@@ -2,161 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2032A699200
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 11:44:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18220699207
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 11:45:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229563AbjBPKoW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 05:44:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59642 "EHLO
+        id S229646AbjBPKp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 05:45:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229893AbjBPKoV (ORCPT
+        with ESMTP id S229454AbjBPKp2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 05:44:21 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF32820D39
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:43:48 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id dr8so4013708ejc.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:43:48 -0800 (PST)
+        Thu, 16 Feb 2023 05:45:28 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 046A5222FB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:45:04 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id cf42so2263251lfb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:45:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=9tmGKKfjVIBTMe/d8Q3K3B9sQlvKc2r/WPRmBl0j3Rg=;
-        b=onoMjrN1fBlNr/ewi7C0X97B0C0HX9kB5Cf/ZFZMHmYwn0d9DCcS8OlDTB8BkFUbPA
-         4oilebj57DPFl5EiQqOdBa4rNQbVk4Tkef4QNpR0XzDHatNmHdsEMJryKOqVz90CThSK
-         6H807FxbWmzH1W2yYAJsJOccJzUC/JkE1W+21Hknw8snYRhXZZIZ5Z9NNJRNoDqHiqgp
-         Bnhxlu68d/euV+l4geG+44OmG134ckuwzaP4P4LrcDM9DIxnoPjF7H1bzM12TXd+NoKV
-         dv1ypqyMz3lJNBhxh7B7Wvhg+kQlcMdBbqL3HMvWqVwwqYxM5kcdV/Bq9jlYgLY99tgA
-         C+4g==
+        bh=dCZ/9iiMJgWMxLk83BvjMM6b0ZsfcU5mDoisIH9FJuA=;
+        b=i2dyU6M6NR6Sz5XWONXph/oCKcJUfJtkwWvAAc6AoYo4tU3uosNpJKzdIdUGnJiRy7
+         kz4xkplcZ29Nr8pPhdLsoC1kIBlfngbf7qpiB4bYCBCNMc7aD3iZkxnLQv9s2wesVCl1
+         g4hsZm6SXOnsL3rsBvTcMK0gtwQgUNjmusaZiw1iAcJ21iLz48sD3eY5eO5HlC1+MDBP
+         C7ncPzd+XyXRuGihjXYvTo0sasYL55QI+7OZBMOXM+cLgDrsmFuGfMjwqTQsyGpx0z8E
+         VvE6Y9MHQamlDaOsJ9EH+kWfwqO4FeCJnMOUgffyvyd40Gq1eEv2GLkT7MsyljYVUOw7
+         sbbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9tmGKKfjVIBTMe/d8Q3K3B9sQlvKc2r/WPRmBl0j3Rg=;
-        b=PgWUvq0YldT8Yx1FcHm+ZN9AkJw6pqinLhFQCSNtArU3jeOOY1DYUt0F8oEuHRKLrn
-         2zjZArlorTk2b8OpKm4OHtw9U1W9ig1Fk0mEjToFopJyFvzD4A78JZiVXsetiwh5xSme
-         EkOZuRiaD2oPwYNs2prjVouLATpjEwgsAB8aqk/1zzt4XwKNcn2aEKxCeOmmbJPphBaF
-         7zPQJJ60Aj+RVAF2/8mVp+tOQ8xLUKqw05f4LyB3cv60tfCUD7WWVhHkrqMhel2lu9mH
-         aXzVxdPcGSvnbg95FOjRN66pg0LLoywWqcX+V/mTPw1Ve58yTF1MvZ6AJLJvqL409idG
-         f2CA==
-X-Gm-Message-State: AO0yUKVC0XYYA/MNjcPxtXAyqcxteldb8P/hazoaVf0z1zFQ5+fRtIAA
-        pMDpdUvP1SGjLq0LLSYoVv+b9SC2unPpvFwQ
-X-Google-Smtp-Source: AK7set+zAOPDXoym9X0HJWJ3l2oohe7BBFTuWjfmepeqDdLC5b0Q9buCYCxc0feUynlvyuvDy/6l7w==
-X-Received: by 2002:a17:906:a40f:b0:873:7108:c6a9 with SMTP id l15-20020a170906a40f00b008737108c6a9mr5864023ejz.32.1676544206460;
-        Thu, 16 Feb 2023 02:43:26 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id k21-20020a170906579500b0087bd2ebe474sm630213ejq.208.2023.02.16.02.43.15
+        bh=dCZ/9iiMJgWMxLk83BvjMM6b0ZsfcU5mDoisIH9FJuA=;
+        b=g11wiwpi/HQfyX1Zd0C/If2O7iDGAPkvQDkGiw85Ym/mNLp2swelJCFBw7mSTwkMD1
+         8mNx6TKZmkyO6TnkZ8u/BhfOfVpIr2kjzYh8XXzfg4bpanrzkms3G+m4Cz6j3MRjRTfg
+         QwPtBaOgWz59M4JA+fEdpPaOiT45EusOlb0Bvabaz8DxwrXiA1ex7jkOhAXS3658xzlg
+         fhfjQc0V8BIuBArKHAlYJaE8/LlonkxmFF8iAq62ESo+ilKgkjIiMVs2h7duT5Mgz56Y
+         jZEAmc+SaALJRzRikP5a3DY0NfyFbfVJnytAarPdItHsaanQlXxBWmyJ0+S3KeaRb/S+
+         1l0A==
+X-Gm-Message-State: AO0yUKXntgv0uRBu2Fe9XW+PWT00aTUnCh8OYGY6tR04GKpIj49lDGqj
+        fRSlY2lcBB7Qdf73uNGCmsKOxarGW9Bet/P2
+X-Google-Smtp-Source: AK7set+Fyt70izS+UadNf/0BX09qj3GdpdGt3WgT59NR/O+QR2/i4FHJ3XDofU/12DxzvXNyNvHfZQ==
+X-Received: by 2002:ac2:5d46:0:b0:4b6:ed8b:4f16 with SMTP id w6-20020ac25d46000000b004b6ed8b4f16mr1327178lfd.52.1676544299741;
+        Thu, 16 Feb 2023 02:44:59 -0800 (PST)
+Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id c13-20020a05651221ad00b004b53eb60e3csm250545lft.256.2023.02.16.02.44.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Feb 2023 02:43:16 -0800 (PST)
-Message-ID: <dff2c160-faab-96c9-e37a-182cb47dc01c@linaro.org>
-Date:   Thu, 16 Feb 2023 11:43:14 +0100
+        Thu, 16 Feb 2023 02:44:59 -0800 (PST)
+Message-ID: <719d3a5d-4bba-e7ef-c000-2df29295f9e0@linaro.org>
+Date:   Thu, 16 Feb 2023 11:44:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 1/7] dt-bindings: clock: split qcom,gcc-ipq4019 to
- separate file
+ Thunderbird/102.7.2
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sa8775p: add the GNSS high-speed
+ UART for sa8775p-ride
 Content-Language: en-US
-To:     Robert Marko <robert.marko@sartura.hr>
-Cc:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, luka.perkov@sartura.hr
-References: <20230214162325.312057-1-robert.marko@sartura.hr>
- <dcdd0a62-8d1f-d9b1-6137-34d9e68313a1@linaro.org>
- <CA+HBbNHmDeBBBc31OayTjegi4KrAgqOiRLQscorENjqg3dEa3Q@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CA+HBbNHmDeBBBc31OayTjegi4KrAgqOiRLQscorENjqg3dEa3Q@mail.gmail.com>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230215154002.446808-1-brgl@bgdev.pl>
+ <20230215154002.446808-4-brgl@bgdev.pl>
+ <CAMRc=MdH7yxof63V2icesypGTFSssziaA5sCOZP_Gby-3ciLKA@mail.gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAMRc=MdH7yxof63V2icesypGTFSssziaA5sCOZP_Gby-3ciLKA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/02/2023 11:41, Robert Marko wrote:
-> On Thu, Feb 16, 2023 at 11:16 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
+
+
+On 16.02.2023 10:43, Bartosz Golaszewski wrote:
+> On Wed, Feb 15, 2023 at 4:40 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
 >>
->> On 14/02/2023 17:23, Robert Marko wrote:
->>> Move schema for the GCC on IPQ4019 platform to a separate file to be able
->>> to allow passing XO and sleep clks directly to GCC.
->>>
->>> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
->>> ---
->>>  .../bindings/clock/qcom,gcc-ipq4019.yaml      | 53 +++++++++++++++++++
->>>  .../bindings/clock/qcom,gcc-other.yaml        |  2 -
->>>  2 files changed, 53 insertions(+), 2 deletions(-)
->>>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml
->>> new file mode 100644
->>> index 0000000000000..6ebaef2288fa3
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml
->>> @@ -0,0 +1,53 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/clock/qcom,gcc-ipq4019.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm Global Clock & Reset Controller on IPQ4019
->>> +
->>> +maintainers:
->>> +  - Stephen Boyd <sboyd@kernel.org>
->>> +  - Taniya Das <tdas@codeaurora.org>
->>> +  - Robert Marko <robert.markoo@sartura.hr>
->>> +
->>> +description: |
->>> +  Qualcomm global clock control module provides the clocks, resets and power
->>> +  domains on IPQ4019.
->>> +
->>> +  See also:: include/dt-bindings/clock/qcom,gcc-ipq4019.h
->>> +
->>> +allOf:
->>> +  - $ref: qcom,gcc.yaml#
->>> +
->>> +properties:
->>> +  compatible:
->>> +    const: qcom,gcc-ipq4019
->>> +
->>> +  clocks:
->>> +    items:
->>> +      - description: board XO clock
->>> +      - description: sleep clock
->>> +
->>> +  clock-names:
->>> +    items:
->>> +      - const: xo
->>> +      - const: sleep_clk
->>> +
->>> +required:
->>> +  - compatible
+>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >>
->> Aren't the clocks now required? Will it keep working without them?
+>> Add the serial port connected to the GNSS on sa8775p-ride.
+>>
+>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 34 +++++++++++++++++++++++
+>>  arch/arm64/boot/dts/qcom/sa8775p.dtsi     | 15 ++++++++++
+>>  2 files changed, 49 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+>> index d01ca3a9ee37..47cf26ea49e8 100644
+>> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+>> @@ -13,6 +13,7 @@ / {
+>>
+>>         aliases {
+>>                 serial0 = &uart10;
+>> +               serial1 = &uart12;
+>>                 i2c18 = &i2c18;
+>>                 spi16 = &spi16;
+>>         };
+>> @@ -66,6 +67,30 @@ qup_i2c18_default: qup-i2c18-state {
+>>                 drive-strength = <2>;
+>>                 bias-pull-up;
+>>         };
+>> +
+>> +       qup_uart12_cts: qup-uart12-cts-state {
+>> +               pins = "gpio52";
+>> +               function = "qup1_se5";
+>> +               bias-disable;
+>> +       };
+>> +
+>> +       qup_uart12_rts: qup_uart12_rts-state {
+>> +               pins = "gpio53";
+>> +               function = "qup1_se5";
+>> +               bias-pull-down;
+>> +       };
+>> +
+>> +       qup_uart12_tx: qup_uart12_tx-state {
+>> +               pins = "gpio54";
+>> +               function = "qup1_se5";
+>> +               bias-pull-up;
+>> +       };
+>> +
+>> +       qup_uart12_rx: qup_uart12_rx-state {
+>> +               pins = "gpio55";
+>> +               function = "qup1_se5";
+>> +               bias-pull-down;
+>> +       };
+>>  };
+>>
+>>  &uart10 {
+>> @@ -75,6 +100,15 @@ &uart10 {
+>>         status = "okay";
+>>  };
+>>
+>> +&uart12 {
+>> +       pinctrl-0 = <&qup_uart12_cts>,
+>> +                   <&qup_uart12_rts>,
+>> +                   <&qup_uart12_tx>,
+>> +                   <&qup_uart12_rx>;
+>> +       pinctrl-names = "default";
+>> +       status = "okay";
+>> +};
+>> +
+>>  &xo_board_clk {
+>>         clock-frequency = <38400000>;
+>>  };
+>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>> index 1abb545ff4f4..8b8931ea739d 100644
+>> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>> @@ -489,6 +489,21 @@ &clk_virt SLAVE_QUP_CORE_1 0>,
+>>                                 operating-points-v2 = <&qup_opp_table_100mhz>;
+>>                                 status = "disabled";
+>>                         };
+>> +
+>> +                       uart12: serial@a94000 {
+>> +                               compatible = "qcom,geni-uart";
+>> +                               reg = <0x0 0xa94000 0x0 0x4000>;
+>> +                               interrupts = <GIC_SPI 585 IRQ_TYPE_LEVEL_HIGH>;
 > 
-> There are not required, this just allows passing them but the driver is
-> still using global matching until in patch 2 XO and sleep clocks are converted
-> to use parent data and in patch 3 they are passed via phandles to GCC,
-> however, even then global matching by name is preserved in the driver
-> as a fallback
-> to keep backward compatibility.
+> Please disregard this series, I've just noticed I didn't stage the
+> change to the interrupt number here which is wrong. And I need to fix
+> the underscores in node names too.
+Generally it would be "nicer" if you split adding the nodes
+in the SoC and device DTs as well, since you're already resending..
+
+Konrad
 > 
-> However, I see your point, after parent data conversion they should be
-> required by
-> schema as that is preferred over global matching.
-
-Yes. Especially that these clock inputs must be there for the device to
-operate, so regardless of how Linux implements this, the hardware
-requires them, I think.
-
-Best regards,
-Krzysztof
-
+> Bart
+> 
+>> +                               clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
+>> +                               clock-names = "se";
+>> +                               interconnects = <&clk_virt MASTER_QUP_CORE_1 0
+>> +                                                &clk_virt SLAVE_QUP_CORE_1 0>,
+>> +                                               <&gem_noc MASTER_APPSS_PROC 0
+>> +                                                &config_noc SLAVE_QUP_1 0>;
+>> +                               interconnect-names = "qup-core", "qup-config";
+>> +                               power-domains = <&rpmhpd SA8775P_CX>;
+>> +                               status = "disabled";
+>> +                       };
+>>                 };
+>>
+>>                 qupv3_id_2: geniqup@8c0000 {
+>> --
+>> 2.37.2
+>>
