@@ -2,144 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EEB43699B6A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 18:41:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 90CBA699B81
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 18:46:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229793AbjBPRlQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 12:41:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54996 "EHLO
+        id S229602AbjBPRqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 12:46:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229748AbjBPRlP (ORCPT
+        with ESMTP id S229547AbjBPRqf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 12:41:15 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 976B33B855;
-        Thu, 16 Feb 2023 09:41:13 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31G47P9d017065;
-        Thu, 16 Feb 2023 17:40:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=2qzEUuV7n8pAGi2RGWf50M997hHG2Iw8kV9N8cxf5BY=;
- b=m3PLxpH6b+QaWZSgqV9wc7WiRw7pEK9qez0K8X0TalKmtaZpKJqYOqZOYr6YRtQAUruF
- PC5xJd2tRl7ENQO7EQjaMDGdTluzTYtKSQ2GhFOvGwmVbceOaF1ObqEUlU65Q1Mlw99F
- 13oVmOwLXDu41Wpxu7+61BRNtiLa7NFrcYipcSfwetV5UT1OlF/wFdB7f2nbn4t2R83D
- kRPzYk4DehEYpb/CwRnsJL/0Lcup/Pa+bQmFDfBJ7sbZ+9gtCyWaGBHChtHJRrhUZmcd
- ogVSukOPo72BqiyFyr5bQbyKG6fJBqJ+ivx9y+IoPWmxbxl5ZMqwtPqDhr6FEZqWEZv3 ww== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ns343bbb6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 17:40:55 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31GHesgZ009492
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 17:40:54 GMT
-Received: from [10.110.95.168] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 16 Feb
- 2023 09:40:53 -0800
-Message-ID: <b04aef26-ee0d-af01-3aa1-a0c77d9cbaf3@quicinc.com>
-Date:   Thu, 16 Feb 2023 09:40:52 -0800
+        Thu, 16 Feb 2023 12:46:35 -0500
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08EFB4C3F8;
+        Thu, 16 Feb 2023 09:46:35 -0800 (PST)
+Received: by mail-pl1-f169.google.com with SMTP id b5so2819438plz.5;
+        Thu, 16 Feb 2023 09:46:35 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=inCt4UfQhzrVjZJORWD7A+ueESnX9lWn7iD06uQFXoM=;
+        b=IE+EoZMmzfDVugt0d4diovC0wMM0fMfSct9N5G8B+qNbw2vxxtUhmWRybd1I8mT08d
+         RvNg6CO2YfCzmqlPRu5QKHv0cQdp3D7fgtOwVv1TJX+QwsBXREQvYOJ99JHgPTXFRJh1
+         SCQm5nYFy8OvEE2Glfh8NM2bFsxejO/K9vurZ0DcE/QY5K3QG21ghkoUKMN96IlWg/j5
+         JnI83+CCQaqQtdUEunvisCovnanB5Vk4RT0QRLgT3tzvtLUP4iCtySmB4qYWlzwB7jMa
+         TCqKrHFr+eJlbKzuzX2ZhhRL7WWVYJw/7WR369y/GEklLJW+rnMGX6tsu58A8ciCY/J4
+         WKmg==
+X-Gm-Message-State: AO0yUKWCmzLyztsfisIoUSRQDYSVwoPK4V3EJHL5amdpr7GEko8cf0qg
+        SoecVJsbtbDvDhiI0ZWWOxc=
+X-Google-Smtp-Source: AK7set8o00RWThdYLu0u33RJUiEVqiKbQpyOVtOl5d15NkjxmqwolNpHng2o2sZrhqoSsuSnDehZGw==
+X-Received: by 2002:a05:6a21:6d88:b0:c7:20d8:dc1e with SMTP id wl8-20020a056a216d8800b000c720d8dc1emr3359795pzb.27.1676569594357;
+        Thu, 16 Feb 2023 09:46:34 -0800 (PST)
+Received: from ?IPV6:2620:15c:211:201:3a83:c047:6e5d:a776? ([2620:15c:211:201:3a83:c047:6e5d:a776])
+        by smtp.gmail.com with ESMTPSA id d7-20020a656207000000b004fadb547d0csm1434401pgv.61.2023.02.16.09.46.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Feb 2023 09:46:33 -0800 (PST)
+Message-ID: <0799ff2a-4775-46f0-38b9-ef28146fd6e1@acm.org>
+Date:   Thu, 16 Feb 2023 09:46:31 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v10 08/26] gunyah: rsc_mgr: Add resource manager RPC core
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v2 1/1] ufs: mcq: fix incorrectly set queue depth
 Content-Language: en-US
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Arnd Bergmann" <arnd@arndb.de>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212327.3310128-1-quic_eberman@quicinc.com>
- <Y+3QqdQVH5BTbnaP@kroah.com>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <Y+3QqdQVH5BTbnaP@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
+        stanley.chu@mediatek.com, adrian.hunter@intel.com,
+        avri.altman@wdc.com, mani@kernel.org, beanhuo@micron.com,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <8840cea4a57b46dabce18acc39afc50ab826330f.1676567593.git.quic_asutoshd@quicinc.com>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <8840cea4a57b46dabce18acc39afc50ab826330f.1676567593.git.quic_asutoshd@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PF4GoKGtM-5nQH14pMTEY9-9Gnxe-O_V
-X-Proofpoint-GUID: PF4GoKGtM-5nQH14pMTEY9-9Gnxe-O_V
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-16_14,2023-02-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=859 malwarescore=0 spamscore=0 phishscore=0
- adultscore=0 mlxscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302160152
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/15/2023 10:43 PM, Greg Kroah-Hartman wrote:
-> On Tue, Feb 14, 2023 at 01:23:25PM -0800, Elliot Berman wrote:
->> +struct gh_rm {
->> +	struct device *dev;
+On 2/16/23 09:13, Asutosh Das wrote:
+> ufshcd_config_mcq() may change the can_queue value.
+> The current code invokes scsi_add_host() before ufshcd_config_mcq().
+> So the tags are limited to the old can_queue value.
 > 
-> What device does this point to?
-> 
+> Fix this by invoking scsi_add_host() after ufshcd_config_mcq().
 
-The platform device.
-
->> +	struct gunyah_resource tx_ghrsc, rx_ghrsc;
->> +	struct gh_msgq msgq;
->> +	struct mbox_client msgq_client;
->> +	struct gh_rm_connection *active_rx_connection;
->> +	int last_tx_ret;
->> +
->> +	struct idr call_idr;
->> +	struct mutex call_idr_lock;
->> +
->> +	struct kmem_cache *cache;
->> +	struct mutex send_lock;
->> +	struct blocking_notifier_head nh;
->> +};
-> 
-> This obviously is the "device" that your system works on, so what are
-> the lifetime rules of it?  Why isn't is just a real 'struct device' in
-> the system instead of a random memory blob with a pointer to a device?
-> 
-> What controls the lifetime of this structure and where is the reference
-> counting logic for it?
-> 
-
-The lifetime of the structure is bound by the platform device that above 
-struct device *dev points to. get_gh_rm and put_gh_rm increments the 
-device ref counter and ensures lifetime of the struct is also extended.
-
-> And why no documentation for this core structure?
-> 
-
-Sure, I will add.
-
-> thanks,
-> 
-> greg k-h
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
