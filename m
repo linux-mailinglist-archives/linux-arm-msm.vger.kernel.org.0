@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B6D76991BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 11:39:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FEC96991C0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 11:39:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229803AbjBPKjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 05:39:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51050 "EHLO
+        id S230169AbjBPKjP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 05:39:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230134AbjBPKjF (ORCPT
+        with ESMTP id S229898AbjBPKjP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 05:39:05 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ABF155282
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:38:31 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id y25so2195718lfa.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:38:31 -0800 (PST)
+        Thu, 16 Feb 2023 05:39:15 -0500
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FD325455F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:38:43 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id h17so1471869ljq.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:38:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JxMdyDI6D0KMu5lr8AIvoXQgNrR3gz0L+12TF60RCV0=;
-        b=L01Ff9grT9wD8UaeHPdOgFJfL0EjyEA0dPBF7LP4T+HDJ+zoeY87RP3uQsWh/FFfry
-         jhSaWneu90rBxiqq3psvfTMnQSCD5THoLyo4J+12u8U0lq+RvMcMzf3wCdAVGcoQe+2i
-         8f32eW/B/FTXRqFwqbn1uqiVh0rve+L89z3RnyzfNp9dOZ4yq6Yfr5mjy/JrCGT4QtXg
-         y4AbZ7JsGZ4/sxPYwvY4NtR4fJKEbbOdGZlPbyvZhcdG7um6iNF9rsleAQce2tT8REJu
-         qLQI4dj4To803VyCr/WT456y+4raV4Fgsa+fsFpC4RfltlJNwYC/TXHLgtBuMNfQcXwc
-         j/zA==
+        bh=rXCBw7G9VuSG/ngojEw3pNHsZ/bJYitaim5VMT2tvs8=;
+        b=U7wjH2fHaAHFVcnj4i8SdiogChJjwk6Z9/LGKcEUXRaVAnyCThwybpsmdjxIFuxL2s
+         mSJh6V9QAd0J8SN119GqVehbF8iOJp0oJKndXJRQqJbnNFnlv+NaMnNgmY20WG4R/W9C
+         D5GgyOpP+dxeb2UBxdA2ThUAdJEpvOqtIYjKQTOS/I1e6K5K+P6/7megaai1BeWkeb31
+         QOb/R3/ghySLgK0o87xdhVZAzRS3PAhsd2/QA8J05wsvuIu/R6iKNtGDJxuISTuYT2Gv
+         B4YV6QSBaBO+AiojHDXJFW2A4qHyt6ra0o6F7Hj3AS8Bq8N01FotLN0fDaLYsPs0wlJg
+         uX7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JxMdyDI6D0KMu5lr8AIvoXQgNrR3gz0L+12TF60RCV0=;
-        b=6yl+AGTZ8tBR1YUMzOkhtE4qIbIYoae8WPrJmuny4lsYJsCbDJAatDieoPKo5FXvta
-         H6LyI0d4wDvnw343gPKeXM/zanv5VuFIbBHqpEn5SNuAo97//nJLlj3lYFCPvtuAubKl
-         6PHlSg5qLjr3fPi959hCS/zNpTc3e5IffDH3UdoCw6DEkI/gUSH1AdMSdT1tQUF9WVpK
-         TeFLbnWAbLmOHedEVnyGludOSC8i3JEI5KJyWEvUFRvAMEWg0jSDFD74CHwBY24JrkSe
-         zWQ98S7C4GoCgwbn4ZB4O3WZIKiRbjttL6F34LR1bBcUtJhOF0PgIVy3uF0taKAK12G5
-         19nw==
-X-Gm-Message-State: AO0yUKWb79IveNDKYlSGmOTzf3e1MTKZqEqNcEOYWhpgVkXA3jzMR1hi
-        /ZRy/BZ0uoDCXPa7RBNMxr7PGQ==
-X-Google-Smtp-Source: AK7set87pO+FJOWq8JAChpvFzm/hlfbaf7Tufr/c9pkmJeii7m1cnVc1pyURG5BpHZv17UvdI9gfEw==
-X-Received: by 2002:ac2:48b0:0:b0:4db:38aa:a2f4 with SMTP id u16-20020ac248b0000000b004db38aaa2f4mr1292545lfg.14.1676543891627;
-        Thu, 16 Feb 2023 02:38:11 -0800 (PST)
+        bh=rXCBw7G9VuSG/ngojEw3pNHsZ/bJYitaim5VMT2tvs8=;
+        b=JaRCjIDAlyEKe7MkNUr/J1MlQoIxI7W6yEo4w4gsd3mGw+UrrBQOKDWZvHH4J2aEYh
+         mZxICd199fCpntepkzYmEfb5n8WrKE0g74czEl5btu31DugDUusPn7LS9y1e5ce0sHty
+         t8vJJAen0FncJofQjq+uer9o+9c3/6pzIRxFen/2NCpd8KIuBTrTu2XVRo8qnOmxPyWQ
+         gRk6kZDZAOlUnGk9k56XA+GdwQykdbs2cqhlM155n+rKR+ra7vxCWds1x8RDpPi799jd
+         +X7YfiNPC3EEC0xU9PReMzFvP2o6pu3jl31lpkCIDRXen1e5OYnZTTEgKNJl32wiS0z/
+         vVYw==
+X-Gm-Message-State: AO0yUKUfKesnSdd2yVBdwVQr4CtwcVGPnvLJyL3tR7N0rVayznkJr3+z
+        EVm9tdw/LszuMNkpgw7X9OfRLQ==
+X-Google-Smtp-Source: AK7set/Wh95woympb18XB5PdGTPAO1sJ+4dF+Jvq+QyTRhzA9lApTfddm1TGkafBT7qHvSJ3Ny5P5g==
+X-Received: by 2002:a2e:968e:0:b0:290:5547:8c7a with SMTP id q14-20020a2e968e000000b0029055478c7amr1397708lji.45.1676543900629;
+        Thu, 16 Feb 2023 02:38:20 -0800 (PST)
 Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id a12-20020a056512020c00b004b57162edfasm242416lfo.117.2023.02.16.02.38.10
+        by smtp.gmail.com with ESMTPSA id bg27-20020a05651c0b9b00b002907f6fba4dsm136762ljb.62.2023.02.16.02.38.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Feb 2023 02:38:11 -0800 (PST)
-Message-ID: <17df2e00-1779-5b7d-1772-a878739ef770@linaro.org>
-Date:   Thu, 16 Feb 2023 11:38:10 +0100
+        Thu, 16 Feb 2023 02:38:20 -0800 (PST)
+Message-ID: <83a768ea-28bd-144d-a74b-2a6278b40d33@linaro.org>
+Date:   Thu, 16 Feb 2023 11:38:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.2
-Subject: Re: [RESEND PATCH 05/12] arm64: dts: qcom: sm8250: Supply clock from
+Subject: Re: [RESEND PATCH 06/12] arm64: dts: qcom: qdu1000: Supply clock from
  cpufreq node to CPUs
 Content-Language: en-US
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
@@ -64,9 +64,9 @@ Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, viresh.kumar@linaro.org
 References: <20230215070400.5901-1-manivannan.sadhasivam@linaro.org>
- <20230215070400.5901-6-manivannan.sadhasivam@linaro.org>
+ <20230215070400.5901-7-manivannan.sadhasivam@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230215070400.5901-6-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20230215070400.5901-7-manivannan.sadhasivam@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -94,82 +94,50 @@ On 15.02.2023 08:03, Manivannan Sadhasivam wrote:
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 9 +++++++++
->  1 file changed, 9 insertions(+)
+>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 2f0e460acccd..44c8851178eb 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -97,6 +97,7 @@ CPU0: cpu@0 {
+> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> index f234159d2060..98a859ad5229 100644
+> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> @@ -27,6 +27,7 @@ CPU0: cpu@0 {
 >  			device_type = "cpu";
->  			compatible = "qcom,kryo485";
+>  			compatible = "arm,cortex-a55";
 >  			reg = <0x0 0x0>;
 > +			clocks = <&cpufreq_hw 0>;
 >  			enable-method = "psci";
->  			capacity-dmips-mhz = <448>;
->  			dynamic-power-coefficient = <205>;
-> @@ -127,6 +128,7 @@ CPU1: cpu@100 {
+>  			power-domains = <&CPU_PD0>;
+>  			power-domain-names = "psci";
+> @@ -45,6 +46,7 @@ CPU1: cpu@100 {
 >  			device_type = "cpu";
->  			compatible = "qcom,kryo485";
+>  			compatible = "arm,cortex-a55";
 >  			reg = <0x0 0x100>;
 > +			clocks = <&cpufreq_hw 0>;
 >  			enable-method = "psci";
->  			capacity-dmips-mhz = <448>;
->  			dynamic-power-coefficient = <205>;
-> @@ -151,6 +153,7 @@ CPU2: cpu@200 {
+>  			power-domains = <&CPU_PD1>;
+>  			power-domain-names = "psci";
+> @@ -60,6 +62,7 @@ CPU2: cpu@200 {
 >  			device_type = "cpu";
->  			compatible = "qcom,kryo485";
+>  			compatible = "arm,cortex-a55";
 >  			reg = <0x0 0x200>;
 > +			clocks = <&cpufreq_hw 0>;
 >  			enable-method = "psci";
->  			capacity-dmips-mhz = <448>;
->  			dynamic-power-coefficient = <205>;
-> @@ -175,6 +178,7 @@ CPU3: cpu@300 {
+>  			power-domains = <&CPU_PD2>;
+>  			power-domain-names = "psci";
+> @@ -75,6 +78,7 @@ CPU3: cpu@300 {
 >  			device_type = "cpu";
->  			compatible = "qcom,kryo485";
+>  			compatible = "arm,cortex-a55";
 >  			reg = <0x0 0x300>;
 > +			clocks = <&cpufreq_hw 0>;
 >  			enable-method = "psci";
->  			capacity-dmips-mhz = <448>;
->  			dynamic-power-coefficient = <205>;
-> @@ -199,6 +203,7 @@ CPU4: cpu@400 {
->  			device_type = "cpu";
->  			compatible = "qcom,kryo485";
->  			reg = <0x0 0x400>;
-> +			clocks = <&cpufreq_hw 1>;
->  			enable-method = "psci";
->  			capacity-dmips-mhz = <1024>;
->  			dynamic-power-coefficient = <379>;
-> @@ -223,6 +228,7 @@ CPU5: cpu@500 {
->  			device_type = "cpu";
->  			compatible = "qcom,kryo485";
->  			reg = <0x0 0x500>;
-> +			clocks = <&cpufreq_hw 1>;
->  			enable-method = "psci";
->  			capacity-dmips-mhz = <1024>;
->  			dynamic-power-coefficient = <379>;
-> @@ -248,6 +254,7 @@ CPU6: cpu@600 {
->  			device_type = "cpu";
->  			compatible = "qcom,kryo485";
->  			reg = <0x0 0x600>;
-> +			clocks = <&cpufreq_hw 1>;
->  			enable-method = "psci";
->  			capacity-dmips-mhz = <1024>;
->  			dynamic-power-coefficient = <379>;
-> @@ -272,6 +279,7 @@ CPU7: cpu@700 {
->  			device_type = "cpu";
->  			compatible = "qcom,kryo485";
->  			reg = <0x0 0x700>;
-> +			clocks = <&cpufreq_hw 2>;
->  			enable-method = "psci";
->  			capacity-dmips-mhz = <1024>;
->  			dynamic-power-coefficient = <444>;
-> @@ -5481,6 +5489,7 @@ cpufreq_hw: cpufreq@18591000 {
->  				     <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "dcvsh-irq-0", "dcvsh-irq-1", "dcvsh-irq-2";
+>  			power-domains = <&CPU_PD3>;
+>  			power-domain-names = "psci";
+> @@ -1312,6 +1316,7 @@ cpufreq_hw: cpufreq@17d90000 {
+>  			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
+>  			clock-names = "xo", "alternate";
 >  			#freq-domain-cells = <1>;
 > +			#clock-cells = <1>;
 >  		};
->  	};
 >  
+>  		gem_noc: interconnect@19100000 {
