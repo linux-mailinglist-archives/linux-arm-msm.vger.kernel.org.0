@@ -2,134 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AFF28698DF1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 08:42:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CB83698EBE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 09:31:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229709AbjBPHm5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 02:42:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47720 "EHLO
+        id S229810AbjBPIbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 03:31:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbjBPHm4 (ORCPT
+        with ESMTP id S229619AbjBPIbe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 02:42:56 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14A3D25285;
-        Wed, 15 Feb 2023 23:42:54 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Thu, 16 Feb 2023 03:31:34 -0500
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5449367DA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 00:31:27 -0800 (PST)
+Received: from SoMainline.org (unknown [89.205.225.214])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A41FBB825DF;
-        Thu, 16 Feb 2023 07:42:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1F9C433D2;
-        Thu, 16 Feb 2023 07:42:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676533372;
-        bh=MOa0xJmnMkeXlEHM9s4CPRRpe1xjLgxBt3dpclKQX5s=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UfDNRhIc0/qbZMXtg5hF6K/EjZv8HzC9qZoSEtDu3XXxsT8GGVTpjEVV4ADQGcI+b
-         +n43X5NUq1AzksTktI+STfxuXuPIiemh0VecOBMvl/JfYVq71DggjY0tZHmA5WPFpT
-         1Zm2+lBDJ2V6/UEwYKruoHBnto/IgvsXfYijug6usrz9pj5Mx02Zj8UfTuRfjIvpxg
-         gvdazPcEsK+jPhaLhReN3AbQdjSAQ9lNH25MZF/3aeWFC0ecVPcc40ch02TqekF+6w
-         FQ5mvkb/J7rCsKRUNsohbnS7zAFiciBkP0zzjrJWHNl1X9NsyeQsAdGyi8O0kLGLt/
-         AxlK0dTuVt6+g==
-Date:   Wed, 15 Feb 2023 23:42:50 -0800
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org
-Subject: Re: [RFC PATCH 1/5] soc: qcom: Make the Qualcomm UFS/SDCC ICE a
- dedicated driver
-Message-ID: <Y+3eenOERCVGW+go@sol.localdomain>
-References: <20230214120253.1098426-1-abel.vesa@linaro.org>
- <20230214120253.1098426-2-abel.vesa@linaro.org>
- <7442b4f8-0560-35ea-4b0e-1f249fc5c902@linaro.org>
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 17EFD1F9AA;
+        Thu, 16 Feb 2023 09:31:22 +0100 (CET)
+Date:   Thu, 16 Feb 2023 09:31:19 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Archit Taneja <architt@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        phone-devel@vger.kernel.org
+Subject: Re: [PATCH 1/3] drm/msm/dpu: Read previously-uninitialized SSPP
+ scaler version from hw
+Message-ID: <20230216083119.6ispk2xhahhzn5sx@SoMainline.org>
+References: <20230215-sspp-scaler-version-v1-0-416b1500b85b@somainline.org>
+ <20230215-sspp-scaler-version-v1-1-416b1500b85b@somainline.org>
+ <CAA8EJpq1L32VQ1eQEk2YQWqCwHgdFQfuWPhQx=PmhzXvazLgPA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7442b4f8-0560-35ea-4b0e-1f249fc5c902@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <CAA8EJpq1L32VQ1eQEk2YQWqCwHgdFQfuWPhQx=PmhzXvazLgPA@mail.gmail.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 14, 2023 at 02:34:47PM +0100, Konrad Dybcio wrote:
-> > +#define QCOM_ICE_BIST_STATUS_MASK		0xF0000000
-> GENMASK(31, 28)?
-
-I personally think the plain number is much easier to read...
-
-> btw, most of these defines seem unused?
-
-Yes, the unused definitions can be dropped if people prefer.  I only included
-them in the original version because this hardware has no public documentation,
-so maybe it's helpful to see what registers and fields are available.
-
-I suppose that downstream code could always be dug up if needed, though.  Or
-maybe someday there will actually be documentation?
-
-> > +static struct qcom_ice *engine;
-> > +
-> > +static bool qcom_ice_check_supported(struct qcom_ice *ice)
-> > +{
-> > +	u32 regval = qcom_ice_readl(ice, QCOM_ICE_REG_VERSION);
-> > +	struct device *dev = ice->dev;
-> > +	int major = regval >> 24;
-> > +	int minor = (regval >> 16) & 0xFF;
-> > +	int step = regval & 0xFFFF;
-> FIELD_GET?
-
-Similarly, plain bit operations are much more universally understood...
-
-> > +	regval = qcom_ice_readl(ice, QCOM_ICE_REG_ADVANCED_CONTROL);
-> > +	/*
-> > +	 * Enable low power mode sequence
-> > +	 * [0]-0, [1]-0, [2]-0, [3]-E, [4]-0, [5]-0, [6]-0, [7]-0
-> Pardon my ignorance, but I have no idea how this comment corresponds
-> to the value OR'd..
+On 2023-02-16 04:22:13, Dmitry Baryshkov wrote:
+> On Thu, 16 Feb 2023 at 01:02, Marijn Suijten
+> <marijn.suijten@somainline.org> wrote:
+> >
+> > DPU's catalog never assigned dpu_scaler_blk::version leading to
+> > initialization code in dpu_hw_setup_scaler3 to wander the wrong
+> > codepaths.  Instead of hardcoding the correct QSEED algorithm version,
+> > read it back from a hardware register.
+> >
+> > Note that this register is only available starting with QSEED3, where
+> > 0x1002 corresponds to QSEED3, 0x2004 to QSEED3LITE and 0x3000 to QSEED4.
 > 
-> > +	 */
-> > +	regval |= 0x7000;
-> > +	qcom_ice_writel(ice, regval, QCOM_ICE_REG_ADVANCED_CONTROL);
+> This is not purely accurate. 0x1003 (sdm845) also corresponds to QSEED3.
+> I'd say instead that there are several variations of QSEED3 scalers,
+> where starting from 0x2004 it is called QSEED3LITE and starting from
+> 0x3000 it is called QSEED4.
 
-I'm not sure either!  I've never had access to any documentation for this
-hardware, so the above logic is just taken from downstream code.  I kept that
-comment because it was the only available explanation for the value OR'd.
+Good catch, I'll update that.
 
-Since it doesn't seem to be useful, I'm fine with just removing it.  (But please
-keep the "Enable low power mode sequence" part, as that's useful.)
+> > Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 --
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c    | 8 +++++++-
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h    | 3 +++
+> >  3 files changed, 10 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> > index ddab9caebb18..96ce1766f4a1 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> > @@ -324,11 +324,9 @@ struct dpu_src_blk {
+> >  /**
+> >   * struct dpu_scaler_blk: Scaler information
+> >   * @info:   HW register and features supported by this sub-blk
+> > - * @version: qseed block revision
+> >   */
+> >  struct dpu_scaler_blk {
+> >         DPU_HW_SUBBLK_INFO;
+> > -       u32 version;
+> 
+> No. Please keep the version in the scaler subblk.  It is a version of
+> the QSEED (scaler block), not the SSPP's version.
 
-My guess is that it is actually just describing the bits backwards, so [3]-E
-corresponds to the three bits that are set.
+You are right that the new variable in the parent (SSPP) block is
+nondescriptive and should have been named scaler_version.
 
-> > +static void qcom_ice_optimization_enable(struct qcom_ice *ice)
-> > +{
-> > +	u32 regval;
-> > +
-> > +	if (!ice)
-> > +		return;
-> > +
-> > +	/* ICE Optimizations Enable Sequence */
-> > +	regval = qcom_ice_readl(ice, QCOM_ICE_REG_ADVANCED_CONTROL);
-> > +	regval |= 0xD807100;
-> Please use lowercase hex, or de-magic-ify this if you have the means to.
+However.
 
-I don't know what the 0xD807100 value means, sorry :-(  This is just the value
-that works to enable the "optimizations", and which the downstream code was
-using.  If anyone has access to the ICE hardware documentation (if there even
-*is* documentation), they might be able to say.
+dpu_scaler_blk is only used as a const static struct in the catalog,
+meaning we cannot (should not!) store a runtime-read register value
+here.  Instead I followed your IRC suggestion to read the register in
+dpu_hw_sspp_init, but my original implementation called
+dpu_hw_get_scaler3_ver in _dpu_hw_sspp_setup_scaler3 where we already
+have access to the subblk_offset, allowing us to delete
+_dpu_hw_sspp_get_scaler3_ver.  Would you rather have that?  We don't
+need the register value anywhere else.
 
-- Eric
+> There is a block called DS (destination scaler), which can be used to
+> scale the resulting image after the LM. This block also uses the
+> QSEED3(,LITE,4) scaler block.
+
+Is this already supported in mainline, and is it the reason for
+previously having qseed_type globally available?  Is my understanding
+correct that this scaler subblk in the SSPP is merely an interface to
+it, allowing the same hardware to be used from the SSPP for intputs and
+after the LM for outputs?
+
+<snip>
+
+- Marijn
