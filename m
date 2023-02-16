@@ -2,134 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 31041699A45
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 17:41:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 725DD699A52
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 17:41:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbjBPQlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 11:41:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39144 "EHLO
+        id S229785AbjBPQl4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 11:41:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229745AbjBPQlM (ORCPT
+        with ESMTP id S229772AbjBPQlw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 11:41:12 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AF4F4CC9E;
-        Thu, 16 Feb 2023 08:41:11 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31GAkVuj002877;
-        Thu, 16 Feb 2023 16:41:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=l4RTo9JGHFcyiRzucLkPnt/T4JgiacY5HHnNjWoul1I=;
- b=hvslx0biV/sZMr4s9kx/9FcH1l/pb3DB9N/qUjsa/kj0N5LjB3J85NHlGrucZSR9dOT1
- dPd8VPyFkJuwwfjWMsb6yPIddXttwX5VNV/zunM0d+9ZLBlV4QTr/EDkQLKlLB5ABjsF
- VKLJzMkrThb7yfNWtXNcrV7YrKVLwSxDt5fUAUoNDKzx9ZeRIsKC61w5WJA9vFzVOvh/
- eEsRtHp7Q/601F6q+vgMx983VW6djMC6VDTrc6d8smGYH0e3w4J3pSGzWjq6NFqqB4SO
- n9ar7MFSALgYUDnriuNYk02ZVdsMzPeMJbDsZwiXZVE4I6I+EqIxaDbeJfpX9esYPByq Iw== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ns85kactd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 16:41:08 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31GGf7SB030429
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 16:41:07 GMT
-Received: from [10.110.95.168] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 16 Feb
- 2023 08:41:06 -0800
-Message-ID: <ba567710-8ef5-9a18-4c41-0d1124163215@quicinc.com>
-Date:   Thu, 16 Feb 2023 08:41:05 -0800
+        Thu, 16 Feb 2023 11:41:52 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC5FA4ECE5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 08:41:50 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id y25so3485791lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 08:41:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SMnX1HaH2NBclXeVG8VG3N1zQtjFM/4YnRJFVyQLDD8=;
+        b=jQke9uCozYVKmQfyOWRZ2twqTstxxeFR0evUWdL8IvoBWvRzH5hKAZNdD1m+wmG/KX
+         zCOW68zPjxJ0xC5Tj/wgOO0uiYVncKpbNUk3ScdM2XdxHaXAsDd0nynpbWlxOnNQGvvj
+         sWcp0uoZJspqIjA1MI72jOTpCQXovGUJEtkmDrfOQi8cJIghONGDe+f00OL7/q0xGP4i
+         W6bYz4w9BMv45fNzUa+0Gtz90kf+ugaXKasDcycnG7798XhIEksfGGoUGoMKuh+cywsg
+         qJrOQ4gnj54NIC4KAy0fDdgEqtZhSRpRlyQ0RQmVG//sGDrJN71xDzv8p/2bAuaI6eEI
+         aTiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SMnX1HaH2NBclXeVG8VG3N1zQtjFM/4YnRJFVyQLDD8=;
+        b=RM/StJxJhFjmo1UobSuoNYzCN/jcDN6Pg3rsY3zNK3+Zp1qIEvS5ZAzs5OIldbKZQB
+         owrCcVJnwjvC+yAxs0Tsa/YLlsHvNB/9362Z8d+tiHyeFQEsCZG/Jm4dsgxVotlDO1hK
+         7232urXN+mE5HVwVJl7vexyftX8r+J6EVH/99x+tUAP4nnc0Q3iyyZYY1GWaTRUjkqCg
+         L249B1AUcMcsa1vMVo9FYKULNmh50+MnMcP/FoXfTmZ3dUn8RQIGVVhUqCXmLW96OoPE
+         32K+6UxfvYPZ3x3uC3I50y9uCpbhUazGjmhwG+EhnheY68f9chGs3O6QckgBVfOcP+LX
+         wL4A==
+X-Gm-Message-State: AO0yUKUEHVK0nf4V6cVI97E5E7C0JyzpfNRdiWZVE9SJmZu6B+LPV7jQ
+        vq3j4VmIX19E1uv+guf1zz+p6A==
+X-Google-Smtp-Source: AK7set/LQizZ5sM7tq/Gdq4hfmltV90P0uwRAz1nBb7Qf4+ZzkfNgvnGWpuPedwMWF+lEpXpUgzkKg==
+X-Received: by 2002:a19:ac42:0:b0:4a4:68b9:19f6 with SMTP id r2-20020a19ac42000000b004a468b919f6mr1907767lfc.30.1676565709087;
+        Thu, 16 Feb 2023 08:41:49 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id l3-20020a19c203000000b004ceb053c3ebsm349490lfc.179.2023.02.16.08.41.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Feb 2023 08:41:48 -0800 (PST)
+Message-ID: <8b14864b-89fa-ef02-f025-00d7713a0bc7@linaro.org>
+Date:   Thu, 16 Feb 2023 18:41:48 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 0/3] mailbox: Allow direct registration to a channel
-To:     Sudeep Holla <sudeep.holla@arm.com>
-CC:     Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-kernel@vger.kernel.org>, <linux-acpi@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230213232537.2040976-1-quic_eberman@quicinc.com>
- <20230215101732.pbpom3ub3yh75n4w@bogus>
- <d35633ea-4049-6f51-3a3a-2a258a4af037@quicinc.com>
- <20230216095816.rzhxa2qdexy3ulrz@bogus>
-Content-Language: en-US
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <20230216095816.rzhxa2qdexy3ulrz@bogus>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH] drm/msm: Fix potential invalid ptr free
+Content-Language: en-GB
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20230215235048.1166484-1-robdclark@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230215235048.1166484-1-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IDsd8l1mKzSoU3nFAtcP9wAlqZCAQCIn
-X-Proofpoint-ORIG-GUID: IDsd8l1mKzSoU3nFAtcP9wAlqZCAQCIn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-16_12,2023-02-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- clxscore=1015 bulkscore=0 priorityscore=1501 phishscore=0 impostorscore=0
- suspectscore=0 spamscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=548
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302160145
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/16/2023 1:58 AM, Sudeep Holla wrote:
-> On Wed, Feb 15, 2023 at 08:58:10AM -0800, Elliot Berman wrote:
->>
->>
->> On 2/15/2023 2:17 AM, Sudeep Holla wrote:
->>> On Mon, Feb 13, 2023 at 03:25:34PM -0800, Elliot Berman wrote:
->>>> Two mailbox controllers have channel/client binding mechanisms that are
->>>> controller-specific and not using the devicetree binding mechanisms. Mailbox
->>>> channel/client is conceptually done in two steps: selecting the channel
->>>> and binding the selected to channel to a client. Channel selection is sometimes
->>>> controller specific (pcc and omap are examples). The channel/client binding
->>>> code is all the same.
->>>>
->>>> This small series de-duplicates and refactors the channel/client binding
->>>> into a common framework function: "mbox_bind_client" which all of the
->>>> channel selection mechanisms can use.
->>>>
->>>> I found this duplicate code while working on the support for Gunyah hypervisor
->>>> message queues [1]. I've only been able to compile-test omap-maiblox and pcc,
->>>> however it is a straightforward conversion here.
->>>>
->>>> [1]: https://lore.kernel.org/all/20230120224627.4053418-9-quic_eberman@quicinc.com/
->>>>
->>>> Elliot Berman (3):
->>>>     mailbox: Allow direct registration to a channel
->>>
->>> I am unable to find the above patch either in my inbox or in lore[1].
->>> Can you please repost the same ? I would like to test/review w.r.t PCC
->>> driver.
->>>
->>
->> Hi Sudeep,
->>
->> Not sure why the patch didn't end up your inbox; lore seems to have linked
->> it correctly and indicates you were in To:. If I missed something, let me
->> know and I'll make sure you're properly included if future versions needed.
->>
->> https://lore.kernel.org/all/20230213232537.2040976-4-quic_eberman@quicinc.com/
+On 16/02/2023 01:50, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> No, I do have patch 2/3 and 3/3 in my inbox along with the cover letter.
-> Patch 1/3 is missing in both my inbox and lore. Can you send me the lore
-> link for patch 1/3 if you are able to find it ? Or just repost the series
-> if you can't.
+> The error path cleanup expects that chain and syncobj are either NULL or
+> valid pointers.  But post_deps was not allocated with __GFP_ZERO.
 > 
+> Fixes: ab723b7a992a ("drm/msm: Add syncobj support.")
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 
-Huh, not sure what happened there. I got a copy of Patch 1/3 but I also 
-don't see it in lore. Resent:
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-https://lore.kernel.org/all/20230216163804.456714-1-quic_eberman@quicinc.com/
+This makes me want to rewrite the ab723b7a992a ("drm/msm: Add syncobj 
+support.") in the usual explicit-error-path way. WDYT?
+
+> ---
+>   drivers/gpu/drm/msm/msm_gem_submit.c | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> index 6503220e5a4b..e4d13540300e 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -640,8 +640,8 @@ static struct msm_submit_post_dep *msm_parse_post_deps(struct drm_device *dev,
+>   	int ret = 0;
+>   	uint32_t i, j;
+>   
+> -	post_deps = kmalloc_array(nr_syncobjs, sizeof(*post_deps),
+> -	                          GFP_KERNEL | __GFP_NOWARN | __GFP_NORETRY);
+> +	post_deps = kcalloc(nr_syncobjs, sizeof(*post_deps),
+> +			    GFP_KERNEL | __GFP_NOWARN | __GFP_NORETRY);
+>   	if (!post_deps)
+>   		return ERR_PTR(-ENOMEM);
+>   
+> @@ -656,7 +656,6 @@ static struct msm_submit_post_dep *msm_parse_post_deps(struct drm_device *dev,
+>   		}
+>   
+>   		post_deps[i].point = syncobj_desc.point;
+> -		post_deps[i].chain = NULL;
+>   
+>   		if (syncobj_desc.flags) {
+>   			ret = -EINVAL;
+
+-- 
+With best wishes
+Dmitry
+
