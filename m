@@ -2,57 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4CE6698ABA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 03:58:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3768698AE2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 04:02:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229551AbjBPC6O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 21:58:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55156 "EHLO
+        id S229608AbjBPDCr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 22:02:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229636AbjBPC6O (ORCPT
+        with ESMTP id S229504AbjBPDCq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 21:58:14 -0500
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A87F24C85
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 18:58:08 -0800 (PST)
-Received: by mail-yb1-xb34.google.com with SMTP id u76so658687ybi.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 18:58:08 -0800 (PST)
+        Wed, 15 Feb 2023 22:02:46 -0500
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 471B623C7C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 19:02:44 -0800 (PST)
+Received: by mail-yb1-xb31.google.com with SMTP id g2so667169ybk.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 19:02:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YyMZCQmaOL1xm4zqLG+BHh0sREN8jgVyVG/p8ktPj+c=;
-        b=mBTcMWPuiflyd2oc/5m7tNXF9fuV2y8N6d1q0h1Qj8DIsihq+Rx5Zu3ZxARHaYmuHh
-         TyHa1FOKITLUVKOuB4LkvJux8vM8KYSjlSMBMfL3fUwUO4/TxidApfDlRXmyKRYoNp3+
-         HKpJIthTDoyScFvmhFvfHnwdn0UcnY7NvkNQVo4vahQFg8AnociLC+3ysCCwm9mvYF+L
-         m5Rr4uFetZBqVNS28SPcAR/GLaVUY0eeylDf7gjpVYajIEAYe0a0JeodButx/u7eTcY2
-         hZXhgUOMJtBJDE8GCUPktK/RabH20AFq/8/5F0b1OydzjVIye8RX+8T/24MPQ3wjn6IR
-         HeXQ==
+        bh=UmfoGNmoydQLu/4gLeD4ecXj20LBp85h/89oL/+L10E=;
+        b=Q/KqDmrg1GbuXRaTxw0oDwkSDjBxP4Ae+nf6X7sbOxXNH0eD0wl8/M6FexUVCbi88W
+         zG2CbhcfEHXgFgPZg1xntAm61fIipkbd5y2y4AHDcvd9/Q45+S0L4PrITYjwN5fnhWl9
+         cluu0f9dhWYoit9BCQsz4c25kC13XVsv/ECcrJK/OBY0Yy9d+VjixjI7KeEI4+u6eutk
+         I0KrrQcpfxCWG4OFz5ILWRHlI9KoYahrIvj9Uw57V9nsJIKSmS64zK7ELoqZyKttAlov
+         HyzQgQtNBCkc0MbCzxDrMcSxmXsTrPWpMKI8PvVsVH6MwUBhhM5TLFdqDhJlsJp4Z2cU
+         rvvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=YyMZCQmaOL1xm4zqLG+BHh0sREN8jgVyVG/p8ktPj+c=;
-        b=aI8Y9Ct72Zi4dwUQSd7/5VtTl7+Lx9z8Dem9hAL56h7hQ7yaaKyDoe6AXqb1HS4Z+0
-         GR+sXV978pn6V0ErvwfIcGwg8O8PGDNmp1+vBe86Euhm8jDQ6jWrymiNr19zfYlLviAO
-         xoq+cKX6NvHlbGjIQvHg19XEVY/t5sjX2MAlvaIUBcLAfqnTvSTRFRga7BEhisVKoy6O
-         j/Pb/RvJEvZd6m0mABcNFzSRR9XjzZF2ZX1NDh2BVbEvXzVFvgpmMWK9me/hSGh3rVS8
-         yblmEvEwnVteteLjyO6KV+mTSPknn6C46iVpop70LI7Hxsu5Gf8NGzPmHKvlyfzctVeX
-         4PqQ==
-X-Gm-Message-State: AO0yUKUrgAn+XZjcey6L0esqQM7GRQ0ynnjeqvox//BlwyqwxYWycQa0
-        gX2x2kd4WZXK/0D6NlbEQQsxVn21CACaaAKIBupacg==
-X-Google-Smtp-Source: AK7set+nmSebDjAkALV0PNZZFrn4v5zED6xwiCkXHS5ZJibfE5G7fjdWSQOZ3GW6NWl5csCf9dRiUjSqbi/Ly8p7fAo=
-X-Received: by 2002:a25:9a49:0:b0:86a:e417:b66e with SMTP id
- r9-20020a259a49000000b0086ae417b66emr531070ybo.382.1676516287570; Wed, 15 Feb
- 2023 18:58:07 -0800 (PST)
+        bh=UmfoGNmoydQLu/4gLeD4ecXj20LBp85h/89oL/+L10E=;
+        b=K/WCqGNryS79jC6ACzjHUYon6e7bSD0nMQau7Mdb3CFmIxa03Qj2id9+kCDEm8eHI+
+         Ar9UIUnbsGGg4PJLjxNukS6JnJgaqHv7oA5E74c7mUSgQHY3iBiNKrstRm/CtDSqvYTw
+         PZhd+dHi6pBRmOnRXxOgQIv7KWwTGjAzBtEy81d3kgUmlnqxgpEepm8V1D5kKJ2d430U
+         gptf3UQ5x3HsjHvm0darZxnHi5ZCrR2D0wsRvHNOOeMqPQKFGJXk1fEoNe9pDrpekPmi
+         GN8d342BSp4WA4G7hZRE9H+ut6d3/b0iKiA0xL0SHSPM4xYDwGb08b8EDUcfT7SNiMdS
+         kYpg==
+X-Gm-Message-State: AO0yUKWOGf6Cot19z/xIX2DzYfcWZucqGSRhvmsc05Jm2cl2gWSWzs2u
+        9hChTn/VXTz6HF2UxunYJENw04+R69hNJNb3XvH8Uw==
+X-Google-Smtp-Source: AK7set+wevyweJgk6/FESwWZUqeOoq8hRyKir3CGjvMKeXHLg9TcJFZU8wMezt7btRCXjLKWkqQ2a5assUlQmuvevrQ=
+X-Received: by 2002:a25:f50c:0:b0:90a:8ba9:3ac3 with SMTP id
+ a12-20020a25f50c000000b0090a8ba93ac3mr509152ybe.333.1676516563474; Wed, 15
+ Feb 2023 19:02:43 -0800 (PST)
 MIME-Version: 1.0
-References: <20230215-sspp-scaler-version-v1-0-416b1500b85b@somainline.org> <20230215-sspp-scaler-version-v1-3-416b1500b85b@somainline.org>
-In-Reply-To: <20230215-sspp-scaler-version-v1-3-416b1500b85b@somainline.org>
+References: <20230215-sspp-scaler-version-v1-0-416b1500b85b@somainline.org>
+In-Reply-To: <20230215-sspp-scaler-version-v1-0-416b1500b85b@somainline.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 16 Feb 2023 04:57:56 +0200
-Message-ID: <CAA8EJpqeVkYyk-RxkODt2wyXy0fhvTgjs-5Ay8R3TV7ddU4zOw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] drm/msm/dpu: Drop unused qseed_type from catalog dpu_caps
+Date:   Thu, 16 Feb 2023 05:02:32 +0200
+Message-ID: <CAA8EJpqL-Vsq7dbK7tfJAGgg2_nV463QYv5zgvRLx_8T2bsXxA@mail.gmail.com>
+Subject: Re: [PATCH 0/3] drm/msm/dpu: Initialize SSPP scaler version (from
+ register read)
 To:     Marijn Suijten <marijn.suijten@somainline.org>
 Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -84,20 +85,48 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On Thu, 16 Feb 2023 at 01:02, Marijn Suijten
 <marijn.suijten@somainline.org> wrote:
 >
-> The SSPP scaler subblk is responsible for reporting its version (via the
-> .id field, feature bits on the parent SSPP block, and since recently
-> also from reading a register to supersede a read-but-unset version field
-> in the catalog), leaving this global qseed_type field logically unused.
-> Remove this dead code to lighten the catalog and bringup-overhead.
+> Random inspection of the SSPP code surfaced that the version field of
+> dpu_scaler_blk was never assigned in the catalog, resulting in wrong
+> codepaths to be taken within dpu_hw_setup_scaler3 based on a 0 version.
+> Rectify this by reading an accurate value from a register (that is not
+> equal to the values represented by DPU_SSPP_SCALER_QSEEDx enum
+> variants) and deleting dead code around QSEED versioning.
 >
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> Future changes should likely get rid of the distinction between QSEED3
+> and up, as these are now purely determined from the register value.
+> Furthermore implementations could look at the scaler subblk .id field
+> rather than the SSPP feature bits, which currently hold redundant
+> information.
+>
 > ---
+> Marijn Suijten (3):
+>       drm/msm/dpu: Read previously-uninitialized SSPP scaler version from hw
+>       drm/msm/dpu: Drop unused get_scaler_ver callback from SSPP
+>       drm/msm/dpu: Drop unused qseed_type from catalog dpu_caps
+
+The cleanup looks good. However as you are on it, maybe you can also
+add patch 4, dropping DPU_SSPP_SCALER_QSEED3LITE and
+DPU_SSPP_SCALER_QSEED4 in favour of using QSEED3 for all these
+scalers? As we are going to use scaler_version to distinguish between
+them, it would be logical not to duplicate that bit of information
+(not to mention all the possible troubles if scaler_version disagrees
+with the sblk->scaler_blk.id).
+
+>
 >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 12 ------------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  2 --
->  2 files changed, 14 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  4 ----
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c    | 12 ++++++++----
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h    |  9 +++------
+>  4 files changed, 11 insertions(+), 26 deletions(-)
+> ---
+> base-commit: 9d9019bcea1aac7eed64a1a4966282b6b7b141c8
+> change-id: 20230215-sspp-scaler-version-19f221585c5e
+>
+> Best regards,
+> --
+> Marijn Suijten <marijn.suijten@somainline.org>
+>
+
 
 -- 
 With best wishes
