@@ -2,164 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 372F26993CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 13:02:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04AA66993FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 13:12:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230460AbjBPMB6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 07:01:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46154 "EHLO
+        id S229956AbjBPMMe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 07:12:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230303AbjBPMBj (ORCPT
+        with ESMTP id S229889AbjBPMMc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 07:01:39 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DB3753575;
-        Thu, 16 Feb 2023 04:01:36 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31G50i77028938;
-        Thu, 16 Feb 2023 12:01:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=opMcAMDYXE/o6hcfbgMpGersLTG+F14oWJ+ziWyzw9M=;
- b=ElaANO0QYtIsS3r+TVIyPq8Z+ihePFPros8UvWNX61C9QXnErxakhodUYb8Bc350Khh+
- x6eAVQiKj9mCTxhUEHrFAa5LKCvATaOy8fOXu7Pf2j6MBiJdClwE5yoUqP1AP28w4PK3
- OSP24/Scp8qfY5rnOW5hq+5UfJMdOphESJtpIk3ayq6JJq+AyGKRj6XaLltJXXwDxtCG
- ji1tk6TsCuExk+sH5affoEbNBXnlO6P6qLZgGdN+deeOgyLPPAjn/7WgHkdt2PMxfG8/
- 7gZoYAKs+CFsACuXqPVsmue5QEWDeQgjWHZYHRvKuU2hNiRMsd0OH72JmYIt66MRVXyg bA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nrwckbdf1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 12:01:23 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31GC1MSE030157
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 12:01:22 GMT
-Received: from poovendh-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Thu, 16 Feb 2023 04:01:13 -0800
-From:   Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <shawnguo@kernel.org>, <arnd@arndb.de>,
-        <marcel.ziswiler@toradex.com>, <robimarko@gmail.com>,
-        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
-        <broonie@kernel.org>, <quic_gurus@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_devipriy@quicinc.com>
-Subject: [PATCH V5 5/5] firmware: scm: Modify only the DLOAD bit in TCSR register for download mode
-Date:   Thu, 16 Feb 2023 17:30:12 +0530
-Message-ID: <20230216120012.28357-6-quic_poovendh@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230216120012.28357-1-quic_poovendh@quicinc.com>
-References: <20230216120012.28357-1-quic_poovendh@quicinc.com>
+        Thu, 16 Feb 2023 07:12:32 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D9C6564B1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 04:12:27 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id cf42so2534171lfb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 04:12:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5xa1EgxIuknODW/uxmcnzw4VoWb0VoixqD9F/6r/2kI=;
+        b=mXTOhX8NwTDA23CAvJrkwEBGQd0MTwe9gvMrXRGiDSG/+UmqpW9kQ2WNH2pHckZ6bZ
+         iRfRvrbTih4mtqGcHEOrAcvpBJaECdgRC94rvROmmsMFZ0Xs1/X48yh6U7Wn1CgN6g/u
+         vqvjDE0AtOteACicAJnOEUmVwuaUNfff69Z0QH2NcMv5V/U+BJem3VB8mkb8VzFKSVFq
+         luGLNCl4UODo7yHQWGUDwLWCET5elF7YzuqtbCKREVWAbwhm9KyxnAdXsWd5bSCZkA3X
+         sYT6kyfYozkTg8MJs32xmJh6GRPNhpsAHayh/AJeDFsPMAUGNGOZtw2KlHND3VI0MrMW
+         hKZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5xa1EgxIuknODW/uxmcnzw4VoWb0VoixqD9F/6r/2kI=;
+        b=bhPvA5Pezon2IAh1/eT92cgDxx4EBJXVbLXH7D2UM9bqfn03f/NQIARi6rUXWSV6/M
+         O+bz/sDTjXYkba7Rukmy8WWP/4zu+0DDYeHhssWYRvjmu+BmZVQ3ZFVsLCRkrsOP8WNA
+         6bGiD6YBfC6hs6u7Iu1bmeqtd/Z63BaxsiCOToj2YtxEXQ78e9nVfNhcv2HTNietZGPf
+         /+nYGurnpQwf/O8xfdBsWUKaZK97HVb1bUEFFV9kH70Ep1RWLsxoBsuc4WoV6dO1PHaQ
+         rgNzmqRpE0ENN3OobURKHdrbpcrfb+tGf4BUWNcb9DlAVtKU5DvJUQSc0TBVNIGP09Zk
+         q97w==
+X-Gm-Message-State: AO0yUKWXEBs2hNBCvgCSk6u9ojb8VBBYWiIcsayL5lwwck16lzjyg9F+
+        BLhS8kOReeSLMLyawKwqu1DqfswV9OjE5Yt9
+X-Google-Smtp-Source: AK7set8gHz2zlSC0sGqYDh4zrURadOgNH0ueAYynB3wPhj/9oVZ9hQQtl4FxuuyOcRQ7u6nY9dkDMA==
+X-Received: by 2002:ac2:4908:0:b0:4cc:7a44:f05f with SMTP id n8-20020ac24908000000b004cc7a44f05fmr1523734lfi.31.1676549545029;
+        Thu, 16 Feb 2023 04:12:25 -0800 (PST)
+Received: from localhost.localdomain (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id l2-20020ac24302000000b004dc4b00a1f3sm278509lfh.253.2023.02.16.04.12.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Feb 2023 04:12:24 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Gene Chen <gene_chen@richtek.com>, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings usb: typec: rt1711h: Use a generic node name
+Date:   Thu, 16 Feb 2023 13:12:10 +0100
+Message-Id: <20230216121211.3964433-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -mdhW_9KDe4hvwefKfGFBerxm3NEfgtX
-X-Proofpoint-ORIG-GUID: -mdhW_9KDe4hvwefKfGFBerxm3NEfgtX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-16_08,2023-02-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- priorityscore=1501 bulkscore=0 phishscore=0 mlxlogscore=999 clxscore=1015
- impostorscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302160102
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-CrashDump collection is based on the DLOAD bit of TCSR register.
-To retain other bits, we read the register and modify only the DLOAD bit as
-the other bits have their own significance.
+Node names should be generic. Use typec-portc@ instead of rt1711h@.
 
-Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-Co-developed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+Fixes: a72095ed8e65 ("dt-bindings usb: typec: rt1711h: Add binding for Richtek RT1711H")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- Changes in V5:
-	- checking the return value in qcom_scm_set_download_mode function as
-	  suggested by Srinivas Kandagatla
+ Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
- Changes in V4:
-	- retain the orginal value of tcsr register when download mode
-	  is not set
-
- drivers/firmware/qcom_scm.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 468d4d5ab550..d88c5f14bd54 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -407,7 +407,7 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
- }
- EXPORT_SYMBOL(qcom_scm_set_remote_state);
+diff --git a/Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml b/Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml
+index 1999f614c89b..7431c25d82ce 100644
+--- a/Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml
++++ b/Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml
+@@ -17,6 +17,9 @@ description: |
+   support for alternative interfaces of the Type-C specification.
  
--static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
-+static int __qcom_scm_set_dload_mode(struct device *dev, u32 val, bool enable)
- {
- 	struct qcom_scm_desc desc = {
- 		.svc = QCOM_SCM_SVC_BOOT,
-@@ -417,7 +417,8 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
- 		.owner = ARM_SMCCC_OWNER_SIP,
- 	};
- 
--	desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
-+	desc.args[1] = enable ? val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
-+				val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE);
- 
- 	return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
- }
-@@ -426,15 +427,25 @@ static void qcom_scm_set_download_mode(bool enable)
- {
- 	bool avail;
- 	int ret = 0;
-+	u32 dload_addr_val;
- 
- 	avail = __qcom_scm_is_call_available(__scm->dev,
- 					     QCOM_SCM_SVC_BOOT,
- 					     QCOM_SCM_BOOT_SET_DLOAD_MODE);
-+	ret = qcom_scm_io_readl(__scm->dload_mode_addr, &dload_addr_val);
+ properties:
++  $nodename:
++    pattern: "^typec-portc@[0-9a-f]+$"
 +
-+	if (ret) {
-+		dev_err(__scm->dev,
-+			"failed to read dload mode address value: %d\n", ret);
-+		return;
-+	}
-+
- 	if (avail) {
--		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
-+		ret = __qcom_scm_set_dload_mode(__scm->dev, dload_addr_val, enable);
- 	} else if (__scm->dload_mode_addr) {
--		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
--				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
-+		ret = qcom_scm_io_writel(__scm->dload_mode_addr, enable ?
-+				dload_addr_val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
-+				dload_addr_val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE));
- 	} else {
- 		dev_err(__scm->dev,
- 			"No available mechanism for setting download mode\n");
+   compatible:
+     enum:
+       - richtek,rt1711h
+@@ -55,7 +58,7 @@ examples:
+       #address-cells = <1>;
+       #size-cells = <0>;
+ 
+-      rt1711h@4e {
++      typec-portc@4e {
+         compatible = "richtek,rt1711h";
+         reg = <0x4e>;
+         interrupts-extended = <&gpio26 3 IRQ_TYPE_LEVEL_LOW>;
 -- 
-2.17.1
+2.39.1
 
