@@ -2,161 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7461569912E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 11:29:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ED595699136
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 11:30:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230004AbjBPK3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 05:29:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35708 "EHLO
+        id S230025AbjBPKaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 05:30:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229986AbjBPK3c (ORCPT
+        with ESMTP id S230027AbjBPKaV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 05:29:32 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BE2E4DE08
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:29:30 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id a3so4056318ejb.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:29:30 -0800 (PST)
+        Thu, 16 Feb 2023 05:30:21 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33AD14DE08
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:30:02 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id j17so2213039lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:30:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a9siJVZPOFvTKH6qbA3a38sGnlXPDe1LlTNA0o2LihA=;
-        b=AOvDsJeMQqZAscWrOwd++yaSB5pWNZLC1DGXNJLb/EmImWJhlUMZh/QkrYMOlg3y/I
-         oEXtb+SGVQnabDf8ii3/Tn7mSwJ3zPd0kR1SLHubef7tJuVLg0e3tcxfaY0JiQ4Ipy3H
-         uakQnIYX1URDOmbeigKL/+zcyZYnovZNVdeMUVr2oMBRDjuwEqSHOoAdUr1EkIEdTK0C
-         kJ7N3abgfqkV/8QjHokp1cHgPeOE2uRrEB5DcrmKkZ6kFO1zmpLU74ch+PrPiBXh8PlH
-         qqMHG7SNU0S+sHMEfAmRlKVYLVk0wZsqWSDDGxaRgfcAD4Hz/k1coir4sAMlAOX0atXN
-         Ry0w==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AIiSyw9cDcFKGu9JiEWZhqoDuiISHZ5PB5xSHIIzqMI=;
+        b=Y+C1NRwyCeSwP2pWEBIAFBwKnvarVgwxp+NowE9shA8W18j5YmMnMJNmiWltbEBEFb
+         DXYsOb7nWHlVMfRNgNyA1R34RISlYa+77UP0wW/jhdZPnzUC6Dh6jCeZZniMvgh3RSVj
+         L3GyhVZFZlCl5q1+GWpPrC3tzscRcQZ2EhfklETZiyhMuVLBPuIgC5ZtQaweI4f6QnKj
+         66QjY91fT6NB3Fk6/BRf1ZBFE+fH3wZ/3hpf00NxfSwb3rzshX4OstmUkDE1QliJE+LA
+         Oa9UOyABzlm/6xHuC77g0KaX9Y16ahd5RuqomuVFyK8tpxbyfVwlmfjBAQefhxNbsF63
+         8uOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a9siJVZPOFvTKH6qbA3a38sGnlXPDe1LlTNA0o2LihA=;
-        b=bWKaU7P/4tWWnlVjgWjbjCFPB7iNeapqaWluYkjn7FYzagMKB8EaYftg+I05Hl8v9F
-         UTMTf6t2aigSIlGA4KQ9lxY1plwuCNiOCMC3x01sjm0aJpvW1g+c9XsPW5dHvOavS8UP
-         x5vQ0OEUVp/IOQ5c7h2jJMGvvV3zqW5/pmiI+PKFXczj82IXwiGvwmxdXKHRTw8nF2LV
-         /EDq1A9lKtNXCzdW2HFxYDGg6lAp3+rAog2fQcGFqfqM7e3iS8sDVI445b/tMFyllINa
-         j5r5spuOKw2s0fDP4HG83gMJzhgaM88Bc7fZSy6eBT7qBZP9yDhTnRz9KaYIZrlQ5Q1k
-         4yiA==
-X-Gm-Message-State: AO0yUKX/GFRwZQY6gkZwsMqgaS5BmfAPtfykDGIr73yFO3JIVSCVn4Ko
-        0Pmo8KpWodx1vzrYlXmuVsqDKw==
-X-Google-Smtp-Source: AK7set8Py/urVAnDtSVqOAA45n+CZn4wecDP3p27sIw8OB/YpmZIlVwbIdd7aUzHO+JP4miZ6M97dQ==
-X-Received: by 2002:a17:906:9f25:b0:8b1:2eef:154c with SMTP id fy37-20020a1709069f2500b008b12eef154cmr1592559ejc.0.1676543368620;
-        Thu, 16 Feb 2023 02:29:28 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id lf18-20020a170906ae5200b008af2b5cc1a2sm630463ejb.69.2023.02.16.02.29.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Feb 2023 02:29:28 -0800 (PST)
-Message-ID: <f883e857-1281-ceae-74ac-72a1f07d6413@linaro.org>
-Date:   Thu, 16 Feb 2023 11:29:24 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AIiSyw9cDcFKGu9JiEWZhqoDuiISHZ5PB5xSHIIzqMI=;
+        b=nmtqFekXl35loW/Z4EeFTVk6hXkYsiS2JpD3Xdo+Q4Ap6h2BgCxUbbmetPFzn9dckX
+         OswlD+P2Dru+tGDRa+XFR6BeJueoFMTwYSsNOOqWhkzMBYEJN7oAIO0A1YiLfoFQowt+
+         irGdzl+rqFqON9d3eP5HfwD8jOYHCFTh/IWwCh6FT1naLg+3wyhszpOQhzPWAxvvomoZ
+         Z1JiRDy+P/Wc7XShKI2ypQHWjQxlXkw3DTUmK3UdSOE8WqqXL3hjU2vsNhnF6Ez0vqnF
+         rJQeQPypwjoxYHLcjgMsVX6utIh2avwq7J8hBkdSyqAkF+zutE8Jx9d3kmCiiFkn+tMG
+         JRAg==
+X-Gm-Message-State: AO0yUKXk5A+6H10J5jgX9z/H6Cr5FgrzNGQGXBET4u5VD6Bm75M53Yx1
+        wguatXO/iO6GAWU9VwA+W78mH7WJuH8ojPPX
+X-Google-Smtp-Source: AK7set+AsBrPxK/iLXBU4CBCQGE5gMYcTd4JVJtj8eimPknD2U5P1kWnppbLIOylyikXZJ6IlAh6eA==
+X-Received: by 2002:ac2:4439:0:b0:4d8:6a30:fbd7 with SMTP id w25-20020ac24439000000b004d86a30fbd7mr1498333lfl.67.1676543399248;
+        Thu, 16 Feb 2023 02:29:59 -0800 (PST)
+Received: from localhost.localdomain (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id p2-20020a19f002000000b0048a9e899693sm248308lfc.16.2023.02.16.02.29.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Feb 2023 02:29:58 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] cpufreq: qcom-hw: Simplify counting frequency domains
+Date:   Thu, 16 Feb 2023 11:29:56 +0100
+Message-Id: <20230216102956.3933639-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 1/7] dt-bindings: PCI: qcom: Add IPQ9574 specific
- compatible
-Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, mturquette@baylibre.com,
-        sboyd@kernel.org, mani@kernel.org, p.zabel@pengutronix.de,
-        svarbanov@mm-sol.com, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-clk@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com
-References: <20230214164135.17039-1-quic_devipriy@quicinc.com>
- <20230214164135.17039-2-quic_devipriy@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230214164135.17039-2-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/02/2023 17:41, Devi Priya wrote:
-> Document the compatible for IPQ9574
-> 
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> ---
->  .../devicetree/bindings/pci/qcom,pcie.yaml    | 72 ++++++++++++++++++-
->  1 file changed, 70 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> index 872817d6d2bd..dabdf2684e2d 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> @@ -26,6 +26,7 @@ properties:
->            - qcom,pcie-ipq8064-v2
->            - qcom,pcie-ipq8074
->            - qcom,pcie-ipq8074-gen3
-> +          - qcom,pcie-ipq9574
->            - qcom,pcie-msm8996
->            - qcom,pcie-qcs404
->            - qcom,pcie-sa8540p
-> @@ -44,11 +45,11 @@ properties:
->  
->    reg:
->      minItems: 4
-> -    maxItems: 5
-> +    maxItems: 6
->  
->    reg-names:
->      minItems: 4
-> -    maxItems: 5
-> +    maxItems: 6
->  
->    interrupts:
->      minItems: 1
-> @@ -105,6 +106,8 @@ properties:
->      items:
->        - const: pciephy
->  
-> +  msi-parent: true
-> +
->    power-domains:
->      maxItems: 1
->  
-> @@ -173,6 +176,27 @@ allOf:
->              - const: parf # Qualcomm specific registers
->              - const: config # PCIe configuration space
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,pcie-ipq9574
-> +    then:
-> +      properties:
-> +        reg:
-> +          minItems: 5
-> +          maxItems: 6
-> +        reg-names:
-> +          minItems: 5
-> +          items:
-> +            - const: dbi # DesignWare PCIe registers
-> +            - const: elbi # External local bus interface registers
-> +            - const: atu # ATU address space
-> +            - const: parf # Qualcomm specific registers
-> +            - const: config # PCIe configuration space
-> +            - const: aggr_noc #PCIe aggr_noc
+For quite some time, this driver has been doing performing some
+quite low-level DT operations. Simplify that using
+platform_get_resource.
 
-Why last one is optional? I would assume device either has it or has not.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/cpufreq/qcom-cpufreq-hw.c | 28 ++++++----------------------
+ 1 file changed, 6 insertions(+), 22 deletions(-)
 
-
-Best regards,
-Krzysztof
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 2f581d2d617d..023a18c0886f 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -29,6 +29,8 @@
+ 
+ #define GT_IRQ_STATUS			BIT(2)
+ 
++#define MAX_FREQ_DOMAINS		3
++
+ struct qcom_cpufreq_soc_data {
+ 	u32 reg_enable;
+ 	u32 reg_domain_state;
+@@ -651,10 +653,9 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+ {
+ 	struct clk_hw_onecell_data *clk_data;
+ 	struct device *dev = &pdev->dev;
+-	struct device_node *soc_node;
+ 	struct device *cpu_dev;
+ 	struct clk *clk;
+-	int ret, i, num_domains, reg_sz;
++	int ret, i, num_domains;
+ 
+ 	clk = clk_get(dev, "xo");
+ 	if (IS_ERR(clk))
+@@ -681,24 +682,9 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Allocate qcom_cpufreq_data based on the available frequency domains in DT */
+-	soc_node = of_get_parent(dev->of_node);
+-	if (!soc_node)
+-		return -EINVAL;
+-
+-	ret = of_property_read_u32(soc_node, "#address-cells", &reg_sz);
+-	if (ret)
+-		goto of_exit;
+-
+-	ret = of_property_read_u32(soc_node, "#size-cells", &i);
+-	if (ret)
+-		goto of_exit;
+-
+-	reg_sz += i;
+-
+-	num_domains = of_property_count_elems_of_size(dev->of_node, "reg", sizeof(u32) * reg_sz);
+-	if (num_domains <= 0)
+-		return num_domains;
++	for (num_domains = 0; num_domains < MAX_FREQ_DOMAINS; num_domains++)
++		if (!platform_get_resource(pdev, IORESOURCE_MEM, num_domains))
++			break;
+ 
+ 	qcom_cpufreq.data = devm_kzalloc(dev, sizeof(struct qcom_cpufreq_data) * num_domains,
+ 					 GFP_KERNEL);
+@@ -762,8 +748,6 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+ 	else
+ 		dev_dbg(dev, "QCOM CPUFreq HW driver initialized\n");
+ 
+-of_exit:
+-	of_node_put(soc_node);
+ 
+ 	return ret;
+ }
+-- 
+2.39.1
 
