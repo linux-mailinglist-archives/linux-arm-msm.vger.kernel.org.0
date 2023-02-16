@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A982698D1E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 07:35:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44009698D32
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 07:38:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229487AbjBPGfr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 01:35:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40724 "EHLO
+        id S229715AbjBPGiu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 01:38:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbjBPGfq (ORCPT
+        with ESMTP id S229710AbjBPGis (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 01:35:46 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22D9141B50;
-        Wed, 15 Feb 2023 22:35:45 -0800 (PST)
+        Thu, 16 Feb 2023 01:38:48 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C98985FDA;
+        Wed, 15 Feb 2023 22:38:27 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B4B2861A1B;
-        Thu, 16 Feb 2023 06:35:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50420C433EF;
-        Thu, 16 Feb 2023 06:35:43 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 639B7B8254D;
+        Thu, 16 Feb 2023 06:38:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CEF8C433EF;
+        Thu, 16 Feb 2023 06:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1676529344;
-        bh=Y4GfQlxzKwZbc0WydlxWK4dEsOXa7BMquXaZxUfXd5U=;
+        s=korg; t=1676529505;
+        bh=kNdtRxIM5pqt8Li3tt+4uiXP2y+kdvnnJ6b3JMf16Xs=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=eXq4JXzM6NOSyHEZD/wWTDygA1Lp21jSkGgMc3yKGLtu10FTY1hwRxExaVou4vrnz
-         lLTxftZcN4ly8Bya8/VY+zR951hX4698mg3RebcNAGyIigevqSJrDeEEwd01iXeTfl
-         8iZuaZihwaLA3VVCAXI6y5UjVfztgl+BPqamx4MY=
-Date:   Thu, 16 Feb 2023 07:35:39 +0100
+        b=uMJYwEtd+tcbfzRi+M9XL5TC9XkZRFA1w1ONhD+G3ZcY2Xe8XuMMGDhmqpSjCGIGN
+         doHBY5sN2MOhDjZTv8S3R+4NJfdZH/JJMCG8CxsVhveug5EO3zu4aH03Pt0LT62xpw
+         7MjJHmk1oe4wpN8FQmXOwFqXoNU+aJTTqx3Da/ZA=
+Date:   Thu, 16 Feb 2023 07:38:21 +0100
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     Elliot Berman <quic_eberman@quicinc.com>
 Cc:     Alex Elder <elder@linaro.org>,
@@ -52,17 +52,16 @@ Cc:     Alex Elder <elder@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v10 13/26] gunyah: vm_mgr: Add ioctls to support basic
- non-proxy VM boot
-Message-ID: <Y+3Ou02LwsfS0TLl@kroah.com>
+Subject: Re: [PATCH v10 12/26] gunyah: vm_mgr: Add/remove user memory regions
+Message-ID: <Y+3PXRdbVFz/ErxW@kroah.com>
 References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212427.3316544-1-quic_eberman@quicinc.com>
+ <20230214212417.3315422-1-quic_eberman@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230214212427.3316544-1-quic_eberman@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+In-Reply-To: <20230214212417.3315422-1-quic_eberman@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,21 +69,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 14, 2023 at 01:24:26PM -0800, Elliot Berman wrote:
-> +	case GH_VM_SET_DTB_CONFIG: {
-> +		struct gh_vm_dtb_config dtb_config;
+On Tue, Feb 14, 2023 at 01:24:16PM -0800, Elliot Berman wrote:
+> 
+> When launching a virtual machine, Gunyah userspace allocates memory for
+> the guest and informs Gunyah about these memory regions through
+> SET_USER_MEMORY_REGION ioctl.
+
+It also frees memory, see below.  Why not document that?
+
+> +	case GH_VM_SET_USER_MEM_REGION: {
+> +		struct gh_userspace_memory_region region;
 > +
-> +		if (copy_from_user(&dtb_config, argp, sizeof(dtb_config)))
+> +		if (copy_from_user(&region, argp, sizeof(region)))
 > +			return -EFAULT;
 > +
-> +		dtb_config.size = PAGE_ALIGN(dtb_config.size);
-> +		ghvm->dtb_config = dtb_config;
+> +		/* All other flag bits are reserved for future use */
+> +		if (region.flags & ~(GH_MEM_ALLOW_READ | GH_MEM_ALLOW_WRITE | GH_MEM_ALLOW_EXEC |
+> +			GH_MEM_LENT))
+> +			return -EINVAL;
 
-Do you really mean to copy this tiny structure twice (once from
-userspace and the second time off of the stack)?  If so, why?
+Nice, thanks for validating that.
 
-And where are the values of the structure checked for validity?  Can any
-64bit value work for size and "gpa"?
+
+> +
+> +
+
+Nit, 2 blank lines are not needed :(
+
+
+> +		if (region.memory_size)
+> +			r = gh_vm_mem_alloc(ghvm, &region);
+> +		else
+> +			r = gh_vm_mem_free(ghvm, region.label);
+
+So if you set the size to 0 it is freed?  Wouldn't a separate ioctl make
+more sense?  Where is this logic documented to userspace?
 
 thanks,
 
