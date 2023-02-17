@@ -2,116 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1769E69A576
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 07:03:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53B2B69A5E9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 08:07:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229677AbjBQGDq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 01:03:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58484 "EHLO
+        id S229779AbjBQHHy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 02:07:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbjBQGDp (ORCPT
+        with ESMTP id S229516AbjBQHHw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 01:03:45 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94AA126CE1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 22:03:42 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 29C2EB82B21
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 06:03:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34A5C4339B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 06:03:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676613819;
-        bh=DywB9X931dYpzWP90TjnxeFMkF19ygIrzGTfPMEKafY=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=YOWJmcnlBsFDL9gNNYM/LYlCXcBMAXyYio/DTkqnrgD0LDHP+VhcKOasO6N7950E/
-         1RvEErPAKvYxjbztWowZ9BaUBJkUv1dbWKeXegZF9vqjECX0gLf7n73zZNUAKZifq5
-         BgG2sddKQHxACiSw2jQOw5/FzxY7DI/b+NMmcy41Gcbi2TeUwbH7sCUTMHk/77/kA1
-         Ft0vZFy73sW7aIbupTxE9tZ/mgTPNE6WmVtdBil55tVEpWHXE47M5j0fIDSsgSw7aG
-         CDNFqMs3X7ChMbDb2xMKvPm+/SLiVAob1cx/I71/2o3wgOymrKJUjRRPZj+xRq/fuB
-         M8j4xMQW7CRTA==
-Received: by mail-vs1-f48.google.com with SMTP id j40so2502091vsv.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 22:03:39 -0800 (PST)
-X-Gm-Message-State: AO0yUKU3kN9p8XDTw6zfHPH4bnlMyqfrFKZd5DNyFQdEt3arCwc8s8bz
-        mre2hK8YgemUK7z76ReabwvIBgRkjv0i+HlFQIQNoA==
-X-Google-Smtp-Source: AK7set/SNybjJrtBUBvHw30NMjPKdxhhc+qpYd8hMX85jaCVgzzyVI7eteev3ae0hkZtI8pnLd/QNthEqdKeTNaf3yk=
-X-Received: by 2002:a05:6102:209e:b0:3f9:ce06:90ff with SMTP id
- h30-20020a056102209e00b003f9ce0690ffmr1708242vsr.35.1676613818580; Thu, 16
- Feb 2023 22:03:38 -0800 (PST)
+        Fri, 17 Feb 2023 02:07:52 -0500
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A767E26CC3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 23:07:47 -0800 (PST)
+Received: by mail-lj1-x242.google.com with SMTP id r12so245347ljg.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 23:07:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DSwBYjZrNmln+ctA3/m+T2GVcsFUCJyV9W5bCg8FwVk=;
+        b=WDYC5mLgBgby4IkaIx/erhiX6pHvAGJfn8AJ4Fg/PsJDfzV1FccE5bSHlt/k0neWN+
+         5qavbew9Z52SAlMUJ96LibXdf5m1sH5ZOkRocvtrbl0TH3Xrmt/+XPkVPM59vvG1r+hn
+         HbDNb/N+2xr7ig+uN972FTzu6d3SEDZyRlEFzAp6pA2US89GZjl/hBOEG/IEJWigdGPt
+         Lst25/ZCiiIBlMlLrvVQVm+sR9pDzrACptLz81ApuVfu/gf+8sw7lo47LQefw6+eHJuV
+         yD5/EGCJghbXSuVjvEL6I2t+czet84cYRS2HZBLOMylaDln80DXMzGttG3vaQR6V8971
+         PI7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DSwBYjZrNmln+ctA3/m+T2GVcsFUCJyV9W5bCg8FwVk=;
+        b=TLOXBVOxWFZ1TuN1t+jz46aERHudSC3K7UO7vL7fHjfUWG3PdkN4rKXOrDS3gU/N/b
+         7lHSUBmXks1geccWNuKfJouz9kFR4rCD92MAIqOWD1MMQnjEk0l6f6suKWrexCRm1GzA
+         MRY7WTbHeAdhvVUXxbcStu25y//WD99JL3zEhyc9x++JUDNqGr1htrMKSw7ohe/EZLAc
+         KG3y8Td8pKoMc4aKcsJJw5XGL42IrvTZezmc1FmtvIut9d2exH+F0/bm6Oxw1kbc07Ua
+         UftT/uOPZ5VRRHMzsohDpfQOD/o+JkwxvqBOsc+FcEh840+uOt/XGvLajoM/BHY0v+2D
+         8XOg==
+X-Gm-Message-State: AO0yUKXcyu3EflN8ut6jYZhS3C9L6bpiFY6Qi1lB0ZcjQ83IocUxhhs0
+        PUxxetFAVU6tdwZTvX3ji7M5lg==
+X-Google-Smtp-Source: AK7set/tAqwu8sxy4AE7vnmKG3xqNcDOKRCF7xpzyi9Ted3sLXbDrbOLyQwAqOQnLDHo62Xv/Vt9tQ==
+X-Received: by 2002:a05:651c:b29:b0:290:7d15:464a with SMTP id b41-20020a05651c0b2900b002907d15464amr134730ljr.5.1676617665835;
+        Thu, 16 Feb 2023 23:07:45 -0800 (PST)
+Received: from [192.168.1.102] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id f2-20020a2e1f02000000b00294619d902dsm471489ljf.112.2023.02.16.23.07.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Feb 2023 23:07:44 -0800 (PST)
+Message-ID: <767e4d8d-b691-1849-71ac-5d6cefbb8d6a@linaro.org>
+Date:   Fri, 17 Feb 2023 09:07:43 +0200
 MIME-Version: 1.0
-References: <202302171138053231478@zte.com.cn>
-In-Reply-To: <202302171138053231478@zte.com.cn>
-From:   Amit Kucheria <amitk@kernel.org>
-Date:   Fri, 17 Feb 2023 11:33:27 +0530
-X-Gmail-Original-Message-ID: <CAHLCerPZ4JfWCNTOmkF9EYsVME2Z_EXY0uG9RchqPR+KOTwccQ@mail.gmail.com>
-Message-ID: <CAHLCerPZ4JfWCNTOmkF9EYsVME2Z_EXY0uG9RchqPR+KOTwccQ@mail.gmail.com>
-Subject: Re: [PATCH] thermal/drivers/tsens: Use devm_platform_ioremap_resource()
-To:     ye.xingchen@zte.com.cn
-Cc:     daniel.lezcano@linaro.org, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, thara.gopinath@gmail.com,
-        rafael@kernel.org, rui.zhang@intel.com,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.0.2
+Subject: Re: [PATCH v7 1/1] dma: qcom: bam_dma: Add support to initialize
+ interconnect path
+Content-Language: en-US
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     dmaengine@vger.kernel.org, agross@kernel.org,
+        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, thara.gopinath@gmail.com,
+        devicetree@vger.kernel.org, andersson@kernel.org,
+        bhupesh.linux@gmail.com, vkoul@kernel.org,
+        Rob Herring <robh@kernel.org>
+References: <20220921030649.1436434-1-bhupesh.sharma@linaro.org>
+ <20220921030649.1436434-2-bhupesh.sharma@linaro.org>
+ <a5b6255c-7282-32ed-8031-a4b841a78db7@linaro.org>
+ <CAH=2Ntw6XcyB2zy-cs35z3eOf8iTa28hGerhLndOgARrG05gJw@mail.gmail.com>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <CAH=2Ntw6XcyB2zy-cs35z3eOf8iTa28hGerhLndOgARrG05gJw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 17, 2023 at 9:08 AM <ye.xingchen@zte.com.cn> wrote:
->
-> From: Ye Xingchen <ye.xingchen@zte.com.cn>
->
-> Convert platform_get_resource(), devm_ioremap_resource() to a single
-> call to Use devm_platform_ioremap_resource(), as this is exactly
-> what this function does.
->
-> Signed-off-by: Ye Xingchen <ye.xingchen@zte.com.cn>
+On 2/17/23 06:00, Bhupesh Sharma wrote:
+> On Thu, 16 Feb 2023 at 19:49, Vladimir Zapolskiy
+> <vladimir.zapolskiy@linaro.org> wrote:
+>>
+>> On 9/21/22 06:06, Bhupesh Sharma wrote:
+>>> From: Thara Gopinath <thara.gopinath@gmail.com>
+>>>
+>>> BAM dma engine associated with certain hardware blocks could require
+>>> relevant interconnect pieces be initialized prior to the dma engine
+>>> initialization. For e.g. crypto bam dma engine on sm8250. Such requirement
+>>
+>> Apparently it's proven that the change description is incorrect, Qualcomm
+>> crypto engine is working fine on SM8250 and even more recent platforms,
+>> so far there is no obvious necessity in this change.
+> 
+> Since your v9 patchset produces no entry in $ cat /proc/crypto on
+> either RB5 (qrb5165) or (with an additional patch) on sm8150-mtp or
+> sa8115p-adp with the default arm64 defconfig with linux-next, I am not
+> sure we can conclude QCE is working with these changes.
 
-Acked-by: Amit Kucheria <amitk@kernel.org>
+Hopefully someone else can conclude it independently.
 
-> ---
->  drivers/thermal/qcom/tsens.c | 7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index 8020ead2794e..bfe7e4728cf0 100644
-> --- a/drivers/thermal/qcom/tsens.c
-> +++ b/drivers/thermal/qcom/tsens.c
-> @@ -876,7 +876,6 @@ int __init init_common(struct tsens_priv *priv)
->         void __iomem *tm_base, *srot_base;
->         struct device *dev = priv->dev;
->         u32 ver_minor;
-> -       struct resource *res;
->         u32 enabled;
->         int ret, i, j;
->         struct platform_device *op = of_find_device_by_node(priv->dev->of_node);
-> @@ -887,8 +886,7 @@ int __init init_common(struct tsens_priv *priv)
->         if (op->num_resources > 1) {
->                 /* DT with separate SROT and TM address space */
->                 priv->tm_offset = 0;
-> -               res = platform_get_resource(op, IORESOURCE_MEM, 1);
-> -               srot_base = devm_ioremap_resource(dev, res);
-> +               srot_base = devm_platform_ioremap_resource(op, 1);
->                 if (IS_ERR(srot_base)) {
->                         ret = PTR_ERR(srot_base);
->                         goto err_put_device;
-> @@ -906,8 +904,7 @@ int __init init_common(struct tsens_priv *priv)
->         }
->
->         if (tsens_version(priv) >= VER_0_1) {
-> -               res = platform_get_resource(op, IORESOURCE_MEM, 0);
-> -               tm_base = devm_ioremap_resource(dev, res);
-> +               tm_base = devm_platform_ioremap_resource(op, 0);
->                 if (IS_ERR(tm_base)) {
->                         ret = PTR_ERR(tm_base);
->                         goto err_put_device;
-> --
-> 2.25.1
+You may notice that v9 patchset series does not contain sm8150 specific
+changes, but sm8250 one (v9 11/14) is present, testing on RB5 is valid.
+
+> Please share more details on how you tested this.
+
+I do compile linux-next with v9 QCE series applied on top of it and run the
+kernel on RB5 board, there is nothing really complicated about it.
+
+If you missed it, the 'cryptobench benchmark' test etc. have been already
+described, please find it here:
+
+   https://lore.kernel.org/linux-crypto/731af3cf-6f18-caf9-ef65-ec73b0744ad9@linaro.org/
+
+--
+Best wishes,
+Vladimir
+
+>>> is passed on to the bam dma driver from dt via the "interconnects"
+>>> property. Add support in bam_dma driver to check whether the interconnect
+>>> path is accessible/enabled prior to attempting driver intializations.
+>>>
+>>> If interconnects are not yet setup, defer the BAM DMA driver probe().
+>>>
+>>> Cc: Bjorn Andersson <andersson@kernel.org>
+>>> Cc: Rob Herring <robh@kernel.org>
+>>> Signed-off-by: Thara Gopinath <thara.gopinath@gmail.com>
+>>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>>> [Bhupesh: Make header file inclusion alphabetical and use 'devm_of_icc_get()']
+>>> ---
+>>>    drivers/dma/qcom/bam_dma.c | 10 ++++++++++
+>>>    1 file changed, 10 insertions(+)
+>>>
+>>> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+>>> index 2ff787df513e..a5b0cf28ffb7 100644
+>>> --- a/drivers/dma/qcom/bam_dma.c
+>>> +++ b/drivers/dma/qcom/bam_dma.c
+>>> @@ -26,6 +26,7 @@
+>>>    #include <linux/kernel.h>
+>>>    #include <linux/io.h>
+>>>    #include <linux/init.h>
+>>> +#include <linux/interconnect.h>
+>>>    #include <linux/slab.h>
+>>>    #include <linux/module.h>
+>>>    #include <linux/interrupt.h>
+>>> @@ -394,6 +395,7 @@ struct bam_device {
+>>>        const struct reg_offset_data *layout;
+>>>
+>>>        struct clk *bamclk;
+>>> +     struct icc_path *mem_path;
+>>>        int irq;
+>>>
+>>>        /* dma start transaction tasklet */
+>>> @@ -1294,6 +1296,14 @@ static int bam_dma_probe(struct platform_device *pdev)
+>>>        if (IS_ERR(bdev->bamclk))
+>>>                return PTR_ERR(bdev->bamclk);
+>>>
+>>> +     /* Ensure that interconnects are initialized */
+>>> +     bdev->mem_path = devm_of_icc_get(bdev->dev, "memory");
+>>> +     if (IS_ERR(bdev->mem_path)) {
+>>> +             ret = dev_err_probe(bdev->dev, PTR_ERR(bdev->mem_path),
+>>> +                                 "failed to acquire icc path\n");
+>>> +             return ret;
+>>> +     }
+>>> +
+>>>        ret = clk_prepare_enable(bdev->bamclk);
+>>>        if (ret) {
+>>>                dev_err(bdev->dev, "failed to prepare/enable clock\n");
+>>
+>> I'm resurrecting the comments on this change to emphasize the observation
+>> that the change is not needed at all to run QCE.
+>>
+>> --
+>> Best wishes,
+>> Vladimir
