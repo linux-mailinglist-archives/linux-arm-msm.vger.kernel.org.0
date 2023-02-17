@@ -2,92 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA5E769B356
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 20:50:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 170DF69B365
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 20:53:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229553AbjBQTuc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 14:50:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34480 "EHLO
+        id S229531AbjBQTxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 14:53:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbjBQTub (ORCPT
+        with ESMTP id S229510AbjBQTxW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 14:50:31 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C8644FCA2;
-        Fri, 17 Feb 2023 11:50:29 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31HCcsIi011130;
-        Fri, 17 Feb 2023 19:50:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=DDzxof5IcVzLldI7GDtr6orQv7jtauqlTg374hNf258=;
- b=J1I9wcoWsNoCHPUw/T99krE+vM9Yl0vUe6jdsO+5fbZzNu8YBkwIrPmZxXZgLCkbxtPp
- QmL7iLiLfClTNQPRYUvU9UJRmrdv9ECdJZXydIvCRFr1DTyNPVrFNvuXXL7E+1kigZS8
- sJzNTmjsdfbt9495/qUlvVXFg+OwoGzF1g2sRCzEwJFTauiTGMOIX0LE0kQk40VsEu3v
- FeZT9SC36sWmSVLS+AR1VxgYCxfI1XwFal37Krt2Q3sMwGD9iQDJ7LJ09cJqo53CXMdi
- +4fOS2h7RJVxX85Pxq9OjAIkCe4qGHyJEHSJA8mOCw5JX5hzbNF+CvYIWGDGptLAXWVE nw== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nshe5mxvf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 17 Feb 2023 19:50:08 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31HJo7J9026503
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 17 Feb 2023 19:50:07 GMT
-Received: from [10.216.18.25] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 17 Feb
- 2023 11:49:57 -0800
-Message-ID: <38780d01-3e02-fd30-4c11-8cb307eeae4d@quicinc.com>
-Date:   Sat, 18 Feb 2023 01:19:54 +0530
+        Fri, 17 Feb 2023 14:53:22 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 339735DE3B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 11:53:21 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id d24so2914244lfs.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 11:53:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=L7sIAulZhUgPygW6MnTOAgMlvOTOg8Ujr1oDEU2lJx8=;
+        b=Wi6Cu7J4a//BgKEfeIJE17gxmy2M2bGyUHp7ZrhXTxzFYPfrDqrK8esYknWbKRXXPH
+         yB5Vz7KB74iwov1/YLACMIMNPa7zbUrVIFjNnUicSaD0t7lQx3uHIzo8PeMbDXQsPUQ5
+         4PCttj1LHQ3WUWY3SbFoupxTmyyLiu24rneOrIGg9s8wD8/ERmPF4AFg4t/1MQ6up5tP
+         kCoOJBQBZc8uwqA9DjnC+lPJ8rLCuaULG9tcHw1FDpXNjRmLzd7CVcqgV8OrsEmu9iPu
+         x6JFXDLDVhsLISPJ4hHJQD4o7A6pEWQTH68EeF02tQk6BpZMcz/UYI2rc3g2AyJhYZh0
+         Nefw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=L7sIAulZhUgPygW6MnTOAgMlvOTOg8Ujr1oDEU2lJx8=;
+        b=fzHqztJmSUTvdxgm0SnMXGpsGe1mVyw/quzNz4AtsTS2/EOyqTDyOvZAZA4+JcAlXO
+         Ojz+tEnzAQ98CCF1vJT/5Gs7EoVonFZYC8dhjLwNyyMYrWEG9HOT0+SmcSRTauCTuun1
+         dhG0JdOYU7cmnrWPgR1UeLKiPRBKjY///QZL785LIVX6OH88KljHQ0Ot7pVCzAoNEUGE
+         quJFuQd9inuwNBT0aKR7IjmG9WqoGxXTxMoyb9/yvMjdB4Ve4c1oC/mI9BPwdn7CPaxG
+         qVStl2ucxsZg0htUG53Eml8DzXm0OJ6hWkDGTuIsGe+pgIXLkmKuL0VAPWwBQJ39jgV4
+         RCWQ==
+X-Gm-Message-State: AO0yUKVkzUpj/qln6Wpf2AHGIGfXAkdRePURafIBarJNXow73Nzr6otn
+        DntqLL7ptYXKRGSzzNBrBLxPyg==
+X-Google-Smtp-Source: AK7set89ZDd3alQ67YDXx9kFoGlmkpHk7qLdQ/FCvCnnXKG4zCMrjHkau5cwTHHDBPyNeDFeoKb3EA==
+X-Received: by 2002:ac2:5e9d:0:b0:4b5:b06d:4300 with SMTP id b29-20020ac25e9d000000b004b5b06d4300mr33287lfq.29.1676663599425;
+        Fri, 17 Feb 2023 11:53:19 -0800 (PST)
+Received: from [192.168.1.101] (abxh184.neoplus.adsl.tpnet.pl. [83.9.1.184])
+        by smtp.gmail.com with ESMTPSA id d2-20020ac24c82000000b004db44dfd888sm772137lfl.30.2023.02.17.11.53.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Feb 2023 11:53:18 -0800 (PST)
+Message-ID: <3c205131-632a-6592-5dc0-82313b26e5f6@linaro.org>
+Date:   Fri, 17 Feb 2023 20:53:16 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH V5 5/5] firmware: scm: Modify only the DLOAD bit in TCSR
- register for download mode
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH v5 08/10] interconnect: qcom: msm8996: Specify no bus
+ clock scaling on A0NoC
 Content-Language: en-US
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-To:     Poovendhan Selvaraj <quic_poovendh@quicinc.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <shawnguo@kernel.org>, <arnd@arndb.de>,
-        <marcel.ziswiler@toradex.com>, <robimarko@gmail.com>,
-        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
-        <broonie@kernel.org>, <quic_gurus@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_devipriy@quicinc.com>
-References: <20230216120012.28357-1-quic_poovendh@quicinc.com>
- <20230216120012.28357-6-quic_poovendh@quicinc.com>
- <51bd93be-f8d3-a33c-18ad-ba4a331f2bcf@quicinc.com>
-In-Reply-To: <51bd93be-f8d3-a33c-18ad-ba4a331f2bcf@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HEPiM6rO7lmKJJLLDWAeOiU3MwhP2ynR
-X-Proofpoint-ORIG-GUID: HEPiM6rO7lmKJJLLDWAeOiU3MwhP2ynR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-17_14,2023-02-17_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- phishscore=0 clxscore=1015 priorityscore=1501 bulkscore=0 impostorscore=0
- mlxlogscore=999 spamscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302170173
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Evan Green <evgreen@chromium.org>,
+        Jun Nie <jun.nie@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230217-topic-icc-fixes-v5-v5-0-c9a550f9fdb9@linaro.org>
+ <20230217-topic-icc-fixes-v5-v5-8-c9a550f9fdb9@linaro.org>
+ <8c4f1cc8-c1f8-06b6-53fe-7507d74ca958@linaro.org>
+In-Reply-To: <8c4f1cc8-c1f8-06b6-53fe-7507d74ca958@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -96,128 +89,43 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 2/16/2023 7:30 PM, Mukesh Ojha wrote:
+On 17.02.2023 20:27, Konrad Dybcio wrote:
 > 
 > 
-> On 2/16/2023 5:30 PM, Poovendhan Selvaraj wrote:
->> CrashDump collection is based on the DLOAD bit of TCSR register.
->> To retain other bits, we read the register and modify only the DLOAD 
->> bit as
->> the other bits have their own significance.
+> On 17.02.2023 11:46, Konrad Dybcio wrote:
+>> A0NoC only does bus scaling through RPM votes and does not have any
+>> ICC clocks. Describe this.
 >>
->> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
->> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
->> Co-developed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
->> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
->> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >> ---
->>   Changes in V5:
->>     - checking the return value in qcom_scm_set_download_mode function as
->>       suggested by Srinivas Kandagatla
->>
->>   Changes in V4:
->>     - retain the orginal value of tcsr register when download mode
->>       is not set
->>
->>   drivers/firmware/qcom_scm.c | 21 ++++++++++++++++-----
->>   1 file changed, 16 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
->> index 468d4d5ab550..d88c5f14bd54 100644
->> --- a/drivers/firmware/qcom_scm.c
->> +++ b/drivers/firmware/qcom_scm.c
->> @@ -407,7 +407,7 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
->>   }
->>   EXPORT_SYMBOL(qcom_scm_set_remote_state);
->> -static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
->> +static int __qcom_scm_set_dload_mode(struct device *dev, u32 val, 
->> bool enable)
->>   {
->>       struct qcom_scm_desc desc = {
->>           .svc = QCOM_SCM_SVC_BOOT,
->> @@ -417,7 +417,8 @@ static int __qcom_scm_set_dload_mode(struct device 
->> *dev, bool enable)
->>           .owner = ARM_SMCCC_OWNER_SIP,
->>       };
->> -    desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
->> +    desc.args[1] = enable ? val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
->> +                val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE);
->>       return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
->>   }
->> @@ -426,15 +427,25 @@ static void qcom_scm_set_download_mode(bool enable)
->>   {
->>       bool avail;
->>       int ret = 0;
->> +    u32 dload_addr_val;
->>       avail = __qcom_scm_is_call_available(__scm->dev,
->>                            QCOM_SCM_SVC_BOOT,
->>                            QCOM_SCM_BOOT_SET_DLOAD_MODE);
->> +    ret = qcom_scm_io_readl(__scm->dload_mode_addr, &dload_addr_val);
->> +
->> +    if (ret) {
->> +        dev_err(__scm->dev,
->> +            "failed to read dload mode address value: %d\n", ret);
->> +        return;
->> +    }
->> +
->>       if (avail) {
->> -        ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
->> +        ret = __qcom_scm_set_dload_mode(__scm->dev, dload_addr_val, 
->> enable);
+> This is bad, as devm_clk_get_bulk{"", _optional} doesn't
+> check if num_clocks makes sense and passes "-1" down the
+> devres alloc chain..
 > 
-> Did you test this on a target where it comes under this if statement? 
-> does it really need to know dload_mode_addr for this target ?
+> I'll rework this for the next revision by simply assigning
+> the common "bus", "bus_a" set everywhere instead of relying
+> on it being there by default..
+Or maybe I shouldn't, as that will require redefining the array
+over and over again.. Perhaps just passing <&xo_board>, <&xo_board>
+to a0noc's "bus", "bus_a", similar to what's been done on SDM630's
+GNoC would be less messy?
 
-
-Can we do something like this? I would let other review as well.
-
---------------------------------------->0-------------------------------------------
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index cdbfe54..26b7eda 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -419,6 +419,7 @@ static void qcom_scm_set_download_mode(bool enable)
-  {
-         bool avail;
-         int ret = 0;
-+       u32 dload_addr_val;
-
-         avail = __qcom_scm_is_call_available(__scm->dev,
-                                              QCOM_SCM_SVC_BOOT,
-@@ -426,8 +427,16 @@ static void qcom_scm_set_download_mode(bool enable)
-         if (avail) {
-                 ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
-         } else if (__scm->dload_mode_addr) {
--               ret = qcom_scm_io_writel(__scm->dload_mode_addr,
--                               enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
-+               ret = qcom_scm_io_readl(__scm->dload_mode_addr, 
-&dload_addr_val);
-+               if (ret) {
-+                       dev_err(__scm->dev,
-+                               "failed to read dload mode address 
-value: %d\n", ret);
-+                       return;
-+               }
-+
-+               ret = qcom_scm_io_writel(__scm->dload_mode_addr, enable ?
-+                               dload_addr_val | 
-QCOM_SCM_BOOT_SET_DLOAD_MODE :
-+                               dload_addr_val & 
-~(QCOM_SCM_BOOT_SET_DLOAD_MODE));
-         } else {
-                 dev_err(__scm->dev,
-                         "No available mechanism for setting download 
-mode\n");
-
--Mukesh
+Konrad
 > 
-> -Mukesh
->>       } else if (__scm->dload_mode_addr) {
->> -        ret = qcom_scm_io_writel(__scm->dload_mode_addr,
->> -                enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
->> +        ret = qcom_scm_io_writel(__scm->dload_mode_addr, enable ?
->> +                dload_addr_val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
->> +                dload_addr_val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE));
->>       } else {
->>           dev_err(__scm->dev,
->>               "No available mechanism for setting download mode\n");
+> Konrad
+>>  drivers/interconnect/qcom/msm8996.c | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
+>> index 1a5e0ad36cc4..45eb8675fb11 100644
+>> --- a/drivers/interconnect/qcom/msm8996.c
+>> +++ b/drivers/interconnect/qcom/msm8996.c
+>> @@ -1817,6 +1817,7 @@ static const struct qcom_icc_desc msm8996_a0noc = {
+>>  	.type = QCOM_ICC_NOC,
+>>  	.nodes = a0noc_nodes,
+>>  	.num_nodes = ARRAY_SIZE(a0noc_nodes),
+>> +	.num_bus_clocks = -1, /* No bus clock scaling */
+>>  	.intf_clocks = a0noc_intf_clocks,
+>>  	.num_intf_clocks = ARRAY_SIZE(a0noc_intf_clocks),
+>>  	.has_bus_pd = true,
+>>
