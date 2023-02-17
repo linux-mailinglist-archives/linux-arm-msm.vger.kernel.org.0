@@ -2,121 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 78E8069A695
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 09:08:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B3CB69A6B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 09:15:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229570AbjBQIH6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 03:07:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43586 "EHLO
+        id S229684AbjBQIPD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 03:15:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229775AbjBQIHw (ORCPT
+        with ESMTP id S229505AbjBQIPD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 03:07:52 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08F515D3D5;
-        Fri, 17 Feb 2023 00:07:46 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31H7Jg3t010504;
-        Fri, 17 Feb 2023 08:07:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=6Uo3fDd/EIub4Kcl0EYseEQ8AVFKdTntS4QZgFBZh0o=;
- b=ev+XDbyxt9MX79LDr6TtAgiHO5njqNVBDr1mT+7MB5Xam9t9D1n0LgWS/2xf7kl0+t+q
- Noe9Wcncri9KEV48d9Mlst3hoVbg13uSKeM/xCdiSX2WUA3JJ0w0GezHFVmOfTVuKL/l
- aU1W9FGk46aKBF2UbX89WOMgXg3GoEYHEIh/w/9E/KhDJjtX53FQmyFuKnrOzSksKFE/
- 99qnaaZ/+FZHLSFmUXVp7BxhNAeH3E69BCyzEmobNJy58/ghKR0LnzNtGxUKVuw6K2d9
- MQ1DgqvUQdhA2x1X7mtWfY6IOTOO6P0sgqYu5DPo2acT1umwcD/wy18I63wig6c9hBjV WA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nt53br3qr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 17 Feb 2023 08:07:40 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31H87ddk028727
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 17 Feb 2023 08:07:39 GMT
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Fri, 17 Feb 2023 00:07:36 -0800
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mturquette@baylibre.com>
-CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>,
-        Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH V3] clk: qcom: ipq5332: mark GPLL4 as critical temporarily
-Date:   Fri, 17 Feb 2023 13:37:20 +0530
-Message-ID: <20230217080720.5206-1-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Fri, 17 Feb 2023 03:15:03 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 959A735AE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 00:15:01 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id r25so1222102wrr.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 00:15:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google; t=1676621700;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+UgwFxSgxIJILWARrs481ZAdhvNlwcsdh1EkJyq83tI=;
+        b=dkym0gOtjXISIIA2/js32L75SO6xjqrglvsxLv/RBeJiFim3ybeD/erVkoEv/wyia9
+         ce6kNP9RbzYLozqRABCQ9xLUWPjRoojC1Op+MdNAiAsb5plyH4qtBXI+tOl+n3qkncRC
+         jjlUcRunVW57kAfTHx4yN0tMmkLYGIqdCc/Hg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1676621700;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+UgwFxSgxIJILWARrs481ZAdhvNlwcsdh1EkJyq83tI=;
+        b=HG5VlRlfKx9KjTgdvZ5oQsfvdvCbG+lrR5vwu/QNak81rjfGzBa11ryvUVh+suwDOP
+         DiAeU442lJ9yde/2hQH3Hz29uqSDlMg2NpIMJPV25VGU6xsa1lb0YTketRNNnyZLW0ID
+         ArNiPekDReCG7C/JB4YfsiojWY59aAbJcLPqn4HDFn7Zw1+OiAmlh80ftReduWrqGqob
+         dO5c0jyOukvkuxETVT/jdlmgOaklQCQIWmTfnUQF3Q6v5BskDQHewoUsTmC3tWyof9+Z
+         OaZOksibaOTlxUP/DANGntXdoPj0LvarerRFX0RT7w22lyLuaQl+Ez7z5HtVIo0I+VSI
+         UN5A==
+X-Gm-Message-State: AO0yUKVuR7cGM0h6RWS8P0azPIld29o5gP1qez/pGVee7XW9/mjwux/e
+        o4Te7kLGf2vtWJGfv6wSD4zxdg==
+X-Google-Smtp-Source: AK7set/PS5/nY+BFhQH71PSQXsx7Wf1XHZSWVqvTIw/BCFEWkDz18d7IDx3eDBBtiLOZp1mWnvrAgA==
+X-Received: by 2002:a5d:438e:0:b0:2c5:8b8d:e5df with SMTP id i14-20020a5d438e000000b002c58b8de5dfmr3071212wrq.1.1676621699993;
+        Fri, 17 Feb 2023 00:14:59 -0800 (PST)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id a8-20020a5d5088000000b002c567881dbcsm3518647wrt.48.2023.02.17.00.14.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Feb 2023 00:14:59 -0800 (PST)
+Date:   Fri, 17 Feb 2023 09:14:52 +0100
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     Daniel Vetter <daniel@ffwll.ch>, neil.armstrong@linaro.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        David Airlie <airlied@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 2/2] gpu/drm/panel: Add Sony TD4353 JDI panel driver
+Message-ID: <Y+83fOHFK2qPXP1S@phenom.ffwll.local>
+Mail-Followup-To: Sam Ravnborg <sam@ravnborg.org>,
+        neil.armstrong@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        David Airlie <airlied@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230119163201.580858-1-konrad.dybcio@linaro.org>
+ <20230119163201.580858-2-konrad.dybcio@linaro.org>
+ <725a5727-fdde-e3ae-a448-2679c5c4c7f4@linaro.org>
+ <CAKMK7uFpc3Kg=Ym6ee_JTZo-0h2ig7Twtf2uwE7oV-1c6YRP=Q@mail.gmail.com>
+ <8ab061aa-a2fa-3070-a756-5682eb40a425@linaro.org>
+ <CAKMK7uHd7Lefc+ZjvuHtrttkQFYDF8XSsKUV2gfGs9=cw1GTKw@mail.gmail.com>
+ <Y+6UHxHaiF6Aw4du@ravnborg.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dvIaN0t9bkSWGucrAvxmlR08jsYL6oQP
-X-Proofpoint-GUID: dvIaN0t9bkSWGucrAvxmlR08jsYL6oQP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-17_04,2023-02-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 malwarescore=0 suspectscore=0 adultscore=0 impostorscore=0
- priorityscore=1501 phishscore=0 mlxlogscore=888 spamscore=0 clxscore=1015
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302170073
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y+6UHxHaiF6Aw4du@ravnborg.org>
+X-Operating-System: Linux phenom 5.19.0-2-amd64 
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Clock framework disables the GPLL4 source since there are no active users
-for this source currently. Some of the clocks initialized by the
-bootloaders uses the GPLL4 as the source. Due to this, when the GPLL4 is
-disabled by the clock framework, system is going for the reboot.
+On Thu, Feb 16, 2023 at 09:37:51PM +0100, Sam Ravnborg wrote:
+> On Thu, Feb 16, 2023 at 01:49:23PM +0100, Daniel Vetter wrote:
+> > On Thu, 16 Feb 2023 at 13:47, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+> > >
+> > > On 16/02/2023 13:32, Daniel Vetter wrote:
+> > > > On Thu, 16 Feb 2023 at 12:59, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> > > >>
+> > > >>
+> > > >>
+> > > >> On 19.01.2023 17:32, Konrad Dybcio wrote:
+> > > >>> From: Konrad Dybcio <konrad.dybcio@somainline.org>
+> > > >>>
+> > > >>> Add support for the Sony TD4353 JDI 2160x1080 display panel used in
+> > > >>> some Sony Xperia XZ2 and XZ2 Compact smartphones. Due to the specifics
+> > > >>> of smartphone manufacturing, it is impossible to retrieve a better name
+> > > >>> for this panel.
+> > > >>>
+> > > >>> This revision adds support for the default 60 Hz configuration, however
+> > > >>> there could possibly be some room for expansion, as the display panels
+> > > >>> used on Sony devices have historically been capable of >2x refresh rate
+> > > >>> overclocking.
+> > > >>>
+> > > >>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> > > >>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > > >>> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > > >>> ---
+> > > >> Are there any outstanding issues with this driver, or perhaps I did
+> > > >> not CC some important list? It has gotten very little activity ever
+> > > >> since its initial submission around Sept'22..
+> > > >
+> > > > Sam is usually picking up panel drivers these days, but maybe we need
+> > > > a bit more help in this area? If anyone from linaro has a handful of
+> > > > drm patches landed in upstream they could apply for drm-misc commit
+> > > > rights and help push these. I think linaro has lost a few of the
+> > > > drm-misc committers so things tend to be stuck a bit more :-/
+> > >
+> > > I usually wait for Sam to comment before applying my panel patches drivers to drm-misc-next,
+> > > but yeah panels would need some more help...
+> > >
+> > > If needed I can add myself to the panel drivers maintainance aswell.
+> > 
+> > I think that would be great, maybe just send out the MAINTAINERS patch
+> > and ask Sam to ack?
+> 
+> That would be great, and I am more than happy to ack it.
+> According to MAINTAINERS Thierry is the panel maintainer and I am reviewer.
+> So you should ask Thierry to ack it too.
 
-To avoid this, mark the GPLL4 as CRITICAL so that clock framework
-doesn't disable it. Once the users of this source is enabled, we can get
-rid of this flag.
-
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
-Changes in V3:
-	- Fixed the typo in the comment
-	- Used CLK_IGNORE_UNUSED instead of CLK_IS_CRITICAL
-
-Changes in V2:
-	- Added a comment in driver explaining the need of the flag
-
- drivers/clk/qcom/gcc-ipq5332.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
-index 9e4baea33937..bea1194b666a 100644
---- a/drivers/clk/qcom/gcc-ipq5332.c
-+++ b/drivers/clk/qcom/gcc-ipq5332.c
-@@ -128,6 +128,16 @@ static struct clk_alpha_pll gpll4_main = {
- 			.parent_data = &gcc_parent_data_xo,
- 			.num_parents = 1,
- 			.ops = &clk_alpha_pll_stromer_ops,
-+			/*
-+			 * There are no consumers for this GPLL in kernel yet,
-+			 * (will be added soon), so the clock framework
-+			 * disables this source. But some of the clocks
-+			 * initialized by boot loaders uses this source. So we
-+			 * need to keep this clock ON. Add the CRITICAL flag
-+			 * so the clock will not be disabled. Once the consumer
-+			 * in kernel is added, we can get rid of this flag.
-+			 */
-+			.flags = CLK_IGNORE_UNUSED,
- 		},
- 	},
- };
+Tbh with the commit right model the difference between reviewer/maintainer
+is kinda not there, and I think Thierry's entry simply goes back to the
+time drm-panel was still a separate git tree. But yeah more acks doesn't
+hurt.
+-Daniel
 -- 
-2.17.1
-
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
