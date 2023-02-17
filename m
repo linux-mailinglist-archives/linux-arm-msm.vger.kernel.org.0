@@ -2,79 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF22D69A79D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 09:58:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98C9A69A7A7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 10:00:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229743AbjBQI65 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 03:58:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34104 "EHLO
+        id S229978AbjBQJAg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 04:00:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbjBQI65 (ORCPT
+        with ESMTP id S229823AbjBQJAf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 03:58:57 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6584E604FC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 00:58:55 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id eg30so1431049edb.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 00:58:55 -0800 (PST)
+        Fri, 17 Feb 2023 04:00:35 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F27860A50
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 01:00:31 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id ee31so3178954edb.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 01:00:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=qs4gU72VHUNMPaZOm7nEODtbU0mJ0OdcIK2lIN68xlo=;
-        b=EunzvhkEUXQIZuBifghYhfX2/i2ffpXe+kAn9O9nV/EWtNPVhBw2kOBMqnRoiLGDjw
-         gxRp6z+zSIbe3JTaqvKqv/uflQneZuaXmXzMUdgfnF9EFm+j+3XKpU5OtE831H3Clnvi
-         uiYlcUYttBToyPQStxktVeVHo5lxzqJv5JzAFJ/FAmPB/E7gZdW0ENpeVDgo2bwkUroH
-         K+ukFLX/d5L0CAOAm7iOt9kc4uJg2dy/P/gsH1xcIXQkAW+2a8CbOLX1sP7hY2O71GtZ
-         /WRh9x+vBFKVplBnqdjWSOulIrEUiMtcms09vQMJrsq5m8866IEgZfezxR4T3CpDE/dW
-         9XMg==
+        bh=ekNOF1bkOZQJm/qVwvKNIt0dSpLOM3/k1DSdulZe8LY=;
+        b=u0R7xCkg647d+PdFtOjae2NNauQmSugx0nA2CnibFYJNb2TqRH6QZUxXuPoW5E5otf
+         5x0s6r74XqEw2i+BBZpbvEUD4m8tp3h0qZvZ5cSSKfpQnnaN/Q7Uo3IuuRs+Uo4NTXm2
+         sBXp8os91H2PSM7ZiKznGecqPLNTZwVOxTSeOdo3bHJlL1eb4l2+ds3nqHt5UjBKiYQu
+         dkL4a/Hj84gZjPHoMjW3gax2UOBzw6ME+5HKDVsqezuk2EF9oJAkCIPjky7SdhwrCbbp
+         dKFCpCwcljp/4D2fSuabF0pHcEChhlQr/Mudc4RVN7+XHddW94cgrRCtjdy8QqiLALLo
+         1N1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qs4gU72VHUNMPaZOm7nEODtbU0mJ0OdcIK2lIN68xlo=;
-        b=gd51UCFsf5waqOx6mpyYJQtrZRkbAJvuXsWuS/fBtzQlGDfiwQe/OKQU/dAZdMVtTx
-         dKOy43Xa1FrWuPZfxb9qUvvm4+UGvlqeJEl8/B4umSTFhrxZKjWmNulrtwkT+Y2uXfRz
-         27XSJzQriX1zxuoyiZe0+MaRccmPgZLBrTXOk9nfuFwIpTsMQ5W8ROKK16i8GjCevk/a
-         EwfFygdigjugfyYeV+vVjKUF7DUXVK1ZbpAlfVDzBQQek5q/1q1Tiyg/yqVzwVTkzYw3
-         TJ1BJDUHE25YbS9+FVlcGMKSmzFbSDGBgOiywBaIvypZM5ZmAeBVu7vyNp+RVsrnuTCZ
-         GJbQ==
-X-Gm-Message-State: AO0yUKUqofVMukQBoUMIva6txLHdrp30aiiS2J1RvkZoKCC1Un6hn/sm
-        ok2mrPE6gAjo+9Hzuz+4Fm596w==
-X-Google-Smtp-Source: AK7set8D5qS/zMbMErNjB8zzWJHf8Tn+NYft2qeWuFWehFZgyXd9JIBBN8/HkaD53f6LphX148o2/g==
-X-Received: by 2002:a17:907:76ad:b0:8b1:749f:b2c0 with SMTP id jw13-20020a17090776ad00b008b1749fb2c0mr3716140ejc.74.1676624333946;
-        Fri, 17 Feb 2023 00:58:53 -0800 (PST)
+        bh=ekNOF1bkOZQJm/qVwvKNIt0dSpLOM3/k1DSdulZe8LY=;
+        b=bZAjf2EDx/zZ38t/9BIPQDoOqYvOCGajWq7cKpQFS6xnGg6dOB8W/gE6g0O99CW2jH
+         fseHJvGKHVb0G8Emnkpzhm65KQNcV64QQZY+xvYTF9J/oJWZpfNLAcI1etX4NZV4iUsM
+         o6IqWtBYJfjlR5JtBDk7pNYW26TTy/xfPG/IxUru0z7eB0mgVGHJ8a/vrhOAcdeiQQZQ
+         7lxtexvO/ZFAru/HDPO5jjENwOPRSf5syUAf4y8kJMTeXl/A1rM3ZZiNNLY0EDssGfJy
+         V3KlvPA7Z7nvPetzxbQsksm4MtEjpY36o4jWgezgWzMtI6oJ01zPxsTiWiO/liRzOXuL
+         AE+Q==
+X-Gm-Message-State: AO0yUKWr/jhemkVSwRMUb9EuNRrl5n1tsVh05FX+nLxvbbkbZHDEp5dB
+        9mKzbzipnHzM4xE2z2KBytVH6g==
+X-Google-Smtp-Source: AK7set/ELRtrQY+LPmu6Ny5BmCpwfAgT22qZ3hPf7KIQmiUV5HJahas5slRjT0KhbQCmxe6/O4yovw==
+X-Received: by 2002:a17:906:f28b:b0:870:b950:18d4 with SMTP id gu11-20020a170906f28b00b00870b95018d4mr34213ejb.5.1676624429688;
+        Fri, 17 Feb 2023 01:00:29 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id t1-20020a17090616c100b008b13a1abadasm1852257ejd.75.2023.02.17.00.58.52
+        by smtp.gmail.com with ESMTPSA id gx10-20020a170906f1ca00b007ad69e9d34dsm1877582ejb.54.2023.02.17.01.00.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Feb 2023 00:58:53 -0800 (PST)
-Message-ID: <60d012ee-d511-81b7-dff3-7f01d947bdf7@linaro.org>
-Date:   Fri, 17 Feb 2023 09:58:51 +0100
+        Fri, 17 Feb 2023 01:00:29 -0800 (PST)
+Message-ID: <943daa4a-8101-d5fa-b38e-97aded3e3b4c@linaro.org>
+Date:   Fri, 17 Feb 2023 10:00:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v10 06/10] dt-bindings: qcom-qce: document optional clocks
- and clock-names properties
+Subject: Re: [PATCH] dt-bindings: display: msm: sm6115-mdss: Fix DSI
+ compatible
 Content-Language: en-US
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-References: <20230216131430.3107308-1-vladimir.zapolskiy@linaro.org>
- <20230216131430.3107308-7-vladimir.zapolskiy@linaro.org>
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230216131426.3996378-1-konrad.dybcio@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230216131430.3107308-7-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20230216131426.3996378-1-konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,19 +85,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/02/2023 14:14, Vladimir Zapolskiy wrote:
-> On newer Qualcomm SoCs the crypto engine clocks are enabled by default
-> by security firmware. To drop clocks and clock-names from the list of
-> required properties use 'qcom,sm8150-qce' compatible name.
+On 16/02/2023 14:14, Konrad Dybcio wrote:
+> Since the DSI autodetection is bound to work correctly on 6115 now,
+> switch to using the correct per-SoC + generic fallback compatible
+> combo.
 > 
-> The change is based on Neil Armstrong's observation and an original change.
-> 
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
+> Depends on (and should have been a part of):
+> 
+> https://lore.kernel.org/linux-arm-msm/20230213121012.1768296-1-konrad.dybcio@linaro.org/
+>  .../devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml     | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
+> index 2491cb100b33..146d3e36d1c9 100644
+> --- a/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
+> @@ -40,7 +40,9 @@ patternProperties:
+>      type: object
+>      properties:
+>        compatible:
+> -        const: qcom,dsi-ctrl-6g-qcm2290
+> +        items:
+> +          - const: qcom,sm6115-dsi-ctrl
+> +          - const: qcom,mdss-dsi-ctrl
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+You should rather keep old compatible as deprecated (so oneOf with two
+options - items and const with deprecated).
 
 Best regards,
 Krzysztof
