@@ -2,112 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3D9669AB6B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 13:24:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF39269AC12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 14:04:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230074AbjBQMYx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 07:24:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60312 "EHLO
+        id S229960AbjBQNEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 08:04:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229785AbjBQMYw (ORCPT
+        with ESMTP id S229874AbjBQNEh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 07:24:52 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B07EE49898
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 04:24:51 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id ec30so3845194edb.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 04:24:51 -0800 (PST)
+        Fri, 17 Feb 2023 08:04:37 -0500
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F57C5ECB2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 05:04:36 -0800 (PST)
+Received: by mail-io1-xd2c.google.com with SMTP id m64so821446ioa.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 05:04:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=DRkSEUhCAUqv74wpKQpFMHAHpDnDB3DUCdgSs3cTD7U=;
-        b=yrhtxWaVZlsZz8EAYHhKo7z7Qcf1xkV9vdz92vZLkg1+ezMyi9xaXJaWg/95UNi0wo
-         RnfgOOSDKqYPcyICelGJD3NSH50xT9pbF0cS5bi89GeBAyl2U3Ju/+apjBqUMRMiKkom
-         HARKsLb0z+pRqvzxeNzxDsyfRLuDWLcT7nGxjWtIhSquM9eBU6u5W3QuSJCIAwAl1AM4
-         ZHSht6gdaLYv6YFVaF20yHxTVg52ihws/Ad/snpohhc6ZqWmtaT+WXlPsIhNPsoZs9AK
-         ouTrvhYfy1IuV/5WWYkQHEhdp9mxPgkK2XtsL9q0+J65UjkmWbdQY/m9Y275kq43JDWY
-         a0nw==
+        bh=wdl/SpUPlb/U52R7GvMwyRHh/0Baz6rZpVw8VtW8CnQ=;
+        b=XpmbE8Irs3q7xMve6YGTddAjYQxNxTlEKNZkeSOUkHC/u1WyXxgAd0f+75xOrYdnQo
+         uXSLCIvn4acIKl7S1dpPjIHVqX9oXnnjMB2iHR51KL2+Fsjem2FQyeWgCOreTxgEL3wh
+         hoErY9eHUDB16pBxN44JRqhs1iS7w5VW6bFr2rt9h4d8cEBv367+8L/cNJph4tcuQHi1
+         zV8LGS1iJ57U5qAujkFVWZtB25CCBbyWNlSRwRxi9irSP9CO0EXlcavzUzbcvaoExEhW
+         KP9NkHblbe8yj7OvX9F54kt3WCmea9+z4HVsMtIoJBqMAin5RQeUPMlpUAGtfuhy7W6S
+         oSjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DRkSEUhCAUqv74wpKQpFMHAHpDnDB3DUCdgSs3cTD7U=;
-        b=Ixh6A22+bWcvQ/Lji4kE3JMMQ6TJGw8h/GntkelLFzUW7N3nWgiJ0jBNHLTaQ97w4D
-         98Pc4KxVNvdCU5xR70ITH6eL/lt/zabSUMISqN67jL08AcnQikzIn/GxqevM3rCbNlAh
-         i3Xdt73GTB0kO6vYmQhsvfoMRH5uM4n/XzXYZMjMoHy3MpBleqWQL4/T0gn8Y0s0AVhw
-         WuLi9enZt5Jjqvo/QJsDXe3MdlW0yEWulDjS4npWSONsflCcfmnwnN3n5uMsoRpr8QYM
-         PMXaa+CcbHqijf4LW4ucnLMhBr+Feyx7b7FE1F0SUe9pjiUs3twgUwpLwKsNzrvNhVoP
-         B+5g==
-X-Gm-Message-State: AO0yUKUatD8Aj/SZv8GvgX/SbQaauzMirTh4mSIadQu1gwZshGSDfHVT
-        OTqeMECNsLqY88Frn1ZqmZd4+w==
-X-Google-Smtp-Source: AK7set/DBCXPYASdQ2V+puV5InoxI88AENgUj/1Lry6p1oLbNzI4+03pYsQYxh01xdrYlB9uSD988g==
-X-Received: by 2002:a17:906:a451:b0:86f:fbcf:f30a with SMTP id cb17-20020a170906a45100b0086ffbcff30amr11172660ejb.58.1676636690249;
-        Fri, 17 Feb 2023 04:24:50 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id n11-20020a170906688b00b008b13a8ec56asm2074181ejr.110.2023.02.17.04.24.48
+        bh=wdl/SpUPlb/U52R7GvMwyRHh/0Baz6rZpVw8VtW8CnQ=;
+        b=u2whCrFfneMf7Jq7BUvYsb2DnDJ2XGnZvOKOAKrQsB/HT1gLWSHGsWVcFyn+X+izxh
+         eGq3mHlluK6zJR+4G8ZfeGzwZ9DEl+00ofOl8YFXpRp4hQS0neoTkPQB2StzEjLMryR7
+         vD4E7XQMl/nDSMOxdEikGmtgIg+iTToSpysoOFwZr9WuTDF0JXZk3XR8NdjPnMfvR43T
+         iyGNWO2Z9UqmCF+ksTKd+xGE09LOZ311ZGVWX1wh50WsmbeuiD6N2YkTRKuuvMtDl1cY
+         GZHsSoiwFt3r3Fnzm5sIPDP/iId+Qi+lTdR2FJa8o4YfXKmzj3hhrnv4iXasimiVZiWY
+         r5RA==
+X-Gm-Message-State: AO0yUKU5IONjcZV8bWQpGx4NjbeOUzhVA529VvOHknKEYKoMvQAYGgbw
+        AInUI/Mq0C5tbXsf2HsJkgjWNg==
+X-Google-Smtp-Source: AK7set+jE0uAmbggiM6MP/n4LRSqM7MGZwFBMs6Z7+7XtogVNAj4ucU8FAZ4Byr33K6z0uVOGk8ONg==
+X-Received: by 2002:a5e:d801:0:b0:71f:c924:69ba with SMTP id l1-20020a5ed801000000b0071fc92469bamr802567iok.19.1676639075679;
+        Fri, 17 Feb 2023 05:04:35 -0800 (PST)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id g4-20020a6be604000000b0074555814e73sm1022471ioh.32.2023.02.17.05.04.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Feb 2023 04:24:49 -0800 (PST)
-Message-ID: <48cb00cd-961c-b72f-fba8-1842d658e289@linaro.org>
-Date:   Fri, 17 Feb 2023 13:24:47 +0100
+        Fri, 17 Feb 2023 05:04:35 -0800 (PST)
+Message-ID: <a919afca-d33e-618d-5db3-17a08d90e8af@linaro.org>
+Date:   Fri, 17 Feb 2023 07:04:33 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v2 1/2] dt-bindings: display/msm: dsi-controller-main: Fix
- deprecated QCM2290 compatible
+Subject: Re: [PATCH net-next 2/6] net: ipa: kill gsi->virt_raw
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230217111316.306241-1-konrad.dybcio@linaro.org>
- <c49904be-d842-fc12-a443-17f229d53166@linaro.org>
- <a4eaccfd-34ba-15f3-033f-165b46c43317@linaro.org>
- <a158bca2-78bf-5b38-60fe-88118e8b4ad7@linaro.org>
- <ab35cdcf-53ae-a3f2-fc08-d0f58c51a0ae@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ab35cdcf-53ae-a3f2-fc08-d0f58c51a0ae@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Alexander Lobakin <aleksander.lobakin@intel.com>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, caleb.connolly@linaro.org, mka@chromium.org,
+        evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230215195352.755744-1-elder@linaro.org>
+ <20230215195352.755744-3-elder@linaro.org>
+ <b0b2ae77-3311-34c8-d1a2-c6f30eca3f1e@intel.com>
+ <c76bbb06-b6b0-8dae-965f-95e8af3634b6@linaro.org>
+ <4c92160f-b2ea-c5ef-5647-6078ab47e518@intel.com>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <4c92160f-b2ea-c5ef-5647-6078ab47e518@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/02/2023 12:36, Konrad Dybcio wrote:
->>>
->>> compatible = "qcom,dsi-ctrl-6g-qcm2290";
->>> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/sm6115.dtsi?h=next-20230217#n1221
+On 2/17/23 5:57 AM, Alexander Lobakin wrote:
+>>> just devm_platform_ioremap_resource_byname() be used here for simplicity?
+>> Previously, virt_raw would be the "real" re-mapped pointer, and then
+>> virt would be adjusted downward from that.  It was a weird thing to
+>> do, because the result pointed to a non-mapped address.  But all uses
+>> of the virt pointer added an offset that was enough to put the result
+>> into the mapped range.
 >>
->> I meant, that original commit wanted to deprecate:
->> compatible="qcom,dsi-ctrl-6g-qcm2290";
->> compatible="qcom,mdss-dsi-ctrl";
->>
-> Okay, so what would be the correct resolution?
-> Drop this patch and keep 2/2?
+>> The new code updates all offsets to account for what the adjustment
+>> previously did.  The test that got removed isn't necessary any more.
+> Yeah I got it, just asked that maybe you can now use
+> platform_ioremap_resource_byname() instead of
+> platform_get_resource_byname() + ioremap() :)
 
-First, it would be nice to know what was the intention of Bryan's commit?
+Sorry, I focused on the "devm" part and not this part.
+Yes I like that, but let me do that as a follow-on
+patch, and I think I can do it in more than this
+spot (possibly three, but I have to look closely).
 
-Second, if the intention was to deprecate both of these, then this
-commit could stay with changes - make it enum for both compatibles (not
-list).
+Thanks.
 
-Best regards,
-Krzysztof
+					-Alex
+
 
