@@ -2,95 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD11069B068
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 17:15:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 215D069B148
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 17:45:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230469AbjBQQPr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 11:15:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44574 "EHLO
+        id S229598AbjBQQps (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 11:45:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231208AbjBQQP2 (ORCPT
+        with ESMTP id S229591AbjBQQps (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 11:15:28 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5FC77119B;
-        Fri, 17 Feb 2023 08:14:52 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31H6rAd0009536;
-        Fri, 17 Feb 2023 16:14:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=HhnZfmCLymwdEGX0RzKZobcjIkAv4CU0zR4Kz/xuDtM=;
- b=nqsXO8EN9IoMxNdWD+8i0ewprDxHwEs6tnaN722bbabHEAty+5DAvYj2RszWCp7RiKnb
- IOv5Ehrg1f9lW/uQ6W0mtMY3WmIJ39X9ATvHy/yStyMmtIJ35wPI80hyHLG/3flShYQq
- U28XiIEn+exyk9QSKjThhdzZBF/RfF6vWuzbmBQiHlQ/sWsbJC7bfZ1uP6xNXa/XhPao
- 0YGAmYljtJyndwkYei6fhUQvNAYJlnzwG9u0TiQTGQrKrVK4qy7H+EI7D6Blt3+6/0fz
- GnqFKH/2kjLmvbWaYyiZ8AnaLFD/7fuEM6z3rQfRgiRYTH4R5zrU9iTR170/VF5BZP9O aA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nsxe7tcnu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 17 Feb 2023 16:14:42 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31HGEf1t030901
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 17 Feb 2023 16:14:41 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 17 Feb
- 2023 08:14:40 -0800
-Message-ID: <e47d2113-cde3-3e65-a132-391b7c314d5e@quicinc.com>
-Date:   Fri, 17 Feb 2023 09:14:40 -0700
+        Fri, 17 Feb 2023 11:45:48 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D27192680
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 08:45:45 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id r28so1753880ljk.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 08:45:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OVlcR3h6+h36cZzj9rEe6pSxdR36N6jX3gc7PvYzj0U=;
+        b=g/D55bpcstBNEWJe4ZZN0oCCrZXGUZc39w28Wo1J70cOKSlzqcuF95vXBiIfqFbzyz
+         M1e0rjjbN2qqmOA7RBc3SQzhPW5VVbGih2FyIADP07b4Q9T5ol2olkAmRoapS4lWX6i+
+         VBjh7CJXGSNoNvi3P4ZBVxkZ+tTypF1rhQ1ftPnBJRXeWYpC+i/8BiUjJWlFBDdG7z/r
+         FWDdZ9yUZFNhtSy9QKtEvKbEConUso3VnmXYDUch45HeWNM+7m6uLz1HdfeyvWHakQcm
+         G5Ji4+r1mVOK1BmcwmbfcNXoTPv9i+dU91NfHhMM+e09s1g8N57SiAezhDA0lu7PDzCE
+         kJ8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OVlcR3h6+h36cZzj9rEe6pSxdR36N6jX3gc7PvYzj0U=;
+        b=c7uarTyi6uylZMSqii4NwMuGmMk/dQctlnAxKV2PJTTQeb7EixDaoz0xC1k4+YbcPi
+         wjIPExY0Iy9q6NHfvkoO/AI5NsmQuu1DkV1s3zbnxb8F7TCMQMvrL4mj47gFew+j7bY9
+         oBHXu5Ml2fmrbsx9xihktlKVAXSDd0Va1vhqnwVlyWDebT/MEZYIUaMDKgD/sLHmws3F
+         Zxb3wRXVL0QGSTqI79+tp31xc2WBvgrUa8jNu3P3CRw4wm14n/tixHgoTIFOJTZq6xN/
+         17PCf59/74+zfHQC/KPxSgtPvfPLpOyJz8Z8WSOfPSKLb4WarFD4EMkbG8hJ8OWsTrRV
+         S3cw==
+X-Gm-Message-State: AO0yUKWChReyAswSYJp8ZEGn5tsOhvs31/u+ur0RdoiqoxOnlDeXbkbK
+        f8qruAgNSzNJ6VOXbkvRbhGg8g==
+X-Google-Smtp-Source: AK7set+skClcydzZ68kU5ppwSH5SYKJp+n6Ctbk4vNZZbeZvDfNOZRJttcRlKzdd4zgNA5n2qwmTQQ==
+X-Received: by 2002:a2e:b4a1:0:b0:293:45b9:d188 with SMTP id q1-20020a2eb4a1000000b0029345b9d188mr301607ljm.41.1676652344003;
+        Fri, 17 Feb 2023 08:45:44 -0800 (PST)
+Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id h4-20020a2e3a04000000b0028bcc644e95sm619189lja.60.2023.02.17.08.45.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Feb 2023 08:45:43 -0800 (PST)
+Message-ID: <10c022fa-6400-bc15-12b7-11453bc3eb43@linaro.org>
+Date:   Fri, 17 Feb 2023 17:45:42 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v2 0/8] QAIC accel driver
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sc7280: align RPMh regulator nodes
+ with bindings
 Content-Language: en-US
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-To:     <ogabbay@kernel.org>, <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <dri-devel@lists.freedesktop.org>
-CC:     <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_ajitpals@quicinc.com>, <quic_pkanojiy@quicinc.com>,
-        <stanislaw.gruszka@linux.intel.com>, <quic_carlv@quicinc.com>,
-        <jacek.lawrynowicz@linux.intel.com>
-References: <1675698105-19025-1-git-send-email-quic_jhugo@quicinc.com>
- <d1074659-8b6a-0756-9cd6-23a9ddc604d8@quicinc.com>
-In-Reply-To: <d1074659-8b6a-0756-9cd6-23a9ddc604d8@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230217155838.848403-1-krzysztof.kozlowski@linaro.org>
+ <20230217155838.848403-3-krzysztof.kozlowski@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230217155838.848403-3-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: aWE76DyEaZRMJM3eKXrWn2i4de8RN2sE
-X-Proofpoint-ORIG-GUID: aWE76DyEaZRMJM3eKXrWn2i4de8RN2sE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-17_10,2023-02-17_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 phishscore=0 adultscore=0 spamscore=0 suspectscore=0
- malwarescore=0 mlxlogscore=777 impostorscore=0 mlxscore=0
- priorityscore=1501 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2302170144
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/8/2023 3:01 PM, Jeffrey Hugo wrote:
-> On 2/6/2023 8:41 AM, Jeffrey Hugo wrote:
->> Regarding the open userspace (see the documentation patch), the UMD and
->> compiler are a week or so away from being posted in the indicated repos.
->> Just need to polish some documentation.
+
+
+On 17.02.2023 16:58, Krzysztof Kozlowski wrote:
+> Device node names should be generic and bindings expect certain pattern
+> for RPMh regulator nodes.
 > 
-> An update to this, the compiler is now live on github at the link 
-> specified in the documentation patch.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-The UMD is now posted.
-
--Jeff
+Konrad
+> 
+> I was fixing these in other boards, but missed SC7280. Previous
+> (applied) set:
+> https://lore.kernel.org/r/20230127114347.235963-4-krzysztof.kozlowski@linaro.org
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts        | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dts           | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi          | 4 ++--
+>  arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi        | 4 ++--
+>  5 files changed, 7 insertions(+), 7 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> index 1185141f348e..afae7f46b050 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> @@ -27,7 +27,7 @@ chosen {
+>  };
+>  
+>  &apps_rsc {
+> -	pmg1110-regulators {
+> +	regulators-2 {
+>  		compatible = "qcom,pmg1110-rpmh-regulators";
+>  		qcom,pmic-id = "k";
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> index 4e0b013e25f4..df39a64da923 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> @@ -40,7 +40,7 @@ vreg_edp_bl_crd: vreg-edp-bl-crd-regulator {
+>  /* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
+>  
+>  &apps_rsc {
+> -	pmg1110-regulators {
+> +	regulators-2 {
+>  		compatible = "qcom,pmg1110-rpmh-regulators";
+>  		qcom,pmic-id = "k";
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> index ba64316b4427..15222e92e3f5 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> @@ -25,7 +25,7 @@ chosen {
+>  };
+>  
+>  &apps_rsc {
+> -	pmr735a-regulators {
+> +	regulators-2 {
+>  		compatible = "qcom,pmr735a-rpmh-regulators";
+>  		qcom,pmic-id = "e";
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> index 8b5293e7fd2a..8ebcf763b3c7 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> @@ -184,7 +184,7 @@ codec {
+>  };
+>  
+>  &apps_rsc {
+> -	pm7325-regulators {
+> +	regulators-0 {
+>  		compatible = "qcom,pm7325-rpmh-regulators";
+>  		qcom,pmic-id = "b";
+>  
+> @@ -279,7 +279,7 @@ vreg_l19b_1p8: ldo19 {
+>  		};
+>  	};
+>  
+> -	pm8350c-regulators {
+> +	regulators-1 {
+>  		compatible = "qcom,pm8350c-rpmh-regulators";
+>  		qcom,pmic-id = "c";
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+> index 88204f794ccb..cb0cc2ba2fa3 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+> @@ -87,7 +87,7 @@ &apps_rsc {
+>  	 * are left out of here since they are managed elsewhere.
+>  	 */
+>  
+> -	pm7325-regulators {
+> +	regulators-0 {
+>  		compatible = "qcom,pm7325-rpmh-regulators";
+>  		qcom,pmic-id = "b";
+>  
+> @@ -188,7 +188,7 @@ vreg_l19b_1p8: ldo19 {
+>  		};
+>  	};
+>  
+> -	pm8350c-regulators {
+> +	regulators-1 {
+>  		compatible = "qcom,pm8350c-rpmh-regulators";
+>  		qcom,pmic-id = "c";
+>  
