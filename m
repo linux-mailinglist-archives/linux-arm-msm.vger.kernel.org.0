@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BD4569B41E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 21:46:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B04569B437
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 21:51:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229755AbjBQUqK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 15:46:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39238 "EHLO
+        id S229593AbjBQUvm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 15:51:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbjBQUqJ (ORCPT
+        with ESMTP id S229551AbjBQUvl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 15:46:09 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C75353EE9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 12:46:08 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id d24so3067695lfs.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 12:46:08 -0800 (PST)
+        Fri, 17 Feb 2023 15:51:41 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4DB05F24D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 12:51:39 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id x4so2919385lfq.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 12:51:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=HX6LMtgxWzl0HpAIUmDAdBT71Qg8jqovVsS10cR9zuw=;
-        b=S1vNlmjor4Xn+dLV7bSsOJktaKJUvBJQh69BX+xsD338LswqnshVx0NU8/CXqUseuL
-         NYG6NnTI8T9Qk+rVaKafZvahg+OsMYIdrFvS3P6BvXPB97YcNBfyZzSWp1aVHe8PRX4U
-         c8tk6TBtYPLpoSEGP370cI7HSxj5ZOFfWZAJ6bNpZKsQkKPYP9oMz7nehEr5scuL1pEI
-         q0qK9Gc8Sl2EuoDRdO/YUjsIeZY/k3cgeX+VBUxSHxNm0sMJKa+wZk5zX6BhevvMBaaA
-         1I+iQmoipwSG6REo8n0D3A38U9ZNsT9Y9wkIpKlu8n27gbSxNj1gDb+6idpr6UlMDexB
-         VfVg==
+        bh=vaUH39wIG4Hkyo8bl9FqmB9fhuOy8PoEQdyCTVMoWM8=;
+        b=H2PHVIoEg7Q+mpHbPQ3C5IuP32zgfr4MsGuFdUJeVetNkWlguMapD0q/UNlU1Qo2NS
+         fYaEjI0MCk7BFGJEX1G/Hr3LzqTVjvWjnCUHByRS8rEhpT+SNeO7+eWJcqXdVOXzUMVZ
+         46nV0KopHivtGIi0G3LNCvoOu0WTHxIw9zCHjL5IOu+wH+znuM61SiG4eWGDNbI08sHL
+         Nn5SiyVQBswoFT6mnS5RhPSFJ7Qah5VRdRDvg8Rfc7KM40nZDMiWKDiXow8h1RhfXb2I
+         Tb+o5blmedrCJFzsADmMcpl94MDd7uu/aPD7/zbm8ndnbC4txMyKrwU1E4CyBMoHlsnW
+         D62w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HX6LMtgxWzl0HpAIUmDAdBT71Qg8jqovVsS10cR9zuw=;
-        b=0GtLWTC2BorSE20/QypsgZdLZ10WoB9lMjL70VsTY0WF9IOrtlRRp3ZCf01oGuLjDM
-         XZfdv+eaC3uq30/8G9+KM1AdA9JAKsWu/wv4NhfkeDXpMdkpLWy+OAA9vtkk05wkPaJD
-         l4S9TIittvdvoM28RVKdzI6KAwPW4yMzfZlENrAnyCQL3bQZBr4/mlW6pw8xKwVEwbqb
-         VdnjDSAqMElgsuTKShVQcUl/gREDAsWUkkrNktgFrpF61Q8aIhPUCIOdKeAdjiyZeTVb
-         TWtxw/BRzyprT3VQ/PKfaeeVB28+IzR1+5NHLRxw6eZfuuhq/t2TChPddWj3Np3pETKV
-         y8Sw==
-X-Gm-Message-State: AO0yUKWmyZcEu200W8NCoUiY3qtbE8r1NtUJ1YX7ETXoWBfoPBOk5ky9
-        n6vYLl7ErJ1CiKQ4G9jPtG2MGw==
-X-Google-Smtp-Source: AK7set9iyqQ5WpL/zj7V3zXr3EoAobKRExN+vepIj9AkhXimGD7sLoQA1IodISpECWZ0p93RwZYpeQ==
-X-Received: by 2002:ac2:5494:0:b0:4cc:53e3:771d with SMTP id t20-20020ac25494000000b004cc53e3771dmr167438lfk.64.1676666766372;
-        Fri, 17 Feb 2023 12:46:06 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id u3-20020ac24c23000000b004dc4c5149cfsm782687lfq.134.2023.02.17.12.46.05
+        bh=vaUH39wIG4Hkyo8bl9FqmB9fhuOy8PoEQdyCTVMoWM8=;
+        b=PPnMxCaBaywozMH7/J0dS56raFn5eLHgJIahizcvAGNH7zDvwSpX4EK5+PJYbtPwYu
+         bsdBd/yjZhbuw8aFISYoXlQjfVaoCgtihxzLtzQ2g0Hn9vmv4QUQODkoFoiwKiE/VyVX
+         94le35cpe38txSqeEo9EEYU7fTUwCcJxCusx7bSReXC8vJ1x2rWFh8cGNSk+J8w5j6g8
+         3bmh6/Dhnzf/IatCdSH9g5B2jQzOrnGSKJhlhjCNx8PK8de2OZDWuhuj0+4z/zowdBt4
+         6PwP+Sgutgj0+Ih8w+TBf8HsibwoJXi/tnLBSMSstwvAsrBTCIKw/72/PdKTf712/oNR
+         5yOg==
+X-Gm-Message-State: AO0yUKX3EA4WblhCekFjee8BUN7UBQpUjCOVegZXmtrLu64d4RIOD4gX
+        ir//MwfZU8PS2qSHAku4uAa7HA==
+X-Google-Smtp-Source: AK7set9hyN2bUTZrJmbKC0oSG02HDrQK9DivB+FyC4+cNf9POowtCVs0iR3CjM2KeH3dF3jZimVQ2Q==
+X-Received: by 2002:ac2:51b8:0:b0:4cb:4571:9efe with SMTP id f24-20020ac251b8000000b004cb45719efemr453495lfk.35.1676667097887;
+        Fri, 17 Feb 2023 12:51:37 -0800 (PST)
+Received: from [192.168.1.101] (abxh184.neoplus.adsl.tpnet.pl. [83.9.1.184])
+        by smtp.gmail.com with ESMTPSA id c25-20020ac244b9000000b004d85789cef1sm780379lfm.49.2023.02.17.12.51.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Feb 2023 12:46:05 -0800 (PST)
-Message-ID: <a611e63b-034d-afbd-f194-c789a9071878@linaro.org>
-Date:   Fri, 17 Feb 2023 22:46:05 +0200
+        Fri, 17 Feb 2023 12:51:37 -0800 (PST)
+Message-ID: <69f4a50b-9566-f892-f1b2-831cf20c6938@linaro.org>
+Date:   Fri, 17 Feb 2023 21:51:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.2
 Subject: Re: [PATCH v2 02/14] drm/msm/a6xx: Extend UBWC config
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org
 Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
@@ -71,98 +71,107 @@ Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
         linux-kernel@vger.kernel.org
 References: <20230214173145.2482651-1-konrad.dybcio@linaro.org>
  <20230214173145.2482651-3-konrad.dybcio@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230214173145.2482651-3-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <a611e63b-034d-afbd-f194-c789a9071878@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <a611e63b-034d-afbd-f194-c789a9071878@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/02/2023 19:31, Konrad Dybcio wrote:
-> Port setting min_access_length, ubwc_mode and upper_bit from downstream.
-> Values were validated using downstream device trees for SM8[123]50 and
-> left default (as per downstream) elsewhere.
+
+
+On 17.02.2023 21:46, Dmitry Baryshkov wrote:
+> On 14/02/2023 19:31, Konrad Dybcio wrote:
+>> Port setting min_access_length, ubwc_mode and upper_bit from downstream.
+>> Values were validated using downstream device trees for SM8[123]50 and
+>> left default (as per downstream) elsewhere.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 29 +++++++++++++++++++--------
+>>   1 file changed, 21 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> index c5f5d0bb3fdc..8855d798bbb3 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> @@ -786,17 +786,25 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
+>>   static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+>>   {
+>>       struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>> -    u32 lower_bit = 2;
+>> +    u32 lower_bit = 1;
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 29 +++++++++++++++++++--------
->   1 file changed, 21 insertions(+), 8 deletions(-)
+> Any reason to change the default value here?
+> If it is to match chipsets you are adding, it might be worth splitting this change to that patch.
+Not really now that I think about it, especially since the
+correct default value should be zero:
+
+-- part of msm-4.19 --
+bit = adreno_dev->highest_bank_bit ? adreno_dev->highest_bank_bit - 13 : 0;
+lower_bit = bit & 0x3;
+upper_bit = (bit >> 0x2) & 1;
+
+where adreno_dev->highest_bank_bit is read from the dt property
+"qcom,highest-bank-bit"
+
+Anyway, I should be able to verify it for all the SoCs which
+we support.
+
+Konrad
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index c5f5d0bb3fdc..8855d798bbb3 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -786,17 +786,25 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
->   static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
->   {
->   	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-> -	u32 lower_bit = 2;
-> +	u32 lower_bit = 1;
-
-Any reason to change the default value here?
-If it is to match chipsets you are adding, it might be worth splitting 
-this change to that patch.
-
-> +	u32 upper_bit = 0;
->   	u32 amsbc = 0;
->   	u32 rgb565_predicator = 0;
->   	u32 uavflagprd_inv = 0;
-> +	u32 min_acc_len = 0;
-> +	u32 ubwc_mode = 0;
->   
->   	/* a618 is using the hw default values */
->   	if (adreno_is_a618(adreno_gpu))
->   		return;
->   
-> -	if (adreno_is_a640_family(adreno_gpu))
-> +	if (adreno_is_a630(adreno_gpu))
-> +		lower_bit = 2;
-> +
-> +	if (adreno_is_a640_family(adreno_gpu)) {
->   		amsbc = 1;
-> +		lower_bit = 2;
-> +	}
->   
->   	if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu)) {
->   		/* TODO: get ddr type from bootloader and use 2 for LPDDR4 */
-> @@ -807,18 +815,23 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
->   	}
->   
->   	if (adreno_is_7c3(adreno_gpu)) {
-> -		lower_bit = 1;
->   		amsbc = 1;
->   		rgb565_predicator = 1;
->   		uavflagprd_inv = 2;
->   	}
->   
->   	gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL,
-> -		rgb565_predicator << 11 | amsbc << 4 | lower_bit << 1);
-> -	gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, lower_bit << 1);
-> -	gpu_write(gpu, REG_A6XX_SP_NC_MODE_CNTL,
-> -		uavflagprd_inv << 4 | lower_bit << 1);
-> -	gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL, lower_bit << 21);
-> +		  rgb565_predicator << 11 | upper_bit << 10 | amsbc << 4 |
-> +		  min_acc_len << 3 | lower_bit << 1 | ubwc_mode);
-> +
-> +	gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, upper_bit << 4 |
-> +		  min_acc_len << 3 | lower_bit << 1 | ubwc_mode);
-> +
-> +	gpu_write(gpu, REG_A6XX_SP_NC_MODE_CNTL, upper_bit << 10 |
-> +		  uavflagprd_inv << 4 | min_acc_len << 3 |
-> +		  lower_bit << 1 | ubwc_mode);
-> +
-> +	gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL, min_acc_len << 23 | lower_bit << 21);
->   }
->   
->   static int a6xx_cp_init(struct msm_gpu *gpu)
-
--- 
-With best wishes
-Dmitry
-
+>> +    u32 upper_bit = 0;
+>>       u32 amsbc = 0;
+>>       u32 rgb565_predicator = 0;
+>>       u32 uavflagprd_inv = 0;
+>> +    u32 min_acc_len = 0;
+>> +    u32 ubwc_mode = 0;
+>>         /* a618 is using the hw default values */
+>>       if (adreno_is_a618(adreno_gpu))
+>>           return;
+>>   -    if (adreno_is_a640_family(adreno_gpu))
+>> +    if (adreno_is_a630(adreno_gpu))
+>> +        lower_bit = 2;
+>> +
+>> +    if (adreno_is_a640_family(adreno_gpu)) {
+>>           amsbc = 1;
+>> +        lower_bit = 2;
+>> +    }
+>>         if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu)) {
+>>           /* TODO: get ddr type from bootloader and use 2 for LPDDR4 */
+>> @@ -807,18 +815,23 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+>>       }
+>>         if (adreno_is_7c3(adreno_gpu)) {
+>> -        lower_bit = 1;
+>>           amsbc = 1;
+>>           rgb565_predicator = 1;
+>>           uavflagprd_inv = 2;
+>>       }
+>>         gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL,
+>> -        rgb565_predicator << 11 | amsbc << 4 | lower_bit << 1);
+>> -    gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, lower_bit << 1);
+>> -    gpu_write(gpu, REG_A6XX_SP_NC_MODE_CNTL,
+>> -        uavflagprd_inv << 4 | lower_bit << 1);
+>> -    gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL, lower_bit << 21);
+>> +          rgb565_predicator << 11 | upper_bit << 10 | amsbc << 4 |
+>> +          min_acc_len << 3 | lower_bit << 1 | ubwc_mode);
+>> +
+>> +    gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, upper_bit << 4 |
+>> +          min_acc_len << 3 | lower_bit << 1 | ubwc_mode);
+>> +
+>> +    gpu_write(gpu, REG_A6XX_SP_NC_MODE_CNTL, upper_bit << 10 |
+>> +          uavflagprd_inv << 4 | min_acc_len << 3 |
+>> +          lower_bit << 1 | ubwc_mode);
+>> +
+>> +    gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL, min_acc_len << 23 | lower_bit << 21);
+>>   }
+>>     static int a6xx_cp_init(struct msm_gpu *gpu)
+> 
