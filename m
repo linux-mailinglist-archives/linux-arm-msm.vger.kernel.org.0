@@ -2,156 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBD6369B3F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 21:29:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7A4969B417
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 21:41:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229799AbjBQU3A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 15:29:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57668 "EHLO
+        id S229746AbjBQUlu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 15:41:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229702AbjBQU27 (ORCPT
+        with ESMTP id S229679AbjBQUlt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 15:28:59 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9996C3E632
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 12:28:57 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id z10so2130647ljq.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 12:28:57 -0800 (PST)
+        Fri, 17 Feb 2023 15:41:49 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFB644C3E1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 12:41:47 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id a18so2404672ljp.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 12:41:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JTQ6oglkYOM2AN9ZOIfiGyLQVZrV76p4xsc7YkXI35c=;
-        b=yWiS7NmIF3KI587TkrTgQf+NkYs7qRs4kMyEcyRPQh5Fi9Ihk1BaM+WzbqYvm2kldT
-         U4BUyRVGD5UP1aSMpiLVy6i3fIxKy+3pnC6si5OAp4ab1t9v9adqza/ZtIOpRTq51bBJ
-         urtTGQSe7FMJUO06WemkMrbZRe9oy+UHJxJRfzGkccPZNXd13vr7fBrpKXGl94bvRz3W
-         +ozZkfp0UomTt8bh+VTarofMLEQcdmyIdhL17lOSftIm6piSLVORZ68FEVIwB1ZQhMEM
-         0x4evUoQvFDk25vXdUa2/CZHhT5WRA/Tzrk7vsTIpbCeNb3HF8hn7QOuk9zBYaGPptLP
-         qH1A==
+        bh=5NWLQ8GhGWTeecUq7rQpF0zTEqtX/Q2r4EBkdCAJ/NY=;
+        b=NE9m1H/AGgL//qsJkO+ByH6tqTtVR42pjXc9IVl8lqPcRh3RJ+ZAP2lFaq8hbk6IyQ
+         iMmsok4R+sC3mkPBhkKXJZbUWGwraNbmQm0xk0IJt6SpBn1eBk4shpuFc5eUMcn+sCbb
+         zKSS0fe368bl11dU7IP8EbOT9Pp9Wh0Vt+4k73hupwPeUjRLOkJ+6fWtf9lS+wMM9VF6
+         qOTLIGpYIGkvghnQbPqyDus6/0EO2RKjIWw4TK4vxqjug8lwPlEWtCy6Ou7QRn4wA8su
+         yfhtgLDRnWXipoLExBaMyjp3ruD7Vz3rX1uQfyHNntdEHrzRZuI7a5n8FZ0h0JBLLeuw
+         FMPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JTQ6oglkYOM2AN9ZOIfiGyLQVZrV76p4xsc7YkXI35c=;
-        b=lRir7YCv8eKX7OHa0dbKoXBeYXeXF5wKAmR3l12FY0QSYSU/SdpO1SzYvvXuXavYUs
-         A+u1H6YSVqRWsA6xQQDPu/bbwyuEPL/B3l7CNWSMp0b96NHBKZtJ/T1AbgdQx/e0LaYu
-         KGrfLYGGcxPhN5wE9MAKkN6s7oD+TkiPEeu1SKrG1EPh/dra3YQSCN0UMQRTho7cwB8v
-         bIcKeNqhpzNQ0PO4iQzeaA4k8SokIdiXgnU7FXo3A3pgBhLcX48NVtpQfxwMxOv7hAOH
-         zDrT0w2xxxL0oJLOPd/K/scoHMHEp/TJqo86jWywNEOMGTmHGFdJnLo37gkGueKUa0NN
-         BBZg==
-X-Gm-Message-State: AO0yUKUcopEv7/rHzPBqy5iXOLxG4x9zbVJFctPUlTtCRCiDcx8i0tkW
-        b5sIYN/fvUku4J+841G6DuH8Tw==
-X-Google-Smtp-Source: AK7set/TDjj7Wmbuf8xCJ0jTpkVZ9OeoRDej7SHgFhojYH8cSfMDg2oUyUqjxToR8JNrKZK3aY+2oA==
-X-Received: by 2002:a2e:a261:0:b0:279:bc00:fe5f with SMTP id k1-20020a2ea261000000b00279bc00fe5fmr779789ljm.8.1676665735842;
-        Fri, 17 Feb 2023 12:28:55 -0800 (PST)
-Received: from [192.168.1.101] (abxh184.neoplus.adsl.tpnet.pl. [83.9.1.184])
-        by smtp.gmail.com with ESMTPSA id k16-20020a2e9210000000b00293524fb6b1sm703068ljg.74.2023.02.17.12.28.54
+        bh=5NWLQ8GhGWTeecUq7rQpF0zTEqtX/Q2r4EBkdCAJ/NY=;
+        b=sTfE7x6KYq4tUITEn8zQW1bnUr50W70deJ9nTGm3v6xHtOxCGkRQyPSfEvKkbbXGUb
+         zLsRdaKqtsANrq00pc3rLST2Varfxa6Jd6xn4/JDDrv3UWC3d79CceVoSWWopKPQdsky
+         utDOu1HkE3xdRIIvAhIjKGO6EzngkYtDtaxmcWDM1xf+cFrH1SEpoo6ZuDILySe2Ip+J
+         sADR06KzOZzBrXrIIG/vuCzv5W8RG3Qz2doiHu+NDGMZNu6/wVtkn5vddG9WqKlihV32
+         ASDOrAShL7T19B1yEn/qAZqF9Z6IBdXxjbZKQpYGua8FlOgdeYZk8tXJjUM0GeDoH2y7
+         0GHw==
+X-Gm-Message-State: AO0yUKWPSt9UC6oLLTdOZJjFtSdX/aIjuBJmEzQxfNLtTK9pxuGCQlOB
+        ihybGgKRZOO5V9jyEMFP4X14JbJvaeYVZS8v
+X-Google-Smtp-Source: AK7set+knfCs4nq/e+nlnXVCaOsj4lwGcn0SZczvY3CyVumuwNyrXb6I3mKnGCs8f46nYntdx7yAXw==
+X-Received: by 2002:a2e:b803:0:b0:293:51d2:1a70 with SMTP id u3-20020a2eb803000000b0029351d21a70mr641034ljo.0.1676666506034;
+        Fri, 17 Feb 2023 12:41:46 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id w2-20020a19c502000000b004cc99cd94basm769138lfe.113.2023.02.17.12.41.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Feb 2023 12:28:55 -0800 (PST)
-Message-ID: <5a2f502a-6530-dc8c-a81e-3d2a33964366@linaro.org>
-Date:   Fri, 17 Feb 2023 21:28:54 +0100
+        Fri, 17 Feb 2023 12:41:45 -0800 (PST)
+Message-ID: <aaf19c87-0761-a108-af4c-c6ec6f75691c@linaro.org>
+Date:   Fri, 17 Feb 2023 22:41:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.2
-Subject: Re: [PATCH v5 08/10] interconnect: qcom: msm8996: Specify no bus
- clock scaling on A0NoC
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Evan Green <evgreen@chromium.org>,
-        Jun Nie <jun.nie@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+Subject: Re: [PATCH v2 01/14] drm/msm/a6xx: De-staticize sptprac en/disable
+ functions
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-kernel@vger.kernel.org
-References: <20230217-topic-icc-fixes-v5-v5-0-c9a550f9fdb9@linaro.org>
- <20230217-topic-icc-fixes-v5-v5-8-c9a550f9fdb9@linaro.org>
- <8c4f1cc8-c1f8-06b6-53fe-7507d74ca958@linaro.org>
- <3c205131-632a-6592-5dc0-82313b26e5f6@linaro.org>
- <CAA8EJprJYPAsFZgu-DwjOHm6FsUEJ309zDo=Muh04L4B4oWhmw@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJprJYPAsFZgu-DwjOHm6FsUEJ309zDo=Muh04L4B4oWhmw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+References: <20230214173145.2482651-1-konrad.dybcio@linaro.org>
+ <20230214173145.2482651-2-konrad.dybcio@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230214173145.2482651-2-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 14/02/2023 19:31, Konrad Dybcio wrote:
+> These two will be reused by at least A619_holi in the non-gmu
+> paths. De-staticize them to make it possible.
 
+Nit: 'remove static annotation' or something like that.
 
-On 17.02.2023 21:26, Dmitry Baryshkov wrote:
-> On Fri, 17 Feb 2023 at 21:53, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->>
->> On 17.02.2023 20:27, Konrad Dybcio wrote:
->>>
->>>
->>> On 17.02.2023 11:46, Konrad Dybcio wrote:
->>>> A0NoC only does bus scaling through RPM votes and does not have any
->>>> ICC clocks. Describe this.
->>>>
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
->>> This is bad, as devm_clk_get_bulk{"", _optional} doesn't
->>> check if num_clocks makes sense and passes "-1" down the
->>> devres alloc chain..
->>>
->>> I'll rework this for the next revision by simply assigning
->>> the common "bus", "bus_a" set everywhere instead of relying
->>> on it being there by default..
->> Or maybe I shouldn't, as that will require redefining the array
->> over and over again.. Perhaps just passing <&xo_board>, <&xo_board>
->> to a0noc's "bus", "bus_a", similar to what's been done on SDM630's
->> GNoC would be less messy?
-> 
-> What about simply skipping a call to devm_clk_get if num_bus_clocks is negative?
-I tested that locally before reporting the mistake on my side and
-while it works, I just consider it.. ugly, because:
+Other than that:
 
-num_clocks =
->0 => use the externally specified num_/clocks (logical)
-=0 => use the default 2
-<0 => consider there's zero
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-..but maybe that's just me.. if you don't find it ugly, I may just
-go with that.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 4 ++--
+>   drivers/gpu/drm/msm/adreno/a6xx_gmu.h | 2 ++
+>   2 files changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index f3c9600221d4..90e636dcdd5b 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -354,7 +354,7 @@ void a6xx_gmu_clear_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state)
+>   }
+>   
+>   /* Enable CPU control of SPTP power power collapse */
+> -static int a6xx_sptprac_enable(struct a6xx_gmu *gmu)
+> +int a6xx_sptprac_enable(struct a6xx_gmu *gmu)
+>   {
+>   	int ret;
+>   	u32 val;
+> @@ -376,7 +376,7 @@ static int a6xx_sptprac_enable(struct a6xx_gmu *gmu)
+>   }
+>   
+>   /* Disable CPU control of SPTP power power collapse */
+> -static void a6xx_sptprac_disable(struct a6xx_gmu *gmu)
+> +void a6xx_sptprac_disable(struct a6xx_gmu *gmu)
+>   {
+>   	u32 val;
+>   	int ret;
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> index e034935b3986..ec28abdd327b 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> @@ -186,5 +186,7 @@ int a6xx_hfi_set_freq(struct a6xx_gmu *gmu, int index);
+>   
+>   bool a6xx_gmu_gx_is_on(struct a6xx_gmu *gmu);
+>   bool a6xx_gmu_sptprac_is_on(struct a6xx_gmu *gmu);
+> +void a6xx_sptprac_disable(struct a6xx_gmu *gmu);
+> +int a6xx_sptprac_enable(struct a6xx_gmu *gmu);
+>   
+>   #endif
 
-Konrad
-> 
->>
->> Konrad
->>>
->>> Konrad
->>>>  drivers/interconnect/qcom/msm8996.c | 1 +
->>>>  1 file changed, 1 insertion(+)
->>>>
->>>> diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
->>>> index 1a5e0ad36cc4..45eb8675fb11 100644
->>>> --- a/drivers/interconnect/qcom/msm8996.c
->>>> +++ b/drivers/interconnect/qcom/msm8996.c
->>>> @@ -1817,6 +1817,7 @@ static const struct qcom_icc_desc msm8996_a0noc = {
->>>>      .type = QCOM_ICC_NOC,
->>>>      .nodes = a0noc_nodes,
->>>>      .num_nodes = ARRAY_SIZE(a0noc_nodes),
->>>> +    .num_bus_clocks = -1, /* No bus clock scaling */
->>>>      .intf_clocks = a0noc_intf_clocks,
->>>>      .num_intf_clocks = ARRAY_SIZE(a0noc_intf_clocks),
->>>>      .has_bus_pd = true,
->>>>
-> 
-> 
-> 
+-- 
+With best wishes
+Dmitry
+
