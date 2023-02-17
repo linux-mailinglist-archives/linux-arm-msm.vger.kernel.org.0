@@ -2,340 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6318869B351
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 20:48:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA5E769B356
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 20:50:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229521AbjBQTsy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 14:48:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34380 "EHLO
+        id S229553AbjBQTuc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 14:50:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbjBQTsy (ORCPT
+        with ESMTP id S229461AbjBQTub (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 14:48:54 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 324C253ED5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 11:48:52 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id bg25-20020a05600c3c9900b003e21af96703so1132097wmb.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 11:48:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google; t=1676663330;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=/zzagqI4o594ye+P8sZFJ7FPrOCINhJemYJfNna1EwQ=;
-        b=CmVs0IfX5GquuEp/qSlMfvMLPxqa4lGm/hiU1GGpSUULRFbHeRrlgTDOaOSdfCbRtZ
-         8nlkYmDNIdz5g71y5xoXuFs4Xma+tM4Se1Q2LAAOj6rSYYMZ4RvDkt4uqHUmF0bbHhNZ
-         Ivd3bs7Rgs0D8Db94FgVWEoJp23So4xz1g77w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1676663330;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/zzagqI4o594ye+P8sZFJ7FPrOCINhJemYJfNna1EwQ=;
-        b=yaeUqP8OSLgUDK5r7aWoYO9L+Q9658UmxgddEstWNGwkFIG2+bRGyupoFmVv75ihgr
-         o9wsQqc04nnO22SFx0mnAQFwd7DWiV38+XSUrlnnFn4C6h/o/4e5XvVxskKZYL7/gOuz
-         2/rnTTt0F+bXUnNe2KXydC93+VRwCRs1LBw6qpHXQ52HJmXqqw4PWPJS9xyCBLbW2lyb
-         GTuGsT0ttSjl89e7rBIMsFArguIl9K1tDyDw28l9/vqp/zZonTlepCfh2i07LmIEKYZd
-         wHhryqfYuPGgenpN66Uw7oqhL7IthYqKaeVdlCtXgqeVTO2ut6n6z8NJJFh99rEIAyBK
-         G27w==
-X-Gm-Message-State: AO0yUKUpkrdZEJu9PmOez4sdwbpnPrVes1r3brmZ3U/Eg9eR43apBeZy
-        oNdpCj0g9myMH41LMLBflshzeA==
-X-Google-Smtp-Source: AK7set+42TuXYqWItQsdnhDJWmmDQB8Kje8i13BYU8HP4LBloz41BYhA5DIurBdRU6JcW7NjyvbfdA==
-X-Received: by 2002:a05:600c:1e0f:b0:3dc:3b1a:5d2d with SMTP id ay15-20020a05600c1e0f00b003dc3b1a5d2dmr2223673wmb.0.1676663330637;
-        Fri, 17 Feb 2023 11:48:50 -0800 (PST)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id 12-20020a05600c020c00b003dc3f3d77e3sm5996834wmi.7.2023.02.17.11.48.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Feb 2023 11:48:50 -0800 (PST)
-Date:   Fri, 17 Feb 2023 20:48:48 +0100
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     Daniel Vetter <daniel@ffwll.ch>, javierm@redhat.com,
-        airlied@gmail.com, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org, dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH] drm/fb-helper: Remove drm_fb_helper_unprepare() from
- drm_fb_helper_fini()
-Message-ID: <Y+/aIGoP13k0MhYG@phenom.ffwll.local>
-References: <20230216140620.17699-1-tzimmermann@suse.de>
- <Y+6OCAJ9wyE1PfAw@phenom.ffwll.local>
- <a9a85066-6f48-5cc5-550f-b6f301a16b00@suse.de>
+        Fri, 17 Feb 2023 14:50:31 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C8644FCA2;
+        Fri, 17 Feb 2023 11:50:29 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31HCcsIi011130;
+        Fri, 17 Feb 2023 19:50:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=DDzxof5IcVzLldI7GDtr6orQv7jtauqlTg374hNf258=;
+ b=J1I9wcoWsNoCHPUw/T99krE+vM9Yl0vUe6jdsO+5fbZzNu8YBkwIrPmZxXZgLCkbxtPp
+ QmL7iLiLfClTNQPRYUvU9UJRmrdv9ECdJZXydIvCRFr1DTyNPVrFNvuXXL7E+1kigZS8
+ sJzNTmjsdfbt9495/qUlvVXFg+OwoGzF1g2sRCzEwJFTauiTGMOIX0LE0kQk40VsEu3v
+ FeZT9SC36sWmSVLS+AR1VxgYCxfI1XwFal37Krt2Q3sMwGD9iQDJ7LJ09cJqo53CXMdi
+ +4fOS2h7RJVxX85Pxq9OjAIkCe4qGHyJEHSJA8mOCw5JX5hzbNF+CvYIWGDGptLAXWVE nw== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nshe5mxvf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 17 Feb 2023 19:50:08 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31HJo7J9026503
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 17 Feb 2023 19:50:07 GMT
+Received: from [10.216.18.25] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 17 Feb
+ 2023 11:49:57 -0800
+Message-ID: <38780d01-3e02-fd30-4c11-8cb307eeae4d@quicinc.com>
+Date:   Sat, 18 Feb 2023 01:19:54 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH V5 5/5] firmware: scm: Modify only the DLOAD bit in TCSR
+ register for download mode
+Content-Language: en-US
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+To:     Poovendhan Selvaraj <quic_poovendh@quicinc.com>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <robimarko@gmail.com>,
+        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
+        <broonie@kernel.org>, <quic_gurus@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_devipriy@quicinc.com>
+References: <20230216120012.28357-1-quic_poovendh@quicinc.com>
+ <20230216120012.28357-6-quic_poovendh@quicinc.com>
+ <51bd93be-f8d3-a33c-18ad-ba4a331f2bcf@quicinc.com>
+In-Reply-To: <51bd93be-f8d3-a33c-18ad-ba4a331f2bcf@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a9a85066-6f48-5cc5-550f-b6f301a16b00@suse.de>
-X-Operating-System: Linux phenom 6.0.0-6-amd64 
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: HEPiM6rO7lmKJJLLDWAeOiU3MwhP2ynR
+X-Proofpoint-ORIG-GUID: HEPiM6rO7lmKJJLLDWAeOiU3MwhP2ynR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-17_14,2023-02-17_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ phishscore=0 clxscore=1015 priorityscore=1501 bulkscore=0 impostorscore=0
+ mlxlogscore=999 spamscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302170173
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 17, 2023 at 09:18:54AM +0100, Thomas Zimmermann wrote:
-> Hi
+
+
+On 2/16/2023 7:30 PM, Mukesh Ojha wrote:
 > 
-> Am 16.02.23 um 21:11 schrieb Daniel Vetter:
-> > On Thu, Feb 16, 2023 at 03:06:20PM +0100, Thomas Zimmermann wrote:
-> > > Move drm_fb_helper_unprepare() from drm_fb_helper_fini() into the
-> > > calling fbdev implementation. Avoids a possible stale mutex with
-> > > generic fbdev code.
-> > > 
-> > > As indicated by its name, drm_fb_helper_prepare() prepares struct
-> > > drm_fb_helper before setting up the fbdev support with a call to
-> > > drm_fb_helper_init(). In legacy fbdev emulation, this happens next
-> > > to each other. If successful, drm_fb_helper_fini() later tear down
-> > > the fbdev device and also unprepare via drm_fb_helper_unprepare().
-> > > 
-> > > Generic fbdev emulation prepares struct drm_fb_helper immediately
-> > > after allocating the instance. It only calls drm_fb_helper_init()
-> > > as part of processing a hotplug event. If the hotplug-handling fails,
-> > > it runs drm_fb_helper_fini(). This unprepares the fb-helper instance
-> > > and the next hotplug event runs on stale data.
-> > > 
-> > > Solve this by moving drm_fb_helper_unprepare() from drm_fb_helper_fini()
-> > > into the fbdev implementations. Call it right before freeing the
-> > > fb-helper instance.
-> > > 
-> > > Fixes: 4825797c36da ("drm/fb-helper: Introduce drm_fb_helper_unprepare()")
-> > > Cc: Thomas Zimmermann <tzimmermann@suse.de>
-> > > Cc: Javier Martinez Canillas <javierm@redhat.com>
-> > > Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> > > Cc: Maxime Ripard <mripard@kernel.org>
-> > > Cc: David Airlie <airlied@gmail.com>
-> > > Cc: Daniel Vetter <daniel@ffwll.ch>
-> > > Cc: dri-devel@lists.freedesktop.org
-> > > 
-> > > Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> > 
-> > This reminds me of an old patch I just recently stumbled over again:
-> > 
-> > https://lore.kernel.org/dri-devel/Y3St2VHJ7jEmcNFw@phenom.ffwll.local/
-> > 
-> > Should I resurrect that one maybe and send it out? I think that also ties
-> > a bit into your story here.
 > 
-> I don't think it will be necessary. I began to convert the existing fbdev
-> emulation to make use of drm_client, which should resove a number of
-> problems. I expect to post this after the various trees have merged the
-> recent changes to fbdev helpers.
-
-The only version the patch is fixing is the client one, the old one is
-unfixable (I think at least, hence just the comments). Note that the link
-is pre-splitting, I do have a rebased version here.
-
-I'll just send that out and head into vacations :-)
--Daniel
-
+> On 2/16/2023 5:30 PM, Poovendhan Selvaraj wrote:
+>> CrashDump collection is based on the DLOAD bit of TCSR register.
+>> To retain other bits, we read the register and modify only the DLOAD 
+>> bit as
+>> the other bits have their own significance.
+>>
+>> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+>> Co-developed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+>> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+>> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>> ---
+>>   Changes in V5:
+>>     - checking the return value in qcom_scm_set_download_mode function as
+>>       suggested by Srinivas Kandagatla
+>>
+>>   Changes in V4:
+>>     - retain the orginal value of tcsr register when download mode
+>>       is not set
+>>
+>>   drivers/firmware/qcom_scm.c | 21 ++++++++++++++++-----
+>>   1 file changed, 16 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>> index 468d4d5ab550..d88c5f14bd54 100644
+>> --- a/drivers/firmware/qcom_scm.c
+>> +++ b/drivers/firmware/qcom_scm.c
+>> @@ -407,7 +407,7 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
+>>   }
+>>   EXPORT_SYMBOL(qcom_scm_set_remote_state);
+>> -static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+>> +static int __qcom_scm_set_dload_mode(struct device *dev, u32 val, 
+>> bool enable)
+>>   {
+>>       struct qcom_scm_desc desc = {
+>>           .svc = QCOM_SCM_SVC_BOOT,
+>> @@ -417,7 +417,8 @@ static int __qcom_scm_set_dload_mode(struct device 
+>> *dev, bool enable)
+>>           .owner = ARM_SMCCC_OWNER_SIP,
+>>       };
+>> -    desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
+>> +    desc.args[1] = enable ? val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
+>> +                val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE);
+>>       return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
+>>   }
+>> @@ -426,15 +427,25 @@ static void qcom_scm_set_download_mode(bool enable)
+>>   {
+>>       bool avail;
+>>       int ret = 0;
+>> +    u32 dload_addr_val;
+>>       avail = __qcom_scm_is_call_available(__scm->dev,
+>>                            QCOM_SCM_SVC_BOOT,
+>>                            QCOM_SCM_BOOT_SET_DLOAD_MODE);
+>> +    ret = qcom_scm_io_readl(__scm->dload_mode_addr, &dload_addr_val);
+>> +
+>> +    if (ret) {
+>> +        dev_err(__scm->dev,
+>> +            "failed to read dload mode address value: %d\n", ret);
+>> +        return;
+>> +    }
+>> +
+>>       if (avail) {
+>> -        ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
+>> +        ret = __qcom_scm_set_dload_mode(__scm->dev, dload_addr_val, 
+>> enable);
 > 
-> Best regards
-> Thomas
+> Did you test this on a target where it comes under this if statement? 
+> does it really need to know dload_mode_addr for this target ?
+
+
+Can we do something like this? I would let other review as well.
+
+--------------------------------------->0-------------------------------------------
+diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+index cdbfe54..26b7eda 100644
+--- a/drivers/firmware/qcom_scm.c
++++ b/drivers/firmware/qcom_scm.c
+@@ -419,6 +419,7 @@ static void qcom_scm_set_download_mode(bool enable)
+  {
+         bool avail;
+         int ret = 0;
++       u32 dload_addr_val;
+
+         avail = __qcom_scm_is_call_available(__scm->dev,
+                                              QCOM_SCM_SVC_BOOT,
+@@ -426,8 +427,16 @@ static void qcom_scm_set_download_mode(bool enable)
+         if (avail) {
+                 ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
+         } else if (__scm->dload_mode_addr) {
+-               ret = qcom_scm_io_writel(__scm->dload_mode_addr,
+-                               enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
++               ret = qcom_scm_io_readl(__scm->dload_mode_addr, 
+&dload_addr_val);
++               if (ret) {
++                       dev_err(__scm->dev,
++                               "failed to read dload mode address 
+value: %d\n", ret);
++                       return;
++               }
++
++               ret = qcom_scm_io_writel(__scm->dload_mode_addr, enable ?
++                               dload_addr_val | 
+QCOM_SCM_BOOT_SET_DLOAD_MODE :
++                               dload_addr_val & 
+~(QCOM_SCM_BOOT_SET_DLOAD_MODE));
+         } else {
+                 dev_err(__scm->dev,
+                         "No available mechanism for setting download 
+mode\n");
+
+-Mukesh
 > 
-> > 
-> > > ---
-> > >   drivers/gpu/drm/armada/armada_fbdev.c      | 3 +++
-> > >   drivers/gpu/drm/drm_fb_helper.c            | 2 --
-> > >   drivers/gpu/drm/drm_fbdev_generic.c        | 2 ++
-> > >   drivers/gpu/drm/exynos/exynos_drm_fbdev.c  | 3 ++-
-> > >   drivers/gpu/drm/gma500/framebuffer.c       | 2 ++
-> > >   drivers/gpu/drm/i915/display/intel_fbdev.c | 1 +
-> > >   drivers/gpu/drm/msm/msm_fbdev.c            | 2 ++
-> > >   drivers/gpu/drm/omapdrm/omap_fbdev.c       | 2 ++
-> > >   drivers/gpu/drm/radeon/radeon_fb.c         | 2 ++
-> > >   drivers/gpu/drm/tegra/fb.c                 | 1 +
-> > >   10 files changed, 17 insertions(+), 3 deletions(-)
-> > > 
-> > > diff --git a/drivers/gpu/drm/armada/armada_fbdev.c b/drivers/gpu/drm/armada/armada_fbdev.c
-> > > index 07e410c62b7a..0e44f53e9fa4 100644
-> > > --- a/drivers/gpu/drm/armada/armada_fbdev.c
-> > > +++ b/drivers/gpu/drm/armada/armada_fbdev.c
-> > > @@ -147,6 +147,7 @@ int armada_fbdev_init(struct drm_device *dev)
-> > >    err_fb_setup:
-> > >   	drm_fb_helper_fini(fbh);
-> > >    err_fb_helper:
-> > > +	drm_fb_helper_unprepare(fbh);
-> > >   	priv->fbdev = NULL;
-> > >   	return ret;
-> > >   }
-> > > @@ -164,6 +165,8 @@ void armada_fbdev_fini(struct drm_device *dev)
-> > >   		if (fbh->fb)
-> > >   			fbh->fb->funcs->destroy(fbh->fb);
-> > > +		drm_fb_helper_unprepare(fbh);
-> > > +
-> > >   		priv->fbdev = NULL;
-> > >   	}
-> > >   }
-> > > diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
-> > > index 28c428e9c530..a39998047f8a 100644
-> > > --- a/drivers/gpu/drm/drm_fb_helper.c
-> > > +++ b/drivers/gpu/drm/drm_fb_helper.c
-> > > @@ -590,8 +590,6 @@ void drm_fb_helper_fini(struct drm_fb_helper *fb_helper)
-> > 
-> > I think it would be good to update the kerneldoc of _init() and _fini()
-> > here to mention each another like we usually do with these pairs. Same
-> > with prepare/unprepare() although the latter rerfences _prepare() already.
-> > 
-> > >   	}
-> > >   	mutex_unlock(&kernel_fb_helper_lock);
-> > > -	drm_fb_helper_unprepare(fb_helper);
-> > > -
-> > >   	if (!fb_helper->client.funcs)
-> > >   		drm_client_release(&fb_helper->client);
-> > >   }
-> > > diff --git a/drivers/gpu/drm/drm_fbdev_generic.c b/drivers/gpu/drm/drm_fbdev_generic.c
-> > > index 365f80717fa1..4d6325e91565 100644
-> > > --- a/drivers/gpu/drm/drm_fbdev_generic.c
-> > > +++ b/drivers/gpu/drm/drm_fbdev_generic.c
-> > > @@ -65,6 +65,8 @@ static void drm_fbdev_fb_destroy(struct fb_info *info)
-> > >   	drm_client_framebuffer_delete(fb_helper->buffer);
-> > >   	drm_client_release(&fb_helper->client);
-> > > +
-> > > +	drm_fb_helper_unprepare(fb_helper);
-> > >   	kfree(fb_helper);
-> > >   }
-> > > diff --git a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-> > > index b89e33af8da8..4929ffe5a09a 100644
-> > > --- a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-> > > +++ b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-> > > @@ -183,8 +183,8 @@ int exynos_drm_fbdev_init(struct drm_device *dev)
-> > >   err_setup:
-> > >   	drm_fb_helper_fini(helper);
-> > > -
-> > >   err_init:
-> > > +	drm_fb_helper_unprepare(helper);
-> > >   	private->fb_helper = NULL;
-> > >   	kfree(fbdev);
-> > > @@ -219,6 +219,7 @@ void exynos_drm_fbdev_fini(struct drm_device *dev)
-> > >   	fbdev = to_exynos_fbdev(private->fb_helper);
-> > >   	exynos_drm_fbdev_destroy(dev, private->fb_helper);
-> > > +	drm_fb_helper_unprepare(private->fb_helper);
-> > >   	kfree(fbdev);
-> > >   	private->fb_helper = NULL;
-> > >   }
-> > > diff --git a/drivers/gpu/drm/gma500/framebuffer.c b/drivers/gpu/drm/gma500/framebuffer.c
-> > > index 1f04c07ee180..f471e0cb7298 100644
-> > > --- a/drivers/gpu/drm/gma500/framebuffer.c
-> > > +++ b/drivers/gpu/drm/gma500/framebuffer.c
-> > > @@ -427,6 +427,7 @@ int psb_fbdev_init(struct drm_device *dev)
-> > >   fini:
-> > >   	drm_fb_helper_fini(fb_helper);
-> > >   free:
-> > > +	drm_fb_helper_unprepare(fb_helper);
-> > >   	kfree(fb_helper);
-> > >   	return ret;
-> > >   }
-> > > @@ -439,6 +440,7 @@ static void psb_fbdev_fini(struct drm_device *dev)
-> > >   		return;
-> > >   	psb_fbdev_destroy(dev, dev_priv->fb_helper);
-> > > +	drm_fb_helper_unprepare(dev_priv->fb_helper);
-> > >   	kfree(dev_priv->fb_helper);
-> > >   	dev_priv->fb_helper = NULL;
-> > >   }
-> > > diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
-> > > index 6113d7627d45..98029059f701 100644
-> > > --- a/drivers/gpu/drm/i915/display/intel_fbdev.c
-> > > +++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
-> > > @@ -352,6 +352,7 @@ static void intel_fbdev_destroy(struct intel_fbdev *ifbdev)
-> > >   	if (ifbdev->fb)
-> > >   		drm_framebuffer_remove(&ifbdev->fb->base);
-> > > +	drm_fb_helper_unprepare(&ifbdev->helper);
-> > >   	kfree(ifbdev);
-> > >   }
-> > > diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
-> > > index 915b213f3a5c..c804e5ba682a 100644
-> > > --- a/drivers/gpu/drm/msm/msm_fbdev.c
-> > > +++ b/drivers/gpu/drm/msm/msm_fbdev.c
-> > > @@ -170,6 +170,7 @@ struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev)
-> > >   fini:
-> > >   	drm_fb_helper_fini(helper);
-> > >   fail:
-> > > +	drm_fb_helper_unprepare(helper);
-> > >   	kfree(fbdev);
-> > >   	return NULL;
-> > >   }
-> > > @@ -196,6 +197,7 @@ void msm_fbdev_free(struct drm_device *dev)
-> > >   		drm_framebuffer_remove(fbdev->fb);
-> > >   	}
-> > > +	drm_fb_helper_unprepare(helper);
-> > >   	kfree(fbdev);
-> > >   	priv->fbdev = NULL;
-> > > diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-> > > index fc5f52d567c6..84429728347f 100644
-> > > --- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
-> > > +++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-> > > @@ -256,6 +256,7 @@ void omap_fbdev_init(struct drm_device *dev)
-> > >   fini:
-> > >   	drm_fb_helper_fini(helper);
-> > >   fail:
-> > > +	drm_fb_helper_unprepare(helper);
-> > >   	kfree(fbdev);
-> > >   	dev_warn(dev->dev, "omap_fbdev_init failed\n");
-> > > @@ -286,6 +287,7 @@ void omap_fbdev_fini(struct drm_device *dev)
-> > >   	if (fbdev->fb)
-> > >   		drm_framebuffer_remove(fbdev->fb);
-> > > +	drm_fb_helper_unprepare(helper);
-> > >   	kfree(fbdev);
-> > >   	priv->fbdev = NULL;
-> > > diff --git a/drivers/gpu/drm/radeon/radeon_fb.c b/drivers/gpu/drm/radeon/radeon_fb.c
-> > > index 6e5eed0e157c..c4807f0c43bc 100644
-> > > --- a/drivers/gpu/drm/radeon/radeon_fb.c
-> > > +++ b/drivers/gpu/drm/radeon/radeon_fb.c
-> > > @@ -367,6 +367,7 @@ int radeon_fbdev_init(struct radeon_device *rdev)
-> > >   fini:
-> > >   	drm_fb_helper_fini(&rfbdev->helper);
-> > >   free:
-> > > +	drm_fb_helper_unprepare(&rfbdev->helper);
-> > >   	kfree(rfbdev);
-> > >   	return ret;
-> > >   }
-> > > @@ -377,6 +378,7 @@ void radeon_fbdev_fini(struct radeon_device *rdev)
-> > >   		return;
-> > >   	radeon_fbdev_destroy(rdev->ddev, rdev->mode_info.rfbdev);
-> > > +	drm_fb_helper_unprepare(&rdev->mode_info.rfbdev->helper);
-> > >   	kfree(rdev->mode_info.rfbdev);
-> > >   	rdev->mode_info.rfbdev = NULL;
-> > >   }
-> > > diff --git a/drivers/gpu/drm/tegra/fb.c b/drivers/gpu/drm/tegra/fb.c
-> > > index 153c39c32c71..bfebe2786d61 100644
-> > > --- a/drivers/gpu/drm/tegra/fb.c
-> > > +++ b/drivers/gpu/drm/tegra/fb.c
-> > > @@ -315,6 +315,7 @@ static struct tegra_fbdev *tegra_fbdev_create(struct drm_device *drm)
-> > >   static void tegra_fbdev_free(struct tegra_fbdev *fbdev)
-> > >   {
-> > > +	drm_fb_helper_unprepare(&fbdev->base);
-> > 
-> > Ok this one tegra change was a bit tricky, drivers really should just use
-> > drmm_/devm_ for everything :-)
-> > 
-> > With the kerneldoc augmented:
-> > 
-> > Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-> > 
-> > >   	kfree(fbdev);
-> > >   }
-> > > -- 
-> > > 2.39.1
-> > > 
-> > 
-> 
-> -- 
-> Thomas Zimmermann
-> Graphics Driver Developer
-> SUSE Software Solutions Germany GmbH
-> Maxfeldstr. 5, 90409 N�rnberg, Germany
-> (HRB 36809, AG N�rnberg)
-> Gesch�ftsf�hrer: Ivo Totev
-
-
-
-
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+> -Mukesh
+>>       } else if (__scm->dload_mode_addr) {
+>> -        ret = qcom_scm_io_writel(__scm->dload_mode_addr,
+>> -                enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
+>> +        ret = qcom_scm_io_writel(__scm->dload_mode_addr, enable ?
+>> +                dload_addr_val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
+>> +                dload_addr_val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE));
+>>       } else {
+>>           dev_err(__scm->dev,
+>>               "No available mechanism for setting download mode\n");
