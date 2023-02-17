@@ -2,68 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A989699FAB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 23:22:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E8A569A465
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 04:38:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230320AbjBPWWt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 17:22:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56882 "EHLO
+        id S229614AbjBQDiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 22:38:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230308AbjBPWWs (ORCPT
+        with ESMTP id S229489AbjBQDiN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 17:22:48 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E6D24C3F4;
-        Thu, 16 Feb 2023 14:22:47 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id r25so205362wrr.5;
-        Thu, 16 Feb 2023 14:22:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e+TRGyUkANFG/SzjJ0lbiLz+Z2ORFm0iM0jvwJBSduI=;
-        b=dswPiC+U9PBL72bD2C+u0izfDhYpogqVWUTWAOam4Ha00rv9pGCv3vj+fBk0uEiozR
-         Y5Q/E6rJ6Dz/xcnG5S1U6HDQ2+SQ70dRfPyXFszsI8VZl4Sva6/7jEwhi7ZXXAeWV3Yb
-         3UDM8OVCsM0dU4ckgPX0IBBzWACr4SgLH6UmqtCGbQleIq2kII5SHxIHgsB/KPbkBIlV
-         mRuXf25PJQWdU4ZEBlLn78Hk8D7BmZD6ACg9rjW0HsCCn3MN2oz83xiQ1Lclhv3+1ado
-         9Zma7EsDtd3wq6LW59Oj8X48zG0VMFC14oqTOx/p4Wc4e/pnGO8EFNa1Td1th7f8HOku
-         sNJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e+TRGyUkANFG/SzjJ0lbiLz+Z2ORFm0iM0jvwJBSduI=;
-        b=OKFE1/H1pXvbpg07ljSWCpIylFKVotcNLyn9vIM2XppQABFzZDq4NYtb1FFPKQsKpL
-         0z3Tpt1EP+0k9mbHNFJOiJqKfnGfIdtvvXaChNt59OGggDeHRalcXlXxrO9Do8YQ0gbW
-         KH6lPquCR6LHspcB7sizSLIWR1yZxIGZNOlcoTU9BDZY8NZ/N623ljnyETrC3GFuGAmZ
-         fj3AoEBn4Sk1tLO8kxSiz9OlutuvThAsQ4qK2mjGIqIbOStz1CY5P00udGpEtdgY25EJ
-         tMsclL8k2l4WOpL9BLJn14ZEfLQeKCek27zdT/BzlEesRLkBJGvs4KN1czgODpSNDRWG
-         A1Pg==
-X-Gm-Message-State: AO0yUKUMh9f5qRabTXGlHmgxqkalIHUhtLvMMrDkwA4n0pNFogB3D1jj
-        2caMVN6TQg4E46PvB601i44=
-X-Google-Smtp-Source: AK7set8CayRU/sR7tImdGcDOqjGJXPlySxe3xD4vFX4LrUmeT+RN+68CZxwjDh7xuW2SwJxLVsKOYw==
-X-Received: by 2002:a5d:43d1:0:b0:2c5:3d1c:efd8 with SMTP id v17-20020a5d43d1000000b002c53d1cefd8mr6008378wrr.63.1676586165505;
-        Thu, 16 Feb 2023 14:22:45 -0800 (PST)
-Received: from localhost (94.197.187.145.threembb.co.uk. [94.197.187.145])
-        by smtp.gmail.com with ESMTPSA id q9-20020a1ce909000000b003e00c453447sm5935410wmc.48.2023.02.16.14.22.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Feb 2023 14:22:45 -0800 (PST)
-From:   Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org, lee@kernel.org
-Cc:     konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v1 4/4] mfd: qcom-pm8008: Remove workaround for a regmap-irq quirk
-Date:   Thu, 16 Feb 2023 22:22:14 +0000
-Message-Id: <20230216222214.138671-5-aidanmacdonald.0x0@gmail.com>
-In-Reply-To: <20230216222214.138671-1-aidanmacdonald.0x0@gmail.com>
-References: <20230216222214.138671-1-aidanmacdonald.0x0@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        Thu, 16 Feb 2023 22:38:13 -0500
+Received: from mxhk.zte.com.cn (mxhk.zte.com.cn [63.216.63.40])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB60739CF9;
+        Thu, 16 Feb 2023 19:38:11 -0800 (PST)
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxhk.zte.com.cn (FangMail) with ESMTPS id 4PHyFZ4s9kz8RV7H;
+        Fri, 17 Feb 2023 11:38:10 +0800 (CST)
+Received: from xaxapp02.zte.com.cn ([10.88.97.241])
+        by mse-fl2.zte.com.cn with SMTP id 31H3c4Fq062930;
+        Fri, 17 Feb 2023 11:38:04 +0800 (+08)
+        (envelope-from ye.xingchen@zte.com.cn)
+Received: from mapi (xaxapp01[null])
+        by mapi (Zmail) with MAPI id mid31;
+        Fri, 17 Feb 2023 11:38:05 +0800 (CST)
+Date:   Fri, 17 Feb 2023 11:38:05 +0800 (CST)
+X-Zmail-TransId: 2af963eef69dffffffff9ba69e1f
+X-Mailer: Zmail v1.0
+Message-ID: <202302171138053231478@zte.com.cn>
+Mime-Version: 1.0
+From:   <ye.xingchen@zte.com.cn>
+To:     <daniel.lezcano@linaro.org>
+Cc:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <amitk@kernel.org>,
+        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
+        <rui.zhang@intel.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: =?UTF-8?B?W1BBVENIXSB0aGVybWFsL2RyaXZlcnMvdHNlbnM6IFVzZSBkZXZtX3BsYXRmb3JtX2lvcmVtYXBfcmVzb3VyY2UoKQ==?=
+Content-Type: text/plain;
+        charset="UTF-8"
+X-MAIL: mse-fl2.zte.com.cn 31H3c4Fq062930
+X-Fangmail-Gw-Spam-Type: 0
+X-FangMail-Miltered: at cgslv5.04-192.168.250.137.novalocal with ID 63EEF6A2.000 by FangMail milter!
+X-FangMail-Envelope: 1676605090/4PHyFZ4s9kz8RV7H/63EEF6A2.000/10.5.228.133/[10.5.228.133]/mse-fl2.zte.com.cn/<ye.xingchen@zte.com.cn>
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 63EEF6A2.000/4PHyFZ4s9kz8RV7H
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,65 +57,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove pm8008_init(), which according to the comments exists only
-as a workaround for regmap-irq's odd treatment of type registers.
-This workaround shouldn't be needed anymore because this driver
-uses config registers, which are always programmed by regmap-irq
-no matter what the initial register state is.
+From: Ye Xingchen <ye.xingchen@zte.com.cn>
 
-Signed-off-by: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
+Convert platform_get_resource(), devm_ioremap_resource() to a single
+call to Use devm_platform_ioremap_resource(), as this is exactly
+what this function does.
+
+Signed-off-by: Ye Xingchen <ye.xingchen@zte.com.cn>
 ---
- drivers/mfd/qcom-pm8008.c | 30 ------------------------------
- 1 file changed, 30 deletions(-)
+ drivers/thermal/qcom/tsens.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
-index 4bcdf0e50c40..a33fbc42ac8e 100644
---- a/drivers/mfd/qcom-pm8008.c
-+++ b/drivers/mfd/qcom-pm8008.c
-@@ -142,30 +142,6 @@ static struct regmap_config qcom_mfd_regmap_cfg = {
- 	.max_register	= 0xFFFF,
- };
- 
--static int pm8008_init(struct regmap *regmap)
--{
--	int rc;
--
--	/*
--	 * Set TEMP_ALARM peripheral's TYPE so that the regmap-irq framework
--	 * reads this as the default value instead of zero, the HW default.
--	 * This is required to enable the writing of TYPE registers in
--	 * regmap_irq_sync_unlock().
--	 */
--	rc = regmap_write(regmap, (PM8008_TEMP_ALARM_ADDR | INT_SET_TYPE_OFFSET), BIT(0));
--	if (rc)
--		return rc;
--
--	/* Do the same for GPIO1 and GPIO2 peripherals */
--	rc = regmap_write(regmap, (PM8008_GPIO1_ADDR | INT_SET_TYPE_OFFSET), BIT(0));
--	if (rc)
--		return rc;
--
--	rc = regmap_write(regmap, (PM8008_GPIO2_ADDR | INT_SET_TYPE_OFFSET), BIT(0));
--
--	return rc;
--}
--
- static int pm8008_probe_irq_peripherals(struct device *dev,
- 					struct regmap *regmap,
- 					int client_irq)
-@@ -174,12 +150,6 @@ static int pm8008_probe_irq_peripherals(struct device *dev,
- 	struct regmap_irq_type *type;
- 	struct regmap_irq_chip_data *irq_data;
- 
--	rc = pm8008_init(regmap);
--	if (rc) {
--		dev_err(dev, "Init failed: %d\n", rc);
--		return rc;
--	}
--
- 	for (i = 0; i < ARRAY_SIZE(pm8008_irqs); i++) {
- 		type = &pm8008_irqs[i].type;
- 
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index 8020ead2794e..bfe7e4728cf0 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -876,7 +876,6 @@ int __init init_common(struct tsens_priv *priv)
+ 	void __iomem *tm_base, *srot_base;
+ 	struct device *dev = priv->dev;
+ 	u32 ver_minor;
+-	struct resource *res;
+ 	u32 enabled;
+ 	int ret, i, j;
+ 	struct platform_device *op = of_find_device_by_node(priv->dev->of_node);
+@@ -887,8 +886,7 @@ int __init init_common(struct tsens_priv *priv)
+ 	if (op->num_resources > 1) {
+ 		/* DT with separate SROT and TM address space */
+ 		priv->tm_offset = 0;
+-		res = platform_get_resource(op, IORESOURCE_MEM, 1);
+-		srot_base = devm_ioremap_resource(dev, res);
++		srot_base = devm_platform_ioremap_resource(op, 1);
+ 		if (IS_ERR(srot_base)) {
+ 			ret = PTR_ERR(srot_base);
+ 			goto err_put_device;
+@@ -906,8 +904,7 @@ int __init init_common(struct tsens_priv *priv)
+ 	}
+
+ 	if (tsens_version(priv) >= VER_0_1) {
+-		res = platform_get_resource(op, IORESOURCE_MEM, 0);
+-		tm_base = devm_ioremap_resource(dev, res);
++		tm_base = devm_platform_ioremap_resource(op, 0);
+ 		if (IS_ERR(tm_base)) {
+ 			ret = PTR_ERR(tm_base);
+ 			goto err_put_device;
 -- 
-2.39.2
-
+2.25.1
