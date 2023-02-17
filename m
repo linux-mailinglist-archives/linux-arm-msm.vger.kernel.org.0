@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F267669B4B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 22:25:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 779FC69B4B9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 22:25:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229896AbjBQVZS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 16:25:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39622 "EHLO
+        id S229728AbjBQVZy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 16:25:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229916AbjBQVZQ (ORCPT
+        with ESMTP id S229601AbjBQVZx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 16:25:16 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A97FB64B19
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 13:25:13 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id u22so3337509lfu.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 13:25:13 -0800 (PST)
+        Fri, 17 Feb 2023 16:25:53 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4390F64B00
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 13:25:42 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id h30so2561913ljb.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 13:25:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=sUPH9uNj9RqxPqJIqqWj0KB91ZhxHRmW1pLTfov3kco=;
-        b=lSupLjkici3HybLblbRtU3qCo4YOOwypd8SBq9COhRVq4/KgZiIwHtFvlA553pxNk0
-         VBCmFNuaLOQNNh8iVlgrJt0Uilqd46QZ6Uke+SRbWpShFvf3M6J7//Rsxznp1nu0yurK
-         5IPZDQwGpRRXbOIpSOn6Zpxikn994N7vUc/C7jHCAY6Vo9bS1S4vYYwpmSoqXvh2Zj2w
-         cthwNKFWYYI80FJLipwP+AYUZpmHt7zXPED0yM4oPJiTgtDoeEfxCb2a/yPusl3CTo/w
-         lXE6JRYurHtjHIPoOaYIvqVGj8NgNhdcvzSOjJi9ZPWTqRQLKmg2SbGufsrfPlfr74tD
-         WMjQ==
+        bh=ORR0AQhnlGMPN31e9mPJsCgrOnth8Cg37H+T3TwuNc0=;
+        b=EoKqClsxJvczaooILRkmTBpck9RRYIHxHhARz8ghkE8ju8QcDyIPrBdTfevR7Z7AYF
+         bQvRcgTxf3QXT3o+H7K62Y1yvdZ99qrQDH+WtYWTyVIw80V+nDv62YyBoaZKLIAbH56g
+         jf3LIQbBz8bo+W1AvacimbCzHm/J6YBzWx1Wn8MLFLclXLAvF0jnke0Mvt6d+RMbJx/r
+         qRbrGwgZxk5J9sZMf9Yia+L+eo6jHfR+gHpeXfVYCtPECh32Dmuez+UhF9KDPoQNms/+
+         KGUJ1wv4V2NMYKV55/yZrCYnbb1fQcmwca5HaYPXOprKOubiHt30ejmd2g3BUdl7aHdK
+         f8Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sUPH9uNj9RqxPqJIqqWj0KB91ZhxHRmW1pLTfov3kco=;
-        b=CIFei84+nBCdGPQS8zLqAOfBIMObZ4x9RlI05uqj6pOi5fV1IP6n9mmCkL5MsQh9w8
-         ANq5QZKvc3ZZYJuE459JEQvSeR2NkIPrGodHJDbvWHhzoHgq235o0y+Mhk35Rrgc+zCe
-         mmdvhvRuRw1e/6YyAGQvin8hyWpBYL6KxYocnr5RZTlmWj3vMvHrITh2YEOgGa8E08Oq
-         52MU01SrGn45WnqMdsiRqCtSQtqcdBNfxoKQvzm7XFiVdFUdnf1Z70kcPncfacvPfMAe
-         SwPuAOPPl5t8vlUFbykAXt7Hz0yQmksTnYnYDGyoMhsBwvNFdr54OXbZPxEZiPKuUa9M
-         PL2A==
-X-Gm-Message-State: AO0yUKVm2En7HpiDem3Tw8MBsbznEx/iI95ynK+1kzj5OnA9WAdsRULj
-        89alBOcrpVMmCmwGSH2U8tV9pQ==
-X-Google-Smtp-Source: AK7set+2WH3f6NpOexHTvZe/aiTMUQ2QqreldPbI1NZb0VtRO9YNs6e28nAhj+xUIdxsjsoBF0J8VQ==
-X-Received: by 2002:a19:7402:0:b0:4dc:4fe2:2aad with SMTP id v2-20020a197402000000b004dc4fe22aadmr2001005lfe.41.1676669111892;
-        Fri, 17 Feb 2023 13:25:11 -0800 (PST)
+        bh=ORR0AQhnlGMPN31e9mPJsCgrOnth8Cg37H+T3TwuNc0=;
+        b=r5dZSfoO2EGK65eS8GE7VZAPEumDYkAOHB0jhZbHca7lxwwPHenPm8xhnr7y6nW6wk
+         CuGNDMa3zKFgpCbRun2pcH6Mpx2YDPaH1JmddJXPoCNpksbrbG1AEvVEXv+JtQsvC42z
+         j7SkIgK9vzEhjnA7I3jBOFL1NS0cHMC+RL5BCGJuUdtfVrZNdx8pkKP2od1xWtkIAfHs
+         UzxXsfZf9cUyaAyc0rd0ePVd3aVc28YoYzgHgf0MvEVG1NoXgz92EhS5YGjwaEit36ns
+         4iApmFJL1qfi+E8LLTiCzPQYNT7uUMt6XMerT43qDf+En5JaHD/0XugTI5Cam88TgyEe
+         fkWw==
+X-Gm-Message-State: AO0yUKWC+k7P2W21E0nqCBMvIb3Q9gs7UdgFqg6WGuV/7Bl+PcCnerI3
+        Om8hFQWRV18PpozAlQ4hEZoCGQ==
+X-Google-Smtp-Source: AK7set83FcpuRjdr9aqb+dOcUa1SF8I+J/myUtqrLeob8tTbxS+Ehimel0K+msGa0mKWSfujy0Ztag==
+X-Received: by 2002:a05:651c:2118:b0:293:4ba3:17be with SMTP id a24-20020a05651c211800b002934ba317bemr1091977ljq.11.1676669140539;
+        Fri, 17 Feb 2023 13:25:40 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id e14-20020ac2546e000000b004dc721ea6a1sm576284lfn.273.2023.02.17.13.25.11
+        by smtp.gmail.com with ESMTPSA id x2-20020ac25dc2000000b004db513b0175sm783715lfq.136.2023.02.17.13.25.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Feb 2023 13:25:11 -0800 (PST)
-Message-ID: <5fdb7416-4764-1bae-08b4-31fc2cdd7860@linaro.org>
-Date:   Fri, 17 Feb 2023 23:25:10 +0200
+        Fri, 17 Feb 2023 13:25:39 -0800 (PST)
+Message-ID: <a13997c2-3b68-7c30-2486-c56cb7b72170@linaro.org>
+Date:   Fri, 17 Feb 2023 23:25:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.2
-Subject: Re: [PATCH v2 13/14] drm/msm/a6xx: Add A619_holi speedbin support
+Subject: Re: [PATCH v2 14/14] drm/msm/a6xx: Add A610 speedbin support
 Content-Language: en-GB
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org, andersson@kernel.org,
@@ -70,9 +70,9 @@ Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-kernel@vger.kernel.org
 References: <20230214173145.2482651-1-konrad.dybcio@linaro.org>
- <20230214173145.2482651-14-konrad.dybcio@linaro.org>
+ <20230214173145.2482651-15-konrad.dybcio@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230214173145.2482651-14-konrad.dybcio@linaro.org>
+In-Reply-To: <20230214173145.2482651-15-konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,73 +86,18 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 14/02/2023 19:31, Konrad Dybcio wrote:
-> A619_holi is implemented on at least two SoCs: SM4350 (holi) and SM6375
-> (blair). This is what seems to be a first occurrence of this happening,
-> but it's easy to overcome by guarding the SoC-specific fuse values with
-> of_machine_is_compatible(). Do just that to enable frequency limiting
-> on these SoCs.
+> A610 is implemented on at least three SoCs: SM6115 (bengal), SM6125
+> (trinket) and SM6225 (khaje). Trinket does not support speed binning
+> (only a single SKU exists) and we don't yet support khaje upstream.
+> Hence, add a fuse mapping table for bengal to allow for per-chip
+> frequency limiting.
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 31 +++++++++++++++++++++++++++
->   1 file changed, 31 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index ffe0fd431a76..94b4d93619ed 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -2094,6 +2094,34 @@ static u32 a618_get_speed_bin(u32 fuse)
->   	return UINT_MAX;
->   }
->   
-> +static u32 a619_holi_get_speed_bin(u32 fuse)
-> +{
-> +	/*
-> +	 * There are (at least) two SoCs implementing A619_holi: SM4350 (holi)
-> +	 * and SM6375 (blair). Limit the fuse matching to the corresponding
-> +	 * SoC to prevent bogus frequency setting (as improbable as it may be,
-> +	 * given unexpected fuse values are.. unexpected! But still possible.)
-> +	 */
-> +
-> +	if (fuse == 0)
-> +		return 0;
-> +
-> +	if (of_machine_is_compatible("qcom,sm4350")) {
-> +		if (fuse == 138)
-> +			return 1;
-> +		else if (fuse == 92)
-> +			return 2;
-> +	} else if (of_machine_is_compatible("qcom,sm6375")) {
-> +		if (fuse == 190)
-> +			return 1;
-> +		else if (fuse == 177)
-> +			return 2;
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 27 +++++++++++++++++++++++++++
+>   1 file changed, 27 insertions(+)
 
-Ugh.
-
-> +	} else
-> +		pr_warn("Unknown SoC implementing A619_holi!\n");
-> +
-> +	return UINT_MAX;
-> +}
-> +
->   static u32 a619_get_speed_bin(u32 fuse)
->   {
->   	if (fuse == 0)
-> @@ -2153,6 +2181,9 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
->   	if (adreno_cmp_rev(ADRENO_REV(6, 1, 8, ANY_ID), rev))
->   		val = a618_get_speed_bin(fuse);
->   
-> +	else if (adreno_cmp_rev(ADRENO_REV(6, 1, 9, 1), rev))
-
-I really think it begs to have && !of_find_property(dev->of_node, 
-"qcom,gmu") here.
-
-> +		val = a619_holi_get_speed_bin(fuse);
-> +
->   	else if (adreno_cmp_rev(ADRENO_REV(6, 1, 9, ANY_ID), rev))
->   		val = a619_get_speed_bin(fuse);
->   
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
