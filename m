@@ -2,72 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 233F169B594
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 23:36:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A77069B657
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 00:14:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229555AbjBQWgd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 17:36:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32996 "EHLO
+        id S229616AbjBQXOo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 18:14:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjBQWgd (ORCPT
+        with ESMTP id S229667AbjBQXOn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 17:36:33 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C1FC2D75;
-        Fri, 17 Feb 2023 14:36:32 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 01C98B82DD1;
-        Fri, 17 Feb 2023 22:36:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8F2C433D2;
-        Fri, 17 Feb 2023 22:36:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676673389;
-        bh=k4OUgOV2DAcRiYZmTlzFyyRMmedSCsjG5YKy4EefJEY=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=Q1u3GP76ZvSpHurnV2VBUmuKgUIceLicA9zGshbGui4fhZx1os0a4cAhCDZ+/gdEi
-         lI5iL1pYMNUbq9fPDuOMaaz/Uv38BBs706T6unHD0x8pRo0k6ndaJQsyFfPEQgMFYF
-         RHtgpyCwdK8eQwnrt13RF6MubY/TbYhCUyFsda0ynm2dxlDoHiBcgZc11RZqm9nd5i
-         Pc04Me5vY+QmjK14igoegXop6ngiy+05q19sbvpAne57Igmd9A00KRAhTP2wXAxcUq
-         I8/8UXuhrnH/spO8Wfj+JXzlPOShKsAd3+LsMBQVspNmUGvIrQugLrqblsd+rWSqsr
-         mAEEgM6lWG1vQ==
-Message-ID: <7666a6dad5c698483c30356d1278025a.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        Fri, 17 Feb 2023 18:14:43 -0500
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC65A552AA;
+        Fri, 17 Feb 2023 15:14:19 -0800 (PST)
+Received: by mail-oo1-f41.google.com with SMTP id m6-20020a4ac686000000b0051f842ba672so226155ooq.4;
+        Fri, 17 Feb 2023 15:14:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dQHoZdZQsb0tbRh6zJhe3Ee112VgPcERiRLHL7uWCfI=;
+        b=D9qKdIxP6r+Q0e6DWoSA+zz3rjNP9CT+qlx7dfYOKVQ3vLyTQQ5iTh3vFBxbqV8b0b
+         B1qQprkwUjwjrDS1NIOgT0E4I1zJknnhaMbT+Nz/QdtwMoxUo4h5xksy9kMbDw2ba/sF
+         c7gtvzoJqAhMXpy+opNh9mR9NCIoELRqn7sETyqSNRstpV/GzsFBKOZpGyTzoOxKJhKa
+         nRqozj0Nj/EKVd9iN3trJRsvaHzOgFZSQFvxRdSfdEUDLU2w29aKLwwC7HR5WDq+m6f2
+         cz2E4equLSyJnuXmYiqMm65mf5Q4N9QXoWAVRocY2MawvqI8s6eDwuWWuxjJ8lH3GIuy
+         WJeQ==
+X-Gm-Message-State: AO0yUKWZlUVbFmnbXOzNH5YBcvTj37suyOdejlGh4Kze/KCqpCfd1gxe
+        K7KrKfZ8Z0zXYkVI3qcsGCqDB7M/Cw==
+X-Google-Smtp-Source: AK7set+CeDzb7BytS+6adQqOOA+3tgP8LOA6jxUsKLTuW/NJoi4x/MIxM1bhqcnMWLMWimw65Q9G2g==
+X-Received: by 2002:a4a:450e:0:b0:49f:8941:ffed with SMTP id y14-20020a4a450e000000b0049f8941ffedmr1571764ooa.9.1676675611946;
+        Fri, 17 Feb 2023 15:13:31 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id y2-20020a4ad642000000b0051ff746e2b2sm1968972oos.8.2023.02.17.15.13.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Feb 2023 15:13:31 -0800 (PST)
+Received: (nullmailer pid 2241205 invoked by uid 1000);
+        Fri, 17 Feb 2023 23:13:30 -0000
+Date:   Fri, 17 Feb 2023 17:13:30 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <nks@flawful.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v10 2/6] dt-bindings: opp: v2-qcom-level: Document CPR3
+ open/closed loop volt adjustment
+Message-ID: <20230217231330.GA2238521-robh@kernel.org>
+References: <20230217-topic-cpr3h-v10-0-67aed8fdfa61@linaro.org>
+ <20230217-topic-cpr3h-v10-2-67aed8fdfa61@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230217080720.5206-1-quic_kathirav@quicinc.com>
-References: <20230217080720.5206-1-quic_kathirav@quicinc.com>
-Subject: Re: [PATCH V3] clk: qcom: ipq5332: mark GPLL4 as critical temporarily
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     quic_varada@quicinc.com, quic_srichara@quicinc.com,
-        Kathiravan T <quic_kathirav@quicinc.com>
-To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mturquette@baylibre.com
-Date:   Fri, 17 Feb 2023 14:36:27 -0800
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230217-topic-cpr3h-v10-2-67aed8fdfa61@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kathiravan T (2023-02-17 00:07:20)
-> Clock framework disables the GPLL4 source since there are no active users
-> for this source currently. Some of the clocks initialized by the
-> bootloaders uses the GPLL4 as the source. Due to this, when the GPLL4 is
-> disabled by the clock framework, system is going for the reboot.
->=20
-> To avoid this, mark the GPLL4 as CRITICAL so that clock framework
+On Fri, Feb 17, 2023 at 12:08:25PM +0100, Konrad Dybcio wrote:
+> CPR3 and newer can be fed per-OPP voltage adjustment values for both
+> open- and closed-loop paths to make better decisions about settling
+> on the final voltage offset target. Document these properties.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  .../devicetree/bindings/opp/opp-v2-qcom-level.yaml         | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+> index a30ef93213c0..93cc88434dfe 100644
+> --- a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+> +++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+> @@ -34,6 +34,20 @@ patternProperties:
+>          minItems: 1
+>          maxItems: 2
+>  
+> +      qcom,opp-cloop-vadj:
+> +        description: |
+> +          A value representing the closed-loop voltage adjustment value
 
-s/CRITICAL/ignore unused/
+A value?
 
-> doesn't disable it. Once the users of this source is enabled, we can get
-> rid of this flag.
->=20
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> +          associated with this OPP node.
+> +        $ref: /schemas/types.yaml#/definitions/int32-array
+> +        maxItems: 2
+
+Or 2 values?
+
+> +
+> +      qcom,opp-oloop-vadj:
+> +        description: |
+> +          A value representing the open-loop voltage adjustment value
+> +          associated with this OPP node.
+> +        $ref: /schemas/types.yaml#/definitions/int32-array
+> +        maxItems: 2
+> +
+>      required:
+>        - opp-level
+>        - qcom,opp-fuse-level
+> 
+> -- 
+> 2.39.1
+> 
