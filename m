@@ -2,130 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 170DF69B365
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 20:53:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFCCB69B3C7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 21:23:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229531AbjBQTxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 14:53:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37090 "EHLO
+        id S229585AbjBQUXP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 15:23:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbjBQTxW (ORCPT
+        with ESMTP id S229746AbjBQUXN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 14:53:22 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 339735DE3B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 11:53:21 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id d24so2914244lfs.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 11:53:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=L7sIAulZhUgPygW6MnTOAgMlvOTOg8Ujr1oDEU2lJx8=;
-        b=Wi6Cu7J4a//BgKEfeIJE17gxmy2M2bGyUHp7ZrhXTxzFYPfrDqrK8esYknWbKRXXPH
-         yB5Vz7KB74iwov1/YLACMIMNPa7zbUrVIFjNnUicSaD0t7lQx3uHIzo8PeMbDXQsPUQ5
-         4PCttj1LHQ3WUWY3SbFoupxTmyyLiu24rneOrIGg9s8wD8/ERmPF4AFg4t/1MQ6up5tP
-         kCoOJBQBZc8uwqA9DjnC+lPJ8rLCuaULG9tcHw1FDpXNjRmLzd7CVcqgV8OrsEmu9iPu
-         x6JFXDLDVhsLISPJ4hHJQD4o7A6pEWQTH68EeF02tQk6BpZMcz/UYI2rc3g2AyJhYZh0
-         Nefw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L7sIAulZhUgPygW6MnTOAgMlvOTOg8Ujr1oDEU2lJx8=;
-        b=fzHqztJmSUTvdxgm0SnMXGpsGe1mVyw/quzNz4AtsTS2/EOyqTDyOvZAZA4+JcAlXO
-         Ojz+tEnzAQ98CCF1vJT/5Gs7EoVonFZYC8dhjLwNyyMYrWEG9HOT0+SmcSRTauCTuun1
-         dhG0JdOYU7cmnrWPgR1UeLKiPRBKjY///QZL785LIVX6OH88KljHQ0Ot7pVCzAoNEUGE
-         quJFuQd9inuwNBT0aKR7IjmG9WqoGxXTxMoyb9/yvMjdB4Ve4c1oC/mI9BPwdn7CPaxG
-         qVStl2ucxsZg0htUG53Eml8DzXm0OJ6hWkDGTuIsGe+pgIXLkmKuL0VAPWwBQJ39jgV4
-         RCWQ==
-X-Gm-Message-State: AO0yUKVkzUpj/qln6Wpf2AHGIGfXAkdRePURafIBarJNXow73Nzr6otn
-        DntqLL7ptYXKRGSzzNBrBLxPyg==
-X-Google-Smtp-Source: AK7set89ZDd3alQ67YDXx9kFoGlmkpHk7qLdQ/FCvCnnXKG4zCMrjHkau5cwTHHDBPyNeDFeoKb3EA==
-X-Received: by 2002:ac2:5e9d:0:b0:4b5:b06d:4300 with SMTP id b29-20020ac25e9d000000b004b5b06d4300mr33287lfq.29.1676663599425;
-        Fri, 17 Feb 2023 11:53:19 -0800 (PST)
-Received: from [192.168.1.101] (abxh184.neoplus.adsl.tpnet.pl. [83.9.1.184])
-        by smtp.gmail.com with ESMTPSA id d2-20020ac24c82000000b004db44dfd888sm772137lfl.30.2023.02.17.11.53.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Feb 2023 11:53:18 -0800 (PST)
-Message-ID: <3c205131-632a-6592-5dc0-82313b26e5f6@linaro.org>
-Date:   Fri, 17 Feb 2023 20:53:16 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH v5 08/10] interconnect: qcom: msm8996: Specify no bus
- clock scaling on A0NoC
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 17 Feb 2023 15:23:13 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A5A860A50;
+        Fri, 17 Feb 2023 12:23:10 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31HE1FHg009572;
+        Fri, 17 Feb 2023 20:22:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=OwC1YUWD4RDPqj6ij1e+DtTL840oqoIG3+VP9IMFt2g=;
+ b=bopzOf1sOHwKpGmFctnCshxn/e3t7HACszkx8XXJmZidnK75m5QfFlWdsc1irOH1jO94
+ Rqgl99mQ1rkNYGtvlf3skcBhcG1dMhq9LsGLR/t0M8qRfiCGKvMlbj0ThTCyp83YRbUi
+ o6VLEZZrtKl7b5t6ebvoy+yccyTCgKFahXR+HSNFQhwRqLcGB8Ouihb/PPf4B4fJ5Ttm
+ XxqaIz4Xz/+6cQJJL8+GaLBWCb0aar0ihUlWah3EPZz5poqPlLp33HGfsTKlpJbkuK9/
+ LCBieBD+YiTcYs6qjt+MxfNArLy/fE/GEFSbQIkUEz3sxXLwQkmYfK2ofWLLV2bZPJzf Zg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ntayfs34c-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 17 Feb 2023 20:22:58 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31HKMuxI015818
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 17 Feb 2023 20:22:56 GMT
+Received: from hu-johmoo-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Fri, 17 Feb 2023 12:22:56 -0800
+From:   John Moon <quic_johmoo@quicinc.com>
+To:     Masahiro Yamada <masahiroy@kernel.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        "Nicolas Schier" <nicolas@fjasle.eu>
+CC:     John Moon <quic_johmoo@quicinc.com>,
+        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Evan Green <evgreen@chromium.org>,
-        Jun Nie <jun.nie@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230217-topic-icc-fixes-v5-v5-0-c9a550f9fdb9@linaro.org>
- <20230217-topic-icc-fixes-v5-v5-8-c9a550f9fdb9@linaro.org>
- <8c4f1cc8-c1f8-06b6-53fe-7507d74ca958@linaro.org>
-In-Reply-To: <8c4f1cc8-c1f8-06b6-53fe-7507d74ca958@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Todd Kjos <tkjos@google.com>,
+        Matthias Maennich <maennich@google.com>,
+        Giuliano Procida <gprocida@google.com>,
+        <kernel-team@android.com>, Jordan Crouse <jorcrous@amazon.com>
+Subject: [PATCH RESEND 0/1] Validating UAPI backwards compatibility
+Date:   Fri, 17 Feb 2023 12:22:33 -0800
+Message-ID: <20230217202234.32260-1-quic_johmoo@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: gQ__dsIXddcnFwqLNS6LKYVPkVedklXQ
+X-Proofpoint-GUID: gQ__dsIXddcnFwqLNS6LKYVPkVedklXQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-17_14,2023-02-17_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ spamscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ mlxlogscore=999 clxscore=1015 mlxscore=0 adultscore=0 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302170178
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
++ linux-arm-kernel and Greg KH
+
+Hi all,
+
+The kernel community has rigorously enforced a policy of backwards
+compatibility in its UAPI headers for a long time. This has allowed user
+applications to enjoy stability across kernel upgrades without
+recompiling.
+
+In the vendor driver community (out-of-tree modules), there's been a
+lack of discipline when it comes to maintaining UAPI backwards
+compatibility. This has been a maintenance burden and limits our options
+for long-term support of older devices.
+
+Our goal is to add tooling for vendor driver developers because the
+upstream model of expert maintainer code review can be difficult to
+replicate in-house. Tools may help developers catch simple UAPI
+incompatibilities that could be easily overlooked by in-house review.
+
+We see in the kernel documentation:
+"Kernel headers are backwards compatible, but not forwards compatible.
+This means that a program built against a C library using older kernel
+headers should run on a newer kernel (although it may not have access
+to new features), but a program built against newer kernel headers may
+not work on an older kernel."[1]
+
+How does the kernel enforce this guarantee? We would be interested to
+learn about any tools or methods used by kernel developers to make sure
+the above statement remains true.
+
+Could the documentation on UAPI maintenance (from a developer's point of
+view) be expanded? Internally, we have a set of guidelines for our kernel
+developers regarding UAPI compatibility techniques. If there's interest
+in supplying a document on this topic with the kernel, we'd be happy to
+submit a draft detailing what we have so far as a jumping off point.
+
+Additionally, I've attached a shell script we've been using internally
+to validate changes to our UAPI headers are backwards compatible. The
+script uses libabigail's[2] tool abidiff[3] to compare a modified
+header's ABI before and after a patch is applied. If an existing UAPI is
+modified, the script exits non-zero. We use this script in our CI system
+to block changes that fail the check.
+
+Currently, the script works with gcc. It generates output like this when
+a backwards-incompatible change is made to a UAPI header:
+
+ !!! ABI differences detected in include/uapi/linux/acct.h (compared to
+ file at HEAD^1) !!!
+
+     [C] 'struct acct' changed:
+       type size changed from 512 to 544 (in bits)
+       1 data member insertion:
+         '__u32 new_val', at offset 512 (in bits) at acct.h:71:1
+
+ 0/1 UAPI header file changes are backwards compatible
+ UAPI header ABI check failed
+
+However, we have not had success with clang. It seems clang is more
+aggressive in optimizing dead code away (no matter which options we
+pass). Therefore, no ABI differences are found.
+
+We wanted to share with the community to receive feedback and any advice
+when it comes to tooling/policy surrounding this issue. Our hope is that
+the script will help all kernel UAPI authors (even those that haven't
+upstreamed yet) maintain good discipline and avoid breaking userspace.
+
+[1] Documentation/kbuild/headers_install.rst
+[2] https://sourceware.org/libabigail/manual/libabigail-overview.html
+[3] https://sourceware.org/libabigail/manual/abidiff.html
+
+P.S. While at Qualcomm, Jordan Crouse <jorcrous@amazon.com> authored the
+original version of the UAPI checker script. Thanks Jordan!
+
+John Moon (1):
+  check-uapi: Introduce check-uapi.sh
+
+ scripts/check-uapi.sh | 245 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 245 insertions(+)
+ create mode 100755 scripts/check-uapi.sh
 
 
-On 17.02.2023 20:27, Konrad Dybcio wrote:
-> 
-> 
-> On 17.02.2023 11:46, Konrad Dybcio wrote:
->> A0NoC only does bus scaling through RPM votes and does not have any
->> ICC clocks. Describe this.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
-> This is bad, as devm_clk_get_bulk{"", _optional} doesn't
-> check if num_clocks makes sense and passes "-1" down the
-> devres alloc chain..
-> 
-> I'll rework this for the next revision by simply assigning
-> the common "bus", "bus_a" set everywhere instead of relying
-> on it being there by default..
-Or maybe I shouldn't, as that will require redefining the array
-over and over again.. Perhaps just passing <&xo_board>, <&xo_board>
-to a0noc's "bus", "bus_a", similar to what's been done on SDM630's
-GNoC would be less messy?
+base-commit: 033c40a89f55525139fd5b6342281b09b97d05bf
+--
+2.17.1
 
-Konrad
-> 
-> Konrad
->>  drivers/interconnect/qcom/msm8996.c | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
->> index 1a5e0ad36cc4..45eb8675fb11 100644
->> --- a/drivers/interconnect/qcom/msm8996.c
->> +++ b/drivers/interconnect/qcom/msm8996.c
->> @@ -1817,6 +1817,7 @@ static const struct qcom_icc_desc msm8996_a0noc = {
->>  	.type = QCOM_ICC_NOC,
->>  	.nodes = a0noc_nodes,
->>  	.num_nodes = ARRAY_SIZE(a0noc_nodes),
->> +	.num_bus_clocks = -1, /* No bus clock scaling */
->>  	.intf_clocks = a0noc_intf_clocks,
->>  	.num_intf_clocks = ARRAY_SIZE(a0noc_intf_clocks),
->>  	.has_bus_pd = true,
->>
