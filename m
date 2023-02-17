@@ -2,69 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EB1C69A497
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 05:01:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1769E69A576
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 07:03:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229802AbjBQEBN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 23:01:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33478 "EHLO
+        id S229677AbjBQGDq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 01:03:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229658AbjBQEBM (ORCPT
+        with ESMTP id S229676AbjBQGDp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 23:01:12 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21DBA37B6A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 20:01:09 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id i18so3490689ljc.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 20:01:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4ymeKyoEPaB2TlyXtYfKO3gw6CH1MjfygMlQz73O8po=;
-        b=yCZKr8/p4yd+8jG2V8QlBXF9KW3dR7ZBJGXIWJ9S0PxxkGxs9p/hPwsoZBM80VHShR
-         4LdrM/kudaLex8OpMLiIzw1ptqK2nTs2YGhlxQ5Glrfy7FmQ05XSKl97t8Gq/iXvM6AJ
-         yDNiUDfIU66SA9X+POtTNQAOZcjVd8Ny9SomMb4vei22woi5WigkWY1cT+bEpD8fMhKg
-         PGPeDPmBCbeT1P2TLuFTcAbz0u0uh9K7qWHe4LJ7l6BLT6UdVitFsnYNK4bmfQsQXtP7
-         UHq+R9bx3po5ispQXnqo5ajbhz3Ay3UCnECMGO4K34Z6ZTdwKephGKsShTPCRA7I5cI5
-         ZhHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4ymeKyoEPaB2TlyXtYfKO3gw6CH1MjfygMlQz73O8po=;
-        b=ykIkr+/PJR+L9pgrtS932qZZHZPwh84hgxzHN3U/pzDKPHha0NwbywTYqyTjBZofy6
-         6j+VU032M5pYmwRSEuoHfyhLk0DNadGRzXX6jRGAnnuWtXhjPwaCxYzI1LxPL87e1wos
-         X2JDo/0JejIwhTu1woyLCdikZ/1xCoW5ReP+CXbbSKcCk7Gb8UTw/BHCOJndlKUtOgMA
-         i7R9KNLy497UJMZa+5DNF6FDM/9nre/PTD9FH/7wl1R4oXMn/AfO4Ykbo5Hx6TNmYk9U
-         GSo8sDEDZl3X0NbjGKilvrMKC377t2bg5Tqs0bQK2NQuqYWrI/OEk6hwYZ9ig6Jw8fyj
-         uJyQ==
-X-Gm-Message-State: AO0yUKWvSH0uP7QDkhXpUjnXuBX8pqfGREKwQAnX+JP0LSJmegEfOZG6
-        8UATca6hDubgMWUQGbhyrZpViCW2KjRJ66s+KaFxtA==
-X-Google-Smtp-Source: AK7set8K5xDrSpT9L0kqCyfqBz0MMroZlR6Mbt2q07zvqdmgztRyOjO1+YmLFjBskGBUQZJF1uyB0xVoL/svv7JZWJ8=
-X-Received: by 2002:a05:651c:1719:b0:293:4e6d:f4f7 with SMTP id
- be25-20020a05651c171900b002934e6df4f7mr2283009ljb.3.1676606467219; Thu, 16
- Feb 2023 20:01:07 -0800 (PST)
+        Fri, 17 Feb 2023 01:03:45 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94AA126CE1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 22:03:42 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 29C2EB82B21
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 06:03:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34A5C4339B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 06:03:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1676613819;
+        bh=DywB9X931dYpzWP90TjnxeFMkF19ygIrzGTfPMEKafY=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=YOWJmcnlBsFDL9gNNYM/LYlCXcBMAXyYio/DTkqnrgD0LDHP+VhcKOasO6N7950E/
+         1RvEErPAKvYxjbztWowZ9BaUBJkUv1dbWKeXegZF9vqjECX0gLf7n73zZNUAKZifq5
+         BgG2sddKQHxACiSw2jQOw5/FzxY7DI/b+NMmcy41Gcbi2TeUwbH7sCUTMHk/77/kA1
+         Ft0vZFy73sW7aIbupTxE9tZ/mgTPNE6WmVtdBil55tVEpWHXE47M5j0fIDSsgSw7aG
+         CDNFqMs3X7ChMbDb2xMKvPm+/SLiVAob1cx/I71/2o3wgOymrKJUjRRPZj+xRq/fuB
+         M8j4xMQW7CRTA==
+Received: by mail-vs1-f48.google.com with SMTP id j40so2502091vsv.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 22:03:39 -0800 (PST)
+X-Gm-Message-State: AO0yUKU3kN9p8XDTw6zfHPH4bnlMyqfrFKZd5DNyFQdEt3arCwc8s8bz
+        mre2hK8YgemUK7z76ReabwvIBgRkjv0i+HlFQIQNoA==
+X-Google-Smtp-Source: AK7set/SNybjJrtBUBvHw30NMjPKdxhhc+qpYd8hMX85jaCVgzzyVI7eteev3ae0hkZtI8pnLd/QNthEqdKeTNaf3yk=
+X-Received: by 2002:a05:6102:209e:b0:3f9:ce06:90ff with SMTP id
+ h30-20020a056102209e00b003f9ce0690ffmr1708242vsr.35.1676613818580; Thu, 16
+ Feb 2023 22:03:38 -0800 (PST)
 MIME-Version: 1.0
-References: <20220921030649.1436434-1-bhupesh.sharma@linaro.org>
- <20220921030649.1436434-2-bhupesh.sharma@linaro.org> <a5b6255c-7282-32ed-8031-a4b841a78db7@linaro.org>
-In-Reply-To: <a5b6255c-7282-32ed-8031-a4b841a78db7@linaro.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Fri, 17 Feb 2023 09:30:55 +0530
-Message-ID: <CAH=2Ntw6XcyB2zy-cs35z3eOf8iTa28hGerhLndOgARrG05gJw@mail.gmail.com>
-Subject: Re: [PATCH v7 1/1] dma: qcom: bam_dma: Add support to initialize
- interconnect path
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     dmaengine@vger.kernel.org, agross@kernel.org,
-        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, thara.gopinath@gmail.com,
-        devicetree@vger.kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, vkoul@kernel.org,
-        Rob Herring <robh@kernel.org>
+References: <202302171138053231478@zte.com.cn>
+In-Reply-To: <202302171138053231478@zte.com.cn>
+From:   Amit Kucheria <amitk@kernel.org>
+Date:   Fri, 17 Feb 2023 11:33:27 +0530
+X-Gmail-Original-Message-ID: <CAHLCerPZ4JfWCNTOmkF9EYsVME2Z_EXY0uG9RchqPR+KOTwccQ@mail.gmail.com>
+Message-ID: <CAHLCerPZ4JfWCNTOmkF9EYsVME2Z_EXY0uG9RchqPR+KOTwccQ@mail.gmail.com>
+Subject: Re: [PATCH] thermal/drivers/tsens: Use devm_platform_ioremap_resource()
+To:     ye.xingchen@zte.com.cn
+Cc:     daniel.lezcano@linaro.org, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, thara.gopinath@gmail.com,
+        rafael@kernel.org, rui.zhang@intel.com,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,84 +65,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 16 Feb 2023 at 19:49, Vladimir Zapolskiy
-<vladimir.zapolskiy@linaro.org> wrote:
+On Fri, Feb 17, 2023 at 9:08 AM <ye.xingchen@zte.com.cn> wrote:
 >
-> On 9/21/22 06:06, Bhupesh Sharma wrote:
-> > From: Thara Gopinath <thara.gopinath@gmail.com>
-> >
-> > BAM dma engine associated with certain hardware blocks could require
-> > relevant interconnect pieces be initialized prior to the dma engine
-> > initialization. For e.g. crypto bam dma engine on sm8250. Such requirement
+> From: Ye Xingchen <ye.xingchen@zte.com.cn>
 >
-> Apparently it's proven that the change description is incorrect, Qualcomm
-> crypto engine is working fine on SM8250 and even more recent platforms,
-> so far there is no obvious necessity in this change.
-
-Since your v9 patchset produces no entry in $ cat /proc/crypto on
-either RB5 (qrb5165) or (with an additional patch) on sm8150-mtp or
-sa8115p-adp with the default arm64 defconfig with linux-next, I am not
-sure we can conclude QCE is working with these changes.
-
-Please share more details on how you tested this.
-
-Regards,
-Bhupesh
-
-> > is passed on to the bam dma driver from dt via the "interconnects"
-> > property. Add support in bam_dma driver to check whether the interconnect
-> > path is accessible/enabled prior to attempting driver intializations.
-> >
-> > If interconnects are not yet setup, defer the BAM DMA driver probe().
-> >
-> > Cc: Bjorn Andersson <andersson@kernel.org>
-> > Cc: Rob Herring <robh@kernel.org>
-> > Signed-off-by: Thara Gopinath <thara.gopinath@gmail.com>
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > [Bhupesh: Make header file inclusion alphabetical and use 'devm_of_icc_get()']
-> > ---
-> >   drivers/dma/qcom/bam_dma.c | 10 ++++++++++
-> >   1 file changed, 10 insertions(+)
-> >
-> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> > index 2ff787df513e..a5b0cf28ffb7 100644
-> > --- a/drivers/dma/qcom/bam_dma.c
-> > +++ b/drivers/dma/qcom/bam_dma.c
-> > @@ -26,6 +26,7 @@
-> >   #include <linux/kernel.h>
-> >   #include <linux/io.h>
-> >   #include <linux/init.h>
-> > +#include <linux/interconnect.h>
-> >   #include <linux/slab.h>
-> >   #include <linux/module.h>
-> >   #include <linux/interrupt.h>
-> > @@ -394,6 +395,7 @@ struct bam_device {
-> >       const struct reg_offset_data *layout;
-> >
-> >       struct clk *bamclk;
-> > +     struct icc_path *mem_path;
-> >       int irq;
-> >
-> >       /* dma start transaction tasklet */
-> > @@ -1294,6 +1296,14 @@ static int bam_dma_probe(struct platform_device *pdev)
-> >       if (IS_ERR(bdev->bamclk))
-> >               return PTR_ERR(bdev->bamclk);
-> >
-> > +     /* Ensure that interconnects are initialized */
-> > +     bdev->mem_path = devm_of_icc_get(bdev->dev, "memory");
-> > +     if (IS_ERR(bdev->mem_path)) {
-> > +             ret = dev_err_probe(bdev->dev, PTR_ERR(bdev->mem_path),
-> > +                                 "failed to acquire icc path\n");
-> > +             return ret;
-> > +     }
-> > +
-> >       ret = clk_prepare_enable(bdev->bamclk);
-> >       if (ret) {
-> >               dev_err(bdev->dev, "failed to prepare/enable clock\n");
+> Convert platform_get_resource(), devm_ioremap_resource() to a single
+> call to Use devm_platform_ioremap_resource(), as this is exactly
+> what this function does.
 >
-> I'm resurrecting the comments on this change to emphasize the observation
-> that the change is not needed at all to run QCE.
+> Signed-off-by: Ye Xingchen <ye.xingchen@zte.com.cn>
+
+Acked-by: Amit Kucheria <amitk@kernel.org>
+
+> ---
+>  drivers/thermal/qcom/tsens.c | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
 >
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 8020ead2794e..bfe7e4728cf0 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -876,7 +876,6 @@ int __init init_common(struct tsens_priv *priv)
+>         void __iomem *tm_base, *srot_base;
+>         struct device *dev = priv->dev;
+>         u32 ver_minor;
+> -       struct resource *res;
+>         u32 enabled;
+>         int ret, i, j;
+>         struct platform_device *op = of_find_device_by_node(priv->dev->of_node);
+> @@ -887,8 +886,7 @@ int __init init_common(struct tsens_priv *priv)
+>         if (op->num_resources > 1) {
+>                 /* DT with separate SROT and TM address space */
+>                 priv->tm_offset = 0;
+> -               res = platform_get_resource(op, IORESOURCE_MEM, 1);
+> -               srot_base = devm_ioremap_resource(dev, res);
+> +               srot_base = devm_platform_ioremap_resource(op, 1);
+>                 if (IS_ERR(srot_base)) {
+>                         ret = PTR_ERR(srot_base);
+>                         goto err_put_device;
+> @@ -906,8 +904,7 @@ int __init init_common(struct tsens_priv *priv)
+>         }
+>
+>         if (tsens_version(priv) >= VER_0_1) {
+> -               res = platform_get_resource(op, IORESOURCE_MEM, 0);
+> -               tm_base = devm_ioremap_resource(dev, res);
+> +               tm_base = devm_platform_ioremap_resource(op, 0);
+>                 if (IS_ERR(tm_base)) {
+>                         ret = PTR_ERR(tm_base);
+>                         goto err_put_device;
 > --
-> Best wishes,
-> Vladimir
+> 2.25.1
