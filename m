@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB5E869B43D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 21:54:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AE1B69B45A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Feb 2023 22:07:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229551AbjBQUyT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 15:54:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45902 "EHLO
+        id S229615AbjBQVHM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 16:07:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229540AbjBQUyS (ORCPT
+        with ESMTP id S229506AbjBQVHL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 15:54:18 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEBEF60A5F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 12:54:16 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id y29so2893679lfj.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 12:54:16 -0800 (PST)
+        Fri, 17 Feb 2023 16:07:11 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99E065E5BA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 13:07:08 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id y14so2287256ljq.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 13:07:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=w4WIlW107+t+DszwrTyAc22lGzyIotvHYh3Xdegh8P4=;
-        b=ijLbDznXSh8NzgQqTx231xT93GZkx4MeSRAeCsBUz44OLjpMEVla3bA3NYQPlNLlZp
-         IQsDkMoFer3vwJxvfOBxV/ruqX0qpfnIZ0wGQNyWXNNMZ4UWqaOzRDa3SkHXAKwU9MMF
-         bdvsq/G2lI6g1C51+IF8GLKFUS0yIJPX8oKvsMwM5p22utkwhC1jV4B9BaizWxCBEbQS
-         Jhl0ACH/gko8v118lIIS/AH7nVRk6BMtERZ3NBQShAQ5HVyOyZiYhQbwK+eZwCUbuvdY
-         rYt7r1dz1nDh9fj2G6a50W62RAUIUCOjqt90QzI1KcDp9BtBI4TDXRcm2j98yB7VGiHI
-         hM4Q==
+        bh=mq8A/0rhG6AT//xrl3XDfAyTm02RPehleIptm7GikgY=;
+        b=e49GzX8HDw9zdkwM7WoCelbzMRJRz2croaMGPdRiF3e3fgJ8yxOdUHAUh4WkrHPHqI
+         sECDo+ZMmeX8JmqPbsI3+3ygR5ZEQd87mfDzvjq+3zeZN0Xcv2bXmK+os0Oqcorixtkg
+         vada4UBhqwM9qTjWoK6UFvtZTonBqrTa1TyQfUPXv9U6vpwZKgDxsNOv+Q+HDoN0wEIY
+         Ep5d7BGnccPcvoyV06++PoCNfbrTCt+Gw/cjzmnMasSIdHh1Z1b6SAD+qG64hW0UMxcj
+         /DqkGt7RlYKIvCKWXzPU6rNA0azPUBhBzVA1RP2AWzgFpD56+eLZuXlrXWvoUaGW2AaM
+         x6Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w4WIlW107+t+DszwrTyAc22lGzyIotvHYh3Xdegh8P4=;
-        b=uVg4THznotomDAdq4HXy/c/q/zf+8sLZN/Am5P1G7p+EY8v9A6DNVEf7TUndATSY27
-         2eELXEa4dFKB+TSaBo5Vw6q5Y8bOWzhJ+CDMTnNPBuq+ADpGTjfxbtXKiFd/AanIpcfi
-         f4RxyNtJRsYHW3O9SRQ0vRuvlVQMDreKgsaCUjXKu6RT+d17YFgWUnNWMrrod9Ns0E/e
-         ew8b0hubWyHhnVVOgAEPsxQt7ZOisj7WNE2BK01iD764SqkoaVCTSgNzBuS0Q6N6Dd3A
-         CS9A/sAX+te0nAbXgWEghHIa4S0dwZrTLyMxuHK8ntTphICE2HQ3RUaIhhwMvhr+iqCS
-         Vu4w==
-X-Gm-Message-State: AO0yUKVv4bn3e1cL0w0BZppwq9aiI1auwsG8kgL8S3UXV3psUZYaVhVc
-        hXKmsI4qS0OIU+GDoawqAZU5qg==
-X-Google-Smtp-Source: AK7set8gglBiYkWUbLE8SQ94BBjgD+VurWdIpC2JdjGiHA8slABEmoxIJMuENRApu8yYjKrVP71O3w==
-X-Received: by 2002:ac2:4142:0:b0:4d5:7923:c4c0 with SMTP id c2-20020ac24142000000b004d57923c4c0mr132849lfi.27.1676667255203;
-        Fri, 17 Feb 2023 12:54:15 -0800 (PST)
+        bh=mq8A/0rhG6AT//xrl3XDfAyTm02RPehleIptm7GikgY=;
+        b=0nMijanUDP6uZUyTI7dc1DtjCBCjJN/r8Yu9ijblubp1qr5TgEfm9b/BPWh68fNZm8
+         gZSG/iMpP/uJxsw0AGDTumfJt7TKh1BvGQAkxeXa3hsZj41ol8S9OOtrdrYfxuL+ziJ4
+         LA3bGWtI/81A6qrankTx96Zj30cMG0m/j0+3MJK7brV4i2bZCQlkmrdMNf1tTM9Nnzre
+         kIUtC3jJe7xDFpdnw0fgXF9dxbltBKzjpvv+kONDSr3Ue1WP3x+Po967AZ0I0DmeD3zC
+         Nnu8MxKDAq4ePLclWvmkDll2yHj4TBDg6RLKnx73lbJ9h2PfJV2yqk/omIDpSeTjZlIR
+         quSg==
+X-Gm-Message-State: AO0yUKUGUQDAdAoYBimsbjTm8KT9i7GdK1WKg0xNXi+PWE/noV14wDgc
+        7M+nYNn1cFVrOxYJgbP9hocvUQ==
+X-Google-Smtp-Source: AK7set+1ihJI1tJPL7YWC72NTcvAKd77K2nw/x7vA7elVm22cZ0Z5abkQNG8PKyFHzCotssyjxqbgA==
+X-Received: by 2002:a2e:94c9:0:b0:290:7017:7fe3 with SMTP id r9-20020a2e94c9000000b0029070177fe3mr827984ljh.50.1676668026854;
+        Fri, 17 Feb 2023 13:07:06 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id h12-20020a19700c000000b004d8729d4150sm771293lfc.145.2023.02.17.12.54.14
+        by smtp.gmail.com with ESMTPSA id t1-20020ac25481000000b004d16263b36bsm777310lfk.111.2023.02.17.13.07.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Feb 2023 12:54:14 -0800 (PST)
-Message-ID: <70f298cb-92a3-0bda-2192-51531a4b4f55@linaro.org>
-Date:   Fri, 17 Feb 2023 22:54:13 +0200
+        Fri, 17 Feb 2023 13:07:06 -0800 (PST)
+Message-ID: <2e129fd6-d4e5-a955-5355-3ca71166fb33@linaro.org>
+Date:   Fri, 17 Feb 2023 23:07:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.2
-Subject: Re: [PATCH v2 05/14] drm/msm/adreno: Disable has_cached_coherent for
- A610/A619_holi
+Subject: Re: [PATCH v2 06/14] drm/msm/gpu: Use dev_pm_opp_set_rate for non-GMU
+ GPUs
 Content-Language: en-GB
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org, andersson@kernel.org,
@@ -66,16 +66,14 @@ Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        Ricardo Ribalda <ribalda@chromium.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
+        Emma Anholt <emma@anholt.net>, Chia-I Wu <olvaffe@gmail.com>,
+        Dan Carpenter <error27@gmail.com>,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-kernel@vger.kernel.org
 References: <20230214173145.2482651-1-konrad.dybcio@linaro.org>
- <20230214173145.2482651-6-konrad.dybcio@linaro.org>
+ <20230214173145.2482651-7-konrad.dybcio@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230214173145.2482651-6-konrad.dybcio@linaro.org>
+In-Reply-To: <20230214173145.2482651-7-konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,44 +86,64 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 14/02/2023 19:31, Konrad Dybcio wrote:
-> These SKUs don't support the feature. Disable it to make the GPU stop
-> crashing after almost each and every submission - the received data on
-> the GPU end was simply incomplete in garbled, resulting in almost nothing
-> being executed properly.
+> Currently we only utilize the OPP table connected to the GPU for
+> getting (available) frequencies. We do however need to scale the
+> voltage rail(s) accordingly to ensure that we aren't trying to
+> run the GPU at 1GHz with a VDD_LOW vote, as that would result in
+> an otherwise inexplainable hang.
+> 
+> Tell the OPP framework that we want to scale the "core" clock
+> and swap out the clk_set_rate to a dev_pm_opp_set_rate in
+> msm_devfreq_target() to enable usage of required-opps and by
+> extension proper voltage level/corner scaling.
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   drivers/gpu/drm/msm/adreno/adreno_device.c | 8 +++++++-
->   1 file changed, 7 insertions(+), 1 deletion(-)
+>   drivers/gpu/drm/msm/adreno/adreno_gpu.c | 4 ++++
+>   drivers/gpu/drm/msm/msm_gpu_devfreq.c   | 2 +-
+>   2 files changed, 5 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> index 36f062c7582f..82757f005a1a 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -540,7 +540,13 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
->   		config.rev.minor, config.rev.patchid);
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index ce6b76c45b6f..15e405e4f977 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -1047,6 +1047,10 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>   	const char *gpu_name;
+>   	u32 speedbin;
 >   
->   	priv->is_a2xx = config.rev.core == 2;
-> -	priv->has_cached_coherent = config.rev.core >= 6;
+> +	/* This can only be done here, or devm_pm_opp_set_supported_hw will WARN_ON() */
+> +	if (!IS_ERR(devm_clk_get(dev, "core")))
+> +		devm_pm_opp_set_clkname(dev, "core");
+
+Can we instead move a call to a6xx_set_supported_hw() / check_speed_bin 
+after the adreno_gpu_init() ? It will call msm_gpu_init, which in turn 
+sets gpu->core_clk.
+
+Ideally you can call devm_pm_opp_set_clkname() from that function. Or 
+maybe completely drop gpu->core_clk and always use 
+devm_pm_opp_set_clk_rate().
+
 > +
-> +	if (config.rev.core >= 6) {
-> +		/* Exclude A610 and A619_holi */
-> +		if (!(adreno_cmp_rev(ADRENO_REV(6, 1, 0, ANY_ID), config.rev) ||
-> +		      adreno_cmp_rev(ADRENO_REV(6, 1, 9, 1), config.rev)))
-> +			priv->has_cached_coherent = true;
-> +	}
+>   	adreno_gpu->funcs = funcs;
+>   	adreno_gpu->info = adreno_info(config->rev);
+>   	adreno_gpu->gmem = adreno_gpu->info->gmem;
+> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> index e27dbf12b5e8..ea70c1c32d94 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> @@ -48,7 +48,7 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
+>   		gpu->funcs->gpu_set_freq(gpu, opp, df->suspended);
+>   		mutex_unlock(&df->lock);
+>   	} else {
+> -		clk_set_rate(gpu->core_clk, *freq);
+> +		dev_pm_opp_set_rate(dev, *freq);
 
-I'd suggest something like:
+This is not enough, there are calls to clk_set_rate(gpu->core_clk) in 
+msm_gpu.c which are called from the suspend/resume path.
 
-if (config.rev.core >= 6 &&
-     !(info.quirks & ADRENO_QUIRK_NO_CACHE_COHERENT))
-         priv->has_cache_coherent = true;
-
-Let's keep all the information and quirks in a single place.
-
+>   	}
 >   
->   	gpu = info->init(drm);
->   	if (IS_ERR(gpu)) {
+>   	dev_pm_opp_put(opp);
 
 -- 
 With best wishes
