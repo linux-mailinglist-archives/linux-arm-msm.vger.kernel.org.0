@@ -2,56 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEE7F69B82F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 06:38:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 24FC069B8AD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 09:17:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229561AbjBRFib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Feb 2023 00:38:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48150 "EHLO
+        id S229616AbjBRIRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Feb 2023 03:17:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjBRFia (ORCPT
+        with ESMTP id S229460AbjBRIRS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Feb 2023 00:38:30 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F06D33A08F;
-        Fri, 17 Feb 2023 21:38:28 -0800 (PST)
+        Sat, 18 Feb 2023 03:17:18 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16DB62C649;
+        Sat, 18 Feb 2023 00:17:17 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 532A2CE22F6;
-        Sat, 18 Feb 2023 05:38:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20FA4C433D2;
-        Sat, 18 Feb 2023 05:38:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676698705;
-        bh=Oxt0iejN3V58EN6vZUzQan+IRypPIMXTdgAy3ihC6GM=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=L5dXVgrxLN/6Mm7rXvR8j0Ohg78CnHdjr05fWcd4Pa5PrYWpEtLV9DLBaExA097rG
-         ojJjwfySDiu0HNDC0vmbB8MXJ4nqoVKXs3SGGvAQSO3Vz2t7uCoEsYW1iN4c5T1DeC
-         i30flI/QOsOI0l2n98lzCJ32/nEFdDoj3BNaqMv9La0HSJyfKRFP3d7GLzDECka+0G
-         T/+IcPd/+vNM1KMgtJ/TxVN6maIvdD3BXHOtA3rY/1bqWzjZLowiD3lXElcFTe40ND
-         ORBVWA3mDyiOz/E8u1p8YQpurVdwNEpoyzJbU1HgUoYDhzJtz1pXSpnsnl6Xlr9xEe
-         vdXvQtkSazBiA==
-Message-ID: <ebc257025ebd641e624ef506ea09c800.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20221227204528.1899863-1-abel.vesa@linaro.org>
-References: <20221227204528.1899863-1-abel.vesa@linaro.org>
-Subject: Re: [PATCH v3 1/2] clk: Add generic sync_state callback for disabling unused clocks
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-clk@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, mka@chromium.org
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        by ams.source.kernel.org (Postfix) with ESMTPS id BD00CB82EB1;
+        Sat, 18 Feb 2023 08:17:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036B4C433EF;
+        Sat, 18 Feb 2023 08:17:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1676708234;
+        bh=BNbl3BOcb+TlBY9OXcmytUp8bjBVyH+3E4aP7IoRNH0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SWJYFb5xLWZn4MAB7/ao/J1LRMuU1xsaMmdRB79QEBVq4atB/HfbpRH6JVr3J0sjw
+         krdibM1Q7MV4zfR2QmsCk/RPIPeSGhNkSunqTYhWSxTvmahfgTwPK9NUgMfuFPIcXf
+         QYeOLp65+hSqgEP2QbMbHQfcRUHhOn3YpBtQSJc8=
+Date:   Sat, 18 Feb 2023 09:17:11 +0100
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     John Moon <quic_johmoo@quicinc.com>,
+        Randy Dunlap <rdunlap@infradead.org>
+Cc:     Masahiro Yamada <masahiroy@kernel.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Trilok Soni <quic_tsoni@quicinc.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>
-Date:   Fri, 17 Feb 2023 21:38:22 -0800
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Todd Kjos <tkjos@google.com>,
+        Matthias Maennich <maennich@google.com>,
+        Giuliano Procida <gprocida@google.com>,
+        kernel-team@android.com, Jordan Crouse <jorcrous@amazon.com>
+Subject: Re: [PATCH RESEND 1/1] check-uapi: Introduce check-uapi.sh
+Message-ID: <Y/CJhzSJ5YKvD7my@kroah.com>
+References: <20230217202234.32260-1-quic_johmoo@quicinc.com>
+ <20230217202234.32260-2-quic_johmoo@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230217202234.32260-2-quic_johmoo@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,91 +62,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Abel Vesa (2022-12-27 12:45:27)
-> There are unused clocks that need to remain untouched by clk_disable_unus=
-ed,
-> and most likely could be disabled later on sync_state. So provide a gener=
-ic
-> sync_state callback for the clock providers that register such clocks.
-> Then, use the same mechanism as clk_disable_unused from that generic
-> callback, but pass the device to make sure only the clocks belonging to
-> the current clock provider get disabled, if unused. Also, during the
-> default clk_disable_unused, if the driver that registered the clock has
-> the generic clk_sync_state_disable_unused callback set for sync_state,
-> skip disabling its clocks.
+On Fri, Feb 17, 2023 at 12:22:34PM -0800, John Moon wrote:
+> While the kernel community has been good at maintaining backwards
+> compatibility with kernel UAPIs, it would be helpful to have a tool
+> to check if a patch introduces changes that break backwards
+> compatibility.
+> 
+> To that end, introduce check-uapi.sh: a simple shell script that
+> checks for changes to UAPI headers using libabigail.
+> 
+> libabigail is "a framework which aims at helping developers and
+> software distributors to spot some ABI-related issues like interface
+> incompatibility in ELF shared libraries by performing a static
+> analysis of the ELF binaries at hand."
+> 
+> The script uses one of libabigail's tools, "abidiff", to compile the
+> changed header before and after the patch to detect any changes.
+> 
+> abidiff "compares the ABI of two shared libraries in ELF format. It
+> emits a meaningful report describing the differences between the two
+> ABIs."
+> 
+> Signed-off-by: John Moon <quic_johmoo@quicinc.com>
+> ---
+>  scripts/check-uapi.sh | 245 ++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 245 insertions(+)
+>  create mode 100755 scripts/check-uapi.sh
 
-How does that avoid disabling clks randomly in the clk tree? I'm
-concerned about disabling an unused clk in the middle of the tree
-because it doesn't have a driver using sync state, while the clk is the
-parent of an unused clk that is backed by sync state.
+Ok, this is very cool, thank you so much for doing this.
 
-   clk A -->  clk B=20
+I know Randy Dunlap was also looking into this previously, so I've cc:ed
+him and bounced him the original.
 
-clk A: No sync state
-clk B: sync state
+I tried this out, and at first glance, this felt like it was just "too
+fast" in that nothing actually was being tested.  So I manually added a
+field to a structure I know would break the abi, and:
 
-clk B is left on by the bootloader. __clk_disable_unused(NULL) is called
-from late init. Imagine clk A is the root of the tree.
+	$ ./scripts/check-uapi.sh
+	!!! ABI differences detected in include/uapi/linux/usb/ch9.h (compared to file at HEAD^1) !!!
 
-	clk_disable_unused_subtree(clk_core A)
-	  clk_disable_unused_subtree(clk_core B)
-	    if (from_sync_state && core->dev !=3D dev)
-	      return;
-	  ...
-	  clk core A->ops->disable()
+	    [C] 'struct usb_ctrlrequest' changed:
+	      type size changed from 64 to 72 (in bits)
+	      1 data member insertion:
+		'__u8 abi_break', at offset 16 (in bits) at ch9.h:216:1
+	      3 data member changes:
+		'__le16 wValue' offset changed from 16 to 24 (in bits) (by +8 bits)
+		'__le16 wIndex' offset changed from 32 to 40 (in bits) (by +8 bits)
+		'__le16 wLength' offset changed from 48 to 56 (in bits) (by +8 bits)
 
-clk core B is off now?
+	0/1 UAPI header file changes are backwards compatible
+	UAPI header ABI check failed
 
-Also sync_state seems broken right now. I saw mka mentioned that if you
-have a device node enabled in your DT but never enable a driver for it
-in the kernel we'll never get sync_state called. This is another
-problem, but it concerns me that sync_state would make the unused clk
-disabling happen at some random time or not at all.
+So it worked!
 
-Can the problem be approached more directly? If this is about fixing
-continuous splash screen, then I wonder why we can't list out the clks
-that we know are enabled by the bootloader in some new DT binding, e.g.:
+There is a mismatch of different bash coding styles in the document, which
+isn't a big deal, and one warning produced by the `shellcheck` tool, but that
+can all be fixed up later.  I'll go queue this up now, as a starting point for
+people to play with, thanks!
 
-	clock-controller {
-		#clock-cells =3D <1>;
-		boot-handoff-clocks =3D <&consumer_device "clock cells for this clk provi=
-der">;
-	};
+Also, it would be nice to be able to check if the current tree with changes in
+it (not checked in, just modified) breaks the abi, without having to go and
+check the change in.  But again, future fixups for people to do!
 
-Then mark those as "critical/don't turn off" all the way up the clk tree
-when the clk driver probes by essentially incrementing the
-prepare/enable count but not actually touching the hardware, and when
-the clks are acquired by clk_get() for that device that's using them
-from boot we make the first clk_prepare_enable() do nothing and not
-increment the count at all. We can probably stick some flag into the
-'struct clk' for this when we create the handle in clk_get() so that the
-prepare and enable functions can special case and skip over.
+thanks,
 
-The sync_state hook operates on a driver level, which is too large when
-you consider that a single clk driver may register hundreds of clks that
-are not related. We want to target a solution at the clk level so that
-any damage from keeping on all the clks provided by the controller is
-limited to just the drivers that aren't probed and ready to handle their
-clks. If sync_state could be called whenever a clk consumer consumes a
-clk it may work? Technically we already have that by the clk_hw_provider
-function but there isn't enough information being passed there, like the
-getting device.
-
-> diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-> index 842e72a5348f..cf1adfeaf257 100644
-> --- a/include/linux/clk-provider.h
-> +++ b/include/linux/clk-provider.h
-> @@ -720,6 +720,7 @@ struct clk *clk_register_divider_table(struct device =
-*dev, const char *name,
->                 void __iomem *reg, u8 shift, u8 width,
->                 u8 clk_divider_flags, const struct clk_div_table *table,
->                 spinlock_t *lock);
-> +void clk_sync_state_disable_unused(struct device *dev);
-
-This is a weird place to put this. Why not in the helper functions
-section?
-
->  /**
->   * clk_register_divider - register a divider clock with the clock framew=
-ork
->   * @dev: device registering this clock
+greg k-h
