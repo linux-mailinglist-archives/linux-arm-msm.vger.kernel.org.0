@@ -2,91 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8EC869B9B8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 12:23:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FCF169BA03
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 13:38:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229634AbjBRLXV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Feb 2023 06:23:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58504 "EHLO
+        id S229481AbjBRMiy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Feb 2023 07:38:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229608AbjBRLXU (ORCPT
+        with ESMTP id S229441AbjBRMix (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Feb 2023 06:23:20 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2277914980
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 03:23:19 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id h20so149683lfe.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 03:23:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zXrmfYPtbD+a4mYWOw7gzX5blmN63cfug46pUteyx84=;
-        b=kzgT7ub+8SeOW/sL4cVFBuzPnNqoM6WqL8uiNYdBNlvtGlgd5lAOwrqaThKyUtzI6q
-         hZPQ++Wa9Bdv294jRq4J9JThEpkCGjTVN/gjjmPdJBTIlwxde9hPV4HU3+iL4zJCiRh7
-         s2aJ0gekWlA7msRBLxF/MznErWfBfNzq/Mz3p8dssISUc70jYCJU1FcC0v5ctD+0KdUX
-         ++eferbxRB4BEpZRn/gvHYPjkeUD88GbtQW7C8PS2zo8EOMuAgDxFCi4rluIgPqPVepn
-         V7+Vrj2qW7APxl6KjZnwP03e9dmotmyN2gGqQn1nuUphnePzLuUcY9T2RSG8YvhrdKSj
-         hEDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zXrmfYPtbD+a4mYWOw7gzX5blmN63cfug46pUteyx84=;
-        b=7nTV9P9zinOO5EfimEiCzGCiykUyVaMshss/1fwn5OHyplj1WboJAiWU1Ds6g4UowT
-         SkEqrC13HyhM2Y/HpFdMjG16JSY9kNhRr7LBiAk53QGo0S4PYwgXk/vuwHOwqDN7sICJ
-         aV1k2q9/jKIGa86irheB0Ss43RUUANErFdFVbjgpqs9nR4mDRqVrTJgzy2MAFf0TdYp4
-         +qS2N/gtPV+4R3JuNvrUbzi1cxaLED8ns1A6QTb2zsgh+uQceij4kjfIlQ4B48tfZPnP
-         uXu/kO1pDwWpNxJh9zGikZQFQf602l0Dx0x1Vgf0olN8EV1pbuCH8ycIrIxXdT6WQLNz
-         DmZg==
-X-Gm-Message-State: AO0yUKUmM5HwjVL2AxNTbfAquUqWEATQoBKPDtoskRouf5nbJgeRa4ca
-        LG9RLebCnN+zwVOxYJ2L2XFX7g==
-X-Google-Smtp-Source: AK7set/2Ym3B0dnJtwcPI9O9DneEz9RDbQ+ZtBmCZopQM4AHFgi7uc2wVb/PGBW+WJcbmcklTCJHtA==
-X-Received: by 2002:a19:a40e:0:b0:4d1:7923:3b92 with SMTP id q14-20020a19a40e000000b004d179233b92mr781116lfc.50.1676719397408;
-        Sat, 18 Feb 2023 03:23:17 -0800 (PST)
-Received: from [192.168.1.101] (abxh184.neoplus.adsl.tpnet.pl. [83.9.1.184])
-        by smtp.gmail.com with ESMTPSA id m17-20020ac24ad1000000b004cb1e2f8f4dsm950902lfp.152.2023.02.18.03.23.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Feb 2023 03:23:17 -0800 (PST)
-Message-ID: <fbece9d6-2204-2534-e44f-29c29cc56413@linaro.org>
-Date:   Sat, 18 Feb 2023 12:23:15 +0100
+        Sat, 18 Feb 2023 07:38:53 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2288417174;
+        Sat, 18 Feb 2023 04:38:52 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31ICD8PE002280;
+        Sat, 18 Feb 2023 12:38:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=g3kOTMIXEvGqXsDw9ykYi5ROfsHk1clT6WdQXaM+IkA=;
+ b=EIJdGhKM3eESaZKjKcM4pvjrqhAGQY2FCZbinaQwpnt/Hxp3SoWwgKasfGQp3+9ZUJhQ
+ fj82t9qQwxwLIeWBTLlx5ojXB2N9vrmEUahUH42GAhLQw6ZNisY6CxW099QuzhhNK8VY
+ FnzYapHyg60/dEJMyw7TQ7GJ5ynL9amwhSbaTahbYhyvvMq9ic/a1t4JscSiYJyGE08V
+ Ivu0RUtptL++BkfMg1yMzHyZIsMd3/G2pER0EMrDAihPVRzMBAh82AB47oIdkT6Jr+HR
+ K6swoQ4CnxOTvxfWKPe8DBLg/q3xunAdscNT39vw0bLUFzCb28hSvONWK9Tvk0JoHXbs +g== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ntps18swd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 18 Feb 2023 12:38:42 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31ICcfLd010907
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 18 Feb 2023 12:38:41 GMT
+Received: from [10.216.19.78] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Sat, 18 Feb
+ 2023 04:38:39 -0800
+Message-ID: <3fe19c46-7013-5f93-8645-e294cf84940c@quicinc.com>
+Date:   Sat, 18 Feb 2023 18:08:36 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH v2 1/2] dt-bindings: display/msm: dsi-controller-main: Fix
- deprecated QCM2290 compatible
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2] firmware: qcom_scm: modify
+ qcom_scm_set_download_mode()
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230217111316.306241-1-konrad.dybcio@linaro.org>
- <c49904be-d842-fc12-a443-17f229d53166@linaro.org>
- <a4eaccfd-34ba-15f3-033f-165b46c43317@linaro.org>
- <a158bca2-78bf-5b38-60fe-88118e8b4ad7@linaro.org>
- <ab35cdcf-53ae-a3f2-fc08-d0f58c51a0ae@linaro.org>
- <48cb00cd-961c-b72f-fba8-1842d658e289@linaro.org>
- <d4ffa9f0-797e-7a32-147e-64aa46d7e197@linaro.org>
- <e6d397bb-dd5d-8308-eb07-3aeb2589115c@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <e6d397bb-dd5d-8308-eb07-3aeb2589115c@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     <agross@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1675419435-30726-1-git-send-email-quic_mojha@quicinc.com>
+ <20230203190248.ywmb54gmdd4blv46@ripper>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20230203190248.ywmb54gmdd4blv46@ripper>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: UTKHes_NnYsK3p4_aCYVwHa8_uqPAMyx
+X-Proofpoint-ORIG-GUID: UTKHes_NnYsK3p4_aCYVwHa8_uqPAMyx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-18_07,2023-02-17_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
+ adultscore=0 impostorscore=0 phishscore=0 spamscore=0 mlxlogscore=999
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302180111
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -95,37 +82,116 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 18.02.2023 11:14, Krzysztof Kozlowski wrote:
-> On 17/02/2023 22:13, Bryan O'Donoghue wrote:
->> On 17/02/2023 12:24, Krzysztof Kozlowski wrote:
->>> First, it would be nice to know what was the intention of Bryan's commit?
+On 2/4/2023 12:32 AM, Bjorn Andersson wrote:
+> On Fri, Feb 03, 2023 at 03:47:15PM +0530, Mukesh Ojha wrote:
+>> Modify qcom_scm_set_download_mode() such that it can support
+>> multiple modes. There is no functional change with this change.
 >>
->> Sorry I've been grazing this thread but, not responding.
+> 
+> As Dmitry said, you argue for added flexibility, but doesn't provide a
+> user of that flexibility. I will drop this patch from the queue for now.
+> 
+> Please include this together with the patch(es) that benefit from such
+> flexibility.
+
+Sure, will add this along with patches which benefit from this change.
+
+> 
+>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>> ---
+>> Changes in v2:
+>>    - Stop changing legacy scm id for dload mode.
 >>
->> - qcom,dsi-ctrl-6g-qcm2290
+>>   drivers/firmware/qcom_scm.c | 15 +++++++--------
+>>   include/linux/qcom_scm.h    |  5 +++++
+>>   2 files changed, 12 insertions(+), 8 deletions(-)
 >>
->> is non-compliant with qcom,socid-dsi-ctrl which is our desired naming 
->> convention, so that's what the deprecation is about i.e. moving this 
->> compat to "qcom,qcm2290-dsi-ctrl"
+>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>> index cdbfe54..6245b97 100644
+>> --- a/drivers/firmware/qcom_scm.c
+>> +++ b/drivers/firmware/qcom_scm.c
+>> @@ -400,7 +400,7 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
+>>   }
+>>   EXPORT_SYMBOL(qcom_scm_set_remote_state);
+>>   
+>> -static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+>> +static int __qcom_scm_set_dload_mode(struct device *dev, enum qcom_download_mode mode)
+>>   {
+>>   	struct qcom_scm_desc desc = {
+>>   		.svc = QCOM_SCM_SVC_BOOT,
+>> @@ -410,12 +410,12 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+>>   		.owner = ARM_SMCCC_OWNER_SIP,
+>>   	};
+>>   
+>> -	desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
+>> +	desc.args[1] = mode ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
+>>   
+>>   	return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
+>>   }
+>>   
+>> -static void qcom_scm_set_download_mode(bool enable)
+>> +static void qcom_scm_set_download_mode(enum qcom_download_mode mode)
+>>   {
+>>   	bool avail;
+>>   	int ret = 0;
+>> @@ -424,10 +424,9 @@ static void qcom_scm_set_download_mode(bool enable)
+>>   					     QCOM_SCM_SVC_BOOT,
+>>   					     QCOM_SCM_BOOT_SET_DLOAD_MODE);
+>>   	if (avail) {
+>> -		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
+>> +		ret = __qcom_scm_set_dload_mode(__scm->dev, mode);
+>>   	} else if (__scm->dload_mode_addr) {
+>> -		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
+>> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
+>> +		ret = qcom_scm_io_writel(__scm->dload_mode_addr, mode);
+>>   	} else {
+>>   		dev_err(__scm->dev,
+>>   			"No available mechanism for setting download mode\n");
+>> @@ -1410,7 +1409,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>>   	 * disabled below by a clean shutdown/reboot.
+>>   	 */
+>>   	if (download_mode)
+>> -		qcom_scm_set_download_mode(true);
+>> +		qcom_scm_set_download_mode(QCOM_DOWNLOAD_FULLDUMP);
+>>   
+>>   	return 0;
+>>   }
+>> @@ -1419,7 +1418,7 @@ static void qcom_scm_shutdown(struct platform_device *pdev)
+>>   {
+>>   	/* Clean shutdown, disable download mode to allow normal restart */
+>>   	if (download_mode)
 > 
-> OK, then there was no intention to deprecate qcom,mdss-dsi-ctrl and it
-> should be left as allowed compatible.
-Not sure if we're on the same page.
+> PS. Wouldn't it make sense, if !download_mode to set NODUMP?
 
-It wasn't intended to deprecate [1] "qcom,qcm2290-dsi-ctrl", "qcom-mdss-dsi-ctrl";
-(newly-introduced in Bryan's cleanup patchset) but it was intended to deprecate
-[2] "qcom,dsi-ctrl-6g-qcm2290"; which was introduced long before that *and* used in
-the 6115 dt (and it still is in linux-next today, as my cleanup hasn't landed yet).
+IMO, it does not need even a check, since our intention is to disable
+download mode during reboot/restart.
 
-[3] "qcom,dsi-ctrl-6g-qcm2290", "qcom,mdss-dsi-ctrl" was never used (and should never
-be, considering there's a proper compatible [1] now) so adding it to bindings
-didn't solve the undocumented-ness issue. Plus the fallback would have never
-worked back then, as the DSI hw revision check would spit out 2.4.1 or 2.4.
-which is SC7180 or SDM845 and then it would never match the base register, as
-they're waay different.
-
-Konrad
+-Mukesh
 > 
-> Best regards,
-> Krzysztof
+> Regards,
+> Bjorn
 > 
+>> -		qcom_scm_set_download_mode(false);
+>> +		qcom_scm_set_download_mode(QCOM_DOWNLOAD_NODUMP);
+>>   }
+>>   
+>>   static const struct of_device_id qcom_scm_dt_match[] = {
+>> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+>> index f833564..f9bc84e 100644
+>> --- a/include/linux/qcom_scm.h
+>> +++ b/include/linux/qcom_scm.h
+>> @@ -14,6 +14,11 @@
+>>   #define QCOM_SCM_CPU_PWR_DOWN_L2_OFF	0x1
+>>   #define QCOM_SCM_HDCP_MAX_REQ_CNT	5
+>>   
+>> +enum qcom_download_mode {
+>> +	QCOM_DOWNLOAD_NODUMP    = 0x00,
+>> +	QCOM_DOWNLOAD_FULLDUMP  = 0x10,
+>> +};
+>> +
+>>   struct qcom_scm_hdcp_req {
+>>   	u32 addr;
+>>   	u32 val;
+>> -- 
+>> 2.7.4
+>>
