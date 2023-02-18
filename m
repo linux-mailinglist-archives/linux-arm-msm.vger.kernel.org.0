@@ -2,142 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91D2369BBE8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 21:40:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B1AB69BC11
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 22:15:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229642AbjBRUkv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Feb 2023 15:40:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57236 "EHLO
+        id S229657AbjBRVPu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Feb 2023 16:15:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229641AbjBRUku (ORCPT
+        with ESMTP id S229624AbjBRVPu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Feb 2023 15:40:50 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21CEF1554E
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 12:40:47 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id s8so1829651lfr.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 12:40:47 -0800 (PST)
+        Sat, 18 Feb 2023 16:15:50 -0500
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0C8F12070;
+        Sat, 18 Feb 2023 13:15:48 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id g2so1465797pjp.2;
+        Sat, 18 Feb 2023 13:15:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/9yjE3QCCJiFeu3KJrY/us9LWq5B0xDXPEFfZAbBjes=;
-        b=KHJZO0rnrAUZZS6r1uhqxXpozu3AvCyL7ufaN1/xRERjundfnIwRvtcbKwZmm9nGd3
-         w/kcXKCW1tlRE6l3P4+LOLyVhZSJJGWVtKqDp0G5I3zlzrzX0SKQD93nn0oMh6265vTC
-         sqUafVt2ypBqWrY4wtPE30sjF4Rj0yLtHS6ryTrsDVe9otxcIlsV9PW2IS+//eAVnv54
-         ITBBXA2ZZy/BiRQ1JPV50h4a8/DQ9kfynKbXQj3spsSnEOw067BIbYfGXcNzWXupCf3K
-         eF5otShLJIMlI4wjTsTm6ZkFMWpgDsy29gYUZ1DHehrZgfv4WlQuTFidvNi9329BH86z
-         5N8w==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ly4gQbq9/GnWUeWA60KPz/G+dzGxkcXgw5HCdzXbiDM=;
+        b=TqzurTwkIi7vl6x42AjsrYN5etY5UrhYSRhuhRA0DcAed3BQ7kd+EShu6ZYUuzSWS6
+         f2ShdvpTlDiEddzw1Pngzl0gliC9vI89r49p462MNjyf7n2fk9K5rG40sbyi9YeAuXKx
+         2IlQ6wVLZDk4ujSNogI1BVXRPnZyG9XodQul+Gt/IjgeqRh2hZMfbddpy2FwGlj/orZk
+         nSpYnyQj/uh7kMZhl+cXvFJ9VgfGaRbtRluybITkUr1SLZHCZANTXG1WLO5m6DiwYoul
+         TaCi+7mlADXeBpnG/jw9xXwtKwm9Focdx2Pr+MJUZva3Y7KD/ZaKPJ7prjd0RN12Eg1h
+         3+EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/9yjE3QCCJiFeu3KJrY/us9LWq5B0xDXPEFfZAbBjes=;
-        b=BaDqB2cA/CIZBRKTcoxR6J0lIS0vY5u1WSeAJyfAySiEe16ldpi6yinfgOe5Ussg9Y
-         DJLODTNofW8KWDCFNcFCunjsX/G9F2nAiJbeKOIpkN6Z28cVtOKhWRmIf9QfuVDz90eH
-         hWQlwKeYYDZS1IxUrdsntCrukYiu8QxMwADm8x9e//QSJFCfrN9RHHPs3qnUaiuJM15J
-         RBDiopZ+IjqLoUTz1kqQPC/UBZ3K6ne5utZgrZdm0PHs7wLQ2K5TCCJ4h9jRb4Mnfno7
-         Q9+Uy3KG7Bxz7/3CPdMp0C3dUwKLnynGs+RFMXQld4waD/WKTEgeo0fYGYzdZ1fgChkz
-         NggA==
-X-Gm-Message-State: AO0yUKV/HlIXnJGsDmhb2SmNxwEGug40oxGzKZfdL5Xv48oj4xyZ8koa
-        2E5mjHZ0QtB6wC+86mornqCILw==
-X-Google-Smtp-Source: AK7set9sgSvx1S75m5oSL7RJvWAtaTcMk+G9MF08BmwzRwqYneDqLgU3tw/H270GjDJi8A6BrbUA5A==
-X-Received: by 2002:ac2:5305:0:b0:4dc:807a:d13e with SMTP id c5-20020ac25305000000b004dc807ad13emr61998lfh.55.1676752845336;
-        Sat, 18 Feb 2023 12:40:45 -0800 (PST)
-Received: from [192.168.1.101] (abxh184.neoplus.adsl.tpnet.pl. [83.9.1.184])
-        by smtp.gmail.com with ESMTPSA id c25-20020ac244b9000000b004d85789cef1sm1067946lfm.49.2023.02.18.12.40.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Feb 2023 12:40:44 -0800 (PST)
-Message-ID: <2a7a43f1-a13d-f094-5167-de74d5092d91@linaro.org>
-Date:   Sat, 18 Feb 2023 21:40:43 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ly4gQbq9/GnWUeWA60KPz/G+dzGxkcXgw5HCdzXbiDM=;
+        b=GFvocMVmL6+bPKoHR4aH/4qbjgr0L4O17fZtRloMtui0Y7xr+DaxYvInBqm6SVrstI
+         N1pqGxTTHzfoAOCgeBy+WTD1ESX/5nKu0mrQfjPv/8rBfMJxOO4bR/vF2ZWbY4XOqAoI
+         d9qtGNX1BrNrpy8F/diqiij70wgpGKe0Ayw6ZgjbpOwLjcFFSNdKhiuTKsI/zSsUr9zJ
+         6zUpsUOhBrTPW9c4fPmmXr4v8qRy8lT/sObAeoIvfSmCwhXpvHZvJJ+2Y05oYimTc4HT
+         VUmNURSdDNj78GHwoAj8nV7hxfsT+nHDHQaGqBFAy8ZNLc9dntRn2nKLrH+VQMpdBpUg
+         iAyQ==
+X-Gm-Message-State: AO0yUKVlS1W4vKwZSyK7S4Zycv7g8m9bDggAhC8jdbv89A216dP8RYM1
+        /YbuMuBq4mKe4CH+V/TKYi8=
+X-Google-Smtp-Source: AK7set8ereILC0V3ZBU5NrGgoh8oJHY1jqZ0fuA0KAdXBnGUn7hGdkEc1QzSShEe+BIohVgIIE6grw==
+X-Received: by 2002:a17:90a:31c:b0:234:2627:d9b0 with SMTP id 28-20020a17090a031c00b002342627d9b0mr1042232pje.32.1676754948302;
+        Sat, 18 Feb 2023 13:15:48 -0800 (PST)
+Received: from localhost (c-73-67-135-195.hsd1.or.comcast.net. [73.67.135.195])
+        by smtp.gmail.com with ESMTPSA id gl19-20020a17090b121300b00230da56ddecsm1292126pjb.27.2023.02.18.13.15.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Feb 2023 13:15:47 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= 
+        <ckoenig.leichtzumerken@gmail.com>,
+        =?UTF-8?q?Michel=20D=C3=A4nzer?= <michel@daenzer.net>,
+        Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Pekka Paalanen <ppaalanen@gmail.com>,
+        Simon Ser <contact@emersion.fr>,
+        Rob Clark <robdclark@chromium.org>,
+        Gustavo Padovan <gustavo@padovan.org>,
+        intel-gfx@lists.freedesktop.org,
+        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING
+        FRAMEWORK),
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list),
+        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK),
+        Sean Paul <sean@poorly.run>
+Subject: [PATCH v4 00/14] dma-fence: Deadline awareness
+Date:   Sat, 18 Feb 2023 13:15:43 -0800
+Message-Id: <20230218211608.1630586-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 4/4] cpufreq: qcom-nvmem: make qcom_cpufreq_get_msm_id()
- return the SoC ID
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Robert Marko <robimarko@gmail.com>, ilia.lin@kernel.org,
-        agross@kernel.org, andersson@kernel.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20230121112947.53433-1-robimarko@gmail.com>
- <20230121112947.53433-4-robimarko@gmail.com>
- <d71e8a18-8a09-c722-d9dd-b2d48615828f@linaro.org>
- <CAA8EJppwNVtUjB7fUZSCrZ88Ssbhmc4HD6oA2nV0uEx+vHBXUw@mail.gmail.com>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJppwNVtUjB7fUZSCrZ88Ssbhmc4HD6oA2nV0uEx+vHBXUw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Rob Clark <robdclark@chromium.org>
+
+This series adds deadline awareness to fences, so realtime deadlines
+such as vblank can be communicated to the fence signaller for power/
+frequency management decisions.
+
+This is partially inspired by a trick i915 does, but implemented
+via dma-fence for a couple of reasons:
+
+1) To continue to be able to use the atomic helpers
+2) To support cases where display and gpu are different drivers
+
+This iteration adds a dma-fence ioctl to set a deadline (both to
+support igt-tests, and compositors which delay decisions about which
+client buffer to display), and a sw_sync ioctl to read back the
+deadline.  IGT tests utilizing these can be found at:
+
+  https://gitlab.freedesktop.org/robclark/igt-gpu-tools/-/commits/fence-deadline
 
 
-On 18.02.2023 21:36, Dmitry Baryshkov wrote:
-> On Sat, 18 Feb 2023 at 16:43, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->>
->> On 21.01.2023 12:29, Robert Marko wrote:
->>> Currently, qcom_cpufreq_get_msm_id() does not simply return the SoC ID
->>> after getting it via SMEM call but instead uses an enum to encode the
->>> matched SMEM ID to 2 variants of MSM8996 which are then used in
->>> qcom_cpufreq_kryo_name_version() to set the supported version.
->>>
->>> This prevents qcom_cpufreq_get_msm_id() from being universal and its doing
->>> more than its name suggests, so lets make it just return the SoC ID
->>> directly which allows matching directly on the SoC ID and removes the need
->>> for msm8996_version enum which simplifies the driver.
->>> It also allows reusing the qcom_cpufreq_get_msm_id() for new SoC-s.
->>>
->>> Signed-off-by: Robert Marko <robimarko@gmail.com>
->>> ---
->>>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 44 ++++++++--------------------
->>>  1 file changed, 12 insertions(+), 32 deletions(-)
->>>
->>> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
->>> index da55d2e1925a..9deaf9521d6d 100644
->>> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
->>> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
->>> @@ -32,12 +32,6 @@
->>>
->>>  #include <dt-bindings/arm/qcom,ids.h>
->>>
->>> -enum _msm8996_version {
->>> -     MSM8996_V3,
->>> -     MSM8996_SG,
->>> -     NUM_OF_MSM8996_VERSIONS,
->>> -};
->>> -
->>>  struct qcom_cpufreq_drv;
->>>
->>>  struct qcom_cpufreq_match_data {
->>> @@ -134,30 +128,16 @@ static void get_krait_bin_format_b(struct device *cpu_dev,
->>>       dev_dbg(cpu_dev, "PVS version: %d\n", *pvs_ver);
->>>  }
->>>
->>> -static enum _msm8996_version qcom_cpufreq_get_msm_id(void)
->>> +static int qcom_cpufreq_get_msm_id(void)
->> This should be u32 as info->id is __le32
->>
->> And please export this function from socinfo, it'll come in
->> useful for other drivers!
-> 
-> How? In my opinion newer drivers should use compat strings rather than
-> depending on the SoC ID. If we were not bound with the compatibility
-> for msm8996pro device trees already using higher bits, we could have
-> dropped this part too.
-Adreno speedbin-to-fuse mapping could use SoC detection..
+v1: https://patchwork.freedesktop.org/series/93035/
+v2: Move filtering out of later deadlines to fence implementation
+    to avoid increasing the size of dma_fence
+v3: Add support in fence-array and fence-chain; Add some uabi to
+    support igt tests and userspace compositors.
+v4: Rebase, address various comments, and add syncobj deadline
+    support, and sync_file EPOLLPRI based on experience with perf/
+    freq issues with clvk compute workloads on i915 (anv)
 
-Konrad
-> 
+Rob Clark (14):
+  dma-buf/dma-fence: Add deadline awareness
+  dma-buf/fence-array: Add fence deadline support
+  dma-buf/fence-chain: Add fence deadline support
+  dma-buf/dma-resv: Add a way to set fence deadline
+  dma-buf/sync_file: Add SET_DEADLINE ioctl
+  dma-buf/sync_file: Support (E)POLLPRI
+  dma-buf/sw_sync: Add fence deadline support
+  drm/scheduler: Add fence deadline support
+  drm/syncobj: Add deadline support for syncobj waits
+  drm/vblank: Add helper to get next vblank time
+  drm/atomic-helper: Set fence deadline for vblank
+  drm/msm: Add deadline based boost support
+  drm/msm: Add wait-boost support
+  drm/i915: Add deadline based boost support
+
+ drivers/dma-buf/dma-fence-array.c       | 11 ++++
+ drivers/dma-buf/dma-fence-chain.c       | 13 +++++
+ drivers/dma-buf/dma-fence.c             | 20 +++++++
+ drivers/dma-buf/dma-resv.c              | 19 +++++++
+ drivers/dma-buf/sw_sync.c               | 58 +++++++++++++++++++
+ drivers/dma-buf/sync_debug.h            |  2 +
+ drivers/dma-buf/sync_file.c             | 27 +++++++++
+ drivers/gpu/drm/drm_atomic_helper.c     | 36 ++++++++++++
+ drivers/gpu/drm/drm_ioctl.c             |  3 +
+ drivers/gpu/drm/drm_syncobj.c           | 59 ++++++++++++++++----
+ drivers/gpu/drm/drm_vblank.c            | 32 +++++++++++
+ drivers/gpu/drm/i915/i915_driver.c      |  2 +-
+ drivers/gpu/drm/i915/i915_request.c     | 20 +++++++
+ drivers/gpu/drm/msm/msm_drv.c           | 16 ++++--
+ drivers/gpu/drm/msm/msm_fence.c         | 74 +++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_fence.h         | 20 +++++++
+ drivers/gpu/drm/msm/msm_gem.c           |  5 ++
+ drivers/gpu/drm/scheduler/sched_fence.c | 46 +++++++++++++++
+ drivers/gpu/drm/scheduler/sched_main.c  |  2 +-
+ include/drm/drm_drv.h                   |  6 ++
+ include/drm/drm_vblank.h                |  1 +
+ include/drm/gpu_scheduler.h             |  8 +++
+ include/linux/dma-fence.h               | 20 +++++++
+ include/linux/dma-resv.h                |  2 +
+ include/uapi/drm/drm.h                  | 16 +++++-
+ include/uapi/drm/msm_drm.h              | 14 ++++-
+ include/uapi/linux/sync_file.h          | 22 ++++++++
+ 27 files changed, 532 insertions(+), 22 deletions(-)
+
+-- 
+2.39.1
+
