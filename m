@@ -2,73 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0318169B776
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 02:25:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2540F69B783
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 02:33:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229724AbjBRBZx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Feb 2023 20:25:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38672 "EHLO
+        id S229475AbjBRBde (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Feb 2023 20:33:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229699AbjBRBZx (ORCPT
+        with ESMTP id S229463AbjBRBdd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Feb 2023 20:25:53 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B7725B778
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 17:25:51 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id x4so3540202lfq.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 17:25:51 -0800 (PST)
+        Fri, 17 Feb 2023 20:33:33 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD985642EA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 17:33:31 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id k13so2965966ljn.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Feb 2023 17:33:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1Q97BznUv1mfKjh1AZZa0Dw1OPMlC5jT+voBjRu9BfA=;
-        b=w390DS6GdepMHP3EzknAMidgDadaDSNKI4SvFVZbxt8Rx3aEYnPzEE+vNrtfKCGdg9
-         okwKQY741PRsxAkqG3pMOp1SFqB29L2vpuX8L/PEjNCSlby+fQKhQEY8tMpMUu9ML7s+
-         frWD6yg3laPUPr4mYHtNFHviABEyqNs3YdwyZv1n32Qqa8ZSFISWjWQ8FrX7AyY/1n3S
-         sj9ichIBUocvw2H9BwnVOuw2Ufd76wNPYyk+0IEsGMic7K2t9DEy9an+T84BZDtmYoxK
-         hUKvybxaReh8eqxlfO6vjsClzYR5N6NwFU7gBSAf7mbHRWCQYL9nCNDzsPQdR+N+8C9j
-         MFiQ==
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IuVW2CZdmVPPL009AhM1dwVCROCD9NP4LtUFzTmDF/g=;
+        b=OnX+xtZpI/R679FSSSy+jfjkNnJLsFd2irLrXV+dz5h5CZh8sXN13ObBbkcvVmMZcL
+         Zrv5pGM6QnwyZknxyWBCctLYigb9OAjB/YJZgGIyJy9le3RxS9jzyoGaekK6hfeDKYkY
+         mYw1tykwVvZBrP6hOgRyU3DhAg+oOW38JIAdmIRXpoGmcnkGw27jSHkEpnZvuKc5Ff0E
+         X0bwK+ypLLySUqQbiJ77HkianPFK5gf51ccLdMoAdrJzMvD1yWJmmO2rLVPDlzrTselH
+         /Tlz6JroqBqLtn6uUkziKkqPkpY6T5KbqdGrrFVvPgYqD2lGfvKzdAHX0Jkr/h2NmOgb
+         CVzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1Q97BznUv1mfKjh1AZZa0Dw1OPMlC5jT+voBjRu9BfA=;
-        b=n8a0mNtzMGis58FFVDdejStqAqz1+NYLdMrZYsz/N6FmIm6MMTpl6r1TEirX142fHk
-         4FrgT2z+TZ7881/Tigu7KmGQBTaRe8S1xNVCggKPyFk7SbT4uRQS9ThOsX7oqW6o430z
-         Zfk3yUMGv3Rh8biZME8GaXx5UUKh4w77HsLaqAOJgprgU4MooTuZiGbXEkE9+zJ+dVJ/
-         rhGBjR0lFIWArUo/wo/OK29WyvoDsx18jvvXSIhTtHTeTFj/27aJENBds25E60v7CJk9
-         QGO3YAxW+C8W9/ihT+5i//bACtRimi1cfQDwwY5OieZwI8t/HNnq5DSZ/eTl1KuH7F+G
-         7r9w==
-X-Gm-Message-State: AO0yUKVBUBJ9QixuZhum6/iSxvJYFsaisgPfp+HL54yABQsNo5BbamfS
-        +L0oRrGYvwEWMFiqHPYDUEbOLw==
-X-Google-Smtp-Source: AK7set+U259Fv3cOjrzdzrO1dq6I6qhFUBuTueybdPfOd9TPfviaxg9n6zW4a1vE7/GdvbxYXnyHNw==
-X-Received: by 2002:ac2:50d5:0:b0:4b5:5ddc:da32 with SMTP id h21-20020ac250d5000000b004b55ddcda32mr163141lfm.56.1676683549715;
-        Fri, 17 Feb 2023 17:25:49 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id j11-20020a19f50b000000b004d85f2acd8esm826414lfb.295.2023.02.17.17.25.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Feb 2023 17:25:49 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 2/2] drm/msm: simplify msm_parse_deps() and msm_parse_post_deps()
-Date:   Sat, 18 Feb 2023 03:25:46 +0200
-Message-Id: <20230218012546.3655999-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230218012546.3655999-1-dmitry.baryshkov@linaro.org>
-References: <20230218012546.3655999-1-dmitry.baryshkov@linaro.org>
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IuVW2CZdmVPPL009AhM1dwVCROCD9NP4LtUFzTmDF/g=;
+        b=0eAJ6HUk0SyQYXCrwA9yavU924zNqGYRKd+ozWef36cTeS/GY+iNcR9LFj5T2MR8+D
+         Q4ClYDIAEvTIpVXpmWMd8zbx/gEKOekcRyQWWrUBuEGBkniUXKLw5HRFSHh6QUJF5FzE
+         tXJeLGU/dfMGV3p6taKmGECnGLuhhOC+KgtRLbEmh3ALBWqUCiAmwk3akGMJHEDvUFoj
+         Fal6WXz9Eq5dfycHZV6HSskxW84KJrqjt2LwSjpB+WSMydq3ySTAEOotZn9c1aT6Bw8c
+         ov1egr8QXwmpR6p+GF6lwr7tXS/JP5XlfSTZH150Ef7MEWRMKXgeTF0N8a92nN1iyPfZ
+         Hv9Q==
+X-Gm-Message-State: AO0yUKXmIuekVRWoTqW0HwSED3LRIm+pfAw0kIDt/vysqsNen+z/kY5A
+        P2qvMKKMyvk+r/6bHlk1gv5Br6jpJR78p6MM
+X-Google-Smtp-Source: AK7set96NnuGQ4KE6QC/nqape/t3SOt9k4jE5QewYTOQk8GjgY5ongK+MfbVDH3OLXmTq2an8p+kYA==
+X-Received: by 2002:a2e:9097:0:b0:293:50e7:3d07 with SMTP id l23-20020a2e9097000000b0029350e73d07mr563220ljg.14.1676684010134;
+        Fri, 17 Feb 2023 17:33:30 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id s3-20020a2e98c3000000b002934ea0def9sm736302ljj.140.2023.02.17.17.33.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Feb 2023 17:33:29 -0800 (PST)
+Message-ID: <81448efc-5b77-5022-5b9f-3b5188509068@linaro.org>
+Date:   Sat, 18 Feb 2023 03:33:29 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: ath10k-firmware: WCN3990: Add board file for the Lenovo Yoga C630
+ laptop
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     ath10k@lists.infradead.org
+Cc:     "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>
+References: <CAA8EJpqrHuTaN-bB6XoB7ZWNvfggNtMts3bBQwqMH8RpO1E3QQ@mail.gmail.com>
+In-Reply-To: <CAA8EJpqrHuTaN-bB6XoB7ZWNvfggNtMts3bBQwqMH8RpO1E3QQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,268 +75,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Simplify two functions msm_parse_deps() and msm_parse_post_deps():
-extract single item parsing function and clean up error path.
+Hello Kalle,
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/msm_gem_submit.c | 196 +++++++++++++++------------
- 1 file changed, 106 insertions(+), 90 deletions(-)
+On 07/10/2022 15:22, Dmitry Baryshkov wrote:
+> We'd like to ask for inclusion of the board file for the Lenovo Yoga
+> C630 laptop. It is
+> a WfA laptop using the Snapdragon SDM850 SoC.
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index a539eb31042f..c64907f0f249 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -546,6 +546,46 @@ struct msm_submit_post_dep {
- 	struct dma_fence_chain *chain;
- };
- 
-+static struct drm_syncobj *msm_parse_dep_one(struct msm_gem_submit *submit,
-+					     struct drm_file *file,
-+					     uint64_t address,
-+					     size_t syncobj_stride)
-+{
-+	struct drm_msm_gem_submit_syncobj syncobj_desc = {0};
-+	struct dma_fence *fence;
-+	struct drm_syncobj *syncobj = NULL;
-+	int ret;
-+
-+	if (copy_from_user(&syncobj_desc,
-+			   u64_to_user_ptr(address),
-+			   min(syncobj_stride, sizeof(syncobj_desc))))
-+		return ERR_PTR(-EFAULT);
-+
-+	if (syncobj_desc.point &&
-+	    !drm_core_check_feature(submit->dev, DRIVER_SYNCOBJ_TIMELINE))
-+		return ERR_PTR(-EOPNOTSUPP);
-+
-+	if (syncobj_desc.flags & ~MSM_SUBMIT_SYNCOBJ_FLAGS)
-+		return ERR_PTR(-EINVAL);
-+
-+	ret = drm_syncobj_find_fence(file, syncobj_desc.handle,
-+				     syncobj_desc.point, 0, &fence);
-+	if (ret)
-+		return ERR_PTR(ret);
-+
-+	ret = drm_sched_job_add_dependency(&submit->base, fence);
-+	if (ret)
-+		return ERR_PTR(ret);
-+
-+	if (syncobj_desc.flags & MSM_SUBMIT_SYNCOBJ_RESET) {
-+		syncobj = drm_syncobj_find(file, syncobj_desc.handle);
-+		if (!syncobj)
-+			return ERR_PTR(-EINVAL);
-+	}
-+
-+	return syncobj;
-+}
-+
- static struct drm_syncobj **msm_parse_deps(struct msm_gem_submit *submit,
-                                            struct drm_file *file,
-                                            uint64_t in_syncobjs_addr,
-@@ -553,9 +593,8 @@ static struct drm_syncobj **msm_parse_deps(struct msm_gem_submit *submit,
-                                            size_t syncobj_stride)
- {
- 	struct drm_syncobj **syncobjs = NULL;
--	struct drm_msm_gem_submit_syncobj syncobj_desc = {0};
--	int ret = 0;
--	uint32_t i, j;
-+	int ret;
-+	int i;
- 
- 	syncobjs = kcalloc(nr_in_syncobjs, sizeof(*syncobjs),
- 	                   GFP_KERNEL | __GFP_NOWARN | __GFP_NORETRY);
-@@ -564,54 +603,26 @@ static struct drm_syncobj **msm_parse_deps(struct msm_gem_submit *submit,
- 
- 	for (i = 0; i < nr_in_syncobjs; ++i) {
- 		uint64_t address = in_syncobjs_addr + i * syncobj_stride;
--		struct dma_fence *fence;
-+		struct drm_syncobj *syncobj;
- 
--		if (copy_from_user(&syncobj_desc,
--			           u64_to_user_ptr(address),
--			           min(syncobj_stride, sizeof(syncobj_desc)))) {
--			ret = -EFAULT;
--			break;
--		}
--
--		if (syncobj_desc.point &&
--		    !drm_core_check_feature(submit->dev, DRIVER_SYNCOBJ_TIMELINE)) {
--			ret = -EOPNOTSUPP;
--			break;
-+		syncobj = msm_parse_dep_one(submit, file, address, syncobj_stride);
-+		if (IS_ERR(syncobj)) {
-+			ret = PTR_ERR(syncobj);
-+			goto err;
- 		}
- 
--		if (syncobj_desc.flags & ~MSM_SUBMIT_SYNCOBJ_FLAGS) {
--			ret = -EINVAL;
--			break;
--		}
--
--		ret = drm_syncobj_find_fence(file, syncobj_desc.handle,
--		                             syncobj_desc.point, 0, &fence);
--		if (ret)
--			break;
--
--		ret = drm_sched_job_add_dependency(&submit->base, fence);
--		if (ret)
--			break;
--
--		if (syncobj_desc.flags & MSM_SUBMIT_SYNCOBJ_RESET) {
--			syncobjs[i] =
--				drm_syncobj_find(file, syncobj_desc.handle);
--			if (!syncobjs[i]) {
--				ret = -EINVAL;
--				break;
--			}
--		}
-+		syncobjs[i] = syncobj;
- 	}
- 
--	if (ret) {
--		for (j = 0; j <= i; ++j) {
--			if (syncobjs[j])
--				drm_syncobj_put(syncobjs[j]);
--		}
--		kfree(syncobjs);
--		return ERR_PTR(ret);
--	}
- 	return syncobjs;
-+
-+err:
-+	while (--i >= 0)
-+		if (syncobjs[i])
-+			drm_syncobj_put(syncobjs[i]);
-+	kfree(syncobjs);
-+
-+	return ERR_PTR(ret);
- }
- 
- static void msm_reset_syncobjs(struct drm_syncobj **syncobjs,
-@@ -625,6 +636,43 @@ static void msm_reset_syncobjs(struct drm_syncobj **syncobjs,
- 	}
- }
- 
-+static int msm_parse_post_dep_one(struct drm_device *dev,
-+				  struct drm_file *file,
-+				  uint64_t address,
-+				  size_t syncobj_stride,
-+				  struct msm_submit_post_dep *post_dep)
-+{
-+	struct msm_submit_post_dep *post_deps;
-+	struct drm_msm_gem_submit_syncobj syncobj_desc = {0};
-+
-+	if (copy_from_user(&syncobj_desc,
-+			   u64_to_user_ptr(address),
-+			   min(syncobj_stride, sizeof(syncobj_desc))))
-+		return -EFAULT;
-+
-+	post_dep->point = syncobj_desc.point;
-+
-+	if (syncobj_desc.flags)
-+		return -EINVAL;
-+
-+	if (syncobj_desc.point) {
-+		if (!drm_core_check_feature(dev, DRIVER_SYNCOBJ_TIMELINE))
-+			return -EOPNOTSUPP;
-+
-+		post_dep->chain = dma_fence_chain_alloc();
-+		if (!post_dep->chain)
-+			return -ENOMEM;
-+	}
-+
-+	post_dep->syncobj = drm_syncobj_find(file, syncobj_desc.handle);
-+	if (!post_dep->syncobj) {
-+		dma_fence_chain_free(post_deps->chain);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static struct msm_submit_post_dep *msm_parse_post_deps(struct drm_device *dev,
-                                                        struct drm_file *file,
-                                                        uint64_t syncobjs_addr,
-@@ -632,9 +680,8 @@ static struct msm_submit_post_dep *msm_parse_post_deps(struct drm_device *dev,
-                                                        size_t syncobj_stride)
- {
- 	struct msm_submit_post_dep *post_deps;
--	struct drm_msm_gem_submit_syncobj syncobj_desc = {0};
- 	int ret = 0;
--	uint32_t i, j;
-+	int i;
- 
- 	post_deps = kcalloc(nr_syncobjs, sizeof(*post_deps),
- 			    GFP_KERNEL | __GFP_NOWARN | __GFP_NORETRY);
-@@ -644,54 +691,23 @@ static struct msm_submit_post_dep *msm_parse_post_deps(struct drm_device *dev,
- 	for (i = 0; i < nr_syncobjs; ++i) {
- 		uint64_t address = syncobjs_addr + i * syncobj_stride;
- 
--		if (copy_from_user(&syncobj_desc,
--			           u64_to_user_ptr(address),
--			           min(syncobj_stride, sizeof(syncobj_desc)))) {
--			ret = -EFAULT;
--			break;
--		}
--
--		post_deps[i].point = syncobj_desc.point;
--
--		if (syncobj_desc.flags) {
--			ret = -EINVAL;
--			break;
--		}
--
--		if (syncobj_desc.point) {
--			if (!drm_core_check_feature(dev,
--			                            DRIVER_SYNCOBJ_TIMELINE)) {
--				ret = -EOPNOTSUPP;
--				break;
--			}
--
--			post_deps[i].chain = dma_fence_chain_alloc();
--			if (!post_deps[i].chain) {
--				ret = -ENOMEM;
--				break;
--			}
--		}
--
--		post_deps[i].syncobj =
--			drm_syncobj_find(file, syncobj_desc.handle);
--		if (!post_deps[i].syncobj) {
--			ret = -EINVAL;
--			break;
--		}
-+		ret = msm_parse_post_dep_one(dev, file, address, syncobj_stride, &post_deps[i]);
-+		if (ret)
-+			goto err;
- 	}
- 
--	if (ret) {
--		for (j = 0; j <= i; ++j) {
--			dma_fence_chain_free(post_deps[j].chain);
--			if (post_deps[j].syncobj)
--				drm_syncobj_put(post_deps[j].syncobj);
--		}
-+	return post_deps;
- 
--		kfree(post_deps);
--		return ERR_PTR(ret);
-+err:
-+	while (--i >= 0) {
-+		dma_fence_chain_free(post_deps[i].chain);
-+		if (post_deps[i].syncobj)
-+			drm_syncobj_put(post_deps[i].syncobj);
- 	}
- 
--	return post_deps;
-+	kfree(post_deps);
-+
-+	return ERR_PTR(ret);
- }
- 
- static void msm_process_post_deps(struct msm_submit_post_dep *post_deps,
+I noticed that you've updated the WCN3990's board-2.bin, but this file 
+was not included. Are there any issues with the submission?
+
+> Following the questions from the ath10k wiki page:
+> 
+> * description for what hardware this is
+> - It is an SDM845-based platform (SDM850)
+> - It uses wcn3990 chip as a WiFi and BT radio
+> - For the reference: [    8.727834] ath10k_snoc 18800000.wifi: qmi
+> chip_id 0x30214 chip_family 0x4001 board_id 0xff soc_id 0x40030001
+> 
+> * origin of the board file
+>    - They come from the original Windows partition, thus being a part
+> of Windows drivers.
+> 
+> * ids to be used with the board file
+> bus=snoc,qmi-board-id=ff,qmi-chip-id=30214,variant=Lenovo_C630
+> 
+> Note, the device comes with the board_id not changed from 0xff.
+> Following the example of Chromebook boards we are adding the
+> calibration variant.
+> 
+> * md5sum of each new board file to add
+> 
+> $ md5sum *
+> 6cd260ad261193fb8b3ddf5293d0103f
+> bus=snoc,qmi-board-id=ff,qmi-chip-id=30214,variant=Lenovo_C630.bin
+> 
+> $ sha256sum *
+> ff96e5295cc3e3fd86f04049058396cd69cd7f1bc44ef4784f13ffe48ef42a8d
+> bus=snoc,qmi-board-id=ff,qmi-chip-id=30214,variant=Lenovo_C630.bin
+
 -- 
-2.39.1
+With best wishes
+Dmitry
 
