@@ -2,133 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60B5169BAD6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 17:04:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB58869BB0A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 17:47:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229573AbjBRQEy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Feb 2023 11:04:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43740 "EHLO
+        id S229636AbjBRQrv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Feb 2023 11:47:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbjBRQEy (ORCPT
+        with ESMTP id S229577AbjBRQru (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Feb 2023 11:04:54 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C820B12BF9;
-        Sat, 18 Feb 2023 08:04:52 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31IFivqp007898;
-        Sat, 18 Feb 2023 16:04:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=Y0rTtoTMn6ZnNqDbDaUytNOP79PGCne+oIxzZUiwE68=;
- b=mFyjGfKI3LoVBLOM7b7gVT8irZy5ip5v4Lkb3Kl3GnNLIslmTi3X2erwXAC1OxfPbeCQ
- BjDQkbhS/PmXcHIMqyDVkq1RjloaIkcawj4s7xaqTbia1MgKBY3vFlW088Y2ocVSB4lg
- OdeF/RvsKIS2lON0tLrtmlukD/EdrQ9tJNi4+h3g4sOr8wiocsUmPfo1T+BB8E0cuqSe
- eUFQVurbz4bdSK4zi7uVzGZt+9lgakp9D4+tdeczLsLsTI2+KdmFdJgC2YRP0/apF7FH
- SRaL7pSUz8ZZAl/21oxpUy5sQ1I7E5c4FqY20AHdGjKoz9y+h1YG/TiMy6olp+TNFI2d Rw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ntp9893mh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 18 Feb 2023 16:04:48 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31IG4lgN023058
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 18 Feb 2023 16:04:47 GMT
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Sat, 18 Feb 2023 08:04:43 -0800
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>,
-        Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH V5] clk: qcom: ipq5332: mark GPLL4 as ignore unused temporarily
-Date:   Sat, 18 Feb 2023 21:34:30 +0530
-Message-ID: <20230218160430.22055-1-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Sat, 18 Feb 2023 11:47:50 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9D9E166EC
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 08:47:47 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id j3so1080003lji.7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 08:47:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gRIwjh8WrsGWjWn7axVeyeH9FAGIRGQoBWtwrxs3ajU=;
+        b=EUAua//jWcjDpwVjpafTgQD7LfpX1Arg+lyEjVRDEJDoWe7QEkQ0zAeeadb88yGdwX
+         l2MuWfiQdxSkwLpjoZSd2vA9XI5rh49iNQl8rUA0faAvYW5Oy+D8iq9mYm/jQXxIe8jh
+         t/JMun2iqHWZ4Rg7N/woCBTbBJFyvUXGXTcnQoztzF3Nluw/fcgRHK+lfPirz/YiivF0
+         cOz80epj17+hD2llYbOBJLHKU6T5oSpbu7GGhRLAlLNh4xPPCFsq+X2Sz4b8ZNhTLU5i
+         NWAXWhjSic2SsOmsbzbm9Dlf7amPdqi7rXJauBXnthOIFgGvXwTi8c3QNv38T24V6rlz
+         UnxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gRIwjh8WrsGWjWn7axVeyeH9FAGIRGQoBWtwrxs3ajU=;
+        b=xxQBfTM/wzNCk3qSLqlKEd7IEg8QF+OMh3l6nQipIi6JKYI1bE7Ns/gbiSmO0vtupg
+         X/bph/+EOGV/crr0emU0pn3Z1J96Vph0HKS6ip7413X1ldl8Xxop4wd0ffT6WnmlVcmb
+         d0c/3humJ2g/aUUWEoAYEqijMxvJB64XtLLb0MlxSL9fDSQH6Y3j2C3NqxNHeCLOzLxq
+         GABzRdRuEDek6wi4GqhaEyQgWfCIWOxGkgWBy5Z02zX7mqzax+7jRj9e2gwhLIeSjzoi
+         X559ppL1NnQYFSIetLpEckGTNEWhzoUwDFDflAdF6xQFyKvDm4F3tiistushAwSHEjvT
+         kxWA==
+X-Gm-Message-State: AO0yUKUaWUSUjfZVjIgIszim/vwCPdz1RuqGuiFa5sNHAvZfqUZPB8b7
+        +sXmv9e0FcT1RjWn3vi01yQJSw==
+X-Google-Smtp-Source: AK7set/OXOH1DDgJWP8lfFHG2KeZXWV1J3P9XC47RH3bLBj9oaU8SVjDgcVzornUiW8DHFyLUs6xTg==
+X-Received: by 2002:a2e:83c3:0:b0:293:48b8:dcad with SMTP id s3-20020a2e83c3000000b0029348b8dcadmr1417632ljh.0.1676738866081;
+        Sat, 18 Feb 2023 08:47:46 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id k21-20020a05651c10b500b002945d119e09sm950834ljn.8.2023.02.18.08.47.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 18 Feb 2023 08:47:45 -0800 (PST)
+Message-ID: <170ee26d-8904-0829-f92e-4ea6678b08eb@linaro.org>
+Date:   Sat, 18 Feb 2023 18:47:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JEfbt7SgZ2_Sw-BcKcjzQrKkNhaEZ3lA
-X-Proofpoint-ORIG-GUID: JEfbt7SgZ2_Sw-BcKcjzQrKkNhaEZ3lA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-18_11,2023-02-17_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=824 mlxscore=0
- adultscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 impostorscore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302180145
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH v2 06/14] drm/msm/gpu: Use dev_pm_opp_set_rate for non-GMU
+ GPUs
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Emma Anholt <emma@anholt.net>, Chia-I Wu <olvaffe@gmail.com>,
+        Dan Carpenter <error27@gmail.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20230214173145.2482651-1-konrad.dybcio@linaro.org>
+ <20230214173145.2482651-7-konrad.dybcio@linaro.org>
+ <2e129fd6-d4e5-a955-5355-3ca71166fb33@linaro.org>
+ <82c84ba4-ca33-3ce0-fe86-efedfce04cda@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <82c84ba4-ca33-3ce0-fe86-efedfce04cda@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Clock framework disables the GPLL4 source since there are no active users
-for this source currently. Some of the clocks initialized by the
-bootloaders uses the GPLL4 as the source. Due to this, when the GPLL4 is
-disabled by the clock framework, system is going for the reboot.
+On 18/02/2023 13:04, Konrad Dybcio wrote:
+> 
+> 
+> On 17.02.2023 22:07, Dmitry Baryshkov wrote:
+>> On 14/02/2023 19:31, Konrad Dybcio wrote:
+>>> Currently we only utilize the OPP table connected to the GPU for
+>>> getting (available) frequencies. We do however need to scale the
+>>> voltage rail(s) accordingly to ensure that we aren't trying to
+>>> run the GPU at 1GHz with a VDD_LOW vote, as that would result in
+>>> an otherwise inexplainable hang.
+>>>
+>>> Tell the OPP framework that we want to scale the "core" clock
+>>> and swap out the clk_set_rate to a dev_pm_opp_set_rate in
+>>> msm_devfreq_target() to enable usage of required-opps and by
+>>> extension proper voltage level/corner scaling.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/adreno/adreno_gpu.c | 4 ++++
+>>>    drivers/gpu/drm/msm/msm_gpu_devfreq.c   | 2 +-
+>>>    2 files changed, 5 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>> index ce6b76c45b6f..15e405e4f977 100644
+>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>> @@ -1047,6 +1047,10 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>>>        const char *gpu_name;
+>>>        u32 speedbin;
+>>>    +    /* This can only be done here, or devm_pm_opp_set_supported_hw will WARN_ON() */
+>>> +    if (!IS_ERR(devm_clk_get(dev, "core")))
+>>> +        devm_pm_opp_set_clkname(dev, "core");
+>>
+>> Can we instead move a call to a6xx_set_supported_hw() / check_speed_bin after the adreno_gpu_init() ? It will call msm_gpu_init, which in turn sets gpu->core_clk.
+>>
+>> Ideally you can call devm_pm_opp_set_clkname() from that function.
+> 
+> 
+>> Or maybe completely drop gpu->core_clk and always use devm_pm_opp_set_clk_rate().
+> That would break non-OPP targets, last of which were probably added N=big years ago..
 
-To avoid this, mark the GPLL4 as ignore unused so that clock framework
-doesn't disable it. Once the users of this source is enabled, we can get
-rid of this flag.
+No. In the lack of OPP tables, dev_pm_opp_clk_set_rate() should behave 
+exactly like the clk_set_rate().
 
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
-Changes in V5:
-	- Update the commit title to reflect CLK_IGNORE_UNUSED is used
-	- This patch depends on the IPQ5332 baseport patches
-	  https://lore.kernel.org/linux-arm-msm/20230217075835.460-1-quic_kathirav@quicinc.com/
+> I'm not sure these would still work, as I think we've got rid of some ugly
+> clock getters that were looking for both "core" and "core_clk" etc.
 
-Changes in V4:
-	- Updated the commit message and comment in driver that
-	  CLK_IGNORE_UNUSED is used
-	- This patch depends on the IPQ5332 baseport patches
-	  https://lore.kernel.org/linux-arm-msm/20230217075835.460-1-quic_kathirav@quicinc.com/
+We still support core vs core_clk, see the get_clocks() at msm_gpu.c and 
+then msm_clk_bulk_get_clock(). However we might mimick this function and 
+call devm_pm_opp_set_clkname() with the proper name ("core" or "core_clk").
 
-Changes in V3:
-	- Fixed the typo in the comment
-	- Used CLK_IGNORE_UNUSED instead of CLK_IS_CRITICAL
+> 
+> See 8db0b6c7b636376789e356d861c3c6c35dcb6913 for what seems to be the most recent
+> example of non-OPP.
+> 
+> IMX51/53 also have no OPP tables and are using the (AFAIK) now-defunct _clk-suffixed
+> clock-names.
 
-Changes in V2:
-	- Added a comment in driver explaining the need of the flag
+It works, I tested it during this cycle.
 
- drivers/clk/qcom/gcc-ipq5332.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+> 
+> I'd be more than happy to rip out some of this legacy code and convert it
+> to something modern like OPP, but I'm not sure you guys would like it considering
+> the breakage on (arguably ancient and borderline retired) platforms.
 
-diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
-index 9e4baea33937..bdb4a0a11d07 100644
---- a/drivers/clk/qcom/gcc-ipq5332.c
-+++ b/drivers/clk/qcom/gcc-ipq5332.c
-@@ -128,6 +128,17 @@ static struct clk_alpha_pll gpll4_main = {
- 			.parent_data = &gcc_parent_data_xo,
- 			.num_parents = 1,
- 			.ops = &clk_alpha_pll_stromer_ops,
-+			/*
-+			 * There are no consumers for this GPLL in kernel yet,
-+			 * (will be added soon), so the clock framework
-+			 * disables this source. But some of the clocks
-+			 * initialized by boot loaders uses this source. So we
-+			 * need to keep this clock ON. Add the
-+			 * CLK_IGNORE_UNUSED flag so the clock will not be
-+			 * disabled. Once the consumer in kernel is added, we
-+			 * can get rid of this flag.
-+			 */
-+			.flags = CLK_IGNORE_UNUSED,
- 		},
- 	},
- };
+I think, we should try switching to OPP-for-everybody, granted the 
+promise of dev_pm_opp_set_clk_rate() being backwards compatible with 
+bare clk_set_rate().
+
+> 
+> This patch as-is "only" breaks non-OPP a5xx & a6xx (as they have .gpu_busy defined),
+> of which there are none..
+> 
+>>
+>>> +
+>>>        adreno_gpu->funcs = funcs;
+>>>        adreno_gpu->info = adreno_info(config->rev);
+>>>        adreno_gpu->gmem = adreno_gpu->info->gmem;
+>>> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+>>> index e27dbf12b5e8..ea70c1c32d94 100644
+>>> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+>>> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+>>> @@ -48,7 +48,7 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
+>>>            gpu->funcs->gpu_set_freq(gpu, opp, df->suspended);
+>>>            mutex_unlock(&df->lock);
+>>>        } else {
+>>> -        clk_set_rate(gpu->core_clk, *freq);
+>>> +        dev_pm_opp_set_rate(dev, *freq);
+>>
+>> This is not enough, there are calls to clk_set_rate(gpu->core_clk) in msm_gpu.c which are called from the suspend/resume path.
+> Right, good catch.
+> 
+> Konrad
+>>
+>>>        }
+>>>          dev_pm_opp_put(opp);
+>>
+
 -- 
-2.17.1
+With best wishes
+Dmitry
 
