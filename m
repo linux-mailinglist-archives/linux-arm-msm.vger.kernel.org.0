@@ -2,84 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB58869BB0A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 17:47:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 182FE69BB60
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 19:22:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbjBRQrv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Feb 2023 11:47:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60208 "EHLO
+        id S229488AbjBRSWb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Feb 2023 13:22:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbjBRQru (ORCPT
+        with ESMTP id S229436AbjBRSWa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Feb 2023 11:47:50 -0500
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9D9E166EC
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 08:47:47 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id j3so1080003lji.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 08:47:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gRIwjh8WrsGWjWn7axVeyeH9FAGIRGQoBWtwrxs3ajU=;
-        b=EUAua//jWcjDpwVjpafTgQD7LfpX1Arg+lyEjVRDEJDoWe7QEkQ0zAeeadb88yGdwX
-         l2MuWfiQdxSkwLpjoZSd2vA9XI5rh49iNQl8rUA0faAvYW5Oy+D8iq9mYm/jQXxIe8jh
-         t/JMun2iqHWZ4Rg7N/woCBTbBJFyvUXGXTcnQoztzF3Nluw/fcgRHK+lfPirz/YiivF0
-         cOz80epj17+hD2llYbOBJLHKU6T5oSpbu7GGhRLAlLNh4xPPCFsq+X2Sz4b8ZNhTLU5i
-         NWAXWhjSic2SsOmsbzbm9Dlf7amPdqi7rXJauBXnthOIFgGvXwTi8c3QNv38T24V6rlz
-         UnxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gRIwjh8WrsGWjWn7axVeyeH9FAGIRGQoBWtwrxs3ajU=;
-        b=xxQBfTM/wzNCk3qSLqlKEd7IEg8QF+OMh3l6nQipIi6JKYI1bE7Ns/gbiSmO0vtupg
-         X/bph/+EOGV/crr0emU0pn3Z1J96Vph0HKS6ip7413X1ldl8Xxop4wd0ffT6WnmlVcmb
-         d0c/3humJ2g/aUUWEoAYEqijMxvJB64XtLLb0MlxSL9fDSQH6Y3j2C3NqxNHeCLOzLxq
-         GABzRdRuEDek6wi4GqhaEyQgWfCIWOxGkgWBy5Z02zX7mqzax+7jRj9e2gwhLIeSjzoi
-         X559ppL1NnQYFSIetLpEckGTNEWhzoUwDFDflAdF6xQFyKvDm4F3tiistushAwSHEjvT
-         kxWA==
-X-Gm-Message-State: AO0yUKUaWUSUjfZVjIgIszim/vwCPdz1RuqGuiFa5sNHAvZfqUZPB8b7
-        +sXmv9e0FcT1RjWn3vi01yQJSw==
-X-Google-Smtp-Source: AK7set/OXOH1DDgJWP8lfFHG2KeZXWV1J3P9XC47RH3bLBj9oaU8SVjDgcVzornUiW8DHFyLUs6xTg==
-X-Received: by 2002:a2e:83c3:0:b0:293:48b8:dcad with SMTP id s3-20020a2e83c3000000b0029348b8dcadmr1417632ljh.0.1676738866081;
-        Sat, 18 Feb 2023 08:47:46 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id k21-20020a05651c10b500b002945d119e09sm950834ljn.8.2023.02.18.08.47.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Feb 2023 08:47:45 -0800 (PST)
-Message-ID: <170ee26d-8904-0829-f92e-4ea6678b08eb@linaro.org>
-Date:   Sat, 18 Feb 2023 18:47:44 +0200
+        Sat, 18 Feb 2023 13:22:30 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1750116ADA;
+        Sat, 18 Feb 2023 10:22:29 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31II99We026414;
+        Sat, 18 Feb 2023 18:22:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=mg5gbA9rOktRLelram4R8AvwoNWEaVjJD5Rdl+HzMKg=;
+ b=gHoy8l7WD4tEUaCpFRgKX/rQk2tOSQdUmDObcuByfUbe/+prfqnZpLDagOlCr76CFf7x
+ WgUy3Y9LENDTREoxxVcJ/d13qrhmVFdFR6Lmm2gwjceshmT0CxPWA3phIfkYpsFwRiU9
+ WSDBCc+Vg/eIOjai2wNzBMadZqsPBol7cWrqDmQX8SdsWgKvXcfnvRn3FpvHVdIVBnim
+ eI9946ag2FvBaD9YsZJo5zlfPokDs6LWiu98My6u3+2WcFEir4dTOFV83zxhb8zLTw9i
+ zbaqS7NnDKrqAXBwsHuv+yGlJgM2es+8gpy4V44MxtMtRoGLjhdyaBUCd4Nspgmb1YGO QQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ntqygs40p-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 18 Feb 2023 18:22:11 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31IIMA6I003817
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 18 Feb 2023 18:22:11 GMT
+Received: from [10.110.56.158] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Sat, 18 Feb
+ 2023 10:22:09 -0800
+Message-ID: <ca30cded-4ea4-8c70-61ad-5d0d99b123d3@quicinc.com>
+Date:   Sat, 18 Feb 2023 10:22:09 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH v2 06/14] drm/msm/gpu: Use dev_pm_opp_set_rate for non-GMU
- GPUs
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Emma Anholt <emma@anholt.net>, Chia-I Wu <olvaffe@gmail.com>,
-        Dan Carpenter <error27@gmail.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230214173145.2482651-1-konrad.dybcio@linaro.org>
- <20230214173145.2482651-7-konrad.dybcio@linaro.org>
- <2e129fd6-d4e5-a955-5355-3ca71166fb33@linaro.org>
- <82c84ba4-ca33-3ce0-fe86-efedfce04cda@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <82c84ba4-ca33-3ce0-fe86-efedfce04cda@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH RESEND 1/1] check-uapi: Introduce check-uapi.sh
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        John Moon <quic_johmoo@quicinc.com>,
+        Randy Dunlap <rdunlap@infradead.org>
+CC:     Masahiro Yamada <masahiroy@kernel.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        "Nicolas Schier" <nicolas@fjasle.eu>,
+        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Todd Kjos" <tkjos@google.com>,
+        Matthias Maennich <maennich@google.com>,
+        "Giuliano Procida" <gprocida@google.com>,
+        <kernel-team@android.com>, Jordan Crouse <jorcrous@amazon.com>
+References: <20230217202234.32260-1-quic_johmoo@quicinc.com>
+ <20230217202234.32260-2-quic_johmoo@quicinc.com> <Y/CJhzSJ5YKvD7my@kroah.com>
+ <Y/CM9JtK0914YUE0@kroah.com>
+Content-Language: en-US
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <Y/CM9JtK0914YUE0@kroah.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 2tzCzwN1XpuVqFXBoZh8jrY-4EbeM-iI
+X-Proofpoint-ORIG-GUID: 2tzCzwN1XpuVqFXBoZh8jrY-4EbeM-iI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-18_13,2023-02-17_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ impostorscore=0 mlxlogscore=637 spamscore=0 priorityscore=1501
+ phishscore=0 malwarescore=0 clxscore=1011 mlxscore=0 adultscore=0
+ suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302180168
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,105 +92,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/02/2023 13:04, Konrad Dybcio wrote:
-> 
-> 
-> On 17.02.2023 22:07, Dmitry Baryshkov wrote:
->> On 14/02/2023 19:31, Konrad Dybcio wrote:
->>> Currently we only utilize the OPP table connected to the GPU for
->>> getting (available) frequencies. We do however need to scale the
->>> voltage rail(s) accordingly to ensure that we aren't trying to
->>> run the GPU at 1GHz with a VDD_LOW vote, as that would result in
->>> an otherwise inexplainable hang.
+On 2/18/2023 12:31 AM, Greg Kroah-Hartman wrote:
+> On Sat, Feb 18, 2023 at 09:17:12AM +0100, Greg Kroah-Hartman wrote:
+>> On Fri, Feb 17, 2023 at 12:22:34PM -0800, John Moon wrote:
+>>> While the kernel community has been good at maintaining backwards
+>>> compatibility with kernel UAPIs, it would be helpful to have a tool
+>>> to check if a patch introduces changes that break backwards
+>>> compatibility.
 >>>
->>> Tell the OPP framework that we want to scale the "core" clock
->>> and swap out the clk_set_rate to a dev_pm_opp_set_rate in
->>> msm_devfreq_target() to enable usage of required-opps and by
->>> extension proper voltage level/corner scaling.
+>>> To that end, introduce check-uapi.sh: a simple shell script that
+>>> checks for changes to UAPI headers using libabigail.
 >>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> libabigail is "a framework which aims at helping developers and
+>>> software distributors to spot some ABI-related issues like interface
+>>> incompatibility in ELF shared libraries by performing a static
+>>> analysis of the ELF binaries at hand."
+>>>
+>>> The script uses one of libabigail's tools, "abidiff", to compile the
+>>> changed header before and after the patch to detect any changes.
+>>>
+>>> abidiff "compares the ABI of two shared libraries in ELF format. It
+>>> emits a meaningful report describing the differences between the two
+>>> ABIs."
+>>>
+>>> Signed-off-by: John Moon <quic_johmoo@quicinc.com>
 >>> ---
->>>    drivers/gpu/drm/msm/adreno/adreno_gpu.c | 4 ++++
->>>    drivers/gpu/drm/msm/msm_gpu_devfreq.c   | 2 +-
->>>    2 files changed, 5 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>> index ce6b76c45b6f..15e405e4f977 100644
->>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>> @@ -1047,6 +1047,10 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->>>        const char *gpu_name;
->>>        u32 speedbin;
->>>    +    /* This can only be done here, or devm_pm_opp_set_supported_hw will WARN_ON() */
->>> +    if (!IS_ERR(devm_clk_get(dev, "core")))
->>> +        devm_pm_opp_set_clkname(dev, "core");
+>>>   scripts/check-uapi.sh | 245 ++++++++++++++++++++++++++++++++++++++++++
+>>>   1 file changed, 245 insertions(+)
+>>>   create mode 100755 scripts/check-uapi.sh
 >>
->> Can we instead move a call to a6xx_set_supported_hw() / check_speed_bin after the adreno_gpu_init() ? It will call msm_gpu_init, which in turn sets gpu->core_clk.
+>> Ok, this is very cool, thank you so much for doing this.
 >>
->> Ideally you can call devm_pm_opp_set_clkname() from that function.
-> 
-> 
->> Or maybe completely drop gpu->core_clk and always use devm_pm_opp_set_clk_rate().
-> That would break non-OPP targets, last of which were probably added N=big years ago..
-
-No. In the lack of OPP tables, dev_pm_opp_clk_set_rate() should behave 
-exactly like the clk_set_rate().
-
-> I'm not sure these would still work, as I think we've got rid of some ugly
-> clock getters that were looking for both "core" and "core_clk" etc.
-
-We still support core vs core_clk, see the get_clocks() at msm_gpu.c and 
-then msm_clk_bulk_get_clock(). However we might mimick this function and 
-call devm_pm_opp_set_clkname() with the proper name ("core" or "core_clk").
-
-> 
-> See 8db0b6c7b636376789e356d861c3c6c35dcb6913 for what seems to be the most recent
-> example of non-OPP.
-> 
-> IMX51/53 also have no OPP tables and are using the (AFAIK) now-defunct _clk-suffixed
-> clock-names.
-
-It works, I tested it during this cycle.
-
-> 
-> I'd be more than happy to rip out some of this legacy code and convert it
-> to something modern like OPP, but I'm not sure you guys would like it considering
-> the breakage on (arguably ancient and borderline retired) platforms.
-
-I think, we should try switching to OPP-for-everybody, granted the 
-promise of dev_pm_opp_set_clk_rate() being backwards compatible with 
-bare clk_set_rate().
-
-> 
-> This patch as-is "only" breaks non-OPP a5xx & a6xx (as they have .gpu_busy defined),
-> of which there are none..
-> 
+>> I know Randy Dunlap was also looking into this previously, so I've cc:ed
+>> him and bounced him the original.
 >>
->>> +
->>>        adreno_gpu->funcs = funcs;
->>>        adreno_gpu->info = adreno_info(config->rev);
->>>        adreno_gpu->gmem = adreno_gpu->info->gmem;
->>> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
->>> index e27dbf12b5e8..ea70c1c32d94 100644
->>> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
->>> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
->>> @@ -48,7 +48,7 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
->>>            gpu->funcs->gpu_set_freq(gpu, opp, df->suspended);
->>>            mutex_unlock(&df->lock);
->>>        } else {
->>> -        clk_set_rate(gpu->core_clk, *freq);
->>> +        dev_pm_opp_set_rate(dev, *freq);
+>> I tried this out, and at first glance, this felt like it was just "too
+>> fast" in that nothing actually was being tested.  So I manually added a
+>> field to a structure I know would break the abi, and:
 >>
->> This is not enough, there are calls to clk_set_rate(gpu->core_clk) in msm_gpu.c which are called from the suspend/resume path.
-> Right, good catch.
+>> 	$ ./scripts/check-uapi.sh
+>> 	!!! ABI differences detected in include/uapi/linux/usb/ch9.h (compared to file at HEAD^1) !!!
+>>
+>> 	    [C] 'struct usb_ctrlrequest' changed:
+>> 	      type size changed from 64 to 72 (in bits)
+>> 	      1 data member insertion:
+>> 		'__u8 abi_break', at offset 16 (in bits) at ch9.h:216:1
+>> 	      3 data member changes:
+>> 		'__le16 wValue' offset changed from 16 to 24 (in bits) (by +8 bits)
+>> 		'__le16 wIndex' offset changed from 32 to 40 (in bits) (by +8 bits)
+>> 		'__le16 wLength' offset changed from 48 to 56 (in bits) (by +8 bits)
+>>
+>> 	0/1 UAPI header file changes are backwards compatible
+>> 	UAPI header ABI check failed
+>>
+>> So it worked!
 > 
-> Konrad
->>
->>>        }
->>>          dev_pm_opp_put(opp);
->>
+> Ok, I take it back, it doesn't seem to work :(
+> 
+> It only "catches" a change from the last commit, but if you have an
+> intermediate commit (i.e change something in HEAD^ but not HEAD), it
+> does not detect it at all.
+> 
+> And if you give it an old version, it doesn't check that either (hint,
+> try passing in a very old kernel version, that returns instantly and
+> doesn't actually build anything).
+> 
+> So it's a good first cut as an example, but as it doesn't really work
+> correctly yet, we can't take it.  Care to fix it up to work so that it
+> can be usable?
 
--- 
-With best wishes
-Dmitry
+These first patches were to introduce the tool w/ the one scenario only, 
+and thanks for trying it out. We can fix it and add your suggestions.
 
+---Trilok Soni
