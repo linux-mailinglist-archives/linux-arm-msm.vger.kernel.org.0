@@ -2,137 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D488C69BA79
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 15:49:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A60769BB1C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 18:00:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229536AbjBROtn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Feb 2023 09:49:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41858 "EHLO
+        id S229709AbjBRRAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Feb 2023 12:00:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjBROtm (ORCPT
+        with ESMTP id S229478AbjBRRAn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Feb 2023 09:49:42 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E72E18B21
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 06:49:40 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id d14so3116623eda.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 06:49:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kpH6WR+bqKoWno46gRZZ6t8aFUv5+bs2I4awyRCR6FA=;
-        b=rEaYZ4lEtjWFBOCo6fKV5jfcQmxL9WR2+GrQ5KF3TotfUhraLpaDLMRbQJWksd56d9
-         vZ3BLN81AjCGswmWZJFs7GRJI7sW1RZgbgRPtuGaYVjM5JFoD8k/Q/g58h5I4BFjfIe/
-         A3cM8iWglxOQJcxB8TmEmmZnWQpSMAkhG3PYE5nBtbWF0h1+jNVwFU9VeaZ/7o8Cfjk4
-         Rz4E32JFDsyqklYYoDOTumGrRVBBF8jvNUPI/kgbscrXWc/7+ZnZwpnhHbIWZDfXCc8U
-         PyYr+Cfwu2MOCQFcwLCbfW02wLNcQ0N1w0OOPHjnFH2HKzXy1zGV4GKYk/pW2BlWomQU
-         siZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kpH6WR+bqKoWno46gRZZ6t8aFUv5+bs2I4awyRCR6FA=;
-        b=3aZeY9e64Z9mtfxslT4fQsD1MblOWZIjcoxHpGewH9YI9spo8g3h7V+VDi6DVb2lQ3
-         5HbVyxqcq5c+Sp6vcHpLsPcJvusd4xKSik1gErkxHaDxxO5kNAKHjDd4KgBBLnkzqylj
-         3LuNQSCZZi96vFXToZOGVTadD1rtpRbKHVlylR6NB7QY0pguIcEg/KXPjBt/NlYgKnDs
-         Y4ojpU9XoiPxA+yypy5QjkHrqRdMGF/lLcMljAiNsHWIE+Gck+IqtOrGCp2jlRuMMToC
-         M7y/TGDd6vozcMsob7+6aD+xR9vCm+cqkm9sPw8jboU6dtanboXp4gRTLc1jvKvAPXFg
-         6bjg==
-X-Gm-Message-State: AO0yUKXlWZXq2gpwc3F8Zk5WqBNW2XbPwLaAX9ZgfmTsHkyGxOJYVOxK
-        O6YyYWH7d0/jTZQAerh8bMhluA==
-X-Google-Smtp-Source: AK7set8fMukTd3S6JPnHsMQuo0S3kewjm1iq6LSD9WPiST+l1GpD6Xw8+bBakt04PTvD+qgtgvjSGQ==
-X-Received: by 2002:a17:906:d925:b0:8b1:78b6:4b3c with SMTP id rn5-20020a170906d92500b008b178b64b3cmr6966704ejb.73.1676731779047;
-        Sat, 18 Feb 2023 06:49:39 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id v30-20020a50d09e000000b004acdef7baaesm3661310edd.96.2023.02.18.06.49.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Feb 2023 06:49:38 -0800 (PST)
-Message-ID: <9a0245af-b7f3-0874-385b-47c86d6e6a60@linaro.org>
-Date:   Sat, 18 Feb 2023 15:49:36 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v2 1/2] dt-bindings: display/msm: dsi-controller-main: Fix
- deprecated QCM2290 compatible
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Sat, 18 Feb 2023 12:00:43 -0500
+X-Greylist: delayed 594 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 18 Feb 2023 09:00:40 PST
+Received: from www.linux-watchdog.org (www.linux-watchdog.org [185.87.125.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8949217155;
+        Sat, 18 Feb 2023 09:00:40 -0800 (PST)
+Received: by www.linux-watchdog.org (Postfix, from userid 500)
+        id 00136409E9; Sat, 18 Feb 2023 16:00:05 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.11.0 www.linux-watchdog.org 00136409E9
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-watchdog.org;
+        s=odk20180602; t=1676732406;
+        bh=mmrzvLbJt44h+Sq+aFCdJK1Dkf8hdq69aQcSosm2/hw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SMI46vBIMOYhEAux/gfW3FNlGhqhgsf8pQXggsAGD9CyO48K+gmfh3SVeFB3Q5POU
+         tHaEnWEqB3p2hxaeD9r8BcnTt/7zT4WeWje89J5P+NbKj6MeLdlkdBQ+RZUM7giV2q
+         fASL9HQCNXkTbB9xfyqoXM6jvRYbcBllwvDlii9Y=
+Date:   Sat, 18 Feb 2023 16:00:05 +0100
+From:   Wim Van Sebroeck <wim@linux-watchdog.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        patches@linaro.org, Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230217111316.306241-1-konrad.dybcio@linaro.org>
- <c49904be-d842-fc12-a443-17f229d53166@linaro.org>
- <a4eaccfd-34ba-15f3-033f-165b46c43317@linaro.org>
- <a158bca2-78bf-5b38-60fe-88118e8b4ad7@linaro.org>
- <ab35cdcf-53ae-a3f2-fc08-d0f58c51a0ae@linaro.org>
- <48cb00cd-961c-b72f-fba8-1842d658e289@linaro.org>
- <d4ffa9f0-797e-7a32-147e-64aa46d7e197@linaro.org>
- <e6d397bb-dd5d-8308-eb07-3aeb2589115c@linaro.org>
- <fbece9d6-2204-2534-e44f-29c29cc56413@linaro.org>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <fbece9d6-2204-2534-e44f-29c29cc56413@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        linux-watchdog@vger.kernel.org
+Subject: Re: [PATCH 2/2] dt-bindings: watchdog: Add MSM8994 watchdog timer
+Message-ID: <20230218150005.GA30362@www.linux-watchdog.org>
+References: <20221117105845.13644-1-konrad.dybcio@linaro.org>
+ <20221117105845.13644-2-konrad.dybcio@linaro.org>
+ <07defd1c-2cbd-f25b-d1f4-824023d27135@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <07defd1c-2cbd-f25b-d1f4-824023d27135@linaro.org>
+User-Agent: Mutt/1.5.20 (2009-12-10)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/02/2023 12:23, Konrad Dybcio wrote:
-> 
-> 
-> On 18.02.2023 11:14, Krzysztof Kozlowski wrote:
->> On 17/02/2023 22:13, Bryan O'Donoghue wrote:
->>> On 17/02/2023 12:24, Krzysztof Kozlowski wrote:
->>>> First, it would be nice to know what was the intention of Bryan's commit?
->>>
->>> Sorry I've been grazing this thread but, not responding.
->>>
->>> - qcom,dsi-ctrl-6g-qcm2290
->>>
->>> is non-compliant with qcom,socid-dsi-ctrl which is our desired naming 
->>> convention, so that's what the deprecation is about i.e. moving this 
->>> compat to "qcom,qcm2290-dsi-ctrl"
->>
->> OK, then there was no intention to deprecate qcom,mdss-dsi-ctrl and it
->> should be left as allowed compatible.
-> Not sure if we're on the same page.
+Hi Konrad,
 
-We are.
+> On 17.11.2022 11:58, Konrad Dybcio wrote:
+> > Document the MSM8994 watchdog timer which is already used in DT.
+> > 
+> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > ---
+> Looks like this never got applied?
 
-> 
-> It wasn't intended to deprecate [1] "qcom,qcm2290-dsi-ctrl", "qcom-mdss-dsi-ctrl";
-> (newly-introduced in Bryan's cleanup patchset) but it was intended to deprecate
-> [2] "qcom,dsi-ctrl-6g-qcm2290"; which was introduced long before that *and* used in
-> the 6115 dt (and it still is in linux-next today, as my cleanup hasn't landed yet).
-> 
-> [3] "qcom,dsi-ctrl-6g-qcm2290", "qcom,mdss-dsi-ctrl" was never used (and should never
-> be, considering there's a proper compatible [1] now) so adding it to bindings
-> didn't solve the undocumented-ness issue. Plus the fallback would have never
-> worked back then, as the DSI hw revision check would spit out 2.4.1 or 2.4.
-> which is SC7180 or SDM845 and then it would never match the base register, as
-> they're waay different.
+Patience is a beautiful virtue.
+Since Guenter reviewed it and since it is in Guenter's tree, I picked it up.
 
-All these were known. I was asking about "qcom,mdss-dsi-ctrl", because
-the original intention also affects the way we want to keep it now
-(unless there are other reasons).
+> Konrad
+> >  Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> > index d8ac0be36e6c..a1f17c9e02db 100644
+> > --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> > +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> > @@ -17,6 +17,7 @@ properties:
+> >      oneOf:
+> >        - items:
+> >            - enum:
+> > +              - qcom,apss-wdt-msm8994
+> >                - qcom,apss-wdt-qcs404
+> >                - qcom,apss-wdt-sc7180
+> >                - qcom,apss-wdt-sc7280
 
-Best regards,
-Krzysztof
+Kind regards,
+Wim.
 
