@@ -2,128 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0D2569BA59
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 15:06:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AF8169BA74
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 15:43:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229563AbjBROGr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Feb 2023 09:06:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57878 "EHLO
+        id S229563AbjBROnL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Feb 2023 09:43:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229585AbjBROGq (ORCPT
+        with ESMTP id S229489AbjBROnK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Feb 2023 09:06:46 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5360193D4;
-        Sat, 18 Feb 2023 06:06:44 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31IDuvu2004864;
-        Sat, 18 Feb 2023 14:06:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=jC4N8DP1fiZQLySy8c6oooFUZP1aOqQYl+cwIghFCVE=;
- b=hQrQYcM+Pi0kqO2pu3i7+qJiPNTKXidTUK8wQsbC8oMpENWrfXSJ8v6snhEm7a4GGgrl
- F5/k3qSNjU+myj7SY/PaSRYxQPTUbmsRdgBGE9BTdvm0WQ+2za1MCDORUBpiR+/47XZv
- oG3bgfHYHgQc2AHXNcNedRz0Asne4ik67mGZUG1xLTIGOADrLgr/dUzTfGl0w0MNWUeY
- 890FfOY2R0GBjSKnqaShQMvS00UfxLz3jUNOye9FkNcOh9mmlSjmMZt4Gumy9WryNCZ/
- YwWEFBlZJizuv1YHGx5vr2UA8js3W0HlzDDFWvsSgpl9XHQ8Se7hcEpAxYM7Z1FCKwpS tQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ntq2egvyu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 18 Feb 2023 14:06:40 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31IE6dbs003628
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 18 Feb 2023 14:06:39 GMT
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Sat, 18 Feb 2023 06:06:35 -0800
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>,
-        Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH V4] clk: qcom: ipq5332: mark GPLL4 as critical temporarily
-Date:   Sat, 18 Feb 2023 19:36:22 +0530
-Message-ID: <20230218140622.14705-1-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Sat, 18 Feb 2023 09:43:10 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26D0918AA7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 06:43:09 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id a27so1115350lfk.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 06:43:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=j2JtiIeMM5Qh7iLDivPLXKMhSL89uXXNjq1NEQuV8jk=;
+        b=TL550rJ2WUTkJQApdGZxJYx2k0C2IEqJi18fOaA8Hx8I/EWgP/bxd9nGslORT4S21X
+         /uAnjvrCtWo2KvZCLPFnV9z6nxD0jvP0YN4YWzk7QTGI3bSEIiwbHv5UHxq8ESF2pqzo
+         hHTci8FedD9t1RHPfGG9PQ5vbPpwO8RjzjRW8niogDENiw5Jx/C1SnWY2hrhXboncsAX
+         HzR62k7v9gPaKQTL7kmtI6xIOofGL58xQYpWQUdvqzbq7jdxDaWb1Gzf2+Ui/gdDuC1G
+         DPlQ8QrlZeH7xUXaPxyX5zarJiC/6ZVyttqxoPVZeADotLBv9CZu2da5dvM2HhC8yiP3
+         V0dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=j2JtiIeMM5Qh7iLDivPLXKMhSL89uXXNjq1NEQuV8jk=;
+        b=n/FuurVe7dFGCY+N0HRvQFWVB1LY6HXlbC7dUL1GJvRfzpEoTolqMGx6ANltjk2PHK
+         aeUSiMfHpstZ3OblFWg0r+eBtPcmjGL344YKcZBfXH5BwsV+LBjkwWGTIdHkFdfo9BOj
+         +g5fDphKJwemtWMUu11jJOKpdy4jNLp9U8bczYS+RlKZiVSnfZdh4X6gYFIm410rLet8
+         IYfjfaSPGSx6M+jkeQhsgxr0K9kph6rUCyREBngwrlxaiv7CRCHg5jmfJ5FDe9U5mcV8
+         TTUnFX1TPi1+/9cdteSJ6R3U12wv53Q3+98nF+0HxEuBdAY36shRv/qucZaE+a19KH7j
+         eYEQ==
+X-Gm-Message-State: AO0yUKVwm74OrjER8RwtXqPgWXdTbYGn4PvJfhDGAT/q3ibNT/LBfD6i
+        X5iV5rNcfYS4tHTf7IDgNU/LzEjc3PS1jPvo
+X-Google-Smtp-Source: AK7set+V1E1rfexjJzv31gH7TIO/LMx7j7Jn+1yQaAAni3f8RJ6w4leZoh0yHDq5ObHKz9IRr3Z6Jg==
+X-Received: by 2002:ac2:5dea:0:b0:4db:56e:427c with SMTP id z10-20020ac25dea000000b004db056e427cmr981242lfq.56.1676731387362;
+        Sat, 18 Feb 2023 06:43:07 -0800 (PST)
+Received: from [192.168.1.101] (abxh184.neoplus.adsl.tpnet.pl. [83.9.1.184])
+        by smtp.gmail.com with ESMTPSA id w10-20020a05651204ca00b004b5ab5e904esm998922lfq.306.2023.02.18.06.43.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 18 Feb 2023 06:43:06 -0800 (PST)
+Message-ID: <d71e8a18-8a09-c722-d9dd-b2d48615828f@linaro.org>
+Date:   Sat, 18 Feb 2023 15:43:05 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PPxeCNyYb_XYE3GiTxz-h9pWmO2lLEEl
-X-Proofpoint-GUID: PPxeCNyYb_XYE3GiTxz-h9pWmO2lLEEl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-18_09,2023-02-17_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 clxscore=1015 suspectscore=0 impostorscore=0
- spamscore=0 mlxscore=0 mlxlogscore=823 malwarescore=0 bulkscore=0
- lowpriorityscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2302180126
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH 4/4] cpufreq: qcom-nvmem: make qcom_cpufreq_get_msm_id()
+ return the SoC ID
+Content-Language: en-US
+To:     Robert Marko <robimarko@gmail.com>, ilia.lin@kernel.org,
+        agross@kernel.org, andersson@kernel.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20230121112947.53433-1-robimarko@gmail.com>
+ <20230121112947.53433-4-robimarko@gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230121112947.53433-4-robimarko@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Clock framework disables the GPLL4 source since there are no active users
-for this source currently. Some of the clocks initialized by the
-bootloaders uses the GPLL4 as the source. Due to this, when the GPLL4 is
-disabled by the clock framework, system is going for the reboot.
 
-To avoid this, mark the GPLL4 as ignore unused so that clock framework
-doesn't disable it. Once the users of this source is enabled, we can get
-rid of this flag.
 
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
-Changes in V4:
-	- Updated the commit message and comment in driver that
-	  CLK_IGNORE_UNUSED is used
-	- This patch depends on the IPQ5332 baseport patches
-	  https://lore.kernel.org/linux-arm-msm/20230217075835.460-1-quic_kathirav@quicinc.com/
+On 21.01.2023 12:29, Robert Marko wrote:
+> Currently, qcom_cpufreq_get_msm_id() does not simply return the SoC ID
+> after getting it via SMEM call but instead uses an enum to encode the
+> matched SMEM ID to 2 variants of MSM8996 which are then used in
+> qcom_cpufreq_kryo_name_version() to set the supported version.
+> 
+> This prevents qcom_cpufreq_get_msm_id() from being universal and its doing
+> more than its name suggests, so lets make it just return the SoC ID
+> directly which allows matching directly on the SoC ID and removes the need
+> for msm8996_version enum which simplifies the driver.
+> It also allows reusing the qcom_cpufreq_get_msm_id() for new SoC-s.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 44 ++++++++--------------------
+>  1 file changed, 12 insertions(+), 32 deletions(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> index da55d2e1925a..9deaf9521d6d 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> @@ -32,12 +32,6 @@
+>  
+>  #include <dt-bindings/arm/qcom,ids.h>
+>  
+> -enum _msm8996_version {
+> -	MSM8996_V3,
+> -	MSM8996_SG,
+> -	NUM_OF_MSM8996_VERSIONS,
+> -};
+> -
+>  struct qcom_cpufreq_drv;
+>  
+>  struct qcom_cpufreq_match_data {
+> @@ -134,30 +128,16 @@ static void get_krait_bin_format_b(struct device *cpu_dev,
+>  	dev_dbg(cpu_dev, "PVS version: %d\n", *pvs_ver);
+>  }
+>  
+> -static enum _msm8996_version qcom_cpufreq_get_msm_id(void)
+> +static int qcom_cpufreq_get_msm_id(void)
+This should be u32 as info->id is __le32
 
-Changes in V3:
-	- Fixed the typo in the comment
-	- Used CLK_IGNORE_UNUSED instead of CLK_IS_CRITICAL
+And please export this function from socinfo, it'll come in
+useful for other drivers!
 
-Changes in V2:
-	- Added a comment in driver explaining the need of the flag
-
- drivers/clk/qcom/gcc-ipq5332.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
-index 9e4baea33937..bdb4a0a11d07 100644
---- a/drivers/clk/qcom/gcc-ipq5332.c
-+++ b/drivers/clk/qcom/gcc-ipq5332.c
-@@ -128,6 +128,17 @@ static struct clk_alpha_pll gpll4_main = {
- 			.parent_data = &gcc_parent_data_xo,
- 			.num_parents = 1,
- 			.ops = &clk_alpha_pll_stromer_ops,
-+			/*
-+			 * There are no consumers for this GPLL in kernel yet,
-+			 * (will be added soon), so the clock framework
-+			 * disables this source. But some of the clocks
-+			 * initialized by boot loaders uses this source. So we
-+			 * need to keep this clock ON. Add the
-+			 * CLK_IGNORE_UNUSED flag so the clock will not be
-+			 * disabled. Once the consumer in kernel is added, we
-+			 * can get rid of this flag.
-+			 */
-+			.flags = CLK_IGNORE_UNUSED,
- 		},
- 	},
- };
--- 
-2.17.1
-
+Konrad
+>  {
+>  	size_t len;
+>  	struct socinfo *info;
+> -	enum _msm8996_version version;
+>  
+>  	info = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_HW_SW_BUILD_ID, &len);
+>  	if (IS_ERR(info))
+> -		return NUM_OF_MSM8996_VERSIONS;
+> +		return PTR_ERR(info);
+>  
+> -	switch (info->id) {
+> -	case QCOM_ID_MSM8996:
+> -	case QCOM_ID_APQ8096:
+> -		version = MSM8996_V3;
+> -		break;
+> -	case QCOM_ID_MSM8996SG:
+> -	case QCOM_ID_APQ8096SG:
+> -		version = MSM8996_SG;
+> -		break;
+> -	default:
+> -		version = NUM_OF_MSM8996_VERSIONS;
+> -	}
+> -
+> -	return version;
+> +	return info->id;
+>  }
+>  
+>  static int qcom_cpufreq_kryo_name_version(struct device *cpu_dev,
+> @@ -166,25 +146,25 @@ static int qcom_cpufreq_kryo_name_version(struct device *cpu_dev,
+>  					  struct qcom_cpufreq_drv *drv)
+>  {
+>  	size_t len;
+> +	int msm_id;
+>  	u8 *speedbin;
+> -	enum _msm8996_version msm8996_version;
+>  	*pvs_name = NULL;
+>  
+> -	msm8996_version = qcom_cpufreq_get_msm_id();
+> -	if (NUM_OF_MSM8996_VERSIONS == msm8996_version) {
+> -		dev_err(cpu_dev, "Not Snapdragon 820/821!");
+> -		return -ENODEV;
+> -	}
+> +	msm_id = qcom_cpufreq_get_msm_id();
+> +	if (msm_id < 0)
+> +		return msm_id;
+>  
+>  	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
+>  	if (IS_ERR(speedbin))
+>  		return PTR_ERR(speedbin);
+>  
+> -	switch (msm8996_version) {
+> -	case MSM8996_V3:
+> +	switch (msm_id) {
+> +	case QCOM_ID_MSM8996:
+> +	case QCOM_ID_APQ8096:
+>  		drv->versions = 1 << (unsigned int)(*speedbin);
+>  		break;
+> -	case MSM8996_SG:
+> +	case QCOM_ID_MSM8996SG:
+> +	case QCOM_ID_APQ8096SG:
+>  		drv->versions = 1 << ((unsigned int)(*speedbin) + 4);
+>  		break;
+>  	default:
