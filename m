@@ -2,169 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C47C69BA21
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 14:04:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B0D2569BA59
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 15:06:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229525AbjBRNEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Feb 2023 08:04:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38580 "EHLO
+        id S229563AbjBROGr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Feb 2023 09:06:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229735AbjBRNEJ (ORCPT
+        with ESMTP id S229585AbjBROGq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Feb 2023 08:04:09 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99AE313DC1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 05:04:07 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id f6so819516lfs.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 05:04:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3N5WAzbRFEo6T4gVmAxjSh/Vc/Ea58u6XaJqPwHeVh4=;
-        b=U4IXj5fZbsqDGnnIHvFZjApawI7qJL91IjBv5k4Klvpgh7GQl6AdaUil67EYPWWXgo
-         5qzdpVEqeRX4xOzpvzc4pKf7InKG6AWHme+BkdAoMHe8B+nmo461rqY3zraL5on846DP
-         gJOMYCVgu7xeuo1EPhlyvmP1+X4/D3pcaHvH0jr0X9A81wjmOXkFd2G3Hau5sbrLcsCY
-         r09p4VrVglNWHtBAm4Mzs/dKh8VpV43bBvYLS9ymwCkaq0ZyLAdQTHOzrp0OnTUIFARl
-         rrlN8H7+vUDN+jdo/2gUYb5KHNcW2oOCccSmZkDFRJ+QUwY82MuWqnjAJJtHH+BypEtW
-         Nylw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3N5WAzbRFEo6T4gVmAxjSh/Vc/Ea58u6XaJqPwHeVh4=;
-        b=xLiEb/S/5/SZi+wi5pS3bwzB8WPsV68kZPjJQaNbdfLm1qxknCTX8KmIYfxa+lVzQs
-         YBR8BnL/bxu7++aYWL5ellVp55FJDaCDNxLHAjyy1HJtUNklGhk97Hg+t7+eZIcKVN3E
-         zyEXO/7zQz3P/8CyxjryAynSYl2VFie2KfXETlXzRdJMnbGFRO/BU4iMPm9ep6dKbq4S
-         nG2fgGHeAbRBcCAaU0i+Vg3CF++yjzHgMZcPegzbd6m0eb/c3rYpj3Ujeo5nja0Ds5Um
-         46q2LAdZcINHOLeezMCD/aONbkn/SVrnYx3vLfLw+0Wgwl2IeFvX5vCZ2gNrtGTMwI0a
-         48nQ==
-X-Gm-Message-State: AO0yUKXpfATBePFaVjj640WVRRqIGochmpH4HLxvTfJlKoY07YqlPqwe
-        tNOmdWLpkGaccAbX1yW4qtBKVw==
-X-Google-Smtp-Source: AK7set/gnKvtFmRzdwyC6P2wMI81d4vWwm6HjdeC7KtCbMNjaI4FGSQJ3mv5xfpjdnNPaUNiKYztuA==
-X-Received: by 2002:ac2:561b:0:b0:4b5:7096:23ff with SMTP id v27-20020ac2561b000000b004b5709623ffmr1010457lfd.66.1676725445833;
-        Sat, 18 Feb 2023 05:04:05 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id h18-20020ac250d2000000b004d865c781eesm980042lfm.24.2023.02.18.05.04.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Feb 2023 05:04:05 -0800 (PST)
-Message-ID: <417fe51e-1f35-53d4-0dd7-bbb01d5bd164@linaro.org>
-Date:   Sat, 18 Feb 2023 15:04:04 +0200
+        Sat, 18 Feb 2023 09:06:46 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5360193D4;
+        Sat, 18 Feb 2023 06:06:44 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31IDuvu2004864;
+        Sat, 18 Feb 2023 14:06:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=jC4N8DP1fiZQLySy8c6oooFUZP1aOqQYl+cwIghFCVE=;
+ b=hQrQYcM+Pi0kqO2pu3i7+qJiPNTKXidTUK8wQsbC8oMpENWrfXSJ8v6snhEm7a4GGgrl
+ F5/k3qSNjU+myj7SY/PaSRYxQPTUbmsRdgBGE9BTdvm0WQ+2za1MCDORUBpiR+/47XZv
+ oG3bgfHYHgQc2AHXNcNedRz0Asne4ik67mGZUG1xLTIGOADrLgr/dUzTfGl0w0MNWUeY
+ 890FfOY2R0GBjSKnqaShQMvS00UfxLz3jUNOye9FkNcOh9mmlSjmMZt4Gumy9WryNCZ/
+ YwWEFBlZJizuv1YHGx5vr2UA8js3W0HlzDDFWvsSgpl9XHQ8Se7hcEpAxYM7Z1FCKwpS tQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ntq2egvyu-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 18 Feb 2023 14:06:40 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31IE6dbs003628
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 18 Feb 2023 14:06:39 GMT
+Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Sat, 18 Feb 2023 06:06:35 -0800
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+To:     <andersson@kernel.org>, <agross@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>,
+        Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH V4] clk: qcom: ipq5332: mark GPLL4 as critical temporarily
+Date:   Sat, 18 Feb 2023 19:36:22 +0530
+Message-ID: <20230218140622.14705-1-quic_kathirav@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH v2 07/14] drm/msm/a6xx: Add support for A619_holi
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230214173145.2482651-1-konrad.dybcio@linaro.org>
- <20230214173145.2482651-8-konrad.dybcio@linaro.org>
- <8268b4c9-ca5e-4ff3-628c-7e9daaeb16b0@linaro.org>
- <9269c5dd-d97c-e29a-98a9-b42c598ebfc6@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <9269c5dd-d97c-e29a-98a9-b42c598ebfc6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: PPxeCNyYb_XYE3GiTxz-h9pWmO2lLEEl
+X-Proofpoint-GUID: PPxeCNyYb_XYE3GiTxz-h9pWmO2lLEEl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-18_09,2023-02-17_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ priorityscore=1501 clxscore=1015 suspectscore=0 impostorscore=0
+ spamscore=0 mlxscore=0 mlxlogscore=823 malwarescore=0 bulkscore=0
+ lowpriorityscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2302180126
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/02/2023 23:21, Konrad Dybcio wrote:
-> 
-> 
-> On 17.02.2023 22:19, Dmitry Baryshkov wrote:
->> On 14/02/2023 19:31, Konrad Dybcio wrote:
->>> A619_holi is a GMU-less variant of the already-supported A619 GPU.
->>> It's present on at least SM4350 (holi) and SM6375 (blair). No mesa
->>> changes are required. Add the required kernel-side support for it.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->>>    drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 37 +++++++++++++++++-----
->>>    drivers/gpu/drm/msm/adreno/adreno_device.c | 13 ++++++++
->>>    drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++
->>>    3 files changed, 47 insertions(+), 8 deletions(-)
+Clock framework disables the GPLL4 source since there are no active users
+for this source currently. Some of the clocks initialized by the
+bootloaders uses the GPLL4 as the source. Due to this, when the GPLL4 is
+disabled by the clock framework, system is going for the reboot.
 
-[...]
+To avoid this, mark the GPLL4 as ignore unused so that clock framework
+doesn't disable it. Once the users of this source is enabled, we can get
+rid of this flag.
 
+Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+---
+Changes in V4:
+	- Updated the commit message and comment in driver that
+	  CLK_IGNORE_UNUSED is used
+	- This patch depends on the IPQ5332 baseport patches
+	  https://lore.kernel.org/linux-arm-msm/20230217075835.460-1-quic_kathirav@quicinc.com/
 
->>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
->>> index 82757f005a1a..71faeb3fd466 100644
->>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
->>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
->>> @@ -264,6 +264,19 @@ static const struct adreno_info gpulist[] = {
->>>            .gmem = SZ_512K,
->>>            .inactive_period = DRM_MSM_INACTIVE_PERIOD,
->>>            .init = a6xx_gpu_init,
->>> +    }, {
->>> +        .rev = ADRENO_REV(6, 1, 9, 1),
->>
->> I think this deserves a comment that GMU-enabled sm6350 has patch_id 0 (if I interpreted the vendor dtsi correctly).
->>
->> Another option might be to actually check for the qcom,gmu presense and add that to the selection conditional.
-> We pass the GMU wrapper in qcom,gmu = <>, though perhaps setting
-> the holi-ness based on whether it's "qcom,gmu-x.y.z.a" or
-> "qcom,gmu-wrapper" would be wiser.. The patch ID is indeterminate
-> and I *think* one GMU-wrapper A619 has patch id 0..
+Changes in V3:
+	- Fixed the typo in the comment
+	- Used CLK_IGNORE_UNUSED instead of CLK_IS_CRITICAL
 
-I was not aware that GMU-wrapper also adds a GMU device. In this case, 
-checking the GMU's compatible strings sounds like a logical approach to me.
+Changes in V2:
+	- Added a comment in driver explaining the need of the flag
 
-> 
-> Konrad
->>
->>> +        .revn = 619,
->>> +        .name = "A619_holi",
->>> +        .fw = {
->>> +            [ADRENO_FW_SQE] = "a630_sqe.fw",
->>> +        },
->>> +        .gmem = SZ_512K,
->>> +        .inactive_period = DRM_MSM_INACTIVE_PERIOD,
->>> +        .quirks = ADRENO_QUIRK_GMU_WRAPPER,
->>> +        .init = a6xx_gpu_init,
->>> +        .zapfw = "a615_zap.mdt",
->>> +        .hwcg = a615_hwcg,
->>>        }, {
->>>            .rev = ADRENO_REV(6, 1, 9, ANY_ID),
->>>            .revn = 619,
->>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->>> index 7c5e0a90b5fb..16241368c2e4 100644
->>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->>> @@ -252,6 +252,11 @@ static inline int adreno_is_a619(struct adreno_gpu *gpu)
->>>        return gpu->revn == 619;
->>>    }
->>>    +static inline int adreno_is_a619_holi(struct adreno_gpu *gpu)
->>> +{
->>> +    return adreno_is_a619(gpu) && adreno_has_gmu_wrapper(gpu);
->>> +}
->>> +
->>>    static inline int adreno_is_a630(struct adreno_gpu *gpu)
->>>    {
->>>        return gpu->revn == 630;
->>
+ drivers/clk/qcom/gcc-ipq5332.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
+diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
+index 9e4baea33937..bdb4a0a11d07 100644
+--- a/drivers/clk/qcom/gcc-ipq5332.c
++++ b/drivers/clk/qcom/gcc-ipq5332.c
+@@ -128,6 +128,17 @@ static struct clk_alpha_pll gpll4_main = {
+ 			.parent_data = &gcc_parent_data_xo,
+ 			.num_parents = 1,
+ 			.ops = &clk_alpha_pll_stromer_ops,
++			/*
++			 * There are no consumers for this GPLL in kernel yet,
++			 * (will be added soon), so the clock framework
++			 * disables this source. But some of the clocks
++			 * initialized by boot loaders uses this source. So we
++			 * need to keep this clock ON. Add the
++			 * CLK_IGNORE_UNUSED flag so the clock will not be
++			 * disabled. Once the consumer in kernel is added, we
++			 * can get rid of this flag.
++			 */
++			.flags = CLK_IGNORE_UNUSED,
+ 		},
+ 	},
+ };
 -- 
-With best wishes
-Dmitry
+2.17.1
 
