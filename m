@@ -2,196 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FCF169BA03
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 13:38:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C47C69BA21
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 14:04:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229481AbjBRMiy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Feb 2023 07:38:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58450 "EHLO
+        id S229525AbjBRNEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Feb 2023 08:04:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbjBRMix (ORCPT
+        with ESMTP id S229735AbjBRNEJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Feb 2023 07:38:53 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2288417174;
-        Sat, 18 Feb 2023 04:38:52 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31ICD8PE002280;
-        Sat, 18 Feb 2023 12:38:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=g3kOTMIXEvGqXsDw9ykYi5ROfsHk1clT6WdQXaM+IkA=;
- b=EIJdGhKM3eESaZKjKcM4pvjrqhAGQY2FCZbinaQwpnt/Hxp3SoWwgKasfGQp3+9ZUJhQ
- fj82t9qQwxwLIeWBTLlx5ojXB2N9vrmEUahUH42GAhLQw6ZNisY6CxW099QuzhhNK8VY
- FnzYapHyg60/dEJMyw7TQ7GJ5ynL9amwhSbaTahbYhyvvMq9ic/a1t4JscSiYJyGE08V
- Ivu0RUtptL++BkfMg1yMzHyZIsMd3/G2pER0EMrDAihPVRzMBAh82AB47oIdkT6Jr+HR
- K6swoQ4CnxOTvxfWKPe8DBLg/q3xunAdscNT39vw0bLUFzCb28hSvONWK9Tvk0JoHXbs +g== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ntps18swd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 18 Feb 2023 12:38:42 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31ICcfLd010907
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 18 Feb 2023 12:38:41 GMT
-Received: from [10.216.19.78] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Sat, 18 Feb
- 2023 04:38:39 -0800
-Message-ID: <3fe19c46-7013-5f93-8645-e294cf84940c@quicinc.com>
-Date:   Sat, 18 Feb 2023 18:08:36 +0530
+        Sat, 18 Feb 2023 08:04:09 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99AE313DC1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 05:04:07 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id f6so819516lfs.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 05:04:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3N5WAzbRFEo6T4gVmAxjSh/Vc/Ea58u6XaJqPwHeVh4=;
+        b=U4IXj5fZbsqDGnnIHvFZjApawI7qJL91IjBv5k4Klvpgh7GQl6AdaUil67EYPWWXgo
+         5qzdpVEqeRX4xOzpvzc4pKf7InKG6AWHme+BkdAoMHe8B+nmo461rqY3zraL5on846DP
+         gJOMYCVgu7xeuo1EPhlyvmP1+X4/D3pcaHvH0jr0X9A81wjmOXkFd2G3Hau5sbrLcsCY
+         r09p4VrVglNWHtBAm4Mzs/dKh8VpV43bBvYLS9ymwCkaq0ZyLAdQTHOzrp0OnTUIFARl
+         rrlN8H7+vUDN+jdo/2gUYb5KHNcW2oOCccSmZkDFRJ+QUwY82MuWqnjAJJtHH+BypEtW
+         Nylw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3N5WAzbRFEo6T4gVmAxjSh/Vc/Ea58u6XaJqPwHeVh4=;
+        b=xLiEb/S/5/SZi+wi5pS3bwzB8WPsV68kZPjJQaNbdfLm1qxknCTX8KmIYfxa+lVzQs
+         YBR8BnL/bxu7++aYWL5ellVp55FJDaCDNxLHAjyy1HJtUNklGhk97Hg+t7+eZIcKVN3E
+         zyEXO/7zQz3P/8CyxjryAynSYl2VFie2KfXETlXzRdJMnbGFRO/BU4iMPm9ep6dKbq4S
+         nG2fgGHeAbRBcCAaU0i+Vg3CF++yjzHgMZcPegzbd6m0eb/c3rYpj3Ujeo5nja0Ds5Um
+         46q2LAdZcINHOLeezMCD/aONbkn/SVrnYx3vLfLw+0Wgwl2IeFvX5vCZ2gNrtGTMwI0a
+         48nQ==
+X-Gm-Message-State: AO0yUKXpfATBePFaVjj640WVRRqIGochmpH4HLxvTfJlKoY07YqlPqwe
+        tNOmdWLpkGaccAbX1yW4qtBKVw==
+X-Google-Smtp-Source: AK7set/gnKvtFmRzdwyC6P2wMI81d4vWwm6HjdeC7KtCbMNjaI4FGSQJ3mv5xfpjdnNPaUNiKYztuA==
+X-Received: by 2002:ac2:561b:0:b0:4b5:7096:23ff with SMTP id v27-20020ac2561b000000b004b5709623ffmr1010457lfd.66.1676725445833;
+        Sat, 18 Feb 2023 05:04:05 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id h18-20020ac250d2000000b004d865c781eesm980042lfm.24.2023.02.18.05.04.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 18 Feb 2023 05:04:05 -0800 (PST)
+Message-ID: <417fe51e-1f35-53d4-0dd7-bbb01d5bd164@linaro.org>
+Date:   Sat, 18 Feb 2023 15:04:04 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2] firmware: qcom_scm: modify
- qcom_scm_set_download_mode()
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-CC:     <agross@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1675419435-30726-1-git-send-email-quic_mojha@quicinc.com>
- <20230203190248.ywmb54gmdd4blv46@ripper>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20230203190248.ywmb54gmdd4blv46@ripper>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: UTKHes_NnYsK3p4_aCYVwHa8_uqPAMyx
-X-Proofpoint-ORIG-GUID: UTKHes_NnYsK3p4_aCYVwHa8_uqPAMyx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-18_07,2023-02-17_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
- adultscore=0 impostorscore=0 phishscore=0 spamscore=0 mlxlogscore=999
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302180111
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH v2 07/14] drm/msm/a6xx: Add support for A619_holi
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Chia-I Wu <olvaffe@gmail.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20230214173145.2482651-1-konrad.dybcio@linaro.org>
+ <20230214173145.2482651-8-konrad.dybcio@linaro.org>
+ <8268b4c9-ca5e-4ff3-628c-7e9daaeb16b0@linaro.org>
+ <9269c5dd-d97c-e29a-98a9-b42c598ebfc6@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <9269c5dd-d97c-e29a-98a9-b42c598ebfc6@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 17/02/2023 23:21, Konrad Dybcio wrote:
+> 
+> 
+> On 17.02.2023 22:19, Dmitry Baryshkov wrote:
+>> On 14/02/2023 19:31, Konrad Dybcio wrote:
+>>> A619_holi is a GMU-less variant of the already-supported A619 GPU.
+>>> It's present on at least SM4350 (holi) and SM6375 (blair). No mesa
+>>> changes are required. Add the required kernel-side support for it.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 37 +++++++++++++++++-----
+>>>    drivers/gpu/drm/msm/adreno/adreno_device.c | 13 ++++++++
+>>>    drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++
+>>>    3 files changed, 47 insertions(+), 8 deletions(-)
+
+[...]
 
 
-On 2/4/2023 12:32 AM, Bjorn Andersson wrote:
-> On Fri, Feb 03, 2023 at 03:47:15PM +0530, Mukesh Ojha wrote:
->> Modify qcom_scm_set_download_mode() such that it can support
->> multiple modes. There is no functional change with this change.
+>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>>> index 82757f005a1a..71faeb3fd466 100644
+>>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>>> @@ -264,6 +264,19 @@ static const struct adreno_info gpulist[] = {
+>>>            .gmem = SZ_512K,
+>>>            .inactive_period = DRM_MSM_INACTIVE_PERIOD,
+>>>            .init = a6xx_gpu_init,
+>>> +    }, {
+>>> +        .rev = ADRENO_REV(6, 1, 9, 1),
 >>
-> 
-> As Dmitry said, you argue for added flexibility, but doesn't provide a
-> user of that flexibility. I will drop this patch from the queue for now.
-> 
-> Please include this together with the patch(es) that benefit from such
-> flexibility.
-
-Sure, will add this along with patches which benefit from this change.
-
-> 
->> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
->> ---
->> Changes in v2:
->>    - Stop changing legacy scm id for dload mode.
+>> I think this deserves a comment that GMU-enabled sm6350 has patch_id 0 (if I interpreted the vendor dtsi correctly).
 >>
->>   drivers/firmware/qcom_scm.c | 15 +++++++--------
->>   include/linux/qcom_scm.h    |  5 +++++
->>   2 files changed, 12 insertions(+), 8 deletions(-)
->>
->> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
->> index cdbfe54..6245b97 100644
->> --- a/drivers/firmware/qcom_scm.c
->> +++ b/drivers/firmware/qcom_scm.c
->> @@ -400,7 +400,7 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
->>   }
->>   EXPORT_SYMBOL(qcom_scm_set_remote_state);
->>   
->> -static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
->> +static int __qcom_scm_set_dload_mode(struct device *dev, enum qcom_download_mode mode)
->>   {
->>   	struct qcom_scm_desc desc = {
->>   		.svc = QCOM_SCM_SVC_BOOT,
->> @@ -410,12 +410,12 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
->>   		.owner = ARM_SMCCC_OWNER_SIP,
->>   	};
->>   
->> -	desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
->> +	desc.args[1] = mode ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
->>   
->>   	return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
->>   }
->>   
->> -static void qcom_scm_set_download_mode(bool enable)
->> +static void qcom_scm_set_download_mode(enum qcom_download_mode mode)
->>   {
->>   	bool avail;
->>   	int ret = 0;
->> @@ -424,10 +424,9 @@ static void qcom_scm_set_download_mode(bool enable)
->>   					     QCOM_SCM_SVC_BOOT,
->>   					     QCOM_SCM_BOOT_SET_DLOAD_MODE);
->>   	if (avail) {
->> -		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
->> +		ret = __qcom_scm_set_dload_mode(__scm->dev, mode);
->>   	} else if (__scm->dload_mode_addr) {
->> -		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
->> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
->> +		ret = qcom_scm_io_writel(__scm->dload_mode_addr, mode);
->>   	} else {
->>   		dev_err(__scm->dev,
->>   			"No available mechanism for setting download mode\n");
->> @@ -1410,7 +1409,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
->>   	 * disabled below by a clean shutdown/reboot.
->>   	 */
->>   	if (download_mode)
->> -		qcom_scm_set_download_mode(true);
->> +		qcom_scm_set_download_mode(QCOM_DOWNLOAD_FULLDUMP);
->>   
->>   	return 0;
->>   }
->> @@ -1419,7 +1418,7 @@ static void qcom_scm_shutdown(struct platform_device *pdev)
->>   {
->>   	/* Clean shutdown, disable download mode to allow normal restart */
->>   	if (download_mode)
-> 
-> PS. Wouldn't it make sense, if !download_mode to set NODUMP?
+>> Another option might be to actually check for the qcom,gmu presense and add that to the selection conditional.
+> We pass the GMU wrapper in qcom,gmu = <>, though perhaps setting
+> the holi-ness based on whether it's "qcom,gmu-x.y.z.a" or
+> "qcom,gmu-wrapper" would be wiser.. The patch ID is indeterminate
+> and I *think* one GMU-wrapper A619 has patch id 0..
 
-IMO, it does not need even a check, since our intention is to disable
-download mode during reboot/restart.
+I was not aware that GMU-wrapper also adds a GMU device. In this case, 
+checking the GMU's compatible strings sounds like a logical approach to me.
 
--Mukesh
 > 
-> Regards,
-> Bjorn
-> 
->> -		qcom_scm_set_download_mode(false);
->> +		qcom_scm_set_download_mode(QCOM_DOWNLOAD_NODUMP);
->>   }
->>   
->>   static const struct of_device_id qcom_scm_dt_match[] = {
->> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
->> index f833564..f9bc84e 100644
->> --- a/include/linux/qcom_scm.h
->> +++ b/include/linux/qcom_scm.h
->> @@ -14,6 +14,11 @@
->>   #define QCOM_SCM_CPU_PWR_DOWN_L2_OFF	0x1
->>   #define QCOM_SCM_HDCP_MAX_REQ_CNT	5
->>   
->> +enum qcom_download_mode {
->> +	QCOM_DOWNLOAD_NODUMP    = 0x00,
->> +	QCOM_DOWNLOAD_FULLDUMP  = 0x10,
->> +};
->> +
->>   struct qcom_scm_hdcp_req {
->>   	u32 addr;
->>   	u32 val;
->> -- 
->> 2.7.4
+> Konrad
 >>
+>>> +        .revn = 619,
+>>> +        .name = "A619_holi",
+>>> +        .fw = {
+>>> +            [ADRENO_FW_SQE] = "a630_sqe.fw",
+>>> +        },
+>>> +        .gmem = SZ_512K,
+>>> +        .inactive_period = DRM_MSM_INACTIVE_PERIOD,
+>>> +        .quirks = ADRENO_QUIRK_GMU_WRAPPER,
+>>> +        .init = a6xx_gpu_init,
+>>> +        .zapfw = "a615_zap.mdt",
+>>> +        .hwcg = a615_hwcg,
+>>>        }, {
+>>>            .rev = ADRENO_REV(6, 1, 9, ANY_ID),
+>>>            .revn = 619,
+>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>>> index 7c5e0a90b5fb..16241368c2e4 100644
+>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>>> @@ -252,6 +252,11 @@ static inline int adreno_is_a619(struct adreno_gpu *gpu)
+>>>        return gpu->revn == 619;
+>>>    }
+>>>    +static inline int adreno_is_a619_holi(struct adreno_gpu *gpu)
+>>> +{
+>>> +    return adreno_is_a619(gpu) && adreno_has_gmu_wrapper(gpu);
+>>> +}
+>>> +
+>>>    static inline int adreno_is_a630(struct adreno_gpu *gpu)
+>>>    {
+>>>        return gpu->revn == 630;
+>>
+
+-- 
+With best wishes
+Dmitry
+
