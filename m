@@ -2,60 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D897069B8BC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 09:31:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4452069B945
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Feb 2023 11:14:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229714AbjBRIby (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Feb 2023 03:31:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60150 "EHLO
+        id S229683AbjBRKOK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Feb 2023 05:14:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbjBRIbx (ORCPT
+        with ESMTP id S229624AbjBRKOK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Feb 2023 03:31:53 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A41A23B218;
-        Sat, 18 Feb 2023 00:31:52 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3E370603E0;
-        Sat, 18 Feb 2023 08:31:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D540C433D2;
-        Sat, 18 Feb 2023 08:31:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1676709111;
-        bh=3AgEsRwqOhnYNVK4GZK8NiR959oQKGSIb55BgkzTMRI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gF8IClealACvbZrZ0F8E2Tp7ykiPDSeey6LbPr3fEqRZ6yt5F+KBBZYGbGO+Zt17V
-         EvQp+wf6UojmyMX+Gly14WmtzXTcwaknjI6HZVK2QprnbhwiDtdM5ZhA7F+T8WDX7q
-         UZS4Eo0gzlyGs0x9uWzlceKylorM/0rfhOVe+2TM=
-Date:   Sat, 18 Feb 2023 09:31:48 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     John Moon <quic_johmoo@quicinc.com>,
-        Randy Dunlap <rdunlap@infradead.org>
-Cc:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Todd Kjos <tkjos@google.com>,
-        Matthias Maennich <maennich@google.com>,
-        Giuliano Procida <gprocida@google.com>,
-        kernel-team@android.com, Jordan Crouse <jorcrous@amazon.com>
-Subject: Re: [PATCH RESEND 1/1] check-uapi: Introduce check-uapi.sh
-Message-ID: <Y/CM9JtK0914YUE0@kroah.com>
-References: <20230217202234.32260-1-quic_johmoo@quicinc.com>
- <20230217202234.32260-2-quic_johmoo@quicinc.com>
- <Y/CJhzSJ5YKvD7my@kroah.com>
+        Sat, 18 Feb 2023 05:14:10 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38EEE38EA8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 02:14:09 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id dm15so2762019edb.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Feb 2023 02:14:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XlYpUpe2mvgMM93e/W7QPf63bpnY6+x3AWjdp9vVuto=;
+        b=vHc8eWnXv559cPUvTjAwx4fjMkcCMs3PZaTCVmo9y2AIJhUH/Mp2yT8Pl2aIjne5Hm
+         KM5BtTCbsjyE1g6mTFetLELJG5SuG2FcFLlfDE5lmVnZ9t1KhJ2sisOUBxAjaTFdBE/1
+         3+SLrC/KB4z3DqbF8ibLbezZrcFMTxC86DohLdKexLBV9EpJ8UQliQ5S4Biqy1/ffceD
+         B5kgjXdVmJpXyFY8lzfVNuzm3X8y+gTKXD1MR1RxR+5cFrSwBalH5q0OblIADiPaNM/E
+         xSvsyeoqlLkWo4YTSQcM5VIzUyz2fqIH/S/h4hfwP+5/O6wx+dCtKD1n05e1WBaORrEF
+         6klA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XlYpUpe2mvgMM93e/W7QPf63bpnY6+x3AWjdp9vVuto=;
+        b=CMmjn7HzKwnDX1kwXEKekNW5O/qxDto+zsAAFmo58y7yQSIwTntzkFKgpQJlY0lJbv
+         ggeKTzlAkh6rcwU0YtWHex8X9d3zPtY+PDM9fGv4mn73lPVu5icFXya9g0hWyjRIBkuF
+         P1r+Ef9aj+AXeEZqYeXUaBlMweUIPQ0ywIVrIVxuwU48Tg7kN/z9Mdh3RD8WyphJy/Rw
+         66uV8FY+LmWpZQlrqnxLs4z3YEp7HpB2qMH1UEY5/jYdr2v9Q018xTanDuqn2SaseoC+
+         V6wtyZqoFc1DwAIMo8Q7inP9Wy2zJsOXj5XKh5iBa6zMnU0VPGAQ38A2DNqT6e8/wwPe
+         Tlmg==
+X-Gm-Message-State: AO0yUKVg3NqLlU2pPjAGjs5A9xOzc7o574cFduCMTIvHM7ni8Cfaqh/4
+        +rpNNpTBFLg41C8LEGOG3Kw+8w==
+X-Google-Smtp-Source: AK7set+3xynx3gDPCY9sAfEctMu3DjKAusUU/V/7HxqiREWds9wQjauq9fvyl47NEeCBkmqS4EqKcw==
+X-Received: by 2002:a05:6402:d2:b0:4ab:4ad1:a37e with SMTP id i18-20020a05640200d200b004ab4ad1a37emr98905edu.16.1676715247702;
+        Sat, 18 Feb 2023 02:14:07 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id r23-20020a50c017000000b004a233e03afdsm3381118edb.46.2023.02.18.02.14.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 18 Feb 2023 02:14:07 -0800 (PST)
+Message-ID: <e6d397bb-dd5d-8308-eb07-3aeb2589115c@linaro.org>
+Date:   Sat, 18 Feb 2023 11:14:04 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y/CJhzSJ5YKvD7my@kroah.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v2 1/2] dt-bindings: display/msm: dsi-controller-main: Fix
+ deprecated QCM2290 compatible
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230217111316.306241-1-konrad.dybcio@linaro.org>
+ <c49904be-d842-fc12-a443-17f229d53166@linaro.org>
+ <a4eaccfd-34ba-15f3-033f-165b46c43317@linaro.org>
+ <a158bca2-78bf-5b38-60fe-88118e8b4ad7@linaro.org>
+ <ab35cdcf-53ae-a3f2-fc08-d0f58c51a0ae@linaro.org>
+ <48cb00cd-961c-b72f-fba8-1842d658e289@linaro.org>
+ <d4ffa9f0-797e-7a32-147e-64aa46d7e197@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <d4ffa9f0-797e-7a32-147e-64aa46d7e197@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,74 +92,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Feb 18, 2023 at 09:17:12AM +0100, Greg Kroah-Hartman wrote:
-> On Fri, Feb 17, 2023 at 12:22:34PM -0800, John Moon wrote:
-> > While the kernel community has been good at maintaining backwards
-> > compatibility with kernel UAPIs, it would be helpful to have a tool
-> > to check if a patch introduces changes that break backwards
-> > compatibility.
-> > 
-> > To that end, introduce check-uapi.sh: a simple shell script that
-> > checks for changes to UAPI headers using libabigail.
-> > 
-> > libabigail is "a framework which aims at helping developers and
-> > software distributors to spot some ABI-related issues like interface
-> > incompatibility in ELF shared libraries by performing a static
-> > analysis of the ELF binaries at hand."
-> > 
-> > The script uses one of libabigail's tools, "abidiff", to compile the
-> > changed header before and after the patch to detect any changes.
-> > 
-> > abidiff "compares the ABI of two shared libraries in ELF format. It
-> > emits a meaningful report describing the differences between the two
-> > ABIs."
-> > 
-> > Signed-off-by: John Moon <quic_johmoo@quicinc.com>
-> > ---
-> >  scripts/check-uapi.sh | 245 ++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 245 insertions(+)
-> >  create mode 100755 scripts/check-uapi.sh
+On 17/02/2023 22:13, Bryan O'Donoghue wrote:
+> On 17/02/2023 12:24, Krzysztof Kozlowski wrote:
+>> First, it would be nice to know what was the intention of Bryan's commit?
 > 
-> Ok, this is very cool, thank you so much for doing this.
+> Sorry I've been grazing this thread but, not responding.
 > 
-> I know Randy Dunlap was also looking into this previously, so I've cc:ed
-> him and bounced him the original.
+> - qcom,dsi-ctrl-6g-qcm2290
 > 
-> I tried this out, and at first glance, this felt like it was just "too
-> fast" in that nothing actually was being tested.  So I manually added a
-> field to a structure I know would break the abi, and:
-> 
-> 	$ ./scripts/check-uapi.sh
-> 	!!! ABI differences detected in include/uapi/linux/usb/ch9.h (compared to file at HEAD^1) !!!
-> 
-> 	    [C] 'struct usb_ctrlrequest' changed:
-> 	      type size changed from 64 to 72 (in bits)
-> 	      1 data member insertion:
-> 		'__u8 abi_break', at offset 16 (in bits) at ch9.h:216:1
-> 	      3 data member changes:
-> 		'__le16 wValue' offset changed from 16 to 24 (in bits) (by +8 bits)
-> 		'__le16 wIndex' offset changed from 32 to 40 (in bits) (by +8 bits)
-> 		'__le16 wLength' offset changed from 48 to 56 (in bits) (by +8 bits)
-> 
-> 	0/1 UAPI header file changes are backwards compatible
-> 	UAPI header ABI check failed
-> 
-> So it worked!
+> is non-compliant with qcom,socid-dsi-ctrl which is our desired naming 
+> convention, so that's what the deprecation is about i.e. moving this 
+> compat to "qcom,qcm2290-dsi-ctrl"
 
-Ok, I take it back, it doesn't seem to work :(
+OK, then there was no intention to deprecate qcom,mdss-dsi-ctrl and it
+should be left as allowed compatible.
 
-It only "catches" a change from the last commit, but if you have an
-intermediate commit (i.e change something in HEAD^ but not HEAD), it
-does not detect it at all.
+Best regards,
+Krzysztof
 
-And if you give it an old version, it doesn't check that either (hint,
-try passing in a very old kernel version, that returns instantly and
-doesn't actually build anything).
-
-So it's a good first cut as an example, but as it doesn't really work
-correctly yet, we can't take it.  Care to fix it up to work so that it
-can be usable?
-
-thanks,
-
-greg k-h
