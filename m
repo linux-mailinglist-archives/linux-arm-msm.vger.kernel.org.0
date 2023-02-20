@@ -2,86 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E9EA69C3E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 02:04:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1EFA69C51A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 06:59:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229604AbjBTBEd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Feb 2023 20:04:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38830 "EHLO
+        id S229798AbjBTF7N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Feb 2023 00:59:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229567AbjBTBEc (ORCPT
+        with ESMTP id S229567AbjBTF7M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Feb 2023 20:04:32 -0500
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9A42D52C;
-        Sun, 19 Feb 2023 17:04:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-        MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-        Content-ID:Content-Description:In-Reply-To:References;
-        bh=ovqZtYKPJQ6/2tewzPzR4aQLjzsj+HmREsk7V7Fv1eg=; b=AW2niDUyFd6c5SQTpM3F2Y5Dpg
-        XyPzZ8fu5vCzkd6PVQKw3lKwEPKHk9wvNfvCmv3LUmu7dFMaS2PJkzQEAK9MNllHuYkAdEMjp5pGs
-        PjX5cKk9gSIYEaRPJbjt8CiKlTCw3+hONrdrZ+txskDBa4luXWk8vBJxWLn8eXkUnYh0Df7fFPWqR
-        ms93hxgrx/JYa2gd1Eu/522kgI6XqJC6zoYSyrt1FN/+KH5Wbt0NCLUUY+hw2V6bcnXV9Ro7/VaR7
-        rmCKlWUss1NhzfJ6nEr/DFMY0LaVzDf6qWUFD/ok0NhDc1xyVSnFTYOCvk0FTzU/yDc/VmJvWZ6/f
-        PFQa+eAQ==;
-Received: from [2601:1c2:980:9ec0::df2f] (helo=bombadil.infradead.org)
-        by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-        id 1pTubX-002eJA-2B; Mon, 20 Feb 2023 01:04:31 +0000
-From:   Randy Dunlap <rdunlap@infradead.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     Randy Dunlap <rdunlap@infradead.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v2] drm/msm: DEVFREQ_GOV_SIMPLE_ONDEMAND is no longer needed
-Date:   Sun, 19 Feb 2023 17:04:28 -0800
-Message-Id: <20230220010428.16910-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.39.2
+        Mon, 20 Feb 2023 00:59:12 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AF8872BE
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Feb 2023 21:59:12 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C647860C79
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 05:59:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E13CC433D2;
+        Mon, 20 Feb 2023 05:59:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1676872751;
+        bh=80zrX5DZqyiAM/9CJMVyLriJCfnAj/L6lQQq4guXpIo=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=LF9ZQwCyn8uY5wEmjcQmVafG8v8hGGmoyucwOKs3tBbn/pOznW6M88orRdVX1hD2c
+         0R3StIWCCLl8qPjgqRmKBIpe6aDsUalJ5AsmcCG0MZyrQ9tarirxWpmzfDMWwdVwN9
+         cs3/TYN1gCoi3hY+U1561Wts7fl9he+grZa8heWg2+7T8AIh++oSFDROsyjYUrCKMg
+         3otbAJHBk9oJibiKXk8PsnYynP9rFHGeROx5sLJuNC/gXek/XE4M+YMSAoUEV1ohI+
+         nk0fuFLRExsIQP7PeJFjVZnWkOFY9fpWKdnDbYVr5v0qHVFf7VmPAgedSmmInaHNcw
+         tiwUyedzqjPSg==
+From:   Kalle Valo <kvalo@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     ath10k@lists.infradead.org,
+        "open list\:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: ath10k-firmware: WCN3990: Add board file for the Lenovo Yoga C630 laptop
+References: <CAA8EJpqrHuTaN-bB6XoB7ZWNvfggNtMts3bBQwqMH8RpO1E3QQ@mail.gmail.com>
+        <81448efc-5b77-5022-5b9f-3b5188509068@linaro.org>
+Date:   Mon, 20 Feb 2023 07:59:08 +0200
+In-Reply-To: <81448efc-5b77-5022-5b9f-3b5188509068@linaro.org> (Dmitry
+        Baryshkov's message of "Sat, 18 Feb 2023 03:33:29 +0200")
+Message-ID: <875ybw513n.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DRM_MSM no longer needs DEVFREQ_GOV_SIMPLE_ONDEMAND (since dbd7a2a941b8
-in linux-next: PM / devfreq: Fix build issues with devfreq disabled),
-so remove that select from the DRM_MSM Kconfig file.
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
-Fixes: 6563f60f14cb ("drm/msm/gpu: Add devfreq tuning debugfs")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Sean Paul <sean@poorly.run>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
----
-v2: since <linux/devfreq.h> has been patched, this select is no longer
-    needed (Rob Clark)
+> Hello Kalle,
+>
+> On 07/10/2022 15:22, Dmitry Baryshkov wrote:
+>> We'd like to ask for inclusion of the board file for the Lenovo Yoga
+>> C630 laptop. It is
+>> a WfA laptop using the Snapdragon SDM850 SoC.
+>
+> I noticed that you've updated the WCN3990's board-2.bin, but this file
+> was not included. Are there any issues with the submission?
 
- drivers/gpu/drm/msm/Kconfig |    1 -
- 1 file changed, 1 deletion(-)
+It's just that I haven't processed the pending ath10k board file
+submissions from the list yet, I do it quite infrequently.
 
-diff -- a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
---- a/drivers/gpu/drm/msm/Kconfig
-+++ b/drivers/gpu/drm/msm/Kconfig
-@@ -23,7 +23,6 @@ config DRM_MSM
- 	select SHMEM
- 	select TMPFS
- 	select QCOM_SCM
--	select DEVFREQ_GOV_SIMPLE_ONDEMAND
- 	select WANT_DEV_COREDUMP
- 	select SND_SOC_HDMI_CODEC if SND_SOC
- 	select SYNC_FILE
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
