@@ -2,197 +2,209 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34E0869D1E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 18:11:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 395C469D1EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 18:12:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231649AbjBTRLR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Feb 2023 12:11:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49412 "EHLO
+        id S232246AbjBTRMZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Feb 2023 12:12:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231346AbjBTRLR (ORCPT
+        with ESMTP id S232271AbjBTRMY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Feb 2023 12:11:17 -0500
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDF951EBF3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 09:11:15 -0800 (PST)
-Received: by mail-io1-xd2b.google.com with SMTP id b16so126451iof.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 09:11:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nEOyqyX16+a0s8LVg/pF7pxqSztYrWWhg38vHHBi3tk=;
-        b=Es+PiD554nf4b0lw9BenSHvyrbUQvjUaddCdjlFQzviROGfsy+bH6ztbIzUJj8HN3D
-         kPFalkX9vL9YMjqz+RQVaezLe3n/aWJABu/mKRnRsZo/vKgmoFbWvroh6JVpowJoBHGr
-         ouIETH64oNwmqNZtENWIe7zqF1yBoI9U+pI2+rgWa0wIwTubNonQomcCnOuI+qJ1Bgyb
-         c5z1Hq8/EpN92SQK6JIMTTvJqi37WvromkSXSCfimYdo4Cphf5I8fw2JhNUTYXlvXl1y
-         1ylrOYnpce4/fJktTg6YdKuj1QoRl2oV/CPtP27vQ5fjr4KMO/oZ0fCrGc1WANg5I610
-         tb5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nEOyqyX16+a0s8LVg/pF7pxqSztYrWWhg38vHHBi3tk=;
-        b=sIxQXf1bWoTvHcj6BOAlN9kLwdB6PE9K28WtIWne5HJPb3+BboiZw2QB/wi3FIaAbs
-         xfIV83/8IOxMB/avDG/OoZRbJas/y5bObVWWXJY98lgjO5Mtg0RCvVwbyPlW4q4NuoUj
-         TuFazykDpvuVXQsfvFmKDV8iki2mhrYNv+C6vLYzOqw/t/GODn3cnpzoRMSD67F+DsNU
-         SlLLyxkDgwGKeNNiaJmgnJ5//JV91c9Dm3KW8F/rVn/2FDHp26tTDStSBibKtLauQexY
-         d0gx+XTbxRenoaZIDyukvkKQl6kbfe8jvb+bt/Lj1wv7UR0Tm7ZSTHM+HiEsr2wEsKpd
-         ggWQ==
-X-Gm-Message-State: AO0yUKUqu8rWU0Yjlfkqk1lgh7brYaySc5qvskAduHT/GCHcD5jBNfr8
-        FvXCl86xrcHElDE83GtZgKp31Sxqz/nME7qNNDkPsw==
-X-Google-Smtp-Source: AK7set+503zOSFCrMzUFKu9VpHP1CxTcABe7Y2qzNdRVr4GS9RE0Nr+Aep7G/9QRg/X7y9lOZcCc6YFmXuu71RYiegk=
-X-Received: by 2002:a6b:6207:0:b0:71c:479d:741a with SMTP id
- f7-20020a6b6207000000b0071c479d741amr2462205iog.38.1676913075061; Mon, 20 Feb
- 2023 09:11:15 -0800 (PST)
+        Mon, 20 Feb 2023 12:12:24 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7FA120D07;
+        Mon, 20 Feb 2023 09:12:21 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5D6CF60D2D;
+        Mon, 20 Feb 2023 17:12:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C379C433EF;
+        Mon, 20 Feb 2023 17:12:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1676913140;
+        bh=K+WQrxm35AL6mxuGen7EEnIB+qmIkik493gpzXp+i6w=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=aIDa4PJkpe8nWW47apxX3M9MuiHHBTgDOLlhz0+Jv2iEyO+0mRyBsb2cjbmDh1aUR
+         ZsS1jHpPiYxGdZrM1jONUER/tIEZYoJ/MeC7nYL+7o4qhbKX1v/s080k+ZxoUsntkc
+         7ssO/LKSYex1liQLrvm39X8RXUjcYZBf30PxL/AvcXyIj/dGeC+ZbyGNvSvCNBzBSF
+         Cdt2wsIbhpcyl9mva97T6mEs68iKtS076CHjbfADbjkIya4MTA/NHpBxQ/aOMlA/3M
+         At/QFAKmmeACLFnq1mPNk78atZ89MJFgsRrreXXsOMtL9lnx9tb+zT8Ikem/MAVE6a
+         VN8l+HCsWyPEg==
+Date:   Mon, 20 Feb 2023 09:15:50 -0800
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Saravana Kannan <saravanak@google.com>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
+ provider has sync_state
+Message-ID: <20230220171550.43a3h56gznfc3gec@ripper>
+References: <20230127104054.895129-1-abel.vesa@linaro.org>
+ <Y9v/z8CYik3faHh7@google.com>
+ <Y+ErWTyV8CnE3Hl+@linaro.org>
+ <Y+E3T6bozU1K2sFb@google.com>
+ <Y+E9Z+/+eCpPK6DE@linaro.org>
+ <CAGETcx99ev_JdgYoifEdUg6rqNCs5LHc-CfwTc7j3Bd_zeizew@mail.gmail.com>
+ <CAD=FV=X3nnwuTK2=w7DJfjL_Ai7MiuvTwv8BiVJPMVEWKzR-_g@mail.gmail.com>
+ <CAGETcx-LJEZAXT1VazhRf7xtNpST0tfLNmgxH878gkOOP4TDAw@mail.gmail.com>
+ <CAD=FV=WG1v4U5iQirG=-ECZFtXE=hwL=oY+6zjsu6TWCiBX=QA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20230126031424.14582-1-quic_wcheng@quicinc.com> <20230126031424.14582-13-quic_wcheng@quicinc.com>
-In-Reply-To: <20230126031424.14582-13-quic_wcheng@quicinc.com>
-From:   Albert Wang <albertccwang@google.com>
-Date:   Tue, 21 Feb 2023 01:11:04 +0800
-Message-ID: <CANqn-rhAWKVrSGKkoDCC+Jy6qdceSqo22KYb-5k+haHpcgQJaA@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 12/22] sound: usb: card: Introduce USB SND platform
- op callbacks
-To:     Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
-        perex@perex.cz, lgirdwood@gmail.com, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
-        Thinh.Nguyen@synopsys.com, broonie@kernel.org,
-        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
-        quic_jackp@quicinc.com, quic_plai@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-16.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL,
-        USER_IN_DEF_SPF_WL autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=WG1v4U5iQirG=-ECZFtXE=hwL=oY+6zjsu6TWCiBX=QA@mail.gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Wesley,
+On Tue, Feb 07, 2023 at 03:45:35PM -0800, Doug Anderson wrote:
+> Hi,
+> 
+> On Mon, Feb 6, 2023 at 1:35 PM Saravana Kannan <saravanak@google.com> wrote:
+> >
+> > On Mon, Feb 6, 2023 at 1:10 PM Doug Anderson <dianders@chromium.org> wrote:
+> > >
+> > > Hi,
+> > >
+> > > On Mon, Feb 6, 2023 at 11:33 AM Saravana Kannan <saravanak@google.com> wrote:
+> > > >
+> > > > On Mon, Feb 6, 2023 at 9:48 AM Abel Vesa <abel.vesa@linaro.org> wrote:
+> > > > >
+> > > > >
+> > > > > CC'ed Saravana
+> > > >
+> > > > Thanks. Please do cc me for stuff like this from the start. I skimmed
+> > > > the series and I think it's doing one of my TODO items. So, thanks for
+> > > > the patch!
+> > > >
+> > > > I'll take a closer look within a few days -- trying to get through
+> > > > some existing fw_devlink stuff.
+> > > >
+> > > > But long story short, it is the right thing to keep a supplier on
+> > > > indefinitely if there's a consumer device (that's not disabled in DT)
+> > > > that never gets probed. It's a pretty common scenario -- for example,
+> > > > say a display backlight. The default case should be functional
+> > > > correctness. And then we can add stuff that allows changing this
+> > > > behavior with command line args or something else that can be done
+> > > > from userspace.
+> > > >
+> > > > +1 to what Doug said elsewhere in this thread too. I'm trying to
+> > > > consolidate the "when do we give up" decision at the driver core level
+> > > > independent of what framework is being used.
+> > >
+> > > I'm not really sure I agree with the above, at least not without lots
+> > > of discussion in the community. It really goes against what the kernel
+> > > has been doing for years and years in the regulator and clock
+> > > frameworks. Those frameworks both eventually give up and power down
+> > > resources that no active drivers are using. Either changing the
+> > > regulator/clock frameworks or saying that other frameworks should work
+> > > in an opposite way seems like a recipe for confusion.
+> > >
+> > > Now, certainly I won't say that the way that the regulator and clock
+> > > frameworks function is perfect nor will I say that they don't cause
+> > > any problems. However, going the opposite way where resources are kept
+> > > at full power indefinitely will _also_ cause problems.
+> > >
+> > > Specifically, let's look at the case you mentioned of a display
+> > > backlight. I think you're saying that if there is no backlight driver
+> > > enabled in the kernel that you'd expect the backlight to just be on at
+> > > full brightness.
+> >
+> > No, I'm not saying that.
+> >
+> > > Would you expect this even if the firmware didn't
+> > > leave the backlight on?
+> >
+> > sync_state() never turns on anything that wasn't already on at boot.
+> > So in your example, if the firmware didn't turn on the backlight, then
+> > it'll remain off.
+> 
+> As per offline discussion, part of the problems are that today this
+> _isn't_ true for a few Qualcomm things (like interconnect). The
+> interconnect frameway specifically maxes things out for early boot.
+> 
 
-It looks like your audio offload driver will fetch the required
-resources for a stream enable request. But we have different designs.
-In the integration with your patch set, we found we still need a call
-back function in card.c when the usb set interface is done, in which
-we would call the new API, xhci_get_xfer_resource(), to get the EP
-transfer ring address. Of course, we will try the
-platform_ops->connect_cb() first to see if it is able to cover what we
-need or not.
+The problem being solved here is that the bootloader leaves some vote at
+1GB/s, as needed by hardware related to driver B.
+
+Driver A is loaded first and votes for 1kb/s; what should the kernel do
+now, without knowledge of the needs from the hardware associated with B,
+or the ability to read back the bootloader's votes.
+
+This was the behavior of the initial implementation, and the practical
+implications was seen as the UART would typically come along really
+early, cast a low vote on the various buses and it would take forever to
+get to the probing of the drivers that actually gave us reasonable
+votes.
 
 
-Thanks,
-Albert Wang
+Also consider the case where driver A probes, votes for bandwidth, does
+it's initialization and then votes for 0. Without making assumptions
+about the needs of B (or a potential B even), we'd turn off critical
+resources - possible preventing us from ever attempting to probe B.
 
-Albert Wang | Pixel USB Software  | albertccwang@google.com | +886-918-695-245
 
 
-On Thu, Jan 26, 2023 at 11:16 AM Wesley Cheng <quic_wcheng@quicinc.com> wrote:
->
-> Allow for different platforms to be notified on USB SND connect/disconnect
-> seqeunces.  This allows for platform USB SND modules to properly initialize
-> and populate internal structures with references to the USB SND chip
-> device.
->
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> ---
->  sound/usb/card.c | 28 ++++++++++++++++++++++++++++
->  sound/usb/card.h | 20 ++++++++++++++++++++
->  2 files changed, 48 insertions(+)
->
-> diff --git a/sound/usb/card.c b/sound/usb/card.c
-> index 26268ffb8274..803230343c16 100644
-> --- a/sound/usb/card.c
-> +++ b/sound/usb/card.c
-> @@ -117,6 +117,24 @@ MODULE_PARM_DESC(skip_validation, "Skip unit descriptor validation (default: no)
->  static DEFINE_MUTEX(register_mutex);
->  static struct snd_usb_audio *usb_chip[SNDRV_CARDS];
->  static struct usb_driver usb_audio_driver;
-> +static struct snd_usb_platform_ops *platform_ops;
-> +
-> +int snd_usb_register_platform_ops(struct snd_usb_platform_ops *ops)
-> +{
-> +       if (platform_ops)
-> +               return -EEXIST;
-> +
-> +       platform_ops = ops;
-> +       return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(snd_usb_register_platform_ops);
-> +
-> +int snd_usb_unregister_platform_ops(void)
-> +{
-> +       platform_ops = NULL;
-> +       return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(snd_usb_unregister_platform_ops);
->
->  /*
->   * disconnect streams
-> @@ -910,6 +928,10 @@ static int usb_audio_probe(struct usb_interface *intf,
->         usb_set_intfdata(intf, chip);
->         atomic_dec(&chip->active);
->         mutex_unlock(&register_mutex);
-> +
-> +       if (platform_ops->connect_cb)
-> +               platform_ops->connect_cb(intf, chip);
-> +
->         return 0;
->
->   __error:
-> @@ -943,6 +965,9 @@ static void usb_audio_disconnect(struct usb_interface *intf)
->         if (chip == USB_AUDIO_IFACE_UNUSED)
->                 return;
->
-> +       if (platform_ops->disconnect_cb)
-> +               platform_ops->disconnect_cb(intf);
-> +
->         card = chip->card;
->
->         mutex_lock(&register_mutex);
-> @@ -1087,6 +1112,9 @@ static int usb_audio_suspend(struct usb_interface *intf, pm_message_t message)
->                 chip->system_suspend = chip->num_suspended_intf;
->         }
->
-> +       if (platform_ops->suspend_cb)
-> +               platform_ops->suspend_cb(intf, message);
-> +
->         return 0;
->  }
->
-> diff --git a/sound/usb/card.h b/sound/usb/card.h
-> index 40061550105a..2249c411c3a1 100644
-> --- a/sound/usb/card.h
-> +++ b/sound/usb/card.h
-> @@ -206,4 +206,24 @@ struct snd_usb_stream {
->         struct list_head list;
->  };
->
-> +struct snd_usb_platform_ops {
-> +       void (*connect_cb)(struct usb_interface *intf, struct snd_usb_audio *chip);
-> +       void (*disconnect_cb)(struct usb_interface *intf);
-> +       void (*suspend_cb)(struct usb_interface *intf, pm_message_t message);
-> +};
-> +
-> +#if IS_ENABLED(CONFIG_SND_USB_AUDIO)
-> +int snd_usb_register_platform_ops(struct snd_usb_platform_ops *ops);
-> +int snd_usb_unregister_platform_ops(void);
-> +#else
-> +int snd_usb_register_platform_ops(struct snd_usb_platform_ops *ops)
-> +{
-> +       return -EOPNOTSUPP;
-> +}
-> +
-> +int snd_usb_unregister_platform_ops(void)
-> +{
-> +       return -EOPNOTSUPP;
-> +}
-> +#endif /* IS_ENABLED(CONFIG_SND_USB_AUDIO) */
->  #endif /* __USBAUDIO_CARD_H */
+As such, the only safe solution is to assume that there might be a later
+loaded/probed client that has a large vote and preemptively vote for
+some higher bandwidth until then.
+
+> 
+> > > In any case, why do you say it's more correct?
+> >
+> > Because if you turn off the display, the device is unusable. In other
+> > circumstances, it can crash a device because the firmware powered it
+> > on left it in a "good enough" state, but we'd go turn it off and crash
+> > the system.
+> >
+> > > I suppose you'd say that the screen is at least usable like this.
+> > > ...except that you've broken a different feature: suspend/resume.
+> >
+> > If the display is off and the laptop is unusable, then we have bigger
+> > problems than suspend/resume?
+> 
+> I suspect that here we'll have to agree to disagree. IMO it's a
+> non-goal to expect hardware to work for which there is no driver. So
+> making the backlight work without a backlight driver isn't really
+> something we should strive for.
+> 
+
+Without trying to make you agree ;)
+
+How can you differentiate between "the driver wasn't built" and "the
+driver isn't yet available"?
+
+Consider the case where I boot my laptop, I have some set of builtin
+drivers, some set of drivers in the ramdisk and some set of drivers in
+the root filesystem.
+
+In the event that something goes wrong mounting the rootfs, I will now
+be in the ramdisk console. Given the current timer-based disabling of
+regulators, I have ~25 seconds to solve my problem before the backlight
+goes blank.
+
+
+Obviously this isn't a typical scenario in a consumer device, but it
+seems conceivable that your ramdisk would run fsck for some amount of
+time before mounting the rootfs and picking up the last tier of drivers.
+
+Regards,
+Bjorn
