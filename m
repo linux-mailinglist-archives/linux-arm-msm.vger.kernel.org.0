@@ -2,164 +2,352 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B62969C777
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 10:16:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 919E469C7D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 10:43:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231162AbjBTJQ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Feb 2023 04:16:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56994 "EHLO
+        id S231175AbjBTJnx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Feb 2023 04:43:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230459AbjBTJQY (ORCPT
+        with ESMTP id S230089AbjBTJnv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Feb 2023 04:16:24 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C750D14213;
-        Mon, 20 Feb 2023 01:16:23 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31K5E9kl021780;
-        Mon, 20 Feb 2023 09:15:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : reply-to : references : mime-version :
- content-type : in-reply-to; s=qcppdkim1;
- bh=yKYgWoCKOuZwlZ5QhhC4HzldsRg45DBg8HPEkWxPOzY=;
- b=JwpsKliUIUyS/PqI0DJE0ZsUUgHRq+IJsuZWMF6Wl47mby5J1gncCxfEswl8BYt45DHM
- KX++ijho3Wzr75MIg/ZmXaaHWOfae3G6GT8Qj2TQyYWG3BosvVEeYNqhAUZKbIkfQSgx
- 7Xwpp7dnd+n3w4yrjbrzHF5Pmwo3mhQIIxgynNOuJYJnVHgo+rZiwe3zNlS6NvBDQ2h+
- N7/N1UzfS0EEIkLEKVi0VQAbVSIeqJlfA+Xl61zdkFptRtWKjDVixM6EutgAfoyO96uZ
- UmnPdvR1K7R/aM3bhL2vq6wvYxi30MyI4FG2a92wEHsnOCq1YXlsqbyDh9KrKx1al6Zt Cw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ntnn04he7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 20 Feb 2023 09:15:56 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31K9FtAj029598
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 20 Feb 2023 09:15:55 GMT
-Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 20 Feb
- 2023 01:15:48 -0800
-Date:   Mon, 20 Feb 2023 14:45:44 +0530
-From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-CC:     Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Mon, 20 Feb 2023 04:43:51 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 184FABDD4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 01:43:50 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id g1so1909309edz.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 01:43:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=X7r8oZbqOdEDUKqJsjABwPZodMhY2NzeDbJjrvQys0I=;
+        b=H6rjSmhaZJLXfK4rjDST8C82u/09vGq0Cxfq0GnIwNnaW2mSEoVIEiAFb6qq3b+NpK
+         5JcJfYp4b2YGMRsnHPGmQusBID6Is/wEhN88+BcIMrg4fDQD8ABk1mcY2Sdj7o827R9W
+         9kaDqob0z4glJyBHNbcL0bHiDm1scXjKQ9KbZQvjrJA1uVgbH/AoWpRY+yLfKC88Zabj
+         36GLEhrTtuDZWCCrESPcM8mEEN/aw7KscSRfO59t0Gc2u1nVu9UeHgl2q53RkcTLITSL
+         +QdMxr5CUDHFYi4GX4nDfg75Tp3WIZQtgWixv/F09EJ8f3qSA75Euru63bZThmBFHFlu
+         pxYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=X7r8oZbqOdEDUKqJsjABwPZodMhY2NzeDbJjrvQys0I=;
+        b=p6G/Q6T48b6KDzjE2ret97AHVWjRw+TjWGezfmGqyK5mYhn08eW15Zfmhl9BPqO3br
+         bIXkfwKSU25yB0ByTKPyOUjDxjY6FXryNAUhsgqTXucAwx1i+eP3u2mMNQnPoarboZM+
+         7wUszPe8aQVfdO+ecI4aKYhMBbBTX54If6P2TGuxkOM4Va0UQcOj6v0Mc542fGQaE5hG
+         CAOsMH/diyv8f1S5VCXa8baPhoEe2CqZv8FoUxvytySpe1lCY/EMtC2SeKecyEKPM4Wm
+         8+DDgvBlbxP1ok49EMUAcUGGylHSGNmHQ0X8caqARrRhbs5osGWCm79Th876m47cdDaz
+         /WtQ==
+X-Gm-Message-State: AO0yUKVIebVfgDk/izinan3KkNzoe+JY7XXaoR9wvZ25XLZt9XfXfQwD
+        lUmhmv4otzp3Vvm7+jW3o+hhzw==
+X-Google-Smtp-Source: AK7set9pu154zOZi9np80teikVR09AbQ5CWwcA1GtQ+4rAO004JnH3ERoIN+kFdIQzBusSaaVun9DQ==
+X-Received: by 2002:a05:6402:4d:b0:4ac:b32e:b6f with SMTP id f13-20020a056402004d00b004acb32e0b6fmr2029346edu.23.1676886228576;
+        Mon, 20 Feb 2023 01:43:48 -0800 (PST)
+Received: from krzk-bin.. ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id b2-20020a50b402000000b004aef4f32edesm1557645edh.88.2023.02.20.01.43.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Feb 2023 01:43:48 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH v10 13/26] gunyah: vm_mgr: Add ioctls to support basic
- non-proxy VM boot
-Message-ID: <20230220091544.GN332@quicinc.com>
-Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212427.3316544-1-quic_eberman@quicinc.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] arm64: dts: qcom: msm8996: move WCD9335 audio codec to boards
+Date:   Mon, 20 Feb 2023 10:43:38 +0100
+Message-Id: <20230220094339.47370-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-In-Reply-To: <20230214212427.3316544-1-quic_eberman@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uUN2EDoZNUiRwtHr8NyIsG4VAp1iiXuc
-X-Proofpoint-GUID: uUN2EDoZNUiRwtHr8NyIsG4VAp1iiXuc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-20_05,2023-02-17_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 impostorscore=0 spamscore=0 priorityscore=1501
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 mlxscore=0
- bulkscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2302200083
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-* Elliot Berman <quic_eberman@quicinc.com> [2023-02-14 13:24:26]:
+The WCD9335 audio codec on Slimbus is a property of a board, not SoC,
+thus it should not be present in MSM8996 DTSI.  Keep it in specific
+boards, so it won't appear incomplete in the boards not having it.
 
->  static void gh_vm_free(struct work_struct *work)
->  {
->  	struct gh_vm *ghvm = container_of(work, struct gh_vm, free_work);
->  	struct gh_vm_mem *mapping, *tmp;
->  	int ret;
->  
-> -	mutex_lock(&ghvm->mm_lock);
-> -	list_for_each_entry_safe(mapping, tmp, &ghvm->memory_mappings, list) {
-> -		gh_vm_mem_reclaim(ghvm, mapping);
-> -		kfree(mapping);
-> +	switch (ghvm->vm_status) {
-> +unknown_state:
-> +	case GH_RM_VM_STATUS_RUNNING:
-> +		gh_vm_stop(ghvm);
-> +		fallthrough;
-> +	case GH_RM_VM_STATUS_INIT_FAILED:
-> +	case GH_RM_VM_STATUS_LOAD:
-> +	case GH_RM_VM_STATUS_LOAD_FAILED:
-> +		mutex_lock(&ghvm->mm_lock);
-> +		list_for_each_entry_safe(mapping, tmp, &ghvm->memory_mappings, list) {
-> +			gh_vm_mem_reclaim(ghvm, mapping);
-> +			kfree(mapping);
-> +		}
-> +		mutex_unlock(&ghvm->mm_lock);
-> +		fallthrough;
-> +	case GH_RM_VM_STATUS_NO_STATE:
-> +		ret = gh_rm_dealloc_vmid(ghvm->rm, ghvm->vmid);
-> +		if (ret)
-> +			pr_warn("Failed to deallocate vmid: %d\n", ret);
-> +
-> +		gh_rm_notifier_unregister(ghvm->rm, &ghvm->nb);
-> +		put_gh_rm(ghvm->rm);
-> +		kfree(ghvm);
-> +		break;
-> +	default:
-> +		pr_err("VM is unknown state: %d, assuming it's running.\n", ghvm->vm_status);
-> +		goto unknown_state;
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dts   | 56 +++++++++++++----
+ .../boot/dts/qcom/msm8996-oneplus-common.dtsi | 56 +++++++++++++----
+ .../boot/dts/qcom/msm8996-xiaomi-common.dtsi  | 60 ++++++++++++++-----
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         | 30 +---------
+ 4 files changed, 135 insertions(+), 67 deletions(-)
 
-'goto unknown_state' here leads to a infinite loop AFAICS. For example consider
-the case  where VM_START failed (due to mem_lend operation) causing VM state to
-be GH_RM_VM_STATUS_RESET. A subsequent close(vmfd) can leads to that forever
-loop.
-
-//snip
-
-
-> +static int gh_vm_start(struct gh_vm *ghvm)
-> +{
-> +	struct gh_vm_mem *mapping;
-> +	u64 dtb_offset;
-> +	u32 mem_handle;
-> +	int ret;
-> +
-> +	down_write(&ghvm->status_lock);
-> +	if (ghvm->vm_status != GH_RM_VM_STATUS_LOAD) {
-> +		up_write(&ghvm->status_lock);
-> +		return 0;
-> +	}
-> +
-> +	ghvm->vm_status = GH_RM_VM_STATUS_RESET;
-> +
-> +	list_for_each_entry(mapping, &ghvm->memory_mappings, list) {
-
-We don't seem to have the right lock here while walking the list.
+diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+index fe6c415e8229..ce189dea2760 100644
+--- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
++++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+@@ -974,6 +974,50 @@ dai@2 {
+ 	};
+ };
+ 
++&slim_msm {
++	status = "okay";
++
++	slim@1 {
++		reg = <1>;
++		#address-cells = <2>;
++		#size-cells = <0>;
++
++		tasha_ifd: tas-ifd@0,0 {
++			compatible = "slim217,1a0";
++			reg = <0 0>;
++		};
++
++		wcd9335: codec@1,0 {
++			compatible = "slim217,1a0";
++			reg = <1 0>;
++
++			clock-names = "mclk", "slimbus";
++			clocks = <&div1_mclk>,
++				 <&rpmcc RPM_SMD_BB_CLK1>;
++			interrupt-parent = <&tlmm>;
++			interrupts = <54 IRQ_TYPE_LEVEL_HIGH>,
++				     <53 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "intr1", "intr2";
++			interrupt-controller;
++			#interrupt-cells = <1>;
++
++			pinctrl-0 = <&cdc_reset_active &wcd_intr_default>;
++			pinctrl-names = "default";
++
++			reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
++			slim-ifc-dev = <&tasha_ifd>;
++
++			#sound-dai-cells = <1>;
++
++			vdd-buck-supply = <&vreg_s4a_1p8>;
++			vdd-buck-sido-supply = <&vreg_s4a_1p8>;
++			vdd-tx-supply = <&vreg_s4a_1p8>;
++			vdd-rx-supply = <&vreg_s4a_1p8>;
++			vdd-io-supply = <&vreg_s4a_1p8>;
++		};
++	};
++};
++
+ &sound {
+ 	compatible = "qcom,apq8096-sndcard";
+ 	model = "DB820c";
+@@ -1101,15 +1145,3 @@ &usb3phy {
+ &venus {
+ 	status = "okay";
+ };
+-
+-&wcd9335 {
+-	clock-names = "mclk", "slimbus";
+-	clocks = <&div1_mclk>,
+-		 <&rpmcc RPM_SMD_BB_CLK1>;
+-
+-	vdd-buck-supply = <&vreg_s4a_1p8>;
+-	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
+-	vdd-tx-supply = <&vreg_s4a_1p8>;
+-	vdd-rx-supply = <&vreg_s4a_1p8>;
+-	vdd-io-supply = <&vreg_s4a_1p8>;
+-};
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
+index 2994337c6046..104deaee74e5 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
+@@ -504,6 +504,50 @@ vreg_l32a_1p8: l32 {
+ 	};
+ };
+ 
++&slim_msm {
++	status = "okay";
++
++	slim@1 {
++		reg = <1>;
++		#address-cells = <2>;
++		#size-cells = <0>;
++
++		tasha_ifd: tas-ifd@0,0 {
++			compatible = "slim217,1a0";
++			reg = <0 0>;
++		};
++
++		wcd9335: codec@1,0 {
++			compatible = "slim217,1a0";
++			reg = <1 0>;
++
++			clock-names = "mclk", "slimbus";
++			clocks = <&div1_mclk>,
++				 <&rpmcc RPM_SMD_BB_CLK1>;
++			interrupt-parent = <&tlmm>;
++			interrupts = <54 IRQ_TYPE_LEVEL_HIGH>,
++				     <53 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "intr1", "intr2";
++			interrupt-controller;
++			#interrupt-cells = <1>;
++
++			pinctrl-0 = <&cdc_reset_active &wcd_intr_default>;
++			pinctrl-names = "default";
++
++			reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
++			slim-ifc-dev = <&tasha_ifd>;
++
++			#sound-dai-cells = <1>;
++
++			vdd-buck-supply = <&vreg_s4a_1p8>;
++			vdd-buck-sido-supply = <&vreg_s4a_1p8>;
++			vdd-tx-supply = <&vreg_s4a_1p8>;
++			vdd-rx-supply = <&vreg_s4a_1p8>;
++			vdd-io-supply = <&vreg_s4a_1p8>;
++		};
++	};
++};
++
+ &slpi_pil {
+ 	status = "okay";
+ };
+@@ -772,15 +816,3 @@ &usb3_dwc3 {
+ &venus {
+ 	status = "okay";
+ };
+-
+-&wcd9335 {
+-	clock-names = "mclk", "slimbus";
+-	clocks = <&div1_mclk>,
+-		 <&rpmcc RPM_SMD_BB_CLK1>;
+-
+-	vdd-buck-supply = <&vreg_s4a_1p8>;
+-	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
+-	vdd-tx-supply = <&vreg_s4a_1p8>;
+-	vdd-rx-supply = <&vreg_s4a_1p8>;
+-	vdd-io-supply = <&vreg_s4a_1p8>;
+-};
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+index 2acfed28e3cb..446b1d23dec0 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+@@ -337,6 +337,52 @@ led@3 {
+ 	};
+ };
+ 
++&slim_msm {
++	status = "okay";
++
++	slim@1 {
++		reg = <1>;
++		#address-cells = <2>;
++		#size-cells = <0>;
++
++		tasha_ifd: tas-ifd@0,0 {
++			compatible = "slim217,1a0";
++			reg = <0 0>;
++		};
++
++		wcd9335: codec@1,0 {
++			compatible = "slim217,1a0";
++			reg = <1 0>;
++
++			clock-names = "mclk", "slimbus";
++			clocks = <&divclk1_cdc>,
++				 <&rpmcc RPM_SMD_BB_CLK1>;
++			interrupt-parent = <&tlmm>;
++			interrupts = <54 IRQ_TYPE_LEVEL_HIGH>,
++				     <53 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "intr1", "intr2";
++			interrupt-controller;
++			#interrupt-cells = <1>;
++
++			pinctrl-0 = <&cdc_reset_active &wcd_intr_default>;
++			pinctrl-names = "default";
++
++			reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
++			slim-ifc-dev = <&tasha_ifd>;
++
++			#sound-dai-cells = <1>;
++
++			vdd-buck-supply = <&vreg_s4a_1p8>;
++			vdd-buck-sido-supply = <&vreg_s4a_1p8>;
++			vdd-rx-supply = <&vreg_s4a_1p8>;
++			vdd-tx-supply = <&vreg_s4a_1p8>;
++			vdd-vbat-supply = <&vph_pwr>;
++			vdd-micbias-supply = <&vph_pwr_bbyp>;
++			vdd-io-supply = <&vreg_s4a_1p8>;
++		};
++	};
++};
++
+ &slpi_pil {
+ 	status = "okay";
+ 
+@@ -395,20 +441,6 @@ &venus {
+ 	status = "okay";
+ };
+ 
+-&wcd9335 {
+-	clock-names = "mclk", "slimbus";
+-	clocks = <&divclk1_cdc>,
+-		 <&rpmcc RPM_SMD_BB_CLK1>;
+-
+-	vdd-buck-supply = <&vreg_s4a_1p8>;
+-	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
+-	vdd-rx-supply = <&vreg_s4a_1p8>;
+-	vdd-tx-supply = <&vreg_s4a_1p8>;
+-	vdd-vbat-supply = <&vph_pwr>;
+-	vdd-micbias-supply = <&vph_pwr_bbyp>;
+-	vdd-io-supply = <&vreg_s4a_1p8>;
+-};
+-
+ &rpm_requests {
+ 	regulators-0 {
+ 		compatible = "qcom,rpm-pm8994-regulators";
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 6f180a8efe77..dfc7153c9d8a 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -3383,36 +3383,8 @@ slim_msm: slim-ngd@91c0000 {
+ 			dma-names = "rx", "tx";
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+-			slim@1 {
+-				reg = <1>;
+-				#address-cells = <2>;
+-				#size-cells = <0>;
+-
+-				tasha_ifd: tas-ifd@0,0 {
+-					compatible = "slim217,1a0";
+-					reg = <0 0>;
+-				};
+-
+-				wcd9335: codec@1,0 {
+-					pinctrl-0 = <&cdc_reset_active &wcd_intr_default>;
+-					pinctrl-names = "default";
+-
+-					compatible = "slim217,1a0";
+-					reg = <1 0>;
+ 
+-					interrupt-parent = <&tlmm>;
+-					interrupts = <54 IRQ_TYPE_LEVEL_HIGH>,
+-						     <53 IRQ_TYPE_LEVEL_HIGH>;
+-					interrupt-names = "intr1", "intr2";
+-					interrupt-controller;
+-					#interrupt-cells = <1>;
+-					reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
+-
+-					slim-ifc-dev = <&tasha_ifd>;
+-
+-					#sound-dai-cells = <1>;
+-				};
+-			};
++			status = "disabled";
+ 		};
+ 
+ 		adsp_pil: remoteproc@9300000 {
+-- 
+2.34.1
 
