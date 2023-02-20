@@ -2,90 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A5BE69CFBB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 15:52:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D86E69D07E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 16:22:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232045AbjBTOwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Feb 2023 09:52:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41956 "EHLO
+        id S231433AbjBTPWk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Feb 2023 10:22:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229671AbjBTOwa (ORCPT
+        with ESMTP id S229579AbjBTPWk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Feb 2023 09:52:30 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FD521C5A4;
-        Mon, 20 Feb 2023 06:52:28 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31KDVO6m028002;
-        Mon, 20 Feb 2023 14:52:08 GMT
+        Mon, 20 Feb 2023 10:22:40 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B09CDF;
+        Mon, 20 Feb 2023 07:22:38 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31KBp51G007275;
+        Mon, 20 Feb 2023 15:22:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=GxL44HibsOb/aqsssO8yBpFiepI9D0VQUTJB74dPhmA=;
- b=clwle24F9z5zbcXfRhZdWDmEHAmwvCYZmZu57WAU+KcEY8YYFvVZ18xQB+OyxiZlb85/
- bXMFRhJ3eyjXiCxn0bgcOTFrACBuNVgcwAPSC7qbuJAEK0UENQmxRJveVEtb40mjj9EQ
- WdbnetxGGIdh6j/f3/+1zdufwW/7ZmNV/jCKh4J91QXxjH+HfB2KvQAR48M10f11bYSu
- 7a2Ma1XRQKLW8xHpe9/DTxgjLIowPJXblvqV6nUeyohw3nhV4rcEcAs5gq/mxY7fP0YS
- /4AH8cU7ug/FZ8ojM7DrT0aNCwSGHIWUZbjNLDbIdtqJwEGLY0tX4zMUNZbILLrH64kf uA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ntm1vdncx-1
+ bh=uOENAIxz3dv64fn0074xIalZSxlWY7KUxw26Na4aTcQ=;
+ b=XWeeSxcEdqCrbgwJs6jO+qW+ewkSv0/gU2Waw0DoGzGhqJnjPWYnwYggyhz5MVo4n5CN
+ AIpjscucvyZ4xIJzI9jlBdNacWaNKVemOgeik5l4HTUy220Lf/vj/c4PTE53gkclCdIr
+ DAjNUoJYrtLFmWrVh4/ix+fUKIbieXjjdgljrvqY3W0hi39pseuiIUiIAwQVxZBy7TDH
+ N+N7hemPWmCjwnRSTrL7iz0sbUkqx21VwMWID+CAXKJmBsKIB8KkKlTuUr0hrujVqvMU
+ Jx9DRKSMwMY5uejBRza2slwe0gqwAFXXgeCv1At8qdJr44s8AEMWvk8syYjASVC2VPmD +w== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ntmcm5ddt-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 20 Feb 2023 14:52:08 +0000
+        Mon, 20 Feb 2023 15:22:34 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31KEq617023258
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31KFMX4o026698
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 20 Feb 2023 14:52:06 GMT
-Received: from [10.50.13.218] (10.80.80.8) by nalasex01a.na.qualcomm.com
+        Mon, 20 Feb 2023 15:22:33 GMT
+Received: from [10.216.11.20] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 20 Feb
- 2023 06:51:56 -0800
-Message-ID: <184a38a0-f2de-dd63-a8af-f4784c61365a@quicinc.com>
-Date:   Mon, 20 Feb 2023 20:21:53 +0530
+ 2023 07:22:27 -0800
+Message-ID: <ba4854dd-2e6c-1fd7-8914-a5a22bd8890a@quicinc.com>
+Date:   Mon, 20 Feb 2023 20:52:24 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 2/7] PCI: qcom: Add IPQ9574 PCIe support
+ Thunderbird/102.6.1
+Subject: Re: [PATCH V2 5/6] arm64: dts: qcom: ipq9574: Add RPM related nodes
 Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>,
-        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lpieralisi@kernel.org>,
-        <kw@linux.com>, <robh@kernel.org>, <bhelgaas@google.com>,
-        <krzysztof.kozlowski+dt@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <mani@kernel.org>, <p.zabel@pengutronix.de>,
-        <svarbanov@mm-sol.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <linux-clk@vger.kernel.org>
-CC:     <quic_gokulsri@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>
-References: <20230214164135.17039-1-quic_devipriy@quicinc.com>
- <20230214164135.17039-3-quic_devipriy@quicinc.com>
- <6ea43d8d-7b9c-5a11-097f-906e10ac3627@quicinc.com>
- <c766648f-c3a5-b842-2164-c3f480dee129@quicinc.com>
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-In-Reply-To: <c766648f-c3a5-b842-2164-c3f480dee129@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_ipkumar@quicinc.com>
+References: <20230217142030.16012-1-quic_devipriy@quicinc.com>
+ <20230217142030.16012-6-quic_devipriy@quicinc.com>
+ <12d23d88-6f42-09ea-3f26-e1b7a0878767@linaro.org>
+ <fb576665-7983-d09a-06a6-bfde5793816e@quicinc.com>
+ <07342311-33e3-cf7e-38ed-5d54d83b43a3@linaro.org>
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <07342311-33e3-cf7e-38ed-5d54d83b43a3@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dPgA47UCWpdMvfRaaHia2A8PgwjyOqZg
-X-Proofpoint-GUID: dPgA47UCWpdMvfRaaHia2A8PgwjyOqZg
+X-Proofpoint-ORIG-GUID: -WpnjPLkYLpBnh6pDg6h6arN1RpFrsnN
+X-Proofpoint-GUID: -WpnjPLkYLpBnh6pDg6h6arN1RpFrsnN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
  definitions=2023-02-20_12,2023-02-20_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 phishscore=0
- bulkscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0 mlxlogscore=999
- suspectscore=0 adultscore=0 impostorscore=0 priorityscore=1501 spamscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ phishscore=0 clxscore=1015 bulkscore=0 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 spamscore=0 mlxlogscore=943 suspectscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302200136
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ definitions=main-2302200140
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -93,209 +90,115 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 2/20/2023 7:11 PM, Devi Priya wrote:
-> Hi Sri,
-> Thanks for taking time to review the patch!
->
-> On 2/16/2023 5:08 PM, Sricharan Ramabadhran wrote:
->> Hi Devi,
+
+On 2/20/2023 8:06 PM, Konrad Dybcio wrote:
+> 
+> 
+> On 20.02.2023 14:53, Devi Priya wrote:
+>> Hi Konrad,
 >>
->> On 2/14/2023 10:11 PM, Devi Priya wrote:
->>> Adding PCIe support for IPQ9574 SoC
+>> Thanks for taking time to review the patch!
+> I appreciate your gratitude, but please don't toppost (a.k.a
+> don't reply in the first lines of the email), that's rather
+> frowned upon on LKML.
+> 
+Sure, understood!
+>>
+>> On 2/17/2023 8:20 PM, Konrad Dybcio wrote:
 >>>
->>> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
->>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
->>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->>> ---
->>>   drivers/pci/controller/dwc/pcie-qcom.c | 119 
->>> +++++++++++++++++++++++++
->>>   1 file changed, 119 insertions(+)
 >>>
->>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c 
->>> b/drivers/pci/controller/dwc/pcie-qcom.c
->>> index a232b04af048..57606c113d45 100644
->>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->>> @@ -193,6 +193,12 @@ struct qcom_pcie_resources_2_9_0 {
->>>       struct reset_control *rst;
->>>   };
->>> +struct qcom_pcie_resources_1_27_0 {
->>> +    struct clk_bulk_data *clks;
->>> +    struct reset_control *rst;
->>> +    int num_clks;
->>> +};
->>> +
->>>   union qcom_pcie_resources {
->>>       struct qcom_pcie_resources_1_0_0 v1_0_0;
->>>       struct qcom_pcie_resources_2_1_0 v2_1_0;
->>> @@ -201,6 +207,7 @@ union qcom_pcie_resources {
->>>       struct qcom_pcie_resources_2_4_0 v2_4_0;
->>>       struct qcom_pcie_resources_2_7_0 v2_7_0;
->>>       struct qcom_pcie_resources_2_9_0 v2_9_0;
->>> +    struct qcom_pcie_resources_1_27_0 v1_27_0;
->>>   };
->>>   struct qcom_pcie;
->>> @@ -1409,6 +1416,104 @@ static int qcom_pcie_post_init_2_9_0(struct 
->>> qcom_pcie *pcie)
->>>       return 0;
->>>   }
->>> +static int qcom_pcie_get_resources_1_27_0(struct qcom_pcie *pcie)
->>> +{
->>> +    struct qcom_pcie_resources_1_27_0 *res = &pcie->res.v1_27_0;
->>> +    struct dw_pcie *pci = pcie->pci;
->>> +    struct device *dev = pci->dev;
->>> +
->>> +    res->num_clks = devm_clk_bulk_get_all(dev, &res->clks);
->>> +    if (res->clks < 0)
->>> +        return res->num_clks;
->>> +
->>> +    res->rst = devm_reset_control_array_get_exclusive(dev);
->>> +    if (IS_ERR(res->rst))
->>> +        return PTR_ERR(res->rst);
->>> +
->>> +    return 0;
->>> +}
->>> +
->>> +static void qcom_pcie_deinit_1_27_0(struct qcom_pcie *pcie)
->>> +{
->>> +    struct qcom_pcie_resources_1_27_0 *res = &pcie->res.v1_27_0;
->>> +
->>> +    clk_bulk_disable_unprepare(res->num_clks, res->clks);
->>> +}
->>> +
->>> +static int qcom_pcie_init_1_27_0(struct qcom_pcie *pcie)
->>> +{
->>> +    struct qcom_pcie_resources_1_27_0 *res = &pcie->res.v1_27_0;
->>> +    struct device *dev = pcie->pci->dev;
->>> +    int ret;
->>> +
->>> +    ret = reset_control_assert(res->rst);
->>> +    if (ret) {
->>> +        dev_err(dev, "reset assert failed (%d)\n", ret);
->>> +        return ret;
->>> +    }
->>> +
->>> +    /*
->>> +     * Delay periods before and after reset deassert are working 
->>> values
->>> +     * from downstream Codeaurora kernel
->>> +     */
->>> +    usleep_range(2000, 2500);
->>> +
->>> +    ret = reset_control_deassert(res->rst);
->>> +    if (ret) {
->>> +        dev_err(dev, "reset deassert failed (%d)\n", ret);
->>> +        return ret;
->>> +    }
->>> +
->>> +    usleep_range(2000, 2500);
->>> +
->>> +    return clk_bulk_prepare_enable(res->num_clks, res->clks);
->>> +}
->>> +
->>> +static int qcom_pcie_post_init_1_27_0(struct qcom_pcie *pcie)
->>> +{
->>> +    struct dw_pcie *pci = pcie->pci;
->>> +    u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
->>> +    u32 val;
->>> +    int i;
->>> +
->>> +    writel(0x8000000, pcie->parf + 
->>> PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
-
-
-Devi,
-
-
-Above statement also differs. You need to consider this also when you 
-use the 2_9_0 ops.
-
-
-Thanks,
-
-
->>> +
->>> +    val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
->>> +    val &= ~BIT(0);
->>> +    writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
->>> +
->>> +    writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
->>> +
->>> +    writel(DEVICE_TYPE_RC, pcie->parf + PCIE20_PARF_DEVICE_TYPE);
->>> +    writel(BYPASS | MSTR_AXI_CLK_EN | AHB_CLK_EN,
->>> +           pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
->>> +    writel(GEN3_RELATED_OFF_RXEQ_RGRDLESS_RXTS |
->>> +           GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL,
->>> +           pci->dbi_base + GEN3_RELATED_OFF);
->>> +
->>> +    writel(MST_WAKEUP_EN | SLV_WAKEUP_EN | MSTR_ACLK_CGC_DIS |
->>> +           SLV_ACLK_CGC_DIS | CORE_CLK_CGC_DIS |
->>> +           AUX_PWR_DET | L23_CLK_RMV_DIS | L1_CLK_RMV_DIS,
->>> +           pcie->parf + PCIE20_PARF_SYS_CTRL);
->>> +
->>> +    writel(0, pcie->parf + PCIE20_PARF_Q2A_FLUSH);
->>> +
->>> +    dw_pcie_dbi_ro_wr_en(pci);
->>> +    writel(PCIE_CAP_SLOT_VAL, pci->dbi_base + offset + 
->>> PCI_EXP_SLTCAP);
->>> +
->>> +    val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
->>> +    val &= ~PCI_EXP_LNKCAP_ASPMS;
->>> +    writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
->>> +
->>> +    writel(PCI_EXP_DEVCTL2_COMP_TMOUT_DIS, pci->dbi_base + offset +
->>> +           PCI_EXP_DEVCTL2);
->>> +
->>> +    for (i = 0; i < 256; i++)
->>> +        writel(0, pcie->parf + PCIE20_PARF_BDF_TO_SID_TABLE_N + (4 
->>> * i));
->>> +
->>> +    return 0;
->>> +}
->>> +
->>>   static int qcom_pcie_link_up(struct dw_pcie *pci)
->>>   {
->>>       u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
->>> @@ -1620,6 +1725,15 @@ static const struct qcom_pcie_ops ops_2_9_0 = {
->>>       .ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
->>>   };
->>> +/* Qcom IP rev.: 1.27.0 Synopsys IP rev.: 5.80a */
->>> +static const struct qcom_pcie_ops ops_1_27_0 = {
->>> +    .get_resources = qcom_pcie_get_resources_1_27_0,
->>> +    .init = qcom_pcie_init_1_27_0,
->>> +    .post_init = qcom_pcie_post_init_1_27_0,
->>> +    .deinit = qcom_pcie_deinit_1_27_0,
->>> +    .ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
->>> +};
->>> +
->>>   static const struct qcom_pcie_cfg cfg_1_0_0 = {
->>>       .ops = &ops_1_0_0,
->>>   };
->>> @@ -1652,6 +1766,10 @@ static const struct qcom_pcie_cfg cfg_2_9_0 = {
->>>       .ops = &ops_2_9_0,
->>>   };
->>> +static const struct qcom_pcie_cfg cfg_1_27_0 = {
->>> +    .ops = &ops_1_27_0,
->>> +};
->>> +
->>>   static const struct dw_pcie_ops dw_pcie_ops = {
->>>       .link_up = qcom_pcie_link_up,
->>>       .start_link = qcom_pcie_start_link,
->>> @@ -1829,6 +1947,7 @@ static const struct of_device_id 
->>> qcom_pcie_match[] = {
->>>       { .compatible = "qcom,pcie-ipq8064-v2", .data = &cfg_2_1_0 },
->>>       { .compatible = "qcom,pcie-ipq8074", .data = &cfg_2_3_3 },
->>>       { .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
->>> +    { .compatible = "qcom,pcie-ipq9574", .data = &cfg_1_27_0 },
->>
->>    I do not see much difference between 2_9_0 and 1_27_0. Is this patch
->>    really required. Can you check if it works with 2_9_0 itself ?
-> Yes right Sri, Only the clocks seem to differ between 2_9_0 and 1_27_0.
-> Will update 2_9_0 ops to get the clocks from the DT and use the same 
-> for ipq9574 in the next spin.
->
-> Best Regards,
-> Devi Priya
->>
->> Regards,
->>   Sricharan
+>>> On 17.02.2023 15:20, Devi Priya wrote:
+>>>> Add RPM Glink, RPM message RAM and SMPA1 regulator
+>>>> nodes to support frequency scaling on IPQ9574
+>>>>
+>>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>>>> ---
+>>>>    Changes in V2:
+>>>>      - Splitted the RPM and CPU Freq changes to individual patches
+>>>>      - Moved the regulators node to Board DT
+>>>>      - Dropped the regulator-always-on property
+>>>>      - Updated the compatible in regulators node with the existing
+>>>>        mp5496 compatible
+>>>>
+>>>>    arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts | 11 +++++++++++
+>>>>    arch/arm64/boot/dts/qcom/ipq9574.dtsi        | 17 +++++++++++++++++
+>>>>    2 files changed, 28 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts b/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
+>>>> index 21b53f34ce84..8a6caaeb0c4b 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
+>>>> +++ b/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
+>>>> @@ -57,6 +57,17 @@
+>>>>        status = "okay";
+>>>>    };
+>>>>    +&rpm_requests {
+>>>> +    regulators {
+>>>> +        compatible = "qcom,rpm-mp5496-regulators";
+>>>> +
+>>>> +        ipq9574_s1: s1 {
+>>>> +            regulator-min-microvolt = <587500>;
+>>>> +            regulator-max-microvolt = <1075000>;
+>>>> +        };
+>>>> +    };
+>>>> +};
+>>> This belongs in a separate patch.
+>>>
+>> Do you recommend to move this change to the below patch in the next spin?
+>> [PATCH V2 6/6]arm64: dts: qcom: ipq9574: Add cpufreq support
+> Sounds good
+> 
+> Also, I think you missed a newline before &rpm_requests now that
+> I look at it.
+Sure, will take care of that in V3
+> 
+> Konrad
+>>>> +
+>>>>    &sdhc_1 {
+>>>>        pinctrl-0 = <&sdc_default_state>;
+>>>>        pinctrl-names = "default";
+>>>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>>> index d20f3c7383f5..2f300cbab93e 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>>> @@ -133,6 +133,11 @@
+>>>>            #size-cells = <2>;
+>>>>            ranges;
+>>>>    +        rpm_msg_ram: rpm@60000 {
+>>> Since this is a part of the MMIO region and not a part of DRAM,
+>>> we generally put this node under /soc with the compatible of
+>>> qcom,rpm-msg-ram and without no-map.
+>>>
+>>> And the node name then should be sram@.
+>> Sure, okay. Will update this in V3
+>>>
+>>>> +            reg = <0x0 0x00060000 0x0 0x6000>;
+>>>> +            no-map;
+>>>> +        };
+>>>> +
+>>>>            tz_region: tz@4a600000 {
+>>>>                reg = <0x0 0x4a600000 0x0 0x400000>;
+>>>>                no-map;
+>>>> @@ -768,6 +773,18 @@
+>>>>            };
+>>>>        };
+>>>>    +    rpm-glink {
+>>> Alphabetically this should come before /soc.
+>> Okay
+>>>
+>>> Konrad
+>>>> +        compatible = "qcom,glink-rpm";
+>>>> +        interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+>>>> +        qcom,rpm-msg-ram = <&rpm_msg_ram>;
+>>>> +        mboxes = <&apcs_glb 0>;
+>>>> +
+>>>> +        rpm_requests: glink-channel {
+>>>> +            compatible = "qcom,rpm-ipq9574";
+>>>> +            qcom,glink-channels = "rpm_requests";
+>>>> +        };
+>>>> +    };
+>>>> +
+>>>>        timer {
+>>>>            compatible = "arm,armv8-timer";
+>>>>            interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+>> Best Regards,
+>> Devi Priya
