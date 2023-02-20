@@ -2,144 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5054C69D171
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 17:40:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 34E0869D1E5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 18:11:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231243AbjBTQko (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Feb 2023 11:40:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50660 "EHLO
+        id S231649AbjBTRLR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Feb 2023 12:11:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231549AbjBTQko (ORCPT
+        with ESMTP id S231346AbjBTRLR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Feb 2023 11:40:44 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F27FE1A665;
-        Mon, 20 Feb 2023 08:40:29 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 555E5CE0FF1;
-        Mon, 20 Feb 2023 16:40:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B0EC433D2;
-        Mon, 20 Feb 2023 16:40:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676911226;
-        bh=aUFNjkKFipMFqsWgdBLvu13lnzOJHrwAfbJcOgLdQZk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=P90f/xk1Q5qdO1uVsJ3tezWyw+y7lfydgWHG3TZ/gPsPOy47tdDrhmW4at5d3jpgS
-         AUaTd218CH9miRCqoRXMu0tauN/HN9kndxW4fbUJSLSSZXzD95ccvOu5e25UkouEMc
-         YOTtlIDbuftx9EHOudNIVLakgGSd1kyhfzm6or1pBrmpmNfe9Wpn82ZHC3WoerRmIr
-         Ku6eCwf3h/0KkMk8HjNznE2roFpSFM3mmeV8fGCRne3HGJzYmnRzjaPFWRJAkl3aLc
-         nUACXL5u9pNhFmYtj/OTy57n4CT3qGgyZiHkiu458Ll0nAyny5K0CIvI854twC6CIY
-         Q2C8kaws+AmgA==
-Date:   Mon, 20 Feb 2023 08:43:56 -0800
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
- provider has sync_state
-Message-ID: <20230220164356.zafohov4mbkvmvjf@ripper>
-References: <20230127104054.895129-1-abel.vesa@linaro.org>
- <CAPDyKFon35wcQ+5kx3QZb-awN_S_q8y1Sir-G+GoxkCvpN=iiA@mail.gmail.com>
- <Y+zOYfSI7Zq5sll1@linaro.org>
+        Mon, 20 Feb 2023 12:11:17 -0500
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDF951EBF3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 09:11:15 -0800 (PST)
+Received: by mail-io1-xd2b.google.com with SMTP id b16so126451iof.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 09:11:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=nEOyqyX16+a0s8LVg/pF7pxqSztYrWWhg38vHHBi3tk=;
+        b=Es+PiD554nf4b0lw9BenSHvyrbUQvjUaddCdjlFQzviROGfsy+bH6ztbIzUJj8HN3D
+         kPFalkX9vL9YMjqz+RQVaezLe3n/aWJABu/mKRnRsZo/vKgmoFbWvroh6JVpowJoBHGr
+         ouIETH64oNwmqNZtENWIe7zqF1yBoI9U+pI2+rgWa0wIwTubNonQomcCnOuI+qJ1Bgyb
+         c5z1Hq8/EpN92SQK6JIMTTvJqi37WvromkSXSCfimYdo4Cphf5I8fw2JhNUTYXlvXl1y
+         1ylrOYnpce4/fJktTg6YdKuj1QoRl2oV/CPtP27vQ5fjr4KMO/oZ0fCrGc1WANg5I610
+         tb5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nEOyqyX16+a0s8LVg/pF7pxqSztYrWWhg38vHHBi3tk=;
+        b=sIxQXf1bWoTvHcj6BOAlN9kLwdB6PE9K28WtIWne5HJPb3+BboiZw2QB/wi3FIaAbs
+         xfIV83/8IOxMB/avDG/OoZRbJas/y5bObVWWXJY98lgjO5Mtg0RCvVwbyPlW4q4NuoUj
+         TuFazykDpvuVXQsfvFmKDV8iki2mhrYNv+C6vLYzOqw/t/GODn3cnpzoRMSD67F+DsNU
+         SlLLyxkDgwGKeNNiaJmgnJ5//JV91c9Dm3KW8F/rVn/2FDHp26tTDStSBibKtLauQexY
+         d0gx+XTbxRenoaZIDyukvkKQl6kbfe8jvb+bt/Lj1wv7UR0Tm7ZSTHM+HiEsr2wEsKpd
+         ggWQ==
+X-Gm-Message-State: AO0yUKUqu8rWU0Yjlfkqk1lgh7brYaySc5qvskAduHT/GCHcD5jBNfr8
+        FvXCl86xrcHElDE83GtZgKp31Sxqz/nME7qNNDkPsw==
+X-Google-Smtp-Source: AK7set+503zOSFCrMzUFKu9VpHP1CxTcABe7Y2qzNdRVr4GS9RE0Nr+Aep7G/9QRg/X7y9lOZcCc6YFmXuu71RYiegk=
+X-Received: by 2002:a6b:6207:0:b0:71c:479d:741a with SMTP id
+ f7-20020a6b6207000000b0071c479d741amr2462205iog.38.1676913075061; Mon, 20 Feb
+ 2023 09:11:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y+zOYfSI7Zq5sll1@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230126031424.14582-1-quic_wcheng@quicinc.com> <20230126031424.14582-13-quic_wcheng@quicinc.com>
+In-Reply-To: <20230126031424.14582-13-quic_wcheng@quicinc.com>
+From:   Albert Wang <albertccwang@google.com>
+Date:   Tue, 21 Feb 2023 01:11:04 +0800
+Message-ID: <CANqn-rhAWKVrSGKkoDCC+Jy6qdceSqo22KYb-5k+haHpcgQJaA@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 12/22] sound: usb: card: Introduce USB SND platform
+ op callbacks
+To:     Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, lgirdwood@gmail.com, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        Thinh.Nguyen@synopsys.com, broonie@kernel.org,
+        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
+        quic_jackp@quicinc.com, quic_plai@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-16.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL,
+        USER_IN_DEF_SPF_WL autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 15, 2023 at 02:21:53PM +0200, Abel Vesa wrote:
-> On 23-02-15 12:57:54, Ulf Hansson wrote:
-> > On Fri, 27 Jan 2023 at 11:40, Abel Vesa <abel.vesa@linaro.org> wrote:
-> > >
-> > > Currently, there are cases when a domain needs to remain enabled until
-> > > the consumer driver probes. Sometimes such consumer drivers may be built
-> > > as modules. Since the genpd_power_off_unused is called too early for
-> > > such consumer driver modules to get a chance to probe, the domain, since
-> > > it is unused, will get disabled. On the other hand, the best time for
-> > > an unused domain to be disabled is on the provider's sync_state
-> > > callback. So, if the provider has registered a sync_state callback,
-> > > assume the unused domains for that provider will be disabled on its
-> > > sync_state callback. Also provide a generic sync_state callback which
-> > > disables all the domains unused for the provider that registers it.
-> > >
-> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > ---
-> > >
-> > > This approach has been applied for unused clocks as well.
-> > > With this patch merged in, all the providers that have sync_state
-> > > callback registered will leave the domains enabled unless the provider's
-> > > sync_state callback explicitly disables them. So those providers will
-> > > need to add the disabling part to their sync_state callback. On the
-> > > other hand, the platforms that have cases where domains need to remain
-> > > enabled (even if unused) until the consumer driver probes, will be able,
-> > > with this patch in, to run without the pd_ignore_unused kernel argument,
-> > > which seems to be the case for most Qualcomm platforms, at this moment.
-> > 
-> > My apologies for the somewhat late reply. Please see my comments below.
-> > 
-> > >
-> > > The v1 is here:
-> > > https://lore.kernel.org/all/20230126234013.3638425-1-abel.vesa@linaro.org/
-> > >
-> > > Changes since v1:
-> > >  * added a generic sync state callback to be registered by providers in
-> > >    order to disable the unused domains on their sync state. Also
-> > >    mentioned this in the commit message.
-> > >
-> > >  drivers/base/power/domain.c | 17 ++++++++++++++++-
-> > >  include/linux/pm_domain.h   |  3 +++
-> > >  2 files changed, 19 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> > > index 84662d338188..c2a5f77c01f3 100644
-> > > --- a/drivers/base/power/domain.c
-> > > +++ b/drivers/base/power/domain.c
-> > > @@ -1099,7 +1099,8 @@ static int __init genpd_power_off_unused(void)
-> > >         mutex_lock(&gpd_list_lock);
-> > >
-> > >         list_for_each_entry(genpd, &gpd_list, gpd_list_node)
-> > > -               genpd_queue_power_off_work(genpd);
-> > > +               if (!dev_has_sync_state(genpd->provider->dev))
-> > 
-> > Unfortunately, this doesn't really help, due to the fact that a
-> > genpd's ->power_off() callback may get called anyway. At power off,
-> > the genpd core only cares about those consumers that are currently
-> > attached, not those that might get attached at some point later in
-> > time.
-> > 
-> > In other words, it's the responsibility for each specific genpd
-> > provider to cope with the condition that its ->sync_state() callback
-> > may *not* have been called, while its ->power_off() callback is being
-> > called.
-> > 
-> > In these cases, the genpd provider should probably make the
-> > ->power_off() callback to return -EBUSY. This is what we do in
-> > psci_pd_power_off(), for example.
-> > 
-> 
-> Hmm, this might actually be a better idea. Bjorn, do you agree?
-> 
+Hi Wesley,
 
-Yes, I agree.
+It looks like your audio offload driver will fetch the required
+resources for a stream enable request. But we have different designs.
+In the integration with your patch set, we found we still need a call
+back function in card.c when the usb set interface is done, in which
+we would call the new API, xhci_get_xfer_resource(), to get the EP
+transfer ring address. Of course, we will try the
+platform_ops->connect_cb() first to see if it is able to cover what we
+need or not.
 
-Regards,
-Bjorn
+
+Thanks,
+Albert Wang
+
+Albert Wang | Pixel USB Software  | albertccwang@google.com | +886-918-695-245
+
+
+On Thu, Jan 26, 2023 at 11:16 AM Wesley Cheng <quic_wcheng@quicinc.com> wrote:
+>
+> Allow for different platforms to be notified on USB SND connect/disconnect
+> seqeunces.  This allows for platform USB SND modules to properly initialize
+> and populate internal structures with references to the USB SND chip
+> device.
+>
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> ---
+>  sound/usb/card.c | 28 ++++++++++++++++++++++++++++
+>  sound/usb/card.h | 20 ++++++++++++++++++++
+>  2 files changed, 48 insertions(+)
+>
+> diff --git a/sound/usb/card.c b/sound/usb/card.c
+> index 26268ffb8274..803230343c16 100644
+> --- a/sound/usb/card.c
+> +++ b/sound/usb/card.c
+> @@ -117,6 +117,24 @@ MODULE_PARM_DESC(skip_validation, "Skip unit descriptor validation (default: no)
+>  static DEFINE_MUTEX(register_mutex);
+>  static struct snd_usb_audio *usb_chip[SNDRV_CARDS];
+>  static struct usb_driver usb_audio_driver;
+> +static struct snd_usb_platform_ops *platform_ops;
+> +
+> +int snd_usb_register_platform_ops(struct snd_usb_platform_ops *ops)
+> +{
+> +       if (platform_ops)
+> +               return -EEXIST;
+> +
+> +       platform_ops = ops;
+> +       return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(snd_usb_register_platform_ops);
+> +
+> +int snd_usb_unregister_platform_ops(void)
+> +{
+> +       platform_ops = NULL;
+> +       return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(snd_usb_unregister_platform_ops);
+>
+>  /*
+>   * disconnect streams
+> @@ -910,6 +928,10 @@ static int usb_audio_probe(struct usb_interface *intf,
+>         usb_set_intfdata(intf, chip);
+>         atomic_dec(&chip->active);
+>         mutex_unlock(&register_mutex);
+> +
+> +       if (platform_ops->connect_cb)
+> +               platform_ops->connect_cb(intf, chip);
+> +
+>         return 0;
+>
+>   __error:
+> @@ -943,6 +965,9 @@ static void usb_audio_disconnect(struct usb_interface *intf)
+>         if (chip == USB_AUDIO_IFACE_UNUSED)
+>                 return;
+>
+> +       if (platform_ops->disconnect_cb)
+> +               platform_ops->disconnect_cb(intf);
+> +
+>         card = chip->card;
+>
+>         mutex_lock(&register_mutex);
+> @@ -1087,6 +1112,9 @@ static int usb_audio_suspend(struct usb_interface *intf, pm_message_t message)
+>                 chip->system_suspend = chip->num_suspended_intf;
+>         }
+>
+> +       if (platform_ops->suspend_cb)
+> +               platform_ops->suspend_cb(intf, message);
+> +
+>         return 0;
+>  }
+>
+> diff --git a/sound/usb/card.h b/sound/usb/card.h
+> index 40061550105a..2249c411c3a1 100644
+> --- a/sound/usb/card.h
+> +++ b/sound/usb/card.h
+> @@ -206,4 +206,24 @@ struct snd_usb_stream {
+>         struct list_head list;
+>  };
+>
+> +struct snd_usb_platform_ops {
+> +       void (*connect_cb)(struct usb_interface *intf, struct snd_usb_audio *chip);
+> +       void (*disconnect_cb)(struct usb_interface *intf);
+> +       void (*suspend_cb)(struct usb_interface *intf, pm_message_t message);
+> +};
+> +
+> +#if IS_ENABLED(CONFIG_SND_USB_AUDIO)
+> +int snd_usb_register_platform_ops(struct snd_usb_platform_ops *ops);
+> +int snd_usb_unregister_platform_ops(void);
+> +#else
+> +int snd_usb_register_platform_ops(struct snd_usb_platform_ops *ops)
+> +{
+> +       return -EOPNOTSUPP;
+> +}
+> +
+> +int snd_usb_unregister_platform_ops(void)
+> +{
+> +       return -EOPNOTSUPP;
+> +}
+> +#endif /* IS_ENABLED(CONFIG_SND_USB_AUDIO) */
+>  #endif /* __USBAUDIO_CARD_H */
