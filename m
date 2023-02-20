@@ -2,89 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B67D69CE8B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 15:00:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36D8069CF84
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 15:37:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232701AbjBTOAG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Feb 2023 09:00:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52356 "EHLO
+        id S231796AbjBTOhA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Feb 2023 09:37:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232696AbjBTOAG (ORCPT
+        with ESMTP id S230480AbjBTOg7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Feb 2023 09:00:06 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA7581F5F8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 05:59:36 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id t15so1420541wrz.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 05:59:36 -0800 (PST)
+        Mon, 20 Feb 2023 09:36:59 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48A65CDD4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 06:36:58 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id m6so2027300lfq.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 06:36:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=UFqX1xpzYfRr7XRliTwmy4fXdKDRsTPOMhc3mSTdFn8=;
-        b=G4oRXIYSs+SlkgF23wiiS6B970a1AG5cpTPGFK0KISLr8+FwieCoiC17HwabV1bHrW
-         x7t2+4ZnkiOWPuNdRq7vn+gm+L6l0gYtaM00FfYvSZ/oBXBzc6Gc8D8ew/a6T/BrhwRy
-         neZBg/1LDW+GewojvsYzfzr84S8d5t6u21+j4PsMSk2g9JMOhfhk+D2l5jplLJlnZr3a
-         euesCry+y1p2x+VHSY7c8kai+vE82hXCjRTTflqK1Aum/K9eP8FcodkavHBC5lNvZAql
-         EiX7ID3SqOIsJcXJNy3/svkAPsYt5Oa7uzDt1EA5HDfvtknDSGRpy2EoWEFHew/48TGE
-         v8LA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6vhlUf4V//EucpeTUzass2zWDgLFr6HdC5bKhDHOf1Y=;
+        b=OBGrR5BqSNtEZQM2urjlOlaH1nXZyXQ47IZg0lF9rt5wQqW4Q98NZGvwbZNA+61qz9
+         6aU2ev0bXVxpk+9FiZZGYk2ZrG5tGs3Rg8zfLoMxKq0czUtZoY5cul/ECPIsR3FP2a4I
+         2Q2vxiSeUP0gfZRTOSPHv8/6ocY8rMx1D5z7TEKaRH4B5ZiLj11rud1u6K/Xr3xrPeBG
+         wyjbDuHvneR1ZG6Tv+HUxYPTm/dWMa3j7iqcIpj1/T0JyrCbBkTxQO9oyGqHee5mA5xF
+         qpkm/35SQsnPu8uT4s8VC8eWppF9ptD9zlneZ5NcECCaabiUZZYXAYcemCLrmsugsg2w
+         hVBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UFqX1xpzYfRr7XRliTwmy4fXdKDRsTPOMhc3mSTdFn8=;
-        b=fQUHW1C1R39lRXfxBezGAvGbvdozBz9IRSpszI6PBHxpRzKP+PbwrUE+inRJIXvWno
-         h262SY/vjOQ14isaRLE2OeUcBXOch3fS3j6k8qjiThWz5yEKfiIh2S/LvATJQKLr/PSA
-         nhhXQgrhkrz70YrJ6iuuDF2rjJFiaSXLu6ETUKJZD0ES46P0aXD15ogrVMcicXsTiyBq
-         X7aP68BAm/tMC2MFlFp6jtbRjrPCz7UhmErz33OPmJMLv5fG+UR4ZkWCSXt4Z1Y8unwT
-         yI98H7PCBhp6mu5zHKnp/EaUCpwL4J/TBrVuIwlZoW3IAmOSgiOFqAEFbnvzueS0begl
-         Ny0Q==
-X-Gm-Message-State: AO0yUKV5RYJ+XRlY06N6ihibe7eVSDiTjCOEWahPO0nTiusKkNXCZ3Rr
-        tcPRfwbrDCOtKxVfGwx9fzFvVg==
-X-Google-Smtp-Source: AK7set8SGGeExgdNhwXfD4zxjZKAtHNtYbpfnDssEcIzSxtUWQqlrX3hqIY9udSP8TB7rai0FtsUNA==
-X-Received: by 2002:a5d:608e:0:b0:2c6:ca01:e70b with SMTP id w14-20020a5d608e000000b002c6ca01e70bmr1690293wrt.31.1676901567663;
-        Mon, 20 Feb 2023 05:59:27 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id p12-20020a5d48cc000000b002c6eaf53bcdsm544410wrs.28.2023.02.20.05.59.26
+        bh=6vhlUf4V//EucpeTUzass2zWDgLFr6HdC5bKhDHOf1Y=;
+        b=Z8Jrn2D1sl7EEEwalwFab5kcUhGtA4UeHF2C3zKVapqLGJEwU18E3AeANVZnz47dN8
+         LVGvwOmG1tfkdCzUtzFCR5GE6Hc/uJeEiO6C39e/Z6TEWYM6JCFYNo15GSzpveRygOqd
+         BFJXaUTb6F6uH4wbkGBE/nCKeHxx87lCaMyvdxUpkqm+Ghd2xggm+P2I6jok2izQo3uS
+         kP0AqeJ70QCo7VbLaqIzSnpQkaPuCJnwSLFlE2c4egTe3WNNHXnjZU/kk2PFzO+iIteQ
+         X6AbSQB/T469yvEGHNrpPjZK5+FPO3h9UIs7cANAEgltJHBhtXmCyS64AyjKBdAKudiZ
+         sMFg==
+X-Gm-Message-State: AO0yUKUePfQ/Byhj+3sCDjhNOttpRB7494AlZ/TKGvVUtAbVkcu40aig
+        wBlx6RikFIkqsU1UhkT8bR9H5A==
+X-Google-Smtp-Source: AK7set9Q2QTfNHI8HJ1IzZNKZTNtqZJBo5WDw+FA5rdYPWKoDAvgoATDJjdXykT21cEn90yayQJ4rA==
+X-Received: by 2002:a05:6512:1284:b0:4d8:86c1:4782 with SMTP id u4-20020a056512128400b004d886c14782mr837059lfs.23.1676903816529;
+        Mon, 20 Feb 2023 06:36:56 -0800 (PST)
+Received: from [192.168.1.101] (abxh184.neoplus.adsl.tpnet.pl. [83.9.1.184])
+        by smtp.gmail.com with ESMTPSA id g21-20020a19ee15000000b004dc4b00a1eesm216242lfb.261.2023.02.20.06.36.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Feb 2023 05:59:27 -0800 (PST)
-Message-ID: <9981e1fc-2464-4c1a-5ce0-3772c9ffb9e8@linaro.org>
-Date:   Mon, 20 Feb 2023 13:59:26 +0000
+        Mon, 20 Feb 2023 06:36:56 -0800 (PST)
+Message-ID: <07342311-33e3-cf7e-38ed-5d54d83b43a3@linaro.org>
+Date:   Mon, 20 Feb 2023 15:36:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH v10 04/26] virt: gunyah: Add hypercalls to identify Gunyah
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214211229.3239350-5-quic_eberman@quicinc.com>
+ Thunderbird/102.8.0
+Subject: Re: [PATCH V2 5/6] arm64: dts: qcom: ipq9574: Add RPM related nodes
 Content-Language: en-US
-In-Reply-To: <20230214211229.3239350-5-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_ipkumar@quicinc.com
+References: <20230217142030.16012-1-quic_devipriy@quicinc.com>
+ <20230217142030.16012-6-quic_devipriy@quicinc.com>
+ <12d23d88-6f42-09ea-3f26-e1b7a0878767@linaro.org>
+ <fb576665-7983-d09a-06a6-bfde5793816e@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <fb576665-7983-d09a-06a6-bfde5793816e@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -94,212 +83,111 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-minor nits below,
 
-On 14/02/2023 21:12, Elliot Berman wrote:
-> Add hypercalls to identify when Linux is running a virtual machine under
-> Gunyah.
+
+On 20.02.2023 14:53, Devi Priya wrote:
+> Hi Konrad,
 > 
-> There are two calls to help identify Gunyah:
+> Thanks for taking time to review the patch!
+I appreciate your gratitude, but please don't toppost (a.k.a
+don't reply in the first lines of the email), that's rather
+frowned upon on LKML.
+
 > 
-> 1. gh_hypercall_get_uid() returns a UID when running under a Gunyah
->     hypervisor.
-> 2. gh_hypercall_hyp_identify() returns build information and a set of
->     feature flags that are supported by Gunyah.
-> 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->   arch/arm64/Kbuild                    |  1 +
->   arch/arm64/gunyah/Makefile           |  3 ++
->   arch/arm64/gunyah/gunyah_hypercall.c | 61 ++++++++++++++++++++++++++++
->   drivers/virt/Kconfig                 |  2 +
->   drivers/virt/gunyah/Kconfig          | 13 ++++++
->   include/linux/gunyah.h               | 33 +++++++++++++++
->   6 files changed, 113 insertions(+)
->   create mode 100644 arch/arm64/gunyah/Makefile
->   create mode 100644 arch/arm64/gunyah/gunyah_hypercall.c
->   create mode 100644 drivers/virt/gunyah/Kconfig
-> 
-> diff --git a/arch/arm64/Kbuild b/arch/arm64/Kbuild
-> index 5bfbf7d79c99..e4847ba0e3c9 100644
-> --- a/arch/arm64/Kbuild
-> +++ b/arch/arm64/Kbuild
-> @@ -3,6 +3,7 @@ obj-y			+= kernel/ mm/ net/
->   obj-$(CONFIG_KVM)	+= kvm/
->   obj-$(CONFIG_XEN)	+= xen/
->   obj-$(subst m,y,$(CONFIG_HYPERV))	+= hyperv/
-> +obj-$(CONFIG_GUNYAH)	+= gunyah/
->   obj-$(CONFIG_CRYPTO)	+= crypto/
->   
->   # for cleaning
-> diff --git a/arch/arm64/gunyah/Makefile b/arch/arm64/gunyah/Makefile
-> new file mode 100644
-> index 000000000000..84f1e38cafb1
-> --- /dev/null
-> +++ b/arch/arm64/gunyah/Makefile
-> @@ -0,0 +1,3 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +
-> +obj-$(CONFIG_GUNYAH) += gunyah_hypercall.o
-> diff --git a/arch/arm64/gunyah/gunyah_hypercall.c b/arch/arm64/gunyah/gunyah_hypercall.c
-> new file mode 100644
-> index 000000000000..f30d06ee80cf
-> --- /dev/null
-> +++ b/arch/arm64/gunyah/gunyah_hypercall.c
-> @@ -0,0 +1,61 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/arm-smccc.h>
-> +#include <linux/module.h>
-> +#include <linux/gunyah.h>
-> +
-> +static const uint32_t gunyah_known_uuids[][4] = {
-> +	{0x19bd54bd, 0x0b37571b, 0x946f609b, 0x54539de6}, /* QC_HYP (Qualcomm's build) */
-> +	{0x673d5f14, 0x9265ce36, 0xa4535fdb, 0xc1d58fcd}, /* GUNYAH (open source build) */
-> +};
-> +
-> +bool arch_is_gunyah_guest(void)
-> +{
-> +	struct arm_smccc_res res;
-> +	u32 uid[4];
-> +	int i;
-> +
-> +	arm_smccc_1_1_hvc(ARM_SMCCC_VENDOR_HYP_CALL_UID_FUNC_ID, &res);
-> +
-> +	uid[0] = lower_32_bits(res.a0);
-> +	uid[1] = lower_32_bits(res.a1);
-> +	uid[2] = lower_32_bits(res.a2);
-> +	uid[3] = lower_32_bits(res.a3);
-> +
-> +	for (i = 0; i < ARRAY_SIZE(gunyah_known_uuids); i++)
-> +		if (!memcmp(uid, gunyah_known_uuids[i], sizeof(uid)))
-> +			break;
-> +
-> +	return i != ARRAY_SIZE(gunyah_known_uuids);
+> On 2/17/2023 8:20 PM, Konrad Dybcio wrote:
+>>
+>>
+>> On 17.02.2023 15:20, Devi Priya wrote:
+>>> Add RPM Glink, RPM message RAM and SMPA1 regulator
+>>> nodes to support frequency scaling on IPQ9574
+>>>
+>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>>> ---
+>>>   Changes in V2:
+>>>     - Splitted the RPM and CPU Freq changes to individual patches
+>>>     - Moved the regulators node to Board DT
+>>>     - Dropped the regulator-always-on property
+>>>     - Updated the compatible in regulators node with the existing
+>>>       mp5496 compatible
+>>>
+>>>   arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts | 11 +++++++++++
+>>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi        | 17 +++++++++++++++++
+>>>   2 files changed, 28 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts b/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
+>>> index 21b53f34ce84..8a6caaeb0c4b 100644
+>>> --- a/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
+>>> @@ -57,6 +57,17 @@
+>>>       status = "okay";
+>>>   };
+>>>   +&rpm_requests {
+>>> +    regulators {
+>>> +        compatible = "qcom,rpm-mp5496-regulators";
+>>> +
+>>> +        ipq9574_s1: s1 {
+>>> +            regulator-min-microvolt = <587500>;
+>>> +            regulator-max-microvolt = <1075000>;
+>>> +        };
+>>> +    };
+>>> +};
+>> This belongs in a separate patch.
+>>
+> Do you recommend to move this change to the below patch in the next spin?
+> [PATCH V2 6/6]arm64: dts: qcom: ipq9574: Add cpufreq support
+Sounds good
 
-you could probably make this more readable by:
+Also, I think you missed a newline before &rpm_requests now that
+I look at it.
 
-
-for (i = 0; i < ARRAY_SIZE(gunyah_known_uuids); i++)
-	if (!memcmp(uid, gunyah_known_uuids[i], sizeof(uid)))
-		return true;
-
-return false;
-
-> +}
-> +EXPORT_SYMBOL_GPL(arch_is_gunyah_guest);
-> +
-> +#define GH_HYPERCALL(fn)	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_64, \
-> +						   ARM_SMCCC_OWNER_VENDOR_HYP, \
-> +						   fn)
-> +
-> +#define GH_HYPERCALL_HYP_IDENTIFY		GH_HYPERCALL(0x8000)
-> +
-> +/**
-> + * gh_hypercall_hyp_identify() - Returns build information and feature flags
-> + *                               supported by Gunyah.
-> + * @hyp_identity: filled by the hypercall with the API info and feature flags.
-> + */
-> +void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity)
-> +{
-> +	struct arm_smccc_res res;
-> +
-> +	arm_smccc_1_1_hvc(GH_HYPERCALL_HYP_IDENTIFY, &res);
-> +
-> +	hyp_identity->api_info = res.a0;
-> +	hyp_identity->flags[0] = res.a1;
-> +	hyp_identity->flags[1] = res.a2;
-> +	hyp_identity->flags[2] = res.a3;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_hypercall_hyp_identify);
-> +
-> +MODULE_LICENSE("GPL");
-> +MODULE_DESCRIPTION("Gunyah Hypervisor Hypercalls");
-> diff --git a/drivers/virt/Kconfig b/drivers/virt/Kconfig
-> index f79ab13a5c28..85bd6626ffc9 100644
-> --- a/drivers/virt/Kconfig
-> +++ b/drivers/virt/Kconfig
-> @@ -54,4 +54,6 @@ source "drivers/virt/coco/sev-guest/Kconfig"
->   
->   source "drivers/virt/coco/tdx-guest/Kconfig"
->   
-> +source "drivers/virt/gunyah/Kconfig"
-> +
->   endif
-> diff --git a/drivers/virt/gunyah/Kconfig b/drivers/virt/gunyah/Kconfig
-> new file mode 100644
-> index 000000000000..1a737694c333
-> --- /dev/null
-> +++ b/drivers/virt/gunyah/Kconfig
-> @@ -0,0 +1,13 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +
-> +config GUNYAH
-> +	tristate "Gunyah Virtualization drivers"
-> +	depends on ARM64
-> +	depends on MAILBOX
-> +	help
-> +	  The Gunyah drivers are the helper interfaces that run in a guest VM
-> +	  such as basic inter-VM IPC and signaling mechanisms, and higher level
-> +	  services such as memory/device sharing, IRQ sharing, and so on.
-> +
-> +	  Say Y/M here to enable the drivers needed to interact in a Gunyah
-> +	  virtual environment.
-> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
-> index 59ef4c735ae8..3fef2854c5e1 100644
-> --- a/include/linux/gunyah.h
-> +++ b/include/linux/gunyah.h
-> @@ -6,8 +6,10 @@
->   #ifndef _LINUX_GUNYAH_H
->   #define _LINUX_GUNYAH_H
->   
-> +#include <linux/bitfield.h>
->   #include <linux/errno.h>
->   #include <linux/limits.h>
-> +#include <linux/types.h>
->   
->   /******************************************************************************/
->   /* Common arch-independent definitions for Gunyah hypercalls                  */
-> @@ -79,4 +81,35 @@ static inline int gh_remap_error(enum gh_error gh_error)
->   	}
->   }
->   
-> +enum gh_api_feature {
-> +	GH_API_FEATURE_DOORBELL,
-> +	GH_API_FEATURE_MSGQUEUE,
-> +	GH_API_FEATURE_VCPU,
-> +	GH_API_FEATURE_MEMEXTENT,
-> +};
-> +
-> +bool arch_is_gunyah_guest(void);
-> +
-> +u16 gh_api_version(void);
-> +bool gh_api_has_feature(enum gh_api_feature feature);
-gh_api_has_feature or arch_is_gunyah_guest is in this patch, this should 
-probably moved to the respecitive patch that implements these functions.
-
---srini
-> +
-> +#define GUNYAH_API_V1			1
-> +
-> +#define GH_API_INFO_API_VERSION_MASK	GENMASK_ULL(13, 0)
-> +#define GH_API_INFO_BIG_ENDIAN		BIT_ULL(14)
-> +#define GH_API_INFO_IS_64BIT		BIT_ULL(15)
-> +#define GH_API_INFO_VARIANT_MASK	GENMASK_ULL(63, 56)
-> +
-> +#define GH_IDENTIFY_DOORBELL			BIT_ULL(1)
-> +#define GH_IDENTIFY_MSGQUEUE			BIT_ULL(2)
-> +#define GH_IDENTIFY_VCPU			BIT_ULL(5)
-> +#define GH_IDENTIFY_MEMEXTENT			BIT_ULL(6)
-> +
-> +struct gh_hypercall_hyp_identify_resp {
-> +	u64 api_info;
-> +	u64 flags[3];
-> +};
-> +
-> +void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity);
-> +
->   #endif
+Konrad
+>>> +
+>>>   &sdhc_1 {
+>>>       pinctrl-0 = <&sdc_default_state>;
+>>>       pinctrl-names = "default";
+>>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>> index d20f3c7383f5..2f300cbab93e 100644
+>>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>> @@ -133,6 +133,11 @@
+>>>           #size-cells = <2>;
+>>>           ranges;
+>>>   +        rpm_msg_ram: rpm@60000 {
+>> Since this is a part of the MMIO region and not a part of DRAM,
+>> we generally put this node under /soc with the compatible of
+>> qcom,rpm-msg-ram and without no-map.
+>>
+>> And the node name then should be sram@.
+> Sure, okay. Will update this in V3
+>>
+>>> +            reg = <0x0 0x00060000 0x0 0x6000>;
+>>> +            no-map;
+>>> +        };
+>>> +
+>>>           tz_region: tz@4a600000 {
+>>>               reg = <0x0 0x4a600000 0x0 0x400000>;
+>>>               no-map;
+>>> @@ -768,6 +773,18 @@
+>>>           };
+>>>       };
+>>>   +    rpm-glink {
+>> Alphabetically this should come before /soc.
+> Okay
+>>
+>> Konrad
+>>> +        compatible = "qcom,glink-rpm";
+>>> +        interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+>>> +        qcom,rpm-msg-ram = <&rpm_msg_ram>;
+>>> +        mboxes = <&apcs_glb 0>;
+>>> +
+>>> +        rpm_requests: glink-channel {
+>>> +            compatible = "qcom,rpm-ipq9574";
+>>> +            qcom,glink-channels = "rpm_requests";
+>>> +        };
+>>> +    };
+>>> +
+>>>       timer {
+>>>           compatible = "arm,armv8-timer";
+>>>           interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+> Best Regards,
+> Devi Priya
