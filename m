@@ -2,83 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA94869D4D2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 21:20:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1150E69D612
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 23:01:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232789AbjBTUUQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Feb 2023 15:20:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37380 "EHLO
+        id S232454AbjBTWBe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Feb 2023 17:01:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232837AbjBTUTv (ORCPT
+        with ESMTP id S232506AbjBTWBc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Feb 2023 15:19:51 -0500
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A738A1ABC2;
-        Mon, 20 Feb 2023 12:19:37 -0800 (PST)
-Received: by mail-pg1-x536.google.com with SMTP id 132so1154979pgh.13;
-        Mon, 20 Feb 2023 12:19:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0EqwRq/t+KHhVrbIAD1sooBDZlG3nzxQWus7/my7j0s=;
-        b=TG1L6nn0mxBlkKBusgwF9MyUCLhHqNTRGOpIiG1+g3+2tbfhq1+DgZUgf4V2KgyNra
-         ENmsUIrjwSSr/A4fn2O9l0F3MUhpCSjJtle6DdruoB8wDezXrbM/gFxXxsBj+dKQf7wl
-         t58P0IMFe+/PCrMmuzStSrS2BkDx3+ndckjxibW/670yzJO914kwBw1L36j4S6OBCdFX
-         LMghJVaa4OPP2iw1qmcJ/x2VEoL4CshIZq34uHqcHASQqYllJCpFEUIWmu/aWIf191bB
-         sXM4DUz8HMGVQHyxzvIsP3fnLQ6VDkpu2myvqfAULLrqWH82Ig+GhmOU3J7uGsCS1mde
-         qLtA==
+        Mon, 20 Feb 2023 17:01:32 -0500
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDD56115;
+        Mon, 20 Feb 2023 14:01:29 -0800 (PST)
+Received: by mail-ot1-f49.google.com with SMTP id w7-20020a056830280700b0068dbf908574so489384otu.8;
+        Mon, 20 Feb 2023 14:01:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0EqwRq/t+KHhVrbIAD1sooBDZlG3nzxQWus7/my7j0s=;
-        b=5SUfvQGUK9cyUL5jOxtv2W08Ho7kHgvwNxDsTqxOiXQzN0p2VC6oqHqV5Obl424oSq
-         XGvFGqzVBdi2C2JZqz/OWZOlqb4H1rEqu864kZ3bx6n5thWCtYT3R1MO20kcW1WRieg7
-         nDSvWYoLj+hJalDCffa/zDglgm6M45ZRCUy1UXFWWtuONS5gV72h9Oo5YWcluA1n8y35
-         QmPkb3E59tkYaxaawoKSYqUzbgMhI4IV/+zQgvPbH5id2vjw7st5rv+ym9A+8zPDPAsw
-         HDbS8cMwQ5G7xrw26MtEjJb8wqkli78wrY44W/0FvSKLvbPAGUTvQnpAQHOkQWHrhu3v
-         f4NA==
-X-Gm-Message-State: AO0yUKXgGg/eNz95B0WXtVt6HguU9d761DF4jDlltuxoFJ4cG25u6/qU
-        EHlHZTeRtRD+oaCzy9CW1zM=
-X-Google-Smtp-Source: AK7set+G+O+g8nCJJ/07wSAUrOEukE3ArmuOtJLackiUQfQRUGS/wMiklYbmz15njHhVBhjw7Qo33g==
-X-Received: by 2002:a05:6a00:9b:b0:5a8:a263:7f4d with SMTP id c27-20020a056a00009b00b005a8a2637f4dmr2306138pfj.15.1676924376984;
-        Mon, 20 Feb 2023 12:19:36 -0800 (PST)
-Received: from localhost (c-73-67-135-195.hsd1.or.comcast.net. [73.67.135.195])
-        by smtp.gmail.com with ESMTPSA id c11-20020aa781cb000000b005a8bc154bf4sm2440630pfn.39.2023.02.20.12.19.36
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gYEMrB66hD4BzXsOvteWpNCRzSSm60RnJUw/8QW1s/M=;
+        b=lOVA4xuKFDE/nA4+XxLRDmD4R7BGwlxyZF8lMZ76MKKWzhF3bMGqTcNORmgIUqo6t5
+         SO+yEQwr7azyAVR3luqI0N9SqKLWKf3H3yt4NkoCHp9y9NUNqNR8VjEv5GTRD7McKuoy
+         v+MbpOnb4REVCDOXV3YXuOWnYNjbu6isFrk5ghj8Wa2UIIJgpPw3kzND/dai3It5Wf+k
+         4aSwydamOKTdF9MZT2ciPlHEPmTMbNxur2IxWN1OK3IuopXNe5MNpVfI/JR7/MF8pES7
+         5Krc+zITWmhFrtVBhyQCa7djWQq/Sl0iq+SX0YlT12vfqkVkR8EfhWrFl9ZaTPYXW4ws
+         8Aqg==
+X-Gm-Message-State: AO0yUKVCybMLh4R8nNP9tUuWtmezfyU1zCOL9rtl1huOAdj0dF+tbOQu
+        byWRMnja9dRdJfSpvlKsdA==
+X-Google-Smtp-Source: AK7set/idW04u+zyWIwDW99FjHPbai96y+ek+DXhbKWo3yv9Wjjaa3uxqP3vboL2f1adNmTsxiAZdg==
+X-Received: by 2002:a9d:3f3:0:b0:68b:caa8:6ef1 with SMTP id f106-20020a9d03f3000000b0068bcaa86ef1mr1288539otf.12.1676930488868;
+        Mon, 20 Feb 2023 14:01:28 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id dg7-20020a056830480700b00684a10970adsm5384093otb.16.2023.02.20.14.01.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Feb 2023 12:19:36 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= 
-        <ckoenig.leichtzumerken@gmail.com>,
-        =?UTF-8?q?Michel=20D=C3=A4nzer?= <michel@daenzer.net>,
-        Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Pekka Paalanen <ppaalanen@gmail.com>,
-        Simon Ser <contact@emersion.fr>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v5 13/14] drm/msm: Add wait-boost support
-Date:   Mon, 20 Feb 2023 12:19:00 -0800
-Message-Id: <20230220201916.1822214-14-robdclark@gmail.com>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230220201916.1822214-1-robdclark@gmail.com>
-References: <20230220201916.1822214-1-robdclark@gmail.com>
+        Mon, 20 Feb 2023 14:01:28 -0800 (PST)
+Received: (nullmailer pid 405998 invoked by uid 1000);
+        Mon, 20 Feb 2023 22:01:27 -0000
+Date:   Mon, 20 Feb 2023 16:01:27 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <nks@flawful.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Subject: Re: [PATCH v10 3/6] dt-bindings: soc: qcom: cpr3: Add bindings for
+ CPR3 driver
+Message-ID: <20230220220127.GA398518-robh@kernel.org>
+References: <20230217-topic-cpr3h-v10-0-67aed8fdfa61@linaro.org>
+ <20230217-topic-cpr3h-v10-3-67aed8fdfa61@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230217-topic-cpr3h-v10-3-67aed8fdfa61@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,124 +78,340 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Fri, Feb 17, 2023 at 12:08:26PM +0100, Konrad Dybcio wrote:
+> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> 
+> Add the bindings for the CPR3 driver to the documentation.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> [Konrad: Make binding check pass; update AGdR's email]
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  .../devicetree/bindings/soc/qcom/qcom,cpr3.yaml    | 299 +++++++++++++++++++++
+>  1 file changed, 299 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
+> new file mode 100644
+> index 000000000000..18366c1e58b9
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
+> @@ -0,0 +1,299 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,cpr3.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm Core Power Reduction v3/v4/Hardened (CPR3, CPR4, CPRh)
+> +
+> +description: |
 
-Add a way for various userspace waits to signal urgency.
+Don't need '|'
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_drv.c | 12 ++++++++----
- drivers/gpu/drm/msm/msm_gem.c |  5 +++++
- include/uapi/drm/msm_drm.h    | 14 ++++++++++++--
- 3 files changed, 25 insertions(+), 6 deletions(-)
+> +  CPR (Core Power Reduction) is a technology to reduce core power on a CPU
+> +  or other device. Each OPP of a device corresponds to a "corner" that has
+> +  a range of valid voltages for a particular frequency. While the device is
+> +  running at a particular frequency, CPR monitors dynamic factors such as
+> +  temperature, etc. and suggests or, in the CPR-Hardened case performs,
+> +  adjustments to the voltage to save power and meet silicon characteristic
+> +  requirements.
+> +
+> +maintainers:
+> +  - AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> +
+> +properties:
+> +  compatible:
+> +    oneOf:
+> +      - description: CPRv3 controller
+> +        items:
+> +          - const: qcom,cpr3
+> +      - description: CPRv4 controller
+> +        items:
+> +          - const: qcom,cpr4
+> +      - description: CPRv4-Hardened controller
+> +        items:
+> +          - enum:
+> +              - qcom,msm8998-cprh
+> +              - qcom,sdm630-cprh
+> +          - const: qcom,cprh
+> +
+> +  reg:
+> +    description: Base address and size of the CPR controller(s)
+> +    minItems: 1
+> +    maxItems: 2
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    items:
+> +      - const: "ref"
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index aca48c868c14..f6764a86b2da 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -46,6 +46,7 @@
-  * - 1.8.0 - Add MSM_BO_CACHED_COHERENT for supported GPUs (a6xx)
-  * - 1.9.0 - Add MSM_SUBMIT_FENCE_SN_IN
-  * - 1.10.0 - Add MSM_SUBMIT_BO_NO_IMPLICIT
-+ * - 1.11.0 - Add wait boost (MSM_WAIT_FENCE_BOOST, MSM_PREP_BOOST)
-  */
- #define MSM_VERSION_MAJOR	1
- #define MSM_VERSION_MINOR	10
-@@ -899,7 +900,7 @@ static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
- }
- 
- static int wait_fence(struct msm_gpu_submitqueue *queue, uint32_t fence_id,
--		      ktime_t timeout)
-+		      ktime_t timeout, uint32_t flags)
- {
- 	struct dma_fence *fence;
- 	int ret;
-@@ -929,6 +930,9 @@ static int wait_fence(struct msm_gpu_submitqueue *queue, uint32_t fence_id,
- 	if (!fence)
- 		return 0;
- 
-+	if (flags & MSM_WAIT_FENCE_BOOST)
-+		dma_fence_set_deadline(fence, ktime_get());
-+
- 	ret = dma_fence_wait_timeout(fence, true, timeout_to_jiffies(&timeout));
- 	if (ret == 0) {
- 		ret = -ETIMEDOUT;
-@@ -949,8 +953,8 @@ static int msm_ioctl_wait_fence(struct drm_device *dev, void *data,
- 	struct msm_gpu_submitqueue *queue;
- 	int ret;
- 
--	if (args->pad) {
--		DRM_ERROR("invalid pad: %08x\n", args->pad);
-+	if (args->flags & ~MSM_WAIT_FENCE_FLAGS) {
-+		DRM_ERROR("invalid flags: %08x\n", args->flags);
- 		return -EINVAL;
- 	}
- 
-@@ -961,7 +965,7 @@ static int msm_ioctl_wait_fence(struct drm_device *dev, void *data,
- 	if (!queue)
- 		return -ENOENT;
- 
--	ret = wait_fence(queue, args->fence, to_ktime(args->timeout));
-+	ret = wait_fence(queue, args->fence, to_ktime(args->timeout), args->flags);
- 
- 	msm_submitqueue_put(queue);
- 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 1dee0d18abbb..dd4a0d773f6e 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -846,6 +846,11 @@ int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout)
- 		op & MSM_PREP_NOSYNC ? 0 : timeout_to_jiffies(timeout);
- 	long ret;
- 
-+	if (op & MSM_PREP_BOOST) {
-+		dma_resv_set_deadline(obj->resv, dma_resv_usage_rw(write),
-+				      ktime_get());
-+	}
-+
- 	ret = dma_resv_wait_timeout(obj->resv, dma_resv_usage_rw(write),
- 				    true,  remain);
- 	if (ret == 0)
-diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-index 329100016e7c..dbf0d6f43fa9 100644
---- a/include/uapi/drm/msm_drm.h
-+++ b/include/uapi/drm/msm_drm.h
-@@ -151,8 +151,13 @@ struct drm_msm_gem_info {
- #define MSM_PREP_READ        0x01
- #define MSM_PREP_WRITE       0x02
- #define MSM_PREP_NOSYNC      0x04
-+#define MSM_PREP_BOOST       0x08
- 
--#define MSM_PREP_FLAGS       (MSM_PREP_READ | MSM_PREP_WRITE | MSM_PREP_NOSYNC)
-+#define MSM_PREP_FLAGS       (MSM_PREP_READ | \
-+			      MSM_PREP_WRITE | \
-+			      MSM_PREP_NOSYNC | \
-+			      MSM_PREP_BOOST | \
-+			      0)
- 
- struct drm_msm_gem_cpu_prep {
- 	__u32 handle;         /* in */
-@@ -286,6 +291,11 @@ struct drm_msm_gem_submit {
- 
- };
- 
-+#define MSM_WAIT_FENCE_BOOST	0x00000001
-+#define MSM_WAIT_FENCE_FLAGS	( \
-+		MSM_WAIT_FENCE_BOOST | \
-+		0)
-+
- /* The normal way to synchronize with the GPU is just to CPU_PREP on
-  * a buffer if you need to access it from the CPU (other cmdstream
-  * submission from same or other contexts, PAGE_FLIP ioctl, etc, all
-@@ -295,7 +305,7 @@ struct drm_msm_gem_submit {
-  */
- struct drm_msm_wait_fence {
- 	__u32 fence;          /* in */
--	__u32 pad;
-+	__u32 flags;          /* in, bitmask of MSM_WAIT_FENCE_x */
- 	struct drm_msm_timespec timeout;   /* in */
- 	__u32 queueid;         /* in, submitqueue id */
- };
--- 
-2.39.1
+Drop quotes. Or perhaps the whole property as you don't need -names when 
+there is only 1.
 
+> +
+> +  clocks:
+> +    items:
+> +      - description: CPR reference clock
+> +
+> +  vdd-supply:
+> +    description: Autonomous Phase Control (APC) or other power supply
+> +
+> +  '#power-domain-cells':
+> +    const: 1
+> +
+> +  acc-syscon:
+
+qcom,acc
+
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description: phandle to syscon for writing ACC settings
+> +
+> +  nvmem-cells:
+> +    description: Cells containing the fuse corners and revision data
+> +    minItems: 10
+> +    maxItems: 32
+> +
+> +  nvmem-cell-names:
+> +    minItems: 10
+> +    maxItems: 32
+> +
+> +  operating-points-v2: true
+> +
+> +  power-domains: true
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - operating-points-v2
+> +  - "#power-domain-cells"
+> +  - nvmem-cells
+> +  - nvmem-cell-names
+> +
+> +additionalProperties: false
+> +
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,msm8998-cprh
+> +    then:
+> +      properties:
+> +        nvmem-cell-names:
+> +          items:
+> +            - const: "cpr_speed_bin"
+> +            - const: "cpr_fuse_revision"
+> +            - const: "cpr0_quotient1"
+> +            - const: "cpr0_quotient2"
+> +            - const: "cpr0_quotient3"
+> +            - const: "cpr0_quotient4"
+> +            - const: "cpr0_quotient_offset2"
+> +            - const: "cpr0_quotient_offset3"
+> +            - const: "cpr0_quotient_offset4"
+> +            - const: "cpr0_init_voltage1"
+> +            - const: "cpr0_init_voltage2"
+> +            - const: "cpr0_init_voltage3"
+> +            - const: "cpr0_init_voltage4"
+> +            - const: "cpr0_ring_osc1"
+> +            - const: "cpr0_ring_osc2"
+> +            - const: "cpr0_ring_osc3"
+> +            - const: "cpr0_ring_osc4"
+> +            - const: "cpr1_quotient1"
+> +            - const: "cpr1_quotient2"
+> +            - const: "cpr1_quotient3"
+> +            - const: "cpr1_quotient4"
+> +            - const: "cpr1_quotient_offset2"
+> +            - const: "cpr1_quotient_offset3"
+> +            - const: "cpr1_quotient_offset4"
+> +            - const: "cpr1_init_voltage1"
+> +            - const: "cpr1_init_voltage2"
+> +            - const: "cpr1_init_voltage3"
+> +            - const: "cpr1_init_voltage4"
+> +            - const: "cpr1_ring_osc1"
+> +            - const: "cpr1_ring_osc2"
+> +            - const: "cpr1_ring_osc3"
+> +            - const: "cpr1_ring_osc4"
+
+Drop quotes.
+
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-msm8998.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +
+> +    cpus {
+> +        #address-cells = <2>;
+> +        #size-cells = <0>;
+> +
+> +        cpu@0 {
+> +            compatible = "qcom,kryo280";
+> +            device_type = "cpu";
+> +            reg = <0x0 0x0>;
+> +            operating-points-v2 = <&cpu_gold_opp_table>;
+> +            power-domains = <&apc_cprh 0>;
+> +            power-domain-names = "cprh";
+> +        };
+> +
+> +        cpu@100 {
+> +            compatible = "qcom,kryo280";
+> +            device_type = "cpu";
+> +            reg = <0x0 0x100>;
+> +            operating-points-v2 = <&cpu_silver_opp_table>;
+> +            power-domains = <&apc_cprh 1>;
+> +            power-domain-names = "cprh";
+> +        };
+> +    };
+> +
+> +    cpu0_opp_table: opp-table-cpu0 {
+
+This label and what cpu@0 point to don't match.
+
+> +        compatible = "operating-points-v2";
+> +        opp-shared;
+> +
+> +        opp-1843200000 {
+> +            opp-hz = /bits/ 64 <1843200000>;
+> +            required-opps = <&cprh_opp3>;
+> +        };
+> +
+> +        opp-1094400000 {
+> +            opp-hz = /bits/ 64 <1094400000>;
+> +            required-opps = <&cprh_opp2>;
+> +        };
+> +
+> +        opp-300000000 {
+> +            opp-hz = /bits/ 64 <300000000>;
+> +            required-opps = <&cprh_opp1>;
+> +        };
+> +    };
+> +
+> +    cpu4_opp_table: opp-table-cpu4 {
+> +        compatible = "operating-points-v2";
+> +        opp-shared;
+> +
+> +        opp-2208000000 {
+> +            opp-hz = /bits/ 64 <2208000000>;
+> +            required-opps = <&cprh_opp3>;
+> +        };
+> +
+> +        opp-1113600000 {
+> +            opp-hz = /bits/ 64 <1113600000>;
+> +            required-opps = <&cprh_opp2>;
+> +        };
+> +
+> +        opp-300000000 {
+> +            opp-hz = /bits/ 64 <300000000>;
+> +            required-opps = <&cprh_opp1>;
+> +        };
+> +    };
+> +
+> +    cprh_opp_table: opp-table-cprh {
+> +        compatible = "operating-points-v2-qcom-level";
+> +
+> +        cprh_opp1: opp-1 {
+> +            opp-level = <1>;
+> +            qcom,opp-fuse-level = <1>;
+> +            qcom,opp-cloop-vadj = <0>;
+> +            qcom,opp-oloop-vadj = <0>;
+> +        };
+> +
+> +        cprh_opp2: opp-2 {
+> +            opp-level = <2>;
+> +            qcom,opp-fuse-level = <2>;
+> +            qcom,opp-cloop-vadj = <0>;
+> +            qcom,opp-oloop-vadj = <0>;
+> +        };
+> +
+> +        cprh_opp3: opp-3 {
+> +            opp-level = <3>;
+> +            qcom,opp-fuse-level = <2 3>;
+> +            qcom,opp-cloop-vadj = <0>;
+> +            qcom,opp-oloop-vadj = <0>;
+> +        };
+> +    };
+> +
+> +    apc_cprh: power-controller@179c8000 {
+> +        compatible = "qcom,msm8998-cprh", "qcom,cprh";
+> +        reg = <0x0179c8000 0x4000>, <0x0179c4000 0x4000>;
+> +        clocks = <&gcc GCC_HMSS_RBCPR_CLK>;
+> +        clock-names = "ref";
+> +
+> +        operating-points-v2 = <&cprh_opp_table>;
+> +        #power-domain-cells = <1>;
+> +
+> +        nvmem-cells = <&cpr_efuse_speedbin>,
+> +                      <&cpr_fuse_revision>,
+> +                      <&cpr_quot0_pwrcl>,
+> +                      <&cpr_quot1_pwrcl>,
+> +                      <&cpr_quot2_pwrcl>,
+> +                      <&cpr_quot3_pwrcl>,
+> +                      <&cpr_quot_offset1_pwrcl>,
+> +                      <&cpr_quot_offset2_pwrcl>,
+> +                      <&cpr_quot_offset3_pwrcl>,
+> +                      <&cpr_init_voltage0_pwrcl>,
+> +                      <&cpr_init_voltage1_pwrcl>,
+> +                      <&cpr_init_voltage2_pwrcl>,
+> +                      <&cpr_init_voltage3_pwrcl>,
+> +                      <&cpr_ro_sel0_pwrcl>,
+> +                      <&cpr_ro_sel1_pwrcl>,
+> +                      <&cpr_ro_sel2_pwrcl>,
+> +                      <&cpr_ro_sel3_pwrcl>,
+> +                      <&cpr_quot0_perfcl>,
+> +                      <&cpr_quot1_perfcl>,
+> +                      <&cpr_quot2_perfcl>,
+> +                      <&cpr_quot3_perfcl>,
+> +                      <&cpr_quot_offset1_perfcl>,
+> +                      <&cpr_quot_offset2_perfcl>,
+> +                      <&cpr_quot_offset3_perfcl>,
+> +                      <&cpr_init_voltage0_perfcl>,
+> +                      <&cpr_init_voltage1_perfcl>,
+> +                      <&cpr_init_voltage2_perfcl>,
+> +                      <&cpr_init_voltage3_perfcl>,
+> +                      <&cpr_ro_sel0_perfcl>,
+> +                      <&cpr_ro_sel1_perfcl>,
+> +                      <&cpr_ro_sel2_perfcl>,
+> +                      <&cpr_ro_sel3_perfcl>;
+> +        nvmem-cell-names = "cpr_speed_bin",
+> +                           "cpr_fuse_revision",
+> +                           "cpr0_quotient1",
+> +                           "cpr0_quotient2",
+> +                           "cpr0_quotient3",
+> +                           "cpr0_quotient4",
+> +                           "cpr0_quotient_offset2",
+> +                           "cpr0_quotient_offset3",
+> +                           "cpr0_quotient_offset4",
+> +                           "cpr0_init_voltage1",
+> +                           "cpr0_init_voltage2",
+> +                           "cpr0_init_voltage3",
+> +                           "cpr0_init_voltage4",
+> +                           "cpr0_ring_osc1",
+> +                           "cpr0_ring_osc2",
+> +                           "cpr0_ring_osc3",
+> +                           "cpr0_ring_osc4",
+> +                           "cpr1_quotient1",
+> +                           "cpr1_quotient2",
+> +                           "cpr1_quotient3",
+> +                           "cpr1_quotient4",
+> +                           "cpr1_quotient_offset2",
+> +                           "cpr1_quotient_offset3",
+> +                           "cpr1_quotient_offset4",
+> +                           "cpr1_init_voltage1",
+> +                           "cpr1_init_voltage2",
+> +                           "cpr1_init_voltage3",
+> +                           "cpr1_init_voltage4",
+> +                           "cpr1_ring_osc1",
+> +                           "cpr1_ring_osc2",
+> +                           "cpr1_ring_osc3",
+> +                           "cpr1_ring_osc4";
+> +    };
+> +...
+> 
+> -- 
+> 2.39.1
+> 
