@@ -2,58 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B754369D0D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 16:46:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52C9669D137
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 17:18:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230392AbjBTPqn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Feb 2023 10:46:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43236 "EHLO
+        id S231575AbjBTQSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Feb 2023 11:18:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230377AbjBTPqm (ORCPT
+        with ESMTP id S232328AbjBTQSM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Feb 2023 10:46:42 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99F4511EAC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 07:46:40 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id h32so6551864eda.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 07:46:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MgpWFr42yyB70QXJviPiRhFMPmBtcy7arHMU218wFoA=;
-        b=YG3EAlqSZvciLAdyppJGhSknjHtILO1vHLGwhzDP1HcWLEbcio5KSVrJGsChged1Fx
-         dTCsYV8e4XuQkU9lFJasl+AnMjfG5jd9rewIXQywaQu0PMBgb5brGNlq0qMmVtNi5j8c
-         a0EEKOlinSTxyp4elYG9hVBTPbxQM2HBx4N3szj6WP8c7IH+5zK2sstl2mmLtmX6fp8O
-         sVVW4rxiowjq4qt4HcPHEKBpk9ZHJv6E3gHvGn4r4e2CNz/73VA7PB7jnZxRXanXMzQF
-         6cFww8VVWGX+iCLT4anVObWSTO+1xjkbeZWFD2UK6WA3fD0nQP+h+sWu4uh7LyoshNEo
-         Y2HQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MgpWFr42yyB70QXJviPiRhFMPmBtcy7arHMU218wFoA=;
-        b=OlK3j3XTO4F6q4Iqxdzh9DFHU/I+UQ1p1sZlu0aaVXSUTV57ztpLnKgNwxhqAWTEwa
-         7XRqWxs6t1tYgOA0vn4f2ktF8d2L7dpbt8EONWALxNXI2z+S/vl1lkrsZwcoDfRwt43y
-         yD3R/fCG66+3mTs2xiMyd4/kAtWiIHxw4VkT2R8MHoJKCbskuNetv6ER6wSPof+H8M4y
-         WnNWoz0eftAIQYfUkG5VUBV/di1OAs2jjDit6i0TBQryNZL2JSJaJKLMNpGuxyeNua1K
-         jbXV9hgW7RpDfA1fGJ8xDqf5fEmhE4Z+ok75ZXfCoznxQUolVpwCd/+Swbm2XylOgkR3
-         i4XA==
-X-Gm-Message-State: AO0yUKUM728Vkf4hXZKZFJfM5rRF/UeBKsV1V8yEtaqjd147qY26yuUD
-        0McxHxkBNgFLgNCH2sVmkaLqdA==
-X-Google-Smtp-Source: AK7set8UdxThUko8BY/93y4ZBzuOyJz3wtqFjQJk+1EmT98vdZiKltWaWOtk7xojW3JetFYGdOTyew==
-X-Received: by 2002:a17:907:2cc7:b0:8b0:23a6:c491 with SMTP id hg7-20020a1709072cc700b008b023a6c491mr15844987ejc.31.1676907999030;
-        Mon, 20 Feb 2023 07:46:39 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id m8-20020a1709060d8800b0084d381d0528sm5973544eji.180.2023.02.20.07.46.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Feb 2023 07:46:38 -0800 (PST)
-Date:   Mon, 20 Feb 2023 17:46:36 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
+        Mon, 20 Feb 2023 11:18:12 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B29C1E28B;
+        Mon, 20 Feb 2023 08:18:10 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id BDA3FB80D4C;
+        Mon, 20 Feb 2023 16:18:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71E6C433D2;
+        Mon, 20 Feb 2023 16:18:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1676909887;
+        bh=YDdZ/aSVIgXwm24AXeuAc+sDztQxXKgMwVKTkCbhyNc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=tubziPJhVTQgDfu8gZrMAfy6SzrfHWHCXqgMfhMJ67dukHh+HyIkODEJw5egy03Jy
+         uqV/FFQbYwj4Uzw+7rYjOH/E5BcUbiOKMu8COpfMM2oSplSIa570KpHV276HiwY1UD
+         MXTwzN+AUOYaaI3kxF2ffbL5dMRXCNHMD79OUg2cVv6LpT4FKu/1mkpeROLioVjMml
+         iBkBhPHTtIPhbxpbu+KOI5aF2gszbSKXKT/1thSVjtsr3FMRpc2xZftc8uqZ8Ddw0H
+         Kymxq73jEnd7bQ7x8Xvh9KvNOhDHGKPaO3kFPE+xXdWzr7LpsPNXGZMiqvz1IEXSgw
+         60ja7dqyCUjxA==
+Date:   Mon, 20 Feb 2023 08:21:37 -0800
+From:   Bjorn Andersson <andersson@kernel.org>
 To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+Cc:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Mike Turquette <mturquette@baylibre.com>,
@@ -62,24 +44,23 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, mka@chromium.org
 Subject: Re: [PATCH v3 1/2] clk: Add generic sync_state callback for
  disabling unused clocks
-Message-ID: <Y/OV3CF0ootyooDJ@linaro.org>
+Message-ID: <20230220162137.xjeowlc4qd3rtzc2@ripper>
 References: <20221227204528.1899863-1-abel.vesa@linaro.org>
  <ebc257025ebd641e624ef506ea09c800.sboyd@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <ebc257025ebd641e624ef506ea09c800.sboyd@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-02-17 21:38:22, Stephen Boyd wrote:
+On Fri, Feb 17, 2023 at 09:38:22PM -0800, Stephen Boyd wrote:
 > Quoting Abel Vesa (2022-12-27 12:45:27)
 > > There are unused clocks that need to remain untouched by clk_disable_unused,
 > > and most likely could be disabled later on sync_state. So provide a generic
@@ -112,31 +93,41 @@ On 23-02-17 21:38:22, Stephen Boyd wrote:
 > 	  clk core A->ops->disable()
 > 
 > clk core B is off now?
-
-Yes, that is correct. But the same thing is happening currently if the
-clk_ignore_unused in not specified. At least with this new approach, we
-get to leave unused clocks enabled either until sync_state is called or forever.
-All the provider has to do is to implement a sync_state callback (or use
-the generic one provided). So the provider of clk A would obviously need
-a sync state callback registered.
-
 > 
+
+I will have to give this some more thought. But this is exactly what we
+have today; consider A being any builtin clock driver and B being any
+clock driver built as modules, with relationship to A.
+
+clk_disable_unused() will take down A without waiting for B, possibly
+locking up parts of the clock hardware of B; or turning off the clocks
+to IP blocks that rely on those clocks (e.g. display).
+
+So my thought on this is that I don't think this patch negatively alter
+the situation. But as it isn't recursive, this remains a problem that
+needs to be fixed.
+
 > Also sync_state seems broken right now. I saw mka mentioned that if you
 > have a device node enabled in your DT but never enable a driver for it
 > in the kernel we'll never get sync_state called. This is another
 > problem, but it concerns me that sync_state would make the unused clk
 > disabling happen at some random time or not at all.
-
-Well, the fact that the sync state not being called because a driver for
-a consumer device doesn't probe does not really mean it is broken. Just
-because the consumer driver hasn't probed yet, doesn't mean it will
-not probe later on.
-
-That aside, rather than going with clk_ignore_unused all the time on
-qcom platforms, at least in a perfect scenario (where sync state is
-reached for all providers) the clocks get disabled.
-
 > 
+
+I don't think that sync_state is "broken".
+
+There is no way to distinguish a driver not being built in, or a driver
+being built as module but not yet loaded. The approach taken by
+sync_state currently is optimistically speculative.
+
+One alternative to this is found in the regulator framework, where we
+have a 30 second timer triggering the late disable. The result of this
+is that every time I end up in the ramdisk console because "root file
+system can't be mounted", I have 25 second to figure out what the
+problem is before the backlight goes out...
+
+As such I do prefer the optimistic approach...
+
 > Can the problem be approached more directly? If this is about fixing
 > continuous splash screen, then I wonder why we can't list out the clks
 > that we know are enabled by the bootloader in some new DT binding, e.g.:
@@ -146,6 +137,13 @@ reached for all providers) the clocks get disabled.
 > 		boot-handoff-clocks = <&consumer_device "clock cells for this clk provider">;
 > 	};
 > 
+
+I was under the impression that we have ruled out this approach.
+
+Presumably this list should not be a manually maintained list of display
+clocks, and that means the bootloader would need to go in and  build
+this list of all enabled clocks. I don't think this is practical.
+
 > Then mark those as "critical/don't turn off" all the way up the clk tree
 > when the clk driver probes by essentially incrementing the
 > prepare/enable count but not actually touching the hardware, and when
@@ -154,11 +152,13 @@ reached for all providers) the clocks get disabled.
 > increment the count at all. We can probably stick some flag into the
 > 'struct clk' for this when we create the handle in clk_get() so that the
 > prepare and enable functions can special case and skip over.
-
-Well, that means we need to play whack-a-mole by alsways adding such clocks to
-devicetree.
-
 > 
+
+The benefit of sync_state is that it kicks when the client drivers has
+probed. As such, you can have e.g. the display driver clk_get(), then
+probe defer on some other resource, and the clock state can remain
+untouched.
+
 > The sync_state hook operates on a driver level, which is too large when
 > you consider that a single clk driver may register hundreds of clks that
 > are not related. We want to target a solution at the clk level so that
@@ -168,16 +168,29 @@ devicetree.
 > clk it may work? Technically we already have that by the clk_hw_provider
 > function but there isn't enough information being passed there, like the
 > getting device.
-
-Actually, from the multitude of clocks registered by one provider, the
-ones already explicitely enabled (and obvisously their parents) by thier
-consumer are safe. The only ones we need to worry about are the ones that
-might be enabled by bootloader and need to remain on. With the sync state
-approach, the latter mentioned clocks will either remain on indefinitely
-or will be disabled on sync state. The provider driver is the only level
-that has a registered sync state callback.
-
 > 
+
+The current solution already operates on all clocks of all drivers, that
+happens to be probed at late_initcall(). This patch removes the
+subordinate clause from this, allowing clock drivers and their clients
+to be built as modules.
+
+So while it still operates on all clocks of a driver, it moves that
+point to a later stage, where that is more reasonable to do.
+
+
+
+It would probably (haven't considered all aspects) if sync_state could
+prune the tree gradually, disabling the branches that are fully probed.
+
+But it wouldn't affect Matthias problem; e.g. if you forget to build the
+venus driver, sync_state won't happen for that branch of the tree.
+(Something that is arguably better than leaving all the clocks for that
+driver enabled)
+
+Regards,
+Bjorn
+
 > > diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
 > > index 842e72a5348f..cf1adfeaf257 100644
 > > --- a/include/linux/clk-provider.h
@@ -190,9 +203,6 @@ that has a registered sync state callback.
 > 
 > This is a weird place to put this. Why not in the helper functions
 > section?
-
-Sure this can be moved.
-
 > 
 > >  /**
 > >   * clk_register_divider - register a divider clock with the clock framework
