@@ -2,79 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5256669C827
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 11:01:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF9D569C855
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Feb 2023 11:12:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231411AbjBTKBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Feb 2023 05:01:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33550 "EHLO
+        id S230379AbjBTKMk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Feb 2023 05:12:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231363AbjBTKBf (ORCPT
+        with ESMTP id S230203AbjBTKMk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Feb 2023 05:01:35 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 405891717A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 02:01:31 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id f41so963149lfv.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 02:01:31 -0800 (PST)
+        Mon, 20 Feb 2023 05:12:40 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DB7FCDEA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 02:12:38 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id g23so804625lfv.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 02:12:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vBEZvAjX93RycLXsAWqWLohrTp8jq3ubVbqPFKfLzbc=;
-        b=vUJGmgC/qJ1hDB631DmR499TOBB6+1XRceb2+zwS9CHH6FUACrLqIK3FMomZdvYqHR
-         PAKOjDR/Gd9OqsBlA7xU0ePBWZqlorxMmcLXrn5tlK253e/vUeE71H5XbW1MFnc+s51R
-         TELqrbQwSdeJuNBD4LfJXw9WRI69iRYUN7HnwR2BDxlQL3txXgveqacqPfaZP80T/GTT
-         IHCB1Lf4aIjPYi1anEYs1GdSYE7UQHYVjBGE5jWF7ufLDN1DlK0uYFT5uTB11zrFsJEg
-         aGWsU8469zWvkdmU6cxDcpMdqk78eGnwyie7C2pTxSbFmF0BL4go2fGba5crcMkOyT2O
-         EmrA==
+        bh=yUwOEcP/9DVBcxe0bKGyfVyvNVdmcwpphO5iPjcAR2Y=;
+        b=M8OCDBRQNiFgCz8B++bKSbGyIe/Sc8R3/kF/tjGPKh2+7uvCbrlTkduOD00JHqQbV9
+         FIBj0A73WTq3yJsNIzu1O0eBT9TLbhW3zyn7LRAVUvjYIYimUP9TcKRLky6oGDNO9Y3H
+         lwavTIFxRfhAUZE/gaSmb3um6h/qanP55kyNI+f8Tcr6MwNnOfTXvAUvVO1urZXSxSrX
+         xGvjmObFw2ZdIE6RDQm7DyHjX49ib8WNwOfXKQt30Kuo8VZgg/ltzOdOxbumtDOf/Qv3
+         DGCJ/8WX0EJzKFgEU5dtoUOwx6uAcd8JjOvjz89d3FvCPlL5zPovy8vWUgbO3k7yxCJ7
+         XeIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vBEZvAjX93RycLXsAWqWLohrTp8jq3ubVbqPFKfLzbc=;
-        b=swgj1P/dz1R2NqdVzs66HTC82cJ4rHzhrWvoa9l2tJB7WZjBAAnIQoQ05t7argnzEX
-         XI1fAzdPGLWMKPkj/JAYiEDQH1Sc8L7201R4Cbef1qWSwT7eaTqGlooV7I7KnYbaSEQt
-         wjPCTDtWCVkw//6uFsjFFRjWh9ugp4NVPVexLr4O309RIBm58BT5Mb8u80obGm1UpUKN
-         kUz0/ikR3RIAIzgFY7q/HgiJU+X2f472gFIS5RmiImonEh3X2HjWzx76g+avbXzRHm6l
-         qG1cixAy2yV0zoRl2JkAJYAm3s+LWMWT2OmdU+JfBl34HKncqUyqHJAA2Ge+lMe+ZJTR
-         DMvg==
-X-Gm-Message-State: AO0yUKX5XWbtFmi+zr4qPTBFviYe/1zLOM7gB3Ao483mitVlvSDFpAot
-        aEs1be2KyBanwnE3HvTOGoAtzQ==
-X-Google-Smtp-Source: AK7set/RLED7POxANEjawWCZd9y0DhL7+H+vwPHf4ZhZvIDfUCF8oyOn5KWO/fdxk86dYuLaO/POiw==
-X-Received: by 2002:ac2:48bc:0:b0:4dc:4b70:a723 with SMTP id u28-20020ac248bc000000b004dc4b70a723mr270817lfg.30.1676887289426;
-        Mon, 20 Feb 2023 02:01:29 -0800 (PST)
+        bh=yUwOEcP/9DVBcxe0bKGyfVyvNVdmcwpphO5iPjcAR2Y=;
+        b=MSZ4w2bFE3eYquh3B9TMqLgfnha0gKYFiCaQGRPJImAnmXqjLVgaghUc89kFkJISnr
+         +LmfFuM7enwIFLuhlI28+dXsSqdhs6VTb1QzOVNrNcBgVo8nI72IkocjqYRx76AwZcr8
+         qgyCN9ii1MZgQGHvJyW6r39UBwNGGDxARAfvw/nUuzjAhI3xTkcwWjMa0p12w/lhrmvY
+         +s6fmON+xbJHbfRyRPI1USmimeKqXdLlhApK+2IAGP7KLiuF4AjNoeahGd1Sk8FyMZe7
+         WjA2aZ+MCy9FFj2ofEIrPQqfQUIPIBleVc/TJhl3hMyxyq3vjYiKipwqHWwSrH0XJFzd
+         jqYA==
+X-Gm-Message-State: AO0yUKULehxums2KI6Mzs4u7N2vbV+ztqjh3TR5V8Cvwx/8x8LnpfnHa
+        ve/Ne0Q0K5xiw6k6yTWhfW5V1Q==
+X-Google-Smtp-Source: AK7set9Eb3oSF53U5AMIrSTg/gwDN6c/gEjlLGQp0XUv4sLxp7wlqjIlD5IraSspSok/CSPFUn5Vsg==
+X-Received: by 2002:a19:ae07:0:b0:4cc:b784:c47e with SMTP id f7-20020a19ae07000000b004ccb784c47emr296664lfc.62.1676887956482;
+        Mon, 20 Feb 2023 02:12:36 -0800 (PST)
 Received: from [192.168.1.101] (abxh184.neoplus.adsl.tpnet.pl. [83.9.1.184])
-        by smtp.gmail.com with ESMTPSA id l13-20020a19c20d000000b004b550c26949sm1481452lfc.290.2023.02.20.02.01.28
+        by smtp.gmail.com with ESMTPSA id u15-20020ac24c2f000000b004db4ec844c8sm71941lfq.235.2023.02.20.02.12.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Feb 2023 02:01:29 -0800 (PST)
-Message-ID: <357f475a-e8e2-2e99-5250-0d63578e3b0f@linaro.org>
-Date:   Mon, 20 Feb 2023 11:01:27 +0100
+        Mon, 20 Feb 2023 02:12:36 -0800 (PST)
+Message-ID: <de1ceb35-0b9b-b99d-49f4-f93cc8332032@linaro.org>
+Date:   Mon, 20 Feb 2023 11:12:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc7280-qcard: drop incorrect
- dai-cells from WCD938x SDW
+Subject: Re: [PATCH v2 06/14] drm/msm/gpu: Use dev_pm_opp_set_rate for non-GMU
+ GPUs
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230220095401.64196-1-krzysztof.kozlowski@linaro.org>
- <20230220095401.64196-2-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230220095401.64196-2-krzysztof.kozlowski@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Emma Anholt <emma@anholt.net>, Chia-I Wu <olvaffe@gmail.com>,
+        Dan Carpenter <error27@gmail.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20230214173145.2482651-1-konrad.dybcio@linaro.org>
+ <20230214173145.2482651-7-konrad.dybcio@linaro.org>
+ <2e129fd6-d4e5-a955-5355-3ca71166fb33@linaro.org>
+ <82c84ba4-ca33-3ce0-fe86-efedfce04cda@linaro.org>
+ <170ee26d-8904-0829-f92e-4ea6678b08eb@linaro.org>
+ <cc7a9cce-cd12-0f35-d8f7-933b64bbb34d@linaro.org>
+In-Reply-To: <cc7a9cce-cd12-0f35-d8f7-933b64bbb34d@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,37 +91,140 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 20.02.2023 10:54, Krzysztof Kozlowski wrote:
-> The WCD938x audio codec Soundwire interface part is not a DAI and does
-> not allow sound-dai-cells:
+On 20.02.2023 10:59, Konrad Dybcio wrote:
 > 
->   sc7280-herobrine-crd.dtb: codec@0,4: '#sound-dai-cells' does not match any of the regexes: 'pinctrl-[0-9]+'
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> On 18.02.2023 17:47, Dmitry Baryshkov wrote:
+>> On 18/02/2023 13:04, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 17.02.2023 22:07, Dmitry Baryshkov wrote:
+>>>> On 14/02/2023 19:31, Konrad Dybcio wrote:
+>>>>> Currently we only utilize the OPP table connected to the GPU for
+>>>>> getting (available) frequencies. We do however need to scale the
+>>>>> voltage rail(s) accordingly to ensure that we aren't trying to
+>>>>> run the GPU at 1GHz with a VDD_LOW vote, as that would result in
+>>>>> an otherwise inexplainable hang.
+>>>>>
+>>>>> Tell the OPP framework that we want to scale the "core" clock
+>>>>> and swap out the clk_set_rate to a dev_pm_opp_set_rate in
+>>>>> msm_devfreq_target() to enable usage of required-opps and by
+>>>>> extension proper voltage level/corner scaling.
+>>>>>
+>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>>> ---
+>>>>>    drivers/gpu/drm/msm/adreno/adreno_gpu.c | 4 ++++
+>>>>>    drivers/gpu/drm/msm/msm_gpu_devfreq.c   | 2 +-
+>>>>>    2 files changed, 5 insertions(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>>>> index ce6b76c45b6f..15e405e4f977 100644
+>>>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>>>> @@ -1047,6 +1047,10 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>>>>>        const char *gpu_name;
+>>>>>        u32 speedbin;
+>>>>>    +    /* This can only be done here, or devm_pm_opp_set_supported_hw will WARN_ON() */
+>>>>> +    if (!IS_ERR(devm_clk_get(dev, "core")))
+>>>>> +        devm_pm_opp_set_clkname(dev, "core");
+>>>>
+>>>> Can we instead move a call to a6xx_set_supported_hw() / check_speed_bin after the adreno_gpu_init() ? It will call msm_gpu_init, which in turn sets gpu->core_clk.
+>>>>
+>>>> Ideally you can call devm_pm_opp_set_clkname() from that function.
+>>>
+>>>
+>>>> Or maybe completely drop gpu->core_clk and always use devm_pm_opp_set_clk_rate().
+>>> That would break non-OPP targets, last of which were probably added N=big years ago..
+>>
+>> No. In the lack of OPP tables, dev_pm_opp_clk_set_rate() should behave exactly like the clk_set_rate().
+> Not sure if that's what you meant, but if a device lacks OPP,
+> devm_pm_opp_set_rate will return -ENODEV.
+> 
+> If you meant "if we can't find an opp table, behave as if we
+> called clk_set_rate", a discussion on #freedreno with robclark
+> indicates he'd accept getting rid of non-opp code, provided we
+> construct a table if need be, since we have the data required
+> to do so ([FMIN=27MHz, FMAX=fast_rate]).
+Actually.. that's what happens for gpu-pwrlevels users already..
+Well, use>r<, as apq8064 seems to have been the only user of
+that upstream, ever..
+
+And for A2XX it looks like it just unconditionally selects 200
+MHz..
+
+I think this could be simplified to:
+
+if (opp exists)
+    // use opp
+else if (adreno_is_a2xx)
+    dev_pm_opp_add(dev, 200000000, 0) //device, freq_hz, volt_uV
+else if (adreno_is_a320)
+    dev_pm_opp_add(dev, 450000000, 0)
+else
+    // for now the driver sets 200mhz here, but i don't think
+    // it's reasonable to keep carrying that behavior for >a2xx
+    return -EINVAL
+
+
+And then we can yank out all clk_set_rate calls just like that!
 
 Konrad
->  arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi | 2 --
->  1 file changed, 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-> index cb0cc2ba2fa3..95d9e4a19d76 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-> @@ -419,7 +419,6 @@ &swr0 {
->  	wcd_rx: codec@0,4 {
->  		compatible = "sdw20217010d00";
->  		reg = <0 4>;
-> -		#sound-dai-cells = <1>;
->  		qcom,rx-port-mapping = <1 2 3 4 5>;
->  	};
->  };
-> @@ -428,7 +427,6 @@ &swr1 {
->  	wcd_tx: codec@0,3 {
->  		compatible = "sdw20217010d00";
->  		reg = <0 3>;
-> -		#sound-dai-cells = <1>;
->  		qcom,tx-port-mapping = <1 2 3 4>;
->  	};
->  };
+>>
+>>> I'm not sure these would still work, as I think we've got rid of some ugly
+>>> clock getters that were looking for both "core" and "core_clk" etc.
+>>
+>> We still support core vs core_clk, see the get_clocks() at msm_gpu.c and then msm_clk_bulk_get_clock(). However we might mimick this function and call devm_pm_opp_set_clkname() with the proper name ("core" or "core_clk").
+>>
+>>>
+>>> See 8db0b6c7b636376789e356d861c3c6c35dcb6913 for what seems to be the most recent
+>>> example of non-OPP.
+>>>
+>>> IMX51/53 also have no OPP tables and are using the (AFAIK) now-defunct _clk-suffixed
+>>> clock-names.
+>>
+>> It works, I tested it during this cycle.
+> Oh okay, I had a feeling like that was dropped at one point..
+> 
+>>
+>>>
+>>> I'd be more than happy to rip out some of this legacy code and convert it
+>>> to something modern like OPP, but I'm not sure you guys would like it considering
+>>> the breakage on (arguably ancient and borderline retired) platforms.
+>>
+>> I think, we should try switching to OPP-for-everybody, granted the promise of dev_pm_opp_set_clk_rate() being backwards compatible with bare clk_set_rate().
+> It's not, but as I mentioned, we can easily work around that.
+> 
+>>
+>>>
+>>> This patch as-is "only" breaks non-OPP a5xx & a6xx (as they have .gpu_busy defined),
+>>> of which there are none..
+> ...but we want to get devfreq everywhere and it's a few LoC away..
+> 
+> Konrad
+>>>
+>>>>
+>>>>> +
+>>>>>        adreno_gpu->funcs = funcs;
+>>>>>        adreno_gpu->info = adreno_info(config->rev);
+>>>>>        adreno_gpu->gmem = adreno_gpu->info->gmem;
+>>>>> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+>>>>> index e27dbf12b5e8..ea70c1c32d94 100644
+>>>>> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+>>>>> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+>>>>> @@ -48,7 +48,7 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
+>>>>>            gpu->funcs->gpu_set_freq(gpu, opp, df->suspended);
+>>>>>            mutex_unlock(&df->lock);
+>>>>>        } else {
+>>>>> -        clk_set_rate(gpu->core_clk, *freq);
+>>>>> +        dev_pm_opp_set_rate(dev, *freq);
+>>>>
+>>>> This is not enough, there are calls to clk_set_rate(gpu->core_clk) in msm_gpu.c which are called from the suspend/resume path.
+>>> Right, good catch.
+>>>
+>>> Konrad
+>>>>
+>>>>>        }
+>>>>>          dev_pm_opp_put(opp);
+>>>>
+>>
