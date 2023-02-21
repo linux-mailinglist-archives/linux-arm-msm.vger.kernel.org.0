@@ -2,108 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4485969E111
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 14:09:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 149BD69E16F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 14:37:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233825AbjBUNJj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 08:09:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36494 "EHLO
+        id S233721AbjBUNhW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 08:37:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233826AbjBUNJi (ORCPT
+        with ESMTP id S233732AbjBUNhV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 08:09:38 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C547A2821A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 05:09:35 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id b18so4381819ljr.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 05:09:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vojoAcfUuZFzbZ4NXFeMzemBjeLJC5XF1afZIyyXCcc=;
-        b=BKvymr7g7GtkBXmqCdpf/taKauloWxanij5lD1QUkDuOXbN3q8I7hNjzkWkFm7ja8h
-         Lnv2HREXgop8r40ION5WEA6Zi/+O3RgLnI7/3sfev+alJRvJZ5aMTiCnN61I/jDHorLq
-         odm0eVnkpaDmzp9cLHu1OU2KWZaJe12e39Pnf5N7zQu96Jc11a6nqXWAgmCghuEGfQai
-         ueFL7fttwW+lRhhuD8xLhXGhzrd64LCI3NjqhNh5SjTDrDJYNgGiisTXiAiIxaF2rJVN
-         9M34OhMjzFLkd4ibj6gFxHGYm+v/0fWa/fRsAYYsomY5t70qQVWzyIoHe7AgIYh7+mQl
-         3gNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vojoAcfUuZFzbZ4NXFeMzemBjeLJC5XF1afZIyyXCcc=;
-        b=JKa65uiVsVsUHnZY8M3WoSDQOtzgiNI40RMgf7vp4P04TWPzkzGKC5EnElg4dwc6AN
-         O+u3SPDFbwka50CdFeCJ6N1yhjQrimySOOJHWV9Wt3YIuIdgGxhuL4tR8vYwO6wSRGFe
-         cQ2Nl49CcuUhDb5Rxcko0eP9rSXRaE84uz0SHYTo0REnxKMShy29S354OFz616L25ANS
-         0J2S1VqxgfSMyLtuEO0SecJyOCaT0Ih8UyPxBulNpnW/XwzEUDOJiimFm3MdszqDceuM
-         ZyZA1zP2bIEI6NE1r0tee2uGaOfvFIbvOcXzavrWspi/XHEZJvQ6GdFfAfSrGUOyuLPN
-         3bAg==
-X-Gm-Message-State: AO0yUKXIsvqYVJ3uD00XHqTPwosmBwHzm+b2RTpFvHbqmuUsOmFbRc1m
-        uHi4NxDxOu9AMBI3KOybRZZXig==
-X-Google-Smtp-Source: AK7set/C1Ntt5qOJwBdZyOdjVB+T9JCWwDKooUuf7BcTZANWTJhOWEj0TcTgLQr3gPVK3+7TOeiEZQ==
-X-Received: by 2002:a2e:7c18:0:b0:293:464f:feda with SMTP id x24-20020a2e7c18000000b00293464ffedamr1729099ljc.16.1676984973385;
-        Tue, 21 Feb 2023 05:09:33 -0800 (PST)
-Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
-        by smtp.gmail.com with ESMTPSA id f22-20020a2e6a16000000b0029353201fddsm773835ljc.129.2023.02.21.05.09.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Feb 2023 05:09:33 -0800 (PST)
-Message-ID: <efdd3472-57cf-6022-2cfa-53a2fd86c2f2@linaro.org>
-Date:   Tue, 21 Feb 2023 14:09:31 +0100
+        Tue, 21 Feb 2023 08:37:21 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C0B42941F;
+        Tue, 21 Feb 2023 05:37:15 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31LCaKif005573;
+        Tue, 21 Feb 2023 13:37:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=UOZsiUu8EbtwhYEpEORP2iMUlL26bpa05OjGkvSGBO0=;
+ b=UI5qA6e3FNXZ/W/SVFnpbXFlM0CUjxh7L0EwhvAyYqydD6Q3IFtqfX97EVGzKdSlq2y1
+ pcpI4Wt+SPzRcE2tEsxRRxY3nogWy3QUPuMNR0Mji7Ll4QReVADArQrFRqi5/DSlcCzE
+ Yql2E2XYzKr7LuIiAXCVL4NVTcNFeUZinCY17Aa3NLIjDpd9L+RvMtwNpJfmfauaxDeA
+ oUInR0e8IhujHrMlO/UcBI2s+dvsExLDO2tW6WQ85QtcpqDmhcHMjRlgNeyqmOTq1I6e
+ 3Rt8obDtJhrnxmKDzGojhja0MLmhkGGUlV5+Q2VvptGpih2GAAjM04ePBfTH7xmk84Le Og== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nvw4s07et-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 21 Feb 2023 13:37:11 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31LDbAL8024487
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 21 Feb 2023 13:37:10 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Tue, 21 Feb 2023 05:37:07 -0800
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <elder@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: [PATCH v2 1/2] dt-bindings: sram: qcom,imem: document sm8450
+Date:   Tue, 21 Feb 2023 19:06:55 +0530
+Message-ID: <1676986616-21378-1-git-send-email-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm8250-xiaomi-elish: Correct venus
- firmware path
-To:     Jianhua Lu <lujianhua000@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20230221123633.25145-1-lujianhua000@gmail.com>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230221123633.25145-1-lujianhua000@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: IxrLqEsjh0ZolzYKdp-BRPiaGGxdcK4X
+X-Proofpoint-ORIG-GUID: IxrLqEsjh0ZolzYKdp-BRPiaGGxdcK4X
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-21_08,2023-02-20_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
+ mlxscore=0 lowpriorityscore=0 mlxlogscore=891 clxscore=1015 suspectscore=0
+ bulkscore=0 priorityscore=1501 adultscore=0 phishscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302210116
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add compatible for sm8450 IMEM.
 
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+Changes in v2:
+  - Added Acked-by .
 
-On 21.02.2023 13:36, Jianhua Lu wrote:
-> Missing vendor name for venus firmware path. Add it.
-> 
-> Fixes: a41b617530bf ("arm64: dts: qcom: sm8250: Add device tree for Xiaomi Mi Pad 5 Pro")
-> Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+ Documentation/devicetree/bindings/sram/qcom,imem.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Konrad
->  arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
-> index acaa99c5ff8b..a85d47f7a9e8 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
-> @@ -625,6 +625,6 @@ &ufs_mem_phy {
->  };
->  
->  &venus {
-> -	firmware-name = "qcom/sm8250/elish/venus.mbn";
-> +	firmware-name = "qcom/sm8250/xiaomi/elish/venus.mbn";
->  	status = "okay";
->  };
+diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+index 665c06e..ba694ce 100644
+--- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
++++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+@@ -26,6 +26,7 @@ properties:
+           - qcom,sdm845-imem
+           - qcom,sdx55-imem
+           - qcom,sdx65-imem
++          - qcom,sm8450-imem
+       - const: syscon
+       - const: simple-mfd
+ 
+-- 
+2.7.4
+
