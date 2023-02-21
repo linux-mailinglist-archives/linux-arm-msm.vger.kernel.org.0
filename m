@@ -2,190 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA60A69E834
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 20:25:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3847469E891
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 20:50:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229535AbjBUTZz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 14:25:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44742 "EHLO
+        id S229530AbjBUTus (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 14:50:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229541AbjBUTZy (ORCPT
+        with ESMTP id S229454AbjBUTur (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 14:25:54 -0500
-Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67E302F7BD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 11:25:51 -0800 (PST)
-Received: by mail-vs1-xe35.google.com with SMTP id v3so5511751vse.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 11:25:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1677007550;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qIumhXVptDGaCBlNxNpJonBcbHAUubqeifjNAqK+SpU=;
-        b=UUimMBx65rs4EgYnP4JSdQZpO27fYhKT8ksV+feyk+W0a+e7v4yo9PUJ5gK05wvGqz
-         1xpPPQUc9V9sPuNL/GOm6oL3QSCblAUQqIaGWHGfpL/gmrTc4CoiqwlGquEEIB/Rbac9
-         lb9QLJoGPABu8Z5nralY7l99l8xEm+7T3oPw91AyK0iD68t40Rwwf98tRBXP2+MvmMZT
-         rlk7irZBawdElh0084INE7qUiNOt8ait/mX4VqyQrfcs7pnl6jNRNEgmtRREAZ1Ks2mp
-         qKP1GuVjrjRic9zgDKl7/0lHSnjIPkNDvqlPDraSLlOns276V28YWz9KGpOUpXUOu9tP
-         LSyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677007550;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qIumhXVptDGaCBlNxNpJonBcbHAUubqeifjNAqK+SpU=;
-        b=dwb7ZzTjPMzEItD2CLrs/V+7/pEDfOje9hBfD8H28CimQPRlbnGtGfUlO8iNsUtd7E
-         1UvIBKbzho6OBAZNrJBSPp3gEBKsnxcreKd053701N+F9vi/bljA1iurCPHBl7DqMvyX
-         7oMI5Vuzx/WjVUWNZk5lqsMbn7PLGS3xMYrZqwbhMaEb0NBCm6uYKlkjz6YodMWrJgCW
-         If+oWbVzGxhTreQi/iYSYiny23d4Gss98L4qCwGGGTySrrw8zfdhF1xmGe7LjFhxL/8+
-         cHZaJllxuTzwYm2zmV6iiNnepUjj4oi0CugPXoTjv0sL842XMuqdr8vHepjmXRoTFptt
-         ftnQ==
-X-Gm-Message-State: AO0yUKUCYPq9j3MBZZl+CcRAocM2pk8MYN5tZm94lICzLphaBsK6JcCB
-        53clXx4Wb6xsKq+xzRAaBQUlUErNybz7ZvakYgv8LQ==
-X-Google-Smtp-Source: AK7set+7iHFS/iorUX3sKwtwOxCp5CG/iAxYxwKP+qJHKKmKYSgJ0ayVog03ErDwVkCN6T4iZ+EsshDbaAfP/B7b/w4=
-X-Received: by 2002:a67:e1cc:0:b0:3ea:5896:84b9 with SMTP id
- p12-20020a67e1cc000000b003ea589684b9mr897651vsl.75.1677007550472; Tue, 21 Feb
- 2023 11:25:50 -0800 (PST)
+        Tue, 21 Feb 2023 14:50:47 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DEE22886E;
+        Tue, 21 Feb 2023 11:50:47 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A94D66119B;
+        Tue, 21 Feb 2023 19:50:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0640AC433D2;
+        Tue, 21 Feb 2023 19:50:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1677009046;
+        bh=4pFYujkIIj3nZDzFEzqRviEyB6tqYrIhzxjyaw31c1A=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=btqnOAsdn15Ts55Nxw2aJcJ4iRHC39TSlbwWQLpJjBSkVjxC7xn200fmYaXCKZqUG
+         wFrKuwO1A6wJpI09iFNNWcnfcMyYoEu1oACj99f8pdfxRVNhKiXIHejgqbwkhJFoCf
+         RmGWzUtZ8lxXPwghQ1sviRF5tZbVKwW0krPjGpMmtMXBwsnnzmkNjJbUhLAG+Amm72
+         EHGE4rbGYpKJQv3QUk4mJOXcVF4PcAAxNMRs6YoDOg55NzajefbXowWSSJ5A4ROQ2p
+         +DjUhy0px2vdrEh/T80R1ESRbcEdQCi4JDTz1B97UmlxS38exyG4maVn8kA0v1GE1w
+         UR8+Ih2w8e31A==
+Message-ID: <e62613b331da617d53515998a2c967d1.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20230221150543.283487-1-brgl@bgdev.pl> <20230221150543.283487-3-brgl@bgdev.pl>
- <9a3e9c76-ba70-6ccc-3ade-fa08cdff571e@linaro.org>
-In-Reply-To: <9a3e9c76-ba70-6ccc-3ade-fa08cdff571e@linaro.org>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Tue, 21 Feb 2023 20:25:39 +0100
-Message-ID: <CAMRc=McMGnzz09SG_QaKWNLSyLbR=QbFvfiYgewYMnAeESRgQQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sa8775p: add cpufreq node
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230219045318.564342-1-andersson@kernel.org>
+References: <20230219045318.564342-1-andersson@kernel.org>
+Subject: Re: [GIT PULL] Qualcomm clock driver updates for v6.3
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Robert Marko <robimarko@gmail.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Yang Yingliang <yangyingliang@huawei.com>
+To:     Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org
+Date:   Tue, 21 Feb 2023 11:50:43 -0800
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 21, 2023 at 6:44 PM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
->
->
-> On 21.02.2023 16:05, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > Add a node for the cpufreq engine and specify the frequency domains for
-> > all CPUs.
-> >
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 21 +++++++++++++++++++++
-> >  1 file changed, 21 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> > index ce5976e36aee..5e2bc67b3178 100644
-> > --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> > @@ -37,6 +37,7 @@ CPU0: cpu@0 {
-> >                       compatible = "qcom,kryo";
-> >                       reg = <0x0 0x0>;
-> >                       enable-method = "psci";
-> > +                     qcom,freq-domain = <&cpufreq_hw 0>;
-> >                       next-level-cache = <&L2_0>;
-> >                       L2_0: l2-cache {
-> >                               compatible = "cache";
-> > @@ -52,6 +53,7 @@ CPU1: cpu@100 {
-> >                       compatible = "qcom,kryo";
-> >                       reg = <0x0 0x100>;
-> >                       enable-method = "psci";
-> > +                     qcom,freq-domain = <&cpufreq_hw 0>;
-> >                       next-level-cache = <&L2_1>;
-> >                       L2_1: l2-cache {
-> >                               compatible = "cache";
-> > @@ -64,6 +66,7 @@ CPU2: cpu@200 {
-> >                       compatible = "qcom,kryo";
-> >                       reg = <0x0 0x200>;
-> >                       enable-method = "psci";
-> > +                     qcom,freq-domain = <&cpufreq_hw 0>;
-> >                       next-level-cache = <&L2_2>;
-> >                       L2_2: l2-cache {
-> >                               compatible = "cache";
-> > @@ -76,6 +79,7 @@ CPU3: cpu@300 {
-> >                       compatible = "qcom,kryo";
-> >                       reg = <0x0 0x300>;
-> >                       enable-method = "psci";
-> > +                     qcom,freq-domain = <&cpufreq_hw 0>;
-> >                       next-level-cache = <&L2_3>;
-> >                       L2_3: l2-cache {
-> >                               compatible = "cache";
-> > @@ -88,6 +92,7 @@ CPU4: cpu@10000 {
-> >                       compatible = "qcom,kryo";
-> >                       reg = <0x0 0x10000>;
-> >                       enable-method = "psci";
-> > +                     qcom,freq-domain = <&cpufreq_hw 1>;
-> >                       next-level-cache = <&L2_4>;
-> >                       L2_4: l2-cache {
-> >                               compatible = "cache";
-> > @@ -104,6 +109,7 @@ CPU5: cpu@10100 {
-> >                       compatible = "qcom,kryo";
-> >                       reg = <0x0 0x10100>;
-> >                       enable-method = "psci";
-> > +                     qcom,freq-domain = <&cpufreq_hw 1>;
-> >                       next-level-cache = <&L2_5>;
-> >                       L2_5: l2-cache {
-> >                               compatible = "cache";
-> > @@ -116,6 +122,7 @@ CPU6: cpu@10200 {
-> >                       compatible = "qcom,kryo";
-> >                       reg = <0x0 0x10200>;
-> >                       enable-method = "psci";
-> > +                     qcom,freq-domain = <&cpufreq_hw 1>;
-> >                       next-level-cache = <&L2_6>;
-> >                       L2_6: l2-cache {
-> >                               compatible = "cache";
-> > @@ -128,6 +135,7 @@ CPU7: cpu@10300 {
-> >                       compatible = "qcom,kryo";
-> >                       reg = <0x0 0x10300>;
-> >                       enable-method = "psci";
-> > +                     qcom,freq-domain = <&cpufreq_hw 1>;
-> >                       next-level-cache = <&L2_7>;
-> >                       L2_7: l2-cache {
-> >                               compatible = "cache";
-> > @@ -731,6 +739,19 @@ tcsr_mutex: hwlock@1f40000 {
-> >                       #hwlock-cells = <1>;
-> >               };
-> >
-> > +             cpufreq_hw: cpufreq@18591000 {
-> > +                     compatible = "qcom,sa8775p-cpufreq-epss",
-> > +                                  "qcom,cpufreq-epss";
-> That's some very aggressive wrapping! :P
->
+Quoting Bjorn Andersson (2023-02-18 20:53:18)
+> clk_disable_unused() is altered, to not consider clocks which comes from
+> a provider with sync_state defined. This makes it possible for
+> individual clock drivers to invoke this process once all clients has
+> been probed, avoiding the need for booting many systems with
+> clk_ignore_unused.
+> This is then enabled for SDM845 and SC8280XP clock controllers.
 
-For when all you have is vi on a 80-char wide terminal :D
+This needs to be reverted. I'm not going to pull this until then.
 
-Bartosz
+>=20
+> Support for QDU1000/QRU1000 Global clock controller, SA8775P Global
+> clock controller, SM8550 TCSR and display clock controller, SM6350 clock
+> controller, nd MSM8996 CBF and APCS clock controllers is introduced..
+>=20
+[...]
+>=20
+> Bjorn Andersson (5):
+>       Merge tag '1672656511-1931-1-git-send-email-quic_akhilpo@quicinc.co=
+m' into clk-for-6.3
+>       Merge branch '20230104093450.3150578-2-abel.vesa@linaro.org' into c=
+lk-for-6.3
+>       clk: qcom: Remove need for clk_ignore_unused on sc8280xp
+>       Merge branch '20230103-topic-sm8550-upstream-dispcc-v3-1-8a03d348c5=
+72@linaro.org' into clk-for-6.3
+>       Merge branch '20230112204446.30236-2-quic_molvera@quicinc.com' into=
+ HEAD
 
-> Nevertheless,
->
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->
-> Konrad
-> > +                     reg = <0x0 0x18591000 0x0 0x1000>,
-> > +                           <0x0 0x18593000 0x0 0x1000>;
-> > +                     reg-names = "freq-domain0", "freq-domain1";
-> > +
-> > +                     clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
-> > +                     clock-names = "xo", "alternate";
-> > +
-> > +                     #freq-domain-cells = <1>;
-> > +             };
-> > +
-> >               tlmm: pinctrl@f000000 {
-> >                       compatible = "qcom,sa8775p-tlmm";
-> >                       reg = <0x0 0xf000000 0x0 0x1000000>;
+When you make merges, please describe what they're for and put that in
+the commit text. Also, reword things like 'into HEAD'.
