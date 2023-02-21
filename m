@@ -2,85 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7607669D830
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 02:52:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 196A169D83F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 03:01:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233136AbjBUBw2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Feb 2023 20:52:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39668 "EHLO
+        id S232642AbjBUCBa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Feb 2023 21:01:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233119AbjBUBw0 (ORCPT
+        with ESMTP id S232324AbjBUCB3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Feb 2023 20:52:26 -0500
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2048C23331;
-        Mon, 20 Feb 2023 17:52:23 -0800 (PST)
-Received: by mail-ot1-f51.google.com with SMTP id t7-20020a9d5907000000b00690ecb95d46so700318oth.2;
-        Mon, 20 Feb 2023 17:52:23 -0800 (PST)
+        Mon, 20 Feb 2023 21:01:29 -0500
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D199E1DBA1;
+        Mon, 20 Feb 2023 18:01:28 -0800 (PST)
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-1720600a5f0so3651679fac.11;
+        Mon, 20 Feb 2023 18:01:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Hi1IHeazYYEWx6mNRMLdVVgjAAhBuj7GZD4rymghCng=;
-        b=qVws9iOjZmIh6BQeFeflBguc/z0co8wwUa1Y+lyKrLwDsrzMC2w1rQeaX4fMPFG6Rb
-         fjtOWRcsFizgS2OvWoWFjFsViZOQsUBHZJ+h9gNotoaTi1ul51sg6/sWFEI5f0qvtMFh
-         j/F5fxgehYY2aY0V+lE4FZhWhyJlJR86T4OYVU7vNh8g5o1tIyEKzZscM6FFBE43AZM+
-         hq69M4oeBkXOp/Qffluj/F6+/83rQJe+9A8HvyXDEI+gymH8u1IPBbD4f7IXV7P6xgty
-         KuNoIO+jIg3Xn8SetfrxVvZu3IzMm3LGIHPwCxW4j7JY793tC6OT3Pvq3aX0pORaY9zE
-         YrOg==
-X-Gm-Message-State: AO0yUKWYrdUGMwf/hbVx0DBcksusJuIlPjB7TIEuKiPZJEvAqlC5xJvi
-        2iXlBAHRRSaF6rJDNeWd1w==
-X-Google-Smtp-Source: AK7set+qwMWOprLi/02IwOHP2ZsyMiK2RmjnRFXtdIi9B9/7B4Yyv4jJhDa4+McVoDdW0GmPs/I4gQ==
-X-Received: by 2002:a9d:1d0:0:b0:68b:cc5c:184b with SMTP id e74-20020a9d01d0000000b0068bcc5c184bmr6548517ote.20.1676944342349;
-        Mon, 20 Feb 2023 17:52:22 -0800 (PST)
+        bh=0jYXquKsgZIFAoZjrn3r51f5Nrmgo9YGfeaRxylpkY0=;
+        b=rPLajTMuLAzrMw8uO3UntI9Im6eGJcCXgNWgJ1yjHVnnJMZn0mcsZMHk0M/FbcyvOJ
+         /c12HxH64uCirjIJcAM4QtWyBehr8xO6qSOle6U9BgiUHBXgDMusfibuOodacebOUSDH
+         o1OFgf5yyejX3YavvVdzxfuW3mSS5uRSBCcW9pJO9yCMB1FVqyxTgVx+fe1UhxIe/Yvu
+         oOZOFX7Z+V4PWAUNaz+FYdt7QVMcAFY5iIAwNQMzrPCFglTsLZqtrDaMaIXXoko22rRp
+         lEpPIlxmY0g9Wqz+rH5Nor6BmlX/Rqe171jwgDbOEutNg6o75zp3ndwLaXq9+/OgZehr
+         z4yg==
+X-Gm-Message-State: AO0yUKVaS/sX+XTZXgZSQzReXtC3I+yty0FuGK014y6fYpWhvZVR9t7t
+        hYdi3gCOBM/5IWfPcKUieg==
+X-Google-Smtp-Source: AK7set9d0zjKNMsdi8TCvYfsVpTCo9aao00Vu6+Asj/xnVj0OI/05cUknCxmTm4mIs3fDkKxERnruw==
+X-Received: by 2002:a05:6870:fba9:b0:172:2d00:9a4c with SMTP id kv41-20020a056870fba900b001722d009a4cmr140644oab.34.1676944888035;
+        Mon, 20 Feb 2023 18:01:28 -0800 (PST)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id j2-20020a9d7d82000000b0068bc48c61a5sm5510368otn.19.2023.02.20.17.52.21
+        by smtp.gmail.com with ESMTPSA id i3-20020a056870864300b001631c92e8b6sm4935988oal.4.2023.02.20.18.01.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Feb 2023 17:52:22 -0800 (PST)
-Received: (nullmailer pid 795753 invoked by uid 1000);
-        Tue, 21 Feb 2023 01:52:21 -0000
-Date:   Mon, 20 Feb 2023 19:52:21 -0600
+        Mon, 20 Feb 2023 18:01:27 -0800 (PST)
+Received: (nullmailer pid 810154 invoked by uid 1000);
+        Tue, 21 Feb 2023 02:01:26 -0000
+Date:   Mon, 20 Feb 2023 20:01:26 -0600
 From:   Rob Herring <robh@kernel.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        marijn.suijten@somainline.org, Luca Weiss <luca@z3ntu.xyz>,
-        andersson@kernel.org, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Conor Dooley <conor.dooley@microchip.com>,
-        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        agross@kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: Re: [PATCH 1/2] dt-bindings: arm: Add Cortex-A715 and X3
-Message-ID: <167694429319.794567.8538815545985460688.robh@kernel.org>
-References: <20230216110803.3945747-1-konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, marijn.suijten@somainline.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Gene Chen <gene_chen@richtek.com>, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings usb: typec: rt1711h: Use a generic node
+ name
+Message-ID: <20230221020126.GA797846-robh@kernel.org>
+References: <20230216121211.3964433-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230216110803.3945747-1-konrad.dybcio@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+In-Reply-To: <20230216121211.3964433-1-konrad.dybcio@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Feb 16, 2023 at 01:12:10PM +0100, Konrad Dybcio wrote:
+> Node names should be generic. Use typec-portc@ instead of rt1711h@.
 
-On Thu, 16 Feb 2023 12:08:02 +0100, Konrad Dybcio wrote:
-> Add compatibles for the Cortex-A715 and X3 cores found in some
-> recent flagship designs.
+What's generic? Others use just 'typec' IIRC. We must first define the 
+generic name for everyone, then do this. It doesn't really work defining 
+this in each binding either as there's no checking a generic name is in 
+fact used. We either need a class type schema (which don't work when 
+devices support multiple classes) or a meta-schema checking $nodename 
+patterns match a set of known node names.
+
 > 
+> Fixes: a72095ed8e65 ("dt-bindings usb: typec: rt1711h: Add binding for Richtek RT1711H")
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  Documentation/devicetree/bindings/arm/cpus.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 > 
-
-I took this for v6.3. No need for it to wait.
-
-Rob
+> diff --git a/Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml b/Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml
+> index 1999f614c89b..7431c25d82ce 100644
+> --- a/Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml
+> +++ b/Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml
+> @@ -17,6 +17,9 @@ description: |
+>    support for alternative interfaces of the Type-C specification.
+>  
+>  properties:
+> +  $nodename:
+> +    pattern: "^typec-portc@[0-9a-f]+$"
+> +
+>    compatible:
+>      enum:
+>        - richtek,rt1711h
+> @@ -55,7 +58,7 @@ examples:
+>        #address-cells = <1>;
+>        #size-cells = <0>;
+>  
+> -      rt1711h@4e {
+> +      typec-portc@4e {
+>          compatible = "richtek,rt1711h";
+>          reg = <0x4e>;
+>          interrupts-extended = <&gpio26 3 IRQ_TYPE_LEVEL_LOW>;
+> -- 
+> 2.39.1
+> 
