@@ -2,114 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A360069E7C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 19:43:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55FC069E7CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 19:44:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229712AbjBUSnx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 13:43:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42164 "EHLO
+        id S229529AbjBUSoa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 13:44:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229665AbjBUSnx (ORCPT
+        with ESMTP id S229785AbjBUSo3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 13:43:53 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 432471C5A9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 10:43:52 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31LCZxwk029247;
-        Tue, 21 Feb 2023 18:43:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=hXP+2Cvhs0rn70hfqQHvhD+mbPDIuo4Jll8YwdXXpdM=;
- b=BkXz1xt0wbyvys96ZsflYhnWK6EgSxPJwyUtbgwr3Ut/VeTXiRfGb6xNSpQS2Ot6wwK5
- wXOPne2sbYmrBLwR1M1KCPkKcjzpckZt+ZDZlga2N2MfqzJ6hTmzbjs679NQGMgOUGex
- 6JYEpGTDysB1G/Y1rRajCRqXSrEWy1ZBFmxLQBVT94s1QOqNWZSfZtk0tVzCKUd2tB9F
- 2fJ2xvM0rzTLltuEbnPiMFSqwpslUetFk8OfKyPTGXbcO2Ijec8svZh2J0qqxTlg3D5U
- rcKKmq5wXJWbYG3CBgktCEGMJYaQ8WnjA0XTw6DQjY2Wgd+f2HX1RIzM6uhQp1v1I+94 oA== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nvtmm1d32-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 21 Feb 2023 18:43:47 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31LIhfjt009435
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 21 Feb 2023 18:43:41 GMT
-Received: from JESSZHAN.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Tue, 21 Feb 2023 10:43:40 -0800
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-To:     <freedreno@lists.freedesktop.org>
-CC:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>,
-        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>,
-        <quic_abhinavk@quicinc.com>, <marijn.suijten@somainline.org>
-Subject: [PATCH v4 4/4] drm/msm/mdp4: Remove empty prepare_commit() function
-Date:   Tue, 21 Feb 2023 10:42:56 -0800
-Message-ID: <20230221184256.1436-5-quic_jesszhan@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230221184256.1436-1-quic_jesszhan@quicinc.com>
-References: <20230221184256.1436-1-quic_jesszhan@quicinc.com>
+        Tue, 21 Feb 2023 13:44:29 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B93E220068;
+        Tue, 21 Feb 2023 10:44:24 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 64208B81052;
+        Tue, 21 Feb 2023 18:44:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2049CC433EF;
+        Tue, 21 Feb 2023 18:44:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1677005062;
+        bh=XnLl9WgTt/7cEYyeLY/yPY03O4OnlgByjW82FJCgZWs=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=lpJOaSmfsw8K8OoaOvh7YV2ow3JnO/jNifbkSEaLFDjwcB+y5S02IiYwLus0ei61K
+         6Sc+FoyjEq/gucfPpXX5FxAajP7nuZiic1ZZMKvHjM2VCwshiJT9V2Qb9/iumwt64c
+         Zf8txOmhh+qwbcmK7RIuBIREXM/YWW0xobpbBa4ckuvhPeFYTo+q2as90QGRho65+2
+         WlbRNlpFm7yonSUOnmO8ZQIC/M2h77Ta20vHZD8UzBZrQ4kC96nFeRlLeVpQexgtBf
+         zKPu2jIYQAolt2nl5s5pnRhUM6C66mw2waRbLIWERmYsdv5D8Bjh+sojhGaVzb1ALp
+         BAv1eY0ObbkTg==
+Message-ID: <0cbf23f481ebb50f955001d6e845a165.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: azFY60LOF0qJ6vm67HWphLux4PuHq-CZ
-X-Proofpoint-ORIG-GUID: azFY60LOF0qJ6vm67HWphLux4PuHq-CZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-21_11,2023-02-20_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- priorityscore=1501 impostorscore=0 suspectscore=0 adultscore=0
- clxscore=1015 mlxlogscore=970 mlxscore=0 phishscore=0 lowpriorityscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302210160
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <Y/OV3CF0ootyooDJ@linaro.org>
+References: <20221227204528.1899863-1-abel.vesa@linaro.org> <ebc257025ebd641e624ef506ea09c800.sboyd@kernel.org> <Y/OV3CF0ootyooDJ@linaro.org>
+Subject: Re: [PATCH v3 1/2] clk: Add generic sync_state callback for disabling unused clocks
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, mka@chromium.org,
+        Saravana Kannan <saravanak@google.com>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Date:   Tue, 21 Feb 2023 10:44:19 -0800
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove empty prepare_commit() function from MDP4 driver.
+Quoting Abel Vesa (2023-02-20 07:46:36)
+> On 23-02-17 21:38:22, Stephen Boyd wrote:
+> > Quoting Abel Vesa (2022-12-27 12:45:27)
+> > > There are unused clocks that need to remain untouched by clk_disable_=
+unused,
+> > > and most likely could be disabled later on sync_state. So provide a g=
+eneric
+> > > sync_state callback for the clock providers that register such clocks.
+> > > Then, use the same mechanism as clk_disable_unused from that generic
+> > > callback, but pass the device to make sure only the clocks belonging =
+to
+> > > the current clock provider get disabled, if unused. Also, during the
+> > > default clk_disable_unused, if the driver that registered the clock h=
+as
+> > > the generic clk_sync_state_disable_unused callback set for sync_state,
+> > > skip disabling its clocks.
+> >=20
+> > How does that avoid disabling clks randomly in the clk tree? I'm
+> > concerned about disabling an unused clk in the middle of the tree
+> > because it doesn't have a driver using sync state, while the clk is the
+> > parent of an unused clk that is backed by sync state.
+> >=20
+> >    clk A -->  clk B=20
+> >=20
+> > clk A: No sync state
+> > clk B: sync state
+> >=20
+> > clk B is left on by the bootloader. __clk_disable_unused(NULL) is called
+> > from late init. Imagine clk A is the root of the tree.
+> >=20
+> >       clk_disable_unused_subtree(clk_core A)
+> >         clk_disable_unused_subtree(clk_core B)
+> >           if (from_sync_state && core->dev !=3D dev)
+> >             return;
+> >         ...
+> >         clk core A->ops->disable()
+> >=20
+> > clk core B is off now?
+>=20
+> Yes, that is correct. But the same thing is happening currently if the
+> clk_ignore_unused in not specified.
 
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 5 -----
- 1 file changed, 5 deletions(-)
+The existing code traverses the clk tree in depth-first order, disabling
+clks from the leaves up to the root. This breaks that tree walk. It is
+not the same thing.
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-index 9a1a0769575d..6e37072ed302 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-@@ -84,10 +84,6 @@ static void mdp4_disable_commit(struct msm_kms *kms)
- 	mdp4_disable(mdp4_kms);
- }
- 
--static void mdp4_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *state)
--{
--}
--
- static void mdp4_flush_commit(struct msm_kms *kms, unsigned crtc_mask)
- {
- 	/* TODO */
-@@ -154,7 +150,6 @@ static const struct mdp_kms_funcs kms_funcs = {
- 		.disable_vblank  = mdp4_disable_vblank,
- 		.enable_commit   = mdp4_enable_commit,
- 		.disable_commit  = mdp4_disable_commit,
--		.prepare_commit  = mdp4_prepare_commit,
- 		.flush_commit    = mdp4_flush_commit,
- 		.wait_flush      = mdp4_wait_flush,
- 		.complete_commit = mdp4_complete_commit,
--- 
-2.39.2
+> At least with this new approach, we
+> get to leave unused clocks enabled either until sync_state is called or f=
+orever.
+> All the provider has to do is to implement a sync_state callback (or use
+> the generic one provided). So the provider of clk A would obviously need
+> a sync state callback registered.
 
+Sure.
+
+>=20
+> >=20
+> > Also sync_state seems broken right now. I saw mka mentioned that if you
+> > have a device node enabled in your DT but never enable a driver for it
+> > in the kernel we'll never get sync_state called. This is another
+> > problem, but it concerns me that sync_state would make the unused clk
+> > disabling happen at some random time or not at all.
+>=20
+> Well, the fact that the sync state not being called because a driver for
+> a consumer device doesn't probe does not really mean it is broken. Just
+> because the consumer driver hasn't probed yet, doesn't mean it will
+> not probe later on.
+>=20
+> That aside, rather than going with clk_ignore_unused all the time on
+> qcom platforms, at least in a perfect scenario (where sync state is
+> reached for all providers) the clocks get disabled.
+
+The clks will get disabled in some random order though even if every clk
+provider has sync_state.
+
+>=20
+> >=20
+> > Can the problem be approached more directly? If this is about fixing
+> > continuous splash screen, then I wonder why we can't list out the clks
+> > that we know are enabled by the bootloader in some new DT binding, e.g.:
+> >=20
+> >       clock-controller {
+> >               #clock-cells =3D <1>;
+> >               boot-handoff-clocks =3D <&consumer_device "clock cells fo=
+r this clk provider">;
+> >       };
+> >=20
+> > Then mark those as "critical/don't turn off" all the way up the clk tree
+> > when the clk driver probes by essentially incrementing the
+> > prepare/enable count but not actually touching the hardware, and when
+> > the clks are acquired by clk_get() for that device that's using them
+> > from boot we make the first clk_prepare_enable() do nothing and not
+> > increment the count at all. We can probably stick some flag into the
+> > 'struct clk' for this when we create the handle in clk_get() so that the
+> > prepare and enable functions can special case and skip over.
+>=20
+> Well, that means we need to play whack-a-mole by alsways adding such cloc=
+ks to
+> devicetree.
+
+I don't think the bootloader is constantly changing. Either we want to
+hand off the enable state to devices that are using them from boot, or
+we don't. I doubt that is changing outside of bootloader development
+time.
+
+>=20
+> >=20
+> > The sync_state hook operates on a driver level, which is too large when
+> > you consider that a single clk driver may register hundreds of clks that
+> > are not related. We want to target a solution at the clk level so that
+> > any damage from keeping on all the clks provided by the controller is
+> > limited to just the drivers that aren't probed and ready to handle their
+> > clks. If sync_state could be called whenever a clk consumer consumes a
+> > clk it may work? Technically we already have that by the clk_hw_provider
+> > function but there isn't enough information being passed there, like the
+> > getting device.
+>=20
+> Actually, from the multitude of clocks registered by one provider, the
+> ones already explicitely enabled (and obvisously their parents) by thier
+> consumer are safe. The only ones we need to worry about are the ones that
+> might be enabled by bootloader and need to remain on. With the sync state
+> approach, the latter mentioned clocks will either remain on indefinitely
+> or will be disabled on sync state. The provider driver is the only level
+> that has a registered sync state callback.
+>=20
+
+The driver has sync_state callback, yes. I'm saying that it is too wide
+of a scope to implement disabling unused clks via the sync_state
+callback.
