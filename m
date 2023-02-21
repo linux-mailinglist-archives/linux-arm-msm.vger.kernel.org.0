@@ -2,176 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6F8669DAC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 07:51:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FCAC69DB60
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 08:42:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233328AbjBUGva (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 01:51:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56694 "EHLO
+        id S232613AbjBUHm1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 02:42:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233319AbjBUGv3 (ORCPT
+        with ESMTP id S229697AbjBUHm0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 01:51:29 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B659E23117;
-        Mon, 20 Feb 2023 22:51:27 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31L2atWw029898;
-        Tue, 21 Feb 2023 06:49:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=qcppdkim1;
- bh=rYjT1VPCrDbOXAoWaWzQslbAY+4S4TBlb0O4SpceqL0=;
- b=IgoDGMe3P9ZZWtn9gd+iBVdOmHB1kpUJ+/k7PWXwqVB2vqDli5Lh0svb+NZcn9Pty8it
- 3hUl9bC4A7muYTFd75HNjiNdkJl5Ntkwmrc2nKnr+CqD4vkrYMbeJVljbDWUMFw6xLWs
- C0sQNQBZjxqubFOx9klnIZ4bgobpRRel8CYkN0/o7fST/yKxEweJxlvLwWgnP7vzr0T9
- VcZdQe9siakXAaolPvv/aDA9zL+/yvsthD3KEGsDQdzui65na/PIjsxNxmwATkyO0AWH
- kHLA6aYYOA6vUKdq9Ma3za8K5olrkEVRaMLkQH8b+wv9thiF9b/+wuBJzp5cawzYN2ch Eg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nubb1w08a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 21 Feb 2023 06:49:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31L6nLEv004488
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 21 Feb 2023 06:49:21 GMT
-Received: from nalasex01b.na.qualcomm.com (10.47.209.197) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Mon, 20 Feb 2023 22:49:20 -0800
-Received: from nalasex01b.na.qualcomm.com ([fe80::5e14:2d59:8da8:b152]) by
- nalasex01b.na.qualcomm.com ([fe80::5e14:2d59:8da8:b152%12]) with mapi id
- 15.02.0986.041; Mon, 20 Feb 2023 22:49:20 -0800
-From:   "Tim Jiang (QUIC)" <quic_tjiang@quicinc.com>
-To:     Steev Klimaszewski <steev@kali.org>
-CC:     "johan.hedberg@gmail.com" <johan.hedberg@gmail.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "marcel@holtmann.org" <marcel@holtmann.org>,
-        "mka@chromium.org" <mka@chromium.org>,
-        "Balakrishna Godavarthi (QUIC)" <quic_bgodavar@quicinc.com>,
-        "Harish Bandi (QUIC)" <quic_hbandi@quicinc.com>,
-        "Hemant Gupta (QUIC)" <quic_hemantg@quicinc.com>,
-        "quic_saluvala@quinc.com" <quic_saluvala@quinc.com>
-Subject: RE: [PATCH v2] Bluetooth: hci_qca: Add support for Qualcomm Bluetooth
- SoC QCA2066
-Thread-Topic: [PATCH v2] Bluetooth: hci_qca: Add support for Qualcomm
- Bluetooth SoC QCA2066
-Thread-Index: AQHZQeg+G1wnKRsWA0alDqcMCYIjUK7UG4eAgANTyyCAAf18gP//iffw
-Date:   Tue, 21 Feb 2023 06:49:20 +0000
-Message-ID: <e2026b606ae14ff6a793d45723b13a1e@quicinc.com>
-References: <20230216092236.26720-1-quic_tjiang@quicinc.com>
- <20230218041545.3801-1-steev@kali.org>
- <DM5PR02MB36863752A525F50AC05662B0EDA49@DM5PR02MB3686.namprd02.prod.outlook.com>
- <CAKXuJqigh=5LMei4ym5s4vKCxkMR5vfM++k7Jk7C4Ge-GRVK6A@mail.gmail.com>
-In-Reply-To: <CAKXuJqigh=5LMei4ym5s4vKCxkMR5vfM++k7Jk7C4Ge-GRVK6A@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.253.32.31]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        Tue, 21 Feb 2023 02:42:26 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E706D2725
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 23:42:23 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id k14so3536184lfj.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 23:42:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dKtslRZspt8o3Sccdk1DfcCyRNMlDNOBZp6futbzDZU=;
+        b=OzU53k4iuJB7XmlE5/JWME6X99P804nLzi+IjCtwjWwLQD9ilB+07YGcTbwnhpTMRG
+         HnrSQY86ESKjU0ZrH68wKx38Ez0G72gj4eLc21EeOG9evi4MzLOu6EoJSBFH+1LWUBpJ
+         E/uRcE2zn50nS94S8nGj7Nh5UUPLH4zrFRH04rn5M56AKrI1ZKyFkFkXs91iXSAozdzM
+         adwGq/M+m5rsHnloEnrIPWTu/rVMJBUBoFfQwXbbWmqlqQ7Vz+C3PBEMuVTcHikkuS9T
+         ZGYjU5ofOsJi+o8PQ3QYpwYv1R4TjTRN6YTr3RYomW+DPmbzl527PYnp7tNwANUR0b0X
+         SO8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dKtslRZspt8o3Sccdk1DfcCyRNMlDNOBZp6futbzDZU=;
+        b=3jnw9pgLbqOJkQpP3rqVQBBLf641v7ceS670BL0aQqn7tyhDn+CChEm1ELQy5PLYeZ
+         ISFo94xk5MenDFZhXQ+HsJbMsFTeKI9Z5/ATOJt7yAOeSVRFLtsAP8+CtjHBD93KdzJe
+         GshQwxFnTCoeggxLlF92imfdakoAzKk9y5E12OcFTe7x/o9ylJCO8nzjSlfUGMe9R6kb
+         71VaJhVvnaAeprxWBypbBBLY7ayLfUH15/vtwcK6WX4NOn437uYDw0zWoNLXbAA/mP/x
+         guZRzh1Ijz9V20WmUiHbPvAhte+gxFapaNdZIc8u8vx1RKeuXsTun5nZe6j1qtLEtRZL
+         tjjg==
+X-Gm-Message-State: AO0yUKWrEIsoTsP4Ni9hFQI1Fkn/d6QVnTpr5/UJWbJ0c9DPOzDs5ILt
+        cf/VZ6UGzITgSKHr4r9zjHFm9A==
+X-Google-Smtp-Source: AK7set/Du/SmnkG9npmGl15OvCIHvsDH40L2g0ZWC0y8n5am9lawYOEAyJD33dLc5DUYqF78qBuVQw==
+X-Received: by 2002:a05:6512:66:b0:4a4:7be4:9baf with SMTP id i6-20020a056512006600b004a47be49bafmr1157741lfo.59.1676965342173;
+        Mon, 20 Feb 2023 23:42:22 -0800 (PST)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id b17-20020ac25e91000000b00492c663bba2sm1766909lfq.124.2023.02.20.23.42.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Feb 2023 23:42:21 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Chia-I Wu <olvaffe@gmail.com>
+Subject: [RFC PATCH] drm/msm: tune the devfreq to take into account the load history
+Date:   Tue, 21 Feb 2023 10:42:21 +0300
+Message-Id: <20230221074221.3650442-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: w5dVPHrD6aH24QMkZndHUNlrk_Jp7jTT
-X-Proofpoint-GUID: w5dVPHrD6aH24QMkZndHUNlrk_Jp7jTT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-21_03,2023-02-20_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
- suspectscore=0 adultscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
- mlxlogscore=999 malwarescore=0 priorityscore=1501 mlxscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302210059
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-U3RlZXYgLCBpbmxpbmUgY29tbWVudHMhDQoNCj4gPlRoaXMgcGF0Y2ggYWRkcyBzdXBwb3J0IGZv
-ciBRQ0EyMDY2IGZpcm13YXJlIHBhdGNoIGFuZCBudm0gZG93bmxvYWRpbmcuDQo+DQo+IElzIHRo
-aXMgYWN0dWFsbHkgY29ycmVjdD8gIEkgYXNrIGJlY2F1c2UgaGVyZSBJIGhhdmUgdGhlIFdDTjY4
-NTUgaW4gdGhlIExlbm92byBUaGlua3BhZCBYMTNzLCBhbmQgd2hlbiBhdHRlbXB0aW5nIHRvIHVz
-ZSB0aGlzIGRyaXZlciwgSSBlbmQgdXAgd2l0aCBhIGJvYXJkIGlkIG9mIDA4YywgYW5kIGFjY29y
-ZGluZyB0byB0aGUgZmlybXdhcmUsIHdlIHNob3VsZCBoYXZlIGEgYm9hcmQgaWQgb2YgYjhjLg0K
-Pg0KPiBbVGltXSBjb3JyZWN0LCBJIGRvZXMgbm90IGtub3cgd2hlcmUgeW91IGdldCB0aGUgV0NO
-Njg1NSBmaXJtd2FyZSwgZm9yIG91ciBzaWRlLCB3ZSB3aWxsIHVzZSBkaWZmZXJlbnQgbmFtZSBy
-dWxlIGZvciBhbmRyb2lkIGFuZCBsaW51eCAsIGZvciBhbmRyb2lkICwgd2Ugd2lsbCBhZGQgImIi
-IGluIHRoZSBmcm9udCBvZiBib2FyZCBpZCwgZm9yIGxpbnV4IHdlIHdpbGwgbm90IGFkZCB0aGlz
-IGJpdC4NCg0KU28sIHRoZSBUaGlua3BhZCBYMTNzIGlzLi4uIHdlbGwsIGl0J3MgYSBUaGlua3Bh
-ZCwgYW5kIGl0IGNvbWVzIHdpdGggV2luZG93cy4gIFNvIHRoZSBmaXJtd2FyZSB0aGF0IHdlIGhh
-dmUsIGNvbWVzIGZyb20uLi4uIHRoZW0/IHFjPw0KW1RpbV0geWVhaCAsIGZvciB3b3MgLCBidGZ3
-IG5hbWUgc2VlbXMgYWxzbyB0aGUgc2FtZSB3aXRoIGFuZHJvaWQuIEkgdGhpbmsgY29tZSBmcm9t
-IHFjIA0KSSBob25lc3RseSBkb24ndCBrbm93IHRoZSBwcm92ZW5hbmNlIG9mIGl0LCBqdXN0IHRo
-YXQgSSBncmFiYmVkIHRoZSBmaWxlcyBmcm9tIHRoZSBXaW5kb3dzIHBhcnRpdGlvbjoNCg0KU28s
-IGFsbCBvZiB0aGUgbnZtIHBhdGNoZXMgdGhhdCBhcmUgcHJvdmlkZWQgYnkgdGhlbSB3aXRoIHRo
-ZSB3aW5kb3dzIGRyaXZlciwgYWxsIHN0YXJ0IHdpdGggJ2InLg0KDQo+IEknbSBub3Qgc3VyZSBo
-b3cgdG8gcGhyYXNlIHRoaXMsIGFuZCBqdXN0IHRoaW5raW5nIG91dCBsb3VkIC0gaWYgdGhlIHFj
-YTIwNjYgaXMgdGhlIHNhbWUgYXMgdGhlIHdjbjY4NTUsIGp1c3Qgd2l0aCBhbiBhZGRpdGlvbmFs
-IGFudGVubmEsIHBlcmhhcHMgdGhlcmUgc2hvdWxkIGJlIHNvbWUgd2F5IHRvIGluZGljYXRlIGl0
-PyAgSW4gbXkgcGF0Y2hzZXQsIEkgaGFkIGEgcHJpbnQgb2YgdGhlIG5hbWUgIlNldHRpbmcgdXAg
-d2NuNjg1NSIgYW5kIGxvY2FsbHksIEkgY29tYmluZWQgeW91ciBwYXRjaCB3aXRoIG1pbmUsIGFs
-dGhvdWdoIGRyb3BwaW5nIHRoZSBhYm92ZSBxY2EyMDY2IGh1bmtzIGluIGZhdm9yIG9mIG15IGFs
-cmVhZHkgd3JpdHRlbiB3Y242ODU1IGh1bmtzLCBhbmQgdGhlbiBjb21iaW5lZCB0aGUgdHdvIGlu
-IHRoZSBwcmludCBzbyBpdCBzYXlzICJTZXR0aW5nIHVwIHFjYTIwNjYvd2NuNjg1NSIgLSBpcyB0
-aGVyZSBhbnkgd2F5IHRvIGRpZmZlcmVudGlhdGUgYmV0d2VlbiB3aGF0IHF0aSBjb25zaWRlcnMg
-YSBxY2EyMDY2IGFuZCB3aGF0IGlzIGNvbnNpZGVyZWQgdGhlIHdjbjY4NTU/DQo+IFtUaW1dIHN0
-ZXZlICxhcyBJIG1lbnRpb25lZCBwcmV2aW91c2x5LCB3ZSBoYXZlIGRpZmZlcmVudCBib2FyZCBp
-ZCAgZm9yIHFjYTIwNjYgYW5kIHdjbjY4NTUgLCBhbmQgdGhlbiB3aGljaCB3aWxsIHVzZSBkaWZm
-ZXJlbnQgbnZtIGNvbmZpZyBmaWxlcyBiYXNlZCBvbiBib2FyZCBpZC4NCj4NCkkgZ2V0IHRoYXQ7
-IEknbSB0aGlua2luZyBvZiBlbmQgdXNlcnMsIHdobyBtYXkga25vdyB0aGF0IHRoZXkgaGF2ZSBh
-IHdjbjY4NTUsIGJ1dCBpZiB0aGUgbWVzc2FnZXMgYXJlIHFjYTIwNjYsIHRoZXkgbWF5IG5vdCB1
-bmRlcnN0YW5kIHRoYXQgaXQncyB0aGUgc2FtZSBjaGlwLg0KW1RpbV0gSSBzZWUsICB3Y242ODU1
-IGFuZCBxY2EyMDY2IGlzIGJlbG9uZyB0byAiaHNwIiBidGNoaXAgZmFtaWx5ICwgc28gbWF5YmUg
-d2UgY2FuIHVzZSAiaHNwIiB0byBpbnN0ZWFkLg0KDQo+IEJlbG93IGlzIGRtZXNnIG91dHB1dCwg
-YW5kIHNvIGlmIHdlIGdvIGJ5IHRoZSB3aWZpIGRldmljZSBjaGVjaywgd2UgDQo+IGVuZCB1cCBz
-ZWVpbmcgdGhhdCB3ZSBnZXQNCj4NCj4gY2hpcF9pZCAweDINCj4gY2hpcF9mYW1pbHkgMHhiDQo+
-IGJvYXJkX2lkIDB4OGMNCj4gc29jX2lkIDB4NDAwYzAyMTANCj4NCj4NCj4gQnV0IHdpdGggeW91
-ciBkcml2ZXIgKG1pbmUgdG9vIGZvciB0aGF0IG1hdHRlciwgYnV0IHRoZW4gaXQncyBqdXN0IGRv
-aW5nIHRoZSBzYW1lIGJpZCBiaXRzKS4uLg0KPg0KPiBbICAgIDkuMDgxMDAzXSBCbHVldG9vdGg6
-IGhjaTA6IEZyYW1lIHJlYXNzZW1ibHkgZmFpbGVkICgtODQpDQo+IFsgICAgOS4xNDE5OTJdIEJs
-dWV0b290aDogaGNpMDogUUNBIFByb2R1Y3QgSUQgICA6MHgwMDAwMDAxMw0KPiBbICAgIDkuMTQx
-OTk5XSBCbHVldG9vdGg6IGhjaTA6IFFDQSBTT0MgVmVyc2lvbiAgOjB4NDAwYzAyMTANCj4gWyAg
-ICA5LjE0MjAwM10gQmx1ZXRvb3RoOiBoY2kwOiBRQ0EgUk9NIFZlcnNpb24gIDoweDAwMDAwMjAx
-DQo+IFsgICAgOS4xNDIwMDddIEJsdWV0b290aDogaGNpMDogUUNBIFBhdGNoIFZlcnNpb246MHgw
-MDAwMzhlNg0KPiBbICAgIDkuMTcwNjEyXSBCbHVldG9vdGg6IGhjaTA6IFFDQSBjb250cm9sbGVy
-IHZlcnNpb24gMHgwMjEwMDIwMQ0KPiBbICAgIDkuMTcwNjIwXSBCbHVldG9vdGg6IGhjaTA6IFFD
-QSBEb3dubG9hZGluZyBxY2EvaHBidGZ3MjEudGx2DQo+DQo+DQo+IFsgICAgOS43NjA1MzddIEJs
-dWV0b290aDogaGNpMDogUUNBIGJvYXJkIElEIGxlbiAyLGlkID0gMCA4Yw0KPiBbICAgIDkuNzYw
-NTQ3XSBCbHVldG9vdGg6IGhjaTA6IFFDQSBEb3dubG9hZGluZyBxY2EvaHBudjIxLjA4Yw0KPiBb
-ICAgIDkuNzYwNjM4XSBibHVldG9vdGggaGNpMDogRGlyZWN0IGZpcm13YXJlIGxvYWQgZm9yIHFj
-YS9ocG52MjEuMDhjIGZhaWxlZCB3aXRoIGVycm9yIC0yDQo+IFsgICAgOS43NjA2NDBdIEJsdWV0
-b290aDogaGNpMDogUUNBIEZhaWxlZCB0byByZXF1ZXN0IGZpbGU6IHFjYS9ocG52MjEuMDhjICgt
-MikNCj4gWyAgICA5Ljc2MDY0M10gQmx1ZXRvb3RoOiBoY2kwOiBRQ0EgRmFpbGVkIHRvIGRvd25s
-b2FkIE5WTSAoLTIpDQo+DQo+IElzIHRoZXJlIGFub3RoZXIgd2F5IHRvIGNoZWNrIHRoZSBib2Fy
-ZCBpZCBvciBib2FyZCBmYW1pbHk/ICBCZWNhdXNlIGl0J3Mgbm90IGNvbWluZyB1cCB3aXRoIHRo
-ZSBjb3JyZWN0IG9uZSBoZXJlLg0KPiBbVGltXSBhcyBteSBjb21tZW50cyBhYm92ZSwgdGhlIHJl
-YWQgYm9hcmQgaWQgd2F5IGlzIGNvcnJlY3QsIG9ubHkgd2UgaGF2ZSBkaWZmZXJlbnQgbmFtZSBy
-dWxlIGZvciBhbmRyb2lkIGFuZCBsaW51eCAuDQoNClJpZ2h0LCBJIGdldCB0aGF0IHJlYWRpbmcg
-dGhlIGJvYXJkIGlkIGlzIHRoZSByaWdodCB3YXkgLSBhbmQgaWYgeW91IHNlZSBpbiBteSBXaW5k
-b3dzIGZpcm13YXJlIGFib3ZlICh0aGUgZmlybXdhcmUgc3VibWl0dGVkIHRvIGxpbnV4LWZpcm13
-YXJlIGJ5IHlvdSBvbmx5IHNlZW1zIHRvIGhhdmUgbnZtIHBhdGNoZXMgdGhhdCBzdGFydCB3aXRo
-ICczJywgYW5kIG5vIG90aGVycy4uKSAgSSdtIHNheWluZywgc2hvdWxkIHdlIGFsc28gcmVhZCB0
-aGUgY2hpcF9mYW1pbHkgc29tZWhvdywgc2luY2UgdGhlIFdpRmkgZmlybXdhcmUgc2VlbXMgdG8g
-cHJvcGVybHkgbm90aWNlIHRoYXQgd2UgYXJlIGNoaXBfZmFtaWx5IDB4YiwgaG93ZXZlciwgdGhl
-IGJsdWV0b290aCBkcml2ZXIganVzdCByZXR1cm5zICcwJy4gIEFuZCBuZWl0aGVyIHRoZSBzdWJt
-aXR0ZWQgZmlybXdhcmUsIG5vciB0aGUgZmlybXdhcmUgdGhhdCBMZW5vdm8vUXVhbGNvbW0gc2hp
-cCB0byBXaW5kb3dzIHVzZXJzLCBoYXZlIG52bSBwYXRjaGVzIHRoYXQgc3RhcnQgd2l0aCAwLg0K
-DQpbVGltXSAgd2UgZGV0ZWN0IHRoZSBjaGlwX2ZhbWlseSBieSBkZXRlY3QgcHJvZHVjdF9pZCBh
-bmQgc29jX2lkICwgc3VjaCBhcyBmb3IgImhzcCIgY2hpcCBmYW1pbHksIGlmIHByb2R1Y3QgaWQg
-ZXF1YWwgMHgxMyAsYW5kIHNvY19pZCAmIDB4ZmZmZjAwMDAgPT0gMHg0MDBjICwgd2UgYXNzdW1l
-IHRoaXMgY2hpcCBpcyAiaHNwIi4gWW91IGNhbiByZWZlciB0aGUgbG9nIGFzIGFib3ZlLg0KDQpB
-biBhZGRpdGlvbmFsIG5vdGUsIG5laXRoZXIgbXkgZHJpdmVyLCBub3IgeW91cnMsIHNlZW1zIHRv
-IHdvcmsgd2l0aCBCTEUuICBJIGNhbm5vdCBjb25uZWN0IGEgcGFpciBvZiBBaXJQb2RzIHRvIG15
-IFRoaW5rcGFkIGluIExpbnV4LCBidXQgSSBhbSBhYmxlIHRvIGRvIGp1c3QgZmluZSBpbiB0aGUg
-V2luZG93cyBpbnN0YWxsYXRpb24uICBJJ20gbm90IHN1cmUgaWYgdGhpcyBpcyBhIGtub3duIGxp
-bWl0YXRpb24gYWxyZWFkeSBpbiBsaW51eCBvciBub3QuDQpbVGltXSBJIGFtIG5vdCBzdXJlLCBt
-YXliZSBoYXZlIElPVCBpc3N1ZSwgbmVlZCB0byBjaGVjayBpdCBjYXNlIGJ5IGNhc2UuDQoNCj4N
-Cj4gLS1zdGVldg0K
+Partially restore the handling of the GPU load history. Accumulate the
+busy_time and and total_time measured in active state during the polling
+period. This results in slightly smoother picture of the GPU frequencies
+(measured on the a530/msm8996, using kmscube in different resolutions).
+
+A call to msm_devfreq_get_dev_status() from msm_devfreq_active() was
+removed in 69f06a5d854f ("drm/msm: remove explicit devfreq status
+reset"), because dev_pm_qos_update_request() triggered that internally.
+As the commit fadcc3ab1302 ("drm/msm/gpu: Bypass PM QoS constraint for
+idle clamp") removed the calls to dev_pm_qos_update_request(), this
+removal was also reverted.
+
+The code doesn't take the frequency into account while accumulating the
+data to keep the code simple for the RFC.
+
+Cc: Chia-I Wu <olvaffe@gmail.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/msm_gpu.h         |  3 +++
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c | 30 ++++++++++++++++++++++++++-
+ 2 files changed, 32 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index fc1c0d8611a8..9d1783375dcc 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -156,6 +156,9 @@ struct msm_gpu_devfreq {
+ 
+ 	/** suspended: tracks if we're suspended */
+ 	bool suspended;
++
++	/* stats for the current period */
++	struct devfreq_dev_status status;
+ };
+ 
+ struct msm_gpu {
+diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+index e27dbf12b5e8..92cb022c8628 100644
+--- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
++++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+@@ -74,7 +74,7 @@ static unsigned long get_freq(struct msm_gpu *gpu)
+ 	return clk_get_rate(gpu->core_clk);
+ }
+ 
+-static int msm_devfreq_get_dev_status(struct device *dev,
++static int msm_devfreq_get_dev_status_int(struct device *dev,
+ 		struct devfreq_dev_status *status)
+ {
+ 	struct msm_gpu *gpu = dev_to_gpu(dev);
+@@ -112,6 +112,22 @@ static int msm_devfreq_get_dev_status(struct device *dev,
+ 	return 0;
+ }
+ 
++static int msm_devfreq_get_dev_status(struct device *dev,
++		struct devfreq_dev_status *status)
++{
++	struct msm_gpu *gpu = dev_to_gpu(dev);
++	struct msm_gpu_devfreq *df = &gpu->devfreq;
++
++	msm_devfreq_get_dev_status_int(&gpu->pdev->dev, status);
++	status->busy_time += df->status.busy_time;
++	status->total_time += df->status.total_time;
++
++	df->status.busy_time = 0;
++	df->status.total_time = 0;
++
++	return 0;
++}
++
+ static int msm_devfreq_get_cur_freq(struct device *dev, unsigned long *freq)
+ {
+ 	*freq = get_freq(dev_to_gpu(dev));
+@@ -290,6 +306,7 @@ void msm_devfreq_active(struct msm_gpu *gpu)
+ 	struct msm_gpu_devfreq *df = &gpu->devfreq;
+ 	unsigned int idle_time;
+ 	unsigned long target_freq;
++	struct devfreq_dev_status status;
+ 
+ 	if (!has_devfreq(gpu))
+ 		return;
+@@ -319,6 +336,12 @@ void msm_devfreq_active(struct msm_gpu *gpu)
+ 	if (target_freq)
+ 		msm_devfreq_target(&gpu->pdev->dev, &target_freq, 0);
+ 
++	/*
++	 * Reset the polling interval so we aren't inconsistent
++	 * about freq vs busy/total cycles
++	 */
++	msm_devfreq_get_dev_status_int(&gpu->pdev->dev, &status);
++
+ 	mutex_unlock(&df->devfreq->lock);
+ 
+ 	/*
+@@ -339,6 +362,7 @@ static void msm_devfreq_idle_work(struct kthread_work *work)
+ 	struct msm_gpu *gpu = container_of(df, struct msm_gpu, devfreq);
+ 	struct msm_drm_private *priv = gpu->dev->dev_private;
+ 	unsigned long idle_freq, target_freq = 0;
++	struct devfreq_dev_status status;
+ 
+ 	/*
+ 	 * Hold devfreq lock to synchronize with get_dev_status()/
+@@ -346,6 +370,10 @@ static void msm_devfreq_idle_work(struct kthread_work *work)
+ 	 */
+ 	mutex_lock(&df->devfreq->lock);
+ 
++	msm_devfreq_get_dev_status_int(&gpu->pdev->dev, &status);
++	df->status.busy_time += status.busy_time;
++	df->status.total_time += status.total_time;
++
+ 	idle_freq = get_freq(gpu);
+ 
+ 	if (priv->gpu_clamp_to_idle)
+-- 
+2.30.2
+
