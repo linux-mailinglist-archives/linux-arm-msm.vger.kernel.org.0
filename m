@@ -2,82 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3355569E302
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 16:04:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 417DB69E307
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 16:05:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234123AbjBUPEc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 10:04:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57198 "EHLO
+        id S234361AbjBUPFy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 10:05:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234229AbjBUPEb (ORCPT
+        with ESMTP id S234229AbjBUPFy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 10:04:31 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C86840C8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 07:04:16 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id o38-20020a05600c512600b003e8320d1c11so509980wms.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 07:04:16 -0800 (PST)
+        Tue, 21 Feb 2023 10:05:54 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06CFC4EC4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 07:05:52 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id p3-20020a05600c358300b003e206711347so3296146wmq.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 07:05:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=bAq207T94jtZhbpF3lRvOqHj2pHQuyZzVY6gA66JNkE=;
-        b=q0eVCbQXIk9t1X1GrLGWms73J569cIe7ZmehOayvIlQ7hWqA2q3gTyPGRyvHm0kov+
-         emjJVckUO1fwnOwNy/qWDqwH8bQALCcHsfGb5uDs3GnbAttX6Mxe+bDvpoobEXk+vrEv
-         CL0xG01pkr5oCbavuJI+zjTC6j696+43CKjPltOo1VRaW4aTWFPwxihWdK2ZhsNCcyBx
-         +6O7OQ2R/2qVvttHq0I9HdhQRB9dOIrBT5jwpVpMskhvQG8feMvzRQVABaRHHc+JKKHd
-         IZgcEcMBMnV2ryIiLcrbt+EuewniFE91f+nSsPpqenTypPX/LrFpwtFsoZ+WA8JOkpCy
-         MFFQ==
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HDtAjKV2duI8aK39M5yuWp8bTPWDmPz63VxbaKpJyaU=;
+        b=mxPXxnRgZbP4sgi3fRh1A+8DfgE14IuMc+uQhc3HfBC6JvkSQEK9MyWyjSOk70uOJC
+         3YUppkPlJl2b7kmXkN0te4IMeuQn0L6y7a16uQB1teNNDjeQE7syu2ORY99hIEt0Fgj/
+         M8sPx66WsTYdF6v2ikIRMJbt99h92qPQEZ0Gj1VUcnS5UydtdQ1mT5uPBjfORdxjqbQF
+         uct4vuP/zYDnTpohSZTugLb1etyOzuTKLDWJ07bRKd1LaokdOTH+lHN9c/fBbDyJoDWI
+         r+pWjUkOk4wdr9fg0xXB7r6QI4Aib8eSJ8pneX6MrUITfTwg4OjaZAZ60UpMG9uhBvaD
+         zYqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bAq207T94jtZhbpF3lRvOqHj2pHQuyZzVY6gA66JNkE=;
-        b=3O15M4mT0PNjVKgc7gp46xbxNSr5T+5wvgSvTuuSjMGbl770gtE+pCGhI+pWtZAQmg
-         Xyg6wPV6QCk8F7wzNiFjEzyxjCGjEhSyseL5K2CDI5DXUc3Q2aSUgTquPxZJdQmyDE/o
-         yU7aFM92Ba1u5UqV+zP36kMoo54dK0vVptS/776ce9AEygAZaiK9LgJ1dW3ltUZYmYCc
-         vQkmT4AwcuyyOCsuisUMrt2+mdJgBY1FRKO3Qhjb8cQqQS/Gb9mwZYZTD9LOYIIgmXq+
-         +lJ5WknImpfNEdO4q6ZrU0LDwy12Oga80WJC2SCkmLb44f8CfkEi+jBSPg2CJWOT5/0k
-         bjoA==
-X-Gm-Message-State: AO0yUKXdlsRx//wMvpovUO8iUSerFnvUFqG4bkc02f1JZNsTryWKaBPC
-        qhyviKHY6axhLAOxNZp22RThSanAYig=
-X-Google-Smtp-Source: AK7set+hjqcF8UJox49KaqvKClclsJX+wta3t//cXD4XVNZab2uGitOY567g/j/k+RCzmSp90f0Baw==
-X-Received: by 2002:a05:600c:74a:b0:3db:262a:8ef with SMTP id j10-20020a05600c074a00b003db262a08efmr9449939wmn.38.1676991854939;
-        Tue, 21 Feb 2023 07:04:14 -0800 (PST)
-Received: from DESKTOP-L1U6HLH ([39.42.138.70])
-        by smtp.gmail.com with ESMTPSA id o10-20020a1c750a000000b003e7c89b3514sm1970976wmc.23.2023.02.21.07.04.14
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
-        Tue, 21 Feb 2023 07:04:14 -0800 (PST)
-Message-ID: <63f4dd6e.1c0a0220.7793c.5bdf@mx.google.com>
-Date:   Tue, 21 Feb 2023 07:04:14 -0800 (PST)
-X-Google-Original-Date: 21 Feb 2023 10:04:15 -0500
+        bh=HDtAjKV2duI8aK39M5yuWp8bTPWDmPz63VxbaKpJyaU=;
+        b=n7LiHgktN/vsjyfxib3uCAiaXkRnjFHXOUYPOeG7SC1bac7F0ApvsXsw2gSXR6OJq4
+         lkcM8Id/ahxfOnSsTwqygVH0ZF076U7BzjRjCjjYVcbIVLgsNGAR9Vsz8h0tSu4m3FP3
+         R5INzfS39bNKkQRZU+FuAeUsIa6h75bTyQ+p/Z9BVWCk1uPo2UPn9Vcp0fuhvc9Du9at
+         Rsdq2AT8QP/GsnBcLao3JFbPrH40Llr6q+inxKpB1DzZRpJxTbOMFuqXhionW7ZmZ67s
+         DQdAXWIxe+/TqHUo58HEWfFoNbRB28HYowd0HIPPcONlyoKSf/NEpNH9fHoAsmgZ12QY
+         U1rA==
+X-Gm-Message-State: AO0yUKUUtbxke9n5NwNFVzRomv0t8ZxXUDE+rkx99x5QVpviyJER6Gkr
+        2Y2WJ3SjUyurQ+hzzWlRQIPyLg==
+X-Google-Smtp-Source: AK7set+T90fi3mhrfQgkbcCGizsm63S6+3QdA6P15+Pm2WdZCuRMEGRomXni96sDgrifOTCwGEGj3g==
+X-Received: by 2002:a05:600c:600a:b0:3e1:e149:b67b with SMTP id az10-20020a05600c600a00b003e1e149b67bmr4736506wmb.18.1676991950469;
+        Tue, 21 Feb 2023 07:05:50 -0800 (PST)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:4c24:722f:312a:76c4])
+        by smtp.gmail.com with ESMTPSA id n30-20020a05600c3b9e00b003e206cc7237sm5331687wms.24.2023.02.21.07.05.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Feb 2023 07:05:50 -0800 (PST)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+To:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 0/2] arm64: qcom: sa8775p: enable cpufreq
+Date:   Tue, 21 Feb 2023 16:05:41 +0100
+Message-Id: <20230221150543.283487-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-From:   leo.dreamlandestimation@gmail.com
-To:     linux-arm-msm@vger.kernel.org
-Subject: Building Estimates
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_20,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,=0D=0A=0D=0AIn case you really want take-offs for a developmen=
-t project, we ought to be your consultancy of decision. Reach out=
- to us assuming that you have any undertakings for departure whic=
-h could utilize our administrations.=0D=0A=0D=0ASend over the pla=
-ns and notice the exact extent of work you need us to assess.=0D=0A=
-We will hit you up with a statement on our administration charges=
- and turnaround time.=0D=0AIn case you endorse that individual st=
-atement then we will continue further with the gauge.=0D=0A=0D=0A=
-For a superior comprehension of our work, go ahead and ask us que=
-stions .=0D=0A=0D=0AKind Regards=0D=0ALeo Burgess	=0D=0ADreamland=
- Estimation, LLC
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+
+Add the new compatible for the cpufreq engine on the sa8775p SoC and
+enable it in the .dtsi.
+
+Bartosz Golaszewski (2):
+  dt-bindings: cpufreq: qcom-hw: add a compatible for sa8775p
+  arm64: dts: qcom: sa8775p: add cpufreq node
+
+ .../bindings/cpufreq/cpufreq-qcom-hw.yaml     |  1 +
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 21 +++++++++++++++++++
+ 2 files changed, 22 insertions(+)
+
+-- 
+2.37.2
 
