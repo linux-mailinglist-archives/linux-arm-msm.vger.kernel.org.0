@@ -2,58 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F33A969E38C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 16:35:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 48ED069E3CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 16:43:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234052AbjBUPfN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 10:35:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57156 "EHLO
+        id S234347AbjBUPnm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 10:43:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234527AbjBUPfL (ORCPT
+        with ESMTP id S234726AbjBUPne (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 10:35:11 -0500
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB56128848;
-        Tue, 21 Feb 2023 07:35:09 -0800 (PST)
-Received: by mail-ot1-f52.google.com with SMTP id t7-20020a9d5907000000b00690ecb95d46so1004153oth.2;
-        Tue, 21 Feb 2023 07:35:09 -0800 (PST)
+        Tue, 21 Feb 2023 10:43:34 -0500
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED6097AB4;
+        Tue, 21 Feb 2023 07:43:33 -0800 (PST)
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-1720ea61e29so5570885fac.12;
+        Tue, 21 Feb 2023 07:43:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=W1ol6n8KiK81clbhIizUnjR9mgA3r+k3AJ/gUsCsOrU=;
-        b=seHfsPJtBtkWGKkD4bclhm9B2qdpY3n/59gje3cTxr2+AwXSWsFnWvuLcsh20iR0b1
-         UG1cKTkTQsZL3i5c/7kOtcU9stE+9qZI4SOOaIVeX9MDiWRhJm09u3ZLFSI5jrO729io
-         jlZyrWb5etAYMvJCRi0RPJCVp4kKKtvzWHK0U6JM3wnPpQc8ddBPmvo6gI3t0SSviGMY
-         2rhWxxOb7v4mmihamKG1ReltRsyL227My9gHdYPg7XHg9plH5i100siCFEeSo47T/P+A
-         X/moFuU2mKoCg1eY7+EGURp1ARMqf9UBkjWG3FB5JrHnhtnG0QqJS3UgQQPLy2DZG7GE
-         sMmg==
-X-Gm-Message-State: AO0yUKW0epFs/+UeIIEgT8tuY830GEwKPIcpK6fwSetBowKYohiCZ5E7
-        /29ExsGLgZTUhGIMreFXzi5HOiMDFg==
-X-Google-Smtp-Source: AK7set+pBSRFlVEy/A1a21lw8ttuMeCVASSm8SLedmylfmZTZ2YQAv6uLda0VPwfPVhinMQ7Gai/CQ==
-X-Received: by 2002:a05:6830:349a:b0:68b:e391:324d with SMTP id c26-20020a056830349a00b0068be391324dmr8290256otu.0.1676993708960;
-        Tue, 21 Feb 2023 07:35:08 -0800 (PST)
+        bh=A+9xiI3UVlHjuS+MWpZRmcoMLLLOXy9JHT1NR0U/EA8=;
+        b=JI210hJ1Em2BFNs/Z32ePnjaQx29Fr+oFu6J52J5FoB97PWh9MqpHrcIg/pXlPlY7h
+         q5c0JDg+KVf4sf82P7uwg042yeIUuozfXi8iajtF6eYly2v68ik8t+qamVtc/142ls5T
+         gRHRabi/a8iGJ+gbuERTP7Ui//FVGuwryq0Xv3OhcLyO5zqS0CQd+KaDSL0GdCaD/5AH
+         I00C2rX76DhBmwMRoy9FJhCYivE7MrRUAx2O1Xj4jCQyf/cUfNbvPwYbrjAjzmVWgjAC
+         2QlTmq25tn2RhQWJLIZfvVCXm8Nor0fmAfryfp9zak+smOQzkJoIscurIqoW74xHdVO8
+         BtUQ==
+X-Gm-Message-State: AO0yUKWkkcTYIRCoVc753BI5u5VXogLC9LH68vpajlcdjmV7tHj1sufI
+        LIaAwiNpuTSGu9MW1sskDg==
+X-Google-Smtp-Source: AK7set/LnRQPKKczNGO0zyZKysK6CC7kRbjgoTB9aYV1CEanHCh9l+x0tND5tFhKDd5DdzhFHHSegw==
+X-Received: by 2002:a05:6870:b620:b0:163:58e8:77e5 with SMTP id cm32-20020a056870b62000b0016358e877e5mr8734321oab.52.1676994213173;
+        Tue, 21 Feb 2023 07:43:33 -0800 (PST)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id t13-20020a9d728d000000b0067781a9292asm254944otj.2.2023.02.21.07.35.00
+        by smtp.gmail.com with ESMTPSA id z6-20020a05687042c600b0014866eb34cesm5304619oah.48.2023.02.21.07.43.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Feb 2023 07:35:02 -0800 (PST)
-Received: (nullmailer pid 2577237 invoked by uid 1000);
-        Tue, 21 Feb 2023 15:35:00 -0000
-Date:   Tue, 21 Feb 2023 09:35:00 -0600
+        Tue, 21 Feb 2023 07:43:32 -0800 (PST)
+Received: (nullmailer pid 2589941 invoked by uid 1000);
+        Tue, 21 Feb 2023 15:43:31 -0000
+Date:   Tue, 21 Feb 2023 09:43:31 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-Cc:     krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
-        agross@kernel.org, elder@linaro.org, konrad.dybcio@linaro.org,
-        andersson@kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, robh+dt@kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: sram: qcom,imem: document sm8450
-Message-ID: <167699369715.2577137.10776654438962526300.robh@kernel.org>
-References: <1676986616-21378-1-git-send-email-quic_mojha@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        alsa-devel@alsa-project.org
+Subject: Re: [PATCH 1/2] ASoC: dt-bindings: qcom,wcd934x: Reference dai-common
+Message-ID: <167699421150.2589878.754040795776366251.robh@kernel.org>
+References: <20230220095643.64898-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1676986616-21378-1-git-send-email-quic_mojha@quicinc.com>
+In-Reply-To: <20230220095643.64898-1-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
@@ -66,18 +72,15 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Tue, 21 Feb 2023 19:06:55 +0530, Mukesh Ojha wrote:
-> Add compatible for sm8450 IMEM.
+On Mon, 20 Feb 2023 10:56:42 +0100, Krzysztof Kozlowski wrote:
+> Reference common DAI properties to get sound-dai-cells description and
+> allow name-prefix.
 > 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
-> Changes in v2:
->   - Added Acked-by .
-> 
->  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 1 +
+>  Documentation/devicetree/bindings/sound/qcom,wcd934x.yaml | 1 +
 >  1 file changed, 1 insertion(+)
 > 
 
-Applied, thanks!
+Acked-by: Rob Herring <robh@kernel.org>
 
