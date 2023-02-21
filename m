@@ -2,99 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC56469E085
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 13:36:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 43A7969E09B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 13:44:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233719AbjBUMgv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 07:36:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34332 "EHLO
+        id S234782AbjBUMo2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 07:44:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232317AbjBUMgu (ORCPT
+        with ESMTP id S234786AbjBUMo1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 07:36:50 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8B1C233D1;
-        Tue, 21 Feb 2023 04:36:49 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id g14so4690610pjb.2;
-        Tue, 21 Feb 2023 04:36:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5L3dF0JAJgBcduePLIvYCGmEEesF6lNT+h6CRgkwaQo=;
-        b=h/tOHFqk90X4NN1IPLfzidjqDpYazUZbvc7olKGdQb0DrlHH3KDj/GfgQbKuBpe5ZM
-         aHpFX1mwNg7ggmf34CFyOZgTXzmVAS8XrrIcCQQV4laUeg3Fkt2JGCiFI50QWYvbwgty
-         pA1lX/F47AN6VQ0qWZkX3MRD4xyc9SB5WqO/QyaA1bOkI/mdpo3F+L4ACEyGAlDtGySX
-         WoaPiDwvRr/7kpn1TVEfag0fPrvg/jhevaJJQg/R2KCAZ8xInewaZj/eOEbYImy0vcCr
-         Tea0w/LrQbgr2MBJKIM7cr96W4Q/lTZZQ/dU1MSVwqWNU7rg9NpB0h1n+BMoQI5Ax5xp
-         2UtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5L3dF0JAJgBcduePLIvYCGmEEesF6lNT+h6CRgkwaQo=;
-        b=LraeIrcq+RhXT+bDVhEQS58bJyyjIdzDJKU8JtaBoleQzdyyYFUHZYBf/TC7yYFkpS
-         Ow992IfsLYr0FZridNpSONfQgWc8InOhqTfDJE3lgvAhXTzk95MHnmrOsk7W48IhtCOw
-         mp/KGfMHh+VYrOiok3U4eIvTIX6oSez+ESzAUxV7hoQAM9A1bScHZWxXJ3ftCXCyS4/i
-         U1NAG+oz8iIsgCyZTO0s5botHZF1yBGMwE5WtquBTyuz/ngr2momecVEOr1+z+Fj8rwQ
-         s0WTIymZmZiIam5+/YrgQtlk/OR7Vunq0tWJPx251BcDrXQ/AINGbs0XvKK61OcLAVVR
-         ii8Q==
-X-Gm-Message-State: AO0yUKV3JQ9XS+gsVp/cXnPYCx8eae5ah82HzCoVZo8N5gfWYyhsXBGf
-        AjGMnRyo05q0QNkmXuGeSuyhXyiSbGf/zg==
-X-Google-Smtp-Source: AK7set929D4rdR6a3m0KR51+bCeLnOUOt0c95DWoOQbQcmYKwxoUEPNln6hcTz7Aw/ppGEy0brIzwQ==
-X-Received: by 2002:a17:902:d4ca:b0:19a:9880:175f with SMTP id o10-20020a170902d4ca00b0019a9880175fmr6088717plg.51.1676983009033;
-        Tue, 21 Feb 2023 04:36:49 -0800 (PST)
-Received: from localhost.localdomain (n220246252084.netvigator.com. [220.246.252.84])
-        by smtp.gmail.com with ESMTPSA id jd7-20020a170903260700b00194a297cb8esm9822879plb.191.2023.02.21.04.36.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Feb 2023 04:36:48 -0800 (PST)
-From:   Jianhua Lu <lujianhua000@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
+        Tue, 21 Feb 2023 07:44:27 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F06662685E;
+        Tue, 21 Feb 2023 04:44:24 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31L6sKh8015495;
+        Tue, 21 Feb 2023 12:44:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : reply-to : references : mime-version :
+ content-type : in-reply-to; s=qcppdkim1;
+ bh=ZI8D5K709Bj5PQ8gtOgpfiSKxnJV6eRTY/NXPIqUoRI=;
+ b=KrJHg0V1vYg1lS5aa4pf2m4uHK0/5Ma9nEJJHo+TAX9+IClJEcq1JWDZIgxmO+5hmtxx
+ gxrfPlguhYIc2siG7cY1sn6259HqEQsfh1H/fLy2cZlK6dAbwH4TQPn6QZNPqyfEMwoH
+ ku9Aa1HvF8ylSLKNv85FnTp6VpNF+WquLMR4Fl+IMNFfCj++EhiyAYXEC7oWQpWIg7/7
+ 18OzX/aqraNx2kLHl2YK4zNvR2fyj16V9tyxQKWOrEwMStUC1liDWtrra9pYkR3MT2x4
+ otNixMqdhGpeJP/PtSnH036zuGnbl0bryDtr4ay4L3AkCvgbQxmGC2Jz0T0rhBwD2Ecq Og== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nvprgs2j6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 21 Feb 2023 12:44:07 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31LCi6Vx024049
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 21 Feb 2023 12:44:06 GMT
+Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 21 Feb
+ 2023 04:43:59 -0800
+Date:   Tue, 21 Feb 2023 18:13:55 +0530
+From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+CC:     Elliot Berman <quic_eberman@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Jianhua Lu <lujianhua000@gmail.com>
-Subject: [PATCH] arm64: dts: qcom: sm8250-xiaomi-elish: Correct venus firmware path
-Date:   Tue, 21 Feb 2023 20:36:33 +0800
-Message-Id: <20230221123633.25145-1-lujianhua000@gmail.com>
-X-Mailer: git-send-email 2.39.2
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH v10 12/26] gunyah: vm_mgr: Add/remove user memory regions
+Message-ID: <20230221124355.GA1437176@quicinc.com>
+Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
+ <20230214212417.3315422-1-quic_eberman@quicinc.com>
+ <db397198-d079-faa5-691f-c4b06822d2f3@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+In-Reply-To: <db397198-d079-faa5-691f-c4b06822d2f3@linaro.org>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: QiGmVfkHlvR8lgLkQ7NFZOeUOPGU4RRv
+X-Proofpoint-ORIG-GUID: QiGmVfkHlvR8lgLkQ7NFZOeUOPGU4RRv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-21_06,2023-02-20_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ mlxlogscore=390 lowpriorityscore=0 spamscore=0 priorityscore=1501
+ impostorscore=0 adultscore=0 phishscore=0 mlxscore=0 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302210107
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Missing vendor name for venus firmware path. Add it.
+* Srinivas Kandagatla <srinivas.kandagatla@linaro.org> [2023-02-21 12:28:53]:
 
-Fixes: a41b617530bf ("arm64: dts: qcom: sm8250: Add device tree for Xiaomi Mi Pad 5 Pro")
-Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
----
- arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> > +void gh_vm_mem_reclaim(struct gh_vm *ghvm, struct gh_vm_mem *mapping)
+> > +	__must_hold(&ghvm->mm_lock)
+> > +{
+> > +	int i, ret = 0;
+> > +
+> > +	if (mapping->parcel.mem_handle != GH_MEM_HANDLE_INVAL) {
+> > +		ret = gh_rm_mem_reclaim(ghvm->rm, &mapping->parcel);
+> > +		if (ret)
+> > +			pr_warn("Failed to reclaim memory parcel for label %d: %d\n",
+> > +				mapping->parcel.label, ret);
+> 
+> what the behavoir of hypervisor if we failed to reclaim the pages?
+> 
+> > +	}
+> > +
+> > +	if (!ret)
+> So we will leave the user pages pinned if hypervisor call fails, but further
+> down we free the mapping all together.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
-index acaa99c5ff8b..a85d47f7a9e8 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
-@@ -625,6 +625,6 @@ &ufs_mem_phy {
- };
- 
- &venus {
--	firmware-name = "qcom/sm8250/elish/venus.mbn";
-+	firmware-name = "qcom/sm8250/xiaomi/elish/venus.mbn";
- 	status = "okay";
- };
--- 
-2.39.2
+I think we should cleanup and bail out here, rather than try continuing past the
+error. For ex: imagine userspace were to reclaim with VM still running. We would
+leave the pages pinned AFAICS (even after VM terminates later) and also not
+return any error to userspace indicating failure to reclaim.
 
