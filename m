@@ -2,271 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DCBF569E2BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 15:55:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E2F669E2FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 16:03:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234116AbjBUOze (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 09:55:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46338 "EHLO
+        id S234631AbjBUPDg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 10:03:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233750AbjBUOzc (ORCPT
+        with ESMTP id S234123AbjBUPDf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 09:55:32 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75F882916A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 06:55:31 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id j2-20020a05600c1c0200b003e1e754657aso3821136wms.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 06:55:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8+KKLNS9ycU8bUHQDhhmWrpDSiK3F39vekEqnfNDvzk=;
-        b=FiZav6HZ941r0qmUfFkY/27g1t6280/yp9qgZBEb0QaJwqv2BGSMTxhvzLdnDnOaDZ
-         M+ltLYpkXjrM50VIJQ+AQf18C6Kz6LjZkJoqo0aOENslh6eoiFzrdOPHH+6tsmf1YDfN
-         PQqJ4x8/9/UvQLzCY2vdbAMEvFHU8YCjht9eFnWrzIvswjW5/0+0EE2YQu9W3/fNX+eR
-         OXd5f0y1IoQhJp5kkMJiwzbgouUsgN0FxHoc3xRTzSYWsPYpJYA5bHEhNkPcV/DrisP3
-         1gDQJhcb3B+MkI+YvefWhji2VulE4tBW3455tHZocdIC1b2ISSOVYFoSyn5o8+NOLNmv
-         E5ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8+KKLNS9ycU8bUHQDhhmWrpDSiK3F39vekEqnfNDvzk=;
-        b=tDd3aG8tGE72SHjAdkAclMjDdGqB9mqbnSCRhOt76Wu74irAInX/3Gndw5ujjsKgdZ
-         VvansLEpE89vwVRZeFt1gzHXxlemMROo1zWRwQAlLJvreJ1hD2Vu1GUO7yVLBOF74nSR
-         THoRA+3T4XHLuMw3vNrBd8chttJmG+PAVq3XS2KvsCktscPGVzHFN1GgqPg+JZB5YMD0
-         2Z7f3cOhkQT4QPEv5ud5DXWh7U2PiLuWgtJk4HaEHCF60RCudqSUPWbj7C4erFtW1hGW
-         mjH4KUsE9yi0up2P2i+YOrxGxcocoF2++dVqzhI2oQ6CIMkPgwshpO1PxhsMKAsyx3Sl
-         BfbQ==
-X-Gm-Message-State: AO0yUKXFWkzgaMYQfBiJSxPpBPR/oJpuRpyQENBQ4T3HkKrxMsc1epQn
-        6E5o0KKJ7gqQjOUmblOiwusFJg==
-X-Google-Smtp-Source: AK7set9Ad86INkNtADXbvxyunm3B2VebhN8+bcplkMAQslqdZWghkZaya9+2AdQqEuG6i9K2C+ER0Q==
-X-Received: by 2002:a05:600c:4393:b0:3e2:8f1:7684 with SMTP id e19-20020a05600c439300b003e208f17684mr3074361wmn.33.1676991329905;
-        Tue, 21 Feb 2023 06:55:29 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id z20-20020a7bc7d4000000b003daf6e3bc2fsm4718883wmk.1.2023.02.21.06.55.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Feb 2023 06:55:29 -0800 (PST)
-Message-ID: <e6832902-a48a-039e-0227-9a165109d660@linaro.org>
-Date:   Tue, 21 Feb 2023 14:55:28 +0000
+        Tue, 21 Feb 2023 10:03:35 -0500
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4356F2118;
+        Tue, 21 Feb 2023 07:03:15 -0800 (PST)
+Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
+        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1pUUAi-0002sD-Ml; Tue, 21 Feb 2023 16:03:12 +0100
+Message-ID: <9a0bfef8-0b5d-f4d0-a8a5-4bbcacc5c0fb@leemhuis.info>
+Date:   Tue, 21 Feb 2023 16:03:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v10 16/26] firmware: qcom_scm: Register Gunyah platform
- ops
-Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Alex Elder <elder@linaro.org>, Andy Gross <agross@kernel.org>,
+ Thunderbird/102.7.2
+Subject: Re: [PATCH] Revert "venus: firmware: Correct non-pix start and end
+ addresses"
+Content-Language: en-US, de-DE
+From:   Thorsten Leemhuis <regressions@leemhuis.info>
+To:     Vikash Garodia <vgarodia@qti.qualcomm.com>
+Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "mka@chromium.org" <mka@chromium.org>,
+        Albert Esteve <aesteve@redhat.com>,
+        "stanimir.varbanov@linaro.org" <stanimir.varbanov@linaro.org>,
+        Enric Balletbo i Serra <eballetb@redhat.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212457.3319814-1-quic_eberman@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230214212457.3319814-1-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        Fritz Koenig <frkoenig@google.com>,
+        "Dikshita Agarwal (QUIC)" <quic_dikshita@quicinc.com>,
+        "Rajeshwar Kurapaty (QUIC)" <quic_rkurapat@quicinc.com>,
+        Javier Martinez Canillas <javierm@redhat.com>,
+        Linux regressions mailing list <regressions@lists.linux.dev>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
+References: <20230207102254.1446461-1-javierm@redhat.com>
+ <DM8PR02MB8169809493BF2822E6C29EECF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
+ <ef09bc9f-d570-be11-238b-bd34063917fc@redhat.com>
+ <70c01751-1dd7-c4bd-a96e-94dea437aa40@redhat.com>
+ <DM8PR02MB81696369DBFE619E43F81EEFF3DE9@DM8PR02MB8169.namprd02.prod.outlook.com>
+ <e87344c6-acef-7f3f-5cac-24961dbd9401@redhat.com>
+ <6f97a117-0d9c-e21b-9adf-50f2233ba9e3@leemhuis.info>
+ <ea283f0a-ca72-447e-ce87-68c1bbee793e@leemhuis.info>
+ <CAFOAJEdBbzqkGVqw+vgNYNxyaTHwvjFyskTwjycP820L2tOctA@mail.gmail.com>
+ <b548da46-bf91-6f1c-4b63-4002109056bc@leemhuis.info>
+In-Reply-To: <b548da46-bf91-6f1c-4b63-4002109056bc@leemhuis.info>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1676991795;fc75e8d9;
+X-HE-SMSGID: 1pUUAi-0002sD-Ml
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 14/02/2023 21:24, Elliot Berman wrote:
+On 15.02.23 14:18, Linux regression tracking (Thorsten Leemhuis) wrote:
+> On 15.02.23 11:57, Javier Martinez Canillas wrote:
+>> On Wed, Feb 15, 2023 at 11:53 AM Linux regression tracking (Thorsten
+>> Leemhuis) <regressions@leemhuis.info> wrote:
+>>> On 11.02.23 15:27, Linux regression tracking (Thorsten Leemhuis) wrote:
+>>>> On 10.02.23 11:07, Javier Martinez Canillas wrote:
+>>>>> On 2/10/23 10:22, Vikash Garodia wrote:
+>>>>>
+>>>>>>> So what should we do about this folks? Since not allowing the driver to probe on
+>>>>>>> at least SC7180 is a quite serious regression, can we revert for now until a proper
+>>>>>>> fix is figured out?
+>>>>>> I am able to repro this issue on sc7180 and discussing with firmware team on the cause
+>>>>>> of reset failure. The original patch was raised for fixing rare SMMU faults during warm
+>>>>>> boot of video hardware. Hence looking to understand the regressing part before we
+>>>>>> proceed to revert.
+>>>>> Great, if you are working on a proper fix then that would be much better indeed.
+>>>> Yeah, that's great, but OTOH: there is almost certainly just one week
+>>>> before 6.2 will be released. Ideally this should be fixed by then.
+>>>> Vikash, do you think that's in the cards? If not: why not revert this
+>>>> now to make sure 6.2 works fine?
+>>> Hmm, no reply. And we meanwhile have Wednesday and 6.2 is almost
+>>> certainly going to be out on Sunday. And the problem was called "a quite
+>>> serious regression" above. So why not quickly fix this with the revert,
+>>> as proposed earlier?
+>>> Vikash? Javier?
+>>
+>> I agree with you, that we should land this revert and then properly
+>> fix the page fault issue in v6.3.
+>>
+>> But it's not my call, the v4l2/media folks have to decide that.
 > 
-> Qualcomm platforms have a firmware entity which performs access control
-> to physical pages. Dynamically started Gunyah virtual machines use the
-> QCOM_SCM_RM_MANAGED_VMID for access. Linux thus needs to assign access
-> to the memory used by guest VMs. Gunyah doesn't do this operation for us
-> since it is the current VM (typically VMID_HLOS) delegating the access
-> and not Gunyah itself. Use the Gunyah platform ops to achieve this so
-> that only Qualcomm platforms attempt to make the needed SCM calls.
+> In that case: Mauro, what's your opinion here?
 > 
-> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->   drivers/firmware/Kconfig    |   2 +
->   drivers/firmware/qcom_scm.c | 100 ++++++++++++++++++++++++++++++++++++
->   2 files changed, 102 insertions(+)
+> Thread starts here:
+> https://lore.kernel.org/lkml/20230207102254.1446461-1-javierm@redhat.com/
 > 
-> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-> index b59e3041fd62..b888068ff6f2 100644
-> --- a/drivers/firmware/Kconfig
-> +++ b/drivers/firmware/Kconfig
-> @@ -214,6 +214,8 @@ config MTK_ADSP_IPC
->   
->   config QCOM_SCM
->   	tristate
-> +	select VIRT_DRIVERS
-> +	select GUNYAH_PLATFORM_HOOKS
+> Regression report:
+> https://lore.kernel.org/lkml/Y9LSMap%2BjRxbtpC8@google.com/
 
-This is really making all the Qualcomm platforms either with Gunyah and 
-non-Gunyah hypervisors to enable VIRT_DRIVERS and GUNYAH_PLATFORM_HOOKS 
-in there kernel builds, that is not right way to do this.
+No reply from Mauro and Linus chose to not apply the revert I pointed
+him to. That at this point leads to the question:
 
-SCM is used as library so lets keep it that way, I have added some 
-comments on platform hooks patch and potential way I see that this can 
-be done without making SCM aware of GUNAYAH internals.
+Vikash, did you or somebody else make any progress to fix this properly?
 
---srini
->   
->   config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
->   	bool "Qualcomm download mode enabled by default"
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 468d4d5ab550..875040982b48 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -20,6 +20,7 @@
->   #include <linux/clk.h>
->   #include <linux/reset-controller.h>
->   #include <linux/arm-smccc.h>
-> +#include <linux/gunyah_rsc_mgr.h>
->   
->   #include "qcom_scm.h"
->   
-> @@ -30,6 +31,9 @@ module_param(download_mode, bool, 0);
->   #define SCM_HAS_IFACE_CLK	BIT(1)
->   #define SCM_HAS_BUS_CLK		BIT(2)
->   
-> +#define QCOM_SCM_RM_MANAGED_VMID	0x3A
-> +#define QCOM_SCM_MAX_MANAGED_VMID	0x3F
-> +
->   struct qcom_scm {
->   	struct device *dev;
->   	struct clk *core_clk;
-> @@ -1297,6 +1301,99 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
->   }
->   EXPORT_SYMBOL(qcom_scm_lmh_dcvsh);
->   
-> +static int qcom_scm_gh_rm_pre_mem_share(struct gh_rm *rm, struct gh_rm_mem_parcel *mem_parcel)
-> +{
-> +	struct qcom_scm_vmperm *new_perms;
-> +	u64 src, src_cpy;
-> +	int ret = 0, i, n;
-> +	u16 vmid;
-> +
-> +	new_perms = kcalloc(mem_parcel->n_acl_entries, sizeof(*new_perms), GFP_KERNEL);
-> +	if (!new_perms)
-> +		return -ENOMEM;
-> +
-> +	for (n = 0; n < mem_parcel->n_acl_entries; n++) {
-> +		vmid = le16_to_cpu(mem_parcel->acl_entries[n].vmid);
-> +		if (vmid <= QCOM_SCM_MAX_MANAGED_VMID)
-> +			new_perms[n].vmid = vmid;
-> +		else
-> +			new_perms[n].vmid = QCOM_SCM_RM_MANAGED_VMID;
-> +		if (mem_parcel->acl_entries[n].perms & GH_RM_ACL_X)
-> +			new_perms[n].perm |= QCOM_SCM_PERM_EXEC;
-> +		if (mem_parcel->acl_entries[n].perms & GH_RM_ACL_W)
-> +			new_perms[n].perm |= QCOM_SCM_PERM_WRITE;
-> +		if (mem_parcel->acl_entries[n].perms & GH_RM_ACL_R)
-> +			new_perms[n].perm |= QCOM_SCM_PERM_READ;
-> +	}
-> +
-> +	src = (1ull << QCOM_SCM_VMID_HLOS);
-> +
-> +	for (i = 0; i < mem_parcel->n_mem_entries; i++) {
-> +		src_cpy = src;
-> +		ret = qcom_scm_assign_mem(le64_to_cpu(mem_parcel->mem_entries[i].ipa_base),
-> +						le64_to_cpu(mem_parcel->mem_entries[i].size),
-> +						&src_cpy, new_perms, mem_parcel->n_acl_entries);
-> +		if (ret) {
-> +			src = 0;
-> +			for (n = 0; n < mem_parcel->n_acl_entries; n++) {
-> +				vmid = le16_to_cpu(mem_parcel->acl_entries[n].vmid);
-> +				if (vmid <= QCOM_SCM_MAX_MANAGED_VMID)
-> +					src |= (1ull << vmid);
-> +				else
-> +					src |= (1ull << QCOM_SCM_RM_MANAGED_VMID);
-> +			}
-> +
-> +			new_perms[0].vmid = QCOM_SCM_VMID_HLOS;
-> +
-> +			for (i--; i >= 0; i--) {
-> +				src_cpy = src;
-> +				WARN_ON_ONCE(qcom_scm_assign_mem(
-> +						le64_to_cpu(mem_parcel->mem_entries[i].ipa_base),
-> +						le64_to_cpu(mem_parcel->mem_entries[i].size),
-> +						&src_cpy, new_perms, 1));
-> +			}
-> +			break;
-> +		}
-> +	}
-> +
-> +	kfree(new_perms);
-> +	return ret;
-> +}
-> +
-> +static int qcom_scm_gh_rm_post_mem_reclaim(struct gh_rm *rm, struct gh_rm_mem_parcel *mem_parcel)
-> +{
-> +	struct qcom_scm_vmperm new_perms;
-> +	u64 src = 0, src_cpy;
-> +	int ret = 0, i, n;
-> +	u16 vmid;
-> +
-> +	new_perms.vmid = QCOM_SCM_VMID_HLOS;
-> +	new_perms.perm = QCOM_SCM_PERM_EXEC | QCOM_SCM_PERM_WRITE | QCOM_SCM_PERM_READ;
-> +
-> +	for (n = 0; n < mem_parcel->n_acl_entries; n++) {
-> +		vmid = le16_to_cpu(mem_parcel->acl_entries[n].vmid);
-> +		if (vmid <= QCOM_SCM_MAX_MANAGED_VMID)
-> +			src |= (1ull << vmid);
-> +		else
-> +			src |= (1ull << QCOM_SCM_RM_MANAGED_VMID);
-> +	}
-> +
-> +	for (i = 0; i < mem_parcel->n_mem_entries; i++) {
-> +		src_cpy = src;
-> +		ret = qcom_scm_assign_mem(le64_to_cpu(mem_parcel->mem_entries[i].ipa_base),
-> +						le64_to_cpu(mem_parcel->mem_entries[i].size),
-> +						&src_cpy, &new_perms, 1);
-> +		WARN_ON_ONCE(ret);
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static struct gunyah_rm_platform_ops qcom_scm_gh_rm_platform_ops = {
-> +	.pre_mem_share = qcom_scm_gh_rm_pre_mem_share,
-> +	.post_mem_reclaim = qcom_scm_gh_rm_post_mem_reclaim,
-> +};
-> +
->   static int qcom_scm_find_dload_address(struct device *dev, u64 *addr)
->   {
->   	struct device_node *tcsr;
-> @@ -1500,6 +1597,9 @@ static int qcom_scm_probe(struct platform_device *pdev)
->   	if (download_mode)
->   		qcom_scm_set_download_mode(true);
->   
-> +	if (devm_gh_rm_register_platform_ops(&pdev->dev, &qcom_scm_gh_rm_platform_ops))
-> +		dev_warn(__scm->dev, "Gunyah RM platform ops were already registered\n");
-> +
->   	return 0;
->   }
->   
+Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
+--
+Everything you wanna know about Linux kernel regression tracking:
+https://linux-regtracking.leemhuis.info/about/#tldr
+If I did something stupid, please tell me, as explained on that page.
+
+#regzbot poke
