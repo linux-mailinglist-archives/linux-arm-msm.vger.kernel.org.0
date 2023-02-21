@@ -2,189 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FCAC69DB60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 08:42:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4031B69DB73
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 08:50:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232613AbjBUHm1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 02:42:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39270 "EHLO
+        id S233484AbjBUHuy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 02:50:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229697AbjBUHm0 (ORCPT
+        with ESMTP id S233407AbjBUHuw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 02:42:26 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E706D2725
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 23:42:23 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id k14so3536184lfj.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 23:42:23 -0800 (PST)
+        Tue, 21 Feb 2023 02:50:52 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66AC91D901
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 23:50:50 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id p8so3505285wrt.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 23:50:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dKtslRZspt8o3Sccdk1DfcCyRNMlDNOBZp6futbzDZU=;
-        b=OzU53k4iuJB7XmlE5/JWME6X99P804nLzi+IjCtwjWwLQD9ilB+07YGcTbwnhpTMRG
-         HnrSQY86ESKjU0ZrH68wKx38Ez0G72gj4eLc21EeOG9evi4MzLOu6EoJSBFH+1LWUBpJ
-         E/uRcE2zn50nS94S8nGj7Nh5UUPLH4zrFRH04rn5M56AKrI1ZKyFkFkXs91iXSAozdzM
-         adwGq/M+m5rsHnloEnrIPWTu/rVMJBUBoFfQwXbbWmqlqQ7Vz+C3PBEMuVTcHikkuS9T
-         ZGYjU5ofOsJi+o8PQ3QYpwYv1R4TjTRN6YTr3RYomW+DPmbzl527PYnp7tNwANUR0b0X
-         SO8A==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Hjfg64gDGO7h14TEC4RS/AXyVKIdDfjATSF2lUKEAMk=;
+        b=MnJqfF8saYIdGPGzzEZegsn2Vhtv4zmyjBE0K3UA2uzL9Pd5fyWiDkZf0nqrhUxBAA
+         T+AISA+Sl3+s7/EcuvPHrI42jRxu7ag3EwRMMbfPDyx54fepvx8ILyc/79eyW2PMf0p7
+         PRIcqJv0DXCGnHaN0lLKfqu8+Ex1X34vNF4vH+Y89l39JDcHFQ8Ojvh9z+XkEYhxIQv9
+         4xhWxDJtpQ624+jpMntoSPNgOIWiiXBZ48UpYETNNCL7wawrCBjF7UIhudtt7ZwHLtJS
+         /1SwzmbJfWZJE0/SXaiL8YRltkcYPQRH54FMtoawjJj7eQJ1mmMmt/bRVUORDjiZ/SjS
+         7dMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dKtslRZspt8o3Sccdk1DfcCyRNMlDNOBZp6futbzDZU=;
-        b=3jnw9pgLbqOJkQpP3rqVQBBLf641v7ceS670BL0aQqn7tyhDn+CChEm1ELQy5PLYeZ
-         ISFo94xk5MenDFZhXQ+HsJbMsFTeKI9Z5/ATOJt7yAOeSVRFLtsAP8+CtjHBD93KdzJe
-         GshQwxFnTCoeggxLlF92imfdakoAzKk9y5E12OcFTe7x/o9ylJCO8nzjSlfUGMe9R6kb
-         71VaJhVvnaAeprxWBypbBBLY7ayLfUH15/vtwcK6WX4NOn437uYDw0zWoNLXbAA/mP/x
-         guZRzh1Ijz9V20WmUiHbPvAhte+gxFapaNdZIc8u8vx1RKeuXsTun5nZe6j1qtLEtRZL
-         tjjg==
-X-Gm-Message-State: AO0yUKWrEIsoTsP4Ni9hFQI1Fkn/d6QVnTpr5/UJWbJ0c9DPOzDs5ILt
-        cf/VZ6UGzITgSKHr4r9zjHFm9A==
-X-Google-Smtp-Source: AK7set/Du/SmnkG9npmGl15OvCIHvsDH40L2g0ZWC0y8n5am9lawYOEAyJD33dLc5DUYqF78qBuVQw==
-X-Received: by 2002:a05:6512:66:b0:4a4:7be4:9baf with SMTP id i6-20020a056512006600b004a47be49bafmr1157741lfo.59.1676965342173;
-        Mon, 20 Feb 2023 23:42:22 -0800 (PST)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id b17-20020ac25e91000000b00492c663bba2sm1766909lfq.124.2023.02.20.23.42.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Feb 2023 23:42:21 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Chia-I Wu <olvaffe@gmail.com>
-Subject: [RFC PATCH] drm/msm: tune the devfreq to take into account the load history
-Date:   Tue, 21 Feb 2023 10:42:21 +0300
-Message-Id: <20230221074221.3650442-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hjfg64gDGO7h14TEC4RS/AXyVKIdDfjATSF2lUKEAMk=;
+        b=FSYhNiiKdQUoPBwtkOZeqrLNUubrrzkHDeIMKpKQm933mUhUKt5B1yPqTlwYvTfWJx
+         38YWatWJfn1oq5ZMZsxfC8+xXJbwhPCVHiuQkC1oa6qXPxN1KshPcXok9TiPDS8ot8dQ
+         yVkX70Icjmk/L9Nl4TjfmnVga+p1o+WTPlBr7/R4MpbE2ceSOZZYNQcqnHiaxdWZYtt7
+         IRaM2rM3U1XOUufQ+294QZbFFpPBhdRT7feEpPa2xUtHT0yiyuokNwaMGQoCMZmkY2m3
+         T8fY94y0hMryc98ZlHrTk2U6j6v/FYPUUvnkC0/eq91+G693kGNYXgHsMCgQbaOPZ28Z
+         8Neg==
+X-Gm-Message-State: AO0yUKW0JsDIuztc/ZFRisOtfhs/XlixkXGtm9uctEW/opJwf9+inoC3
+        MIPwklW6UKfsvvpztFknRaanqA==
+X-Google-Smtp-Source: AK7set97tfEfb+9jEmaIbBvjUjYHM1C/RcXs0xI1hR9WFaCJoLbuEO79GObcuG1M2I6FlEJKYM/nSA==
+X-Received: by 2002:adf:e242:0:b0:2c5:8c04:c6a8 with SMTP id bl2-20020adfe242000000b002c58c04c6a8mr3548223wrb.51.1676965848828;
+        Mon, 20 Feb 2023 23:50:48 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id j16-20020a056000125000b002c5706f7c6dsm711101wrx.94.2023.02.20.23.50.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Feb 2023 23:50:48 -0800 (PST)
+Message-ID: <78f841f1-1e1a-9eb9-940d-6e11dd18d86f@linaro.org>
+Date:   Tue, 21 Feb 2023 07:50:46 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v10 09/26] gunyah: rsc_mgr: Add VM lifecycle RPC
+Content-Language: en-US
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
+ <20230214212343.3311875-1-quic_eberman@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230214212343.3311875-1-quic_eberman@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Partially restore the handling of the GPU load history. Accumulate the
-busy_time and and total_time measured in active state during the polling
-period. This results in slightly smoother picture of the GPU frequencies
-(measured on the a530/msm8996, using kmscube in different resolutions).
 
-A call to msm_devfreq_get_dev_status() from msm_devfreq_active() was
-removed in 69f06a5d854f ("drm/msm: remove explicit devfreq status
-reset"), because dev_pm_qos_update_request() triggered that internally.
-As the commit fadcc3ab1302 ("drm/msm/gpu: Bypass PM QoS constraint for
-idle clamp") removed the calls to dev_pm_qos_update_request(), this
-removal was also reverted.
 
-The code doesn't take the frequency into account while accumulating the
-data to keep the code simple for the RFC.
+On 14/02/2023 21:23, Elliot Berman wrote:
+> 
+> Add Gunyah Resource Manager RPC to launch an unauthenticated VM.
+> 
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
+>   drivers/virt/gunyah/Makefile      |   2 +-
+>   drivers/virt/gunyah/rsc_mgr.h     |  45 ++++++
+>   drivers/virt/gunyah/rsc_mgr_rpc.c | 226 ++++++++++++++++++++++++++++++
+>   include/linux/gunyah_rsc_mgr.h    |  73 ++++++++++
+>   4 files changed, 345 insertions(+), 1 deletion(-)
+>   create mode 100644 drivers/virt/gunyah/rsc_mgr_rpc.c
+> 
+> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
+> index cc864ff5abbb..de29769f2f3f 100644
+> --- a/drivers/virt/gunyah/Makefile
+> +++ b/drivers/virt/gunyah/Makefile
+> @@ -2,5 +2,5 @@
+>   
+>   obj-$(CONFIG_GUNYAH) += gunyah.o
+>   
+> -gunyah_rsc_mgr-y += rsc_mgr.o
+> +gunyah_rsc_mgr-y += rsc_mgr.o rsc_mgr_rpc.o
+>   obj-$(CONFIG_GUNYAH) += gunyah_rsc_mgr.o
+> diff --git a/drivers/virt/gunyah/rsc_mgr.h b/drivers/virt/gunyah/rsc_mgr.h
+> index d4e799a7526f..7406237bc66d 100644
+> --- a/drivers/virt/gunyah/rsc_mgr.h
+> +++ b/drivers/virt/gunyah/rsc_mgr.h
+> @@ -74,4 +74,49 @@ struct gh_rm;
+>   int gh_rm_call(struct gh_rm *rsc_mgr, u32 message_id, void *req_buff, size_t req_buff_size,
+>   		void **resp_buf, size_t *resp_buff_size);
+>   
+<----------------------------
+> +/* Message IDs: VM Management */
+> +#define GH_RM_RPC_VM_ALLOC_VMID			0x56000001
+> +#define GH_RM_RPC_VM_DEALLOC_VMID		0x56000002
+> +#define GH_RM_RPC_VM_START			0x56000004
+> +#define GH_RM_RPC_VM_STOP			0x56000005
+> +#define GH_RM_RPC_VM_RESET			0x56000006
+> +#define GH_RM_RPC_VM_CONFIG_IMAGE		0x56000009
+> +#define GH_RM_RPC_VM_INIT			0x5600000B
+> +#define GH_RM_RPC_VM_GET_HYP_RESOURCES		0x56000020
+> +#define GH_RM_RPC_VM_GET_VMID			0x56000024
+> +
+> +struct gh_rm_vm_common_vmid_req {
+> +	__le16 vmid;
+> +	__le16 reserved0;
+> +} __packed;
+> +
+> +/* Call: VM_ALLOC */
+> +struct gh_rm_vm_alloc_vmid_resp {
+> +	__le16 vmid;
+> +	__le16 reserved0;
+> +} __packed;
+> +
+> +/* Call: VM_STOP */
+> +struct gh_rm_vm_stop_req {
+> +	__le16 vmid;
+> +#define GH_RM_VM_STOP_FLAG_FORCE_STOP	BIT(0)
+> +	u8 flags;
+> +	u8 reserved;
+> +#define GH_RM_VM_STOP_REASON_FORCE_STOP		3
+> +	__le32 stop_reason;
+> +} __packed;
+> +
+> +/* Call: VM_CONFIG_IMAGE */
+> +struct gh_rm_vm_config_image_req {
+> +	__le16 vmid;
+> +	__le16 auth_mech;
+> +	__le32 mem_handle;
+> +	__le64 image_offset;
+> +	__le64 image_size;
+> +	__le64 dtb_offset;
+> +	__le64 dtb_size;
+> +} __packed;
+> +
+> +/* Call: GET_HYP_RESOURCES */
+> +
+-------------------------------->
 
-Cc: Chia-I Wu <olvaffe@gmail.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/msm_gpu.h         |  3 +++
- drivers/gpu/drm/msm/msm_gpu_devfreq.c | 30 ++++++++++++++++++++++++++-
- 2 files changed, 32 insertions(+), 1 deletion(-)
+All the above structures are very much internal to rsc_mgr_rpc.c and 
+interface to the rsc_mgr_rpc is already abstracted with function arguments
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index fc1c0d8611a8..9d1783375dcc 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -156,6 +156,9 @@ struct msm_gpu_devfreq {
- 
- 	/** suspended: tracks if we're suspended */
- 	bool suspended;
-+
-+	/* stats for the current period */
-+	struct devfreq_dev_status status;
- };
- 
- struct msm_gpu {
-diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-index e27dbf12b5e8..92cb022c8628 100644
---- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-+++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-@@ -74,7 +74,7 @@ static unsigned long get_freq(struct msm_gpu *gpu)
- 	return clk_get_rate(gpu->core_clk);
- }
- 
--static int msm_devfreq_get_dev_status(struct device *dev,
-+static int msm_devfreq_get_dev_status_int(struct device *dev,
- 		struct devfreq_dev_status *status)
- {
- 	struct msm_gpu *gpu = dev_to_gpu(dev);
-@@ -112,6 +112,22 @@ static int msm_devfreq_get_dev_status(struct device *dev,
- 	return 0;
- }
- 
-+static int msm_devfreq_get_dev_status(struct device *dev,
-+		struct devfreq_dev_status *status)
-+{
-+	struct msm_gpu *gpu = dev_to_gpu(dev);
-+	struct msm_gpu_devfreq *df = &gpu->devfreq;
-+
-+	msm_devfreq_get_dev_status_int(&gpu->pdev->dev, status);
-+	status->busy_time += df->status.busy_time;
-+	status->total_time += df->status.total_time;
-+
-+	df->status.busy_time = 0;
-+	df->status.total_time = 0;
-+
-+	return 0;
-+}
-+
- static int msm_devfreq_get_cur_freq(struct device *dev, unsigned long *freq)
- {
- 	*freq = get_freq(dev_to_gpu(dev));
-@@ -290,6 +306,7 @@ void msm_devfreq_active(struct msm_gpu *gpu)
- 	struct msm_gpu_devfreq *df = &gpu->devfreq;
- 	unsigned int idle_time;
- 	unsigned long target_freq;
-+	struct devfreq_dev_status status;
- 
- 	if (!has_devfreq(gpu))
- 		return;
-@@ -319,6 +336,12 @@ void msm_devfreq_active(struct msm_gpu *gpu)
- 	if (target_freq)
- 		msm_devfreq_target(&gpu->pdev->dev, &target_freq, 0);
- 
-+	/*
-+	 * Reset the polling interval so we aren't inconsistent
-+	 * about freq vs busy/total cycles
-+	 */
-+	msm_devfreq_get_dev_status_int(&gpu->pdev->dev, &status);
-+
- 	mutex_unlock(&df->devfreq->lock);
- 
- 	/*
-@@ -339,6 +362,7 @@ static void msm_devfreq_idle_work(struct kthread_work *work)
- 	struct msm_gpu *gpu = container_of(df, struct msm_gpu, devfreq);
- 	struct msm_drm_private *priv = gpu->dev->dev_private;
- 	unsigned long idle_freq, target_freq = 0;
-+	struct devfreq_dev_status status;
- 
- 	/*
- 	 * Hold devfreq lock to synchronize with get_dev_status()/
-@@ -346,6 +370,10 @@ static void msm_devfreq_idle_work(struct kthread_work *work)
- 	 */
- 	mutex_lock(&df->devfreq->lock);
- 
-+	msm_devfreq_get_dev_status_int(&gpu->pdev->dev, &status);
-+	df->status.busy_time += status.busy_time;
-+	df->status.total_time += status.total_time;
-+
- 	idle_freq = get_freq(gpu);
- 
- 	if (priv->gpu_clamp_to_idle)
--- 
-2.30.2
+ex:
 
+int gh_rm_vm_configure(struct gh_rm *rm, u16 vmid, enum 
+gh_rm_vm_auth_mechanism auth_mechanism, u32 mem_handle, u64 
+image_offset, u64 image_size, u64 dtb_offset, u64 dtb_size)
+
+So why do we need these structs and defines in header file at all?
+you should proabably consider moving them to the .c file.
+
+
+>   #endif
+> diff --git a/drivers/virt/gunyah/rsc_mgr_rpc.c b/drivers/virt/gunyah/rsc_mgr_rpc.c
+> new file mode 100644
+> index 000000000000..4515cdd80106
+> --- /dev/null
+> +++ b/drivers/virt/gunyah/rsc_mgr_rpc.c
+> @@ -0,0 +1,226 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/gunyah_rsc_mgr.h>
+> +
+
+Why new line here?
+
+> +#include "rsc_mgr.h"
+> +
+> +/*
+...
+
+> +int gh_rm_vm_configure(struct gh_rm *rm, u16 vmid, enum gh_rm_vm_auth_mechanism auth_mechanism,
+> +		u32 mem_handle, u64 image_offset, u64 image_size, u64 dtb_offset, u64 dtb_size)
+> +{
+> +	struct gh_rm_vm_config_image_req req_payload = { 0 };
+> +	size_t resp_size;
+> +	void *resp;
+> +
+> +	req_payload.vmid = cpu_to_le16(vmid);
+> +	req_payload.auth_mech = cpu_to_le16(auth_mechanism);
+> +	req_payload.mem_handle = cpu_to_le32(mem_handle);
+> +	req_payload.image_offset = cpu_to_le64(image_offset);
+> +	req_payload.image_size = cpu_to_le64(image_size);
+> +	req_payload.dtb_offset = cpu_to_le64(dtb_offset);
+> +	req_payload.dtb_size = cpu_to_le64(dtb_size);
+> +
+> +	return gh_rm_call(rm, GH_RM_RPC_VM_CONFIG_IMAGE, &req_payload, sizeof(req_payload),
+> +			&resp, &resp_size);
+> +}
+> +
+
+--srini
