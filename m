@@ -2,44 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E7B269E0A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 13:45:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8320469E104
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 14:06:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234797AbjBUMpb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 07:45:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42376 "EHLO
+        id S233732AbjBUNGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 08:06:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234664AbjBUMpa (ORCPT
+        with ESMTP id S233481AbjBUNGm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 07:45:30 -0500
+        Tue, 21 Feb 2023 08:06:42 -0500
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01A59E8;
-        Tue, 21 Feb 2023 04:45:29 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31LCa3mM020813;
-        Tue, 21 Feb 2023 12:45:12 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A361826CFF;
+        Tue, 21 Feb 2023 05:06:41 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31LCbFbR015942;
+        Tue, 21 Feb 2023 13:06:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
  cc : subject : message-id : reply-to : references : mime-version :
  content-type : in-reply-to; s=qcppdkim1;
- bh=x3stg8zJRtXCGXEKmbrGIt8ho9ZieFxJLhwP/0UeaeA=;
- b=V5zVcAZDNq0vH53WmIAnNTuMqsXb3brM+lQtpDZF3RxA9k33s6rXBmYDI0Bybed+DY4M
- K8r99GaL1xJhawxLblMF2hVzEx18rN2oEb3XSQQXR5ZK/aWR+is0ghZky4o2cJwh+EoX
- gUJz7ra1HHmDwOXSWktW2lB+IgiBqF6yWHHiiDQfeTFeAnmWHFOOOMAsSRUvg3uKr1r2
- u90DedTkIHPDJqsDyN4VPZhe2znPRJ+2u3zDVd/RmnKlQ+vQ6WTwcD3eCL17J03zBsgC
- UYSckh7AmeNx5tRROqE2jGJ/R8oYiTtmFE9igHZtFt4dl8dKSyjEZXTQYXPwDlQCp2wA Ug== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nvp4v13cg-1
+ bh=g1P63C+a580kYDfcdmzQvxGNzrNC04RSAQ2tEvn68zk=;
+ b=Q7OK7LMoLOgTp1KJe7muKbm086Q1tbKWe4m549VWQv0gAbd6DixXjBHMQ7tiAj8UVYps
+ zeRmvt4KDc2tOVJ3uytQCqOPOgGo927I0WYOnOBc0xNEq0rKpuQ4YQUG+OUx8s14yVwp
+ Xe43JnGI5zwVijib2wC2sHaCKx/zw5viCWZel2JUT6aRsQMTmZ09sZgjtwggt/PHRIgX
+ h/HphD0KpPfCzvNfqzeFZEGFmh9EN7vfmqzx0amEwgJFfYFbCOyqMaXOk0OzXdoZP2KA
+ ZXqfNo5H3s7EUbrWjB2M2DnYWAHtMTEdHXBSFfmzHrBTMsk9OJwq5T1XsAdkSw0ZIl3q tA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nvnbt97xh-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 21 Feb 2023 12:45:12 +0000
+        Tue, 21 Feb 2023 13:06:29 +0000
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31LCjBjD029154
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31LD6SeT019399
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 21 Feb 2023 12:45:11 GMT
+        Tue, 21 Feb 2023 13:06:28 GMT
 Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
  (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 21 Feb
- 2023 04:45:04 -0800
-Date:   Tue, 21 Feb 2023 18:15:00 +0530
+ 2023 05:06:21 -0800
+Date:   Tue, 21 Feb 2023 18:36:18 +0530
 From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
 To:     Elliot Berman <quic_eberman@quicinc.com>
 CC:     Alex Elder <elder@linaro.org>,
@@ -62,30 +62,31 @@ CC:     Alex Elder <elder@linaro.org>,
         <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH v10 12/26] gunyah: vm_mgr: Add/remove user memory regions
-Message-ID: <20230221124500.GB1437176@quicinc.com>
+Subject: Re: [PATCH v10 13/26] gunyah: vm_mgr: Add ioctls to support basic
+ non-proxy VM boot
+Message-ID: <20230221130618.GB787573@quicinc.com>
 Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
 References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212417.3315422-1-quic_eberman@quicinc.com>
+ <20230214212427.3316544-1-quic_eberman@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Disposition: inline
-In-Reply-To: <20230214212417.3315422-1-quic_eberman@quicinc.com>
+In-Reply-To: <20230214212427.3316544-1-quic_eberman@quicinc.com>
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: fFbo6RuodUEy2REFMkCBFIuWCSHvZEBC
-X-Proofpoint-GUID: fFbo6RuodUEy2REFMkCBFIuWCSHvZEBC
+X-Proofpoint-GUID: 8D9JSBLljUsyWQQyWmRSmhsM8u3vA7SX
+X-Proofpoint-ORIG-GUID: 8D9JSBLljUsyWQQyWmRSmhsM8u3vA7SX
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-21_08,2023-02-20_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=832
- clxscore=1015 adultscore=0 spamscore=0 phishscore=0 suspectscore=0
- bulkscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302210108
+ definitions=2023-02-21_07,2023-02-20_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ priorityscore=1501 mlxlogscore=774 bulkscore=0 malwarescore=0 adultscore=0
+ impostorscore=0 clxscore=1015 mlxscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302210111
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -95,26 +96,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-* Elliot Berman <quic_eberman@quicinc.com> [2023-02-14 13:24:16]:
+* Elliot Berman <quic_eberman@quicinc.com> [2023-02-14 13:24:26]:
 
-> +int gh_vm_mem_alloc(struct gh_vm *ghvm, struct gh_userspace_memory_region *region)
+> +static int gh_vm_start(struct gh_vm *ghvm)
 > +{
-> +	struct gh_vm_mem *mapping, *tmp_mapping;
-> +	struct gh_rm_mem_entry *mem_entries;
-> +	phys_addr_t curr_page, prev_page;
-> +	struct gh_rm_mem_parcel *parcel;
-> +	int i, j, pinned, ret = 0;
-> +	size_t entry_size;
-> +	u16 vmid;
+> +	struct gh_vm_mem *mapping;
+> +	u64 dtb_offset;
+> +	u32 mem_handle;
+> +	int ret;
 > +
-> +	if (!gh_api_has_feature(GH_API_FEATURE_MEMEXTENT))
-> +		return -EOPNOTSUPP;
+> +	down_write(&ghvm->status_lock);
+> +	if (ghvm->vm_status != GH_RM_VM_STATUS_LOAD) {
+> +		up_write(&ghvm->status_lock);
+> +		return 0;
+> +	}
 > +
-> +	if (!region->memory_size || !PAGE_ALIGNED(region->memory_size) ||
-> +		!PAGE_ALIGNED(region->userspace_addr) || !PAGE_ALIGNED(region->guest_phys_addr))
-> +		return -EINVAL;
+> +	ghvm->vm_status = GH_RM_VM_STATUS_RESET;
+> +
+> +	list_for_each_entry(mapping, &ghvm->memory_mappings, list) {
+> +		switch (mapping->share_type) {
+> +		case VM_MEM_LEND:
+> +			ret = gh_rm_mem_lend(ghvm->rm, &mapping->parcel);
+> +			break;
+> +		case VM_MEM_SHARE:
+> +			ret = gh_rm_mem_share(ghvm->rm, &mapping->parcel);
+> +			break;
+> +		}
+> +		if (ret) {
+> +			pr_warn("Failed to %s parcel %d: %d\n",
+> +				mapping->share_type == VM_MEM_LEND ? "lend" : "share",
+> +				mapping->parcel.label,
+> +				ret);
+> +			goto err;
+> +		}
+> +	}
+> +
+> +	mapping = gh_vm_mem_find_mapping(ghvm, ghvm->dtb_config.gpa, ghvm->dtb_config.size);
 
-Check for wraps also:
+It may be some optimization to derive DTB 'mapping' in the first loop you have
+above (that lends/shares all mappings)
 
-        region->guest_phys_addr + region->memory_size > region->guest_phys_addr
 
+> +	if (!mapping) {
+> +		pr_warn("Failed to find the memory_handle for DTB\n");
+> +		ret = -EINVAL;
+> +		goto err;
+> +	}
