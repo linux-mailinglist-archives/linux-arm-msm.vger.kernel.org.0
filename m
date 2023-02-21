@@ -2,67 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3575369E5C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 18:17:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2249869E62C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 18:45:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234794AbjBURR2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 12:17:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57552 "EHLO
+        id S234848AbjBURpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 12:45:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234768AbjBURR0 (ORCPT
+        with ESMTP id S234069AbjBURpE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 12:17:26 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 500702E0F6;
-        Tue, 21 Feb 2023 09:17:25 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E68E36115C;
-        Tue, 21 Feb 2023 17:17:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0449C433EF;
-        Tue, 21 Feb 2023 17:17:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676999844;
-        bh=xBNVJdXxQw9xLa9bGh85+q7YfrToaQbE38ybZVRF5xc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Be/MU6I9UTNNMwxBwbz3Zv2y3jx3JhzRnuS1+eP4sGuIVDULaJSJUunBIoKoZD/+q
-         pFch+6iKbVnGi9fJKoqXaOaiCzsKqe8Yka1Aptu1IlJsVibHwd7mS5FWHbcA3FZaDl
-         EqKl0/YcC9sVLzfKiWSOQYdJU0e9AMY4xVjEQpYJWEmnXSbBptahCvvUa6yPCCKjmZ
-         fiSe5YzW3RoggFM79q+zRLqUqV6TDGZaXzJn4l+e1yTKmSQpx6OeAwGu4g4+bThKZS
-         HtqyeveUCMZNDveAJiiLEs1E15dgIRuy/mYWRvXPs+3qXmztH1W0tGnUCszjZRXA8X
-         0d5J837h7lLsw==
-Date:   Tue, 21 Feb 2023 09:20:52 -0800
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Sarannya S <quic_sarannya@quicinc.com>
-Cc:     quic_bjorande@quicinc.com, arnaud.pouliquen@foss.st.com,
-        swboyd@chromium.org, quic_clew@quicinc.com,
-        mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>,
-        Alexei Starovoitov <ast@kernel.org>,
-        Daniel Borkmann <daniel@iogearbox.net>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Jesper Dangaard Brouer <hawk@kernel.org>,
-        John Fastabend <john.fastabend@gmail.com>,
-        "moderated list:ARM64 PORT (AARCH64 ARCHITECTURE)" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:PTP HARDWARE CLOCK SUPPORT" <netdev@vger.kernel.org>,
-        "open list:XDP (eXpress Data Path)" <bpf@vger.kernel.org>
-Subject: Re: [PATCH V5 1/3] rpmsg: core: Add signal API support
-Message-ID: <20230221172052.papcj7wl3u5gzo6s@ripper>
-References: <1676990114-1369-1-git-send-email-quic_sarannya@quicinc.com>
- <1676990114-1369-2-git-send-email-quic_sarannya@quicinc.com>
+        Tue, 21 Feb 2023 12:45:04 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3911234CA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 09:44:59 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id h9so5135520ljq.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 09:44:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SbC5sP3V4tvxg8poITPffqeiBSYf5mTki8iUVO0MfTU=;
+        b=YTuHJO/cT2gzfESi8zNm1cF+ovCWeN4ypblfk5i+cUWaymjSHjwTVGENfflTPwgw/T
+         2jCWWzKseuNBuyC/Tk9vhGo1dUvXleGiFQ95CIiy6BnFeEvyWHFAJRycHFVRIr4Y6JsI
+         AHsKo6s8kWq/nYKntu4cod1qq2zjgp+OEW1IJBPaRIycWp1M+iPr7edsvTf5ZYkj8onV
+         eaQK3aMZ+FlgS/E9/ixd/Hn/2fS8tI7Vz4vaHoX9Vl9pVW3XR/WF64sF8YnyJd+TJRHo
+         jSOERGvg8xMKmHWzB+xmBmQJoIAOaC0P92nl51T18x7P0XfK3jsXExOBFmc5Ske5Gt+Y
+         YaEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SbC5sP3V4tvxg8poITPffqeiBSYf5mTki8iUVO0MfTU=;
+        b=VRgWeyg+1Iy8aXoeHxfb5d0Z+ezX7/5qCoe4YfzMYjVirlkLey1IsOIZw2SKNTE3FG
+         QNUT1XnhAu/i1RcRcpT1O+YI7cHId/Rg7bvHtoZNNKjtiNhLmcpftXGRetS2U1FIG5ef
+         hzj5hsRJ1kJ1Qy9Cw+UqnogCDeIZGmvNWUTOcPg1gxdWutq8M6RM9TGe96t8EId7bbKJ
+         W932o8eZjCZxgSVXs2I3YG5vxLYXOH4HvOZq5OwxXSKKybNGep8v9GvRB3p4RZjG0boF
+         5ViuTny6H2e7BJfYOoMCGaMMuCHbE/V44x/ZTjqFzEcMr55swmKMJ7mKfLvMg+xqS/ag
+         nQGA==
+X-Gm-Message-State: AO0yUKUQtUzJcL30/PA9KdjEi5G1HO93as2zd8fwrxhh+tBB6ikPn8K6
+        8X9UDKwLju+20DVBxWabh6Cv7nNnYRhF/6w4
+X-Google-Smtp-Source: AK7set879K1Vi+y3/+uZVasOTDhk1xxr/cHP8DNMLeLPuEKpxk6lQ/H0S5WhJxZ4r3G8sI0qOtKB7g==
+X-Received: by 2002:a05:651c:b0d:b0:293:7bce:2374 with SMTP id b13-20020a05651c0b0d00b002937bce2374mr2608864ljr.33.1677001497854;
+        Tue, 21 Feb 2023 09:44:57 -0800 (PST)
+Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
+        by smtp.gmail.com with ESMTPSA id k16-20020a05651c10b000b00290517c661asm203301ljn.40.2023.02.21.09.44.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Feb 2023 09:44:57 -0800 (PST)
+Message-ID: <9a3e9c76-ba70-6ccc-3ade-fa08cdff571e@linaro.org>
+Date:   Tue, 21 Feb 2023 18:44:55 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1676990114-1369-2-git-send-email-quic_sarannya@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sa8775p: add cpufreq node
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230221150543.283487-1-brgl@bgdev.pl>
+ <20230221150543.283487-3-brgl@bgdev.pl>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230221150543.283487-3-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,30 +82,111 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 21, 2023 at 08:05:12PM +0530, Sarannya S wrote:
-> Some transports like Glink support the state notifications between
-> clients using flow control signals similar to serial protocol signals.
-> Local glink client drivers can send and receive flow control status
-> to glink clients running on remote processors.
+
+
+On 21.02.2023 16:05, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Add APIs to support sending and receiving of flow control status by
-> rpmsg clients.
+> Add a node for the cpufreq engine and specify the frequency domains for
+> all CPUs.
 > 
-> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-> Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
->  arch/arm64/boot/Image.gz-dtb   | Bin 0 -> 12413735 bytes
->  drivers/rpmsg/rpmsg_core.c     |  20 ++++++++++++++++++++
->  drivers/rpmsg/rpmsg_core.c.rej |  11 +++++++++++
->  drivers/rpmsg/rpmsg_internal.h |   2 ++
->  include/linux/rpmsg.h          |  15 +++++++++++++++
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 21 +++++++++++++++++++++
+>  1 file changed, 21 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index ce5976e36aee..5e2bc67b3178 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -37,6 +37,7 @@ CPU0: cpu@0 {
+>  			compatible = "qcom,kryo";
+>  			reg = <0x0 0x0>;
+>  			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			next-level-cache = <&L2_0>;
+>  			L2_0: l2-cache {
+>  				compatible = "cache";
+> @@ -52,6 +53,7 @@ CPU1: cpu@100 {
+>  			compatible = "qcom,kryo";
+>  			reg = <0x0 0x100>;
+>  			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			next-level-cache = <&L2_1>;
+>  			L2_1: l2-cache {
+>  				compatible = "cache";
+> @@ -64,6 +66,7 @@ CPU2: cpu@200 {
+>  			compatible = "qcom,kryo";
+>  			reg = <0x0 0x200>;
+>  			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			next-level-cache = <&L2_2>;
+>  			L2_2: l2-cache {
+>  				compatible = "cache";
+> @@ -76,6 +79,7 @@ CPU3: cpu@300 {
+>  			compatible = "qcom,kryo";
+>  			reg = <0x0 0x300>;
+>  			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			next-level-cache = <&L2_3>;
+>  			L2_3: l2-cache {
+>  				compatible = "cache";
+> @@ -88,6 +92,7 @@ CPU4: cpu@10000 {
+>  			compatible = "qcom,kryo";
+>  			reg = <0x0 0x10000>;
+>  			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			next-level-cache = <&L2_4>;
+>  			L2_4: l2-cache {
+>  				compatible = "cache";
+> @@ -104,6 +109,7 @@ CPU5: cpu@10100 {
+>  			compatible = "qcom,kryo";
+>  			reg = <0x0 0x10100>;
+>  			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			next-level-cache = <&L2_5>;
+>  			L2_5: l2-cache {
+>  				compatible = "cache";
+> @@ -116,6 +122,7 @@ CPU6: cpu@10200 {
+>  			compatible = "qcom,kryo";
+>  			reg = <0x0 0x10200>;
+>  			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			next-level-cache = <&L2_6>;
+>  			L2_6: l2-cache {
+>  				compatible = "cache";
+> @@ -128,6 +135,7 @@ CPU7: cpu@10300 {
+>  			compatible = "qcom,kryo";
+>  			reg = <0x0 0x10300>;
+>  			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			next-level-cache = <&L2_7>;
+>  			L2_7: l2-cache {
+>  				compatible = "cache";
+> @@ -731,6 +739,19 @@ tcsr_mutex: hwlock@1f40000 {
+>  			#hwlock-cells = <1>;
+>  		};
+>  
+> +		cpufreq_hw: cpufreq@18591000 {
+> +			compatible = "qcom,sa8775p-cpufreq-epss",
+> +				     "qcom,cpufreq-epss";
+That's some very aggressive wrapping! :P
 
-Looks like you accidentally included the Image.gz-dtb and .rej file in
-the patch. Please resend without these.
+Nevertheless,
 
-Thanks,
-Bjorn
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
->  5 files changed, 48 insertions(+)
->  create mode 100644 arch/arm64/boot/Image.gz-dtb
->  create mode 100644 drivers/rpmsg/rpmsg_core.c.rej
+Konrad
+> +			reg = <0x0 0x18591000 0x0 0x1000>,
+> +			      <0x0 0x18593000 0x0 0x1000>;
+> +			reg-names = "freq-domain0", "freq-domain1";
+> +
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
+> +			clock-names = "xo", "alternate";
+> +
+> +			#freq-domain-cells = <1>;
+> +		};
+> +
+>  		tlmm: pinctrl@f000000 {
+>  			compatible = "qcom,sa8775p-tlmm";
+>  			reg = <0x0 0xf000000 0x0 0x1000000>;
