@@ -2,67 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E2F669E2FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 16:03:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3355569E302
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 16:04:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234631AbjBUPDg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 10:03:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55732 "EHLO
+        id S234123AbjBUPEc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 10:04:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234123AbjBUPDf (ORCPT
+        with ESMTP id S234229AbjBUPEb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 10:03:35 -0500
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4356F2118;
-        Tue, 21 Feb 2023 07:03:15 -0800 (PST)
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1pUUAi-0002sD-Ml; Tue, 21 Feb 2023 16:03:12 +0100
-Message-ID: <9a0bfef8-0b5d-f4d0-a8a5-4bbcacc5c0fb@leemhuis.info>
-Date:   Tue, 21 Feb 2023 16:03:11 +0100
+        Tue, 21 Feb 2023 10:04:31 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C86840C8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 07:04:16 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id o38-20020a05600c512600b003e8320d1c11so509980wms.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 07:04:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=bAq207T94jtZhbpF3lRvOqHj2pHQuyZzVY6gA66JNkE=;
+        b=q0eVCbQXIk9t1X1GrLGWms73J569cIe7ZmehOayvIlQ7hWqA2q3gTyPGRyvHm0kov+
+         emjJVckUO1fwnOwNy/qWDqwH8bQALCcHsfGb5uDs3GnbAttX6Mxe+bDvpoobEXk+vrEv
+         CL0xG01pkr5oCbavuJI+zjTC6j696+43CKjPltOo1VRaW4aTWFPwxihWdK2ZhsNCcyBx
+         +6O7OQ2R/2qVvttHq0I9HdhQRB9dOIrBT5jwpVpMskhvQG8feMvzRQVABaRHHc+JKKHd
+         IZgcEcMBMnV2ryIiLcrbt+EuewniFE91f+nSsPpqenTypPX/LrFpwtFsoZ+WA8JOkpCy
+         MFFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bAq207T94jtZhbpF3lRvOqHj2pHQuyZzVY6gA66JNkE=;
+        b=3O15M4mT0PNjVKgc7gp46xbxNSr5T+5wvgSvTuuSjMGbl770gtE+pCGhI+pWtZAQmg
+         Xyg6wPV6QCk8F7wzNiFjEzyxjCGjEhSyseL5K2CDI5DXUc3Q2aSUgTquPxZJdQmyDE/o
+         yU7aFM92Ba1u5UqV+zP36kMoo54dK0vVptS/776ce9AEygAZaiK9LgJ1dW3ltUZYmYCc
+         vQkmT4AwcuyyOCsuisUMrt2+mdJgBY1FRKO3Qhjb8cQqQS/Gb9mwZYZTD9LOYIIgmXq+
+         +lJ5WknImpfNEdO4q6ZrU0LDwy12Oga80WJC2SCkmLb44f8CfkEi+jBSPg2CJWOT5/0k
+         bjoA==
+X-Gm-Message-State: AO0yUKXdlsRx//wMvpovUO8iUSerFnvUFqG4bkc02f1JZNsTryWKaBPC
+        qhyviKHY6axhLAOxNZp22RThSanAYig=
+X-Google-Smtp-Source: AK7set+hjqcF8UJox49KaqvKClclsJX+wta3t//cXD4XVNZab2uGitOY567g/j/k+RCzmSp90f0Baw==
+X-Received: by 2002:a05:600c:74a:b0:3db:262a:8ef with SMTP id j10-20020a05600c074a00b003db262a08efmr9449939wmn.38.1676991854939;
+        Tue, 21 Feb 2023 07:04:14 -0800 (PST)
+Received: from DESKTOP-L1U6HLH ([39.42.138.70])
+        by smtp.gmail.com with ESMTPSA id o10-20020a1c750a000000b003e7c89b3514sm1970976wmc.23.2023.02.21.07.04.14
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Tue, 21 Feb 2023 07:04:14 -0800 (PST)
+Message-ID: <63f4dd6e.1c0a0220.7793c.5bdf@mx.google.com>
+Date:   Tue, 21 Feb 2023 07:04:14 -0800 (PST)
+X-Google-Original-Date: 21 Feb 2023 10:04:15 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH] Revert "venus: firmware: Correct non-pix start and end
- addresses"
-Content-Language: en-US, de-DE
-From:   Thorsten Leemhuis <regressions@leemhuis.info>
-To:     Vikash Garodia <vgarodia@qti.qualcomm.com>
-Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "mka@chromium.org" <mka@chromium.org>,
-        Albert Esteve <aesteve@redhat.com>,
-        "stanimir.varbanov@linaro.org" <stanimir.varbanov@linaro.org>,
-        Enric Balletbo i Serra <eballetb@redhat.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        Fritz Koenig <frkoenig@google.com>,
-        "Dikshita Agarwal (QUIC)" <quic_dikshita@quicinc.com>,
-        "Rajeshwar Kurapaty (QUIC)" <quic_rkurapat@quicinc.com>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Linux regressions mailing list <regressions@lists.linux.dev>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
-References: <20230207102254.1446461-1-javierm@redhat.com>
- <DM8PR02MB8169809493BF2822E6C29EECF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <ef09bc9f-d570-be11-238b-bd34063917fc@redhat.com>
- <70c01751-1dd7-c4bd-a96e-94dea437aa40@redhat.com>
- <DM8PR02MB81696369DBFE619E43F81EEFF3DE9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <e87344c6-acef-7f3f-5cac-24961dbd9401@redhat.com>
- <6f97a117-0d9c-e21b-9adf-50f2233ba9e3@leemhuis.info>
- <ea283f0a-ca72-447e-ce87-68c1bbee793e@leemhuis.info>
- <CAFOAJEdBbzqkGVqw+vgNYNxyaTHwvjFyskTwjycP820L2tOctA@mail.gmail.com>
- <b548da46-bf91-6f1c-4b63-4002109056bc@leemhuis.info>
-In-Reply-To: <b548da46-bf91-6f1c-4b63-4002109056bc@leemhuis.info>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1676991795;fc75e8d9;
-X-HE-SMSGID: 1pUUAi-0002sD-Ml
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+From:   leo.dreamlandestimation@gmail.com
+To:     linux-arm-msm@vger.kernel.org
+Subject: Building Estimates
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_20,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,54 +69,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15.02.23 14:18, Linux regression tracking (Thorsten Leemhuis) wrote:
-> On 15.02.23 11:57, Javier Martinez Canillas wrote:
->> On Wed, Feb 15, 2023 at 11:53 AM Linux regression tracking (Thorsten
->> Leemhuis) <regressions@leemhuis.info> wrote:
->>> On 11.02.23 15:27, Linux regression tracking (Thorsten Leemhuis) wrote:
->>>> On 10.02.23 11:07, Javier Martinez Canillas wrote:
->>>>> On 2/10/23 10:22, Vikash Garodia wrote:
->>>>>
->>>>>>> So what should we do about this folks? Since not allowing the driver to probe on
->>>>>>> at least SC7180 is a quite serious regression, can we revert for now until a proper
->>>>>>> fix is figured out?
->>>>>> I am able to repro this issue on sc7180 and discussing with firmware team on the cause
->>>>>> of reset failure. The original patch was raised for fixing rare SMMU faults during warm
->>>>>> boot of video hardware. Hence looking to understand the regressing part before we
->>>>>> proceed to revert.
->>>>> Great, if you are working on a proper fix then that would be much better indeed.
->>>> Yeah, that's great, but OTOH: there is almost certainly just one week
->>>> before 6.2 will be released. Ideally this should be fixed by then.
->>>> Vikash, do you think that's in the cards? If not: why not revert this
->>>> now to make sure 6.2 works fine?
->>> Hmm, no reply. And we meanwhile have Wednesday and 6.2 is almost
->>> certainly going to be out on Sunday. And the problem was called "a quite
->>> serious regression" above. So why not quickly fix this with the revert,
->>> as proposed earlier?
->>> Vikash? Javier?
->>
->> I agree with you, that we should land this revert and then properly
->> fix the page fault issue in v6.3.
->>
->> But it's not my call, the v4l2/media folks have to decide that.
-> 
-> In that case: Mauro, what's your opinion here?
-> 
-> Thread starts here:
-> https://lore.kernel.org/lkml/20230207102254.1446461-1-javierm@redhat.com/
-> 
-> Regression report:
-> https://lore.kernel.org/lkml/Y9LSMap%2BjRxbtpC8@google.com/
+Hi,=0D=0A=0D=0AIn case you really want take-offs for a developmen=
+t project, we ought to be your consultancy of decision. Reach out=
+ to us assuming that you have any undertakings for departure whic=
+h could utilize our administrations.=0D=0A=0D=0ASend over the pla=
+ns and notice the exact extent of work you need us to assess.=0D=0A=
+We will hit you up with a statement on our administration charges=
+ and turnaround time.=0D=0AIn case you endorse that individual st=
+atement then we will continue further with the gauge.=0D=0A=0D=0A=
+For a superior comprehension of our work, go ahead and ask us que=
+stions .=0D=0A=0D=0AKind Regards=0D=0ALeo Burgess	=0D=0ADreamland=
+ Estimation, LLC
 
-No reply from Mauro and Linus chose to not apply the revert I pointed
-him to. That at this point leads to the question:
-
-Vikash, did you or somebody else make any progress to fix this properly?
-
-Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
---
-Everything you wanna know about Linux kernel regression tracking:
-https://linux-regtracking.leemhuis.info/about/#tldr
-If I did something stupid, please tell me, as explained on that page.
-
-#regzbot poke
