@@ -2,92 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4031B69DB73
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 08:50:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1498369DC57
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 09:45:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233484AbjBUHuy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 02:50:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44192 "EHLO
+        id S233500AbjBUIoq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 03:44:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233407AbjBUHuw (ORCPT
+        with ESMTP id S232613AbjBUIop (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 02:50:52 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66AC91D901
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 23:50:50 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id p8so3505285wrt.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 23:50:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Hjfg64gDGO7h14TEC4RS/AXyVKIdDfjATSF2lUKEAMk=;
-        b=MnJqfF8saYIdGPGzzEZegsn2Vhtv4zmyjBE0K3UA2uzL9Pd5fyWiDkZf0nqrhUxBAA
-         T+AISA+Sl3+s7/EcuvPHrI42jRxu7ag3EwRMMbfPDyx54fepvx8ILyc/79eyW2PMf0p7
-         PRIcqJv0DXCGnHaN0lLKfqu8+Ex1X34vNF4vH+Y89l39JDcHFQ8Ojvh9z+XkEYhxIQv9
-         4xhWxDJtpQ624+jpMntoSPNgOIWiiXBZ48UpYETNNCL7wawrCBjF7UIhudtt7ZwHLtJS
-         /1SwzmbJfWZJE0/SXaiL8YRltkcYPQRH54FMtoawjJj7eQJ1mmMmt/bRVUORDjiZ/SjS
-         7dMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hjfg64gDGO7h14TEC4RS/AXyVKIdDfjATSF2lUKEAMk=;
-        b=FSYhNiiKdQUoPBwtkOZeqrLNUubrrzkHDeIMKpKQm933mUhUKt5B1yPqTlwYvTfWJx
-         38YWatWJfn1oq5ZMZsxfC8+xXJbwhPCVHiuQkC1oa6qXPxN1KshPcXok9TiPDS8ot8dQ
-         yVkX70Icjmk/L9Nl4TjfmnVga+p1o+WTPlBr7/R4MpbE2ceSOZZYNQcqnHiaxdWZYtt7
-         IRaM2rM3U1XOUufQ+294QZbFFpPBhdRT7feEpPa2xUtHT0yiyuokNwaMGQoCMZmkY2m3
-         T8fY94y0hMryc98ZlHrTk2U6j6v/FYPUUvnkC0/eq91+G693kGNYXgHsMCgQbaOPZ28Z
-         8Neg==
-X-Gm-Message-State: AO0yUKW0JsDIuztc/ZFRisOtfhs/XlixkXGtm9uctEW/opJwf9+inoC3
-        MIPwklW6UKfsvvpztFknRaanqA==
-X-Google-Smtp-Source: AK7set97tfEfb+9jEmaIbBvjUjYHM1C/RcXs0xI1hR9WFaCJoLbuEO79GObcuG1M2I6FlEJKYM/nSA==
-X-Received: by 2002:adf:e242:0:b0:2c5:8c04:c6a8 with SMTP id bl2-20020adfe242000000b002c58c04c6a8mr3548223wrb.51.1676965848828;
-        Mon, 20 Feb 2023 23:50:48 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id j16-20020a056000125000b002c5706f7c6dsm711101wrx.94.2023.02.20.23.50.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Feb 2023 23:50:48 -0800 (PST)
-Message-ID: <78f841f1-1e1a-9eb9-940d-6e11dd18d86f@linaro.org>
-Date:   Tue, 21 Feb 2023 07:50:46 +0000
+        Tue, 21 Feb 2023 03:44:45 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 820E64C14;
+        Tue, 21 Feb 2023 00:44:40 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31L3gt5B000674;
+        Tue, 21 Feb 2023 08:44:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=lJZJskjBOHx/iQdeXfb+9gcEIWXD+YzO5L8KNARmCUc=;
+ b=JIGb11jPom7O65wXfWmsXc8rEIVlR109S00E+EHfIEe14QXLycXvd86pUskbfj0TpBEG
+ 9u8nQsVpwCc7tKekoLq4nj7sDvhbHiwe7XCjPTpjbHTHNyQkm6HerTu6u9pgsusG9FvM
+ s775y01CrKGf1IvlEF5xXWp5iPGeqyOLDCQ5Da7NYhtMh9XfbrVcizuIUvTpuuvN55jz
+ GbRq97MzE9rOaB4a0ZDQfWo/Wz/MkKWGkxTm1w0GMug+clG7wOUb8aevI/kpRI5Aeb16
+ 7cdPD7BA+4B2vIaBzaaj6VemEx64cHtLNU8BWPqytQfDzpKL75T1mx5lxgjd1wv8/LM+ zg== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ntp98fcq4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 21 Feb 2023 08:44:31 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31L8iUwq027469
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 21 Feb 2023 08:44:30 GMT
+Received: from [10.251.44.63] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 21 Feb
+ 2023 00:44:26 -0800
+Message-ID: <8243cc42-236c-20e3-74dc-1f130ab1dcf6@quicinc.com>
+Date:   Tue, 21 Feb 2023 10:44:24 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v10 09/26] gunyah: rsc_mgr: Add VM lifecycle RPC
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH v7 0/4] media: camss: sm8250: Virtual channels support for
+ SM8250
 Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212343.3311875-1-quic_eberman@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230214212343.3311875-1-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <akapatra@quicinc.com>, <jzala@quicinc.com>, <todor.too@gmail.com>
+CC:     <agross@kernel.org>, <konrad.dybcio@somainline.org>,
+        <mchehab@kernel.org>, <cgera@qti.qualcomm.com>,
+        <gchinnab@quicinc.com>, <ayasan@qti.qualcomm.com>,
+        <laurent.pinchart@ideasonboard.com>
+References: <20221209094037.1148-1-quic_mmitkov@quicinc.com>
+ <662d68f7-6160-263d-6e4d-e3687d5cf8eb@quicinc.com>
+ <7565d38c-d8f4-39e0-8547-fbb511f6d649@quicinc.com>
+ <894e3ce6-0f2b-608b-ec4e-09083704f429@linaro.org>
+From:   "Milen Mitkov (Consultant)" <quic_mmitkov@quicinc.com>
+In-Reply-To: <894e3ce6-0f2b-608b-ec4e-09083704f429@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5hFQGPJ6yhUNnT9m3V5Ri1iNguX4ry4Y
+X-Proofpoint-ORIG-GUID: 5hFQGPJ6yhUNnT9m3V5Ri1iNguX4ry4Y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-21_04,2023-02-20_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 mlxscore=0
+ adultscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 impostorscore=0 spamscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302210074
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -95,140 +87,166 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 14/02/2023 21:23, Elliot Berman wrote:
-> 
-> Add Gunyah Resource Manager RPC to launch an unauthenticated VM.
-> 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+On 20/02/2023 14:26, Bryan O'Donoghue wrote:
+> On 20/02/2023 12:18, Milen Mitkov (Consultant) wrote:
+>> On 31/01/2023 11:00, Milen Mitkov (Consultant) wrote:
+>>> On 09/12/2022 11:40, quic_mmitkov@quicinc.com wrote:
+>>>> From: Milen Mitkov <quic_mmitkov@quicinc.com>
+>>>>
+>>>> For v7:
+>>>> - Fix an issue with output state for different versions of the IFE
+>>>>    hardware (for platforms different from QRB5, e.g. QRB3).
+>>>>
+>>>> For v6:
+>>>> - Fix for a potential race condition in csid
+>>>> - More detailed description on how to use/test this feature in
+>>>>    user-space in the last patch.
+>>>>
+>>>> For v5:
+>>>> - Use entity->use_count instead of s_stream subdev call ret code to
+>>>>    check if another instance of the pipeline is running. Prevents an
+>>>>    error on 6.1 and up, when stopping one of several simultaneous
+>>>>    instances.
+>>>> - flush buffers instead of just returning if the pipeline didn't 
+>>>> start.
+>>>>
+>>>> For v4:
+>>>> - fixes the warning reported by the kernel test robot
+>>>> - tiny code change to enable the vc functionality with the 
+>>>> partially-applied
+>>>>    multistream patches on linux-next (tested on tag:next-20221010)
+>>>>
+>>>> For v3:
+>>>> - setting the sink pad format on the CSID entity will now propagate 
+>>>> the
+>>>>    format to the source pads to keep the subdev in a valid internal 
+>>>> state.
+>>>> - code syntax improvements
+>>>>
+>>>> For v2:
+>>>> - code syntax improvements
+>>>> - The info print for the enabled VCs was demoted to a dbg print. 
+>>>> Can be
+>>>>    enabled with dynamic debug, e.g.:
+>>>> echo "file drivers/media/platform/qcom/camss/* +p" > 
+>>>> /sys/kernel/debug/dynamic_debug/control
+>>>>
+>>>> NOTE: These changes depend on the multistream series, that as of yet
+>>>> is still not merged upstream. However, part of the
+>>>> multistream patches are merged in linux-next (tested on
+>>>> tag:next-20221010), including the patch that introduces the
+>>>> video_device_pipeline_alloc_start() functionality. This allows
+>>>> applying and using this series on linux-next without applying the
+>>>> complete multistream set.
+>>>>
+>>>> The CSID hardware on SM8250 can demux the input data stream into
+>>>> maximum of 4 multiple streams depending on virtual channel (vc)
+>>>> or data type (dt) configuration.
+>>>>
+>>>> Situations in which demuxing is useful:
+>>>> - HDR sensors that produce a 2-frame HDR output, e.g. a light and a 
+>>>> dark frame
+>>>>    (the setup we used for testing, with the imx412 sensor),
+>>>>    or a 3-frame HDR output - light, medium-lit, dark frame.
+>>>> - sensors with additional metadata that is streamed over a different
+>>>>    virtual channel/datatype.
+>>>> - sensors that produce frames with multiple resolutions in the same 
+>>>> pixel
+>>>>    data stream
+>>>>
+>>>> With these changes, the CSID entity has, as it did previously, a 
+>>>> single
+>>>> sink port (0), and always exposes 4 source ports (1, 2,3, 4). The
+>>>> virtual channel configuration is determined by which of the source 
+>>>> ports
+>>>> are linked to an output VFE line. For example, the link below will
+>>>> configure the CSID driver to enable vc 0 and vc 1:
+>>>>
+>>>> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+>>>> media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
+>>>>
+>>>> which will be demuxed and propagated into /dev/video0
+>>>> and /dev/video1 respectively. With this, the userspace can use
+>>>> any normal V4L2 client app to start/stop/queue/dequeue from these
+>>>> video nodes. Tested with the yavta app.
+>>>>
+>>>> The format of each RDI channel of the used VFE(s) (msm_vfe0_rdi0,
+>>>> msm_vfe0_rdi1,...) must also be configured explicitly.
+>>>>
+>>>> Note that in order to keep a valid internal subdevice state,
+>>>> setting the sink pad format of the CSID subdevice will propagate
+>>>> this format to the source pads. However, since the CSID hardware
+>>>> can demux the input stream into several streams each of which can
+>>>> be a different format, in that case each source pad's
+>>>> format must be set individually, e.g.:
+>>>>
+>>>> media-ctl -V '"msm_csid0":1[fmt:SRGGB10/3840x2160]'
+>>>> media-ctl -V '"msm_csid0":2[fmt:SRGGB10/960x540]'
+>>>>
+>>>> Milen Mitkov (4):
+>>>>    media: camss: sm8250: Virtual channels for CSID
+>>>>    media: camss: vfe: Reserve VFE lines on stream start and link to 
+>>>> CSID
+>>>>    media: camss: vfe-480: Multiple outputs support for SM8250
+>>>>    media: camss: sm8250: Pipeline starting and stopping for multiple
+>>>>      virtual channels
+>>>>
+>>>>   .../platform/qcom/camss/camss-csid-gen2.c     | 54 ++++++++++------
+>>>>   .../media/platform/qcom/camss/camss-csid.c    | 44 +++++++++----
+>>>>   .../media/platform/qcom/camss/camss-csid.h    | 11 +++-
+>>>>   .../media/platform/qcom/camss/camss-vfe-170.c |  4 +-
+>>>>   .../media/platform/qcom/camss/camss-vfe-480.c | 61 
+>>>> ++++++++++++-------
+>>>>   .../platform/qcom/camss/camss-vfe-gen1.c      |  4 +-
+>>>>   drivers/media/platform/qcom/camss/camss-vfe.c |  1 +
+>>>>   .../media/platform/qcom/camss/camss-video.c   | 21 ++++++-
+>>>>   drivers/media/platform/qcom/camss/camss.c     |  2 +-
+>>>>   9 files changed, 138 insertions(+), 64 deletions(-)
+>>>
+>>> Hi guys,
+>>>
+>>> just a ping for this series.
+>>>
+>>> Laurent, I sent you an email with answers to the questions you 
+>>> requested. I read your reply that you'll review these changes in the 
+>>> context of the multi-stream API, but this series doesn't really use 
+>>> the multi-stream API, just a note.
+>>>
+>>> Cheers,
+>>>
+>>> Milen
+>>>
+>> Hi there,
+>>
+>> Just another ping..:)
+>>
+>> Please let me know if there's anything I could do (improve/fix/code 
+>> differently/etc.) to help get this series merged.
+>>
+>>
+>> Best Regards,
+>>
+>> Milen
+>>
+>>
+>>
+>
+> Well, we need to re-verify it works on linux-next.
+>
+> Other than that it seems OK to me.
+>
 > ---
->   drivers/virt/gunyah/Makefile      |   2 +-
->   drivers/virt/gunyah/rsc_mgr.h     |  45 ++++++
->   drivers/virt/gunyah/rsc_mgr_rpc.c | 226 ++++++++++++++++++++++++++++++
->   include/linux/gunyah_rsc_mgr.h    |  73 ++++++++++
->   4 files changed, 345 insertions(+), 1 deletion(-)
->   create mode 100644 drivers/virt/gunyah/rsc_mgr_rpc.c
-> 
-> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
-> index cc864ff5abbb..de29769f2f3f 100644
-> --- a/drivers/virt/gunyah/Makefile
-> +++ b/drivers/virt/gunyah/Makefile
-> @@ -2,5 +2,5 @@
->   
->   obj-$(CONFIG_GUNYAH) += gunyah.o
->   
-> -gunyah_rsc_mgr-y += rsc_mgr.o
-> +gunyah_rsc_mgr-y += rsc_mgr.o rsc_mgr_rpc.o
->   obj-$(CONFIG_GUNYAH) += gunyah_rsc_mgr.o
-> diff --git a/drivers/virt/gunyah/rsc_mgr.h b/drivers/virt/gunyah/rsc_mgr.h
-> index d4e799a7526f..7406237bc66d 100644
-> --- a/drivers/virt/gunyah/rsc_mgr.h
-> +++ b/drivers/virt/gunyah/rsc_mgr.h
-> @@ -74,4 +74,49 @@ struct gh_rm;
->   int gh_rm_call(struct gh_rm *rsc_mgr, u32 message_id, void *req_buff, size_t req_buff_size,
->   		void **resp_buf, size_t *resp_buff_size);
->   
-<----------------------------
-> +/* Message IDs: VM Management */
-> +#define GH_RM_RPC_VM_ALLOC_VMID			0x56000001
-> +#define GH_RM_RPC_VM_DEALLOC_VMID		0x56000002
-> +#define GH_RM_RPC_VM_START			0x56000004
-> +#define GH_RM_RPC_VM_STOP			0x56000005
-> +#define GH_RM_RPC_VM_RESET			0x56000006
-> +#define GH_RM_RPC_VM_CONFIG_IMAGE		0x56000009
-> +#define GH_RM_RPC_VM_INIT			0x5600000B
-> +#define GH_RM_RPC_VM_GET_HYP_RESOURCES		0x56000020
-> +#define GH_RM_RPC_VM_GET_VMID			0x56000024
-> +
-> +struct gh_rm_vm_common_vmid_req {
-> +	__le16 vmid;
-> +	__le16 reserved0;
-> +} __packed;
-> +
-> +/* Call: VM_ALLOC */
-> +struct gh_rm_vm_alloc_vmid_resp {
-> +	__le16 vmid;
-> +	__le16 reserved0;
-> +} __packed;
-> +
-> +/* Call: VM_STOP */
-> +struct gh_rm_vm_stop_req {
-> +	__le16 vmid;
-> +#define GH_RM_VM_STOP_FLAG_FORCE_STOP	BIT(0)
-> +	u8 flags;
-> +	u8 reserved;
-> +#define GH_RM_VM_STOP_REASON_FORCE_STOP		3
-> +	__le32 stop_reason;
-> +} __packed;
-> +
-> +/* Call: VM_CONFIG_IMAGE */
-> +struct gh_rm_vm_config_image_req {
-> +	__le16 vmid;
-> +	__le16 auth_mech;
-> +	__le32 mem_handle;
-> +	__le64 image_offset;
-> +	__le64 image_size;
-> +	__le64 dtb_offset;
-> +	__le64 dtb_size;
-> +} __packed;
-> +
-> +/* Call: GET_HYP_RESOURCES */
-> +
--------------------------------->
+> bod
 
-All the above structures are very much internal to rsc_mgr_rpc.c and 
-interface to the rsc_mgr_rpc is already abstracted with function arguments
+Thanks Bryan,
 
-ex:
-
-int gh_rm_vm_configure(struct gh_rm *rm, u16 vmid, enum 
-gh_rm_vm_auth_mechanism auth_mechanism, u32 mem_handle, u64 
-image_offset, u64 image_size, u64 dtb_offset, u64 dtb_size)
-
-So why do we need these structs and defines in header file at all?
-you should proabably consider moving them to the .c file.
+I just re-tested on latest linux-next (next-20230221 tag) and the set 
+applies and, judging by the standard set of tests I did, works as 
+expected and doesn't break anything.
 
 
->   #endif
-> diff --git a/drivers/virt/gunyah/rsc_mgr_rpc.c b/drivers/virt/gunyah/rsc_mgr_rpc.c
-> new file mode 100644
-> index 000000000000..4515cdd80106
-> --- /dev/null
-> +++ b/drivers/virt/gunyah/rsc_mgr_rpc.c
-> @@ -0,0 +1,226 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/gunyah_rsc_mgr.h>
-> +
+Best Regards,
 
-Why new line here?
+Milen
 
-> +#include "rsc_mgr.h"
-> +
-> +/*
-...
 
-> +int gh_rm_vm_configure(struct gh_rm *rm, u16 vmid, enum gh_rm_vm_auth_mechanism auth_mechanism,
-> +		u32 mem_handle, u64 image_offset, u64 image_size, u64 dtb_offset, u64 dtb_size)
-> +{
-> +	struct gh_rm_vm_config_image_req req_payload = { 0 };
-> +	size_t resp_size;
-> +	void *resp;
-> +
-> +	req_payload.vmid = cpu_to_le16(vmid);
-> +	req_payload.auth_mech = cpu_to_le16(auth_mechanism);
-> +	req_payload.mem_handle = cpu_to_le32(mem_handle);
-> +	req_payload.image_offset = cpu_to_le64(image_offset);
-> +	req_payload.image_size = cpu_to_le64(image_size);
-> +	req_payload.dtb_offset = cpu_to_le64(dtb_offset);
-> +	req_payload.dtb_size = cpu_to_le64(dtb_size);
-> +
-> +	return gh_rm_call(rm, GH_RM_RPC_VM_CONFIG_IMAGE, &req_payload, sizeof(req_payload),
-> +			&resp, &resp_size);
-> +}
-> +
-
---srini
