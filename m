@@ -2,111 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 196A169D83F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 03:01:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8526B69DA5F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 06:28:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232642AbjBUCBa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Feb 2023 21:01:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45542 "EHLO
+        id S233250AbjBUF2O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 00:28:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232324AbjBUCB3 (ORCPT
+        with ESMTP id S232556AbjBUF2N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Feb 2023 21:01:29 -0500
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D199E1DBA1;
-        Mon, 20 Feb 2023 18:01:28 -0800 (PST)
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-1720600a5f0so3651679fac.11;
-        Mon, 20 Feb 2023 18:01:28 -0800 (PST)
+        Tue, 21 Feb 2023 00:28:13 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6AF8A275
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 21:28:10 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id x10so11640077edd.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Feb 2023 21:28:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3lSksC8fsXMKoURwVyXHoZg6ZiRAH8wXHUe/MOqa9l0=;
+        b=KgzsXP/uLCotz14QrXSx9HGgAAwq+EX1iCA0khBMMYYZ4bpp19cmcKb+PvLCubWlUR
+         L0PyVKke1NoF93sTmBRx1gZq1sxFHIYNyFNUDys7r8hw+F8kvjs3+zQ6IdvWkgP4rKaF
+         OKRg/wlB+Ns2Q1SuVRevuPq3Vlsk8ARftOOfNgSRagXT77pd5Q5PZo5ZOvAm8XQaB08o
+         qzlSJE2K3oP0G+twaGkjWT2+1aU8RWOHzTbbwUv8rYEOXPkp+vOkkSY7yVnkDGpII3gY
+         SSaWBzjmIqFZejF2r0vJWgUddc1mFcaDQpM8cxSfhBJucd4o4rT4Noo8xY2bPCUzoPcy
+         NN9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0jYXquKsgZIFAoZjrn3r51f5Nrmgo9YGfeaRxylpkY0=;
-        b=rPLajTMuLAzrMw8uO3UntI9Im6eGJcCXgNWgJ1yjHVnnJMZn0mcsZMHk0M/FbcyvOJ
-         /c12HxH64uCirjIJcAM4QtWyBehr8xO6qSOle6U9BgiUHBXgDMusfibuOodacebOUSDH
-         o1OFgf5yyejX3YavvVdzxfuW3mSS5uRSBCcW9pJO9yCMB1FVqyxTgVx+fe1UhxIe/Yvu
-         oOZOFX7Z+V4PWAUNaz+FYdt7QVMcAFY5iIAwNQMzrPCFglTsLZqtrDaMaIXXoko22rRp
-         lEpPIlxmY0g9Wqz+rH5Nor6BmlX/Rqe171jwgDbOEutNg6o75zp3ndwLaXq9+/OgZehr
-         z4yg==
-X-Gm-Message-State: AO0yUKVaS/sX+XTZXgZSQzReXtC3I+yty0FuGK014y6fYpWhvZVR9t7t
-        hYdi3gCOBM/5IWfPcKUieg==
-X-Google-Smtp-Source: AK7set9d0zjKNMsdi8TCvYfsVpTCo9aao00Vu6+Asj/xnVj0OI/05cUknCxmTm4mIs3fDkKxERnruw==
-X-Received: by 2002:a05:6870:fba9:b0:172:2d00:9a4c with SMTP id kv41-20020a056870fba900b001722d009a4cmr140644oab.34.1676944888035;
-        Mon, 20 Feb 2023 18:01:28 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id i3-20020a056870864300b001631c92e8b6sm4935988oal.4.2023.02.20.18.01.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Feb 2023 18:01:27 -0800 (PST)
-Received: (nullmailer pid 810154 invoked by uid 1000);
-        Tue, 21 Feb 2023 02:01:26 -0000
-Date:   Mon, 20 Feb 2023 20:01:26 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, marijn.suijten@somainline.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Gene Chen <gene_chen@richtek.com>, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings usb: typec: rt1711h: Use a generic node
- name
-Message-ID: <20230221020126.GA797846-robh@kernel.org>
-References: <20230216121211.3964433-1-konrad.dybcio@linaro.org>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3lSksC8fsXMKoURwVyXHoZg6ZiRAH8wXHUe/MOqa9l0=;
+        b=dC0sOPUVk/Jh9YIdXh8N8AA6tkM9vcv3P/NgT0QvzzY8ipkGsI7SvdXO+Eunol7/YI
+         km9oxQn1XCm9/pP25Fr9Z/CW74R+kibF2TQizWO4RPgQUcwbNZp3lHNmADISUGGPfAM4
+         WVa6Iy0PA+igF+kfsmGxYGFgIxw5+lYoV++VYSd7WXUEdxwWILfR9/hNNfuiiB6FSmyv
+         xNPIdfNNZ6cD5D3DeVdcxz+aazffv7gUFntSVJJAhup2f193E190cocIraLHojn+mINS
+         Hq+SyADSRHRr2+37DYQacGD51QW8rowoZ5dV12oqLgCil43kGlXXnQ3eLArWgX2f0CNQ
+         t23Q==
+X-Gm-Message-State: AO0yUKXYhUT3hzXd0vVnn1kSG90aAIBJA8ltrimtVpryeCq5rpJaNa8l
+        DNn798G4QQgULcwNC4fGV8ciTrsm9aSdOF+j9P4CHQ==
+X-Google-Smtp-Source: AK7set+j3EAMYoASgPes70zdAtHz5d7vB7lxtsyL/bL08jysUR8+oBSACyTLLBr3ntjp4P4/wn/ov/ari59sXlr14bk=
+X-Received: by 2002:a17:906:e217:b0:8b1:38d6:9853 with SMTP id
+ gf23-20020a170906e21700b008b138d69853mr5118964ejb.2.1676957289130; Mon, 20
+ Feb 2023 21:28:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230216121211.3964433-1-konrad.dybcio@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+References: <20230216092236.26720-1-quic_tjiang@quicinc.com>
+ <20230218041545.3801-1-steev@kali.org> <DM5PR02MB36863752A525F50AC05662B0EDA49@DM5PR02MB3686.namprd02.prod.outlook.com>
+In-Reply-To: <DM5PR02MB36863752A525F50AC05662B0EDA49@DM5PR02MB3686.namprd02.prod.outlook.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Date:   Mon, 20 Feb 2023 23:27:57 -0600
+Message-ID: <CAKXuJqigh=5LMei4ym5s4vKCxkMR5vfM++k7Jk7C4Ge-GRVK6A@mail.gmail.com>
+Subject: Re: [PATCH v2] Bluetooth: hci_qca: Add support for Qualcomm Bluetooth
+ SoC QCA2066
+To:     "Tim Jiang (QUIC)" <quic_tjiang@quicinc.com>
+Cc:     "johan.hedberg@gmail.com" <johan.hedberg@gmail.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "marcel@holtmann.org" <marcel@holtmann.org>,
+        "mka@chromium.org" <mka@chromium.org>,
+        "Balakrishna Godavarthi (QUIC)" <quic_bgodavar@quicinc.com>,
+        "Harish Bandi (QUIC)" <quic_hbandi@quicinc.com>,
+        "Hemant Gupta (QUIC)" <quic_hemantg@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 16, 2023 at 01:12:10PM +0100, Konrad Dybcio wrote:
-> Node names should be generic. Use typec-portc@ instead of rt1711h@.
+Hi Tim,
 
-What's generic? Others use just 'typec' IIRC. We must first define the 
-generic name for everyone, then do this. It doesn't really work defining 
-this in each binding either as there's no checking a generic name is in 
-fact used. We either need a class type schema (which don't work when 
-devices support multiple classes) or a meta-schema checking $nodename 
-patterns match a set of known node names.
+On Mon, Feb 20, 2023 at 1:04 AM Tim Jiang (QUIC)
+<quic_tjiang@quicinc.com> wrote:
+>
+> Steve, sorry I does not know why I can not send out the email as have som=
+e warning  , so I removed the code part, you can refer to my inline comment=
+s.
+>
 
-> 
-> Fixes: a72095ed8e65 ("dt-bindings usb: typec: rt1711h: Add binding for Richtek RT1711H")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml b/Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml
-> index 1999f614c89b..7431c25d82ce 100644
-> --- a/Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml
-> +++ b/Documentation/devicetree/bindings/usb/richtek,rt1711h.yaml
-> @@ -17,6 +17,9 @@ description: |
->    support for alternative interfaces of the Type-C specification.
->  
->  properties:
-> +  $nodename:
-> +    pattern: "^typec-portc@[0-9a-f]+$"
-> +
->    compatible:
->      enum:
->        - richtek,rt1711h
-> @@ -55,7 +58,7 @@ examples:
->        #address-cells = <1>;
->        #size-cells = <0>;
->  
-> -      rt1711h@4e {
-> +      typec-portc@4e {
->          compatible = "richtek,rt1711h";
->          reg = <0x4e>;
->          interrupts-extended = <&gpio26 3 IRQ_TYPE_LEVEL_LOW>;
-> -- 
-> 2.39.1
-> 
+No worries, I understand!
+
+> Regards.
+> Tim
+>
+> >This patch adds support for QCA2066 firmware patch and nvm downloading.
+>
+> Is this actually correct?  I ask because here I have the WCN6855 in the L=
+enovo Thinkpad X13s, and when attempting to use this driver, I end up with =
+a board id of 08c, and according to the firmware, we should have a board id=
+ of b8c.
+>
+> [Tim] correct, I does not know where you get the WCN6855 firmware, for ou=
+r side, we will use different name rule for android and linux , for android=
+ , we will add "b" in the front of board id, for linux we will not add this=
+ bit.
+
+So, the Thinkpad X13s is... well, it's a Thinkpad, and it comes with
+Windows.  So the firmware that we have, comes from.... them? qualcomm?
+I honestly don't know the provenance of it, just that I grabbed the
+files from the Windows partition:
+
+steev@wintermute:~/firmware/new/qcbtfmuart_hsp8280.inf_arm64_69bd85311531b3=
+4a$
+ls
+bsrc_bt.bin hpnv10.b03 hpnv20.b80 hpnv20.b8f hpnv21.ba2 hpnv21g.b9f
+hpnv21g.bb8 hpbtfw10.tlv hpnv10.b04 hpnv20.b82 hpnv20.bin hpnv21.ba3
+hpnv21g.ba0 hpnv21g.bin hpbtfw10.ver hpnv10.b06 hpnv20.b84 hpnv21.b8c
+hpnv21.ba4 hpnv21g.ba1 qcbtfmuart_hsp8280.cat hpbtfw20.tlv hpnv10.b07
+hpnv20.b85 hpnv21.b9f hpnv21.bb8 hpnv21g.ba2 qcbtfmuart_hsp8280.inf
+hpbtfw20.ver hpnv10.b08 hpnv20.b8c hpnv21.ba0 hpnv21.bin hpnv21g.ba3
+qcbtfmuart_hsp8280.PNF hpbtfw21.tlv hpnv10.bin hpnv20.b8e hpnv21.ba1
+hpnv21g.b8c hpnv21g.ba4 qcbtfmuart_hsp8280.sys
+
+So, all of the nvm patches that are provided by them with the windows
+driver, all start with 'b'.
+
+> I'm not sure how to phrase this, and just thinking out loud - if the qca2=
+066 is the same as the wcn6855, just with an additional antenna, perhaps th=
+ere should be some way to indicate it?  In my patchset, I had a print of th=
+e name "Setting up wcn6855" and locally, I combined your patch with mine, a=
+lthough dropping the above qca2066 hunks in favor of my already written wcn=
+6855 hunks, and then combined the two in the print so it says "Setting up q=
+ca2066/wcn6855" - is there any way to differentiate between what qti consid=
+ers a qca2066 and what is considered the wcn6855?
+> [Tim] steve ,as I mentioned previously, we have different board id  for q=
+ca2066 and wcn6855 , and then which will use different nvm config files bas=
+ed on board id.
+>
+I get that; I'm thinking of end users, who may know that they have a
+wcn6855, but if the messages are qca2066, they may not understand that
+it's the same chip.
+
+> Below is dmesg output, and so if we go by the wifi device check, we end u=
+p seeing that we get
+>
+> chip_id 0x2
+> chip_family 0xb
+> board_id 0x8c
+> soc_id 0x400c0210
+>
+> [    9.724834] ath11k_pci 0006:01:00.0: chip_id 0x2 chip_family 0xb board=
+_id 0x8c soc_id 0x400c0210
+> [    9.724850] ath11k_pci 0006:01:00.0: fw_version 0x110b196e fw_build_ti=
+mestamp 2022-12-22 12:54 fw_build_id WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SI=
+LICONZ_LITE-3.6510.23
+> [    9.742346] ath11k_pci 0006:01:00.0: failed to fetch board data for bu=
+s=3Dpci,vendor=3D17cb,device=3D1103,subsystem-vendor=3D17cb,subsystem-devic=
+e=3D0108,qmi-chip-id=3D2,qmi-board-id=3D140 from ath11k/WCN6855/hw2.1/board=
+-2.bin
+> [    9.742358] ath11k_pci 0006:01:00.0: failed to fetch board.bin from WC=
+N6855/hw2.1
+> [    9.742361] ath11k_pci 0006:01:00.0: qmi failed to fetch board file: -=
+2
+> [    9.742363] ath11k_pci 0006:01:00.0: failed to load board data file: -=
+2
+>
+> But with your driver (mine too for that matter, but then it's just doing =
+the same bid bits)...
+>
+> [    9.081003] Bluetooth: hci0: Frame reassembly failed (-84)
+> [    9.141992] Bluetooth: hci0: QCA Product ID   :0x00000013
+> [    9.141999] Bluetooth: hci0: QCA SOC Version  :0x400c0210
+> [    9.142003] Bluetooth: hci0: QCA ROM Version  :0x00000201
+> [    9.142007] Bluetooth: hci0: QCA Patch Version:0x000038e6
+> [    9.170612] Bluetooth: hci0: QCA controller version 0x02100201
+> [    9.170620] Bluetooth: hci0: QCA Downloading qca/hpbtfw21.tlv
+>
+>
+> [    9.760537] Bluetooth: hci0: QCA board ID len 2,id =3D 0 8c
+> [    9.760547] Bluetooth: hci0: QCA Downloading qca/hpnv21.08c
+> [    9.760638] bluetooth hci0: Direct firmware load for qca/hpnv21.08c fa=
+iled with error -2
+> [    9.760640] Bluetooth: hci0: QCA Failed to request file: qca/hpnv21.08=
+c (-2)
+> [    9.760643] Bluetooth: hci0: QCA Failed to download NVM (-2)
+>
+> Is there another way to check the board id or board family?  Because it's=
+ not coming up with the correct one here.
+> [Tim] as my comments above, the read board id way is correct, only we hav=
+e different name rule for android and linux .
+
+Right, I get that reading the board id is the right way - and if you
+see in my Windows firmware above (the firmware submitted to
+linux-firmware by you only seems to have nvm patches that start with
+'3', and no others..)  I'm saying, should we also read the chip_family
+somehow, since the WiFi firmware seems to properly notice that we are
+chip_family 0xb, however, the bluetooth driver just returns '0'.  And
+neither the submitted firmware, nor the firmware that Lenovo/Qualcomm
+ship to Windows users, have nvm patches that start with 0.
+
+An additional note, neither my driver, nor yours, seems to work with
+BLE.  I cannot connect a pair of AirPods to my Thinkpad in Linux, but
+I am able to do just fine in the Windows installation.  I'm not sure
+if this is a known limitation already in linux or not.
+
+>
+> --steev
