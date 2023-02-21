@@ -2,76 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2249869E62C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 18:45:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F15FF69E639
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 18:47:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234848AbjBURpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 12:45:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57970 "EHLO
+        id S233381AbjBURrQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 12:47:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234069AbjBURpE (ORCPT
+        with ESMTP id S233620AbjBURrO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 12:45:04 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3911234CA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 09:44:59 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id h9so5135520ljq.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 09:44:59 -0800 (PST)
+        Tue, 21 Feb 2023 12:47:14 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58F882E0C7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 09:47:11 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id c12so5353253wrw.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 09:47:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SbC5sP3V4tvxg8poITPffqeiBSYf5mTki8iUVO0MfTU=;
-        b=YTuHJO/cT2gzfESi8zNm1cF+ovCWeN4ypblfk5i+cUWaymjSHjwTVGENfflTPwgw/T
-         2jCWWzKseuNBuyC/Tk9vhGo1dUvXleGiFQ95CIiy6BnFeEvyWHFAJRycHFVRIr4Y6JsI
-         AHsKo6s8kWq/nYKntu4cod1qq2zjgp+OEW1IJBPaRIycWp1M+iPr7edsvTf5ZYkj8onV
-         eaQK3aMZ+FlgS/E9/ixd/Hn/2fS8tI7Vz4vaHoX9Vl9pVW3XR/WF64sF8YnyJd+TJRHo
-         jSOERGvg8xMKmHWzB+xmBmQJoIAOaC0P92nl51T18x7P0XfK3jsXExOBFmc5Ske5Gt+Y
-         YaEQ==
+        bh=mOLW7RcKOMj6wzBV4JkdTKKGO7dmgNUGUYLxw+QcAKg=;
+        b=xuGVkaYUdKGqYhIHiOFe8sDq7BDuQ75ig9yBbfA+FwYWXQtUTq19CQ2xL/BlfJ2iPE
+         i0HzabHfXUrsyciu64QkmIQnXfcbrqkiaIdasGqZzJsvxWrnJSOSZvTkTEykwFqH1hqd
+         z++fVIhyj7/a1cXHVfUBrnptutt7zm16lGxtbmTQG3mpNZ7KPVSLNz6zYbQ/zIIUGPWW
+         r5N5U0TLG9HyPxBRUTYEoThfJOD11g3PH1BlWV7rjyUfXBzADTiLnrZRypuOrHFXwlQz
+         d/vkkksJk/XqGMzerIll5m+F5DEewhxz1ZaR6jT+/XCuu0/AZ3D1Z0R2f5W8R6JPho28
+         CZcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SbC5sP3V4tvxg8poITPffqeiBSYf5mTki8iUVO0MfTU=;
-        b=VRgWeyg+1Iy8aXoeHxfb5d0Z+ezX7/5qCoe4YfzMYjVirlkLey1IsOIZw2SKNTE3FG
-         QNUT1XnhAu/i1RcRcpT1O+YI7cHId/Rg7bvHtoZNNKjtiNhLmcpftXGRetS2U1FIG5ef
-         hzj5hsRJ1kJ1Qy9Cw+UqnogCDeIZGmvNWUTOcPg1gxdWutq8M6RM9TGe96t8EId7bbKJ
-         W932o8eZjCZxgSVXs2I3YG5vxLYXOH4HvOZq5OwxXSKKybNGep8v9GvRB3p4RZjG0boF
-         5ViuTny6H2e7BJfYOoMCGaMMuCHbE/V44x/ZTjqFzEcMr55swmKMJ7mKfLvMg+xqS/ag
-         nQGA==
-X-Gm-Message-State: AO0yUKUQtUzJcL30/PA9KdjEi5G1HO93as2zd8fwrxhh+tBB6ikPn8K6
-        8X9UDKwLju+20DVBxWabh6Cv7nNnYRhF/6w4
-X-Google-Smtp-Source: AK7set879K1Vi+y3/+uZVasOTDhk1xxr/cHP8DNMLeLPuEKpxk6lQ/H0S5WhJxZ4r3G8sI0qOtKB7g==
-X-Received: by 2002:a05:651c:b0d:b0:293:7bce:2374 with SMTP id b13-20020a05651c0b0d00b002937bce2374mr2608864ljr.33.1677001497854;
-        Tue, 21 Feb 2023 09:44:57 -0800 (PST)
-Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
-        by smtp.gmail.com with ESMTPSA id k16-20020a05651c10b000b00290517c661asm203301ljn.40.2023.02.21.09.44.56
+        bh=mOLW7RcKOMj6wzBV4JkdTKKGO7dmgNUGUYLxw+QcAKg=;
+        b=E+HlnN2YW8ijRrgUgdTY9dzIQlYwxpAHGe/mhnyF+lIStfi8KVVXk6VmP/cOC6cxBq
+         ZHEi9OHZXewRr8XUYSLtUfaBhNEPkg0rAboNoRivghKWBiu4vY6z9x1lwjpKS2wZPNZJ
+         dwR8XqH1pppvkoEuN8qEpFi//JCuxoZnqSFeK6+vw2HXwvJmRPqBen7qwQXvylOguLi5
+         6ve/rUC8VnGb8Vr7OVKAuf/S7HZ8CN12Ojn3yhaJdnpJKRzslzytCbxGH/HVmOzAjmgS
+         g2ksSpdgeC2325bfS7ukxwjckcD4gcQ/KiHHJKacYcZgdZPUrhIlkJsK42CnRegnm44T
+         1EFw==
+X-Gm-Message-State: AO0yUKXdVo/peVyOPk9zMnvL2V8iiEmVO6A560lm7HYEOCtuh5ldrYuV
+        eKwTkGpK5GaPXujHq7mLD2TRiA==
+X-Google-Smtp-Source: AK7set/k4QWtz5DOn4AY85c7F6LSJIWv9nqR8Svr+OWmkOD2pEDdiJwVsDYE6z3IgSNBHmR+R4qGkg==
+X-Received: by 2002:a05:6000:1c04:b0:2c5:483f:1580 with SMTP id ba4-20020a0560001c0400b002c5483f1580mr3627719wrb.12.1677001629794;
+        Tue, 21 Feb 2023 09:47:09 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id q2-20020adff502000000b002c573a6216fsm3530970wro.37.2023.02.21.09.47.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Feb 2023 09:44:57 -0800 (PST)
-Message-ID: <9a3e9c76-ba70-6ccc-3ade-fa08cdff571e@linaro.org>
-Date:   Tue, 21 Feb 2023 18:44:55 +0100
+        Tue, 21 Feb 2023 09:47:09 -0800 (PST)
+Message-ID: <314a567a-7e85-a293-ab16-c03a049538fa@linaro.org>
+Date:   Tue, 21 Feb 2023 17:47:08 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sa8775p: add cpufreq node
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v10 18/26] virt: gunyah: Translate gh_rm_hyp_resource into
+ gunyah_resource
+Content-Language: en-US
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230221150543.283487-1-brgl@bgdev.pl>
- <20230221150543.283487-3-brgl@bgdev.pl>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230221150543.283487-3-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
+ <20230214212521.3322247-1-quic_eberman@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230214212521.3322247-1-quic_eberman@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -84,109 +97,302 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 21.02.2023 16:05, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 14/02/2023 21:25, Elliot Berman wrote:
 > 
-> Add a node for the cpufreq engine and specify the frequency domains for
-> all CPUs.
+> When booting a Gunyah virtual machine, the host VM may gain capabilities
+> to interact with resources for the guest virtual machine. Examples of
+> such resources are vCPUs or message queues. To use those resources, we
+> need to translate the RM response into a gunyah_resource structure which
+> are useful to Linux drivers. Presently, Linux drivers need only to know
+> the type of resource, the capability ID, and an interrupt.
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> On ARM64 systems, the interrupt reported by Gunyah is the GIC interrupt
+> ID number and always a SPI.
+> 
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
+>   arch/arm64/include/asm/gunyah.h |  23 +++++
+>   drivers/virt/gunyah/rsc_mgr.c   | 161 +++++++++++++++++++++++++++++++-
+>   include/linux/gunyah.h          |   4 +
+>   include/linux/gunyah_rsc_mgr.h  |   4 +
+>   4 files changed, 191 insertions(+), 1 deletion(-)
+>   create mode 100644 arch/arm64/include/asm/gunyah.h
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index ce5976e36aee..5e2bc67b3178 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -37,6 +37,7 @@ CPU0: cpu@0 {
->  			compatible = "qcom,kryo";
->  			reg = <0x0 0x0>;
->  			enable-method = "psci";
-> +			qcom,freq-domain = <&cpufreq_hw 0>;
->  			next-level-cache = <&L2_0>;
->  			L2_0: l2-cache {
->  				compatible = "cache";
-> @@ -52,6 +53,7 @@ CPU1: cpu@100 {
->  			compatible = "qcom,kryo";
->  			reg = <0x0 0x100>;
->  			enable-method = "psci";
-> +			qcom,freq-domain = <&cpufreq_hw 0>;
->  			next-level-cache = <&L2_1>;
->  			L2_1: l2-cache {
->  				compatible = "cache";
-> @@ -64,6 +66,7 @@ CPU2: cpu@200 {
->  			compatible = "qcom,kryo";
->  			reg = <0x0 0x200>;
->  			enable-method = "psci";
-> +			qcom,freq-domain = <&cpufreq_hw 0>;
->  			next-level-cache = <&L2_2>;
->  			L2_2: l2-cache {
->  				compatible = "cache";
-> @@ -76,6 +79,7 @@ CPU3: cpu@300 {
->  			compatible = "qcom,kryo";
->  			reg = <0x0 0x300>;
->  			enable-method = "psci";
-> +			qcom,freq-domain = <&cpufreq_hw 0>;
->  			next-level-cache = <&L2_3>;
->  			L2_3: l2-cache {
->  				compatible = "cache";
-> @@ -88,6 +92,7 @@ CPU4: cpu@10000 {
->  			compatible = "qcom,kryo";
->  			reg = <0x0 0x10000>;
->  			enable-method = "psci";
-> +			qcom,freq-domain = <&cpufreq_hw 1>;
->  			next-level-cache = <&L2_4>;
->  			L2_4: l2-cache {
->  				compatible = "cache";
-> @@ -104,6 +109,7 @@ CPU5: cpu@10100 {
->  			compatible = "qcom,kryo";
->  			reg = <0x0 0x10100>;
->  			enable-method = "psci";
-> +			qcom,freq-domain = <&cpufreq_hw 1>;
->  			next-level-cache = <&L2_5>;
->  			L2_5: l2-cache {
->  				compatible = "cache";
-> @@ -116,6 +122,7 @@ CPU6: cpu@10200 {
->  			compatible = "qcom,kryo";
->  			reg = <0x0 0x10200>;
->  			enable-method = "psci";
-> +			qcom,freq-domain = <&cpufreq_hw 1>;
->  			next-level-cache = <&L2_6>;
->  			L2_6: l2-cache {
->  				compatible = "cache";
-> @@ -128,6 +135,7 @@ CPU7: cpu@10300 {
->  			compatible = "qcom,kryo";
->  			reg = <0x0 0x10300>;
->  			enable-method = "psci";
-> +			qcom,freq-domain = <&cpufreq_hw 1>;
->  			next-level-cache = <&L2_7>;
->  			L2_7: l2-cache {
->  				compatible = "cache";
-> @@ -731,6 +739,19 @@ tcsr_mutex: hwlock@1f40000 {
->  			#hwlock-cells = <1>;
->  		};
->  
-> +		cpufreq_hw: cpufreq@18591000 {
-> +			compatible = "qcom,sa8775p-cpufreq-epss",
-> +				     "qcom,cpufreq-epss";
-That's some very aggressive wrapping! :P
-
-Nevertheless,
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
-> +			reg = <0x0 0x18591000 0x0 0x1000>,
-> +			      <0x0 0x18593000 0x0 0x1000>;
-> +			reg-names = "freq-domain0", "freq-domain1";
+> diff --git a/arch/arm64/include/asm/gunyah.h b/arch/arm64/include/asm/gunyah.h
+> new file mode 100644
+> index 000000000000..64cfb964efee
+> --- /dev/null
+> +++ b/arch/arm64/include/asm/gunyah.h
+> @@ -0,0 +1,23 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +#ifndef __ASM_GUNYAH_H_
+> +#define __ASM_GUNYAH_H_
 > +
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
-> +			clock-names = "xo", "alternate";
+> +#include <linux/irq.h>
+> +#include <dt-bindings/interrupt-controller/arm-gic.h>
 > +
-> +			#freq-domain-cells = <1>;
+> +static inline int arch_gh_fill_irq_fwspec_params(u32 virq, struct irq_fwspec *fwspec)
+> +{
+> +	if (virq < 32 || virq > 1019)
+> +		return -EINVAL;
+> +
+> +	fwspec->param_count = 3;
+> +	fwspec->param[0] = GIC_SPI;
+> +	fwspec->param[1] = virq - 32;
+> +	fwspec->param[2] = IRQ_TYPE_EDGE_RISING;
+> +	return 0;
+> +}
+> +
+> +#endif
+> diff --git a/drivers/virt/gunyah/rsc_mgr.c b/drivers/virt/gunyah/rsc_mgr.c
+> index 73c5a6b7cbbc..eb1bc3f68792 100644
+> --- a/drivers/virt/gunyah/rsc_mgr.c
+> +++ b/drivers/virt/gunyah/rsc_mgr.c
+> @@ -18,6 +18,8 @@
+>   #include <linux/platform_device.h>
+>   #include <linux/miscdevice.h>
+>   
+> +#include <asm/gunyah.h>
+> +
+>   #include "rsc_mgr.h"
+>   #include "vm_mgr.h"
+>   
+> @@ -107,8 +109,137 @@ struct gh_rm {
+>   	struct blocking_notifier_head nh;
+>   
+>   	struct miscdevice miscdev;
+> +	struct irq_domain *irq_domain;
+> +};
+> +
+> +struct gh_irq_chip_data {
+> +	u32 gh_virq;
+> +};
+> +
+> +static struct irq_chip gh_rm_irq_chip = {
+> +	.name			= "Gunyah",
+> +	.irq_enable		= irq_chip_enable_parent,
+> +	.irq_disable		= irq_chip_disable_parent,
+> +	.irq_ack		= irq_chip_ack_parent,
+> +	.irq_mask		= irq_chip_mask_parent,
+> +	.irq_mask_ack		= irq_chip_mask_ack_parent,
+> +	.irq_unmask		= irq_chip_unmask_parent,
+> +	.irq_eoi		= irq_chip_eoi_parent,
+> +	.irq_set_affinity	= irq_chip_set_affinity_parent,
+> +	.irq_set_type		= irq_chip_set_type_parent,
+> +	.irq_set_wake		= irq_chip_set_wake_parent,
+> +	.irq_set_vcpu_affinity	= irq_chip_set_vcpu_affinity_parent,
+> +	.irq_retrigger		= irq_chip_retrigger_hierarchy,
+> +	.irq_get_irqchip_state	= irq_chip_get_parent_state,
+> +	.irq_set_irqchip_state	= irq_chip_set_parent_state,
+> +	.flags			= IRQCHIP_SET_TYPE_MASKED |
+> +				  IRQCHIP_SKIP_SET_WAKE |
+> +				  IRQCHIP_MASK_ON_SUSPEND,
+> +};
+> +
+> +static int gh_rm_irq_domain_alloc(struct irq_domain *d, unsigned int virq, unsigned int nr_irqs,
+> +				 void *arg)
+> +{
+> +	struct gh_irq_chip_data *chip_data, *spec = arg;
+> +	struct irq_fwspec parent_fwspec;
+> +	struct gh_rm *rm = d->host_data;
+> +	u32 gh_virq = spec->gh_virq;
+> +	int ret;
+> +
+> +	if (nr_irqs != 1 || gh_virq == U32_MAX)
+> +		return -EINVAL;
+> +
+> +	chip_data = kzalloc(sizeof(*chip_data), GFP_KERNEL);
+> +	if (!chip_data)
+> +		return -ENOMEM;
+> +
+> +	chip_data->gh_virq = gh_virq;
+> +
+> +	ret = irq_domain_set_hwirq_and_chip(d, virq, chip_data->gh_virq, &gh_rm_irq_chip,
+> +						chip_data);
+> +	if (ret)
+
+leaking chip_data?
+
+> +		return ret;
+> +
+> +	parent_fwspec.fwnode = d->parent->fwnode;
+> +	ret = arch_gh_fill_irq_fwspec_params(chip_data->gh_virq, &parent_fwspec);
+> +	if (ret) {
+> +		dev_err(rm->dev, "virq translation failed %u: %d\n", chip_data->gh_virq, ret);
+> +		goto err_free_irq_data;
+> +	}
+> +
+> +	ret = irq_domain_alloc_irqs_parent(d, virq, nr_irqs, &parent_fwspec);
+> +	if (ret)
+> +		goto err_free_irq_data;
+> +
+> +	return ret;
+> +err_free_irq_data:
+> +	kfree(chip_data);
+> +	return ret;
+> +}
+> +
+> +static void gh_rm_irq_domain_free_single(struct irq_domain *d, unsigned int virq)
+> +{
+> +	struct gh_irq_chip_data *chip_data;
+> +	struct irq_data *irq_data;
+> +
+> +	irq_data = irq_domain_get_irq_data(d, virq);
+> +	if (!irq_data)
+> +		return;
+> +
+> +	chip_data = irq_data->chip_data;
+> +
+> +	kfree(chip_data);
+> +	irq_data->chip_data = NULL;
+> +}
+> +
+> +static void gh_rm_irq_domain_free(struct irq_domain *d, unsigned int virq, unsigned int nr_irqs)
+> +{
+> +	unsigned int i;
+> +
+> +	for (i = 0; i < nr_irqs; i++)
+> +		gh_rm_irq_domain_free_single(d, virq);
+> +}
+> +
+> +static const struct irq_domain_ops gh_rm_irq_domain_ops = {
+> +	.alloc		= gh_rm_irq_domain_alloc,
+> +	.free		= gh_rm_irq_domain_free,
+>   };
+>   
+> +struct gunyah_resource *gh_rm_alloc_resource(struct gh_rm *rm,
+> +						struct gh_rm_hyp_resource *hyp_resource)
+> +{
+> +	struct gunyah_resource *ghrsc;
+> +
+> +	ghrsc = kzalloc(sizeof(*ghrsc), GFP_KERNEL);
+> +	if (!ghrsc)
+> +		return NULL;
+return ERR_PTR(-ENOMEM);
+
+> +
+> +	ghrsc->type = hyp_resource->type;
+> +	ghrsc->capid = le64_to_cpu(hyp_resource->cap_id);
+> +	ghrsc->irq = IRQ_NOTCONNECTED;
+> +	ghrsc->rm_label = le32_to_cpu(hyp_resource->resource_label);
+> +	if (hyp_resource->virq && le32_to_cpu(hyp_resource->virq) != U32_MAX) {
+> +		struct gh_irq_chip_data irq_data = {
+> +			.gh_virq = le32_to_cpu(hyp_resource->virq),
 > +		};
 > +
->  		tlmm: pinctrl@f000000 {
->  			compatible = "qcom,sa8775p-tlmm";
->  			reg = <0x0 0xf000000 0x0 0x1000000>;
+> +		ghrsc->irq = irq_domain_alloc_irqs(rm->irq_domain, 1, NUMA_NO_NODE, &irq_data);
+> +		if (ghrsc->irq < 0) {
+> +			pr_err("Failed to allocate interrupt for resource %d label: %d: %d\n",
+> +				ghrsc->type, ghrsc->rm_label, ghrsc->irq);
+> +			ghrsc->irq = IRQ_NOTCONNECTED;
+> +		}
+> +	}
+> +
+> +	return ghrsc;
+> +}
+> +
+> +void gh_rm_free_resource(struct gunyah_resource *ghrsc)
+> +{
+> +	irq_dispose_mapping(ghrsc->irq);
+> +	kfree(ghrsc);
+> +}
+> +
+>   static struct gh_rm_connection *gh_rm_alloc_connection(__le32 msg_id, u8 type)
+>   {
+>   	struct gh_rm_connection *connection;
+> @@ -553,6 +684,8 @@ static int gh_msgq_platform_probe_direction(struct platform_device *pdev,
+>   
+>   static int gh_rm_drv_probe(struct platform_device *pdev)
+>   {
+> +	struct irq_domain *parent_irq_domain;
+> +	struct device_node *parent_irq_node;
+>   	struct gh_msgq_tx_data *msg;
+>   	struct gh_rm *rm;
+>   	int ret;
+> @@ -590,15 +723,40 @@ static int gh_rm_drv_probe(struct platform_device *pdev)
+>   	if (ret)
+>   		goto err_cache;
+>   
+> +	parent_irq_node = of_irq_find_parent(pdev->dev.of_node);
+> +	if (!parent_irq_node) {
+> +		dev_err(&pdev->dev, "Failed to find interrupt parent of resource manager\n");
+> +		ret = -ENODEV;
+> +		goto err_msgq;
+> +	}
+> +
+> +	parent_irq_domain = irq_find_host(parent_irq_node);
+> +	if (!parent_irq_domain) {
+> +		dev_err(&pdev->dev, "Failed to find interrupt parent domain of resource manager\n");
+> +		ret = -ENODEV;
+> +		goto err_msgq;
+> +	}
+> +
+> +	rm->irq_domain = irq_domain_add_hierarchy(parent_irq_domain, 0, 0, pdev->dev.of_node,
+> +							&gh_rm_irq_domain_ops, NULL);
+> +	if (!rm->irq_domain) {
+> +		dev_err(&pdev->dev, "Failed to add irq domain\n");
+> +		ret = -ENODEV;
+> +		goto err_msgq;
+> +	}
+> +	rm->irq_domain->host_data = rm;
+> +
+>   	rm->miscdev.name = "gunyah";
+>   	rm->miscdev.minor = MISC_DYNAMIC_MINOR;
+>   	rm->miscdev.fops = &gh_dev_fops;
+>   
+>   	ret = misc_register(&rm->miscdev);
+>   	if (ret)
+> -		goto err_msgq;
+> +		goto err_irq_domain;
+>   
+>   	return 0;
+> +err_irq_domain:
+> +	irq_domain_remove(rm->irq_domain);
+>   err_msgq:
+>   	mbox_free_channel(gh_msgq_chan(&rm->msgq));
+>   	gh_msgq_remove(&rm->msgq);
+> @@ -612,6 +770,7 @@ static int gh_rm_drv_remove(struct platform_device *pdev)
+>   	struct gh_rm *rm = platform_get_drvdata(pdev);
+>   
+>   	misc_deregister(&rm->miscdev);
+> +	irq_domain_remove(rm->irq_domain);
+>   	mbox_free_channel(gh_msgq_chan(&rm->msgq));
+>   	gh_msgq_remove(&rm->msgq);
+>   	kmem_cache_destroy(rm->cache);
+> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
+> index 2e13669c6363..a06d5fa68a65 100644
+> --- a/include/linux/gunyah.h
+> +++ b/include/linux/gunyah.h
+> @@ -27,6 +27,10 @@ struct gunyah_resource {
+>   	enum gunyah_resource_type type;
+>   	u64 capid;
+>   	int irq;
+> +
+> +	/* To help allocator of resource manager */
+> +	struct list_head list;
+
+Looks like unused?
+
+
+> +	u32 rm_label;
+>   };
+>   
+>   /**
+> diff --git a/include/linux/gunyah_rsc_mgr.h b/include/linux/gunyah_rsc_mgr.h
+> index dc05d5b1e1a3..2fb6efbe2f70 100644
+> --- a/include/linux/gunyah_rsc_mgr.h
+> +++ b/include/linux/gunyah_rsc_mgr.h
+> @@ -147,6 +147,10 @@ int gh_rm_get_hyp_resources(struct gh_rm *rm, u16 vmid,
+>   				struct gh_rm_hyp_resources **resources);
+>   int gh_rm_get_vmid(struct gh_rm *rm, u16 *vmid);
+>   
+> +struct gunyah_resource *gh_rm_alloc_resource(struct gh_rm *rm,
+> +						struct gh_rm_hyp_resource *hyp_resource);
+> +void gh_rm_free_resource(struct gunyah_resource *ghrsc);
+> +
+>   struct gunyah_rm_platform_ops {
+>   	int (*pre_mem_share)(struct gh_rm *rm, struct gh_rm_mem_parcel *mem_parcel);
+>   	int (*post_mem_reclaim)(struct gh_rm *rm, struct gh_rm_mem_parcel *mem_parcel);
