@@ -2,273 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 502F369E8B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 20:59:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80EDD69E967
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Feb 2023 22:23:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230055AbjBUT7J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 14:59:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48536 "EHLO
+        id S229648AbjBUVXT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Feb 2023 16:23:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230018AbjBUT7H (ORCPT
+        with ESMTP id S229498AbjBUVXS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 14:59:07 -0500
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B875B2B621
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 11:59:03 -0800 (PST)
-Received: by mail-pg1-x52c.google.com with SMTP id i31so2357699pgi.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 11:59:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1677009542;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7eq+GLjk+av91BYy8K1H8/nqn9j1Ssh66EQWIUoWV8U=;
-        b=f4Rx0zt4bBRl99OfPGExycd3qJ0qO5L7Lz83N1qPPkG/HOjwjbaOgNNJ+L0PJJ1MG8
-         vAKh/dEeFSNmSHEzJzAI5nWPSMxbe7lwiV1eQl4UyJwtA0x/oAORYIE9Ny8nbubmlXs6
-         30rKoDWsAtTXIDCCWVQ35d61GZdJqCQmjCwL4WR+kX3sLL+yzjHWuRTdU4n8yCoWkhQQ
-         3QH4WALc7JnhQxpKiTu9uH76wrxcntaaEhxjU5ODdYAwMqy32CroPUcgnyBhKWJVQUdg
-         /KfUuzr1FDGy3zTGGzUapXit+d+3dQG6wFgyDl5QQ6TQai9azs+Hjs9pqV5LxSw3XsTK
-         5+Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677009542;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7eq+GLjk+av91BYy8K1H8/nqn9j1Ssh66EQWIUoWV8U=;
-        b=x9ZJG8TfXwaop2q54EWmVhAOVEwctztm7G8G8GdABZAv6ot8Lj39QATe8J2NI/W30z
-         jTjXpmwdvHwxIEKimcYSw0HDOYEXuwa0CAkHv+3WDNi2fjbmV9Z55mW6aUomFN+p7Dlw
-         XB1IzMOL/sdN+G85k3x1vqBHAKyFHvVgLXjIT7gxZJDNUTWe1zPzKpqCiKCzZbcG3tCf
-         gYYL4gLUAEr3kq3jBUQTKP4vvXTY/iGyK1z5baebg/2nffWjRHJ/nk0OEuaqWG+JINoV
-         Rb/NeUy+JnWIlhBhL7linnhmg1tw3JBfRUL8hmjTWtrAUABsKU4KcfEGHfYmok9l/SZE
-         orjg==
-X-Gm-Message-State: AO0yUKW3GlPNIrZlB656aGXbebWLupEupcWkUGza4si6oDsLRxSo1Zb1
-        sBHYnwQ6eV0U8gHGCeXGtpDNx1557MpIcb+fyq4gtw==
-X-Google-Smtp-Source: AK7set/oKDe4l9jN3bUlPuAnUw9TY87yypO5sFUEynIDS3p3A4+Q5qMQivZkCgbUfGJcOBuP4O/WChZ8shBFhbRgMYo=
-X-Received: by 2002:a62:3103:0:b0:5a8:4dea:7015 with SMTP id
- x3-20020a623103000000b005a84dea7015mr904607pfx.36.1677009541669; Tue, 21 Feb
- 2023 11:59:01 -0800 (PST)
+        Tue, 21 Feb 2023 16:23:18 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF1A844B2;
+        Tue, 21 Feb 2023 13:23:17 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31LCZoRI015712;
+        Tue, 21 Feb 2023 21:22:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ovWj8UmzoKvy/G0pIzs9xOPymSnbtxoCS3AGeSJ+cBA=;
+ b=B8a2BQDPKkCCn0rZ8h/WARjkQYZ7KyBs5mlChLOnb/5UAFUYr0owuDwTbrFvhzPF07Hy
+ uslXy/WWO/1x1uhs+8TTVe9c8Qp1OgmsO2TGWpRTinJ1hFGMpohoqEbBwLb/1ELwLjYz
+ dAtYCpTG/lfFkg5pBdjsFKpQlE/3IE+vbhgyIPYFYDe4IbE9R2CZ8HrEh5wLKJjiTv+C
+ fqyNL779BtxhImyCFXXD9FYZbES+pf1HJt2ZODPd5zLOwQ9p+rd679hHvkRTFe2W/t5u
+ JyKAJy0gbfa3xEv7kBbcAJIO8J8LbLcit+OkccnPV5fHoYmx6ZVZFDQqewgXjR9mbNeX 3A== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ntpw9rrh4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 21 Feb 2023 21:22:54 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31LLMrcZ012877
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 21 Feb 2023 21:22:53 GMT
+Received: from [10.110.71.80] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 21 Feb
+ 2023 13:22:51 -0800
+Message-ID: <7aa025a1-b211-f04c-9169-236102fe27fe@quicinc.com>
+Date:   Tue, 21 Feb 2023 13:22:51 -0800
 MIME-Version: 1.0
-References: <20221227204528.1899863-1-abel.vesa@linaro.org>
- <ebc257025ebd641e624ef506ea09c800.sboyd@kernel.org> <Y/OV3CF0ootyooDJ@linaro.org>
- <Y/OfjbxI1tHYJHNv@linaro.org> <CAGETcx_mD3pbAmT5FDZaVAsKb_2PAnrHL8B_6gSR=+a0O4kHfQ@mail.gmail.com>
- <Y/PALlrQpwPlum9M@linaro.org>
-In-Reply-To: <Y/PALlrQpwPlum9M@linaro.org>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Tue, 21 Feb 2023 11:58:24 -0800
-Message-ID: <CAGETcx_TZN3=GKrEf5fy_tA=JnOfw7m-N=+hD=qhe_yRRpngPw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] clk: Add generic sync_state callback for disabling
- unused clocks
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v10 15/26] gunyah: rsc_mgr: Add platform ops on
+ mem_lend/mem_reclaim
+Content-Language: en-US
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Alex Elder <elder@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, mka@chromium.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
+ <20230214212448.3318756-1-quic_eberman@quicinc.com>
+ <963d84e8-7b91-c278-1978-4e73d73f7c6f@linaro.org>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <963d84e8-7b91-c278-1978-4e73d73f7c6f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BDrpy9BYGEbZnz3_yiaFgW_COdaF98o2
+X-Proofpoint-GUID: BDrpy9BYGEbZnz3_yiaFgW_COdaF98o2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-21_12,2023-02-20_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1015
+ spamscore=0 adultscore=0 impostorscore=0 phishscore=0 mlxscore=0
+ suspectscore=0 malwarescore=0 priorityscore=1501 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302210185
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 20, 2023 at 10:47 AM Abel Vesa <abel.vesa@linaro.org> wrote:
->
-> On 23-02-20 09:51:55, Saravana Kannan wrote:
-> > On Mon, Feb 20, 2023 at 8:28 AM Abel Vesa <abel.vesa@linaro.org> wrote:
-> > >
-> > > On 23-02-20 17:46:36, Abel Vesa wrote:
-> > > > On 23-02-17 21:38:22, Stephen Boyd wrote:
-> > > > > Quoting Abel Vesa (2022-12-27 12:45:27)
-> > > > > > There are unused clocks that need to remain untouched by clk_disable_unused,
-> > > > > > and most likely could be disabled later on sync_state. So provide a generic
-> > > > > > sync_state callback for the clock providers that register such clocks.
-> > > > > > Then, use the same mechanism as clk_disable_unused from that generic
-> > > > > > callback, but pass the device to make sure only the clocks belonging to
-> > > > > > the current clock provider get disabled, if unused. Also, during the
-> > > > > > default clk_disable_unused, if the driver that registered the clock has
-> > > > > > the generic clk_sync_state_disable_unused callback set for sync_state,
-> > > > > > skip disabling its clocks.
-> >
-> > Hi Abel,
-> >
-> > We have the day off today, so I'll respond more later. Also, please cc
-> > me on all sync_state() related patches in the future.
-> >
->
-> Sure thing.
->
-> > I haven't taken a close look at your series yet, but at a glance it
-> > seems incomplete.
-> >
-> > Any reason you didn't just try to revive my series[1] or nudge me?
-> > [1]- https://lore.kernel.org/lkml/20210407034456.516204-3-saravanak@google.com/
->
-> This patchset is heavily reworked and much more simpler as it relies
-> strictly on the sync_state being registered by the clock provider.
 
-It's simpler because it's not complete. It for sure doesn't handle
-orphan-reparenting. It also doesn't make a lot of sense for only some
-clock providers registering for sync_state(). If CC-A is feeding a
-clock signal that's used as a root for clocks in CC-B, then what
-happens if only CC-B implements sync_state() but CC-A doesn't. The
-clocks from CC-B are still going to turn off when CC-A turns off its
-PLL before CC-B registers.
 
-Nack for this patch.
+On 2/21/2023 6:51 AM, Srinivas Kandagatla wrote:
+> 
+> 
+> On 14/02/2023 21:24, Elliot Berman wrote:
+[snip]
+>> +
+>> +static struct gunyah_rm_platform_ops *rm_platform_ops;
+>> +static DECLARE_RWSEM(rm_platform_ops_lock);
+> 
+> Why do we need this read/write lock or this global rm_platform_ops here, 
+> AFAIU, there will be only one instance of platform_ops per platform.
+> 
+> This should be a core part of the gunyah and its driver early setup, 
+> that should give us pretty much lock less behaviour.
+> 
+> We should be able to determine by Hypervisor UUID that its on Qualcomm 
+> platform or not, during early gunyah setup which should help us setup 
+> the platfrom ops accordingly.
+> 
+> This should also help cleanup some of the gunyah code that was added 
+> futher down in this patchset.
 
-Also, unless there's a strong objection, let's go back to my patch
-please. It's way more well tested and used across different SoCs than
-this patch. Also, I'm pretty sure the orphan handling is needed for
-qcom SoC's too.
+I'm guessing the direction to take is:
 
--Saravana
+   config GUNYAH
+     select QCOM_SCM if ARCH_QCOM
 
->
-> I saw your patchset a few months ago but then forgot about its
-> existence. That's also why I forgot to nudge you. Sorry about that.
->
-> >
-> > At the least, I know [1] works on all Android devices (including
-> > Qualcomm SoCs) released in the past 2-3 years or more. If [1] works
-> > for you, I'd rather land that after addressing Stephen's comments
-> > there (I remember them being fairly easy to address comments) instead
-> > of whipping up a new series that's not as well used. I just got busy
-> > with other things and addressing more fundamental fw_devlink TODOs
-> > before getting back to this.
-> >
-> > Hi Bjorn,
-> >
-> > I see in another reply you've said:
-> >
-> > Applied, thanks!
-> >
-> > [1/2] clk: Add generic sync_state callback for disabling unused clocks
-> >       commit: 26b36df7516692292312063ca6fd19e73c06d4e7
-> > [2/2] clk: qcom: sdm845: Use generic clk_sync_state_disable_unused callback
-> >       commit: 99c0f7d35c4b204dd95ba50e155f32c99695b445
-> >
-> > Where exactly have you applied them? I hope you haven't applied the
-> > clk.c changes to some tree that goes into 6.3.
->
-> I think it is already part of Bjorn's Qualcomm clocks pull request.
->
-> >
-> > -Saravana
-> >
-> > > > >
-> > > > > How does that avoid disabling clks randomly in the clk tree? I'm
-> > > > > concerned about disabling an unused clk in the middle of the tree
-> > > > > because it doesn't have a driver using sync state, while the clk is the
-> > > > > parent of an unused clk that is backed by sync state.
-> > > > >
-> > > > >    clk A -->  clk B
-> > > > >
-> > > > > clk A: No sync state
-> > > > > clk B: sync state
-> > > > >
-> > > > > clk B is left on by the bootloader. __clk_disable_unused(NULL) is called
-> > > > > from late init. Imagine clk A is the root of the tree.
-> > > > >
-> > > > >     clk_disable_unused_subtree(clk_core A)
-> > > > >       clk_disable_unused_subtree(clk_core B)
-> > > > >         if (from_sync_state && core->dev != dev)
-> > > > >           return;
-> > > > >       ...
-> > > > >       clk core A->ops->disable()
-> > > > >
-> > > > > clk core B is off now?
-> > > >
-> > > > Yes, that is correct. But the same thing is happening currently if the
-> > > > clk_ignore_unused in not specified. At least with this new approach, we
-> > > > get to leave unused clocks enabled either until sync_state is called or forever.
-> > > > All the provider has to do is to implement a sync_state callback (or use
-> > > > the generic one provided). So the provider of clk A would obviously need
-> > > > a sync state callback registered.
-> > > >
-> > > > >
-> > > > > Also sync_state seems broken right now. I saw mka mentioned that if you
-> > > > > have a device node enabled in your DT but never enable a driver for it
-> > > > > in the kernel we'll never get sync_state called. This is another
-> > > > > problem, but it concerns me that sync_state would make the unused clk
-> > > > > disabling happen at some random time or not at all.
-> > > >
-> > > > Well, the fact that the sync state not being called because a driver for
-> > > > a consumer device doesn't probe does not really mean it is broken. Just
-> > > > because the consumer driver hasn't probed yet, doesn't mean it will
-> > > > not probe later on.
-> > > >
-> > >
-> > > CC'ed Saravana
-> > >
-> > > > That aside, rather than going with clk_ignore_unused all the time on
-> > > > qcom platforms, at least in a perfect scenario (where sync state is
-> > > > reached for all providers) the clocks get disabled.
-> > > >
-> > > > >
-> > > > > Can the problem be approached more directly? If this is about fixing
-> > > > > continuous splash screen, then I wonder why we can't list out the clks
-> > > > > that we know are enabled by the bootloader in some new DT binding, e.g.:
-> > > > >
-> > > > >     clock-controller {
-> > > > >             #clock-cells = <1>;
-> > > > >             boot-handoff-clocks = <&consumer_device "clock cells for this clk provider">;
-> > > > >     };
-> > > > >
-> > > > > Then mark those as "critical/don't turn off" all the way up the clk tree
-> > > > > when the clk driver probes by essentially incrementing the
-> > > > > prepare/enable count but not actually touching the hardware, and when
-> > > > > the clks are acquired by clk_get() for that device that's using them
-> > > > > from boot we make the first clk_prepare_enable() do nothing and not
-> > > > > increment the count at all. We can probably stick some flag into the
-> > > > > 'struct clk' for this when we create the handle in clk_get() so that the
-> > > > > prepare and enable functions can special case and skip over.
-> > > >
-> > > > Well, that means we need to play whack-a-mole by alsways adding such clocks to
-> > > > devicetree.
-> > > >
-> > > > >
-> > > > > The sync_state hook operates on a driver level, which is too large when
-> > > > > you consider that a single clk driver may register hundreds of clks that
-> > > > > are not related. We want to target a solution at the clk level so that
-> > > > > any damage from keeping on all the clks provided by the controller is
-> > > > > limited to just the drivers that aren't probed and ready to handle their
-> > > > > clks. If sync_state could be called whenever a clk consumer consumes a
-> > > > > clk it may work? Technically we already have that by the clk_hw_provider
-> > > > > function but there isn't enough information being passed there, like the
-> > > > > getting device.
-> > > >
-> > > > Actually, from the multitude of clocks registered by one provider, the
-> > > > ones already explicitely enabled (and obvisously their parents) by thier
-> > > > consumer are safe. The only ones we need to worry about are the ones that
-> > > > might be enabled by bootloader and need to remain on. With the sync state
-> > > > approach, the latter mentioned clocks will either remain on indefinitely
-> > > > or will be disabled on sync state. The provider driver is the only level
-> > > > that has a registered sync state callback.
-> > > >
-> > > > >
-> > > > > > diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-> > > > > > index 842e72a5348f..cf1adfeaf257 100644
-> > > > > > --- a/include/linux/clk-provider.h
-> > > > > > +++ b/include/linux/clk-provider.h
-> > > > > > @@ -720,6 +720,7 @@ struct clk *clk_register_divider_table(struct device *dev, const char *name,
-> > > > > >                 void __iomem *reg, u8 shift, u8 width,
-> > > > > >                 u8 clk_divider_flags, const struct clk_div_table *table,
-> > > > > >                 spinlock_t *lock);
-> > > > > > +void clk_sync_state_disable_unused(struct device *dev);
-> > > > >
-> > > > > This is a weird place to put this. Why not in the helper functions
-> > > > > section?
-> > > >
-> > > > Sure this can be moved.
-> > > >
-> > > > >
-> > > > > >  /**
-> > > > > >   * clk_register_divider - register a divider clock with the clock framework
-> > > > > >   * @dev: device registering this clock
+and have vm_mgr call directly into qcom_scm driver if the UID matches?
+
+We have an Android requirement to enable CONFIG_GUNYAH=y and 
+CONFIG_QCOM_SCM=m, but it wouldn't be possible with this design. The 
+platform hooks implementation allows GUNYAH and QCOM_SCM to be enabled 
+without setting lower bound of the other.
+
+- Elliot
