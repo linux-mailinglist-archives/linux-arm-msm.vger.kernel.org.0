@@ -2,139 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D3C169F4CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 13:42:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 270C669F4D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 13:46:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232183AbjBVMmz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 07:42:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41562 "EHLO
+        id S231989AbjBVMqX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 07:46:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232194AbjBVMmy (ORCPT
+        with ESMTP id S229557AbjBVMqX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 07:42:54 -0500
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2001:67c:2178:6::1c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BDA446AE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 04:42:53 -0800 (PST)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id E023A3369F;
-        Wed, 22 Feb 2023 12:42:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1677069771; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=00fKa3Pg7xM7XyYXHDD0alYo5Cr5Wwhs1ZdIRCtzOAo=;
-        b=r6dgcn7hpWErHQMXudknaO/recmTNduYyLxXPJcP26+8SE1HLCKcBWkziSH1917IJMQ4Ur
-        Zc5/dBV/f/LL5rra1+Hi7Tmj4YIyL4/LZ+D3Lr3xJYAr+4YlmjLCNRsqg+nVYIGKmSsDra
-        /PjUlFgq2vCzD3lY7IRRH220A4Kog9Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1677069771;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=00fKa3Pg7xM7XyYXHDD0alYo5Cr5Wwhs1ZdIRCtzOAo=;
-        b=MJ5fak7t9ywrZn9AILbxZgzasxStB/h+Pfm3RF/A7Ps+fQc35z+NTpsNfD4UZMiJHKv8Jy
-        ks3IO0EHQLH1aDDQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B4D8F133E0;
-        Wed, 22 Feb 2023 12:42:51 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id CNM0K8sN9mP6TAAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Wed, 22 Feb 2023 12:42:51 +0000
-Message-ID: <08e3340e-b459-0e60-4bba-30716b675e05@suse.de>
-Date:   Wed, 22 Feb 2023 13:42:51 +0100
+        Wed, 22 Feb 2023 07:46:23 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 68F8F367DD;
+        Wed, 22 Feb 2023 04:46:21 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 156AB139F;
+        Wed, 22 Feb 2023 04:47:04 -0800 (PST)
+Received: from [10.57.90.101] (unknown [10.57.90.101])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0B5123F703;
+        Wed, 22 Feb 2023 04:46:17 -0800 (PST)
+Message-ID: <6072a788-74b9-6521-882c-c1637a68ccb2@arm.com>
+Date:   Wed, 22 Feb 2023 12:46:16 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH] drm/msm: Fix possible uninitialized access in fbdev
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, javierm@redhat.com,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        kernel test robot <lkp@intel.com>,
-        dri-devel@lists.freedesktop.org
-References: <20230222123712.5049-1-tzimmermann@suse.de>
- <c62e64e6-4114-2411-b80b-8cdc112a4393@linaro.org>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <c62e64e6-4114-2411-b80b-8cdc112a4393@linaro.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------LSb3CjLc6VCr1IIjjqgLfRSz"
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.7.2
+Subject: Re: [PATCH v2 2/9] coresight-tpda: Add DSB dataset support
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        Tao Zhang <taozha@qti.qualcomm.com>
+References: <1674114105-16651-1-git-send-email-quic_taozha@quicinc.com>
+ <1674114105-16651-3-git-send-email-quic_taozha@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1674114105-16651-3-git-send-email-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------LSb3CjLc6VCr1IIjjqgLfRSz
-Content-Type: multipart/mixed; boundary="------------lNm1QWZJ0CJmq6oVw8jTmvyg";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, javierm@redhat.com,
- robdclark@gmail.com, quic_abhinavk@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- kernel test robot <lkp@intel.com>, dri-devel@lists.freedesktop.org
-Message-ID: <08e3340e-b459-0e60-4bba-30716b675e05@suse.de>
-Subject: Re: [PATCH] drm/msm: Fix possible uninitialized access in fbdev
-References: <20230222123712.5049-1-tzimmermann@suse.de>
- <c62e64e6-4114-2411-b80b-8cdc112a4393@linaro.org>
-In-Reply-To: <c62e64e6-4114-2411-b80b-8cdc112a4393@linaro.org>
+On 19/01/2023 07:41, Tao Zhang wrote:
+> Read the DSB element size from the device tree. Set the register
+> bit that controls the DSB element size of the corresponding port.
+> 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> Signed-off-by: Tao Zhang <taozha@qti.qualcomm.com>
+> ---
+>   drivers/hwtracing/coresight/coresight-tpda.c | 62 ++++++++++++++++++++++++++++
+>   drivers/hwtracing/coresight/coresight-tpda.h |  4 ++
+>   2 files changed, 66 insertions(+)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
+> index 5989798..be13e08 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpda.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
+> @@ -37,6 +37,15 @@ static void tpda_enable_port(struct tpda_drvdata *drvdata, int port)
+>   	u32 val;
+>   
+>   	val = readl_relaxed(drvdata->base + TPDA_Pn_CR(port));
+> +	/*
+> +	 * Configure aggregator port n DSB data set element size
+> +	 * Set the bit to 0 if the size is 32
+> +	 * Set the bit to 1 if the size is 64
+> +	 */
+> +	if (drvdata->dsb_esize[port] == 32)
+> +		val &= ~TPDA_Pn_CR_DSBSIZE;
+> +	else if (drvdata->dsb_esize[port] == 64)
+> +		val |= TPDA_Pn_CR_DSBSIZE;
 
---------------lNm1QWZJ0CJmq6oVw8jTmvyg
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+What are the chances of having a value other than 32 or 64 ?
+What should we do in that case ? Should the driver at least
+give out a warning at least in the unhandled case rather than
+silently reusing the existing setting ?
 
-SGkNCg0KQW0gMjIuMDIuMjMgdW0gMTM6Mzcgc2NocmllYiBEbWl0cnkgQmFyeXNoa292Og0K
-PiBPbiAyMi8wMi8yMDIzIDE0OjM3LCBUaG9tYXMgWmltbWVybWFubiB3cm90ZToNCj4+IERv
-IG5vdCBydW4gZHJtX2ZiX2hlbHBlcl91bnByZXBhcmUoKSBpZiBmYmRldiBhbGxvY2F0aW9u
-IGZhaWxzLiBBdm9pZHMNCj4+IGFjY2VzcyB0byBhbiB1bmluaXRpYWxpemVkIHBvaW50ZXIu
-IE9yaWdpbmFsIGJ1ZyByZXBvcnQgaXMgYXQgWzFdLg0KPj4NCj4+IFJlcG9ydGVkLWJ5OiBr
-ZXJuZWwgdGVzdCByb2JvdCA8bGtwQGludGVsLmNvbT4NCj4+IFNpZ25lZC1vZmYtYnk6IFRo
-b21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPg0KPj4gRml4ZXM6IDNmYjFm
-NjJmODBhMSAoImRybS9mYi1oZWxwZXI6IFJlbW92ZSBkcm1fZmJfaGVscGVyX3VucHJlcGFy
-ZSgpIA0KPj4gZnJvbSBkcm1fZmJfaGVscGVyX2ZpbmkoKSIpDQo+PiBMaW5rOiANCj4+IGh0
-dHBzOi8vbG9yZS5rZXJuZWwub3JnL29lLWtidWlsZC1hbGwvMjAyMzAyMjIwODEwLjlkeW13
-Q1E4LWxrcEBpbnRlbC5jb20vICMgMQ0KPj4gLS0tDQo+PiDCoCBkcml2ZXJzL2dwdS9kcm0v
-bXNtL21zbV9mYmRldi5jIHwgNCArKy0tDQo+PiDCoCAxIGZpbGUgY2hhbmdlZCwgMiBpbnNl
-cnRpb25zKCspLCAyIGRlbGV0aW9ucygtKQ0KPiANCj4gUmV2aWV3ZWQtYnk6IERtaXRyeSBC
-YXJ5c2hrb3YgPGRtaXRyeS5iYXJ5c2hrb3ZAbGluYXJvLm9yZz4NCj4gDQoNCkltcHJlc3Np
-dmUgcmVzcG9uc2UgdGltZS4gVGhhbmtzIGEgbG90Lg0KDQpCZXN0IHJlZ2FyZHMNClRob21h
-cw0KDQotLSANClRob21hcyBaaW1tZXJtYW5uDQpHcmFwaGljcyBEcml2ZXIgRGV2ZWxvcGVy
-DQpTVVNFIFNvZnR3YXJlIFNvbHV0aW9ucyBHZXJtYW55IEdtYkgNCk1heGZlbGRzdHIuIDUs
-IDkwNDA5IE7DvHJuYmVyZywgR2VybWFueQ0KKEhSQiAzNjgwOSwgQUcgTsO8cm5iZXJnKQ0K
-R2VzY2jDpGZ0c2bDvGhyZXI6IEl2byBUb3Rldg0K
+Suzuki
 
---------------lNm1QWZJ0CJmq6oVw8jTmvyg--
-
---------------LSb3CjLc6VCr1IIjjqgLfRSz
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmP2DcsFAwAAAAAACgkQlh/E3EQov+BL
-hxAAl6st0LRpLjg3KU5IdcDPRSaISEUq50nS8wzGcNh5l/+6tPoelB9LDal17dwiazvw5OMzUJ0S
-fOEc0W1ogtczIzhEZauJMXMP5szrb8OJWSY5+i+cwHtqWJeAnuMJ/yrKiqCKD98iY91ZmutMJpBW
-vt/BxA1KR4yUpf6BuA0QI3R++r+ufOY08dSVLJxuDy9j1NXg4X0k3g8PYWC/54Sz8uwNXAP017DB
-yox+2cWHTpMOTjrr5eGGolUSpLosCU56NBJzWwTYg73KUHr6/VqOdQnO4izla6HEjVf86EG8T/WY
-jl2Y7jeIVwTHDp39UxfdxSbJAXh/SGTDWFMf8VYa1G7YiHjikwpVNi7rWBjTkLKdmCHTS/N/aktK
-zLCFVWG9D8zBCDeuJ40fnwSjE9+aVY4vvwzpsVXp4vHPTGbqnB4nEl3PZxgav0cTLVEji/qnTCR/
-IA6FAK1Q3cglR8DUtK095FiFXgai/OQJHUl+30r0e4muyMOgwdPK24UmAuAx2WVTMvDuundSbb4u
-fY12Pxz2hOwjp8O0yikDlGcsJkG2XQ9kMIzCfFXBqYihjcYS/XaVmvlpv8r4/DCeXPL4J/1XE64/
-tgUW88+NwwmWuteNX6+OeqWd9m7oS7uF2YQ+1IzDN5HRgDs5UaSO94CnOl1Xs5F0+xMEVjRPMobU
-vNU=
-=deyL
------END PGP SIGNATURE-----
-
---------------LSb3CjLc6VCr1IIjjqgLfRSz--
