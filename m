@@ -2,118 +2,354 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3604A69FF18
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 00:01:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3F3D69FF4A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 00:14:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231726AbjBVXBX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 18:01:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50946 "EHLO
+        id S231493AbjBVXOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 18:14:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230000AbjBVXBX (ORCPT
+        with ESMTP id S229922AbjBVXOl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 18:01:23 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04035410AE;
-        Wed, 22 Feb 2023 15:01:22 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B3C46B818D1;
-        Wed, 22 Feb 2023 23:01:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3A3C433D2;
-        Wed, 22 Feb 2023 23:01:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677106879;
-        bh=5Epr+Sg2dMQsZpAgQsCxMuhd2oNEoAwQFrpqJFEYeHQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MY985pim1F7QnE9UtW2aav5FRQV7YnpLQsq1byMYrO5o6NAx1vVPl1Bo7sVO3FkV2
-         gVUP681jbVZ1WGmp30SyrUMAFeyU4ZJ0zs1cTe8ROURO7erdAsgxNcEjTlB1dTfY5Y
-         sAX2oIWZcPXg9tpHOiY9K8gqg5C6YhSKBcd+FGTO4rodVCrVzU6arm6k6mrSfw6bWs
-         4FFSp9tCi1PIvmCjfS5+hIGOF+Xagwy9qCjy9oHKls/H3GjftrmikVfgiwPna/rSd1
-         aWO97sSRj1goxAGWjdVPjokhM92/S7+/HzNSmE6U1OUkPY7SaRSEBenf/DkOyR8q1t
-         6+DYDMaMbJl4g==
-Date:   Wed, 22 Feb 2023 23:01:15 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, lgirdwood@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_ipkumar@quicinc.com
-Subject: Re: [PATCH V2 4/6] regulator: qcom_smd: Add support to define the
- bootup voltage
-Message-ID: <Y/aeu5ua7cY5cGON@sirena.org.uk>
-References: <20230217142030.16012-1-quic_devipriy@quicinc.com>
- <20230217142030.16012-5-quic_devipriy@quicinc.com>
- <907628d1-b88d-5ac6-ed9d-7f63e2875738@linaro.org>
+        Wed, 22 Feb 2023 18:14:41 -0500
+Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 533E4AB;
+        Wed, 22 Feb 2023 15:14:39 -0800 (PST)
+Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-1722c48a773so8863237fac.2;
+        Wed, 22 Feb 2023 15:14:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AWtWIYTGNMyDOMqqOh9t6zGvy0m9O4dPql9gjsk0/Zw=;
+        b=iIdpgNb0c5q4M2dQOzDGGvR++HfQmC46LKRbtsCGsETjgQ5P6n/Vf5mgNZ2ejrYv3a
+         eEpk4mh8B5DHrozdEgeMsVa9C7Ed8BQN74vvcsGxcnSLMqj1eKSnpYKyyVVuf/u6tC8L
+         sOf+z+1LUQPxP9eRg20srtpuodp5MWnxEWcnqsAMFzaXtCBQal/Q/4c8C1KZtaThZhUJ
+         kVkNlc2+3BDOKmgVATFBcM/OKSyjE+6DaFc6uBM4xekagRxjs1b7kjfoMxqoYIL42qEJ
+         pjRxxEMjnrHrR52ho/sMNS2dW5P0ReAq0ZWC/FHX3DxrBxAo+3xG25zsH0ZrR8p6Q9qv
+         uYeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AWtWIYTGNMyDOMqqOh9t6zGvy0m9O4dPql9gjsk0/Zw=;
+        b=sYOTs/h1zULYr900Avug8Nk3hu23VVBkgksQLNHX9+epLQ7pTWSQkliIpmx5z67xxy
+         u9ixZ4cRbacBRPhsY0HqSqFUg2QfIEZrL172g6IvkySifF3y8Xgei1/wA+GchO4Z5Jug
+         c17YkEoQIcziT6lHPBtAyPNSH+Ym9AD0HIWBFUxQSemkHQ6VTUqHeV0L2dqw6tzN2wna
+         mC0ngtEAQHunD8bDFPUBVEMIY8f15sLTMykiGe10FV3S2JEwbo8lACX7oa5bKlb/Ib13
+         eDV5a59BAnwfUoAAJYGPoHSAWQiTjUyi/gRPEZautMI0DxPDWeausoD2uNQipc7q2V+B
+         iXng==
+X-Gm-Message-State: AO0yUKWgaDSb8BCxyHsfnjzkvKmBbGwQFW5vwe9FrHlQIMMKK40S+lzl
+        H2+BZRrV8KnToUr2nko2HJPd8HpSGGd9karn6hc=
+X-Google-Smtp-Source: AK7set/vSOhCsjA3k/BmRsMD07qeudjbB6KHmncgnsdQiHmX7AqvCxii7B6mfmEHNkUURYYhVKOWgKR+7Kt+sVEKhwo=
+X-Received: by 2002:a05:6870:808d:b0:16e:8a56:d0d2 with SMTP id
+ q13-20020a056870808d00b0016e8a56d0d2mr1457790oab.38.1677107678554; Wed, 22
+ Feb 2023 15:14:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="dRZIuVS8T/5W7hxa"
-Content-Disposition: inline
-In-Reply-To: <907628d1-b88d-5ac6-ed9d-7f63e2875738@linaro.org>
-X-Cookie: Serving suggestion.
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230216111214.3489223-1-daniel.vetter@ffwll.ch>
+In-Reply-To: <20230216111214.3489223-1-daniel.vetter@ffwll.ch>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 22 Feb 2023 15:14:27 -0800
+Message-ID: <CAF6AEGvFN-9_cr2EyGxuW5NVgk8CA99rVuv_Y80M+gvMviPcuA@mail.gmail.com>
+Subject: Re: [PATCH] drm/atomic-helpers: remove legacy_cursor_update hacks
+To:     Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Maxime Ripard <maxime@cerno.tech>, mikita.lipski@amd.com,
+        =?UTF-8?Q?Michel_D=C3=A4nzer?= <michel@daenzer.net>,
+        harry.wentland@amd.com,
+        "Kazlauskas, Nicholas" <nicholas.kazlauskas@amd.com>,
+        Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Lucas De Marchi <lucas.demarchi@intel.com>,
+        Imre Deak <imre.deak@intel.com>,
+        Manasi Navare <manasi.d.navare@intel.com>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Feb 16, 2023 at 3:12 AM Daniel Vetter <daniel.vetter@ffwll.ch> wrot=
+e:
+>
+> The stuff never really worked, and leads to lots of fun because it
+> out-of-order frees atomic states. Which upsets KASAN, among other
+> things.
+>
+> For async updates we now have a more solid solution with the
+> ->atomic_async_check and ->atomic_async_commit hooks. Support for that
+> for msm and vc4 landed. nouveau and i915 have their own commit
+> routines, doing something similar.
+>
+> For everyone else it's probably better to remove the use-after-free
+> bug, and encourage folks to use the async support instead. The
+> affected drivers which register a legacy cursor plane and don't either
+> use the new async stuff or their own commit routine are: amdgpu,
+> atmel, mediatek, qxl, rockchip, sti, sun4i, tegra, virtio, and vmwgfx.
+>
+> Inspired by an amdgpu bug report.
+>
+> v2: Drop RFC, I think with amdgpu converted over to use
+> atomic_async_check/commit done in
+>
+> commit 674e78acae0dfb4beb56132e41cbae5b60f7d662
+> Author: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+> Date:   Wed Dec 5 14:59:07 2018 -0500
+>
+>     drm/amd/display: Add fast path for cursor plane updates
+>
+> we don't have any driver anymore where we have userspace expecting
+> solid legacy cursor support _and_ they are using the atomic helpers in
+> their fully glory. So we can retire this.
+>
+> v3: Paper over msm and i915 regression. The complete_all is the only
+> thing missing afaict.
+>
+> v4: Fixup i915 fixup ...
+>
+> v5: Unallocate the crtc->event in msm to avoid hitting a WARN_ON in
+> dpu_crtc_atomic_flush(). This is a bit a hack, but simplest way to
+> untangle this all. Thanks to Abhinav Kumar for the debug help.
 
---dRZIuVS8T/5W7hxa
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hmm, are you sure about that double-put?
 
-On Wed, Feb 22, 2023 at 11:11:42PM +0100, Konrad Dybcio wrote:
+[  +0.501263] ------------[ cut here ]------------
+[  +0.000032] refcount_t: underflow; use-after-free.
+[  +0.000033] WARNING: CPU: 6 PID: 1854 at lib/refcount.c:28
+refcount_warn_saturate+0xf8/0x134
+[  +0.000043] Modules linked in: uinput rfcomm algif_hash
+algif_skcipher af_alg veth venus_dec venus_enc xt_cgroup xt_MASQUERADE
+qcom_spmi_temp_alarm qcom_spmi_adc_tm5 qcom_spmi_adc5 qcom_vadc_common
+cros_ec_typec typec 8021q hci_uart btqca qcom_stats venus_core
+coresight_etm4x coresight_tmc snd_soc_lpass_sc7180
+coresight_replicator coresight_funnel coresight snd_soc_sc7180
+ip6table_nat fuse ath10k_snoc ath10k_core ath mac80211 iio_trig_sysfs
+bluetooth cros_ec_sensors cfg80211 cros_ec_sensors_core
+industrialio_triggered_buffer kfifo_buf ecdh_generic ecc
+cros_ec_sensorhub lzo_rle lzo_compress r8153_ecm cdc_ether usbnet
+r8152 mii zram hid_vivaldi hid_google_hammer hid_vivaldi_common joydev
+[  +0.000189] CPU: 6 PID: 1854 Comm: DrmThread Not tainted
+5.15.93-16271-g5ecce40dbcd4 #46
+cf9752a1c9e5b13fd13216094f52d77fa5a5f8f3
+[  +0.000016] Hardware name: Google Wormdingler rev1+ INX panel board (DT)
+[  +0.000008] pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=
+=3D--)
+[  +0.000013] pc : refcount_warn_saturate+0xf8/0x134
+[  +0.000011] lr : refcount_warn_saturate+0xf8/0x134
+[  +0.000011] sp : ffffffc012e43930
+[  +0.000008] x29: ffffffc012e43930 x28: ffffff80d31aa300 x27: 000000000000=
+024e
+[  +0.000017] x26: 00000000000003bd x25: 0000000000000040 x24: 000000000000=
+0040
+[  +0.000014] x23: ffffff8083eb1000 x22: 0000000000000002 x21: ffffff80845b=
+c800
+[  +0.000013] x20: 0000000000000040 x19: ffffff80d0cecb00 x18: 000000006001=
+4024
+[  +0.000012] x17: 0000000000000000 x16: 000000000000003c x15: ffffffd97e21=
+a1c0
+[  +0.000012] x14: 0000000000000003 x13: 0000000000000004 x12: 000000000000=
+0001
+[  +0.000014] x11: c0000000ffffdfff x10: ffffffd97f560f50 x9 : 5749cdb40355=
+0d00
+[  +0.000014] x8 : 5749cdb403550d00 x7 : 0000000000000000 x6 : 372e31332020=
+205b
+[  +0.000012] x5 : ffffffd97f7b8b24 x4 : 0000000000000000 x3 : ffffffc012e4=
+3588
+[  +0.000013] x2 : ffffffc012e43590 x1 : 00000000ffffdfff x0 : 000000000000=
+0026
+[  +0.000014] Call trace:
+[  +0.000008]  refcount_warn_saturate+0xf8/0x134
+[  +0.000013]  drm_crtc_commit_put+0x54/0x74
+[  +0.000013]  __drm_atomic_helper_plane_destroy_state+0x64/0x68
+[  +0.000013]  dpu_plane_destroy_state+0x24/0x3c
+[  +0.000017]  drm_atomic_state_default_clear+0x13c/0x2d8
+[  +0.000015]  __drm_atomic_state_free+0x88/0xa0
+[  +0.000015]  drm_atomic_helper_update_plane+0x158/0x188
+[  +0.000014]  __setplane_atomic+0xf4/0x138
+[  +0.000012]  drm_mode_cursor_common+0x2e8/0x40c
+[  +0.000009]  drm_mode_cursor_ioctl+0x48/0x70
+[  +0.000008]  drm_ioctl_kernel+0xe0/0x158
+[  +0.000014]  drm_ioctl+0x214/0x480
+[  +0.000012]  __arm64_sys_ioctl+0x94/0xd4
+[  +0.000010]  invoke_syscall+0x4c/0x100
+[  +0.000013]  do_el0_svc+0xa4/0x168
+[  +0.000012]  el0_svc+0x20/0x50
+[  +0.000009]  el0t_64_sync_handler+0x20/0x110
+[  +0.000008]  el0t_64_sync+0x1a4/0x1a8
+[  +0.000010] ---[ end trace 35bb2d245a684c9a ]---
 
-> Thinking about it again, this seems like something that could be
-> generalized and introduced into regulator core.. Hardcoding this
-> will not end well.. Not to mention it'll affect all mp5496-using
-> boards that are already upstream.
 
-> WDYT about regulator-init-microvolts Mark?
+BR,
+-R
 
-The overwhelming majority of devices that have variable voltages
-support readback, these Qualcomm firmware devices are pretty much
-unique in this regard.  We don't want a general property to set a
-specific voltage since normally we should be using the
-constraints and don't normally need to adjust things immediately
-since we can tell what the current voltage is.=20
 
-This is pretty much just going to be a device specific bodge,
-ideally something that does know what the voltage is would be
-able to tell us at runtime but if that's not possible then
-there's no good options.  If the initial voltage might vary based
-on board then a device specific DT property might be less
-terrible, if it's determined by the regulator the current code
-seems fine.  Or just leave the current behavour, if the
-constraints are accurate then hopefully a temporary dip in
-voltage is just inelegant rather than an issue.  Indeed the
-current behaviour might well save power if you've got a voltage
-range configured and nothing actually ever gets round to setting
-the voltage (which is depressingly common, people seem keen on
-setting voltage ranges even when the voltage is never varied in
-practice).
 
---dRZIuVS8T/5W7hxa
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmP2nrsACgkQJNaLcl1U
-h9BSYAgAg7R+LoNCsEJBpg9GBF0QWNVI+uDSXvbYm2PlkJChzl7FRWdyOCaRBrA4
-xXb6lqs5PxU3aNBvpIFeSxfsLgb1zvjLPA+xSIUVvn/nYrijd58CgU9mp3+iCyzs
-2+O+WPJZuZaNcc3FzS6t9PxPVRg0uYby6H0BJ6ZdRe0GgNhznx2tq1M+Em517w90
-u8eiSfdQEfbE0woSFIGTH+scvTmWJAfcMRU3m1nEJcjd2PBL/TX7P4QciGEsGT66
-wAPeb8uGUKWDTqZsJNN2i3/S5q/TRRfTo7piotQVrJPS6nnJvAQL17mz3NjAf9bP
-7Ig1FRDtI4GJOBiBkwOwOMnlX25AMw==
-=zYTX
------END PGP SIGNATURE-----
-
---dRZIuVS8T/5W7hxa--
+> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Cc: Thomas Zimmermann <tzimmermann@suse.de>
+> Cc: Maxime Ripard <maxime@cerno.tech>
+> References: https://bugzilla.kernel.org/show_bug.cgi?id=3D199425
+> References: https://lore.kernel.org/all/20220221134155.125447-9-maxime@ce=
+rno.tech/
+> References: https://bugzilla.kernel.org/show_bug.cgi?id=3D199425
+> Cc: Maxime Ripard <maxime@cerno.tech>
+> Tested-by: Maxime Ripard <maxime@cerno.tech>
+> Cc: mikita.lipski@amd.com
+> Cc: Michel D=C3=A4nzer <michel@daenzer.net>
+> Cc: harry.wentland@amd.com
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: "Kazlauskas, Nicholas" <nicholas.kazlauskas@amd.com>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: Matthias Brugger <matthias.bgg@gmail.com>
+> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Cc: "Ville Syrj=C3=A4l=C3=A4" <ville.syrjala@linux.intel.com>
+> Cc: Jani Nikula <jani.nikula@intel.com>
+> Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+> Cc: Imre Deak <imre.deak@intel.com>
+> Cc: Manasi Navare <manasi.d.navare@intel.com>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: freedreno@lists.freedesktop.org
+> Cc: linux-kernel@vger.kernel.org
+> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: linux-mediatek@lists.infradead.org
+> Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+> ---
+>  drivers/gpu/drm/drm_atomic_helper.c          | 13 -------------
+>  drivers/gpu/drm/i915/display/intel_display.c | 14 ++++++++++++++
+>  drivers/gpu/drm/msm/msm_atomic.c             | 15 +++++++++++++++
+>  3 files changed, 29 insertions(+), 13 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_at=
+omic_helper.c
+> index d579fd8f7cb8..f6b4c3a00684 100644
+> --- a/drivers/gpu/drm/drm_atomic_helper.c
+> +++ b/drivers/gpu/drm/drm_atomic_helper.c
+> @@ -1587,13 +1587,6 @@ drm_atomic_helper_wait_for_vblanks(struct drm_devi=
+ce *dev,
+>         int i, ret;
+>         unsigned int crtc_mask =3D 0;
+>
+> -        /*
+> -         * Legacy cursor ioctls are completely unsynced, and userspace
+> -         * relies on that (by doing tons of cursor updates).
+> -         */
+> -       if (old_state->legacy_cursor_update)
+> -               return;
+> -
+>         for_each_oldnew_crtc_in_state(old_state, crtc, old_crtc_state, ne=
+w_crtc_state, i) {
+>                 if (!new_crtc_state->active)
+>                         continue;
+> @@ -2244,12 +2237,6 @@ int drm_atomic_helper_setup_commit(struct drm_atom=
+ic_state *state,
+>                         continue;
+>                 }
+>
+> -               /* Legacy cursor updates are fully unsynced. */
+> -               if (state->legacy_cursor_update) {
+> -                       complete_all(&commit->flip_done);
+> -                       continue;
+> -               }
+> -
+>                 if (!new_crtc_state->event) {
+>                         commit->event =3D kzalloc(sizeof(*commit->event),
+>                                                 GFP_KERNEL);
+> diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/d=
+rm/i915/display/intel_display.c
+> index 3479125fbda6..2454451fcf95 100644
+> --- a/drivers/gpu/drm/i915/display/intel_display.c
+> +++ b/drivers/gpu/drm/i915/display/intel_display.c
+> @@ -7651,6 +7651,20 @@ static int intel_atomic_commit(struct drm_device *=
+dev,
+>                 intel_runtime_pm_put(&dev_priv->runtime_pm, state->wakere=
+f);
+>                 return ret;
+>         }
+> +
+> +       /*
+> +        * FIXME: Cut over to (async) commit helpers instead of hand-roll=
+ing
+> +        * everything.
+> +        */
+> +       if (state->base.legacy_cursor_update) {
+> +               struct intel_crtc_state *new_crtc_state;
+> +               struct intel_crtc *crtc;
+> +               int i;
+> +
+> +               for_each_new_intel_crtc_in_state(state, crtc, new_crtc_st=
+ate, i)
+> +                       complete_all(&new_crtc_state->uapi.commit->flip_d=
+one);
+> +       }
+> +
+>         intel_shared_dpll_swap_state(state);
+>         intel_atomic_track_fbs(state);
+>
+> diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_a=
+tomic.c
+> index 1686fbb611fd..b7151767b567 100644
+> --- a/drivers/gpu/drm/msm/msm_atomic.c
+> +++ b/drivers/gpu/drm/msm/msm_atomic.c
+> @@ -189,6 +189,19 @@ void msm_atomic_commit_tail(struct drm_atomic_state =
+*state)
+>         bool async =3D kms->funcs->vsync_time &&
+>                         can_do_async(state, &async_crtc);
+>
+> +       /*
+> +        * FIXME: Convert to async plane helpers and remove the various h=
+acks to
+> +        * keep the old legacy_cursor_way of doing async commits working =
+for the
+> +        * dpu code, like the expectation that these don't have a crtc->e=
+vent.
+> +        */
+> +       if (async) {
+> +               /* both ->event itself and the pointer hold a reference! =
+*/
+> +               drm_crtc_commit_put(async_crtc->state->commit);
+> +               drm_crtc_commit_put(async_crtc->state->commit);
+> +               kfree(async_crtc->state->event);
+> +               async_crtc->state->event =3D NULL;
+> +       }
+> +
+>         trace_msm_atomic_commit_tail_start(async, crtc_mask);
+>
+>         kms->funcs->enable_commit(kms);
+> @@ -222,6 +235,8 @@ void msm_atomic_commit_tail(struct drm_atomic_state *=
+state)
+>                 /* async updates are limited to single-crtc updates: */
+>                 WARN_ON(crtc_mask !=3D drm_crtc_mask(async_crtc));
+>
+> +               complete_all(&async_crtc->state->commit->flip_done);
+> +
+>                 /*
+>                  * Start timer if we don't already have an update pending
+>                  * on this crtc:
+> --
+> 2.39.0
+>
