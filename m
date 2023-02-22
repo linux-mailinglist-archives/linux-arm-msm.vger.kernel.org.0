@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55EB969F9D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 18:18:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 40CCE69F9DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 18:20:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231226AbjBVRSg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 12:18:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33664 "EHLO
+        id S231910AbjBVRUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 12:20:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232634AbjBVRSf (ORCPT
+        with ESMTP id S231536AbjBVRUY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 12:18:35 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CE2623850
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:18:33 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id a10so8657717ljq.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:18:32 -0800 (PST)
+        Wed, 22 Feb 2023 12:20:24 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EA0A392A1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:20:23 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id o38-20020a05600c512600b003e8320d1c11so1262739wms.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:20:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=uZMsMNKryIwR/OeQId+MpW2HJ78jeGftvuKDzTXo6Vo=;
-        b=rwvM6bYXrPO3KZuj2AzMWITfL0PdEAgRSMh92oGQ88rPc8/X1+yxUZmBApVMrQ2RRk
-         XLngbd/PefrdT2GrFeCNLN9tBu7WY4x189a9bl6KOU9u5i1yFrWp8fmNxpLc8MWB4ete
-         neTGARuG1avKmvWVVfiKm7iT3soP6p4k8CRpOWw1mK5+B01d5QlDqvZEYlx8Ag4Yy77b
-         h+R/3v3idPsG0q2ItpufCBLUCX1MNEJIUUMLF5IkDXW59JFZMATq7hAbEgY7q9okaW+I
-         IfRtcR/8Msw4RCUJ/TwwN+72BTuumcVCtHyV611KdWjVsWWNBYQeSiNzjuX9JQvtlpbP
-         l6sQ==
+        bh=ZVi4Wirs0e/17ik8W0xDMJgrb4uTDy85Bz2aeRFW/hc=;
+        b=t75YkVIC2DZjLqm9BpjhIGF8T9pmK/zO0NA0dYuyop58C7cPNrnCC0FyYOXOj38dR4
+         Th1+F1PcXaovr40hbRCTNMZXgb6SZHs0SKfE+WGhbkOiwD8CMMf+LYuIP5yBAIp+nihs
+         XsexyVV09n71It80X/oIhW80NlZhzrUf+3I9+M0+VJi3dIamLEAGrYoBoBK0ARJrNT45
+         3rC5/616tDu2lDREreG864MnBJSy7UdbbrqsF33Ql/DEghZV5sKqAG0YC3SbGYGvhzMo
+         V3u/c72J4z0MCIp5JeZmqGg9q/TIeYK13KgpasnMfYpPT3v7CB5bqfr+AwO1vKQENfs3
+         rk5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uZMsMNKryIwR/OeQId+MpW2HJ78jeGftvuKDzTXo6Vo=;
-        b=FvawjXJUqoKtnl6WcdtNFBpYM1xGvg4ej2OjaJs72a9A4kxU/TAC8OQWtfFglPHBDX
-         mjtZVk/KcT+srXAU8By4j8GMC2jbu/jGGp9CGf8SNlIh+7TaUI9B43ZYg1J8Gs5JGkJD
-         NDKQArFm9Qh75SDor8l7Yy1EK16UzZxv8RiqcpBtakMG/3dqndcn55JjOrwbSrAK2u6V
-         PdS4W/S5QQUCcb4LpaRLlbxsmF5BtBXpc13IHSAxWRPUcNvR0cAYIodQKNuC7YcqEYce
-         e5J0i8ql+Y6em8gCiwHp2+1xdrSbjavNA6gAqkQEMf74piSxg05l+0OOdO2T7d0FM1wX
-         QwhA==
-X-Gm-Message-State: AO0yUKXnU1GmhZOyAf46BDOH3Mn3tUm5duhRAogwoolNeq9VDXGzdg9F
-        aQZxnsXqvruf8e+TAw4Ey9NVJw==
-X-Google-Smtp-Source: AK7set/T/Iv3eABTBRx05+Qn0B0IKh+wIymlFgEzJm9eVk0wcaZd7cBHusmAO4oV/6GTaxUQuBySqQ==
-X-Received: by 2002:a2e:b4a6:0:b0:288:d4bb:4020 with SMTP id q6-20020a2eb4a6000000b00288d4bb4020mr3262218ljm.32.1677086311273;
-        Wed, 22 Feb 2023 09:18:31 -0800 (PST)
-Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
-        by smtp.gmail.com with ESMTPSA id t3-20020a05651c204300b002947029eacfsm864343ljo.23.2023.02.22.09.18.29
+        bh=ZVi4Wirs0e/17ik8W0xDMJgrb4uTDy85Bz2aeRFW/hc=;
+        b=p2WBmiBf8QQCC1MESLiDyC0igw1mIfxxbf5poxrw/xIAR5pCLOrZDmngV8jvlD+T4B
+         1ub0bYTptX8CLpofsSUsI5ec9HaTjb2EKEvl8rD1PTDiYmGp05fABXED6JjQsbh+XWBl
+         KHE6Y92y/Mt8/eYMCmNvtgYIXJ/nCvjCMwLKWSIHjwu/gRXxT6HxvsVBjCnBETO5j7Vv
+         XhlV9O/yMUzQWb8K0Gcz5vD0uM95vRr5VI6kr2yDV4Ln1BdLyERDvxccWO01KOPO5Nx2
+         n760taXk3Y1OTqzcM/J0uCJ2Ab6g1yb7VKQEfHjLO5R2ixCdvYPDkE3wK/zE0Bgu6SiU
+         Fh2A==
+X-Gm-Message-State: AO0yUKX1wxlvp00TPMRcAyX3zvZjhHh73h17dNDxkxzNwvF0gJSVoEjJ
+        fKhADHHS1j58en25CCjDw4mMoA==
+X-Google-Smtp-Source: AK7set8TllcV+8dKebiEcH0GOIDcwlJbsApHyh128agZkDk70uRojafplxAcp46qxWfAbzvdAyVeFg==
+X-Received: by 2002:a05:600c:331b:b0:3dc:4318:d00d with SMTP id q27-20020a05600c331b00b003dc4318d00dmr6624700wmp.11.1677086421630;
+        Wed, 22 Feb 2023 09:20:21 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id ja14-20020a05600c556e00b003dfefe115b9sm6010747wmb.0.2023.02.22.09.20.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Feb 2023 09:18:30 -0800 (PST)
-Message-ID: <39e69f3c-5b81-d04f-c89c-a8173622493a@linaro.org>
-Date:   Wed, 22 Feb 2023 18:18:29 +0100
+        Wed, 22 Feb 2023 09:20:21 -0800 (PST)
+Message-ID: <b42af293-3dd0-008e-819f-676d79ff96d0@linaro.org>
+Date:   Wed, 22 Feb 2023 17:20:20 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
+ Thunderbird/102.7.0
 Subject: Re: [PATCH v6 3/5] arm64: dts: qcom: Add msm8939-pm8916.dtsi include
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
         andersson@kernel.org, djakov@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
@@ -67,125 +67,26 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         stephan@gerhold.net
 References: <20230222120411.55197-1-bryan.odonoghue@linaro.org>
  <20230222120411.55197-4-bryan.odonoghue@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230222120411.55197-4-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+ <39e69f3c-5b81-d04f-c89c-a8173622493a@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <39e69f3c-5b81-d04f-c89c-a8173622493a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 22.02.2023 13:04, Bryan O'Donoghue wrote:
-> From: Stephan Gerhold <stephan@gerhold.net>
+On 22/02/2023 17:18, Konrad Dybcio wrote:
+> Reviewed-by: Konrad Dybcio<konrad.dybcio@linaro.org>
 > 
-> The msm8939-pm8916.dtsi include configures the regulator supplies of
-> MSM8939 used together with PM8916, as recommended by Qualcomm. In rare
-> cases where boards deviate from the recommended design they can just
-> avoid using this include.
-> 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Konrad
 
-Konrad
->  arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi | 82 ++++++++++++++++++++
->  1 file changed, 82 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi
-> new file mode 100644
-> index 0000000000000..18a1b3cca01d6
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi
-> @@ -0,0 +1,82 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +
-> +#include "msm8939.dtsi"
-> +#include "pm8916.dtsi"
-> +
-> +&dsi0 {
-> +	vdda-supply = <&pm8916_l2>;
-> +	vddio-supply = <&pm8916_l6>;
-> +};
-> +
-> +&dsi1 {
-> +	vdda-supply = <&pm8916_l2>;
-> +	vddio-supply = <&pm8916_l6>;
-> +};
-> +
-> +&dsi_phy0 {
-> +	vddio-supply = <&pm8916_l6>;
-> +};
-> +
-> +&dsi_phy1 {
-> +	vddio-supply = <&pm8916_l6>;
-> +};
-> +
-> +&mpss {
-> +	pll-supply = <&pm8916_l7>;
-> +};
-> +
-> +&pronto {
-> +	vddpx-supply = <&pm8916_l7>;
-> +
-> +	iris {
-> +		vddxo-supply = <&pm8916_l7>;
-> +		vddrfa-supply = <&pm8916_s3>;
-> +		vddpa-supply = <&pm8916_l9>;
-> +		vdddig-supply = <&pm8916_l5>;
-> +	};
-> +};
-> +
-> +&sdhc_1 {
-> +	vmmc-supply = <&pm8916_l8>;
-> +	vqmmc-supply = <&pm8916_l5>;
-> +};
-> +
-> +&sdhc_2 {
-> +	vmmc-supply = <&pm8916_l11>;
-> +	vqmmc-supply = <&pm8916_l12>;
-> +};
-> +
-> +&usb_hs_phy {
-> +	v1p8-supply = <&pm8916_l7>;
-> +	v3p3-supply = <&pm8916_l13>;
-> +};
-> +
-> +&rpm_requests {
-> +	smd_rpm_regulators: regulators {
-> +		compatible = "qcom,rpm-pm8916-regulators";
-> +
-> +		/* pm8916_s1 is managed by rpmpd (MSM8939_VDDMDCX) */
-> +		/* pm8916_s2 is managed by rpmpd (MSM8939_VDDCX) */
-> +		pm8916_s3: s3 {};
-> +		pm8916_s4: s4 {};
-> +
-> +		pm8916_l1: l1 {};
-> +		pm8916_l2: l2 {};
-> +		/* pm8916_l3 is managed by rpmpd (MSM8939_VDDMX) */
-> +		pm8916_l4: l4 {};
-> +		pm8916_l5: l5 {};
-> +		pm8916_l6: l6 {};
-> +		pm8916_l7: l7 {};
-> +		pm8916_l8: l8 {};
-> +		pm8916_l9: l9 {};
-> +		pm8916_l10: l10 {};
-> +		pm8916_l11: l11 {};
-> +		pm8916_l12: l12 {};
-> +		pm8916_l13: l13 {};
-> +		pm8916_l14: l14 {};
-> +		pm8916_l15: l15 {};
-> +		pm8916_l16: l16 {};
-> +		pm8916_l17: l17 {};
-> +		pm8916_l18: l18 {};
-> +	};
-> +};
+Oops sorry I think you already gave an RB and I forgot to add it.
+
+---
+bod
