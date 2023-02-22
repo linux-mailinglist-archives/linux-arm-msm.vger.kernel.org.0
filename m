@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D718D69FA00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 18:23:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3031B69FA04
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 18:23:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231580AbjBVRXQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 12:23:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37170 "EHLO
+        id S232302AbjBVRXR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 12:23:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232302AbjBVRXG (ORCPT
+        with ESMTP id S232650AbjBVRXH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 12:23:06 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61B8BAD09
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:23:00 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id f16so8549140ljq.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:23:00 -0800 (PST)
+        Wed, 22 Feb 2023 12:23:07 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59ED24EEC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:23:03 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id n2so7726620lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:23:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=linaro.org; s=google; t=1677086581;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MKtgUKcE8D4PdOsG4pco92R7REX4loOPN7r7BcAijX4=;
-        b=bgw+D02vIBGlqTMX5kxPekSLrBSjn2WYXpjJnhq/cFXXJkA7vIfZbkVAhGy1sIwLlo
-         ZxR0rzVfZDBr1SJuqEuP8wQP0DuQxNDuZdY1DA4YGMva270rtGF5ycraO36nJwb6CCum
-         3B8R8mv7YnWhnbAX64jvQTN+GL9Swp/h+CBuL5MOtpapuCWPpY8SE9DARVNCHLY0QNYe
-         IGrOE/9w3FiBAgiFbK9nTtuI9mNp+krdW6rBhBAW0vEzuyDYYt79jSRXAQetdJtL0aSy
-         OJ/MpxBu67g4Ya2o2BpiVKYIa3GA576bUJotpt+RLI6vBEYrTkhrq9yi6605YUe7w3+Q
-         gUVA==
+        bh=drQma7nNWgYIegGN8xjgb6Jv9bqzaE0wjeikGVtXijQ=;
+        b=DNxBThzaxRiww7qKaICnUKL7RfJtsyRoZsTXpSleR1Xq1JIkxPBxuFItd7xulubWZf
+         ebYg0b9MlmnT+f3S04htKDogisAN0H53dScPVhlIMBVOWL107+mxyIyrvlmsdJsvJfhm
+         3cVrBHoPXdRvhgi0fU4mxR4zCR0pocptcsNKVRmoRr11xWTus3hRD0axwZRftnVBCgfW
+         sEFAA3CEjLEOxfsbB6TBaNXyhFMCXjOSjyUp09448lDS87AyDWT92teYHOLIEKc6NB5Q
+         3SrrzK92oIJoOsYFiWmZRipzselEn7jlUN1j1uhAxe6Snrh3sO9fECZDFRoYFlO72FnB
+         w+AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
+        d=1e100.net; s=20210112; t=1677086581;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MKtgUKcE8D4PdOsG4pco92R7REX4loOPN7r7BcAijX4=;
-        b=c+UDzbbGsTkkLS4MAxRd4pavW9tG3D2EsyenzZR/qAd4PQx/ArL5kCdIOfA0ZeUaNz
-         qPjNHccopMg5UTd4WUYkmlCOB/8aD20BGZThcNcAP7GvJM7JTx66O3k1Fxs73mVvJ3be
-         orMFnlGgi8rahNPZrkMzXCYxqu/NYq9g1a7P9csBA6hlM8yTHeIJyFQD0X29ZGQn6J6t
-         tbG86U312HiSBrS7p8PZF625SFCCxDBs1Qi1jOPWkl4R2QC21MuwD9+MuVaRlcH3UYn1
-         6jVPE3roHyDc13rv5kNHgesSKzhRHpuXB9ugRf9cRLB2ChIZCrnoClx3+ewuxCLFVyHB
-         eTPw==
-X-Gm-Message-State: AO0yUKWef4DQpoQOHMGDF0ZLa9ryjP218BJYWSkuyIaae+ZsApvQK62v
-        9swCWF2THOZqV34emeVZXa0+CQ==
-X-Google-Smtp-Source: AK7set+hLbqPJHD4L8hIu7kc4tqcoexO6btD0vYTbBci0azcqWgIFyiqQGoRqAHYMkAAdhe931sHgA==
-X-Received: by 2002:a2e:bd03:0:b0:293:4ba3:3013 with SMTP id n3-20020a2ebd03000000b002934ba33013mr3459107ljq.5.1677086579768;
-        Wed, 22 Feb 2023 09:22:59 -0800 (PST)
+        bh=drQma7nNWgYIegGN8xjgb6Jv9bqzaE0wjeikGVtXijQ=;
+        b=go9Q0nuPlACpooWtst0osYUQFX1y9tMRNqj+hQ4rrZuSUb96jucJ7ZPKR2YJPVZ9eF
+         v6AX4vvIRV4mNEd0L2kGBtbZ+unrRaDfMLKP398D1LvdvSI+xCl44rdLfKBTeS83fgNA
+         P0H7uI7uUB2MY7Er/E56QoxlxJdQonrbi19cj7nxRLUvDEPwPChM1myTbmWBgT2e1Nok
+         ACwOu6W1yuH97D5vgSZWXO0033RVhN9GXGgKh/9fA8mhSSWl+e8gwghWpKGtgwU/bqPX
+         vq5CpOW2dSCX0mTrJgVhGqCnqoy1mVtZCRvSq1DPylvH/004cLDw0WkOMPWHcxOaMVv+
+         h9/Q==
+X-Gm-Message-State: AO0yUKXetq4ZZ2BdLF0bkCa5sDUJTZJtcZttdzbcnY+Oxf2QfHqBmwdw
+        wc9qbF91ZJ5iV5enWErSsA0JPg==
+X-Google-Smtp-Source: AK7set/oNq2wFyvgMGH0MurxbxUeHP/fVQKjHvAFF7a139Vj/tEWgFyc144tx+RJM/FuxpXsfSRs7A==
+X-Received: by 2002:ac2:43ac:0:b0:4dc:807a:d135 with SMTP id t12-20020ac243ac000000b004dc807ad135mr2841298lfl.5.1677086581569;
+        Wed, 22 Feb 2023 09:23:01 -0800 (PST)
 Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id r3-20020a2e80c3000000b0029358afcc9esm805233ljg.34.2023.02.22.09.22.58
+        by smtp.gmail.com with ESMTPSA id r3-20020a2e80c3000000b0029358afcc9esm805233ljg.34.2023.02.22.09.22.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Feb 2023 09:22:58 -0800 (PST)
+        Wed, 22 Feb 2023 09:23:00 -0800 (PST)
 From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -62,9 +62,9 @@ Cc:     Rob Herring <robh+dt@kernel.org>,
         "David S. Miller" <davem@davemloft.net>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-crypto@vger.kernel.org, Jordan Crouse <jorcrous@amazon.com>
-Subject: [PATCH v11 08/10] crypto: qce: core: Add support to initialize interconnect path
-Date:   Wed, 22 Feb 2023 19:22:38 +0200
-Message-Id: <20230222172240.3235972-9-vladimir.zapolskiy@linaro.org>
+Subject: [PATCH v11 09/10] crypto: qce: core: Make clocks optional
+Date:   Wed, 22 Feb 2023 19:22:39 +0200
+Message-Id: <20230222172240.3235972-10-vladimir.zapolskiy@linaro.org>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20230222172240.3235972-1-vladimir.zapolskiy@linaro.org>
 References: <20230222172240.3235972-1-vladimir.zapolskiy@linaro.org>
@@ -72,7 +72,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -81,85 +82,43 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Thara Gopinath <thara.gopinath@gmail.com>
 
-Crypto engine on certain Snapdragon processors like sm8150, sm8250, sm8350
-etc. requires interconnect path between the engine and memory to be
-explicitly enabled and bandwidth set prior to any operations. Add support
-in the qce core to enable the interconnect path appropriately.
+On certain Snapdragon processors, the crypto engine clocks are enabled by
+default by security firmware and the driver should not handle the clocks.
+Make acquiring of all the clocks optional in crypto engine driver, so that
+the driver initializes properly even if no clocks are specified in the dt.
 
 Tested-by: Jordan Crouse <jorcrous@amazon.com>
 Signed-off-by: Thara Gopinath <thara.gopinath@gmail.com>
-[Bhupesh: Make header file inclusion alphabetical and use devm_of_icc_get()]
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-[vladimir: moved icc bandwidth setup closer to its acquisition]
+[Bhupesh: Massage the commit log]
 Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 ---
- drivers/crypto/qce/core.c | 16 +++++++++++++++-
- drivers/crypto/qce/core.h |  1 +
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ drivers/crypto/qce/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-index 74deca4f96e0..0654b94cfb95 100644
+index 0654b94cfb95..5bb2128c95ca 100644
 --- a/drivers/crypto/qce/core.c
 +++ b/drivers/crypto/qce/core.c
-@@ -5,6 +5,7 @@
+@@ -209,15 +209,15 @@ static int qce_crypto_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		return ret;
  
- #include <linux/clk.h>
- #include <linux/dma-mapping.h>
-+#include <linux/interconnect.h>
- #include <linux/interrupt.h>
- #include <linux/module.h>
- #include <linux/mod_devicetable.h>
-@@ -22,6 +23,8 @@
- #define QCE_MAJOR_VERSION5	0x05
- #define QCE_QUEUE_LENGTH	1
+-	qce->core = devm_clk_get(qce->dev, "core");
++	qce->core = devm_clk_get_optional(qce->dev, "core");
+ 	if (IS_ERR(qce->core))
+ 		return PTR_ERR(qce->core);
  
-+#define QCE_DEFAULT_MEM_BANDWIDTH	393600
-+
- static const struct qce_algo_ops *qce_ops[] = {
- #ifdef CONFIG_CRYPTO_DEV_QCE_SKCIPHER
- 	&skcipher_ops,
-@@ -218,10 +221,18 @@ static int qce_crypto_probe(struct platform_device *pdev)
+-	qce->iface = devm_clk_get(qce->dev, "iface");
++	qce->iface = devm_clk_get_optional(qce->dev, "iface");
+ 	if (IS_ERR(qce->iface))
+ 		return PTR_ERR(qce->iface);
+ 
+-	qce->bus = devm_clk_get(qce->dev, "bus");
++	qce->bus = devm_clk_get_optional(qce->dev, "bus");
  	if (IS_ERR(qce->bus))
  		return PTR_ERR(qce->bus);
  
--	ret = clk_prepare_enable(qce->core);
-+	qce->mem_path = devm_of_icc_get(qce->dev, "memory");
-+	if (IS_ERR(qce->mem_path))
-+		return PTR_ERR(qce->mem_path);
-+
-+	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
- 	if (ret)
- 		return ret;
- 
-+	ret = clk_prepare_enable(qce->core);
-+	if (ret)
-+		goto err_mem_path_disable;
-+
- 	ret = clk_prepare_enable(qce->iface);
- 	if (ret)
- 		goto err_clks_core;
-@@ -260,6 +271,9 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	clk_disable_unprepare(qce->iface);
- err_clks_core:
- 	clk_disable_unprepare(qce->core);
-+err_mem_path_disable:
-+	icc_set_bw(qce->mem_path, 0, 0);
-+
- 	return ret;
- }
- 
-diff --git a/drivers/crypto/qce/core.h b/drivers/crypto/qce/core.h
-index 085774cdf641..228fcd69ec51 100644
---- a/drivers/crypto/qce/core.h
-+++ b/drivers/crypto/qce/core.h
-@@ -35,6 +35,7 @@ struct qce_device {
- 	void __iomem *base;
- 	struct device *dev;
- 	struct clk *core, *iface, *bus;
-+	struct icc_path *mem_path;
- 	struct qce_dma_data dma;
- 	int burst_size;
- 	unsigned int pipe_pair_id;
 -- 
 2.33.0
 
