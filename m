@@ -2,81 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF06969F726
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 15:53:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 479CA69F784
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 16:16:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229505AbjBVOxn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 09:53:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40832 "EHLO
+        id S232224AbjBVPQT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 10:16:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229980AbjBVOxe (ORCPT
+        with ESMTP id S230480AbjBVPQS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 09:53:34 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ECC62138
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 06:53:33 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id m6so10423540lfq.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 06:53:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XtiAUhBRnV1kzRpqeljMlrgfEP8oapNbELdUiPr+q0Q=;
-        b=yIaGRZdfGhPRxB1k8ow9epTiEE1W20A8grO7TCejcTJ9sWi1bZHAds5FbSz221ZTgc
-         XY+qfPUtt4sp+Rr8533QuRnBFRfyC9e5t70/Z86qx+VK2ILclkW2XWvn9kZ/+UyFKuoa
-         X28QYxXXtkuaave1dYN9Fiuv/jZYY4Lom0dKo3852iGBIY8af9JqyXVGLJVvSd41ym6O
-         Wy/obk73XRE8S4v5Qlf3i3KQ02UEZhazuGUXtNSrUU+P6P05EbCPh8aIG+hwdMCc5Qx7
-         0pXwcTR1KpkXeIg/BgUex7/RhJZJwkDYuOas/jUlZqbPv7dWUyC5ZHgBt6zYJ9V/kAMd
-         EVAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XtiAUhBRnV1kzRpqeljMlrgfEP8oapNbELdUiPr+q0Q=;
-        b=PbVyRyLDvrUAy/xSdi7a/WrVIR+KOogAyuc8v9xJKuzy8LURj+wisVuR/8Z8DqeyLE
-         PJpqdTNN3NoG6qSKaYMW9SdbqPdSZUsD7UlVP2xAE57R3SVR4JE/49IpjKWGGJckxYzS
-         7UDX0Rspa7r9w0+vwBPGpKix7cQdE8fPUtIyOQQoepMu1QcGazHDYqW35Eg2FCPprh7w
-         bQbsn8rEVayQZQLM6PuJAljSerlsS1bPOpNvSFKVd1r2YTcuu2q39dxYs+nOK83tlRbF
-         PlMZcpZ5RCUI80xl8xMvLgTRtdF1yHMKyb5azTx/IHOHAsbVVI0FH0+q05L565ehM/Am
-         TQuw==
-X-Gm-Message-State: AO0yUKXy9d4wjx747aC1wfaEF3WPOvWZxQxUL5+CwZIz4DsmmaSuVYx5
-        mCSk8EEDdyzUnjUpJkbVWdiOyw==
-X-Google-Smtp-Source: AK7set8GZAysuh1vxytnbgEUxlKPIUmiScd1FKQtLfvEvrgSqsAGqT845Dtx9NeLeTWFSw7AwRcICQ==
-X-Received: by 2002:ac2:5282:0:b0:4d5:a689:7580 with SMTP id q2-20020ac25282000000b004d5a6897580mr2678118lfm.47.1677077611335;
-        Wed, 22 Feb 2023 06:53:31 -0800 (PST)
-Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
-        by smtp.gmail.com with ESMTPSA id w26-20020a05651204da00b004d39af98af6sm646836lfq.81.2023.02.22.06.53.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Feb 2023 06:53:31 -0800 (PST)
-Message-ID: <64c80ca9-2317-8225-2345-146e41f3c251@linaro.org>
-Date:   Wed, 22 Feb 2023 15:53:29 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 2/2] soundwire: qcom: gracefully handle too many ports in
- DT
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 22 Feb 2023 10:16:18 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50582360B8;
+        Wed, 22 Feb 2023 07:16:17 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id F1E2FB815B4;
+        Wed, 22 Feb 2023 15:16:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3DAC433EF;
+        Wed, 22 Feb 2023 15:16:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1677078974;
+        bh=wUslbHkWZIpoEVNM5LtQHHbJ94IyutGQuJabE24DqWE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=DAT8rKh33CtVSEYanh8svT89vw8xxLp9ZiBkoGZrikdmQLTe1jJy9FibMbJZ/8dj5
+         J6iZWIDep2t0g79YX2tw+/gt6pZUCsaFwu811Tcjx+06elEPRcCX0eB3BTYAH0413V
+         s/EBlcteHGkrOw/znNzb7Ssv0/JauJsEsfeYscm3NrXOawlIPB70mlqDdpCKLB5axt
+         E1WlAvsj/fM2HmAGcaY6XFvHAh57MdHOGgDuXHgG01IYWpYZ39nq+c2QYmHKJAzwEn
+         B0q5fbmUJOyuaj9ZqvH4XHF1FfRphGRMaGC+7Qc4m6Ee0hnFKGVwVRtIkeykeDcR9l
+         6zT9tkRgBV4PA==
+Date:   Wed, 22 Feb 2023 15:16:08 +0000
+From:   Lee Jones <lee@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-References: <20230222144412.237832-1-krzysztof.kozlowski@linaro.org>
- <20230222144412.237832-2-krzysztof.kozlowski@linaro.org>
- <dc544641-b9f1-96b4-95a1-30fafc0712e5@linaro.org>
- <80339c7f-1cea-3c97-7dc4-5efb4597cb69@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <80339c7f-1cea-3c97-7dc4-5efb4597cb69@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 2/7] dt-bindings: mfd: qcom,spmi-pmic: Add pattern
+ property for phy
+Message-ID: <Y/YxuM67on1X9NUA@google.com>
+References: <20230208190200.2966723-1-abel.vesa@linaro.org>
+ <20230208190200.2966723-3-abel.vesa@linaro.org>
+ <Y+uqcb+CZUy/8GYh@matsya>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Y+uqcb+CZUy/8GYh@matsya>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,42 +65,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 14 Feb 2023, Vinod Koul wrote:
 
-
-On 22.02.2023 15:50, Krzysztof Kozlowski wrote:
-> On 22/02/2023 15:47, Konrad Dybcio wrote:
->>
->>
->> On 22.02.2023 15:44, Krzysztof Kozlowski wrote:
->>> There are two issues related to the number of ports coming from
->>> Devicetree when exceeding in total QCOM_SDW_MAX_PORTS.  Both lead to
->>> incorrect memory accesses:
->>> 1. With DTS having too big value of input or output ports, the driver,
->>>    when copying port parameters from local/stack arrays into 'pconfig'
->>>    array in 'struct qcom_swrm_ctrl', will iterate over their sizes.
->>>
->>> 2. If DTS also has too many parameters for these ports (e.g.
->>>    qcom,ports-sinterval-low), the driver will overflow buffers on the
->>>    stack when reading these properties from DTS.
->>>
->>> Add a sanity check so incorrect DTS will not cause kernel memory
->>> corruption.
->>>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> ---
->> Fixes: 02efb49aa805 ("soundwire: qcom: add support for SoundWire controller")
+> On 08-02-23, 21:01, Abel Vesa wrote:
+> > The phy pattern property will be used for providing eUSB2 repeater
+> > functionality. This will be modelled as a Qualcomm PHY driver.
 > 
-> Can be... but is it really a bug of the kernel? Issue is visible with
-> incorrect DTS and it's not the kernel's job to fix it. If DTS has
-> incorrect values (e.g. IO addresses) system won't work anyway and that's
-> the same type of bug.
-I'm not sure to what extent the kernel should be responsible for
-checking DT sanity, but in case of a buffer overflow, I really
-think it definitely deserves a fixes tag.
-
-Konrad
-
+> Lee,
 > 
-> Best regards,
-> Krzysztof
+> Can I get your ack and merge this thru phy tree
+
+Acked-by: Lee Jones <lee@kernel.org>
+
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> > 
+> > The v4 is here:
+> > https://lore.kernel.org/all/20230207135551.1418637-3-abel.vesa@linaro.org/
+> > 
+> > Changes since v4:
+> >  * none
+> > 
+> > Changes since v3:
+> >  * made this the second patch rather than the first in the series
+> > 
+> >  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > index adf88245c409..1e6fadec1301 100644
+> > --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > @@ -135,6 +135,10 @@ patternProperties:
+> >      type: object
+> >      $ref: /schemas/pinctrl/qcom,pmic-gpio.yaml#
+> >  
+> > +  "phy@[0-9a-f]+$":
+> > +    type: object
+> > +    $ref: /schemas/phy/qcom,snps-eusb2-repeater.yaml#
+> > +
+> >    "pon@[0-9a-f]+$":
+> >      type: object
+> >      $ref: /schemas/power/reset/qcom,pon.yaml#
+> > -- 
+> > 2.34.1
 > 
+> -- 
+> ~Vinod
+
+-- 
+Lee Jones [李琼斯]
