@@ -2,97 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 270C669F4D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 13:46:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 46AA569F5FF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 15:00:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231989AbjBVMqX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 07:46:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43292 "EHLO
+        id S229950AbjBVOAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 09:00:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbjBVMqX (ORCPT
+        with ESMTP id S229615AbjBVOAE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 07:46:23 -0500
+        Wed, 22 Feb 2023 09:00:04 -0500
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 68F8F367DD;
-        Wed, 22 Feb 2023 04:46:21 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 4A53734333;
+        Wed, 22 Feb 2023 06:00:02 -0800 (PST)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 156AB139F;
-        Wed, 22 Feb 2023 04:47:04 -0800 (PST)
-Received: from [10.57.90.101] (unknown [10.57.90.101])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0B5123F703;
-        Wed, 22 Feb 2023 04:46:17 -0800 (PST)
-Message-ID: <6072a788-74b9-6521-882c-c1637a68ccb2@arm.com>
-Date:   Wed, 22 Feb 2023 12:46:16 +0000
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E832C139F;
+        Wed, 22 Feb 2023 06:00:44 -0800 (PST)
+Received: from bogus (unknown [10.57.10.143])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 017663F881;
+        Wed, 22 Feb 2023 06:00:00 -0800 (PST)
+Date:   Wed, 22 Feb 2023 13:59:56 +0000
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 0/3] mailbox: Allow direct registration to a channel
+Message-ID: <20230222135956.onrgpra6ezjx3ian@bogus>
+References: <20230213232537.2040976-1-quic_eberman@quicinc.com>
+ <20230215101732.pbpom3ub3yh75n4w@bogus>
+ <d35633ea-4049-6f51-3a3a-2a258a4af037@quicinc.com>
+ <20230216095816.rzhxa2qdexy3ulrz@bogus>
+ <ba567710-8ef5-9a18-4c41-0d1124163215@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.7.2
-Subject: Re: [PATCH v2 2/9] coresight-tpda: Add DSB dataset support
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        Tao Zhang <taozha@qti.qualcomm.com>
-References: <1674114105-16651-1-git-send-email-quic_taozha@quicinc.com>
- <1674114105-16651-3-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1674114105-16651-3-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ba567710-8ef5-9a18-4c41-0d1124163215@quicinc.com>
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/01/2023 07:41, Tao Zhang wrote:
-> Read the DSB element size from the device tree. Set the register
-> bit that controls the DSB element size of the corresponding port.
+On Thu, Feb 16, 2023 at 08:41:05AM -0800, Elliot Berman wrote:
 > 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> Signed-off-by: Tao Zhang <taozha@qti.qualcomm.com>
-> ---
->   drivers/hwtracing/coresight/coresight-tpda.c | 62 ++++++++++++++++++++++++++++
->   drivers/hwtracing/coresight/coresight-tpda.h |  4 ++
->   2 files changed, 66 insertions(+)
 > 
-> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
-> index 5989798..be13e08 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpda.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
-> @@ -37,6 +37,15 @@ static void tpda_enable_port(struct tpda_drvdata *drvdata, int port)
->   	u32 val;
->   
->   	val = readl_relaxed(drvdata->base + TPDA_Pn_CR(port));
-> +	/*
-> +	 * Configure aggregator port n DSB data set element size
-> +	 * Set the bit to 0 if the size is 32
-> +	 * Set the bit to 1 if the size is 64
-> +	 */
-> +	if (drvdata->dsb_esize[port] == 32)
-> +		val &= ~TPDA_Pn_CR_DSBSIZE;
-> +	else if (drvdata->dsb_esize[port] == 64)
-> +		val |= TPDA_Pn_CR_DSBSIZE;
+> On 2/16/2023 1:58 AM, Sudeep Holla wrote:
+> > On Wed, Feb 15, 2023 at 08:58:10AM -0800, Elliot Berman wrote:
+> > > 
+> > > 
+> > > On 2/15/2023 2:17 AM, Sudeep Holla wrote:
+> > > > On Mon, Feb 13, 2023 at 03:25:34PM -0800, Elliot Berman wrote:
+> > > > > Two mailbox controllers have channel/client binding mechanisms that are
+> > > > > controller-specific and not using the devicetree binding mechanisms. Mailbox
+> > > > > channel/client is conceptually done in two steps: selecting the channel
+> > > > > and binding the selected to channel to a client. Channel selection is sometimes
+> > > > > controller specific (pcc and omap are examples). The channel/client binding
+> > > > > code is all the same.
+> > > > > 
+> > > > > This small series de-duplicates and refactors the channel/client binding
+> > > > > into a common framework function: "mbox_bind_client" which all of the
+> > > > > channel selection mechanisms can use.
+> > > > > 
+> > > > > I found this duplicate code while working on the support for Gunyah hypervisor
+> > > > > message queues [1]. I've only been able to compile-test omap-maiblox and pcc,
+> > > > > however it is a straightforward conversion here.
+> > > > > 
+> > > > > [1]: https://lore.kernel.org/all/20230120224627.4053418-9-quic_eberman@quicinc.com/
+> > > > > 
+> > > > > Elliot Berman (3):
+> > > > >     mailbox: Allow direct registration to a channel
+> > > > 
+> > > > I am unable to find the above patch either in my inbox or in lore[1].
+> > > > Can you please repost the same ? I would like to test/review w.r.t PCC
+> > > > driver.
+> > > > 
+> > > 
+> > > Hi Sudeep,
+> > > 
+> > > Not sure why the patch didn't end up your inbox; lore seems to have linked
+> > > it correctly and indicates you were in To:. If I missed something, let me
+> > > know and I'll make sure you're properly included if future versions needed.
+> > > 
+> > > https://lore.kernel.org/all/20230213232537.2040976-4-quic_eberman@quicinc.com/
+> > 
+> > No, I do have patch 2/3 and 3/3 in my inbox along with the cover letter.
+> > Patch 1/3 is missing in both my inbox and lore. Can you send me the lore
+> > link for patch 1/3 if you are able to find it ? Or just repost the series
+> > if you can't.
+> > 
+> 
+> Huh, not sure what happened there. I got a copy of Patch 1/3 but I also
+> don't see it in lore. Resent:
+> 
+> https://lore.kernel.org/all/20230216163804.456714-1-quic_eberman@quicinc.com/
 
-What are the chances of having a value other than 32 or 64 ?
-What should we do in that case ? Should the driver at least
-give out a warning at least in the unhandled case rather than
-silently reusing the existing setting ?
+Thanks.
 
-Suzuki
+You can add(tested PCC driver)
 
+Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+
+-- 
+Regards,
+Sudeep
