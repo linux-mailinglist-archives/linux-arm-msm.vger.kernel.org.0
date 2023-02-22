@@ -2,227 +2,285 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1DB269EF95
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 08:50:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C367F69EFB3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 08:57:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229825AbjBVHuO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 02:50:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38710 "EHLO
+        id S230163AbjBVH5m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 02:57:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229615AbjBVHuN (ORCPT
+        with ESMTP id S229755AbjBVH5l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 02:50:13 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12C0D34C35;
-        Tue, 21 Feb 2023 23:50:12 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31M5hWS3030956;
-        Wed, 22 Feb 2023 07:49:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=BcqR612iqCWvW3DvlGmYyi5ki20UIPw6xs/a6ed8V/k=;
- b=COoFBD8oB3i/p2+NTxejar+kgnRzdEFBwbyI5uxeRnm5z1qdFgyzGr/N2pMPbO5u7KK3
- /Ng1R08TGbUbLRDMv84ffjoU4kFw8FQWySUJfbfD0nulYgHACd7oeRguQHY9ayRSuNLO
- esMWWDa3VMeE4noHHlfZULWg/+q3gXOFHgvrkOyk6rBXD7PuLQ1mvS90uzs1TmjYEkUu
- ZAwnQPM31cf0HhwIobUKRsSWN7opo4RuVXKmIbiTj/3OMy71lfEpITUbMTUqC+Gsph/m
- aC4b5+mboMtvRT8YXId6TIf3ISfEF9MPce0zCCZx7PTeuoxa793E3V9Z+i4RGW0gNhDs 6g== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nvprguj01-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 22 Feb 2023 07:49:52 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31M7npcM011037
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 22 Feb 2023 07:49:51 GMT
-Received: from [10.242.243.78] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 21 Feb
- 2023 23:49:16 -0800
-Message-ID: <90919327-650f-210d-ecdf-9f35827fe72f@quicinc.com>
-Date:   Wed, 22 Feb 2023 13:19:13 +0530
+        Wed, 22 Feb 2023 02:57:41 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47CC6367F8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 23:57:33 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id i34so1533791eda.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 23:57:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lRvIvkf8yG2Yo7blwPcCDwUhc0kMdsUTbYCmySTrqm4=;
+        b=pf0c2/YZnz9aV/yEL191dmaMWJb/+PGs7Fx4ol+I8Lb84PeytIEbCla5CHXccrf2C3
+         +MW3V7Ywmf4oCYW7mWTw42NIgx3J2Z2Pp57NRKdRil1J8hyngxgnu5+n/w59xvA01vla
+         9+MTTimtrS/S9NLQqE8bbsZ0ig8sZXnBiQ0NBKUEq323j+1npgrFW/eJEdKEMVzi0Ytu
+         b0PqjL//A4raS6AHZ3TzJisQ5rEp8HRl3lTsH1jwoZ+QHXNmuyRD7PtSKp6+IT1lr/Y0
+         ziE6WHfAueHa2RFegMB/EgTAw3rdHoI6f0CYGKpH4DwT358NK7w2IgX2G8USkBSUTMsW
+         Wo0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lRvIvkf8yG2Yo7blwPcCDwUhc0kMdsUTbYCmySTrqm4=;
+        b=SY8naZ2bECfO8CRbOB+FIvPTd/FHFJGzb2sAVRTWsUmgHp98pT5yMshoHLQTItRXGF
+         75whOAI3jdKK0hfxXktcEszTT30V0BZPFMwESR56HAV+wqaUy49wo+hSeFOfr3Nie7dT
+         dw/lG/E5ts1bZFz0BBoH/Fz4iBwDhBnqZIzj05dKj3766FchpZlA8Pmm6ayxSmn8TS+W
+         KEY9SqJYYc2adgl5RmFxofNF/ptKb9ljVq0x/I+thV4FUl8A+Zgk8fQBhkAgX6VbRpEF
+         MJil+MyLoVP0oSTt2ZdOfaQrXeK3H2kYU9a6byZv6oC4bIDT2Yfo4tKqZ/KQe+3ykIIn
+         JBOg==
+X-Gm-Message-State: AO0yUKVl855Q60JnDCfb1fXJJIsRDE2uZwE8HcK/e+YuEk3YmA5GNpuy
+        e88HR6BoCsfEJlczNZz5c6s7rA==
+X-Google-Smtp-Source: AK7set97Ck1w5Q1ybSPB1uJIePA6zRy1nsuZainK6/a1QCnoBibRE0eKgj7xOsVxIhD7sWcdAwAyUw==
+X-Received: by 2002:a17:906:b746:b0:877:573d:e919 with SMTP id fx6-20020a170906b74600b00877573de919mr16520851ejb.20.1677052651590;
+        Tue, 21 Feb 2023 23:57:31 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id ca13-20020a170906a3cd00b008d02b6f3f41sm3894887ejb.211.2023.02.21.23.57.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Feb 2023 23:57:31 -0800 (PST)
+Date:   Wed, 22 Feb 2023 09:57:29 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Saravana Kannan <saravanak@google.com>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, mka@chromium.org
+Subject: Re: [PATCH v3 1/2] clk: Add generic sync_state callback for
+ disabling unused clocks
+Message-ID: <Y/XK6UBfA2JRQrAR@linaro.org>
+References: <20221227204528.1899863-1-abel.vesa@linaro.org>
+ <ebc257025ebd641e624ef506ea09c800.sboyd@kernel.org>
+ <Y/OV3CF0ootyooDJ@linaro.org>
+ <Y/OfjbxI1tHYJHNv@linaro.org>
+ <CAGETcx_mD3pbAmT5FDZaVAsKb_2PAnrHL8B_6gSR=+a0O4kHfQ@mail.gmail.com>
+ <Y/PALlrQpwPlum9M@linaro.org>
+ <CAGETcx_TZN3=GKrEf5fy_tA=JnOfw7m-N=+hD=qhe_yRRpngPw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH V5 5/5] firmware: scm: Modify only the DLOAD bit in TCSR
- register for download mode
-Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>,
-        POOVENDHAN SELVARAJ <quic_poovendh@quicinc.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <shawnguo@kernel.org>, <arnd@arndb.de>,
-        <marcel.ziswiler@toradex.com>, <robimarko@gmail.com>,
-        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
-        <broonie@kernel.org>, <quic_gurus@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-CC:     <quic_gokulsri@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_devipriy@quicinc.com>
-References: <20230216120012.28357-1-quic_poovendh@quicinc.com>
- <20230216120012.28357-6-quic_poovendh@quicinc.com>
- <51bd93be-f8d3-a33c-18ad-ba4a331f2bcf@quicinc.com>
- <38780d01-3e02-fd30-4c11-8cb307eeae4d@quicinc.com>
- <45ea27af-d4d3-48b4-236d-128a26552d6c@quicinc.com>
- <d290a4d7-885a-437f-028e-df04a117f983@quicinc.com>
- <cdb5b07f-6767-3162-532b-2c80178b8b92@quicinc.com>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <cdb5b07f-6767-3162-532b-2c80178b8b92@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: V2ARKtby_0kJJbsvSau7dx9O9aMpVRYe
-X-Proofpoint-ORIG-GUID: V2ARKtby_0kJJbsvSau7dx9O9aMpVRYe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-22_02,2023-02-20_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
- mlxlogscore=825 lowpriorityscore=0 spamscore=0 priorityscore=1501
- impostorscore=0 adultscore=0 phishscore=0 mlxscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302220066
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGETcx_TZN3=GKrEf5fy_tA=JnOfw7m-N=+hD=qhe_yRRpngPw@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-<..>
+On 23-02-21 11:58:24, Saravana Kannan wrote:
+> On Mon, Feb 20, 2023 at 10:47 AM Abel Vesa <abel.vesa@linaro.org> wrote:
+> >
+> > On 23-02-20 09:51:55, Saravana Kannan wrote:
+> > > On Mon, Feb 20, 2023 at 8:28 AM Abel Vesa <abel.vesa@linaro.org> wrote:
+> > > >
+> > > > On 23-02-20 17:46:36, Abel Vesa wrote:
+> > > > > On 23-02-17 21:38:22, Stephen Boyd wrote:
+> > > > > > Quoting Abel Vesa (2022-12-27 12:45:27)
+> > > > > > > There are unused clocks that need to remain untouched by clk_disable_unused,
+> > > > > > > and most likely could be disabled later on sync_state. So provide a generic
+> > > > > > > sync_state callback for the clock providers that register such clocks.
+> > > > > > > Then, use the same mechanism as clk_disable_unused from that generic
+> > > > > > > callback, but pass the device to make sure only the clocks belonging to
+> > > > > > > the current clock provider get disabled, if unused. Also, during the
+> > > > > > > default clk_disable_unused, if the driver that registered the clock has
+> > > > > > > the generic clk_sync_state_disable_unused callback set for sync_state,
+> > > > > > > skip disabling its clocks.
+> > >
+> > > Hi Abel,
+> > >
+> > > We have the day off today, so I'll respond more later. Also, please cc
+> > > me on all sync_state() related patches in the future.
+> > >
+> >
+> > Sure thing.
+> >
+> > > I haven't taken a close look at your series yet, but at a glance it
+> > > seems incomplete.
+> > >
+> > > Any reason you didn't just try to revive my series[1] or nudge me?
+> > > [1]- https://lore.kernel.org/lkml/20210407034456.516204-3-saravanak@google.com/
+> >
+> > This patchset is heavily reworked and much more simpler as it relies
+> > strictly on the sync_state being registered by the clock provider.
+> 
+> It's simpler because it's not complete. It for sure doesn't handle
+> orphan-reparenting. It also doesn't make a lot of sense for only some
+> clock providers registering for sync_state(). If CC-A is feeding a
+> clock signal that's used as a root for clocks in CC-B, then what
+> happens if only CC-B implements sync_state() but CC-A doesn't. The
+> clocks from CC-B are still going to turn off when CC-A turns off its
+> PLL before CC-B registers.
+> 
+> Nack for this patch.
+> 
+> Also, unless there's a strong objection, let's go back to my patch
+> please. It's way more well tested and used across different SoCs than
+> this patch. Also, I'm pretty sure the orphan handling is needed for
+> qcom SoC's too.
 
->>>>>>       };
->>>>>> -    desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
->>>>>> +    desc.args[1] = enable ? val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
->>>>>> +                val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE);
->>>>>>       return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
->>>>>>   }
->>>>>> @@ -426,15 +427,25 @@ static void qcom_scm_set_download_mode(bool 
->>>>>> enable)
->>>>>>   {
->>>>>>       bool avail;
->>>>>>       int ret = 0;
->>>>>> +    u32 dload_addr_val;
->>>>>>       avail = __qcom_scm_is_call_available(__scm->dev,
->>>>>>                            QCOM_SCM_SVC_BOOT,
->>>>>>                            QCOM_SCM_BOOT_SET_DLOAD_MODE);
->>>>>> +    ret = qcom_scm_io_readl(__scm->dload_mode_addr, 
->>>>>> &dload_addr_val);
->>>>>> +
->>>>>> +    if (ret) {
->>>>>> +        dev_err(__scm->dev,
->>>>>> +            "failed to read dload mode address value: %d\n", ret);
->>>>>> +        return;
->>>>>> +    }
->>>>>> +
->>>>>>       if (avail) {
->>>>>> -        ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
->>>>>> +        ret = __qcom_scm_set_dload_mode(__scm->dev, 
->>>>>> dload_addr_val, enable);
->>>>>
->>>>> Did you test this on a target where it comes under this if 
->>>>> statement? does it really need to know dload_mode_addr for this 
->>>>> target ?
->>>>
->>>>
->>>> Can we do something like this? I would let other review as well.
->>>>
->>>> --------------------------------------->0------------------------------------------- 
->>>>
->>>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
->>>> index cdbfe54..26b7eda 100644
->>>> --- a/drivers/firmware/qcom_scm.c
->>>> +++ b/drivers/firmware/qcom_scm.c
->>>> @@ -419,6 +419,7 @@ static void qcom_scm_set_download_mode(bool enable)
->>>>  {
->>>>         bool avail;
->>>>         int ret = 0;
->>>> +       u32 dload_addr_val;
->>>>
->>>>         avail = __qcom_scm_is_call_available(__scm->dev,
->>>>                                              QCOM_SCM_SVC_BOOT,
->>>> @@ -426,8 +427,16 @@ static void qcom_scm_set_download_mode(bool 
->>>> enable)
->>>>         if (avail) {
->>>>                 ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
->>>>         } else if (__scm->dload_mode_addr) {
->>>> -               ret = qcom_scm_io_writel(__scm->dload_mode_addr,
->>>> -                               enable ? 
->>>> QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
->>>> +               ret = qcom_scm_io_readl(__scm->dload_mode_addr, 
->>>> &dload_addr_val);
->>>> +               if (ret) {
->>>> +                       dev_err(__scm->dev,
->>>> +                               "failed to read dload mode address 
->>>> value: %d\n", ret);
->>>> +                       return;
->>>> +               }
->>>> +
->>>> +               ret = qcom_scm_io_writel(__scm->dload_mode_addr, 
->>>> enable ?
->>>> +                               dload_addr_val | 
->>>> QCOM_SCM_BOOT_SET_DLOAD_MODE :
->>>> +                               dload_addr_val & 
->>>> ~(QCOM_SCM_BOOT_SET_DLOAD_MODE));
->>>>         } else {
->>>>                 dev_err(__scm->dev,
->>>>                         "No available mechanism for setting download 
->>>> mode\n");
->>>>
->>>> -Mukesh
->>>
->>> Okay sure..Agreed, will address this in the next patch.
->>
->>    Also, not sure, if its better to keep the old behavior working for
->>    targets that does not support 'READ' of this address. If one such
->>    thing exists, that will be broken now. In such a case, we should
->>    ignore if scm_io_readl fails, still write and dload_addr_val should
->>    be '0' initialised.
-> 
-> Why would a secure read of this register would fail, if one is allowed 
-> to do secure write ?
-> 
-> Honestly, i was not understanding the purpose of this bitwise handling
-> of this patch, i thought it is trying to fix existing issue for
-> some target.
-> 
-> For some of the upstream target(e.g sm8450, i verified it myself), it is 
-> not an issue.
-> 
-> arch/arm64/boot/dts/qcom/msm8916.dtsi:                  qcom,dload-mode 
-> = <&tcsr 0x6100>;
-> arch/arm64/boot/dts/qcom/msm8976.dtsi:                  qcom,dload-mode 
-> = <&tcsr 0x6100>;
-> arch/arm64/boot/dts/qcom/msm8996.dtsi:                  qcom,dload-mode 
-> = <&tcsr_2 0x13000>;
-> arch/arm64/boot/dts/qcom/sm8450.dtsi:                   qcom,dload-mode 
-> = <&tcsr 0x13000>;
-> 
-> 
-> However, it looks valid to handle only the effective bits. I have worked 
-> on top of this patch and tested it and posted here.
-> 
-> https://lore.kernel.org/lkml/1676990381-18184-1-git-send-email-quic_mojha@quicinc.com/ 
-> 
-> 
-> Do you have any example of any upstream target where this would fail ?
+Fine. Will wait for a respin of your patchset. Please CC me on it.
 
-   Actually not sure. I was saying just based on the fact that,
-   previously it was 'unconditional write' on all targets, now its a
-   'conditional write'. If 'read' would never fail from secure,
-   then your patch looks fine.
+Bjorn please drop this patchset from your tree/pull request.
 
-Regards,
-  Sricharan
-  y
-
-
+> 
+> -Saravana
+> 
+> >
+> > I saw your patchset a few months ago but then forgot about its
+> > existence. That's also why I forgot to nudge you. Sorry about that.
+> >
+> > >
+> > > At the least, I know [1] works on all Android devices (including
+> > > Qualcomm SoCs) released in the past 2-3 years or more. If [1] works
+> > > for you, I'd rather land that after addressing Stephen's comments
+> > > there (I remember them being fairly easy to address comments) instead
+> > > of whipping up a new series that's not as well used. I just got busy
+> > > with other things and addressing more fundamental fw_devlink TODOs
+> > > before getting back to this.
+> > >
+> > > Hi Bjorn,
+> > >
+> > > I see in another reply you've said:
+> > >
+> > > Applied, thanks!
+> > >
+> > > [1/2] clk: Add generic sync_state callback for disabling unused clocks
+> > >       commit: 26b36df7516692292312063ca6fd19e73c06d4e7
+> > > [2/2] clk: qcom: sdm845: Use generic clk_sync_state_disable_unused callback
+> > >       commit: 99c0f7d35c4b204dd95ba50e155f32c99695b445
+> > >
+> > > Where exactly have you applied them? I hope you haven't applied the
+> > > clk.c changes to some tree that goes into 6.3.
+> >
+> > I think it is already part of Bjorn's Qualcomm clocks pull request.
+> >
+> > >
+> > > -Saravana
+> > >
+> > > > > >
+> > > > > > How does that avoid disabling clks randomly in the clk tree? I'm
+> > > > > > concerned about disabling an unused clk in the middle of the tree
+> > > > > > because it doesn't have a driver using sync state, while the clk is the
+> > > > > > parent of an unused clk that is backed by sync state.
+> > > > > >
+> > > > > >    clk A -->  clk B
+> > > > > >
+> > > > > > clk A: No sync state
+> > > > > > clk B: sync state
+> > > > > >
+> > > > > > clk B is left on by the bootloader. __clk_disable_unused(NULL) is called
+> > > > > > from late init. Imagine clk A is the root of the tree.
+> > > > > >
+> > > > > >     clk_disable_unused_subtree(clk_core A)
+> > > > > >       clk_disable_unused_subtree(clk_core B)
+> > > > > >         if (from_sync_state && core->dev != dev)
+> > > > > >           return;
+> > > > > >       ...
+> > > > > >       clk core A->ops->disable()
+> > > > > >
+> > > > > > clk core B is off now?
+> > > > >
+> > > > > Yes, that is correct. But the same thing is happening currently if the
+> > > > > clk_ignore_unused in not specified. At least with this new approach, we
+> > > > > get to leave unused clocks enabled either until sync_state is called or forever.
+> > > > > All the provider has to do is to implement a sync_state callback (or use
+> > > > > the generic one provided). So the provider of clk A would obviously need
+> > > > > a sync state callback registered.
+> > > > >
+> > > > > >
+> > > > > > Also sync_state seems broken right now. I saw mka mentioned that if you
+> > > > > > have a device node enabled in your DT but never enable a driver for it
+> > > > > > in the kernel we'll never get sync_state called. This is another
+> > > > > > problem, but it concerns me that sync_state would make the unused clk
+> > > > > > disabling happen at some random time or not at all.
+> > > > >
+> > > > > Well, the fact that the sync state not being called because a driver for
+> > > > > a consumer device doesn't probe does not really mean it is broken. Just
+> > > > > because the consumer driver hasn't probed yet, doesn't mean it will
+> > > > > not probe later on.
+> > > > >
+> > > >
+> > > > CC'ed Saravana
+> > > >
+> > > > > That aside, rather than going with clk_ignore_unused all the time on
+> > > > > qcom platforms, at least in a perfect scenario (where sync state is
+> > > > > reached for all providers) the clocks get disabled.
+> > > > >
+> > > > > >
+> > > > > > Can the problem be approached more directly? If this is about fixing
+> > > > > > continuous splash screen, then I wonder why we can't list out the clks
+> > > > > > that we know are enabled by the bootloader in some new DT binding, e.g.:
+> > > > > >
+> > > > > >     clock-controller {
+> > > > > >             #clock-cells = <1>;
+> > > > > >             boot-handoff-clocks = <&consumer_device "clock cells for this clk provider">;
+> > > > > >     };
+> > > > > >
+> > > > > > Then mark those as "critical/don't turn off" all the way up the clk tree
+> > > > > > when the clk driver probes by essentially incrementing the
+> > > > > > prepare/enable count but not actually touching the hardware, and when
+> > > > > > the clks are acquired by clk_get() for that device that's using them
+> > > > > > from boot we make the first clk_prepare_enable() do nothing and not
+> > > > > > increment the count at all. We can probably stick some flag into the
+> > > > > > 'struct clk' for this when we create the handle in clk_get() so that the
+> > > > > > prepare and enable functions can special case and skip over.
+> > > > >
+> > > > > Well, that means we need to play whack-a-mole by alsways adding such clocks to
+> > > > > devicetree.
+> > > > >
+> > > > > >
+> > > > > > The sync_state hook operates on a driver level, which is too large when
+> > > > > > you consider that a single clk driver may register hundreds of clks that
+> > > > > > are not related. We want to target a solution at the clk level so that
+> > > > > > any damage from keeping on all the clks provided by the controller is
+> > > > > > limited to just the drivers that aren't probed and ready to handle their
+> > > > > > clks. If sync_state could be called whenever a clk consumer consumes a
+> > > > > > clk it may work? Technically we already have that by the clk_hw_provider
+> > > > > > function but there isn't enough information being passed there, like the
+> > > > > > getting device.
+> > > > >
+> > > > > Actually, from the multitude of clocks registered by one provider, the
+> > > > > ones already explicitely enabled (and obvisously their parents) by thier
+> > > > > consumer are safe. The only ones we need to worry about are the ones that
+> > > > > might be enabled by bootloader and need to remain on. With the sync state
+> > > > > approach, the latter mentioned clocks will either remain on indefinitely
+> > > > > or will be disabled on sync state. The provider driver is the only level
+> > > > > that has a registered sync state callback.
+> > > > >
+> > > > > >
+> > > > > > > diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+> > > > > > > index 842e72a5348f..cf1adfeaf257 100644
+> > > > > > > --- a/include/linux/clk-provider.h
+> > > > > > > +++ b/include/linux/clk-provider.h
+> > > > > > > @@ -720,6 +720,7 @@ struct clk *clk_register_divider_table(struct device *dev, const char *name,
+> > > > > > >                 void __iomem *reg, u8 shift, u8 width,
+> > > > > > >                 u8 clk_divider_flags, const struct clk_div_table *table,
+> > > > > > >                 spinlock_t *lock);
+> > > > > > > +void clk_sync_state_disable_unused(struct device *dev);
+> > > > > >
+> > > > > > This is a weird place to put this. Why not in the helper functions
+> > > > > > section?
+> > > > >
+> > > > > Sure this can be moved.
+> > > > >
+> > > > > >
+> > > > > > >  /**
+> > > > > > >   * clk_register_divider - register a divider clock with the clock framework
+> > > > > > >   * @dev: device registering this clock
