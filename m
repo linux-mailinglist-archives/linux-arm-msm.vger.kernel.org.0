@@ -2,76 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A69F469FE30
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 23:12:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FFC369FE36
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 23:13:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232532AbjBVWME (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 17:12:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35354 "EHLO
+        id S229755AbjBVWN2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 17:13:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232415AbjBVWMB (ORCPT
+        with ESMTP id S229567AbjBVWN1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 17:12:01 -0500
+        Wed, 22 Feb 2023 17:13:27 -0500
 Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E6D42BCC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 14:11:46 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id t11so1001976lfr.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 14:11:46 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA6F51D92B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 14:12:55 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id f41so11922712lfv.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 14:12:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2M/okC0ikS9uDwZLSlit4bWXZfj2iKqcWmr+GvGYOvs=;
-        b=MOSTb+TlyzknQi1Pu6dI3l3bIngMQLG5b8Vfyl3M9fHUqa+N6PZHWpCAX+MszvkN4l
-         Du7u/M0jey4cb/DirqsZ06dSrs8ABDgnUk3c//Qae0iWlkIKpIjPTshY1CfMVHXdjcSI
-         2/somtLmtlCrfBGUCNwhP1C8Z2fJMaue5Hl0w/uQqFg0ISum5Es3XVF5bIdO70TTGdm2
-         oB76ATz5DWg+V/M2oy6thr0hFKjyb1KiHcXMKNZRlClFQIQNRzlsjlIz3FsoTs+qlTac
-         /1pyxEftQm1aLsxXeWfKAZ21L5rQsTebbTphBleBDBqYLCgMXKVOtAdppB7CuCjaFRqu
-         VNZA==
+        bh=hGZr4GB37okt9ns/7m+dFk/oY3FVz2qC1daXRw1yuJ0=;
+        b=p0OnXRAlhWxfboCKRQVVAEGT0BLMcjKThuGG4IznwRspSxUpT5OS/qbA6o3bccRBlH
+         MGs2a1Ev1Ob/eFQJ6TXPG26A2nZDYaWPL99/XG3HM+Ndbf5YOW3Ow0S75H69HMpiYjO7
+         h5tfm8UzlrDMi9I7+My8MIo9V4SrLTw14eKlaeZ+sewiUiezM9dcymUKcCjlaKiYbvht
+         k1SHx/T+uajghDgRuvS3CD1i+Og9LlBbLbYDkKZWmPqdkaWUl0nUf6fS7Ha7XFOaGF1Q
+         vXJkr4IZ3wbslNp1SH8H80Ckivs2xqlCQMZfY47FCSI+BO4+5T/GVHDPHZ09j13WdjYR
+         hPhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2M/okC0ikS9uDwZLSlit4bWXZfj2iKqcWmr+GvGYOvs=;
-        b=S+G7pklQP/gal9PZIU4FC23B4IzfnoqaZWTddrn5FBEB5utnLhLnQaTMm6rK05OLyu
-         ZnrnfWoo4SE4vyT+SK+1KHHE8Bg5bvK++a310SbyDbNOH6c4+e08+POR5g9+R+KUCWlR
-         +B448jAZQFfDR7LZoKHIbpJN9NXHrtDAEH7jzHJQ2cW58rihYbT20ImNaPQGPdpfH3tK
-         fIhiH6iClRiWEzVD/gfeYG07S567+rJV8I7uKk6vmBlt6jhMy/O5scWtQx24KcPz8sMS
-         AvfVBIpOUfYX/oCSKTQuEurZhuT4Z+2OOOu1z+DRym6K0D5Da5k+5Lku6XxsgKal9ZVU
-         V1Fw==
-X-Gm-Message-State: AO0yUKU0RvPV6xc4NeKMwWpgr+XkoRaNchMy9i2bFw+Td6WoAMSKDWIm
-        WcXEyEBN9qGQleGbbRijk3uEmA==
-X-Google-Smtp-Source: AK7set8S6Lw1AvpZQ6hKQcPF8ONbxTN/08nxsClBKMYdoGLZ7+WIdP+5+S0V+wjw4aIJVaxR3Q1T0Q==
-X-Received: by 2002:a05:6512:10c2:b0:4ca:ffe0:e754 with SMTP id k2-20020a05651210c200b004caffe0e754mr4411168lfg.18.1677103904923;
-        Wed, 22 Feb 2023 14:11:44 -0800 (PST)
-Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
-        by smtp.gmail.com with ESMTPSA id z18-20020ac24f92000000b004d51b590772sm909349lfs.255.2023.02.22.14.11.43
+        bh=hGZr4GB37okt9ns/7m+dFk/oY3FVz2qC1daXRw1yuJ0=;
+        b=e0Iegkh52F/d2F6U6QxwLUs18U6ucMIyBE/vHj6187l/SyJ7zK0yEU+rFFA6O2pvVF
+         LUH7i7pc8wCFR/wG8FAUo6fxVmQbyB5KR68/LAtaMM6Vr65p9J9br489EcmkgiA6YeHj
+         DHEqqw6WUYJbjkAnu2guJQyCHeGxqsTDthR/N3QimsGSX0vlWsTw4jsx+ogjMer+pzMe
+         f4MWChXOSIAzAEddqM20kb9I0NIdBBf5Trwc3+vUPxuwLjmMsViyjKDh+5LLPTCYZs1g
+         atxRJhDNFH4ovej3IvP+qDRO8eWygkV0qVnfLSp3DiQDwuaUN6c9Dq8G/2B3syRtJ6Fj
+         xm4Q==
+X-Gm-Message-State: AO0yUKVz6L2o/4cZkcJ5I4AI49Npcog3PG1SZ2hYnn2Dupwa6bJAqAK4
+        Af3lqtFOOCRikgxbUeWioPGJ3Q==
+X-Google-Smtp-Source: AK7set9TRNdjF5tyidrvhYqKAA784Ti8Hwk1puhQzfAnq9RFgTuW55KmHTiMvXqomFgwEPzc96xTyw==
+X-Received: by 2002:ac2:5615:0:b0:4a4:68b8:f4bd with SMTP id v21-20020ac25615000000b004a468b8f4bdmr3282585lfd.3.1677103974194;
+        Wed, 22 Feb 2023 14:12:54 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id u20-20020ac243d4000000b004d575f56227sm837784lfl.114.2023.02.22.14.12.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Feb 2023 14:11:44 -0800 (PST)
-Message-ID: <907628d1-b88d-5ac6-ed9d-7f63e2875738@linaro.org>
-Date:   Wed, 22 Feb 2023 23:11:42 +0100
+        Wed, 22 Feb 2023 14:12:53 -0800 (PST)
+Message-ID: <4b9145e0-0526-dd08-2d92-05a49e50e3bc@linaro.org>
+Date:   Thu, 23 Feb 2023 00:12:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH V2 4/6] regulator: qcom_smd: Add support to define the
- bootup voltage
-Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_ipkumar@quicinc.com
-References: <20230217142030.16012-1-quic_devipriy@quicinc.com>
- <20230217142030.16012-5-quic_devipriy@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230217142030.16012-5-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+ Thunderbird/102.7.2
+Subject: Re: [PATCH 5/5] drm/msm/a5xx: Enable optional icc voting from OPP
+ tables
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230222-konrad-longbois-next-v1-0-01021425781b@linaro.org>
+ <20230222-konrad-longbois-next-v1-5-01021425781b@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230222-konrad-longbois-next-v1-5-01021425781b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -82,68 +80,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 22/02/2023 23:47, Konrad Dybcio wrote:
+> Add the dev_pm_opp_of_find_icc_paths() call to let the OPP framework
+> handle bus voting as part of power level setting.
 
+This can probably go to the generic code path rather than sticking it 
+into a5xx only.
 
-On 17.02.2023 15:20, Devi Priya wrote:
-> Kernel does not know the initial voltage set by the bootloaders.
-> During regulator registration, the voltage variable is just declared
-> and it is zero. Based on that, the regulator framework considers current
-> the voltage as zero and tries to bring up each regulator to minimum
-> the supported voltage.
 > 
-> This introduces a dip in the voltage during kernel boot and gets
-> stabilized once the voltage scaling comes into picture.
-> 
-> To avoid the voltage dip, adding support to define the
-> bootup voltage set by the boodloaders and based on it, regulator
-> framework understands that proper voltage is already set
-> 
-> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-Thinking about it again, this seems like something that could be
-generalized and introduced into regulator core.. Hardcoding this
-will not end well.. Not to mention it'll affect all mp5496-using
-boards that are already upstream.
-
-WDYT about regulator-init-microvolts Mark?
-
-Konrad
->  Changes in V2:
-> 	- Added the bootup voltages to s2 and l2 regulators
+>   drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 > 
->  drivers/regulator/qcom_smd-regulator.c | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-> index a40e66cea7e7..5f9fe6b9d368 100644
-> --- a/drivers/regulator/qcom_smd-regulator.c
-> +++ b/drivers/regulator/qcom_smd-regulator.c
-> @@ -800,12 +800,13 @@ struct rpm_regulator_data {
->  	u32 id;
->  	const struct regulator_desc *desc;
->  	const char *supply;
-> +	int boot_uV; /* To store the bootup voltage set by bootloaders */
->  };
->  
->  static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
-> -	{ "s1", QCOM_SMD_RPM_SMPA, 1, &mp5496_smpa1, "s1" },
-> -	{ "s2", QCOM_SMD_RPM_SMPA, 2, &mp5496_smpa2, "s2" },
-> -	{ "l2", QCOM_SMD_RPM_LDOA, 2, &mp5496_ldoa2, "l2" },
-> +	{ "s1", QCOM_SMD_RPM_SMPA, 1, &mp5496_smpa1, "s1", 875000  },
-> +	{ "s2", QCOM_SMD_RPM_SMPA, 2, &mp5496_smpa2, "s2", 875000  },
-> +	{ "l2", QCOM_SMD_RPM_LDOA, 2, &mp5496_ldoa2, "l2", 2950000 },
->  	{}
->  };
->  
-> @@ -1388,6 +1389,9 @@ static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev
->  	vreg->type	= rpm_data->type;
->  	vreg->id	= rpm_data->id;
->  
-> +	if (rpm_data->boot_uV)
-> +		vreg->uV = rpm_data->boot_uV;
+> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> index d09221f97f71..a33af0cc27b6 100644
+> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> @@ -1775,5 +1775,9 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+>   	/* Set up the preemption specific bits and pieces for each ringbuffer */
+>   	a5xx_preempt_init(gpu);
+>   
+> +	ret = dev_pm_opp_of_find_icc_paths(&pdev->dev, NULL);
+> +	if (ret)
+> +		return ERR_PTR(ret);
 > +
->  	memcpy(&vreg->desc, rpm_data->desc, sizeof(vreg->desc));
->  	vreg->desc.name = rpm_data->name;
->  	vreg->desc.supply_name = rpm_data->supply;
+>   	return gpu;
+>   }
+> 
+
+-- 
+With best wishes
+Dmitry
+
