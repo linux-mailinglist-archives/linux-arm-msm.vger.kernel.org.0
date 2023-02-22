@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1697C69F6F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 15:46:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B82869F709
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 15:48:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232124AbjBVOp6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 09:45:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57398 "EHLO
+        id S232230AbjBVOsL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 09:48:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231801AbjBVOp5 (ORCPT
+        with ESMTP id S232238AbjBVOrr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 09:45:57 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70AEF3B3C8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 06:45:28 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id s22so10219706lfi.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 06:45:28 -0800 (PST)
+        Wed, 22 Feb 2023 09:47:47 -0500
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56DC03C78B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 06:47:27 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id a10so8117432ljq.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 06:47:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=82MAuCNhG06xMeVQkBmgdPiKLkfVFlIu9OWII8VtcQA=;
-        b=jbz30JcKqnUko6NCOvVUzpfPgOlNcTNiBXom2bSbhca8hPWlzTMqkY904C5HWQAr8M
-         0JocMOzsOUXiVouYD6KGTRaWAW8XEWiNpxFRimk5Ox07Qsnub9Qj4Dj1nTNSu4OM7sgw
-         pDZ5UkFTjYe3Hqsxp0UcoOVb0DOvLuhc+dK0vig+k/v9frs8o2q57M2RbP3CCf4mVjae
-         NnjOnsDTqXltTvWNbk1BEyKig3SB/gePUTVYz9r4iOgIZgtiSjmQXGLC1rDEPdbZ/7tp
-         lmD3qqQTikKpP68zOQkoFA67MtIlwu69KpmlzBiqJ7LctprtIGR0KVJoNGOr9ji4XZtu
-         c+DA==
+        bh=JsfYZbZTcH3AGBn/UIvjg51JaY99ziTDUPxRNM8kMPg=;
+        b=wDz3kMMjHapiCiaEAYT158xP5zG/O4p5xL09bvgPuTGB1Y/myR5GXZfwdgWBc/LMQc
+         Rwby7x9GxRr/0DpzzFJE4xqU4GC5IiWD4dEQhG+MnP3o5yPbUyrSUv3a7giW6/YC5itX
+         99aJnQ51VGiftf84jFkU5vB9VRuk7xhMAER6+qpv0pb163LVK43xIK2W0T5sokrpwhhn
+         c5agMKwlAubSEHP+jX64M9Vt9QVnfPcooQ9Zgi/CfzI45l6OjjEcYdA/3z+lAXDRMsNu
+         DPGhxMr2zv/xhfjlvlh4jshqqZSXkvVdIoliWr4eiJ+ZqeGeD9yBP8WOyDWSoBgY+EQ8
+         EKsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=82MAuCNhG06xMeVQkBmgdPiKLkfVFlIu9OWII8VtcQA=;
-        b=CA77A5mmfXTw/64cVtnwHj+U1BcrxKC8vmw3Wo4Ks5m4qhI/IjiS7zZwrQMcpVSnY4
-         3qWANSc+2hiR5WyC59JBnaSuPEKZLDzW7fXnNaU9vubs8ccGgGXQcNc96frjTdRakjfh
-         weEJSiH8xbBfoT/7Xy/QSyc6QuHXz318/yCbVL7V/V3tuYTsPUmGk3qCSKyJI/mhrKfC
-         9d/7m34R/XAsrKc4/MUwk6Mwe0phNYp+e4q+Ibht2Vu0fHvxSnocyZXO+BHuKLpIHvB8
-         G8aKzIy7HP56r2R5LnahJySOCgf0+VaZKgGgutSOLAQyEW5nWBZwNHSKgwJaiOs3OHhI
-         kmHg==
-X-Gm-Message-State: AO0yUKV7ZeeP+9lhB7XJQCzQo/wtso4PdSsOth9u6MJtv8IxPzqFC6KC
-        6EVsyXSyMTlfGXdDLRdj+qBJFA==
-X-Google-Smtp-Source: AK7set9ZQwKHM5C/UkmDcsKwJ3injIEsUGeSMXhs/dQJ3ThR3rnbgEMHbFOu0LRO77vL7KiuJDldSw==
-X-Received: by 2002:a05:6512:38d1:b0:4dd:9f4d:7459 with SMTP id p17-20020a05651238d100b004dd9f4d7459mr488939lft.67.1677077123238;
-        Wed, 22 Feb 2023 06:45:23 -0800 (PST)
+        bh=JsfYZbZTcH3AGBn/UIvjg51JaY99ziTDUPxRNM8kMPg=;
+        b=LT49HxYxeP+gE92EuKQQLvlnoDx6eH+66MUEqFEk1fsczujOsxhcreiBH9rZN4aFEG
+         E62VwvTE8KpoiWYM5oKnU6fg7jOCuJXz5Typ8MXZ/Ha8fp7aOL5dgRKgpsmc1N/EzbGG
+         CeOACiIGYMvO/lfib7u5fSPLsuIQrHfJLJ++afkJPdiWJopVjqOjpW2wdRydCNwxGFfk
+         /htGMc3kVTivGdw1vhEHksXxte88AO7ZhH84Ys2Feq3KmC6v7OKMAlgqEIQwzqPhN/ML
+         NcvCqTIP/yGQx/If+8sAsueA5xoNyMBIiylZSQ9o/SGQvFDcqR5VBufHlwP3Kwp3YGbk
+         BK3Q==
+X-Gm-Message-State: AO0yUKVyUYfAYBveCWWbobjBWR6iU05F9e8+/PYnQWCBHgZU2QdyTu2E
+        j2jJ3/DEDspl/lgvM0Ms5G1JGw==
+X-Google-Smtp-Source: AK7set+5epA/wJFXcFA8AfQy+dzMhWWm13BX2dxUNOkmKLV4wg9xt3YxvKO23nI9zvgvYTleO8N1OA==
+X-Received: by 2002:a05:651c:510:b0:293:4b8e:f7e9 with SMTP id o16-20020a05651c051000b002934b8ef7e9mr4380059ljp.23.1677077245109;
+        Wed, 22 Feb 2023 06:47:25 -0800 (PST)
 Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
-        by smtp.gmail.com with ESMTPSA id f25-20020ac25339000000b004d865c781eesm978866lfh.24.2023.02.22.06.45.22
+        by smtp.gmail.com with ESMTPSA id a18-20020a2eb552000000b002935899fe3fsm390848ljn.116.2023.02.22.06.47.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Feb 2023 06:45:22 -0800 (PST)
-Message-ID: <65533400-5baa-1577-f2af-c9fca9e888e4@linaro.org>
-Date:   Wed, 22 Feb 2023 15:45:21 +0100
+        Wed, 22 Feb 2023 06:47:24 -0800 (PST)
+Message-ID: <dc544641-b9f1-96b4-95a1-30fafc0712e5@linaro.org>
+Date:   Wed, 22 Feb 2023 15:47:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 1/2] soundwire: qcom: define hardcoded version magic
- numbers
+Subject: Re: [PATCH 2/2] soundwire: qcom: gracefully handle too many ports in
+ DT
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -68,8 +68,9 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
         linux-kernel@vger.kernel.org
 References: <20230222144412.237832-1-krzysztof.kozlowski@linaro.org>
+ <20230222144412.237832-2-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230222144412.237832-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230222144412.237832-2-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,85 +85,41 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 22.02.2023 15:44, Krzysztof Kozlowski wrote:
-> Use a define instead of hard-coded register values for Soundwire
-> hardware version number, because it is a bit easier to read and allows
-> to drop explaining comment.
+> There are two issues related to the number of ports coming from
+> Devicetree when exceeding in total QCOM_SDW_MAX_PORTS.  Both lead to
+> incorrect memory accesses:
+> 1. With DTS having too big value of input or output ports, the driver,
+>    when copying port parameters from local/stack arrays into 'pconfig'
+>    array in 'struct qcom_swrm_ctrl', will iterate over their sizes.
+> 
+> 2. If DTS also has too many parameters for these ports (e.g.
+>    qcom,ports-sinterval-low), the driver will overflow buffers on the
+>    stack when reading these properties from DTS.
+> 
+> Add a sanity check so incorrect DTS will not cause kernel memory
+> corruption.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
+Fixes: 02efb49aa805 ("soundwire: qcom: add support for SoundWire controller")
+
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/soundwire/qcom.c | 17 +++++++++--------
->  1 file changed, 9 insertions(+), 8 deletions(-)
+>  drivers/soundwire/qcom.c | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
 > diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-> index ba502129150d..79bebcecde6d 100644
+> index 79bebcecde6d..c296e0bf897b 100644
 > --- a/drivers/soundwire/qcom.c
 > +++ b/drivers/soundwire/qcom.c
-> @@ -28,6 +28,9 @@
->  #define SWRM_LINK_MANAGER_EE					0x018
->  #define SWRM_EE_CPU						1
->  #define SWRM_FRM_GEN_ENABLED					BIT(0)
-> +#define SWRM_VERSION_1_3_0					0x01030000
-> +#define SWRM_VERSION_1_5_1					0x01050001
-> +#define SWRM_VERSION_1_7_0					0x01070000
->  #define SWRM_COMP_HW_VERSION					0x00
->  #define SWRM_COMP_CFG_ADDR					0x04
->  #define SWRM_COMP_CFG_IRQ_LEVEL_OR_PULSE_MSK			BIT(1)
-> @@ -351,8 +354,7 @@ static int qcom_swrm_cmd_fifo_wr_cmd(struct qcom_swrm_ctrl *swrm, u8 cmd_data,
->  	/* Its assumed that write is okay as we do not get any status back */
->  	swrm->reg_write(swrm, SWRM_CMD_FIFO_WR_CMD, val);
+> @@ -1218,6 +1218,9 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
+>  	ctrl->num_dout_ports = val;
 >  
-> -	/* version 1.3 or less */
-> -	if (swrm->version <= 0x01030000)
-> +	if (swrm->version <= SWRM_VERSION_1_3_0)
->  		usleep_range(150, 155);
->  
->  	if (cmd_id == SWR_BROADCAST_CMD_ID) {
-> @@ -695,7 +697,7 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
->  	u32p_replace_bits(&val, SWRM_DEF_CMD_NO_PINGS, SWRM_MCP_CFG_MAX_NUM_OF_CMD_NO_PINGS_BMSK);
->  	ctrl->reg_write(ctrl, SWRM_MCP_CFG_ADDR, val);
->  
-> -	if (ctrl->version >= 0x01070000) {
-> +	if (ctrl->version >= SWRM_VERSION_1_7_0) {
->  		ctrl->reg_write(ctrl, SWRM_LINK_MANAGER_EE, SWRM_EE_CPU);
->  		ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL,
->  				SWRM_MCP_BUS_CLK_START << SWRM_EE_CPU);
-> @@ -704,8 +706,7 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
->  	}
->  
->  	/* Configure number of retries of a read/write cmd */
-> -	if (ctrl->version >= 0x01050001) {
-> -		/* Only for versions >= 1.5.1 */
-> +	if (ctrl->version >= SWRM_VERSION_1_5_1) {
->  		ctrl->reg_write(ctrl, SWRM_CMD_FIFO_CFG_ADDR,
->  				SWRM_RD_WR_CMD_RETRIES |
->  				SWRM_CONTINUE_EXEC_ON_CMD_IGNORE);
-> @@ -1239,7 +1240,7 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
->  	ret = of_property_read_u8_array(np, "qcom,ports-block-pack-mode",
->  					bp_mode, nports);
->  	if (ret) {
-> -		if (ctrl->version <= 0x01030000)
-> +		if (ctrl->version <= SWRM_VERSION_1_3_0)
->  			memset(bp_mode, SWR_INVALID_PARAM, QCOM_SDW_MAX_PORTS);
->  		else
->  			return ret;
-> @@ -1442,7 +1443,7 @@ static int qcom_swrm_probe(struct platform_device *pdev)
->  	pm_runtime_enable(dev);
->  
->  	/* Clk stop is not supported on WSA Soundwire masters */
-> -	if (ctrl->version <= 0x01030000) {
-> +	if (ctrl->version <= SWRM_VERSION_1_3_0) {
->  		ctrl->clock_stop_not_supported = true;
->  	} else {
->  		ctrl->reg_read(ctrl, SWRM_COMP_MASTER_ID, &val);
-> @@ -1527,7 +1528,7 @@ static int __maybe_unused swrm_runtime_resume(struct device *dev)
->  	} else {
->  		reset_control_reset(ctrl->audio_cgcr);
->  
-> -		if (ctrl->version >= 0x01070000) {
-> +		if (ctrl->version >= SWRM_VERSION_1_7_0) {
->  			ctrl->reg_write(ctrl, SWRM_LINK_MANAGER_EE, SWRM_EE_CPU);
->  			ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL,
->  					SWRM_MCP_BUS_CLK_START << SWRM_EE_CPU);
+>  	nports = ctrl->num_dout_ports + ctrl->num_din_ports;
+> +	if (nports > QCOM_SDW_MAX_PORTS)
+> +		return -EINVAL;
+> +
+>  	/* Valid port numbers are from 1-14, so mask out port 0 explicitly */
+>  	set_bit(0, &ctrl->dout_port_mask);
+>  	set_bit(0, &ctrl->din_port_mask);
