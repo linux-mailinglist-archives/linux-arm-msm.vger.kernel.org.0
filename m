@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E809269F7F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 16:34:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 01D6269F7FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 16:34:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232561AbjBVPd7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 10:33:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53534 "EHLO
+        id S232555AbjBVPeK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 10:34:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232552AbjBVPd7 (ORCPT
+        with ESMTP id S232577AbjBVPeJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 10:33:59 -0500
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E1DD38B5F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 07:33:29 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id s15so3154443pfg.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 07:33:29 -0800 (PST)
+        Wed, 22 Feb 2023 10:34:09 -0500
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 436993BDAF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 07:33:36 -0800 (PST)
+Received: by mail-pg1-x52c.google.com with SMTP id d10so888049pgt.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 07:33:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A4e6XJvimzjayIq2V7Cw6k05l1eYQZOtV1NQM7gOwgU=;
-        b=hc/0ExDqHBp6yqsX7IqrWw+7tV0Rgf/3zfN97gO83nbPY7XBsfNQ6W0nnoK12uYa/P
-         1Dwx9ULAD5d6/rDoc3DYeEhGVcmXr0Qf9piCCF2RS6Fi7/uD1b7ZafNn0Rzp6+leQGCo
-         eVu96IJVQ6ihIBC/U4DeSEIQ9EPT/eUdrX/4KlUqFGAVIofNkPJ/eKOu7L+sLJVdJWWB
-         QVjkKA7I/Q+PO6NGT7uA3ELxItst/t1z1HmQDVltHcn1r4rIefkqpGoeMkmQF/MH9RO6
-         qvSCia105WspwsmDSMBs7leaqvCfLyxlFjvXUNQKJm/hFLkBPACAu/mLBWk5Du0dhChl
-         pSrQ==
+        bh=vMflvsnFsn2zSdUZQv5yrtakTBmlDgkLH0Li1CsV2To=;
+        b=YZJTTFPH0Pr2V8A31PjTaOSzgCTBXNraY7fMtPG5G+knvwky3RUWDSHn90AdWCV+9c
+         J7EgwlG7yr0zO+cSybo6QMHLw3Xn0c8lHhMNKWpRCEg3TNfRgB7VO5Rjt6T9sLvhke6c
+         x8jEe4o8ji7g5Wn3ZWspnn6L3KgKp8F3CWU41iPX0s+86vH8EmvHcaJOlbnq0MmrjW3Z
+         iMEkr+33udcLVafW1PQUPJBSeP/bKpHg9f+bcMpWXcjrge9yEQtbkpSRoctusJu7bFvr
+         F+jac6Os3hegzKKQHkhH7HpIatpRdD7sjimt+gZiR6TViFGeItQ6UyeP49l7IhWn1W6p
+         q1EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=A4e6XJvimzjayIq2V7Cw6k05l1eYQZOtV1NQM7gOwgU=;
-        b=lMIK6DdmkuCOrS1s7bLeALeMMnbfGWlgoK7vX9CtYCx7653xBEuOEIqCZ8jN+SA/xd
-         COv+6ZARvNh7zBWdcUs1thnn07C6AYgYRYFE5PD+t5Eo047YZOz/OHVkw48C1DPJs1Ha
-         uB0N5t5dHddotXQ8Q7l1cqpV7J6GJk6GuteIaSSprGl1Rlf+SBOkhh4IWdAmWXxBfB79
-         Dj81KpsLyFsVvqOEktDFtQ4gJ32Fn7i0B3Zq62/+zyKPtGk3dY5xbIDCH5HxeGLn2frs
-         3uAYSFZ3zv7OnAwdehVVE7GfxvRjac8Q1Rd5AiDl1FDkuZ5ICrB+lHPy42nVrmasPLCl
-         BFMw==
-X-Gm-Message-State: AO0yUKVISPlkiSAHaIK7/RNznxTE9mVHnihNmyq9o1EOArWL3bo/xsXn
-        jqtEenBiukD1rG1rtYaoqMVO
-X-Google-Smtp-Source: AK7set8V+18ixdqMsCw6Vz279XJTCqXYx+Iloje8RWLhufTW0y1tKLnBJDHeueSNrBUwzepJ80M4/g==
-X-Received: by 2002:a62:1d4b:0:b0:5a8:a250:bc16 with SMTP id d72-20020a621d4b000000b005a8a250bc16mr6422800pfd.3.1677080008710;
-        Wed, 22 Feb 2023 07:33:28 -0800 (PST)
+        bh=vMflvsnFsn2zSdUZQv5yrtakTBmlDgkLH0Li1CsV2To=;
+        b=zXNYGdtlRbPHfIEKFJjGk0NhMLoDGLAId6mwpyBzehqCeW949Xb1OUm/UyYnuQsi/k
+         8dHO2wZXLAfZ3JDidwgtyeNGHTI/02OXVZjjX7LAvMuIzEgx3IUk56LZKVwUsoVYWO+Y
+         XmvhygvMHfP+VLTARuyHJYWpshmWSaVi4DAIhuqHlXdqAi5r9Z5ZOD4z9o3ADpWfK2hU
+         U7kSJGQG6qboCvHFQpGtH4QKVkAvXwEijuc35TgRV0zzE8go4ef2mAAlAmPTofGMI1ER
+         hFEtHDUK87O6oP8jGehg4yojC3ZM6lHfah05xckYsChlo1fGw1+i4Rg3wVsMfoLPO1VE
+         Us9g==
+X-Gm-Message-State: AO0yUKWpy+wM3k/tK+GS5TpjsCagZm5SDOZPd1IrnKecyzfgJfsav0cR
+        UHpSBgCqs81+CRQ43UvNC+mo
+X-Google-Smtp-Source: AK7set/DaY4JX5g0bxT/WJ1K/Re0gRMiLL10QT0E6/zqLIvI5b7akQzia7g4DkJpCENlzYWk169QMw==
+X-Received: by 2002:a62:505:0:b0:5a8:d97d:c346 with SMTP id 5-20020a620505000000b005a8d97dc346mr7084089pff.12.1677080013472;
+        Wed, 22 Feb 2023 07:33:33 -0800 (PST)
 Received: from localhost.localdomain ([117.216.123.15])
-        by smtp.gmail.com with ESMTPSA id f15-20020aa78b0f000000b005ac419804d3sm5222482pfd.186.2023.02.22.07.33.24
+        by smtp.gmail.com with ESMTPSA id f15-20020aa78b0f000000b005ac419804d3sm5222482pfd.186.2023.02.22.07.33.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Feb 2023 07:33:28 -0800 (PST)
+        Wed, 22 Feb 2023 07:33:33 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     andersson@kernel.org, lpieralisi@kernel.org, robh@kernel.org,
         kw@linux.com, krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org
@@ -58,9 +58,9 @@ Cc:     konrad.dybcio@linaro.org, bhelgaas@google.com, kishon@kernel.org,
         linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
         devicetree@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 05/11] ARM: dts: qcom: sdx55: Fix the unit address of PCIe EP node
-Date:   Wed, 22 Feb 2023 21:02:45 +0530
-Message-Id: <20230222153251.254492-6-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 06/11] ARM: dts: qcom: sdx55: Rename pcie0_{phy/lane} to pcie_{phy/lane}
+Date:   Wed, 22 Feb 2023 21:02:46 +0530
+Message-Id: <20230222153251.254492-7-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230222153251.254492-1-manivannan.sadhasivam@linaro.org>
 References: <20230222153251.254492-1-manivannan.sadhasivam@linaro.org>
@@ -76,113 +76,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Unit address of PCIe EP node should be 0x1c00000 as it has to match the
-first address specified in the reg property.
+There is only one PCIe PHY in this SoC, so there is no need to add an
+index to the suffix. This also matches the naming convention of the PCIe
+controller.
 
-This also requires sorting the node in the ascending order.
-
-Fixes: 31c9ef002580 ("dt-bindings: PCI: Add Qualcomm PCIe Endpoint controller")
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- arch/arm/boot/dts/qcom-sdx55.dtsi | 78 +++++++++++++++----------------
- 1 file changed, 39 insertions(+), 39 deletions(-)
+ arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts | 2 +-
+ arch/arm/boot/dts/qcom-sdx55.dtsi                | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts b/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts
+index ac8b4626ae9a..b7ee0237608f 100644
+--- a/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts
++++ b/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts
+@@ -242,7 +242,7 @@ &ipa {
+ 	memory-region = <&ipa_fw_mem>;
+ };
+ 
+-&pcie0_phy {
++&pcie_phy {
+ 	status = "okay";
+ 
+ 	vdda-phy-supply = <&vreg_l1e_bb_1p2>;
 diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
-index 93d71aff3fab..e84ca795cae6 100644
+index e84ca795cae6..a1f4a7b0904a 100644
 --- a/arch/arm/boot/dts/qcom-sdx55.dtsi
 +++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
-@@ -303,6 +303,45 @@ qpic_nand: nand-controller@1b30000 {
+@@ -334,7 +334,7 @@ pcie_ep: pcie-ep@1c00000 {
+ 			resets = <&gcc GCC_PCIE_BCR>;
+ 			reset-names = "core";
+ 			power-domains = <&gcc PCIE_GDSC>;
+-			phys = <&pcie0_lane>;
++			phys = <&pcie_lane>;
+ 			phy-names = "pciephy";
+ 			max-link-speed = <3>;
+ 			num-lanes = <2>;
+@@ -342,7 +342,7 @@ pcie_ep: pcie-ep@1c00000 {
  			status = "disabled";
  		};
  
-+		pcie_ep: pcie-ep@1c00000 {
-+			compatible = "qcom,sdx55-pcie-ep";
-+			reg = <0x01c00000 0x3000>,
-+			      <0x40000000 0xf1d>,
-+			      <0x40000f20 0xc8>,
-+			      <0x40001000 0x1000>,
-+			      <0x40200000 0x100000>,
-+			      <0x01c03000 0x3000>;
-+			reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
-+				    "mmio";
-+
-+			qcom,perst-regs = <&tcsr 0xb258 0xb270>;
-+
-+			clocks = <&gcc GCC_PCIE_AUX_CLK>,
-+				 <&gcc GCC_PCIE_CFG_AHB_CLK>,
-+				 <&gcc GCC_PCIE_MSTR_AXI_CLK>,
-+				 <&gcc GCC_PCIE_SLV_AXI_CLK>,
-+				 <&gcc GCC_PCIE_SLV_Q2A_AXI_CLK>,
-+				 <&gcc GCC_PCIE_SLEEP_CLK>,
-+				 <&gcc GCC_PCIE_0_CLKREF_CLK>;
-+			clock-names = "aux", "cfg", "bus_master", "bus_slave",
-+				      "slave_q2a", "sleep", "ref";
-+
-+			interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "global", "doorbell";
-+			reset-gpios = <&tlmm 57 GPIO_ACTIVE_LOW>;
-+			wake-gpios = <&tlmm 53 GPIO_ACTIVE_LOW>;
-+			resets = <&gcc GCC_PCIE_BCR>;
-+			reset-names = "core";
-+			power-domains = <&gcc PCIE_GDSC>;
-+			phys = <&pcie0_lane>;
-+			phy-names = "pciephy";
-+			max-link-speed = <3>;
-+			num-lanes = <2>;
-+
-+			status = "disabled";
-+		};
-+
- 		pcie0_phy: phy@1c07000 {
+-		pcie0_phy: phy@1c07000 {
++		pcie_phy: phy@1c07000 {
  			compatible = "qcom,sdx55-qmp-pcie-phy";
  			reg = <0x01c07000 0x1c4>;
-@@ -400,45 +439,6 @@ sdhc_1: mmc@8804000 {
- 			status = "disabled";
- 		};
+ 			#address-cells = <1>;
+@@ -362,7 +362,7 @@ pcie0_phy: phy@1c07000 {
  
--		pcie_ep: pcie-ep@40000000 {
--			compatible = "qcom,sdx55-pcie-ep";
--			reg = <0x01c00000 0x3000>,
--			      <0x40000000 0xf1d>,
--			      <0x40000f20 0xc8>,
--			      <0x40001000 0x1000>,
--			      <0x40200000 0x100000>,
--			      <0x01c03000 0x3000>;
--			reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
--				    "mmio";
--
--			qcom,perst-regs = <&tcsr 0xb258 0xb270>;
--
--			clocks = <&gcc GCC_PCIE_AUX_CLK>,
--				 <&gcc GCC_PCIE_CFG_AHB_CLK>,
--				 <&gcc GCC_PCIE_MSTR_AXI_CLK>,
--				 <&gcc GCC_PCIE_SLV_AXI_CLK>,
--				 <&gcc GCC_PCIE_SLV_Q2A_AXI_CLK>,
--				 <&gcc GCC_PCIE_SLEEP_CLK>,
--				 <&gcc GCC_PCIE_0_CLKREF_CLK>;
--			clock-names = "aux", "cfg", "bus_master", "bus_slave",
--				      "slave_q2a", "sleep", "ref";
--
--			interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "global", "doorbell";
--			reset-gpios = <&tlmm 57 GPIO_ACTIVE_LOW>;
--			wake-gpios = <&tlmm 53 GPIO_ACTIVE_LOW>;
--			resets = <&gcc GCC_PCIE_BCR>;
--			reset-names = "core";
--			power-domains = <&gcc PCIE_GDSC>;
--			phys = <&pcie0_lane>;
--			phy-names = "pciephy";
--			max-link-speed = <3>;
--			num-lanes = <2>;
--
--			status = "disabled";
--		};
--
- 		remoteproc_mpss: remoteproc@4080000 {
- 			compatible = "qcom,sdx55-mpss-pas";
- 			reg = <0x04080000 0x4040>;
+ 			status = "disabled";
+ 
+-			pcie0_lane: lanes@1c06000 {
++			pcie_lane: lanes@1c06000 {
+ 				reg = <0x01c06000 0x104>, /* tx0 */
+ 				      <0x01c06200 0x328>, /* rx0 */
+ 				      <0x01c07200 0x1e8>, /* pcs */
 -- 
 2.25.1
 
