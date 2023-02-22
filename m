@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A28FF69F71D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 15:51:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF06969F726
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 15:53:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231500AbjBVOvV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 09:51:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60940 "EHLO
+        id S229505AbjBVOxn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 09:53:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230402AbjBVOu4 (ORCPT
+        with ESMTP id S229980AbjBVOxe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 09:50:56 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA4E1EC75
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 06:50:34 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id j2so7823133wrh.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 06:50:34 -0800 (PST)
+        Wed, 22 Feb 2023 09:53:34 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ECC62138
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 06:53:33 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id m6so10423540lfq.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 06:53:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2m0OKl4nW18kj3TpHqbzbDOvreek3tUnpMdCqgRNLUY=;
-        b=VrX7QMEXYkklpuE/QmGcyM+XfZWgdCI6waWCn1IxTVFKfbrjRmBANQ6aupUg2Inyq4
-         DlzPZFUgUjfOeGCdWQhU8oaKucowRbPPfxMzVCEW2YDoMmcRWcURQT7sorS486CJG5Nn
-         SJl+dQ7BXA53fSPdTpidQwoPr8vs8AcGbbKOGVuv7+62H/sCfca9i3zL4X/ajs2AycfT
-         ehEhAosIfas8y4KltM6h0mLijHcYZWvpSedP06ponR1T0mlE8fmMakodzEun3mrtbsPS
-         TAB+Ol3GbEM5nEQSSPwwkp0gYNZIlusPrU0JnWtizWLjlZH89iutosstOCVCJbJChqHd
-         wM7Q==
+        bh=XtiAUhBRnV1kzRpqeljMlrgfEP8oapNbELdUiPr+q0Q=;
+        b=yIaGRZdfGhPRxB1k8ow9epTiEE1W20A8grO7TCejcTJ9sWi1bZHAds5FbSz221ZTgc
+         XY+qfPUtt4sp+Rr8533QuRnBFRfyC9e5t70/Z86qx+VK2ILclkW2XWvn9kZ/+UyFKuoa
+         X28QYxXXtkuaave1dYN9Fiuv/jZYY4Lom0dKo3852iGBIY8af9JqyXVGLJVvSd41ym6O
+         Wy/obk73XRE8S4v5Qlf3i3KQ02UEZhazuGUXtNSrUU+P6P05EbCPh8aIG+hwdMCc5Qx7
+         0pXwcTR1KpkXeIg/BgUex7/RhJZJwkDYuOas/jUlZqbPv7dWUyC5ZHgBt6zYJ9V/kAMd
+         EVAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2m0OKl4nW18kj3TpHqbzbDOvreek3tUnpMdCqgRNLUY=;
-        b=F0z7+2iqnIYm2kuc0WFP/vWL9sB/3rNDLOdhKhAw/5XfrkBab4/aheIbGQKT2xCfg+
-         ka1ctx5juX2eYLiabsRn1b7RJw3fPNANZsVrrqZ6zTAQWO2hEfZk5SDrd+8XpfBgkNK4
-         K0kCCI8ONRP5iFrghb6kyCeFt2JCevNgtcBn9R856HryXUlgvyqRtOkVHQGCFvKH5r2+
-         JbPVJ2FUORZfEElfpcOD+Ybu7q3BQRa7unhvIBZH1JGCMnvgXgp9qkeJ/M4PSBmnEmE3
-         RdUmydU1resOkYG/7DAlYqUo77NxbICuVRJKhPTSn6sTpgcE8/VfDeYMe/DPMddSpOvy
-         cmrw==
-X-Gm-Message-State: AO0yUKUSVcQXYV3nQW3zTJbqRY7PEW9H2So32+M3H3YYdvPXwe/uhOog
-        6aYAPfOFWClrq6TFsjD37fVKtg==
-X-Google-Smtp-Source: AK7set8Xepbg4AmGPsxdF+FrCpHM2/HH2gMe8NzmWtaFsw7m9Ami5hXizGd4NMJ464FvfP8WDb+HnA==
-X-Received: by 2002:a05:6000:3c8:b0:2c5:540b:886c with SMTP id b8-20020a05600003c800b002c5540b886cmr7004009wrg.31.1677077431804;
-        Wed, 22 Feb 2023 06:50:31 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id o1-20020a5d58c1000000b002c53f5b13f9sm8483402wrf.0.2023.02.22.06.50.30
+        bh=XtiAUhBRnV1kzRpqeljMlrgfEP8oapNbELdUiPr+q0Q=;
+        b=PbVyRyLDvrUAy/xSdi7a/WrVIR+KOogAyuc8v9xJKuzy8LURj+wisVuR/8Z8DqeyLE
+         PJpqdTNN3NoG6qSKaYMW9SdbqPdSZUsD7UlVP2xAE57R3SVR4JE/49IpjKWGGJckxYzS
+         7UDX0Rspa7r9w0+vwBPGpKix7cQdE8fPUtIyOQQoepMu1QcGazHDYqW35Eg2FCPprh7w
+         bQbsn8rEVayQZQLM6PuJAljSerlsS1bPOpNvSFKVd1r2YTcuu2q39dxYs+nOK83tlRbF
+         PlMZcpZ5RCUI80xl8xMvLgTRtdF1yHMKyb5azTx/IHOHAsbVVI0FH0+q05L565ehM/Am
+         TQuw==
+X-Gm-Message-State: AO0yUKXy9d4wjx747aC1wfaEF3WPOvWZxQxUL5+CwZIz4DsmmaSuVYx5
+        mCSk8EEDdyzUnjUpJkbVWdiOyw==
+X-Google-Smtp-Source: AK7set8GZAysuh1vxytnbgEUxlKPIUmiScd1FKQtLfvEvrgSqsAGqT845Dtx9NeLeTWFSw7AwRcICQ==
+X-Received: by 2002:ac2:5282:0:b0:4d5:a689:7580 with SMTP id q2-20020ac25282000000b004d5a6897580mr2678118lfm.47.1677077611335;
+        Wed, 22 Feb 2023 06:53:31 -0800 (PST)
+Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
+        by smtp.gmail.com with ESMTPSA id w26-20020a05651204da00b004d39af98af6sm646836lfq.81.2023.02.22.06.53.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Feb 2023 06:50:31 -0800 (PST)
-Message-ID: <80339c7f-1cea-3c97-7dc4-5efb4597cb69@linaro.org>
-Date:   Wed, 22 Feb 2023 15:50:30 +0100
+        Wed, 22 Feb 2023 06:53:31 -0800 (PST)
+Message-ID: <64c80ca9-2317-8225-2345-146e41f3c251@linaro.org>
+Date:   Wed, 22 Feb 2023 15:53:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
 Subject: Re: [PATCH 2/2] soundwire: qcom: gracefully handle too many ports in
  DT
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Vinod Koul <vkoul@kernel.org>,
@@ -70,8 +70,9 @@ To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
 References: <20230222144412.237832-1-krzysztof.kozlowski@linaro.org>
  <20230222144412.237832-2-krzysztof.kozlowski@linaro.org>
  <dc544641-b9f1-96b4-95a1-30fafc0712e5@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <dc544641-b9f1-96b4-95a1-30fafc0712e5@linaro.org>
+ <80339c7f-1cea-3c97-7dc4-5efb4597cb69@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <80339c7f-1cea-3c97-7dc4-5efb4597cb69@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,33 +84,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/02/2023 15:47, Konrad Dybcio wrote:
+
+
+On 22.02.2023 15:50, Krzysztof Kozlowski wrote:
+> On 22/02/2023 15:47, Konrad Dybcio wrote:
+>>
+>>
+>> On 22.02.2023 15:44, Krzysztof Kozlowski wrote:
+>>> There are two issues related to the number of ports coming from
+>>> Devicetree when exceeding in total QCOM_SDW_MAX_PORTS.  Both lead to
+>>> incorrect memory accesses:
+>>> 1. With DTS having too big value of input or output ports, the driver,
+>>>    when copying port parameters from local/stack arrays into 'pconfig'
+>>>    array in 'struct qcom_swrm_ctrl', will iterate over their sizes.
+>>>
+>>> 2. If DTS also has too many parameters for these ports (e.g.
+>>>    qcom,ports-sinterval-low), the driver will overflow buffers on the
+>>>    stack when reading these properties from DTS.
+>>>
+>>> Add a sanity check so incorrect DTS will not cause kernel memory
+>>> corruption.
+>>>
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> ---
+>> Fixes: 02efb49aa805 ("soundwire: qcom: add support for SoundWire controller")
 > 
+> Can be... but is it really a bug of the kernel? Issue is visible with
+> incorrect DTS and it's not the kernel's job to fix it. If DTS has
+> incorrect values (e.g. IO addresses) system won't work anyway and that's
+> the same type of bug.
+I'm not sure to what extent the kernel should be responsible for
+checking DT sanity, but in case of a buffer overflow, I really
+think it definitely deserves a fixes tag.
+
+Konrad
+
 > 
-> On 22.02.2023 15:44, Krzysztof Kozlowski wrote:
->> There are two issues related to the number of ports coming from
->> Devicetree when exceeding in total QCOM_SDW_MAX_PORTS.  Both lead to
->> incorrect memory accesses:
->> 1. With DTS having too big value of input or output ports, the driver,
->>    when copying port parameters from local/stack arrays into 'pconfig'
->>    array in 'struct qcom_swrm_ctrl', will iterate over their sizes.
->>
->> 2. If DTS also has too many parameters for these ports (e.g.
->>    qcom,ports-sinterval-low), the driver will overflow buffers on the
->>    stack when reading these properties from DTS.
->>
->> Add a sanity check so incorrect DTS will not cause kernel memory
->> corruption.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
-> Fixes: 02efb49aa805 ("soundwire: qcom: add support for SoundWire controller")
-
-Can be... but is it really a bug of the kernel? Issue is visible with
-incorrect DTS and it's not the kernel's job to fix it. If DTS has
-incorrect values (e.g. IO addresses) system won't work anyway and that's
-the same type of bug.
-
-Best regards,
-Krzysztof
-
+> Best regards,
+> Krzysztof
+> 
