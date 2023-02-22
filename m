@@ -2,151 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84ADB69F8A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 17:09:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36A1E69F940
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 17:45:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229887AbjBVQJo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 11:09:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58074 "EHLO
+        id S231722AbjBVQpv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 11:45:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229836AbjBVQJo (ORCPT
+        with ESMTP id S231924AbjBVQpu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 11:09:44 -0500
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3599367D1;
-        Wed, 22 Feb 2023 08:09:42 -0800 (PST)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 622E42070D;
-        Wed, 22 Feb 2023 16:09:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1677082181; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=UnlWzOjsvHFym+8/oV1/3UC3iLCVK7y0jY+xZK0uwO0=;
-        b=Ys/Ee8nKKA06ngkS/Telib9jsbgI9efxI212/NPfanNR2rIRzSvZ5qvBzrbrIJ0iGlTH5z
-        KSjT0NutywlA5tXWWwt/KuGKX1usoqqoCalV7KeCNRoGs8Ii7El8GueHjVYF5CYaEmmB7w
-        vUjMoYU28yZwIG8ziGAZleFY5KUFlwM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1677082181;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=UnlWzOjsvHFym+8/oV1/3UC3iLCVK7y0jY+xZK0uwO0=;
-        b=+iYq3uqqsPd6GGVnlW3dwzsJ+xE5eY5Ubovd2BmP6REYw8zT3dRyOH4vyI9w1IdquIHr8/
-        p1q4c3hLV0VTtPBw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 1AFBC139DB;
-        Wed, 22 Feb 2023 16:09:41 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id xIOnBUU+9mNKRQAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Wed, 22 Feb 2023 16:09:41 +0000
-Message-ID: <8f4a18d7-3477-5af0-605d-27098cc7e02c@suse.de>
-Date:   Wed, 22 Feb 2023 17:09:40 +0100
+        Wed, 22 Feb 2023 11:45:50 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 850EB3BD99
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 08:45:47 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id m7so10770321lfj.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 08:45:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Xf8IY83kNm9ZLdtrAMlzH0BWdysIJ0EtE4QkPWoDYMs=;
+        b=iR9IHWtk+Ko+B/NToRrxElbe2NzAzxbQd3SlLe4qK4hFAoa91S/pZ0irPFW0tY0cQ1
+         NqT1a8fELf4fKaC2XwpZN6Urq8yodxAkRfDE5e4hQa3tyP74cM6tOGqICfP0k491XO6E
+         YeTUzilnoBUE2kPANVC0WyKX6hAwFNor1PGHNxn/J9SKveFZRj/TOwKlqo2JsLEbqTRG
+         DWSwP8JBxhSm2yxzzerqHLVlMLvVpV7VymvkiY4Gg2spZd5CMGRqyL76OCQxBVJw5I1M
+         p94XNvZ6FkuYBAs+xuGfy6piCQwPcuqnwJVVO+CM2ibczsv0j4hQ8WQdI0gtiOkCww42
+         2RNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Xf8IY83kNm9ZLdtrAMlzH0BWdysIJ0EtE4QkPWoDYMs=;
+        b=mGnrK3P2SDSgGqttuiVDrz3JLjqIBi539BY0qQGhjUHbsPu0PsAbcmB4pEsiD/pw0m
+         MsXdDtkclkPj1ZGD7Yp+ZnMEsqbkkkuFgm73Rgmqwpxld6UxBkLtZCRlpPxsWVnxcHez
+         UtL82lEgfIE+hEVgQ8b7DiZJgDVSN/hAJo+dwPcgpq7cXxtjdNDQ+gf97Sk+SSE0aqoK
+         sql8KHbKXxNGZLQeVp/+JS2BzweIZW23RucPWOrtcsMIpV16vXAJ9ElOPjH3bYFnGvSS
+         LVzRiqGYf/Ej/mFJ5lKvbKzACdjPbKrXRgJKRDDYEJKosJAFEUQ608h9+91xq0XOOYy2
+         WOjw==
+X-Gm-Message-State: AO0yUKW6Cqs+WKjaG7t8Qwort1OeJUdGS06u+SWcv5KU+oH1ridP8i+F
+        QCGqCj2melii6mqWp4WtqfiJDg==
+X-Google-Smtp-Source: AK7set9t/nSuuaKdA16dsR+NcfmJqnzDAcj0o9WtZkAkWK3/yNkQ5lBR2aCr8By5catJHiIdFRk8wg==
+X-Received: by 2002:ac2:5582:0:b0:4db:2978:e32c with SMTP id v2-20020ac25582000000b004db2978e32cmr3141176lfg.11.1677084345809;
+        Wed, 22 Feb 2023 08:45:45 -0800 (PST)
+Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
+        by smtp.gmail.com with ESMTPSA id w7-20020ac24427000000b004db3e03e201sm1013276lfl.6.2023.02.22.08.45.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Feb 2023 08:45:45 -0800 (PST)
+Message-ID: <69259bca-5618-7590-07b0-494041d83823@linaro.org>
+Date:   Wed, 22 Feb 2023 17:45:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH] drm/msm: return early when allocating fbdev fails
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 06/11] ARM: dts: qcom: sdx55: Rename pcie0_{phy/lane} to
+ pcie_{phy/lane}
 Content-Language: en-US
-To:     Tom Rix <trix@redhat.com>, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
-        sean@poorly.run, airlied@gmail.com, daniel@ffwll.ch,
-        nathan@kernel.org, ndesaulniers@google.com, javierm@redhat.com
-Cc:     linux-arm-msm@vger.kernel.org, llvm@lists.linux.dev,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230222155649.2001467-1-trix@redhat.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <20230222155649.2001467-1-trix@redhat.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------SQ90Z4oS8ujHiGUv24PFSrcn"
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        andersson@kernel.org, lpieralisi@kernel.org, robh@kernel.org,
+        kw@linux.com, krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org
+Cc:     bhelgaas@google.com, kishon@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230222153251.254492-1-manivannan.sadhasivam@linaro.org>
+ <20230222153251.254492-7-manivannan.sadhasivam@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230222153251.254492-7-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------SQ90Z4oS8ujHiGUv24PFSrcn
-Content-Type: multipart/mixed; boundary="------------F5IVgm3PBZcllElL50P0fLmj";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Tom Rix <trix@redhat.com>, robdclark@gmail.com,
- quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, sean@poorly.run,
- airlied@gmail.com, daniel@ffwll.ch, nathan@kernel.org,
- ndesaulniers@google.com, javierm@redhat.com
-Cc: linux-arm-msm@vger.kernel.org, llvm@lists.linux.dev,
- linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org
-Message-ID: <8f4a18d7-3477-5af0-605d-27098cc7e02c@suse.de>
-Subject: Re: [PATCH] drm/msm: return early when allocating fbdev fails
-References: <20230222155649.2001467-1-trix@redhat.com>
-In-Reply-To: <20230222155649.2001467-1-trix@redhat.com>
 
---------------F5IVgm3PBZcllElL50P0fLmj
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
 
-SGkNCg0KQW0gMjIuMDIuMjMgdW0gMTY6NTYgc2NocmllYiBUb20gUml4Og0KPiBidWlsZGlu
-ZyB3aXRoIGNsYW5nIGFuZCBXPTEgcmVwb3J0cw0KPiBkcml2ZXJzL2dwdS9kcm0vbXNtL21z
-bV9mYmRldi5jOjE0NDo2OiBlcnJvcjogdmFyaWFibGUgJ2hlbHBlcicgaXMgdXNlZA0KPiAg
-ICB1bmluaXRpYWxpemVkIHdoZW5ldmVyICdpZicgY29uZGl0aW9uIGlzIHRydWUgWy1XZXJy
-b3IsLVdzb21ldGltZXMtdW5pbml0aWFsaXplZF0NCj4gICAgaWYgKCFmYmRldikNCj4gICAg
-ICAgIF5+fn5+fg0KPiANCj4gaGVscGVyIGlzIG9ubHkgaW5pdGlhbGl6ZWQgYWZ0ZXIgZmJk
-ZXYgc3VjY2VlZHMsIHNvIGlzIGluIGEgZ2FyYmFnZSBzdGF0ZSBhdA0KPiB0aGUgZmFpbDog
-bGFiZWwuICBUaGVyZSBpcyBub3RoaW5nIHRvIHVud2luZGVkIGlmIGZiZGV2IGFsbG9hY3Rp
-b24gZmFpbHMsDQo+IHJldHVybiBOVUxMLg0KPiANCj4gRml4ZXM6IDNmYjFmNjJmODBhMSAo
-ImRybS9mYi1oZWxwZXI6IFJlbW92ZSBkcm1fZmJfaGVscGVyX3VucHJlcGFyZSgpIGZyb20g
-ZHJtX2ZiX2hlbHBlcl9maW5pKCkiKQ0KPiBTaWduZWQtb2ZmLWJ5OiBUb20gUml4IDx0cml4
-QHJlZGhhdC5jb20+DQoNCkFscmVhZHkgZml4ZWQgaGVyZTogDQpodHRwczovL2xvcmUua2Vy
-bmVsLm9yZy9kcmktZGV2ZWwvMDhlMzM0MGUtYjQ1OS0wZTYwLTRiYmEtMzA3MTZiNjc1ZTA1
-QHN1c2UuZGUvVC8jdA0KDQpCZXN0IHJlZ2FyZHMNClRob21hcw0KDQo+IC0tLQ0KPiAgIGRy
-aXZlcnMvZ3B1L2RybS9tc20vbXNtX2ZiZGV2LmMgfCAyICstDQo+ICAgMSBmaWxlIGNoYW5n
-ZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0aW9uKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEv
-ZHJpdmVycy9ncHUvZHJtL21zbS9tc21fZmJkZXYuYyBiL2RyaXZlcnMvZ3B1L2RybS9tc20v
-bXNtX2ZiZGV2LmMNCj4gaW5kZXggYzgwNGU1YmE2ODJhLi5jMTM1NmFmZjg3ZGEgMTAwNjQ0
-DQo+IC0tLSBhL2RyaXZlcnMvZ3B1L2RybS9tc20vbXNtX2ZiZGV2LmMNCj4gKysrIGIvZHJp
-dmVycy9ncHUvZHJtL21zbS9tc21fZmJkZXYuYw0KPiBAQCAtMTQyLDcgKzE0Miw3IEBAIHN0
-cnVjdCBkcm1fZmJfaGVscGVyICptc21fZmJkZXZfaW5pdChzdHJ1Y3QgZHJtX2RldmljZSAq
-ZGV2KQ0KPiAgIA0KPiAgIAlmYmRldiA9IGt6YWxsb2Moc2l6ZW9mKCpmYmRldiksIEdGUF9L
-RVJORUwpOw0KPiAgIAlpZiAoIWZiZGV2KQ0KPiAtCQlnb3RvIGZhaWw7DQo+ICsJCXJldHVy
-biBOVUxMOw0KPiAgIA0KPiAgIAloZWxwZXIgPSAmZmJkZXYtPmJhc2U7DQo+ICAgDQoNCi0t
-IA0KVGhvbWFzIFppbW1lcm1hbm4NCkdyYXBoaWNzIERyaXZlciBEZXZlbG9wZXINClNVU0Ug
-U29mdHdhcmUgU29sdXRpb25zIEdlcm1hbnkgR21iSA0KTWF4ZmVsZHN0ci4gNSwgOTA0MDkg
-TsO8cm5iZXJnLCBHZXJtYW55DQooSFJCIDM2ODA5LCBBRyBOw7xybmJlcmcpDQpHZXNjaMOk
-ZnRzZsO8aHJlcjogSXZvIFRvdGV2DQo=
+On 22.02.2023 16:32, Manivannan Sadhasivam wrote:
+> There is only one PCIe PHY in this SoC, so there is no need to add an
+> index to the suffix. This also matches the naming convention of the PCIe
+> controller.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
---------------F5IVgm3PBZcllElL50P0fLmj--
-
---------------SQ90Z4oS8ujHiGUv24PFSrcn
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmP2PkQFAwAAAAAACgkQlh/E3EQov+D+
-MxAAzTy/dxFBP/tdwP5qdKJiLkKg2qI9ibBnpvteu2RH+tvtKysCWjqiuD2tl14FL28VWIEUBeJg
-d/LXLgRJpur5Ea+ZlKxpx33PRzQxGVOUzSatngJqv1SPQ5N0zBNRqz7gyJV717c01jh1RnfpnYSa
-osUP9kTsuR+dSqwWBZM7iCeUuA/3NCFS7o2eQhVkTh1BaaRV4lUNLnfYTClRwuseL1Uazu6SY9L1
-rD/GUJuU/yOyAzChBCf8ebC/9NlOon+nsaciVZifrl3NqgPYVLmKZSErCvK206bjefhlZrvSfho+
-WgPbDS63kTY82Tft9wgDyvDILzYUhNOgaCj57W2PcJlzxyHXWXycJkC8KZMyLY13PHxFG6gnOS/6
-wqf7LThkQRjhNbYMch6c0PSm9uVomgU2jwCwgG4+CBESj3/K8dsG0/Ne0Y5g77k048/EZKezvZSw
-l2jLjZSWrXuGKfWyjKvFqz/fs2oPPsBASbKqgO2buNpD8LBJWdfksflz/9xCdSODRM8SNyZW3Q5d
-eNhJq6kpBEsFywfkNnDxAiLYfp1npn2zV0cUVxNf9XsKBoNyCUx+52eEme88o4I2/XlVOV94nErW
-8yEja6NsWMw7dy4JjlqYuSELN+rFToy2qJkomeKal6esXCHjKkTqYMuW/GGpNL2ajsUgJ2XuEoQM
-8+8=
-=Gind
------END PGP SIGNATURE-----
-
---------------SQ90Z4oS8ujHiGUv24PFSrcn--
+Konrad
+>  arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts | 2 +-
+>  arch/arm/boot/dts/qcom-sdx55.dtsi                | 6 +++---
+>  2 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts b/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts
+> index ac8b4626ae9a..b7ee0237608f 100644
+> --- a/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts
+> +++ b/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts
+> @@ -242,7 +242,7 @@ &ipa {
+>  	memory-region = <&ipa_fw_mem>;
+>  };
+>  
+> -&pcie0_phy {
+> +&pcie_phy {
+>  	status = "okay";
+>  
+>  	vdda-phy-supply = <&vreg_l1e_bb_1p2>;
+> diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
+> index e84ca795cae6..a1f4a7b0904a 100644
+> --- a/arch/arm/boot/dts/qcom-sdx55.dtsi
+> +++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
+> @@ -334,7 +334,7 @@ pcie_ep: pcie-ep@1c00000 {
+>  			resets = <&gcc GCC_PCIE_BCR>;
+>  			reset-names = "core";
+>  			power-domains = <&gcc PCIE_GDSC>;
+> -			phys = <&pcie0_lane>;
+> +			phys = <&pcie_lane>;
+>  			phy-names = "pciephy";
+>  			max-link-speed = <3>;
+>  			num-lanes = <2>;
+> @@ -342,7 +342,7 @@ pcie_ep: pcie-ep@1c00000 {
+>  			status = "disabled";
+>  		};
+>  
+> -		pcie0_phy: phy@1c07000 {
+> +		pcie_phy: phy@1c07000 {
+>  			compatible = "qcom,sdx55-qmp-pcie-phy";
+>  			reg = <0x01c07000 0x1c4>;
+>  			#address-cells = <1>;
+> @@ -362,7 +362,7 @@ pcie0_phy: phy@1c07000 {
+>  
+>  			status = "disabled";
+>  
+> -			pcie0_lane: lanes@1c06000 {
+> +			pcie_lane: lanes@1c06000 {
+>  				reg = <0x01c06000 0x104>, /* tx0 */
+>  				      <0x01c06200 0x328>, /* rx0 */
+>  				      <0x01c07200 0x1e8>, /* pcs */
