@@ -2,71 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7227C69F3FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 13:05:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE49469F41A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 13:14:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231536AbjBVMFo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 07:05:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52450 "EHLO
+        id S231667AbjBVMOO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 07:14:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231707AbjBVMFC (ORCPT
+        with ESMTP id S229884AbjBVMON (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 07:05:02 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CBBF3A0A7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 04:04:24 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id j3so3555519wms.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 04:04:24 -0800 (PST)
+        Wed, 22 Feb 2023 07:14:13 -0500
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7731B24CBF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 04:14:10 -0800 (PST)
+Received: by mail-pf1-x42c.google.com with SMTP id cb13so4292811pfb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 04:14:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G/tJ2JMtTtWdrvRORgn45WjOaYptTrhld5Ae5l8mf8Y=;
-        b=zd37dD/y6/90tOjmHv/IMzqn3bfjhlJzajgQ4iUiOFJVeWHB8Gl+MSF1TIVp3qDgIv
-         DrOx58WZVVD91y4eLQcwE0uexElRYkKI6XTr5dl4ZydykWe9jIz9ZZVPpvnlcyEkUGgw
-         jcPaGF+RFfAJPrVM6M1jZ6fbIn7QJcWu7xvVQsc5CCakQb+6WajNFIzI86OEny8sLyD5
-         84vPXAXhrFwyqVtXpl8ImZDbis7HljMckmcQxJul/nZeu1X2G2aqvhlz4QJBxYkzDn6d
-         kH5K48xSYH0sSoDaFbpYi3dKoYG1pXLRcLYSVqANou40PYBuPEoC71l+59Fo7zHuh63v
-         QLdg==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lYGZ5//o8M4pVJprIcaF2S4AKthafJRvOQpNFYhcofw=;
+        b=TryG8umiRILDNUIzA1zTxlagBAfT5lz0wkt1kAVhdh2HRVtf6M53uxmu70d9CcCwq3
+         mGoVW7uWq/X/NXvmfl4J07c72SioPZ7D24FVx5TuP80SqrXFHN9jm73ohoBrTYOWySWd
+         fmk5W+R4DM+udAzM8f03UcGP+ldclcstr/0hvqJaR8B59TTL7it1DD0QpL8LkCC1DSIP
+         GROpt/saqLUP6KMY4rkI5SnrQQS4hSFFatn2NBtfmCRCHDv2qySBtP9qK1P/vDDWCQ/b
+         OlyMqm3tl/5qkI2fXTZdrIu2uT7tEb6pU3jnwKRD9pX6FZCBfSfTYadLeuMY6l6MVhb3
+         brAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=G/tJ2JMtTtWdrvRORgn45WjOaYptTrhld5Ae5l8mf8Y=;
-        b=dMRWP51uj5CzIwi8E6Iavio/QhdaZnulRKVCuSTz7RczyKV8evECAllC0vohQ/Nt1H
-         LsfHYsAhkyNI6iuSrkVTfNuD75cblZr6oXSASQJer9R1OtOeJSPzLZ5JhPq8BCmBMBoG
-         +QMpuCJF/iUjArKI4qDvlVaVwTktDM/ueV3wTZOWaruvSGfcpx712S8cOapiKmNDiSVQ
-         hWeCSyGsfFxmMExLlF+acz9lzeKw3Ac9YXPL4wo195JxVc7rg91Nr1vNfLENjiQVVGSA
-         oxnDhVSPtzE/xfnDHho80BM9HnnCjoY3k9BSDtpXbpi8yl+9D1LcxWsFDHHpgQhPEIZh
-         Q8GA==
-X-Gm-Message-State: AO0yUKWgGYQVAQXdMrZirU/cSABC05RthOO/6d/AziIxzFC1ucJgJraF
-        r/S0QA6tHjfH5HLp2GcHyq1qvw==
-X-Google-Smtp-Source: AK7set962qevwX6vz+Ko3a2VfC9xKMIIiysXs3OLv/F3ex27CMOwdB4nF7h3GBs0SDsuIZ0LwfFRnQ==
-X-Received: by 2002:a05:600c:16c7:b0:3de:e8c5:d826 with SMTP id l7-20020a05600c16c700b003dee8c5d826mr252196wmn.28.1677067462726;
-        Wed, 22 Feb 2023 04:04:22 -0800 (PST)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o27-20020a05600c511b00b003e21dcccf9fsm8447722wms.16.2023.02.22.04.04.21
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lYGZ5//o8M4pVJprIcaF2S4AKthafJRvOQpNFYhcofw=;
+        b=xvmr4S7UYSlIzR5fHo6hT7Q+wOp3beFnXR/sjiWdeV7H6Eh6hjEbyUDQMewFOB02O0
+         zRqX7sA9+ejLp4OoQ7p+qS9z+P9IEGfXytSJzRyUPMYgTI8fKVDQbuCwzBDqO0cY3pxG
+         gdIaile1HnLqGBFTZTlIoiMGQ4Y4WO6KOnLbfTjvjzT5LjjJ1JgKXRm4cuWPynEjseV4
+         cQrdhGJVTbLTyq6YoLklLaE/nFfb0dPJss5JHxYKOkiQDPWonmya+z9SCZdC2GrMpf8j
+         3WbKVgc+yWy1UNCNIdH9hecZPUVTvCd5kv/OVm/DrMT/yHJhmE4Xlvo2ArFYkBcSYJ0T
+         WBug==
+X-Gm-Message-State: AO0yUKUwJtpJAV+z3tXrUdL3B3cK/y0STBIv+ilHY85UKumnnyvunKBB
+        dHHV2E6CCBGOcUfKSnKVzaW0RQ==
+X-Google-Smtp-Source: AK7set/FbhCTWvNdc9k6TNd2ug0UrmTguYiyEScloVCq8+eigxepEY8xvZZ+ET0fyq2XVSiUKBJeuQ==
+X-Received: by 2002:a05:6a00:4c13:b0:5a8:b6ec:3aac with SMTP id ea19-20020a056a004c1300b005a8b6ec3aacmr6963046pfb.15.1677068049595;
+        Wed, 22 Feb 2023 04:14:09 -0800 (PST)
+Received: from leoy-yangtze.lan (n058152048225.netvigator.com. [58.152.48.225])
+        by smtp.gmail.com with ESMTPSA id f14-20020aa782ce000000b005d774488b89sm984450pfn.206.2023.02.22.04.14.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Feb 2023 04:04:22 -0800 (PST)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        djakov@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     bryan.odonoghue@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, benl@squareup.com,
-        shawn.guo@linaro.org, fabien.parent@linaro.org, leo.yan@linaro.org,
-        dmitry.baryshkov@linaro.org, stephan@gerhold.net
-Subject: [PATCH v6 5/5] arm64: dts: qcom: Add msm8939 Sony Xperia M4 Aqua
-Date:   Wed, 22 Feb 2023 12:04:11 +0000
-Message-Id: <20230222120411.55197-6-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230222120411.55197-1-bryan.odonoghue@linaro.org>
-References: <20230222120411.55197-1-bryan.odonoghue@linaro.org>
+        Wed, 22 Feb 2023 04:14:09 -0800 (PST)
+Date:   Wed, 22 Feb 2023 20:13:59 +0800
+From:   Leo Yan <leo.yan@linaro.org>
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Bjorn Andersson <andersson@kernel.org>, arm <arm@kernel.org>,
+        soc@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Dawei Li <set_pte_at@outlook.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Naman Jain <quic_namajain@quicinc.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Yang Li <yang.lee@linux.alibaba.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        coresight@lists.linaro.org,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Jiri Olsa <jolsa@kernel.org>,
+        Namhyung Kim <namhyung@kernel.org>,
+        linux-perf-users@vger.kernel.org,
+        John Garry <john.g.garry@oracle.com>,
+        Will Deacon <will@kernel.org>,
+        James Clark <james.clark@arm.com>
+Subject: Re: [GIT PULL] Qualcomm driver updates for v6.3
+Message-ID: <Y/YHByya0NvoU+If@leoy-yangtze.lan>
+References: <20230126163008.3676950-1-andersson@kernel.org>
+ <cdcff86c-77fe-4c5d-b8e8-58b815b9e969@app.fastmail.com>
+ <20230130222412.t2tkkhqfep2orxf2@builder.lan>
+ <9b680581-0956-4188-9af9-af06b625c001@app.fastmail.com>
+ <Y/VzRJzxkPm3l0Km@leoy-yangtze.lan>
+ <4704856d-eac6-9088-4523-3739e04d3fcd@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4704856d-eac6-9088-4523-3739e04d3fcd@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -77,497 +112,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a basic booting DTS for the Sony Xperia M4 Aqua aka "tulip".
+Hi Souradeep,
 
-Tulip is paired with:
+On Wed, Feb 22, 2023 at 04:46:07PM +0530, Souradeep Chowdhury wrote:
+> On 2/22/2023 7:13 AM, Leo Yan wrote:
+> > On Wed, Feb 15, 2023 at 04:05:36PM +0100, Arnd Bergmann wrote:
 
-- wcn3660
-- smb1360 battery charger
-- 720p Truly NT35521 Panel
+[...]
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../qcom/msm8939-sony-xperia-kanuti-tulip.dts | 457 ++++++++++++++++++
- 2 files changed, 458 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
+> > > If the possible use is purely for saving some state across
+> > > a reboot, as opposed to other events, I wonder if there is
+> > > a good way to integrate it into the fs/pstore/ code, which
+> > > already has a way to multiplex various kinds of input (log
+> > > buffer, ftrace call chain, userspace strings, ...) into
+> > > various kinds of persistent buffers (sram, blockdev, mtd,
+> > > efivars, ...) with the purpose of helping analyze the
+> > > state after a reboot.
+> > 
+> > Good point!
+> > 
+> > I understand pstore/ramoops is somehow like a sink which routes the
+> > tracing data (software tracing data but not hadware tracing data) to
+> > persistent memory.  This is why we also can route these software
+> > tracing data to STM (hardware sink!).
+> > 
+> > Seems to me, Arnd suggests to connect two sinks between DCC and
+> > pstore (to persistent memory).  But I cannot give an example code in
+> > kernel for doing this way, sorry if I miss something.
+> > 
+> > Essentially, a good user case is to keep a persistent memory for the
+> > tracing data, then after rebooting cycle we can retrieve the tracing
+> > data via user space interface (like sysfs node).
+> 
+> Hi Leo/Arnd,
+> 
+> Just wanted to let you know that the justification of not using PStore was
+> already given in the version 1 of this patch series as below
+> 
+> https://lore.kernel.org/linux-arm-msm/ab30490c016f906fd9bc5d789198530b@codeaurora.org/#r
+> 
+> PStore/Ramoops only persists across warm-reboots which is present for chrome
+> devices but not for android ones.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 2983e83a19061..81a38d46deba5 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -29,6 +29,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-uf896.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-ufi001c.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-mido.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts b/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
-new file mode 100644
-index 0000000000000..c646fada11a5a
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
-@@ -0,0 +1,457 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022-2023, Bryan O'Donoghue.
-+ *
-+ */
-+
-+/dts-v1/;
-+
-+#include "msm8939.dtsi"
-+#include "msm8939-pm8916.dtsi"
-+#include <dt-bindings/arm/qcom,ids.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+
-+/ {
-+	model = "Sony Xperia M4 Aqua";
-+	compatible = "sony,kanuti-tulip", "qcom,msm8939";
-+
-+	qcom,board-id = <8 0>;
-+	qcom,msm-id = <QCOM_ID_MSM8939 0>, <QCOM_ID_MSM8939 0x30000>;
-+
-+	aliases {
-+		mmc0 = &sdhc_1; /* SDC1 eMMC slot */
-+		mmc1 = &sdhc_2; /* SDC2 SD card slot */
-+		serial0 = &blsp1_uart2;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	vreg_negative5_reg: negative5-regulator {
-+		compatible = "regulator-fixed";
-+		pinctrl-0 = <&negative5_reg_default>;
-+		pinctrl-names = "default";
-+		regulator-name = "negative5_reg";
-+		gpio = <&tlmm 17 GPIO_ACTIVE_LOW>;
-+		startup-delay-us = <0>;
-+	};
-+
-+	vreg_positive5_reg: positive5-regulator {
-+		compatible = "regulator-fixed";
-+		pinctrl-0 = <&positive5_reg_default>;
-+		pinctrl-names = "default";
-+		regulator-name = "positive5_reg";
-+		gpio = <&tlmm 114 GPIO_ACTIVE_LOW>;
-+		startup-delay-us = <0>;
-+	};
-+
-+	usb_id: usb-id {
-+		compatible = "linux,extcon-usb-gpio";
-+		id-gpio = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb_id_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&dsi0 {
-+	status = "okay";
-+
-+	panel@0 {
-+		compatible = "sony,tulip-truly-nt35521";
-+		reg = <0>;
-+		positive5-supply = <&vreg_positive5_reg>;
-+		negative5-supply = <&vreg_negative5_reg>;
-+		reset-gpios = <&tlmm 25 GPIO_ACTIVE_LOW>;
-+		enable-gpios = <&tlmm 10 GPIO_ACTIVE_LOW>;
-+
-+		ports {
-+			port {
-+				panel_in: endpoint {
-+					remote-endpoint = <&dsi0_out>;
-+				};
-+			};
-+		};
-+
-+	};
-+};
-+
-+&dsi0_out {
-+	remote-endpoint = <&panel_in>;
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&dsi_phy0 {
-+	qcom,dsi-phy-regulator-ldo-mode;
-+	status = "okay";
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	ak8963_default: ak8963-default-state {
-+		pins = "gpio69";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <6>;
-+	};
-+
-+	ak8963_sleep: ak8963-sleep-state {
-+		pins = "gpio69";
-+		function = "gpio";
-+		bias-pull-down;
-+		drive-strength = <2>;
-+	};
-+
-+	/* Ambient light and proximity sensor apds9930 and apds9900 */
-+	apds99xx_default: apds99xx-default-state {
-+		pins = "gpio113";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <6>;
-+	};
-+
-+	apds99xx_sleep: apds99xx-sleep-state {
-+		pins = "gpio113";
-+		function = "gpio";
-+		bias-pull-down;
-+		drive-strength = <2>;
-+	};
-+
-+	cam_sensor_flash_default: cam-sensor-flash-default-state {
-+		pins = "gpio98", "gpio97";
-+		function = "gpio";
-+		bias-disable;
-+		drive-strength = <2>;
-+	};
-+
-+	cci1_default: cci1-default-state {
-+		pins = "gpio31", "gpio32";
-+		function = "cci_i2c";
-+		bias-disable;
-+		drive-strength = <2>;
-+	};
-+
-+	cdc_ext_spk_pa_active: cdc-ext-spk-pa-on-state {
-+		pins = "gpio0";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		output-low;
-+	};
-+
-+	cdc_ext_spk_pa_sus: cdc-ext-spk-pa-off-state {
-+		pins = "gpio0";
-+		function = "gpio";
-+		bias-disable;
-+		drive-strength = <2>;
-+	};
-+
-+	cdc_slim_lines_act: lines-on-state {
-+		pins = "gpio63";
-+		function = "cdc_pdm0";
-+		drive-strength = <8>;
-+		output-high;
-+	};
-+
-+	cdc_slim_lines_sus: lines-off-state {
-+		pins = "gpio63";
-+		function = "cdc_pdm0";
-+		bias-disable;
-+		drive-strength = <2>;
-+	};
-+
-+	cross_conn_det_act: lines-on-state {
-+		pins = "gpio120";
-+		function = "gpio";
-+		bias-pull-down;
-+		drive-strength = <8>;
-+		output-low;
-+	};
-+
-+	cross_conn_det_sus: lines-off-state {
-+		pins = "gpio120";
-+		function = "gpio";
-+		bias-pull-down;
-+		drive-strength = <2>;
-+	};
-+
-+	ext_buck_vsel: vsel0-state {
-+		pins = "gpio111";
-+		function = "gpio";
-+		drive-strength = <2>;
-+	};
-+
-+	ext_cdc_tlmm_lines_act: tlmm-lines-on-state {
-+		pins = "gpio116", "gpio112", "gpio117", "gpio118", "gpio119";
-+		function = "gpio";
-+		bias-disable;
-+		drive-strength = <8>;
-+	};
-+
-+	ext_cdc_tlmm_lines_sus: tlmm-lines-off-state {
-+		pins = "gpio116", "gpio112", "gpio117", "gpio118", "gpio119";
-+		function = "gpio";
-+		bias-disable;
-+		drive-strength = <2>;
-+	};
-+
-+	gpio_key_suspend: gpio-key-suspend-state {
-+		pins = "gpio107", "gpio108", "gpio109";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <2>;
-+	};
-+
-+	negative5_reg_default: negative5-reg-default-state {
-+		pins = "gpio17";
-+		function = "gpio";
-+		output-low;
-+	};
-+
-+	positive5_reg_default: positive5-reg-default-state {
-+		pins = "gpio114";
-+		function = "gpio";
-+		output-low;
-+	};
-+
-+	/* Gyroscope and accelerometer sensor combo */
-+	mpu6050_default: mpu6050-default-state {
-+		pins = "gpio115";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <6>;
-+	};
-+
-+	mpu6050_sleep: mpu6050-sleep-state {
-+		pins = "gpio115";
-+		function = "gpio";
-+		bias-pull-down;
-+		drive-strength = <2>;
-+	};
-+
-+	nfc_disable_active: nfc-disable-active-state {
-+		pins = "gpio20";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <6>;
-+	};
-+
-+	nfc_disable_suspend: nfc-disable-suspend-state {
-+		pins = "gpio20";
-+		function = "gpio";
-+		bias-disable;
-+		drive-strength = <6>;
-+	};
-+
-+	nfc_int_active: nfc-int-active-state {
-+		pins = "gpio21";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <6>;
-+	};
-+
-+	nfc_int_suspend: nfc-int-suspend-state {
-+		pins = "gpio21";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <6>;
-+	};
-+
-+	nt35521_te_default: nt35521-te-default-state {
-+		pins = "gpio24";
-+		function = "gpio";
-+		bias-pull-down;
-+		drive-strength = <6>;
-+	};
-+
-+	nt35521_backlight: nt35521-backlight-default-state {
-+		pins = "gpio10";
-+		function = "gpio";
-+		bias-pull-down;
-+		drive-strength = <6>;
-+	};
-+
-+	smb_int: smb-int-default-state {
-+		pins = "gpio62";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <2>;
-+	};
-+
-+	ts_int_active: ts-int-active-state {
-+		pins = "gpio13";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <16>;
-+	};
-+
-+	ts_int_suspend: ts-int-suspend-state {
-+		pins = "gpio13";
-+		function = "gpio";
-+		bias-pull-down;
-+		drive-strength = <2>;
-+	};
-+
-+	ts_reset_active: ts-reset-active-state {
-+		pins = "gpio12";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <16>;
-+	};
-+
-+	ts_reset_suspend: ts-reset-suspend-state {
-+		pins = "gpio12";
-+		function = "gpio";
-+		bias-pull-down;
-+		drive-strength = <2>;
-+	};
-+
-+	ts_release: ts-release-default-state {
-+		pins = "gpio13", "gpio12";
-+		function = "gpio";
-+		bias-pull-down;
-+		drive-strength = <2>;
-+	};
-+
-+	usb_id_default: usb-id-default-state {
-+		pins = "gpio110";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <8>;
-+	};
-+};
-+
-+&pronto {
-+	status = "okay";
-+
-+	iris {
-+		compatible = "qcom,wcn3660";
-+	};
-+};
-+
-+&smd_rpm_regulators {
-+	vdd_l1_l2_l3-supply = <&pm8916_s3>;
-+	vdd_l4_l5_l6-supply = <&pm8916_s4>;
-+	vdd_l7-supply = <&pm8916_s4>;
-+
-+	pm8916_s3: s3 {
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1300000>;
-+	};
-+
-+	pm8916_s4: s4 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <2100000>;
-+	};
-+
-+	pm8916_l2: l2 {
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1200000>;
-+	};
-+
-+	pm8916_l4: l4 {
-+		regulator-min-microvolt = <2050000>;
-+		regulator-max-microvolt = <2050000>;
-+	};
-+
-+	pm8916_l5: l5 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
-+	pm8916_l6: l6 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-always-on;
-+	};
-+
-+	pm8916_l7: l7 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
-+	pm8916_l8: l8 {
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2900000>;
-+	};
-+
-+	pm8916_l9: l9 {
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l10: l10 {
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l11: l11 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
-+	};
-+
-+	pm8916_l12: l12 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l13: l13 {
-+		regulator-min-microvolt = <3075000>;
-+		regulator-max-microvolt = <3075000>;
-+	};
-+
-+	pm8916_l14: l14 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l15: l15 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l16: l16 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l17: l17 {
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2850000>;
-+	};
-+
-+	pm8916_l18: l18 {
-+		regulator-min-microvolt = <2700000>;
-+		regulator-max-microvolt = <2700000>;
-+	};
-+};
-+
-+&sdhc_1 {
-+	pinctrl-0 = <&sdc1_default_state>;
-+	pinctrl-1 = <&sdc1_sleep_state>;
-+	pinctrl-names = "default", "sleep";
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	pinctrl-0 = <&sdc2_default_state>;
-+	pinctrl-1 = <&sdc2_sleep_state>;
-+	pinctrl-names = "default", "sleep";
-+	cd-gpios = <&tlmm 38 GPIO_ACTIVE_HIGH>;
-+	status = "okay";
-+};
-+
-+&usb {
-+	extcon = <&usb_id>, <&usb_id>;
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&usb_id>;
-+};
--- 
-2.39.1
+Thanks for the info.  Just remind a subtle difference of reboots.
 
+Besides warm reboot, kernel can reboot system after panic (see kernel
+command line option `panic`) and watchdog can reboot the system as well.
+
+Even though Android doesn't support warm reboot, system still can reboot
+on panic or by watchdog (in particular after bus lockup), pstore/ramoops
+also can support these cases.
+
+> Also the dcc_sram contents can
+> also be collected by going for a software trigger after loading the kernel
+> and the dcc_sram is parsed to get the register values with the
+> opensource parser as below
+> 
+> https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+
+To be clear, current driver is fine for me (TBH, I didn't spend much
+time to read it but it's very neat after quickly went through it), I
+just share some info in case it's helpful for the discussion.
+
+Thanks,
+Leo
