@@ -2,186 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96A8069EC6F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 02:44:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C3D5669EEFC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 07:54:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230505AbjBVBoR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Feb 2023 20:44:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53468 "EHLO
+        id S230356AbjBVGx7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 01:53:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230499AbjBVBoO (ORCPT
+        with ESMTP id S229552AbjBVGx6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Feb 2023 20:44:14 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C908828854
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 17:43:46 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id 16so3581016pfl.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Feb 2023 17:43:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=oGQR9BKenQJcygCfU4We/diuL+ICMe3u3JE4eZxnrcU=;
-        b=pWypUIyIYLmWw8RihuQAkHi2oHJjsldHhOakLOdcwfTzhxMpltnkOLjEovT9mHR95M
-         87rkOx7XEx8mREyM+t4VALYocP0g9kmjs24mNsFmJnaW+brJBYjnksTe+OwyCFVAVg/V
-         tgrJszaPCZqSWyRDVBWdfhlu8HxB9nZ16OZaHqbjNlb0G12rXRYlldszar1aAb8zEzlG
-         TD3xrXX+uTWODTDL+1uwQPpYOEY3CtJ2eRp2NJheLA06V6ckZTb9+0prXq6TQC5ojygA
-         F6TtzjCkHkfEz3FhgpnTlnjDC2fC9wF/txbfTGyL+fMu3tYSVPsrgM4mW1r6aUdTiBMz
-         brjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oGQR9BKenQJcygCfU4We/diuL+ICMe3u3JE4eZxnrcU=;
-        b=3jYd2IV1/dof6FFT6tFpU07xAur4SLytU4YBQSlyKcvs7qXFJi8S+Dez8jEf7Z82kd
-         DE2r6SvLFIeXwMYbZdPq432abtHfkdsBI+0+THR1ztVpuIAN7bqjJzopWOkLJecUV+7l
-         8tHD7rSuNesu6HA6zy66v9d6eQnX/osNjosOnFl9J7yoVptnUo1KH79NetMS/6QWKwTv
-         x9+p7+MbfHQOgsN6aEET0/Md7NVA7EKig3DLVWi+XMxbOkupUbOzeMZZU3tjNrHQHDgS
-         Uml+jame+EUh+bGVvhI2dT9YKOSlTbHvOgh4i16lVB8tOvPYm6keVKlqK0sheIdYiQ3q
-         20bw==
-X-Gm-Message-State: AO0yUKWzjpJjXppQvO6Z0dtszqp/G7fWyLfkqzQHG/7aXc6uzCKTh9A9
-        37KpdymKkQw6c2pRLdnWP2+OIg==
-X-Google-Smtp-Source: AK7set9braK4Z+1AEc8yI0Oqim+6ZGLIF5SWXXwtrKp43LARv7YLBrTQQtInIGw/nL1RMThOmJmWRg==
-X-Received: by 2002:a62:5290:0:b0:596:15de:ea1e with SMTP id g138-20020a625290000000b0059615deea1emr6648555pfb.9.1677030226002;
-        Tue, 21 Feb 2023 17:43:46 -0800 (PST)
-Received: from leoy-yangtze.lan (211-23-211-66.hinet-ip.hinet.net. [211.23.211.66])
-        by smtp.gmail.com with ESMTPSA id r24-20020a62e418000000b00587fda4a260sm1875612pfh.9.2023.02.21.17.43.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Feb 2023 17:43:45 -0800 (PST)
-Date:   Wed, 22 Feb 2023 09:43:32 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Bjorn Andersson <andersson@kernel.org>, arm <arm@kernel.org>,
-        soc@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>,
-        Olof Johansson <olof@lixom.net>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dawei Li <set_pte_at@outlook.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Naman Jain <quic_namajain@quicinc.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Yang Li <yang.lee@linux.alibaba.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        coresight@lists.linaro.org,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Jiri Olsa <jolsa@kernel.org>,
-        Namhyung Kim <namhyung@kernel.org>,
-        linux-perf-users@vger.kernel.org,
-        John Garry <john.g.garry@oracle.com>,
-        Will Deacon <will@kernel.org>,
-        James Clark <james.clark@arm.com>
-Subject: Re: [GIT PULL] Qualcomm driver updates for v6.3
-Message-ID: <Y/VzRJzxkPm3l0Km@leoy-yangtze.lan>
-References: <20230126163008.3676950-1-andersson@kernel.org>
- <cdcff86c-77fe-4c5d-b8e8-58b815b9e969@app.fastmail.com>
- <20230130222412.t2tkkhqfep2orxf2@builder.lan>
- <9b680581-0956-4188-9af9-af06b625c001@app.fastmail.com>
+        Wed, 22 Feb 2023 01:53:58 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1904C3644D;
+        Tue, 21 Feb 2023 22:53:37 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31M5VLKa015212;
+        Wed, 22 Feb 2023 06:53:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=5b8JEHE17ojZOj8kkTk5ltAXkLS6Mr6tmeMHmvckfE0=;
+ b=XB9eqy+xrlnUPXEZWkUFbWr5HNf2+fhIxygQ+oDdqXOk9ZUaB5911leFSgx2rurikHnZ
+ ciNN+YnU6ytrjy9ySdymiLb2BWUKOjn7UmmXcoV5Q8ulr0I9u/6J3/Cg0xfD7nDuxK8/
+ jWPbkS9bHq3iGqO5BZxXR4HeRV8MplHiERcj4l0k1GXe8miMxb6Jakjwetgpr69OKUEj
+ lkUyJOM+ax/Aavd7+8ocW9dnIPklYx0GSEPt+epp+XDJ+rHoinU8SIsfQq6+Lf1yD58S
+ /7wmwEOwrDgJf2GzJrCAourpxqWVDYe8VgC5mpBniM6HMFtR/8m/4hL/oY7ffcWVP7de XA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nw8gnrptp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Feb 2023 06:53:15 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31M6rERa003814
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Feb 2023 06:53:14 GMT
+Received: from [10.242.243.78] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 21 Feb
+ 2023 22:53:05 -0800
+Message-ID: <d290a4d7-885a-437f-028e-df04a117f983@quicinc.com>
+Date:   Wed, 22 Feb 2023 12:22:53 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9b680581-0956-4188-9af9-af06b625c001@app.fastmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH V5 5/5] firmware: scm: Modify only the DLOAD bit in TCSR
+ register for download mode
+Content-Language: en-US
+To:     POOVENDHAN SELVARAJ <quic_poovendh@quicinc.com>,
+        Mukesh Ojha <quic_mojha@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <lee@kernel.org>, <catalin.marinas@arm.com>, <will@kernel.org>,
+        <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <robimarko@gmail.com>,
+        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
+        <broonie@kernel.org>, <quic_gurus@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     <quic_gokulsri@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
+        <quic_anusha@quicinc.com>, <quic_devipriy@quicinc.com>
+References: <20230216120012.28357-1-quic_poovendh@quicinc.com>
+ <20230216120012.28357-6-quic_poovendh@quicinc.com>
+ <51bd93be-f8d3-a33c-18ad-ba4a331f2bcf@quicinc.com>
+ <38780d01-3e02-fd30-4c11-8cb307eeae4d@quicinc.com>
+ <45ea27af-d4d3-48b4-236d-128a26552d6c@quicinc.com>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <45ea27af-d4d3-48b4-236d-128a26552d6c@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: gVnS39JJuWO64AasN3YAAhMVcqg9jx0n
+X-Proofpoint-GUID: gVnS39JJuWO64AasN3YAAhMVcqg9jx0n
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-22_02,2023-02-20_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 adultscore=0 bulkscore=0 clxscore=1011
+ lowpriorityscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0 phishscore=0
+ suspectscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302220057
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 15, 2023 at 04:05:36PM +0100, Arnd Bergmann wrote:
+Hi,
 
-[...]
-
-> > To my knowledge the hwtracing framework is an interface for
-> > enabling/disabling traces and then you get a stream of trace data out of
-> > it.
-> >
-> > With DCC you essentially write a small "program" to be run at the time
-> > of an exception (or triggered manually). When the "program" is run it
-> > acquire data from mmio interfaces and stores data in sram, which can
-> > then be retrieved - possibly after the fatal reset of the system.
-> >
-> > Perhaps I've misunderstood the hwtracing framework, please help me steer
-> > Souradeep towards a subsystem you find suitable for this functionality.
+On 2/20/2023 4:00 PM, POOVENDHAN SELVARAJ wrote:
 > 
-> I'm also not too familiar with tracing infrastructure and was hoping
-> that the coresight maintainers (Mathieu, Suzuki, Mike and Leo)
-> would have some suggestions here. My initial guess was that in
-> both cases, you have hardware support that is abstracted by the
-> kernel in order to have a user interface that can be consumed
-> by the 'perf' tool.
+> On 2/18/2023 1:19 AM, Mukesh Ojha wrote:
+>>
+>>
+>> On 2/16/2023 7:30 PM, Mukesh Ojha wrote:
+>>>
+>>>
+>>> On 2/16/2023 5:30 PM, Poovendhan Selvaraj wrote:
+>>>> CrashDump collection is based on the DLOAD bit of TCSR register.
+>>>> To retain other bits, we read the register and modify only the DLOAD 
+>>>> bit as
+>>>> the other bits have their own significance.
+>>>>
+>>>> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+>>>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+>>>> Co-developed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+>>>> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+>>>> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>>>> ---
+>>>>   Changes in V5:
+>>>>     - checking the return value in qcom_scm_set_download_mode 
+>>>> function as
+>>>>       suggested by Srinivas Kandagatla
+>>>>
+>>>>   Changes in V4:
+>>>>     - retain the orginal value of tcsr register when download mode
+>>>>       is not set
+>>>>
+>>>>   drivers/firmware/qcom_scm.c | 21 ++++++++++++++++-----
+>>>>   1 file changed, 16 insertions(+), 5 deletions(-)
+>>>>
+>>>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>>>> index 468d4d5ab550..d88c5f14bd54 100644
+>>>> --- a/drivers/firmware/qcom_scm.c
+>>>> +++ b/drivers/firmware/qcom_scm.c
+>>>> @@ -407,7 +407,7 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
+>>>>   }
+>>>>   EXPORT_SYMBOL(qcom_scm_set_remote_state);
+>>>> -static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+>>>> +static int __qcom_scm_set_dload_mode(struct device *dev, u32 val, 
+>>>> bool enable)
+>>>>   {
+>>>>       struct qcom_scm_desc desc = {
+>>>>           .svc = QCOM_SCM_SVC_BOOT,
+>>>> @@ -417,7 +417,8 @@ static int __qcom_scm_set_dload_mode(struct 
+>>>> device *dev, bool enable)
+>>>>           .owner = ARM_SMCCC_OWNER_SIP,
+>>>>       };
+>>>> -    desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
+>>>> +    desc.args[1] = enable ? val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
+>>>> +                val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE);
+>>>>       return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
+>>>>   }
+>>>> @@ -426,15 +427,25 @@ static void qcom_scm_set_download_mode(bool 
+>>>> enable)
+>>>>   {
+>>>>       bool avail;
+>>>>       int ret = 0;
+>>>> +    u32 dload_addr_val;
+>>>>       avail = __qcom_scm_is_call_available(__scm->dev,
+>>>>                            QCOM_SCM_SVC_BOOT,
+>>>>                            QCOM_SCM_BOOT_SET_DLOAD_MODE);
+>>>> +    ret = qcom_scm_io_readl(__scm->dload_mode_addr, &dload_addr_val);
+>>>> +
+>>>> +    if (ret) {
+>>>> +        dev_err(__scm->dev,
+>>>> +            "failed to read dload mode address value: %d\n", ret);
+>>>> +        return;
+>>>> +    }
+>>>> +
+>>>>       if (avail) {
+>>>> -        ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
+>>>> +        ret = __qcom_scm_set_dload_mode(__scm->dev, dload_addr_val, 
+>>>> enable);
+>>>
+>>> Did you test this on a target where it comes under this if statement? 
+>>> does it really need to know dload_mode_addr for this target ?
+>>
+>>
+>> Can we do something like this? I would let other review as well.
+>>
+>> --------------------------------------->0------------------------------------------- 
+>>
+>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>> index cdbfe54..26b7eda 100644
+>> --- a/drivers/firmware/qcom_scm.c
+>> +++ b/drivers/firmware/qcom_scm.c
+>> @@ -419,6 +419,7 @@ static void qcom_scm_set_download_mode(bool enable)
+>>  {
+>>         bool avail;
+>>         int ret = 0;
+>> +       u32 dload_addr_val;
+>>
+>>         avail = __qcom_scm_is_call_available(__scm->dev,
+>>                                              QCOM_SCM_SVC_BOOT,
+>> @@ -426,8 +427,16 @@ static void qcom_scm_set_download_mode(bool enable)
+>>         if (avail) {
+>>                 ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
+>>         } else if (__scm->dload_mode_addr) {
+>> -               ret = qcom_scm_io_writel(__scm->dload_mode_addr,
+>> -                               enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE 
+>> : 0);
+>> +               ret = qcom_scm_io_readl(__scm->dload_mode_addr, 
+>> &dload_addr_val);
+>> +               if (ret) {
+>> +                       dev_err(__scm->dev,
+>> +                               "failed to read dload mode address 
+>> value: %d\n", ret);
+>> +                       return;
+>> +               }
+>> +
+>> +               ret = qcom_scm_io_writel(__scm->dload_mode_addr, enable ?
+>> +                               dload_addr_val | 
+>> QCOM_SCM_BOOT_SET_DLOAD_MODE :
+>> +                               dload_addr_val & 
+>> ~(QCOM_SCM_BOOT_SET_DLOAD_MODE));
+>>         } else {
+>>                 dev_err(__scm->dev,
+>>                         "No available mechanism for setting download 
+>> mode\n");
+>>
+>> -Mukesh
+> 
+> Okay sure..Agreed, will address this in the next patch.
 
-My understanding is hwtracing provides a common framework for STM so
-that different tracing IPs (like Intel_th and Arm CoreSight) can
-register STM module into this framework.  The framework code is placed
-in: linux/drivers/hwtracing/stm.
+   Also, not sure, if its better to keep the old behavior working for
+   targets that does not support 'READ' of this address. If one such
+   thing exists, that will be broken now. In such a case, we should
+   ignore if scm_io_readl fails, still write and dload_addr_val should
+   be '0' initialised.
 
-Now kernel doesn't provide a general framework for all hardware tracing
-IPs, e.g. Arm CoreSight has its own framework to manage tracing
-components and creating links with sinks.
 
-Simply to say, we can place DCC driver in linux/drivers/hwtracing folder
-(like Hisilicon's ptt driver), but we have no common framework for it to
-use.
+Regards,
+  Sricharan
 
-Based on reading DCC's driver, seems to me it's more like a bus tracing
-module rather than a uncore PMU.  I found the driver does not support
-interrupt, I am not sure this is a hardware limitation or just software
-doesn't implement the interrupt handling, without interrupt, it would be
-difficult for using DCC for profiling.
-
-If we register DCC into perf framework, the good thing is DCC can use
-perf framework (e.g. perf's configs) as its user space interface, but
-it's still not clear for me how to capture the DCC trace data (no
-interrupt and not relevant with process task switching).
-
-[...]
-
-> If the possible use is purely for saving some state across
-> a reboot, as opposed to other events, I wonder if there is
-> a good way to integrate it into the fs/pstore/ code, which
-> already has a way to multiplex various kinds of input (log
-> buffer, ftrace call chain, userspace strings, ...) into
-> various kinds of persistent buffers (sram, blockdev, mtd,
-> efivars, ...) with the purpose of helping analyze the
-> state after a reboot. 
-
-Good point!
-
-I understand pstore/ramoops is somehow like a sink which routes the
-tracing data (software tracing data but not hadware tracing data) to
-persistent memory.  This is why we also can route these software
-tracing data to STM (hardware sink!).
-
-Seems to me, Arnd suggests to connect two sinks between DCC and
-pstore (to persistent memory).  But I cannot give an example code in
-kernel for doing this way, sorry if I miss something.
-
-Essentially, a good user case is to keep a persistent memory for the
-tracing data, then after rebooting cycle we can retrieve the tracing
-data via user space interface (like sysfs node).
-
-Thanks,
-Leo
