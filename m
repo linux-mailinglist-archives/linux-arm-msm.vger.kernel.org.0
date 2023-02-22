@@ -2,118 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A82C69F682
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 15:23:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC4AD69F6C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 15:41:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231384AbjBVOXq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 09:23:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38412 "EHLO
+        id S230478AbjBVOk7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 09:40:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbjBVOXp (ORCPT
+        with ESMTP id S231127AbjBVOk5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 09:23:45 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AB22F3;
-        Wed, 22 Feb 2023 06:23:43 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 621CCCE1DC1;
-        Wed, 22 Feb 2023 14:23:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EE1C433EF;
-        Wed, 22 Feb 2023 14:23:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677075820;
-        bh=FUcKUmojOe5y+lIgn9m2LvFqGYduztP2VvpOJeF5ytA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YMnzBRw94hattP81LW4L+GjsK2NbXMJJv3vP/vbhlZ8iYb0Csx2NN6KRzIWJR+bhP
-         F5Cwh+Dgo54VXfuK/cyO+r0yLTwj1ClsNEB33dwt8NLtduHqaSrRHjjm3/7/QIbh9j
-         3YTRnefEBHo4KjQjOALp7vOmJfLXsmIF8SEaZCCRRYlCdvjYA9So/sxwnPHGR7RwNm
-         wz1D4x/8s7yZ5ZrgZW/4/xw45ahomZYIY/RPdmKRM/JgqDAI5kFMCyNQQg8L+lmh2g
-         JCMe11el24VewuIfxMpXNKlwfXWBqx8HcdOk9RuH6I5X8ZftrYb8TkM7i3QSgtG0Lv
-         CEiboOalQjXOA==
-Date:   Wed, 22 Feb 2023 06:27:07 -0800
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Robert Marko <robimarko@gmail.com>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Yang Yingliang <yangyingliang@huawei.com>
-Subject: Re: [GIT PULL] Qualcomm clock driver updates for v6.3
-Message-ID: <20230222142707.43embhopp7ijx5us@ripper>
-References: <20230219045318.564342-1-andersson@kernel.org>
- <e62613b331da617d53515998a2c967d1.sboyd@kernel.org>
- <4aee9ad3-fe3b-7be3-ce71-df2365dd3482@linaro.org>
+        Wed, 22 Feb 2023 09:40:57 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C502F37B65
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 06:40:52 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id bp25so10447074lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 06:40:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PvLTXVhFf+9UO9yJz50JTAIFh9uNCAolWXsnSIodUYI=;
+        b=VPBJFAXyNbqDjZxq9pO/ZNoH2BJ8eEOKyOGnzkifVboY9avrnNrKkYlKM1Y+FIkiTw
+         ggz/lsxUmzfqnR2xmvyy6zckac8EjkrGhtRXkRjXH0Id+/yG42kdjUWUVh1IAJTfn0oV
+         rKwcRDzWZm6zcZbYS7zH//wWIYmZsV8eqSFmng4fSxqnwJbmTsQMKs6hPRowXdxyzdfU
+         t39+rSq39OMJkvy/MLh+bHSlrFSIsNq2LrWyEIdTZJtNibYJOyOqw6pVjA2+Ih6e5zoi
+         9m/4Vm4n6bzWtoBa3BY9M/nNAE/CwS9LZEInrNl+v5DhVzE2zGPjNNTEJ7MyQ5TOaIIE
+         voTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PvLTXVhFf+9UO9yJz50JTAIFh9uNCAolWXsnSIodUYI=;
+        b=c+UJ5yxYhNaatfhLGTwluhVzIGHQZluodZgnA3+YKVtT/+JIu+NhdCvy+yqzrNDoSF
+         fIol3RiY2vGgkbUO64VmDOvaEP5+cauv+YdJTQc/U8+iFinqe6grxCEGUjJhsUOXr8Ku
+         aFTl4h13KzXEs/h1kzy2Tlh98FStDAwcXyo1gNeO+XO/mhaj/12Z1oOvkSerkKaEvU1K
+         oJ3iYRzlgj6kIvPMEWjgIUKbIDU2uxIcY/h063tzlORvmAJBLnjgekiyMLYmTSJnRuIj
+         LXIQ31dc4QK6vwiDHG7iFAr0iJL1f5QS+ueqaXqY11ezD35AQ1Tr5m8Kt1UqCvbdY4Vo
+         e2Ew==
+X-Gm-Message-State: AO0yUKVUPx8K6pbqGDc5afrG5iklxt5wwt+H28FrQdzfNrPgi8dXQjft
+        YfQtOJCatkV65NhXsPJMhOmVHDW6C9s+AYtk
+X-Google-Smtp-Source: AK7set9tbOG1JDa7ON96GIX0/P9bCWVAB5FYV2Dl3q9zTf2BKn/G3+lDGlHuV1sEnIwqqksw55SqdQ==
+X-Received: by 2002:ac2:5298:0:b0:4da:9b7d:637e with SMTP id q24-20020ac25298000000b004da9b7d637emr2890097lfm.42.1677076850982;
+        Wed, 22 Feb 2023 06:40:50 -0800 (PST)
+Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
+        by smtp.gmail.com with ESMTPSA id 8-20020ac24848000000b004db250355b3sm479255lfy.138.2023.02.22.06.40.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Feb 2023 06:40:50 -0800 (PST)
+Message-ID: <f1d78b2a-f9ae-6a46-4db6-25e0b823ac46@linaro.org>
+Date:   Wed, 22 Feb 2023 15:40:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4aee9ad3-fe3b-7be3-ce71-df2365dd3482@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] soundwire: qcom: correct setting ignore bit on v1.5.1
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org
+Cc:     stable@vger.kernel.org
+References: <20230222140343.188691-1-krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230222140343.188691-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 22, 2023 at 09:35:31AM +0100, Krzysztof Kozlowski wrote:
-> On 21/02/2023 20:50, Stephen Boyd wrote:
-> > Quoting Bjorn Andersson (2023-02-18 20:53:18)
-> >> clk_disable_unused() is altered, to not consider clocks which comes from
-> >> a provider with sync_state defined. This makes it possible for
-> >> individual clock drivers to invoke this process once all clients has
-> >> been probed, avoiding the need for booting many systems with
-> >> clk_ignore_unused.
-> >> This is then enabled for SDM845 and SC8280XP clock controllers.
-> > 
-> > This needs to be reverted. I'm not going to pull this until then.
-> > 
-> >>
-> >> Support for QDU1000/QRU1000 Global clock controller, SA8775P Global
-> >> clock controller, SM8550 TCSR and display clock controller, SM6350 clock
-> >> controller, nd MSM8996 CBF and APCS clock controllers is introduced..
-> >>
-> > [...]
-> >>
-> >> Bjorn Andersson (5):
-> >>       Merge tag '1672656511-1931-1-git-send-email-quic_akhilpo@quicinc.com' into clk-for-6.3
-> >>       Merge branch '20230104093450.3150578-2-abel.vesa@linaro.org' into clk-for-6.3
-> >>       clk: qcom: Remove need for clk_ignore_unused on sc8280xp
-> >>       Merge branch '20230103-topic-sm8550-upstream-dispcc-v3-1-8a03d348c572@linaro.org' into clk-for-6.3
-> >>       Merge branch '20230112204446.30236-2-quic_molvera@quicinc.com' into HEAD
-> > 
-> > When you make merges, please describe what they're for and put that in
-> > the commit text. Also, reword things like 'into HEAD'.
+
+
+On 22.02.2023 15:03, Krzysztof Kozlowski wrote:
+> According to the comment and to downstream sources, the
+> SWRM_CONTINUE_EXEC_ON_CMD_IGNORE in SWRM_CMD_FIFO_CFG_ADDR register
+> should be set for v1.5.1 and newer, so fix the >= operator.
 > 
-> I think these are all merges of patchsets (eg. b4 shazam --merge
-> <patchset_id>), thus it's the same as applying.
+> Fixes: 542d3491cdd7 ("soundwire: qcom: set continue execution flag for ignored commands")
+> Cc: <stable@vger.kernel.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+>  drivers/soundwire/qcom.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-
-No, these are when I pick binding patches with include files on a
-separate topic branch, for merging into the clk and dts branches.
-
-So it's manual, and I can certainly improve these.
-
-Regards,
-Bjorn
-
-> Best regards,
-> Krzysztof
-> 
+> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+> index d5b73b7f98bf..29035cf15407 100644
+> --- a/drivers/soundwire/qcom.c
+> +++ b/drivers/soundwire/qcom.c
+> @@ -733,7 +733,7 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
+>  	}
+>  
+>  	/* Configure number of retries of a read/write cmd */
+> -	if (ctrl->version > 0x01050001) {
+> +	if (ctrl->version >= 0x01050001) {
+>  		/* Only for versions >= 1.5.1 */
+>  		ctrl->reg_write(ctrl, SWRM_CMD_FIFO_CFG_ADDR,
+>  				SWRM_RD_WR_CMD_RETRIES |
