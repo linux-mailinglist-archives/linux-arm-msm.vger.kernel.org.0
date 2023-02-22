@@ -2,115 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BB0D69FA3F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 18:34:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DAD1A69FA46
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 18:38:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231377AbjBVRe3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 12:34:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50012 "EHLO
+        id S230129AbjBVRip (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 12:38:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230129AbjBVRe2 (ORCPT
+        with ESMTP id S229950AbjBVRio (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 12:34:28 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3458C367C6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:34:24 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id bp25so11190860lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:34:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dN59YH7HktjgMj5OjrTUOtlbYhIW/Rx8QjDE6EyJw6k=;
-        b=A62osjPfpGpdg0t63Vx3paXGtgYpu0xHbhgXtxWw9PUFmspKHqgU1zXxUiY6n/ljRM
-         56F3WU0UxqpRAaggnfFobSyQtl95t9uxsNV0DWAZG3HPDxVRE5feN7k4vUbFFDZO0u8A
-         yVHCfff8tbqelbL6b7aPQnYs0QSjpEffYc4fVMINaz+TfKtHkAJ+Vr03utr04azgA8x/
-         rQH4HdMnQPM+oumHdIcCVdooW6sL3tPGkJmACH0WbFK78mJ3mguL8iZeoWTz+oBVlhG0
-         yHrYRfESJOr+WXC7WAsOvRoTQmdLl9ttEIK+9FvuCbwnvmkEminwQ1593YMvFOhpTN7p
-         QNYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dN59YH7HktjgMj5OjrTUOtlbYhIW/Rx8QjDE6EyJw6k=;
-        b=UpFhlWXqVZi/zIo5V4HYSlT7NsXehX1/+/V5IKp/P89EEVWBac3NG2NHrPEqm3EWHP
-         QEvPHQVm8Jn7oNGO9XS3mirfJb0tuWTIVrjJaSkCf48tDtZe9Ug7LJ93FRsLmreqXyoD
-         jHbdu2LB9Du55Be0mGlbmmc4i/FC75Rg0eyUJIRj+B1m45DQKQNydpQEvgwbBWS4a7y1
-         BP1mgQWIOSHDLEO88ED+4eO5rskNIFT3SUlTD4zeTX4sBwgvykweNILpbniM9EPtyOvN
-         1WyNPNqHaFPZmYUZLYCVnt+mY49i28XxHihNIkNmsBy/jzobV6R6oeVrPmeIr5/XS6sR
-         1kFg==
-X-Gm-Message-State: AO0yUKVMCaRm33htSSFjHqODq6HXDTvFPz74Zlq5yVXrxoM1dFOMnIbz
-        x0quWGf0nlYeMLounDI+Z87hMA==
-X-Google-Smtp-Source: AK7set+STaQ15AJMYhkHPL7UhEGo+p3D9Rno4QNj6KEvcO/5dJ9mhbNlj8YfNmhwIr0Iu3uu2G1d4Q==
-X-Received: by 2002:a19:ee0b:0:b0:4db:2cdf:4c12 with SMTP id g11-20020a19ee0b000000b004db2cdf4c12mr3450237lfb.43.1677087262601;
-        Wed, 22 Feb 2023 09:34:22 -0800 (PST)
-Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
-        by smtp.gmail.com with ESMTPSA id l18-20020a19c212000000b004a91df49508sm695013lfc.177.2023.02.22.09.34.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Feb 2023 09:34:22 -0800 (PST)
-Message-ID: <ebffa713-fa55-63e6-7f45-3b4739d38184@linaro.org>
-Date:   Wed, 22 Feb 2023 18:34:20 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v11 10/10] crypto: qce: core: Add a QCE IP family
- compatible 'qcom,qce'
-Content-Language: en-US
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org
-References: <20230222172240.3235972-1-vladimir.zapolskiy@linaro.org>
- <20230222172240.3235972-11-vladimir.zapolskiy@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230222172240.3235972-11-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 22 Feb 2023 12:38:44 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40DC028213;
+        Wed, 22 Feb 2023 09:38:39 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31MAxwtO017419;
+        Wed, 22 Feb 2023 17:38:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=0P+R+juQHlHNSwC5b6RqqeVMFPtdxal5F6AkMRzCLp8=;
+ b=T0JMim8zUGsXQd+reBxoHnWgO/c6+JdbtwUp35P2lR18iAxowlOgrq2eECOw1Y5Sw6Q/
+ 1I2Dd9zIKm4fz6zYRSs2cZpI7A8m8vRCb69BRswDJfHC5Xd7MXHPIE1d1U+G9zCg4kJt
+ XTfcZ+022rYM525QK46TjoPTEhkmJzhNVPaBBl1ox7vmyQ5z6YXSLeygRQsZg3lRTpef
+ YxykI+ZViUKlLj3GM9bdXzKKiFYuKagqrxLPl9tl8Xt5Qtj2x6lzzU+VIn5fk62IDN59
+ OW+O8BOK/B1CtZbA1V4dTwZIvhV/QEp1Spp/HqutXVYhwErlfR+6C7ba6YGFUuw7/dum 2Q== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nw8gntbkn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Feb 2023 17:37:59 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 31MHbtdf021923;
+        Wed, 22 Feb 2023 17:37:55 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3ntqrkxfsa-1;
+        Wed, 22 Feb 2023 17:37:55 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 31MHbt27021918;
+        Wed, 22 Feb 2023 17:37:55 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-vpernami-hyd.qualcomm.com [10.213.107.240])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 31MHbslX021916;
+        Wed, 22 Feb 2023 17:37:55 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 2370923)
+        id 0FE3A157C; Wed, 22 Feb 2023 23:07:54 +0530 (+0530)
+From:   Vivek Pernamitta <quic_vpernami@quicinc.com>
+To:     mhi@lists.linux.dev
+Cc:     quic_qianyu@quicinc.com, manivannan.sadhasivam@linaro.org,
+        quic_vbadigan@quicinc.com, quic_krichai@quicinc.com,
+        quic_skananth@quicinc.com, mrana@quicinc.com,
+        Vivek Pernamitta <quic_vpernami@quicinc.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alex Elder <elder@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org (open list:MHI BUS),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v5] bus: mhi: host: Avoid ringing EV DB if there is no elements to process
+Date:   Wed, 22 Feb 2023 23:07:48 +0530
+Message-Id: <1677087470-7004-1-git-send-email-quic_vpernami@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: jqmkLrMG69aIoaxkjaEBeR2sWAHnU43p
+X-Proofpoint-GUID: jqmkLrMG69aIoaxkjaEBeR2sWAHnU43p
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-22_06,2023-02-22_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 adultscore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0 phishscore=0
+ suspectscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302220154
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+As mhi_poll function can be called by mhi client drivers
+which will call process_event, which will ring DB even if
+there no ring elements to process. This could cause
+doorbell event to be processed by MHI device to check for
+any ring elements even it is none and also it will occupy
+lot of bandwidth on peripheral when mhi_poll() is called in
+aggressive loop.
 
+Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-On 22.02.2023 18:22, Vladimir Zapolskiy wrote:
-> The added 'qcom,qce' compatible value will serve as a sole QCE IP family
-> compatible, since a particular QCE IP version is discoverablem thus, if
-> it'd be needed to differentiate various IP versions, it can be obtained
-> in runtime.
-> 
-> Two IP version based compatibles are left untouched to preserve backward
-> DTB ABI compatibility.
-> 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+changes since v4:
+	updating the commit text with more information.
+changes since v3:
+	- Updating commit text for multiple versions of patches.
+changes since v2:
+	- Updated comments in code.
+changes since v1:
+	- Add an check to avoid ringing EV DB in mhi_process_ctrl_ev_ring().
+---
+ drivers/bus/mhi/host/main.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Konrad
->  drivers/crypto/qce/core.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-> index 5bb2128c95ca..fce49c0dee3e 100644
-> --- a/drivers/crypto/qce/core.c
-> +++ b/drivers/crypto/qce/core.c
-> @@ -293,6 +293,7 @@ static int qce_crypto_remove(struct platform_device *pdev)
->  static const struct of_device_id qce_crypto_of_match[] = {
->  	{ .compatible = "qcom,crypto-v5.1", },
->  	{ .compatible = "qcom,crypto-v5.4", },
-> +	{ .compatible = "qcom,qce", },
->  	{}
->  };
->  MODULE_DEVICE_TABLE(of, qce_crypto_of_match);
+diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+index df0fbfe..1bbdb75 100644
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -961,7 +961,9 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+ 	}
+ 
+ 	read_lock_bh(&mhi_cntrl->pm_lock);
+-	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
++
++	/* Ring EV DB only if there is any pending element to process */
++	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)) && count)
+ 		mhi_ring_er_db(mhi_event);
+ 	read_unlock_bh(&mhi_cntrl->pm_lock);
+ 
+@@ -1031,7 +1033,9 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
+ 		count++;
+ 	}
+ 	read_lock_bh(&mhi_cntrl->pm_lock);
+-	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
++
++	/* Ring EV DB only if there is any pending element to process */
++	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)) && count)
+ 		mhi_ring_er_db(mhi_event);
+ 	read_unlock_bh(&mhi_cntrl->pm_lock);
+ 
+-- 
+2.7.4
+
