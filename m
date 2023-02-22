@@ -2,180 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7B5969FA5A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 18:47:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BAE4169FA96
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 18:57:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231310AbjBVRrW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 12:47:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57390 "EHLO
+        id S229975AbjBVR5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 12:57:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230190AbjBVRrW (ORCPT
+        with ESMTP id S230048AbjBVR5U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 12:47:22 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83CAB3D934
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:47:17 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id bg11so8622390oib.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:47:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=oXuZiVkdxXl94pWmoBOSfddctzecfqzqWUepbQog4+M=;
-        b=d+XcrYZdGh9ImNucjkTcaP9Levht/SReyRHCSmQPYGN/mGIoju7vfneKS+9KQOdKXx
-         oaPGlW7+z6SSca87Tr8fhNnCoCU07En/4o5zDrMill+HL20fc4JQOVZJCY7pbyFjVq8D
-         hxnqNRZ6WBXzSUKZOyigcl7nQazxfn2NksxLeNVL8FfUW7R5MYfzPmTpmBXJtfOOAb24
-         BoFjHOvyRQJNYysRp4sSY9KRaw2Rm5ujegKYNcpWyP5Vb+wfzUZp4tVzknvL5NNjxmTK
-         CUTKy44x57pD6dFBHgFqVg6qvA5BFmYEMqvChMILPXdoOvWCz6ouLFIsP7yiA/dv+RAj
-         JonQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oXuZiVkdxXl94pWmoBOSfddctzecfqzqWUepbQog4+M=;
-        b=DTsiHCvtFIMp8387DllY3TALihNXj+oXfYMEs4M0+nDVHXDMKllr9i1wicmoLeF0T7
-         sw8kPkTi4fAyEGxR3HSJvScVqje32iDXZ/MMaDDwx/8+oTcYxZ7kV+zGsXJIk6tJ8X7P
-         YYFquVd+5Fa5KtiXCwReghxw1pYyqwF0gsrwCoD9mEnBlxWLfszenIDbwQrLJiA5CC6i
-         kwtWCwAF14ZCEV38ragnKaFrFdN6IOk8aJmET7XjBmF+Rb4b1+m2BFpaQc8+R0crZBYa
-         AAyl0Gv/xyCuuU1TwTszlCEp+OC8+h1lkQdLrb7K4tjT05LHUFoNSAoLFzewbXeZoNBP
-         9Ypg==
-X-Gm-Message-State: AO0yUKUDRQg9ODxim4kegQlv1aUY8hlUuIZoVafkxR0PJ+hveJJTaxny
-        Y4AJ9MG/d1jCzSyfC/NElgdQm/CCHeLUpn0uBWA=
-X-Google-Smtp-Source: AK7set9zfy4HxzzpDn0lFFE16Ew1ffKzEzp9s80BgsQ4DxHCqImlxUG3qI9dx3bOf7wNVB8bfJWMfs8rbYCThAo9jJQ=
-X-Received: by 2002:a05:6808:16ab:b0:37d:81a9:5103 with SMTP id
- bb43-20020a05680816ab00b0037d81a95103mr1441359oib.38.1677088036803; Wed, 22
- Feb 2023 09:47:16 -0800 (PST)
-MIME-Version: 1.0
-References: <20230218012546.3655999-1-dmitry.baryshkov@linaro.org> <20230218012546.3655999-2-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230218012546.3655999-2-dmitry.baryshkov@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 22 Feb 2023 09:47:05 -0800
-Message-ID: <CAF6AEGsRA+sV9PpdDxpZ_eFVoV6+GJpB1tHf8190F3YNR5CMQw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] drm/msm: drop unused ring variable in msm_ioctl_gem_submit()
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 22 Feb 2023 12:57:20 -0500
+Received: from srv01.abscue.de (abscue.de [89.58.28.240])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1F893BDB8;
+        Wed, 22 Feb 2023 09:57:18 -0800 (PST)
+Received: from srv01.abscue.de (localhost [127.0.0.1])
+        by spamfilter.srv.local (Postfix) with ESMTP id 157F71C0048;
+        Wed, 22 Feb 2023 18:57:16 +0100 (CET)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Received: from fluffy-mammal.metal.fwg-cag.de (dslb-092-073-092-061.092.073.pools.vodafone-ip.de [92.73.92.61])
+        by srv01.abscue.de (Postfix) with ESMTPSA id 8F7521C0046;
+        Wed, 22 Feb 2023 18:57:15 +0100 (CET)
+Date:   Wed, 22 Feb 2023 18:57:08 +0100
+From:   Otto =?iso-8859-1?Q?Pfl=FCger?= <otto.pflueger@abscue.de>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Otto =?iso-8859-1?Q?Pfl=FCger?= <otto.pflueger@abscue.de>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/4] clk: qcom: Add global clock controller driver for
+ MSM8917
+Message-ID: <Y/ZXdO67/9X5xabE@fluffy-mammal.metal.fwg-cag.de>
+References: <20230221174909.164029-1-otto.pflueger@abscue.de>
+ <20230221174909.164029-3-otto.pflueger@abscue.de>
+ <10b2ce9a-d838-6063-1646-90f91ce819e6@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <10b2ce9a-d838-6063-1646-90f91ce819e6@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 17, 2023 at 5:25 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> The variable ring is not used by msm_parse_deps() and
-> msm_ioctl_gem_submit() and thus can be dropped.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/msm/msm_gem_submit.c | 10 +++-------
->  drivers/gpu/drm/msm/msm_gpu_trace.h  | 10 ++++------
->  2 files changed, 7 insertions(+), 13 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> index ac8ed731f76d..a539eb31042f 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> @@ -550,8 +550,7 @@ static struct drm_syncobj **msm_parse_deps(struct msm_gem_submit *submit,
->                                             struct drm_file *file,
->                                             uint64_t in_syncobjs_addr,
->                                             uint32_t nr_in_syncobjs,
-> -                                           size_t syncobj_stride,
-> -                                           struct msm_ringbuffer *ring)
-> +                                           size_t syncobj_stride)
->  {
->         struct drm_syncobj **syncobjs = NULL;
->         struct drm_msm_gem_submit_syncobj syncobj_desc = {0};
-> @@ -722,7 +721,6 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
->         struct msm_gem_submit *submit;
->         struct msm_gpu *gpu = priv->gpu;
->         struct msm_gpu_submitqueue *queue;
-> -       struct msm_ringbuffer *ring;
->         struct msm_submit_post_dep *post_deps = NULL;
->         struct drm_syncobj **syncobjs_to_reset = NULL;
->         int out_fence_fd = -1;
-> @@ -760,8 +758,6 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
->         if (!queue)
->                 return -ENOENT;
->
-> -       ring = gpu->rb[queue->ring_nr];
-> -
->         if (args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
->                 out_fence_fd = get_unused_fd_flags(O_CLOEXEC);
->                 if (out_fence_fd < 0) {
-> @@ -774,7 +770,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
->         if (IS_ERR(submit))
->                 return PTR_ERR(submit);
->
-> -       trace_msm_gpu_submit(pid_nr(submit->pid), ring->id, submit->ident,
-> +       trace_msm_gpu_submit(pid_nr(submit->pid), submit->ident,
->                 args->nr_bos, args->nr_cmds);
+On Wed, Feb 22, 2023 at 09:51:21AM +0100, Krzysztof Kozlowski wrote:
+> On 21/02/2023 18:49, Otto Pflüger wrote:
+> > This driver provides clocks, resets and power domains needed for various
+> > components of the MSM8917 SoC and the very similar QM215 SoC.
+> > 
+> > According to [1] in the downstream kernel, the GPU clock has a different
+> > source mapping on QM215 (gcc_gfx3d_map vs gcc_gfx3d_map_qm215).
+> > 
+> > [1]: https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LF.UM.8.6.2-28000-89xx.0/include/dt-bindings/clock/msm-clocks-hwio-8952.h#L298
+> > 
+> > Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
+> > ---
+> >  drivers/clk/qcom/Kconfig       |    8 +
+> >  drivers/clk/qcom/Makefile      |    1 +
+> >  drivers/clk/qcom/gcc-msm8917.c | 3283 ++++++++++++++++++++++++++++++++
+> >  3 files changed, 3292 insertions(+)
+> >  create mode 100644 drivers/clk/qcom/gcc-msm8917.c
+> > 
+> > diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> > index 70d43f0a8919..3ef58b09385a 100644
+> > --- a/drivers/clk/qcom/Kconfig
+> > +++ b/drivers/clk/qcom/Kconfig
+> > @@ -196,6 +196,14 @@ config MSM_GCC_8916
+> >  	  Say Y if you want to use devices such as UART, SPI i2c, USB,
+> >  	  SD/eMMC, display, graphics, camera etc.
+> >  
+> > +config MSM_GCC_8917
+> > +	tristate "MSM8917 Global Clock Controller"
+> 
+> I propose to add here:
+> 
+> depends on ARM64 || COMPILE_TEST
 
-Please don't remove things from the tracepoint, we have userspace
-tools that use the tracepoints..
+Why should this driver only be enabled on ARM64 systems? In my opinion,
+this should also be supported on 32-bit ARM, just like the other clock
+drivers for the 64-bit SoCs. Users should be able to boot a 32-bit
+kernel if they have to, e.g. if their device has broken firmware that
+prohibits booting 64-bit kernels (there have been such cases with
+MSM8916) or if they think that 64-bit systems use too much memory (my
+QM215 device with 512MB RAM shipped with a 32-bit kernel for this very
+reason).
 
-Other parts look ok.
+> 
+> > +	select QCOM_GDSC
+> > +	help
+> > +	  Support for the global clock controller on msm8917 devices.
+> > +	  Say Y if you want to use devices such as UART, SPI i2c, USB,
+> > +	  SD/eMMC, display, graphics, camera etc.
+> > +
+> 
+> (...)
+> > +
+> > +static int gcc_msm8917_probe(struct platform_device *pdev)
+> > +{
+> > +	struct regmap *regmap;
+> > +
+> > +	regmap  = qcom_cc_map(pdev, &gcc_msm8917_desc);
+> > +	if (IS_ERR(regmap))
+> > +		return PTR_ERR(regmap);
+> > +
+> > +	if (of_device_is_compatible(pdev->dev.of_node, "qcom,gcc-qm215"))
+> 
+> Use data in of_device_id instead. This scales poorly if any new variant
+> is added here. Unless no new variants will be added? Ever?
 
-BR,
--R
+Thanks. There are a lot of other related SoCs (MSM8920, MSM8937, MSM8940,
+MSM8952, SDM429 and SDM439) which could get added here as variants, so
+I'll implement this using data in of_device_id.
 
->
->         ret = mutex_lock_interruptible(&queue->lock);
-> @@ -803,7 +799,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
->                 syncobjs_to_reset = msm_parse_deps(submit, file,
->                                                    args->in_syncobjs,
->                                                    args->nr_in_syncobjs,
-> -                                                  args->syncobj_stride, ring);
-> +                                                  args->syncobj_stride);
->                 if (IS_ERR(syncobjs_to_reset)) {
->                         ret = PTR_ERR(syncobjs_to_reset);
->                         goto out_unlock;
-> diff --git a/drivers/gpu/drm/msm/msm_gpu_trace.h b/drivers/gpu/drm/msm/msm_gpu_trace.h
-> index ac40d857bc45..12ef10f1de4c 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu_trace.h
-> +++ b/drivers/gpu/drm/msm/msm_gpu_trace.h
-> @@ -9,24 +9,22 @@
->  #define TRACE_INCLUDE_FILE msm_gpu_trace
->
->  TRACE_EVENT(msm_gpu_submit,
-> -           TP_PROTO(pid_t pid, u32 ringid, u32 id, u32 nr_bos, u32 nr_cmds),
-> -           TP_ARGS(pid, ringid, id, nr_bos, nr_cmds),
-> +           TP_PROTO(pid_t pid, u32 id, u32 nr_bos, u32 nr_cmds),
-> +           TP_ARGS(pid, id, nr_bos, nr_cmds),
->             TP_STRUCT__entry(
->                     __field(pid_t, pid)
->                     __field(u32, id)
-> -                   __field(u32, ringid)
->                     __field(u32, nr_cmds)
->                     __field(u32, nr_bos)
->                     ),
->             TP_fast_assign(
->                     __entry->pid = pid;
->                     __entry->id = id;
-> -                   __entry->ringid = ringid;
->                     __entry->nr_bos = nr_bos;
->                     __entry->nr_cmds = nr_cmds
->                     ),
-> -           TP_printk("id=%d pid=%d ring=%d bos=%d cmds=%d",
-> -                   __entry->id, __entry->pid, __entry->ringid,
-> +           TP_printk("id=%d pid=%d bos=%d cmds=%d",
-> +                   __entry->id, __entry->pid,
->                     __entry->nr_bos, __entry->nr_cmds)
->  );
->
-> --
-> 2.39.1
->
+Regards,
+Otto Pflüger
