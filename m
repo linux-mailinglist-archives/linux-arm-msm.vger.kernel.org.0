@@ -2,176 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C907269FD98
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 22:15:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8326769FDDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 22:47:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232338AbjBVVPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 16:15:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49974 "EHLO
+        id S232338AbjBVVrQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 16:47:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229828AbjBVVPJ (ORCPT
+        with ESMTP id S230407AbjBVVrP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 16:15:09 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D235323850;
-        Wed, 22 Feb 2023 13:15:07 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id cq23so35592019edb.1;
-        Wed, 22 Feb 2023 13:15:07 -0800 (PST)
+        Wed, 22 Feb 2023 16:47:15 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA80A38033
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 13:47:13 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id s22so11784365lfi.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 13:47:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1hpkcdj31Kp+64I0H+8QjpzTiuX76hZTeMvrWdpVOt4=;
-        b=Y95tEBQTvJnja0wiaBFlONHEPFFpg4E5Aidd7Wxu88GO6+Efw9s32CSm6Qrv+mXXKE
-         i5+x1nQprf7tfF0IcJzKPjG26LQSm8lVS+CQndNmsIeuLxTz3Zws+u23ldaG3K54+WIL
-         IKeo6NJCJ7WchtpfymyIpeNWai8L7kAy3lwcxu51e9DNdYZrZ0f3D1Sw8ivAk+CfDKS3
-         Ek4oq62+5hOyx3h0ySU4oZmDiESIURoGhUvHFCUOXpdaqhWIldAEFOJmG9Rfku2zdt2S
-         XHD98cqCLTBp5a+c55IWJPbpd06egfIFbD37YQMjJACS4ZlT8leLyYR4DAvtMaXLTN/X
-         IY6g==
+        d=linaro.org; s=google;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LtV4gYlZb6movFpbhLNmgY7hQ5iw08LpCzFT54yrzAs=;
+        b=xvsApw/xe6eVzMexS8gyRb6PnkjYi1+vYZLtmPdAbOIy6zgwklwpIdeAXa9DXgEkDz
+         CfaOV8wYg5bcvQTLuWodJRkW5QgnXUZafwwLZmgQwWn98oXneVQGqapGcvtfPoWtfsDl
+         wLqjjFlhJ1SD305vnKdaKkAQNc/yLQTru/SqkDujMAvIgA9ssESu9k/iZeSfs4z4PKX5
+         pdi/G9vqxjcpB1gJhm1RBslHkg0dZAZzvwuPMeTC7mr/ALQNkPxJdVE5seFij5pIg/06
+         Dy1imCqafD3J75cmgT6WdXXQwBMcRpY7O3iJH0jYLnVo1xqjinWY/YliM09JkylO0hmI
+         Kw3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1hpkcdj31Kp+64I0H+8QjpzTiuX76hZTeMvrWdpVOt4=;
-        b=zFAf1yRH4XcebMdO9ryebkSDBWBEnFLHAGJsQXXMzZ133pTbyCRE+RRTEc7uHdcwvO
-         vUuVP33X3rljzPYGO7RcGZAWaobL6CkaY/WYw4bEELP47iMydj/ZdoeUSkHIzHNaKago
-         IVLgAdMneJncMvj6BbkCCLt0LCzKNNwYvnUgLMKk0PbqFy7K3YPm+AKobU0nE7IqJfHD
-         j9QDZZwPRNEvAssNPHrzeTPfOjiher8+XFaqZyMbWAezF+/Yt8eEzwe8LiDXtdWtG+/n
-         8mg4oveXCADSSceWWB9tME0p0Z8U/xZtel+9/7GgB0EPSq9i4KoA9K+XC4TYmHKVn+Oy
-         205w==
-X-Gm-Message-State: AO0yUKXexSyQcXdjIuftF4wC2Pr6hFgZ0YiIr+J/uCocFL5FC5fsF2P6
-        JNo9NoJEHSscsXNCoFqoAFR4BfXb9sTgbMYBSXg=
-X-Google-Smtp-Source: AK7set8TXb46bTmDPfzW/xczn6QfGU7MdMXPRf/CaO6cyWdNx+3X84yvibHTXzLWWA/EAH5iiZY+OShEAAHjsEGwRMc=
-X-Received: by 2002:a50:f611:0:b0:4ac:b7c1:9109 with SMTP id
- c17-20020a50f611000000b004acb7c19109mr4476929edn.6.1677100506156; Wed, 22 Feb
- 2023 13:15:06 -0800 (PST)
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LtV4gYlZb6movFpbhLNmgY7hQ5iw08LpCzFT54yrzAs=;
+        b=ZpTE44ZisdL4FPiR4M0T//BU0WxaSY8Ia/gMpOuPEmVDxbK9YFe5QvpQ0WKxSlNN8S
+         3P5dWZ/gHYv9T1UhyUyKgcI0wKwQt3/z10PY9g3ezDEgWfe7M5TnhVk4Js0LbVQOIG12
+         bpxfMhY4K6aWoiQDdHr/Kj2sR+uM54lRqswjRylSQkvtD0kYpHZ26leMzJr5u/Zmfcky
+         X8wWJ3wTnwON972vEeij8TFijlCLY0OhB13cssNYb25NAw4Q08EqLLku2RKhJJYB928r
+         gKpZfrk8uuxT2ORLjw+GYoxLqGlyCeh3Zk7GBVK2/NwUdU0d06TzjQr761jpbF5yqGxD
+         iAcQ==
+X-Gm-Message-State: AO0yUKUFNSDCQOP6uThPyEs/OHgIuNUjv0OCJ7JiZjn8R29iJpbA7zR8
+        dqrTRgCAUAlNd1dJO1TNQkhmPrsmI+DK8dog
+X-Google-Smtp-Source: AK7set/RP4wCH5nANpTc//nQoM25cOa7FJpbemhgSn3yJ/9VpW6trH+TvUn2C8GStdji/Y+bwdm9gQ==
+X-Received: by 2002:ac2:5202:0:b0:4dd:749b:2d5e with SMTP id a2-20020ac25202000000b004dd749b2d5emr3245594lfl.13.1677102431997;
+        Wed, 22 Feb 2023 13:47:11 -0800 (PST)
+Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
+        by smtp.gmail.com with ESMTPSA id c23-20020ac244b7000000b004db5081e3f7sm505126lfm.46.2023.02.22.13.47.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Feb 2023 13:47:11 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/5] OPP and devfreq for all Adrenos
+Date:   Wed, 22 Feb 2023 22:47:09 +0100
+Message-Id: <20230222-konrad-longbois-next-v1-0-01021425781b@linaro.org>
 MIME-Version: 1.0
-References: <20230221145021.31993-1-zajec5@gmail.com> <CAFBinCDxB=xtz9mtZupBC7J5oxknN1ENHzJ-cFxX4FTDSgZeFQ@mail.gmail.com>
- <101a5bdf-870a-a1bb-954d-1d675ecad5a7@gmail.com>
-In-Reply-To: <101a5bdf-870a-a1bb-954d-1d675ecad5a7@gmail.com>
-From:   Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Date:   Wed, 22 Feb 2023 22:14:55 +0100
-Message-ID: <CAFBinCDcDYtdOdikc2ieXjRUkrjgwNKaPYvYZb_v84gh66q=bw@mail.gmail.com>
-Subject: Re: [PATCH] nvmem: add explicit config option to read OF fixed cells
-To:     =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Evgeniy Polyakov <zbr@ioremap.net>,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rtc@vger.kernel.org,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAF2N9mMC/x2N0QrCMAwAf2Xk2cCW4VB/RXxI27gFSyrplMHYv
+ 1t8vIPjdqjiKhVu3Q4uX61arMFw6iAubLOgpsZAPY09EeGrmHPCXGwORSuabCtepjTwdD2PFAl
+ aGrgKBmeLS4vtk3OTb5enbv/X/XEcP343Cs57AAAA
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1677102430; l=2087;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=ocr3jeuvoRq3y9CSWJWmDlXSkvIkpCb9rcZR7Ldt8y0=;
+ b=GnX5hx4k4NEFLxBrvnFkBrpW7jm1Yg1bxr4NqiOJ1CEFH/5VtjvD1XT/pHQKEdLz6RaWIHFdv0a9
+ l2zbUi+tB7Th6+9ZQ07IS4Xo5xNTXebzV60EY+88yeyROg2CK1qd
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Rafa=C5=82,
+This series is a combination of [1] and a subset of [2] and some new
+stuff.
 
-On Tue, Feb 21, 2023 at 11:29 PM Rafa=C5=82 Mi=C5=82ecki <zajec5@gmail.com>=
- wrote:
-[...]
-> > I am not familiar with the recent changes around dynamic cells.
-> > Is there any discussion/summary that I can read to get up to speed?
->
-> Some NVMEM devices don't store specific data at hardcoded offsets. For
-> such devices we have drivers (to become: layouts) that parse their magic
-> content. They discover cells and register them and provide matching with
-> proper DT nodes.
->
-> For bindings see:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit=
-/?id=3D084973e944bec21804f8afb0515b25434438699a
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit=
-/?id=3Da607a850ba1fa966cbb035544c1588e24a6307df
->
-> For example driver see:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit=
-/?id=3D6e977eaa8280e957b87904b536661550f2a6b3e8
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit=
-/?id=3D207775f7e17b8fd0426a2ac4a5b81e4e1d71849e
->
-> For usage see:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit=
-/?id=3Dc8442f0fb09ca3d842b9b23d1d0650f649fd10f8
-Thanks, that makes things clearer for me!
+With it, devfreq is used on all a2xx-a6xx (including gmu and
+gmu-wrapper) and all clk_set_rate(core clock) calls are dropped in
+favour of dev_pm_opp_set_rate, which - drumroll - lets us scale
+the voltage domain. DT patches making use of that will be sent
+separately.
 
-> > My main thought is: if there are many "fixed OF cells" implementations
-> > and only a few "dynamic" ones - does it make sense to flip the logic
-> > and introduce a new "use_dynamic_of_cells" flag instead?
->
-> The problem is that there are more cases than just two. We can have:
-> 1. No cells at all
-> 2. Fixed cells in DT
-> 3. Dynamic cells with references in DT
-> 4. Driver specified cells (specified within config)
-> 5. Cells defined in a global table
->
-> So we need to reference DT cells explicitly (we can't just confirm /
-> deny *dynamic* cells).
->
-> Another solution would be to have "no_fixed_of_cells" but:
->
-> 1. Personally I think negation is less clear / easy to follow
->
-> 2. There may be actually more drivers with no fixed cells.
-> I think I modified 18 drivers. It seems devm_nvmem_register() is
-> referenced in 44 places. Few of them may be not actual users but it
-> still seems to be about equal.
-Thanks for this overview of all the special cases. Please add my:
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-for the following two drivers:
-- drivers/nvmem/meson-efuse.c
-- drivers/nvmem/meson-mx-efuse.c
+On top of that, a5xx gets a call to enable icc scaling from the OPP
+tables. No SoCs implementing a2xx have icc support yet and a3/4xx
+SoCs have separate logic for that, which will be updated at a later
+time.
 
+Getting this in for 6.4 early would be appreciated, as that would
+allow for getting GMU wrapper GPUs up (without VDD&icc scaling they
+can only run at lower freqs, which is.. ehhh..)
+
+Changes:
+- a3xx busy: use the _1 counter as per msm-3.x instead of _0
+- a6xx-series-opp: basically rewrite, ensure compat with all gens
+- a2/4xx busy: new patch
+- a5xx icc: new patch
+
+[1] https://lore.kernel.org/linux-arm-msm/20230130093809.2079314-1-konrad.dybcio@linaro.org/
+[2] https://lore.kernel.org/linux-arm-msm/20230214173145.2482651-1-konrad.dybcio@linaro.org/
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (5):
+      drm/msm/adreno: Use OPP for every GPU generation
+      drm/msm/a2xx: Implement .gpu_busy
+      drm/msm/a3xx: Implement .gpu_busy
+      drm/msm/a4xx: Implement .gpu_busy
+      drm/msm/a5xx: Enable optional icc voting from OPP tables
+
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.c   | 28 ++++++++++
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c   | 11 ++++
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c   | 11 ++++
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c   |  4 ++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 94 +++++++++++++++------------------
+ drivers/gpu/drm/msm/msm_gpu.c           |  4 +-
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c   |  2 +-
+ 7 files changed, 99 insertions(+), 55 deletions(-)
+---
+base-commit: f4ed0868966d96203fee6f2782508746ded2ce3f
+change-id: 20230222-konrad-longbois-next-86d1a69532c2
 
 Best regards,
-Martin
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
