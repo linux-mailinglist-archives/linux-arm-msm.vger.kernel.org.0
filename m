@@ -2,162 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9414A69FA53
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 18:42:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E7B5969FA5A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 18:47:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232025AbjBVRmk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 12:42:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54860 "EHLO
+        id S231310AbjBVRrW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 12:47:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232046AbjBVRmj (ORCPT
+        with ESMTP id S230190AbjBVRrW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 12:42:39 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14D263E0B5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:42:36 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id s22so10976969lfi.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:42:35 -0800 (PST)
+        Wed, 22 Feb 2023 12:47:22 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83CAB3D934
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:47:17 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id bg11so8622390oib.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 09:47:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rkvf2RmLW6rznz1HAgBefc/tK0jWR+Wupjni4KMu9Yo=;
-        b=WF28+J62nVWj+PoVKfoEZ0yrujyRavwV23LGwl6NYGp/3Y4muBY73poKlSGHhvhGvD
-         xRTDXW5/yuZDBSXMuVb6vpHWjNDW3JGYKmwJWFeeneiWK9NKrYsLSUVKbOEt0WiiKx+D
-         Cmxcx3haBhp9fL9/zVmRM2Je1MHqB7uxeL+wodNEXcSPyzTbFprgrYQ+MA8YTz+Uw3ki
-         2DxI1SOGAqk/nNpOmVcaKPzDMGSvFnpdcJ7CulMNVvnvy+tJHVk4iISGWAVBaDGwjCmd
-         wpW3SAefke3DYIdIJfZBcCOFrPWTuJmMXHOT8mbtL2qPlYYhZjBPalL9HPHxbU3SLl1A
-         RXZA==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=oXuZiVkdxXl94pWmoBOSfddctzecfqzqWUepbQog4+M=;
+        b=d+XcrYZdGh9ImNucjkTcaP9Levht/SReyRHCSmQPYGN/mGIoju7vfneKS+9KQOdKXx
+         oaPGlW7+z6SSca87Tr8fhNnCoCU07En/4o5zDrMill+HL20fc4JQOVZJCY7pbyFjVq8D
+         hxnqNRZ6WBXzSUKZOyigcl7nQazxfn2NksxLeNVL8FfUW7R5MYfzPmTpmBXJtfOOAb24
+         BoFjHOvyRQJNYysRp4sSY9KRaw2Rm5ujegKYNcpWyP5Vb+wfzUZp4tVzknvL5NNjxmTK
+         CUTKy44x57pD6dFBHgFqVg6qvA5BFmYEMqvChMILPXdoOvWCz6ouLFIsP7yiA/dv+RAj
+         JonQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rkvf2RmLW6rznz1HAgBefc/tK0jWR+Wupjni4KMu9Yo=;
-        b=zQ9QD+UiwfHD+SFTcOM7Z6HF80BbG0KV/voB2eHRFfTzNH/kk+k1fKhljv1qcYx20C
-         jZ+9hPaQWhVz4zfwwgiEv5mDll4CeRHg/iyORj6JycZH5UZyhfgKWYxE+hppnl7bq0KB
-         o0wR8FlrySG8m8TxclkhbF0fReyizXPs4/aiVFXGEJZPhYTwxlpa6xLGlK0yUP1pYbWC
-         2R2pXfJahcEZrtReBgp0OMmr6F6dvJShtm02AL9VY8jhiwk4pKc7Id4qh6OIx7LuHxlC
-         66OGzHKEBwScYeu8X5lg4HtSOQM+cZo5QY1A9o5eyVQbWthJ5V1yCEF7Zengq3W55Eq+
-         MTJw==
-X-Gm-Message-State: AO0yUKXvcrW1twqll5EOYi0sVqZEgbC/UjCzHIC0WUthaHaHgM0+gPrh
-        ADlOD4aS+TXdi6ALqxGTBFasBEL0ebtHos+l
-X-Google-Smtp-Source: AK7set+1a8OF7jyLmkJooq/S6lNZXi6oR2S6E8K5SzBMN50//7c5b474aeDnO7YV/iNAj+lyBUEWlQ==
-X-Received: by 2002:ac2:43a7:0:b0:4dc:4b92:dbc4 with SMTP id t7-20020ac243a7000000b004dc4b92dbc4mr2749532lfl.14.1677087754284;
-        Wed, 22 Feb 2023 09:42:34 -0800 (PST)
-Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
-        by smtp.gmail.com with ESMTPSA id t9-20020a19ad09000000b004db2bda9527sm972736lfc.121.2023.02.22.09.42.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Feb 2023 09:42:33 -0800 (PST)
-Message-ID: <42b91fed-1f8c-b019-a1cc-32690b534dd9@linaro.org>
-Date:   Wed, 22 Feb 2023 18:42:32 +0100
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oXuZiVkdxXl94pWmoBOSfddctzecfqzqWUepbQog4+M=;
+        b=DTsiHCvtFIMp8387DllY3TALihNXj+oXfYMEs4M0+nDVHXDMKllr9i1wicmoLeF0T7
+         sw8kPkTi4fAyEGxR3HSJvScVqje32iDXZ/MMaDDwx/8+oTcYxZ7kV+zGsXJIk6tJ8X7P
+         YYFquVd+5Fa5KtiXCwReghxw1pYyqwF0gsrwCoD9mEnBlxWLfszenIDbwQrLJiA5CC6i
+         kwtWCwAF14ZCEV38ragnKaFrFdN6IOk8aJmET7XjBmF+Rb4b1+m2BFpaQc8+R0crZBYa
+         AAyl0Gv/xyCuuU1TwTszlCEp+OC8+h1lkQdLrb7K4tjT05LHUFoNSAoLFzewbXeZoNBP
+         9Ypg==
+X-Gm-Message-State: AO0yUKUDRQg9ODxim4kegQlv1aUY8hlUuIZoVafkxR0PJ+hveJJTaxny
+        Y4AJ9MG/d1jCzSyfC/NElgdQm/CCHeLUpn0uBWA=
+X-Google-Smtp-Source: AK7set9zfy4HxzzpDn0lFFE16Ew1ffKzEzp9s80BgsQ4DxHCqImlxUG3qI9dx3bOf7wNVB8bfJWMfs8rbYCThAo9jJQ=
+X-Received: by 2002:a05:6808:16ab:b0:37d:81a9:5103 with SMTP id
+ bb43-20020a05680816ab00b0037d81a95103mr1441359oib.38.1677088036803; Wed, 22
+ Feb 2023 09:47:16 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: sdm845-oneplus: add alert-slider
-Content-Language: en-US
-To:     Gergo Koteles <soyer@irl.hu>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Andy Gross <agross@kernel.org>,
+References: <20230218012546.3655999-1-dmitry.baryshkov@linaro.org> <20230218012546.3655999-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230218012546.3655999-2-dmitry.baryshkov@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 22 Feb 2023 09:47:05 -0800
+Message-ID: <CAF6AEGsRA+sV9PpdDxpZ_eFVoV6+GJpB1tHf8190F3YNR5CMQw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] drm/msm: drop unused ring variable in msm_ioctl_gem_submit()
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Cc:     linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Caleb Connolly <caleb@connolly.tech>
-References: <cover.1677022414.git.soyer@irl.hu>
- <a8610cc5e16b63cd716e466d8edae54d97f5ae57.1677022414.git.soyer@irl.hu>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <a8610cc5e16b63cd716e466d8edae54d97f5ae57.1677022414.git.soyer@irl.hu>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 22.02.2023 01:10, Gergo Koteles wrote:
-> The alert-slider is a tri-state sound profile switch found on the OnePlus 6,
-> Android maps the states to "silent", "vibrate" and "ring". Expose them as
-> ABS_SND_PROFILE events.
-> The previous GPIO numbers were wrong. Update them to the correct
-> ones.
-> 
-> Co-developed-by: Caleb Connolly <caleb@connolly.tech>
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-> Signed-off-by: Gergo Koteles <soyer@irl.hu>
+On Fri, Feb 17, 2023 at 5:25 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> The variable ring is not used by msm_parse_deps() and
+> msm_ioctl_gem_submit() and thus can be dropped.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>  drivers/gpu/drm/msm/msm_gem_submit.c | 10 +++-------
+>  drivers/gpu/drm/msm/msm_gpu_trace.h  | 10 ++++------
+>  2 files changed, 7 insertions(+), 13 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> index ac8ed731f76d..a539eb31042f 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -550,8 +550,7 @@ static struct drm_syncobj **msm_parse_deps(struct msm_gem_submit *submit,
+>                                             struct drm_file *file,
+>                                             uint64_t in_syncobjs_addr,
+>                                             uint32_t nr_in_syncobjs,
+> -                                           size_t syncobj_stride,
+> -                                           struct msm_ringbuffer *ring)
+> +                                           size_t syncobj_stride)
+>  {
+>         struct drm_syncobj **syncobjs = NULL;
+>         struct drm_msm_gem_submit_syncobj syncobj_desc = {0};
+> @@ -722,7 +721,6 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+>         struct msm_gem_submit *submit;
+>         struct msm_gpu *gpu = priv->gpu;
+>         struct msm_gpu_submitqueue *queue;
+> -       struct msm_ringbuffer *ring;
+>         struct msm_submit_post_dep *post_deps = NULL;
+>         struct drm_syncobj **syncobjs_to_reset = NULL;
+>         int out_fence_fd = -1;
+> @@ -760,8 +758,6 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+>         if (!queue)
+>                 return -ENOENT;
+>
+> -       ring = gpu->rb[queue->ring_nr];
+> -
+>         if (args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
+>                 out_fence_fd = get_unused_fd_flags(O_CLOEXEC);
+>                 if (out_fence_fd < 0) {
+> @@ -774,7 +770,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+>         if (IS_ERR(submit))
+>                 return PTR_ERR(submit);
+>
+> -       trace_msm_gpu_submit(pid_nr(submit->pid), ring->id, submit->ident,
+> +       trace_msm_gpu_submit(pid_nr(submit->pid), submit->ident,
+>                 args->nr_bos, args->nr_cmds);
 
-Konrad
->  .../boot/dts/qcom/sdm845-oneplus-common.dtsi  | 39 ++++++++++++++++++-
->  1 file changed, 37 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> index 64638ea94db7..7567f5cf6e3f 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> @@ -20,6 +20,41 @@
->  /delete-node/ &rmtfs_mem;
->  
->  / {
-> +	alert-slider {
-> +		compatible = "gpio-keys";
-> +		label = "Alert slider";
-> +
-> +		pinctrl-0 = <&alert_slider_default>;
-> +		pinctrl-names = "default";
-> +
-> +		switch-top {
-> +			label = "Silent";
-> +			linux,input-type = <EV_ABS>;
-> +			linux,code = <ABS_SND_PROFILE>;
-> +			linux,input-value = <SND_PROFILE_SILENT>;
-> +			gpios = <&tlmm 126 GPIO_ACTIVE_LOW>;
-> +			linux,can-disable;
-> +		};
-> +
-> +		switch-middle {
-> +			label = "Vibrate";
-> +			linux,input-type = <EV_ABS>;
-> +			linux,code = <ABS_SND_PROFILE>;
-> +			linux,input-value = <SND_PROFILE_VIBRATE>;
-> +			gpios = <&tlmm 52 GPIO_ACTIVE_LOW>;
-> +			linux,can-disable;
-> +		};
-> +
-> +		switch-bottom {
-> +			label = "Ring";
-> +			linux,input-type = <EV_ABS>;
-> +			linux,code = <ABS_SND_PROFILE>;
-> +			linux,input-value = <SND_PROFILE_RING>;
-> +			gpios = <&tlmm 24 GPIO_ACTIVE_LOW>;
-> +			linux,can-disable;
-> +		};
-> +	};
-> +
->  	aliases {
->  		serial0 = &uart9;
->  		serial1 = &uart6;
-> @@ -753,8 +788,8 @@ &usb_1_hsphy {
->  &tlmm {
->  	gpio-reserved-ranges = <0 4>, <81 4>;
->  
-> -	tri_state_key_default: tri-state-key-default-state {
-> -		pins = "gpio40", "gpio42", "gpio26";
-> +	alert_slider_default: alert-slider-default-state {
-> +		pins = "gpio126", "gpio52", "gpio24";
->  		function = "gpio";
->  		drive-strength = <2>;
->  		bias-disable;
+Please don't remove things from the tracepoint, we have userspace
+tools that use the tracepoints..
+
+Other parts look ok.
+
+BR,
+-R
+
+>
+>         ret = mutex_lock_interruptible(&queue->lock);
+> @@ -803,7 +799,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+>                 syncobjs_to_reset = msm_parse_deps(submit, file,
+>                                                    args->in_syncobjs,
+>                                                    args->nr_in_syncobjs,
+> -                                                  args->syncobj_stride, ring);
+> +                                                  args->syncobj_stride);
+>                 if (IS_ERR(syncobjs_to_reset)) {
+>                         ret = PTR_ERR(syncobjs_to_reset);
+>                         goto out_unlock;
+> diff --git a/drivers/gpu/drm/msm/msm_gpu_trace.h b/drivers/gpu/drm/msm/msm_gpu_trace.h
+> index ac40d857bc45..12ef10f1de4c 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu_trace.h
+> +++ b/drivers/gpu/drm/msm/msm_gpu_trace.h
+> @@ -9,24 +9,22 @@
+>  #define TRACE_INCLUDE_FILE msm_gpu_trace
+>
+>  TRACE_EVENT(msm_gpu_submit,
+> -           TP_PROTO(pid_t pid, u32 ringid, u32 id, u32 nr_bos, u32 nr_cmds),
+> -           TP_ARGS(pid, ringid, id, nr_bos, nr_cmds),
+> +           TP_PROTO(pid_t pid, u32 id, u32 nr_bos, u32 nr_cmds),
+> +           TP_ARGS(pid, id, nr_bos, nr_cmds),
+>             TP_STRUCT__entry(
+>                     __field(pid_t, pid)
+>                     __field(u32, id)
+> -                   __field(u32, ringid)
+>                     __field(u32, nr_cmds)
+>                     __field(u32, nr_bos)
+>                     ),
+>             TP_fast_assign(
+>                     __entry->pid = pid;
+>                     __entry->id = id;
+> -                   __entry->ringid = ringid;
+>                     __entry->nr_bos = nr_bos;
+>                     __entry->nr_cmds = nr_cmds
+>                     ),
+> -           TP_printk("id=%d pid=%d ring=%d bos=%d cmds=%d",
+> -                   __entry->id, __entry->pid, __entry->ringid,
+> +           TP_printk("id=%d pid=%d bos=%d cmds=%d",
+> +                   __entry->id, __entry->pid,
+>                     __entry->nr_bos, __entry->nr_cmds)
+>  );
+>
+> --
+> 2.39.1
+>
