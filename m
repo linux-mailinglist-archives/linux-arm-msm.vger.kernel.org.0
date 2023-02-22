@@ -2,78 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 695D269FE9D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 23:40:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39FB269FEBE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 23:52:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232787AbjBVWk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 17:40:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34558 "EHLO
+        id S233055AbjBVWwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 17:52:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230281AbjBVWk4 (ORCPT
+        with ESMTP id S233051AbjBVWw2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 17:40:56 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2119143475
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 14:40:54 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id i9so11857615lfc.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 14:40:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=v/Y1KciKJZ7VrZa7gW0Zk0UbrGDz/hc2vzEA3PjcOcc=;
-        b=nEUnG1X2syFChhsaIXbJ4M2fp7tcyeGP2H6ZEvHSjURRaXYvibakD70006YLtxqcYN
-         Hu61Yu44WBUcQGd1fPzcOi2DMDZ5Le2HOLAP8ZH+36dsiPlNRtgs8drQXKcHe44LyqCQ
-         DoSyHBW8Tw67rOB/NskrIJ1Ng8uFf8hdQFlGrd5foNzu5so74pdEC4Zda+ZSQKyuViny
-         rOEAvdFKQyPfxJRYQAA7lJZvSSzODJRgK54t2G3hFV3th78fRLnw/yRAOl0qQ3d7dvMK
-         16Ii18+kGHsEG/7nAzQxnsTMhlxF1qRAYeiGHmvndo1OSCRwP+hEKYAb63/Z134jLyO6
-         TDwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v/Y1KciKJZ7VrZa7gW0Zk0UbrGDz/hc2vzEA3PjcOcc=;
-        b=shvRcwBUBv1R8OWPy7mP+boM+TKYBGk/0jo/bzfcUl9kgeVKxeRKlMwIfMJeutPZT9
-         gHPTq9nDqFlTWEZ+u2x+xnYrncXiVRenc0QJp9kXRv6ibw+NJZmQtLqzyN+XKiROQr7Y
-         Z1etGVWDzKCEPnIUwzOjyQgemzttqcHL1C4SlGGKbr1Cmju9RdMTO4dqPxM4zVMAMurR
-         AATMwbzLV4dRxONMwO63F1VLZ7OKy5sGSNQchxzfAyVcaeTIlj2sI61qaLuR++V2gK6Z
-         zDzolFu/WtM38JBZbMg2bSvoI0CgOMQCBCxpqSDJAL/cmY4Y8uOgtXHyBPFypW4ix1iN
-         DDrA==
-X-Gm-Message-State: AO0yUKWmDad+lCw0kK821vvSwtpyT2TMVk9Pl25LEtW4nlXcS2bYr1er
-        YeMxVwk0WlDsJMiyN7E/wLv5XQ==
-X-Google-Smtp-Source: AK7set/oe/NTvA8Q49sJW8AIXbVS4dwnSRYNzENHQ3vtDIlMjzoGyUHFWwe/9jG6vu3XzFZr7Oq3yA==
-X-Received: by 2002:a19:f609:0:b0:4b5:b06d:4300 with SMTP id x9-20020a19f609000000b004b5b06d4300mr3175904lfe.29.1677105652345;
-        Wed, 22 Feb 2023 14:40:52 -0800 (PST)
-Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
-        by smtp.gmail.com with ESMTPSA id l23-20020ac24317000000b004cca1658a41sm646920lfh.300.2023.02.22.14.40.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Feb 2023 14:40:52 -0800 (PST)
-Message-ID: <180a33e7-d7b0-1b7f-9b91-20eb81d377dc@linaro.org>
-Date:   Wed, 22 Feb 2023 23:40:50 +0100
+        Wed, 22 Feb 2023 17:52:28 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 352EE301B6;
+        Wed, 22 Feb 2023 14:52:27 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31MEjTtf002541;
+        Wed, 22 Feb 2023 22:52:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=LgmYIsv97qPbDmuwM1PfV1v0A5XJ8xw9/5yC+6G52TE=;
+ b=oN35t60zzfOaTOdp4vp6r5BmyxwEvzSEPBdqtsrIwdRe4XB7onsshfSIZg/10Jz4dCca
+ BBxpfRiur79dRlD/OItdK8oc9/8U/iQx0N58+L0hhd/9gvxaz7fDkaxGL4qbClxUpV6c
+ uQvBzz+Zve1MfqwxDE8K0VGPTc5tFx1pCNXo8Z3zvycUzdAXAmp4b1u3pQfkNUMpzDjZ
+ 6sHlb0+NncHaW3HWQ253QDoDgxAGdraiixdI6BSnLJHysGNJIGJ/MznZLfjhlU7TW88G
+ aUG3sWBwfF+q/KRjNVb4+GAz61MGQctlSp+TLLEJZoCqPoXOYu8S3Aa0jdXeZtGFvi9y vg== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nwn3894ts-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Feb 2023 22:52:09 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31MMq892026213
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Feb 2023 22:52:08 GMT
+Received: from [10.134.67.48] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 22 Feb
+ 2023 14:52:07 -0800
+Message-ID: <931494e0-b2da-5746-a86c-42b972072080@quicinc.com>
+Date:   Wed, 22 Feb 2023 14:52:07 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 1/5] drm/msm/adreno: Use OPP for every GPU generation
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v10 08/26] gunyah: rsc_mgr: Add resource manager RPC core
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230222-konrad-longbois-next-v1-0-01021425781b@linaro.org>
- <20230222-konrad-longbois-next-v1-1-01021425781b@linaro.org>
- <6ff7aea6-6535-3f54-b8d2-718d9a38a1be@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <6ff7aea6-6535-3f54-b8d2-718d9a38a1be@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Arnd Bergmann" <arnd@arndb.de>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
+ <20230214212327.3310128-1-quic_eberman@quicinc.com>
+ <Y+3QqdQVH5BTbnaP@kroah.com>
+ <b04aef26-ee0d-af01-3aa1-a0c77d9cbaf3@quicinc.com>
+ <Y+8upgx58a+vLeaT@kroah.com>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <Y+8upgx58a+vLeaT@kroah.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: n7hNREE5imiuMUSHjvLRU8RWFJOvXThF
+X-Proofpoint-ORIG-GUID: n7hNREE5imiuMUSHjvLRU8RWFJOvXThF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-22_10,2023-02-22_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
+ malwarescore=0 bulkscore=0 phishscore=0 spamscore=0 priorityscore=1501
+ mlxlogscore=939 adultscore=0 suspectscore=0 lowpriorityscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302220198
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,194 +101,64 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 22.02.2023 23:38, Dmitry Baryshkov wrote:
-> On 22/02/2023 23:47, Konrad Dybcio wrote:
->> Some older GPUs (namely a2xx with no opp tables at all and a320 with
->> downstream-remnants gpu pwrlevels) used not to have OPP tables. They
->> both however had just one frequency defined, making it extremely easy
->> to construct such an OPP table from within the driver if need be.
+On 2/16/2023 11:37 PM, Greg Kroah-Hartman wrote:
+> On Thu, Feb 16, 2023 at 09:40:52AM -0800, Elliot Berman wrote:
 >>
->> Do so and switch all clk_set_rate calls on core_clk to their OPP
->> counterparts.
 >>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/adreno/adreno_gpu.c | 94 +++++++++++++++------------------
->>   drivers/gpu/drm/msm/msm_gpu.c           |  4 +-
->>   drivers/gpu/drm/msm/msm_gpu_devfreq.c   |  2 +-
->>   3 files changed, 45 insertions(+), 55 deletions(-)
+>> On 2/15/2023 10:43 PM, Greg Kroah-Hartman wrote:
+>>> On Tue, Feb 14, 2023 at 01:23:25PM -0800, Elliot Berman wrote:
+>>>> +struct gh_rm {
+>>>> +	struct device *dev;
+>>>
+>>> What device does this point to?
+>>>
 >>
->> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->> index ce6b76c45b6f..9b940c0f063f 100644
->> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->> @@ -922,73 +922,50 @@ void adreno_wait_ring(struct msm_ringbuffer *ring, uint32_t ndwords)
->>               ring->id);
->>   }
->>   -/* Get legacy powerlevels from qcom,gpu-pwrlevels and populate the opp table */
->> -static int adreno_get_legacy_pwrlevels(struct device *dev)
->> -{
->> -    struct device_node *child, *node;
->> -    int ret;
->> -
->> -    node = of_get_compatible_child(dev->of_node, "qcom,gpu-pwrlevels");
->> -    if (!node) {
->> -        DRM_DEV_DEBUG(dev, "Could not find the GPU powerlevels\n");
->> -        return -ENXIO;
->> -    }
->> -
->> -    for_each_child_of_node(node, child) {
->> -        unsigned int val;
->> -
->> -        ret = of_property_read_u32(child, "qcom,gpu-freq", &val);
->> -        if (ret)
->> -            continue;
->> -
->> -        /*
->> -         * Skip the intentionally bogus clock value found at the bottom
->> -         * of most legacy frequency tables
->> -         */
->> -        if (val != 27000000)
->> -            dev_pm_opp_add(dev, val, 0);
->> -    }
->> -
->> -    of_node_put(node);
->> -
->> -    return 0;
->> -}
->> -
->> -static void adreno_get_pwrlevels(struct device *dev,
->> +static int adreno_get_pwrlevels(struct device *dev,
->>           struct msm_gpu *gpu)
->>   {
->> +    struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>       unsigned long freq = ULONG_MAX;
->>       struct dev_pm_opp *opp;
->>       int ret;
->>         gpu->fast_rate = 0;
->>   -    /* You down with OPP? */
->> -    if (!of_find_property(dev->of_node, "operating-points-v2", NULL))
->> -        ret = adreno_get_legacy_pwrlevels(dev);
->> -    else {
->> -        ret = devm_pm_opp_of_add_table(dev);
->> -        if (ret)
->> -            DRM_DEV_ERROR(dev, "Unable to set the OPP table\n");
->> -    }
->> -
->> -    if (!ret) {
->> +    /* devm_pm_opp_of_add_table may error out but will still create an OPP table */
->> +    ret = devm_pm_opp_of_add_table(dev);
->> +    if (ret == -ENODEV) {
->> +        /* Special cases for ancient hw with ancient DT bindings */
->> +        if (adreno_is_a2xx(adreno_gpu)) {
->> +            dev_warn(dev, "Unable to find the OPP table. Falling back to 200 MHz.\n");
->> +            dev_pm_opp_add(dev, 200000000, 0);
->> +            gpu->fast_rate = 200000000;
+>> The platform device.
 > 
-> We can skip setting the fast_rate, dev_pm_opp_find_freq_floor below will get it from our freshly generated opp table.
-It's not reached in this code path.
+> What platform device?  And why a platform device?
+> 
 
-> 
->> +        } else if (adreno_is_a320(adreno_gpu)) {
->> +            dev_warn(dev, "Unable to find the OPP table. Falling back to 450 MHz.\n");
->> +            dev_pm_opp_add(dev, 450000000, 0);
->> +            gpu->fast_rate = 450000000;
->> +        } else {
->> +            DRM_DEV_ERROR(dev, "Unable to find the OPP table\n");
->> +            return -ENODEV;
->> +        }
->> +    } else if (ret) {
->> +        DRM_DEV_ERROR(dev, "Unable to set the OPP table\n");
->> +        return ret;
->> +    } else {
->>           /* Find the fastest defined rate */
->>           opp = dev_pm_opp_find_freq_floor(dev, &freq);
->> -        if (!IS_ERR(opp)) {
->> +
->> +        if (IS_ERR(opp))
->> +            return PTR_ERR(opp);
->> +        else {
->>               gpu->fast_rate = freq;
->>               dev_pm_opp_put(opp);
->>           }
->>       }
->>   -    if (!gpu->fast_rate) {
->> -        dev_warn(dev,
->> -            "Could not find a clock rate. Using a reasonable default\n");
->> -        /* Pick a suitably safe clock speed for any target */
->> -        gpu->fast_rate = 200000000;
->> -    }
->> -
->>       DBG("fast_rate=%u, slow_rate=27000000", gpu->fast_rate);
->> +
->> +    return 0;
->>   }
->>     int adreno_gpu_ocmem_init(struct device *dev, struct adreno_gpu *adreno_gpu,
->> @@ -1046,6 +1023,17 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->>       struct adreno_rev *rev = &config->rev;
->>       const char *gpu_name;
->>       u32 speedbin;
->> +    int ret;
->> +
->> +    /* This can only be done here, or devm_pm_opp_set_supported_hw will WARN_ON() */
-> 
-> I'd rephrase this to '...done before devm_pm_opp_of_add_table(), or dev_pm_opp_set_config() will...'. It took me a while to find correct limitation.
-> 
-> I wanted to move the code below to msm_gpu_init(), but after digging in found that it's not possible.
-Ack, I wasted some time on this too..
+This will be used for the dev_printk. It's presently also used for the 
+reference counting. From your comments below, I'll switch the reference 
+counting away from this platform device.
 
-Konrad
-> 
-> 
->> +    if (IS_ERR(devm_clk_get(dev, "core"))) {
->> +        /*
->> +         * If "core" is absent, go for the legacy clock name.
->> +         * If we got this far in probing, it's a given one of them exists.
->> +         */
->> +        devm_pm_opp_set_clkname(dev, "core_clk");
->> +    } else
->> +        devm_pm_opp_set_clkname(dev, "core");
->>         adreno_gpu->funcs = funcs;
->>       adreno_gpu->info = adreno_info(config->rev);
->> @@ -1070,7 +1058,9 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->>         adreno_gpu_config.nr_rings = nr_rings;
->>   -    adreno_get_pwrlevels(dev, gpu);
->> +    ret = adreno_get_pwrlevels(dev, gpu);
->> +    if (ret)
->> +        return ret;
->>         pm_runtime_set_autosuspend_delay(dev,
->>           adreno_gpu->info->inactive_period);
->> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
->> index 380249500325..cdcb00df3f25 100644
->> --- a/drivers/gpu/drm/msm/msm_gpu.c
->> +++ b/drivers/gpu/drm/msm/msm_gpu.c
->> @@ -59,7 +59,7 @@ static int disable_pwrrail(struct msm_gpu *gpu)
->>   static int enable_clk(struct msm_gpu *gpu)
->>   {
->>       if (gpu->core_clk && gpu->fast_rate)
->> -        clk_set_rate(gpu->core_clk, gpu->fast_rate);
->> +        dev_pm_opp_set_rate(&gpu->pdev->dev, gpu->fast_rate);
->>         /* Set the RBBM timer rate to 19.2Mhz */
->>       if (gpu->rbbmtimer_clk)
->> @@ -78,7 +78,7 @@ static int disable_clk(struct msm_gpu *gpu)
->>        * will be rounded down to zero anyway so it all works out.
->>        */
->>       if (gpu->core_clk)
->> -        clk_set_rate(gpu->core_clk, 27000000);
->> +        dev_pm_opp_set_rate(&gpu->pdev->dev, 27000000);
->>         if (gpu->rbbmtimer_clk)
->>           clk_set_rate(gpu->rbbmtimer_clk, 0);
->> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
->> index e27dbf12b5e8..ea70c1c32d94 100644
->> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
->> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
->> @@ -48,7 +48,7 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
->>           gpu->funcs->gpu_set_freq(gpu, opp, df->suspended);
->>           mutex_unlock(&df->lock);
->>       } else {
->> -        clk_set_rate(gpu->core_clk, *freq);
->> +        dev_pm_opp_set_rate(dev, *freq);
->>       }
->>         dev_pm_opp_put(opp);
+>>>> +	struct gunyah_resource tx_ghrsc, rx_ghrsc;
+>>>> +	struct gh_msgq msgq;
+>>>> +	struct mbox_client msgq_client;
+>>>> +	struct gh_rm_connection *active_rx_connection;
+>>>> +	int last_tx_ret;
+>>>> +
+>>>> +	struct idr call_idr;
+>>>> +	struct mutex call_idr_lock;
+>>>> +
+>>>> +	struct kmem_cache *cache;
+>>>> +	struct mutex send_lock;
+>>>> +	struct blocking_notifier_head nh;
+>>>> +};
+>>>
+>>> This obviously is the "device" that your system works on, so what are
+>>> the lifetime rules of it?  Why isn't is just a real 'struct device' in
+>>> the system instead of a random memory blob with a pointer to a device?
+>>>
+>>> What controls the lifetime of this structure and where is the reference
+>>> counting logic for it?
+>>>
 >>
+>> The lifetime of the structure is bound by the platform device that above
+>> struct device *dev points to. get_gh_rm and put_gh_rm increments the device
+>> ref counter and ensures lifetime of the struct is also extended.
 > 
+> But this really is "your" device, not the platform device.  So make it a
+> real one please as that is how the kernel's driver model works.  Don't
+> hang "magic structures" off of a random struct device and have them
+> control the lifetime rules of the parent without actually being a device
+> themself.  This should make things simpler overall, not more complex,
+> and allow you to expose things to userspace properly (right now your
+> data is totally hidden.)
+
+The "real" device I create here is the miscdev, so I think the 
+recommendation here is to do refcounting off that miscdev. Is this the 
+approach you were thinking of?
+
+Thanks,
+Elliot
