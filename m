@@ -2,60 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D2DE69F7CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 16:30:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A2F269F840
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 16:43:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231842AbjBVPaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 10:30:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49200 "EHLO
+        id S231533AbjBVPnn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 10:43:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231272AbjBVPav (ORCPT
+        with ESMTP id S231235AbjBVPnm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 10:30:51 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D7C837717;
-        Wed, 22 Feb 2023 07:30:50 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3FB59B815C8;
-        Wed, 22 Feb 2023 15:30:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D24DC433EF;
-        Wed, 22 Feb 2023 15:30:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677079848;
-        bh=sVA1o6wuZ1GuHVS6IClOur8oHR2t+TgMPfwchaZ/ukY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=HFT/uVzgMAdaFzkRP6JDiqxxeeMAdaXOg08SZpb2Kd9YlbMkzwMySkFidRt1+4aNx
-         Z2s7XATzX5My3+jVmMjgjuczcRS+HQPIaK6LaD8Sno5ciT2jOH99IzqkUXuVhBMCMl
-         d9aD+jtLVyBOklarS2abWH0t4PkpfZx22wy/+oXSvCtCrr680zkghGjPFb7Iaxf/m7
-         O1ztmVAp8LXoc+evmDRcZ9iwTTxvS9/gNVe1VWDha7Spudl1Dv5IYOTJHMXwh0zwZI
-         UBj47MJ1y27tg1ZKQQCAkBrufe5moTGG4QJOTqJByenQlxPL09XLCBxmNZdL5NVqIm
-         p+M/lApgtcoRA==
-Date:   Wed, 22 Feb 2023 07:34:15 -0800
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, mka@chromium.org,
-        Saravana Kannan <saravanak@google.com>
-Subject: Re: [PATCH v3 1/2] clk: Add generic sync_state callback for
- disabling unused clocks
-Message-ID: <20230222153415.5npe4axg4mupzvw4@ripper>
-References: <20221227204528.1899863-1-abel.vesa@linaro.org>
- <ebc257025ebd641e624ef506ea09c800.sboyd@kernel.org>
- <20230220162137.xjeowlc4qd3rtzc2@ripper>
- <6a3204bcd2a192c866c0fc66fed9786f.sboyd@kernel.org>
+        Wed, 22 Feb 2023 10:43:42 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D2CA1E5DE;
+        Wed, 22 Feb 2023 07:43:41 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31MF7tUI012996;
+        Wed, 22 Feb 2023 15:43:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=JnxcFNqst959AUn2rOTT4yjbmqPZ4cda06QUPBhLYgA=;
+ b=ENozoSh+C0oYoTdXt0nl3JoUXdF7+1/Fivob4/M62VUm+rO0x10MeZWEdSFB75/Ce9x8
+ q+sUT+avwdfk7s+3ekouvkc2w9qYewdDEMUt44TBj/5ofvz24/ooDqNBRBf/mvYGE006
+ hq+M3n7YKhYeEQQ4eXC1QK9zVUvt052nUbuYuKL0w+UQfAO/OevJOckAw/hc6N3yyjtH
+ sNSfhtXGElhZYtje/nNCLIDasd8h8hQ5b2tw2Veb+y4+WjfhlXrv+HcANhMLVenv+fyq
+ roDPnJRCAWhvNKCS5YcfrQ/6u2Oe7Y7rjqlnN1EkDTZeXwShPikmjAy7bd8A6kCwwjLn iQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nw75ta6da-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Feb 2023 15:43:29 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31MFhTEU007299
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Feb 2023 15:43:29 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 22 Feb
+ 2023 07:43:28 -0800
+Message-ID: <88b46bcf-04c0-009a-db9f-4a39b8344dcd@quicinc.com>
+Date:   Wed, 22 Feb 2023 08:43:27 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6a3204bcd2a192c866c0fc66fed9786f.sboyd@kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v4] bus: mhi: host: Avoid ringing EV DB if there is no
+ elements to process
+Content-Language: en-US
+To:     Vivek Pernamitta <quic_vpernami@quicinc.com>, <mhi@lists.linux.dev>
+CC:     <quic_qianyu@quicinc.com>, <manivannan.sadhasivam@linaro.org>,
+        <quic_vbadigan@quicinc.com>, <quic_krichai@quicinc.com>,
+        <quic_skananth@quicinc.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        "Alex Elder" <elder@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Paul Davey <paul.davey@alliedtelesis.co.nz>,
+        "open list:MHI BUS" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <1677066231-14931-1-git-send-email-quic_vpernami@quicinc.com>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <1677066231-14931-1-git-send-email-quic_vpernami@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: x_fwL7FU5oPyizJGgE8MgY8huVqJF82h
+X-Proofpoint-ORIG-GUID: x_fwL7FU5oPyizJGgE8MgY8huVqJF82h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-22_05,2023-02-22_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
+ adultscore=0 priorityscore=1501 mlxscore=0 bulkscore=0 suspectscore=0
+ clxscore=1015 impostorscore=0 mlxlogscore=999 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302220136
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,148 +86,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 21, 2023 at 11:24:36AM -0800, Stephen Boyd wrote:
-> Quoting Bjorn Andersson (2023-02-20 08:21:37)
-> > On Fri, Feb 17, 2023 at 09:38:22PM -0800, Stephen Boyd wrote:
-> > > Quoting Abel Vesa (2022-12-27 12:45:27)
-> > > > There are unused clocks that need to remain untouched by clk_disable_unused,
-> > > > and most likely could be disabled later on sync_state. So provide a generic
-> > > > sync_state callback for the clock providers that register such clocks.
-> > > > Then, use the same mechanism as clk_disable_unused from that generic
-> > > > callback, but pass the device to make sure only the clocks belonging to
-> > > > the current clock provider get disabled, if unused. Also, during the
-> > > > default clk_disable_unused, if the driver that registered the clock has
-> > > > the generic clk_sync_state_disable_unused callback set for sync_state,
-> > > > skip disabling its clocks.
-> > > 
-> > > How does that avoid disabling clks randomly in the clk tree? I'm
-> > > concerned about disabling an unused clk in the middle of the tree
-> > > because it doesn't have a driver using sync state, while the clk is the
-> > > parent of an unused clk that is backed by sync state.
-> > > 
-> > >    clk A -->  clk B 
-> > > 
-> > > clk A: No sync state
-> > > clk B: sync state
-> > > 
-> > > clk B is left on by the bootloader. __clk_disable_unused(NULL) is called
-> > > from late init. Imagine clk A is the root of the tree.
-> > > 
-> > >       clk_disable_unused_subtree(clk_core A)
-> > >         clk_disable_unused_subtree(clk_core B)
-> > >           if (from_sync_state && core->dev != dev)
-> > >             return;
-> > >         ...
-> > >         clk core A->ops->disable()
-> > > 
-> > > clk core B is off now?
-> > > 
-> > 
-> > I will have to give this some more thought. But this is exactly what we
-> > have today; consider A being any builtin clock driver and B being any
-> > clock driver built as modules, with relationship to A.
-> > 
-> > clk_disable_unused() will take down A without waiting for B, possibly
-> > locking up parts of the clock hardware of B; or turning off the clocks
-> > to IP blocks that rely on those clocks (e.g. display).
+On 2/22/2023 4:43 AM, Vivek Pernamitta wrote:
+> Avoid ringing Event DB if there is no elements to process.
+
+This is almost exactly identical to $SUBJECT and therefore redundant.
+
+> As mhi_poll function can be called by mhi client drivers
+> which will call process_event, which will ring DB even if
+> there no ring elements to process.
+
+I think that you could be more clear on why this is a problem that 
+should be addressed.  Perhaps add a sentence like "These doorbell events 
+needlessly interrupt the MHI device to checked for ring elements when 
+there are none."
+
+With the commit text updated, you can add
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+
 > 
-> Oh, thanks for clarifying! Yes, the disabling of unused clks with
-> respect to modules is broken in the same way. This makes that brokenness
-> equally apply to builtin drivers, making the situation worse, not better.
+> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
 > 
-
-It does indeed improve the situation, because it allow us to have clock
-drivers and consumers as modules without having their clocks disabled
-prematurely (or by chance not be disabled ever).
-
-But it does come at the cost of disabling unused clocks later, or if the
-system doesn't probe all enabled devices, possibly never.
-
-[..]
-> > 
-> > Presumably this list should not be a manually maintained list of display
-> > clocks, and that means the bootloader would need to go in and  build
-> > this list of all enabled clocks. I don't think this is practical.
+> ---
+> changes since v3:
+> 	- Updating commit text for multiple versions of patches.
+> changes since v2:
+> 	- Updated comments in code.
+> changes since v1:
+> 	- Add an check to avoid ringing EV DB in mhi_process_ctrl_ev_ring().
+> ---
+>   drivers/bus/mhi/host/main.c | 8 ++++++--
+>   1 file changed, 6 insertions(+), 2 deletions(-)
 > 
-> Why does the bootloader need to do that? The devicetree author can list
-> out the clks that they want to keep on for the display driver until the
-> display driver can acquire them.
-> 
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index df0fbfe..1bbdb75 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -961,7 +961,9 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+>   	}
+>   
+>   	read_lock_bh(&mhi_cntrl->pm_lock);
+> -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
+> +
+> +	/* Ring EV DB only if there is any pending element to process */
+> +	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)) && count)
+>   		mhi_ring_er_db(mhi_event);
+>   	read_unlock_bh(&mhi_cntrl->pm_lock);
+>   
+> @@ -1031,7 +1033,9 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
+>   		count++;
+>   	}
+>   	read_lock_bh(&mhi_cntrl->pm_lock);
+> -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
+> +
+> +	/* Ring EV DB only if there is any pending element to process */
+> +	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)) && count)
+>   		mhi_ring_er_db(mhi_event);
+>   	read_unlock_bh(&mhi_cntrl->pm_lock);
+>   
 
-I don't think maintaining this list is either necessary or the solution
-to our problem. But if we need it, I don't think the list of clock which
-happens to be needed for the author to boot his particular build of
-Linux is sufficient "hardware description".
-
-We need to solve the ordering issue, because we do want as many clock
-drivers built as modules as possible, and anything shutting down
-seemingly unused clocks at late_initcall() is causing problems, beyond
-display.
-
-> > 
-> > > Then mark those as "critical/don't turn off" all the way up the clk tree
-> > > when the clk driver probes by essentially incrementing the
-> > > prepare/enable count but not actually touching the hardware, and when
-> > > the clks are acquired by clk_get() for that device that's using them
-> > > from boot we make the first clk_prepare_enable() do nothing and not
-> > > increment the count at all. We can probably stick some flag into the
-> > > 'struct clk' for this when we create the handle in clk_get() so that the
-> > > prepare and enable functions can special case and skip over.
-> > > 
-> > 
-> > The benefit of sync_state is that it kicks when the client drivers has
-> > probed. As such, you can have e.g. the display driver clk_get(), then
-> > probe defer on some other resource, and the clock state can remain
-> > untouched.
-> 
-> Ok. I think this spitball design would do that still. It's not like we
-> would go and disable the clks that are handed to the display driver even
-> if it probe defers. The clk would be marked as enabled until the display
-> driver enables the clk, and then it wouldn't be disabled during late
-> init (or later) because the clk would be enabled either by the core or
-> by the display driver. The point where we transfer ownership of the
-> enable state is when the consumer calls clk_enable().
-> 
-
-You're right, and if a driver where to acquire a clock enable/disable it
-and then probe defer, the sync_state mechanism wouldn't help us anyways.
-
-But we need something that kicks in and disables unused clocks whenever
-there will be no more consumers. Regardless if the list of resources to
-do this with is defined my human, machine or derived from something.
-
-> > 
-> > > The sync_state hook operates on a driver level, which is too large when
-> > > you consider that a single clk driver may register hundreds of clks that
-> > > are not related. We want to target a solution at the clk level so that
-> > > any damage from keeping on all the clks provided by the controller is
-> > > limited to just the drivers that aren't probed and ready to handle their
-> > > clks. If sync_state could be called whenever a clk consumer consumes a
-> > > clk it may work? Technically we already have that by the clk_hw_provider
-> > > function but there isn't enough information being passed there, like the
-> > > getting device.
-> > > 
-> > 
-> > The current solution already operates on all clocks of all drivers, that
-> > happens to be probed at late_initcall(). This patch removes the
-> > subordinate clause from this, allowing clock drivers and their clients
-> > to be built as modules.
-> > 
-> > So while it still operates on all clocks of a driver, it moves that
-> > point to a later stage, where that is more reasonable to do.
-> > 
-> 
-> When we have clk drivers that provide clks to many different device
-> drivers, they all have to probe for any unused clks to be disabled.
-> 
-
-I would prefer that we go to a mechanism where we disable all unused
-clocks per provider, based on sync_state, and then from there try to
-optimize that to disable subsets of those clocks a few seconds
-earlier. Because upstream is broken by design right now.
-
-I've reverted the applies patches, and sent a new pull request. Let's
-try to make some progress on Saravana's proposal.
-
-Regards,
-Bjorn
