@@ -2,178 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D25769F296
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 11:22:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45ED169F309
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Feb 2023 11:57:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231918AbjBVKWB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 05:22:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57430 "EHLO
+        id S230267AbjBVK51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 05:57:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231800AbjBVKWA (ORCPT
+        with ESMTP id S229749AbjBVK50 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 05:22:00 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1C3233471
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 02:21:57 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id l25so6779256wrb.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 02:21:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=A/j0BfnrCEhVdiOlio/nDMN6dumXmN70t4sL/nEbtGg=;
-        b=GNmVNqegus0CkMHKZPlBIsyM8lqvJHnnghxp/kR0qt3wPYhVy7syqKVVpUbEuVSYHl
-         h3ON4kUamqsUja0gB2puPO0PL8/riIyXemHSnZtXNzSvJGBvnwz5hNb+jzCDsrdpHNen
-         Majnw0xt4GVNQi5SXv/j8nQj1+vZoM9HAxdO6cb1Q74BlBdmvFxlXYrPjKHhvmGDopJL
-         5NR6lC9IFzNzqsxYOgtPulFZlcrHf8bYs3KuXCEXnP5cy/GQGI0zBOD3vhw1mwNhn0DD
-         yqEEqElvmi0OsdBpOvCtKI3l2b0GyeFNJ92kCZ/pUxa7zvKuBr9KxPUGhii4g/73b1kZ
-         xVLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A/j0BfnrCEhVdiOlio/nDMN6dumXmN70t4sL/nEbtGg=;
-        b=hCyc89nLiFWnm1GkLRToCVQ8DcABzUl5EZ7nUx66U1T29TiFghicmUZUDWgKwj1t6N
-         qQpOUxG0Cn2ZafeYFT/pk26AuDV/gNbR3Z5DdejK6rRvBkF0XGSrw1D+uJ9foTG8D2lE
-         0FCGcdVyThD1acaD59tH9NhTEHjaugoGQR1OQv3GZ+sDElqKkCfJtKFYU5QZod/U3lWU
-         FVK7HWfzfsqoIKDO+DameA3DTB1athcdAjYl/c6sxeZWrnVNjxb5AIvmJmhiZW+CVHdj
-         HUf2yzp8tizrz3e40ToSB8otAHaiY8Ee+Gg7VZtHMsw6bIHaGd5jgyr7CtIQJiCcwlzP
-         kX+A==
-X-Gm-Message-State: AO0yUKWXsBL++JoooCQAK1fD/wgdBf3pvaHmNodibjJEoTJq7qtDz/w3
-        K4HSqjaDO4Vbr9O2HAM/e4+/yw==
-X-Google-Smtp-Source: AK7set9mJGpo7aAMHeJCPmz7r3fDVsWDYZu57myyP0o6LfkR4NtiNQffpn1liMDoWlfe8foSFDc/Ow==
-X-Received: by 2002:adf:fb4b:0:b0:2c5:85ef:980f with SMTP id c11-20020adffb4b000000b002c585ef980fmr5648878wrs.49.1677061316323;
-        Wed, 22 Feb 2023 02:21:56 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id m26-20020a7bca5a000000b003e20a6fd604sm6782962wml.4.2023.02.22.02.21.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Feb 2023 02:21:55 -0800 (PST)
-Message-ID: <dea710b6-b627-08e9-3d26-d73e6be2e852@linaro.org>
-Date:   Wed, 22 Feb 2023 10:21:53 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v10 15/26] gunyah: rsc_mgr: Add platform ops on
- mem_lend/mem_reclaim
-Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Wed, 22 Feb 2023 05:57:26 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA73C37B69;
+        Wed, 22 Feb 2023 02:57:25 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31M5VX83002660;
+        Wed, 22 Feb 2023 10:56:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=ixm7GUkIHDJi7rAFz5vFQQS/srNr3SbjM/9REZ1D7bk=;
+ b=kpriDmJVSj7iuxKbb6evpDUEP69K3LdSjO77BCBh9CCPyUKOK03FICN7AQilth9NYoUu
+ ShWFI8vBR4YK6BGhckaYmZqStRtCDrViCHA/HhvtTPTLb1uNlG/P+/FSWjYXikjaYiBQ
+ DvgQlaOLh/6T3AWKwA1to80lGWgC+goFfsyVDhW7qdK60QogaB0KNnVdeDwUpBqK2rWt
+ 4EBXOTgn3Mq7qE9ycPGK7Gy90+L/GakoDGB2gmTgtFkxcFMmuYAMkAyjuuTjSnfZ+13V
+ NSf5FkaBXjAxs2J1KALdtYKU1pCmZO9Tg6SzgVl81kTO6aVnNm9yUHrWQskaQkC/mIXd Hw== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nvp4v3x80-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Feb 2023 10:56:46 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 31MAuglB005888;
+        Wed, 22 Feb 2023 10:56:42 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3ntqrkw5xf-1;
+        Wed, 22 Feb 2023 10:56:42 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 31MAugxw005883;
+        Wed, 22 Feb 2023 10:56:42 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-vpernami-hyd.qualcomm.com [10.213.107.240])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 31MAufmZ005882;
+        Wed, 22 Feb 2023 10:56:42 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 2370923)
+        id 0152C157C; Wed, 22 Feb 2023 16:26:40 +0530 (+0530)
+From:   Vivek Pernamitta <quic_vpernami@quicinc.com>
+To:     mhi@lists.linux.dev
+Cc:     quic_qianyu@quicinc.com, manivannan.sadhasivam@linaro.org,
+        quic_vbadigan@quicinc.com, quic_krichai@quicinc.com,
+        quic_skananth@quicinc.com,
+        Vivek Pernamitta <quic_vpernami@quicinc.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
         Alex Elder <elder@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212448.3318756-1-quic_eberman@quicinc.com>
- <963d84e8-7b91-c278-1978-4e73d73f7c6f@linaro.org>
- <7aa025a1-b211-f04c-9169-236102fe27fe@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <7aa025a1-b211-f04c-9169-236102fe27fe@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Paul Davey <paul.davey@alliedtelesis.co.nz>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org (open list:MHI BUS),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH V2] bus: mhi: host: Avoid ringing EV DB if there is no elements to process
+Date:   Wed, 22 Feb 2023 16:26:37 +0530
+Message-Id: <1677063399-27595-1-git-send-email-quic_vpernami@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: oGZ9hRZXI8cJiIotRFakAbh8jA2pmzGc
+X-Proofpoint-GUID: oGZ9hRZXI8cJiIotRFakAbh8jA2pmzGc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-22_05,2023-02-22_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=518
+ clxscore=1015 adultscore=0 spamscore=0 phishscore=0 suspectscore=0
+ bulkscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302220096
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Avoid ringing Event DB if there is no elements to process.
+As mhi_poll function can be called by mhi client drivers
+which will call process_event, which will ring DB even if
+there no ring elements to process.
 
+Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+---
+ drivers/bus/mhi/host/main.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-On 21/02/2023 21:22, Elliot Berman wrote:
-> 
-> 
-> On 2/21/2023 6:51 AM, Srinivas Kandagatla wrote:
->>
->>
->> On 14/02/2023 21:24, Elliot Berman wrote:
-> [snip]
->>> +
->>> +static struct gunyah_rm_platform_ops *rm_platform_ops;
->>> +static DECLARE_RWSEM(rm_platform_ops_lock);
->>
->> Why do we need this read/write lock or this global rm_platform_ops 
->> here, AFAIU, there will be only one instance of platform_ops per 
->> platform.
->>
->> This should be a core part of the gunyah and its driver early setup, 
->> that should give us pretty much lock less behaviour.
->>
->> We should be able to determine by Hypervisor UUID that its on Qualcomm 
->> platform or not, during early gunyah setup which should help us setup 
->> the platfrom ops accordingly.
->>
->> This should also help cleanup some of the gunyah code that was added 
->> futher down in this patchset.
-> 
-> I'm guessing the direction to take is:
-> 
->    config GUNYAH
->      select QCOM_SCM if ARCH_QCOM
+diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+index df0fbfe..0311a31 100644
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -961,7 +961,7 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+ 	}
+ 
+ 	read_lock_bh(&mhi_cntrl->pm_lock);
+-	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
++	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)) && count)
+ 		mhi_ring_er_db(mhi_event);
+ 	read_unlock_bh(&mhi_cntrl->pm_lock);
+ 
+@@ -1031,7 +1031,9 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
+ 		count++;
+ 	}
+ 	read_lock_bh(&mhi_cntrl->pm_lock);
+-	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
++
++	/* Ring EV DB only if there is any pending element to process */
++	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)) && count)
+ 		mhi_ring_er_db(mhi_event);
+ 	read_unlock_bh(&mhi_cntrl->pm_lock);
+ 
+-- 
+2.7.4
 
-This is how other kernel drivers use SCM.
-
-> 
-> and have vm_mgr call directly into qcom_scm driver if the UID matches?
-
-Yes that is the plan, we could have these callbacks as part key data 
-structure like struct gh_rm and update it at very early in setup stage 
-based on UUID match.
-
-
-> 
-> We have an Android requirement to enable CONFIG_GUNYAH=y and 
-> CONFIG_QCOM_SCM=m, but it wouldn't be possible with this design. The 
-
-Am not sure how this will work, if gunyah for QCOM Platform is depended 
-on SCM then there is no way that gunyah could be a inbuilt and make scm 
-a module.
-
-On the other hand with the existing design gunyah will not be functional 
-until scm driver is loaded and platform hooks are registered. This 
-runtime dependency design does not express the dependency correctly and 
-the only way to know if gunyah is functional is keep trying which can 
-only work after scm driver is probed.
-
-This also raises the design question on how much of platform hooks 
-dependency is captured at gunyah core and api level, with state of 
-current code /dev/gunyah will be created even without platform hooks and 
-let the userspace use it which then only fail at hyp call level.
-
-Other issue with current design is, scm module can be unloaded under the 
-hood leaving gunyah with NULL pointers to those platform hook functions. 
-This is the kind of issues we could see if the dependency is not 
-expressed from bottom up.
-
-The current design is not really capturing the depended components 
-accurately.
-
-Considering platform hooks as a core resource to gunyah on Qualcomm 
-platform is something that needs attention. If we can fix that then it 
-might be doable to have QCOM_SCM=m and CONFIG_GUNYAH=y.
-
-
---srini
-> platform hooks implementation allows GUNYAH and QCOM_SCM to be enabled 
-> without setting lower bound of the other.
-> 
-> - Elliot
