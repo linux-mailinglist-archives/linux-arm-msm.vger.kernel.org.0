@@ -2,82 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D96E26A12AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 23:15:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E3B006A12E2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 23:41:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229758AbjBWWPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 17:15:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49894 "EHLO
+        id S229576AbjBWWlX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 17:41:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229826AbjBWWPl (ORCPT
+        with ESMTP id S229463AbjBWWlW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 17:15:41 -0500
+        Thu, 23 Feb 2023 17:41:22 -0500
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D1645AB57
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 14:15:40 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31NG4jhp022013;
-        Thu, 23 Feb 2023 22:15:28 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 462B255C3C;
+        Thu, 23 Feb 2023 14:41:21 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31NMEqhv006321;
+        Thu, 23 Feb 2023 22:40:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=1pFZeZfJvlIZL3EptwVRHAcGp6VDFYkGsbbhE4f3RKA=;
- b=BmLUzRx8EGlSUGlmDMgwAucE765+npELkyTZzEFz8TrgCBhFbKiBvjllukQFbOrEO063
- pZ9kUyYrkxHlmFQzE6od1tw62npPQxoCLRXukbEgHA4mW5PEX8Wn33rWWTbKr9UXAM5g
- AypQi681Hd21JKpLcxM+ZUcHWvtaPhBldYvfB4IiOYHpRTyC/wtyjdDZOZWP0Al9DQfY
- 6J41EjaxqNdZxQJNfYtNygtTKs0DkmYj7aU3iPp829sqPG9ng8O8r/kU3dbrVISdG3as
- sKYfOOE+ZJZuIbiW5Nh4/i1Q3Xm4wdIbugf2yhlAtjBRmEvYorQin1SJZ3CTqlCMaIM2 9A== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nwy8m2smd-1
+ bh=vwSIdh17qJjWuuG8z6cWMHyJXoRyAfuwcZs4OEdGOzg=;
+ b=V7046jEF9kPAvF7/4ErM/lwBvesSCcAH5bXzJjNLStio887Ls4DsJpFmkZW+pwFfsA/K
+ ZZ+nRMXBeb9B3L5jo4myeAGtpu7aAc+TQiBxIfAXoJEUTUte5oljeXwODAPzQ59hOjUX
+ LeOXj63rbHZTRCI4eB07AdUGEnslg2OIGtdPFnLqO1X+wMjcpxOgZ9k96406PK6VoEle
+ NYsGswH8C2TxN2/AhonDwfvnNR/nU3RUnfkZlpoDWoYeYfm8r6gQjAGQefn1Bt+q5UoV
+ URupPM+FH46yQsR+TguzgS5k/6KB13fLCtlVgVSkFQpdIKvHOYsa2yz0UjtYdGuifdLr vQ== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nwycnjtbu-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Feb 2023 22:15:27 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31NMFRPa004604
+        Thu, 23 Feb 2023 22:40:52 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31NMepx5031123
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Feb 2023 22:15:27 GMT
-Received: from [10.110.22.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+        Thu, 23 Feb 2023 22:40:51 GMT
+Received: from [10.134.65.165] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 23 Feb
- 2023 14:15:26 -0800
-Message-ID: <85891a0c-b351-56e8-1de1-f69bf7983d26@quicinc.com>
-Date:   Thu, 23 Feb 2023 14:15:25 -0800
+ 2023 14:40:50 -0800
+Message-ID: <c5ff1523-7a62-3d3f-6fa9-792ce4d222e8@quicinc.com>
+Date:   Thu, 23 Feb 2023 14:40:50 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] drm/msm/dpu: fix stack smashing in
- dpu_hw_ctl_setup_blendstage
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v10 10/26] gunyah: vm_mgr: Introduce basic VM Manager
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Alex Elder <elder@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>,
-        Amit Pundir <amit.pundir@linaro.org>
-References: <20230223095708.3688148-1-dmitry.baryshkov@linaro.org>
- <0daf8821-a228-1180-358b-4e50f36ca4b0@quicinc.com>
- <CAA8EJpqz-XhpEgSLTsS_ddo95y7nYmTvgop4Hj845PLbwHGmnw@mail.gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpqz-XhpEgSLTsS_ddo95y7nYmTvgop4Hj845PLbwHGmnw@mail.gmail.com>
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
+ <20230214212356.3313181-1-quic_eberman@quicinc.com>
+ <dbcfa4e9-a1ad-0f24-77bf-05934ca26bb2@linaro.org>
+ <05c4aab8-2d26-b944-adb6-624d67e4a11d@quicinc.com>
+ <52d944b1-3ea6-26b7-766a-2fed05dccf3a@linaro.org>
+Content-Language: en-US
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <52d944b1-3ea6-26b7-766a-2fed05dccf3a@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7gxqQVTuBD40XZaRnnF54rVnQ-ROn8Lf
-X-Proofpoint-ORIG-GUID: 7gxqQVTuBD40XZaRnnF54rVnQ-ROn8Lf
+X-Proofpoint-ORIG-GUID: w-UUgCskb9-MmOJrbcAGgLdyO350Ovqq
+X-Proofpoint-GUID: w-UUgCskb9-MmOJrbcAGgLdyO350Ovqq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
  definitions=2023-02-23_13,2023-02-23_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
- mlxscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
- impostorscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302230184
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ suspectscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 spamscore=0
+ clxscore=1015 mlxlogscore=999 priorityscore=1501 malwarescore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302230188
 X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -89,102 +102,221 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 2/23/2023 2:08 PM, Dmitry Baryshkov wrote:
-> Hi Abhinav,
+On 2/23/2023 2:08 AM, Srinivas Kandagatla wrote:
 > 
-> On Thu, 23 Feb 2023 at 21:17, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>
->> Hi Dmitry
->>
->> On 2/23/2023 1:57 AM, Dmitry Baryshkov wrote:
->>> The rewritten dpu_hw_ctl_setup_blendstage() can lightly smash the stack
->>> when setting the SSPP_NONE pipe. However it was unnoticed until the
->>> kernel was tested under AOSP (with some kind of stack protection/check).
->>>
->>> This fixes the following backtrace:
->>>
->>> Unexpected kernel BRK exception at EL1
->>> Internal error: BRK handler: 00000000f20003e8 [#1] PREEMPT SMP
->>> Hardware name: Thundercomm Dragonboard 845c (DT)
->>> pstate: a0400005 (NzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
->>> pc : dpu_hw_ctl_setup_blendstage+0x26c/0x278 [msm]
->>> lr : _dpu_crtc_blend_setup+0x4b4/0x5a0 [msm]
->>> sp : ffffffc00bdcb720
->>> x29: ffffffc00bdcb720 x28: ffffff8085debac0 x27: 0000000000000002
->>> x26: ffffffd74af18320 x25: ffffff8083af75a0 x24: ffffffc00bdcb878
->>> x23: 0000000000000001 x22: 0000000000000000 x21: ffffff8085a70000
->>> x20: ffffff8083012dc0 x19: 0000000000000001 x18: 0000000000000000
->>> x17: 000000040044ffff x16: 045000f4b5593519 x15: 0000000000000000
->>> x14: 000000000000000b x13: 0000000000000001 x12: 0000000000000000
->>> x11: 0000000000000001 x10: ffffffc00bdcb764 x9 : ffffffd74af06a08
->>> x8 : 0000000000000001 x7 : 0000000000000001 x6 : 0000000000000000
->>> x5 : ffffffc00bdcb878 x4 : 0000000000000002 x3 : ffffffffffffffff
->>> x2 : ffffffc00bdcb878 x1 : 0000000000000000 x0 : 0000000000000002
->>> Call trace:
->>>    dpu_hw_ctl_setup_blendstage+0x26c/0x278 [msm]
->>>    _dpu_crtc_blend_setup+0x4b4/0x5a0 [msm]
->>>    dpu_crtc_atomic_begin+0xd8/0x22c [msm]
->>>    drm_atomic_helper_commit_planes+0x80/0x208 [drm_kms_helper]
->>>    msm_atomic_commit_tail+0x134/0x6f0 [msm]
->>>    commit_tail+0xa4/0x1a4 [drm_kms_helper]
->>>    drm_atomic_helper_commit+0x170/0x184 [drm_kms_helper]
->>>    drm_atomic_commit+0xac/0xe8
->>>    drm_mode_atomic_ioctl+0xbf0/0xdac
->>>    drm_ioctl_kernel+0xc4/0x178
->>>    drm_ioctl+0x2c8/0x608
->>>    __arm64_sys_ioctl+0xa8/0xec
->>>    invoke_syscall+0x44/0x104
->>>    el0_svc_common.constprop.0+0x44/0xec
->>>    do_el0_svc+0x38/0x98
->>>    el0_svc+0x2c/0xb4
->>>    el0t_64_sync_handler+0xb8/0xbc
->>>    el0t_64_sync+0x1a0/0x1a4
->>> Code: 52800016 52800017 52800018 17ffffc7 (d4207d00)
->>>
->>> Fixes: 4488f71f6373 ("drm/msm/dpu: simplify blend configuration")
->>> Reported-by: Amit Pundir <amit.pundir@linaro.org>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 4 +++-
->>>    1 file changed, 3 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
->>> index b88a2f3724e6..6c53ea560ffa 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
->>> @@ -446,7 +446,9 @@ static void dpu_hw_ctl_setup_blendstage(struct dpu_hw_ctl *ctx,
->>>                         * CTL_LAYER has 3-bit field (and extra bits in EXT register),
->>>                         * all EXT registers has 4-bit fields.
->>>                         */
->>> -                     if (cfg->idx == 0) {
->>> +                     if (cfg->idx == -1) {
->>> +                             continue;
->>> +                     } else if (cfg->idx == 0) {
->>>                                mixercfg[0] |= mix << cfg->shift;
->>>                                mixercfg[1] |= ext << cfg->ext_shift;
->>>                        } else {
->>
->> Since I had not reviewed the change which introduced this, had a question.
->>
->> The issue here is because the shift and ext_shift are -1 for NONE and
->> hence the shift causes overflow?
->>
->> If that was the issue shouldnt we protect all such cases?
 > 
-> This change protects all the cases.
+> On 22/02/2023 00:27, Elliot Berman wrote:
+>>
+>>>> +    .llseek = noop_llseek,
+>>>> +};
+>>>> +
+>>>> +static long gh_dev_ioctl_create_vm(struct gh_rm *rm, unsigned long 
+>>>> arg)
+>>> Not sure what is the gain of this multiple levels of redirection.
+>>>
+>>> How about
+>>>
+>>> long gh_dev_create_vm(struct gh_rm *rm, unsigned long arg)
+>>> {
+>>> ...
+>>> }
+>>>
+>>> and rsc_mgr just call it as part of its ioctl call
+>>>
+>>> static long gh_dev_ioctl(struct file *filp, unsigned int cmd, 
+>>> unsigned long arg)
+>>> {
+>>>      struct miscdevice *miscdev = filp->private_data;
+>>>      struct gh_rm *rm = container_of(miscdev, struct gh_rm, miscdev);
+>>>
+>>>      switch (cmd) {
+>>>      case GH_CREATE_VM:
+>>>          return gh_dev_create_vm(rm, arg);
+>>>      default:
+>>>          return -ENOIOCTLCMD;
+>>>      }
+>>> }
+>>>
+>>
+>> I'm anticipating we will add further /dev/gunyah ioctls and I thought 
+>> it would be cleaner to have all that in vm_mgr.c itself.
+>>
+>>>
+>>>> +{
+>>>> +    struct gh_vm *ghvm;
+>>>> +    struct file *file;
+>>>> +    int fd, err;
+>>>> +
+>>>> +    /* arg reserved for future use. */
+>>>> +    if (arg)
+>>>> +        return -EINVAL;
+>>>
+>>> The only code path I see here is via GH_CREATE_VM ioctl which 
+>>> obviously does not take any arguments, so if you are thinking of 
+>>> using the argument for architecture-specific VM flags.  Then this 
+>>> needs to be properly done by making the ABI aware of this.
+>>
+>> It is documented in Patch 17 (Document Gunyah VM Manager)
+>>
+>> +GH_CREATE_VM
+>> +~~~~~~~~~~~~
+>> +
+>> +Creates a Gunyah VM. The argument is reserved for future use and must 
+>> be 0.
+>>
+> But this conficts with the UAPIs that have been defined. GH_CREATE_VM 
+> itself is defined to take no parameters.
 > 
->> So lets say we use SSPP_RGB0, the multirect_index for it will always be
->> -1 as it doesnt support smartDMA. What prevents the same issue from
->> hitting in that case? Because you are only checking for idx and not the
->> shifts.
+> #define GH_CREATE_VM                    _IO(GH_IOCTL_TYPE, 0x0)
 > 
-> Because for the RGB0 / rect-2 the cfg->idx will also be -1 (and
-> shift/ext_shift will be 0).
+> so where are you expecting the argument to come from?
+>  >>>
+>>> As you mentioned zero value arg imply an "unauthenticated VM" type, 
+>>> but this was not properly encoded in the userspace ABI. Why not make 
+>>> it future compatible. How about adding arguments to GH_CREATE_VM and 
+>>> pass the required information correctly.
+>>> Note that once the ABI is accepted then you will not be able to 
+>>> change it, other than adding a new one.
+>>>
+>>
+>> Does this means adding #define GH_VM_DEFAULT_ARG 0 ? I am not sure yet 
+>> what arguments to add here.
+>>
+>> The ABI can add new "long" values to GH_CREATE_VM and that wouldn't 
+> 
+> Sorry, that is exactly what we want to avoid, we can not change the UAPI 
+> its going to break the userspace.
+> 
+>> break compatibility with old kernels; old kernels reject it as -EINVAL.
+> 
+> If you have userspace built with older kernel headers then that will 
+> break. Am not sure about old-kernels.
+> 
+> What exactly is the argument that you want to add to GH_CREATE_VM?
+> 
+> If you want to keep GH_CREATE_VM with no arguments that is fine but 
+> remove the conflicting comments in the code and document so that its not 
+> misleading readers/reviewers that the UAPI is going to be modified in 
+> near future.
 > 
 > 
 
-Thanks for confirming, I have understood it now, LGTM
+The convention followed here comes from KVM_CREATE_VM. Is this ioctl 
+considered bad example?
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-Will pick this up for -fixes
+>>
+>>>> +
+>>>> +    ghvm = gh_vm_alloc(rm);
+>>>> +    if (IS_ERR(ghvm))
+>>>> +        return PTR_ERR(ghvm);
+>>>> +
+>>>> +    fd = get_unused_fd_flags(O_CLOEXEC);
+>>>> +    if (fd < 0) {
+>>>> +        err = fd;
+>>>> +        goto err_destroy_vm;
+>>>> +    }
+>>>> +
+>>>> +    file = anon_inode_getfile("gunyah-vm", &gh_vm_fops, ghvm, O_RDWR);
+>>>> +    if (IS_ERR(file)) {
+>>>> +        err = PTR_ERR(file);
+>>>> +        goto err_put_fd;
+>>>> +    }
+>>>> +
+>>>> +    fd_install(fd, file);
+>>>> +
+>>>> +    return fd;
+>>>> +
+>>>> +err_put_fd:
+>>>> +    put_unused_fd(fd);
+>>>> +err_destroy_vm:
+>>>> +    kfree(ghvm);
+>>>> +    return err;
+>>>> +}
+>>>> +
+>>>> +long gh_dev_vm_mgr_ioctl(struct gh_rm *rm, unsigned int cmd, 
+>>>> unsigned long arg)
+>>>> +{
+>>>> +    switch (cmd) {
+>>>> +    case GH_CREATE_VM:
+>>>> +        return gh_dev_ioctl_create_vm(rm, arg);
+>>>> +    default:
+>>>> +        return -ENOIOCTLCMD;
+>>>> +    }
+>>>> +}
+>>>> diff --git a/drivers/virt/gunyah/vm_mgr.h 
+>>>> b/drivers/virt/gunyah/vm_mgr.h
+>>>> new file mode 100644
+>>>> index 000000000000..76954da706e9
+>>>> --- /dev/null
+>>>> +++ b/drivers/virt/gunyah/vm_mgr.h
+>>>> @@ -0,0 +1,22 @@
+>>>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>>>> +/*
+>>>> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All 
+>>>> rights reserved.
+>>>> + */
+>>>> +
+>>>> +#ifndef _GH_PRIV_VM_MGR_H
+>>>> +#define _GH_PRIV_VM_MGR_H
+>>>> +
+>>>> +#include <linux/gunyah_rsc_mgr.h>
+>>>> +
+>>>> +#include <uapi/linux/gunyah.h>
+>>>> +
+>>>> +long gh_dev_vm_mgr_ioctl(struct gh_rm *rm, unsigned int cmd, 
+>>>> unsigned long arg);
+>>>> +
+>>>> +struct gh_vm {
+>>>> +    u16 vmid;
+>>>> +    struct gh_rm *rm;
+>>>> +
+>>>> +    struct work_struct free_work;
+>>>> +};
+>>>> +
+>>>> +#endif
+>>>> diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
+>>>> new file mode 100644
+>>>> index 000000000000..10ba32d2b0a6
+>>>> --- /dev/null
+>>>> +++ b/include/uapi/linux/gunyah.h
+>>>> @@ -0,0 +1,23 @@
+>>>> +/* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
+>>>> +/*
+>>>> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All 
+>>>> rights reserved.
+>>>> + */
+>>>> +
+>>>> +#ifndef _UAPI_LINUX_GUNYAH
+>>>> +#define _UAPI_LINUX_GUNYAH
+>>>> +
+>>>> +/*
+>>>> + * Userspace interface for /dev/gunyah - gunyah based virtual machine
+>>>> + */
+>>>> +
+>>>> +#include <linux/types.h>
+>>>> +#include <linux/ioctl.h>
+>>>> +
+>>>> +#define GH_IOCTL_TYPE            'G'
+>>>> +
+>>>> +/*
+>>>> + * ioctls for /dev/gunyah fds:
+>>>> + */
+>>>> +#define GH_CREATE_VM            _IO(GH_IOCTL_TYPE, 0x0) /* Returns 
+>>>> a Gunyah VM fd */
+>>>
+>>> Can HLOS forcefully destroy a VM?
+>>> If so should we have a corresponding DESTROY IOCTL?
+>>
+>> It can forcefully destroy unauthenticated and protected virtual 
+>> machines. I don't have a userspace usecase for a DESTROY ioctl yet, 
+>> maybe this can be added later? By the way, the VM is forcefully 
+> that should be fine, but its also nice to add it for completeness, but 
+> not a compulsory atm
+> 
+>> destroyed when VM refcount is dropped to 0 (close(vm_fd) and any other 
+>> relevant file descriptors).
+> I have noticed that path.
+> 
+> --srini
+>>
+>> - Elliot
