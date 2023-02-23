@@ -2,62 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F19DF6A0C1E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 15:46:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 84D926A0C2F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 15:49:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234372AbjBWOqp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 09:46:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54674 "EHLO
+        id S234809AbjBWOtH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 09:49:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234047AbjBWOqo (ORCPT
+        with ESMTP id S234805AbjBWOs6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 09:46:44 -0500
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95D0D58B5E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 06:46:41 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id f16so10999344ljq.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 06:46:41 -0800 (PST)
+        Thu, 23 Feb 2023 09:48:58 -0500
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DD668A65
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 06:48:48 -0800 (PST)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-536cd8f6034so165231467b3.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 06:48:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ewkJKpLhRlkUZJac6/QgsQf+dTNESz/tP/HEthoezNg=;
-        b=wwKEAZH73fcxc3cFcceI7bFOwqIhiqICwzOOFLpbwh6vs1vFMZML6cS3Z/n+YWlTL7
-         HOc64fe8HuF5JHogri+aYVEuMho/Wb49HzkrRCGrXjoScHxK4NaYfL2agF/Jmih7d2yQ
-         N2LRAI221j7iaVJbtNJ56rdnvVhOc3OKfiAvqVUS8g2LyLjCF3DKm49qZ0CKHzFnRMsN
-         14Qq2dxcbXoxw3rBrazhTLuzOkZH3A07PpZusxXmf7Tw+Y/AUJFrITR7++tAYAr88sUh
-         YSOZwoAge6iGRfGTGXfw+vW05WXEt2T0u/wiu1cmo/TuDSUEW9Pt+bvi+QP1DlT8oBkQ
-         13dQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4pa8WhVoMTas4nD3mKBiwC/IIvOKuMqZMgApILYBrlg=;
+        b=sq2yEKIzAfYxhUjTGZscUcBKjbRg/XDm6/OwDMuFPcEmkYSC5SZuAHJTff953rBxec
+         LXLsNugN1pCBzThSfJuKLff6xwek+18mho5HTV7Faj9nXCmrf6il/5KmHnZsEES5UNBt
+         eTmKrtOonZITSNMLxOnPamdZEaODB4Xww/33QpFmi0aWhtDuS7c1gn6NQd3laKkB6FGe
+         rM8cIi09jTeip4eoTTIIOa/qTQO10Q2eNX6IY7E1S4Lff6byWPaH/8qwSu7FCUE6kj2a
+         hy4hlom66L8I40nNa9KzkVoJDtSzNybkpPR3SQ+ncXT6v3HMCM4M0JA8RWfKX9cRHBHp
+         BtXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ewkJKpLhRlkUZJac6/QgsQf+dTNESz/tP/HEthoezNg=;
-        b=awr7rzns48zRj9z41dk4rhZHAZvS4wu7L2NnN59Ws3KYAzR6HqgZTgnZCXXhMWkVNZ
-         C1PNOde1Ecmhpka+NtWx6ZGrlLSupSG474jrHlNLOZpJnWvEVlxdO3fq/MyL4xQjbsQG
-         p4ZCu3nWXAIIwe0sErrBk2HzZ1f7df+BmBMWqs+eDKQ6r9K8Ls3eqj3iblOoc8TYMj04
-         6ESV2nSooQStXPiqp01olGLwQ7P9j6MSo4bvyE1UUOe9LsWzJ44OlaDVqWGxiz82nU34
-         1hVC5NYt/6X47Am20LIp4MiH1RdqH8Fyc5T4Ij3vGOLWXH1PG4kFzYeCZWfX3N6ITAJ8
-         N36A==
-X-Gm-Message-State: AO0yUKX7pSMpMekfTJAeOtWprW8wHqmUTKOQpt1khLCuqPyoX32XkrRs
-        dNXpSNcF45wWQL/pzJbVqj0+Ig==
-X-Google-Smtp-Source: AK7set857JU/kQ9OKvktp7r/yAkvD19eRshon2vEqyBgqmVBw9pVvGBGUJ1nugOI/JaMGMecVgSqBg==
-X-Received: by 2002:a2e:1551:0:b0:293:2d4d:7e00 with SMTP id 17-20020a2e1551000000b002932d4d7e00mr4257204ljv.12.1677163599764;
-        Thu, 23 Feb 2023 06:46:39 -0800 (PST)
-Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
-        by smtp.gmail.com with ESMTPSA id b12-20020ac25e8c000000b004dc4cb4f9c4sm538605lfq.35.2023.02.23.06.46.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 06:46:39 -0800 (PST)
-Message-ID: <20042c70-b89d-add7-bcdb-1e28932c4e4a@linaro.org>
-Date:   Thu, 23 Feb 2023 15:46:37 +0100
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4pa8WhVoMTas4nD3mKBiwC/IIvOKuMqZMgApILYBrlg=;
+        b=L6DYmicfgxrjWFHtyBt9SPxMoOhlJ5+SfxMkmYQlCoQ2HKRW9atNDOzc75yGhnNX5R
+         +LhSiRsThEpVQiBjyCfyFenmItejjbCMD73UfZ1w+ioxRPWurtfo/g+xpjc9kVj2JxxU
+         gvZ0mhS83EJhPU0Z4R6AaO4fgGNKiu2ToC3wdGgO1jfYMzuI8J3CEomrivoMudD6pxgP
+         U9Ba46/6L/VNHJsMEbpF9ylUKRZlz/NT+miXhC4tg2s1OZFb0wZ187xUn5vEmkAAq4Jb
+         c/j3BziQGFVErXYwwlPlTho8AyMuFH2iXs5fcs+J1hBQnVN6Bp5+M4pd5xNF4BFJ5LH9
+         ghJg==
+X-Gm-Message-State: AO0yUKUrjkeEhXPxQy0FTl7Zy+6UxSZXDRLduTk189+bFsSu7aTq28f7
+        Qsba02WKrLXljTHu3WNybFKG/+4HoAF0c0hbW19lLg==
+X-Google-Smtp-Source: AK7set9VUZNRZCaLDXrLLy8mHGx5HocaLmAlWGX8los92wGIp1ZTneOSgYrN2Af2BE5NJykwArXcAFeSMswQ6RhmvHI=
+X-Received: by 2002:a25:9bc2:0:b0:9fe:195a:ce0d with SMTP id
+ w2-20020a259bc2000000b009fe195ace0dmr1724279ybo.10.1677163727331; Thu, 23 Feb
+ 2023 06:48:47 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3 05/15] drm/msm/a6xx: Introduce GMU wrapper support
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20230223-topic-gmuwrapper-v3-0-5be55a336819@linaro.org>
+ <20230223-topic-gmuwrapper-v3-10-5be55a336819@linaro.org> <CAA8EJppi45K0hQ=1fZvf+Mps+4uEkXmLFeqdmyk-yk31CNvUsw@mail.gmail.com>
+ <761e0aba-9364-557a-e6e5-e21494597dbc@linaro.org>
+In-Reply-To: <761e0aba-9364-557a-e6e5-e21494597dbc@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 23 Feb 2023 16:48:36 +0200
+Message-ID: <CAA8EJppvmojWnvwB1aKJ1M7CcoFHk9BLFR0U7CQGR9GexQckdw@mail.gmail.com>
+Subject: Re: [PATCH v3 10/15] drm/msm/a6xx: Fix A680 highest bank bit value
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
@@ -70,15 +68,9 @@ Cc:     Rob Clark <robdclark@gmail.com>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>
-References: <20230223-topic-gmuwrapper-v3-0-5be55a336819@linaro.org>
- <20230223-topic-gmuwrapper-v3-5-5be55a336819@linaro.org>
- <CAA8EJpptwvxahDL34HCo59Lh9nNjFwiyhru-jYmVHJOLQ7yC7g@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJpptwvxahDL34HCo59Lh9nNjFwiyhru-jYmVHJOLQ7yC7g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,199 +79,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 23 Feb 2023 at 15:49, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 23.02.2023 14:06, Dmitry Baryshkov wrote:
+> > On Thu, 23 Feb 2023 at 14:07, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>
+> >> According to the vendor sources, it's equal to 16, which makes hbb_lo
+> >> equal to 3.
+> >
+> > I think we might be stricken with the ddr kind difference here, but I
+> > would not bet on it.
+> It totally is, but it also seems to be SoC-dependent..
+> I think all 8180x devices shipped with LPDDR4X FWIW
+
+I think so too. However sdmshrike dts uses LPDDR5.
+
+>
+> Konrad
+> >
+> >>
+> >> Fixes: 840d10b64dad ("drm: msm: Add 680 gpu to the adreno gpu list")
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >> ---
+> >>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 8 +++++++-
+> >>  1 file changed, 7 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >> index b5017c56fa1b..2c4afecdd213 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >> @@ -885,12 +885,18 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+> >>                 hbb_lo = 2;
+> >>         }
+> >>
+> >> -       if (adreno_is_a640_family(adreno_gpu)) {
+> >> +       if (adreno_is_a640(adreno_gpu)) {
+> >>                 amsbc = 1;
+> >>                 /* HBB = 15 */
+> >>                 hbb_lo = 2;
+> >>         }
+> >>
+> >> +       if (adreno_is_a680(adreno_gpu)) {
+> >> +               amsbc = 1;
+> >> +               /* HBB = 16 */
+> >> +               hbb_lo = 3;
+> >> +       }
+> >> +
+> >>         if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu)) {
+> >>                 amsbc = 1;
+> >>                 /* TODO: get ddr type from bootloader and use 2 for LPDDR4 */
+> >>
+> >> --
+> >> 2.39.2
+> >>
+> >
+> >
 
 
-On 23.02.2023 15:43, Dmitry Baryshkov wrote:
-> On Thu, 23 Feb 2023 at 14:06, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> Some (particularly SMD_RPM, a.k.a non-RPMh) SoCs implement A6XX GPUs
->> but don't implement the associated GMUs. This is due to the fact that
->> the GMU directly pokes at RPMh. Sadly, this means we have to take care
->> of enabling & scaling power rails, clocks and bandwidth ourselves.
->>
->> Reuse existing Adreno-common code and modify the deeply-GMU-infused
->> A6XX code to facilitate these GPUs. This involves if-ing out lots
->> of GMU callbacks and introducing a new type of GMU - GMU wrapper (it's
->> the actual name that Qualcomm uses in their downstream kernels).
->>
->> This is essentially a register region which is convenient to model
->> as a device. We'll use it for managing the GDSCs. The register
->> layout matches the actual GMU_CX/GX regions on the "real GMU" devices
->> and lets us reuse quite a bit of gmu_read/write/rmw calls.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c       |  53 +++++-
->>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 244 +++++++++++++++++++++++++---
->>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h       |   1 +
->>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  14 +-
->>  drivers/gpu/drm/msm/adreno/adreno_gpu.h     |   6 +
->>  5 files changed, 282 insertions(+), 36 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> index 90e636dcdd5b..b2c56561cde6 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> 
-> [skipped]
-> 
->>  struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->>  {
->>         struct msm_drm_private *priv = dev->dev_private;
->> @@ -2063,18 +2235,36 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->>
->>         adreno_gpu->registers = NULL;
->>
->> +       /* Check if there is a GMU phandle and set it up */
->> +       node = of_parse_phandle(pdev->dev.of_node, "qcom,gmu", 0);
->> +       /* FIXME: How do we gracefully handle this? */
->> +       BUG_ON(!node);
-> 
-> I thought that we should fix it, but then I noticed that this code was
-> just moved from the part below.
-I suppose we could return einval instead of calling BUG_ON,
-but this would belong to a separate patch (possibly outside
-this series).
 
-> 
->> +
->> +       adreno_gpu->gmu_is_wrapper = of_device_is_compatible(node, "qcom,adreno-gmu-wrapper");
->> +
->>         /*
->>          * We need to know the platform type before calling into adreno_gpu_init
->>          * so that the hw_apriv flag can be correctly set. Snoop into the info
->>          * and grab the revision number
->>          */
->>         info = adreno_info(config->rev);
->> -
->> -       if (info && (info->revn == 650 || info->revn == 660 ||
->> -                       adreno_cmp_rev(ADRENO_REV(6, 3, 5, ANY_ID), info->rev)))
-> 
-> Are we losing A635 here? I don't see it in the condition below.
-a660_family takes care of it
-
-Konrad
-
-> 
->> +       if (!info)
->> +               return ERR_PTR(-EINVAL);
->> +
->> +       /* Assign these early so that we can use the is_aXYZ helpers */
->> +       /* Numeric revision IDs (e.g. 630) */
->> +       adreno_gpu->revn = info->revn;
->> +       /* New-style ADRENO_REV()-only */
->> +       adreno_gpu->rev = info->rev;
->> +       /* Quirk data */
->> +       adreno_gpu->info = info;
->> +
->> +       if (adreno_is_a650(adreno_gpu) || adreno_is_a660_family(adreno_gpu))
->>                 adreno_gpu->base.hw_apriv = true;
->>
->> -       a6xx_llc_slices_init(pdev, a6xx_gpu);
->> +       /* No LLCC on non-RPMh (and by extension, non-GMU) SoCs */
->> +       if (!adreno_has_gmu_wrapper(adreno_gpu))
->> +               a6xx_llc_slices_init(pdev, a6xx_gpu);
->>
->>         ret = a6xx_set_supported_hw(&pdev->dev, config->rev);
->>         if (ret) {
->> @@ -2082,7 +2272,10 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->>                 return ERR_PTR(ret);
->>         }
->>
->> -       ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 1);
->> +       if (adreno_has_gmu_wrapper(adreno_gpu))
->> +               ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs_gmuwrapper, 1);
->> +       else
->> +               ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 1);
->>         if (ret) {
->>                 a6xx_destroy(&(a6xx_gpu->base.base));
->>                 return ERR_PTR(ret);
->> @@ -2095,13 +2288,10 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->>         if (adreno_is_a618(adreno_gpu) || adreno_is_7c3(adreno_gpu))
->>                 priv->gpu_clamp_to_idle = true;
->>
->> -       /* Check if there is a GMU phandle and set it up */
->> -       node = of_parse_phandle(pdev->dev.of_node, "qcom,gmu", 0);
->> -
->> -       /* FIXME: How do we gracefully handle this? */
->> -       BUG_ON(!node);
->> -
->> -       ret = a6xx_gmu_init(a6xx_gpu, node);
->> +       if (adreno_has_gmu_wrapper(adreno_gpu))
->> +               ret = a6xx_gmu_wrapper_init(a6xx_gpu, node);
->> +       else
->> +               ret = a6xx_gmu_init(a6xx_gpu, node);
->>         of_node_put(node);
->>         if (ret) {
->>                 a6xx_destroy(&(a6xx_gpu->base.base));
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->> index eea2e60ce3b7..51a7656072fa 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->> @@ -76,6 +76,7 @@ int a6xx_gmu_set_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state);
->>  void a6xx_gmu_clear_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state);
->>
->>  int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node);
->> +int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node);
->>  void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu);
->>
->>  void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
->> index b7e217d00a22..e11e8a02ac22 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
->> @@ -1041,16 +1041,18 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu)
->>         /* Get the generic state from the adreno core */
->>         adreno_gpu_state_get(gpu, &a6xx_state->base);
->>
->> -       a6xx_get_gmu_registers(gpu, a6xx_state);
->> +       if (!adreno_has_gmu_wrapper(adreno_gpu)) {
->> +               a6xx_get_gmu_registers(gpu, a6xx_state);
->>
->> -       a6xx_state->gmu_log = a6xx_snapshot_gmu_bo(a6xx_state, &a6xx_gpu->gmu.log);
->> -       a6xx_state->gmu_hfi = a6xx_snapshot_gmu_bo(a6xx_state, &a6xx_gpu->gmu.hfi);
->> -       a6xx_state->gmu_debug = a6xx_snapshot_gmu_bo(a6xx_state, &a6xx_gpu->gmu.debug);
->> +               a6xx_state->gmu_log = a6xx_snapshot_gmu_bo(a6xx_state, &a6xx_gpu->gmu.log);
->> +               a6xx_state->gmu_hfi = a6xx_snapshot_gmu_bo(a6xx_state, &a6xx_gpu->gmu.hfi);
->> +               a6xx_state->gmu_debug = a6xx_snapshot_gmu_bo(a6xx_state, &a6xx_gpu->gmu.debug);
->>
->> -       a6xx_snapshot_gmu_hfi_history(gpu, a6xx_state);
->> +               a6xx_snapshot_gmu_hfi_history(gpu, a6xx_state);
->> +       }
->>
->>         /* If GX isn't on the rest of the data isn't going to be accessible */
->> -       if (!a6xx_gmu_gx_is_on(&a6xx_gpu->gmu))
->> +       if (!adreno_has_gmu_wrapper(adreno_gpu) && !a6xx_gmu_gx_is_on(&a6xx_gpu->gmu))
->>                 return &a6xx_state->base;
->>
->>         /* Get the banks of indexed registers */
->> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->> index b4f9b1343d63..2c0f0ef094cb 100644
->> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->> @@ -115,6 +115,7 @@ struct adreno_gpu {
->>          * code (a3xx_gpu.c) and stored in this common location.
->>          */
->>         const unsigned int *reg_offsets;
->> +       bool gmu_is_wrapper;
->>  };
->>  #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
->>
->> @@ -145,6 +146,11 @@ struct adreno_platform_config {
->>
->>  bool adreno_cmp_rev(struct adreno_rev rev1, struct adreno_rev rev2);
->>
->> +static inline bool adreno_has_gmu_wrapper(struct adreno_gpu *gpu)
->> +{
->> +       return gpu->gmu_is_wrapper;
->> +}
->> +
->>  static inline bool adreno_is_a2xx(struct adreno_gpu *gpu)
->>  {
->>         return (gpu->revn < 300);
->>
->> --
->> 2.39.2
->>
-> 
-> 
+-- 
+With best wishes
+Dmitry
