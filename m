@@ -2,119 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10A006A0C8E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 16:07:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BB726A0CB6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 16:19:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234920AbjBWPH0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 10:07:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48088 "EHLO
+        id S234329AbjBWPTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 10:19:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234953AbjBWPHV (ORCPT
+        with ESMTP id S232923AbjBWPTE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 10:07:21 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C149532BD;
-        Thu, 23 Feb 2023 07:07:20 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31NB496V015214;
-        Thu, 23 Feb 2023 15:07:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=sq8uvt1NViWyHNAXmly9UKKOFzxewtugXdsvilv+m0k=;
- b=Hw6gypJcvR3CNE+P18dn3xdf4Df792qJUgn7hvy2HKE+daDQuD1Sq76riQkuH/hHY0Gh
- pdo8L+grEfh9pkTshTyEXr6TPTejOUjdE9pv7qiT5OEPA6WsEeHI0xOcri+N2eMKLGnp
- V+Wrz51nZqvOAhL9AdLehiFQAJmzI7ObFVT+N5bOYp8tWgUVHYYkE0uE/VYgd6Rg13VK
- qeYATJou3JdUy0HX1aE7nImcP1SZ28JD/t/+6xfz6sr3DBmO7LKj6S7A7QVD7A4neoOB
- 9Tj4raPznOWxtFenTWqH+wff1Ksp2b6gp7CTnhR05ZCD6pMUBQ6uYRxW8/R8I6Eezs0Y 6w== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nwy8m1p07-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Feb 2023 15:07:08 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31NF78sN021006
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Feb 2023 15:07:08 GMT
-Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Thu, 23 Feb 2023 07:07:00 -0800
-From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-To:     <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>,
-        <krzysztof.kozlowski@linaro.org>, <mathieu.poirier@linaro.org>,
-        <corbet@lwn.net>, <quic_visr@quicinc.com>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
-        =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-        Mukesh Ojha <quic_mojha@quicinc.com>
-Subject: [PATCH v5 2/2] docs: remoteproc: Update section header name requirement
-Date:   Thu, 23 Feb 2023 20:35:59 +0530
-Message-ID: <20230223150559.2429562-3-quic_mohs@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230223150559.2429562-1-quic_mohs@quicinc.com>
-References: <20230223150559.2429562-1-quic_mohs@quicinc.com>
+        Thu, 23 Feb 2023 10:19:04 -0500
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E962E4FCBD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 07:19:02 -0800 (PST)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-5384ff97993so68557087b3.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 07:19:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=LwN6HfLSUE5ZKSAzD6kxZTBLoYaNfg1FJI6Ev8TDx4M=;
+        b=hY5XLuPCYfHmjKHQuLwKYFlB4WfA4hoN+aNfzERLVE6508A9iiPyioey5culYB5CI+
+         ESYRSZAB2d9XOnbo+cPZOt5OLd7wLWB7difGrXDNSB7/03o81Ll8EMoLuzLSK2QUGew9
+         awH6Y8ox1ORqwCp48m3OlXmzoIArA44JwGCBbwPMQ6k/CBSrsn6n1K6I40hBbX92WHjT
+         DZ76eQqiDDhgz+O0wScTmQJ73Oa6UEiDlkgSHwECcXczHmoGueOLa/ZMalhUxiInxmv5
+         MzDYTNI52JhbmS6KV9LughkC8xGgkDEItI0FrO9gg6tlDmWfV0LX6bJHB0udKm29d9zM
+         Bz9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LwN6HfLSUE5ZKSAzD6kxZTBLoYaNfg1FJI6Ev8TDx4M=;
+        b=uiSQqmlHlDAiK8Oh6BaDW+cy+3UhQUU1v6nvAyZszaG2+ka5XpgLpLC2QmnlnX9RYo
+         fJ0iuj4hcg0cI3Cq3ovInSLo8cxU65/O+VDgBidaKc62zdB4ZE67ROaKRq3k1kf801bI
+         o6EIKjtGLXMQcPapgxlSGGdYaXKBGTqdxTKmKFF0VD54AMgNOLoQkmSHg+82UwL8XShP
+         EDjiY/GGWTEgGUDkmJmRjW1+i2i/dZGb2TPZuAAmvgdOiVkXCuxfaGgZGGmO3RTXmr/u
+         1bcXqJC7hrLYbNj2piGfnQcrgGE79V0uTQmxuloL7q5ndG7oXDtkYgTE+a1/Do5nN+So
+         3pGA==
+X-Gm-Message-State: AO0yUKXboOFDJ2YROd8vnV4rFdF/6bF1BNG+0q0pLe6TR+hUpB8Sruhe
+        JzV/ek+zqgHDIF+Ralw3lcjPdZSw+Kcg+UO5x67SVg==
+X-Google-Smtp-Source: AK7set/MGnbOMGB+D2Et65I+FbFHFBA3n+THAUTHlhkT5fuvYhaHgIJXj5QE6uw1NwL5PDsQmt26jDgvePFLaYbOwRQ=
+X-Received: by 2002:a5b:b8b:0:b0:a28:737a:b214 with SMTP id
+ l11-20020a5b0b8b000000b00a28737ab214mr1359757ybq.10.1677165542095; Thu, 23
+ Feb 2023 07:19:02 -0800 (PST)
 MIME-Version: 1.0
+References: <20230223135635.30659-1-quic_sbillaka@quicinc.com>
+In-Reply-To: <20230223135635.30659-1-quic_sbillaka@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 23 Feb 2023 17:18:51 +0200
+Message-ID: <CAA8EJppZ+Hyhb9MacaFX6xTrJ9XyYbbCRrBvO+yE0=-Bztk7CQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/2] drm/msm/dp: refactor the msm dp driver resources
+To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        quic_kalyant@quicinc.com, quic_abhinavk@quicinc.com,
+        dianders@chromium.org, quic_khsieh@quicinc.com,
+        quic_bjorande@quicinc.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, quic_vproddut@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 2Kb6C0fZY61HRDvR5cEfZvUVJ2ry5Q7q
-X-Proofpoint-ORIG-GUID: 2Kb6C0fZY61HRDvR5cEfZvUVJ2ry5Q7q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-23_09,2023-02-23_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
- mlxscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
- impostorscore=0 suspectscore=0 malwarescore=0 mlxlogscore=978 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302230123
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+On Thu, 23 Feb 2023 at 15:57, Sankeerth Billakanti
+<quic_sbillaka@quicinc.com> wrote:
+>
+> The DP driver resources are currently enabled and disabled directly based on code flow.
+> As mentioned in bug 230631602, we want to do the following:
 
-Add section header name requirement specification in elf segments.
+private bug tracker
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
----
- Documentation/staging/remoteproc.rst | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> 1) Refactor the dp/edp parsing code to move it to probe (it is currently done in bind).
 
-diff --git a/Documentation/staging/remoteproc.rst b/Documentation/staging/remoteproc.rst
-index 348ee7e508ac..0c9c10a30c3d 100644
---- a/Documentation/staging/remoteproc.rst
-+++ b/Documentation/staging/remoteproc.rst
-@@ -244,7 +244,10 @@ according to the specified device address (might be a physical address
- if the remote processor is accessing memory directly).
- 
- In addition to the standard ELF segments, most remote processors would
--also include a special section which we call "the resource table".
-+also include a special section which we call the "resource table".
-+A "resource table" section name must start with the ".resource_table" prefix,
-+optionally having a more descriptive string appended. For example,
-+".resource_table.my_rproc" is a valid section name.
- 
- The resource table contains system resources that the remote processor
- requires before it should be powered on, such as allocation of physically
+This is good. I'd suggest splitting this into smaller chunks. First,
+move all resource binding, then move the actual dp_aux handling. It
+would be easier to review it this way.
+
+> 2) Then bind all the power resources needed for AUX in pm_runtime_ops.
+>
+> 3) Handle EPROBE_DEFER cases of the panel-eDP aux device.
+
+This is not handled properly. The eDP aux probing is asynchronous, so
+you should move the second stage into the done_probing() part, rather
+than relying on the -EPROBE_DEFER. There can be cases, when the panel
+driver is not available at the DP's probe time. In such cases we
+should leave the DP driver probed, then wait for the panel before
+binding the component.
+
+> 4) Verify DP functionality is unaffected.
+>
+> These code changes will parse the resources and get the edp panel during probe.
+> All the necessary resources required for the aux transactions are moved to pm_runtime ops.
+> They are enabled or disabled via get/put sync functions.
+>
+> This is a RFC to verify with the community if the approach we are taking is correct.
+>
+> https://partnerissuetracker.corp.google.com/issues/230631602
+
+This link is useless, since its contents are not public.
+
+>
+> Sankeerth Billakanti (2):
+>   drm/msm/dp: enumerate edp panel during driver probe
+>   drm/msm/dp: enable pm_runtime support for dp driver
+>
+>  drivers/gpu/drm/msm/dp/dp_aux.c     | 155 +++++++++++++++++++++--
+>  drivers/gpu/drm/msm/dp/dp_catalog.c |  12 ++
+>  drivers/gpu/drm/msm/dp/dp_catalog.h |   1 +
+>  drivers/gpu/drm/msm/dp/dp_display.c | 185 ++++++++++++++--------------
+>  drivers/gpu/drm/msm/dp/dp_power.c   |   7 --
+>  5 files changed, 250 insertions(+), 110 deletions(-)
+>
+> --
+> 2.39.0
+>
+
+
 -- 
-2.25.1
-
+With best wishes
+Dmitry
