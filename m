@@ -2,368 +2,284 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A70369FF62
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 00:21:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52E2769FFEA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 01:15:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232277AbjBVXVc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 18:21:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39664 "EHLO
+        id S232110AbjBWAPj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 19:15:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231424AbjBVXVa (ORCPT
+        with ESMTP id S229446AbjBWAPh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 18:21:30 -0500
-Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8030123673;
-        Wed, 22 Feb 2023 15:21:22 -0800 (PST)
-Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-172663f1956so2872646fac.12;
-        Wed, 22 Feb 2023 15:21:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TBQjWreD5YceHGAm3SljA5uXbeQChUwHxJ9vgJBly4g=;
-        b=BIUqtXs6ZC4lcSzsCiRtjlqqmnfD+oVi3pNQXD/lrRwGLfGpnxlsteLZZitjNAAdl/
-         HB1/0mXen40LmBLk9zgl/OodDsXk2aepm2SNgbffvKVyOYnw8ODgLOiBSnILYzTVxehK
-         57EUW2FPNM/mk7MelBxTuQsLquaSAgnCIVLnE6pkmuWMEB+cIFmyJOzWnNVbYUbS8sCR
-         TiFhjNXik8wyPtw0Y4QJtJTbIr0cv15HxWv1F0X6hZoU3sGHpSJS1Z+FluHhOjd5la+o
-         Stl7c+jLcl5RKLurfpXTDx5SFG7GvXchENKKfTeMps+YkjGGPDQnT5HIu3RKhdW94hfC
-         l2SA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TBQjWreD5YceHGAm3SljA5uXbeQChUwHxJ9vgJBly4g=;
-        b=OEnB9Q1cpiKPbI/CmQ5uDEtMe0kkfhyvhjM+JSrcb5F3Ij2JrwPTboj3Dsn7Y+rAWX
-         8MvDEFvK1eA1cmU+3I1AsLcwQ93Ab6tk6J0d9Z4PuIZzBbzbXuqK6/akhMOU+cL1bWNC
-         FwBM5tdLaldnLyinIBBhQKL+XjvTwLPLJ/yfPlXlsOLOWXVRp9ju9QMo23Pswzhh74to
-         UqV6LMGtaW3R19ppFMxKVHRypR95vuAb5ii9NsfxTv2ScT24VAbD0zb/q/P/0DSMA2Cf
-         /wTiOCBnucKEjbzdjeAHGYQUXrDdHAGZfI9b8zDvnqMZV51j3NTl72EhGIXe9WEwDltM
-         owJA==
-X-Gm-Message-State: AO0yUKXr6Zm4FtIEYVANZqgJB+x4rsk7mLX9IFXbsNxfy/vBfvU2x9yE
-        eQU+7DMiEezalG+Z37MNVf1WBHsRefwkxBhJ/IY=
-X-Google-Smtp-Source: AK7set8Vn9OcME7Hn72aIHIFRq64owG0Eqv9emogmG1BJgmD5Zi85rMaudzShrlI/k0Eg3hVMrCA5DH9pi6YtaX7lhg=
-X-Received: by 2002:a05:6870:808d:b0:16e:8a56:d0d2 with SMTP id
- q13-20020a056870808d00b0016e8a56d0d2mr1458724oab.38.1677108081698; Wed, 22
- Feb 2023 15:21:21 -0800 (PST)
+        Wed, 22 Feb 2023 19:15:37 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0030934C34;
+        Wed, 22 Feb 2023 16:15:35 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31MLUZPe015607;
+        Thu, 23 Feb 2023 00:15:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : from : subject : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=HCL+ctSWpGnB2xaBRX9FLVk33q+txzOX1BjEyAyM2K0=;
+ b=Y6V03bqm8Ox+5JXvn6CCmdL61OJKZwt7q48MV7231XVhUB2fTcgUCPLPmB99q3XKp78q
+ rZTLKNk8qJQgW9D4suC3OrX4NuSCKR2vVErbh6obdwoCeRwG5D8MqP7eNGpErbFwh5UK
+ ttU2z4A/MA5Ceig5hr2GVRc7QT9fap1xpem2HbPNGGeydazceldLvceYGzC9VM4EEb+2
+ WLhhvhkqAvPP4UAsrFL2dTVSChNAxCsgQu/tUd4qnEt/esA5M3Y5ORyb3A4xLbvYjtPj
+ z4S4jE0yogBQCgGEbNJvTfjJ5yk8EQdPMlLzJzI9rsiCvj6uFmDw3OSUJUe3aHgIBCfm 7A== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nwn389afs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 23 Feb 2023 00:15:16 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31N0FFLA010669
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 23 Feb 2023 00:15:15 GMT
+Received: from [10.134.67.48] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 22 Feb
+ 2023 16:15:15 -0800
+Message-ID: <576aed85-a566-3645-559e-06b2135cf57f@quicinc.com>
+Date:   Wed, 22 Feb 2023 16:15:14 -0800
 MIME-Version: 1.0
-References: <20230216111214.3489223-1-daniel.vetter@ffwll.ch> <CAF6AEGvFN-9_cr2EyGxuW5NVgk8CA99rVuv_Y80M+gvMviPcuA@mail.gmail.com>
-In-Reply-To: <CAF6AEGvFN-9_cr2EyGxuW5NVgk8CA99rVuv_Y80M+gvMviPcuA@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 22 Feb 2023 15:21:10 -0800
-Message-ID: <CAF6AEGs63gz_ja8gV_CYwG1jd912BrgKXz+kJH++Vc8oLYWOPA@mail.gmail.com>
-Subject: Re: [PATCH] drm/atomic-helpers: remove legacy_cursor_update hacks
-To:     Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Maxime Ripard <maxime@cerno.tech>, mikita.lipski@amd.com,
-        =?UTF-8?Q?Michel_D=C3=A4nzer?= <michel@daenzer.net>,
-        harry.wentland@amd.com,
-        "Kazlauskas, Nicholas" <nicholas.kazlauskas@amd.com>,
-        Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+From:   Elliot Berman <quic_eberman@quicinc.com>
+Subject: Re: [PATCH v10 07/26] mailbox: Add Gunyah message queue mailbox
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Alex Elder <elder@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Jassi Brar <jassisinghbrar@gmail.com>
+CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Lucas De Marchi <lucas.demarchi@intel.com>,
-        Imre Deak <imre.deak@intel.com>,
-        Manasi Navare <manasi.d.navare@intel.com>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        Rob Clark <robdclark@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
+ <20230214212316.3309053-1-quic_eberman@quicinc.com>
+ <c8161a4c-fa45-cb9e-7211-5486ece1fc2d@linaro.org>
+Content-Language: en-US
+In-Reply-To: <c8161a4c-fa45-cb9e-7211-5486ece1fc2d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: K53N7I3HpO79FCEwWKk2fCSWW6GikGMq
+X-Proofpoint-ORIG-GUID: K53N7I3HpO79FCEwWKk2fCSWW6GikGMq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-22_11,2023-02-22_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
+ malwarescore=0 bulkscore=0 phishscore=0 spamscore=0 priorityscore=1501
+ mlxlogscore=883 adultscore=0 suspectscore=0 lowpriorityscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302230000
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 22, 2023 at 3:14 PM Rob Clark <robdclark@gmail.com> wrote:
->
-> On Thu, Feb 16, 2023 at 3:12 AM Daniel Vetter <daniel.vetter@ffwll.ch> wr=
-ote:
-> >
-> > The stuff never really worked, and leads to lots of fun because it
-> > out-of-order frees atomic states. Which upsets KASAN, among other
-> > things.
-> >
-> > For async updates we now have a more solid solution with the
-> > ->atomic_async_check and ->atomic_async_commit hooks. Support for that
-> > for msm and vc4 landed. nouveau and i915 have their own commit
-> > routines, doing something similar.
-> >
-> > For everyone else it's probably better to remove the use-after-free
-> > bug, and encourage folks to use the async support instead. The
-> > affected drivers which register a legacy cursor plane and don't either
-> > use the new async stuff or their own commit routine are: amdgpu,
-> > atmel, mediatek, qxl, rockchip, sti, sun4i, tegra, virtio, and vmwgfx.
-> >
-> > Inspired by an amdgpu bug report.
-> >
-> > v2: Drop RFC, I think with amdgpu converted over to use
-> > atomic_async_check/commit done in
-> >
-> > commit 674e78acae0dfb4beb56132e41cbae5b60f7d662
-> > Author: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-> > Date:   Wed Dec 5 14:59:07 2018 -0500
-> >
-> >     drm/amd/display: Add fast path for cursor plane updates
-> >
-> > we don't have any driver anymore where we have userspace expecting
-> > solid legacy cursor support _and_ they are using the atomic helpers in
-> > their fully glory. So we can retire this.
-> >
-> > v3: Paper over msm and i915 regression. The complete_all is the only
-> > thing missing afaict.
-> >
-> > v4: Fixup i915 fixup ...
-> >
-> > v5: Unallocate the crtc->event in msm to avoid hitting a WARN_ON in
-> > dpu_crtc_atomic_flush(). This is a bit a hack, but simplest way to
-> > untangle this all. Thanks to Abhinav Kumar for the debug help.
->
-> Hmm, are you sure about that double-put?
->
-> [  +0.501263] ------------[ cut here ]------------
-> [  +0.000032] refcount_t: underflow; use-after-free.
-> [  +0.000033] WARNING: CPU: 6 PID: 1854 at lib/refcount.c:28
-> refcount_warn_saturate+0xf8/0x134
-> [  +0.000043] Modules linked in: uinput rfcomm algif_hash
-> algif_skcipher af_alg veth venus_dec venus_enc xt_cgroup xt_MASQUERADE
-> qcom_spmi_temp_alarm qcom_spmi_adc_tm5 qcom_spmi_adc5 qcom_vadc_common
-> cros_ec_typec typec 8021q hci_uart btqca qcom_stats venus_core
-> coresight_etm4x coresight_tmc snd_soc_lpass_sc7180
-> coresight_replicator coresight_funnel coresight snd_soc_sc7180
-> ip6table_nat fuse ath10k_snoc ath10k_core ath mac80211 iio_trig_sysfs
-> bluetooth cros_ec_sensors cfg80211 cros_ec_sensors_core
-> industrialio_triggered_buffer kfifo_buf ecdh_generic ecc
-> cros_ec_sensorhub lzo_rle lzo_compress r8153_ecm cdc_ether usbnet
-> r8152 mii zram hid_vivaldi hid_google_hammer hid_vivaldi_common joydev
-> [  +0.000189] CPU: 6 PID: 1854 Comm: DrmThread Not tainted
-> 5.15.93-16271-g5ecce40dbcd4 #46
-> cf9752a1c9e5b13fd13216094f52d77fa5a5f8f3
-> [  +0.000016] Hardware name: Google Wormdingler rev1+ INX panel board (DT=
-)
-> [  +0.000008] pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=
-=3D--)
-> [  +0.000013] pc : refcount_warn_saturate+0xf8/0x134
-> [  +0.000011] lr : refcount_warn_saturate+0xf8/0x134
-> [  +0.000011] sp : ffffffc012e43930
-> [  +0.000008] x29: ffffffc012e43930 x28: ffffff80d31aa300 x27: 0000000000=
-00024e
-> [  +0.000017] x26: 00000000000003bd x25: 0000000000000040 x24: 0000000000=
-000040
-> [  +0.000014] x23: ffffff8083eb1000 x22: 0000000000000002 x21: ffffff8084=
-5bc800
-> [  +0.000013] x20: 0000000000000040 x19: ffffff80d0cecb00 x18: 0000000060=
-014024
-> [  +0.000012] x17: 0000000000000000 x16: 000000000000003c x15: ffffffd97e=
-21a1c0
-> [  +0.000012] x14: 0000000000000003 x13: 0000000000000004 x12: 0000000000=
-000001
-> [  +0.000014] x11: c0000000ffffdfff x10: ffffffd97f560f50 x9 : 5749cdb403=
-550d00
-> [  +0.000014] x8 : 5749cdb403550d00 x7 : 0000000000000000 x6 : 372e313320=
-20205b
-> [  +0.000012] x5 : ffffffd97f7b8b24 x4 : 0000000000000000 x3 : ffffffc012=
-e43588
-> [  +0.000013] x2 : ffffffc012e43590 x1 : 00000000ffffdfff x0 : 0000000000=
-000026
-> [  +0.000014] Call trace:
-> [  +0.000008]  refcount_warn_saturate+0xf8/0x134
-> [  +0.000013]  drm_crtc_commit_put+0x54/0x74
-> [  +0.000013]  __drm_atomic_helper_plane_destroy_state+0x64/0x68
-> [  +0.000013]  dpu_plane_destroy_state+0x24/0x3c
-> [  +0.000017]  drm_atomic_state_default_clear+0x13c/0x2d8
-> [  +0.000015]  __drm_atomic_state_free+0x88/0xa0
-> [  +0.000015]  drm_atomic_helper_update_plane+0x158/0x188
-> [  +0.000014]  __setplane_atomic+0xf4/0x138
-> [  +0.000012]  drm_mode_cursor_common+0x2e8/0x40c
-> [  +0.000009]  drm_mode_cursor_ioctl+0x48/0x70
-> [  +0.000008]  drm_ioctl_kernel+0xe0/0x158
-> [  +0.000014]  drm_ioctl+0x214/0x480
-> [  +0.000012]  __arm64_sys_ioctl+0x94/0xd4
-> [  +0.000010]  invoke_syscall+0x4c/0x100
-> [  +0.000013]  do_el0_svc+0xa4/0x168
-> [  +0.000012]  el0_svc+0x20/0x50
-> [  +0.000009]  el0t_64_sync_handler+0x20/0x110
-> [  +0.000008]  el0t_64_sync+0x1a4/0x1a8
-> [  +0.000010] ---[ end trace 35bb2d245a684c9a ]---
->
 
-without the double-put it "works" (as in doesn't immediately crash)
-but we are queuing up a _lot_ of updates (ie. cursor is lagging
-somewhat behind)
 
-BR,
--R
+On 2/20/2023 5:59 AM, Srinivas Kandagatla wrote:
+> 
+> 
+> On 14/02/2023 21:23, Elliot Berman wrote:
+>> Gunyah message queues are a unidirectional inter-VM pipe for messages up
+>> to 1024 bytes. This driver supports pairing a receiver message queue and
+>> a transmitter message queue to expose a single mailbox channel.
+>>
+>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+>> ---
+>>   Documentation/virt/gunyah/message-queue.rst |   8 +
+>>   drivers/mailbox/Makefile                   |   2 +
+>>   drivers/mailbox/gunyah-msgq.c               | 214 ++++++++++++++++++++
+>>   include/linux/gunyah.h                      |  56 +++++
+>>   4 files changed, 280 insertions(+)
+>>   create mode 100644 drivers/mailbox/gunyah-msgq.c
+>>
+>> diff --git a/Documentation/virt/gunyah/message-queue.rst 
+>> b/Documentation/virt/gunyah/message-queue.rst
+>> index 0667b3eb1ff9..082085e981e0 100644
+>> --- a/Documentation/virt/gunyah/message-queue.rst
+>> +++ b/Documentation/virt/gunyah/message-queue.rst
+>> @@ -59,3 +59,11 @@ vIRQ: two TX message queues will have two vIRQs 
+>> (and two capability IDs).
+>>         |               |         |                 |         
+>> |               |
+>>         |               |         |                 |         
+>> |               |
+>>         +---------------+         +-----------------+         
+>> +---------------+
+>> +
+>> +Gunyah message queues are exposed as mailboxes. To create the 
+>> mailbox, create
+>> +a mbox_client and call `gh_msgq_init`. On receipt of the RX_READY 
+>> interrupt,
+>> +all messages in the RX message queue are read and pushed via the 
+>> `rx_callback`
+>> +of the registered mbox_client.
+>> +
+>> +.. kernel-doc:: drivers/mailbox/gunyah-msgq.c
+>> +   :identifiers: gh_msgq_init
+>> diff --git a/drivers/mailbox/Makefile b/drivers/mailbox/Makefile
+>> index fc9376117111..5f929bb55e9a 100644
+>> --- a/drivers/mailbox/Makefile
+>> +++ b/drivers/mailbox/Makefile
+>> @@ -55,6 +55,8 @@ obj-$(CONFIG_MTK_CMDQ_MBOX)    += mtk-cmdq-mailbox.o
+>>   obj-$(CONFIG_ZYNQMP_IPI_MBOX)    += zynqmp-ipi-mailbox.o
+>> +obj-$(CONFIG_GUNYAH)        += gunyah-msgq.o
+> 
+> Why are we reusing CONFIG_GUNYAH Kconfig symbol for mailbox, why not 
+> CONFIG_GUNYAH_MBOX?
+> 
 
->
-> BR,
-> -R
->
->
->
-> > Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> > Cc: Thomas Zimmermann <tzimmermann@suse.de>
-> > Cc: Maxime Ripard <maxime@cerno.tech>
-> > References: https://bugzilla.kernel.org/show_bug.cgi?id=3D199425
-> > References: https://lore.kernel.org/all/20220221134155.125447-9-maxime@=
-cerno.tech/
-> > References: https://bugzilla.kernel.org/show_bug.cgi?id=3D199425
-> > Cc: Maxime Ripard <maxime@cerno.tech>
-> > Tested-by: Maxime Ripard <maxime@cerno.tech>
-> > Cc: mikita.lipski@amd.com
-> > Cc: Michel D=C3=A4nzer <michel@daenzer.net>
-> > Cc: harry.wentland@amd.com
-> > Cc: Rob Clark <robdclark@gmail.com>
-> > Cc: "Kazlauskas, Nicholas" <nicholas.kazlauskas@amd.com>
-> > Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> > Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Cc: Sean Paul <sean@poorly.run>
-> > Cc: Matthias Brugger <matthias.bgg@gmail.com>
-> > Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com=
->
-> > Cc: "Ville Syrj=C3=A4l=C3=A4" <ville.syrjala@linux.intel.com>
-> > Cc: Jani Nikula <jani.nikula@intel.com>
-> > Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-> > Cc: Imre Deak <imre.deak@intel.com>
-> > Cc: Manasi Navare <manasi.d.navare@intel.com>
-> > Cc: linux-arm-msm@vger.kernel.org
-> > Cc: freedreno@lists.freedesktop.org
-> > Cc: linux-kernel@vger.kernel.org
-> > Cc: linux-arm-kernel@lists.infradead.org
-> > Cc: linux-mediatek@lists.infradead.org
-> > Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-> > ---
-> >  drivers/gpu/drm/drm_atomic_helper.c          | 13 -------------
-> >  drivers/gpu/drm/i915/display/intel_display.c | 14 ++++++++++++++
-> >  drivers/gpu/drm/msm/msm_atomic.c             | 15 +++++++++++++++
-> >  3 files changed, 29 insertions(+), 13 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_=
-atomic_helper.c
-> > index d579fd8f7cb8..f6b4c3a00684 100644
-> > --- a/drivers/gpu/drm/drm_atomic_helper.c
-> > +++ b/drivers/gpu/drm/drm_atomic_helper.c
-> > @@ -1587,13 +1587,6 @@ drm_atomic_helper_wait_for_vblanks(struct drm_de=
-vice *dev,
-> >         int i, ret;
-> >         unsigned int crtc_mask =3D 0;
-> >
-> > -        /*
-> > -         * Legacy cursor ioctls are completely unsynced, and userspace
-> > -         * relies on that (by doing tons of cursor updates).
-> > -         */
-> > -       if (old_state->legacy_cursor_update)
-> > -               return;
-> > -
-> >         for_each_oldnew_crtc_in_state(old_state, crtc, old_crtc_state, =
-new_crtc_state, i) {
-> >                 if (!new_crtc_state->active)
-> >                         continue;
-> > @@ -2244,12 +2237,6 @@ int drm_atomic_helper_setup_commit(struct drm_at=
-omic_state *state,
-> >                         continue;
-> >                 }
-> >
-> > -               /* Legacy cursor updates are fully unsynced. */
-> > -               if (state->legacy_cursor_update) {
-> > -                       complete_all(&commit->flip_done);
-> > -                       continue;
-> > -               }
-> > -
-> >                 if (!new_crtc_state->event) {
-> >                         commit->event =3D kzalloc(sizeof(*commit->event=
-),
-> >                                                 GFP_KERNEL);
-> > diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu=
-/drm/i915/display/intel_display.c
-> > index 3479125fbda6..2454451fcf95 100644
-> > --- a/drivers/gpu/drm/i915/display/intel_display.c
-> > +++ b/drivers/gpu/drm/i915/display/intel_display.c
-> > @@ -7651,6 +7651,20 @@ static int intel_atomic_commit(struct drm_device=
- *dev,
-> >                 intel_runtime_pm_put(&dev_priv->runtime_pm, state->wake=
-ref);
-> >                 return ret;
-> >         }
-> > +
-> > +       /*
-> > +        * FIXME: Cut over to (async) commit helpers instead of hand-ro=
-lling
-> > +        * everything.
-> > +        */
-> > +       if (state->base.legacy_cursor_update) {
-> > +               struct intel_crtc_state *new_crtc_state;
-> > +               struct intel_crtc *crtc;
-> > +               int i;
-> > +
-> > +               for_each_new_intel_crtc_in_state(state, crtc, new_crtc_=
-state, i)
-> > +                       complete_all(&new_crtc_state->uapi.commit->flip=
-_done);
-> > +       }
-> > +
-> >         intel_shared_dpll_swap_state(state);
-> >         intel_atomic_track_fbs(state);
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm=
-_atomic.c
-> > index 1686fbb611fd..b7151767b567 100644
-> > --- a/drivers/gpu/drm/msm/msm_atomic.c
-> > +++ b/drivers/gpu/drm/msm/msm_atomic.c
-> > @@ -189,6 +189,19 @@ void msm_atomic_commit_tail(struct drm_atomic_stat=
-e *state)
-> >         bool async =3D kms->funcs->vsync_time &&
-> >                         can_do_async(state, &async_crtc);
-> >
-> > +       /*
-> > +        * FIXME: Convert to async plane helpers and remove the various=
- hacks to
-> > +        * keep the old legacy_cursor_way of doing async commits workin=
-g for the
-> > +        * dpu code, like the expectation that these don't have a crtc-=
->event.
-> > +        */
-> > +       if (async) {
-> > +               /* both ->event itself and the pointer hold a reference=
-! */
-> > +               drm_crtc_commit_put(async_crtc->state->commit);
-> > +               drm_crtc_commit_put(async_crtc->state->commit);
-> > +               kfree(async_crtc->state->event);
-> > +               async_crtc->state->event =3D NULL;
-> > +       }
-> > +
-> >         trace_msm_atomic_commit_tail_start(async, crtc_mask);
-> >
-> >         kms->funcs->enable_commit(kms);
-> > @@ -222,6 +235,8 @@ void msm_atomic_commit_tail(struct drm_atomic_state=
- *state)
-> >                 /* async updates are limited to single-crtc updates: */
-> >                 WARN_ON(crtc_mask !=3D drm_crtc_mask(async_crtc));
-> >
-> > +               complete_all(&async_crtc->state->commit->flip_done);
-> > +
-> >                 /*
-> >                  * Start timer if we don't already have an update pendi=
-ng
-> >                  * on this crtc:
-> > --
-> > 2.39.0
-> >
+There was some previous discussion about this:
+
+https://lore.kernel.org/all/2a7bb5f2-1286-b661-659a-a5037150eae8@quicinc.com/
+
+>> +
+>>   obj-$(CONFIG_SUN6I_MSGBOX)    += sun6i-msgbox.o
+>>   obj-$(CONFIG_SPRD_MBOX)       += sprd-mailbox.o
+>> diff --git a/drivers/mailbox/gunyah-msgq.c 
+>> b/drivers/mailbox/gunyah-msgq.c
+>> new file mode 100644
+>> index 000000000000..03ffaa30ce9b
+>> --- /dev/null
+>> +++ b/drivers/mailbox/gunyah-msgq.c
+>> @@ -0,0 +1,214 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All 
+>> rights reserved.
+>> + */
+>> +
+>> +#include <linux/mailbox_controller.h>
+>> +#include <linux/module.h>
+>> +#include <linux/interrupt.h>
+>> +#include <linux/gunyah.h>
+>> +#include <linux/printk.h>
+>> +#include <linux/init.h>
+>> +#include <linux/slab.h>
+>> +#include <linux/wait.h>
+> 
+> ...
+> 
+>> +/* Fired when message queue transitions from "full" to "space 
+>> available" to send messages */
+>> +static irqreturn_t gh_msgq_tx_irq_handler(int irq, void *data)
+>> +{
+>> +    struct gh_msgq *msgq = data;
+>> +
+>> +    mbox_chan_txdone(gh_msgq_chan(msgq), 0);
+>> +
+>> +    return IRQ_HANDLED;
+>> +}
+>> +
+>> +/* Fired after sending message and hypercall told us there was more 
+>> space available. */
+>> +static void gh_msgq_txdone_tasklet(struct tasklet_struct *tasklet)
+> 
+> Tasklets have been long deprecated, consider using workqueues in this 
+> particular case.
+> 
+
+Workqueues have higher latency and tasklets came as recommendation from 
+Jassi. drivers/mailbox/imx-mailbox.c uses tasklets in the same way.
+
+I did some quick unscientific measurements of ~1000x samples. The median 
+latency for resource manager went from 25.5 us (tasklet) to 26 us 
+(workqueue) (2% slower). The mean went from 28.7 us to 32.5 us (13% 
+slower). Obviously, the outliers for workqueues were much more extreme.
+
+> 
+>> +{
+>> +    struct gh_msgq *msgq = container_of(tasklet, struct gh_msgq, 
+>> txdone_tasklet);
+>> +
+>> +    mbox_chan_txdone(gh_msgq_chan(msgq), msgq->last_ret);
+>> +}
+>> +
+>> +static int gh_msgq_send_data(struct mbox_chan *chan, void *data)
+>> +{
+> ..
+> 
+>> +    tasklet_schedule(&msgq->txdone_tasklet);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static struct mbox_chan_ops gh_msgq_ops = {
+>> +    .send_data = gh_msgq_send_data,
+>> +};
+>> +
+>> +/**
+>> + * gh_msgq_init() - Initialize a Gunyah message queue with an 
+>> mbox_client
+>> + * @parent: optional, device parent used for the mailbox controller
+>> + * @msgq: Pointer to the gh_msgq to initialize
+>> + * @cl: A mailbox client to bind to the mailbox channel that the 
+>> message queue creates
+>> + * @tx_ghrsc: optional, the transmission side of the message queue
+>> + * @rx_ghrsc: optional, the receiving side of the message queue
+>> + *
+>> + * At least one of tx_ghrsc and rx_ghrsc should be not NULL. Most 
+>> message queue use cases come with
+>> + * a pair of message queues to facilitate bidirectional 
+>> communication. When tx_ghrsc is set,
+>> + * the client can send messages with 
+>> mbox_send_message(gh_msgq_chan(msgq), msg). When rx_ghrsc
+>> + * is set, the mbox_client should register an .rx_callback() and the 
+>> message queue driver will
+>> + * push all available messages upon receiving the RX ready interrupt. 
+>> The messages should be
+>> + * consumed or copied by the client right away as the gh_msgq_rx_data 
+>> will be replaced/destroyed
+>> + * after the callback.
+>> + *
+>> + * Returns - 0 on success, negative otherwise
+>> + */
+>> +int gh_msgq_init(struct device *parent, struct gh_msgq *msgq, struct 
+>> mbox_client *cl,
+>> +             struct gunyah_resource *tx_ghrsc, struct gunyah_resource 
+>> *rx_ghrsc)
+>> +{
+>> +    int ret;
+>> +
+>> +    /* Must have at least a tx_ghrsc or rx_ghrsc and that they are 
+>> the right device types */
+>> +    if ((!tx_ghrsc && !rx_ghrsc) ||
+>> +        (tx_ghrsc && tx_ghrsc->type != GUNYAH_RESOURCE_TYPE_MSGQ_TX) ||
+>> +        (rx_ghrsc && rx_ghrsc->type != GUNYAH_RESOURCE_TYPE_MSGQ_RX))
+>> +        return -EINVAL;
+>> +
+>> +    if (gh_api_version() != GUNYAH_API_V1) {
+>> +        pr_err("Unrecognized gunyah version: %u. Currently supported: 
+>> %d\n",
+> dev_err(parent
+> 
+> would make this more useful
+> 
+
+Done.
+
+- Elliot
