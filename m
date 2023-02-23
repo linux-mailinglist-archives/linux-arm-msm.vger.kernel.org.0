@@ -2,168 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 477E96A1078
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 20:19:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C3256A10B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 20:43:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229500AbjBWTTL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 14:19:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41964 "EHLO
+        id S230118AbjBWTnf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 14:43:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230231AbjBWTTK (ORCPT
+        with ESMTP id S229747AbjBWTn3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 14:19:10 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEFEA1704
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 11:18:43 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31NB45kt012780;
-        Thu, 23 Feb 2023 19:17:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3dYIwA/4/9A+RLvGcDRtys6zldwoQoCo3Na5NhuLUaE=;
- b=haXPCLGeOGOrJRgcG5kLKeA9SHHKTVsDg1vMimEkQlbNy2uoduwkdpgPAq4e6GQlJ25i
- USMr/yWcGEC+UR4lMFXbI0ISNim//t1eE421UN5BnX9XkSbn5nMwRNlBdUroKIMn67qp
- Jl2h+dYxrUQB83tKNHxXMhSQHui5vW68Iqlm9cfAUZgOGbw1CWe4LFk7bj79WK7BNFRH
- wAJpRFuQkc9nqpKSzreHNkzXey8g0YGHa55SyToZVyOWVhhn6freZsJGKCSrF580uWAm
- MKjeRqxPQt5xVpIjONROcmebQ/rQ6sqdjFAMdwM5SQ/riXce4/se5IZy7hU2qzBLxtoS 1w== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nwyc5jedn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Feb 2023 19:17:33 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31NJHWPC009696
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Feb 2023 19:17:32 GMT
-Received: from [10.110.22.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 23 Feb
- 2023 11:17:32 -0800
-Message-ID: <0daf8821-a228-1180-358b-4e50f36ca4b0@quicinc.com>
-Date:   Thu, 23 Feb 2023 11:17:31 -0800
+        Thu, 23 Feb 2023 14:43:29 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1163A268
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 11:43:27 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id q11so14643333plx.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 11:43:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=LjnO9LX2oaudWt6rcbd+l5z7VPXLNIdPSojjdZ3yYwY=;
+        b=hiuStAIwYFXYL421s/3Lu/eOuoTSSlsQBwaCgifpmsZg6YhziKooeTzsZenHIOHT+I
+         314pOCAXOA2sfpZ/KQI3DoDZs5Cu6ZyyWzg0Tv7bGySCcvd0+owffRaZwi/mRsXbLhBG
+         1RokLHwoxZHNcxvJqODrJP0OpFr7Sx2dogisA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LjnO9LX2oaudWt6rcbd+l5z7VPXLNIdPSojjdZ3yYwY=;
+        b=ON0KLOvvJ0q0DlldI0nmMc9KgENYqAuVEWLfB/GYsRpAP/VC7BvLdEeJsio5sXKMtW
+         Zxa8PMxH2+/ZLEbseucoA3WIXLgJNnS5CkmL2r9SU/OyHoo/COwtX8Ewl1/X6mLDwKMl
+         sqXJWF6qQAHEVicgMibTsYUOjMArN/mJ23PUirM9oHbec6cvL86nVC5uLZG1s0mB5VO2
+         bCQw+Ti1TrSonZCnJhbH5pql9c/fIk3/uB6DuDQGqB+XEpN/WbsuHttwTpLLIFlZQsZb
+         mwVkJBwMwvThTFTiX3zmla1N7o6H+XbsQAioKYhtMJqF8Z0z1bOXiFVcuscf15nbu6se
+         onmA==
+X-Gm-Message-State: AO0yUKVYSrkwFiDy2IhvRhQzZDwnZ1z4TUNaFAzeRj+Pq0HWvi74Ry+R
+        IVmj7bpsmyZpRjptyvNRf/XJ0Q==
+X-Google-Smtp-Source: AK7set+TL9Ckjp+vyRH438uqoixtcPKXpe+lB8xFoGl83ryXnOWzsjiRVgjs0r/TRLnZz4KSDGKWBQ==
+X-Received: by 2002:a17:902:e890:b0:199:2a4f:be84 with SMTP id w16-20020a170902e89000b001992a4fbe84mr18564844plg.58.1677181407313;
+        Thu, 23 Feb 2023 11:43:27 -0800 (PST)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id d5-20020a170902c18500b00198e12c499dsm7194331pld.282.2023.02.23.11.43.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Feb 2023 11:43:26 -0800 (PST)
+Message-ID: <63f7c1de.170a0220.f48b.e137@mx.google.com>
+X-Google-Original-Message-ID: <202302231120.@keescook>
+Date:   Thu, 23 Feb 2023 11:43:26 -0800
+From:   Kees Cook <keescook@chromium.org>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        tony.luck@intel.com, gpiccoli@igalia.com, catalin.marinas@arm.com,
+        will@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-hardening@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [RFC PATCH 6/6] pstore/ram: Register context with minidump
+References: <1676978713-7394-1-git-send-email-quic_mojha@quicinc.com>
+ <1676978713-7394-7-git-send-email-quic_mojha@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] drm/msm/dpu: fix stack smashing in
- dpu_hw_ctl_setup_blendstage
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>,
-        Amit Pundir <amit.pundir@linaro.org>
-References: <20230223095708.3688148-1-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230223095708.3688148-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dBsnsPj2ZTQW_Ddf_dn4FAxOYcLnxWGy
-X-Proofpoint-GUID: dBsnsPj2ZTQW_Ddf_dn4FAxOYcLnxWGy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-23_13,2023-02-23_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
- phishscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 adultscore=0
- mlxscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302230158
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1676978713-7394-7-git-send-email-quic_mojha@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry
+On Tue, Feb 21, 2023 at 04:55:13PM +0530, Mukesh Ojha wrote:
+> There are system which does not uses pstore directly but
+> may have the interest in the context saved by pstore.
+> Register pstore regions with minidump so that it get
+> dumped on minidump collection.
 
-On 2/23/2023 1:57 AM, Dmitry Baryshkov wrote:
-> The rewritten dpu_hw_ctl_setup_blendstage() can lightly smash the stack
-> when setting the SSPP_NONE pipe. However it was unnoticed until the
-> kernel was tested under AOSP (with some kind of stack protection/check).
-> 
-> This fixes the following backtrace:
-> 
-> Unexpected kernel BRK exception at EL1
-> Internal error: BRK handler: 00000000f20003e8 [#1] PREEMPT SMP
-> Hardware name: Thundercomm Dragonboard 845c (DT)
-> pstate: a0400005 (NzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> pc : dpu_hw_ctl_setup_blendstage+0x26c/0x278 [msm]
-> lr : _dpu_crtc_blend_setup+0x4b4/0x5a0 [msm]
-> sp : ffffffc00bdcb720
-> x29: ffffffc00bdcb720 x28: ffffff8085debac0 x27: 0000000000000002
-> x26: ffffffd74af18320 x25: ffffff8083af75a0 x24: ffffffc00bdcb878
-> x23: 0000000000000001 x22: 0000000000000000 x21: ffffff8085a70000
-> x20: ffffff8083012dc0 x19: 0000000000000001 x18: 0000000000000000
-> x17: 000000040044ffff x16: 045000f4b5593519 x15: 0000000000000000
-> x14: 000000000000000b x13: 0000000000000001 x12: 0000000000000000
-> x11: 0000000000000001 x10: ffffffc00bdcb764 x9 : ffffffd74af06a08
-> x8 : 0000000000000001 x7 : 0000000000000001 x6 : 0000000000000000
-> x5 : ffffffc00bdcb878 x4 : 0000000000000002 x3 : ffffffffffffffff
-> x2 : ffffffc00bdcb878 x1 : 0000000000000000 x0 : 0000000000000002
-> Call trace:
->   dpu_hw_ctl_setup_blendstage+0x26c/0x278 [msm]
->   _dpu_crtc_blend_setup+0x4b4/0x5a0 [msm]
->   dpu_crtc_atomic_begin+0xd8/0x22c [msm]
->   drm_atomic_helper_commit_planes+0x80/0x208 [drm_kms_helper]
->   msm_atomic_commit_tail+0x134/0x6f0 [msm]
->   commit_tail+0xa4/0x1a4 [drm_kms_helper]
->   drm_atomic_helper_commit+0x170/0x184 [drm_kms_helper]
->   drm_atomic_commit+0xac/0xe8
->   drm_mode_atomic_ioctl+0xbf0/0xdac
->   drm_ioctl_kernel+0xc4/0x178
->   drm_ioctl+0x2c8/0x608
->   __arm64_sys_ioctl+0xa8/0xec
->   invoke_syscall+0x44/0x104
->   el0_svc_common.constprop.0+0x44/0xec
->   do_el0_svc+0x38/0x98
->   el0_svc+0x2c/0xb4
->   el0t_64_sync_handler+0xb8/0xbc
->   el0t_64_sync+0x1a0/0x1a4
-> Code: 52800016 52800017 52800018 17ffffc7 (d4207d00)
-> 
-> Fixes: 4488f71f6373 ("drm/msm/dpu: simplify blend configuration")
-> Reported-by: Amit Pundir <amit.pundir@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index b88a2f3724e6..6c53ea560ffa 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -446,7 +446,9 @@ static void dpu_hw_ctl_setup_blendstage(struct dpu_hw_ctl *ctx,
->   			 * CTL_LAYER has 3-bit field (and extra bits in EXT register),
->   			 * all EXT registers has 4-bit fields.
->   			 */
-> -			if (cfg->idx == 0) {
-> +			if (cfg->idx == -1) {
-> +				continue;
-> +			} else if (cfg->idx == 0) {
->   				mixercfg[0] |= mix << cfg->shift;
->   				mixercfg[1] |= ext << cfg->ext_shift;
->   			} else {
+Okay, so, this is a really interesting case -- it's a RAM backend that
+is already found on a system by pstore via device tree, but there is
+_another_ RAM overlay (minidump) that would like to know more about how
+the pstore ram backend carves up the memory regions so it can examine
+them itself too. (i.e. it's another "interface" like the pstorefs.)
 
-Since I had not reviewed the change which introduced this, had a question.
+So we need to provide the mapping back to the overlay. It feels to me
+like the logic for this needs to live in the minidump driver itself
+(rather than in the pstore RAM backend). Specifically, it wants to know
+about all the operational frontends (dmesg, console, ftrace, pmsg) with
+their virt & phys addresses and size.
 
-The issue here is because the shift and ext_shift are -1 for NONE and 
-hence the shift causes overflow?
+The frontends are defined via enum pstore_type_id, and the other values
+are "normal" types, so it should be possible to move this logic into
+minidump instead, leaving a simpler callback. Perhaps something like:
 
-If that was the issue shouldnt we protect all such cases?
+void pstore_region_defined(enum pstore_type_id, void *virt,
+			   phys_addr_t phys, size_t size);
 
-So lets say we use SSPP_RGB0, the multirect_index for it will always be 
--1 as it doesnt support smartDMA. What prevents the same issue from 
-hitting in that case? Because you are only checking for idx and not the 
-shifts.
+How the pstore ram backend should know to call this, though, I'm
+struggling to find a sensible way. How can it determine if the device
+tree region is actually contained by a minidump overlay?
 
+-- 
+Kees Cook
