@@ -2,92 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD79D6A0FE9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 19:56:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C23246A0FF5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 19:59:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229813AbjBWS4t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 13:56:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42468 "EHLO
+        id S229480AbjBWS7g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 13:59:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229464AbjBWS4s (ORCPT
+        with ESMTP id S229927AbjBWS7f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 13:56:48 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A7151B334;
-        Thu, 23 Feb 2023 10:56:48 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A1E43616DE;
-        Thu, 23 Feb 2023 18:56:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36E4C433EF;
-        Thu, 23 Feb 2023 18:56:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677178607;
-        bh=lh3O4K2uQYYnZm7iTsoHpc8yyCCA0Oz/2ar/BdqkP9A=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=KtdqBOHFcm6dbujpia/0OPv05BQR3esYI5YtUqhd3MgA+S9Dr/bRZVJ8/uaTLiJR8
-         T2aKoSR8KfbwCST9mJ9eZ24gSaQUfxHnXp2p97bGrDBgGi1JgaO6ap2SRZUxaHboJp
-         /a8S0CdB635QJjJ9Fw03pBvEBI2m3IPFXX33W78A1zP5mmEjVKVOEKiJFUji9hsPsu
-         cZNhuBk+kXvBRQ/eWTnb497++W7JCVh6bskSOvE5FUi5HMBe5CgWdb548ZyZBfTBsM
-         1PvBNsy1xf0415oHHK//EXhU6/+VvLp56H2G7EhO0Cd7KW8Hzs8XobXqoeLfSRP59f
-         fZ8whthewFV+g==
-Message-ID: <b0595f7a7d0a4b263abd22dd6256155a.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        Thu, 23 Feb 2023 13:59:35 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDDFC24113
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 10:59:33 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id h9so11721287ljq.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 10:59:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
+         :from:references:in-reply-to:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TrKZBYzgrUY+yT1Sm6r8rYhRImsEiv0nymsNFzBZTig=;
+        b=mLOlHmCobTk7ODTXZj4kvMvZSq3dbf7CN8kW6AwzeqG8wy7pXxYJEj9jX8JcE44NQf
+         rbIr7lgWnloXvvyqdvgAO2hpJ7WVAIsNa2IKrPaltX+Ik3W+Nj91Q/WsXD5RTD0L3HJf
+         pPWAo41bCftknxF7z7ARoIKS3sPuxz2Pb2PjA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
+         :from:references:in-reply-to:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TrKZBYzgrUY+yT1Sm6r8rYhRImsEiv0nymsNFzBZTig=;
+        b=um9IirOOS1fR9p1ZcpHFRUNgeEnFRrK5UlXawUCKfzCKGpBfQGYq/KcS2I7J09c6EX
+         8BXQmZJpWb5hpK2Ym7dv+dhJyWUxPet+NxNTvIQ4iPVkXq67cjHmseHO35AGlL5tL7SX
+         yQsOjs2kum1buyT42QSGpRLo+bfDM9zE7f5qyIuU4vM4cDC0HVDSVWjeWDz4VeN8p+7y
+         mYICKyOlGEGmuuhoX+iHaYTdyF9xc3ImcTsEaH37HQ7aeZEzOe0x1OCwm5nyMaPLwQg6
+         i2nVD1+x2BWQMelPBAV7uuepJeqO4Qb43imZVofl3k1NyB1Y2Qm3MENtRTp3iDmR6Ccs
+         MJEA==
+X-Gm-Message-State: AO0yUKWrCAT6XrlxKThdnSi8CEPszFrUUE7nE7qkpOKB5YLQAzZZwXHC
+        g4pFEFGzEwOq86zAxxVZdchrGR/t6r6+TSFxgIAlmA==
+X-Google-Smtp-Source: AK7set/l8Tuw2PrNZ5eEO0k2aNueP3SGyCL0EtuYv8nYx+cObISGq/vMLL/Udukub6jGMnM8zbbG6oae6gK4zdLkyFc=
+X-Received: by 2002:a05:651c:336:b0:294:764a:3318 with SMTP id
+ b22-20020a05651c033600b00294764a3318mr4022405ljp.0.1677178772084; Thu, 23 Feb
+ 2023 10:59:32 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 23 Feb 2023 13:59:31 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230222153253.3105863-1-andersson@kernel.org>
-References: <20230222153253.3105863-1-andersson@kernel.org>
-Subject: Re: [GIT PULL] Qualcomm clock driver updates for v6.3
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Robert Marko <robimarko@gmail.com>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Yang Yingliang <yangyingliang@huawei.com>
-To:     Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org
-Date:   Thu, 23 Feb 2023 10:56:44 -0800
+In-Reply-To: <ef82f126-af16-8eba-4da9-eb08106a03db@quicinc.com>
+References: <20230215151330.539885-1-quic_mohs@quicinc.com>
+ <20230215151330.539885-5-quic_mohs@quicinc.com> <CAE-0n53mDzqua47jEqrJwQBhcQcyBjJAtNvH2J-tCPhkvV9JtA@mail.gmail.com>
+ <ef82f126-af16-8eba-4da9-eb08106a03db@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Date:   Thu, 23 Feb 2023 13:59:31 -0500
+Message-ID: <CAE-0n50tKWWPgU31dpcUo7bfJnnwjM-bNkDhFc0+e=iGkh3e_A@mail.gmail.com>
+Subject: Re: [RESEND v8 4/5] clk: qcom: lpassaudiocc-sc7280: Merge AHB clocks
+ into lpass_aon
+To:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, broonie@kernel.org,
+        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
+        quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
+        quic_visr@quicinc.com, robh+dt@kernel.org
+Cc:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2023-02-22 07:32:53)
-> The following changes since commit 1b929c02afd37871d5afb9d498426f83432e71=
-c2:
->=20
->   Linux 6.2-rc1 (2022-12-25 13:41:39 -0800)
->=20
-> are available in the Git repository at:
->=20
->   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qco=
-m-clk-for-6.3-2
->=20
-> for you to fetch changes up to c1855dd0a62b7ead360eb9231fb65c2108efaf47:
->=20
->   clk: qcom: Revert sync_state based clk_disable_unused (2023-02-22 06:34=
-:08 -0800)
->=20
-> ----------------------------------------------------------------
+Quoting Mohammad Rafi Shaik (2023-02-23 02:19:30)
+>
+> On 2/16/2023 11:01 AM, Stephen Boyd wrote:
+> > Quoting Mohammad Rafi Shaik (2023-02-15 07:13:29)
+> >> @@ -828,8 +830,9 @@ static int lpass_aon_cc_sc7280_probe(struct platfo=
+rm_device *pdev)
+> >>          if (of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-m=
+ode")) {
+> >>                  lpass_audio_cc_sc7280_regmap_config.name =3D "cc";
+> >>                  desc =3D &lpass_cc_sc7280_desc;
+> >> -               ret =3D qcom_cc_probe(pdev, desc);
+> >> -               goto exit;
+> >> +               ret =3D qcom_cc_probe_by_index(pdev, 1, desc);
+> > Where is the patch to the binding yaml file?
+> Thanks for comment.
+>
+> The dtbinding=C2=A0 yaml file for this is already present in existing yam=
+l.
+>
+> Below is the snippet for the same:
+>
+> compatible =3D "qcom,sc7280-lpassaoncc";
+> reg =3D <0x3380000 0x30000>;
+>
+> Actually what ever the=C2=A0 CC register region <required range is=C2=A0 =
+0x3389000
+> 0x24> which we are accessing is already present in the above reg map
+> range of dtsi, so we have not updated the
+> /devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml file.
+>
 
-Thanks. Pulled into clk-next
+The usage of '1' in qcom_cc_probe_by_index() means that the reg property
+should have at least two addresses. The example you pasted above shows
+only one reg address. The binding needs an update for two registers,
+where is that?
