@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AFC5F6A13E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 00:42:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 138596A1405
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 00:55:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229602AbjBWXmB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 18:42:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58276 "EHLO
+        id S229640AbjBWXzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 18:55:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229589AbjBWXmA (ORCPT
+        with ESMTP id S229631AbjBWXzK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 18:42:00 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AFB620543
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 15:41:58 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id e5so15982057plg.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 15:41:58 -0800 (PST)
+        Thu, 23 Feb 2023 18:55:10 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCAC45BB80
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 15:55:07 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id qa18-20020a17090b4fd200b0023750b675f5so1016650pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 15:55:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=X+lqxjm0+kKvGCHCvbCD4t+kuH1zTIskid0IPJ7eZkw=;
-        b=EJZTNr5h/wNKgKRS64pBO/5V4ChAnia9P42JWAAFXaw3feJfeB1Jk6JQeMudWl0ieF
-         Irgq86pwcQS2rFeRSTfW4URv/fsH9yLByJi0+vCkZ2Als/22/b3EgyvQ/6t8e0J+F2AK
-         /DzSjx3KCta7nT7GTlViD+VVHIf29Iu+TrpL5yl1f52e339WnFl82MGeVCCtjZgM1cA3
-         BtRty8xyy9jEP8xh+zZv5VhfBDXkFznU5fCXOFw1Jw8qVCyU7ZrBbC2j7dlmSUG2Ct1b
-         Cwxj6F6cybKwoxUXtz2ahkyAHiJAZz1GhQ8YgvPNA+uiTu8cR5ZZRKvFkb33qVpTbPHa
-         3S+g==
+        bh=WtTBZYOExvc5n8giROfO1dPxIyNM2H7rqatYfqD4Z2M=;
+        b=RFZBBqytynmIbxtT/qDXwgRBwOK9Gk56bsvh9xmjA7Yxedl+RTlB3fkZ0VUkHaq1JA
+         +ZP42NGKrGrdjOJ+Di9kpP6KMRoX7SgtXO5fBDqNZsJjTfRt8YuEyilNutNlzp+V1wZR
+         RthU6FPY7Rj9T57Ym0+vPebj2oImXwoWWlefcuv1mbqUPhHjgY+n8UhAn5D8YUJtU/h+
+         H6/ib1PjFoX4R7axaUlmlBYu1KJECPV7dgJvu/HJFwlsACWNaB2FEXR3mi6nwTYrYwfX
+         xKGvsX5nx6i137TdhNQWIUqtGOBx7jIT+E8BtipzlLkuYUbhNecH/kLTyFYQ+pgw127G
+         mLxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X+lqxjm0+kKvGCHCvbCD4t+kuH1zTIskid0IPJ7eZkw=;
-        b=KHWHiMi0ziPCzU6uIBgj15r1XlV8CCoB0dnw046mnI7Lvsh6609SRtqxgFC91/GB43
-         UN+TvCFsj6ivoOFrBwgjJ8F0zTmlzoJCexvZAPdhDhNAbXd8VgJyT3csVOul1Kkdhnqx
-         qUxOFfzE/OsuP+lWu0myG/rths2EonAmJ1cTneOXAmowEef1ym7RXLKeYW7dN4ARDo4I
-         h4XxoBDpmJwtTVJrTnXMeO3hPH41CjqeDASccTusUBZzZwjUPTMLRWpT8+y51srPl7BT
-         6CZGIEGKWbjOsDaLmIFkEvUPq41TguvmKavWHxQarOM4z62atXLzrSShNaWR8Bk7uodJ
-         oVKA==
-X-Gm-Message-State: AO0yUKURUtA33/t/43o0+67Ydx4F13+AE9WaUO9U1rumbbd0LQc4IZ++
-        HlJ7y5LjzcevTydnZBvSzIsw6A==
-X-Google-Smtp-Source: AK7set/IG4130KCWLoU6ORwXcepFD/YDxbZLb410AmyaHu8UWBbwWVWerDn8d+UP8xsqZTQT6FycrQ==
-X-Received: by 2002:a17:902:e1cc:b0:19c:9420:6236 with SMTP id t12-20020a170902e1cc00b0019c94206236mr8569592pla.22.1677195717615;
-        Thu, 23 Feb 2023 15:41:57 -0800 (PST)
+        bh=WtTBZYOExvc5n8giROfO1dPxIyNM2H7rqatYfqD4Z2M=;
+        b=DxF1lG9vnikonnqk1JyCK5V9V1piRi2dfdfOZnnCjMao1ePG76fb37tzMMfHOZeOw3
+         YsbFGHnoEBhFc28oyxIO7RqTwXqxuEM2iWM3Vh8S0wRAbm/57zqTQcOPxD+tvmzNEc9k
+         97Ejcma4rbFr5JMH3zWDc0guizoVnuSjIdOCb/MKeIC0MxB3VFH2TwncOsmBcsFR//Iy
+         3S0DxeKarMjZb3xZ9eMeKxWLL2sYRIdWAcTbvGnKSQZ4mY9VwI9zoLBnUGC8CBS97RCK
+         0vWA1NGyiJpnNRrejjwjUsNFY6Q9lUVCwq2yW05GUUILzZEUiWTu07ocM3Km1LB8H2vA
+         N2fQ==
+X-Gm-Message-State: AO0yUKUBNujnRjEhmQyiVx96vweHtiYdthgYErsQoNDFycEH9PGmjdAy
+        KshtKwdpL/Um/n+w8YOdAQZs7w==
+X-Google-Smtp-Source: AK7set+s6o8UwSQnW1YrqNF6rOUbpd4d9XZVdYd+0rm0pY0ufGNSxdV/Kein2zFpBdyXfPXRVk+L1g==
+X-Received: by 2002:a17:902:ec92:b0:19a:eef0:3392 with SMTP id x18-20020a170902ec9200b0019aeef03392mr17465284plg.43.1677196507180;
+        Thu, 23 Feb 2023 15:55:07 -0800 (PST)
 Received: from [10.211.55.3] (c-73-221-130-71.hsd1.wa.comcast.net. [73.221.130.71])
-        by smtp.gmail.com with ESMTPSA id d5-20020a170902c18500b00194c90ca320sm7699073pld.204.2023.02.23.15.41.56
+        by smtp.gmail.com with ESMTPSA id i3-20020a170902c28300b0019460ac7c6asm2054438pld.283.2023.02.23.15.55.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 15:41:57 -0800 (PST)
-Message-ID: <41df9fd2-9277-b6e8-7961-509da295dcb8@linaro.org>
-Date:   Thu, 23 Feb 2023 17:41:55 -0600
+        Thu, 23 Feb 2023 15:55:06 -0800 (PST)
+Message-ID: <a6f8c339-c126-dded-60fe-8cd9febb55af@linaro.org>
+Date:   Thu, 23 Feb 2023 17:55:05 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v10 01/26] docs: gunyah: Introduce Gunyah Hypervisor
+Subject: Re: [PATCH v10 17/26] docs: gunyah: Document Gunyah VM Manager
 Content-Language: en-US
 To:     Elliot Berman <quic_eberman@quicinc.com>,
         Alex Elder <elder@linaro.org>,
@@ -80,254 +80,187 @@ Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
 References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214211229.3239350-2-quic_eberman@quicinc.com>
+ <20230214212506.3320728-1-quic_eberman@quicinc.com>
 From:   Alex Elder <alex.elder@linaro.org>
-In-Reply-To: <20230214211229.3239350-2-quic_eberman@quicinc.com>
+In-Reply-To: <20230214212506.3320728-1-quic_eberman@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/14/23 3:12 PM, Elliot Berman wrote:
-> Gunyah is an open-source Type-1 hypervisor developed by Qualcomm. It
-> does not depend on any lower-privileged OS/kernel code for its core
-> functionality. This increases its security and can support a smaller
-> trusted computing based when compared to Type-2 hypervisors.
+On 2/14/23 3:25 PM, Elliot Berman wrote:
 > 
-> Add documentation describing the Gunyah hypervisor and the main
-> components of the Gunyah hypervisor which are of interest to Linux
-> virtualization development.
+> Document the ioctls and usage of Gunyah VM Manager driver.
 > 
-> Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
 > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->   Documentation/virt/gunyah/index.rst         | 113 ++++++++++++++++++++
->   Documentation/virt/gunyah/message-queue.rst |  61 +++++++++++
->   Documentation/virt/index.rst                |   1 +
->   3 files changed, 175 insertions(+)
->   create mode 100644 Documentation/virt/gunyah/index.rst
->   create mode 100644 Documentation/virt/gunyah/message-queue.rst
+>   Documentation/virt/gunyah/index.rst      |   1 +
+>   Documentation/virt/gunyah/vm-manager.rst | 106 +++++++++++++++++++++++
+>   2 files changed, 107 insertions(+)
+>   create mode 100644 Documentation/virt/gunyah/vm-manager.rst
 > 
 > diff --git a/Documentation/virt/gunyah/index.rst b/Documentation/virt/gunyah/index.rst
-> new file mode 100644
-> index 000000000000..45adbbc311db
-> --- /dev/null
+> index 45adbbc311db..b204b85e86db 100644
+> --- a/Documentation/virt/gunyah/index.rst
 > +++ b/Documentation/virt/gunyah/index.rst
-> @@ -0,0 +1,113 @@
+> @@ -7,6 +7,7 @@ Gunyah Hypervisor
+>   .. toctree::
+>      :maxdepth: 1
+>   
+> +   vm-manager
+>      message-queue
+>   
+>   Gunyah is a Type-1 hypervisor which is independent of any OS kernel, and runs in
+> diff --git a/Documentation/virt/gunyah/vm-manager.rst b/Documentation/virt/gunyah/vm-manager.rst
+> new file mode 100644
+> index 000000000000..c0126cfeadc7
+> --- /dev/null
+> +++ b/Documentation/virt/gunyah/vm-manager.rst
+> @@ -0,0 +1,106 @@
 > +.. SPDX-License-Identifier: GPL-2.0
 > +
-> +=================
-> +Gunyah Hypervisor
-> +=================
-> +
-> +.. toctree::
-> +   :maxdepth: 1
-> +
-> +   message-queue
-> +
-> +Gunyah is a Type-1 hypervisor which is independent of any OS kernel, and runs in
-> +a higher CPU privilege level. It does not depend on any lower-privileged operating system
-> +for its core functionality. This increases its security and can support a much smaller
-> +trusted computing base than a Type-2 hypervisor.
-> +
-> +Gunyah is an open source hypervisor. The source repo is available at
-> +https://github.com/quic/gunyah-hypervisor.
-> +
-> +Gunyah provides these following features.
-> +
-> +- Scheduling:
-> +
-> +  A scheduler for virtual CPUs (vCPUs) on physical CPUs enables time-sharing
-> +  of the CPUs. Gunyah supports two models of scheduling:
-> +
-> +    1. "Behind the back" scheduling in which Gunyah hypervisor schedules vCPUS on its own.
-> +    2. "Proxy" scheduling in which a delegated VM can donate part of one of its vCPU slice
-> +       to another VM's vCPU via a hypercall.
-> +
-> +- Memory Management:
-> +
-> +  APIs handling memory, abstracted as objects, limiting direct use of physical
-> +  addresses. Memory ownership and usage tracking of all memory under its control.
-> +  Memory partitioning between VMs is a fundamental security feature.
-> +
-> +- Interrupt Virtualization:
-> +
-> +  Uses CPU hardware interrupt virtualization capabilities. Interrupts are handled
-> +  in the hypervisor and routed to the assigned VM.
-> +
-> +- Inter-VM Communication:
-> +
-> +  There are several different mechanisms provided for communicating between VMs.
-> +
-> +- Virtual platform:
-> +
-> +  Architectural devices such as interrupt controllers and CPU timers are directly provided
-> +  by the hypervisor as well as core virtual platform devices and system APIs such as ARM PSCI.
-> +
-> +- Device Virtualization:
-> +
-> +  Para-virtualization of devices is supported using inter-VM communication.
-> +
-> +Architectures supported
 > +=======================
-> +AArch64 with a GIC
+> +Virtual Machine Manager
+> +=======================
 > +
-> +Resources and Capabilities
-> +==========================
+> +The Gunyah Virtual Machine Manager is a Linux driver to support launching
+> +virtual machines using Gunyah. It presently supports launching non-proxy
+> +scheduled Linux-like virtual machines.
 > +
-> +Some services or resources provided by the Gunyah hypervisor are described to a virtual machine by
-> +capability IDs. For instance, inter-VM communication is performed with doorbells and message queues.
-> +Gunyah allows access to manipulate that doorbell via the capability ID. These resources are
-> +described in Linux as a struct gunyah_resource.
+> +Except for some basic information about the location of initial binaries,
+> +most of the configuration about a Gunyah virtual machine is described in the
+> +VM's devicetree. The devicetree is generated by userspace. Interacting with the
+> +virtual machine is still done via the kernel and VM configuration requires some
+> +of the corresponding functionality to be set up in the kernel. For instance,
+> +sharing userspace memory with a VM is done via the GH_VM_SET_USER_MEM_REGION
+> +ioctl. The VM itself is configured to use the memory region via the
+> +devicetree.
 > +
-> +High level management of these resources is performed by the resource manager VM. RM informs a
-> +guest VM about resources it can access through either the device tree or via guest-initiated RPC.
+> +Sample Userspace VMM
+> +====================
 > +
-> +For each virtual machine, Gunyah maintains a table of resources which can be accessed by that VM.
-> +An entry in this table is called a "capability" and VMs can only access resources via this
-> +capability table. Hence, virtual Gunyah resources are referenced by a "capability IDs" and not
-> +"resource IDs". If 2 VMs have access to the same resource, they might not be using the same
-> +capability ID to access that resource since the capability tables are independent per VM.
+> +A sample userspace VMM is included in samples/gunyah/ along with a minimal
+> +devicetree that can be used to launch a VM. To build this sample, enable
+> +CONFIG_SAMPLE_GUNYAH.
 > +
-> +Resource Manager
-> +================
+> +IOCTLs and userspace VMM flows
+> +==============================
 > +
-> +The resource manager (RM) is a privileged application VM supporting the Gunyah Hypervisor.
-> +It provides policy enforcement aspects of the virtualization system. The resource manager can
-> +be treated as an extension of the Hypervisor but is separated to its own partition to ensure
-> +that the hypervisor layer itself remains small and secure and to maintain a separation of policy
-> +and mechanism in the platform. RM runs at arm64 NS-EL1 similar to other virtual machines.
+> +The kernel exposes a char device interface at /dev/gunyah.
 > +
-> +Communication with the resource manager from each guest VM happens with message-queue.rst. Details
-> +about the specific messages can be found in drivers/virt/gunyah/rsc_mgr.c
+> +To create a VM, use the GH_CREATE_VM ioctl. A successful call will return a
+> +"Gunyah VM" file descriptor.
+> +
+> +/dev/gunyah API Descriptions
+> +----------------------------
+> +
+> +GH_CREATE_VM
+> +~~~~~~~~~~~~
+> +
+> +Creates a Gunyah VM. The argument is reserved for future use and must be 0.
+
+I wouldn't say it "must be zero".  Instead maybe say it is
+is currently ignored.
+
+> +
+> +Gunyah VM API Descriptions
+> +--------------------------
+> +
+> +GH_VM_SET_USER_MEM_REGION
+> +~~~~~~~~~~~~~~~~~~~~~~~~~
 > +
 > +::
 > +
-> +  +-------+   +--------+   +--------+
-> +  |  RM   |   |  VM_A  |   |  VM_B  |
-> +  +-.-.-.-+   +---.----+   +---.----+
-> +    | |           |            |
-> +  +-.-.-----------.------------.----+
-> +  | | \==========/             |    |
-> +  |  \========================/     |
-> +  |            Gunyah               |
-> +  +---------------------------------+
+> +  struct gh_userspace_memory_region {
+> +	__u32 label;
+> +	__u32 flags;
+> +	__u64 guest_phys_addr;
+> +	__u64 memory_size;
+> +	__u64 userspace_addr;
+> +  };
 > +
-> +The source for the resource manager is available at https://github.com/quic/gunyah-resource-manager.
-> +
-> +The resource manager provides the following features:
-> +
-> +- VM lifecycle management: allocating a VM, starting VMs, destruction of VMs
-> +- VM access control policy, including memory sharing and lending
-> +- Interrupt routing configuration
-> +- Forwarding of system-level events (e.g. VM shutdown) to owner VM
-> +
-> +When booting a virtual machine which uses a devicetree such as Linux, resource manager overlays a
-> +/hypervisor node. This node can let Linux know it is running as a Gunyah guest VM,
-> +how to communicate with resource manager, and basic description and capabilities of
-> +this VM. See Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml for a description
-> +of this node.
-> diff --git a/Documentation/virt/gunyah/message-queue.rst b/Documentation/virt/gunyah/message-queue.rst
-> new file mode 100644
-> index 000000000000..0667b3eb1ff9
-> --- /dev/null
-> +++ b/Documentation/virt/gunyah/message-queue.rst
-> @@ -0,0 +1,61 @@
-> +.. SPDX-License-Identifier: GPL-2.0
-> +
-> +Message Queues
-> +==============
-> +Message queue is a simple low-capacity IPC channel between two VMs. It is
-> +intended for sending small control and configuration messages. Each message
-> +queue is unidirectional, so a full-duplex IPC channel requires a pair of queues.
-> +
-> +Messages can be up to 240 bytes in length. Longer messages require a further
-> +protocol on top of the message queue messages themselves. For instance, communication
-> +with the resource manager adds a header field for sending longer messages via multiple
-> +message fragments.
-> +
-> +The diagram below shows how message queue works. A typical configuration involves
-> +2 message queues. Message queue 1 allows VM_A to send messages to VM_B. Message
-> +queue 2 allows VM_B to send messages to VM_A.
-> +
-> +1. VM_A sends a message of up to 240 bytes in length. It raises a hypercall
+> +This ioctl allows the user to create or delete a memory parcel for a guest
+> +virtual machine. Each memory region is uniquely identified by a label;
+> +attempting to create two regions with the same label is not allowed.
 
-Can you clarify that the message being sent is in the VM's *own*
-memory/  Maybe this is clear, but the message doesn't have to (for
-example) be located in shared memory.  The original message is
-copied into message queue buffers in order to be transferred.
+Must the label be unique across a single instance of Gunyah (on
+a single physical machine)?  Or is it unique within a VM?  Or
+something else?  (It's not universally unique, right?)
 
-> +   with the message to inform the hypervisor to add the message to
-> +   message queue 1's queue.
 > +
-> +2. Gunyah raises the corresponding interrupt for VM_B (Rx vIRQ) when any of
-> +   these happens:
+> +While VMM is guest-agnostic and allows runtime addition of memory regions,
+> +Linux guest virtual machines do not support accepting memory regions at runtime.
+> +Thus, memory regions should be provided before starting the VM and the VM must
+> +be configured to accept these at boot-up.
 > +
-> +   a. gh_msgq_send has PUSH flag. Queue is immediately flushed. This is the typical case.
+> +The guest physical address is used by Linux kernel to check that the requested
+> +user regions do not overlap and to help find the corresponding memory region
+> +for calls like GH_VM_SET_DTB_CONFIG. It should be page aligned.
 
-Below you use gh_msgq_send() (with parentheses).  I prefer that,
-but whatever you do, do it consistently.
+The physical address must be page aligned.  Can a page be anything
+other than 4096 bytes?
 
-> +   b. Explicility with gh_msgq_push command from VM_A.
-> +   c. Message queue has reached a threshold depth.
 > +
-> +3. VM_B calls gh_msgq_recv and Gunyah copies message to requested buffer.
-> +
-> +4. Gunyah buffers messages in the queue. If the queue became full when VM_A added a message,
-> +   the return values for gh_msgq_send() include a flag that indicates the queue is full.
-> +   Once VM_B receives the message and, thus, there is space in the queue, Gunyah
-> +   will raise the Tx vIRQ on VM_A to indicate it can continue sending messages.
-> +
-> +For VM_B to send a message to VM_A, the process is identical, except that hypercalls
-> +reference message queue 2's capability ID. Each message queue has its own independent
-> +vIRQ: two TX message queues will have two vIRQs (and two capability IDs).
+> +memory_size and userspace_addr should be page-aligned.
 
-Can a sender determine when a message has been delivered?
-Does the TX vIRQ indicate only that the messaging system
-has processed the message (taken it and queued it), but
-says nothing about it being delivered/accepted/received?
+Not should, must, right?  (The address isn't rounded down to a
+page boundary, for example.)
+
+> +
+> +The flags field of gh_userspace_memory_region accepts the following bits. All
+> +other bits must be 0 and are reserved for future use. The ioctl will return
+> +-EINVAL if an unsupported bit is detected.
+> +
+> +  - GH_MEM_ALLOW_READ/GH_MEM_ALLOW_WRITE/GH_MEM_ALLOW_EXEC sets read/write/exec
+> +    permissions for the guest, respectively.
+> +  - GH_MEM_LENT means that the memory will be unmapped from the host and be
+> +    unaccessible by the host while the guest has the region.
+> +
+> +To add a memory region, call GH_VM_SET_USER_MEM_REGION with fields set as
+> +described above.
+> +
+> +To delete a memory region, call GH_VM_SET_USER_MEM_REGION with label set to the
+> +desired region and memory_size set to 0.
+> +
+> +GH_VM_SET_DTB_CONFIG
+> +~~~~~~~~~~~~~~~~~~~~
+> +
+> +::
+> +
+> +  struct gh_vm_dtb_config {
+> +	__u64 gpa;
+
+What is "gpa"?  Guest physical address?  Gunyah pseudo address?
+Can this have a longer and more descriptive name please?
+
+> +	__u64 size;
+> +  };
+> +
+> +This ioctl sets the location of the VM's devicetree blob and is used by Gunyah
+> +Resource Manager to allocate resources. The guest physical memory should be part
+> +of the primary memory parcel provided to the VM prior to GH_VM_START.
+
+Any alignment constraints?  (If not, you could say "there are no
+alignment constraints on the address or size.")
+
+> +
+> +GH_VM_START
+> +~~~~~~~~~~~
+> +
+> +This ioctl starts the VM.
+
+Is there anything you can say about what gets returned for
+these (at least for significant cases, like permission
+problems or something)?
+
+Are IOCTLs the normal way for virtual machine mechanisms
+to set up things like this?  (Noob question.)
 
 					-Alex
-
-> +
-> +::
-> +
-> +      +---------------+         +-----------------+         +---------------+
-> +      |      VM_A     |         |Gunyah hypervisor|         |      VM_B     |
-> +      |               |         |                 |         |               |
-> +      |               |         |                 |         |               |
-> +      |               |   Tx    |                 |         |               |
-> +      |               |-------->|                 | Rx vIRQ |               |
-> +      |gh_msgq_send() | Tx vIRQ |Message queue 1  |-------->|gh_msgq_recv() |
-> +      |               |<------- |                 |         |               |
-> +      |               |         |                 |         |               |
-> +      | Message Queue |         |                 |         | Message Queue |
-> +      | driver        |         |                 |         | driver        |
-> +      |               |         |                 |         |               |
-> +      |               |         |                 |         |               |
-> +      |               |         |                 |   Tx    |               |
-> +      |               | Rx vIRQ |                 |<--------|               |
-> +      |gh_msgq_recv() |<--------|Message queue 2  | Tx vIRQ |gh_msgq_send() |
-> +      |               |         |                 |-------->|               |
-> +      |               |         |                 |         |               |
-> +      |               |         |                 |         |               |
-> +      +---------------+         +-----------------+         +---------------+
-> diff --git a/Documentation/virt/index.rst b/Documentation/virt/index.rst
-> index 7fb55ae08598..15869ee059b3 100644
-> --- a/Documentation/virt/index.rst
-> +++ b/Documentation/virt/index.rst
-> @@ -16,6 +16,7 @@ Virtualization Support
->      coco/sev-guest
->      coco/tdx-guest
->      hyperv/index
-> +   gunyah/index
->   
->   .. only:: html and subproject
->   
-
