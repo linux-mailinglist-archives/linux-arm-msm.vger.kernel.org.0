@@ -2,121 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B98D06A0D4E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 16:48:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 65EEC6A0F3A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 19:10:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234161AbjBWPst (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 10:48:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60168 "EHLO
+        id S229808AbjBWSKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 13:10:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233862AbjBWPss (ORCPT
+        with ESMTP id S231180AbjBWSKg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 10:48:48 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7C91311C2;
-        Thu, 23 Feb 2023 07:48:47 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 561E1B81A53;
-        Thu, 23 Feb 2023 15:48:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCD1C433EF;
-        Thu, 23 Feb 2023 15:48:40 +0000 (UTC)
-Date:   Thu, 23 Feb 2023 21:18:36 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Vivek Pernamitta <quic_vpernami@quicinc.com>
-Cc:     mhi@lists.linux.dev, quic_qianyu@quicinc.com,
-        quic_vbadigan@quicinc.com, quic_krichai@quicinc.com,
-        quic_skananth@quicinc.com, mrana@quicinc.com,
-        Alex Elder <elder@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        "open list:MHI BUS" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5] bus: mhi: host: Avoid ringing EV DB if there is no
- elements to process
-Message-ID: <20230223154836.GC6422@workstation>
-References: <1677087470-7004-1-git-send-email-quic_vpernami@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1677087470-7004-1-git-send-email-quic_vpernami@quicinc.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        Thu, 23 Feb 2023 13:10:36 -0500
+Received: from srv01.abscue.de (abscue.de [IPv6:2a03:4000:63:bf5:4817:8eff:feeb:8ac7])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2943B5708C;
+        Thu, 23 Feb 2023 10:10:19 -0800 (PST)
+Received: from srv01.abscue.de (localhost [127.0.0.1])
+        by spamfilter.srv.local (Postfix) with ESMTP id 93D6D1C0048;
+        Thu, 23 Feb 2023 19:10:17 +0100 (CET)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Received: from fluffy-mammal.fritz.box (dslb-092-073-085-163.092.073.pools.vodafone-ip.de [92.73.85.163])
+        by srv01.abscue.de (Postfix) with ESMTPSA id 1FE431C0046;
+        Thu, 23 Feb 2023 19:10:17 +0100 (CET)
+From:   =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
+Subject: [PATCH v2 0/4] clk: qcom: Add clocks for MSM8917 and QM215
+Date:   Thu, 23 Feb 2023 19:09:31 +0100
+Message-Id: <20230223180935.60546-1-otto.pflueger@abscue.de>
+X-Mailer: git-send-email 2.39.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 22, 2023 at 11:07:48PM +0530, Vivek Pernamitta wrote:
-> As mhi_poll function can be called by mhi client drivers
-> which will call process_event, which will ring DB even if
-> there no ring elements to process. This could cause
-> doorbell event to be processed by MHI device to check for
-> any ring elements even it is none and also it will occupy
-> lot of bandwidth on peripheral when mhi_poll() is called in
-> aggressive loop.
-> 
+Add support for clocks, resets and power domains provided by the global
+clock controller (GCC) and clocks controlled by the RPM firmware on
+MSM8917/QM215 SoCs.
 
-The change looks good to me but who is the actual in-kernel user of
-mhi_poll() API? It is being exported and if there is no upstream client
-driver making use of it, then it shouldn't be.
+The only clock configuration difference between QM215 and MSM8917
+is the source mapping of the GPU clock, so a single driver is used
+for both SoCs.
 
-I'm gonna submit a patch to remove this API altogether.
+Changes in v2:
+ - Added Krzysztof's Acked-by and Reviewed-by
+ - Rebased onto linux-next-20230223
+ - Fixed address in oxili_gx_gdsc
+ - Mentioned QM215 in Kconfig
+ - Switched to index-based device tree clock lookup
+ - Switched to of_device_get_match_data for determining the SoC variant
+ - Formatting fixes as suggested by Konrad
+ - Added depends on ARM64 || COMPILE_TEST as suggested by Krzysztof
 
-> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
-> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Otto Pflüger (4):
+  dt-bindings: clock: Add MSM8917 global clock controller
+  clk: qcom: Add global clock controller driver for MSM8917
+  dt-bindings: clock: qcom,rpmcc: Add MSM8917
+  clk: qcom: smd-rpm: Add clocks for MSM8917
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+ .../bindings/clock/qcom,gcc-msm8909.yaml      |   13 +-
+ .../devicetree/bindings/clock/qcom,rpmcc.yaml |    2 +
+ drivers/clk/qcom/Kconfig                      |   10 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-smd-rpm.c                |   35 +
+ drivers/clk/qcom/gcc-msm8917.c                | 3303 +++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-msm8917.h  |  190 +
+ 7 files changed, 3550 insertions(+), 4 deletions(-)
+ create mode 100644 drivers/clk/qcom/gcc-msm8917.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-msm8917.h
 
-Thanks,
-Mani
-
-> 
-> ---
-> changes since v4:
-> 	updating the commit text with more information.
-> changes since v3:
-> 	- Updating commit text for multiple versions of patches.
-> changes since v2:
-> 	- Updated comments in code.
-> changes since v1:
-> 	- Add an check to avoid ringing EV DB in mhi_process_ctrl_ev_ring().
-> ---
->  drivers/bus/mhi/host/main.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index df0fbfe..1bbdb75 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -961,7 +961,9 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
->  	}
->  
->  	read_lock_bh(&mhi_cntrl->pm_lock);
-> -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
-> +
-> +	/* Ring EV DB only if there is any pending element to process */
-> +	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)) && count)
->  		mhi_ring_er_db(mhi_event);
->  	read_unlock_bh(&mhi_cntrl->pm_lock);
->  
-> @@ -1031,7 +1033,9 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
->  		count++;
->  	}
->  	read_lock_bh(&mhi_cntrl->pm_lock);
-> -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
-> +
-> +	/* Ring EV DB only if there is any pending element to process */
-> +	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)) && count)
->  		mhi_ring_er_db(mhi_event);
->  	read_unlock_bh(&mhi_cntrl->pm_lock);
->  
-> -- 
-> 2.7.4
-> 
+-- 
+2.39.1
