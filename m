@@ -2,81 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 190F46A0B2A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 14:49:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 20A366A0B3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 14:54:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234284AbjBWNtW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 08:49:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56818 "EHLO
+        id S234513AbjBWNyE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 08:54:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234611AbjBWNtO (ORCPT
+        with ESMTP id S234464AbjBWNyE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 08:49:14 -0500
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 676714FAAC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 05:49:05 -0800 (PST)
-Received: by mail-lj1-x22d.google.com with SMTP id a10so10941933ljq.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 05:49:05 -0800 (PST)
+        Thu, 23 Feb 2023 08:54:04 -0500
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3F8024CB7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 05:54:01 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id b10so2102802ljr.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 05:54:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=frB7bLXBAzoLz+jz9s0Y5YZS3DoAI1c5p0MiOZAyg3g=;
-        b=RA0VXA2x0u01eDdYnr9UigJZ2T1pl4zDq8NqGuMX5UnjXPlLjgeKxRXqQy3vLOU12v
-         JOabwvQh9gnxhIhomkRifz1DnoOv8cMNPI5C3oGD3qTtgEDAJlv9pyLmdK1/0qjsHPfj
-         U2Z1q4rG9HVbRdYmcIHenKEEwsYrYbK5Rp0UL378bayXIRu4HhAz8f2Zh/U1VoN0okaj
-         JYMBS/y+fs2BCN2jjRr2X4uO7SqfsyTE8yYoMc6vhpr7G+nepm2paL4jH0Uo3u/KrpTz
-         5z7zCPtZ0HtSWnEisORbCgNNTNWpeBL5SeW8HQrJZH9LlemOnWAbmLySna534kXjaGsw
-         92Lg==
+        bh=yYFX5pmaSVzGWi42xVOCfGboWlcT7LiUwwnbJTILE1A=;
+        b=nO8vClqZf3GWYNGDQRXrVe5XH4b4AUQTVSoPx4e6OhvKM/t6moUrffd2aXGjK9hDIH
+         lqqm5RUbr7YaI0/s8MMIl9Z89OGPm3iMRgnMjKaPyedLEarIjVS9vebhYPvU6BOjbahx
+         Zpuo6NG4GWkwaiJy/RRjcsoDb83oHsnwQnGk3K9K7YM6jbbSa1eOennFtGFInN9qYEtU
+         H/3oFyR0tdkT8s0B057loJ+Ouk8Zw+nmlGpXkxSlTkDC9YmQS9drfvsEmtlZBpk3ArTv
+         Zc7pb0bBhFwpCbFMcqBIMpeXawKwo96WpgPCahU27IN/6ie9X0esQr3lVBGo0PNNGpqY
+         s97w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=frB7bLXBAzoLz+jz9s0Y5YZS3DoAI1c5p0MiOZAyg3g=;
-        b=g9zZhwI6gBJc/x1jR/m1sT9OV1YsOPwaNzzP+vAR5qzTeMIap/SnBGf3I6SyDJhBYj
-         UAldPBOJuYcuaJ3b9KD7UjA6xMc4Yg/ITpSVJih5/Hw8peKOhyKOXQzSiMbStz+sWgRn
-         2F/RoMFWTl0Vq2JZdMTwnRmNtFznmlYyneKiqvKai1g9ZjKDFEUKQJpP2/x3/qFDbXEH
-         faZbvSJWMs3AhAFELFLDlc8ueCage+oDaWgtOL6iKiaXqhxwRoplNqY93HrfVg6enafx
-         uJcH/Mjn2kZRQt4FdSMI+uEu4s5rbC+1g91YJFLa15ZV4KbM2eoCBF93+ILgNk87TJHP
-         okqw==
-X-Gm-Message-State: AO0yUKV2+b0aQUVC3NjW5QfoiDX3lPAXkUq2548Jiu9dKiLT8DLnSMxs
-        qomE//RhvtxEPP6uBpjFg4YKcg==
-X-Google-Smtp-Source: AK7set/+fzhm8Q7+85CuVpa/CC2T12Ib2EKLG78RC9QKfOzgfhUM/TMMpg4QaxdhhCQesbzSHPM6AA==
-X-Received: by 2002:a05:651c:1614:b0:293:45f1:c1a6 with SMTP id f20-20020a05651c161400b0029345f1c1a6mr3959697ljq.0.1677160143636;
-        Thu, 23 Feb 2023 05:49:03 -0800 (PST)
+        bh=yYFX5pmaSVzGWi42xVOCfGboWlcT7LiUwwnbJTILE1A=;
+        b=OXjEf0mcA5iXpyKkY663xEMZmpdtctuSYJaUAkrPGSZw6nANEKHJTLYepdNutOM63M
+         YZMeEprHK/kWWmzmRqDwpSDupAcmvAek9VKwGdzn4ga6SU3AYyy8iWdAIkjQmo4pGSQk
+         ObHl5v/62LSIBV2fRL1ejhbugancDadskhOtumJB03czHAlQl21NQhv2HxAKG9NwyN7M
+         pNO+flFLdvORIiKFndf2vqVh5tZg2weF/Mj5O4wO17GxNCHNC8r1OO5OlV0utqirhcwA
+         8TTaKWa3v1eN1wV8jvshxk+UCzyq1uLvmTKSO95QJ+DJ90h7Nf5OMY7yXyeuVbaYJbb0
+         Jf+A==
+X-Gm-Message-State: AO0yUKW48Xax0nFQdCQXtadQuffvgZm8/pDh8c5kcrzmqo6llWVev3bI
+        C0xNKaNIkcMq8Ep87CAlODgPyA==
+X-Google-Smtp-Source: AK7set+jSSf60lhvfadRI+N7+BvjSGVGxxbhW7pvTkm9ucF3nEsyiBqltMBSG24sQdrXsPbcTwZyNw==
+X-Received: by 2002:a2e:95d4:0:b0:295:a2cf:b1ca with SMTP id y20-20020a2e95d4000000b00295a2cfb1camr172181ljh.14.1677160440153;
+        Thu, 23 Feb 2023 05:54:00 -0800 (PST)
 Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
-        by smtp.gmail.com with ESMTPSA id n16-20020ac24910000000b004b7033da2d7sm799123lfi.128.2023.02.23.05.49.01
+        by smtp.gmail.com with ESMTPSA id w13-20020a056512098d00b004db26660d86sm1001759lft.95.2023.02.23.05.53.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 05:49:03 -0800 (PST)
-Message-ID: <761e0aba-9364-557a-e6e5-e21494597dbc@linaro.org>
-Date:   Thu, 23 Feb 2023 14:49:00 +0100
+        Thu, 23 Feb 2023 05:53:59 -0800 (PST)
+Message-ID: <4e1164cf-2317-776f-54cc-322b277fd4b7@linaro.org>
+Date:   Thu, 23 Feb 2023 14:53:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v3 10/15] drm/msm/a6xx: Fix A680 highest bank bit value
+Subject: Re: [PATCH v6 2/5] arm64: dts: qcom: Add msm8939 SoC
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>
-References: <20230223-topic-gmuwrapper-v3-0-5be55a336819@linaro.org>
- <20230223-topic-gmuwrapper-v3-10-5be55a336819@linaro.org>
- <CAA8EJppi45K0hQ=1fZvf+Mps+4uEkXmLFeqdmyk-yk31CNvUsw@mail.gmail.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, djakov@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        benl@squareup.com, shawn.guo@linaro.org, fabien.parent@linaro.org,
+        leo.yan@linaro.org, dmitry.baryshkov@linaro.org,
+        stephan@gerhold.net, Jun Nie <jun.nie@linaro.org>,
+        James Willcox <jwillcox@squareup.com>,
+        Joseph Gates <jgates@squareup.com>,
+        Max Chen <mchen@squareup.com>, Zac Crosby <zac@squareup.com>,
+        Vincent Knecht <vincent.knecht@mailoo.org>
+References: <20230222120411.55197-1-bryan.odonoghue@linaro.org>
+ <20230222120411.55197-3-bryan.odonoghue@linaro.org>
+ <56ed6a30-9815-002f-8174-95e7e9fc0954@linaro.org>
+ <f852bf35-6f29-a91a-00ab-9f7b2d709328@linaro.org>
+ <78f9f327-283d-c7f9-b54b-a54efd1d264b@linaro.org>
+ <a662b604-0bef-6ee4-43d5-0480171539c3@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJppi45K0hQ=1fZvf+Mps+4uEkXmLFeqdmyk-yk31CNvUsw@mail.gmail.com>
+In-Reply-To: <a662b604-0bef-6ee4-43d5-0480171539c3@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -89,53 +91,50 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 23.02.2023 14:06, Dmitry Baryshkov wrote:
-> On Thu, 23 Feb 2023 at 14:07, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+On 23.02.2023 14:02, Bryan O'Donoghue wrote:
+> On 23/02/2023 12:53, Konrad Dybcio wrote:
 >>
->> According to the vendor sources, it's equal to 16, which makes hbb_lo
->> equal to 3.
+>>
+>> On 23.02.2023 13:51, Bryan O'Donoghue wrote:
+>>> On 22/02/2023 17:08, Konrad Dybcio wrote:
+>>>>> +            interrupt-names = "wdog", "fatal", "ready",
+>>>>> +                      "handover", "stop-ack";
+>>>> This should be a vertical list
+>>>>
+>>>>> +
+>>>>> +            clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
+>>>>> +                 <&gcc GCC_MSS_Q6_BIMC_AXI_CLK>,
+>>>>> +                 <&gcc GCC_BOOT_ROM_AHB_CLK>,
+>>>>> +                 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+>>>>> +            clock-names = "iface", "bus", "mem", "xo";
+>>>> This could also be one
+>>>>
+>>>
+>>> Sorry what are you asking for here Konrad
+>>>
+>>> clock-names = "iface",
+>>>                "bus",
+>>>
+>>> if so, why ?
+>> Yep!
+>>
+>> It's just easier to read.. you don't have to count the
+>> nth entry in a single line. Maybe this specific example
+>> is still easy for the human brain to quickly cross-reference,
+>> longer lists or lists with longer entries than 3 or so are
+>> confusing..
+>>
+>> Konrad
 > 
-> I think we might be stricken with the ddr kind difference here, but I
-> would not bet on it.
-It totally is, but it also seems to be SoC-dependent..
-I think all 8180x devices shipped with LPDDR4X FWIW
+> I'm not necessarily opposed to that, I just don't see much precedent for it.
+> 
+> But... fine.
+Well yeah.. our dt style is still evolving, but this thing is
+certainly useful, I've started asking people to do it in the
+past month or so, as we've been doing that in some places already
+and it seems to be beneficial to coherency and readability..
 
 Konrad
 > 
->>
->> Fixes: 840d10b64dad ("drm: msm: Add 680 gpu to the adreno gpu list")
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 8 +++++++-
->>  1 file changed, 7 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> index b5017c56fa1b..2c4afecdd213 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> @@ -885,12 +885,18 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
->>                 hbb_lo = 2;
->>         }
->>
->> -       if (adreno_is_a640_family(adreno_gpu)) {
->> +       if (adreno_is_a640(adreno_gpu)) {
->>                 amsbc = 1;
->>                 /* HBB = 15 */
->>                 hbb_lo = 2;
->>         }
->>
->> +       if (adreno_is_a680(adreno_gpu)) {
->> +               amsbc = 1;
->> +               /* HBB = 16 */
->> +               hbb_lo = 3;
->> +       }
->> +
->>         if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu)) {
->>                 amsbc = 1;
->>                 /* TODO: get ddr type from bootloader and use 2 for LPDDR4 */
->>
->> --
->> 2.39.2
->>
-> 
-> 
+> ---
+> bod
