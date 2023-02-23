@@ -2,81 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A22F86A1293
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 23:08:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D96E26A12AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 23:15:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229797AbjBWWId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 17:08:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44266 "EHLO
+        id S229758AbjBWWPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 17:15:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229684AbjBWWIc (ORCPT
+        with ESMTP id S229826AbjBWWPl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 17:08:32 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AF3A52DF8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 14:08:31 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id bp25so15725106lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 14:08:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677190109;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FpIYBvef67KIJ3NnrbVSWmzC1ty4BZYEeYQF6vvBuHs=;
-        b=rRNgN1gWU08liue17+9XjEUEG1VeOfSTgo5yvd8qehur7BM4JCRdUN5mWf4VfLAW8a
-         +Enuu6PZljKldSlsmUssms6QePHt9i/uuTne6UHlJ26Lg5lwO6Qf6GHvFpn3bWytmor7
-         fAQekJette0EwPBd/0blN0Tln8JyUewTruJNRA1rctEtAyr+C5gj/ZQVUe8i6rFgKWoO
-         qzmWzKfRyuSyG3EV+A513f/+vVxLW4qazldgdWp2LFio4BYwFRwlhGPUVq1JJSy0ZRC/
-         +uqLFaC6MMW0VQnaGsMJdyYgT/7RnsT9N5PltQ7euPmwMqInTU2otcxeWVQ56ja9rpVB
-         Q7Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677190109;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FpIYBvef67KIJ3NnrbVSWmzC1ty4BZYEeYQF6vvBuHs=;
-        b=xSo219xLnbPDCaA/FCwpxIWHHy2cPAKtF5pkKqCofiaLgtU/FBkg2abSQok0yfb7un
-         mt93GNYDJ27dCdBXau9PeWXaiapwHxGbbPaV6h94f9nZSSQerjesEJhb0dyO7F5QkU/d
-         nsiBm8rhcuk/TuQiFmtr7qGO7M4Z9fbIuYNr/D6eLKI+E732CXUel7mfT3nSNo2wb6/V
-         T0ucvH1M785etICWa6brUTb8uJttEjcVInk1NJ2HBWX55yWoQrZbkEMOBSy7/8qA5eg1
-         b/qkgWNIDdWN6smBGhvESM+GJiGNntnt5Sc7Y68IG7x3UvUCjyg/rcjQMMrWExhbA1QN
-         uxTw==
-X-Gm-Message-State: AO0yUKXumvGHREDtQ7+HBGPWLTkohG143MBpo3yVvX8t6R4B1CAxmcmO
-        rEOBkSKcW1si8P6ejHU2bBDQ/A==
-X-Google-Smtp-Source: AK7set8PwnvNKjEm2ttWdokuKDX5spkhC6lDHrpgx7wKKTnT4YwMbOYFGseNvXa6+hiHRE6AQhdwAg==
-X-Received: by 2002:ac2:5e84:0:b0:4dd:9f73:f3f7 with SMTP id b4-20020ac25e84000000b004dd9f73f3f7mr2185244lfq.64.1677190109505;
-        Thu, 23 Feb 2023 14:08:29 -0800 (PST)
-Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
-        by smtp.gmail.com with ESMTPSA id p9-20020a05651238c900b004dda87e7de7sm65321lft.81.2023.02.23.14.08.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 14:08:29 -0800 (PST)
-Message-ID: <907731c3-c37e-6ab0-4985-6b43e8d0a120@linaro.org>
-Date:   Thu, 23 Feb 2023 23:08:27 +0100
+        Thu, 23 Feb 2023 17:15:41 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D1645AB57
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 14:15:40 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31NG4jhp022013;
+        Thu, 23 Feb 2023 22:15:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=1pFZeZfJvlIZL3EptwVRHAcGp6VDFYkGsbbhE4f3RKA=;
+ b=BmLUzRx8EGlSUGlmDMgwAucE765+npELkyTZzEFz8TrgCBhFbKiBvjllukQFbOrEO063
+ pZ9kUyYrkxHlmFQzE6od1tw62npPQxoCLRXukbEgHA4mW5PEX8Wn33rWWTbKr9UXAM5g
+ AypQi681Hd21JKpLcxM+ZUcHWvtaPhBldYvfB4IiOYHpRTyC/wtyjdDZOZWP0Al9DQfY
+ 6J41EjaxqNdZxQJNfYtNygtTKs0DkmYj7aU3iPp829sqPG9ng8O8r/kU3dbrVISdG3as
+ sKYfOOE+ZJZuIbiW5Nh4/i1Q3Xm4wdIbugf2yhlAtjBRmEvYorQin1SJZ3CTqlCMaIM2 9A== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nwy8m2smd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 23 Feb 2023 22:15:27 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31NMFRPa004604
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 23 Feb 2023 22:15:27 GMT
+Received: from [10.110.22.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 23 Feb
+ 2023 14:15:26 -0800
+Message-ID: <85891a0c-b351-56e8-1de1-f69bf7983d26@quicinc.com>
+Date:   Thu, 23 Feb 2023 14:15:25 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 4/4] clk: qcom: smd-rpm: Add clocks for MSM8917
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/dpu: fix stack smashing in
+ dpu_hw_ctl_setup_blendstage
 Content-Language: en-US
-To:     =?UTF-8?Q?Otto_Pfl=c3=bcger?= <otto.pflueger@abscue.de>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230223180935.60546-1-otto.pflueger@abscue.de>
- <20230223180935.60546-5-otto.pflueger@abscue.de>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230223180935.60546-5-otto.pflueger@abscue.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        Amit Pundir <amit.pundir@linaro.org>
+References: <20230223095708.3688148-1-dmitry.baryshkov@linaro.org>
+ <0daf8821-a228-1180-358b-4e50f36ca4b0@quicinc.com>
+ <CAA8EJpqz-XhpEgSLTsS_ddo95y7nYmTvgop4Hj845PLbwHGmnw@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpqz-XhpEgSLTsS_ddo95y7nYmTvgop4Hj845PLbwHGmnw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 7gxqQVTuBD40XZaRnnF54rVnQ-ROn8Lf
+X-Proofpoint-ORIG-GUID: 7gxqQVTuBD40XZaRnnF54rVnQ-ROn8Lf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-23_13,2023-02-23_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ mlxscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302230184
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,71 +89,102 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 23.02.2023 19:09, Otto Pflüger wrote:
-> MSM8917 has mostly the same rpm clocks as MSM8953, but lacks RF_CLK3 and
-> IPA_CLK and additionally has the BIMC_GPU clock.
+On 2/23/2023 2:08 PM, Dmitry Baryshkov wrote:
+> Hi Abhinav,
 > 
-> Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> On Thu, 23 Feb 2023 at 21:17, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>> Hi Dmitry
+>>
+>> On 2/23/2023 1:57 AM, Dmitry Baryshkov wrote:
+>>> The rewritten dpu_hw_ctl_setup_blendstage() can lightly smash the stack
+>>> when setting the SSPP_NONE pipe. However it was unnoticed until the
+>>> kernel was tested under AOSP (with some kind of stack protection/check).
+>>>
+>>> This fixes the following backtrace:
+>>>
+>>> Unexpected kernel BRK exception at EL1
+>>> Internal error: BRK handler: 00000000f20003e8 [#1] PREEMPT SMP
+>>> Hardware name: Thundercomm Dragonboard 845c (DT)
+>>> pstate: a0400005 (NzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+>>> pc : dpu_hw_ctl_setup_blendstage+0x26c/0x278 [msm]
+>>> lr : _dpu_crtc_blend_setup+0x4b4/0x5a0 [msm]
+>>> sp : ffffffc00bdcb720
+>>> x29: ffffffc00bdcb720 x28: ffffff8085debac0 x27: 0000000000000002
+>>> x26: ffffffd74af18320 x25: ffffff8083af75a0 x24: ffffffc00bdcb878
+>>> x23: 0000000000000001 x22: 0000000000000000 x21: ffffff8085a70000
+>>> x20: ffffff8083012dc0 x19: 0000000000000001 x18: 0000000000000000
+>>> x17: 000000040044ffff x16: 045000f4b5593519 x15: 0000000000000000
+>>> x14: 000000000000000b x13: 0000000000000001 x12: 0000000000000000
+>>> x11: 0000000000000001 x10: ffffffc00bdcb764 x9 : ffffffd74af06a08
+>>> x8 : 0000000000000001 x7 : 0000000000000001 x6 : 0000000000000000
+>>> x5 : ffffffc00bdcb878 x4 : 0000000000000002 x3 : ffffffffffffffff
+>>> x2 : ffffffc00bdcb878 x1 : 0000000000000000 x0 : 0000000000000002
+>>> Call trace:
+>>>    dpu_hw_ctl_setup_blendstage+0x26c/0x278 [msm]
+>>>    _dpu_crtc_blend_setup+0x4b4/0x5a0 [msm]
+>>>    dpu_crtc_atomic_begin+0xd8/0x22c [msm]
+>>>    drm_atomic_helper_commit_planes+0x80/0x208 [drm_kms_helper]
+>>>    msm_atomic_commit_tail+0x134/0x6f0 [msm]
+>>>    commit_tail+0xa4/0x1a4 [drm_kms_helper]
+>>>    drm_atomic_helper_commit+0x170/0x184 [drm_kms_helper]
+>>>    drm_atomic_commit+0xac/0xe8
+>>>    drm_mode_atomic_ioctl+0xbf0/0xdac
+>>>    drm_ioctl_kernel+0xc4/0x178
+>>>    drm_ioctl+0x2c8/0x608
+>>>    __arm64_sys_ioctl+0xa8/0xec
+>>>    invoke_syscall+0x44/0x104
+>>>    el0_svc_common.constprop.0+0x44/0xec
+>>>    do_el0_svc+0x38/0x98
+>>>    el0_svc+0x2c/0xb4
+>>>    el0t_64_sync_handler+0xb8/0xbc
+>>>    el0t_64_sync+0x1a0/0x1a4
+>>> Code: 52800016 52800017 52800018 17ffffc7 (d4207d00)
+>>>
+>>> Fixes: 4488f71f6373 ("drm/msm/dpu: simplify blend configuration")
+>>> Reported-by: Amit Pundir <amit.pundir@linaro.org>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 4 +++-
+>>>    1 file changed, 3 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>>> index b88a2f3724e6..6c53ea560ffa 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>>> @@ -446,7 +446,9 @@ static void dpu_hw_ctl_setup_blendstage(struct dpu_hw_ctl *ctx,
+>>>                         * CTL_LAYER has 3-bit field (and extra bits in EXT register),
+>>>                         * all EXT registers has 4-bit fields.
+>>>                         */
+>>> -                     if (cfg->idx == 0) {
+>>> +                     if (cfg->idx == -1) {
+>>> +                             continue;
+>>> +                     } else if (cfg->idx == 0) {
+>>>                                mixercfg[0] |= mix << cfg->shift;
+>>>                                mixercfg[1] |= ext << cfg->ext_shift;
+>>>                        } else {
+>>
+>> Since I had not reviewed the change which introduced this, had a question.
+>>
+>> The issue here is because the shift and ext_shift are -1 for NONE and
+>> hence the shift causes overflow?
+>>
+>> If that was the issue shouldnt we protect all such cases?
+> 
+> This change protects all the cases.
+> 
+>> So lets say we use SSPP_RGB0, the multirect_index for it will always be
+>> -1 as it doesnt support smartDMA. What prevents the same issue from
+>> hitting in that case? Because you are only checking for idx and not the
+>> shifts.
+> 
+> Because for the RGB0 / rect-2 the cfg->idx will also be -1 (and
+> shift/ext_shift will be 0).
+> 
+> 
 
-Konrad
-> Changes in v2:
->  - Rebased onto linux-next-20230223
-> ---
->  drivers/clk/qcom/clk-smd-rpm.c | 35 ++++++++++++++++++++++++++++++++++
->  1 file changed, 35 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
-> index 198886c1b6c8..ae6559c7efab 100644
-> --- a/drivers/clk/qcom/clk-smd-rpm.c
-> +++ b/drivers/clk/qcom/clk-smd-rpm.c
-> @@ -573,6 +573,40 @@ static const struct rpm_smd_clk_desc rpm_clk_msm8916 = {
->  	.num_clks = ARRAY_SIZE(msm8916_clks),
->  };
->  
-> +static struct clk_smd_rpm *msm8917_clks[] = {
-> +	[RPM_SMD_XO_CLK_SRC]		= &clk_smd_rpm_branch_bi_tcxo,
-> +	[RPM_SMD_XO_A_CLK_SRC]		= &clk_smd_rpm_branch_bi_tcxo_a,
-> +	[RPM_SMD_PNOC_CLK]		= &clk_smd_rpm_bus_0_pcnoc_clk,
-> +	[RPM_SMD_PNOC_A_CLK]		= &clk_smd_rpm_bus_0_pcnoc_a_clk,
-> +	[RPM_SMD_SNOC_CLK]		= &clk_smd_rpm_bus_1_snoc_clk,
-> +	[RPM_SMD_SNOC_A_CLK]		= &clk_smd_rpm_bus_1_snoc_a_clk,
-> +	[RPM_SMD_BIMC_CLK]		= &clk_smd_rpm_bimc_clk,
-> +	[RPM_SMD_BIMC_A_CLK]		= &clk_smd_rpm_bimc_a_clk,
-> +	[RPM_SMD_BIMC_GPU_CLK]		= &clk_smd_rpm_bimc_gpu_clk,
-> +	[RPM_SMD_BIMC_GPU_A_CLK]	= &clk_smd_rpm_bimc_gpu_a_clk,
-> +	[RPM_SMD_SYSMMNOC_CLK]		= &clk_smd_rpm_bus_2_sysmmnoc_clk,
-> +	[RPM_SMD_SYSMMNOC_A_CLK]	= &clk_smd_rpm_bus_2_sysmmnoc_a_clk,
-> +	[RPM_SMD_QDSS_CLK]		= &clk_smd_rpm_qdss_clk,
-> +	[RPM_SMD_QDSS_A_CLK]		= &clk_smd_rpm_qdss_a_clk,
-> +	[RPM_SMD_BB_CLK1]		= &clk_smd_rpm_bb_clk1,
-> +	[RPM_SMD_BB_CLK1_A]		= &clk_smd_rpm_bb_clk1_a,
-> +	[RPM_SMD_BB_CLK2]		= &clk_smd_rpm_bb_clk2,
-> +	[RPM_SMD_BB_CLK2_A]		= &clk_smd_rpm_bb_clk2_a,
-> +	[RPM_SMD_RF_CLK2]		= &clk_smd_rpm_rf_clk2,
-> +	[RPM_SMD_RF_CLK2_A]		= &clk_smd_rpm_rf_clk2_a,
-> +	[RPM_SMD_DIV_CLK2]		= &clk_smd_rpm_div_clk2,
-> +	[RPM_SMD_DIV_A_CLK2]		= &clk_smd_rpm_div_clk2_a,
-> +	[RPM_SMD_BB_CLK1_PIN]		= &clk_smd_rpm_bb_clk1_pin,
-> +	[RPM_SMD_BB_CLK1_A_PIN]		= &clk_smd_rpm_bb_clk1_a_pin,
-> +	[RPM_SMD_BB_CLK2_PIN]		= &clk_smd_rpm_bb_clk2_pin,
-> +	[RPM_SMD_BB_CLK2_A_PIN]		= &clk_smd_rpm_bb_clk2_a_pin,
-> +};
-> +
-> +static const struct rpm_smd_clk_desc rpm_clk_msm8917 = {
-> +	.clks = msm8917_clks,
-> +	.num_clks = ARRAY_SIZE(msm8917_clks),
-> +};
-> +
->  static struct clk_smd_rpm *msm8936_clks[] = {
->  	[RPM_SMD_XO_CLK_SRC]		= &clk_smd_rpm_branch_bi_tcxo,
->  	[RPM_SMD_XO_A_CLK_SRC]		= &clk_smd_rpm_branch_bi_tcxo_a,
-> @@ -1228,6 +1262,7 @@ static const struct of_device_id rpm_smd_clk_match_table[] = {
->  	{ .compatible = "qcom,rpmcc-msm8226", .data = &rpm_clk_msm8974 },
->  	{ .compatible = "qcom,rpmcc-msm8909", .data = &rpm_clk_msm8909 },
->  	{ .compatible = "qcom,rpmcc-msm8916", .data = &rpm_clk_msm8916 },
-> +	{ .compatible = "qcom,rpmcc-msm8917", .data = &rpm_clk_msm8917 },
->  	{ .compatible = "qcom,rpmcc-msm8936", .data = &rpm_clk_msm8936 },
->  	{ .compatible = "qcom,rpmcc-msm8953", .data = &rpm_clk_msm8953 },
->  	{ .compatible = "qcom,rpmcc-msm8974", .data = &rpm_clk_msm8974 },
+Thanks for confirming, I have understood it now, LGTM
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+Will pick this up for -fixes
