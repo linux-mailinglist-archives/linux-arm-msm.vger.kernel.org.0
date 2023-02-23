@@ -2,130 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA1776A07AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 12:49:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DEA66A07C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 12:53:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233183AbjBWLtB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 06:49:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48978 "EHLO
+        id S233645AbjBWLx5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 06:53:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232923AbjBWLtA (ORCPT
+        with ESMTP id S233771AbjBWLx4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 06:49:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1CFA4616E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 03:48:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1677152896;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=0hd9dV+UdVIpy8dlJkRFhNqjTWUaHLmUV4zgNY9iUPE=;
-        b=ZjUfHAzLNgjZO6m8s6maUjPyi3lfJ/dZ2vBmmEU8wn2GU38V1PaFTlWgPM2P57NlcOb/AY
-        gVd9KD30y+DrLYp+3rvsPRjjdFl9VjDM7LQ6L+kVBiXFo+ahO2fkJsSKfEzhKX+710oit2
-        IavGoEVd6EVf/vMnZf8V60i+9TnJRsM=
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
- [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-478-EjFm9NgQPsK4FOYH0lutjg-1; Thu, 23 Feb 2023 06:48:15 -0500
-X-MC-Unique: EjFm9NgQPsK4FOYH0lutjg-1
-Received: by mail-il1-f200.google.com with SMTP id y2-20020a929502000000b0031707c6b348so219346ilh.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 03:48:15 -0800 (PST)
+        Thu, 23 Feb 2023 06:53:56 -0500
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 514E826CD0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 03:53:53 -0800 (PST)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-536bf92b55cso176835727b3.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 03:53:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=w5vFA5woKdP31zz1MYFFSTK/8C5in6StonTFARcQSxc=;
+        b=zdgnTMUYSKxrHmptZYB1txbg5XdYZbMJmp6zZQP60Od2bIm6d6jZvQFdxKtCN9W+ds
+         teF7nUxlb98zWxM7BJlGLpn7Plii/DjGBdRLG8eL+O7bE1LMGOYGo+/TYNgnLkBZOMi4
+         gPxVSAY+JNyveb+gLYrDInJGUg5lpfYXvw30nrJXkHe2sBRDebWKorFrGJAHQv6QK0ZC
+         gyf3peY34HC+LdFo5zPmWk3okfIloKSKWYJguTNrG9v56H+sOK5b1JgBvCjZNbERL8gM
+         Tp95lZHR1QuCkdw4v3LC1sMpdD7HrHvpPoFwqQ0lp4XTUIVXy9v0Vxjq0kjvwlbz072P
+         Zv/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0hd9dV+UdVIpy8dlJkRFhNqjTWUaHLmUV4zgNY9iUPE=;
-        b=4d45gMH4VKsb4Pn9zhrXMdoKvDUOjlW5DYwCi5JUIvgjXW9iydB/4HngWAnqWeVnFk
-         wc4FsVbu87nFMM/sMxsyBKqhml6KsTP3dHcIYFPZdeFeMpI8zO8E7XwDwyFwFanBCkvi
-         mWR93bP/Xed7LKnv9NldY3WVqzu0CtM9k9Haavy3D++4mPuikvaj4wW49VXGjF9PzTja
-         Zq9oSaJe5pO46NGM7YxvtMMpYDOHirsto/LJpdWat4okEElfQ7hClNrUv2X+pR65Psgr
-         5CLgqttJJoH4YDnU5op3V5HeC0U+lwEyqSE+qPIPu42WVvc/yfxqew1l2JITHxLdQHpJ
-         8dQg==
-X-Gm-Message-State: AO0yUKUWCufdvR081mIfP9DqVhJ9iv9I3a0aXreUHvtIDHniXglHiOSF
-        JznIdIdmsq7mt8KTX2pM1c8QJ9c4h/DzTb5w4IbHC/NaFqoVX/FIPkDpGYWxCke9WSSsTIYdTmk
-        7vb5po5f/ZuYXsxWPFA33YfmE6A==
-X-Received: by 2002:a05:6e02:b42:b0:310:e6a5:d7b1 with SMTP id f2-20020a056e020b4200b00310e6a5d7b1mr10484992ilu.15.1677152894802;
-        Thu, 23 Feb 2023 03:48:14 -0800 (PST)
-X-Google-Smtp-Source: AK7set/+vAX2+nfbz1ymcBx68tMHE3V7jGVV1AQ0g/eIMMJrgsmlsT7/9gh8ILjsIKH75Vx183cQ9w==
-X-Received: by 2002:a05:6e02:b42:b0:310:e6a5:d7b1 with SMTP id f2-20020a056e020b4200b00310e6a5d7b1mr10484976ilu.15.1677152894568;
-        Thu, 23 Feb 2023 03:48:14 -0800 (PST)
-Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id r10-20020a02c6ca000000b00363c4307bb2sm3299697jan.79.2023.02.23.03.48.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 03:48:13 -0800 (PST)
-Date:   Thu, 23 Feb 2023 06:48:12 -0500
-From:   Brian Masney <bmasney@redhat.com>
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/4] firmware: scm: Modify only the DLOAD bit in TCSR
- register for download mode
-Message-ID: <Y/dSfKGK3JPPS+Cj@x1>
-References: <1676990381-18184-1-git-send-email-quic_mojha@quicinc.com>
- <1676990381-18184-3-git-send-email-quic_mojha@quicinc.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=w5vFA5woKdP31zz1MYFFSTK/8C5in6StonTFARcQSxc=;
+        b=3ctpVzWyxZKqmggI613OqLsMJ+NntJMte5mmD0IerJkmkrZCLu/rqscc9Mhr6/+vIb
+         z6eES4S8pv/vqsZZ+jDQQtF1QMtjcOc8dRXNgrZP811Gn8YgaoAGijtVcz74loXwNLVd
+         olZtQ6tuKbXJDd9/fJCGd9nErrAREwor2Xt+5YN6UQkkcT2xJxEE0uDf+qf3rqJnYeDq
+         TQ/QSZZXzmVUvE3BIdExpQvDSUWMt2SKYNoTZF3dwG4ELb5WhigkqtxTGf7dgq6vgVKz
+         6i9LkvOCiKjxiGuG9w9lkNQjnxVBHvORkFOwUvUgPWy7TSmEi3T4smMDIBFtww14/2id
+         wTbA==
+X-Gm-Message-State: AO0yUKUPmht0AaM0f9Qd4koNVXDO2xqAASns+Cr3Un0q1F/vsxGURhKN
+        feH7VVqUpaDLJlG8ratk60rjVDIPFfuNq3PL2Yfaew==
+X-Google-Smtp-Source: AK7set8ADM3JyIy92RuH/QhTaMHo2xmNRRrEeVWSFEkvKKjyBxV3bprFl7ligPErd83/AXMtNQFr6PprUcnXTbRRc0Y=
+X-Received: by 2002:a05:690c:c13:b0:52a:9eac:92b with SMTP id
+ cl19-20020a05690c0c1300b0052a9eac092bmr2733502ywb.4.1677153232506; Thu, 23
+ Feb 2023 03:53:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1676990381-18184-3-git-send-email-quic_mojha@quicinc.com>
-User-Agent: Mutt/2.2.7 (2022-08-07)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230223095708.3688148-1-dmitry.baryshkov@linaro.org> <0efb141d-aab6-a13f-8cd7-0de0deae9af2@linaro.org>
+In-Reply-To: <0efb141d-aab6-a13f-8cd7-0de0deae9af2@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 23 Feb 2023 13:53:41 +0200
+Message-ID: <CAA8EJpo2Vp-n_kBTT-vfaGAE4jO58=NCh0MpMhTEjL3GonxWsg@mail.gmail.com>
+Subject: Re: drm/msm/dpu: fix stack smashing in dpu_hw_ctl_setup_blendstage
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 21, 2023 at 08:09:39PM +0530, Mukesh Ojha wrote:
-> CrashDump collection is based on the DLOAD bit of TCSR register.
-> To retain other bits, we read the register and modify only the DLOAD bit as
-> the other bits have their own significance.
-> 
-> Originally-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
->  drivers/firmware/qcom_scm.c | 13 +++++++++++--
->  1 file changed, 11 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 51eb853..c376ba8 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -419,6 +419,7 @@ static void qcom_scm_set_download_mode(bool enable)
->  {
->  	bool avail;
->  	int ret = 0;
-> +	u32 dload_addr_val;
+On Thu, 23 Feb 2023 at 12:57, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 23.02.2023 10:57, Dmitry Baryshkov wrote:
+> > The rewritten dpu_hw_ctl_setup_blendstage() can lightly smash the stack
+> > when setting the SSPP_NONE pipe. However it was unnoticed until the
+> > kernel was tested under AOSP (with some kind of stack protection/check).
+> >
+> > This fixes the following backtrace:
+> >
+> > Unexpected kernel BRK exception at EL1
+> > Internal error: BRK handler: 00000000f20003e8 [#1] PREEMPT SMP
+> > Hardware name: Thundercomm Dragonboard 845c (DT)
+> > pstate: a0400005 (NzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> > pc : dpu_hw_ctl_setup_blendstage+0x26c/0x278 [msm]
+> > lr : _dpu_crtc_blend_setup+0x4b4/0x5a0 [msm]
+> > sp : ffffffc00bdcb720
+> > x29: ffffffc00bdcb720 x28: ffffff8085debac0 x27: 0000000000000002
+> > x26: ffffffd74af18320 x25: ffffff8083af75a0 x24: ffffffc00bdcb878
+> > x23: 0000000000000001 x22: 0000000000000000 x21: ffffff8085a70000
+> > x20: ffffff8083012dc0 x19: 0000000000000001 x18: 0000000000000000
+> > x17: 000000040044ffff x16: 045000f4b5593519 x15: 0000000000000000
+> > x14: 000000000000000b x13: 0000000000000001 x12: 0000000000000000
+> > x11: 0000000000000001 x10: ffffffc00bdcb764 x9 : ffffffd74af06a08
+> > x8 : 0000000000000001 x7 : 0000000000000001 x6 : 0000000000000000
+> > x5 : ffffffc00bdcb878 x4 : 0000000000000002 x3 : ffffffffffffffff
+> > x2 : ffffffc00bdcb878 x1 : 0000000000000000 x0 : 0000000000000002
+> > Call trace:
+> >  dpu_hw_ctl_setup_blendstage+0x26c/0x278 [msm]
+> >  _dpu_crtc_blend_setup+0x4b4/0x5a0 [msm]
+> >  dpu_crtc_atomic_begin+0xd8/0x22c [msm]
+> >  drm_atomic_helper_commit_planes+0x80/0x208 [drm_kms_helper]
+> >  msm_atomic_commit_tail+0x134/0x6f0 [msm]
+> >  commit_tail+0xa4/0x1a4 [drm_kms_helper]
+> >  drm_atomic_helper_commit+0x170/0x184 [drm_kms_helper]
+> >  drm_atomic_commit+0xac/0xe8
+> >  drm_mode_atomic_ioctl+0xbf0/0xdac
+> >  drm_ioctl_kernel+0xc4/0x178
+> >  drm_ioctl+0x2c8/0x608
+> >  __arm64_sys_ioctl+0xa8/0xec
+> >  invoke_syscall+0x44/0x104
+> >  el0_svc_common.constprop.0+0x44/0xec
+> >  do_el0_svc+0x38/0x98
+> >  el0_svc+0x2c/0xb4
+> >  el0t_64_sync_handler+0xb8/0xbc
+> >  el0t_64_sync+0x1a0/0x1a4
+> > Code: 52800016 52800017 52800018 17ffffc7 (d4207d00)
+> >
+> > Fixes: 4488f71f6373 ("drm/msm/dpu: simplify blend configuration")
+> > Reported-by: Amit Pundir <amit.pundir@linaro.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> > index b88a2f3724e6..6c53ea560ffa 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> > @@ -446,7 +446,9 @@ static void dpu_hw_ctl_setup_blendstage(struct dpu_hw_ctl *ctx,
+> >                        * CTL_LAYER has 3-bit field (and extra bits in EXT register),
+> >                        * all EXT registers has 4-bit fields.
+> >                        */
+> > -                     if (cfg->idx == 0) {
+> > +                     if (cfg->idx == -1) {
+> if (cfg->idx == ctl_blend_config[SSPP_NONE][0].idx)?
 
-Minor nit if you happen to need to send out a v2: put in reverse
-Christmas tree order.
+Why? -1 is simpler and more obvious (and doesn't bind it only to SSPP_NONE).
 
->  
->  	avail = __qcom_scm_is_call_available(__scm->dev,
->  					     QCOM_SCM_SVC_BOOT,
-> @@ -426,8 +427,16 @@ static void qcom_scm_set_download_mode(bool enable)
->  	if (avail) {
->  		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
->  	} else if (__scm->dload_mode_addr) {
-> -		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
-> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
-> +		ret = qcom_scm_io_readl(__scm->dload_mode_addr, &dload_addr_val);
-> +		if (ret) {
-> +			dev_err(__scm->dev,
-> +				"failed to read dload mode address value: %d\n", ret);
-> +			return;
-> +		}
-> +
-> +		ret = qcom_scm_io_writel(__scm->dload_mode_addr, enable ?
-> +				dload_addr_val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
-> +				dload_addr_val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE));
+>
+> Konrad
+> > +                             continue;
+> > +                     } else if (cfg->idx == 0) {
+> >                               mixercfg[0] |= mix << cfg->shift;
+> >                               mixercfg[1] |= ext << cfg->ext_shift;
+> >                       } else {
+> >
 
-Should the dload_mode_addr variable be renamed to something else? I'm
-not sure what else is in that register.
 
-Brian
 
+-- 
+With best wishes
+Dmitry
