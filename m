@@ -2,66 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5E016A0689
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 11:48:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E982A6A0690
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 11:49:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233704AbjBWKsQ convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 05:48:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52186 "EHLO
+        id S232900AbjBWKtn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 05:49:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233756AbjBWKsN (ORCPT
+        with ESMTP id S229745AbjBWKtm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 05:48:13 -0500
-Received: from bg4.exmail.qq.com (bg4.exmail.qq.com [43.154.221.58])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F9F015572;
-        Thu, 23 Feb 2023 02:48:06 -0800 (PST)
-X-QQ-mid: bizesmtp70t1677149215tas5wyws
-Received: from [192.168.3.2] ( [111.196.135.79])
-        by bizesmtp.qq.com (ESMTP) with 
-        id ; Thu, 23 Feb 2023 18:46:52 +0800 (CST)
-X-QQ-SSF: 01200000000000C0E000000A0000000
-X-QQ-FEAT: J5JfekO1WsizcDCdP6pS0Nv0IPZH5I+BxYY5ciCZ3k/pMwPyu6rRfcjJajQNq
-        ICILx0adBsPEjHhINdWmF+2AdgWWmP8u9N4YIK3xncnwCKihgDQBjlY4Dnl9KrR09wBmbVg
-        wDoKUlf0PRMmQtYr10W8e5lvvH4ui12fBfiT18nSSzoRh7gnDUi0TPI5UDgUYdWfhnu3zf2
-        274tvazzH33/uCi2zQacBryg7qPbNCngxJcMw4YfsPcJ80dx0QPJxiwi+jYinHyC06Ose8u
-        pmuMxhpmfWFOnqRtCjATvGfyYsb7keZhzvGaQBk/vO71ueYAyQw+7rAz2nBdD2EL/tu/CMU
-        tgqjZiB5U6tw0gvwB7mTP/u6xyj3KDQL/5NXp3vPIRrYiQjQtE=
-X-QQ-GoodBg: 0
-From:   "Bin Meng" <bmeng@tinylab.org>
-To:     linux-kernel <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm: Drop CONFIG_MTD_M25P80 in various defconfig files
-Cc:     andrew <andrew@lunn.ch>, agross <agross@kernel.org>,
-        arnd <arnd@arndb.de>, andersson <andersson@kernel.org>,
-        "chuck.lever" <chuck.lever@oracle.com>,
-        dinguyen <dinguyen@kernel.org>, festevam <festevam@gmail.com>,
-        "gregory.clement" <gregory.clement@bootlin.com>,
-        "jernej.skrabec" <jernej.skrabec@gmail.com>,
-        "konrad.dybcio" <konrad.dybcio@linaro.org>,
-        "krzysztof.kozlowski" <krzysztof.kozlowski@linaro.org>,
-        linux-imx <linux-imx@nxp.com>,
-        "neil.armstrong" <neil.armstrong@linaro.org>,
-        kernel <kernel@pengutronix.de>, elliott <elliott@hpe.com>,
-        linux <linux@armlinux.org.uk>,
-        "s.hauer" <s.hauer@pengutronix.de>,
-        "sebastian.hesselbarth" <sebastian.hesselbarth@gmail.com>,
-        shawnguo <shawnguo@kernel.org>,
-        newbie13xd <newbie13xd@gmail.com>,
-        "sudeep.holla" <sudeep.holla@arm.com>, ziy <ziy@nvidia.com>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Date:   Thu, 23 Feb 2023 10:46:52 +0000
-Message-Id: <em4fed7efe-b8aa-4a34-86d4-655b0a96fec0@1adcb789.com>
-In-Reply-To: <20230210093224.689990-1-bmeng@tinylab.org>
-References: <20230210093224.689990-1-bmeng@tinylab.org>
-Reply-To: "Bin Meng" <bmeng@tinylab.org>
-User-Agent: eM_Client/9.2.1577.0
+        Thu, 23 Feb 2023 05:49:42 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C5AD4AFD5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 02:49:41 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id t11so2317218lfr.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 02:49:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Yr0y3Qeq1u2rQWHyWs/rAaWs2NbdV1kuldEYjIeP4Nk=;
+        b=A8zyKDVpRiutSwh+lkjQojMtaRp6Q9e/j5stfHXOpWPC+xGjlPEEMznGrj5xDGAxwp
+         VnGEQUA0l5RZ3cuZW+LnnUA3iDBIyr2m3xV4R6aI0BPHXzPGkcI1UqcuxUGQgsZHSJIn
+         /ec7mDoOKbk53lvUIVtm4Ko4kzF8MfwyR3B+XxdLZ9gYMwFbj6Em78zykdc3h5iHoP3A
+         r0W7qnzo8wk3JllZ+BJYCUS/jsNNFE3hyWaQe3flkUpD0r0t/WSY2/o+Of9cFnYHVzYE
+         wYIQZKmxzxTXAHlIxO2rlD9HuxJbU1jxY7Xoi6j3KFpJTnnhavKsdsSjlLx4tlY66joP
+         Goow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yr0y3Qeq1u2rQWHyWs/rAaWs2NbdV1kuldEYjIeP4Nk=;
+        b=JyPM106zz0YV9p9R/bGcALmagJx8EBCEKPM8CNkBwp0kzWGJpvhwmNErYXO/IaQJ2X
+         ckC4Vn2Xq80Le8R0syu1WwaxdL2HaJt9IFJuCivEH+3BfHcKQ7FzwNa+Si35sFihYBAl
+         lFZCBOgV8Up0A35quKTKHwUtKrXDWAIblWRV9hq3A6t+GBqJNypleSy5qkOLmrZtLAbq
+         oBThEgRRFFJWl23zAZCmluVxSTsS7QKpLsrILkJUX9l98fOQ+q/21M1TE/MznxurdxVL
+         wtPOWAElHw3VMwCWy8cGvz3yrjrXqkjm5C3cJLLLd0b/bhnscPojkkAsfCWrlGT3LsZD
+         u1FA==
+X-Gm-Message-State: AO0yUKXZ7NJcvmsg7LcqAdyRaTceJG+rz0ryqnVfDczPg1DOJowAzNW1
+        qrtsu1TCGpF8pDRVqg7vQ8DNmg==
+X-Google-Smtp-Source: AK7set/L2xUtI4IPyfWEyjYzgLb/b9TgU6bEJpxccera2h9ihdfNGwynEZlDdSYQkGFc+eduSJPTsw==
+X-Received: by 2002:a19:ad0a:0:b0:4d5:978e:8bcf with SMTP id t10-20020a19ad0a000000b004d5978e8bcfmr3377845lfc.33.1677149379532;
+        Thu, 23 Feb 2023 02:49:39 -0800 (PST)
+Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
+        by smtp.gmail.com with ESMTPSA id r28-20020ac25a5c000000b004db3890cb4bsm168085lfn.94.2023.02.23.02.49.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Feb 2023 02:49:39 -0800 (PST)
+Message-ID: <a0a7df49-0cba-927e-8bcd-d42c040845d7@linaro.org>
+Date:   Thu, 23 Feb 2023 11:49:37 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtp:tinylab.org:qybglogicsvr:qybglogicsvr3
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_MSPIKE_H2,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] arm: Drop CONFIG_MTD_M25P80 in various defconfig files
+Content-Language: en-US
+To:     Bin Meng <bmeng@tinylab.org>, linux-kernel@vger.kernel.org
+Cc:     Andrew Lunn <andrew@lunn.ch>, Andy Gross <agross@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Chuck Lever <chuck.lever@oracle.com>,
+        Dinh Nguyen <dinguyen@kernel.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Robert Elliott <elliott@hpe.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stefan Hansson <newbie13xd@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>, Zi Yan <ziy@nvidia.com>,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+References: <20230210093224.689990-1-bmeng@tinylab.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230210093224.689990-1-bmeng@tinylab.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,15 +92,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023/2/10 17:32:24, "Bin Meng" <bmeng@tinylab.org> wrote:
 
->Drop CONFIG_MTD_M25P80 that was removed in
->commit b35b9a10362d ("mtd: spi-nor: Move m25p80 code in spi-nor.c")
->
->Signed-off-by: Bin Meng <bmeng@tinylab.org>
->
->---
->
+
+On 10.02.2023 10:32, Bin Meng wrote:
+> Drop CONFIG_MTD_M25P80 that was removed in
+> commit b35b9a10362d ("mtd: spi-nor: Move m25p80 code in spi-nor.c")
+> 
+> Signed-off-by: Bin Meng <bmeng@tinylab.org>
+> 
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+> 
 >  arch/arm/configs/axm55xx_defconfig     | 2 +-
 >  arch/arm/configs/davinci_all_defconfig | 1 -
 >  arch/arm/configs/dove_defconfig        | 1 -
@@ -88,7 +115,113 @@ On 2023/2/10 17:32:24, "Bin Meng" <bmeng@tinylab.org> wrote:
 >  arch/arm/configs/qcom_defconfig        | 1 -
 >  arch/arm/configs/socfpga_defconfig     | 1 -
 >  9 files changed, 1 insertion(+), 9 deletions(-)
->
->
-
-Ping?
+> 
+> diff --git a/arch/arm/configs/axm55xx_defconfig b/arch/arm/configs/axm55xx_defconfig
+> index bfbaa2df3be5..936aecbdc129 100644
+> --- a/arch/arm/configs/axm55xx_defconfig
+> +++ b/arch/arm/configs/axm55xx_defconfig
+> @@ -85,7 +85,7 @@ CONFIG_MTD_CFI_AMDSTD=y
+>  CONFIG_MTD_CFI_STAA=y
+>  CONFIG_MTD_PHYSMAP=y
+>  CONFIG_MTD_PHYSMAP_OF=y
+> -CONFIG_MTD_M25P80=y
+> +CONFIG_MTD_SPI_NOR=y
+>  CONFIG_PROC_DEVICETREE=y
+>  CONFIG_BLK_DEV_LOOP=y
+>  CONFIG_BLK_DEV_RAM=y
+> diff --git a/arch/arm/configs/davinci_all_defconfig b/arch/arm/configs/davinci_all_defconfig
+> index 821d966c95a5..cb7a03bce291 100644
+> --- a/arch/arm/configs/davinci_all_defconfig
+> +++ b/arch/arm/configs/davinci_all_defconfig
+> @@ -63,7 +63,6 @@ CONFIG_MTD_CFI=m
+>  CONFIG_MTD_CFI_INTELEXT=m
+>  CONFIG_MTD_CFI_AMDSTD=m
+>  CONFIG_MTD_PHYSMAP=m
+> -CONFIG_MTD_M25P80=m
+>  CONFIG_MTD_RAW_NAND=m
+>  CONFIG_MTD_NAND_DAVINCI=m
+>  CONFIG_MTD_SPI_NOR=m
+> diff --git a/arch/arm/configs/dove_defconfig b/arch/arm/configs/dove_defconfig
+> index ff37f46c82fb..3f90b4b241a9 100644
+> --- a/arch/arm/configs/dove_defconfig
+> +++ b/arch/arm/configs/dove_defconfig
+> @@ -43,7 +43,6 @@ CONFIG_MTD_CFI_GEOMETRY=y
+>  CONFIG_MTD_CFI_INTELEXT=y
+>  CONFIG_MTD_CFI_STAA=y
+>  CONFIG_MTD_PHYSMAP=y
+> -CONFIG_MTD_M25P80=y
+>  CONFIG_MTD_SPI_NOR=y
+>  CONFIG_BLK_DEV_LOOP=y
+>  CONFIG_BLK_DEV_RAM=y
+> diff --git a/arch/arm/configs/keystone_defconfig b/arch/arm/configs/keystone_defconfig
+> index 4a5b9adbf2a1..36692143dd3d 100644
+> --- a/arch/arm/configs/keystone_defconfig
+> +++ b/arch/arm/configs/keystone_defconfig
+> @@ -118,7 +118,6 @@ CONFIG_MTD=y
+>  CONFIG_MTD_CMDLINE_PARTS=y
+>  CONFIG_MTD_BLOCK=y
+>  CONFIG_MTD_PLATRAM=y
+> -CONFIG_MTD_M25P80=y
+>  CONFIG_MTD_RAW_NAND=y
+>  CONFIG_MTD_NAND_DAVINCI=y
+>  CONFIG_MTD_SPI_NOR=y
+> diff --git a/arch/arm/configs/mvebu_v5_defconfig b/arch/arm/configs/mvebu_v5_defconfig
+> index 2467afd32146..26c5724c409d 100644
+> --- a/arch/arm/configs/mvebu_v5_defconfig
+> +++ b/arch/arm/configs/mvebu_v5_defconfig
+> @@ -63,7 +63,6 @@ CONFIG_MTD_CFI_GEOMETRY=y
+>  CONFIG_MTD_CFI_INTELEXT=y
+>  CONFIG_MTD_CFI_STAA=y
+>  CONFIG_MTD_PHYSMAP=y
+> -CONFIG_MTD_M25P80=y
+>  CONFIG_MTD_RAW_NAND=y
+>  CONFIG_MTD_NAND_ORION=y
+>  CONFIG_MTD_SPI_NOR=y
+> diff --git a/arch/arm/configs/mxs_defconfig b/arch/arm/configs/mxs_defconfig
+> index feb38a94c1a7..0eeef6402952 100644
+> --- a/arch/arm/configs/mxs_defconfig
+> +++ b/arch/arm/configs/mxs_defconfig
+> @@ -45,7 +45,6 @@ CONFIG_MTD=y
+>  CONFIG_MTD_CMDLINE_PARTS=y
+>  CONFIG_MTD_BLOCK=y
+>  CONFIG_MTD_DATAFLASH=y
+> -CONFIG_MTD_M25P80=y
+>  CONFIG_MTD_SST25L=y
+>  CONFIG_MTD_RAW_NAND=y
+>  CONFIG_MTD_NAND_GPMI_NAND=y
+> diff --git a/arch/arm/configs/pxa_defconfig b/arch/arm/configs/pxa_defconfig
+> index 0a0f12df40b5..851a817b52c0 100644
+> --- a/arch/arm/configs/pxa_defconfig
+> +++ b/arch/arm/configs/pxa_defconfig
+> @@ -130,7 +130,6 @@ CONFIG_MTD_ROM=m
+>  CONFIG_MTD_COMPLEX_MAPPINGS=y
+>  CONFIG_MTD_PHYSMAP=y
+>  CONFIG_MTD_PXA2XX=m
+> -CONFIG_MTD_M25P80=m
+>  CONFIG_MTD_BLOCK2MTD=y
+>  CONFIG_MTD_DOCG3=m
+>  CONFIG_MTD_ONENAND=m
+> diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
+> index b41716c1ec64..fd5581edc310 100644
+> --- a/arch/arm/configs/qcom_defconfig
+> +++ b/arch/arm/configs/qcom_defconfig
+> @@ -63,7 +63,6 @@ CONFIG_DEVTMPFS_MOUNT=y
+>  CONFIG_MTD=y
+>  CONFIG_MTD_QCOMSMEM_PARTS=y
+>  CONFIG_MTD_BLOCK=y
+> -CONFIG_MTD_M25P80=y
+>  CONFIG_MTD_RAW_NAND=y
+>  CONFIG_MTD_NAND_QCOM=y
+>  CONFIG_MTD_SPI_NOR=y
+> diff --git a/arch/arm/configs/socfpga_defconfig b/arch/arm/configs/socfpga_defconfig
+> index 70739e09d0f4..9591af0441dd 100644
+> --- a/arch/arm/configs/socfpga_defconfig
+> +++ b/arch/arm/configs/socfpga_defconfig
+> @@ -41,7 +41,6 @@ CONFIG_DEVTMPFS=y
+>  CONFIG_DEVTMPFS_MOUNT=y
+>  CONFIG_MTD=y
+>  CONFIG_MTD_BLOCK=y
+> -CONFIG_MTD_M25P80=y
+>  CONFIG_MTD_RAW_NAND=y
+>  CONFIG_MTD_NAND_DENALI_DT=y
+>  CONFIG_MTD_SPI_NOR=y
