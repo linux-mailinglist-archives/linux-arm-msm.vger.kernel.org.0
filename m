@@ -2,63 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60FAB6A083A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 13:08:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EB966A083F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 13:10:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234243AbjBWMIG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 07:08:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34400 "EHLO
+        id S233421AbjBWMKj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 07:10:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234158AbjBWMHh (ORCPT
+        with ESMTP id S229448AbjBWMKi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 07:07:37 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0815655C0D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 04:07:20 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id m7so13425958lfj.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 04:07:19 -0800 (PST)
+        Thu, 23 Feb 2023 07:10:38 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3C215504F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 04:10:09 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id r27so11396570lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 04:10:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C4+BbvaxTKosi1VX2ZfgyFw5uKrIVyEHJTEyhGEltZ8=;
-        b=Y2jcSJHhF5U7EQu4pplmwN6DCqvLxec404zwfZZnPgxsphRj/bZKem0lSAXaMsKAPF
-         4IVbe4H2jrX3UZbOoh3MyeDnq8yRX3crwsGY0UDg8F8wo1yxX+KiFtRiWeP9OTwhaSHq
-         mU3xs1HoR0dgTBhQjEv1e4VUvDqucQ1JVcdLXEeKnsvVSmZbelyiiaGNZy4ilyFoW4LF
-         fcXKmYY7Mh5f5yV3b+mA3S1dUsnPcfd9hm+IL/kC8X7lOwANQFIpXQYMnlSZnAE8EU0m
-         tB0VOaJ7j2XemYKYIO3cverm+e45CmLb9TN0zsXKm7H/4I7Blpvbpgai+dZUIc7glGGU
-         feAQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VQn70AP+A3I2sqmjhfgfqL1Y9XTnRaJMCZdiO2SRAdA=;
+        b=sRsF5eRVhlmOFCywnN66o4x7hIsjnlo+cWOI++wvBg3w7DbFNASgEvl3i4emeNfmUH
+         kKzoEjujEgFiAaYYD7THOVWUlp8iKd6Zpr6CKzVYEsifp9nhIe8JbDP7ohG1qANgSx3H
+         gEUo+g45pmRdlJPGeREwrWiYametw2jcpSB/6KviTPtGU8sM0CYf7AM/M9PfggKMBnu4
+         VW5XcA+egquL2zQdIc/+fCb0sYxw3dQpDaULAWsK/NePCEh9p6jCJlN/WKr8MBiwN4yt
+         wewBTQS7JB1n0lVHjUN1N8Jdpd96QrSTS1ONhNv9K/PcWdTkbleJHCCMjYxnznEv7Pv5
+         YBRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=C4+BbvaxTKosi1VX2ZfgyFw5uKrIVyEHJTEyhGEltZ8=;
-        b=Og5h+q66ywqFhG7/ojfO/15nlpDOqSjFDiB/M5AuKk7Fn/OFNxRR72Pxi6xn8jH70E
-         B88L6N0xKWqu774SsPuwKg0L55iwdzLug4kXUgoZomU3x5K9aenREEMSWGtOJA657bjX
-         lHf/tLUt8Is+MbI+HS3/Upa6alk9t8qc1GzuF7bVehZG7VrxxSKSbULh4JFyyyWOIcZ5
-         KGSKqSG0NU64lJqjKl0kWwIjNW5ZGMeCxqvXlVjw2rgBioorYtUq/La5y+6UThpB9HMU
-         hnBsjs5hbWplpIE4nNLvHVaz4qRQKduxWhQcgTHQSWu3oGRVoxtSKrhxMisUR71UuDIx
-         AB1Q==
-X-Gm-Message-State: AO0yUKUZay000DT6Xhx7YgS0oDjXyKm7rZXTniGwfofDkT3QOUY0yHub
-        LUEmMXJYaWR9tnl9DRlAb3m7Og==
-X-Google-Smtp-Source: AK7set/BfkcYxE6t0vClbaGDWrcWIMEVdt6dbBzCVaxKh/DZJn4Hjr2vb/yRmNsYoPwWnzNvdxDLyw==
-X-Received: by 2002:ac2:54ab:0:b0:4ce:e95c:f300 with SMTP id w11-20020ac254ab000000b004cee95cf300mr3781292lfk.39.1677154028161;
-        Thu, 23 Feb 2023 04:07:08 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VQn70AP+A3I2sqmjhfgfqL1Y9XTnRaJMCZdiO2SRAdA=;
+        b=rkxvBOq5piHrHc1EJUDBR9ZA/DyTpVLnzdLGR1/QaMkAcJOGhe8qT7ik8z7wFWQ940
+         Pt9kyRFvj6X5ThaPd6GAi9XgUY9SSaI5ytduUj2EKz5T/S9UigczDPZ3RV9pWOW0Lb9q
+         tw9lqyFdETboidue0CjfgSMYlKte8FFN8pDiy4LWheusAMtK2stAXR9BfvGN9JarKGxY
+         J0h17a67x2RCKXbuvstuRR3nrz0yuQiXp7K/RzTBxitGUC7cJoG8fKsj3G6JlPQsrhAN
+         e4tGHfsLJWPgU+ih3mTVhDqoSGk2QWAXJ/w7KqfI0Sxe6+KPA4UQhLI7Pj4/1HX2pXA7
+         FY6Q==
+X-Gm-Message-State: AO0yUKVDG4KQ+IEGaz/pzF0Hm8Dy5LC2EE88IXocaCoHLZYTwLE4aRJW
+        OGCfVLWCDKG98K374Sns5FugSQ==
+X-Google-Smtp-Source: AK7set+O7HU38OM6BC/kSjZpEGP7oZyfke11r+upQCHouYa68PvTYy0DG/uzr00PZxqYJE6A8ov2tg==
+X-Received: by 2002:ac2:560f:0:b0:4d5:c96f:f7c7 with SMTP id v15-20020ac2560f000000b004d5c96ff7c7mr3460171lfd.23.1677154122485;
+        Thu, 23 Feb 2023 04:08:42 -0800 (PST)
 Received: from [192.168.1.101] (abxi151.neoplus.adsl.tpnet.pl. [83.9.2.151])
-        by smtp.gmail.com with ESMTPSA id h23-20020a2ea497000000b0029599744c02sm414838lji.75.2023.02.23.04.07.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 04:07:07 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 23 Feb 2023 13:06:49 +0100
-Subject: [PATCH v3 15/15] drm/msm/a6xx: Add A610 speedbin support
+        by smtp.gmail.com with ESMTPSA id v26-20020ac2593a000000b004dc4d984911sm638214lfi.271.2023.02.23.04.08.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Feb 2023 04:08:42 -0800 (PST)
+Message-ID: <1c4f3f2c-d435-3721-df03-152c6468e0e3@linaro.org>
+Date:   Thu, 23 Feb 2023 13:08:40 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230223-topic-gmuwrapper-v3-15-5be55a336819@linaro.org>
-References: <20230223-topic-gmuwrapper-v3-0-5be55a336819@linaro.org>
-In-Reply-To: <20230223-topic-gmuwrapper-v3-0-5be55a336819@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3 01/15] dt-bindings: display/msm: gpu: Document GMU
+ wrapper-equipped A6xx
+Content-Language: en-US
 To:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -71,18 +70,15 @@ To:     Rob Clark <robdclark@gmail.com>,
         Akhil P Oommen <quic_akhilpo@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1677154003; l=1852;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=gmn1Idn/yrEmcHwFxm5qk9hU1gD03yCxhKSKpAQYKug=;
- b=6S8Wn5QB1UAWFq1YBi3uGUxAV7PpjS5h2hGvXXaJ1yZCevQezsRpJqu0PBnlHJn+L2usM1ipmYK9
- ml6T9bHWATtmbl+C50XUojlihXpuGxw3y8/01fMYjx91UqJg0ouL
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>
+References: <20230223-topic-gmuwrapper-v3-0-5be55a336819@linaro.org>
+ <20230223-topic-gmuwrapper-v3-1-5be55a336819@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230223-topic-gmuwrapper-v3-1-5be55a336819@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -91,64 +87,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A610 is implemented on at least three SoCs: SM6115 (bengal), SM6125
-(trinket) and SM6225 (khaje). Trinket does not support speed binning
-(only a single SKU exists) and we don't yet support khaje upstream.
-Hence, add a fuse mapping table for bengal to allow for per-chip
-frequency limiting.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 81f99f8d1978..f78077abb886 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -2151,6 +2151,30 @@ static bool a6xx_progress(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
- 	return progress;
- }
- 
-+static u32 a610_get_speed_bin(u32 fuse)
-+{
-+	/*
-+	 * There are (at least) three SoCs implementing A610: SM6125 (trinket),
-+	 * SM6115 (bengal) and SM6225 (khaje). Trinket does not have speedbinning,
-+	 * as only a single SKU exists and we don't support khaje upstream yet.
-+	 * Hence, this matching table is only valid for bengal and can be easily
-+	 * expanded if need be.
-+	 */
-+
-+	if (fuse == 0)
-+		return 0;
-+	else if (fuse == 206)
-+		return 1;
-+	else if (fuse == 200)
-+		return 2;
-+	else if (fuse == 157)
-+		return 3;
-+	else if (fuse == 127)
-+		return 4;
-+
-+	return UINT_MAX;
-+}
-+
- static u32 a618_get_speed_bin(u32 fuse)
- {
- 	if (fuse == 0)
-@@ -2247,6 +2271,9 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_gpu *adreno_gpu, u3
- {
- 	u32 val = UINT_MAX;
- 
-+	if (adreno_is_a610(adreno_gpu))
-+		val = a610_get_speed_bin(fuse);
-+
- 	if (adreno_is_a618(adreno_gpu))
- 		val = a618_get_speed_bin(fuse);
- 
+On 23.02.2023 13:06, Konrad Dybcio wrote:
+> GMU wrapper-equipped A6xx GPUs require clocks and clock-names to be
+> specified under the GPU node, just like their older cousins.
+> Account for that.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+[...]
+> -    then: # Since Adreno 6xx series clocks should be defined in GMU
+> +            enum:
+> +              - qcom,adreno-610.0
+> +              - qcom,adreno-619.1
+Immediate comment: this could be improved by checking
+the compatible of the node referenced in qcom,gmu, but
+frankly - I have no idea how to do this / whether it's
+possible with schema.
 
--- 
-2.39.2
-
+Konrad
+> +    then:
+>        properties:
+> -        clocks: false
+> -        clock-names: false
+> +        clock-names:
+> +          items:
+> +            - const: core
+> +              description: GPU Core clock
+> +            - const: iface
+> +              description: GPU Interface clock
+> +            - const: mem_iface
+> +              description: GPU Memory Interface clock
+> +            - const: alt_mem_iface
+> +              description: GPU Alternative Memory Interface clock
+> +            - const: gmu
+> +              description: CX GMU clock
+> +            - const: xo
+> +              description: GPUCC clocksource clock
+> +
+> +        reg-names:
+> +          minItems: 1
+> +          items:
+> +            - const: kgsl_3d0_reg_memory
+> +            - const: cx_dbgc
+> +
+> +      required:
+> +        - clocks
+> +        - clock-names
+> +    else:
+> +      if:
+> +        properties:
+> +          compatible:
+> +            contains:
+> +              pattern: '^qcom,adreno-6[0-9][0-9]\.[0-9]$'
+> +
+> +      then: # Starting with A6xx, the clocks are usually defined in the GMU node
+> +        properties:
+> +          clocks: false
+> +          clock-names: false
+> +
+> +          reg-names:
+> +            minItems: 1
+> +            items:
+> +              - const: kgsl_3d0_reg_memory
+> +              - const: cx_mem
+> +              - const: cx_dbgc
+>  
+>  examples:
+>    - |
+> 
