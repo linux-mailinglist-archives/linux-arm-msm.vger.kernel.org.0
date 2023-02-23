@@ -2,91 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C14D26A04AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 10:21:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE6416A04D8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 10:32:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233157AbjBWJVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 04:21:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50044 "EHLO
+        id S233446AbjBWJcP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 04:32:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjBWJVh (ORCPT
+        with ESMTP id S233751AbjBWJcM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 04:21:37 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F74E521C6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 01:21:35 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id l25so9689547wrb.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 01:21:35 -0800 (PST)
+        Thu, 23 Feb 2023 04:32:12 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10ADD3B85F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 01:32:11 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id l25so9717894wrb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 01:32:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=eJSCygSyqymwVM3qv58bXIOQ/QMwS9A0T2gOwos2ANI=;
-        b=fegQtyEWhTqmEAd0iw7X7HKpXLywzYFPBBzCm5qOIC8lDXtvSvWPLxRK1SHoHx4D8F
-         cX9nYfRK96054nl3FKHZATG+FapB5e23HntdNfvK5fJTrpOIQaNkPh/xOf2q2H/h43Se
-         U8P0v8yKtozY/YP3KYye8WS9wsVTR5g4NxnbpZFKLDDujNez4IvzyNE8MDGdtipvuMQS
-         QGoU+osQ2ysbPKou87uCJADJSCZH3B8NHlV4LoKYB+YXGLZL07eCv71HXiKC1ZUz4wsZ
-         G9TUCri7cQOq+twOG6pqmE/sgiTL2VcQhWorwnarYl22GecZP4GL0w3WTLmc7eegOgEH
-         Aq2Q==
+        bh=RGcZat4rJvZA4JvcNDS29r6hOcHFn5XfKWwq3XORVPs=;
+        b=Yt49MEJ9NqvopLj/2ozmBGZWXWZP4QGefbvOIErAMUKNhgea+wVF0D/Jy5Azg2/9Zk
+         ApR8dloCE57tigesDALBZ5JvU8wFsj0ksr5t2SsRABIVi6ikOoVO2DWbRD1JfFWTh/kW
+         H7b82HrlGm5vFPEjd19iE2kergvhiDnvJ6EPzlFW4d7fQ2FrCmsFM/T8SbLSWa6KkiHR
+         WXQzvOuUKglkxurFrTF1/e/lWj+DZ0EQwHGxFvuYLRrNyu73sxSKU/h7dDlJpCRZBD7E
+         TKvvUSIeLuPOEl1KWrpFtQim91uU9IPqshCevpoPfHOJzysW70/GRimB5io9ts3+/BUG
+         Dxiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eJSCygSyqymwVM3qv58bXIOQ/QMwS9A0T2gOwos2ANI=;
-        b=Ue0NPhcTRnrJlF0i4rpBfY4f3S+oF2IC3szT1DfIToShdR++eQZVYPnaVmIabhPzKt
-         a8ROYzJ9hDuXzV3nlTnvift3vfgXRtqfdKeWVMkGa6lJ5aV3NVFWDS6GP4jXrZ/9uvH8
-         saKJkTqoge08HU47Y0f2OSGMFsF+BDx+PS1r7Uz5AZaqKV6gam0N8OScdXFKvQXCtRIZ
-         x/JwI9RfDTTRuxRXBKBb0hQdVsV3LZdgRWTRTGqHjgj26DoC2EQqplk5mftoB0XoODhY
-         JAbxZtcGm+1kuGlhnISo7JxGgXmL6YylmCd3GBJPFOwF4FIHCwgTWZhNPAn8ektBGb90
-         5VCw==
-X-Gm-Message-State: AO0yUKVEqx2JjMJKwrEnzhtRHi9c/Xg3ITjhPLQoCobps0sbZvDWPV3Q
-        3cUt1xB/zuhSzchyElODZw8Ukw==
-X-Google-Smtp-Source: AK7set+KT38k5JXdqB9gWpe020J1FzMkLGn2pF7mw7ss+GUQRXzcwUsyPn/SBCWmwFh5a4SSTvcWZA==
-X-Received: by 2002:a5d:6a03:0:b0:2c7:84e:1cfa with SMTP id m3-20020a5d6a03000000b002c7084e1cfamr5709487wru.40.1677144093790;
-        Thu, 23 Feb 2023 01:21:33 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id v17-20020adff691000000b002c70e60eb40sm2038217wrp.11.2023.02.23.01.21.32
+        bh=RGcZat4rJvZA4JvcNDS29r6hOcHFn5XfKWwq3XORVPs=;
+        b=kLmsxQvYM/l8m1FFnyIw0kP6uGxQrPAS9E81WcSbc3QNdwoz6t7688sqb9LF9dD347
+         +yBTc+pAfiS6WzDkLYRUYDJQOXZ117C9qaSR05tsfxAoDv6tkKfcOaxcSn8OBdVRb+n3
+         WHrosktH2kVBtlSTK9uH4Q5s9urIT0FAhAz8dK/csli2OoJGwh0jAGjhlpbrj67HmdSq
+         7RIHmSVK+8/uC63AVe2EmAkHGaTHz012Bmid211JQKAIb8mSv6V8A1ZomUemk7nfaIZD
+         aq+rewXAak2BxykSKgLJ8bPOy+EIEqCO+Vv8fQyTvhsORrgf/pXrR9RJzzF7ETUBa7dB
+         RbHg==
+X-Gm-Message-State: AO0yUKUSpatD6s7hELkaTdkm+j+PAJWkYFpYNr/EwoJEb/4DynYNR3s3
+        eG8JnLrOGDKx1RzXvrQrMUMu/Q==
+X-Google-Smtp-Source: AK7set8JtmCSdtvo0Q/Dix4hkgM4WlaiSkXDAUcpvvkOj2MWIykMQbAOyl7oCrI5Oq9nTyXgJO4d4A==
+X-Received: by 2002:adf:f7d1:0:b0:2c7:bd6:68fd with SMTP id a17-20020adff7d1000000b002c70bd668fdmr4252879wrq.47.1677144729470;
+        Thu, 23 Feb 2023 01:32:09 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id a16-20020adffb90000000b002c54c92e125sm8537550wrr.46.2023.02.23.01.32.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 01:21:32 -0800 (PST)
-Message-ID: <e9fc3d3e-173c-6e8b-3f1f-187b1c72ff6c@linaro.org>
-Date:   Thu, 23 Feb 2023 09:21:30 +0000
+        Thu, 23 Feb 2023 01:32:04 -0800 (PST)
+Message-ID: <3b54cd46-1c85-6a50-4902-7e59fb00a117@linaro.org>
+Date:   Thu, 23 Feb 2023 10:32:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v10 13/26] gunyah: vm_mgr: Add ioctls to support basic
- non-proxy VM boot
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v11 06/10] dt-bindings: qcom-qce: document optional clocks
+ and clock-names properties
 Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212427.3316544-1-quic_eberman@quicinc.com>
- <1080339c-608e-6df8-8eee-b8f3bb7f396d@linaro.org>
- <320d42a0-9889-43ae-5d62-0c4cab3434c5@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <320d42a0-9889-43ae-5d62-0c4cab3434c5@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        Bjorn Andersson <andersson@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20230222172240.3235972-1-vladimir.zapolskiy@linaro.org>
+ <20230222172240.3235972-7-vladimir.zapolskiy@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230222172240.3235972-7-vladimir.zapolskiy@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -97,50 +87,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 23/02/2023 00:50, Elliot Berman wrote:
->>>
->>> +
->>> +    mem_handle = mapping->parcel.mem_handle;
->>> +    dtb_offset = ghvm->dtb_config.gpa - mapping->guest_phys_addr;
->>> +
->>> +    ret = gh_rm_vm_configure(ghvm->rm, ghvm->vmid, ghvm->auth, 
->>> mem_handle,
->>
->> where is authentication mechanism (auth) comming from? Who is supposed 
->> to set this value?
->>
->> Should it come from userspace? if so I do not see any UAPI facility to 
->> do that via VM_START ioctl.
->>
+On 22/02/2023 18:22, Vladimir Zapolskiy wrote:
+> On newer Qualcomm SoCs the crypto engine clocks are enabled by default
+> by security firmware. To drop clocks and clock-names from the list of
+> required properties use 'qcom,sm8150-qce' compatible name.
 > 
-> Right, we are only adding the support for unauthenticated VMs for now. 
-> There would be further UAPI facilities to set the authentication type.
-We have to be careful, please note that you can not change an existing 
-UAPI to accommodate new features.
-
-There are two ways to do this properly:
-
-1. Design UAPI to accommodate features that will be part of this in very 
-  soon or in future. This way the UAPI is stable and does not change 
-over time when we add support this feature in driver.
-
-In this particular case, vm authentication type is one that needs to 
-come from user, rather than kernel assuming it, so definitely this need 
-to be properly addressed by passing this info from userspace.
-Or rename this IOCTl to something like VM_START_UNAUTH_VM to make this 
-more explicit.
-
-
-2. For each feature add new UAPI as and when its required, which is 
-really the only option when we failed to design UAPIs correctly in the 
-first place.
-
---srini
-
-
+> The change is based on Neil Armstrong's observation and an original change.
 > 
->>
->>> +                0, 0, dtb_offset, ghvm->dtb_config.size);
->>> +    if (ret) { 
+> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
