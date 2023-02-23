@@ -2,79 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE6416A04D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 10:32:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B841D6A04FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 10:36:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233446AbjBWJcP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 04:32:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59558 "EHLO
+        id S233044AbjBWJgj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 04:36:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233751AbjBWJcM (ORCPT
+        with ESMTP id S233312AbjBWJgi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 04:32:12 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10ADD3B85F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 01:32:11 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id l25so9717894wrb.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 01:32:10 -0800 (PST)
+        Thu, 23 Feb 2023 04:36:38 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41158515CC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 01:36:14 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id l1so9846795wry.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 01:36:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RGcZat4rJvZA4JvcNDS29r6hOcHFn5XfKWwq3XORVPs=;
-        b=Yt49MEJ9NqvopLj/2ozmBGZWXWZP4QGefbvOIErAMUKNhgea+wVF0D/Jy5Azg2/9Zk
-         ApR8dloCE57tigesDALBZ5JvU8wFsj0ksr5t2SsRABIVi6ikOoVO2DWbRD1JfFWTh/kW
-         H7b82HrlGm5vFPEjd19iE2kergvhiDnvJ6EPzlFW4d7fQ2FrCmsFM/T8SbLSWa6KkiHR
-         WXQzvOuUKglkxurFrTF1/e/lWj+DZ0EQwHGxFvuYLRrNyu73sxSKU/h7dDlJpCRZBD7E
-         TKvvUSIeLuPOEl1KWrpFtQim91uU9IPqshCevpoPfHOJzysW70/GRimB5io9ts3+/BUG
-         Dxiw==
+        bh=8+c3O+JKb+ygyDEtjXcAkTDQCL5lhMHIdEFdwOPkUzM=;
+        b=GJAvOM7vT6y+dpNnUBSXR8Ebltv2bQljUUOjeCVhH+BHrudJbK6t3LP+tnTTJyVur7
+         S/W8Iuh4ID/TlBggamOu7aFWsNu2AMd3kK5xLMgYsbr9G/hGMCNh4kAF0htl8p4FtDpc
+         kliFUM4kqlARQ+W5qLa649a6zqvToo665hF/E0ErCtfI1V1WSv4OnuuHaxvm/RvVF3BC
+         o4gk8RuiYnYyTs4yd0Z8n1BOs2onAiZBqpj3LT1HBFN1vIQOZARwLGmGLToZajHrkgPQ
+         B5Kl01grWp/Y1cWhljIkZMdMPpUuABL61kL/hYXukh5zJN6H7NQnzHQ20N8QpSykhAqT
+         L5ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RGcZat4rJvZA4JvcNDS29r6hOcHFn5XfKWwq3XORVPs=;
-        b=kLmsxQvYM/l8m1FFnyIw0kP6uGxQrPAS9E81WcSbc3QNdwoz6t7688sqb9LF9dD347
-         +yBTc+pAfiS6WzDkLYRUYDJQOXZ117C9qaSR05tsfxAoDv6tkKfcOaxcSn8OBdVRb+n3
-         WHrosktH2kVBtlSTK9uH4Q5s9urIT0FAhAz8dK/csli2OoJGwh0jAGjhlpbrj67HmdSq
-         7RIHmSVK+8/uC63AVe2EmAkHGaTHz012Bmid211JQKAIb8mSv6V8A1ZomUemk7nfaIZD
-         aq+rewXAak2BxykSKgLJ8bPOy+EIEqCO+Vv8fQyTvhsORrgf/pXrR9RJzzF7ETUBa7dB
-         RbHg==
-X-Gm-Message-State: AO0yUKUSpatD6s7hELkaTdkm+j+PAJWkYFpYNr/EwoJEb/4DynYNR3s3
-        eG8JnLrOGDKx1RzXvrQrMUMu/Q==
-X-Google-Smtp-Source: AK7set8JtmCSdtvo0Q/Dix4hkgM4WlaiSkXDAUcpvvkOj2MWIykMQbAOyl7oCrI5Oq9nTyXgJO4d4A==
-X-Received: by 2002:adf:f7d1:0:b0:2c7:bd6:68fd with SMTP id a17-20020adff7d1000000b002c70bd668fdmr4252879wrq.47.1677144729470;
-        Thu, 23 Feb 2023 01:32:09 -0800 (PST)
+        bh=8+c3O+JKb+ygyDEtjXcAkTDQCL5lhMHIdEFdwOPkUzM=;
+        b=EnkPaRU6nghl6dTz7xbfcGmBK9ZxzEnibBfmF91HqJTt+8H0kZYY4bvqJ4T59p+sKH
+         Zg34jtNo0eR5ZsdVKEs/l2grCHYiZxILKdxXFd6yxjl1oXf70MiALDsqDDhrrBkgKOP/
+         Xfm752Ss0wcpFTh5p0SEnOaEUNCBOpyrbLNk7iXZSObHQMM6Rd4gU1ac0AK0f59xaqzM
+         q68lG8NHmJZC2z3xlu1UNuSsR5bHRrT1bEDim+yxWwXpN4QmjIKFd6fmdCS2SDYxKocs
+         ziArzwuf/lIloqWzN06oOUzmfYMLOriVQjOAKJlcJ3VOPaWHy0JXEaCHRA7PWEhiq6pf
+         8w2w==
+X-Gm-Message-State: AO0yUKWOUgBC8RTzYHw9q2RcltzrxTYu1NyevpgX3UTk3sdrZsGHPcuu
+        0s4rktCkHWl7qsRYr07BEK2uVA==
+X-Google-Smtp-Source: AK7set8QN3z8iyphsQHHkmevnZI5JlReWkBkgbZdtR+/J74U1LMkYhlHUOO2fryJAU1hiUfczkXfHA==
+X-Received: by 2002:a5d:6a04:0:b0:2c3:db98:3e87 with SMTP id m4-20020a5d6a04000000b002c3db983e87mr11353074wru.20.1677144965983;
+        Thu, 23 Feb 2023 01:36:05 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id a16-20020adffb90000000b002c54c92e125sm8537550wrr.46.2023.02.23.01.32.03
+        by smtp.gmail.com with ESMTPSA id n10-20020a05600c500a00b003ea57808179sm1577581wmr.38.2023.02.23.01.36.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 01:32:04 -0800 (PST)
-Message-ID: <3b54cd46-1c85-6a50-4902-7e59fb00a117@linaro.org>
-Date:   Thu, 23 Feb 2023 10:32:02 +0100
+        Thu, 23 Feb 2023 01:36:05 -0800 (PST)
+Message-ID: <4e2ea3e3-8a5d-0e9f-f16a-acedacc99b95@linaro.org>
+Date:   Thu, 23 Feb 2023 10:36:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v11 06/10] dt-bindings: qcom-qce: document optional clocks
- and clock-names properties
+Subject: Re: [PATCH 01/11] dt-bindings: PCI: qcom: Update maintainers entry
 Content-Language: en-US
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-References: <20230222172240.3235972-1-vladimir.zapolskiy@linaro.org>
- <20230222172240.3235972-7-vladimir.zapolskiy@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        andersson@kernel.org, lpieralisi@kernel.org, robh@kernel.org,
+        kw@linux.com, krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org
+Cc:     konrad.dybcio@linaro.org, bhelgaas@google.com, kishon@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230222153251.254492-1-manivannan.sadhasivam@linaro.org>
+ <20230222153251.254492-2-manivannan.sadhasivam@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230222172240.3235972-7-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20230222153251.254492-2-manivannan.sadhasivam@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,19 +80,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/02/2023 18:22, Vladimir Zapolskiy wrote:
-> On newer Qualcomm SoCs the crypto engine clocks are enabled by default
-> by security firmware. To drop clocks and clock-names from the list of
-> required properties use 'qcom,sm8150-qce' compatible name.
+On 22/02/2023 16:32, Manivannan Sadhasivam wrote:
+> Stan is no longer working with MMSOL and expressed his interest to not
+> continue maintaining Qcom PCIe driver. Since I took over the driver
+> maintainership, I'm stepping in to maintain the binding also.
 > 
-> The change is based on Neil Armstrong's observation and an original change.
-> 
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
