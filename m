@@ -2,196 +2,279 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 573E66A00E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 02:55:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C59F6A00F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 02:59:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233014AbjBWBzh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 20:55:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58408 "EHLO
+        id S232770AbjBWB7o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 20:59:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230048AbjBWBzg (ORCPT
+        with ESMTP id S231493AbjBWB7o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 20:55:36 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7064113FF;
-        Wed, 22 Feb 2023 17:55:34 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31N1C773023643;
-        Thu, 23 Feb 2023 01:55:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3tFARqURuZ0F1rOR81RT4P4rlziCK2DZUB77v3kvH7M=;
- b=AMGNodXn4Y29uW5OlaNtyn9tzLIbKVI36n0RUEmh+0TQAaoCOVY4hO4UwUadhSqfrR7H
- 4H1pFG+wxD8ufh2dzQvpIApoHE4oavkUpqIUZH6dxd266GbRnkiohSiihoK755YgZZsR
- SddGexoYxswWbqGfuKtgYJTq0Hb2fDl/oB+VlduiMLMt3vvAtM+3ZJxXD0R1yFokD1fJ
- YgiDz+iVZ4IQj6dFTRPqA7phk6zaQDcAzxE5/pt90olazG/aNpaEhU6li7EbNjE84FvM
- +zw42R3Xg+K9U6Fcw9mOHVSUeikL9bPx5prOP+HN6N9M2JsJolEoTaAprVJlknLEQHDn KA== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nwfh02gqc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Feb 2023 01:55:18 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31N1tII2021720
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Feb 2023 01:55:18 GMT
-Received: from [10.134.67.48] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 22 Feb
- 2023 17:55:17 -0800
-Message-ID: <74c19e48-481a-7be9-e287-ca1f7a659c21@quicinc.com>
-Date:   Wed, 22 Feb 2023 17:55:17 -0800
+        Wed, 22 Feb 2023 20:59:44 -0500
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBEC31816A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 17:59:42 -0800 (PST)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-536b7ffdd34so159058017b3.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 17:59:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=IP6lDzcBIzEEnBgehiJD2Dl3S2juwhkS/TNCDBV4bqk=;
+        b=vzANCIUaqHw3c7P03agBctNixVdLAdG+6pPZcSEUFfgf5gsb19BeUraB2ZZKYTWUSE
+         PKHWYuCw2UtdRMzBStkdZvpTF4n8XPGx5wYi9XQFKMwnHw4AUVByG6US80YPQMYnDPKA
+         f4TjrkPTgT58cK/kDXObq+PFYgyLzIlHOneERxEzrKOtzr2mivmi42cjdCFEJClSPfov
+         +EGAQroSjTAZzzCJV+g7Fq10Ei5Lg5yZKXNPRSxXkOk+8IKToVaO6nUY5XS7IOVe56t+
+         eh1Q1FqAD/h2lFQ6QtSrOzl1AaPDWJ3Vr+60S3taoQfIPSdJ9g0hibc+qFp/S6z77Yry
+         KWzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IP6lDzcBIzEEnBgehiJD2Dl3S2juwhkS/TNCDBV4bqk=;
+        b=ZUT9zz6iR5iJiPQtTv7x6xtdoGelcHi7Y8tPyiNFbiAtwbL9xHJIEjWeNcAt/CrWlU
+         wCBoQ42BeESbbw0ZTT5kfTKE6ZmRoB4a3r4xsjVZs7d9T8sO+C+kd2AugPMC1ZNgltP4
+         6Zlymt0GvZ90frRcQ6CnsEwTkLQ2CFKJgjsMj7vN40dkzT5R1zokf2CS4nuV64QZXEjN
+         bfrTvZrRfA59g+2d3u8zEbh2JmIUuUjTzK5qkC9CtxjONJRo+QhaFEboOTWQFLVEENOB
+         pfw2JKJwgSEshPABNOTQ5NFdrjwu2NuQx8qWinDyYWrPMcqAwhFQ3bGFKJt7Zze+z8ey
+         45GA==
+X-Gm-Message-State: AO0yUKUhGr3EDXl28WOOeFC2JCNqvDLqVfnlLCkfZ7NV9+J5dZKN1DeI
+        NYqXcr5GX3tgw8NN3nyByNtKlrstSJ6OSHdaqdEcjA==
+X-Google-Smtp-Source: AK7set9F5W2lrAqWpjZeQLGOdq45GnY7482NBqzW+2+US4qyL2EIzk7Ov1OS/drJfPF6ndIUcZshRtPP2zJQkmMROeg=
+X-Received: by 2002:a81:b660:0:b0:533:9ffb:cb13 with SMTP id
+ h32-20020a81b660000000b005339ffbcb13mr1614152ywk.3.1677117581829; Wed, 22 Feb
+ 2023 17:59:41 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v10 15/26] gunyah: rsc_mgr: Add platform ops on
- mem_lend/mem_reclaim
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Alex Elder <elder@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212448.3318756-1-quic_eberman@quicinc.com>
- <963d84e8-7b91-c278-1978-4e73d73f7c6f@linaro.org>
- <7aa025a1-b211-f04c-9169-236102fe27fe@quicinc.com>
- <dea710b6-b627-08e9-3d26-d73e6be2e852@linaro.org>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <dea710b6-b627-08e9-3d26-d73e6be2e852@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Zxazv_018zfZqQGMD80Fr5WUnEbIOd2X
-X-Proofpoint-GUID: Zxazv_018zfZqQGMD80Fr5WUnEbIOd2X
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-22_12,2023-02-22_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 bulkscore=0 mlxlogscore=999 phishscore=0
- impostorscore=0 mlxscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
- spamscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302230015
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230223-topic-opp-v2-0-24ed24cd7358@linaro.org> <20230223-topic-opp-v2-2-24ed24cd7358@linaro.org>
+In-Reply-To: <20230223-topic-opp-v2-2-24ed24cd7358@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 23 Feb 2023 03:59:31 +0200
+Message-ID: <CAA8EJpoQG014xZp23VeT4FYC_GNjTw7M3q9CMvtj0AEJrhknPA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] drm/msm/adreno: Use OPP for every GPU generation
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 23 Feb 2023 at 03:47, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> Some older GPUs (namely a2xx with no opp tables at all and a320 with
+> downstream-remnants gpu pwrlevels) used not to have OPP tables. They
+> both however had just one frequency defined, making it extremely easy
+> to construct such an OPP table from within the driver if need be.
+>
+> Do so and switch all clk_set_rate calls on core_clk to their OPP
+> counterparts.
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-On 2/22/2023 2:21 AM, Srinivas Kandagatla wrote:
-> 
-> 
-> On 21/02/2023 21:22, Elliot Berman wrote:
->>
->>
->> On 2/21/2023 6:51 AM, Srinivas Kandagatla wrote:
->>>
->>>
->>> On 14/02/2023 21:24, Elliot Berman wrote:
->> [snip]
->>>> +
->>>> +static struct gunyah_rm_platform_ops *rm_platform_ops;
->>>> +static DECLARE_RWSEM(rm_platform_ops_lock);
->>>
->>> Why do we need this read/write lock or this global rm_platform_ops 
->>> here, AFAIU, there will be only one instance of platform_ops per 
->>> platform.
->>>
->>> This should be a core part of the gunyah and its driver early setup, 
->>> that should give us pretty much lock less behaviour.
->>>
->>> We should be able to determine by Hypervisor UUID that its on 
->>> Qualcomm platform or not, during early gunyah setup which should help 
->>> us setup the platfrom ops accordingly.
->>>
->>> This should also help cleanup some of the gunyah code that was added 
->>> futher down in this patchset.
->>
->> I'm guessing the direction to take is:
->>
->>    config GUNYAH
->>      select QCOM_SCM if ARCH_QCOM
-> 
-> This is how other kernel drivers use SCM.
-> 
->>
->> and have vm_mgr call directly into qcom_scm driver if the UID matches?
-> 
-> Yes that is the plan, we could have these callbacks as part key data 
-> structure like struct gh_rm and update it at very early in setup stage 
-> based on UUID match.
-> 
-> 
->>
->> We have an Android requirement to enable CONFIG_GUNYAH=y and 
->> CONFIG_QCOM_SCM=m, but it wouldn't be possible with this design. The 
-> 
-> Am not sure how this will work, if gunyah for QCOM Platform is depended 
-> on SCM then there is no way that gunyah could be a inbuilt and make scm 
-> a module. >
-> On the other hand with the existing design gunyah will not be functional 
-> until scm driver is loaded and platform hooks are registered. This 
-> runtime dependency design does not express the dependency correctly and 
-> the only way to know if gunyah is functional is keep trying which can 
-> only work after scm driver is probed.
-> 
-> This also raises the design question on how much of platform hooks 
-> dependency is captured at gunyah core and api level, with state of 
-> current code /dev/gunyah will be created even without platform hooks and 
-> let the userspace use it which then only fail at hyp call level.
-> 
-> Other issue with current design is, scm module can be unloaded under the 
-> hood leaving gunyah with NULL pointers to those platform hook functions. 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Minor nit below.
+
+> ---
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 99 +++++++++++++++------------------
+>  drivers/gpu/drm/msm/msm_gpu.c           |  4 +-
+>  drivers/gpu/drm/msm/msm_gpu_devfreq.c   |  2 +-
+>  3 files changed, 48 insertions(+), 57 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index ce6b76c45b6f..8721e3d6231a 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -922,73 +922,48 @@ void adreno_wait_ring(struct msm_ringbuffer *ring, uint32_t ndwords)
+>                         ring->id);
+>  }
+>
+> -/* Get legacy powerlevels from qcom,gpu-pwrlevels and populate the opp table */
+> -static int adreno_get_legacy_pwrlevels(struct device *dev)
+> -{
+> -       struct device_node *child, *node;
+> -       int ret;
+> -
+> -       node = of_get_compatible_child(dev->of_node, "qcom,gpu-pwrlevels");
+> -       if (!node) {
+> -               DRM_DEV_DEBUG(dev, "Could not find the GPU powerlevels\n");
+> -               return -ENXIO;
+> -       }
+> -
+> -       for_each_child_of_node(node, child) {
+> -               unsigned int val;
+> -
+> -               ret = of_property_read_u32(child, "qcom,gpu-freq", &val);
+> -               if (ret)
+> -                       continue;
+> -
+> -               /*
+> -                * Skip the intentionally bogus clock value found at the bottom
+> -                * of most legacy frequency tables
+> -                */
+> -               if (val != 27000000)
+> -                       dev_pm_opp_add(dev, val, 0);
+> -       }
+> -
+> -       of_node_put(node);
+> -
+> -       return 0;
+> -}
+> -
+> -static void adreno_get_pwrlevels(struct device *dev,
+> +static int adreno_get_pwrlevels(struct device *dev,
+>                 struct msm_gpu *gpu)
+>  {
+> +       struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>         unsigned long freq = ULONG_MAX;
+>         struct dev_pm_opp *opp;
+>         int ret;
+>
+>         gpu->fast_rate = 0;
+>
+> -       /* You down with OPP? */
+> -       if (!of_find_property(dev->of_node, "operating-points-v2", NULL))
+> -               ret = adreno_get_legacy_pwrlevels(dev);
+> -       else {
+> -               ret = devm_pm_opp_of_add_table(dev);
+> -               if (ret)
+> -                       DRM_DEV_ERROR(dev, "Unable to set the OPP table\n");
+> -       }
+> -
+> -       if (!ret) {
+> -               /* Find the fastest defined rate */
+> -               opp = dev_pm_opp_find_freq_floor(dev, &freq);
+> -               if (!IS_ERR(opp)) {
+> -                       gpu->fast_rate = freq;
+> -                       dev_pm_opp_put(opp);
+> +       /* devm_pm_opp_of_add_table may error out but will still create an OPP table */
+> +       ret = devm_pm_opp_of_add_table(dev);
+> +       if (ret == -ENODEV) {
+> +               /* Special cases for ancient hw with ancient DT bindings */
+> +               if (adreno_is_a2xx(adreno_gpu)) {
+> +                       dev_warn(dev, "Unable to find the OPP table. Falling back to 200 MHz.\n");
+> +                       dev_pm_opp_add(dev, 200000000, 0);
+> +               } else if (adreno_is_a320(adreno_gpu)) {
+> +                       dev_warn(dev, "Unable to find the OPP table. Falling back to 450 MHz.\n");
+> +                       dev_pm_opp_add(dev, 450000000, 0);
+> +               } else {
+> +                       DRM_DEV_ERROR(dev, "Unable to find the OPP table\n");
+> +                       return -ENODEV;
+>                 }
+> +       } else if (ret) {
+> +               DRM_DEV_ERROR(dev, "Unable to set the OPP table\n");
+> +               return ret;
+>         }
+>
+> -       if (!gpu->fast_rate) {
+> -               dev_warn(dev,
+> -                       "Could not find a clock rate. Using a reasonable default\n");
+> -               /* Pick a suitably safe clock speed for any target */
+> -               gpu->fast_rate = 200000000;
+> +       /* Find the fastest defined rate */
+> +       opp = dev_pm_opp_find_freq_floor(dev, &freq);
+> +
+> +       if (IS_ERR(opp))
+> +               return PTR_ERR(opp);
+> +       else {
+> +               gpu->fast_rate = freq;
+> +               dev_pm_opp_put(opp);
+>         }
+
+Nit: you can drop else {} here.
+
+>
+>         DBG("fast_rate=%u, slow_rate=27000000", gpu->fast_rate);
+> +
+> +       return 0;
+>  }
+>
+>  int adreno_gpu_ocmem_init(struct device *dev, struct adreno_gpu *adreno_gpu,
+> @@ -1046,6 +1021,20 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>         struct adreno_rev *rev = &config->rev;
+>         const char *gpu_name;
+>         u32 speedbin;
+> +       int ret;
+> +
+> +       /*
+> +        * This can only be done before devm_pm_opp_of_add_table(), or
+> +        * dev_pm_opp_set_config() will WARN_ON()
+> +        */
+> +       if (IS_ERR(devm_clk_get(dev, "core"))) {
+> +               /*
+> +                * If "core" is absent, go for the legacy clock name.
+> +                * If we got this far in probing, it's a given one of them exists.
+> +                */
+> +               devm_pm_opp_set_clkname(dev, "core_clk");
+> +       } else
+> +               devm_pm_opp_set_clkname(dev, "core");
+>
+>         adreno_gpu->funcs = funcs;
+>         adreno_gpu->info = adreno_info(config->rev);
+> @@ -1070,7 +1059,9 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>
+>         adreno_gpu_config.nr_rings = nr_rings;
+>
+> -       adreno_get_pwrlevels(dev, gpu);
+> +       ret = adreno_get_pwrlevels(dev, gpu);
+> +       if (ret)
+> +               return ret;
+>
+>         pm_runtime_set_autosuspend_delay(dev,
+>                 adreno_gpu->info->inactive_period);
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 380249500325..cdcb00df3f25 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -59,7 +59,7 @@ static int disable_pwrrail(struct msm_gpu *gpu)
+>  static int enable_clk(struct msm_gpu *gpu)
+>  {
+>         if (gpu->core_clk && gpu->fast_rate)
+> -               clk_set_rate(gpu->core_clk, gpu->fast_rate);
+> +               dev_pm_opp_set_rate(&gpu->pdev->dev, gpu->fast_rate);
+>
+>         /* Set the RBBM timer rate to 19.2Mhz */
+>         if (gpu->rbbmtimer_clk)
+> @@ -78,7 +78,7 @@ static int disable_clk(struct msm_gpu *gpu)
+>          * will be rounded down to zero anyway so it all works out.
+>          */
+>         if (gpu->core_clk)
+> -               clk_set_rate(gpu->core_clk, 27000000);
+> +               dev_pm_opp_set_rate(&gpu->pdev->dev, 27000000);
+>
+>         if (gpu->rbbmtimer_clk)
+>                 clk_set_rate(gpu->rbbmtimer_clk, 0);
+> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> index e27dbf12b5e8..ea70c1c32d94 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> @@ -48,7 +48,7 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
+>                 gpu->funcs->gpu_set_freq(gpu, opp, df->suspended);
+>                 mutex_unlock(&df->lock);
+>         } else {
+> -               clk_set_rate(gpu->core_clk, *freq);
+> +               dev_pm_opp_set_rate(dev, *freq);
+>         }
+>
+>         dev_pm_opp_put(opp);
+>
+> --
+> 2.39.2
+>
 
 
-This is not possible because SCM module can't be unloaded (except with 
-CONFIG_MODULE_FORCE_UNLOAD). I can also increase refcount of qcom_scm.ko 
-module to be more correct.
-
-> This is the kind of issues we could see if the dependency is not 
-> expressed from bottom up. >
-> The current design is not really capturing the depended components 
-> accurately.
-> 
-> Considering platform hooks as a core resource to gunyah on Qualcomm 
-> platform is something that needs attention. If we can fix that then it 
-> might be doable to have QCOM_SCM=m and CONFIG_GUNYAH=y.
-> 
-
-I'm open to ideas. I don't see this as being a real-world issue because 
-default defconfig has QCOM_SCM=y and all Qualcomm platforms enable 
-QCOM_SCM at least as =m.
-
-Thanks,
-Elliot
-
-> 
-> --srini
->> platform hooks implementation allows GUNYAH and QCOM_SCM to be enabled 
->> without setting lower bound of the other.
->>
->> - Elliot
+-- 
+With best wishes
+Dmitry
