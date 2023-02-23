@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A6376A1223
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 22:37:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 142AF6A126E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 22:59:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229460AbjBWVhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 16:37:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49446 "EHLO
+        id S229684AbjBWV7D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 16:59:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229464AbjBWVhQ (ORCPT
+        with ESMTP id S229468AbjBWV7C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 16:37:16 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC35D59E54
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 13:37:13 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id y2so10188350pjg.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 13:37:13 -0800 (PST)
+        Thu, 23 Feb 2023 16:59:02 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27D371FDA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 13:59:01 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id z20-20020a17090a8b9400b002372d7f823eso740813pjn.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 13:59:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=z7+aUg9HXQ/A/eUt8v18nKugzdSz6vl7sg4McbH6tWQ=;
-        b=c0u0fvJZo7cq6NMR9jPgTY+MYZwgs+0jV6PRHowGAKrgQuoUhvj3TL13DAL7cHpEIg
-         4fYxMXbiP4VqePjSGrYZ+GgoINswsELo4klKlaOH4DjNL3MId9Z0yRYhzhfiPzf14+Js
-         l5sOFeOLeZTeRxCU5FJ7yUA5tg8DlZpNSY3LQYP/lIR8O/awnhgVGJ4sEswcpLfqh6ux
-         GeK5MXrLx3lqT4df5CdiOamajjJAW0KBcA5PN6wJTJ6HgbUrsXmFllSjzjM7WvPpOqsO
-         TE70o8gCt2etNpQiPKSBG2B/atIKnm7rJoR0iG6sIKDmvr+I3CnqWdiZmk1xPB6cJt5x
-         hIvQ==
+        bh=s4Mr/rCIfznjMH6ZhmV4S/R+2E0ra9anHB7zT/P7eKw=;
+        b=fmoe7GqEAskBDcDzNZHbQZoj09JyGfUXYYKF5nEbfxEGliwyTZ78C8xVaf1Q5X8HJl
+         c2294rdMFOUVcTOP8Y2gbuHZY3Cn3197Pqoy1qcFdlpbO1ErMVeuKjjdUDlW6kICPt8K
+         xqzuhbgC6VvbLXb440TXkCn/hApWyobxQqgZ9OEY5ZkGor1G468/XaI1YePz/7mFn6/3
+         yke+cSm08fEsWLdvWGmGAHsQ50X+yxHCklgX/YHAuKNIgH3k/mxNjkZqPXZTlxYm6nsT
+         /O9jAsS/553PM2fsIgDltac4CNriIRC0nrWJzVfzkkJxNLd3kuK5NL7enclap6D/Djqk
+         5Riw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z7+aUg9HXQ/A/eUt8v18nKugzdSz6vl7sg4McbH6tWQ=;
-        b=IZ8RxGjrts1QJV+XHfiNR9MPwXB4dhM1TibnIEqZgMmubfcvK65rpjDOjLLanb3PFI
-         c5gA94wc9KETiNljDTWw8XQtv+baZ+W0HgR13IffQgasK7+xbgouUknyBOviBzRORBeZ
-         aBKEmEE4o7EV8Uk3o2egHD6BxvFLSgV3SC2BjnI+vHh4SS5sQ3gpYaCZP+zKrXqW3mEL
-         t57ZCUPg+Ro7eQLBOIiBgIF5f9QJPHxvA8NtvOf19sDOVpbY3ixJOkRls+hg1s2oFQCW
-         s7h3w6MXdYscCO1Cl28jryExnzaGaqK6s6A6K0EJgSOSTw9s9PErVRpnnaNHNYxdE9dO
-         rsqw==
-X-Gm-Message-State: AO0yUKW1rUNWqOsuk5jdRsnKNsdAaQcWKjfFIyCop9KnNq7KiaT05WDV
-        H+YlQlud/dZJzD1t3onkUK4cgg==
-X-Google-Smtp-Source: AK7set+WA4y6isMIp2ZzVMyILhKLJ1WQxXMtedotrSE0LCPg6li/VQItDsL6LiRCl1UMeJqGyYTlRQ==
-X-Received: by 2002:a05:6a20:6918:b0:c7:164c:edf7 with SMTP id q24-20020a056a20691800b000c7164cedf7mr12929189pzj.36.1677188233241;
-        Thu, 23 Feb 2023 13:37:13 -0800 (PST)
+        bh=s4Mr/rCIfznjMH6ZhmV4S/R+2E0ra9anHB7zT/P7eKw=;
+        b=cLg/izoskwxysE20Dn4nIWv6jb/vCiJHZ1WIacnUp9FyIrNngCyHyNr03OJo79gvh7
+         Y9JWdFQ4queD1jXCsPGpfts1Cs33OErRr3hEQ7HiMsgoa5JTOqhQw2GjRpMaFqlsVK5n
+         TfZoQ8tcdWniFxf0bunXHek9vwkWryYYzOU3mnTGVFXWD8DhbgrIr/Ncup2xLETWx+84
+         LKYzv8R/zLFR99KXWVG98W38ILqZnVb7EBHb/+4wIikDQdgFzHxQINy1PjZ+LU2TtDpZ
+         +UT/4m9d0lIE2bwa96Z3ZIlP7/3VJQmN69cDbJJNcITKRhrIiVmLjRVbv2DggEtsKp9i
+         6vYA==
+X-Gm-Message-State: AO0yUKUnnN1E/+EFsZRr1SedTGEfaaY623SI3CBD+U99c8pYrP2sKDF+
+        apw4jC2Tbs22mJ02sNmp8vsVig==
+X-Google-Smtp-Source: AK7set+IuofcGG5Kuc+wgMaj11Z8DA++Rd/x/pbYLU/+F/IK9///eNtuG5BrHiJykcQjod2gP5rnrA==
+X-Received: by 2002:a05:6a21:33a4:b0:cc:59b7:79e6 with SMTP id yy36-20020a056a2133a400b000cc59b779e6mr1112752pzb.24.1677189540582;
+        Thu, 23 Feb 2023 13:59:00 -0800 (PST)
 Received: from [10.211.55.3] (c-73-221-130-71.hsd1.wa.comcast.net. [73.221.130.71])
-        by smtp.gmail.com with ESMTPSA id s23-20020a62e717000000b005a9cb8edee3sm3881780pfh.85.2023.02.23.13.36.59
+        by smtp.gmail.com with ESMTPSA id x5-20020a654145000000b00502ecb91940sm3043520pgp.55.2023.02.23.13.58.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 13:37:01 -0800 (PST)
-Message-ID: <556ab51e-ddf8-b56b-1743-36f3b6d623d1@linaro.org>
-Date:   Thu, 23 Feb 2023 15:36:58 -0600
+        Thu, 23 Feb 2023 13:59:00 -0800 (PST)
+Message-ID: <5d67ee67-e63f-1393-1455-bfb6b2ddaeb5@linaro.org>
+Date:   Thu, 23 Feb 2023 15:58:58 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v10 09/26] gunyah: rsc_mgr: Add VM lifecycle RPC
+Subject: Re: [PATCH v10 03/26] gunyah: Common types and error codes for Gunyah
+ hypercalls
 Content-Language: en-US
 To:     Elliot Berman <quic_eberman@quicinc.com>,
         Alex Elder <elder@linaro.org>,
@@ -80,9 +81,9 @@ Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
 References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212343.3311875-1-quic_eberman@quicinc.com>
+ <20230214211229.3239350-4-quic_eberman@quicinc.com>
 From:   Alex Elder <alex.elder@linaro.org>
-In-Reply-To: <20230214212343.3311875-1-quic_eberman@quicinc.com>
+In-Reply-To: <20230214211229.3239350-4-quic_eberman@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -94,154 +95,122 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/14/23 3:23 PM, Elliot Berman wrote:
+On 2/14/23 3:12 PM, Elliot Berman wrote:
+> Add architecture-independent standard error codes, types, and macros for
+> Gunyah hypercalls.
 > 
-> Add Gunyah Resource Manager RPC to launch an unauthenticated VM.
-> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->   drivers/virt/gunyah/Makefile      |   2 +-
->   drivers/virt/gunyah/rsc_mgr.h     |  45 ++++++
->   drivers/virt/gunyah/rsc_mgr_rpc.c | 226 ++++++++++++++++++++++++++++++
->   include/linux/gunyah_rsc_mgr.h    |  73 ++++++++++
->   4 files changed, 345 insertions(+), 1 deletion(-)
->   create mode 100644 drivers/virt/gunyah/rsc_mgr_rpc.c
+>   include/linux/gunyah.h | 82 ++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 82 insertions(+)
+>   create mode 100644 include/linux/gunyah.h
 > 
-> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
-> index cc864ff5abbb..de29769f2f3f 100644
-> --- a/drivers/virt/gunyah/Makefile
-> +++ b/drivers/virt/gunyah/Makefile
-> @@ -2,5 +2,5 @@
->   
->   obj-$(CONFIG_GUNYAH) += gunyah.o
->   
-> -gunyah_rsc_mgr-y += rsc_mgr.o
-> +gunyah_rsc_mgr-y += rsc_mgr.o rsc_mgr_rpc.o
->   obj-$(CONFIG_GUNYAH) += gunyah_rsc_mgr.o
-> diff --git a/drivers/virt/gunyah/rsc_mgr.h b/drivers/virt/gunyah/rsc_mgr.h
-> index d4e799a7526f..7406237bc66d 100644
-> --- a/drivers/virt/gunyah/rsc_mgr.h
-> +++ b/drivers/virt/gunyah/rsc_mgr.h
-> @@ -74,4 +74,49 @@ struct gh_rm;
->   int gh_rm_call(struct gh_rm *rsc_mgr, u32 message_id, void *req_buff, size_t req_buff_size,
->   		void **resp_buf, size_t *resp_buff_size);
->   
-> +/* Message IDs: VM Management */
-> +#define GH_RM_RPC_VM_ALLOC_VMID			0x56000001
-> +#define GH_RM_RPC_VM_DEALLOC_VMID		0x56000002
-> +#define GH_RM_RPC_VM_START			0x56000004
-> +#define GH_RM_RPC_VM_STOP			0x56000005
-> +#define GH_RM_RPC_VM_RESET			0x56000006
-> +#define GH_RM_RPC_VM_CONFIG_IMAGE		0x56000009
-> +#define GH_RM_RPC_VM_INIT			0x5600000B
-> +#define GH_RM_RPC_VM_GET_HYP_RESOURCES		0x56000020
-> +#define GH_RM_RPC_VM_GET_VMID			0x56000024
-> +
-> +struct gh_rm_vm_common_vmid_req {
-> +	__le16 vmid;
-> +	__le16 reserved0;
-> +} __packed;
-> +
-> +/* Call: VM_ALLOC */
-> +struct gh_rm_vm_alloc_vmid_resp {
-> +	__le16 vmid;
-> +	__le16 reserved0;
-> +} __packed;
-> +
-> +/* Call: VM_STOP */
-> +struct gh_rm_vm_stop_req {
-> +	__le16 vmid;
-> +#define GH_RM_VM_STOP_FLAG_FORCE_STOP	BIT(0)
-> +	u8 flags;
-> +	u8 reserved;
-> +#define GH_RM_VM_STOP_REASON_FORCE_STOP		3
-
-I suggested this before and you honored it.  Now I'll suggest
-it again, and ask you to do it throughout the driver.
-
-Please separate the definitions of constant values that
-certain fields can take on from the structure definition.
-I think doing it the way you have here makes it harder to
-understand the structure definition.
-
-You could define an anonymous enumerated type to hold
-the values meant to be held by each field.
-
-> +	__le32 stop_reason;
-> +} __packed;
-> +
-> +/* Call: VM_CONFIG_IMAGE */
-> +struct gh_rm_vm_config_image_req {
-> +	__le16 vmid;
-> +	__le16 auth_mech;
-> +	__le32 mem_handle;
-> +	__le64 image_offset;
-> +	__le64 image_size;
-> +	__le64 dtb_offset;
-> +	__le64 dtb_size;
-> +} __packed;
-> +
-> +/* Call: GET_HYP_RESOURCES */
-> +
->   #endif
-> diff --git a/drivers/virt/gunyah/rsc_mgr_rpc.c b/drivers/virt/gunyah/rsc_mgr_rpc.c
+> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
 > new file mode 100644
-> index 000000000000..4515cdd80106
+> index 000000000000..59ef4c735ae8
 > --- /dev/null
-> +++ b/drivers/virt/gunyah/rsc_mgr_rpc.c
-> @@ -0,0 +1,226 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
+> +++ b/include/linux/gunyah.h
+> @@ -0,0 +1,82 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
 > +/*
 > + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
 > + */
 > +
-> +#include <linux/gunyah_rsc_mgr.h>
+> +#ifndef _LINUX_GUNYAH_H
+> +#define _LINUX_GUNYAH_H
 > +
-> +#include "rsc_mgr.h"
+> +#include <linux/errno.h>
+> +#include <linux/limits.h>
 > +
-> +/*
-> + * Several RM calls take only a VMID as a parameter and give only standard
-> + * response back. Deduplicate boilerplate code by using this common call.
-> + */
-> +static int gh_rm_common_vmid_call(struct gh_rm *rm, u32 message_id, u16 vmid)
-> +{
-> +	struct gh_rm_vm_common_vmid_req req_payload = {
-> +		.vmid = cpu_to_le16(vmid),
-> +	};
-> +	size_t resp_size;
-> +	void *resp;
+> +/******************************************************************************/
+> +/* Common arch-independent definitions for Gunyah hypercalls                  */
+> +#define GH_CAPID_INVAL	U64_MAX
+> +#define GH_VMID_ROOT_VM	0xff
 > +
-> +	return gh_rm_call(rm, message_id, &req_payload, sizeof(req_payload), &resp, &resp_size);
-> +}
-> +
-> +/**
-> + * gh_rm_alloc_vmid() - Allocate a new VM in Gunyah. Returns the VM identifier.
-> + * @rm: Handle to a Gunyah resource manager
-> + * @vmid: Use GH_VMID_INVAL or 0 to dynamically allocate a VM. A reserved VMID can
-> + *        be supplied to request allocation of a platform-defined VM.
+> +enum gh_error {
+> +	GH_ERROR_OK			= 0,
+> +	GH_ERROR_UNIMPLEMENTED		= -1,
+> +	GH_ERROR_RETRY			= -2,
 
-Honestly, I'd rather just see 0 (and *not* GH_VMID_INVAL) be the
-special value to mean "dynamically allocate the VMID."  It seems
-0 is a reserved VMID anyway, and GH_VMID_INVAL might as well be
-treated here as an invalid parameter.
+Do you expect this type to have a particular size?
+Since you specify negative values, it matters, and
+it's possible that this forces it to be a 4-byte value
+(though I'm not sure what the rules are).  In other
+words, UNIMPLEMENTED could conceivably have value 0xff
+or 0xffffffff.  I'm not even sure you can tell whether
+an enum is interpreted as signed or unsigned.
 
-Is there any definitition of which VMIDs are reserved?  Like,
-anything under 1024?
-
-That's it on this patch for now.
+It's not usually a good thing to do, but this *could*
+be a case where you do a typedef to represent this as
+a signed value of a certain bit width.  (But don't do
+that unless someone else says that's worth doing.)
 
 					-Alex
 
-> + *
-> + * Returns - the allocated VMID or negative value on error
+> +
+> +	GH_ERROR_ARG_INVAL		= 1,
+> +	GH_ERROR_ARG_SIZE		= 2,
+> +	GH_ERROR_ARG_ALIGN		= 3,
+> +
+> +	GH_ERROR_NOMEM			= 10,
+> +
+> +	GH_ERROR_ADDR_OVFL		= 20,
+> +	GH_ERROR_ADDR_UNFL		= 21,
+> +	GH_ERROR_ADDR_INVAL		= 22,
+> +
+> +	GH_ERROR_DENIED			= 30,
+> +	GH_ERROR_BUSY			= 31,
+> +	GH_ERROR_IDLE			= 32,
+> +
+> +	GH_ERROR_IRQ_BOUND		= 40,
+> +	GH_ERROR_IRQ_UNBOUND		= 41,
+> +
+> +	GH_ERROR_CSPACE_CAP_NULL	= 50,
+> +	GH_ERROR_CSPACE_CAP_REVOKED	= 51,
+> +	GH_ERROR_CSPACE_WRONG_OBJ_TYPE	= 52,
+> +	GH_ERROR_CSPACE_INSUF_RIGHTS	= 53,
+> +	GH_ERROR_CSPACE_FULL		= 54,
+> +
+> +	GH_ERROR_MSGQUEUE_EMPTY		= 60,
+> +	GH_ERROR_MSGQUEUE_FULL		= 61,
+> +};
+> +
+> +/**
+> + * gh_remap_error() - Remap Gunyah hypervisor errors into a Linux error code
+> + * @gh_error: Gunyah hypercall return value
 > + */
-> +int gh_rm_alloc_vmid(struct gh_rm *rm, u16 vmid)
+> +static inline int gh_remap_error(enum gh_error gh_error)
 > +{
-> +	struct gh_rm_vm_common_vmid_req req_payload = { 0 };
-> +	struct gh_rm_vm_alloc_vmid_resp *resp_payload;
-> +	size_t resp_size;
-> +	void *resp;
-> +	int ret;
+> +	switch (gh_error) {
+> +	case GH_ERROR_OK:
+> +		return 0;
+> +	case GH_ERROR_NOMEM:
+> +		return -ENOMEM;
+> +	case GH_ERROR_DENIED:
+> +	case GH_ERROR_CSPACE_CAP_NULL:
+> +	case GH_ERROR_CSPACE_CAP_REVOKED:
+> +	case GH_ERROR_CSPACE_WRONG_OBJ_TYPE:
+> +	case GH_ERROR_CSPACE_INSUF_RIGHTS:
+> +	case GH_ERROR_CSPACE_FULL:
+> +		return -EACCES;
+> +	case GH_ERROR_BUSY:
+> +	case GH_ERROR_IDLE:
+> +	case GH_ERROR_IRQ_BOUND:
+> +	case GH_ERROR_IRQ_UNBOUND:
+> +	case GH_ERROR_MSGQUEUE_FULL:
+> +	case GH_ERROR_MSGQUEUE_EMPTY:
 
-. . .
+Is an empty message queue really busy?
+
+> +		return -EBUSY;
+> +	case GH_ERROR_UNIMPLEMENTED:
+> +	case GH_ERROR_RETRY:
+> +		return -EOPNOTSUPP;
+> +	default:
+> +		return -EINVAL;
+> +	}
+> +}
+> +
+> +#endif
 
