@@ -2,130 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40D8D6A08B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 13:39:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 066D26A08F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 13:52:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234052AbjBWMjE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 07:39:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35806 "EHLO
+        id S233712AbjBWMwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 07:52:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233501AbjBWMi5 (ORCPT
+        with ESMTP id S233847AbjBWMwB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 07:38:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35B41BDD8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 04:37:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1677155876;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=o5faige4boHy1KDnDJFUMGzlyi7Wgdd7JL40G0EvBo0=;
-        b=DAd69z/mYzo+WhTe+QrdMa5w37mfk94GO5CzaCRSOEbhF+nhiqNXPbPhC/TArBDxe5+B9+
-        liEk1vMkKXZ/PdYUSmxQYw0OoYAvhg33TEnNA7VnKGnwqpzN2PcPOSVg+edfytRdxDJTkD
-        bSzjTpjE7EMvgAL9ZDqsoUIkwDr3Q1o=
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
- [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-516-Rie3erdiNG-fnONQSKTT7w-1; Thu, 23 Feb 2023 07:37:55 -0500
-X-MC-Unique: Rie3erdiNG-fnONQSKTT7w-1
-Received: by mail-io1-f72.google.com with SMTP id b13-20020a5d890d000000b0074ca82f593bso147371ion.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 04:37:55 -0800 (PST)
+        Thu, 23 Feb 2023 07:52:01 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D7F556518
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 04:51:58 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id c12so10599314wrw.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 04:51:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=He3/T5rNjZxbvQvsLoh9SavvhiALDTplmrGhWdH6/2E=;
+        b=alxxBCSG2sPNWiZwA17ja0FEz5b1RDxTTs4NGCFVIi8pqg9nexPHIGFFiVv19m7MF7
+         9lQqxzBWsGQfoFuqnSSabuDcCcD9lLoEBQlTsTiTzzXMAhJwzI3msL3PxuEc4lX2LN7N
+         PAUR1w6FHcB0gAgWqzWp+HhtdnvRT8MZq2jpz5WCzdFjfk2IAPyooUwKK4XswJVhkqMo
+         YmIHqfHGLxCxaEf9bKUoaUZe74VVxinp9k1p0nQZyGUHYaZb2DAvdkDy4IcO9owSUaR0
+         3o3gkdcYBcjVQvYgurSYyIazojzvlQ/gje1S+X7QFhPaWhuAI0wP7Yzp6C8UTFqkU/zu
+         c4GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=o5faige4boHy1KDnDJFUMGzlyi7Wgdd7JL40G0EvBo0=;
-        b=MIoAYFwaQ6u45FmvkUm76iOxhw9Wq1wXzcUvdThQJ4Noh/kJ2WwERPTBjjWFM2cg+u
-         dRGzm01u32jmcf1WAMjV1levVjbuidYrRTMya8VNhbnvj2Ad3ssrmemzDEEJwFEZZ1qZ
-         akqW/mVOiMzFwejighKJNYTkkVei8slwTi/h1nrS7MEuFf0voGo0nAgl42C/bj6O1h9Y
-         6EcSvR3TgvLEICQ0b+NurJVf7tU/TO7alNUpE0KWs0hqafTCzc7nSTEI59m7q3tRXG4U
-         fW392+AOQDLSIbqYjoRHk/H7gk0WeTFrkSduIKqgwgUs4CuShL57tcUSkhe7P19r8zqf
-         0Dug==
-X-Gm-Message-State: AO0yUKUpseoN795d9Sj9HX723Xl/IlExz4LgeX/PN6grbo1yVxfb/8XC
-        ADuiQLPGcpvGu3JYyFCcKEz0M/YaJCkBR5OiksAl7Ma56dTF0IrhwgARVRo9R8GER+ETg4f5diF
-        6+s+k0cmYTjtAsb+qFvQpfXx3ZQ==
-X-Received: by 2002:a05:6e02:1445:b0:316:e54a:828f with SMTP id p5-20020a056e02144500b00316e54a828fmr6493872ilo.6.1677155874526;
-        Thu, 23 Feb 2023 04:37:54 -0800 (PST)
-X-Google-Smtp-Source: AK7set/6AWA4CAuXGZNmzPhHzcrBdzMdBpWOTtYJucrF1Qv97MIIPEiFDxaTnG32VB1VQ2w0xUjrzA==
-X-Received: by 2002:a05:6e02:1445:b0:316:e54a:828f with SMTP id p5-20020a056e02144500b00316e54a828fmr6493856ilo.6.1677155874289;
-        Thu, 23 Feb 2023 04:37:54 -0800 (PST)
-Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id y22-20020a02bb16000000b0039e89ea68f9sm1759062jan.135.2023.02.23.04.37.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 04:37:53 -0800 (PST)
-Date:   Thu, 23 Feb 2023 07:37:51 -0500
-From:   Brian Masney <bmasney@redhat.com>
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        catalin.marinas@arm.com, will@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [RFC PATCH 0/6] Add basic Minidump kernel driver support
-Message-ID: <Y/deHzijzvuvCJ2M@x1>
-References: <1676978713-7394-1-git-send-email-quic_mojha@quicinc.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=He3/T5rNjZxbvQvsLoh9SavvhiALDTplmrGhWdH6/2E=;
+        b=qxX/s95+F1N5oT6hsKMEVJEVykCK8Y2f+RP9NeQ0hsAQ1CjlafHeHb4xsQeZkqX/l/
+         eggLUSTM4jJUxpmq5IhNIdSrgsUr8cvSbdHtEXFl2qUGq9QwcJg/hxRRpbhhV/sH1/5D
+         tLvPHm6DRWqNcZp9y65hO+prAndHADPcn/CRk3wUeUE8MPuWLQVWpRD75v6JI3i4hKCQ
+         RguC4m9V9nTzYfz10XSmzTogFi0EC3Hb1/XQW6zQfrxLVlVJ/z0zKqQ7IudeMqiJLoxH
+         Cah/HlexG8qVm+KH2F5lbur+P9ru5/oeMueUA3ae7LseQ6sSk8i+oJmwrlyeWFgmaZJx
+         9Zqw==
+X-Gm-Message-State: AO0yUKXK+0TWYfx/c5xOyfOCMcwdwdTHEM58q8G5eMva76MY9dct7Lml
+        zXVGIyUkrg/QHCiL41I3vy2s1w==
+X-Google-Smtp-Source: AK7set9ix212YSCnyGx56kbZG1wFRQMw0z+jnmOA6BkbGPbPtnvuzNhWX3F4lLDb03ZsXuDk0ySpaQ==
+X-Received: by 2002:a05:6000:136a:b0:2c7:f56:28d9 with SMTP id q10-20020a056000136a00b002c70f5628d9mr2470997wrz.54.1677156716880;
+        Thu, 23 Feb 2023 04:51:56 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id v10-20020a05600c214a00b003e209186c07sm11194549wml.19.2023.02.23.04.51.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Feb 2023 04:51:56 -0800 (PST)
+Message-ID: <f852bf35-6f29-a91a-00ab-9f7b2d709328@linaro.org>
+Date:   Thu, 23 Feb 2023 12:51:55 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1676978713-7394-1-git-send-email-quic_mojha@quicinc.com>
-User-Agent: Mutt/2.2.7 (2022-08-07)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v6 2/5] arm64: dts: qcom: Add msm8939 SoC
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, djakov@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        benl@squareup.com, shawn.guo@linaro.org, fabien.parent@linaro.org,
+        leo.yan@linaro.org, dmitry.baryshkov@linaro.org,
+        stephan@gerhold.net, Jun Nie <jun.nie@linaro.org>,
+        James Willcox <jwillcox@squareup.com>,
+        Joseph Gates <jgates@squareup.com>,
+        Max Chen <mchen@squareup.com>, Zac Crosby <zac@squareup.com>,
+        Vincent Knecht <vincent.knecht@mailoo.org>
+References: <20230222120411.55197-1-bryan.odonoghue@linaro.org>
+ <20230222120411.55197-3-bryan.odonoghue@linaro.org>
+ <56ed6a30-9815-002f-8174-95e7e9fc0954@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <56ed6a30-9815-002f-8174-95e7e9fc0954@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 21, 2023 at 04:55:07PM +0530, Mukesh Ojha wrote:
-> Minidump is a best effort mechanism to collect useful and predefined data
-> for first level of debugging on end user devices running on Qualcomm SoCs.
-> It is built on the premise that System on Chip (SoC) or subsystem part of
-> SoC crashes, due to a range of hardware and software bugs. Hence, the
-> ability to collect accurate data is only a best-effort. The data collected
-> could be invalid or corrupted, data collection itself could fail, and so on.
+On 22/02/2023 17:08, Konrad Dybcio wrote:
+>> +			interrupt-names = "wdog", "fatal", "ready",
+>> +					  "handover", "stop-ack";
+> This should be a vertical list
 > 
-> Qualcomm devices in engineering mode provides a mechanism for generating
-> full system ramdumps for post mortem debugging. But in some cases it's
-> however not feasible to capture the entire content of RAM. The minidump
-> mechanism provides the means for selecting which snippets should be
-> included in the ramdump.
+>> +
+>> +			clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
+>> +				 <&gcc GCC_MSS_Q6_BIMC_AXI_CLK>,
+>> +				 <&gcc GCC_BOOT_ROM_AHB_CLK>,
+>> +				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+>> +			clock-names = "iface", "bus", "mem", "xo";
+> This could also be one
 > 
-> The core of minidump feature is part of Qualcomm's boot firmware code.
-> It initializes shared memory (SMEM), which is a part of DDR and
-> allocates a small section of SMEM to minidump table i.e also called
-> global table of content (G-ToC). Each subsystem (APSS, ADSP, ...) has
-> their own table of segments to be included in the minidump and all get
-> their reference from G-ToC. Each segment/region has some details like
-> name, physical address and it's size etc. and it could be anywhere
-> scattered in the DDR.
-> 
-> Existing upstream Qualcomm remoteproc driver[1] already supports minidump
-> feature for remoteproc instances like ADSP, MODEM, ... where predefined
-> selective segments of subsystem region can be dumped as part of
-> coredump collection which generates smaller size artifacts compared to
-> complete coredump of subsystem on crash.
-> 
-> [1]
-> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/remoteproc/qcom_common.c#n142
-> 
-> In addition to managing and querying the APSS minidump description,
-> the Linux driver maintains a ELF header in a segment. This segment
-> gets updated with section/program header whenever a new entry gets
-> registered.
 
-I'd like to test this series plus your series that sets the multiple
-download modes. Can you include documentation about how to actually use
-this new feature? Also the information that you provided above is really
-useful. I think that should also go in the documentation file as well.
+Sorry what are you asking for here Konrad
 
-I already have a reliable way to make a board go BOOM and go into
-ramdump mode.
+clock-names = "iface",
+               "bus",
 
-Brian
-
+if so, why ?
