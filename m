@@ -2,156 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C41D56A1022
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 20:09:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 477E96A1078
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 20:19:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231569AbjBWTJi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 14:09:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54988 "EHLO
+        id S229500AbjBWTTL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 14:19:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231245AbjBWTJe (ORCPT
+        with ESMTP id S230231AbjBWTTK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 14:09:34 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 140A84DBCC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 11:09:33 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id r27so12905302lfe.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 11:09:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ki/+8rKjqaLiO1EXm/3PKBzNTnhWcpNouZYryd40ZXw=;
-        b=xIuTFUJwmjUmo/ZY7Efw7KXI4HDpZwPevKdH4zReUGBB530x2VTfEXIap7soq0xrkt
-         fLxo3HUQXeuriXYqhotDJepEW6dKbiKyscYKjciNlfpIQ7fIuhqj74/8rDCysXnnO0JS
-         4Rf3qTXcAeSv7w9CaUQ4B3flmF0e7QuqGF5lBxjmALTvorOeudLvwvHwKkIWAMFH6FGY
-         RzPjMj1fh5sESLWEVhNtWl4+eoCT4hsOhoXtes5Embqey5/DrfNuKrjAedYKpFs1dksR
-         kK0cf+naL7g3BnH+Zg0cDxH484/qNt5tBW1W5g+ElnpeGmP/16EUhsw6If9ri8NPv5Js
-         WtKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ki/+8rKjqaLiO1EXm/3PKBzNTnhWcpNouZYryd40ZXw=;
-        b=C51OUzrzyMhB70htn/BhlZh1q/f3JVwrFvtADO0Jl1pirE5fkWOzNkihstdheQKXsc
-         3FA0zx115PcCS7oqxz6NbJOaDS+mjtLUDbULLL2i49TsnFQeRQxjwSAAeusZbXrHAgKv
-         7OYnlBSHZQQ2rkjKv6LAQJhPN7kvnFf/ioth7iVWjDLiz4l/cP+tXAptWMu8qc5MgSAD
-         M/9LIo8XtsP31LzZmymrsrBKy0KUYzs7OeQmhJjrO3nB4dyHGMXGRXuIkykvaHkY9HUr
-         vhNwny3r4FmJj68YxcA70UNgIi+g0vERjSoWJ7rCkMv25RY+AUkO/rZIVJQYFehIQdOr
-         YM0g==
-X-Gm-Message-State: AO0yUKXYt6DnxC+LzsaC8EG8i/plZUesgY8fhgy0OwG01D1SjNJTDK2B
-        LrD0VQNQaF6MeO7axpILc9GfpdH8nVndXC96BfsRWw==
-X-Google-Smtp-Source: AK7set+1Snm8QmjNNVo8GqQflRkjIgua4+rtwYxMZTP19pOBlpTETTnalWgFkXRsDT/zGvsFyvQiZm0rEv+ZUq9Zrys=
-X-Received: by 2002:ac2:5387:0:b0:4d5:ca32:7bbb with SMTP id
- g7-20020ac25387000000b004d5ca327bbbmr4069994lfh.2.1677179371151; Thu, 23 Feb
- 2023 11:09:31 -0800 (PST)
+        Thu, 23 Feb 2023 14:19:10 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEFEA1704
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 11:18:43 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31NB45kt012780;
+        Thu, 23 Feb 2023 19:17:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=3dYIwA/4/9A+RLvGcDRtys6zldwoQoCo3Na5NhuLUaE=;
+ b=haXPCLGeOGOrJRgcG5kLKeA9SHHKTVsDg1vMimEkQlbNy2uoduwkdpgPAq4e6GQlJ25i
+ USMr/yWcGEC+UR4lMFXbI0ISNim//t1eE421UN5BnX9XkSbn5nMwRNlBdUroKIMn67qp
+ Jl2h+dYxrUQB83tKNHxXMhSQHui5vW68Iqlm9cfAUZgOGbw1CWe4LFk7bj79WK7BNFRH
+ wAJpRFuQkc9nqpKSzreHNkzXey8g0YGHa55SyToZVyOWVhhn6freZsJGKCSrF580uWAm
+ MKjeRqxPQt5xVpIjONROcmebQ/rQ6sqdjFAMdwM5SQ/riXce4/se5IZy7hU2qzBLxtoS 1w== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nwyc5jedn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 23 Feb 2023 19:17:33 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31NJHWPC009696
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 23 Feb 2023 19:17:32 GMT
+Received: from [10.110.22.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 23 Feb
+ 2023 11:17:32 -0800
+Message-ID: <0daf8821-a228-1180-358b-4e50f36ca4b0@quicinc.com>
+Date:   Thu, 23 Feb 2023 11:17:31 -0800
 MIME-Version: 1.0
-References: <20220929060405.2445745-1-bhupesh.sharma@linaro.org>
- <20220929060405.2445745-4-bhupesh.sharma@linaro.org> <4e896382-c666-55c6-f50b-5c442e428a2b@linaro.org>
- <1163e862-d36a-9b5e-2019-c69be41cc220@linaro.org> <9999a1a3-cda0-2759-f6f4-9bc7414f9ee4@linaro.org>
- <0aeb2c5e-9a5e-90c6-a974-f2a0b866d64f@linaro.org> <ca62fc03-8acc-73fc-3b15-bd95fe8e05a4@linaro.org>
- <CAH=2Nty1BfaTWbE-PZQPiRtAco=5xhvJT3QbpqYsABxZxBzF3w@mail.gmail.com>
- <2e68d64f-766c-0a52-9df8-74f0681a5973@linaro.org> <20230222202904.mhsbxnaxt3psmwr7@halaney-x13s>
-In-Reply-To: <20230222202904.mhsbxnaxt3psmwr7@halaney-x13s>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Fri, 24 Feb 2023 00:39:19 +0530
-Message-ID: <CAH=2NtzJViZ2e7aw9Ej67=XRrWOPzGrq1gccCsFiHBzRDZxmmQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] dt-bindings: net: qcom,ethqos: Convert bindings to yaml
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        netdev@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        David Miller <davem@davemloft.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/dpu: fix stack smashing in
+ dpu_hw_ctl_setup_blendstage
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        Amit Pundir <amit.pundir@linaro.org>
+References: <20230223095708.3688148-1-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230223095708.3688148-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: dBsnsPj2ZTQW_Ddf_dn4FAxOYcLnxWGy
+X-Proofpoint-GUID: dBsnsPj2ZTQW_Ddf_dn4FAxOYcLnxWGy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-23_13,2023-02-23_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
+ phishscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 adultscore=0
+ mlxscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302230158
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 23 Feb 2023 at 01:59, Andrew Halaney <ahalaney@redhat.com> wrote:
->
-> On Mon, Oct 03, 2022 at 11:32:58AM +0200, Krzysztof Kozlowski wrote:
-> > On 03/10/2022 10:29, Bhupesh Sharma wrote:
-> > > On Sun, 2 Oct 2022 at 13:24, Krzysztof Kozlowski
-> > > <krzysztof.kozlowski@linaro.org> wrote:
-> > >>
-> > >> On 01/10/2022 14:51, Bhupesh Sharma wrote:
-> > >>>>> Right, most of them are to avoid the make dtbs_check errors / warnings
-> > >>>>> like the one mentioned above.
-> > >>>>
-> > >>>> All of them should not be here.
-> > >>>
-> > >>> I guess only 'snps,reset-gpio' need not be replicated here, as for
-> > >>> others I still see 'dtbs_check' error, if they are not replicated here:
-> > >>>
-> > >>>
-> > >>> arch/arm64/boot/dts/qcom/sm8150-hdk.dtb: ethernet@20000: Unevaluated
-> > >>> properties are not allowed ('power-domains', 'resets', 'rx-fifo-depth',
-> > >>> 'tx-fifo-depth' were unexpected)
-> > >>>       From schema: /Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> > >>>
-> > >>> Am I missing something here?
-> > >>
-> > >> Probably the snps,dwmac schema failed. It is then considered
-> > >> unevaluated, so such properties are unknown for qcom,ethqos schema. Run
-> > >> check with snps,dwmac and fix all errors first.
-> > >
-> > > Running dt_binding_check DT_SCHEMA_FILES=net/snps,dwmac.yaml
-> > > reports no error currently.
-> >
-> > Then it's something in your commits. I don't know what you wrote, as you
-> > did not sent a commit. I cannot reproduce your errors after removing
-> > unneeded power-domains.
-> >
-> > Just to clarify - I am testing only the dt_binding_check (so only the
-> > examples - I assume they are meaningful).
->
-> Just a little note before I forget..
->
-> I picked this up yesterday (in prep for adding sa8540p support here),
-> and noticed the same thing as Bhupesh when validating dtbs with
-> the requested changes (not duplicating snsp,dwmac.yaml). I ended up
-> tracking it down to a (fixed) bug in dtschema:
->
->     https://github.com/devicetree-org/dt-schema/commit/e503ec1115345bdfa06b96c9d6c4496457cbd75b
->
-> And a little test output showing before and after (fix is in the 2022.12
-> release):
->
->     (dtschema-2022.11) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac] % make CHECK_DTBS=y DT_SCHEMA_FILES=/net/qcom,ethqos.yaml qcom/sm8150-hdk.dtb
->       LINT    Documentation/devicetree/bindings
->       CHKDT   Documentation/devicetree/bindings/processed-schema.json
->       SCHEMA  Documentation/devicetree/bindings/processed-schema.json
->       DTC_CHK arch/arm64/boot/dts/qcom/sm8150-hdk.dtb
->     /home/ahalaney/git/redhat/stmmac/arch/arm64/boot/dts/qcom/sm8150-hdk.dtb: ethernet@20000: Unevaluated properties are not allowed ('power-domains', 'resets', 'rx-fifo-depth', 'snps,tso', 'tx-fifo-depth' were unexpected)
->         From schema: /home/ahalaney/git/redhat/stmmac/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
->     (dtschema-2022.11) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac] % pip3 list | grep dtschema
->     dtschema         2022.11
->     (dtschema-2022.11) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac] %
->
->     dtschema) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac] % pip3 list | grep dtschema
->     dtschema         2023.1
->     (dtschema) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac] % make CHECK_DTBS=y DT_SCHEMA_FILES=/net/qcom,ethqos.yaml qcom/sm8150-hdk.dtb
->       LINT    Documentation/devicetree/bindings
->       CHKDT   Documentation/devicetree/bindings/processed-schema.json
->       SCHEMA  Documentation/devicetree/bindings/processed-schema.json
->       DTC_CHK arch/arm64/boot/dts/qcom/sm8150-hdk.dtb
->     (dtschema) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac] %
->
->
-> I'll go ahead and make the adjustments and pull this series into mine
-> adding sa8540p support, thanks for starting it!
+Hi Dmitry
 
-Thanks Andrew. Please feel free to add it to your series.
+On 2/23/2023 1:57 AM, Dmitry Baryshkov wrote:
+> The rewritten dpu_hw_ctl_setup_blendstage() can lightly smash the stack
+> when setting the SSPP_NONE pipe. However it was unnoticed until the
+> kernel was tested under AOSP (with some kind of stack protection/check).
+> 
+> This fixes the following backtrace:
+> 
+> Unexpected kernel BRK exception at EL1
+> Internal error: BRK handler: 00000000f20003e8 [#1] PREEMPT SMP
+> Hardware name: Thundercomm Dragonboard 845c (DT)
+> pstate: a0400005 (NzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> pc : dpu_hw_ctl_setup_blendstage+0x26c/0x278 [msm]
+> lr : _dpu_crtc_blend_setup+0x4b4/0x5a0 [msm]
+> sp : ffffffc00bdcb720
+> x29: ffffffc00bdcb720 x28: ffffff8085debac0 x27: 0000000000000002
+> x26: ffffffd74af18320 x25: ffffff8083af75a0 x24: ffffffc00bdcb878
+> x23: 0000000000000001 x22: 0000000000000000 x21: ffffff8085a70000
+> x20: ffffff8083012dc0 x19: 0000000000000001 x18: 0000000000000000
+> x17: 000000040044ffff x16: 045000f4b5593519 x15: 0000000000000000
+> x14: 000000000000000b x13: 0000000000000001 x12: 0000000000000000
+> x11: 0000000000000001 x10: ffffffc00bdcb764 x9 : ffffffd74af06a08
+> x8 : 0000000000000001 x7 : 0000000000000001 x6 : 0000000000000000
+> x5 : ffffffc00bdcb878 x4 : 0000000000000002 x3 : ffffffffffffffff
+> x2 : ffffffc00bdcb878 x1 : 0000000000000000 x0 : 0000000000000002
+> Call trace:
+>   dpu_hw_ctl_setup_blendstage+0x26c/0x278 [msm]
+>   _dpu_crtc_blend_setup+0x4b4/0x5a0 [msm]
+>   dpu_crtc_atomic_begin+0xd8/0x22c [msm]
+>   drm_atomic_helper_commit_planes+0x80/0x208 [drm_kms_helper]
+>   msm_atomic_commit_tail+0x134/0x6f0 [msm]
+>   commit_tail+0xa4/0x1a4 [drm_kms_helper]
+>   drm_atomic_helper_commit+0x170/0x184 [drm_kms_helper]
+>   drm_atomic_commit+0xac/0xe8
+>   drm_mode_atomic_ioctl+0xbf0/0xdac
+>   drm_ioctl_kernel+0xc4/0x178
+>   drm_ioctl+0x2c8/0x608
+>   __arm64_sys_ioctl+0xa8/0xec
+>   invoke_syscall+0x44/0x104
+>   el0_svc_common.constprop.0+0x44/0xec
+>   do_el0_svc+0x38/0x98
+>   el0_svc+0x2c/0xb4
+>   el0t_64_sync_handler+0xb8/0xbc
+>   el0t_64_sync+0x1a0/0x1a4
+> Code: 52800016 52800017 52800018 17ffffc7 (d4207d00)
+> 
+> Fixes: 4488f71f6373 ("drm/msm/dpu: simplify blend configuration")
+> Reported-by: Amit Pundir <amit.pundir@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> index b88a2f3724e6..6c53ea560ffa 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> @@ -446,7 +446,9 @@ static void dpu_hw_ctl_setup_blendstage(struct dpu_hw_ctl *ctx,
+>   			 * CTL_LAYER has 3-bit field (and extra bits in EXT register),
+>   			 * all EXT registers has 4-bit fields.
+>   			 */
+> -			if (cfg->idx == 0) {
+> +			if (cfg->idx == -1) {
+> +				continue;
+> +			} else if (cfg->idx == 0) {
+>   				mixercfg[0] |= mix << cfg->shift;
+>   				mixercfg[1] |= ext << cfg->ext_shift;
+>   			} else {
 
-Regards,
-Bhupesh
+Since I had not reviewed the change which introduced this, had a question.
+
+The issue here is because the shift and ext_shift are -1 for NONE and 
+hence the shift causes overflow?
+
+If that was the issue shouldnt we protect all such cases?
+
+So lets say we use SSPP_RGB0, the multirect_index for it will always be 
+-1 as it doesnt support smartDMA. What prevents the same issue from 
+hitting in that case? Because you are only checking for idx and not the 
+shifts.
+
