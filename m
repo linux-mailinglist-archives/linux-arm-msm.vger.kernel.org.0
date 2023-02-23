@@ -2,141 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A10DF6A0384
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 09:06:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C14D26A04AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 10:21:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233549AbjBWIGM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 03:06:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59360 "EHLO
+        id S233157AbjBWJVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 04:21:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233224AbjBWIFw (ORCPT
+        with ESMTP id S229502AbjBWJVh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 03:05:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 568252BF21
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 00:05:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1677139504;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=1+ueFbDYI2fCK6KAGkfWDv0qOw1/uXZTIg/vtWRlPiU=;
-        b=adB+W9iy6u6cBXv593m+9LlnTmT1xtIdBo7KvGPFbhVpCBbEI/aULbM3KSljLIijQi3iqT
-        cHizFw9MrpR1gjj5uHs/Sr7VT8YmU+KohhCvYlBEs33kb2poyRKmLw+Cw5xNl3j7Wgp4jY
-        rhpLvBmZXQfoA/cNA2/LXm/tHYqSvLk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-552--znW33qNOIaKoaNTJiGpSw-1; Thu, 23 Feb 2023 03:05:03 -0500
-X-MC-Unique: -znW33qNOIaKoaNTJiGpSw-1
-Received: by mail-wm1-f71.google.com with SMTP id m22-20020a05600c4f5600b003dffc7343c3so4600895wmq.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 00:05:02 -0800 (PST)
+        Thu, 23 Feb 2023 04:21:37 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F74E521C6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 01:21:35 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id l25so9689547wrb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 01:21:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eJSCygSyqymwVM3qv58bXIOQ/QMwS9A0T2gOwos2ANI=;
+        b=fegQtyEWhTqmEAd0iw7X7HKpXLywzYFPBBzCm5qOIC8lDXtvSvWPLxRK1SHoHx4D8F
+         cX9nYfRK96054nl3FKHZATG+FapB5e23HntdNfvK5fJTrpOIQaNkPh/xOf2q2H/h43Se
+         U8P0v8yKtozY/YP3KYye8WS9wsVTR5g4NxnbpZFKLDDujNez4IvzyNE8MDGdtipvuMQS
+         QGoU+osQ2ysbPKou87uCJADJSCZH3B8NHlV4LoKYB+YXGLZL07eCv71HXiKC1ZUz4wsZ
+         G9TUCri7cQOq+twOG6pqmE/sgiTL2VcQhWorwnarYl22GecZP4GL0w3WTLmc7eegOgEH
+         Aq2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1+ueFbDYI2fCK6KAGkfWDv0qOw1/uXZTIg/vtWRlPiU=;
-        b=NFCZS+YKIw8B0cAALmrIwbzGxdWxLwJPiDK+HXEWRTjjVYVPDbLWeD38O3CCX5iA8o
-         +nC65ZXvN6Dph0JdCtG1kRXSQ1Tgejo4VS0ZH4Y11ny7h461MEWZ82TN0xkfrgeE3gsv
-         NxTUB/6dKyNH8qVR0LJap6O26Uh4SGzKGO7knDDdEcJz1wZlJ5jqdigy49/bcvMGLvPh
-         66nbqo72Hk4lDZooPvMFNnFzbjwEV9msNr88E1XQaUJ5hY7mGpLnHdl3Y+uhgEP/vE7s
-         A1ghrLG7foL4j9LqxkkpGGh2PQ3BS5SCam6tNJyhtdyExYK88iGlYcZfem5CG7ig/Syb
-         MQVw==
-X-Gm-Message-State: AO0yUKVGjKAyXbkI7BzFRI6rw1Ph0g0JBKCJQW/PUi7V01exF9VIIyAq
-        geQFGxbNbL+oj6ljCyU+dJHiubkKDTlvs3KblDgm3DY7Ns3IbVKGCaYdipnex7oZ/boDETIVG1j
-        IIJCERiJFxjtTckfb1XrYCI9j7w==
-X-Received: by 2002:a05:600c:3093:b0:3dc:555c:dd30 with SMTP id g19-20020a05600c309300b003dc555cdd30mr1930915wmn.27.1677139502051;
-        Thu, 23 Feb 2023 00:05:02 -0800 (PST)
-X-Google-Smtp-Source: AK7set8C2KkhdFOu+LnX9wVb8yRJ6czYkak4zwJwTlRC59nu1vtOB2+Qi4rT251F92cwGEsPeVo5bw==
-X-Received: by 2002:a05:600c:3093:b0:3dc:555c:dd30 with SMTP id g19-20020a05600c309300b003dc555cdd30mr1930899wmn.27.1677139501762;
-        Thu, 23 Feb 2023 00:05:01 -0800 (PST)
-Received: from localhost (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
-        by smtp.gmail.com with ESMTPSA id o11-20020a05600c510b00b003e1f2e43a1csm10728694wms.48.2023.02.23.00.05.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 00:05:01 -0800 (PST)
-From:   Javier Martinez Canillas <javierm@redhat.com>
-To:     Vikash Garodia <vgarodia@qti.qualcomm.com>,
-        Linux regressions mailing list <regressions@lists.linux.dev>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "mka@chromium.org" <mka@chromium.org>,
-        Albert Esteve <aesteve@redhat.com>,
-        "stanimir.varbanov@linaro.org" <stanimir.varbanov@linaro.org>,
-        Enric Balletbo i Serra <eballetb@redhat.com>,
-        Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eJSCygSyqymwVM3qv58bXIOQ/QMwS9A0T2gOwos2ANI=;
+        b=Ue0NPhcTRnrJlF0i4rpBfY4f3S+oF2IC3szT1DfIToShdR++eQZVYPnaVmIabhPzKt
+         a8ROYzJ9hDuXzV3nlTnvift3vfgXRtqfdKeWVMkGa6lJ5aV3NVFWDS6GP4jXrZ/9uvH8
+         saKJkTqoge08HU47Y0f2OSGMFsF+BDx+PS1r7Uz5AZaqKV6gam0N8OScdXFKvQXCtRIZ
+         x/JwI9RfDTTRuxRXBKBb0hQdVsV3LZdgRWTRTGqHjgj26DoC2EQqplk5mftoB0XoODhY
+         JAbxZtcGm+1kuGlhnISo7JxGgXmL6YylmCd3GBJPFOwF4FIHCwgTWZhNPAn8ektBGb90
+         5VCw==
+X-Gm-Message-State: AO0yUKVEqx2JjMJKwrEnzhtRHi9c/Xg3ITjhPLQoCobps0sbZvDWPV3Q
+        3cUt1xB/zuhSzchyElODZw8Ukw==
+X-Google-Smtp-Source: AK7set+KT38k5JXdqB9gWpe020J1FzMkLGn2pF7mw7ss+GUQRXzcwUsyPn/SBCWmwFh5a4SSTvcWZA==
+X-Received: by 2002:a5d:6a03:0:b0:2c7:84e:1cfa with SMTP id m3-20020a5d6a03000000b002c7084e1cfamr5709487wru.40.1677144093790;
+        Thu, 23 Feb 2023 01:21:33 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id v17-20020adff691000000b002c70e60eb40sm2038217wrp.11.2023.02.23.01.21.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Feb 2023 01:21:32 -0800 (PST)
+Message-ID: <e9fc3d3e-173c-6e8b-3f1f-187b1c72ff6c@linaro.org>
+Date:   Thu, 23 Feb 2023 09:21:30 +0000
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v10 13/26] gunyah: vm_mgr: Add ioctls to support basic
+ non-proxy VM boot
+Content-Language: en-US
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        Fritz Koenig <frkoenig@google.com>,
-        "Dikshita Agarwal (QUIC)" <quic_dikshita@quicinc.com>,
-        "Rajeshwar Kurapaty (QUIC)" <quic_rkurapat@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: RE: [PATCH] Revert "venus: firmware: Correct non-pix start and end
- addresses"
-In-Reply-To: <DM8PR02MB8169E16569616870A583B376F3AB9@DM8PR02MB8169.namprd02.prod.outlook.com>
-References: <20230207102254.1446461-1-javierm@redhat.com>
- <DM8PR02MB8169809493BF2822E6C29EECF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <ef09bc9f-d570-be11-238b-bd34063917fc@redhat.com>
- <70c01751-1dd7-c4bd-a96e-94dea437aa40@redhat.com>
- <DM8PR02MB81696369DBFE619E43F81EEFF3DE9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <e87344c6-acef-7f3f-5cac-24961dbd9401@redhat.com>
- <6f97a117-0d9c-e21b-9adf-50f2233ba9e3@leemhuis.info>
- <ea283f0a-ca72-447e-ce87-68c1bbee793e@leemhuis.info>
- <CAFOAJEdBbzqkGVqw+vgNYNxyaTHwvjFyskTwjycP820L2tOctA@mail.gmail.com>
- <b548da46-bf91-6f1c-4b63-4002109056bc@leemhuis.info>
- <9a0bfef8-0b5d-f4d0-a8a5-4bbcacc5c0fb@leemhuis.info>
- <DM8PR02MB8169E16569616870A583B376F3AB9@DM8PR02MB8169.namprd02.prod.outlook.com>
-Date:   Thu, 23 Feb 2023 09:05:00 +0100
-Message-ID: <87356wn6xf.fsf@minerva.mail-host-address-is-not-set>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
+ <20230214212427.3316544-1-quic_eberman@quicinc.com>
+ <1080339c-608e-6df8-8eee-b8f3bb7f396d@linaro.org>
+ <320d42a0-9889-43ae-5d62-0c4cab3434c5@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <320d42a0-9889-43ae-5d62-0c4cab3434c5@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Vikash Garodia <vgarodia@qti.qualcomm.com> writes:
 
-Hello Vikash,
 
-> Hi All,
->
-
-[...]
-
+On 23/02/2023 00:50, Elliot Berman wrote:
+>>>
+>>> +
+>>> +    mem_handle = mapping->parcel.mem_handle;
+>>> +    dtb_offset = ghvm->dtb_config.gpa - mapping->guest_phys_addr;
+>>> +
+>>> +    ret = gh_rm_vm_configure(ghvm->rm, ghvm->vmid, ghvm->auth, 
+>>> mem_handle,
 >>
->>No reply from Mauro and Linus chose to not apply the revert I pointed him to.
->>That at this point leads to the question:
+>> where is authentication mechanism (auth) comming from? Who is supposed 
+>> to set this value?
 >>
->>Vikash, did you or somebody else make any progress to fix this properly?
->
-> We tried with different settings for the registers and arrive at a conclusion that
-> the original configuration was proper. There is no need to explicitly configure
-> the secure non-pixel region when there is no support for the usecase. So, in summary,
-> we are good to have the revert.
->
+>> Should it come from userspace? if so I do not see any UAPI facility to 
+>> do that via VM_START ioctl.
+>>
+> 
+> Right, we are only adding the support for unauthenticated VMs for now. 
+> There would be further UAPI facilities to set the authentication type.
+We have to be careful, please note that you can not change an existing 
+UAPI to accommodate new features.
 
-Perfect. Thanks a lot for looking at this.
+There are two ways to do this properly:
 
-> Stan, could you please help with the revert and a pull request having this revert
-> alongwith other pending changes ?
->
+1. Design UAPI to accommodate features that will be part of this in very 
+  soon or in future. This way the UAPI is stable and does not change 
+over time when we add support this feature in driver.
 
-Other fix posted is "media: venus: dec: Fix capture formats enumeration order":
+In this particular case, vm authentication type is one that needs to 
+come from user, rather than kernel assuming it, so definitely this need 
+to be properly addressed by passing this info from userspace.
+Or rename this IOCTl to something like VM_START_UNAUTH_VM to make this 
+more explicit.
 
-https://patchwork.kernel.org/project/linux-media/patch/20230210081835.2054482-1-javierm@redhat.com/
 
--- 
-Best regards,
+2. For each feature add new UAPI as and when its required, which is 
+really the only option when we failed to design UAPIs correctly in the 
+first place.
 
-Javier Martinez Canillas
-Core Platforms
-Red Hat
+--srini
 
+
+> 
+>>
+>>> +                0, 0, dtb_offset, ghvm->dtb_config.size);
+>>> +    if (ret) { 
