@@ -2,87 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B564F6A13AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 00:20:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A934C6A13C4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 00:29:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229448AbjBWXUj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 18:20:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43496 "EHLO
+        id S229462AbjBWX3F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 18:29:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjBWXUj (ORCPT
+        with ESMTP id S229448AbjBWX3F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 18:20:39 -0500
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8801358493
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 15:20:36 -0800 (PST)
-Received: by mail-il1-x133.google.com with SMTP id o8so3672428ilt.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 15:20:36 -0800 (PST)
+        Thu, 23 Feb 2023 18:29:05 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B168A53EED
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 15:29:01 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id il18-20020a17090b165200b0023127b2d602so944309pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 15:29:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CcS5jsqzbZbUHIgyk1mZG9EIgGS9uBrAg9XTbvuKrY0=;
-        b=R/8SLHW0bb6bXpEMVBfSN9liyL6huXmLLSp96uzEcLqKoidk5Ry34O5hbLpx8qW3Fa
-         zhttdwQHY4l4nPMRgyO4PCu99BphTUwy9SGJERL1SbKZeC+DDt/W1kcTwCCTEn3P0du/
-         /kBJMycp2nUupXrJ46P+LhCEGPDXilpPNyUzo=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QFaLp0QcFunVLeVDzKvC0t8S4cDGh0Txi6Qa9QxDIuU=;
+        b=o3vt2Ns4U72rpxonUJ3Z74KeNC48gypVcKTR5ueKb0sIrPMH58B/TNFKAysmvYlCd0
+         WF/Q8UsYZXUQYUId9O580ohQVrxnNW7NcEKzqjm6jVTEVBqX7D6XeE4jjoxDoMZh+0vf
+         V7WsHq8MxnUO+oH3vUyQFSqho9yuHlm9yook3//y7p7saTi4huxIkpv/7f+knmOA9nO5
+         DnXlgQBqgvroP0YdZkHYONb+P0nwH1ByBl2HuW1cr6VoMIpANZgJcYIXiuHr5D0zN0hd
+         1UozHz7hL/wEdX0kfRd1A9LrxdTx47LlfnlOS/6fWiLNTfY4BQWXndYMP3U00HfVArJs
+         6Yow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CcS5jsqzbZbUHIgyk1mZG9EIgGS9uBrAg9XTbvuKrY0=;
-        b=7sQTuFG0qZcIXw08B+G10vxTOrhhayX/M2c8TZ3OnW5Q4Sy4KHNZDhANcK5XvtF29g
-         ymTug4jrpBJ+OR1eVTrezWnFvBL0Tlz3cDEGM7NklkRmvixhT9ouOCr3lTr3AVakhmu7
-         YFWRR3ND7htfa3IR+ka6m5hfz1hIs3VB99syzdY4M+04QyaFkEa+ILmdNcNuDZLVSneH
-         3QwxbP4/BfqPmIHAr1JSdYWcDoAiXFMoO8vzx7+eAA4/X5V9iW5+fUZ/LtQl4nuLVQmr
-         XsHpF6mmI0WrCzUUJc5Uf8s/R3CLIoreorg/DbF0bVHbgg0d7TWscncWgGPFnHIYeEFg
-         g3dQ==
-X-Gm-Message-State: AO0yUKUfbmqiDbI4QKmok++kEi75z+V3DdA/Y6RhSUfme5at+4RTxT1H
-        b9cT9XdOU/ylh7Suetph+lZvRA==
-X-Google-Smtp-Source: AK7set/A5twPeEpmPIKnFVmcHMaRpfW26OtlE9Bk+U3nYV0O2dw47+8KUO0Bm9FrLrEobp0pT4tKBg==
-X-Received: by 2002:a05:6e02:1a43:b0:317:106c:647f with SMTP id u3-20020a056e021a4300b00317106c647fmr141466ilv.20.1677194435780;
-        Thu, 23 Feb 2023 15:20:35 -0800 (PST)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id c14-20020a02a40e000000b003a971c488cesm3811916jal.173.2023.02.23.15.20.35
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QFaLp0QcFunVLeVDzKvC0t8S4cDGh0Txi6Qa9QxDIuU=;
+        b=yEtcvwZEXy5KWxy9kiPnBerh3vMFvt6ZZ32ST+H2jIw57z3m6vF8lyxMUbnh21x/TI
+         vUGAYkdM0KSwveJnkFU9HU6+BOMmugMwzp9QxHpcPl+PWIFGTA9h/WNPmvkCdpkungUc
+         NaU8ZCzlee1+5LGZDuQXDvX6mrLzY1Yx1QVHf7tzB/962FO7YYDbxayKqdROV+tHq5V2
+         HD1iedNWg5/Ki62H9iOq3Me/G/ynl6dHjPb7shf7TzeuiH4CRzRvUxCCBGKYG0UwW/zE
+         sZ7VUJuHrAk05VTAZpxraJTNjzNxg/Pa131VXrZKH9fhQZ5FFUECulrxsIkzwkaJHmqm
+         Fo2w==
+X-Gm-Message-State: AO0yUKVkqm9XW404rZ+fFdjcxvhS88FE/GVzpUbqZQGymSg4IYL9ANpF
+        4Z4fqGG5/f9eGNuBqYLLOpNbJg==
+X-Google-Smtp-Source: AK7set9Dv6Ys6txMY50pX+yCuZkO3d9LV/Klokb4/TTOusp2hnX4Yj/eOS05vEmH69+wn4yqAd/21w==
+X-Received: by 2002:a05:6a21:3385:b0:c7:684a:e4ae with SMTP id yy5-20020a056a21338500b000c7684ae4aemr16637180pzb.15.1677194940889;
+        Thu, 23 Feb 2023 15:29:00 -0800 (PST)
+Received: from [10.211.55.3] (c-73-221-130-71.hsd1.wa.comcast.net. [73.221.130.71])
+        by smtp.gmail.com with ESMTPSA id i13-20020aa787cd000000b005a8b882a239sm6429082pfo.109.2023.02.23.15.28.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 15:20:35 -0800 (PST)
-Date:   Thu, 23 Feb 2023 23:20:34 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
- provider has sync_state
-Message-ID: <Y/f0wg4WJSc3ag8c@google.com>
-References: <Y+ErWTyV8CnE3Hl+@linaro.org>
- <Y+E3T6bozU1K2sFb@google.com>
- <Y+E9Z+/+eCpPK6DE@linaro.org>
- <CAGETcx99ev_JdgYoifEdUg6rqNCs5LHc-CfwTc7j3Bd_zeizew@mail.gmail.com>
- <CAD=FV=X3nnwuTK2=w7DJfjL_Ai7MiuvTwv8BiVJPMVEWKzR-_g@mail.gmail.com>
- <CAGETcx-LJEZAXT1VazhRf7xtNpST0tfLNmgxH878gkOOP4TDAw@mail.gmail.com>
- <CAD=FV=WG1v4U5iQirG=-ECZFtXE=hwL=oY+6zjsu6TWCiBX=QA@mail.gmail.com>
- <20230220171550.43a3h56gznfc3gec@ripper>
- <Y/UOJtyIMEMzuPqN@google.com>
- <20230222185152.tkculzvabvmjc3n4@ripper>
+        Thu, 23 Feb 2023 15:29:00 -0800 (PST)
+Message-ID: <9c56e16e-ecd0-2ef4-14d8-476029458359@linaro.org>
+Date:   Thu, 23 Feb 2023 17:28:59 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230222185152.tkculzvabvmjc3n4@ripper>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v10 08/26] gunyah: rsc_mgr: Add resource manager RPC core
+Content-Language: en-US
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
+ <20230214212327.3310128-1-quic_eberman@quicinc.com>
+From:   Alex Elder <alex.elder@linaro.org>
+In-Reply-To: <20230214212327.3310128-1-quic_eberman@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,271 +94,918 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 22, 2023 at 10:51:52AM -0800, Bjorn Andersson wrote:
-> On Tue, Feb 21, 2023 at 06:32:06PM +0000, Matthias Kaehlcke wrote:
-> > On Mon, Feb 20, 2023 at 09:15:50AM -0800, Bjorn Andersson wrote:
-> > > On Tue, Feb 07, 2023 at 03:45:35PM -0800, Doug Anderson wrote:
-> > > > Hi,
-> > > > 
-> > > > On Mon, Feb 6, 2023 at 1:35 PM Saravana Kannan <saravanak@google.com> wrote:
-> > > > >
-> > > > > On Mon, Feb 6, 2023 at 1:10 PM Doug Anderson <dianders@chromium.org> wrote:
-> > > > > >
-> > > > > > Hi,
-> > > > > >
-> > > > > > On Mon, Feb 6, 2023 at 11:33 AM Saravana Kannan <saravanak@google.com> wrote:
-> > > > > > >
-> > > > > > > On Mon, Feb 6, 2023 at 9:48 AM Abel Vesa <abel.vesa@linaro.org> wrote:
-> > > > > > > >
-> > > > > > > >
-> > > > > > > > CC'ed Saravana
-> > > > > > >
-> > > > > > > Thanks. Please do cc me for stuff like this from the start. I skimmed
-> > > > > > > the series and I think it's doing one of my TODO items. So, thanks for
-> > > > > > > the patch!
-> > > > > > >
-> > > > > > > I'll take a closer look within a few days -- trying to get through
-> > > > > > > some existing fw_devlink stuff.
-> > > > > > >
-> > > > > > > But long story short, it is the right thing to keep a supplier on
-> > > > > > > indefinitely if there's a consumer device (that's not disabled in DT)
-> > > > > > > that never gets probed. It's a pretty common scenario -- for example,
-> > > > > > > say a display backlight. The default case should be functional
-> > > > > > > correctness. And then we can add stuff that allows changing this
-> > > > > > > behavior with command line args or something else that can be done
-> > > > > > > from userspace.
-> > > > > > >
-> > > > > > > +1 to what Doug said elsewhere in this thread too. I'm trying to
-> > > > > > > consolidate the "when do we give up" decision at the driver core level
-> > > > > > > independent of what framework is being used.
-> > > > > >
-> > > > > > I'm not really sure I agree with the above, at least not without lots
-> > > > > > of discussion in the community. It really goes against what the kernel
-> > > > > > has been doing for years and years in the regulator and clock
-> > > > > > frameworks. Those frameworks both eventually give up and power down
-> > > > > > resources that no active drivers are using. Either changing the
-> > > > > > regulator/clock frameworks or saying that other frameworks should work
-> > > > > > in an opposite way seems like a recipe for confusion.
-> > > > > >
-> > > > > > Now, certainly I won't say that the way that the regulator and clock
-> > > > > > frameworks function is perfect nor will I say that they don't cause
-> > > > > > any problems. However, going the opposite way where resources are kept
-> > > > > > at full power indefinitely will _also_ cause problems.
-> > > > > >
-> > > > > > Specifically, let's look at the case you mentioned of a display
-> > > > > > backlight. I think you're saying that if there is no backlight driver
-> > > > > > enabled in the kernel that you'd expect the backlight to just be on at
-> > > > > > full brightness.
-> > > > >
-> > > > > No, I'm not saying that.
-> > > > >
-> > > > > > Would you expect this even if the firmware didn't
-> > > > > > leave the backlight on?
-> > > > >
-> > > > > sync_state() never turns on anything that wasn't already on at boot.
-> > > > > So in your example, if the firmware didn't turn on the backlight, then
-> > > > > it'll remain off.
-> > > > 
-> > > > As per offline discussion, part of the problems are that today this
-> > > > _isn't_ true for a few Qualcomm things (like interconnect). The
-> > > > interconnect frameway specifically maxes things out for early boot.
-> > > > 
-> > > 
-> > > The problem being solved here is that the bootloader leaves some vote at
-> > > 1GB/s, as needed by hardware related to driver B.
-> > > 
-> > > Driver A is loaded first and votes for 1kb/s; what should the kernel do
-> > > now, without knowledge of the needs from the hardware associated with B,
-> > > or the ability to read back the bootloader's votes.
-> > > 
-> > > This was the behavior of the initial implementation, and the practical
-> > > implications was seen as the UART would typically come along really
-> > > early, cast a low vote on the various buses and it would take forever to
-> > > get to the probing of the drivers that actually gave us reasonable
-> > > votes.
-> > 
-> > I generally understand this problem and agree that it makes sense to bump
-> > the resources *initially*. Doug and I primarily question the 'wait forever'
-> > part of it.
-> > 
+On 2/14/23 3:23 PM, Elliot Berman wrote:
 > 
-> The question is when "initially" ends.
-
-ack
-
-> > > Also consider the case where driver A probes, votes for bandwidth, does
-> > > it's initialization and then votes for 0. Without making assumptions
-> > > about the needs of B (or a potential B even), we'd turn off critical
-> > > resources - possible preventing us from ever attempting to probe B.
-> > 
-> > For the most critical devices that are probed during early boot this
-> > would still work if the resources are initially bumped and then turned
-> > off after some timeout.
-> > 
+> The resource manager is a special virtual machine which is always
+> running on a Gunyah system. It provides APIs for creating and destroying
+> VMs, secure memory management, sharing/lending of memory between VMs,
+> and setup of inter-VM communication. Calls to the resource manager are
+> made via message queues.
 > 
-> The resources that needs to be kept on are those which we rely on for
-> the system to reach said driver 'B'.
+> This patch implements the basic probing and RPC mechanism to make those
+> API calls. Request/response calls can be made with gh_rm_call.
+> Drivers can also register to notifications pushed by RM via
+> gh_rm_register_notifier
 > 
-> The obvious ones are those allowing us to execute code (e.g. some form
-> of DDR vote) and things such as earlycon - until the console driver is
-> probed properly and can cast a interconnect vote.
-
-Yes, these were the things that came to my mind and I'd expect the
-corresponding drivers to be either builtin or on the ramdisk, so they
-wouldn't be impacted if the rootfs takes longer to mount.
-
-> But the typical example here is display, which depending on system
-> configuration might rely on the hardware being able to fetch data from
-> DDR until all the relevant display driver components is starting to take
-> care of the voting.
-
-Thanks for the example, it's certainly desirable to keep the display
-working even when the rootf can't be mounted (in time).
-
-> > Could you provide an example for some other type of device that is/would
-> > be probed later? Except for auto-probing buses like USB or PCI the device
-> > should probe regardless of the resources being enabled and then vote
-> > during probe for the required bandwidth, voltage, etc., which should put
-> > the resources into the required state. Am I missing something here?
-> > 
+> Specific API calls that resource manager supports will be implemented in
+> subsequent patches.
 > 
-> What do you mean with "later"?
-
-I was thinking beyond 'early boot', you are right, there is no clear
-definition.
-
-> We have one consistent definition of "later", and that's
-> late_initcall(). By that definition it's pretty much everything beyond
-> gcc, interconnect and UART is or may probe "later" (because starting
-> userspace without a valid /dev/console is suboptimal)..
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
+>   drivers/virt/gunyah/Makefile   |   3 +
+>   drivers/virt/gunyah/rsc_mgr.c  | 604 +++++++++++++++++++++++++++++++++
+>   drivers/virt/gunyah/rsc_mgr.h  |  77 +++++
+>   include/linux/gunyah_rsc_mgr.h |  24 ++
+>   4 files changed, 708 insertions(+)
+>   create mode 100644 drivers/virt/gunyah/rsc_mgr.c
+>   create mode 100644 drivers/virt/gunyah/rsc_mgr.h
+>   create mode 100644 include/linux/gunyah_rsc_mgr.h
 > 
-> 
-> Looking at something specific, if you where to try to boot sc7280 using
-> the upstream defconfig I don't think you have anyone ensuring that the
-> CPU is allowed to reach DDR at this point.
+> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
+> index 34f32110faf9..cc864ff5abbb 100644
+> --- a/drivers/virt/gunyah/Makefile
+> +++ b/drivers/virt/gunyah/Makefile
+> @@ -1,3 +1,6 @@
+>   # SPDX-License-Identifier: GPL-2.0
+>   
+>   obj-$(CONFIG_GUNYAH) += gunyah.o
+> +
+> +gunyah_rsc_mgr-y += rsc_mgr.o
+> +obj-$(CONFIG_GUNYAH) += gunyah_rsc_mgr.o
+> diff --git a/drivers/virt/gunyah/rsc_mgr.c b/drivers/virt/gunyah/rsc_mgr.c
+> new file mode 100644
+> index 000000000000..2a47139873a8
+> --- /dev/null
+> +++ b/drivers/virt/gunyah/rsc_mgr.c
+> @@ -0,0 +1,604 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/of.h>
+> +#include <linux/slab.h>
+> +#include <linux/mutex.h>
+> +#include <linux/sched.h>
+> +#include <linux/gunyah.h>
+> +#include <linux/module.h>
+> +#include <linux/of_irq.h>
+> +#include <linux/kthread.h>
+> +#include <linux/notifier.h>
+> +#include <linux/workqueue.h>
+> +#include <linux/completion.h>
+> +#include <linux/gunyah_rsc_mgr.h>
+> +#include <linux/platform_device.h>
+> +
+> +#include "rsc_mgr.h"
+> +
+> +#define RM_RPC_API_VERSION_MASK		GENMASK(3, 0)
+> +#define RM_RPC_HEADER_WORDS_MASK	GENMASK(7, 4)
+> +#define RM_RPC_API_VERSION		FIELD_PREP(RM_RPC_API_VERSION_MASK, 1)
+> +#define RM_RPC_HEADER_WORDS		FIELD_PREP(RM_RPC_HEADER_WORDS_MASK, \
+> +						(sizeof(struct gh_rm_rpc_hdr) / sizeof(u32)))
+> +#define RM_RPC_API			(RM_RPC_API_VERSION | RM_RPC_HEADER_WORDS)
+> +
+> +#define RM_RPC_TYPE_CONTINUATION	0x0
+> +#define RM_RPC_TYPE_REQUEST		0x1
+> +#define RM_RPC_TYPE_REPLY		0x2
+> +#define RM_RPC_TYPE_NOTIF		0x3
+> +#define RM_RPC_TYPE_MASK		GENMASK(1, 0)
+> +
+> +#define GH_RM_MAX_NUM_FRAGMENTS		62
+> +#define RM_RPC_FRAGMENTS_MASK		GENMASK(7, 2)
+> +
+> +struct gh_rm_rpc_hdr {
+> +	u8 api;
+> +	u8 type;
+> +	__le16 seq;
+> +	__le32 msg_id;
+> +} __packed;
+> +
+> +struct gh_rm_rpc_reply_hdr {
+> +	struct gh_rm_rpc_hdr hdr;
+> +	__le32 err_code; /* GH_RM_ERROR_* */
+> +} __packed;
+> +
+> +#define GH_RM_MAX_MSG_SIZE	(GH_MSGQ_MAX_MSG_SIZE - sizeof(struct gh_rm_rpc_hdr))
+> +
+> +/**
+> + * struct gh_rm_connection - Represents a complete message from resource manager
+> + * @payload: Combined payload of all the fragments (msg headers stripped off).
+> + * @size: Size of the payload received so far.
+> + * @msg_id: Message ID from the header.
 
-Why is that the case?
+You do not define the @type field here.
 
-> > > As such, the only safe solution is to assume that there might be a later
-> > > loaded/probed client that has a large vote and preemptively vote for
-> > > some higher bandwidth until then.
-> > 
-> > > > > > In any case, why do you say it's more correct?
-> > > > >
-> > > > > Because if you turn off the display, the device is unusable. In other
-> > > > > circumstances, it can crash a device because the firmware powered it
-> > > > > on left it in a "good enough" state, but we'd go turn it off and crash
-> > > > > the system.
-> > > > >
-> > > > > > I suppose you'd say that the screen is at least usable like this.
-> > > > > > ...except that you've broken a different feature: suspend/resume.
-> > > > >
-> > > > > If the display is off and the laptop is unusable, then we have bigger
-> > > > > problems than suspend/resume?
-> > > > 
-> > > > I suspect that here we'll have to agree to disagree. IMO it's a
-> > > > non-goal to expect hardware to work for which there is no driver. So
-> > > > making the backlight work without a backlight driver isn't really
-> > > > something we should strive for.
-> > > > 
-> > > 
-> > > Without trying to make you agree ;)
-> > > 
-> > > How can you differentiate between "the driver wasn't built" and "the
-> > > driver isn't yet available"?
-> > 
-> > Unfortunately you can't AFAIK.
-> > 
-> > > Consider the case where I boot my laptop, I have some set of builtin
-> > > drivers, some set of drivers in the ramdisk and some set of drivers in
-> > > the root filesystem.
-> > > 
-> > > In the event that something goes wrong mounting the rootfs, I will now
-> > > be in the ramdisk console. Given the current timer-based disabling of
-> > > regulators, I have ~25 seconds to solve my problem before the backlight
-> > > goes blank.
-> > > 
-> > > 
-> > > Obviously this isn't a typical scenario in a consumer device, but it
-> > > seems conceivable that your ramdisk would run fsck for some amount of
-> > > time before mounting the rootfs and picking up the last tier of drivers.
-> > 
-> > If the laptop is running a kernel that is tailored for this device I'd
-> > say the most practial solution would be to either build the backlight
-> > driver into the kernel or have it on the ramdisk as a module.
-> > 
-> > However the laptop might be running a distribution like Debian or Red Hat
-> > with (I assume) a single kernel+ramdisk for all systems of a given
-> > architecture (e.g. aarch64). In that case it might not be desirable to
-> > have all possible backlight drivers in the kernel image or ramdisk. For
-> > this kind of system 'wait forever' might be a suitable solution.
-> > 
-> 
-> For most users, most of the time, I don't think "wait forever" is very
-> good either; e.g. if a distro is lacking one .ko the user would see
-> significant worse battery performance...
-> 
-> But at the same time, when your distro asks for your crypto key for your
-> rootfs and the kernel decides that times up, that's pretty bad user
-> experience as well..
+> + * @num_fragments: total number of fragments expected to be received.
+> + * @fragments_received: fragments received so far.
+> + * @reply: Fields used for request/reply sequences
+> + * @ret: Linux return code, set in case there was an error processing connection
+> + * @type: RM_RPC_TYPE_REPLY or RM_RPC_TYPE_NOTIF.
 
-Indeed, both options have their significant caveats :(
+Oh, I guess you should move the above line up...
 
-> > I have the impression we might want both options, a timeout after which
-> > resources are turned off unless they have been voted for, and 'wait
-> > forever', with a Kconfig option to select the desired behavior.
-> > 
-> > For most tailored systems the timout is probably a more suitable solution.
-> > The maintainer of the kernel/system can decide to not enable certain
-> > drivers because they aren't needed and include essential drivers into
-> > the kernel image or ramdisk. The timeout ensures that the system doesn't
-> > burn extra power for reasons that aren't evident for the maintainer (who
-> > might not even be aware of the whole sync_state story).
-> > 
-> > On the other hand general purpose distributions might want to wait
-> > forever, since they have to support a wide range of hardware and enable
-> > most available drivers anyway.
-> > 
-> > If we end up with such an option I think the timeout should be the
-> > default. Why? There are hundreds of maintainers of tailored kernels
-> > who might run into hard to detect/debug power issues with 'wait
-> > forever'. On the other hand there is a limited number of general purpose
-> > distributions, with kernel teams that probably already know about
-> > 'sync_state'. They only have to enable 'wait forever' once and then
-> > carry it forward to future versions.
-> 
-> In your tailored system you test every hardware and driver combinations,
-> so the wait forever seems like a very easy thing to handle.
+> + * @rm_error: For request/reply sequences with standard replies.
+> + * @seq: Sequence ID for the main message.
+> + * @seq_done: Signals caller that the RM reply has been received
 
-I disagree
+Now that you've defined parts of these in a union, it
+might be clearer to document them as separate struct
+types defined earlier (above gh_rm_connection).
 
-For one you might not want to enable certain drivers, because the system
-doesn't make use of the underlying hardware. In theory (probably not as
-much in practice) the device tree could describe existing hardware which
-isn't supported by the kernel (yet).
+> + * @notification: Fields used for notifiations
 
-More importantly it might not be evident to the maintaner(s) of the system
-that they have an issue impacting power. Think of small companies with a
-single person or very small kernel team and no vendor support. How do
-they even know their system is consuming more power than it would if
-only all these drivers they don't really care about were enabled? Some of
-them will be aware of the problematic and pro-actively look out for
-possible issues, but I expect many aren't. It wouldn't be scalable and
-'user'-friendly to put the burden on them and expect them to sort out the
-issues individually.
+You added a new rm pointer field, not documented here.
 
-> In a general purpose distribution, the distribution doesn't have a way
-> to test every single system. So it's quite likely that they won't enable
-> some optional set of drivers (e.g. camera, venus) and wait forever would
-> be the wrong thing to do. Except when the user needs that backlight, or
-> the framebuffer etc.
+> + * @work: Triggered when all fragments of a notification received
+> + */
+> +struct gh_rm_connection {
+> +	void *payload;
+> +	size_t size;
+> +	__le32 msg_id;
+> +	u8 type;
+> +
+> +	u8 num_fragments;
+> +	u8 fragments_received;
+> +
+> +	union {
+> +		struct {
+> +			int ret;
+> +			u16 seq;
+> +			enum gh_rm_error rm_error;
+> +			struct completion seq_done;
+> +		} reply;
+> +
+> +		struct {
+> +			struct gh_rm *rm;
+> +			struct work_struct work;
+> +		} notification;
+> +	};
+> +};
+> +
+> +struct gh_rm {
+> +	struct device *dev;
+> +	struct gunyah_resource tx_ghrsc, rx_ghrsc;
 
-True, even a general purpose distribution doesn't necessarily enable
-everything.
+Please split the above two definitions into two separate lines.
 
-> I don't know how to solve this, the global timeout is likely the best
-> way we have for now - at least it works, for all cases except when
-> someone needs to stay in their initramfs for more than 30 seconds...
+> +	struct gh_msgq msgq;
+> +	struct mbox_client msgq_client;
+> +	struct gh_rm_connection *active_rx_connection;
+> +	int last_tx_ret;
+> +
 
-There is indeed (at least for now) no solution that addresses all the
-issues. A timeout sounds good to me for the time being.
+Maybe the next two fields can just be "idr" and "idr_lock".
+
+> +	struct idr call_idr;
+> +	struct mutex call_idr_lock;
+> +
+> +	struct kmem_cache *cache;
+> +	struct mutex send_lock;
+> +	struct blocking_notifier_head nh;
+> +};
+
+The next function is very simple.  You don't supply a
+free_connection counterpart, so maybe it's not even
+needed (just open-code it in the two places it's used)?
+
+> +static struct gh_rm_connection *gh_rm_alloc_connection(__le32 msg_id, u8 type)
+> +{
+> +	struct gh_rm_connection *connection;
+> +
+> +	connection = kzalloc(sizeof(*connection), GFP_KERNEL);
+> +	if (!connection)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	connection->type = type;
+> +	connection->msg_id = msg_id;
+> +
+> +	return connection;
+> +}
+> +
+> +static int gh_rm_init_connection_payload(struct gh_rm_connection *connection, void *msg,
+> +					size_t hdr_size, size_t msg_size)
+
+The value of hdr_size is *always* sizeof(*hdr), so you can
+do without passing it as an argument.
+
+> +{
+> +	size_t max_buf_size, payload_size;
+> +	struct gh_rm_rpc_hdr *hdr = msg;
+> +
+
+It probably sounds dumb, but I'd reverse the values
+compared below (and the operator).
+
+> +	if (hdr_size > msg_size)
+> +		return -EINVAL;
+> +
+> +	payload_size = msg_size - hdr_size;
+> +
+> +	connection->num_fragments = FIELD_GET(RM_RPC_FRAGMENTS_MASK, hdr->type);
+> +	connection->fragments_received = 0;
+> +
+> +	/* There's not going to be any payload, no need to allocate buffer. */
+> +	if (!payload_size && !connection->num_fragments)
+
+The payload size is the same across all messages in the
+"connection" right?  As is the number of fragments?
+It's not even possible/valid to have a zero payload size
+and non-zero number of fragments.  I think the second
+half of the above test can be dropped.
+
+> +		return 0;
+> +
+> +	if (connection->num_fragments > GH_RM_MAX_NUM_FRAGMENTS)
+> +		return -EINVAL;
+> +
+> +	max_buf_size = payload_size + (connection->num_fragments * GH_RM_MAX_MSG_SIZE);
+> +
+> +	connection->payload = kzalloc(max_buf_size, GFP_KERNEL);
+> +	if (!connection->payload)
+> +		return -ENOMEM;
+> +
+> +	memcpy(connection->payload, msg + hdr_size, payload_size);
+
+I think I suggested (hdr + 1) rather than (msg + size) elsewhere
+and you took that suggestion.  I'd say do it one way or the other,
+consistently, everywhere.
+
+> +	connection->size = payload_size;
+> +	return 0;
+> +}
+> +
+> +static void gh_rm_notif_work(struct work_struct *work)
+> +{
+> +	struct gh_rm_connection *connection = container_of(work, struct gh_rm_connection,
+> +								notification.work);
+> +	struct gh_rm *rm = connection->notification.rm;
+> +
+> +	blocking_notifier_call_chain(&rm->nh, connection->msg_id, connection->payload);
+> +
+> +	put_gh_rm(rm);
+> +	kfree(connection->payload);
+> +	kfree(connection);
+> +}
+> +
+> +static struct gh_rm_connection *gh_rm_process_notif(struct gh_rm *rm, void *msg, size_t msg_size)
+
+I think it might be better if you do some of what the caller
+does here.  I.e., verify the current connection is null (and
+abort if not and make it NULL), then assign it to the new
+connection before you return success.  And return an errno.
+
+> +{
+> +	struct gh_rm_connection *connection;
+> +	struct gh_rm_rpc_hdr *hdr = msg;
+> +	int ret;
+> +
+> +	connection = gh_rm_alloc_connection(hdr->msg_id, RM_RPC_TYPE_NOTIF);
+> +	if (IS_ERR(connection)) {
+> +		dev_err(rm->dev, "Failed to alloc connection for notification: %ld, dropping.\n",
+> +			PTR_ERR(connection));
+> +		return NULL;
+> +	}
+> +
+> +	get_gh_rm(rm);
+> +	connection->notification.rm = rm;
+> +	INIT_WORK(&connection->notification.work, gh_rm_notif_work);
+> +
+> +	ret = gh_rm_init_connection_payload(connection, msg, sizeof(*hdr), msg_size);
+> +	if (ret) {
+> +		dev_err(rm->dev, "Failed to initialize connection buffer for notification: %d\n",
+> +			ret);
+> +		kfree(connection);
+> +		return NULL;
+> +	}
+> +
+> +	return connection;
+> +}
+> +
+> +static struct gh_rm_connection *gh_rm_process_rply(struct gh_rm *rm, void *msg, size_t msg_size)
+> +{
+
+Here too, make sure there is no active connection and then
+set it within this function if the errno returned is 0.
+
+> +	struct gh_rm_rpc_reply_hdr *reply_hdr = msg;
+> +	struct gh_rm_connection *connection;
+> +	u16 seq_id = le16_to_cpu(reply_hdr->hdr.seq);
+> +
+> +	mutex_lock(&rm->call_idr_lock);
+> +	connection = idr_find(&rm->call_idr, seq_id);
+> +	mutex_unlock(&rm->call_idr_lock);
+> +
+> +	if (!connection || connection->msg_id != reply_hdr->hdr.msg_id)
+> +		return NULL;
+> +
+> +	if (gh_rm_init_connection_payload(connection, msg, sizeof(*reply_hdr), msg_size)) {
+> +		dev_err(rm->dev, "Failed to alloc connection buffer for sequence %d\n", seq_id);
+> +		/* Send connection complete and error the client. */
+> +		connection->reply.ret = -ENOMEM;
+> +		complete(&connection->reply.seq_done);
+> +		return NULL;
+> +	}
+> +
+> +	connection->reply.rm_error = le32_to_cpu(reply_hdr->err_code);
+> +	return connection;
+> +}
+> +
+> +static int gh_rm_process_cont(struct gh_rm *rm, struct gh_rm_connection *connection,
+> +				void *msg, size_t msg_size)
+
+Similar comment here.  Have this function verify there is
+a non-null active connection.  Then process the message
+and abort if there's an error (and null the active connection
+pointer).
+
+> +{
+> +	struct gh_rm_rpc_hdr *hdr = msg;
+> +	size_t payload_size = msg_size - sizeof(*hdr);
+> +
+> +	/*
+> +	 * hdr->fragments and hdr->msg_id preserves the value from first reply
+> +	 * or notif message. To detect mishandling, check it's still intact.
+> +	 */
+> +	if (connection->msg_id != hdr->msg_id ||
+> +		connection->num_fragments != FIELD_GET(RM_RPC_FRAGMENTS_MASK, hdr->type))
+> +		return -EINVAL;
+
+Maybe -EBADMSG?
+
+> +
+> +	memcpy(connection->payload + connection->size, msg + sizeof(*hdr), payload_size);
+> +	connection->size += payload_size;
+> +	connection->fragments_received++;
+> +	return 0;
+> +}
+> +
+> +static void gh_rm_abort_connection(struct gh_rm_connection *connection)
+> +{
+> +	switch (connection->type) {
+> +	case RM_RPC_TYPE_REPLY:
+> +		connection->reply.ret = -EIO;
+> +		complete(&connection->reply.seq_done);
+> +		break;
+> +	case RM_RPC_TYPE_NOTIF:
+> +		fallthrough;
+> +	default:
+> +		kfree(connection->payload);
+> +		kfree(connection);
+> +	}
+> +}
+> +
+> +static bool gh_rm_complete_connection(struct gh_rm *rm, struct gh_rm_connection *connection)
+
+The only caller of this function passes rm->active_rx_connection
+as the second argument.  It is available to you here, so you
+can get rid of that argument.
+
+> +{
+> +	if (!connection || connection->fragments_received != connection->num_fragments)
+> +		return false;
+> +
+> +	switch (connection->type) {
+> +	case RM_RPC_TYPE_REPLY:
+> +		complete(&connection->reply.seq_done);
+> +		break;
+> +	case RM_RPC_TYPE_NOTIF:
+> +		schedule_work(&connection->notification.work);
+> +		break;
+> +	default:
+> +		dev_err(rm->dev, "Invalid message type (%d) received\n", connection->type);
+> +		gh_rm_abort_connection(connection);
+> +		break;
+> +	}
+> +
+> +	return true;
+> +}
+> +
+> +static void gh_rm_msgq_rx_data(struct mbox_client *cl, void *mssg)
+> +{
+> +	struct gh_rm *rm = container_of(cl, struct gh_rm, msgq_client);
+> +	struct gh_msgq_rx_data *rx_data = mssg;
+> +	size_t msg_size = rx_data->length;
+> +	void *msg = rx_data->data;
+> +	struct gh_rm_rpc_hdr *hdr;
+> +
+
+Is it required that at least one byte (past the header) will
+be received?  I.e., should the "<=" below just be "<"?
+
+> +	if (msg_size <= sizeof(*hdr) || msg_size > GH_MSGQ_MAX_MSG_SIZE)
+> +		return;
+
+You previously reported a message here.  These seem like
+errors, which if they occur, maybe should be reported.
+They seem like "never happen" issues, but it's defensive
+to make these checks (which is good).
+
+> +
+> +	hdr = msg;
+> +	if (hdr->api != RM_RPC_API) {
+
+If this ever happens, is the hardware failing?  It seems
+like once Gunyah is initialized and you've checked the
+API version once, there should be no need to check it
+repeatedly.
+
+> +		dev_err(rm->dev, "Unknown RM RPC API version: %x\n", hdr->api);
+> +		return;
+> +	}
+> +
+> +	switch (FIELD_GET(RM_RPC_TYPE_MASK, hdr->type)) {
+> +	case RM_RPC_TYPE_NOTIF:
+> +		rm->active_rx_connection = gh_rm_process_notif(rm, msg, msg_size);
+> +		break;
+> +	case RM_RPC_TYPE_REPLY:
+> +		rm->active_rx_connection = gh_rm_process_rply(rm, msg, msg_size);
+> +		break;
+> +	case RM_RPC_TYPE_CONTINUATION:
+> +		if (gh_rm_process_cont(rm, rm->active_rx_connection, msg, msg_size)) {
+> +			gh_rm_abort_connection(rm->active_rx_connection);
+> +			rm->active_rx_connection = NULL;
+> +		}
+> +		break;
+> +	default:
+> +		dev_err(rm->dev, "Invalid message type (%lu) received\n",
+> +			FIELD_GET(RM_RPC_TYPE_MASK, hdr->type));
+> +		return;
+> +	}
+> +
+> +	if (gh_rm_complete_connection(rm, rm->active_rx_connection))
+> +		rm->active_rx_connection = NULL;
+> +}
+> +
+> +static void gh_rm_msgq_tx_done(struct mbox_client *cl, void *mssg, int r)
+> +{
+> +	struct gh_rm *rm = container_of(cl, struct gh_rm, msgq_client);
+> +
+> +	kmem_cache_free(rm->cache, mssg);
+> +	rm->last_tx_ret = r;
+> +}
+> +
+> +static int gh_rm_send_request(struct gh_rm *rm, u32 message_id,
+> +			      const void *req_buff, size_t req_buff_size,
+> +			      struct gh_rm_connection *connection)
+> +{
+> +	u8 msg_type = FIELD_PREP(RM_RPC_TYPE_MASK, RM_RPC_TYPE_REQUEST);
+> +	size_t buff_size_remaining = req_buff_size;
+> +	const void *req_buff_curr = req_buff;
+> +	struct gh_msgq_tx_data *msg;
+> +	struct gh_rm_rpc_hdr *hdr;
+> +	u32 cont_fragments = 0;
+> +	size_t payload_size;
+> +	void *payload;
+> +	int ret;
+> +
+> +	if (req_buff_size)
+> +		cont_fragments = (req_buff_size - 1) / GH_RM_MAX_MSG_SIZE;
+
+Compute this *after* verifying the size isn't too big.
+
+> +
+> +	if (req_buff_size > GH_RM_MAX_NUM_FRAGMENTS * GH_RM_MAX_MSG_SIZE) {
+> +		pr_warn("Limit exceeded for the number of fragments: %u\n", cont_fragments);
+> +		dump_stack();
+> +		return -E2BIG;
+> +	}
+> +
+> +	ret = mutex_lock_interruptible(&rm->send_lock);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* Consider also the 'request' packet for the loop count */
+> +	do {
+> +		msg = kmem_cache_zalloc(rm->cache, GFP_KERNEL);
+> +		if (!msg) {
+> +			ret = -ENOMEM;
+> +			goto out;
+> +		}
+> +
+> +		/* Fill header */
+> +		hdr = (struct gh_rm_rpc_hdr *)msg->data;
+> +		hdr->api = RM_RPC_API;
+> +		hdr->type = msg_type | FIELD_PREP(RM_RPC_FRAGMENTS_MASK, cont_fragments);
+> +		hdr->seq = cpu_to_le16(connection->reply.seq);
+> +		hdr->msg_id = cpu_to_le32(message_id);
+
+Most of the above are constant for every message.  I think the only
+thing that changes is the type field.  It might not make a difference
+but you could compute the "generic" header outside the loop and
+assign it as a structure, then overwrite the type field.
+
+> +
+> +		/* Copy payload */
+> +		payload = hdr + 1;
+> +		payload_size = min(buff_size_remaining, GH_RM_MAX_MSG_SIZE);
+> +		memcpy(payload, req_buff_curr, payload_size);
+> +		req_buff_curr += payload_size;
+> +		buff_size_remaining -= payload_size;
+> +
+> +		/* Force the last fragment to immediately alert the receiver */
+> +		msg->push = !buff_size_remaining;
+> +		msg->length = sizeof(*hdr) + payload_size;
+> +
+> +		ret = mbox_send_message(gh_msgq_chan(&rm->msgq), msg);
+> +		if (ret < 0) {
+> +			kmem_cache_free(rm->cache, msg);
+> +			break;
+> +		}
+> +
+> +		if (rm->last_tx_ret) {
+> +			ret = rm->last_tx_ret;
+> +			break;
+> +		}
+> +
+> +		msg_type = FIELD_PREP(RM_RPC_TYPE_MASK, RM_RPC_TYPE_CONTINUATION);
+> +	} while (buff_size_remaining);
+> +
+> +out:
+> +	mutex_unlock(&rm->send_lock);
+> +	return ret < 0 ? ret : 0;
+> +}
+> +
+> +/**
+> + * gh_rm_call: Achieve request-response type communication with RPC
+> + * @rm: Pointer to Gunyah resource manager internal data
+> + * @message_id: The RM RPC message-id
+> + * @req_buff: Request buffer that contains the payload
+> + * @req_buff_size: Total size of the payload
+> + * @resp_buf: Pointer to a response buffer
+
+Is it "buf" or is it "buff"?  I prefer the former, but you
+should be consistent in your namings.
+
+> + * @resp_buff_size: Size of the response buffer
+> + *
+> + * Make a request to the RM-VM and wait for reply back. For a successful
+> + * response, the function returns the payload. The size of the payload is set in
+> + * resp_buff_size. The resp_buf should be freed by the caller.
+
+It might not matter, but resp_buf should be freed by the
+caller *if 0 is returned* (no error).
+
+> + *
+> + * req_buff should be not NULL for req_buff_size >0. If req_buff_size == 0,
+> + * req_buff *can* be NULL and no additional payload is sent.
+> + *
+> + * Context: Process context. Will sleep waiting for reply.
+> + * Return: 0 on success. <0 if error.
+> + */
+> +int gh_rm_call(struct gh_rm *rm, u32 message_id, void *req_buff, size_t req_buff_size,
+> +		void **resp_buf, size_t *resp_buff_size)
+> +{
+> +	struct gh_rm_connection *connection;
+> +	int ret;
+> +
+> +	/* message_id 0 is reserved. req_buff_size implies req_buf is not NULL */
+> +	if (!message_id || (!req_buff && req_buff_size) || !rm)
+> +		return -EINVAL;
+> +
+> +	connection = gh_rm_alloc_connection(cpu_to_le32(message_id), RM_RPC_TYPE_REPLY);
+> +	if (IS_ERR(connection))
+> +		return PTR_ERR(connection);
+> +
+> +	init_completion(&connection->reply.seq_done);
+> +
+> +	/* Allocate a new seq number for this connection */
+> +	mutex_lock(&rm->call_idr_lock);
+> +	ret = idr_alloc_cyclic(&rm->call_idr, connection, 0, U16_MAX,
+> +						GFP_KERNEL);
+> +	mutex_unlock(&rm->call_idr_lock);
+> +	if (ret < 0)
+> +		goto out;
+
+You need a different error path label here.  If there's an
+error, the IDR allocation failed (so shoudln't be removed).
+(Right?)
+
+> +	connection->reply.seq = ret;
+> +
+> +	/* Send the request to the Resource Manager */
+> +	ret = gh_rm_send_request(rm, message_id, req_buff, req_buff_size, connection);
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	/* Wait for response */
+> +	ret = wait_for_completion_interruptible(&connection->reply.seq_done);
+> +	if (ret)
+> +		goto out;
+> +
+> +	/* Check for internal (kernel) error waiting for the response */
+> +	if (connection->reply.ret) {
+> +		ret = connection->reply.ret;
+> +		if (ret != -ENOMEM)
+> +			kfree(connection->payload);
+> +		goto out;
+> +	}
+> +
+> +	/* Got a response, did resource manager give us an error? */
+> +	if (connection->reply.rm_error != GH_RM_ERROR_OK) {
+> +		pr_warn("RM rejected message %08x. Error: %d\n", message_id,
+> +			connection->reply.rm_error);
+> +		dump_stack();
+> +		ret = gh_rm_remap_error(connection->reply.rm_error);
+> +		kfree(connection->payload);
+> +		goto out;
+> +	}
+> +
+> +	/* Everything looks good, return the payload */
+> +	*resp_buff_size = connection->size;
+> +	if (connection->size)
+> +		*resp_buf = connection->payload;
+> +	else {
+> +		/* kfree in case RM sent us multiple fragments but never any data in
+> +		 * those fragments. We would've allocated memory for it, but connection->size == 0
+> +		 */
+> +		kfree(connection->payload);
+> +	}
+> +
+> +out:
+> +	mutex_lock(&rm->call_idr_lock);
+> +	idr_remove(&rm->call_idr, connection->reply.seq);
+> +	mutex_unlock(&rm->call_idr_lock);
+> +	kfree(connection);
+> +	return ret;
+> +}
+> +
+> +
+> +int gh_rm_notifier_register(struct gh_rm *rm, struct notifier_block *nb)
+> +{
+> +	return blocking_notifier_chain_register(&rm->nh, nb);
+> +}
+> +EXPORT_SYMBOL_GPL(gh_rm_notifier_register);
+> +
+> +int gh_rm_notifier_unregister(struct gh_rm *rm, struct notifier_block *nb)
+> +{
+> +	return blocking_notifier_chain_unregister(&rm->nh, nb);
+> +}
+> +EXPORT_SYMBOL_GPL(gh_rm_notifier_unregister);
+> +
+> +void get_gh_rm(struct gh_rm *rm)
+
+It is often pretty handy to return the argument in
+functions like this.  It simultaneously takes the
+reference and assigns the pointer the reference
+represents.
+
+
+> +{
+> +	get_device(rm->dev);
+> +}
+> +EXPORT_SYMBOL_GPL(get_gh_rm);
+> +
+> +void put_gh_rm(struct gh_rm *rm)
+> +{
+> +	put_device(rm->dev);
+> +}
+> +EXPORT_SYMBOL_GPL(put_gh_rm);
+> +
+> +static int gh_msgq_platform_probe_direction(struct platform_device *pdev,
+> +					bool tx, int idx, struct gunyah_resource *ghrsc)
+> +{
+> +	struct device_node *node = pdev->dev.of_node;
+> +	int ret;
+
+I think you should declare idx as a local variable.
+
+	int idx = tx ? 1 : 0;
+
+> +
+> +	ghrsc->type = tx ? GUNYAH_RESOURCE_TYPE_MSGQ_TX : GUNYAH_RESOURCE_TYPE_MSGQ_RX;
+> +
+> +	ghrsc->irq = platform_get_irq(pdev, idx);
+
+Do you suppose you could do platform_get_irq_byname(), and then
+specify the names of the IRQs ("rm_tx_irq" and "rm_rx_irq" maybe)?
+
+> +	if (ghrsc->irq < 0) {
+> +		dev_err(&pdev->dev, "Failed to get irq%d: %d\n", idx, ghrsc->irq);
+
+Maybe:	"Failed to get %cX IRQ: %d\n", tx ? 'T' : 'R', ghrsc->irq);
+
+> +		return ghrsc->irq;
+> +	}
+> +
+> +	ret = of_property_read_u64_index(node, "reg", idx, &ghrsc->capid);
+
+Is a capability ID a simple (but large) number?
+
+The *resource manager* (which is a very special VM) has to
+have both TX and RX message queue capability IDs.  Is there
+'any chance that these specific capability IDs have values
+that are fixed by the design?  Like, 0 and 1?  I don't know
+what they are, but it seems like it *could* be something
+fixed by the design, and if that were the case, there would
+be no need to specify the "reg" property to get the "capid"
+values.
+
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "Failed to get capid%d: %d\n", idx, ret);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int gh_rm_drv_probe(struct platform_device *pdev)
+> +{
+> +	struct gh_msgq_tx_data *msg;
+> +	struct gh_rm *rm;
+> +	int ret;
+> +
+> +	rm = devm_kzalloc(&pdev->dev, sizeof(*rm), GFP_KERNEL);
+> +	if (!rm)
+> +		return -ENOMEM;
+> +
+> +	platform_set_drvdata(pdev, rm);
+> +	rm->dev = &pdev->dev;
+> +
+> +	mutex_init(&rm->call_idr_lock);
+> +	idr_init(&rm->call_idr);
+> +	rm->cache = kmem_cache_create("gh_rm", struct_size(msg, data, GH_MSGQ_MAX_MSG_SIZE), 0,
+> +		SLAB_HWCACHE_ALIGN, NULL);
+> +	if (!rm->cache)
+> +		return -ENOMEM;
+
+If you abstracted the allocation interface for these messages,
+you could actually survive without the slab cache here.  But
+if this fails, maybe you won't get far anyway.
+
+> +	mutex_init(&rm->send_lock);
+> +	BLOCKING_INIT_NOTIFIER_HEAD(&rm->nh);
+> +
+> +	ret = gh_msgq_platform_probe_direction(pdev, true, 0, &rm->tx_ghrsc);
+> +	if (ret)
+> +		goto err_cache;
+> +
+> +	ret = gh_msgq_platform_probe_direction(pdev, false, 1, &rm->rx_ghrsc);
+> +	if (ret)
+> +		goto err_cache;
+> +
+> +	rm->msgq_client.dev = &pdev->dev;
+> +	rm->msgq_client.tx_block = true;
+> +	rm->msgq_client.rx_callback = gh_rm_msgq_rx_data;
+> +	rm->msgq_client.tx_done = gh_rm_msgq_tx_done;
+> +
+> +	return gh_msgq_init(&pdev->dev, &rm->msgq, &rm->msgq_client, &rm->tx_ghrsc, &rm->rx_ghrsc);
+> +err_cache:
+> +	kmem_cache_destroy(rm->cache);
+> +	return ret;
+> +}
+> +
+> +static int gh_rm_drv_remove(struct platform_device *pdev)
+> +{
+> +	struct gh_rm *rm = platform_get_drvdata(pdev);
+> +
+> +	mbox_free_channel(gh_msgq_chan(&rm->msgq));
+> +	gh_msgq_remove(&rm->msgq);
+> +	kmem_cache_destroy(rm->cache);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id gh_rm_of_match[] = {
+> +	{ .compatible = "gunyah-resource-manager" },
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(of, gh_rm_of_match);
+> +
+> +static struct platform_driver gh_rm_driver = {
+> +	.probe = gh_rm_drv_probe,
+> +	.remove = gh_rm_drv_remove,
+> +	.driver = {
+> +		.name = "gh_rsc_mgr",
+> +		.of_match_table = gh_rm_of_match,
+> +	},
+> +};
+> +module_platform_driver(gh_rm_driver);
+> +
+> +MODULE_LICENSE("GPL");
+> +MODULE_DESCRIPTION("Gunyah Resource Manager Driver");
+> diff --git a/drivers/virt/gunyah/rsc_mgr.h b/drivers/virt/gunyah/rsc_mgr.h
+> new file mode 100644
+> index 000000000000..d4e799a7526f
+> --- /dev/null
+> +++ b/drivers/virt/gunyah/rsc_mgr.h
+> @@ -0,0 +1,77 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +#ifndef __GH_RSC_MGR_PRIV_H
+> +#define __GH_RSC_MGR_PRIV_H
+> +
+> +#include <linux/gunyah.h>
+> +#include <linux/gunyah_rsc_mgr.h>
+> +#include <linux/types.h>
+> +
+> +/* RM Error codes */
+> +enum gh_rm_error {
+> +	GH_RM_ERROR_OK			= 0x0,
+> +	GH_RM_ERROR_UNIMPLEMENTED	= 0xFFFFFFFF,
+> +	GH_RM_ERROR_NOMEM		= 0x1,
+> +	GH_RM_ERROR_NORESOURCE		= 0x2,
+> +	GH_RM_ERROR_DENIED		= 0x3,
+> +	GH_RM_ERROR_INVALID		= 0x4,
+> +	GH_RM_ERROR_BUSY		= 0x5,
+> +	GH_RM_ERROR_ARGUMENT_INVALID	= 0x6,
+> +	GH_RM_ERROR_HANDLE_INVALID	= 0x7,
+> +	GH_RM_ERROR_VALIDATE_FAILED	= 0x8,
+> +	GH_RM_ERROR_MAP_FAILED		= 0x9,
+> +	GH_RM_ERROR_MEM_INVALID		= 0xA,
+> +	GH_RM_ERROR_MEM_INUSE		= 0xB,
+> +	GH_RM_ERROR_MEM_RELEASED	= 0xC,
+> +	GH_RM_ERROR_VMID_INVALID	= 0xD,
+> +	GH_RM_ERROR_LOOKUP_FAILED	= 0xE,
+> +	GH_RM_ERROR_IRQ_INVALID		= 0xF,
+> +	GH_RM_ERROR_IRQ_INUSE		= 0x10,
+> +	GH_RM_ERROR_IRQ_RELEASED	= 0x11,
+> +};
+> +
+> +/**
+> + * gh_rm_remap_error() - Remap Gunyah resource manager errors into a Linux error code
+> + * @gh_error: "Standard" return value from Gunyah resource manager
+> + */
+> +static inline int gh_rm_remap_error(enum gh_rm_error rm_error)
+> +{
+> +	switch (rm_error) {
+> +	case GH_RM_ERROR_OK:
+> +		return 0;
+> +	case GH_RM_ERROR_UNIMPLEMENTED:
+> +		return -EOPNOTSUPP;
+> +	case GH_RM_ERROR_NOMEM:
+> +		return -ENOMEM;
+> +	case GH_RM_ERROR_NORESOURCE:
+> +		return -ENODEV;
+> +	case GH_RM_ERROR_DENIED:
+> +		return -EPERM;
+> +	case GH_RM_ERROR_BUSY:
+> +		return -EBUSY;
+> +	case GH_RM_ERROR_INVALID:
+> +	case GH_RM_ERROR_ARGUMENT_INVALID:
+> +	case GH_RM_ERROR_HANDLE_INVALID:
+> +	case GH_RM_ERROR_VALIDATE_FAILED:
+> +	case GH_RM_ERROR_MAP_FAILED:
+> +	case GH_RM_ERROR_MEM_INVALID:
+> +	case GH_RM_ERROR_MEM_INUSE:
+> +	case GH_RM_ERROR_MEM_RELEASED:
+> +	case GH_RM_ERROR_VMID_INVALID:
+> +	case GH_RM_ERROR_LOOKUP_FAILED:
+> +	case GH_RM_ERROR_IRQ_INVALID:
+> +	case GH_RM_ERROR_IRQ_INUSE:
+> +	case GH_RM_ERROR_IRQ_RELEASED:
+> +		return -EINVAL;
+> +	default:
+> +		return -EBADMSG;
+> +	}
+> +}
+> +
+> +struct gh_rm;
+
+This might just be my preference, but I like to see declarations
+like the one above grouped at the top of the file, under includes.
+
+> +int gh_rm_call(struct gh_rm *rsc_mgr, u32 message_id, void *req_buff, size_t req_buff_size,
+> +		void **resp_buf, size_t *resp_buff_size);
+> +
+> +#endif
+> diff --git a/include/linux/gunyah_rsc_mgr.h b/include/linux/gunyah_rsc_mgr.h
+> new file mode 100644
+> index 000000000000..c992b3188c8d
+> --- /dev/null
+> +++ b/include/linux/gunyah_rsc_mgr.h
+> @@ -0,0 +1,24 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#ifndef _GUNYAH_RSC_MGR_H
+> +#define _GUNYAH_RSC_MGR_H
+> +
+> +#include <linux/list.h>
+> +#include <linux/notifier.h>
+> +#include <linux/gunyah.h>
+> +
+> +#define GH_VMID_INVAL	U16_MAX
+> +
+> +/* Gunyah recognizes VMID0 as an alias to the current VM's ID */
+> +#define GH_VMID_SELF			0
+
+I haven't really checked very well, bur you should *use this*
+definition where a VMID is being examined. I.e., if you're
+going to define this, then never just compare a VMID against 0.
+
+					-Alex
+
+> +
+> +struct gh_rm;
+> +int gh_rm_notifier_register(struct gh_rm *rm, struct notifier_block *nb);
+> +int gh_rm_notifier_unregister(struct gh_rm *rm, struct notifier_block *nb);
+> +void get_gh_rm(struct gh_rm *rm);
+> +void put_gh_rm(struct gh_rm *rm);
+> +
+> +#endif
+
