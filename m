@@ -2,36 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D2346A06E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 12:01:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 66A766A0725
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 12:15:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233407AbjBWLBV convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 06:01:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38462 "EHLO
+        id S233356AbjBWLPg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 06:15:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233767AbjBWLBS (ORCPT
+        with ESMTP id S231312AbjBWLPe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 06:01:18 -0500
-Received: from bg4.exmail.qq.com (bg4.exmail.qq.com [43.154.221.58])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A901A52DE8;
-        Thu, 23 Feb 2023 03:01:10 -0800 (PST)
-X-QQ-mid: bizesmtp91t1677150009tl48xxbe
-Received: from [192.168.3.2] ( [111.196.135.79])
-        by bizesmtp.qq.com (ESMTP) with 
-        id ; Thu, 23 Feb 2023 19:00:05 +0800 (CST)
-X-QQ-SSF: 01200000000000C0E000000A0000000
-X-QQ-FEAT: uGhnJwy6xZLF01U1t+tFV9zPAyRY0eXljRPN2ey2sbDXH52lPbRzrCAGz4oVU
-        qxcrrmc16EfqtarwuNQFItaXMsIJMgPr/C6Yw3K4BJTSLJOYqGiS5uQyYBbGWDyBpW+MiKm
-        +p9JwoMPgOekqeMveePon8ZY84gjtlov48nQOlGWYURF8RFrlSiDMw4hOcqguT7DhrDRjoB
-        nTFM3SU6lbgHrxH1VmmesFi79iO8ley7MoykT6DL+PkQh/86WHUp+RHHrl6aQQuqG2eF67Q
-        rx1XpCglAwzJD2ifDzwvk6YhoomEKwM4u9m5t6Mq8SpuWj1AtA2jQbeu7SajGr8giouAj18
-        vVoNtHDrQLcZh0YHtlJQjqm/npf2jLl874XGnGMF6vXwTq0follZg/5wa3iFw==
-X-QQ-GoodBg: 0
-From:   "Bin Meng" <bmeng@tinylab.org>
-To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
+        Thu, 23 Feb 2023 06:15:34 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BAD51C339
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 03:15:33 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id i34so15463471eda.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 03:15:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UBnqHGQezE2IyBBd9t88qMIvutHEY5Rpl2abqvqfeSs=;
+        b=oTX6kYDbTKG9Lu4Dsnk0vuQDVDkX/TYoSX3awjP4CAgdQvfx1H832cA6w1rZ09X6BX
+         FjszmLmnbO/dhrw0fG+64OzL7YOlFwNOJNBI88821WvchSVc/b63IJs48QWvxdRKBWva
+         /VzdH/UDfld5XFZBLdx49330t27fsIxH9r1fPiO/l0kAJ94Aw/UgiqyQT23FBtXZJnbe
+         CrKEQCnT0UfA0f2NRochCv6CdtI6u6yn1RowARdQRD75Y7k3GJ4Pg9CgrlEWrjgxtzQw
+         my2gUitEBbjIyXWFbPgYkaNMXdA2e1mWU4Fmybw0OkKL9cnY5ykpmdlxppFnPQlgWcEc
+         YLhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UBnqHGQezE2IyBBd9t88qMIvutHEY5Rpl2abqvqfeSs=;
+        b=Le2KcwDIeOKuWjgjsbBp7kIyPHTsIWs8HPRUMVkFy+Q5YGeoa9V4p5y2cq7QZ3b0Yn
+         1KBIMRWlldNHxpQCH3E1HCJ2O0uD+XK+2fWcmDfP7GU0zFV16rOkTXMzyqiBh0ePQtpq
+         v/tgvu1GpgeXVLjCv4kavRxTE1BLkV6ZsHK03zc6zt24XpJlodl1zopVIeHRPGGwtUZ3
+         c44ahKcrALIqtUzFKj3Jgh5DAZFZJ+1Y2J7fLwnsWYMozhh0lqWr11jIPCYI0EWIyd80
+         a1h4+vuBrkzBmfSWEgphJtQLjv5FEkMWHbA2VfSswC/3kEVIByNQIGn64obtv8O3pkwk
+         zJ0g==
+X-Gm-Message-State: AO0yUKUJkBbiyvEsRhdh51SvjzJNCtkCfZcmwHwmORpjyviCpm07foBr
+        7d6tiQlTjZu6JOxny4TeN/Ucmg==
+X-Google-Smtp-Source: AK7set8eibBObJ0JJRlJP0C1NRS36UyC5W+9+4UIoIuShY5Bhn8lOjCbugT2E+dhjLNpnr5ysRWHxg==
+X-Received: by 2002:a17:907:6d0a:b0:8af:4418:8700 with SMTP id sa10-20020a1709076d0a00b008af44188700mr27119496ejc.47.1677150932130;
+        Thu, 23 Feb 2023 03:15:32 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id bh13-20020a170906a0cd00b008d9ddd2da88sm4259117ejb.6.2023.02.23.03.15.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Feb 2023 03:15:30 -0800 (PST)
+Message-ID: <8ea9b68c-67cc-cc6f-39d4-0c5bdbfe3203@linaro.org>
+Date:   Thu, 23 Feb 2023 12:15:28 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
 Subject: Re: [PATCH] arm: Drop CONFIG_MTD_M25P80 in various defconfig files
+Content-Language: en-US
+To:     Bin Meng <bmeng@tinylab.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
 Cc:     andrew <andrew@lunn.ch>, agross <agross@kernel.org>,
         arnd <arnd@arndb.de>, andersson <andersson@kernel.org>,
         "chuck.lever" <chuck.lever@oracle.com>,
@@ -50,20 +77,16 @@ Cc:     andrew <andrew@lunn.ch>, agross <agross@kernel.org>,
         "sudeep.holla" <sudeep.holla@arm.com>, ziy <ziy@nvidia.com>,
         linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Date:   Thu, 23 Feb 2023 11:00:05 +0000
-Message-Id: <em4f9482cc-1919-4f29-92a5-41ba5f6c3bb3@1adcb789.com>
-In-Reply-To: <e6d97e34-0c63-019d-93b6-c39e722d1d8c@linaro.org>
 References: <20230210093224.689990-1-bmeng@tinylab.org>
  <em4fed7efe-b8aa-4a34-86d4-655b0a96fec0@1adcb789.com>
  <e6d97e34-0c63-019d-93b6-c39e722d1d8c@linaro.org>
-Reply-To: "Bin Meng" <bmeng@tinylab.org>
-User-Agent: eM_Client/9.2.1577.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtp:tinylab.org:qybglogicsvr:qybglogicsvr3
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_MSPIKE_H2,
+ <em4f9482cc-1919-4f29-92a5-41ba5f6c3bb3@1adcb789.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <em4f9482cc-1919-4f29-92a5-41ba5f6c3bb3@1adcb789.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,42 +94,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023/2/23 18:50:36, "Krzysztof Kozlowski" 
-<krzysztof.kozlowski@linaro.org> wrote:
-
->On 23/02/2023 11:46, Bin Meng wrote:
->>  On 2023/2/10 17:32:24, "Bin Meng" <bmeng@tinylab.org> wrote:
+On 23/02/2023 12:00, Bin Meng wrote:
+> On 2023/2/23 18:50:36, "Krzysztof Kozlowski" 
+> <krzysztof.kozlowski@linaro.org> wrote:
+> 
+>> On 23/02/2023 11:46, Bin Meng wrote:
+>>>  On 2023/2/10 17:32:24, "Bin Meng" <bmeng@tinylab.org> wrote:
+>>>
+>>>>  Drop CONFIG_MTD_M25P80 that was removed in
+>>>>  commit b35b9a10362d ("mtd: spi-nor: Move m25p80 code in spi-nor.c")
+>>>>
+>>>>  Signed-off-by: Bin Meng <bmeng@tinylab.org>
+>>>>
+>>>>  ---
+>>>>
+>>>>   arch/arm/configs/axm55xx_defconfig     | 2 +-
+>>>>   arch/arm/configs/davinci_all_defconfig | 1 -
+>>>>   arch/arm/configs/dove_defconfig        | 1 -
+>>>>   arch/arm/configs/keystone_defconfig    | 1 -
+>>>>   arch/arm/configs/mvebu_v5_defconfig    | 1 -
+>>>>   arch/arm/configs/mxs_defconfig         | 1 -
+>>>>   arch/arm/configs/pxa_defconfig         | 1 -
+>>>>   arch/arm/configs/qcom_defconfig        | 1 -
+>>>>   arch/arm/configs/socfpga_defconfig     | 1 -
+>>>>   9 files changed, 1 insertion(+), 9 deletions(-)
+>>>>
+>>>>
+>>>
+>>>  Ping?
 >>
->>>  Drop CONFIG_MTD_M25P80 that was removed in
->>>  commit b35b9a10362d ("mtd: spi-nor: Move m25p80 code in spi-nor.c")
->>>
->>>  Signed-off-by: Bin Meng <bmeng@tinylab.org>
->>>
->>>  ---
->>>
->>>   arch/arm/configs/axm55xx_defconfig     | 2 +-
->>>   arch/arm/configs/davinci_all_defconfig | 1 -
->>>   arch/arm/configs/dove_defconfig        | 1 -
->>>   arch/arm/configs/keystone_defconfig    | 1 -
->>>   arch/arm/configs/mvebu_v5_defconfig    | 1 -
->>>   arch/arm/configs/mxs_defconfig         | 1 -
->>>   arch/arm/configs/pxa_defconfig         | 1 -
->>>   arch/arm/configs/qcom_defconfig        | 1 -
->>>   arch/arm/configs/socfpga_defconfig     | 1 -
->>>   9 files changed, 1 insertion(+), 9 deletions(-)
->>>
->>>
->>
->>  Ping?
->
->No need for pinging, but you need to send to soc folks. Otherwise no one
->will pick it up. You will get the address from get_maintainer.pl -f
->arch/arm/boot/dts/Makefile (yes, it is quite hidden on purpose).
+>> No need for pinging, but you need to send to soc folks. Otherwise no one
+>> will pick it up. You will get the address from get_maintainer.pl -f
+>> arch/arm/boot/dts/Makefile (yes, it is quite hidden on purpose).
+> 
+> Yeah I used the script to generate the cc list.
 
-Yeah I used the script to generate the cc list.
+Did you read my message fully? Because the CC list is not having the
+proper address, thus maybe you based your patch on some old kernel.
+Please rebase.
 
-Let me know if I need to split this patch into several ones (per-soc a 
-patch) so that each soc maintainer only picks up their own?
+> 
+> Let me know if I need to split this patch into several ones (per-soc a 
+> patch) so that each soc maintainer only picks up their own?
 
-Regards,
-Bin
+If you did what I wrote about and the kernel is fairly recent, then no
+need...
+
+
+Best regards,
+Krzysztof
+
