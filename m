@@ -2,85 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C05146A05E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 11:20:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B5366A0615
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 11:25:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233375AbjBWKTx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 05:19:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52400 "EHLO
+        id S232906AbjBWKZW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 05:25:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234287AbjBWKTs (ORCPT
+        with ESMTP id S233863AbjBWKZO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 05:19:48 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2D14498AB;
-        Thu, 23 Feb 2023 02:19:47 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31N5rI3b006103;
-        Thu, 23 Feb 2023 10:19:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=pfyZZO6xMEuJP6vhvmuwjFzktu+Iqk/2I7+Jba2oc0Q=;
- b=PD9VRS2bhbQhURCoEYg6FUd7hWiK+nlu+o/5QzxXFcLw5KVOCLWCaZDXWT/0HloGyXEq
- QElhiZqJXA5fHGpQpE8iC5IyGCkjMxl+GQGU54dQhzS/mTEJlqU9K+KdzbhGbr6KSwxK
- 1ycSoPYTeOn1AGfGTo2EEMHDVxumBRtUo48/iLdYqifD5y39lG0+uQSK9GchQA43obe9
- ytteGyQRasIekblHJR9z802pptTe6c55wpylNFru44K7fI1kz18jcNgTH6/O8/1Opc3E
- ddQ9Ls0itgl/KQVSNNI7ILI0gPM2gnh4QOzRfWRrCV/gxcXuHsI9wrnGdA/TqJUAqzo9 /Q== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nwybwgykd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Feb 2023 10:19:39 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31NAJcgk019330
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Feb 2023 10:19:38 GMT
-Received: from [10.216.58.21] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 23 Feb
- 2023 02:19:34 -0800
-Message-ID: <ef82f126-af16-8eba-4da9-eb08106a03db@quicinc.com>
-Date:   Thu, 23 Feb 2023 15:49:30 +0530
+        Thu, 23 Feb 2023 05:25:14 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19A7A2A147
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 02:25:12 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id l1so9984874wry.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 02:25:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ILsJiQmAcGMco7NUgLTOCX0TG7re8hDAG5iO8fvr7a4=;
+        b=TK8kcnTC+nImoJL65VRAhunMg8vM1exizc22cs8DXr1R/r+n/iyvPS49NLhUmQ8+VC
+         +B7R2hVboQeqG5v6DjQxyIAVXIrILn0Uil5bHPLmuI5KjpMkRQB9IaFfUS/vmW21j4CS
+         qYP3gxyi6uj4GIrnI5LbW/Xq/u0g9u42o8fHrG396hg6YwlkWvE3ELRThjZ48V+gjv3R
+         kcUSVpid1pNlrQq0e1kFj9gRb3zPXCl7k7P0TIXvKvbhO85UFnR+Y9FibEAYNn1WVIWQ
+         SbmMfGOp1B/9XGq8zgnROx3QR2oX98MpiKl8358NoJ0m+dXsoe840h6k3I3oupYQTnhv
+         6v/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ILsJiQmAcGMco7NUgLTOCX0TG7re8hDAG5iO8fvr7a4=;
+        b=fF19Ms5cPuWsJgqoaqT+7HlI2jeSKL16HdKWuilpijmMgWYHgYlLSYPHp+sTGyaN9l
+         ibl6sWVG7JuzP063pqboSnhkiXETDcq5151ZWjNOOl6AS28/sEwcyIWmEjgSx/a7Znpp
+         DFyhZN4kQnmPdhlPxR0Z5VBCFnllU29wbvrfwVObkcfKSExgmq5UePGUhYjZun32zNpc
+         lI1riJ0wzAzvO2XGtp/4QzjX+gdBJH5kGgLpEFhlj+GdMdrdnN1JqJ3EC/8B1+mcyv01
+         VfNWeJ/ekYO5OXK8E+c7q+qKX4GuL3to+OMNp+9mDKIcwZ+rV0AK8iWPzduI2jspnMoR
+         FtOg==
+X-Gm-Message-State: AO0yUKX2G+qbE2nwa4mXCHlcjIaAfdnpGA914FuJpgRkwdMA97Mw8Ze5
+        LRbvWL9hLzcz0e/94tNXbeK2KA==
+X-Google-Smtp-Source: AK7set8DT7LYGd+BggBMdTTvDzh5kJcrtERcWSp8PmQ4OJsHb5Ia4iNw4ehu6zGRRm2nkiAsnY+I9Q==
+X-Received: by 2002:a5d:6789:0:b0:2c5:5ed8:77d4 with SMTP id v9-20020a5d6789000000b002c55ed877d4mr8570791wru.57.1677147910458;
+        Thu, 23 Feb 2023 02:25:10 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id m4-20020a05600c40c400b003e223fe0a3asm10943246wmh.27.2023.02.23.02.25.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Feb 2023 02:25:09 -0800 (PST)
+Message-ID: <7e3170e4-c530-0b5b-903f-e5ea6d8268dc@linaro.org>
+Date:   Thu, 23 Feb 2023 10:25:06 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [RESEND v8 4/5] clk: qcom: lpassaudiocc-sc7280: Merge AHB clocks
- into lpass_aon
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v10 07/26] mailbox: Add Gunyah message queue mailbox
 Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <broonie@kernel.org>,
-        <konrad.dybcio@somainline.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mturquette@baylibre.com>,
-        <quic_plai@quicinc.com>, <quic_rohkumar@quicinc.com>,
-        <quic_visr@quicinc.com>, <robh+dt@kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-References: <20230215151330.539885-1-quic_mohs@quicinc.com>
- <20230215151330.539885-5-quic_mohs@quicinc.com>
- <CAE-0n53mDzqua47jEqrJwQBhcQcyBjJAtNvH2J-tCPhkvV9JtA@mail.gmail.com>
-From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-In-Reply-To: <CAE-0n53mDzqua47jEqrJwQBhcQcyBjJAtNvH2J-tCPhkvV9JtA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Jassi Brar <jassisinghbrar@gmail.com>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
+ <20230214212316.3309053-1-quic_eberman@quicinc.com>
+ <c8161a4c-fa45-cb9e-7211-5486ece1fc2d@linaro.org>
+ <576aed85-a566-3645-559e-06b2135cf57f@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <576aed85-a566-3645-559e-06b2135cf57f@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mggz6HI0JFJFTJw8yYfdZ-xCUKslvekK
-X-Proofpoint-ORIG-GUID: mggz6HI0JFJFTJw8yYfdZ-xCUKslvekK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-23_06,2023-02-23_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=987 malwarescore=0 impostorscore=0
- bulkscore=0 spamscore=0 mlxscore=0 priorityscore=1501 adultscore=0
- phishscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2302230088
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,27 +97,198 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 2/16/2023 11:01 AM, Stephen Boyd wrote:
-> Quoting Mohammad Rafi Shaik (2023-02-15 07:13:29)
->> @@ -828,8 +830,9 @@ static int lpass_aon_cc_sc7280_probe(struct platform_device *pdev)
->>          if (of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode")) {
->>                  lpass_audio_cc_sc7280_regmap_config.name = "cc";
->>                  desc = &lpass_cc_sc7280_desc;
->> -               ret = qcom_cc_probe(pdev, desc);
->> -               goto exit;
->> +               ret = qcom_cc_probe_by_index(pdev, 1, desc);
-> Where is the patch to the binding yaml file?
-Thanks for comment.
 
-The dtbinding  yaml file for this is already present in existing yaml.
+On 23/02/2023 00:15, Elliot Berman wrote:
+> 
+> 
+> On 2/20/2023 5:59 AM, Srinivas Kandagatla wrote:
+>>
+>>
+>> On 14/02/2023 21:23, Elliot Berman wrote:
+>>> Gunyah message queues are a unidirectional inter-VM pipe for messages up
+>>> to 1024 bytes. This driver supports pairing a receiver message queue and
+>>> a transmitter message queue to expose a single mailbox channel.
+>>>
+>>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+>>> ---
+>>>   Documentation/virt/gunyah/message-queue.rst |   8 +
+>>>   drivers/mailbox/Makefile                   |   2 +
+>>>   drivers/mailbox/gunyah-msgq.c               | 214 ++++++++++++++++++++
+>>>   include/linux/gunyah.h                      |  56 +++++
+>>>   4 files changed, 280 insertions(+)
+>>>   create mode 100644 drivers/mailbox/gunyah-msgq.c
+>>>
+>>> diff --git a/Documentation/virt/gunyah/message-queue.rst 
+>>> b/Documentation/virt/gunyah/message-queue.rst
+>>> index 0667b3eb1ff9..082085e981e0 100644
+>>> --- a/Documentation/virt/gunyah/message-queue.rst
+>>> +++ b/Documentation/virt/gunyah/message-queue.rst
+>>> @@ -59,3 +59,11 @@ vIRQ: two TX message queues will have two vIRQs 
+>>> (and two capability IDs).
+>>>         |               |         |                 | |               |
+>>>         |               |         |                 | |               |
+>>>         +---------------+         +-----------------+ +---------------+
+>>> +
+>>> +Gunyah message queues are exposed as mailboxes. To create the 
+>>> mailbox, create
+>>> +a mbox_client and call `gh_msgq_init`. On receipt of the RX_READY 
+>>> interrupt,
+>>> +all messages in the RX message queue are read and pushed via the 
+>>> `rx_callback`
+>>> +of the registered mbox_client.
+>>> +
+>>> +.. kernel-doc:: drivers/mailbox/gunyah-msgq.c
+>>> +   :identifiers: gh_msgq_init
+>>> diff --git a/drivers/mailbox/Makefile b/drivers/mailbox/Makefile
+>>> index fc9376117111..5f929bb55e9a 100644
+>>> --- a/drivers/mailbox/Makefile
+>>> +++ b/drivers/mailbox/Makefile
+>>> @@ -55,6 +55,8 @@ obj-$(CONFIG_MTK_CMDQ_MBOX)    += mtk-cmdq-mailbox.o
+>>>   obj-$(CONFIG_ZYNQMP_IPI_MBOX)    += zynqmp-ipi-mailbox.o
+>>> +obj-$(CONFIG_GUNYAH)        += gunyah-msgq.o
+>>
+>> Why are we reusing CONFIG_GUNYAH Kconfig symbol for mailbox, why not 
+>> CONFIG_GUNYAH_MBOX?
+>>
+> 
+> There was some previous discussion about this:
+> 
+> https://lore.kernel.org/all/2a7bb5f2-1286-b661-659a-a5037150eae8@quicinc.com/
+> 
+>>> +
+>>>   obj-$(CONFIG_SUN6I_MSGBOX)    += sun6i-msgbox.o
+>>>   obj-$(CONFIG_SPRD_MBOX)       += sprd-mailbox.o
+>>> diff --git a/drivers/mailbox/gunyah-msgq.c 
+>>> b/drivers/mailbox/gunyah-msgq.c
+>>> new file mode 100644
+>>> index 000000000000..03ffaa30ce9b
+>>> --- /dev/null
+>>> +++ b/drivers/mailbox/gunyah-msgq.c
+>>> @@ -0,0 +1,214 @@
+>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>> +/*
+>>> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All 
+>>> rights reserved.
+>>> + */
+>>> +
+>>> +#include <linux/mailbox_controller.h>
+>>> +#include <linux/module.h>
+>>> +#include <linux/interrupt.h>
+>>> +#include <linux/gunyah.h>
+>>> +#include <linux/printk.h>
+>>> +#include <linux/init.h>
+>>> +#include <linux/slab.h>
+>>> +#include <linux/wait.h>
+>>
+>> ...
+>>
+>>> +/* Fired when message queue transitions from "full" to "space 
+>>> available" to send messages */
+>>> +static irqreturn_t gh_msgq_tx_irq_handler(int irq, void *data)
+>>> +{
+>>> +    struct gh_msgq *msgq = data;
+>>> +
+>>> +    mbox_chan_txdone(gh_msgq_chan(msgq), 0);
+>>> +
+>>> +    return IRQ_HANDLED;
+>>> +}
+>>> +
+>>> +/* Fired after sending message and hypercall told us there was more 
+>>> space available. */
+>>> +static void gh_msgq_txdone_tasklet(struct tasklet_struct *tasklet)
+>>
+>> Tasklets have been long deprecated, consider using workqueues in this 
+>> particular case.
+>>
+> 
+> Workqueues have higher latency and tasklets came as recommendation from 
+> Jassi. drivers/mailbox/imx-mailbox.c uses tasklets in the same way.
+> 
+> I did some quick unscientific measurements of ~1000x samples. The median 
+> latency for resource manager went from 25.5 us (tasklet) to 26 us 
+> (workqueue) (2% slower). The mean went from 28.7 us to 32.5 us (13% 
+> slower). Obviously, the outliers for workqueues were much more extreme.
 
-Below is the snippet for the same:
+TBH, this is expected because we are only testing resource manager, Note 
+  the advantage that you will see shifting from tasket to workqueues is 
+on overall system latencies and some drivers performance that need to 
+react to events.
 
-compatible = "qcom,sc7280-lpassaoncc";
-reg = <0x3380000 0x30000>;
+please take some time to read this nice article about this 
+https://lwn.net/Articles/830964/
 
-Actually what ever the  CC register region <required range is  0x3389000 
-0x24> which we are accessing is already present in the above reg map 
-range of dtsi, so we have not updated the 
-/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml file.
 
+--srini
+> 
+>>
+>>> +{
+>>> +    struct gh_msgq *msgq = container_of(tasklet, struct gh_msgq, 
+>>> txdone_tasklet);
+>>> +
+>>> +    mbox_chan_txdone(gh_msgq_chan(msgq), msgq->last_ret);
+>>> +}
+>>> +
+>>> +static int gh_msgq_send_data(struct mbox_chan *chan, void *data)
+>>> +{
+>> ..
+>>
+>>> +    tasklet_schedule(&msgq->txdone_tasklet);
+>>> +
+>>> +    return 0;
+>>> +}
+>>> +
+>>> +static struct mbox_chan_ops gh_msgq_ops = {
+>>> +    .send_data = gh_msgq_send_data,
+>>> +};
+>>> +
+>>> +/**
+>>> + * gh_msgq_init() - Initialize a Gunyah message queue with an 
+>>> mbox_client
+>>> + * @parent: optional, device parent used for the mailbox controller
+>>> + * @msgq: Pointer to the gh_msgq to initialize
+>>> + * @cl: A mailbox client to bind to the mailbox channel that the 
+>>> message queue creates
+>>> + * @tx_ghrsc: optional, the transmission side of the message queue
+>>> + * @rx_ghrsc: optional, the receiving side of the message queue
+>>> + *
+>>> + * At least one of tx_ghrsc and rx_ghrsc should be not NULL. Most 
+>>> message queue use cases come with
+>>> + * a pair of message queues to facilitate bidirectional 
+>>> communication. When tx_ghrsc is set,
+>>> + * the client can send messages with 
+>>> mbox_send_message(gh_msgq_chan(msgq), msg). When rx_ghrsc
+>>> + * is set, the mbox_client should register an .rx_callback() and the 
+>>> message queue driver will
+>>> + * push all available messages upon receiving the RX ready 
+>>> interrupt. The messages should be
+>>> + * consumed or copied by the client right away as the 
+>>> gh_msgq_rx_data will be replaced/destroyed
+>>> + * after the callback.
+>>> + *
+>>> + * Returns - 0 on success, negative otherwise
+>>> + */
+>>> +int gh_msgq_init(struct device *parent, struct gh_msgq *msgq, struct 
+>>> mbox_client *cl,
+>>> +             struct gunyah_resource *tx_ghrsc, struct 
+>>> gunyah_resource *rx_ghrsc)
+>>> +{
+>>> +    int ret;
+>>> +
+>>> +    /* Must have at least a tx_ghrsc or rx_ghrsc and that they are 
+>>> the right device types */
+>>> +    if ((!tx_ghrsc && !rx_ghrsc) ||
+>>> +        (tx_ghrsc && tx_ghrsc->type != GUNYAH_RESOURCE_TYPE_MSGQ_TX) ||
+>>> +        (rx_ghrsc && rx_ghrsc->type != GUNYAH_RESOURCE_TYPE_MSGQ_RX))
+>>> +        return -EINVAL;
+>>> +
+>>> +    if (gh_api_version() != GUNYAH_API_V1) {
+>>> +        pr_err("Unrecognized gunyah version: %u. Currently 
+>>> supported: %d\n",
+>> dev_err(parent
+>>
+>> would make this more useful
+>>
+> 
+> Done.
+> 
+> - Elliot
