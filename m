@@ -2,73 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C23246A0FF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 19:59:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C41D56A1022
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 20:09:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229480AbjBWS7g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 13:59:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44746 "EHLO
+        id S231569AbjBWTJi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 14:09:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229927AbjBWS7f (ORCPT
+        with ESMTP id S231245AbjBWTJe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 13:59:35 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDDFC24113
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 10:59:33 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id h9so11721287ljq.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 10:59:33 -0800 (PST)
+        Thu, 23 Feb 2023 14:09:34 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 140A84DBCC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 11:09:33 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id r27so12905302lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 11:09:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TrKZBYzgrUY+yT1Sm6r8rYhRImsEiv0nymsNFzBZTig=;
-        b=mLOlHmCobTk7ODTXZj4kvMvZSq3dbf7CN8kW6AwzeqG8wy7pXxYJEj9jX8JcE44NQf
-         rbIr7lgWnloXvvyqdvgAO2hpJ7WVAIsNa2IKrPaltX+Ik3W+Nj91Q/WsXD5RTD0L3HJf
-         pPWAo41bCftknxF7z7ARoIKS3sPuxz2Pb2PjA=
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ki/+8rKjqaLiO1EXm/3PKBzNTnhWcpNouZYryd40ZXw=;
+        b=xIuTFUJwmjUmo/ZY7Efw7KXI4HDpZwPevKdH4zReUGBB530x2VTfEXIap7soq0xrkt
+         fLxo3HUQXeuriXYqhotDJepEW6dKbiKyscYKjciNlfpIQ7fIuhqj74/8rDCysXnnO0JS
+         4Rf3qTXcAeSv7w9CaUQ4B3flmF0e7QuqGF5lBxjmALTvorOeudLvwvHwKkIWAMFH6FGY
+         RzPjMj1fh5sESLWEVhNtWl4+eoCT4hsOhoXtes5Embqey5/DrfNuKrjAedYKpFs1dksR
+         kK0cf+naL7g3BnH+Zg0cDxH484/qNt5tBW1W5g+ElnpeGmP/16EUhsw6If9ri8NPv5Js
+         WtKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=TrKZBYzgrUY+yT1Sm6r8rYhRImsEiv0nymsNFzBZTig=;
-        b=um9IirOOS1fR9p1ZcpHFRUNgeEnFRrK5UlXawUCKfzCKGpBfQGYq/KcS2I7J09c6EX
-         8BXQmZJpWb5hpK2Ym7dv+dhJyWUxPet+NxNTvIQ4iPVkXq67cjHmseHO35AGlL5tL7SX
-         yQsOjs2kum1buyT42QSGpRLo+bfDM9zE7f5qyIuU4vM4cDC0HVDSVWjeWDz4VeN8p+7y
-         mYICKyOlGEGmuuhoX+iHaYTdyF9xc3ImcTsEaH37HQ7aeZEzOe0x1OCwm5nyMaPLwQg6
-         i2nVD1+x2BWQMelPBAV7uuepJeqO4Qb43imZVofl3k1NyB1Y2Qm3MENtRTp3iDmR6Ccs
-         MJEA==
-X-Gm-Message-State: AO0yUKWrCAT6XrlxKThdnSi8CEPszFrUUE7nE7qkpOKB5YLQAzZZwXHC
-        g4pFEFGzEwOq86zAxxVZdchrGR/t6r6+TSFxgIAlmA==
-X-Google-Smtp-Source: AK7set/l8Tuw2PrNZ5eEO0k2aNueP3SGyCL0EtuYv8nYx+cObISGq/vMLL/Udukub6jGMnM8zbbG6oae6gK4zdLkyFc=
-X-Received: by 2002:a05:651c:336:b0:294:764a:3318 with SMTP id
- b22-20020a05651c033600b00294764a3318mr4022405ljp.0.1677178772084; Thu, 23 Feb
- 2023 10:59:32 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 23 Feb 2023 13:59:31 -0500
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ki/+8rKjqaLiO1EXm/3PKBzNTnhWcpNouZYryd40ZXw=;
+        b=C51OUzrzyMhB70htn/BhlZh1q/f3JVwrFvtADO0Jl1pirE5fkWOzNkihstdheQKXsc
+         3FA0zx115PcCS7oqxz6NbJOaDS+mjtLUDbULLL2i49TsnFQeRQxjwSAAeusZbXrHAgKv
+         7OYnlBSHZQQ2rkjKv6LAQJhPN7kvnFf/ioth7iVWjDLiz4l/cP+tXAptWMu8qc5MgSAD
+         M/9LIo8XtsP31LzZmymrsrBKy0KUYzs7OeQmhJjrO3nB4dyHGMXGRXuIkykvaHkY9HUr
+         vhNwny3r4FmJj68YxcA70UNgIi+g0vERjSoWJ7rCkMv25RY+AUkO/rZIVJQYFehIQdOr
+         YM0g==
+X-Gm-Message-State: AO0yUKXYt6DnxC+LzsaC8EG8i/plZUesgY8fhgy0OwG01D1SjNJTDK2B
+        LrD0VQNQaF6MeO7axpILc9GfpdH8nVndXC96BfsRWw==
+X-Google-Smtp-Source: AK7set+1Snm8QmjNNVo8GqQflRkjIgua4+rtwYxMZTP19pOBlpTETTnalWgFkXRsDT/zGvsFyvQiZm0rEv+ZUq9Zrys=
+X-Received: by 2002:ac2:5387:0:b0:4d5:ca32:7bbb with SMTP id
+ g7-20020ac25387000000b004d5ca327bbbmr4069994lfh.2.1677179371151; Thu, 23 Feb
+ 2023 11:09:31 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <ef82f126-af16-8eba-4da9-eb08106a03db@quicinc.com>
-References: <20230215151330.539885-1-quic_mohs@quicinc.com>
- <20230215151330.539885-5-quic_mohs@quicinc.com> <CAE-0n53mDzqua47jEqrJwQBhcQcyBjJAtNvH2J-tCPhkvV9JtA@mail.gmail.com>
- <ef82f126-af16-8eba-4da9-eb08106a03db@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 23 Feb 2023 13:59:31 -0500
-Message-ID: <CAE-0n50tKWWPgU31dpcUo7bfJnnwjM-bNkDhFc0+e=iGkh3e_A@mail.gmail.com>
-Subject: Re: [RESEND v8 4/5] clk: qcom: lpassaudiocc-sc7280: Merge AHB clocks
- into lpass_aon
-To:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, broonie@kernel.org,
-        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
-        quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
-        quic_visr@quicinc.com, robh+dt@kernel.org
-Cc:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+References: <20220929060405.2445745-1-bhupesh.sharma@linaro.org>
+ <20220929060405.2445745-4-bhupesh.sharma@linaro.org> <4e896382-c666-55c6-f50b-5c442e428a2b@linaro.org>
+ <1163e862-d36a-9b5e-2019-c69be41cc220@linaro.org> <9999a1a3-cda0-2759-f6f4-9bc7414f9ee4@linaro.org>
+ <0aeb2c5e-9a5e-90c6-a974-f2a0b866d64f@linaro.org> <ca62fc03-8acc-73fc-3b15-bd95fe8e05a4@linaro.org>
+ <CAH=2Nty1BfaTWbE-PZQPiRtAco=5xhvJT3QbpqYsABxZxBzF3w@mail.gmail.com>
+ <2e68d64f-766c-0a52-9df8-74f0681a5973@linaro.org> <20230222202904.mhsbxnaxt3psmwr7@halaney-x13s>
+In-Reply-To: <20230222202904.mhsbxnaxt3psmwr7@halaney-x13s>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Fri, 24 Feb 2023 00:39:19 +0530
+Message-ID: <CAH=2NtzJViZ2e7aw9Ej67=XRrWOPzGrq1gccCsFiHBzRDZxmmQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] dt-bindings: net: qcom,ethqos: Convert bindings to yaml
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        netdev@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        David Miller <davem@davemloft.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,38 +77,81 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Mohammad Rafi Shaik (2023-02-23 02:19:30)
+On Thu, 23 Feb 2023 at 01:59, Andrew Halaney <ahalaney@redhat.com> wrote:
 >
-> On 2/16/2023 11:01 AM, Stephen Boyd wrote:
-> > Quoting Mohammad Rafi Shaik (2023-02-15 07:13:29)
-> >> @@ -828,8 +830,9 @@ static int lpass_aon_cc_sc7280_probe(struct platfo=
-rm_device *pdev)
-> >>          if (of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-m=
-ode")) {
-> >>                  lpass_audio_cc_sc7280_regmap_config.name =3D "cc";
-> >>                  desc =3D &lpass_cc_sc7280_desc;
-> >> -               ret =3D qcom_cc_probe(pdev, desc);
-> >> -               goto exit;
-> >> +               ret =3D qcom_cc_probe_by_index(pdev, 1, desc);
-> > Where is the patch to the binding yaml file?
-> Thanks for comment.
+> On Mon, Oct 03, 2022 at 11:32:58AM +0200, Krzysztof Kozlowski wrote:
+> > On 03/10/2022 10:29, Bhupesh Sharma wrote:
+> > > On Sun, 2 Oct 2022 at 13:24, Krzysztof Kozlowski
+> > > <krzysztof.kozlowski@linaro.org> wrote:
+> > >>
+> > >> On 01/10/2022 14:51, Bhupesh Sharma wrote:
+> > >>>>> Right, most of them are to avoid the make dtbs_check errors / warnings
+> > >>>>> like the one mentioned above.
+> > >>>>
+> > >>>> All of them should not be here.
+> > >>>
+> > >>> I guess only 'snps,reset-gpio' need not be replicated here, as for
+> > >>> others I still see 'dtbs_check' error, if they are not replicated here:
+> > >>>
+> > >>>
+> > >>> arch/arm64/boot/dts/qcom/sm8150-hdk.dtb: ethernet@20000: Unevaluated
+> > >>> properties are not allowed ('power-domains', 'resets', 'rx-fifo-depth',
+> > >>> 'tx-fifo-depth' were unexpected)
+> > >>>       From schema: /Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+> > >>>
+> > >>> Am I missing something here?
+> > >>
+> > >> Probably the snps,dwmac schema failed. It is then considered
+> > >> unevaluated, so such properties are unknown for qcom,ethqos schema. Run
+> > >> check with snps,dwmac and fix all errors first.
+> > >
+> > > Running dt_binding_check DT_SCHEMA_FILES=net/snps,dwmac.yaml
+> > > reports no error currently.
+> >
+> > Then it's something in your commits. I don't know what you wrote, as you
+> > did not sent a commit. I cannot reproduce your errors after removing
+> > unneeded power-domains.
+> >
+> > Just to clarify - I am testing only the dt_binding_check (so only the
+> > examples - I assume they are meaningful).
 >
-> The dtbinding=C2=A0 yaml file for this is already present in existing yam=
-l.
+> Just a little note before I forget..
 >
-> Below is the snippet for the same:
+> I picked this up yesterday (in prep for adding sa8540p support here),
+> and noticed the same thing as Bhupesh when validating dtbs with
+> the requested changes (not duplicating snsp,dwmac.yaml). I ended up
+> tracking it down to a (fixed) bug in dtschema:
 >
-> compatible =3D "qcom,sc7280-lpassaoncc";
-> reg =3D <0x3380000 0x30000>;
+>     https://github.com/devicetree-org/dt-schema/commit/e503ec1115345bdfa06b96c9d6c4496457cbd75b
 >
-> Actually what ever the=C2=A0 CC register region <required range is=C2=A0 =
-0x3389000
-> 0x24> which we are accessing is already present in the above reg map
-> range of dtsi, so we have not updated the
-> /devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml file.
+> And a little test output showing before and after (fix is in the 2022.12
+> release):
 >
+>     (dtschema-2022.11) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac] % make CHECK_DTBS=y DT_SCHEMA_FILES=/net/qcom,ethqos.yaml qcom/sm8150-hdk.dtb
+>       LINT    Documentation/devicetree/bindings
+>       CHKDT   Documentation/devicetree/bindings/processed-schema.json
+>       SCHEMA  Documentation/devicetree/bindings/processed-schema.json
+>       DTC_CHK arch/arm64/boot/dts/qcom/sm8150-hdk.dtb
+>     /home/ahalaney/git/redhat/stmmac/arch/arm64/boot/dts/qcom/sm8150-hdk.dtb: ethernet@20000: Unevaluated properties are not allowed ('power-domains', 'resets', 'rx-fifo-depth', 'snps,tso', 'tx-fifo-depth' were unexpected)
+>         From schema: /home/ahalaney/git/redhat/stmmac/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>     (dtschema-2022.11) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac] % pip3 list | grep dtschema
+>     dtschema         2022.11
+>     (dtschema-2022.11) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac] %
+>
+>     dtschema) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac] % pip3 list | grep dtschema
+>     dtschema         2023.1
+>     (dtschema) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac] % make CHECK_DTBS=y DT_SCHEMA_FILES=/net/qcom,ethqos.yaml qcom/sm8150-hdk.dtb
+>       LINT    Documentation/devicetree/bindings
+>       CHKDT   Documentation/devicetree/bindings/processed-schema.json
+>       SCHEMA  Documentation/devicetree/bindings/processed-schema.json
+>       DTC_CHK arch/arm64/boot/dts/qcom/sm8150-hdk.dtb
+>     (dtschema) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac] %
+>
+>
+> I'll go ahead and make the adjustments and pull this series into mine
+> adding sa8540p support, thanks for starting it!
 
-The usage of '1' in qcom_cc_probe_by_index() means that the reg property
-should have at least two addresses. The example you pasted above shows
-only one reg address. The binding needs an update for two registers,
-where is that?
+Thanks Andrew. Please feel free to add it to your series.
+
+Regards,
+Bhupesh
