@@ -2,68 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FE836A0110
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 03:10:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A1836A0180
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 04:24:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232990AbjBWCKQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Feb 2023 21:10:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41212 "EHLO
+        id S230114AbjBWDYI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Feb 2023 22:24:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230048AbjBWCKP (ORCPT
+        with ESMTP id S229461AbjBWDYH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Feb 2023 21:10:15 -0500
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325BB32CF8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 18:10:14 -0800 (PST)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-536c2a1cc07so148976997b3.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Feb 2023 18:10:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=lFMUOoT9K3sV7smyMsQz++3wD9NZYfAOVbqH2hbiHvw=;
-        b=NLiX6/4oMH+SP7OZC5H5dkuhYcqk9qtytdK8dpBWBW4NG9sbrJ8niFrUx5cx8SpArt
-         2Gf8P6Z+SoOtRcI2MnO0WOv8wdbjFTrl+0HFTP1Gj5+oq7tUncVG6Gr4Iy+Z78IXGg/e
-         mQw+Hg22nU2XYHZKBl2yo33jUAg9d1aVpCv8mwpSAB5+NPqOIqzW8/dg0OJNKMtdcsQQ
-         gw+Xig4Qd38XQjL20jB7BfTZU8h/ghCmivlJYa/IQrVzHmg3rsPHXilPWjC6PTGlzrDT
-         UmvIE7Cksnzci6YyvWhl8ABuTIUSFR/Bq+7gdcq3jDSRKWfgUJbr5+xo0sjjh8M9hlAP
-         YhVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lFMUOoT9K3sV7smyMsQz++3wD9NZYfAOVbqH2hbiHvw=;
-        b=BWf/G4RPQigU9wsJPcipBMd/E7R952asoOwTWJ1rrMZAqqEx1RuykyOoJAWm5AHgTn
-         m4/jk8hPYl74NUVBAlIQR/3ZSJIVbX/M8qG3yaXO+ELHKUodyqrhm/M+iquwhqSxw6hg
-         zouGRfV+dCKeT9lRro5WW5OKPgBa6zOz+YDCEL1Bz1DKPGmoWQ9ZKg6d1yZmYfOUjrjW
-         7txLBSJR/cpTXFCxRQCYxYdh9dmb2GDAr4r9jPJR4Bn+WFx9BvH8hRJR5Cm9mNpY4RMv
-         Hd0l5Q6vmE+8PEHbCCeW0B2Xrz6a4WsSpMK8lUS+f80zT8H1KBNQSg/kRh4d2TiCU/BJ
-         JUaQ==
-X-Gm-Message-State: AO0yUKV52qX0gBtw3SAhUUwXRwwxEMsCq3K3t+Knm81K3fxcouXPMzmd
-        pz+r21gQCwd+pC4SjCPkLGYU3tj6i5LasHgHkw59Sg==
-X-Google-Smtp-Source: AK7set/MR6o1EBljJIfausK4TNfCevYS3wfBHGHm1ASRwt2JVCu4Tl6+7XqTiq/FidNJsl2qK9Axd3xTeY6e3XCB5qI=
-X-Received: by 2002:a81:ad28:0:b0:536:55e5:2eaa with SMTP id
- l40-20020a81ad28000000b0053655e52eaamr1508552ywh.3.1677118213425; Wed, 22 Feb
- 2023 18:10:13 -0800 (PST)
-MIME-Version: 1.0
-References: <20230223-topic-opp-v2-0-24ed24cd7358@linaro.org> <20230223-topic-opp-v2-6-24ed24cd7358@linaro.org>
-In-Reply-To: <20230223-topic-opp-v2-6-24ed24cd7358@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 23 Feb 2023 04:10:02 +0200
-Message-ID: <CAA8EJposxNgyCh+LUstVvBO3Pf3119mmwb6CijN8Ss6TWw5+-A@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] drm/msm/adreno: Enable optional icc voting from
- OPP tables
+        Wed, 22 Feb 2023 22:24:07 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFC012A6E6;
+        Wed, 22 Feb 2023 19:24:05 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 86492B81733;
+        Thu, 23 Feb 2023 03:24:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C19BC433D2;
+        Thu, 23 Feb 2023 03:24:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1677122643;
+        bh=e1QIQuOBVdmi2tiHZ/xai1rSaIqCT7wlBRBcoAQUl/Q=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LYROHYabF4OwV2y+2tpoWXpS++YNKSDKWR/wwgY/5yxwFL99FKYmmhLFr70YilVCQ
+         MjU/ruelGPqs/OPeiAvxjIWDdSDIGNk5Umh8nSjltjErwFkTMHNfjaLoRrlgcsTfkI
+         VslW/fIOc0L5Ls2wRmOrOXr74E2u6uJEBDfI//VpEKEqgrI89oJVhhKn2zqlgIYdgc
+         s9Sc9f/BRSZ+QtjDtIxNmmJ8MCPYu7FJwrvrWogRErmnKsKr6nM0zwvUbWi9Fb5zch
+         ey8HwLL2IDer4ej5TVnYDB6pVVzuzPtj9KMUl9WRXYkEh7oYtC6NP/eG6C/H6mn0wR
+         r9UMIJB5S2mvA==
+Date:   Wed, 22 Feb 2023 19:27:30 -0800
+From:   Bjorn Andersson <andersson@kernel.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        marijn.suijten@somainline.org,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] cpufreq: qcom-hw: Simplify counting frequency domains
+Message-ID: <20230223032730.fhnxjzfwralkexun@ripper>
+References: <20230216105140.3938749-1-konrad.dybcio@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230216105140.3938749-1-konrad.dybcio@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,16 +56,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 23 Feb 2023 at 03:47, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> Add the dev_pm_opp_of_find_icc_paths() call to let the OPP framework
-> handle bus voting as part of power level setting.
->
+On Thu, Feb 16, 2023 at 11:51:40AM +0100, Konrad Dybcio wrote:
+> For quite some time, this driver has been performing some quite
+> low-level DT operations. Simplify that using platform_get_resource.
+> 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
+Regards,
+Bjorn
 
--- 
-With best wishes
-Dmitry
+> ---
+> v1 -> v2:
+> - remove stray newline near probe return
+> - s/doing performing/performing/
+> 
+> v1: https://lore.kernel.org/linux-arm-msm/20230216102956.3933639-1-konrad.dybcio@linaro.org/T/#u
+> 
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 29 ++++++-----------------------
+>  1 file changed, 6 insertions(+), 23 deletions(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index 2f581d2d617d..575a4461c25a 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -29,6 +29,8 @@
+>  
+>  #define GT_IRQ_STATUS			BIT(2)
+>  
+> +#define MAX_FREQ_DOMAINS		3
+> +
+>  struct qcom_cpufreq_soc_data {
+>  	u32 reg_enable;
+>  	u32 reg_domain_state;
+> @@ -651,10 +653,9 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+>  {
+>  	struct clk_hw_onecell_data *clk_data;
+>  	struct device *dev = &pdev->dev;
+> -	struct device_node *soc_node;
+>  	struct device *cpu_dev;
+>  	struct clk *clk;
+> -	int ret, i, num_domains, reg_sz;
+> +	int ret, i, num_domains;
+>  
+>  	clk = clk_get(dev, "xo");
+>  	if (IS_ERR(clk))
+> @@ -681,24 +682,9 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+>  
+> -	/* Allocate qcom_cpufreq_data based on the available frequency domains in DT */
+> -	soc_node = of_get_parent(dev->of_node);
+> -	if (!soc_node)
+> -		return -EINVAL;
+> -
+> -	ret = of_property_read_u32(soc_node, "#address-cells", &reg_sz);
+> -	if (ret)
+> -		goto of_exit;
+> -
+> -	ret = of_property_read_u32(soc_node, "#size-cells", &i);
+> -	if (ret)
+> -		goto of_exit;
+> -
+> -	reg_sz += i;
+> -
+> -	num_domains = of_property_count_elems_of_size(dev->of_node, "reg", sizeof(u32) * reg_sz);
+> -	if (num_domains <= 0)
+> -		return num_domains;
+> +	for (num_domains = 0; num_domains < MAX_FREQ_DOMAINS; num_domains++)
+> +		if (!platform_get_resource(pdev, IORESOURCE_MEM, num_domains))
+> +			break;
+>  
+>  	qcom_cpufreq.data = devm_kzalloc(dev, sizeof(struct qcom_cpufreq_data) * num_domains,
+>  					 GFP_KERNEL);
+> @@ -762,9 +748,6 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+>  	else
+>  		dev_dbg(dev, "QCOM CPUFreq HW driver initialized\n");
+>  
+> -of_exit:
+> -	of_node_put(soc_node);
+> -
+>  	return ret;
+>  }
+>  
+> -- 
+> 2.39.1
+> 
