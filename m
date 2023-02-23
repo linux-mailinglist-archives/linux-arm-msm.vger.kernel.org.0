@@ -2,97 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3B006A12E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 23:41:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B7736A12FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Feb 2023 23:49:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229576AbjBWWlX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 17:41:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40280 "EHLO
+        id S229614AbjBWWtW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 17:49:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbjBWWlW (ORCPT
+        with ESMTP id S229538AbjBWWtT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 17:41:22 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 462B255C3C;
-        Thu, 23 Feb 2023 14:41:21 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31NMEqhv006321;
-        Thu, 23 Feb 2023 22:40:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vwSIdh17qJjWuuG8z6cWMHyJXoRyAfuwcZs4OEdGOzg=;
- b=V7046jEF9kPAvF7/4ErM/lwBvesSCcAH5bXzJjNLStio887Ls4DsJpFmkZW+pwFfsA/K
- ZZ+nRMXBeb9B3L5jo4myeAGtpu7aAc+TQiBxIfAXoJEUTUte5oljeXwODAPzQ59hOjUX
- LeOXj63rbHZTRCI4eB07AdUGEnslg2OIGtdPFnLqO1X+wMjcpxOgZ9k96406PK6VoEle
- NYsGswH8C2TxN2/AhonDwfvnNR/nU3RUnfkZlpoDWoYeYfm8r6gQjAGQefn1Bt+q5UoV
- URupPM+FH46yQsR+TguzgS5k/6KB13fLCtlVgVSkFQpdIKvHOYsa2yz0UjtYdGuifdLr vQ== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nwycnjtbu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Feb 2023 22:40:52 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31NMepx5031123
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Feb 2023 22:40:51 GMT
-Received: from [10.134.65.165] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 23 Feb
- 2023 14:40:50 -0800
-Message-ID: <c5ff1523-7a62-3d3f-6fa9-792ce4d222e8@quicinc.com>
-Date:   Thu, 23 Feb 2023 14:40:50 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v10 10/26] gunyah: vm_mgr: Introduce basic VM Manager
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Alex Elder <elder@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Thu, 23 Feb 2023 17:49:19 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71AAB12854
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 14:49:16 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id i11so6025518wrp.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 14:49:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0e9wKai03am79CRSK5WLZ1F5ap0ezDnNlxcN7b+lDFE=;
+        b=e1cBgUyQ/g+XqDZYcCuo4IjpVJ0bYGtk4RIwmDCGqqBVxgouUCKid7iqJ2o/m+nHjO
+         lBis5y+53GlcpaLGOQDazYfuDmAMFJa9AzSnu+sIFsZSKRPrY3P/w7iPrSLPCUwst3A7
+         tiCwlcgJKV2fOrvTw/dRG9wQ6Y3+G7kpPmlx6MhSRiPmlwWLAwNM7AZeO3y1BP0hytXM
+         tmsdvoKKj71YFlvnxM8AJirTe++GozjxQ0+P980QJfwTqPXw5nt1uc9a5xrVZtqK98Xp
+         LJUGAexEZIXUid1bWiEoDsi9XFgW0iOQMGvggswDlTFiVVkdaL6GxHx36J/Gi50croa+
+         jpmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0e9wKai03am79CRSK5WLZ1F5ap0ezDnNlxcN7b+lDFE=;
+        b=g1r4RSGhnDZ7zMyk6CWkRK7JjVD463EsL1Oq/GUYw7IR4YpTnceoH3RR3fuR0VYkT6
+         bpp+jw5W4JXY6lLG1DwUuzvyfHzR6yZKh2DYty/HR/JqBhjcAj6vWy/HuRqHd+lw8cy3
+         rnemGKfumz1AcKSHSOZ8K5ygYBAT7Qu7x1mb2B4MDwwBN0CVCHKI8XhPmvd2O7z/6oGp
+         LUhz5DzeDERmvxDS0u/JyUF/VNKqzj9V99V29bhB2vqn2KS9hz3X5wqD4QpbbwbGyzLK
+         QwzXwF+7qd2nKcpAlJMp2Lgf2tVPj3x7aPSE7vWPvMhNMTslTDEfTJqC5MmJoz0cHead
+         LA8A==
+X-Gm-Message-State: AO0yUKU02u7gTaEwe8J3J5vKDeGazG2xNVSiEFQZDcoCDmmirVYGjpdb
+        3QtW6LapKG4ZSdeNtnpplH2mIA==
+X-Google-Smtp-Source: AK7set+J4+z16ZYIGtUfAxvhQ7Rw/xTuQ6bJmbCW+N9/KnLGd9DmqNExpVJOSkPifrOZdaxQIMODeA==
+X-Received: by 2002:adf:e445:0:b0:2c5:48ed:d258 with SMTP id t5-20020adfe445000000b002c548edd258mr11585718wrm.35.1677192554709;
+        Thu, 23 Feb 2023 14:49:14 -0800 (PST)
+Received: from mai.box.freepro.com ([2a05:6e02:1041:c10:3e6f:e90a:1fc9:3708])
+        by smtp.gmail.com with ESMTPSA id p14-20020a5d4e0e000000b002c5a790e959sm13857483wrt.19.2023.02.23.14.49.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Feb 2023 14:49:14 -0800 (PST)
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+To:     rafael@kernel.org, daniel.lezcano@linaro.org
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Zhang Rui <rui.zhang@intel.com>, Len Brown <lenb@kernel.org>,
+        Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Jean Delvare <jdelvare@suse.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Ido Schimmel <idosch@nvidia.com>,
+        Petr Machata <petrm@nvidia.com>,
+        Gregory Greenman <gregory.greenman@intel.com>,
+        Kalle Valo <kvalo@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Markus Mayer <mmayer@broadcom.com>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212356.3313181-1-quic_eberman@quicinc.com>
- <dbcfa4e9-a1ad-0f24-77bf-05934ca26bb2@linaro.org>
- <05c4aab8-2d26-b944-adb6-624d67e4a11d@quicinc.com>
- <52d944b1-3ea6-26b7-766a-2fed05dccf3a@linaro.org>
-Content-Language: en-US
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <52d944b1-3ea6-26b7-766a-2fed05dccf3a@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Vasily Khoruzhick <anarsoul@gmail.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Talel Shenhar <talel@amazon.com>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Keerthy <j-keerthy@ti.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Stefan Wahren <stefan.wahren@i2se.com>,
+        Zheng Yongjun <zhengyongjun3@huawei.com>,
+        Yang Li <yang.lee@linux.alibaba.com>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Daniel Golle <daniel@makrotopia.org>,
+        Balsam CHIHI <bchihi@baylibre.com>,
+        Mikko Perttunen <mperttunen@nvidia.com>,
+        linux-acpi@vger.kernel.org, linux-ide@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org,
+        linux-iio@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-input@vger.kernel.org, netdev@vger.kernel.org,
+        linux-wireless@vger.kernel.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-omap@vger.kernel.org, linux-mediatek@lists.infradead.org
+Subject: [PATCH v3 00/17] Self-encapsulate the thermal zone device structure
+Date:   Thu, 23 Feb 2023 23:48:27 +0100
+Message-Id: <20230223224844.3491251-1-daniel.lezcano@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: w-UUgCskb9-MmOJrbcAGgLdyO350Ovqq
-X-Proofpoint-GUID: w-UUgCskb9-MmOJrbcAGgLdyO350Ovqq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-23_13,2023-02-23_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- suspectscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 spamscore=0
- clxscore=1015 mlxlogscore=999 priorityscore=1501 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302230188
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -100,223 +144,228 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The exported thermal headers expose the thermal core structure while those
+should be private to the framework. The initial idea was the thermal sensor
+drivers use the thermal zone device structure pointer to pass it around from
+the ops to the thermal framework API like a handler.
+
+Unfortunately, different drivers are using and abusing the internals of this
+structure to hook the associated struct device, read the internals values, take
+the lock, etc ...
+
+rn order to fix this situation, let's encapsulate the structure leaking the
+more in the different drivers: the thermal_zone_device structure.
+
+This series revisit the existing drivers using the thermal zone private
+structure internals to change the access to something else. For instance, the
+get_temp() ops is using the tz->dev to write a debug trace. Despite the trace
+is not helpful, we can check the return value for the get_temp() ops in the
+call site and show the message in this place.
+
+With this set of changes, the thermal_zone_device is almost self-encapsulated.
+As usual, the acpi driver needs a more complex changes, so that will come in a
+separate series along with the structure moved the private core headers.
+
+Changelog:
+	- V3:
+	   - Collected more tags
+	   - Added missing changes for ->devdata in some drivers
+	   - Added a 'type' accessor
+	   - Replaced the 'type' to 'id' changes by the 'type' accessor
+	   - Used the 'type' accessor in the drivers
+	- V2:
+	   - Collected tags
+	   - Added missing changes for ->devdata for the tsens driver
+	   - Renamed thermal_zone_device_get_data() to thermal_zone_priv()
+	   - Added stubs when CONFIG_THERMAL is not set
+	   - Dropped hwmon change where we remove the tz->lock usage
+
+Thank you all for your comments
 
 
-On 2/23/2023 2:08 AM, Srinivas Kandagatla wrote:
-> 
-> 
-> On 22/02/2023 00:27, Elliot Berman wrote:
->>
->>>> +    .llseek = noop_llseek,
->>>> +};
->>>> +
->>>> +static long gh_dev_ioctl_create_vm(struct gh_rm *rm, unsigned long 
->>>> arg)
->>> Not sure what is the gain of this multiple levels of redirection.
->>>
->>> How about
->>>
->>> long gh_dev_create_vm(struct gh_rm *rm, unsigned long arg)
->>> {
->>> ...
->>> }
->>>
->>> and rsc_mgr just call it as part of its ioctl call
->>>
->>> static long gh_dev_ioctl(struct file *filp, unsigned int cmd, 
->>> unsigned long arg)
->>> {
->>>      struct miscdevice *miscdev = filp->private_data;
->>>      struct gh_rm *rm = container_of(miscdev, struct gh_rm, miscdev);
->>>
->>>      switch (cmd) {
->>>      case GH_CREATE_VM:
->>>          return gh_dev_create_vm(rm, arg);
->>>      default:
->>>          return -ENOIOCTLCMD;
->>>      }
->>> }
->>>
->>
->> I'm anticipating we will add further /dev/gunyah ioctls and I thought 
->> it would be cleaner to have all that in vm_mgr.c itself.
->>
->>>
->>>> +{
->>>> +    struct gh_vm *ghvm;
->>>> +    struct file *file;
->>>> +    int fd, err;
->>>> +
->>>> +    /* arg reserved for future use. */
->>>> +    if (arg)
->>>> +        return -EINVAL;
->>>
->>> The only code path I see here is via GH_CREATE_VM ioctl which 
->>> obviously does not take any arguments, so if you are thinking of 
->>> using the argument for architecture-specific VM flags.  Then this 
->>> needs to be properly done by making the ABI aware of this.
->>
->> It is documented in Patch 17 (Document Gunyah VM Manager)
->>
->> +GH_CREATE_VM
->> +~~~~~~~~~~~~
->> +
->> +Creates a Gunyah VM. The argument is reserved for future use and must 
->> be 0.
->>
-> But this conficts with the UAPIs that have been defined. GH_CREATE_VM 
-> itself is defined to take no parameters.
-> 
-> #define GH_CREATE_VM                    _IO(GH_IOCTL_TYPE, 0x0)
-> 
-> so where are you expecting the argument to come from?
->  >>>
->>> As you mentioned zero value arg imply an "unauthenticated VM" type, 
->>> but this was not properly encoded in the userspace ABI. Why not make 
->>> it future compatible. How about adding arguments to GH_CREATE_VM and 
->>> pass the required information correctly.
->>> Note that once the ABI is accepted then you will not be able to 
->>> change it, other than adding a new one.
->>>
->>
->> Does this means adding #define GH_VM_DEFAULT_ARG 0 ? I am not sure yet 
->> what arguments to add here.
->>
->> The ABI can add new "long" values to GH_CREATE_VM and that wouldn't 
-> 
-> Sorry, that is exactly what we want to avoid, we can not change the UAPI 
-> its going to break the userspace.
-> 
->> break compatibility with old kernels; old kernels reject it as -EINVAL.
-> 
-> If you have userspace built with older kernel headers then that will 
-> break. Am not sure about old-kernels.
-> 
-> What exactly is the argument that you want to add to GH_CREATE_VM?
-> 
-> If you want to keep GH_CREATE_VM with no arguments that is fine but 
-> remove the conflicting comments in the code and document so that its not 
-> misleading readers/reviewers that the UAPI is going to be modified in 
-> near future.
-> 
-> 
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Zhang Rui <rui.zhang@intel.com>
+Cc: Len Brown <lenb@kernel.org>
+Cc: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Cc: Shawn Guo <shawnguo@kernel.org>
+Cc: Sascha Hauer <s.hauer@pengutronix.de>
+Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: NXP Linux Team <linux-imx@nxp.com>
+Cc: Jean Delvare <jdelvare@suse.com>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Cc: Jonathan Cameron <jic23@kernel.org>
+Cc: Lars-Peter Clausen <lars@metafoo.de>
+Cc: Chen-Yu Tsai <wens@csie.org>
+Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc: Samuel Holland <samuel@sholland.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Ido Schimmel <idosch@nvidia.com>
+Cc: Petr Machata <petrm@nvidia.com>
+Cc: Gregory Greenman <gregory.greenman@intel.com>
+Cc: Kalle Valo <kvalo@kernel.org>
+Cc: Sebastian Reichel <sre@kernel.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc: Amit Kucheria <amitk@kernel.org>
+Cc: Florian Fainelli <f.fainelli@gmail.com>
+Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Cc: Ray Jui <rjui@broadcom.com>
+Cc: Scott Branden <sbranden@broadcom.com>
+Cc: Markus Mayer <mmayer@broadcom.com>
+Cc: Support Opensource <support.opensource@diasemi.com>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Thara Gopinath <thara.gopinath@gmail.com>
+Cc: "Niklas Söderlund" <niklas.soderlund@ragnatech.se>
+Cc: Heiko Stuebner <heiko@sntech.de>
+Cc: Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Orson Zhai <orsonzhai@gmail.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Chunyan Zhang <zhang.lyra@gmail.com>
+Cc: Vasily Khoruzhick <anarsoul@gmail.com>
+Cc: Yangtao Li <tiny.windzz@gmail.com>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Jonathan Hunter <jonathanh@nvidia.com>
+Cc: Talel Shenhar <talel@amazon.com>
+Cc: Eduardo Valentin <edubezval@gmail.com>
+Cc: Keerthy <j-keerthy@ti.com>
+Cc: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Stefan Wahren <stefan.wahren@i2se.com>
+Cc: Zheng Yongjun <zhengyongjun3@huawei.com>
+Cc: Yang Li <yang.lee@linux.alibaba.com>
+Cc: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: Daniel Golle <daniel@makrotopia.org>
+Cc: Balsam CHIHI <bchihi@baylibre.com>
+Cc: Mikko Perttunen <mperttunen@nvidia.com>
+Cc: linux-acpi@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-ide@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-hwmon@vger.kernel.org
+Cc: linux-iio@vger.kernel.org
+Cc: linux-sunxi@lists.linux.dev
+Cc: linux-input@vger.kernel.org
+Cc: netdev@vger.kernel.org
+Cc: linux-wireless@vger.kernel.org
+Cc: linux-pm@vger.kernel.org
+Cc: linux-rpi-kernel@lists.infradead.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-renesas-soc@vger.kernel.org
+Cc: linux-rockchip@lists.infradead.org
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: linux-tegra@vger.kernel.org
+Cc: linux-omap@vger.kernel.org
+Cc: linux-mediatek@lists.infradead.org
 
-The convention followed here comes from KVM_CREATE_VM. Is this ioctl 
-considered bad example?
+Daniel Lezcano (17):
+  thermal/core: Add a thermal zone 'devdata' accessor
+  thermal/core: Show a debug message when get_temp() fails
+  thermal: Remove debug or error messages in get_temp() ops
+  thermal/hwmon: Do not set no_hwmon before calling
+    thermal_add_hwmon_sysfs()
+  thermal/hwmon: Use the right device for devm_thermal_add_hwmon_sysfs()
+  thermal: Don't use 'device' internal thermal zone structure field
+  thermal/core: Add 'type' accessor
+  thermal/drivers/spear: Don't use tz->device but pdev->dev
+  thermal: Add a thermal zone id accessor
+  thermal: Use thermal_zone_device_type() accessor
+  thermal/drivers/da9062: Don't access the thermal zone device fields
+  thermal/hwmon: Use the thermal_core.h header
+  thermal/drivers/tegra: Remove unneeded lock when setting a trip point
+  thermal/tegra: Do not enable the thermal zone, it is already enabled
+  thermal/drivers/acerhdf: Make interval setting only at module load
+    time
+  thermal/drivers/acerhdf: Remove pointless governor test
+  thermal/traces: Replace the thermal zone structure parameter with the
+    field value
 
->>
->>>> +
->>>> +    ghvm = gh_vm_alloc(rm);
->>>> +    if (IS_ERR(ghvm))
->>>> +        return PTR_ERR(ghvm);
->>>> +
->>>> +    fd = get_unused_fd_flags(O_CLOEXEC);
->>>> +    if (fd < 0) {
->>>> +        err = fd;
->>>> +        goto err_destroy_vm;
->>>> +    }
->>>> +
->>>> +    file = anon_inode_getfile("gunyah-vm", &gh_vm_fops, ghvm, O_RDWR);
->>>> +    if (IS_ERR(file)) {
->>>> +        err = PTR_ERR(file);
->>>> +        goto err_put_fd;
->>>> +    }
->>>> +
->>>> +    fd_install(fd, file);
->>>> +
->>>> +    return fd;
->>>> +
->>>> +err_put_fd:
->>>> +    put_unused_fd(fd);
->>>> +err_destroy_vm:
->>>> +    kfree(ghvm);
->>>> +    return err;
->>>> +}
->>>> +
->>>> +long gh_dev_vm_mgr_ioctl(struct gh_rm *rm, unsigned int cmd, 
->>>> unsigned long arg)
->>>> +{
->>>> +    switch (cmd) {
->>>> +    case GH_CREATE_VM:
->>>> +        return gh_dev_ioctl_create_vm(rm, arg);
->>>> +    default:
->>>> +        return -ENOIOCTLCMD;
->>>> +    }
->>>> +}
->>>> diff --git a/drivers/virt/gunyah/vm_mgr.h 
->>>> b/drivers/virt/gunyah/vm_mgr.h
->>>> new file mode 100644
->>>> index 000000000000..76954da706e9
->>>> --- /dev/null
->>>> +++ b/drivers/virt/gunyah/vm_mgr.h
->>>> @@ -0,0 +1,22 @@
->>>> +/* SPDX-License-Identifier: GPL-2.0-only */
->>>> +/*
->>>> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All 
->>>> rights reserved.
->>>> + */
->>>> +
->>>> +#ifndef _GH_PRIV_VM_MGR_H
->>>> +#define _GH_PRIV_VM_MGR_H
->>>> +
->>>> +#include <linux/gunyah_rsc_mgr.h>
->>>> +
->>>> +#include <uapi/linux/gunyah.h>
->>>> +
->>>> +long gh_dev_vm_mgr_ioctl(struct gh_rm *rm, unsigned int cmd, 
->>>> unsigned long arg);
->>>> +
->>>> +struct gh_vm {
->>>> +    u16 vmid;
->>>> +    struct gh_rm *rm;
->>>> +
->>>> +    struct work_struct free_work;
->>>> +};
->>>> +
->>>> +#endif
->>>> diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
->>>> new file mode 100644
->>>> index 000000000000..10ba32d2b0a6
->>>> --- /dev/null
->>>> +++ b/include/uapi/linux/gunyah.h
->>>> @@ -0,0 +1,23 @@
->>>> +/* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
->>>> +/*
->>>> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All 
->>>> rights reserved.
->>>> + */
->>>> +
->>>> +#ifndef _UAPI_LINUX_GUNYAH
->>>> +#define _UAPI_LINUX_GUNYAH
->>>> +
->>>> +/*
->>>> + * Userspace interface for /dev/gunyah - gunyah based virtual machine
->>>> + */
->>>> +
->>>> +#include <linux/types.h>
->>>> +#include <linux/ioctl.h>
->>>> +
->>>> +#define GH_IOCTL_TYPE            'G'
->>>> +
->>>> +/*
->>>> + * ioctls for /dev/gunyah fds:
->>>> + */
->>>> +#define GH_CREATE_VM            _IO(GH_IOCTL_TYPE, 0x0) /* Returns 
->>>> a Gunyah VM fd */
->>>
->>> Can HLOS forcefully destroy a VM?
->>> If so should we have a corresponding DESTROY IOCTL?
->>
->> It can forcefully destroy unauthenticated and protected virtual 
->> machines. I don't have a userspace usecase for a DESTROY ioctl yet, 
->> maybe this can be added later? By the way, the VM is forcefully 
-> that should be fine, but its also nice to add it for completeness, but 
-> not a compulsory atm
-> 
->> destroyed when VM refcount is dropped to 0 (close(vm_fd) and any other 
->> relevant file descriptors).
-> I have noticed that path.
-> 
-> --srini
->>
->> - Elliot
+ drivers/acpi/thermal.c                        | 18 +++----
+ drivers/ata/ahci_imx.c                        |  2 +-
+ drivers/hwmon/hwmon.c                         |  4 +-
+ drivers/hwmon/pmbus/pmbus_core.c              |  2 +-
+ drivers/hwmon/scmi-hwmon.c                    |  4 +-
+ drivers/hwmon/scpi-hwmon.c                    |  2 +-
+ drivers/iio/adc/sun4i-gpadc-iio.c             |  2 +-
+ drivers/input/touchscreen/sun4i-ts.c          |  2 +-
+ .../ethernet/chelsio/cxgb4/cxgb4_thermal.c    |  2 +-
+ .../ethernet/mellanox/mlxsw/core_thermal.c    | 16 +++----
+ drivers/net/wireless/intel/iwlwifi/mvm/tt.c   |  4 +-
+ drivers/platform/x86/acerhdf.c                | 19 ++------
+ drivers/power/supply/power_supply_core.c      |  2 +-
+ drivers/regulator/max8973-regulator.c         |  2 +-
+ drivers/thermal/amlogic_thermal.c             |  4 +-
+ drivers/thermal/armada_thermal.c              | 14 ++----
+ drivers/thermal/broadcom/bcm2711_thermal.c    |  3 +-
+ drivers/thermal/broadcom/bcm2835_thermal.c    |  3 +-
+ drivers/thermal/broadcom/brcmstb_thermal.c    |  8 ++--
+ drivers/thermal/broadcom/ns-thermal.c         |  2 +-
+ drivers/thermal/broadcom/sr-thermal.c         |  2 +-
+ drivers/thermal/da9062-thermal.c              | 13 +++--
+ drivers/thermal/db8500_thermal.c              |  2 +-
+ drivers/thermal/dove_thermal.c                |  7 +--
+ drivers/thermal/gov_fair_share.c              |  4 +-
+ drivers/thermal/gov_power_allocator.c         |  6 ++-
+ drivers/thermal/gov_step_wise.c               |  4 +-
+ drivers/thermal/hisi_thermal.c                |  5 +-
+ drivers/thermal/imx8mm_thermal.c              |  4 +-
+ drivers/thermal/imx_sc_thermal.c              |  9 ++--
+ drivers/thermal/imx_thermal.c                 | 47 +++++--------------
+ .../intel/int340x_thermal/int3400_thermal.c   |  2 +-
+ .../int340x_thermal/int340x_thermal_zone.c    |  4 +-
+ .../processor_thermal_device_pci.c            |  4 +-
+ drivers/thermal/intel/intel_pch_thermal.c     |  2 +-
+ .../thermal/intel/intel_quark_dts_thermal.c   |  6 +--
+ drivers/thermal/intel/intel_soc_dts_iosf.c    | 13 ++---
+ drivers/thermal/intel/x86_pkg_temp_thermal.c  |  4 +-
+ drivers/thermal/k3_bandgap.c                  |  4 +-
+ drivers/thermal/k3_j72xx_bandgap.c            |  2 +-
+ drivers/thermal/kirkwood_thermal.c            |  7 +--
+ drivers/thermal/max77620_thermal.c            |  6 +--
+ drivers/thermal/mediatek/auxadc_thermal.c     |  4 +-
+ drivers/thermal/mediatek/lvts_thermal.c       | 10 ++--
+ drivers/thermal/qcom/qcom-spmi-adc-tm5.c      |  6 +--
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c   |  6 +--
+ drivers/thermal/qcom/tsens.c                  |  6 +--
+ drivers/thermal/qoriq_thermal.c               |  4 +-
+ drivers/thermal/rcar_gen3_thermal.c           |  5 +-
+ drivers/thermal/rcar_thermal.c                |  8 +---
+ drivers/thermal/rockchip_thermal.c            |  8 +---
+ drivers/thermal/rzg2l_thermal.c               |  3 +-
+ drivers/thermal/samsung/exynos_tmu.c          |  4 +-
+ drivers/thermal/spear_thermal.c               | 10 ++--
+ drivers/thermal/sprd_thermal.c                |  2 +-
+ drivers/thermal/st/st_thermal.c               |  4 +-
+ drivers/thermal/st/stm_thermal.c              |  4 +-
+ drivers/thermal/sun8i_thermal.c               |  4 +-
+ drivers/thermal/tegra/soctherm.c              |  6 +--
+ drivers/thermal/tegra/tegra-bpmp-thermal.c    |  6 ++-
+ drivers/thermal/tegra/tegra30-tsensor.c       | 31 ++++++------
+ drivers/thermal/thermal-generic-adc.c         |  7 ++-
+ drivers/thermal/thermal_core.c                | 26 +++++++++-
+ drivers/thermal/thermal_helpers.c             |  3 ++
+ drivers/thermal/thermal_hwmon.c               |  9 ++--
+ drivers/thermal/thermal_hwmon.h               |  4 +-
+ drivers/thermal/thermal_mmio.c                |  2 +-
+ .../ti-soc-thermal/ti-thermal-common.c        | 10 ++--
+ drivers/thermal/uniphier_thermal.c            |  2 +-
+ include/linux/thermal.h                       | 19 ++++++++
+ include/trace/events/thermal.h                | 24 +++++-----
+ .../trace/events/thermal_power_allocator.h    | 12 ++---
+ 72 files changed, 251 insertions(+), 270 deletions(-)
+
+-- 
+2.34.1
+
