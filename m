@@ -2,131 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E1826A22A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 21:00:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 597E76A22B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 21:02:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229776AbjBXUAP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 15:00:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51620 "EHLO
+        id S229505AbjBXUCC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 15:02:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229608AbjBXUAO (ORCPT
+        with ESMTP id S229481AbjBXUCC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 15:00:14 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0A6D14EA6;
-        Fri, 24 Feb 2023 11:59:43 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31O4dA7H007070;
-        Fri, 24 Feb 2023 19:59:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=quW0laTGwLkdjH2tEZrvVdnRB0nR9k4yRR0RvQAxAg0=;
- b=KRIgPkjZxmTltVMY3txSYm/l+HZZZPranm6jM+mayltfWZ0NFyXgAzmY3SJz9Zt2rg2G
- 4bF516PPodOZIa9oiM0rx8cdpzGVERscXN9bhCTO0yZbgDg2W2eSlsYOJuGLKLW+ZtPu
- fuGEjsgqaCES0CK1ThIMchMWbWUsiTDUWlXwLkKzYIIIOOMZdJ0/LW5azUVvSf2JtGek
- ofBGh0MHsG6W9vB/06nvB0IU53EEDESd9VL1nN+43Z0MsxZwHLnKM4GPFFmQBqdpO13c
- QSfgislLyDpmRDV/57jjtiQmQrxsTlJPoHyG9NxMQAVkBCLNSyh1RD7hA/oCqrN/Q9cM og== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nxpcqtg60-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 24 Feb 2023 19:59:16 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31OJxF1T014545
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 24 Feb 2023 19:59:15 GMT
-Received: from [10.110.32.28] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 24 Feb
- 2023 11:59:14 -0800
-Message-ID: <43fbde3c-cb4d-6fb4-7f35-3ec660475f4e@quicinc.com>
-Date:   Fri, 24 Feb 2023 11:59:13 -0800
+        Fri, 24 Feb 2023 15:02:02 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A55A614EA6;
+        Fri, 24 Feb 2023 12:02:00 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id nw10-20020a17090b254a00b00233d7314c1cso3954236pjb.5;
+        Fri, 24 Feb 2023 12:02:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mk1VF7nfT+6id+DUlBftm181VOn00OpXZ9aoQ8/9Ri4=;
+        b=lyvITwMHa5/MbF1J88r6mzMkAUSoXLwCAGhy6wsMTOayyUihm+WpWPPkxpvWAdS7vi
+         NXhNb8mywFTPtQ83mEPdA5LWmVb5FdU7PBfd/io2R9mg+tm2sRs+7Tc7WSb9kCYdCnnm
+         h3PvF0uwo/nt5wu53SbYYoOjkz2DDck2XcH9yzzK4GjjlgXLsL64hVw+y3akAQd/BH5h
+         mip4ouSJlaJt/Vjv9FwgJgl6hpMNrtfehzmr+LjVOLeC7g2RKPLxs+huy11MC2XYtvwJ
+         JGK2egmAG9YZn1hGsA7YUaRyl/fSgPa35jU0zjEIuB+tDD2AfuBCQrHiNue8hYzFZgqJ
+         gBjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mk1VF7nfT+6id+DUlBftm181VOn00OpXZ9aoQ8/9Ri4=;
+        b=6yIeOD28L+LEkZy8tAnHuqiPL3SfJFtg4JPer1cv3JLG82YaFiz59hepulOcpi9ecV
+         XtBqWk8rTGg5NuZW1SnhuSVJ7WFs+5s+jswZR7APQlmckeyUe9Pb6+Gu3cFiMZHZaAIv
+         a1R6Z0mBIL5fntiw1E/MFu05MRx64h/pxmPGviG4Qpw5jTAQEeWN8zQDyadr6ELXXV2F
+         WRMtP3RDDuyAHuGo/Z9+ZlVxpi/eLb2sOEsXAJAdrenv9wjuCg3macigUkB8/OnpGuSN
+         px+4GqCG1RDyq9BpKSmnm8MQjU7lt7aZQtzjP26Y2Q9OnPfRl6yH+PkZt7Cy64WDvOs8
+         VhPg==
+X-Gm-Message-State: AO0yUKWadohWU1PUuKn+WzNvfnepR7Riv0waXWysHxzl0LVV0MdZCHaZ
+        fo5m9AJl2m0fuNmDqG9h6iU=
+X-Google-Smtp-Source: AK7set/MCGgw4sWMEQil+Zu1uL8C35OoLNVcgddzAVBaEcb5RsD58//mSqRogHKbudTmp5Q9jYP+Pw==
+X-Received: by 2002:a17:90a:19c5:b0:237:1f17:68ad with SMTP id 5-20020a17090a19c500b002371f1768admr15713350pjj.18.1677268919978;
+        Fri, 24 Feb 2023 12:01:59 -0800 (PST)
+Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
+        by smtp.gmail.com with ESMTPSA id t12-20020a17090ae50c00b002376d85844dsm31654pjy.51.2023.02.24.12.01.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Feb 2023 12:01:59 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= 
+        <ckoenig.leichtzumerken@gmail.com>,
+        =?UTF-8?q?Michel=20D=C3=A4nzer?= <michel@daenzer.net>,
+        Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Pekka Paalanen <ppaalanen@gmail.com>,
+        Simon Ser <contact@emersion.fr>,
+        Luben Tuikov <luben.tuikov@amd.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Gustavo Padovan <gustavo@padovan.org>,
+        intel-gfx@lists.freedesktop.org,
+        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING
+        FRAMEWORK),
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list),
+        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK),
+        Liu Shixin <liushixin2@huawei.com>,
+        Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>
+Subject: [PATCH v6 00/15] dma-fence: Deadline awareness
+Date:   Fri, 24 Feb 2023 12:01:28 -0800
+Message-Id: <20230224200155.2510320-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v4 1/2] remoteproc: core: Export the rproc coredump APIs
-Content-Language: en-US
-To:     Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        "Guru Das Srinagesh" <quic_gurus@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Siddharth Gupta <sidgup@codeaurora.org>
-References: <20230224195731.324-1-quic_gokukris@quicinc.com>
- <20230224195731.324-2-quic_gokukris@quicinc.com>
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <20230224195731.324-2-quic_gokukris@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: EikF5G3_N64y51UOBZd-RjJmWbmfU66r
-X-Proofpoint-GUID: EikF5G3_N64y51UOBZd-RjJmWbmfU66r
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-24_14,2023-02-24_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- adultscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1011
- priorityscore=1501 mlxlogscore=990 spamscore=0 suspectscore=0 mlxscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302240158
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/24/2023 11:57 AM, Gokul krishna Krishnakumar wrote:
-> From: Siddharth Gupta <sidgup@codeaurora.org>
-> 
-> The remoteproc coredump APIs are currently only part of the internal
-> remoteproc header. This prevents the remoteproc platform drivers from
-> using these APIs when needed. This change moves the rproc_coredump()
-> and rproc_coredump_cleanup() APIs to the linux header and marks them
-> as exported symbols.
-> 
-> Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
-> Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-> ---
->   drivers/remoteproc/remoteproc_coredump.c | 2 ++
->   drivers/remoteproc/remoteproc_internal.h | 4 ----
->   include/linux/remoteproc.h               | 4 ++++
->   3 files changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/remoteproc_coredump.c b/drivers/remoteproc/remoteproc_coredump.c
-> index 4b093420d98a..e8f1b580d1d9 100644
-> --- a/drivers/remoteproc/remoteproc_coredump.c
-> +++ b/drivers/remoteproc/remoteproc_coredump.c
-> @@ -32,6 +32,7 @@ void rproc_coredump_cleanup(struct rproc *rproc)
->   		kfree(entry);
->   	}
->   }
-> +EXPORT_SYMBOL(rproc_coredump_cleanup);
+From: Rob Clark <robdclark@chromium.org>
 
-EXPORT_SYMBOL_GPL?
 
->   
->   /**
->    * rproc_coredump_add_segment() - add segment of device memory to coredump
-> @@ -327,6 +328,7 @@ void rproc_coredump(struct rproc *rproc)
->   	 */
->   	wait_for_completion(&dump_state.dump_done);
->   }
-> +EXPORT_SYMBOL(rproc_coredump);
+This series adds a deadline hint to fences, so realtime deadlines
+such as vblank can be communicated to the fence signaller for power/
+frequency management decisions.
 
-Same as above.
+This is partially inspired by a trick i915 does, but implemented
+via dma-fence for a couple of reasons:
 
+1) To continue to be able to use the atomic helpers
+2) To support cases where display and gpu are different drivers
+
+This iteration adds a dma-fence ioctl to set a deadline (both to
+support igt-tests, and compositors which delay decisions about which
+client buffer to display), and a sw_sync ioctl to read back the
+deadline.  IGT tests utilizing these can be found at:
+
+  https://gitlab.freedesktop.org/robclark/igt-gpu-tools/-/commits/fence-deadline
+
+
+v1: https://patchwork.freedesktop.org/series/93035/
+v2: Move filtering out of later deadlines to fence implementation
+    to avoid increasing the size of dma_fence
+v3: Add support in fence-array and fence-chain; Add some uabi to
+    support igt tests and userspace compositors.
+v4: Rebase, address various comments, and add syncobj deadline
+    support, and sync_file EPOLLPRI based on experience with perf/
+    freq issues with clvk compute workloads on i915 (anv)
+v5: Clarify that this is a hint as opposed to a more hard deadline
+    guarantee, switch to using u64 ns values in UABI (still absolute
+    CLOCK_MONOTONIC values), drop syncobj related cap and driver
+    feature flag in favor of allowing count_handles==0 for probing
+    kernel support.
+v6: Re-work vblank helper to calculate time of _start_ of vblank,
+    and work correctly if the last vblank event was more than a
+    frame ago.  Add (mostly unrelated) drm/msm patch which also
+    uses the vblank helper.  Use dma_fence_chain_contained().  More
+    verbose syncobj UABI comments.  Drop DMA_FENCE_FLAG_HAS_DEADLINE_BIT.
+
+Rob Clark (15):
+  dma-buf/dma-fence: Add deadline awareness
+  dma-buf/fence-array: Add fence deadline support
+  dma-buf/fence-chain: Add fence deadline support
+  dma-buf/dma-resv: Add a way to set fence deadline
+  dma-buf/sync_file: Add SET_DEADLINE ioctl
+  dma-buf/sync_file: Support (E)POLLPRI
+  dma-buf/sw_sync: Add fence deadline support
+  drm/scheduler: Add fence deadline support
+  drm/syncobj: Add deadline support for syncobj waits
+  drm/vblank: Add helper to get next vblank time
+  drm/atomic-helper: Set fence deadline for vblank
+  drm/msm: Add deadline based boost support
+  drm/msm: Add wait-boost support
+  drm/msm/atomic: Switch to vblank_start helper
+  drm/i915: Add deadline based boost support
+
+ drivers/dma-buf/dma-fence-array.c       | 11 ++++
+ drivers/dma-buf/dma-fence-chain.c       | 12 ++++
+ drivers/dma-buf/dma-fence.c             | 20 +++++++
+ drivers/dma-buf/dma-resv.c              | 22 ++++++++
+ drivers/dma-buf/sw_sync.c               | 58 +++++++++++++++++++
+ drivers/dma-buf/sync_debug.h            |  2 +
+ drivers/dma-buf/sync_file.c             | 27 +++++++++
+ drivers/gpu/drm/drm_atomic_helper.c     | 36 ++++++++++++
+ drivers/gpu/drm/drm_syncobj.c           | 64 ++++++++++++++++-----
+ drivers/gpu/drm/drm_vblank.c            | 52 ++++++++++++++---
+ drivers/gpu/drm/i915/i915_request.c     | 20 +++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 15 -----
+ drivers/gpu/drm/msm/msm_atomic.c        |  8 ++-
+ drivers/gpu/drm/msm/msm_drv.c           | 12 ++--
+ drivers/gpu/drm/msm/msm_fence.c         | 74 +++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_fence.h         | 20 +++++++
+ drivers/gpu/drm/msm/msm_gem.c           |  5 ++
+ drivers/gpu/drm/msm/msm_kms.h           |  8 ---
+ drivers/gpu/drm/scheduler/sched_fence.c | 46 +++++++++++++++
+ drivers/gpu/drm/scheduler/sched_main.c  |  2 +-
+ include/drm/drm_vblank.h                |  1 +
+ include/drm/gpu_scheduler.h             | 17 ++++++
+ include/linux/dma-fence.h               | 19 +++++++
+ include/linux/dma-resv.h                |  2 +
+ include/uapi/drm/drm.h                  | 17 ++++++
+ include/uapi/drm/msm_drm.h              | 14 ++++-
+ include/uapi/linux/sync_file.h          | 26 +++++++++
+ 27 files changed, 555 insertions(+), 55 deletions(-)
+
+-- 
+2.39.1
 
