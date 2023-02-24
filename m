@@ -2,115 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 506DB6A238C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 22:15:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 992EB6A239A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 22:18:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230431AbjBXVPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 16:15:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33582 "EHLO
+        id S229618AbjBXVSD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 16:18:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbjBXVO7 (ORCPT
+        with ESMTP id S229804AbjBXVSC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 16:14:59 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C39BB6F414
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 13:14:55 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id s20so780935lfb.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 13:14:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a3tMET32MC/ilQvKVfykq58VVtfmdUTziBlgOazLd3M=;
-        b=U5eD5dgQMqr90/i1TZVqTWa3upSJ8famKFMQf6b9Y4qBH8DJcyBWCDB2wSBsxCCQmV
-         WZ+8aokL4OdbZAaMkkA3m8qy6FibDv5B7fgz1TTrT0aGeRrgnzz5GhFtpuDI2LAXzVpY
-         DtucP8KdYrdXIDcb25gdulIleYmRNT2tNiEGSn5/gRHJ0+UmPNDswbe8uz6mpLEYYBSv
-         OQgWVLtwRv7wwHFb1npF/UZFjkqNwbH1gZlmtMGoclhGA9W/4uZ+5+qs2dD5baNy7YBY
-         IQ9ZJdMJNw6jKamY4dAgdrItDX1BkWNO0DYQo+EkdY9p3tH6CFWPy92vySc2VVVINtLc
-         JMQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a3tMET32MC/ilQvKVfykq58VVtfmdUTziBlgOazLd3M=;
-        b=kN5OVQuC63NSc9qdxL+SsjDfzGdg8pb37TYd3eo0a+zLKPF0xxb8sEubMhq+0N0wrn
-         icsXDA9SgJj5GUyhesBs+pYd5tut/53GyMCODiANA/OJK2cBzsxVSg+2GXiIT5RFc/K5
-         2MZC8LLARXd4h+DdijY2XfmAymZ/yeP3X1u5WlZBqnJoJZxy4DLQWEkr5AW5wsD7UIp8
-         zJqknZUqVQSmAWpfhKayLMD23l65HQlulaPAhP5gI0yjVojd4N3ZEueDQmrYeNvU245M
-         S4F8FzYCc21mq4PJyLX/1NnQ3Tlskclmbt5ksZT0Md+zwncUt3NHSQwM75selFY4Jeiv
-         poHw==
-X-Gm-Message-State: AO0yUKVSvbjnG65WpeExrJi6RegoQiui0N350u07EO0hNxF5YkpgbLW7
-        pqYEGIpo0I9U/iGha3Ymu4ie5Q==
-X-Google-Smtp-Source: AK7set+KuQfh3hQTyj9cvtkBXBPxyynq+nrRD1q1YjjoI1lEyvxDbAvco71W6uCiJgOUd/RvpsNOzg==
-X-Received: by 2002:ac2:4842:0:b0:4d5:a6ad:53e8 with SMTP id 2-20020ac24842000000b004d5a6ad53e8mr6464231lfy.27.1677273294064;
-        Fri, 24 Feb 2023 13:14:54 -0800 (PST)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id z7-20020ac25de7000000b004db44dfd888sm2750lfq.30.2023.02.24.13.14.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Feb 2023 13:14:53 -0800 (PST)
-Message-ID: <54004e9c-256c-15b2-9c55-8bd88ebb0c85@linaro.org>
-Date:   Fri, 24 Feb 2023 23:14:52 +0200
+        Fri, 24 Feb 2023 16:18:02 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 050AB17CD0;
+        Fri, 24 Feb 2023 13:17:27 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31OLA165016576;
+        Fri, 24 Feb 2023 21:17:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=j5KCVpEd+ZBO66GbCWEgXteYq8VuhHbqP+aNM/lamPI=;
+ b=Ry4Y7DdtZ7DhUoESJpgUsUHcSH6Mcv6OggJl1xGMl0LEX9EzY+EH33Yyex6WX2zXSB2j
+ aC5PMHIkAihYGoNAsMlO9qzCj6U4rru6lRZ47VcVVOLUJbicyk14CusQoPnd3lTRR2fO
+ DOpx2x4AuFF4rKExFBUDsxDeP7Dqysds6gmOb8tIvf1YMy2Ru6jnhWsv3yffoW4V7gos
+ JcHMN12ISWe0X30CHhL4n3+5/Zw8p+J2brc6YgBEQJj9COBk9jswzjFeuqH8dOWoiUp2
+ A52vzNQfAXzyYdb1WxiTXJlR8Aca8CKLAqzHHJ1HlqaYqVNO9iXNG15mhFdoI8ganV2H Mg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nxsxr2220-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Feb 2023 21:17:21 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31OLHK3u031484
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Feb 2023 21:17:20 GMT
+Received: from hu-gokukris-sd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Fri, 24 Feb 2023 13:17:19 -0800
+From:   Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+CC:     Trilok Soni <quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        "Elliot Berman" <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+Subject: [PATCH v5 0/2] Fallback to full coredump
+Date:   Fri, 24 Feb 2023 13:17:05 -0800
+Message-ID: <20230224211707.30916-1-quic_gokukris@quicinc.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [RFC PATCH 2/2] drm/msm/dsi: use new
- dpu_dsc_populate_dsc_config()
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org
-Cc:     quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1677267647-28672-1-git-send-email-quic_khsieh@quicinc.com>
- <1677267647-28672-3-git-send-email-quic_khsieh@quicinc.com>
- <525078f5-44be-9a75-a737-ddcc6e097700@linaro.org>
- <21623a6d-7f83-5d2c-068c-f600a1834ac9@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <21623a6d-7f83-5d2c-068c-f600a1834ac9@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Ww9HIEK-PLI8V3p8ry_fjxT2SIxQq0Ny
+X-Proofpoint-ORIG-GUID: Ww9HIEK-PLI8V3p8ry_fjxT2SIxQq0Ny
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-24_14,2023-02-24_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ impostorscore=0 mlxlogscore=487 suspectscore=0 adultscore=0 clxscore=1015
+ spamscore=0 bulkscore=0 lowpriorityscore=0 mlxscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302240169
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/02/2023 23:09, Abhinav Kumar wrote:
-> 
-> 
-> On 2/24/2023 1:04 PM, Dmitry Baryshkov wrote:
->> On 24/02/2023 21:40, Kuogee Hsieh wrote:
->>> use new introduced dpu_dsc_populate_dsc_config() to calculate
->>> and populate drm_dsc_info instead of hard code value.
->>
->> DPU is an optional component, so DSI driver should not depend on the 
->> DPU driver.
->>
-> 
-> Today, the implicit dependency is already there. Without the DPU DSC 
-> blocks, the DSI cannot operate in compressed mode.
+Add support for full coredump as a fallback mechanism in
+absence of minidump support.
 
-It can not operate, but one will compile w/o other driver.
+Siddharth Gupta (2):
+  remoteproc: core: Export the rproc coredump APIs
+  remoteproc: qcom: Add full coredump fallback mechanism
 
-> 
-> But, from a SW standpoint I agree we can separate this.
-> 
-> We can move this one level up to the disp/ or msm/ folder
-> 
-> What do you think about that?
+ drivers/remoteproc/qcom_common.c         | 13 +++++++++++--
+ drivers/remoteproc/qcom_q6v5_pas.c       |  1 +
+ drivers/remoteproc/remoteproc_coredump.c |  2 ++
+ drivers/remoteproc/remoteproc_internal.h |  4 ----
+ include/linux/remoteproc.h               |  4 ++++
+ 5 files changed, 18 insertions(+), 6 deletions(-)
 
-I think about drivers/gpu/drm/display/drm_dsc_helper.c
 
-> -- 
-With best wishes
-Dmitry
+base-commit: 7c855ef7137a67bcff0e039691b969428dd8ef6a
+prerequisite-patch-id: e536336b8482ec63dac942663168e8437d59e250
+prerequisite-patch-id: 3f021e6eb809f76cd989c6151437838cda16dd7d
+prerequisite-patch-id: 78c3fd76f0fc0c6c016cd343afae65f60e6769dd
+prerequisite-patch-id: 9157843370eb8a77d1c533a69a6ee061478dc11b
+prerequisite-patch-id: 4ad66d124fd8370f9a443d726cb79e491cead691
+prerequisite-patch-id: 226e1fb9cef4107698b0f15591aeca57025ff2d6
+prerequisite-patch-id: a2fd45558397fc752b0e4f49305cdbe856747c30
+prerequisite-patch-id: 45c6493f77babc82f66600b8914bfa46378e71e8
+prerequisite-patch-id: d401dd88b3b36b67a0295a7b212e9a6902881930
+prerequisite-patch-id: f494d0c370cae200c6af5bb3d6e784e3102b31b1
+prerequisite-patch-id: c2192102ca8edd39defda07aa70fd484082adda8
+prerequisite-patch-id: 2c4a3d89099cf154956088be6a30f1eeea131d8c
+prerequisite-patch-id: 86ed20751124c24999c16289ba87d562c9000a31
+prerequisite-patch-id: 1a8773faff744dafed185d8a55bb8f0840854220
+prerequisite-patch-id: 9019e5c8c02d424787be016388c78fc612f0a94a
+prerequisite-patch-id: c81d93897349887e70614cf628a8b72f6fedb52a
+prerequisite-patch-id: 05e64f10cfd8ad329f583a2badde29a9424e4f0d
+prerequisite-patch-id: 92276f31af93078364eac07142e45ef3cde3a1c9
+prerequisite-patch-id: d40cb6cbde3f8e8385e7d79755a412d01994ec53
+-- 
+2.39.2
 
