@@ -2,170 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A6846A1CB7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 14:08:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8206F6A1CD5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 14:14:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230172AbjBXNII (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 08:08:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39168 "EHLO
+        id S229786AbjBXNOI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 08:14:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229929AbjBXNIH (ORCPT
+        with ESMTP id S229446AbjBXNOH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 08:08:07 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D185F12BFD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 05:08:05 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id m6so17909175lfq.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 05:08:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677244084;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EPreAIsPBs0vo9Qsm+CM5kGjxjzbL2RRreZgJMx8oPk=;
-        b=cJdEzQNdVzHBlQVlfDkZ4stM6P+/jhwF5aDU9BVUr5epgTQZrsOmTCdIcFh3ew1/Ui
-         eFeGRMjuHUErKRT6h/3VN26wS6UoJ8FdId4RY+dEFNfkPr7VH8G1auSMMLNsT6NCR27W
-         m6xWUU3u9lkIHwT9BKScyBCbFXBPGWwJHF5wPEvPdgnqPeMIsA970HoTRrTKt64t9JLP
-         vQfrmFfo1UBtYE6oExAtVX12C3I0K4Ks0dnnEaCMMuUadrDXZ/xf2NyqK5vIrGafb673
-         vOprKJVEGlz6nrcYNLMFj4pMufGbn7EuakGc/6LWEaL3Rfa/gA/bzpttKMp0XbTZqFHJ
-         82bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677244084;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EPreAIsPBs0vo9Qsm+CM5kGjxjzbL2RRreZgJMx8oPk=;
-        b=IY1QK9q8irOK1TzU4gH0hYmfQhJjM+pBdEJWNxYxD/LLd1Zr11d7w4/Zv4jwCoHns2
-         59d7J4G0W3MWTDDmIS7yPOMvbtVzcsJOPT9s3XuSJzISxXKyROkMmZLfw7pT/zccTddS
-         SXxJR8zchXUS5E5POmfWpc5vH/VVSfIblfw3X4ZXhstozgVefE5P5IvXv8eKYtAL2lZA
-         VxzusvEwLvTI9X4haUtPqoS695f3gUa4VqUJSVIu2NA4y1TIupLLrRmY1bBmTaB0wvJq
-         kjU9k4ectr737U7N+4iFti+xtuvFY2qSlBsWcF3xsGikvfqS6+2og6uhDQqw4UNFa+ji
-         lbCw==
-X-Gm-Message-State: AO0yUKUQqAhCvDfjaPHPa1NA0N3qYgBZfNJ5IbR53iQsEgxUwuoL7W9j
-        jJbrUrLeQCffjimcU/R0MxJr1NJ8STh1VpDM
-X-Google-Smtp-Source: AK7set8+cjo3A4v4txcKI1tpKNOIYdz++lPbFizEkFnGvQRsMB9gq98YcsVIBQ02klbWKAU+VDL43w==
-X-Received: by 2002:ac2:48b7:0:b0:4db:3a6f:df17 with SMTP id u23-20020ac248b7000000b004db3a6fdf17mr5132455lfg.51.1677244083883;
-        Fri, 24 Feb 2023 05:08:03 -0800 (PST)
-Received: from localhost.localdomain (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id i19-20020a056512007300b004dd7fefd2c8sm524046lfo.242.2023.02.24.05.08.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Feb 2023 05:08:03 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Luca Weiss <luca@z3ntu.xyz>, Iskren Chernev <me@iskren.info>,
-        Conor Dooley <conor.dooley@microchip.com>,
-        Chanho Park <chanho61.park@samsung.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: sc8280xp: Use correct CPU compatibles
-Date:   Fri, 24 Feb 2023 14:07:58 +0100
-Message-Id: <20230224130759.45579-2-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230224130759.45579-1-konrad.dybcio@linaro.org>
-References: <20230224130759.45579-1-konrad.dybcio@linaro.org>
+        Fri, 24 Feb 2023 08:14:07 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F38D1C308;
+        Fri, 24 Feb 2023 05:14:05 -0800 (PST)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 65D7D6602FB6;
+        Fri, 24 Feb 2023 13:14:01 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1677244443;
+        bh=Okn4gS1gr349hyYSKqFPtphNu9lynSCGwrmaUsYAV7k=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=Gm+baLq2JEYoErHccOrY+sq6UkDE63wM7blUSKo5+RWdViPYvsPewvBWLj6KK/Klp
+         mX0JPGD4xhg/6yWU++Nzbmfnl82cF9liwmH7/V49AdT0JhjKn/9qFXL/MGmI+iFB67
+         kEGGWDZczMu1ApL71HWexGJDHuCekPnec8VhOqK/IaN4Ec18oW5lZJK5IMSXZwaONx
+         pW0CUQ3NXQdomYvAUVtmuLd3Bvdsg8AvWF57+1ZZ3pSrcDOBQdPK7V6n01YRtKSLUa
+         bKRbQR8cYQ9XXXp8GWwxsBTRfmoO71Bj6gti3TX4MnkShBZEDgDb+fHdBMjgfzYc9q
+         hsCnVl7kz1jdg==
+Message-ID: <c17f94a6-c710-f80e-c2af-9e450f144157@collabora.com>
+Date:   Fri, 24 Feb 2023 14:13:59 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH V2] nvmem: add explicit config option to read OF fixed
+ cells
+Content-Language: en-US
+To:     =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Vincent Shih <vincent.sunplus@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Evgeniy Polyakov <zbr@ioremap.net>,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-rtc@vger.kernel.org,
+        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
+References: <20230224072903.20945-1-zajec5@gmail.com>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20230224072903.20945-1-zajec5@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Cores 0-3 are CA78C r0p0, cores 4-7 are CX1C r0p0. Use the correct
-compatibles instead of the placeholder qcom,kryo.
+Il 24/02/23 08:29, Rafał Miłecki ha scritto:
+> From: Rafał Miłecki <rafal@milecki.pl>
+> 
+> NVMEM subsystem looks for fixed NVMEM cells (specified in DT) by
+> default. This behaviour made sense in early days before adding support
+> for dynamic cells.
+> 
+> With every new supported NVMEM device with dynamic cells current
+> behaviour becomes non-optimal. It results in unneeded iterating over DT
+> nodes and may result in false discovery of cells (depending on used DT
+> properties).
+> 
+> This behaviour has actually caused a problem already with the MTD
+> subsystem. MTD subpartitions were incorrectly treated as NVMEM cells.
+> 
+> Also with upcoming support for NVMEM layouts no new binding or driver
+> should support fixed cells defined in device node.
+> 
+> Solve this by modifying drivers for bindings that support specifying
+> fixed NVMEM cells in DT. Make them explicitly tell NVMEM subsystem to
+> read cells from DT.
+> 
+> It wasn't clear (to me) if rtc and w1 code actually uses fixed cells. I
+> enabled them to don't risk any breakage.
+> 
+> Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+> [for drivers/nvmem/meson-{efuse,mx-efuse}.c]
+> Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+[for mtk-efuse.c, nvmem/core.c, nvmem-provider.h]
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 0d02599d8867..9c186ba55cdc 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -43,7 +43,7 @@ cpus {
- 
- 		CPU0: cpu@0 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo";
-+			compatible = "arm,cortex-a78c";
- 			reg = <0x0 0x0>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <602>;
-@@ -67,7 +67,7 @@ L3_0: l3-cache {
- 
- 		CPU1: cpu@100 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo";
-+			compatible = "arm,cortex-a78c";
- 			reg = <0x0 0x100>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <602>;
-@@ -87,7 +87,7 @@ L2_100: l2-cache {
- 
- 		CPU2: cpu@200 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo";
-+			compatible = "arm,cortex-a78c";
- 			reg = <0x0 0x200>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <602>;
-@@ -107,7 +107,7 @@ L2_200: l2-cache {
- 
- 		CPU3: cpu@300 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo";
-+			compatible = "arm,cortex-a78c";
- 			reg = <0x0 0x300>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <602>;
-@@ -127,7 +127,7 @@ L2_300: l2-cache {
- 
- 		CPU4: cpu@400 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo";
-+			compatible = "arm,cortex-x1c";
- 			reg = <0x0 0x400>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
-@@ -147,7 +147,7 @@ L2_400: l2-cache {
- 
- 		CPU5: cpu@500 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo";
-+			compatible = "arm,cortex-x1c";
- 			reg = <0x0 0x500>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
-@@ -167,7 +167,7 @@ L2_500: l2-cache {
- 
- 		CPU6: cpu@600 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo";
-+			compatible = "arm,cortex-x1c";
- 			reg = <0x0 0x600>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
-@@ -187,7 +187,7 @@ L2_600: l2-cache {
- 
- 		CPU7: cpu@700 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo";
-+			compatible = "arm,cortex-x1c";
- 			reg = <0x0 0x700>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
--- 
-2.39.2
+[MT8192, MT8195 Chromebooks]
+Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
