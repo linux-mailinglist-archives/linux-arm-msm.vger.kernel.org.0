@@ -2,92 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 687BF6A1A56
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 11:31:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03CCD6A1A62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 11:36:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230108AbjBXKbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 05:31:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58904 "EHLO
+        id S230325AbjBXKgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 05:36:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230111AbjBXKbA (ORCPT
+        with ESMTP id S230293AbjBXKfZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 05:31:00 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 563BB679AD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 02:30:26 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id m25-20020a7bcb99000000b003e7842b75f2so1426867wmi.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 02:30:25 -0800 (PST)
+        Fri, 24 Feb 2023 05:35:25 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E92EE67989
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 02:33:57 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id i9so17160288lfc.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 02:33:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1677234836;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6wxxz+sDh794uzv69vqKx5GNNub+zLdXfYsMvxxHBJ4=;
-        b=ftm4FaeoP2zr5EYlxPFvlurlNxkZoU/u6gsYW0oFeC6dwiCYq7LzqS4DjcV6allT9l
-         o/Zd+Pmt028rUJa2MyaU5OKEfubnqpL+UmCodhb+SdUnkYF5Fb/YnxjerOmIHjXoGRqw
-         ESZRI42hZYoDZ0U3pi9wIWDp9PZQwRspsyZwRXQaWoqkfWjBLJUoVA2zZGWxS8BcV0BX
-         qFwp7ZrtZwxGiSqybS1cdOPOJVED33eHxhSPYhV1+58yCHABO4rh2b65YXS15zu7GXJM
-         YBvECCJThSbVQHkQ5bUcPR+98dfsIVcxn/0TuU1lJ/lil50PfGLT8Fw0csw+hYB8n9mr
-         Uu9A==
+        bh=PRnJwyzUqjuU0z+FmmZHaXTEUHiO7ZvbRBc0gbEAgJU=;
+        b=aKBXMYK/kVOe/kD1qhF3ZDqDvd5kp6IBmz2E17O+HeDB/qoUgpJYnIGkhf5ipfOS5H
+         eDIuO9r3azNw03ljLdHWlQKbaYDmGteB3h8BMmsyP1ig2mqHUasRSqUaGDKV7gD7TTQt
+         q2wqrensFNHhxu7q0TmJyBQPB1pyea4EqiZh+2DrRfKxk6kGkPu35JvpiyWfQl8fyNPv
+         ZjGEtIx/pl36JZ9+cxXnjZlktPOSyeeKH5AM1daVeJSfxoPoxx26RSrENA1KXCHRnNxm
+         ha9m9XhXZOLaSH3fL4fmc7w6tw6AZOJWPfmUwph81GFrbUEiv6dfnmBgMKKWOqAug9kG
+         2hEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1677234836;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6wxxz+sDh794uzv69vqKx5GNNub+zLdXfYsMvxxHBJ4=;
-        b=n08WNQWs0wmm2hjVKokOwgKutLa67LoamE6tQDTeuaVpjKbjFIGQSrHKjB2odTm6Pf
-         CHf0drCObufrajJd2dHfYxy/i7IHlc/SiZc5UCaryVNTUhM6JjK2G/RCl39VQ74G/iKo
-         F9V1Udu7jotv9ymqrc01V4MI5qYGbHkBj2M8LoXO3YCG9pG+geMyVaQO5OEZo7zBqua2
-         RHlJnX8BN6qfK5SI6Lj1pQ/0e70HaVSlQ+m6ENGmBiMRleLXO3PaQb/H/qE4IecKJ3ec
-         9PS74dihM4i7O8pH8XiVjaL2zQRPM7fA2Wd0DBDA0zxy9IquY9U9pBM+8c6Eao4qcwqk
-         +tWA==
-X-Gm-Message-State: AO0yUKXge6v9yU4gox9PyADMLTL8mWqcPZgPfUgx5x6TgYuJmoY0S9Yi
-        iraky6sBXdAHGjtEFO1u5rO+wITQTQCDISg8
-X-Google-Smtp-Source: AK7set+yKZPsTlp+cfnAvSBbyEIWpo7dQfPOGPoNPA8Ycci6zSnnqhHIygrGuXmhhimjWGXsjagJrw==
-X-Received: by 2002:a05:600c:34cb:b0:3eb:a4e:a2b2 with SMTP id d11-20020a05600c34cb00b003eb0a4ea2b2mr1562593wmq.4.1677234588949;
-        Fri, 24 Feb 2023 02:29:48 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id az35-20020a05600c602300b003eaf666cbe0sm2376659wmb.27.2023.02.24.02.29.47
+        bh=PRnJwyzUqjuU0z+FmmZHaXTEUHiO7ZvbRBc0gbEAgJU=;
+        b=IYeu61ylTUx92RIymT3nyhoWcbbKq7BYpRtfbTJUNX/hOuS0BvlV4noUQYO97AzhNF
+         lA3cEh6H8yODe5MMyl2q6G2tnB/IPYsjvO6mC+trYrPYKmr6n7B+jRPvi8cfnzqUyXWX
+         MCtzwqPpVSukK0HJbIRtLt3BM/SkNpY+YLHo89EdzC726+WUu1b+LwR0xQVVB4nf5/2w
+         tn8lUoWeV9luwGlla4bwsRRzKJPy/cSsi2wxRXdu6jaeyatR0zTIv0JcbYY5m/54zi+n
+         o9eCGU28OfNu+/+kbrlHkkgjgx2T1Eg+pklWLC9auTe3sxNDSXky/L7KBWVzE94MrXJh
+         aZkg==
+X-Gm-Message-State: AO0yUKW7KyWfRIBzgpS5jH4Jq2y6DCTCe3kF8ynVaRxwNsf6mKY3VQ4Y
+        bQ53m4upN/LIXReSzBfw/vSpMg==
+X-Google-Smtp-Source: AK7set+rwdNqYZOVQEUon/RZ3hjn9Oox/3KITLrfJ0GFkSIV+QoQ9z3F7EiuRivMQxZStUOUkWnvsQ==
+X-Received: by 2002:a05:6512:41a:b0:4d8:69c3:f76a with SMTP id u26-20020a056512041a00b004d869c3f76amr4707992lfk.11.1677234836215;
+        Fri, 24 Feb 2023 02:33:56 -0800 (PST)
+Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
+        by smtp.gmail.com with ESMTPSA id j8-20020a19f508000000b004db3dc10189sm835989lfb.292.2023.02.24.02.33.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Feb 2023 02:29:48 -0800 (PST)
-Message-ID: <a50fa44d-fbc3-9ce2-175b-85c8cd7a9f7f@linaro.org>
-Date:   Fri, 24 Feb 2023 10:29:46 +0000
+        Fri, 24 Feb 2023 02:33:55 -0800 (PST)
+Message-ID: <d7d2b443-298b-700d-4ef5-9fd37f9e1467@linaro.org>
+Date:   Fri, 24 Feb 2023 11:33:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v10 10/26] gunyah: vm_mgr: Introduce basic VM Manager
-Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] arm64: dts: qcom: sm8150: Fix the iommu mask used for
+ PCIe controllers
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        andersson@kernel.org
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212356.3313181-1-quic_eberman@quicinc.com>
- <dbcfa4e9-a1ad-0f24-77bf-05934ca26bb2@linaro.org>
- <05c4aab8-2d26-b944-adb6-624d67e4a11d@quicinc.com>
- <52d944b1-3ea6-26b7-766a-2fed05dccf3a@linaro.org>
- <c5ff1523-7a62-3d3f-6fa9-792ce4d222e8@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <c5ff1523-7a62-3d3f-6fa9-792ce4d222e8@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        linux-kernel@vger.kernel.org, bhupesh.sharma@linaro.org,
+        srinivas.kandagatla@linaro.org, quic_vkamble@quicinc.com,
+        stable@vger.kernel.org
+References: <20230224080045.6577-1-manivannan.sadhasivam@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230224080045.6577-1-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -100,241 +82,40 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 23/02/2023 22:40, Elliot Berman wrote:
+On 24.02.2023 09:00, Manivannan Sadhasivam wrote:
+> The iommu mask should be 0x3f as per Qualcomm internal documentation.
+> Without the correct mask, the PCIe transactions from the endpoint will
+> result in SMMU faults. Hence, fix it!
 > 
+> Cc: stable@vger.kernel.org # 5.19
+> Fixes: a1c86c680533 ("arm64: dts: qcom: sm8150: Add PCIe nodes")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> On 2/23/2023 2:08 AM, Srinivas Kandagatla wrote:
->>
->>
->> On 22/02/2023 00:27, Elliot Berman wrote:
->>>
->>>>> +    .llseek = noop_llseek,
->>>>> +};
->>>>> +
->>>>> +static long gh_dev_ioctl_create_vm(struct gh_rm *rm, unsigned long 
->>>>> arg)
->>>> Not sure what is the gain of this multiple levels of redirection.
->>>>
->>>> How about
->>>>
->>>> long gh_dev_create_vm(struct gh_rm *rm, unsigned long arg)
->>>> {
->>>> ...
->>>> }
->>>>
->>>> and rsc_mgr just call it as part of its ioctl call
->>>>
->>>> static long gh_dev_ioctl(struct file *filp, unsigned int cmd, 
->>>> unsigned long arg)
->>>> {
->>>>      struct miscdevice *miscdev = filp->private_data;
->>>>      struct gh_rm *rm = container_of(miscdev, struct gh_rm, miscdev);
->>>>
->>>>      switch (cmd) {
->>>>      case GH_CREATE_VM:
->>>>          return gh_dev_create_vm(rm, arg);
->>>>      default:
->>>>          return -ENOIOCTLCMD;
->>>>      }
->>>> }
->>>>
->>>
->>> I'm anticipating we will add further /dev/gunyah ioctls and I thought 
->>> it would be cleaner to have all that in vm_mgr.c itself.
->>>
->>>>
->>>>> +{
->>>>> +    struct gh_vm *ghvm;
->>>>> +    struct file *file;
->>>>> +    int fd, err;
->>>>> +
->>>>> +    /* arg reserved for future use. */
->>>>> +    if (arg)
->>>>> +        return -EINVAL;
->>>>
->>>> The only code path I see here is via GH_CREATE_VM ioctl which 
->>>> obviously does not take any arguments, so if you are thinking of 
->>>> using the argument for architecture-specific VM flags.  Then this 
->>>> needs to be properly done by making the ABI aware of this.
->>>
->>> It is documented in Patch 17 (Document Gunyah VM Manager)
->>>
->>> +GH_CREATE_VM
->>> +~~~~~~~~~~~~
->>> +
->>> +Creates a Gunyah VM. The argument is reserved for future use and 
->>> must be 0.
->>>
->> But this conficts with the UAPIs that have been defined. GH_CREATE_VM 
->> itself is defined to take no parameters.
->>
->> #define GH_CREATE_VM                    _IO(GH_IOCTL_TYPE, 0x0)
->>
->> so where are you expecting the argument to come from?
->>  >>>
->>>> As you mentioned zero value arg imply an "unauthenticated VM" type, 
->>>> but this was not properly encoded in the userspace ABI. Why not make 
->>>> it future compatible. How about adding arguments to GH_CREATE_VM and 
->>>> pass the required information correctly.
->>>> Note that once the ABI is accepted then you will not be able to 
->>>> change it, other than adding a new one.
->>>>
->>>
->>> Does this means adding #define GH_VM_DEFAULT_ARG 0 ? I am not sure 
->>> yet what arguments to add here.
->>>
->>> The ABI can add new "long" values to GH_CREATE_VM and that wouldn't 
->>
->> Sorry, that is exactly what we want to avoid, we can not change the 
->> UAPI its going to break the userspace.
->>
->>> break compatibility with old kernels; old kernels reject it as -EINVAL.
->>
->> If you have userspace built with older kernel headers then that will 
->> break. Am not sure about old-kernels.
->>
->> What exactly is the argument that you want to add to GH_CREATE_VM?
->>
->> If you want to keep GH_CREATE_VM with no arguments that is fine but 
->> remove the conflicting comments in the code and document so that its 
->> not misleading readers/reviewers that the UAPI is going to be modified 
->> in near future.
->>
->>
-> 
-> The convention followed here comes from KVM_CREATE_VM. Is this ioctl 
-> considered bad example?
-> 
-
-It is recommended to only use _IO for commands without arguments, and 
-use pointers for passing data. Even though _IO can indicate either 
-commands with no argument or passing an integer value instead of a 
-pointer. Am really not sure how this works in compat case.
-
-Am sure there are tricks that can be done with just using _IO() macro 
-(ex vfio), but this does not mean that we should not use _IOW to be more 
-explicit on the type and size of argument that we are expecting.
-
-On the other hand If its really not possible to change this IOCTL to 
-_IOW and argument that you are referring would be with in integer range, 
-then what you have with _IO macro should work.
-
---srini
-
->>>
->>>>> +
->>>>> +    ghvm = gh_vm_alloc(rm);
->>>>> +    if (IS_ERR(ghvm))
->>>>> +        return PTR_ERR(ghvm);
->>>>> +
->>>>> +    fd = get_unused_fd_flags(O_CLOEXEC);
->>>>> +    if (fd < 0) {
->>>>> +        err = fd;
->>>>> +        goto err_destroy_vm;
->>>>> +    }
->>>>> +
->>>>> +    file = anon_inode_getfile("gunyah-vm", &gh_vm_fops, ghvm, 
->>>>> O_RDWR);
->>>>> +    if (IS_ERR(file)) {
->>>>> +        err = PTR_ERR(file);
->>>>> +        goto err_put_fd;
->>>>> +    }
->>>>> +
->>>>> +    fd_install(fd, file);
->>>>> +
->>>>> +    return fd;
->>>>> +
->>>>> +err_put_fd:
->>>>> +    put_unused_fd(fd);
->>>>> +err_destroy_vm:
->>>>> +    kfree(ghvm);
->>>>> +    return err;
->>>>> +}
->>>>> +
->>>>> +long gh_dev_vm_mgr_ioctl(struct gh_rm *rm, unsigned int cmd, 
->>>>> unsigned long arg)
->>>>> +{
->>>>> +    switch (cmd) {
->>>>> +    case GH_CREATE_VM:
->>>>> +        return gh_dev_ioctl_create_vm(rm, arg);
->>>>> +    default:
->>>>> +        return -ENOIOCTLCMD;
->>>>> +    }
->>>>> +}
->>>>> diff --git a/drivers/virt/gunyah/vm_mgr.h 
->>>>> b/drivers/virt/gunyah/vm_mgr.h
->>>>> new file mode 100644
->>>>> index 000000000000..76954da706e9
->>>>> --- /dev/null
->>>>> +++ b/drivers/virt/gunyah/vm_mgr.h
->>>>> @@ -0,0 +1,22 @@
->>>>> +/* SPDX-License-Identifier: GPL-2.0-only */
->>>>> +/*
->>>>> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All 
->>>>> rights reserved.
->>>>> + */
->>>>> +
->>>>> +#ifndef _GH_PRIV_VM_MGR_H
->>>>> +#define _GH_PRIV_VM_MGR_H
->>>>> +
->>>>> +#include <linux/gunyah_rsc_mgr.h>
->>>>> +
->>>>> +#include <uapi/linux/gunyah.h>
->>>>> +
->>>>> +long gh_dev_vm_mgr_ioctl(struct gh_rm *rm, unsigned int cmd, 
->>>>> unsigned long arg);
->>>>> +
->>>>> +struct gh_vm {
->>>>> +    u16 vmid;
->>>>> +    struct gh_rm *rm;
->>>>> +
->>>>> +    struct work_struct free_work;
->>>>> +};
->>>>> +
->>>>> +#endif
->>>>> diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
->>>>> new file mode 100644
->>>>> index 000000000000..10ba32d2b0a6
->>>>> --- /dev/null
->>>>> +++ b/include/uapi/linux/gunyah.h
->>>>> @@ -0,0 +1,23 @@
->>>>> +/* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
->>>>> +/*
->>>>> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All 
->>>>> rights reserved.
->>>>> + */
->>>>> +
->>>>> +#ifndef _UAPI_LINUX_GUNYAH
->>>>> +#define _UAPI_LINUX_GUNYAH
->>>>> +
->>>>> +/*
->>>>> + * Userspace interface for /dev/gunyah - gunyah based virtual machine
->>>>> + */
->>>>> +
->>>>> +#include <linux/types.h>
->>>>> +#include <linux/ioctl.h>
->>>>> +
->>>>> +#define GH_IOCTL_TYPE            'G'
->>>>> +
->>>>> +/*
->>>>> + * ioctls for /dev/gunyah fds:
->>>>> + */
->>>>> +#define GH_CREATE_VM            _IO(GH_IOCTL_TYPE, 0x0) /* Returns 
->>>>> a Gunyah VM fd */
->>>>
->>>> Can HLOS forcefully destroy a VM?
->>>> If so should we have a corresponding DESTROY IOCTL?
->>>
->>> It can forcefully destroy unauthenticated and protected virtual 
->>> machines. I don't have a userspace usecase for a DESTROY ioctl yet, 
->>> maybe this can be added later? By the way, the VM is forcefully 
->> that should be fine, but its also nice to add it for completeness, but 
->> not a compulsory atm
->>
->>> destroyed when VM refcount is dropped to 0 (close(vm_fd) and any 
->>> other relevant file descriptors).
->> I have noticed that path.
->>
->> --srini
->>>
->>> - Elliot
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index fd20096cfc6e..13e0ce828606 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -1826,7 +1826,7 @@ pcie0: pci@1c00000 {
+>  				      "slave_q2a",
+>  				      "tbu";
+>  
+> -			iommus = <&apps_smmu 0x1d80 0x7f>;
+> +			iommus = <&apps_smmu 0x1d80 0x3f>;
+>  			iommu-map = <0x0   &apps_smmu 0x1d80 0x1>,
+>  				    <0x100 &apps_smmu 0x1d81 0x1>;
+>  
+> @@ -1925,7 +1925,7 @@ pcie1: pci@1c08000 {
+>  			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+>  			assigned-clock-rates = <19200000>;
+>  
+> -			iommus = <&apps_smmu 0x1e00 0x7f>;
+> +			iommus = <&apps_smmu 0x1e00 0x3f>;
+>  			iommu-map = <0x0   &apps_smmu 0x1e00 0x1>,
+>  				    <0x100 &apps_smmu 0x1e01 0x1>;
+>  
