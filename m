@@ -2,192 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88F866A22F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 21:03:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE26B6A2347
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 21:52:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229951AbjBXUDZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 15:03:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55690 "EHLO
+        id S229582AbjBXUwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 15:52:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229776AbjBXUDD (ORCPT
+        with ESMTP id S229505AbjBXUwC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 15:03:03 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30E586F43C;
-        Fri, 24 Feb 2023 12:02:30 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id y2so209022pjg.3;
-        Fri, 24 Feb 2023 12:02:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2hrRR+74wlbtFKJjI1vePCtLY+UXSH6ONksg5TtlCrQ=;
-        b=ZZ7igSSQQDU0uw7AobYmC6Qr4Zo65YgCii7Uk3r1xDlOgBzia1x/39tRKjs/vQao3J
-         b2eJUkqTg2oJ1Snx+IzgUJyoV+oyKFjx/gJiiMJPMl0sc57fHQ+ZxdX+ERugwsR4E8gJ
-         vn8nStB1fy9QCRs8lg02VjxI83xvTHnHODzV26n0/lqzXPteLvq0IdNzXIC6afmAS06h
-         diaGxhAi8VnERtA5/SirCFc9Pqpk87lrQAZz/CQ/2N4U7mRb68lDYcKsCnuMCQpWS42l
-         jCFQFjwMgxPuOCZyOlwdfH2b3m6wYhuM/5T4acp7Vs+4hai5hyQI311Ht7A4Azq3sNMp
-         wm4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2hrRR+74wlbtFKJjI1vePCtLY+UXSH6ONksg5TtlCrQ=;
-        b=WnkP/KEn1Wt70Xwsby5icupjwZ/V5RnV04GopSJzA13UV+sZLSzwtxK6vZ3KhOr5ti
-         0V0FFe5m4kFT196vzHLi2Qn+AqLFAmjVumbgtBaqDlBHFwKD372cLF9QN251LuLDsHHi
-         nxSzI50ekFlqJL9r5ymL/WBwUU7WXgkNj1ENTqlhJ1+jAsjj3pvlbII7JXTA+J9/WgR9
-         yZs2COUcFd/1bfzkFz7RKE6QqZMSe63H4oBWwytWcnOk2CPRxXZcs+SuxlV0yDZanex9
-         5neDkzERLF7dmny18QVzPM37cLxn5rJkEMNaqXy6CKgF3BM6m0U5/kvBBcKm6B1Iy05o
-         yuAQ==
-X-Gm-Message-State: AO0yUKWGxxSVO+Qkw+llajuaEWIGuMdl5FuLfoQc1FFIas95NNI/RRpj
-        gM74R6XYSua/+q4RSZfxQCs=
-X-Google-Smtp-Source: AK7set/gsBMM5rOoncDiD+qPtbeJXzn8SJFKziYIKVcWGjXtI5uWV2ZZs11iGJWQ9/vcGA6DeHxYvA==
-X-Received: by 2002:a05:6a20:690b:b0:cb:cd69:48d2 with SMTP id q11-20020a056a20690b00b000cbcd6948d2mr12131136pzj.30.1677268947993;
-        Fri, 24 Feb 2023 12:02:27 -0800 (PST)
-Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
-        by smtp.gmail.com with ESMTPSA id c9-20020aa78e09000000b005a8c90fa306sm6224999pfr.83.2023.02.24.12.02.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Feb 2023 12:02:27 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= 
-        <ckoenig.leichtzumerken@gmail.com>,
-        =?UTF-8?q?Michel=20D=C3=A4nzer?= <michel@daenzer.net>,
-        Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Pekka Paalanen <ppaalanen@gmail.com>,
-        Simon Ser <contact@emersion.fr>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Liu Shixin <liushixin2@huawei.com>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v6 14/15] drm/msm/atomic: Switch to vblank_start helper
-Date:   Fri, 24 Feb 2023 12:01:42 -0800
-Message-Id: <20230224200155.2510320-15-robdclark@gmail.com>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230224200155.2510320-1-robdclark@gmail.com>
-References: <20230224200155.2510320-1-robdclark@gmail.com>
+        Fri, 24 Feb 2023 15:52:02 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC7EB584A8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 12:52:00 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31OJTSKS022184;
+        Fri, 24 Feb 2023 20:51:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=lbbVB3k23RQjUw90I/QkLcSSw61COvYG7rDw+Z6ZIoc=;
+ b=Hhr5f6nDEbtJPD495hwi8m25IofJYLP15oEvNpV3MArI+oI/3tngU8Z6F5343B+fP5A9
+ OJusqsP0SGySV/A0jaBtIZcVNFJdC5T9AAztRJd7JO70uH+huXIB4MrwwxlFfbjEHWHQ
+ +n7XVXrdDul+OE2rAeo6gfs8Y2vn2+s1HQqUhcazMWYx2EWHwpg5dMk0eJwlVDSmXw+i
+ E8mPzA0mawFa7DiMKaJRnhe7SZGPSNVTxPJlFzaXETo8sntmukv0QOCZzejrwYzHjen1
+ W4A0sxQgOhzyY4SJGOCTtM0KJwRago8TpgfffOrkmS5ubhsMCpCRihQP1EqgZw5Bv4qS 0Q== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nwybm676f-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Feb 2023 20:51:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31OKpqIn018524
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Feb 2023 20:51:52 GMT
+Received: from [10.110.89.76] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 24 Feb
+ 2023 12:51:51 -0800
+Message-ID: <298eff36-1a55-75a8-d957-ab97504e5caf@quicinc.com>
+Date:   Fri, 24 Feb 2023 12:51:50 -0800
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v2 06/50] drm/msm/dpu: correct sm8550 scaler
+Content-Language: en-US
+To:     <neil.armstrong@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230211231259.1308718-1-dmitry.baryshkov@linaro.org>
+ <20230211231259.1308718-7-dmitry.baryshkov@linaro.org>
+ <5bc2221f-61ba-3801-6dbb-83587d986b50@linaro.org>
+ <a589d45e-f084-9371-05dc-0676f12458a3@linaro.org>
+ <e20d2b76-a446-019d-73db-6f16ba7cbfb5@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <e20d2b76-a446-019d-73db-6f16ba7cbfb5@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Zbf7s01zB7KkC2bxwz4nWh0iOI4g4FTk
+X-Proofpoint-GUID: Zbf7s01zB7KkC2bxwz4nWh0iOI4g4FTk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-24_14,2023-02-24_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ suspectscore=0 phishscore=0 spamscore=0 priorityscore=1501 adultscore=0
+ impostorscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0 mlxscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302240166
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
 
-Drop our custom thing and switch to drm_crtc_next_vblank_start() for
-calculating the time of the start of the next vblank period.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 15 ---------------
- drivers/gpu/drm/msm/msm_atomic.c        |  8 +++++---
- drivers/gpu/drm/msm/msm_kms.h           |  8 --------
- 3 files changed, 5 insertions(+), 26 deletions(-)
+On 2/13/2023 9:36 AM, neil.armstrong@linaro.org wrote:
+> On 13/02/2023 12:16, Dmitry Baryshkov wrote:
+>> On 13/02/2023 12:41, Neil Armstrong wrote:
+>>> On 12/02/2023 00:12, Dmitry Baryshkov wrote:
+>>>> QSEED4 is a newer variant of QSEED3LITE, which should be used on
+>>>> sm8550. Fix the DPU caps structure and used feature masks.
+>>>
+>>> I found nowhere SM8550 uses Qseed4, on downstream DT, it's written:
+>>>          qcom,sde-qseed-sw-lib-rev = "qseedv3lite";
+>>>          qcom,sde-qseed-scalar-version = <0x3002>;
+>>
+>> And then the techpack tells us starting from 0x3000 the v3lite is v4:
+>>
+>> https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/display-kernel.lnx.5.10.r8-rel/msm/sde/sde_hw_util.c#L59 
+>>
+>>
+>> https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/display-kernel.lnx.5.10.r8-rel/msm/sde/sde_hw_util.c#L102 
+>>
+> 
+> OK then:
+> 
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> 
+>>
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index a683bd9b5a04..43996aecaf8c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -411,20 +411,6 @@ static void dpu_kms_disable_commit(struct msm_kms *kms)
- 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
- }
- 
--static ktime_t dpu_kms_vsync_time(struct msm_kms *kms, struct drm_crtc *crtc)
--{
--	struct drm_encoder *encoder;
--
--	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask) {
--		ktime_t vsync_time;
--
--		if (dpu_encoder_vsync_time(encoder, &vsync_time) == 0)
--			return vsync_time;
--	}
--
--	return ktime_get();
--}
--
- static void dpu_kms_prepare_commit(struct msm_kms *kms,
- 		struct drm_atomic_state *state)
- {
-@@ -953,7 +939,6 @@ static const struct msm_kms_funcs kms_funcs = {
- 	.irq             = dpu_core_irq,
- 	.enable_commit   = dpu_kms_enable_commit,
- 	.disable_commit  = dpu_kms_disable_commit,
--	.vsync_time      = dpu_kms_vsync_time,
- 	.prepare_commit  = dpu_kms_prepare_commit,
- 	.flush_commit    = dpu_kms_flush_commit,
- 	.wait_flush      = dpu_kms_wait_flush,
-diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-index 1686fbb611fd..de7ce17489cc 100644
---- a/drivers/gpu/drm/msm/msm_atomic.c
-+++ b/drivers/gpu/drm/msm/msm_atomic.c
-@@ -186,8 +186,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 	struct msm_kms *kms = priv->kms;
- 	struct drm_crtc *async_crtc = NULL;
- 	unsigned crtc_mask = get_crtc_mask(state);
--	bool async = kms->funcs->vsync_time &&
--			can_do_async(state, &async_crtc);
-+	bool async = can_do_async(state, &async_crtc);
- 
- 	trace_msm_atomic_commit_tail_start(async, crtc_mask);
- 
-@@ -231,7 +230,9 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 
- 			kms->pending_crtc_mask |= crtc_mask;
- 
--			vsync_time = kms->funcs->vsync_time(kms, async_crtc);
-+			if (!drm_crtc_next_vblank_start(async_crtc, &vsync_time))
-+				goto fallback;
-+
- 			wakeup_time = ktime_sub(vsync_time, ms_to_ktime(1));
- 
- 			msm_hrtimer_queue_work(&timer->work, wakeup_time,
-@@ -253,6 +254,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 		return;
- 	}
- 
-+fallback:
- 	/*
- 	 * If there is any async flush pending on updated crtcs, fold
- 	 * them into the current flush.
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index f8ed7588928c..086a3f1ff956 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -59,14 +59,6 @@ struct msm_kms_funcs {
- 	void (*enable_commit)(struct msm_kms *kms);
- 	void (*disable_commit)(struct msm_kms *kms);
- 
--	/**
--	 * If the kms backend supports async commit, it should implement
--	 * this method to return the time of the next vsync.  This is
--	 * used to determine a time slightly before vsync, for the async
--	 * commit timer to run and complete an async commit.
--	 */
--	ktime_t (*vsync_time)(struct msm_kms *kms, struct drm_crtc *crtc);
--
- 	/**
- 	 * Prepare for atomic commit.  This is called after any previous
- 	 * (async or otherwise) commit has completed.
--- 
-2.39.1
+This little bit of confusion is because with downstream, the qseed is a 
+separate usermode library having its own revision. So the SW lib version 
+in this case is not exactly correlating with the scalar HW revision.
 
+Since upstream DPU only cares about the HW revision of the scaler, we 
+should be going off the qcom,sde-qseed-scalar-version.
+
+This change LGTM,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>>
+>>> Neil
+>>>>
+>>>> Fixes: efcd0107727c ("drm/msm/dpu: add support for SM8550")
+>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> ---
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 10 +++++-----
+>>>>   1 file changed, 5 insertions(+), 5 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>>> index 192fff9238f9..c4e45c472685 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>>> @@ -458,7 +458,7 @@ static const struct dpu_caps sm8450_dpu_caps = {
+>>>>   static const struct dpu_caps sm8550_dpu_caps = {
+>>>>       .max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
+>>>>       .max_mixer_blendstages = 0xb,
+>>>> -    .qseed_type = DPU_SSPP_SCALER_QSEED3LITE,
+>>>> +    .qseed_type = DPU_SSPP_SCALER_QSEED4,
+>>>>       .smart_dma_rev = DPU_SSPP_SMART_DMA_V2, /* TODO: v2.5 */
+>>>>       .ubwc_version = DPU_HW_UBWC_VER_40,
+>>>>       .has_src_split = true,
+>>>> @@ -1301,13 +1301,13 @@ static const struct dpu_sspp_cfg 
+>>>> sm8450_sspp[] = {
+>>>>   };
+>>>>   static const struct dpu_sspp_sub_blks sm8550_vig_sblk_0 =
+>>>> -                _VIG_SBLK("0", 7, DPU_SSPP_SCALER_QSEED3LITE);
+>>>> +                _VIG_SBLK("0", 7, DPU_SSPP_SCALER_QSEED4);
+>>>>   static const struct dpu_sspp_sub_blks sm8550_vig_sblk_1 =
+>>>> -                _VIG_SBLK("1", 8, DPU_SSPP_SCALER_QSEED3LITE);
+>>>> +                _VIG_SBLK("1", 8, DPU_SSPP_SCALER_QSEED4);
+>>>>   static const struct dpu_sspp_sub_blks sm8550_vig_sblk_2 =
+>>>> -                _VIG_SBLK("2", 9, DPU_SSPP_SCALER_QSEED3LITE);
+>>>> +                _VIG_SBLK("2", 9, DPU_SSPP_SCALER_QSEED4);
+>>>>   static const struct dpu_sspp_sub_blks sm8550_vig_sblk_3 =
+>>>> -                _VIG_SBLK("3", 10, DPU_SSPP_SCALER_QSEED3LITE);
+>>>> +                _VIG_SBLK("3", 10, DPU_SSPP_SCALER_QSEED4);
+>>>>   static const struct dpu_sspp_sub_blks sm8550_dma_sblk_4 = 
+>>>> _DMA_SBLK("12", 5);
+>>>>   static const struct dpu_sspp_sub_blks sm8550_dma_sblk_5 = 
+>>>> _DMA_SBLK("13", 6);
+>>>
+>>
+> 
