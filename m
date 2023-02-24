@@ -2,68 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A44466A1437
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 01:15:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A67A6A1458
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 01:34:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229656AbjBXAPO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 19:15:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53580 "EHLO
+        id S229586AbjBXAef (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 19:34:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229598AbjBXAPO (ORCPT
+        with ESMTP id S229567AbjBXAef (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 19:15:14 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CFDC460A0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 16:15:13 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id u14so11075469ple.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 16:15:13 -0800 (PST)
+        Thu, 23 Feb 2023 19:34:35 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1472751902
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 16:34:32 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id q31-20020a17090a17a200b0023750b69614so1051699pja.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 16:34:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gnsL+pGfqbSaj40dlXSygHui8rkzCXGh8NQYT1OtVjc=;
-        b=MEMyJaQw67L5JtHF1XZ61OYT6n+VfEM4YMA80P0tKRQfHyK6eOM2UnebOQdeamv+xT
-         yz2NB/ixM+eJktRajoBHzOa6L7dT2+CXtbR/pOqZGAHeq9z5a9z03YJ341hIx6xxxeoL
-         h+IutQs/R34YpzIUCI2D62wQKZ8qveteFtJOf6WvLi4PawfWnxcu/s6MoTWhsJ6bIVkm
-         JWB0JPg9ASJdw1+MZYPjQC5D3pD5S12YsD7Dk5SRBebuwl/9Wk1g90CacKGm/yWcAqQJ
-         p+28peXucCwPRkbo6f4iUAB4JqxQqU4Q+iKlqjmi0Qg+j0xJNiPRzKPqGYm+Rfx4E0g5
-         huKg==
+        bh=LkwTUypetfbi40a7yUCwplrx+RBHVyw2x29kpaOPhT4=;
+        b=am3yOtTpdx27lGyhxqz/SnjApTNPPEsR+25AXQqCnW2kZN1xDHcbAn3UUnl7FL739S
+         iAw+ZevJe5nIhoHildehVOzSX3M2kNvKDTKieqk1Prw7pBZMhTCyE3eVuAKAq7kVDHiU
+         dHtGDXkq9Pelgen3+IwgYB4Ipzk3f4QK8udrjQdSe3RN3fk+n9QGd8qDp9Kf3B/YKUxW
+         3d1rc/Y27X6KGiVkwP4RARMfWA0sjmrXkumyGH7SiSzpfvumRAxyuj0PF22h2M3cJctQ
+         sxDDmiSmHNSE9HWJSHyg1L3gvJzwxIMVLUKHGwKN+G6aPxBinK2DHPMnIiNcMUqzdNr9
+         51gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gnsL+pGfqbSaj40dlXSygHui8rkzCXGh8NQYT1OtVjc=;
-        b=l7VdNK1kEHgqUoKFGISE59spNZY1pzUb7NDfi7mbUI3YCviONZicuxqAVqCQ9Ko5B0
-         Gna7jdn9MLTKgFje6s8usEVIpb4JeT2nbfsP2c/cAfGKi0FjMo/PAZOYwimTHrZl8tfK
-         hvnA+rhkN9tYJydbYBDju6hmXOjaFcDHiJJtZ151Yb28iajxwuJEnw78Y4GPiKg17g/3
-         ePAhzdmkwxXNAiKPZm5U8Wi4a0c5i9uABtbYT8MI+KAEkNgIO6w7HDMlTLramMCUC8lk
-         Ui0b4bZVrknxNaPW1sIWRQpUiSp+OVH7qq3OmwDJBP+1m8IvrNg5znquTYj6CNMIUbyb
-         q5aQ==
-X-Gm-Message-State: AO0yUKXu9rZk/OZ4n9kHOCNsxzdl3EbY3nVm6uQunaRD2BaQhXta4RNT
-        tdtijLJW+WKTqbLxN2RNBeZBqw==
-X-Google-Smtp-Source: AK7set+H1Oed36cehxC8KiJPC3s0ckOpweO6g64c5qWByIUOeqKQ8bas15lSHf/5Y113qatq+WyDfg==
-X-Received: by 2002:a05:6a20:7d99:b0:cc:4db1:12fc with SMTP id v25-20020a056a207d9900b000cc4db112fcmr2303043pzj.46.1677197712594;
-        Thu, 23 Feb 2023 16:15:12 -0800 (PST)
+        bh=LkwTUypetfbi40a7yUCwplrx+RBHVyw2x29kpaOPhT4=;
+        b=QswZVjqyvVu1+QWmEYR2lXs2f67Ecni0BGPgzDtrRqcw66wrp2PHTXkyRgmuJDoKn5
+         tVdDs9cfZ4/KDxxE5SGpQclZBi8fuOKC8YayvZtkG/45Si3yR6/GY6jp+K8eZOh+UWj9
+         bET3N0TvnvZmmLesgwjmzQ3a588msxmfcsmKRH4Ro9+mUnurA1PsAqp911LvWiZ5FW2o
+         ZJR8NPsSpNgSSJ4NMDkxxkA8DWvP5MQwDmijf5J6F8/R62gqy3oJcbIKhkQaK45+zaRK
+         EndfcGBZZ71j00oxy2hXUTP0vSuGW6Hd+QY0KceKiwFOu+am6a3q0iPmiA1+EYYzu9HK
+         RZWQ==
+X-Gm-Message-State: AO0yUKVNgZ78wIMircVFNKI3HDe7cAhltqy50y2wzgw9H6F6pYoeEyeF
+        LJpc7WrUKgC7FiELIbCFpAhC2w==
+X-Google-Smtp-Source: AK7set/hBcxLlMi3dFarw0MLGHPQBxey3QzObDAiMrnRL16ZFY/iV8hwbEqJvSl91y0Ujhn3MOyFOQ==
+X-Received: by 2002:a05:6a20:a004:b0:cc:a93:2b82 with SMTP id p4-20020a056a20a00400b000cc0a932b82mr5292194pzj.58.1677198871421;
+        Thu, 23 Feb 2023 16:34:31 -0800 (PST)
 Received: from [10.211.55.3] (c-73-221-130-71.hsd1.wa.comcast.net. [73.221.130.71])
-        by smtp.gmail.com with ESMTPSA id q18-20020a62e112000000b005a7ae8b3a09sm3528645pfh.32.2023.02.23.16.15.11
+        by smtp.gmail.com with ESMTPSA id e24-20020a62aa18000000b005d61829db4fsm3712019pff.168.2023.02.23.16.34.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 16:15:12 -0800 (PST)
-Message-ID: <d4cdae93-a003-d07f-3074-3542a231747b@linaro.org>
-Date:   Thu, 23 Feb 2023 18:15:10 -0600
+        Thu, 23 Feb 2023 16:34:30 -0800 (PST)
+Message-ID: <971726ce-b88a-0e68-45aa-862f821116ae@linaro.org>
+Date:   Thu, 23 Feb 2023 18:34:29 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v10 06/26] virt: gunyah: msgq: Add hypercalls to send and
- receive messages
+Subject: Re: [PATCH v10 12/26] gunyah: vm_mgr: Add/remove user memory regions
 Content-Language: en-US
 To:     Elliot Berman <quic_eberman@quicinc.com>,
         Alex Elder <elder@linaro.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
 Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
         Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
@@ -77,110 +74,290 @@ Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Jonathan Corbet <corbet@lwn.net>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
         Jassi Brar <jassisinghbrar@gmail.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
 References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212303.3307536-1-quic_eberman@quicinc.com>
+ <20230214212417.3315422-1-quic_eberman@quicinc.com>
 From:   Alex Elder <alex.elder@linaro.org>
-In-Reply-To: <20230214212303.3307536-1-quic_eberman@quicinc.com>
+In-Reply-To: <20230214212417.3315422-1-quic_eberman@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/14/23 3:23 PM, Elliot Berman wrote:
-> Add hypercalls to send and receive messages on a Gunyah message queue.
+On 2/14/23 3:24 PM, Elliot Berman wrote:
 > 
+> When launching a virtual machine, Gunyah userspace allocates memory for
+> the guest and informs Gunyah about these memory regions through
+> SET_USER_MEMORY_REGION ioctl.
+> 
+> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
 > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->   arch/arm64/gunyah/gunyah_hypercall.c | 32 ++++++++++++++++++++++++++++
->   include/linux/gunyah.h               |  7 ++++++
->   2 files changed, 39 insertions(+)
+>   drivers/virt/gunyah/Makefile    |   2 +-
+>   drivers/virt/gunyah/vm_mgr.c    |  44 ++++++
+>   drivers/virt/gunyah/vm_mgr.h    |  25 ++++
+>   drivers/virt/gunyah/vm_mgr_mm.c | 235 ++++++++++++++++++++++++++++++++
+>   include/uapi/linux/gunyah.h     |  33 +++++
+>   5 files changed, 338 insertions(+), 1 deletion(-)
+>   create mode 100644 drivers/virt/gunyah/vm_mgr_mm.c
 > 
-> diff --git a/arch/arm64/gunyah/gunyah_hypercall.c b/arch/arm64/gunyah/gunyah_hypercall.c
-> index f30d06ee80cf..2ca9ab098ff6 100644
-> --- a/arch/arm64/gunyah/gunyah_hypercall.c
-> +++ b/arch/arm64/gunyah/gunyah_hypercall.c
-> @@ -38,6 +38,8 @@ EXPORT_SYMBOL_GPL(arch_is_gunyah_guest);
->   						   fn)
+> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
+> index 03951cf82023..ff8bc4925392 100644
+> --- a/drivers/virt/gunyah/Makefile
+> +++ b/drivers/virt/gunyah/Makefile
+> @@ -2,5 +2,5 @@
 >   
->   #define GH_HYPERCALL_HYP_IDENTIFY		GH_HYPERCALL(0x8000)
-> +#define GH_HYPERCALL_MSGQ_SEND			GH_HYPERCALL(0x801B)
-> +#define GH_HYPERCALL_MSGQ_RECV			GH_HYPERCALL(0x801C)
+>   obj-$(CONFIG_GUNYAH) += gunyah.o
 >   
->   /**
->    * gh_hypercall_hyp_identify() - Returns build information and feature flags
-> @@ -57,5 +59,35 @@ void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identi
+> -gunyah_rsc_mgr-y += rsc_mgr.o rsc_mgr_rpc.o vm_mgr.o
+> +gunyah_rsc_mgr-y += rsc_mgr.o rsc_mgr_rpc.o vm_mgr.o vm_mgr_mm.o
+>   obj-$(CONFIG_GUNYAH) += gunyah_rsc_mgr.o
+> diff --git a/drivers/virt/gunyah/vm_mgr.c b/drivers/virt/gunyah/vm_mgr.c
+> index fd890a57172e..84102bac03cc 100644
+> --- a/drivers/virt/gunyah/vm_mgr.c
+> +++ b/drivers/virt/gunyah/vm_mgr.c
+> @@ -18,8 +18,16 @@
+>   static void gh_vm_free(struct work_struct *work)
+>   {
+>   	struct gh_vm *ghvm = container_of(work, struct gh_vm, free_work);
+> +	struct gh_vm_mem *mapping, *tmp;
+>   	int ret;
+>   
+> +	mutex_lock(&ghvm->mm_lock);
+> +	list_for_each_entry_safe(mapping, tmp, &ghvm->memory_mappings, list) {
+> +		gh_vm_mem_reclaim(ghvm, mapping);
+> +		kfree(mapping);
+> +	}
+> +	mutex_unlock(&ghvm->mm_lock);
+> +
+>   	ret = gh_rm_dealloc_vmid(ghvm->rm, ghvm->vmid);
+>   	if (ret)
+>   		pr_warn("Failed to deallocate vmid: %d\n", ret);
+> @@ -48,11 +56,46 @@ static __must_check struct gh_vm *gh_vm_alloc(struct gh_rm *rm)
+>   	ghvm->vmid = vmid;
+>   	ghvm->rm = rm;
+>   
+> +	mutex_init(&ghvm->mm_lock);
+> +	INIT_LIST_HEAD(&ghvm->memory_mappings);
+>   	INIT_WORK(&ghvm->free_work, gh_vm_free);
+>   
+>   	return ghvm;
 >   }
->   EXPORT_SYMBOL_GPL(gh_hypercall_hyp_identify);
 >   
-> +enum gh_error gh_hypercall_msgq_send(u64 capid, size_t size, uintptr_t buff, int tx_flags,
-> +					bool *ready)
+> +static long gh_vm_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 > +{
-> +	struct arm_smccc_res res;
+> +	struct gh_vm *ghvm = filp->private_data;
+> +	void __user *argp = (void __user *)arg;
+> +	long r;
 > +
-> +	arm_smccc_1_1_hvc(GH_HYPERCALL_MSGQ_SEND, capid, size, buff, tx_flags, 0, &res);
+> +	switch (cmd) {
+> +	case GH_VM_SET_USER_MEM_REGION: {
+> +		struct gh_userspace_memory_region region;
 > +
-> +	if (res.a0 == GH_ERROR_OK)
-> +		*ready = res.a1;
+> +		if (copy_from_user(&region, argp, sizeof(region)))
+> +			return -EFAULT;
 > +
-> +	return res.a0;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_hypercall_msgq_send);
+> +		/* All other flag bits are reserved for future use */
+> +		if (region.flags & ~(GH_MEM_ALLOW_READ | GH_MEM_ALLOW_WRITE | GH_MEM_ALLOW_EXEC |
+> +			GH_MEM_LENT))
+> +			return -EINVAL;
 > +
-> +enum gh_error gh_hypercall_msgq_recv(u64 capid, uintptr_t buff, size_t size, size_t *recv_size,
-> +					bool *ready)
-> +{
-> +	struct arm_smccc_res res;
 > +
-> +	arm_smccc_1_1_hvc(GH_HYPERCALL_MSGQ_RECV, capid, buff, size, 0, &res);
-> +
-> +	if (res.a0 == GH_ERROR_OK) {
-> +		*recv_size = res.a1;
+> +		if (region.memory_size)
 
-Is there any chance the 64-bit size is incompatible
-with size_t?  (Too big?)
+Would there be any value in allowing a zero-size memory
+region to be created?  Maybe that doesn't make sense, but
+I guess i'm questioning whether a zero memory region size
+have special meaning in this interface is a good thing to
+do.  You could sensibly have a separate REMOVE_USER_MEM_REGION
+request, and still permit 0 to be a valid size.
 
-> +		*ready = res.a2;
-
-		*ready = !!res.a2;
-
+> +			r = gh_vm_mem_alloc(ghvm, &region);
+> +		else
+> +			r = gh_vm_mem_free(ghvm, region.label);
+> +		break;
+> +	}
+> +	default:
+> +		r = -ENOTTY;
+> +		break;
 > +	}
 > +
-> +	return res.a0;
+> +	return r;
 > +}
-> +EXPORT_SYMBOL_GPL(gh_hypercall_msgq_recv);
 > +
->   MODULE_LICENSE("GPL");
->   MODULE_DESCRIPTION("Gunyah Hypervisor Hypercalls");
-> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
-> index 3fef2854c5e1..cb6df4eec5c2 100644
-> --- a/include/linux/gunyah.h
-> +++ b/include/linux/gunyah.h
-> @@ -112,4 +112,11 @@ struct gh_hypercall_hyp_identify_resp {
+>   static int gh_vm_release(struct inode *inode, struct file *filp)
+>   {
+>   	struct gh_vm *ghvm = filp->private_data;
+> @@ -65,6 +108,7 @@ static int gh_vm_release(struct inode *inode, struct file *filp)
+>   }
 >   
->   void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity);
+>   static const struct file_operations gh_vm_fops = {
+> +	.unlocked_ioctl = gh_vm_ioctl,
+>   	.release = gh_vm_release,
+>   	.compat_ioctl	= compat_ptr_ioctl,
+>   	.llseek = noop_llseek,
+> diff --git a/drivers/virt/gunyah/vm_mgr.h b/drivers/virt/gunyah/vm_mgr.h
+> index 76954da706e9..97bc00c34878 100644
+> --- a/drivers/virt/gunyah/vm_mgr.h
+> +++ b/drivers/virt/gunyah/vm_mgr.h
+> @@ -7,16 +7,41 @@
+>   #define _GH_PRIV_VM_MGR_H
 >   
-> +#define GH_HYPERCALL_MSGQ_TX_FLAGS_PUSH		BIT(0)
-> +
-> +enum gh_error gh_hypercall_msgq_send(u64 capid, size_t size, uintptr_t buff, int tx_flags,
-> +					bool *ready);
+>   #include <linux/gunyah_rsc_mgr.h>
+> +#include <linux/list.h>
+> +#include <linux/miscdevice.h>
+> +#include <linux/mutex.h>
+>   
+>   #include <uapi/linux/gunyah.h>
+>   
+>   long gh_dev_vm_mgr_ioctl(struct gh_rm *rm, unsigned int cmd, unsigned long arg);
+>   
+> +enum gh_vm_mem_share_type {
+> +	VM_MEM_SHARE,
+> +	VM_MEM_LEND,
 
-Why uintptr_t?  Why not just pass a host pointer (void *)
-and do whatever conversion is necessary inside the function?
+Are there any other share types anticipated?  Even if
+there were, for now you could use a Boolean to distinguish
+between shared or lent (at least until a third option
+materializes).
+
+> +};
+> +
+> +struct gh_vm_mem {
+> +	struct list_head list;
+> +	enum gh_vm_mem_share_type share_type;
+> +	struct gh_rm_mem_parcel parcel;
+> +
+> +	__u64 guest_phys_addr;
+> +	struct page **pages;
+> +	unsigned long npages;
+> +};
+> +
+>   struct gh_vm {
+>   	u16 vmid;
+>   	struct gh_rm *rm;
+>   
+>   	struct work_struct free_work;
+> +	struct mutex mm_lock;
+> +	struct list_head memory_mappings;
+>   };
+>   
+> +int gh_vm_mem_alloc(struct gh_vm *ghvm, struct gh_userspace_memory_region *region);
+> +void gh_vm_mem_reclaim(struct gh_vm *ghvm, struct gh_vm_mem *mapping);
+> +int gh_vm_mem_free(struct gh_vm *ghvm, u32 label);
+> +struct gh_vm_mem *gh_vm_mem_find(struct gh_vm *ghvm, u32 label);
+> +
+>   #endif
+> diff --git a/drivers/virt/gunyah/vm_mgr_mm.c b/drivers/virt/gunyah/vm_mgr_mm.c
+> new file mode 100644
+> index 000000000000..03e71a36ea3b
+> --- /dev/null
+> +++ b/drivers/virt/gunyah/vm_mgr_mm.c
+> @@ -0,0 +1,235 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#define pr_fmt(fmt) "gh_vm_mgr: " fmt
+> +
+> +#include <linux/gunyah_rsc_mgr.h>
+> +#include <linux/mm.h>
+> +
+> +#include <uapi/linux/gunyah.h>
+> +
+> +#include "vm_mgr.h"
+> +
+> +static inline bool page_contiguous(phys_addr_t p, phys_addr_t t)
+
+Is there not some existing function that captures this?
+In any case, it's used in one place and I think it would
+be clearer to just put the logic there rather than hiding
+it behind this function.
+
+> +{
+> +	return t - p == PAGE_SIZE;
+> +}
+> +
+> +static struct gh_vm_mem *__gh_vm_mem_find(struct gh_vm *ghvm, u32 label)
+> +	__must_hold(&ghvm->mm_lock)
+> +{
+> +	struct gh_vm_mem *mapping;
+> +
+> +	list_for_each_entry(mapping, &ghvm->memory_mappings, list)
+> +		if (mapping->parcel.label == label)
+> +			return mapping;
+> +
+> +	return NULL;
+> +}
+> +
+
+. . .
+
+> diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
+> index 10ba32d2b0a6..d85d12119a48 100644
+> --- a/include/uapi/linux/gunyah.h
+> +++ b/include/uapi/linux/gunyah.h
+> @@ -20,4 +20,37 @@
+>    */
+>   #define GH_CREATE_VM			_IO(GH_IOCTL_TYPE, 0x0) /* Returns a Gunyah VM fd */
+>   
+> +/*
+> + * ioctls for VM fds
+> + */
+> +
+> +/**
+> + * struct gh_userspace_memory_region - Userspace memory descripion for GH_VM_SET_USER_MEM_REGION
+> + * @label: Unique identifer to the region.
+
+Maybe this is described somewhere, but what is the purpose
+of the label?  Who uses it?  Is it meant to be a value
+only the current owner of a resource understands?  Or does
+resource manager use it internally, or what?
+
+> + * @flags: Flags for memory parcel behavior
+> + * @guest_phys_addr: Location of the memory region in guest's memory space (page-aligned)
+> + * @memory_size: Size of the region (page-aligned)
+> + * @userspace_addr: Location of the memory region in caller (userspace)'s memory
+> + *
+> + * See Documentation/virt/gunyah/vm-manager.rst for further details.
+> + */
+> +struct gh_userspace_memory_region {
+> +	__u32 label;
+
+Define the possible permission values separate from
+the structure.
 
 					-Alex
 
-> +enum gh_error gh_hypercall_msgq_recv(u64 capid, uintptr_t buff, size_t size, size_t *recv_size,
-> +					bool *ready);
+> +#define GH_MEM_ALLOW_READ	(1UL << 0)
+> +#define GH_MEM_ALLOW_WRITE	(1UL << 1)
+> +#define GH_MEM_ALLOW_EXEC	(1UL << 2)
+> +/*
+> + * The guest will be lent the memory instead of shared.
+> + * In other words, the guest has exclusive access to the memory region and the host loses access.
+> + */
+> +#define GH_MEM_LENT		(1UL << 3)
+> +	__u32 flags;
+> +	__u64 guest_phys_addr;
+> +	__u64 memory_size;
+> +	__u64 userspace_addr;
+> +};
+> +
+> +#define GH_VM_SET_USER_MEM_REGION	_IOW(GH_IOCTL_TYPE, 0x1, \
+> +						struct gh_userspace_memory_region)
 > +
 >   #endif
 
