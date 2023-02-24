@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A5DD6A1429
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 01:09:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A44466A1437
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 01:15:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229529AbjBXAJV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 19:09:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47622 "EHLO
+        id S229656AbjBXAPO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 19:15:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229495AbjBXAJU (ORCPT
+        with ESMTP id S229598AbjBXAPO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 19:09:20 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 625A619F26
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 16:09:16 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id m3-20020a17090ade0300b00229eec90a7fso5325647pjv.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 16:09:16 -0800 (PST)
+        Thu, 23 Feb 2023 19:15:14 -0500
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CFDC460A0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 16:15:13 -0800 (PST)
+Received: by mail-pl1-x635.google.com with SMTP id u14so11075469ple.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 16:15:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ccCPNE0dRKdn3JLZtkA6wCbsKjwclr4fc3XDhVbkgLo=;
-        b=nHqpFvKbKdvofrxGmm+RSs6Q5fKLZ4vSN9y/VSyKTTCS9QA+Licsnf0zajAgsMvSyu
-         x+8cCaA7IVUEApOk5gX4oMCM9hIjIPy9Ikp6u7WDgcKQj32Oip2mrvMAOm/dx1HMBl1C
-         qTwyiGVBzMocIe6s7O82OJNRhPQTAH3DFPOdSPv5r1zZsJBGxwHgl37SKnAlG09bqJF9
-         TgxttzvxKH6mE9FYTCy6+GIzFHCXuNpuaU6PAv8AYtbdGIQHqaCFfEV9vX2MqalYHKvg
-         mIDyfF4S9QNifKrCpo07uYklfPy8UmSSMDzu/Qhp5Qy8kcFumZ1lCLKfDWmusxaqQlAJ
-         D5cQ==
+        bh=gnsL+pGfqbSaj40dlXSygHui8rkzCXGh8NQYT1OtVjc=;
+        b=MEMyJaQw67L5JtHF1XZ61OYT6n+VfEM4YMA80P0tKRQfHyK6eOM2UnebOQdeamv+xT
+         yz2NB/ixM+eJktRajoBHzOa6L7dT2+CXtbR/pOqZGAHeq9z5a9z03YJ341hIx6xxxeoL
+         h+IutQs/R34YpzIUCI2D62wQKZ8qveteFtJOf6WvLi4PawfWnxcu/s6MoTWhsJ6bIVkm
+         JWB0JPg9ASJdw1+MZYPjQC5D3pD5S12YsD7Dk5SRBebuwl/9Wk1g90CacKGm/yWcAqQJ
+         p+28peXucCwPRkbo6f4iUAB4JqxQqU4Q+iKlqjmi0Qg+j0xJNiPRzKPqGYm+Rfx4E0g5
+         huKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ccCPNE0dRKdn3JLZtkA6wCbsKjwclr4fc3XDhVbkgLo=;
-        b=zGA1sQABhbx0G1vDbkwXMm6GTm6IheCSUY3a0AscW2suxi6XVyrXEl7et98Ba853Mh
-         StHH8Y11gIRL2DZAPOmwJadjR0TubTqTHWxFe6zJA9JeV9PpNLEvk/Dv34TkILyyaEFU
-         G2oFfuDJGnTjCbs1QOQils2JMmYjcmNSi8LX5ZtkGJXu7AsCreCyuh4imH7/4WEO4ItE
-         IxjnDXANT/zcFewlZS90zx1lcKOy0KvrC51L06cB8awrmk3dan8oMKRdGmGLB9f6pc/r
-         mXFTyAdjYon4XO/z1mBRaaNQQblgs9JtN+Rf2GOcAL4WvabcG+mivZQ/EjcMrpgdcq42
-         gRFQ==
-X-Gm-Message-State: AO0yUKVXp2fgru53XvOqsOFJBKFa/FPGPqrn99bXaRa5FCqZ5fLT5THJ
-        4p8OKqdfPPvbZULXUnyT65gC1g==
-X-Google-Smtp-Source: AK7set/HnrMWRi5l/nSGXUaL8JJ1iDLJnBnX2j0CDyp5hfge20IJFbzCBCdSoKyNngrhY9QQqcNYRg==
-X-Received: by 2002:a17:903:2441:b0:196:5bac:e319 with SMTP id l1-20020a170903244100b001965bace319mr16426552pls.35.1677197355664;
-        Thu, 23 Feb 2023 16:09:15 -0800 (PST)
+        bh=gnsL+pGfqbSaj40dlXSygHui8rkzCXGh8NQYT1OtVjc=;
+        b=l7VdNK1kEHgqUoKFGISE59spNZY1pzUb7NDfi7mbUI3YCviONZicuxqAVqCQ9Ko5B0
+         Gna7jdn9MLTKgFje6s8usEVIpb4JeT2nbfsP2c/cAfGKi0FjMo/PAZOYwimTHrZl8tfK
+         hvnA+rhkN9tYJydbYBDju6hmXOjaFcDHiJJtZ151Yb28iajxwuJEnw78Y4GPiKg17g/3
+         ePAhzdmkwxXNAiKPZm5U8Wi4a0c5i9uABtbYT8MI+KAEkNgIO6w7HDMlTLramMCUC8lk
+         Ui0b4bZVrknxNaPW1sIWRQpUiSp+OVH7qq3OmwDJBP+1m8IvrNg5znquTYj6CNMIUbyb
+         q5aQ==
+X-Gm-Message-State: AO0yUKXu9rZk/OZ4n9kHOCNsxzdl3EbY3nVm6uQunaRD2BaQhXta4RNT
+        tdtijLJW+WKTqbLxN2RNBeZBqw==
+X-Google-Smtp-Source: AK7set+H1Oed36cehxC8KiJPC3s0ckOpweO6g64c5qWByIUOeqKQ8bas15lSHf/5Y113qatq+WyDfg==
+X-Received: by 2002:a05:6a20:7d99:b0:cc:4db1:12fc with SMTP id v25-20020a056a207d9900b000cc4db112fcmr2303043pzj.46.1677197712594;
+        Thu, 23 Feb 2023 16:15:12 -0800 (PST)
 Received: from [10.211.55.3] (c-73-221-130-71.hsd1.wa.comcast.net. [73.221.130.71])
-        by smtp.gmail.com with ESMTPSA id t18-20020a170902d21200b0019337bf957dsm8692210ply.296.2023.02.23.16.09.13
+        by smtp.gmail.com with ESMTPSA id q18-20020a62e112000000b005a7ae8b3a09sm3528645pfh.32.2023.02.23.16.15.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 16:09:14 -0800 (PST)
-Message-ID: <4eb2e494-d987-5eb7-3513-be58eb87c9af@linaro.org>
-Date:   Thu, 23 Feb 2023 18:09:12 -0600
+        Thu, 23 Feb 2023 16:15:12 -0800 (PST)
+Message-ID: <d4cdae93-a003-d07f-3074-3542a231747b@linaro.org>
+Date:   Thu, 23 Feb 2023 18:15:10 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v10 04/26] virt: gunyah: Add hypercalls to identify Gunyah
+Subject: Re: [PATCH v10 06/26] virt: gunyah: msgq: Add hypercalls to send and
+ receive messages
 Content-Language: en-US
 To:     Elliot Berman <quic_eberman@quicinc.com>,
         Alex Elder <elder@linaro.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
         Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+        Will Deacon <will@kernel.org>
 Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
         Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
@@ -81,257 +82,105 @@ Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
 References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214211229.3239350-5-quic_eberman@quicinc.com>
+ <20230214212303.3307536-1-quic_eberman@quicinc.com>
 From:   Alex Elder <alex.elder@linaro.org>
-In-Reply-To: <20230214211229.3239350-5-quic_eberman@quicinc.com>
+In-Reply-To: <20230214212303.3307536-1-quic_eberman@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/14/23 3:12 PM, Elliot Berman wrote:
-> Add hypercalls to identify when Linux is running a virtual machine under
-> Gunyah.
-> 
-> There are two calls to help identify Gunyah:
-> 
-> 1. gh_hypercall_get_uid() returns a UID when running under a Gunyah
->     hypervisor.
-> 2. gh_hypercall_hyp_identify() returns build information and a set of
->     feature flags that are supported by Gunyah.
+On 2/14/23 3:23 PM, Elliot Berman wrote:
+> Add hypercalls to send and receive messages on a Gunyah message queue.
 > 
 > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->   arch/arm64/Kbuild                    |  1 +
->   arch/arm64/gunyah/Makefile           |  3 ++
->   arch/arm64/gunyah/gunyah_hypercall.c | 61 ++++++++++++++++++++++++++++
->   drivers/virt/Kconfig                 |  2 +
->   drivers/virt/gunyah/Kconfig          | 13 ++++++
->   include/linux/gunyah.h               | 33 +++++++++++++++
->   6 files changed, 113 insertions(+)
->   create mode 100644 arch/arm64/gunyah/Makefile
->   create mode 100644 arch/arm64/gunyah/gunyah_hypercall.c
->   create mode 100644 drivers/virt/gunyah/Kconfig
+>   arch/arm64/gunyah/gunyah_hypercall.c | 32 ++++++++++++++++++++++++++++
+>   include/linux/gunyah.h               |  7 ++++++
+>   2 files changed, 39 insertions(+)
 > 
-> diff --git a/arch/arm64/Kbuild b/arch/arm64/Kbuild
-> index 5bfbf7d79c99..e4847ba0e3c9 100644
-> --- a/arch/arm64/Kbuild
-> +++ b/arch/arm64/Kbuild
-> @@ -3,6 +3,7 @@ obj-y			+= kernel/ mm/ net/
->   obj-$(CONFIG_KVM)	+= kvm/
->   obj-$(CONFIG_XEN)	+= xen/
->   obj-$(subst m,y,$(CONFIG_HYPERV))	+= hyperv/
-> +obj-$(CONFIG_GUNYAH)	+= gunyah/
->   obj-$(CONFIG_CRYPTO)	+= crypto/
->   
->   # for cleaning
-> diff --git a/arch/arm64/gunyah/Makefile b/arch/arm64/gunyah/Makefile
-> new file mode 100644
-> index 000000000000..84f1e38cafb1
-> --- /dev/null
-> +++ b/arch/arm64/gunyah/Makefile
-> @@ -0,0 +1,3 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +
-> +obj-$(CONFIG_GUNYAH) += gunyah_hypercall.o
 > diff --git a/arch/arm64/gunyah/gunyah_hypercall.c b/arch/arm64/gunyah/gunyah_hypercall.c
-> new file mode 100644
-> index 000000000000..f30d06ee80cf
-> --- /dev/null
+> index f30d06ee80cf..2ca9ab098ff6 100644
+> --- a/arch/arm64/gunyah/gunyah_hypercall.c
 > +++ b/arch/arm64/gunyah/gunyah_hypercall.c
-> @@ -0,0 +1,61 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/arm-smccc.h>
-> +#include <linux/module.h>
-> +#include <linux/gunyah.h>
-> +
-> +static const uint32_t gunyah_known_uuids[][4] = {
-> +	{0x19bd54bd, 0x0b37571b, 0x946f609b, 0x54539de6}, /* QC_HYP (Qualcomm's build) */
-> +	{0x673d5f14, 0x9265ce36, 0xa4535fdb, 0xc1d58fcd}, /* GUNYAH (open source build) */
-> +};
-
-Are these really UUIDs? Standard ones?  Define them using
-the standard Linux way of doing it.  See <linux/uuid.h>.
-
-> +
-> +bool arch_is_gunyah_guest(void)
-> +{
-> +	struct arm_smccc_res res;
-> +	u32 uid[4];
-> +	int i;
-> +
-> +	arm_smccc_1_1_hvc(ARM_SMCCC_VENDOR_HYP_CALL_UID_FUNC_ID, &res);
-> +
-> +	uid[0] = lower_32_bits(res.a0);
-> +	uid[1] = lower_32_bits(res.a1);
-> +	uid[2] = lower_32_bits(res.a2);
-> +	uid[3] = lower_32_bits(res.a3);
-> +
-> +	for (i = 0; i < ARRAY_SIZE(gunyah_known_uuids); i++)
-> +		if (!memcmp(uid, gunyah_known_uuids[i], sizeof(uid)))
-> +			break;
-> +
-> +	return i != ARRAY_SIZE(gunyah_known_uuids);
-> +}
-> +EXPORT_SYMBOL_GPL(arch_is_gunyah_guest);
-> +
-> +#define GH_HYPERCALL(fn)	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_64, \
-> +						   ARM_SMCCC_OWNER_VENDOR_HYP, \
-> +						   fn)
-> +
-> +#define GH_HYPERCALL_HYP_IDENTIFY		GH_HYPERCALL(0x8000)
-> +
-> +/**
-> + * gh_hypercall_hyp_identify() - Returns build information and feature flags
-> + *                               supported by Gunyah.
-> + * @hyp_identity: filled by the hypercall with the API info and feature flags.
-> + */
-> +void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity)
+> @@ -38,6 +38,8 @@ EXPORT_SYMBOL_GPL(arch_is_gunyah_guest);
+>   						   fn)
+>   
+>   #define GH_HYPERCALL_HYP_IDENTIFY		GH_HYPERCALL(0x8000)
+> +#define GH_HYPERCALL_MSGQ_SEND			GH_HYPERCALL(0x801B)
+> +#define GH_HYPERCALL_MSGQ_RECV			GH_HYPERCALL(0x801C)
+>   
+>   /**
+>    * gh_hypercall_hyp_identify() - Returns build information and feature flags
+> @@ -57,5 +59,35 @@ void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identi
+>   }
+>   EXPORT_SYMBOL_GPL(gh_hypercall_hyp_identify);
+>   
+> +enum gh_error gh_hypercall_msgq_send(u64 capid, size_t size, uintptr_t buff, int tx_flags,
+> +					bool *ready)
 > +{
 > +	struct arm_smccc_res res;
 > +
-> +	arm_smccc_1_1_hvc(GH_HYPERCALL_HYP_IDENTIFY, &res);
+> +	arm_smccc_1_1_hvc(GH_HYPERCALL_MSGQ_SEND, capid, size, buff, tx_flags, 0, &res);
 > +
-> +	hyp_identity->api_info = res.a0;
-> +	hyp_identity->flags[0] = res.a1;
-> +	hyp_identity->flags[1] = res.a2;
-> +	hyp_identity->flags[2] = res.a3;
+> +	if (res.a0 == GH_ERROR_OK)
+> +		*ready = res.a1;
+> +
+> +	return res.a0;
 > +}
-> +EXPORT_SYMBOL_GPL(gh_hypercall_hyp_identify);
+> +EXPORT_SYMBOL_GPL(gh_hypercall_msgq_send);
 > +
-> +MODULE_LICENSE("GPL");
-> +MODULE_DESCRIPTION("Gunyah Hypervisor Hypercalls");
-> diff --git a/drivers/virt/Kconfig b/drivers/virt/Kconfig
-> index f79ab13a5c28..85bd6626ffc9 100644
-> --- a/drivers/virt/Kconfig
-> +++ b/drivers/virt/Kconfig
-> @@ -54,4 +54,6 @@ source "drivers/virt/coco/sev-guest/Kconfig"
->   
->   source "drivers/virt/coco/tdx-guest/Kconfig"
->   
-> +source "drivers/virt/gunyah/Kconfig"
+> +enum gh_error gh_hypercall_msgq_recv(u64 capid, uintptr_t buff, size_t size, size_t *recv_size,
+> +					bool *ready)
+> +{
+> +	struct arm_smccc_res res;
 > +
->   endif
-> diff --git a/drivers/virt/gunyah/Kconfig b/drivers/virt/gunyah/Kconfig
-> new file mode 100644
-> index 000000000000..1a737694c333
-> --- /dev/null
-> +++ b/drivers/virt/gunyah/Kconfig
-> @@ -0,0 +1,13 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
+> +	arm_smccc_1_1_hvc(GH_HYPERCALL_MSGQ_RECV, capid, buff, size, 0, &res);
 > +
-> +config GUNYAH
-> +	tristate "Gunyah Virtualization drivers"
-> +	depends on ARM64
-> +	depends on MAILBOX
-> +	help
-> +	  The Gunyah drivers are the helper interfaces that run in a guest VM
-> +	  such as basic inter-VM IPC and signaling mechanisms, and higher level
-> +	  services such as memory/device sharing, IRQ sharing, and so on.
+> +	if (res.a0 == GH_ERROR_OK) {
+> +		*recv_size = res.a1;
+
+Is there any chance the 64-bit size is incompatible
+with size_t?  (Too big?)
+
+> +		*ready = res.a2;
+
+		*ready = !!res.a2;
+
+> +	}
 > +
-> +	  Say Y/M here to enable the drivers needed to interact in a Gunyah
-> +	  virtual environment.
+> +	return res.a0;
+> +}
+> +EXPORT_SYMBOL_GPL(gh_hypercall_msgq_recv);
+> +
+>   MODULE_LICENSE("GPL");
+>   MODULE_DESCRIPTION("Gunyah Hypervisor Hypercalls");
 > diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
-> index 59ef4c735ae8..3fef2854c5e1 100644
+> index 3fef2854c5e1..cb6df4eec5c2 100644
 > --- a/include/linux/gunyah.h
 > +++ b/include/linux/gunyah.h
-> @@ -6,8 +6,10 @@
->   #ifndef _LINUX_GUNYAH_H
->   #define _LINUX_GUNYAH_H
+> @@ -112,4 +112,11 @@ struct gh_hypercall_hyp_identify_resp {
 >   
-> +#include <linux/bitfield.h>
->   #include <linux/errno.h>
->   #include <linux/limits.h>
-> +#include <linux/types.h>
+>   void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity);
 >   
->   /******************************************************************************/
->   /* Common arch-independent definitions for Gunyah hypercalls                  */
-> @@ -79,4 +81,35 @@ static inline int gh_remap_error(enum gh_error gh_error)
->   	}
->   }
->   
-> +enum gh_api_feature {
-> +	GH_API_FEATURE_DOORBELL,
-> +	GH_API_FEATURE_MSGQUEUE,
-> +	GH_API_FEATURE_VCPU,
-> +	GH_API_FEATURE_MEMEXTENT,
-> +};
-
-Can't you reuse these symbols, so that the same set
-represents the feature and the identify response?
-
-I'm not sure what a good naming scheme would be, but
-you could easily do:
-enum gh_api_feature {
-	GH_FEATURE_DOORBELL	= 1,
-	GH_FEATURE_MSGQUEUE	= 2,
-	GH_FEATURE_VCPU		= 5,
-	GH_FEATURE_MEMEXTENT	= 6,
-};
-
-And then you could do:
-
-bool gh_api_has_feature(enum gh_api_feature feature)
-{
-         switch (feature) {
-         case GH_FEATURE_DOORBELL:
-	case GH_FEATURES_MSGQUEUE:
-	case GH_FEATURE_VCPU:
-	case GH_FEATURE_MEMEXTENT:
-		return !!(gunyah_api.flags[0] & BIT_ULL(feature));
-
-	default:
-		return false;
-	}
-}
-
+> +#define GH_HYPERCALL_MSGQ_TX_FLAGS_PUSH		BIT(0)
 > +
-> +bool arch_is_gunyah_guest(void);
-> +
-> +u16 gh_api_version(void);
-> +bool gh_api_has_feature(enum gh_api_feature feature);
-> +
-> +#define GUNYAH_API_V1			1
-> +
+> +enum gh_error gh_hypercall_msgq_send(u64 capid, size_t size, uintptr_t buff, int tx_flags,
+> +					bool *ready);
 
-Rather than _INFO_ here, maybe _IDENTIFY_?
+Why uintptr_t?  Why not just pass a host pointer (void *)
+and do whatever conversion is necessary inside the function?
 
-Why is "API_" needed in these symbol names?
+					-Alex
 
-> +#define GH_API_INFO_API_VERSION_MASK	GENMASK_ULL(13, 0)
-> +#define GH_API_INFO_BIG_ENDIAN		BIT_ULL(14)
-> +#define GH_API_INFO_IS_64BIT		BIT_ULL(15)
-> +#define GH_API_INFO_VARIANT_MASK	GENMASK_ULL(63, 56)
-> +
-> +#define GH_IDENTIFY_DOORBELL			BIT_ULL(1)
-> +#define GH_IDENTIFY_MSGQUEUE			BIT_ULL(2)
-> +#define GH_IDENTIFY_VCPU			BIT_ULL(5)
-> +#define GH_IDENTIFY_MEMEXTENT			BIT_ULL(6)
-> +
-> +struct gh_hypercall_hyp_identify_resp {
-> +	u64 api_info;
-> +	u64 flags[3];
-> +};
-> +
-> +void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity);
-
-Since this is a user space API, you *could* consider having
-this function return an int.  Just in case there's a future
-reason that a failure could occur, or that you want to
-supply some other information.  If this truly doesn't make
-sense, it's fine as-is...
-
+> +enum gh_error gh_hypercall_msgq_recv(u64 capid, uintptr_t buff, size_t size, size_t *recv_size,
+> +					bool *ready);
 > +
 >   #endif
 
