@@ -2,213 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4213F6A21F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 20:01:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B30A56A2217
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 20:07:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229957AbjBXTBz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 14:01:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57532 "EHLO
+        id S230020AbjBXTHS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 14:07:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229560AbjBXTBt (ORCPT
+        with ESMTP id S230029AbjBXTHO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 14:01:49 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0992F1B2D2;
-        Fri, 24 Feb 2023 11:01:47 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31OIBa2Q005341;
-        Fri, 24 Feb 2023 19:01:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=piuuc2wyWBVCiJ95WfQWMKtEKTQoo3gZy+3qcnD1EOU=;
- b=hvCpaE1fXHckVZaIQ7v7336sj0hG9OvOYaI6JrPkuRJTl8WL73hUlM8dlTNyQN+XJ86g
- LCQjV1DsfbXId4t648c1ViGKrSEkNLeuDjHRsV3m6uMo+gcMjR4nh7ugc8xoEjHHaqQ8
- z1jsCfWZ8DUcwnCZUuBlQGdl/T2/aW4awm07+Q9nR/tw2DJ0pg+vpgoaU66zGjxB8VBo
- Y+Wy8E1euWzS6iyqrjMHd5fMOgZ2OSFhIVNlKg6GQG2xhfMPsmJl3sMpQVOQxTN159L7
- TLe0Q9ypgIrvQXjv1ZptfukghtV5SrPcYvPgbFSCY53O8dOe0OfTsaYDkuKJSPBlap3U tA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ny05mrk41-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 24 Feb 2023 19:01:40 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31OJ1eM7004179
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 24 Feb 2023 19:01:40 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Fri, 24 Feb 2023 11:01:39 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v1 2/2] drm/msm/dsi: use new dpu_dsc_populate_dsc_config()
-Date:   Fri, 24 Feb 2023 11:01:27 -0800
-Message-ID: <1677265287-7765-3-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1677265287-7765-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1677265287-7765-1-git-send-email-quic_khsieh@quicinc.com>
+        Fri, 24 Feb 2023 14:07:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5590D2310E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 11:06:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1677265581;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=TO32MmHRC5X6hVdeytKpEjQuFgiB4c62vSXkbsV3be0=;
+        b=eEUhZWsIJyLEU6EN9L4oxw6Kses9zRKEgVQ9dMahLM2P7EsZpDPkWCbmdIZnSTTQ8fA0cV
+        DFKWJN0RpF2LsxxTqbbSjgvtAZLKOcdSwge/8W0wwFfkaw6Cldwvy8dYpSaqMNY33CEd1s
+        lTZ0ByWAAnmLb50/mNk+N593nDQaylA=
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-620-dq_AIw4DOESJJvMWtx5K6g-1; Fri, 24 Feb 2023 14:06:11 -0500
+X-MC-Unique: dq_AIw4DOESJJvMWtx5K6g-1
+Received: by mail-io1-f71.google.com with SMTP id e4-20020a056602158400b0073529b4aeaaso8953921iow.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 11:06:11 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TO32MmHRC5X6hVdeytKpEjQuFgiB4c62vSXkbsV3be0=;
+        b=sqiSJCoYziXmMW7I3moYThauXV7crMCgofaAyczQ8DofP5y9HwKrnI9T9ZthMVoj8D
+         tWrSdRAu48CR96jb60tDw1O4lFW4a8dtEFdLqFPJMTKONe5Yk2dg3IFC46jmLb7ngK4f
+         Amw3n1RbSzmOy5ME3uU5dGFBwStUWYi6Q6V3ko3qsp2idj2AmqpCwjaKd8ots9/WGp6O
+         oMlFNtsjxhyzpIuf4Gch2FiOsjyHqZ0lt27ZUZU/UVwCk2FMD1iNGGOEv0YUyfumJZLI
+         OMIh7pbQhMD76THqUfoAIpCwvdWbh+MWmLp7jT/n2qIC9MU82C3nE51cyDXBHuUdJEzI
+         xlrg==
+X-Gm-Message-State: AO0yUKVD9xINMgwpAKlsB1IaZ2c5BNz2nUAMxz4lNiNCoWDhHMLjIQ7k
+        gKyZP4INWUX7NvF47KMdDDjCM/Aj5cuo/X7a9wTGGdmDjbgVpBNi6IQa2dONL0nhQf6XtDNgDJw
+        73ejjuBoCX1IpvxQTMmphI7VuYg==
+X-Received: by 2002:a05:6602:200f:b0:74c:bc54:def6 with SMTP id y15-20020a056602200f00b0074cbc54def6mr790444iod.16.1677265571054;
+        Fri, 24 Feb 2023 11:06:11 -0800 (PST)
+X-Google-Smtp-Source: AK7set9/Pv5CyL/4mD4A9Y4Q/LVOJsbK7o9jmpBuvUza9YaJUBhEetobrRKdqPedvvHaEaB9J1UmPg==
+X-Received: by 2002:a05:6602:200f:b0:74c:bc54:def6 with SMTP id y15-20020a056602200f00b0074cbc54def6mr790426iod.16.1677265570885;
+        Fri, 24 Feb 2023 11:06:10 -0800 (PST)
+Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id l5-20020a6b7b05000000b0073f8a470bacsm24221iop.16.2023.02.24.11.06.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Feb 2023 11:06:09 -0800 (PST)
+Date:   Fri, 24 Feb 2023 14:06:07 -0500
+From:   Brian Masney <bmasney@redhat.com>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        catalin.marinas@arm.com, will@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [RFC PATCH 0/6] Add basic Minidump kernel driver support
+Message-ID: <Y/kKn9tnvSQ2Pacn@x1>
+References: <1676978713-7394-1-git-send-email-quic_mojha@quicinc.com>
+ <Y/deHzijzvuvCJ2M@x1>
+ <47542dbb-8cf3-6eae-a38e-910d38bd960b@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jwdPOz1m8JSMxdO8fv0NnYphax4qE1zv
-X-Proofpoint-ORIG-GUID: jwdPOz1m8JSMxdO8fv0NnYphax4qE1zv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-24_14,2023-02-24_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
- priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0 mlxscore=0
- spamscore=0 impostorscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302240151
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <47542dbb-8cf3-6eae-a38e-910d38bd960b@quicinc.com>
+User-Agent: Mutt/2.2.7 (2022-08-07)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-use new introduced dpu_dsc_populate_dsc_config() to calculate
-and populate drm_dsc_info instead of hard code value.
+Hi Mukesh,
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 78 ++++++--------------------------------
- 1 file changed, 12 insertions(+), 66 deletions(-)
+On Fri, Feb 24, 2023 at 04:10:42PM +0530, Mukesh Ojha wrote:
+> On 2/23/2023 6:07 PM, Brian Masney wrote:
+> > I'd like to test this series plus your series that sets the multiple
+> > download modes.
+> 
+> Sure, you are welcome, but for that you need a device running with Qualcomm
+> SoC and if it has a upstream support.
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 31ad193..5f3f84f 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-  * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2023. Qualcomm Innovation Center, Inc. All rights reserved
-  */
- 
- #include <linux/clk.h>
-@@ -21,7 +22,6 @@
- 
- #include <video/mipi_display.h>
- 
--#include <drm/display/drm_dsc_helper.h>
- #include <drm/drm_of.h>
- 
- #include "dsi.h"
-@@ -31,6 +31,7 @@
- #include "msm_kms.h"
- #include "msm_gem.h"
- #include "phy/dsi_phy.h"
-+#include "dpu_dsc_helper.h"
- 
- #define DSI_RESET_TOGGLE_DELAY_MS 20
- 
-@@ -1819,29 +1820,8 @@ static int dsi_host_parse_lane_data(struct msm_dsi_host *msm_host,
- 	return -EINVAL;
- }
- 
--static u32 dsi_dsc_rc_buf_thresh[DSC_NUM_BUF_RANGES - 1] = {
--	0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54, 0x62,
--	0x69, 0x70, 0x77, 0x79, 0x7b, 0x7d, 0x7e
--};
--
--/* only 8bpc, 8bpp added */
--static char min_qp[DSC_NUM_BUF_RANGES] = {
--	0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 7, 13
--};
--
--static char max_qp[DSC_NUM_BUF_RANGES] = {
--	4, 4, 5, 6, 7, 7, 7, 8, 9, 10, 11, 12, 13, 13, 15
--};
--
--static char bpg_offset[DSC_NUM_BUF_RANGES] = {
--	2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
--};
--
- static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc_config *dsc)
- {
--	int i;
--	u16 bpp = dsc->bits_per_pixel >> 4;
--
- 	if (dsc->bits_per_pixel & 0xf) {
- 		DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support fractional bits_per_pixel\n");
- 		return -EINVAL;
-@@ -1852,50 +1832,16 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
- 		return -EOPNOTSUPP;
- 	}
- 
--	dsc->rc_model_size = 8192;
--	dsc->first_line_bpg_offset = 12;
--	dsc->rc_edge_factor = 6;
--	dsc->rc_tgt_offset_high = 3;
--	dsc->rc_tgt_offset_low = 3;
--	dsc->simple_422 = 0;
--	dsc->convert_rgb = 1;
--	dsc->vbr_enable = 0;
--
--	/* handle only bpp = bpc = 8 */
--	for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++)
--		dsc->rc_buf_thresh[i] = dsi_dsc_rc_buf_thresh[i];
--
--	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
--		dsc->rc_range_params[i].range_min_qp = min_qp[i];
--		dsc->rc_range_params[i].range_max_qp = max_qp[i];
--		/*
--		 * Range BPG Offset contains two's-complement signed values that fill
--		 * 8 bits, yet the registers and DCS PPS field are only 6 bits wide.
--		 */
--		dsc->rc_range_params[i].range_bpg_offset = bpg_offset[i] & DSC_RANGE_BPG_OFFSET_MASK;
--	}
--
--	dsc->initial_offset = 6144;		/* Not bpp 12 */
--	if (bpp != 8)
--		dsc->initial_offset = 2048;	/* bpp = 12 */
--
--	if (dsc->bits_per_component <= 10)
--		dsc->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
--	else
--		dsc->mux_word_size = DSC_MUX_WORD_SIZE_12_BPC;
--
--	dsc->initial_xmit_delay = 512;
--	dsc->initial_scale_value = 32;
--	dsc->first_line_bpg_offset = 12;
--	dsc->line_buf_depth = dsc->bits_per_component + 1;
--
--	/* bpc 8 */
--	dsc->flatness_min_qp = 3;
--	dsc->flatness_max_qp = 12;
--	dsc->rc_quant_incr_limit0 = 11;
--	dsc->rc_quant_incr_limit1 = 11;
--
--	return drm_dsc_compute_rc_parameters(dsc);
-+	/*
-+	 * NOTE:
-+	 * dsc->dsc_version_major, dsc->dsc_version_minor
-+	 * dsc->bits_per_pixel,
-+	 * dsc->bits_per_component,
-+	 * dsc->native_422, dsc->native_420
-+	 *
-+	 * above parameters must be populated
-+	 */
-+	return dpu_dsc_populate_dsc_config(dsc, 0);
- }
- 
- static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+I will be testing this series on a sa8540p (QDrive3 Automotive
+Development Board), which has the sc8280xp SoC with good upstream
+support. This is also the same board that I have a reliable way to
+make the board crash due to a known firmware bug.
+
+> Also, testing of this patch needs some minimal out of tree patches and
+> i can help you with that.
+
+Yup, that's fine. Hopefully we can also work to get those dependencies
+merged upstream as well.
+
+Brian
 
