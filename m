@@ -2,66 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 138596A1405
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 00:55:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A5DD6A1429
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 01:09:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229640AbjBWXzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Feb 2023 18:55:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39006 "EHLO
+        id S229529AbjBXAJV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Feb 2023 19:09:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229631AbjBWXzK (ORCPT
+        with ESMTP id S229495AbjBXAJU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Feb 2023 18:55:10 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCAC45BB80
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 15:55:07 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id qa18-20020a17090b4fd200b0023750b675f5so1016650pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 15:55:07 -0800 (PST)
+        Thu, 23 Feb 2023 19:09:20 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 625A619F26
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 16:09:16 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id m3-20020a17090ade0300b00229eec90a7fso5325647pjv.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 16:09:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WtTBZYOExvc5n8giROfO1dPxIyNM2H7rqatYfqD4Z2M=;
-        b=RFZBBqytynmIbxtT/qDXwgRBwOK9Gk56bsvh9xmjA7Yxedl+RTlB3fkZ0VUkHaq1JA
-         +ZP42NGKrGrdjOJ+Di9kpP6KMRoX7SgtXO5fBDqNZsJjTfRt8YuEyilNutNlzp+V1wZR
-         RthU6FPY7Rj9T57Ym0+vPebj2oImXwoWWlefcuv1mbqUPhHjgY+n8UhAn5D8YUJtU/h+
-         H6/ib1PjFoX4R7axaUlmlBYu1KJECPV7dgJvu/HJFwlsACWNaB2FEXR3mi6nwTYrYwfX
-         xKGvsX5nx6i137TdhNQWIUqtGOBx7jIT+E8BtipzlLkuYUbhNecH/kLTyFYQ+pgw127G
-         mLxg==
+        bh=ccCPNE0dRKdn3JLZtkA6wCbsKjwclr4fc3XDhVbkgLo=;
+        b=nHqpFvKbKdvofrxGmm+RSs6Q5fKLZ4vSN9y/VSyKTTCS9QA+Licsnf0zajAgsMvSyu
+         x+8cCaA7IVUEApOk5gX4oMCM9hIjIPy9Ikp6u7WDgcKQj32Oip2mrvMAOm/dx1HMBl1C
+         qTwyiGVBzMocIe6s7O82OJNRhPQTAH3DFPOdSPv5r1zZsJBGxwHgl37SKnAlG09bqJF9
+         TgxttzvxKH6mE9FYTCy6+GIzFHCXuNpuaU6PAv8AYtbdGIQHqaCFfEV9vX2MqalYHKvg
+         mIDyfF4S9QNifKrCpo07uYklfPy8UmSSMDzu/Qhp5Qy8kcFumZ1lCLKfDWmusxaqQlAJ
+         D5cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WtTBZYOExvc5n8giROfO1dPxIyNM2H7rqatYfqD4Z2M=;
-        b=DxF1lG9vnikonnqk1JyCK5V9V1piRi2dfdfOZnnCjMao1ePG76fb37tzMMfHOZeOw3
-         YsbFGHnoEBhFc28oyxIO7RqTwXqxuEM2iWM3Vh8S0wRAbm/57zqTQcOPxD+tvmzNEc9k
-         97Ejcma4rbFr5JMH3zWDc0guizoVnuSjIdOCb/MKeIC0MxB3VFH2TwncOsmBcsFR//Iy
-         3S0DxeKarMjZb3xZ9eMeKxWLL2sYRIdWAcTbvGnKSQZ4mY9VwI9zoLBnUGC8CBS97RCK
-         0vWA1NGyiJpnNRrejjwjUsNFY6Q9lUVCwq2yW05GUUILzZEUiWTu07ocM3Km1LB8H2vA
-         N2fQ==
-X-Gm-Message-State: AO0yUKUBNujnRjEhmQyiVx96vweHtiYdthgYErsQoNDFycEH9PGmjdAy
-        KshtKwdpL/Um/n+w8YOdAQZs7w==
-X-Google-Smtp-Source: AK7set+s6o8UwSQnW1YrqNF6rOUbpd4d9XZVdYd+0rm0pY0ufGNSxdV/Kein2zFpBdyXfPXRVk+L1g==
-X-Received: by 2002:a17:902:ec92:b0:19a:eef0:3392 with SMTP id x18-20020a170902ec9200b0019aeef03392mr17465284plg.43.1677196507180;
-        Thu, 23 Feb 2023 15:55:07 -0800 (PST)
+        bh=ccCPNE0dRKdn3JLZtkA6wCbsKjwclr4fc3XDhVbkgLo=;
+        b=zGA1sQABhbx0G1vDbkwXMm6GTm6IheCSUY3a0AscW2suxi6XVyrXEl7et98Ba853Mh
+         StHH8Y11gIRL2DZAPOmwJadjR0TubTqTHWxFe6zJA9JeV9PpNLEvk/Dv34TkILyyaEFU
+         G2oFfuDJGnTjCbs1QOQils2JMmYjcmNSi8LX5ZtkGJXu7AsCreCyuh4imH7/4WEO4ItE
+         IxjnDXANT/zcFewlZS90zx1lcKOy0KvrC51L06cB8awrmk3dan8oMKRdGmGLB9f6pc/r
+         mXFTyAdjYon4XO/z1mBRaaNQQblgs9JtN+Rf2GOcAL4WvabcG+mivZQ/EjcMrpgdcq42
+         gRFQ==
+X-Gm-Message-State: AO0yUKVXp2fgru53XvOqsOFJBKFa/FPGPqrn99bXaRa5FCqZ5fLT5THJ
+        4p8OKqdfPPvbZULXUnyT65gC1g==
+X-Google-Smtp-Source: AK7set/HnrMWRi5l/nSGXUaL8JJ1iDLJnBnX2j0CDyp5hfge20IJFbzCBCdSoKyNngrhY9QQqcNYRg==
+X-Received: by 2002:a17:903:2441:b0:196:5bac:e319 with SMTP id l1-20020a170903244100b001965bace319mr16426552pls.35.1677197355664;
+        Thu, 23 Feb 2023 16:09:15 -0800 (PST)
 Received: from [10.211.55.3] (c-73-221-130-71.hsd1.wa.comcast.net. [73.221.130.71])
-        by smtp.gmail.com with ESMTPSA id i3-20020a170902c28300b0019460ac7c6asm2054438pld.283.2023.02.23.15.55.05
+        by smtp.gmail.com with ESMTPSA id t18-20020a170902d21200b0019337bf957dsm8692210ply.296.2023.02.23.16.09.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 15:55:06 -0800 (PST)
-Message-ID: <a6f8c339-c126-dded-60fe-8cd9febb55af@linaro.org>
-Date:   Thu, 23 Feb 2023 17:55:05 -0600
+        Thu, 23 Feb 2023 16:09:14 -0800 (PST)
+Message-ID: <4eb2e494-d987-5eb7-3513-be58eb87c9af@linaro.org>
+Date:   Thu, 23 Feb 2023 18:09:12 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v10 17/26] docs: gunyah: Document Gunyah VM Manager
+Subject: Re: [PATCH v10 04/26] virt: gunyah: Add hypercalls to identify Gunyah
 Content-Language: en-US
 To:     Elliot Berman <quic_eberman@quicinc.com>,
         Alex Elder <elder@linaro.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
 Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
         Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
@@ -73,16 +74,16 @@ Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
         Jassi Brar <jassisinghbrar@gmail.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
 References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212506.3320728-1-quic_eberman@quicinc.com>
+ <20230214211229.3239350-5-quic_eberman@quicinc.com>
 From:   Alex Elder <alex.elder@linaro.org>
-In-Reply-To: <20230214212506.3320728-1-quic_eberman@quicinc.com>
+In-Reply-To: <20230214211229.3239350-5-quic_eberman@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -95,172 +96,242 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/14/23 3:25 PM, Elliot Berman wrote:
+On 2/14/23 3:12 PM, Elliot Berman wrote:
+> Add hypercalls to identify when Linux is running a virtual machine under
+> Gunyah.
 > 
-> Document the ioctls and usage of Gunyah VM Manager driver.
+> There are two calls to help identify Gunyah:
+> 
+> 1. gh_hypercall_get_uid() returns a UID when running under a Gunyah
+>     hypervisor.
+> 2. gh_hypercall_hyp_identify() returns build information and a set of
+>     feature flags that are supported by Gunyah.
 > 
 > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->   Documentation/virt/gunyah/index.rst      |   1 +
->   Documentation/virt/gunyah/vm-manager.rst | 106 +++++++++++++++++++++++
->   2 files changed, 107 insertions(+)
->   create mode 100644 Documentation/virt/gunyah/vm-manager.rst
+>   arch/arm64/Kbuild                    |  1 +
+>   arch/arm64/gunyah/Makefile           |  3 ++
+>   arch/arm64/gunyah/gunyah_hypercall.c | 61 ++++++++++++++++++++++++++++
+>   drivers/virt/Kconfig                 |  2 +
+>   drivers/virt/gunyah/Kconfig          | 13 ++++++
+>   include/linux/gunyah.h               | 33 +++++++++++++++
+>   6 files changed, 113 insertions(+)
+>   create mode 100644 arch/arm64/gunyah/Makefile
+>   create mode 100644 arch/arm64/gunyah/gunyah_hypercall.c
+>   create mode 100644 drivers/virt/gunyah/Kconfig
 > 
-> diff --git a/Documentation/virt/gunyah/index.rst b/Documentation/virt/gunyah/index.rst
-> index 45adbbc311db..b204b85e86db 100644
-> --- a/Documentation/virt/gunyah/index.rst
-> +++ b/Documentation/virt/gunyah/index.rst
-> @@ -7,6 +7,7 @@ Gunyah Hypervisor
->   .. toctree::
->      :maxdepth: 1
+> diff --git a/arch/arm64/Kbuild b/arch/arm64/Kbuild
+> index 5bfbf7d79c99..e4847ba0e3c9 100644
+> --- a/arch/arm64/Kbuild
+> +++ b/arch/arm64/Kbuild
+> @@ -3,6 +3,7 @@ obj-y			+= kernel/ mm/ net/
+>   obj-$(CONFIG_KVM)	+= kvm/
+>   obj-$(CONFIG_XEN)	+= xen/
+>   obj-$(subst m,y,$(CONFIG_HYPERV))	+= hyperv/
+> +obj-$(CONFIG_GUNYAH)	+= gunyah/
+>   obj-$(CONFIG_CRYPTO)	+= crypto/
 >   
-> +   vm-manager
->      message-queue
->   
->   Gunyah is a Type-1 hypervisor which is independent of any OS kernel, and runs in
-> diff --git a/Documentation/virt/gunyah/vm-manager.rst b/Documentation/virt/gunyah/vm-manager.rst
+>   # for cleaning
+> diff --git a/arch/arm64/gunyah/Makefile b/arch/arm64/gunyah/Makefile
 > new file mode 100644
-> index 000000000000..c0126cfeadc7
+> index 000000000000..84f1e38cafb1
 > --- /dev/null
-> +++ b/Documentation/virt/gunyah/vm-manager.rst
-> @@ -0,0 +1,106 @@
-> +.. SPDX-License-Identifier: GPL-2.0
+> +++ b/arch/arm64/gunyah/Makefile
+> @@ -0,0 +1,3 @@
+> +# SPDX-License-Identifier: GPL-2.0
 > +
-> +=======================
-> +Virtual Machine Manager
-> +=======================
+> +obj-$(CONFIG_GUNYAH) += gunyah_hypercall.o
+> diff --git a/arch/arm64/gunyah/gunyah_hypercall.c b/arch/arm64/gunyah/gunyah_hypercall.c
+> new file mode 100644
+> index 000000000000..f30d06ee80cf
+> --- /dev/null
+> +++ b/arch/arm64/gunyah/gunyah_hypercall.c
+> @@ -0,0 +1,61 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
 > +
-> +The Gunyah Virtual Machine Manager is a Linux driver to support launching
-> +virtual machines using Gunyah. It presently supports launching non-proxy
-> +scheduled Linux-like virtual machines.
+> +#include <linux/arm-smccc.h>
+> +#include <linux/module.h>
+> +#include <linux/gunyah.h>
 > +
-> +Except for some basic information about the location of initial binaries,
-> +most of the configuration about a Gunyah virtual machine is described in the
-> +VM's devicetree. The devicetree is generated by userspace. Interacting with the
-> +virtual machine is still done via the kernel and VM configuration requires some
-> +of the corresponding functionality to be set up in the kernel. For instance,
-> +sharing userspace memory with a VM is done via the GH_VM_SET_USER_MEM_REGION
-> +ioctl. The VM itself is configured to use the memory region via the
-> +devicetree.
-> +
-> +Sample Userspace VMM
-> +====================
-> +
-> +A sample userspace VMM is included in samples/gunyah/ along with a minimal
-> +devicetree that can be used to launch a VM. To build this sample, enable
-> +CONFIG_SAMPLE_GUNYAH.
-> +
-> +IOCTLs and userspace VMM flows
-> +==============================
-> +
-> +The kernel exposes a char device interface at /dev/gunyah.
-> +
-> +To create a VM, use the GH_CREATE_VM ioctl. A successful call will return a
-> +"Gunyah VM" file descriptor.
-> +
-> +/dev/gunyah API Descriptions
-> +----------------------------
-> +
-> +GH_CREATE_VM
-> +~~~~~~~~~~~~
-> +
-> +Creates a Gunyah VM. The argument is reserved for future use and must be 0.
+> +static const uint32_t gunyah_known_uuids[][4] = {
+> +	{0x19bd54bd, 0x0b37571b, 0x946f609b, 0x54539de6}, /* QC_HYP (Qualcomm's build) */
+> +	{0x673d5f14, 0x9265ce36, 0xa4535fdb, 0xc1d58fcd}, /* GUNYAH (open source build) */
+> +};
 
-I wouldn't say it "must be zero".  Instead maybe say it is
-is currently ignored.
+Are these really UUIDs? Standard ones?  Define them using
+the standard Linux way of doing it.  See <linux/uuid.h>.
 
 > +
-> +Gunyah VM API Descriptions
-> +--------------------------
+> +bool arch_is_gunyah_guest(void)
+> +{
+> +	struct arm_smccc_res res;
+> +	u32 uid[4];
+> +	int i;
 > +
-> +GH_VM_SET_USER_MEM_REGION
-> +~~~~~~~~~~~~~~~~~~~~~~~~~
+> +	arm_smccc_1_1_hvc(ARM_SMCCC_VENDOR_HYP_CALL_UID_FUNC_ID, &res);
 > +
-> +::
+> +	uid[0] = lower_32_bits(res.a0);
+> +	uid[1] = lower_32_bits(res.a1);
+> +	uid[2] = lower_32_bits(res.a2);
+> +	uid[3] = lower_32_bits(res.a3);
 > +
-> +  struct gh_userspace_memory_region {
-> +	__u32 label;
-> +	__u32 flags;
-> +	__u64 guest_phys_addr;
-> +	__u64 memory_size;
-> +	__u64 userspace_addr;
-> +  };
+> +	for (i = 0; i < ARRAY_SIZE(gunyah_known_uuids); i++)
+> +		if (!memcmp(uid, gunyah_known_uuids[i], sizeof(uid)))
+> +			break;
 > +
-> +This ioctl allows the user to create or delete a memory parcel for a guest
-> +virtual machine. Each memory region is uniquely identified by a label;
-> +attempting to create two regions with the same label is not allowed.
+> +	return i != ARRAY_SIZE(gunyah_known_uuids);
+> +}
+> +EXPORT_SYMBOL_GPL(arch_is_gunyah_guest);
+> +
+> +#define GH_HYPERCALL(fn)	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_64, \
+> +						   ARM_SMCCC_OWNER_VENDOR_HYP, \
+> +						   fn)
+> +
+> +#define GH_HYPERCALL_HYP_IDENTIFY		GH_HYPERCALL(0x8000)
+> +
+> +/**
+> + * gh_hypercall_hyp_identify() - Returns build information and feature flags
+> + *                               supported by Gunyah.
+> + * @hyp_identity: filled by the hypercall with the API info and feature flags.
+> + */
+> +void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity)
+> +{
+> +	struct arm_smccc_res res;
+> +
+> +	arm_smccc_1_1_hvc(GH_HYPERCALL_HYP_IDENTIFY, &res);
+> +
+> +	hyp_identity->api_info = res.a0;
+> +	hyp_identity->flags[0] = res.a1;
+> +	hyp_identity->flags[1] = res.a2;
+> +	hyp_identity->flags[2] = res.a3;
+> +}
+> +EXPORT_SYMBOL_GPL(gh_hypercall_hyp_identify);
+> +
+> +MODULE_LICENSE("GPL");
+> +MODULE_DESCRIPTION("Gunyah Hypervisor Hypercalls");
+> diff --git a/drivers/virt/Kconfig b/drivers/virt/Kconfig
+> index f79ab13a5c28..85bd6626ffc9 100644
+> --- a/drivers/virt/Kconfig
+> +++ b/drivers/virt/Kconfig
+> @@ -54,4 +54,6 @@ source "drivers/virt/coco/sev-guest/Kconfig"
+>   
+>   source "drivers/virt/coco/tdx-guest/Kconfig"
+>   
+> +source "drivers/virt/gunyah/Kconfig"
+> +
+>   endif
+> diff --git a/drivers/virt/gunyah/Kconfig b/drivers/virt/gunyah/Kconfig
+> new file mode 100644
+> index 000000000000..1a737694c333
+> --- /dev/null
+> +++ b/drivers/virt/gunyah/Kconfig
+> @@ -0,0 +1,13 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +
+> +config GUNYAH
+> +	tristate "Gunyah Virtualization drivers"
+> +	depends on ARM64
+> +	depends on MAILBOX
+> +	help
+> +	  The Gunyah drivers are the helper interfaces that run in a guest VM
+> +	  such as basic inter-VM IPC and signaling mechanisms, and higher level
+> +	  services such as memory/device sharing, IRQ sharing, and so on.
+> +
+> +	  Say Y/M here to enable the drivers needed to interact in a Gunyah
+> +	  virtual environment.
+> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
+> index 59ef4c735ae8..3fef2854c5e1 100644
+> --- a/include/linux/gunyah.h
+> +++ b/include/linux/gunyah.h
+> @@ -6,8 +6,10 @@
+>   #ifndef _LINUX_GUNYAH_H
+>   #define _LINUX_GUNYAH_H
+>   
+> +#include <linux/bitfield.h>
+>   #include <linux/errno.h>
+>   #include <linux/limits.h>
+> +#include <linux/types.h>
+>   
+>   /******************************************************************************/
+>   /* Common arch-independent definitions for Gunyah hypercalls                  */
+> @@ -79,4 +81,35 @@ static inline int gh_remap_error(enum gh_error gh_error)
+>   	}
+>   }
+>   
+> +enum gh_api_feature {
+> +	GH_API_FEATURE_DOORBELL,
+> +	GH_API_FEATURE_MSGQUEUE,
+> +	GH_API_FEATURE_VCPU,
+> +	GH_API_FEATURE_MEMEXTENT,
+> +};
 
-Must the label be unique across a single instance of Gunyah (on
-a single physical machine)?  Or is it unique within a VM?  Or
-something else?  (It's not universally unique, right?)
+Can't you reuse these symbols, so that the same set
+represents the feature and the identify response?
+
+I'm not sure what a good naming scheme would be, but
+you could easily do:
+enum gh_api_feature {
+	GH_FEATURE_DOORBELL	= 1,
+	GH_FEATURE_MSGQUEUE	= 2,
+	GH_FEATURE_VCPU		= 5,
+	GH_FEATURE_MEMEXTENT	= 6,
+};
+
+And then you could do:
+
+bool gh_api_has_feature(enum gh_api_feature feature)
+{
+         switch (feature) {
+         case GH_FEATURE_DOORBELL:
+	case GH_FEATURES_MSGQUEUE:
+	case GH_FEATURE_VCPU:
+	case GH_FEATURE_MEMEXTENT:
+		return !!(gunyah_api.flags[0] & BIT_ULL(feature));
+
+	default:
+		return false;
+	}
+}
 
 > +
-> +While VMM is guest-agnostic and allows runtime addition of memory regions,
-> +Linux guest virtual machines do not support accepting memory regions at runtime.
-> +Thus, memory regions should be provided before starting the VM and the VM must
-> +be configured to accept these at boot-up.
+> +bool arch_is_gunyah_guest(void);
 > +
-> +The guest physical address is used by Linux kernel to check that the requested
-> +user regions do not overlap and to help find the corresponding memory region
-> +for calls like GH_VM_SET_DTB_CONFIG. It should be page aligned.
+> +u16 gh_api_version(void);
+> +bool gh_api_has_feature(enum gh_api_feature feature);
+> +
+> +#define GUNYAH_API_V1			1
+> +
 
-The physical address must be page aligned.  Can a page be anything
-other than 4096 bytes?
+Rather than _INFO_ here, maybe _IDENTIFY_?
 
-> +
-> +memory_size and userspace_addr should be page-aligned.
+Why is "API_" needed in these symbol names?
 
-Not should, must, right?  (The address isn't rounded down to a
-page boundary, for example.)
+> +#define GH_API_INFO_API_VERSION_MASK	GENMASK_ULL(13, 0)
+> +#define GH_API_INFO_BIG_ENDIAN		BIT_ULL(14)
+> +#define GH_API_INFO_IS_64BIT		BIT_ULL(15)
+> +#define GH_API_INFO_VARIANT_MASK	GENMASK_ULL(63, 56)
+> +
+> +#define GH_IDENTIFY_DOORBELL			BIT_ULL(1)
+> +#define GH_IDENTIFY_MSGQUEUE			BIT_ULL(2)
+> +#define GH_IDENTIFY_VCPU			BIT_ULL(5)
+> +#define GH_IDENTIFY_MEMEXTENT			BIT_ULL(6)
+> +
+> +struct gh_hypercall_hyp_identify_resp {
+> +	u64 api_info;
+> +	u64 flags[3];
+> +};
+> +
+> +void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity);
 
-> +
-> +The flags field of gh_userspace_memory_region accepts the following bits. All
-> +other bits must be 0 and are reserved for future use. The ioctl will return
-> +-EINVAL if an unsupported bit is detected.
-> +
-> +  - GH_MEM_ALLOW_READ/GH_MEM_ALLOW_WRITE/GH_MEM_ALLOW_EXEC sets read/write/exec
-> +    permissions for the guest, respectively.
-> +  - GH_MEM_LENT means that the memory will be unmapped from the host and be
-> +    unaccessible by the host while the guest has the region.
-> +
-> +To add a memory region, call GH_VM_SET_USER_MEM_REGION with fields set as
-> +described above.
-> +
-> +To delete a memory region, call GH_VM_SET_USER_MEM_REGION with label set to the
-> +desired region and memory_size set to 0.
-> +
-> +GH_VM_SET_DTB_CONFIG
-> +~~~~~~~~~~~~~~~~~~~~
-> +
-> +::
-> +
-> +  struct gh_vm_dtb_config {
-> +	__u64 gpa;
-
-What is "gpa"?  Guest physical address?  Gunyah pseudo address?
-Can this have a longer and more descriptive name please?
-
-> +	__u64 size;
-> +  };
-> +
-> +This ioctl sets the location of the VM's devicetree blob and is used by Gunyah
-> +Resource Manager to allocate resources. The guest physical memory should be part
-> +of the primary memory parcel provided to the VM prior to GH_VM_START.
-
-Any alignment constraints?  (If not, you could say "there are no
-alignment constraints on the address or size.")
+Since this is a user space API, you *could* consider having
+this function return an int.  Just in case there's a future
+reason that a failure could occur, or that you want to
+supply some other information.  If this truly doesn't make
+sense, it's fine as-is...
 
 > +
-> +GH_VM_START
-> +~~~~~~~~~~~
-> +
-> +This ioctl starts the VM.
+>   #endif
 
-Is there anything you can say about what gets returned for
-these (at least for significant cases, like permission
-problems or something)?
-
-Are IOCTLs the normal way for virtual machine mechanisms
-to set up things like this?  (Noob question.)
-
-					-Alex
