@@ -2,550 +2,609 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66FB96A23DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 22:36:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C96096A23FB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 22:57:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229542AbjBXVgb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 16:36:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57830 "EHLO
+        id S229558AbjBXV5X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 16:57:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbjBXVg3 (ORCPT
+        with ESMTP id S229488AbjBXV5W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 16:36:29 -0500
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5287719F24
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 13:36:27 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id e9so433649ljn.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 13:36:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=chW2sH/gJAtv0VgHpGdTehMYaBfqQmF+IkEl+pnB18E=;
-        b=MW2s77FgG8K4w/A9zQUgFkiKvFBw/lCGBTlOKcABDk+ZV+lMg0bx73LIcCVWhewdwV
-         AjyZ7YEbZkEHRGmsPeQhS4P5deYL2M4FQ4Cr8WsOi3tXb2wHFHlq17uERBkKKmOwQl8G
-         1+CMi+Khu8fiby2fbbK5hqQw9B9BsrFhdDm/0MMsatXY9txJ9cMvlllnHVTrfG35qW4i
-         z9sr9caIsi/O50MIORqqTFhnUCuzqvr766+eZy0PqXmvUXWfnAOna/FNoHDxeCySKJPT
-         Z7XAJC7cTGd7JvzWE/3Fec3fghlPA7g9VRPMfUEPQrK/At7+WceL1JQoigyfKJlHIYKG
-         5XTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=chW2sH/gJAtv0VgHpGdTehMYaBfqQmF+IkEl+pnB18E=;
-        b=i1WUd6ALPVcVy+QOBXkFDNhyQic1i43YgVXOWc7lvuRG8e+ZnJN7sVO+PE9HjbWqIm
-         +fMtVXjwTS833Rapxwkj9KXQ45+/+zRXujmAmb7fu2Xl/g2s0gsbaVmh1NLwtC9/uh4i
-         ZvVLAG9mmrC2Ngb9b8Z22zhiysPZrmTEglgePX3rfXbCQ0GwxP5sQR0RXFw4BG/nvq4p
-         kcJEZJCaX2KPryJSATLmm5szaSUlni9DdiZehntd8ERj6XW5fjx4UZ46RGqGFLHEb/IC
-         90ZmCSrDd7N4z6P6zSwEfbLTorEeoRyfuUBm1iO/u5Geb3Ntqd+uZpDt++Cev+WdBFxf
-         zjLA==
-X-Gm-Message-State: AO0yUKVez71ric1czuNVt1+0WrTGacoCKqHdm+gGyR+w/Xb4NNFUMOAx
-        zHCaKJgKR24u+/jjgmtg4oF5EA==
-X-Google-Smtp-Source: AK7set9sr/S30YDREz0zkmufGzYaW+YfuYTq7xmRz64mZqq0bHZMqbHFtNMynCf2RgEAKp9Efi+3ag==
-X-Received: by 2002:a2e:9857:0:b0:295:8c04:8205 with SMTP id e23-20020a2e9857000000b002958c048205mr5498434ljj.41.1677274585434;
-        Fri, 24 Feb 2023 13:36:25 -0800 (PST)
-Received: from [127.0.0.1] (85-76-97-202-nat.elisa-mobile.fi. [85.76.97.202])
-        by smtp.gmail.com with ESMTPSA id p17-20020a2ea4d1000000b00295733a3390sm9611ljm.101.2023.02.24.13.36.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Feb 2023 13:36:24 -0800 (PST)
-Date:   Fri, 24 Feb 2023 23:36:23 +0200
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org
-CC:     quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 1/2] drm/msm/dpu: add dsc helper functions
-User-Agent: K-9 Mail for Android
-In-Reply-To: <741be2a3-0208-2f40-eedf-d439c4e6795b@quicinc.com>
-References: <1677267647-28672-1-git-send-email-quic_khsieh@quicinc.com> <1677267647-28672-2-git-send-email-quic_khsieh@quicinc.com> <42b3c193-8897-cfe9-1cae-2f9a66f7983a@linaro.org> <741be2a3-0208-2f40-eedf-d439c4e6795b@quicinc.com>
-Message-ID: <F8A4FC18-C64E-4011-BC08-18EB3B95A357@linaro.org>
+        Fri, 24 Feb 2023 16:57:22 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A08F86DDA9;
+        Fri, 24 Feb 2023 13:57:20 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31OLJ1AF016297;
+        Fri, 24 Feb 2023 21:57:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=YUw/L9gsrEr5RcEvUFQnRKftnsC+eLWLBE1DlB1Htv4=;
+ b=moCcAUi2P86wvsHNvRfaUS5nzGZ3eNS8bEpoVIxkV9+eBwHPzFcb3PXh0O7e0lUXcG9j
+ VRojRlfAbK6DmmwBEIbxjf1oCX22aRHLOb+eo2Fu8e/IJZx5DKYi/ILi7pDYQK8/H+Vo
+ obC/WufvO8UfJRP4S1SE/zskfyZxrDBaYWVaYCaAeMnuLQ2Joip+kwccZPOpStM01YuY
+ VmEt4HdS8LI6yCgDXlylkg4QCNQdEEqu8pKTVrlt1v9xOM4RbAnIgoPJyZTyJcbLtyML
+ e1GjDSpFFu7VwBS+aSzwiTfkubNxGZncfIaCW7njCpb4UE/silke7qP3tkN9irlFkDtm 8g== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nxw3d9n3c-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Feb 2023 21:57:05 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31OLv4wT003203
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Feb 2023 21:57:04 GMT
+Received: from [10.110.9.108] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 24 Feb
+ 2023 13:57:02 -0800
+Message-ID: <a75480bf-4710-d833-8f3a-708f0cd6706e@quicinc.com>
+Date:   Fri, 24 Feb 2023 13:57:02 -0800
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v10 07/26] mailbox: Add Gunyah message queue mailbox
+Content-Language: en-US
+To:     Alex Elder <alex.elder@linaro.org>, Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Jassi Brar <jassisinghbrar@gmail.com>
+CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
+ <20230214212316.3309053-1-quic_eberman@quicinc.com>
+ <10343ac1-8350-5fc0-b358-8a1b7280afcc@linaro.org>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <10343ac1-8350-5fc0-b358-8a1b7280afcc@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: qxgLbwKr4Mxp9UJY3uso8wRyxXbh5eXc
+X-Proofpoint-ORIG-GUID: qxgLbwKr4Mxp9UJY3uso8wRyxXbh5eXc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-24_16,2023-02-24_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
+ suspectscore=0 bulkscore=0 impostorscore=0 mlxlogscore=616 malwarescore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302240175
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-24 =D1=84=D0=B5=D0=B2=D1=80=D0=B0=D0=BB=D1=8F 2023 =D0=B3=2E 23:23:03 GMT+0=
-2:00, Abhinav Kumar <quic_abhinavk@quicinc=2Ecom> =D0=BF=D0=B8=D1=88=D0=B5=
-=D1=82:
->
->
->On 2/24/2023 1:13 PM, Dmitry Baryshkov wrote:
->> On 24/02/2023 21:40, Kuogee Hsieh wrote:
->>> Add DSC helper functions based on DSC configuration profiles to produc=
-e
->>> DSC related runtime parameters through both table look up and runtime
->>> calculation to support DSC on DPU=2E
->>>=20
->>> There are 6 different DSC configuration profiles are supported current=
-ly=2E
->>> DSC configuration profiles are differiented by 5 keys, DSC version (V1=
-=2E1),
->>> chroma (444/422/420), colorspace (RGB/YUV), bpc(8/10),
->>> bpp (6/7/7=2E5/8/9/10/12/15) and SCR (0/1)=2E
->>>=20
->>> Only DSC version V1=2E1 added and V1=2E2 will be added later=2E
->>=20
->> These helpers should go to drivers/gpu/drm/display/drm_dsc_helper=2Ec
->> Also please check that they can be used for i915 or for amdgpu (ideally=
- for both of them)=2E
->>=20
->
->No, it cannot=2E So each DSC encoder parameter is calculated based on the=
- HW core which is being used=2E
->
->They all get packed to the same DSC structure which is the struct drm_dsc=
-_config but the way the parameters are computed is specific to the HW=2E
->
->This DPU file helper still uses the drm_dsc_helper's drm_dsc_compute_rc_p=
-arameters() like all other vendors do but the parameters themselves are ver=
-y HW specific and belong to each vendor's dir=2E
->
->This is not unique to MSM=2E
->
->Lets take a few other examples:
->
->AMD: https://gitlab=2Efreedesktop=2Eorg/drm/msm/-/blob/msm-next/drivers/g=
-pu/drm/amd/display/dc/dml/dsc/rc_calc_fpu=2Ec#L165
->
->i915: https://gitlab=2Efreedesktop=2Eorg/drm/msm/-/blob/msm-next/drivers/=
-gpu/drm/i915/display/intel_vdsc=2Ec#L379=20
-
-I checked several values here=2E Intel driver defines more bpc/bpp combina=
-tions, but the ones which are defined in intel_vdsc and in this patch seem =
-to match=2E If there are major differences there, please point me to the ex=
-act case=2E
-
-I remember that AMD driver might have different values=2E
 
 
->
->All vendors compute the values differently and eventually call drm_dsc_co=
-mpute_rc_parameters()
->
->> I didn't check the tables against the standard (or against the current =
-source code), will do that later=2E
->>=20
->>>=20
->>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc=2Ecom>
->>> ---
->>> =C2=A0 drivers/gpu/drm/msm/Makefile=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- |=C2=A0=C2=A0 1 +
->>> =C2=A0 drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper=2Ec | 209 ++++++++=
-+++++++++++++++++
->>> =C2=A0 drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper=2Eh |=C2=A0 34 +++=
-+
->>> =C2=A0 3 files changed, 244 insertions(+)
->>> =C2=A0 create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper=
-=2Ec
->>> =C2=A0 create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper=
-=2Eh
->>>=20
->>> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefi=
-le
->>> index 7274c412=2E=2E28cf52b 100644
->>> --- a/drivers/gpu/drm/msm/Makefile
->>> +++ b/drivers/gpu/drm/msm/Makefile
->>> @@ -65,6 +65,7 @@ msm-$(CONFIG_DRM_MSM_DPU) +=3D \
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 disp/dpu1/dpu_hw_catalog=2Eo \
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 disp/dpu1/dpu_hw_ctl=2Eo \
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 disp/dpu1/dpu_hw_dsc=2Eo \
->>> +=C2=A0=C2=A0=C2=A0 disp/dpu1/dpu_dsc_helper=2Eo \
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 disp/dpu1/dpu_hw_interrupts=2Eo \
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 disp/dpu1/dpu_hw_intf=2Eo \
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 disp/dpu1/dpu_hw_lm=2Eo \
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper=2Ec b/driver=
-s/gpu/drm/msm/disp/dpu1/dpu_dsc_helper=2Ec
->>> new file mode 100644
->>> index 00000000=2E=2E88207e9
->>> --- /dev/null
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper=2Ec
->>> @@ -0,0 +1,209 @@
->>> +// SPDX-License-Identifier: GPL-2=2E0-only
->>> +/*
->>> + * Copyright (c) 2023=2E Qualcomm Innovation Center, Inc=2E All right=
-s reserved
->>> + */
->>> +
->>> +#include <drm/display/drm_dsc_helper=2Eh>
->>> +#include "msm_drv=2Eh"
->>> +#include "dpu_kms=2Eh"
->>> +#include "dpu_hw_dsc=2Eh"
->>> +#include "dpu_dsc_helper=2Eh"
->>> +
->>> +
->>=20
->> Extra empty line
->>=20
->>> +#define DPU_DSC_PPS_SIZE=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 128
->>> +
->>> +enum dpu_dsc_ratio_type {
->>> +=C2=A0=C2=A0=C2=A0 DSC_V11_8BPC_8BPP,
->>> +=C2=A0=C2=A0=C2=A0 DSC_V11_10BPC_8BPP,
->>> +=C2=A0=C2=A0=C2=A0 DSC_V11_10BPC_10BPP,
->>> +=C2=A0=C2=A0=C2=A0 DSC_V11_SCR1_8BPC_8BPP,
->>> +=C2=A0=C2=A0=C2=A0 DSC_V11_SCR1_10BPC_8BPP,
->>> +=C2=A0=C2=A0=C2=A0 DSC_V11_SCR1_10BPC_10BPP,
->>> +=C2=A0=C2=A0=C2=A0 DSC_RATIO_TYPE_MAX
->>> +};
->>> +
->>> +
->>> +static u16 dpu_dsc_rc_buf_thresh[DSC_NUM_BUF_RANGES - 1] =3D {
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x0e, 0x1c, 0x2a, 0x38, 0x=
-46, 0x54,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x62, 0x69, 0x70, 0x77, 0x=
-79, 0x7b, 0x7d, 0x7e
->>=20
->> Weird indentation
->>=20
->>> +};
->>> +
->>> +/*
->>> + * Rate control - Min QP values for each ratio type in dpu_dsc_ratio_=
-type
->>> + */
->>> +static char dpu_dsc_rc_range_min_qp[DSC_RATIO_TYPE_MAX][DSC_NUM_BUF_R=
-ANGES] =3D {
->>> +=C2=A0=C2=A0=C2=A0 /* DSC v1=2E1 */
->>> +=C2=A0=C2=A0=C2=A0 {0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 7, 13},
->>> +=C2=A0=C2=A0=C2=A0 {0, 4, 5, 5, 7, 7, 7, 7, 7, 7, 9, 9, 9, 11, 17},
->>> +=C2=A0=C2=A0=C2=A0 {0, 4, 5, 6, 7, 7, 7, 7, 7, 7, 9, 9, 9, 11, 15},
->>> +=C2=A0=C2=A0=C2=A0 /* DSC v1=2E1 SCR and DSC v1=2E2 RGB 444 */
->>=20
->> What is SCR? Is there any reason to use older min/max Qp params instead=
- of always using the ones from the VESA-DSC-1=2E1 standard?
->>=20
->>> +=C2=A0=C2=A0=C2=A0 {0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 9, 12},
->>> +=C2=A0=C2=A0=C2=A0 {0, 4, 5, 5, 7, 7, 7, 7, 7, 7, 9, 9, 9, 13, 16},
->>> +=C2=A0=C2=A0=C2=A0 {0, 4, 5, 6, 7, 7, 7, 7, 7, 7, 9, 9, 9, 11, 15},
->>> +};
->>> +
->>> +/*
->>> + * Rate control - Max QP values for each ratio type in dpu_dsc_ratio_=
-type
->>> + */
->>> +static char dpu_dsc_rc_range_max_qp[DSC_RATIO_TYPE_MAX][DSC_NUM_BUF_R=
-ANGES] =3D {
->>> +=C2=A0=C2=A0=C2=A0 /* DSC v1=2E1 */
->>> +=C2=A0=C2=A0=C2=A0 {4, 4, 5, 6, 7, 7, 7, 8, 9, 10, 11, 12, 13, 13, 15=
-},
->>> +=C2=A0=C2=A0=C2=A0 {4, 8, 9, 10, 11, 11, 11, 12, 13, 14, 15, 16, 17, =
-17, 19},
->>> +=C2=A0=C2=A0=C2=A0 {7, 8, 9, 10, 11, 11, 11, 12, 13, 13, 14, 14, 15, =
-15, 16},
->>> +=C2=A0=C2=A0=C2=A0 /* DSC v1=2E1 SCR and DSC v1=2E2 RGB 444 */
->>> +=C2=A0=C2=A0=C2=A0 {4, 4, 5, 6, 7, 7, 7, 8, 9, 10, 10, 11, 11, 12, 13=
-},
->>> +=C2=A0=C2=A0=C2=A0 {8, 8, 9, 10, 11, 11, 11, 12, 13, 14, 14, 15, 15, =
-16, 17},
->>> +=C2=A0=C2=A0=C2=A0 {7, 8, 9, 10, 11, 11, 11, 12, 13, 13, 14, 14, 15, =
-15, 16},
->>> +};
->>> +
->>> +/*
->>> + * Rate control - bpg offset values for each ratio type in dpu_dsc_ra=
-tio_type
->>> + */
->>> +static char dpu_dsc_rc_range_bpg[DSC_RATIO_TYPE_MAX][DSC_NUM_BUF_RANG=
-ES] =3D {
->>> +=C2=A0=C2=A0=C2=A0 /* DSC v1=2E1 */
->>> +=C2=A0=C2=A0=C2=A0 {2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -=
-12, -12, -12},
->>> +=C2=A0=C2=A0=C2=A0 {2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -=
-12, -12, -12},
->>> +=C2=A0=C2=A0=C2=A0 {2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -10, -=
-12, -12, -12},
->>> +=C2=A0=C2=A0=C2=A0 /* DSC v1=2E1 SCR and DSC V1=2E2 RGB 444 */
->>> +=C2=A0=C2=A0=C2=A0 {2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -=
-12, -12, -12},
->>> +=C2=A0=C2=A0=C2=A0 {2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -=
-12, -12, -12},
->>> +=C2=A0=C2=A0=C2=A0 {2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -10, -=
-12, -12, -12},
->>> +};
->>> +
->>> +static struct dpu_dsc_rc_init_params_lut {
->>> +=C2=A0=C2=A0=C2=A0 u32 rc_quant_incr_limit0;
->>> +=C2=A0=C2=A0=C2=A0 u32 rc_quant_incr_limit1;
->>> +=C2=A0=C2=A0=C2=A0 u32 initial_fullness_offset;
->>> +=C2=A0=C2=A0=C2=A0 u32 initial_xmit_delay;
->>> +=C2=A0=C2=A0=C2=A0 u32 second_line_bpg_offset;
->>> +=C2=A0=C2=A0=C2=A0 u32 second_line_offset_adj;
->>> +=C2=A0=C2=A0=C2=A0 u32 flatness_min_qp;
->>> +=C2=A0=C2=A0=C2=A0 u32 flatness_max_qp;
->>> +}=C2=A0 dpu_dsc_rc_init_param_lut[] =3D {
->>> +=C2=A0=C2=A0=C2=A0 /* DSC v1=2E1 */
->>> +=C2=A0=C2=A0=C2=A0 {11, 11, 6144, 512, 0, 0, 3, 12}, /* DSC_V11_8BPC_=
-8BPP */
->>> +=C2=A0=C2=A0=C2=A0 {15, 15, 6144, 512, 0, 0, 7, 16}, /* DSC_V11_10BPC=
-_8BPP */
->>> +=C2=A0=C2=A0=C2=A0 {15, 15, 5632, 410, 0, 0, 7, 16}, /* DSC_V11_10BPC=
-_10BPP */
->>> +=C2=A0=C2=A0=C2=A0 /* DSC v1=2E1 SCR and DSC v1=2E2 RGB 444 */
->>> +=C2=A0=C2=A0=C2=A0 {11, 11, 6144, 512, 0, 0, 3, 12}, /* DSC_V12_444_8=
-BPC_8BPP or DSC_V11_SCR1_8BPC_8BPP */
->>> +=C2=A0=C2=A0=C2=A0 {15, 15, 6144, 512, 0, 0, 7, 16}, /* DSC_V12_444_1=
-0BPC_8BPP or DSC_V11_SCR1_10BPC_8BPP */
->>> +=C2=A0=C2=A0=C2=A0 {15, 15, 5632, 410, 0, 0, 7, 16}, /* DSC_V12_444_1=
-0BPC_10BPP or DSC_V11_SCR1_10BPC_10BPP */
->>> +};
->>> +
->>> +/**
->>> + * Maps to lookup the dpu_dsc_ratio_type index used in rate control t=
-ables
->>> + */
->>> +static struct dpu_dsc_table_index_lut {
->>> +=C2=A0=C2=A0=C2=A0 u32 fmt;
->>> +=C2=A0=C2=A0=C2=A0 u32 scr_ver;
->>> +=C2=A0=C2=A0=C2=A0 u32 minor_ver;
->>> +=C2=A0=C2=A0=C2=A0 u32 bpc;
->>> +=C2=A0=C2=A0=C2=A0 u32 bpp;
->>> +=C2=A0=C2=A0=C2=A0 u32 type;
->>> +} dpu_dsc_index_map[] =3D {
->>> +=C2=A0=C2=A0=C2=A0 /* DSC 1=2E1 formats - scr version is considered *=
-/
->>> +=C2=A0=C2=A0=C2=A0 {DPU_DSC_CHROMA_444, 0, 1, 8, 8, DSC_V11_8BPC_8BPP=
-},
->>> +=C2=A0=C2=A0=C2=A0 {DPU_DSC_CHROMA_444, 0, 1, 10, 8, DSC_V11_10BPC_8B=
-PP},
->>> +=C2=A0=C2=A0=C2=A0 {DPU_DSC_CHROMA_444, 0, 1, 10, 10, DSC_V11_10BPC_1=
-0BPP},
->>> +=C2=A0=C2=A0=C2=A0 {DPU_DSC_CHROMA_444, 1, 1, 8, 8, DSC_V11_SCR1_8BPC=
-_8BPP},
->>> +=C2=A0=C2=A0=C2=A0 {DPU_DSC_CHROMA_444, 1, 1, 10, 8, DSC_V11_SCR1_10B=
-PC_8BPP},
->>> +=C2=A0=C2=A0=C2=A0 {DPU_DSC_CHROMA_444, 1, 1, 10, 10, DSC_V11_SCR1_10=
-BPC_10BPP},
->>> +};
->>> +
->>> +static int _get_rc_table_index(struct drm_dsc_config *dsc, int scr_ve=
-r)
->>> +{
->>> +=C2=A0=C2=A0=C2=A0 u32 bpp, bpc, i, fmt =3D DPU_DSC_CHROMA_444;
->>> +
->>> +=C2=A0=C2=A0=C2=A0 if (dsc->dsc_version_major !=3D 0x1) {
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 DPU_ERROR("unsupported maj=
-or version %d\n",
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 dsc->dsc_version_major);
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -EINVAL;
->>> +=C2=A0=C2=A0=C2=A0 }
->>> +
->>> +=C2=A0=C2=A0=C2=A0 bpc =3D dsc->bits_per_component;
->>> +=C2=A0=C2=A0=C2=A0 bpp =3D DSC_BPP(*dsc);
->>=20
->> Just inline the macro=2E
->>=20
->>> +
->>> +=C2=A0=C2=A0=C2=A0 if (dsc->native_422)
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fmt =3D DPU_DSC_CHROMA_422=
-;
->>> +=C2=A0=C2=A0=C2=A0 else if (dsc->native_420)
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fmt =3D DPU_DSC_CHROMA_420=
-;
->>> +
->>> +
->>> +=C2=A0=C2=A0=C2=A0 for (i =3D 0; i < ARRAY_SIZE(dpu_dsc_index_map); i=
-++) {
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (dsc->dsc_version_minor=
- =3D=3D dpu_dsc_index_map[i]=2Eminor_ver &&
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 fmt =3D=3D=C2=A0 dpu_dsc_index_map[i]=2Efmt &&
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 bpc =3D=3D dpu_dsc_index_map[i]=2Ebpc &&
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 bpp =3D=3D dpu_dsc_index_map[i]=2Ebpp &&
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 (dsc->dsc_version_minor !=3D 0x1 ||
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 scr_ver =3D=3D dpu_dsc_index_=
-map[i]=2Escr_ver))
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 re=
-turn dpu_dsc_index_map[i]=2Etype;
->>> +=C2=A0=C2=A0=C2=A0 }
->>> +
->>> +=C2=A0=C2=A0=C2=A0 DPU_ERROR("unsupported DSC v%d=2E%dr%d, bpc:%d, bp=
-p:%d, fmt:0x%x\n",
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ds=
-c->dsc_version_major, dsc->dsc_version_minor,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sc=
-r_ver, bpc, bpp, fmt);
->>> +=C2=A0=C2=A0=C2=A0 return -EINVAL;
->>> +}
->>> +
->>> +int dpu_dsc_populate_dsc_config(struct drm_dsc_config *dsc, int scr_v=
-er)
->>> +{
->>> +=C2=A0=C2=A0=C2=A0 int bpp, bpc;
->>> +=C2=A0=C2=A0=C2=A0 struct dpu_dsc_rc_init_params_lut *rc_param_lut;
->>> +=C2=A0=C2=A0=C2=A0 int i, ratio_idx;
->>> +
->>> +=C2=A0=C2=A0=C2=A0 dsc->rc_model_size =3D 8192;
->>> +
->>> +=C2=A0=C2=A0=C2=A0 if ((dsc->dsc_version_major =3D=3D 0x1) &&
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (d=
-sc->dsc_version_minor =3D=3D 0x1)) {
->>=20
->> indent to the opening bracket please, so that '(dsc' on both lines star=
-t on the same position=2E
->>=20
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (scr_ver =3D=3D 0x1)
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ds=
-c->first_line_bpg_offset =3D 15;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 else
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ds=
-c->first_line_bpg_offset =3D 12;
->>> +=C2=A0=C2=A0=C2=A0 }
->>> +
->>> +=C2=A0=C2=A0=C2=A0 dsc->rc_edge_factor =3D 6;
->>> +=C2=A0=C2=A0=C2=A0 dsc->rc_tgt_offset_high =3D 3;
->>> +=C2=A0=C2=A0=C2=A0 dsc->rc_tgt_offset_low =3D 3;
->>> +=C2=A0=C2=A0=C2=A0 dsc->simple_422 =3D 0;
->>> +=C2=A0=C2=A0=C2=A0 dsc->convert_rgb =3D !(dsc->native_422 | dsc->nati=
-ve_420);
->>> +=C2=A0=C2=A0=C2=A0 dsc->vbr_enable =3D 0;
->>> +
->>> +=C2=A0=C2=A0=C2=A0 bpp =3D DSC_BPP(*dsc);
->>=20
->> inline the macro=2E
->>=20
->>> +=C2=A0=C2=A0=C2=A0 bpc =3D dsc->bits_per_component;
->>> +
->>> +=C2=A0=C2=A0=C2=A0 ratio_idx =3D _get_rc_table_index(dsc, scr_ver);
->>> +=C2=A0=C2=A0=C2=A0 if ((ratio_idx < 0) || (ratio_idx >=3D DSC_RATIO_T=
-YPE_MAX))
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -EINVAL;
->>> +
->>> +
->>> +=C2=A0=C2=A0=C2=A0 for (i =3D 0; i < DSC_NUM_BUF_RANGES - 1; i++)
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dsc->rc_buf_thresh[i] =3D =
-dpu_dsc_rc_buf_thresh[i];
->>=20
->> Can we use memcpy?
->>=20
->>> +
->>> +=C2=A0=C2=A0=C2=A0 for (i =3D 0; i < DSC_NUM_BUF_RANGES; i++) {
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dsc->rc_range_params[i]=2E=
-range_min_qp =3D
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dp=
-u_dsc_rc_range_min_qp[ratio_idx][i];
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dsc->rc_range_params[i]=2E=
-range_max_qp =3D
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dp=
-u_dsc_rc_range_max_qp[ratio_idx][i];
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dsc->rc_range_params[i]=2E=
-range_bpg_offset =3D
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dp=
-u_dsc_rc_range_bpg[ratio_idx][i];
->>> +=C2=A0=C2=A0=C2=A0 }
->>> +
->>> +=C2=A0=C2=A0=C2=A0 rc_param_lut =3D &dpu_dsc_rc_init_param_lut[ratio_=
-idx];
->>> +=C2=A0=C2=A0=C2=A0 dsc->rc_quant_incr_limit0 =3D rc_param_lut->rc_qua=
-nt_incr_limit0;
->>> +=C2=A0=C2=A0=C2=A0 dsc->rc_quant_incr_limit1 =3D rc_param_lut->rc_qua=
-nt_incr_limit1;
->>> +=C2=A0=C2=A0=C2=A0 dsc->initial_offset =3D rc_param_lut->initial_full=
-ness_offset;
->>> +=C2=A0=C2=A0=C2=A0 dsc->initial_xmit_delay =3D rc_param_lut->initial_=
-xmit_delay;
->>> +=C2=A0=C2=A0=C2=A0 dsc->second_line_bpg_offset =3D rc_param_lut->seco=
-nd_line_bpg_offset;
->>> +=C2=A0=C2=A0=C2=A0 dsc->second_line_offset_adj =3D rc_param_lut->seco=
-nd_line_offset_adj;
->>> +=C2=A0=C2=A0=C2=A0 dsc->flatness_min_qp =3D rc_param_lut->flatness_mi=
-n_qp;
->>> +=C2=A0=C2=A0=C2=A0 dsc->flatness_max_qp =3D rc_param_lut->flatness_ma=
-x_qp;
->>> +
->>> +
->>> +=C2=A0=C2=A0=C2=A0 dsc->line_buf_depth =3D bpc + 1;
->>> +=C2=A0=C2=A0=C2=A0 dsc->mux_word_size =3D bpc > 10 ? DSC_MUX_WORD_SIZ=
-E_12_BPC : DSC_MUX_WORD_SIZE_8_10_BPC;
->>> +
->>> +=C2=A0=C2=A0=C2=A0 dsc->initial_scale_value =3D 8 * dsc->rc_model_siz=
-e /
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (d=
-sc->rc_model_size - dsc->initial_offset);
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return drm_dsc_compute_rc_=
-parameters(dsc);
->>=20
->> Indentation is wrong
->>=20
->>> +}
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper=2Eh b/driver=
-s/gpu/drm/msm/disp/dpu1/dpu_dsc_helper=2Eh
->>> new file mode 100644
->>> index 00000000=2E=2E4a23e02
->>> --- /dev/null
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper=2Eh
->>> @@ -0,0 +1,34 @@
->>> +// SPDX-License-Identifier: GPL-2=2E0-only
->>> +/*
->>> + * Copyright (c) 2023=2E Qualcomm Innovation Center, Inc=2E All right=
-s reserved
->>> + */
->>> +
->>> +#ifndef __DPU_DSC_HELPER_H__
->>> +#define __DPU_DSC_HELPER_H__
->>> +
->>> +#include "msm_drv=2Eh"
->>> +
->>> +#define DSC_1_1_PPS_PARAMETER_SET_ELEMENTS=C2=A0=C2=A0 88
->>=20
->> What is this? Does it need to be global?
->>=20
->>> +
->>> +/**
->>> + * Bits/pixel target >> 4=C2=A0 (removing the fractional bits)
->>> + * returns the integer bpp value from the drm_dsc_config struct
->>> + */
->>> +#define DSC_BPP(config) ((config)=2Ebits_per_pixel >> 4)
->>> +
->>> +enum dpu_dsc_chroma {
->>> +=C2=A0=C2=A0=C2=A0 DPU_DSC_CHROMA_444,
->>> +=C2=A0=C2=A0=C2=A0 DPU_DSC_CHROMA_422,
->>> +=C2=A0=C2=A0=C2=A0 DPU_DSC_CHROMA_420,
->>> +};
->>=20
->> I think this enum is also not used outside of your helpers=2E
->>=20
->>> +
->>> +int dpu_dsc_populate_dsc_config(struct drm_dsc_config *dsc, int scr_v=
-er);
->>> +
->>> +bool dpu_dsc_ich_reset_override_needed(bool pu_en, struct drm_dsc_con=
-fig *dsc);
->>=20
->> Unused
->>=20
->>> +
->>> +int dpu_dsc_initial_line_calc( u32 num_active_ss_per_enc,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 struct drm_dsc_config *dsc,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 int enc_ip_width, int dsc_cmn_mode);
->>=20
->> Unused
->>=20
->>> +
->>> +#endif /* __DPU_DSC_HELPER_H__ */
->>> +
->>=20
+On 2/23/2023 1:11 PM, Alex Elder wrote:
+> On 2/14/23 3:23 PM, Elliot Berman wrote:
+>> Gunyah message queues are a unidirectional inter-VM pipe for messages up
+>> to 1024 bytes. This driver supports pairing a receiver message queue and
+>> a transmitter message queue to expose a single mailbox channel.
+>>
+>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+>> ---
+>>   Documentation/virt/gunyah/message-queue.rst |   8 +
+>>   drivers/mailbox/Makefile                    |   2 +
+>>   drivers/mailbox/gunyah-msgq.c               | 214 ++++++++++++++++++++
+>>   include/linux/gunyah.h                      |  56 +++++
+>>   4 files changed, 280 insertions(+)
+>>   create mode 100644 drivers/mailbox/gunyah-msgq.c
+>>
+>> diff --git a/Documentation/virt/gunyah/message-queue.rst 
+>> b/Documentation/virt/gunyah/message-queue.rst
+>> index 0667b3eb1ff9..082085e981e0 100644
+>> --- a/Documentation/virt/gunyah/message-queue.rst
+>> +++ b/Documentation/virt/gunyah/message-queue.rst
+>> @@ -59,3 +59,11 @@ vIRQ: two TX message queues will have two vIRQs 
+>> (and two capability IDs).
+>>         |               |         |                 |         
+>> |               |
+>>         |               |         |                 |         
+>> |               |
+>>         +---------------+         +-----------------+         
+>> +---------------+
+>> +
+>> +Gunyah message queues are exposed as mailboxes. To create the 
+>> mailbox, create
+>> +a mbox_client and call `gh_msgq_init`. On receipt of the RX_READY 
+>> interrupt,
+>> +all messages in the RX message queue are read and pushed via the 
+>> `rx_callback`
+>> +of the registered mbox_client.
+>> +
+>> +.. kernel-doc:: drivers/mailbox/gunyah-msgq.c
+>> +   :identifiers: gh_msgq_init
+>> diff --git a/drivers/mailbox/Makefile b/drivers/mailbox/Makefile
+>> index fc9376117111..5f929bb55e9a 100644
+>> --- a/drivers/mailbox/Makefile
+>> +++ b/drivers/mailbox/Makefile
+>> @@ -55,6 +55,8 @@ obj-$(CONFIG_MTK_CMDQ_MBOX)    += mtk-cmdq-mailbox.o
+>>   obj-$(CONFIG_ZYNQMP_IPI_MBOX)    += zynqmp-ipi-mailbox.o
+>> +obj-$(CONFIG_GUNYAH)        += gunyah-msgq.o
+>> +
+>>   obj-$(CONFIG_SUN6I_MSGBOX)    += sun6i-msgbox.o
+>>   obj-$(CONFIG_SPRD_MBOX)        += sprd-mailbox.o
+>> diff --git a/drivers/mailbox/gunyah-msgq.c 
+>> b/drivers/mailbox/gunyah-msgq.c
+>> new file mode 100644
+>> index 000000000000..03ffaa30ce9b
+>> --- /dev/null
+>> +++ b/drivers/mailbox/gunyah-msgq.c
+> 
+> You use a dash in this source file name, but an underscore
+> everywhere else.  Unless there's a good reason to do this,
+> please be consistent (use "gunyah_msgq.c").
+> 
+>> @@ -0,0 +1,214 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All 
+>> rights reserved.
+>> + */
+>> +
+>> +#include <linux/mailbox_controller.h>
+>> +#include <linux/module.h>
+>> +#include <linux/interrupt.h>
+>> +#include <linux/gunyah.h>
+>> +#include <linux/printk.h>
+>> +#include <linux/init.h>
+>> +#include <linux/slab.h>
+>> +#include <linux/wait.h>
+>> +
+>> +#define mbox_chan_to_msgq(chan) (container_of(chan->mbox, struct 
+>> gh_msgq, mbox))
+>> +
+>> +static irqreturn_t gh_msgq_rx_irq_handler(int irq, void *data)
+>> +{
+>> +    struct gh_msgq *msgq = data;
+>> +    struct gh_msgq_rx_data rx_data;
+>> +    enum gh_error err;
+>> +    bool ready = true;
+>> +
+>> +    while (ready) {
+>> +        err = gh_hypercall_msgq_recv(msgq->rx_ghrsc->capid,
+>> +                (uintptr_t)&rx_data.data, sizeof(rx_data.data),
+>> +                &rx_data.length, &ready);
+>> +        if (err != GH_ERROR_OK) {
+>> +            if (err != GH_ERROR_MSGQUEUE_EMPTY)
+> 
+> Srini mentioned something about this too.  In many
+> (all?) cases, there is a device pointer available,
+> so you should use dev_*() functions rather than pr_*().
+> 
+> In this particular case, I'm not sure why/when the
+> mbox.dev pointer would be null.  Also, dev_*() handles
+> the case of a null device pointer, and it reports the
+> device name (just as you do here).
+> 
+>> +                pr_warn("Failed to receive data from msgq for %s: %d\n",
+>> +                    msgq->mbox.dev ? dev_name(msgq->mbox.dev) : "", 
+>> err);
+>> +            break;
+>> +        }
+>> +        mbox_chan_received_data(gh_msgq_chan(msgq), &rx_data);
+>> +    }
+>> +
+>> +    return IRQ_HANDLED;
+>> +}
+>> +
+>> +/* Fired when message queue transitions from "full" to "space 
+>> available" to send messages */
+>> +static irqreturn_t gh_msgq_tx_irq_handler(int irq, void *data)
+>> +{
+>> +    struct gh_msgq *msgq = data;
+>> +
+>> +    mbox_chan_txdone(gh_msgq_chan(msgq), 0);
+>> +
+>> +    return IRQ_HANDLED;
+>> +}
+>> +
+>> +/* Fired after sending message and hypercall told us there was more 
+>> space available. */
+>> +static void gh_msgq_txdone_tasklet(struct tasklet_struct *tasklet)
+>> +{
+>> +    struct gh_msgq *msgq = container_of(tasklet, struct gh_msgq, 
+>> txdone_tasklet);
+>> +
+>> +    mbox_chan_txdone(gh_msgq_chan(msgq), msgq->last_ret);
+>> +}
+>> +
+>> +static int gh_msgq_send_data(struct mbox_chan *chan, void *data)
+>> +{
+>> +    struct gh_msgq *msgq = mbox_chan_to_msgq(chan);
+>> +    struct gh_msgq_tx_data *msgq_data = data;
+>> +    u64 tx_flags = 0;
+>> +    enum gh_error gh_error;
+> 
+> Above you named the variable "err".  It helps readability
+> if you use a very consistent naming convention for variables
+> of a certain type when they are used a lot.
+> 
+>> +    bool ready;
+>> +
+>> +    if (msgq_data->push)
+>> +        tx_flags |= GH_HYPERCALL_MSGQ_TX_FLAGS_PUSH;
+>> +
+>> +    gh_error = gh_hypercall_msgq_send(msgq->tx_ghrsc->capid, 
+>> msgq_data->length,
+>> +                    (uintptr_t)msgq_data->data, tx_flags, &ready);
+>> +
+>> +    /**
+>> +     * unlikely because Linux tracks state of msgq and should not try to
+>> +     * send message when msgq is full.
+>> +     */
+>> +    if (unlikely(gh_error == GH_ERROR_MSGQUEUE_FULL))
+>> +        return -EAGAIN;
+>> +
+>> +    /**
+>> +     * Propagate all other errors to client. If we return error to 
+>> mailbox
+>> +     * framework, then no other messages can be sent and nobody will 
+>> know
+>> +     * to retry this message.
+>> +     */
+>> +    msgq->last_ret = gh_remap_error(gh_error);
+>> +
+>> +    /**
+>> +     * This message was successfully sent, but message queue isn't 
+>> ready to
+>> +     * receive more messages because it's now full. Mailbox framework
+> 
+> Maybe:  s/receive/accept/
+> 
+>> +     * requires that we only report that message was transmitted when
+>> +     * we're ready to transmit another message. We'll get that in the 
+>> form
+>> +     * of tx IRQ once the other side starts to drain the msgq.
+>> +     */
+>> +    if (gh_error == GH_ERROR_OK && !ready)
+>> +        return 0;
+>> +
+>> +    /**
+>> +     * We can send more messages. Mailbox framework requires that tx 
+>> done
+>> +     * happens asynchronously to sending the message. Gunyah message 
+>> queues
+>> +     * tell us right away on the hypercall return whether we can send 
+>> more
+>> +     * messages. To work around this, defer the txdone to a tasklet.
+>> +     */
+>> +    tasklet_schedule(&msgq->txdone_tasklet);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static struct mbox_chan_ops gh_msgq_ops = {
+>> +    .send_data = gh_msgq_send_data,
+>> +};
+>> +
+>> +/**
+>> + * gh_msgq_init() - Initialize a Gunyah message queue with an 
+>> mbox_client
+>> + * @parent: optional, device parent used for the mailbox controller
+>> + * @msgq: Pointer to the gh_msgq to initialize
+>> + * @cl: A mailbox client to bind to the mailbox channel that the 
+>> message queue creates
+>> + * @tx_ghrsc: optional, the transmission side of the message queue
+>> + * @rx_ghrsc: optional, the receiving side of the message queue
+>> + *
+>> + * At least one of tx_ghrsc and rx_ghrsc should be not NULL. Most 
+>> message queue use cases come with
+> 
+> s/should be/must be/
+> 
+>> + * a pair of message queues to facilitate bidirectional 
+>> communication. When tx_ghrsc is set,
+>> + * the client can send messages with 
+>> mbox_send_message(gh_msgq_chan(msgq), msg). When rx_ghrsc
+>> + * is set, the mbox_client should register an .rx_callback() and the 
+>> message queue driver will
+> 
+> s/should register/must register/
+> 
+> A general comment on this code is that you sort of half define
+> a Gunyah message queue API.  You define an initialization
+> function and an exit function, but you also expose the fact
+> that you use the mailbox framework in implementation.  This
+> despite avoiding defining it as an mbox in the DTS file.
+> 
+> It might be hard to avoid that I guess.  But to me it would be
+> nice if there were a more distinct Gunyah message queue API,
+> which would provide a send_message() function, for example.
+> And in that case, perhaps you would pass in the tx_done and/or
+> rx_data callbacks to this function (since they're required).
 
+I can write a wrapper for send_message, but I think it limits the code 
+re-use of mailbox framework.
+
+> 
+> All that said, this is (currently?) only used by the resource
+> manager, so making a beautiful API might not be that important.
+> Do you envision this being used to communicate with other VMs
+> in the future?
+> 
+>> + * push all available messages upon receiving the RX ready interrupt. 
+>> The messages should be
+> 
+> Maybe: s/push/deliver/
+> 
+>> + * consumed or copied by the client right away as the gh_msgq_rx_data 
+>> will be replaced/destroyed
+>> + * after the callback.
+>> + *
+>> + * Returns - 0 on success, negative otherwise
+>> + */
+>> +int gh_msgq_init(struct device *parent, struct gh_msgq *msgq, struct 
+>> mbox_client *cl,
+>> +             struct gunyah_resource *tx_ghrsc, struct gunyah_resource 
+>> *rx_ghrsc)
+>> +{
+>> +    int ret;
+>> +
+>> +    /* Must have at least a tx_ghrsc or rx_ghrsc and that they are 
+>> the right device types */
+>> +    if ((!tx_ghrsc && !rx_ghrsc) ||
+>> +        (tx_ghrsc && tx_ghrsc->type != GUNYAH_RESOURCE_TYPE_MSGQ_TX) ||
+>> +        (rx_ghrsc && rx_ghrsc->type != GUNYAH_RESOURCE_TYPE_MSGQ_RX))
+>> +        return -EINVAL;
+>> +
+>> +    if (gh_api_version() != GUNYAH_API_V1) {
+>> +        pr_err("Unrecognized gunyah version: %u. Currently supported: 
+>> %d\n",
+>> +            gh_api_version(), GUNYAH_API_V1);
+>> +        return -EOPNOTSUPP;
+>> +    }
+>> +
+>> +    if (!gh_api_has_feature(GH_API_FEATURE_MSGQUEUE))
+>> +        return -EOPNOTSUPP;
+> 
+> Can Gunyah even function if it doesn't have the MSGQUEUE feature?
+> Will there ever be a Gunyah implementation that does not support
+> it?  Perhaps this test could be done in gunyah_init() instead.
+
+I don't think we will ever have a Gunyah implementation that doesn't 
+support message queues. Perhaps some long distant Gunyah will use IPC 
+mechanism X instead of message queues and the message queue support is 
+dropped.
+
+> 
+> For that matter, you could verify the result of gh_api_version()
+> at that time also.
+> 
+
+Moved the gh_api_version() check to gunyah_init()
+
+>> +
+>> +    msgq->tx_ghrsc = tx_ghrsc;
+>> +    msgq->rx_ghrsc = rx_ghrsc;
+>> +
+>> +    msgq->mbox.dev = parent;
+>> +    msgq->mbox.ops = &gh_msgq_ops;
+>> +    msgq->mbox.num_chans = 1;
+>> +    msgq->mbox.txdone_irq = true;
+>> +    msgq->mbox.chans = kcalloc(msgq->mbox.num_chans, 
+>> sizeof(*msgq->mbox.chans), GFP_KERNEL);
+> 
+>  From what I can tell, you will always use exactly one mailbox channel.
+> So you could just do kzalloc(sizeof()...).
+> 
+
+If it's all the same, I'd like to keep it as kcalloc because chans is 
+expected to be an array with num_chans size. It seems more correct to 
+use kcalloc.
+
+>> +    if (!msgq->mbox.chans)
+>> +        return -ENOMEM;
+>> +
+>> +    if (msgq->tx_ghrsc) {
+> 
+>      if (tx_ghrsc) {
+> 
+> The irq field is assumed to be valid.  Are there any
+> sanity checks you could perform?  Again this is only
+> used for the resource manager right now, so maybe
+> it's OK.
+> 
+
+We should safely assume irq field is valid. If we need to be skeptical 
+of irq, we'd also need to be skeptical of capid and there's not validity 
+check to perform there. struct gunyah_resource's are either filled from 
+DT (in this case) or would be created by resource manager which does 
+validity checks.
+
+>> +        ret = request_irq(msgq->tx_ghrsc->irq, 
+>> gh_msgq_tx_irq_handler, 0, "gh_msgq_tx",
+> 
+>          ret = request_irq(tx_ghrsc->irq, ...
+> 
+> 
+>> +                msgq);
+>> +        if (ret)
+>> +            goto err_chans;
+>> +    }
+>> +
+>> +    if (msgq->rx_ghrsc) {
+>> +        ret = request_threaded_irq(msgq->rx_ghrsc->irq, NULL, 
+>> gh_msgq_rx_irq_handler,
+>> +                        IRQF_ONESHOT, "gh_msgq_rx", msgq);
+>> +        if (ret)
+>> +            goto err_tx_irq;
+>> +    }
+>> +
+>> +    tasklet_setup(&msgq->txdone_tasklet, gh_msgq_txdone_tasklet);
+>> +
+>> +    ret = mbox_controller_register(&msgq->mbox);
+>> +    if (ret)
+>> +        goto err_rx_irq;
+>> +
+>> +    ret = mbox_bind_client(gh_msgq_chan(msgq), cl);
+> 
+> 
+>> +    if (ret)
+>> +        goto err_mbox;
+>> +
+>> +    return 0;
+>> +err_mbox:
+>> +    mbox_controller_unregister(&msgq->mbox);
+>> +err_rx_irq:
+>> +    if (msgq->rx_ghrsc)
+>> +        free_irq(msgq->rx_ghrsc->irq, msgq);
+>> +err_tx_irq:
+>> +    if (msgq->tx_ghrsc)
+>> +        free_irq(msgq->tx_ghrsc->irq, msgq);
+>> +err_chans:
+>> +    kfree(msgq->mbox.chans);
+>> +    return ret;
+>> +}
+>> +EXPORT_SYMBOL_GPL(gh_msgq_init);
+>> +
+>> +void gh_msgq_remove(struct gh_msgq *msgq)
+>> +{
+> 
+> Is there any need to un-bind the client?
+> 
+
+I was leaving un-binding the client to the client (RM).
+
+>> +    mbox_controller_unregister(&msgq->mbox);
+>> +
+>> +    if (msgq->rx_ghrsc)
+>> +        free_irq(msgq->rx_ghrsc->irq, msgq);
+>> +
+>> +    if (msgq->tx_ghrsc)
+>> +        free_irq(msgq->tx_ghrsc->irq, msgq);
+>> +
+>> +    kfree(msgq->mbox.chans);
+>> +}
+>> +EXPORT_SYMBOL_GPL(gh_msgq_remove);
+>> +
+>> +MODULE_LICENSE("GPL");
+>> +MODULE_DESCRIPTION("Gunyah Message Queue Driver");
+>> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
+>> index cb6df4eec5c2..2e13669c6363 100644
+>> --- a/include/linux/gunyah.h
+>> +++ b/include/linux/gunyah.h
+>> @@ -8,11 +8,67 @@
+>>   #include <linux/bitfield.h>
+>>   #include <linux/errno.h>
+>> +#include <linux/interrupt.h>
+>>   #include <linux/limits.h>
+>> +#include <linux/mailbox_controller.h>
+>> +#include <linux/mailbox_client.h>
+>>   #include <linux/types.h>
+>> +/* Follows resource manager's resource types for VM_GET_HYP_RESOURCES */
+>> +enum gunyah_resource_type {
+>> +    GUNYAH_RESOURCE_TYPE_BELL_TX    = 0,
+>> +    GUNYAH_RESOURCE_TYPE_BELL_RX    = 1,
+>> +    GUNYAH_RESOURCE_TYPE_MSGQ_TX    = 2,
+>> +    GUNYAH_RESOURCE_TYPE_MSGQ_RX    = 3,
+>> +    GUNYAH_RESOURCE_TYPE_VCPU    = 4,
+> 
+> The maximum value here must fit in 8 bits.  I guess
+> there's no risk right now of using that up, but you
+> use negative values in some cases elsewhere.
+> 
+>> +};
+>> +
+>> +struct gunyah_resource {
+>> +    enum gunyah_resource_type type;
+>> +    u64 capid;
+>> +    int irq;
+> 
+> request_irq() defines the IRQ value to be an unsigned int.
+> 
+
+Done.
+
+>> +};
+>> +
+>> +/**
+>> + * Gunyah Message Queues
+>> + */
+>> +
+>> +#define GH_MSGQ_MAX_MSG_SIZE    240
+>> +
+>> +struct gh_msgq_tx_data {
+>> +    size_t length;
+>> +    bool push;
+>> +    char data[];
+>> +};
+>> +
+>> +struct gh_msgq_rx_data {
+>> +    size_t length;
+>> +    char data[GH_MSGQ_MAX_MSG_SIZE];
+>> +};
+>> +
+>> +struct gh_msgq {
+>> +    struct gunyah_resource *tx_ghrsc;
+>> +    struct gunyah_resource *rx_ghrsc;
+>> +
+>> +    /* msgq private */
+>> +    int last_ret; /* Linux error, not GH_STATUS_* */
+>> +    struct mbox_controller mbox;
+>> +    struct tasklet_struct txdone_tasklet;
+> 
+> Can the msgq_client be embedded here too?  (I don't really
+> know whether msgq and msgq_client are one-to one.)
+> 
+
+They are one-to-one. I can embed the struct in the struct gh_msgq and 
+drop the kcalloc.
+
+Thanks,
+Elliot
+
+>> +};
+>> +
+>> +
+>> +int gh_msgq_init(struct device *parent, struct gh_msgq *msgq, struct 
+>> mbox_client *cl,
+>> +             struct gunyah_resource *tx_ghrsc, struct gunyah_resource 
+>> *rx_ghrsc);
+>> +void gh_msgq_remove(struct gh_msgq *msgq);
+> 
+> I suggested:
+> 
+> int gh_msgq_send(struct gh_msgq, struct gh_msgq_tx_data *data);
+> 
+>                      -Alex
+> 
+>> +
+>> +static inline struct mbox_chan *gh_msgq_chan(struct gh_msgq *msgq)
+>> +{
+>> +    return &msgq->mbox.chans[0];
+>> +}
+>> +
+>>   
+>> /******************************************************************************/
+>>   /* Common arch-independent definitions for Gunyah 
+>> hypercalls                  */
+>> +
+>>   #define GH_CAPID_INVAL    U64_MAX
+>>   #define GH_VMID_ROOT_VM    0xff
+> 
