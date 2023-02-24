@@ -2,201 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F2636A1B9C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 12:51:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1852C6A1C69
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 13:47:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229778AbjBXLv3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 06:51:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51246 "EHLO
+        id S229458AbjBXMrk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 07:47:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229741AbjBXLv3 (ORCPT
+        with ESMTP id S229743AbjBXMrj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 06:51:29 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C4444A1E8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 03:51:27 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id t11so6625265lfr.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 03:51:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677239485;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TnexSMd+XVoyj7y7yaOeBmQu7EBkAmuDHGXQa8H9Mtw=;
-        b=pw5jsbH6Ahef7qZKvgF3EtWIxOg45xrKzGuv2DkJzX/meHHDnjUelN4xqa08NuR2Tz
-         nyC+9kjJXnRTY0v+0wha6BAHyB6bgzSRaehem/88QFTzvOi/B+kMM3MBN9tD3LMQ7Qr9
-         s+3+Frj3QYO7MGMXlpV6mebZl+VujPqZJgBP5laTCM99SnAhtLLFXMX/vnp7h/0cGsXK
-         Ezv6W0u81c9yXmbluxS5WTj9ABCHi7RXwDrRL9kCZY/IC4QEMayF0STDLIezqy7cXnKu
-         UOi1Ug4Ke2PRMehSgjU0fO/YhdulY7osNGhrkOov58zIpm7CSf2EhcTehGzPdwVHpwwY
-         j06Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677239485;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TnexSMd+XVoyj7y7yaOeBmQu7EBkAmuDHGXQa8H9Mtw=;
-        b=u6P8wK9yHkAvcn0otL9bbRPcRtpDtFOzPUGEceMCEb+XbExc6sti3houvi9dscBe3j
-         W48DQxvdq/pX1suSvlrU88/K/ZNfl87b3mkPZhAt2dz9I4FMok+jD4DSEnWu12nPFUY9
-         BjG6NLj0makgobUuwoTgGFEu2xXJYD7jmbrmygU1UR93E0u7xdy9Z/KZSDKpsrcex6cx
-         b8VNBqwYM4ctYz2Y7FXNzR9KMsmx2UkKkZAFlKAiaSvwM9hzibqulquNpllS0Ah0fIbi
-         IwQxcBdUy2NvysdyQPkqvPsN2asvXEPCHBFJ1xX0hFP2T7R1AmigpykAs7TjSLbwBzPg
-         lHow==
-X-Gm-Message-State: AO0yUKXpaZuG2h3Mk4l2Fr6PGERpzpY7Y4g0MwlQt1Lq5b5ZGeWEBufh
-        Z87MtmVMvjiEq+1zO6QFnDpgvw==
-X-Google-Smtp-Source: AK7set/FkVC3ts6OtmMUhOGLdSYYVCrglgLPa706kH6YP7Eze6YmEYBTVypJE8rX+86gHX2+wzb/Yg==
-X-Received: by 2002:a05:6512:3d90:b0:4da:f379:9f60 with SMTP id k16-20020a0565123d9000b004daf3799f60mr5682703lfv.33.1677239485520;
-        Fri, 24 Feb 2023 03:51:25 -0800 (PST)
-Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id l13-20020a19c20d000000b004dd6c32532bsm576631lfc.263.2023.02.24.03.51.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Feb 2023 03:51:25 -0800 (PST)
-Message-ID: <a28c4e67-78b4-21b5-7094-9953316576b2@linaro.org>
-Date:   Fri, 24 Feb 2023 12:51:22 +0100
+        Fri, 24 Feb 2023 07:47:39 -0500
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECAE063DC2;
+        Fri, 24 Feb 2023 04:47:37 -0800 (PST)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id 9E51F38C9E;
+        Fri, 24 Feb 2023 12:47:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+        t=1677242856; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=FRS6JIVxD98UMfKKQQi4U8ooVdVzZHO1t/2LZ6jiUFs=;
+        b=r3ur6fxcW92yEcWBOA6q76sBEhcOGqHa26Ze7DErSHeh+g0UKez4w4NTMAH1baJ9s0s49f
+        xTKXrXS5ST25dtnvUjd6jghioSjnLxf+zZMwu6tYOw+ri2WBg+7UF2viOdwlud9VBybt96
+        vFWJK8WI8B5vjik2Bzm3Fp1IyCm1aI4=
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 8174D13A3A;
+        Fri, 24 Feb 2023 12:47:36 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id K39AHOix+GOELwAAMHmgww
+        (envelope-from <mhocko@suse.com>); Fri, 24 Feb 2023 12:47:36 +0000
+Date:   Fri, 24 Feb 2023 13:47:35 +0100
+From:   Michal Hocko <mhocko@suse.com>
+To:     Suren Baghdasaryan <surenb@google.com>
+Cc:     Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>,
+        David Hildenbrand <david@redhat.com>,
+        Johannes Weiner <hannes@cmpxchg.org>,
+        Mike Rapoport <rppt@kernel.org>,
+        Oscar Salvador <osalvador@suse.de>,
+        Anshuman Khandual <anshuman.khandual@arm.com>,
+        mark.rutland@arm.com, will@kernel.org,
+        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Sukadev Bhattiprolu <quic_sukadev@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Patrick Daly <quic_pdaly@quicinc.com>
+Subject: Re: [PATCH] psi: reduce min window size to 50ms
+Message-ID: <Y/ix53x8i/ViuBXf@dhcp22.suse.cz>
+References: <cover.1676067791.git.quic_sudaraja@quicinc.com>
+ <CAJuCfpHWQ8NV=iR3BN+pt1c8FynCnRqyyriHb1gLxFgiNVrwjA@mail.gmail.com>
+ <e944536f-a04c-5528-601e-d7f505a761e8@quicinc.com>
+ <CAJuCfpGLkkS2yx0d9+2nYtEtxANSH5H3EgCmWZax4N-ieEBG7g@mail.gmail.com>
+ <15cd8816-b474-0535-d854-41982d3bbe5c@quicinc.com>
+ <CAJuCfpHihLgHCcsAqMJ_o2u7Ux9B5HFGsV2y_L2_5GXYAGYLnw@mail.gmail.com>
+ <82406da2-799e-f0b4-bce0-7d47486030d4@quicinc.com>
+ <CAJuCfpHrhO7_fMwNuu2hdQob=MPjZTW8eaJpNhEhPmDMqz2qTA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3 01/15] dt-bindings: display/msm: gpu: Document GMU
- wrapper-equipped A6xx
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>
-References: <20230223-topic-gmuwrapper-v3-0-5be55a336819@linaro.org>
- <20230223-topic-gmuwrapper-v3-1-5be55a336819@linaro.org>
- <c3376575-c24f-18a3-1d8b-c3d67f072287@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <c3376575-c24f-18a3-1d8b-c3d67f072287@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJuCfpHrhO7_fMwNuu2hdQob=MPjZTW8eaJpNhEhPmDMqz2qTA@mail.gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue 14-02-23 11:34:30, Suren Baghdasaryan wrote:
+[...]
+> Your suggestion to have this limit configurable sounds like obvious
+> solution. I would like to get some opinions from other maintainers.
+> Johannes, WDYT? CC'ing Michal to chime in as well since this is mostly
+> related to memory stalls.
 
+I do not think that making this configurable helps much. Many users will
+be bound to distribution config and also it would be hard to experiment
+with a recompile cycle every time. This seems just too impractical.
 
-On 24.02.2023 12:17, Krzysztof Kozlowski wrote:
-> On 23/02/2023 13:06, Konrad Dybcio wrote:
->> GMU wrapper-equipped A6xx GPUs require clocks and clock-names to be
->> specified under the GPU node, just like their older cousins.
->> Account for that.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  .../devicetree/bindings/display/msm/gpu.yaml       | 63 ++++++++++++++++++----
->>  1 file changed, 53 insertions(+), 10 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
->> index d4191cca71fb..e6d3160601bc 100644
->> --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
->> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
->> @@ -36,10 +36,7 @@ properties:
->>  
->>    reg-names:
->>      minItems: 1
->> -    items:
->> -      - const: kgsl_3d0_reg_memory
->> -      - const: cx_mem
->> -      - const: cx_dbgc
->> +    maxItems: 3
->>  
->>    interrupts:
->>      maxItems: 1
->> @@ -147,26 +144,72 @@ allOf:
->>                  description: GPU Alternative Memory Interface clock
->>                - const: gfx3d
->>                  description: GPU 3D engine clock
->> +              - const: gmu
->> +                description: CX GMU clock
->>                - const: rbbmtimer
->>                  description: GPU RBBM Timer for Adreno 5xx series
->>                - const: rbcpr
->>                  description: GPU RB Core Power Reduction clock
->> +              - const: xo
->> +                description: GPUCC clocksource clock
->>            minItems: 2
->> -          maxItems: 7
->> +          maxItems: 9
-> 
-> Your commit says A6xx but this is a3-5xx. I don't understand this change.
-Right, it's a leftover unrelated hunk. I'll remove it.
+Is there any reason why we shouldn't allow any timeout? Shorter
+timeouts could be restricted to a priviledged context to avoid an easy
+way to swamp system by too frequent polling.
 
-> 
->>  
->>        required:
->>          - clocks
->>          - clock-names
->> +
->>    - if:
->>        properties:
->>          compatible:
->>            contains:
->> -            pattern: '^qcom,adreno-6[0-9][0-9]\.[0-9]$'
->> -
->> -    then: # Since Adreno 6xx series clocks should be defined in GMU
->> +            enum:
->> +              - qcom,adreno-610.0
->> +              - qcom,adreno-619.1
->> +    then:
->>        properties:
->> -        clocks: false
->> -        clock-names: false
->> +        clock-names:
->> +          items:
->> +            - const: core
->> +              description: GPU Core clock
->> +            - const: iface
->> +              description: GPU Interface clock
->> +            - const: mem_iface
->> +              description: GPU Memory Interface clock
->> +            - const: alt_mem_iface
->> +              description: GPU Alternative Memory Interface clock
->> +            - const: gmu
->> +              description: CX GMU clock
->> +            - const: xo
->> +              description: GPUCC clocksource clock
->> +
->> +        reg-names:
->> +          minItems: 1
->> +          items:
->> +            - const: kgsl_3d0_reg_memory
->> +            - const: cx_dbgc
->> +
->> +      required:
->> +        - clocks
->> +        - clock-names
->> +    else:
->> +      if:
->> +        properties:
->> +          compatible:
->> +            contains:
->> +              pattern: '^qcom,adreno-6[0-9][0-9]\.[0-9]$'
->> +
->> +      then: # Starting with A6xx, the clocks are usually defined in the GMU node
-> 
-> The comment is not accurate anymore.
-I'll argue the semantics, they are still "usually" defined
-in the GMU node..
-
-Konrad
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+Btw. it seems that there is is only a limit on a single trigger per fd
+but no limits per user so it doesn't sound too hard to end up with too
+much polling even with a larger timeouts. To me it seems like we need to
+contain the polling thread to be bound by the cpu controller.
+-- 
+Michal Hocko
+SUSE Labs
