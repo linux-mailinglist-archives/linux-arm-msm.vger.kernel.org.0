@@ -2,154 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEB786A1A7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 11:43:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C84486A1AC9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 12:00:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230050AbjBXKnN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 05:43:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42928 "EHLO
+        id S229966AbjBXLAK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 06:00:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230060AbjBXKmn (ORCPT
+        with ESMTP id S230032AbjBXK7l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 05:42:43 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DCEF5FD5;
-        Fri, 24 Feb 2023 02:41:15 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31OARbEx001357;
-        Fri, 24 Feb 2023 10:40:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=8cWmvPwNwNmGYejx+XOmF4t+iGtdVe0NNZaVfqLw+CM=;
- b=m44a5+AZmREmQBqj3NVlwF80MBGPyQT8oPnPwWDDfrfrgm5Uh0s6qA/GHWsNBwnntku5
- Sg0Kn/EUOUZiPLzK12O89fVL6jdw9xcoEvk/CHVl3BzMwjpWA5cIsqWpOZmmDYDQ7l2q
- DEQpADRPrR2IEDaKQeERSZFnjPQqDMPe+HOUkMa0VWUnQwtOWq/u28qIULA3PafN15S1
- jz95ugB2Y06cOAQzyA4+Gal2Qe/5Q7rGdtHJySyawrd2FQWwFMkcNN0ndK5A4RQOIqAN
- jfmq7U4WpDCwULAjQ7QedgxcyWmah5wShuUF84ohWWRCo2hXbuZWL2ynTRccS5Vk3Tbn rg== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nxugh80tc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 24 Feb 2023 10:40:51 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31OAeoqY024499
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 24 Feb 2023 10:40:50 GMT
-Received: from [10.216.22.47] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 24 Feb
- 2023 02:40:45 -0800
-Message-ID: <47542dbb-8cf3-6eae-a38e-910d38bd960b@quicinc.com>
-Date:   Fri, 24 Feb 2023 16:10:42 +0530
+        Fri, 24 Feb 2023 05:59:41 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4020963DE8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 02:59:16 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id ky4so17544868plb.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 02:59:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4nUiMlzdFVdylVAwvGF2mzTH+MQ8jxdhSSAuOwiDOrk=;
+        b=sD8fpV1iBm1gOL4hX7ssWFPYQXWuJgQM8zfQlrHHNH7z4u/zl+ABhh3jZ9pqJ1wVj0
+         B2vre9cVycIC8F/bA4JpHy3L9p4kxWrr1DAGUo7LNSZeIlOGA68QahK65J/W34IjD4aW
+         txEgU8+p3DQaH/gFVaGvmVbba0SofD0L49Z23g3ywpEmWZsyv99YcS/9RAAx3P+/BAYa
+         J/Nxq3++RIozCHDwOm+WIHfuEA/Ji7ud0cjY/xYFjubCxZLu9QA2Lka1F4jxN5LMG7iN
+         ZMFlit9zuVRtpx0vpb19qfbkT/3YkzQLseDNNBRnD7eNE1tIH/lS1VoNnOoHCkiCweTA
+         hV+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4nUiMlzdFVdylVAwvGF2mzTH+MQ8jxdhSSAuOwiDOrk=;
+        b=SBT9j6TFJxA9q6Wuhbhl+74gxltY2Nyf7+jq29Vd5FAen4rtcXS6ZfnaQbstzHMJWV
+         uTsJLG+AGyuLOe4ZoHgl/mcXpRiuYE9ADXnm33WMQiCw5+klKnEFdMJqx+74pXo2Z+TV
+         sJQr4uh0VO4GrZy8TP0oabV40ZQmTjb2BIOHU1SNm75/rYZO20HM0JjF76lYKPf04SeM
+         TytFum25kD/EF3pcmRMlL0IE9OHPLP9GpDNAz0WigkvxlZQq9s9tE4pgxG1fD6MPP/GP
+         uDloPSPCAFbS7andFfPZCcVThn6MvO/h1wgXRGKkhcCyryxeOMMTB+QpQLeDBabt6Bni
+         kn0w==
+X-Gm-Message-State: AO0yUKUEdx7MOZ0Z1VswYpFKBWXFS7vseWQYzb4gTtVjk0pgODON0HOv
+        w2YOY+d1QJcqj+lPpisa4xzL
+X-Google-Smtp-Source: AK7set/S+ZygCYuCUKF9LEBR1rJYfsKfJShN1QO28O1CvLDthNfwy1uzHl2p2i6zudrTi6g/rOYYrw==
+X-Received: by 2002:a17:90b:388f:b0:234:6b7e:d016 with SMTP id mu15-20020a17090b388f00b002346b7ed016mr15132219pjb.22.1677236355675;
+        Fri, 24 Feb 2023 02:59:15 -0800 (PST)
+Received: from localhost.localdomain ([117.217.187.3])
+        by smtp.gmail.com with ESMTPSA id gd5-20020a17090b0fc500b00233cde36909sm1263853pjb.21.2023.02.24.02.59.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Feb 2023 02:59:15 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     andersson@kernel.org, lpieralisi@kernel.org, robh@kernel.org,
+        kw@linux.com, krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org
+Cc:     konrad.dybcio@linaro.org, bhelgaas@google.com, kishon@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 00/13] Add PCIe RC support to Qcom SDX55 SoC
+Date:   Fri, 24 Feb 2023 16:28:53 +0530
+Message-Id: <20230224105906.16540-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [RFC PATCH 0/6] Add basic Minidump kernel driver support
-Content-Language: en-US
-To:     Brian Masney <bmasney@redhat.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <keescook@chromium.org>,
-        <tony.luck@intel.com>, <gpiccoli@igalia.com>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <1676978713-7394-1-git-send-email-quic_mojha@quicinc.com>
- <Y/deHzijzvuvCJ2M@x1>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <Y/deHzijzvuvCJ2M@x1>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: T7W3uxWLeUgO6aChRz5rQfM-dvuvUMbl
-X-Proofpoint-ORIG-GUID: T7W3uxWLeUgO6aChRz5rQfM-dvuvUMbl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-24_06,2023-02-24_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
- bulkscore=0 phishscore=0 mlxlogscore=999 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 mlxscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302240087
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Brian for your interest in this series.
+Hi,
 
-On 2/23/2023 6:07 PM, Brian Masney wrote:
-> On Tue, Feb 21, 2023 at 04:55:07PM +0530, Mukesh Ojha wrote:
->> Minidump is a best effort mechanism to collect useful and predefined data
->> for first level of debugging on end user devices running on Qualcomm SoCs.
->> It is built on the premise that System on Chip (SoC) or subsystem part of
->> SoC crashes, due to a range of hardware and software bugs. Hence, the
->> ability to collect accurate data is only a best-effort. The data collected
->> could be invalid or corrupted, data collection itself could fail, and so on.
->>
->> Qualcomm devices in engineering mode provides a mechanism for generating
->> full system ramdumps for post mortem debugging. But in some cases it's
->> however not feasible to capture the entire content of RAM. The minidump
->> mechanism provides the means for selecting which snippets should be
->> included in the ramdump.
->>
->> The core of minidump feature is part of Qualcomm's boot firmware code.
->> It initializes shared memory (SMEM), which is a part of DDR and
->> allocates a small section of SMEM to minidump table i.e also called
->> global table of content (G-ToC). Each subsystem (APSS, ADSP, ...) has
->> their own table of segments to be included in the minidump and all get
->> their reference from G-ToC. Each segment/region has some details like
->> name, physical address and it's size etc. and it could be anywhere
->> scattered in the DDR.
->>
->> Existing upstream Qualcomm remoteproc driver[1] already supports minidump
->> feature for remoteproc instances like ADSP, MODEM, ... where predefined
->> selective segments of subsystem region can be dumped as part of
->> coredump collection which generates smaller size artifacts compared to
->> complete coredump of subsystem on crash.
->>
->> [1]
->> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/remoteproc/qcom_common.c#n142
->>
->> In addition to managing and querying the APSS minidump description,
->> the Linux driver maintains a ELF header in a segment. This segment
->> gets updated with section/program header whenever a new entry gets
->> registered.
->
-> I'd like to test this series plus your series that sets the multiple
-> download modes.
+This series adds PCIe RC support to the Qcom SDX55 SoC. The PCIe controller
+in SDX55 can act as both Root Complex and Endpoint but only one mode at a
+time i.e., the mode cannot be switched during runtime.
 
-Sure, you are welcome, but for that you need a device running with 
-Qualcomm SoC and if it has a upstream support.
+This series has been tested on Thundercomm T55 board having QCA6390 WLAN
+chipset connected to the PCIe controller. For powering up the WLAN chipset,
+an out-of-tree patch has been used since we do not have a proper driver in
+mainline to handle the power supplies.
 
-Also, testing of this patch needs some minimal out of tree patches and
-i can help you with that.
+NOTE: Even with this series, I couldn't get network connectivity using
+QCA6390. But that's due to ath11k regression for which I've filed a bug
+report: https://bugzilla.kernel.org/show_bug.cgi?id=217070
 
-> Can you include documentation about how to actually use
-> this new feature?
+Merging strategy
+----------------
 
-Will surely do, Since this is still RFC, and i am doubtful on the path 
-of it in documentation directory.
+PCI and binding patches through PCI tree
+PHY patches through PHY tree
+Devicetree patches through Qcom tree
 
-  Also the information that you provided above is really
-> useful. I think that should also go in the documentation file as well.
-> 
-> I already have a reliable way to make a board go BOOM and go into
-> ramdump mode.
+Thanks,
+Mani
 
-That's very nice to hear; but again if you can specify your target 
-specification.
+Changes in v2:
 
--Mukesh
-> 
-> Brian
-> 
+* Added patche to move status property down
+* Added patch to list property values vertically
+* Addressed comments from Konrad
+* Collected review tags
+* Fixed review tag for dts patch
+
+Manivannan Sadhasivam (13):
+  dt-bindings: PCI: qcom: Update maintainers entry
+  dt-bindings: PCI: qcom: Add iommu properties
+  dt-bindings: PCI: qcom: Add SDX55 SoC
+  dt-bindings: PCI: qcom-ep: Fix the unit address used in example
+  ARM: dts: qcom: sdx55: Fix the unit address of PCIe EP node
+  ARM: dts: qcom: sdx55: Rename pcie0_{phy/lane} to pcie_{phy/lane}
+  ARM: dts: qcom: sdx55: Add support for PCIe RC controller
+  ARM: dts: qcom: sdx55: List the property values vertically
+  ARM: dts: qcom: sdx55-t55: Enable PCIe RC support
+  ARM: dts: qcom: sdx55-t55: Move "status" property down
+  phy: qcom-qmp-pcie: Split out EP related init sequence for SDX55
+  phy: qcom-qmp-pcie: Add RC init sequence for SDX55
+  PCI: qcom: Add support for SDX55 SoC
+
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml |   2 +-
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  35 +++-
+ arch/arm/boot/dts/qcom-sdx55-t55.dts          |  53 +++++-
+ .../boot/dts/qcom-sdx55-telit-fn980-tlb.dts   |   2 +-
+ arch/arm/boot/dts/qcom-sdx55.dtsi             | 179 ++++++++++++++----
+ drivers/pci/controller/dwc/pcie-qcom.c        |   4 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      |  91 +++++++--
+ .../qualcomm/phy-qcom-qmp-pcs-pcie-v4_20.h    |   2 +
+ 8 files changed, 303 insertions(+), 65 deletions(-)
+
+-- 
+2.25.1
+
