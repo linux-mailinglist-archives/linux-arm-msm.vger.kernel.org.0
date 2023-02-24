@@ -2,160 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30F9F6A1CE6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 14:21:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F2456A1DF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 16:05:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229923AbjBXNVG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 08:21:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51798 "EHLO
+        id S229740AbjBXPFT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 10:05:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbjBXNVF (ORCPT
+        with ESMTP id S229607AbjBXPFS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 08:21:05 -0500
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FFAC66970;
-        Fri, 24 Feb 2023 05:21:00 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id C8BE55C00FD;
-        Fri, 24 Feb 2023 08:20:57 -0500 (EST)
-Received: from imap51 ([10.202.2.101])
-  by compute6.internal (MEProxy); Fri, 24 Feb 2023 08:20:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; t=1677244857; x=1677331257; bh=Xle0yeUGBO
-        ksma2Gc9p3BVXHO1tPXh7Uos0haf9MEdw=; b=CSaI77jmGYFEpkHo8SbSMJFSNt
-        s+7t+i35rlx+02Rkc5GAegdPGWQwqYVeBJpwrcevDxWbkkFilW4xy+gcUGK/YhKt
-        W3Ir7ftEGg6agi3OWEjE439seloBmVLd0aa0RdMdoZhGTxrvS7fen4k6BRHmwTXu
-        MEmO1qInbkqbvbC81tUMIG05+VQQ6lsiuxvkQsZOey+917S/b6e7fxDL4wSD7ZNE
-        3X6w2UZa8k/kpE/M5P0UtPwg8dsJl144hrrCX/4vIqsE2Reez1vELeNPXCt+BqSk
-        1Ve7MAgrcfDNDWB7QgPkMwjwbTvPYqtIAcGUJbug5lQek62VSMxT6+0IV1yw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1677244857; x=1677331257; bh=Xle0yeUGBOksma2Gc9p3BVXHO1tP
-        Xh7Uos0haf9MEdw=; b=mkUCCb+7KZ0i6c+OmFU3nSQZO0DzLhBKzaVQdyl5hj7E
-        B6La8P7s76VzF19FLer7kfJcr4Z3QO8ycIY8IVCzXqmp2o6+CYcjJbVfmNi/9uwX
-        XpvKmbtloNnJ6Y7cMLaq8VXRSPgiN4OBNMLJmuGkTXXdgJL1Tp5h5KsD//Wd9GzZ
-        1FcwsLxE/53TAJHnzFB1lmPrQG7i/LpXS+CdgRuwWxLFR/0SHcx+Y9gIaH3K7dzs
-        zOvWrGuT9w+pGZ9Rs3aPZN/oeA94Y6zQdAXbVd9aL4ZWVcBDKQMEZpMjEq5gfQDL
-        IUuyD4BbKtiS3S20aPC2bc58cv/DPoQAXMA/HDeeWg==
-X-ME-Sender: <xms:ubn4YwjAurfwTsVL7ndr1bAB6gidcqZijE86FhNUmGeJniTuL60i5g>
-    <xme:ubn4Y5APYULTM1iq2cJDTTfy32rZ2TM3D0wYrrWDNFyU_ud0E5-DUPI77_UkBMJAv
-    dD-EnG9CvOJl_DlEIc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudekfedggeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
-    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
-    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
-    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
-    hrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:ubn4Y4FYb6e9VA8-bXVQxC6VBZOnLCKl1hVxEIMQOdpJjxtA7yBbeA>
-    <xmx:ubn4YxQBvA1VhTF9vQTgsEScgcMpnAep5-eP9iB02UhbhiT6MX6GoA>
-    <xmx:ubn4Y9wxuFRfRM0GGGVjpUYIeOPPEHV_nMYNt9wR3u0QikPh3fwRnQ>
-    <xmx:ubn4YyxFUZ_-OwngXtf0cXoRFAOD81hhN_bdOYgOooL8MiEwQxFZRw>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 5D0F7B60086; Fri, 24 Feb 2023 08:20:57 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-172-g9a2dae1853-fm-20230213.001-g9a2dae18
-Mime-Version: 1.0
-Message-Id: <15aa881f-5cf1-446e-a71e-f62d24e87500@app.fastmail.com>
-In-Reply-To: <a50fa44d-fbc3-9ce2-175b-85c8cd7a9f7f@linaro.org>
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212356.3313181-1-quic_eberman@quicinc.com>
- <dbcfa4e9-a1ad-0f24-77bf-05934ca26bb2@linaro.org>
- <05c4aab8-2d26-b944-adb6-624d67e4a11d@quicinc.com>
- <52d944b1-3ea6-26b7-766a-2fed05dccf3a@linaro.org>
- <c5ff1523-7a62-3d3f-6fa9-792ce4d222e8@quicinc.com>
- <a50fa44d-fbc3-9ce2-175b-85c8cd7a9f7f@linaro.org>
-Date:   Fri, 24 Feb 2023 14:20:40 +0100
-From:   "Arnd Bergmann" <arnd@arndb.de>
-To:     "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
-        "Elliot Berman" <quic_eberman@quicinc.com>,
-        "Alex Elder" <elder@linaro.org>,
-        "Jonathan Corbet" <corbet@lwn.net>,
-        "Prakruthi Deepak Heragu" <quic_pheragu@quicinc.com>
-Cc:     "Murali Nalajala" <quic_mnalajal@quicinc.com>,
-        "Trilok Soni" <quic_tsoni@quicinc.com>,
-        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
-        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Bagas Sanjaya" <bagasdotme@gmail.com>,
-        "Catalin Marinas" <catalin.marinas@arm.com>,
-        "Jassi Brar" <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v10 10/26] gunyah: vm_mgr: Introduce basic VM Manager
-Content-Type: text/plain
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        Fri, 24 Feb 2023 10:05:18 -0500
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D477241E7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 07:05:17 -0800 (PST)
+Received: by mail-qv1-xf2c.google.com with SMTP id op8so14201850qvb.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 07:05:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=O5BpD6FTwoSIc56RP/MeWNUaxFFqGMGY83NroahzU7g=;
+        b=OvJ/9+t5tSih6Cs7/VwVRxdFSmLE3uHmMP2iPMou9Ph4IF275aGHwW0lsDMq34XP7J
+         KtnmR1Kyz9nwbAfPeB24EE6enAvh7TfdZ+LSdCXmejScc26YtKCkcAQ1c9p3rylCaevD
+         bujgKUL0r4fwcaZZHa7LJHd+QTLXr0V0d0H/k6PEFE7bHEZIuzn75UNaXDWjfWE7ghmL
+         qbF7hAEUqyjiIUgBbCc762iOqinFYjyMRYZhvWbSWbaEalQzp2d3mR9f6b0kIvHGLpvW
+         knmQixfvy0915fxY6j1UAH4N39fDRRUzNMpV287lkrqkWaLqSzVDPkT8EbxPjJSHllhq
+         cEFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=O5BpD6FTwoSIc56RP/MeWNUaxFFqGMGY83NroahzU7g=;
+        b=rK1fEt703RMnv8yNEThu52PdlgV6QkNd2tb8p9v/LukRsNKfibTxjHHaL5TuWjMi1u
+         y4DfSVxud3JLOQfHw9bB22IN/d48WiiTLUoGzpWNATnLVXpT22njrZZ9wyMxop8HWE28
+         wNqKNR/nJ9WmBYtLOC0774MqodW6cexr+ZE6iH/bNCsHeXQuJxkua3I8VLte9k0iHt0M
+         B1FwaP/lw2LAs/oPJx1O3ozvlHRHuz8Flbnz8HnqpA4VlM0gLCtrUK0+pQfpn1YAfRzc
+         2YLDw7xcMwDPzbDteNGlRCc6/TownyMfPxi+X0E7IaW3jYFvZwLo4/UhhDyE7jroRYLh
+         ej2g==
+X-Gm-Message-State: AO0yUKVNX+mb99A2WgjVpwuXeuT3wNWX6wLTN4q7FjPVAOBuxhMTE9wE
+        bGVQYDeiSd3T12X7vDMm2bsShg==
+X-Google-Smtp-Source: AK7set82DcP5O0Ce0JRP76yvFk01KL2wCZ2N+/Abd+TwAMwdOsaWfxITECxz9SxWHBh1nhmPmixVNg==
+X-Received: by 2002:a05:6214:e8a:b0:56e:ff37:6b6e with SMTP id hf10-20020a0562140e8a00b0056eff376b6emr31812080qvb.10.1677251116493;
+        Fri, 24 Feb 2023 07:05:16 -0800 (PST)
+Received: from [192.168.0.189] (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
+        by smtp.gmail.com with ESMTPSA id a186-20020a3798c3000000b0073b878e3f30sm6538530qke.59.2023.02.24.07.05.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Feb 2023 07:05:16 -0800 (PST)
+Subject: Re: [Freedreno] [PATCH v3 4/7] drm/msm/a2xx: Implement .gpu_busy
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org
+References: <20230223-topic-opp-v3-0-5f22163cd1df@linaro.org>
+ <20230223-topic-opp-v3-4-5f22163cd1df@linaro.org>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <2f2467d1-f5f3-86dd-edba-fc26e60d142f@marek.ca>
+Date:   Fri, 24 Feb 2023 10:04:19 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
+MIME-Version: 1.0
+In-Reply-To: <20230223-topic-opp-v3-4-5f22163cd1df@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 24, 2023, at 11:29, Srinivas Kandagatla wrote:
-> On 23/02/2023 22:40, Elliot Berman wrote:
+This won't work because a2xx freedreno userspace expects to own all the 
+perfcounters.
 
->>>> Does this means adding #define GH_VM_DEFAULT_ARG 0 ? I am not sure 
->>>> yet what arguments to add here.
->>>>
->>>> The ABI can add new "long" values to GH_CREATE_VM and that wouldn't 
->>>
->>> Sorry, that is exactly what we want to avoid, we can not change the 
->>> UAPI its going to break the userspace.
->>>
->>>> break compatibility with old kernels; old kernels reject it as -EINVAL.
->>>
->>> If you have userspace built with older kernel headers then that will 
->>> break. Am not sure about old-kernels.
->>>
->>> What exactly is the argument that you want to add to GH_CREATE_VM?
->>>
->>> If you want to keep GH_CREATE_VM with no arguments that is fine but 
->>> remove the conflicting comments in the code and document so that its 
->>> not misleading readers/reviewers that the UAPI is going to be modified 
->>> in near future.
->>>
->>>
->> 
->> The convention followed here comes from KVM_CREATE_VM. Is this ioctl 
->> considered bad example?
->> 
->
-> It is recommended to only use _IO for commands without arguments, and 
-> use pointers for passing data. Even though _IO can indicate either 
-> commands with no argument or passing an integer value instead of a 
-> pointer. Am really not sure how this works in compat case.
->
-> Am sure there are tricks that can be done with just using _IO() macro 
-> (ex vfio), but this does not mean that we should not use _IOW to be more 
-> explicit on the type and size of argument that we are expecting.
->
-> On the other hand If its really not possible to change this IOCTL to 
-> _IOW and argument that you are referring would be with in integer range, 
-> then what you have with _IO macro should work.
+This will break perfcounters for userspace, and when userspace isn't 
+using perfcounters, this won't count correctly because userspace writes 
+0 to CP_PERFMON_CNTL at the start of every submit.
 
-Passing an 'unsigned long' value instead of a pointer is fine for compat
-mode, as a 32-bit compat_ulong_t always fits inside of the 64-bit
-unsigned long. The downside is that portable code cannot have a
-single ioctl handler function that takes both commands with pointers
-and other commands with integer arguments, as some architectures
-(i.e. s390, possibly arm64+morello in the future) need to mangle
-pointer arguments using compat_ptr() but must not do that on integer
-arguments.
-
-     Arnd
+On 2/23/23 5:52 AM, Konrad Dybcio wrote:
+> Implement gpu_busy based on the downstream msm-3.4 code [1]. This
+> allows us to use devfreq on this old old old hardware!
+> 
+> [1] https://github.com/LineageOS/android_kernel_sony_apq8064/blob/lineage-16.0/drivers/gpu/msm/adreno_a2xx.c#L1975
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/adreno/a2xx_gpu.c | 26 ++++++++++++++++++++++++++
+>   1 file changed, 26 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
+> index c67089a7ebc1..104bdf28cdaf 100644
+> --- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
+> @@ -481,6 +481,31 @@ a2xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
+>   	return aspace;
+>   }
+>   
+> +/* While the precise size of this field is unknown, it holds at least these three values.. */
+> +static u64 a2xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
+> +{
+> +	u64 busy_cycles;
+> +
+> +	/* Freeze the counter */
+> +	gpu_write(gpu, REG_A2XX_CP_PERFMON_CNTL, PERF_STATE_FREEZE);
+> +
+> +	busy_cycles = gpu_read64(gpu, REG_A2XX_RBBM_PERFCOUNTER1_LO);
+> +
+> +	/* Reset the counter */
+> +	gpu_write(gpu, REG_A2XX_CP_PERFMON_CNTL, PERF_STATE_RESET);
+> +
+> +	/* Re-enable the performance monitors */
+> +	gpu_rmw(gpu, REG_A2XX_RBBM_PM_OVERRIDE2,
+> +		A2XX_RBBM_PM_OVERRIDE2_DEBUG_PERF_SCLK_PM_OVERRIDE,
+> +		A2XX_RBBM_PM_OVERRIDE2_DEBUG_PERF_SCLK_PM_OVERRIDE);
+> +	gpu_write(gpu, REG_A2XX_RBBM_PERFCOUNTER1_SELECT, 1);
+> +	gpu_write(gpu, REG_A2XX_CP_PERFMON_CNTL, PERF_STATE_ENABLE);
+> +
+> +	*out_sample_rate = clk_get_rate(gpu->core_clk);
+> +
+> +	return busy_cycles;
+> +}
+> +
+>   static u32 a2xx_get_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
+>   {
+>   	ring->memptrs->rptr = gpu_read(gpu, REG_AXXX_CP_RB_RPTR);
+> @@ -502,6 +527,7 @@ static const struct adreno_gpu_funcs funcs = {
+>   #if defined(CONFIG_DEBUG_FS) || defined(CONFIG_DEV_COREDUMP)
+>   		.show = adreno_show,
+>   #endif
+> +		.gpu_busy = a2xx_gpu_busy,
+>   		.gpu_state_get = a2xx_gpu_state_get,
+>   		.gpu_state_put = adreno_gpu_state_put,
+>   		.create_address_space = a2xx_create_address_space,
+> 
