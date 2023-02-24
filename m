@@ -2,145 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F2456A1DF7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 16:05:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06B2E6A1E80
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 16:25:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229740AbjBXPFT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 10:05:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51804 "EHLO
+        id S229482AbjBXPZw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 10:25:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229607AbjBXPFS (ORCPT
+        with ESMTP id S229456AbjBXPZv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 10:05:18 -0500
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D477241E7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 07:05:17 -0800 (PST)
-Received: by mail-qv1-xf2c.google.com with SMTP id op8so14201850qvb.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 07:05:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=O5BpD6FTwoSIc56RP/MeWNUaxFFqGMGY83NroahzU7g=;
-        b=OvJ/9+t5tSih6Cs7/VwVRxdFSmLE3uHmMP2iPMou9Ph4IF275aGHwW0lsDMq34XP7J
-         KtnmR1Kyz9nwbAfPeB24EE6enAvh7TfdZ+LSdCXmejScc26YtKCkcAQ1c9p3rylCaevD
-         bujgKUL0r4fwcaZZHa7LJHd+QTLXr0V0d0H/k6PEFE7bHEZIuzn75UNaXDWjfWE7ghmL
-         qbF7hAEUqyjiIUgBbCc762iOqinFYjyMRYZhvWbSWbaEalQzp2d3mR9f6b0kIvHGLpvW
-         knmQixfvy0915fxY6j1UAH4N39fDRRUzNMpV287lkrqkWaLqSzVDPkT8EbxPjJSHllhq
-         cEFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O5BpD6FTwoSIc56RP/MeWNUaxFFqGMGY83NroahzU7g=;
-        b=rK1fEt703RMnv8yNEThu52PdlgV6QkNd2tb8p9v/LukRsNKfibTxjHHaL5TuWjMi1u
-         y4DfSVxud3JLOQfHw9bB22IN/d48WiiTLUoGzpWNATnLVXpT22njrZZ9wyMxop8HWE28
-         wNqKNR/nJ9WmBYtLOC0774MqodW6cexr+ZE6iH/bNCsHeXQuJxkua3I8VLte9k0iHt0M
-         B1FwaP/lw2LAs/oPJx1O3ozvlHRHuz8Flbnz8HnqpA4VlM0gLCtrUK0+pQfpn1YAfRzc
-         2YLDw7xcMwDPzbDteNGlRCc6/TownyMfPxi+X0E7IaW3jYFvZwLo4/UhhDyE7jroRYLh
-         ej2g==
-X-Gm-Message-State: AO0yUKVNX+mb99A2WgjVpwuXeuT3wNWX6wLTN4q7FjPVAOBuxhMTE9wE
-        bGVQYDeiSd3T12X7vDMm2bsShg==
-X-Google-Smtp-Source: AK7set82DcP5O0Ce0JRP76yvFk01KL2wCZ2N+/Abd+TwAMwdOsaWfxITECxz9SxWHBh1nhmPmixVNg==
-X-Received: by 2002:a05:6214:e8a:b0:56e:ff37:6b6e with SMTP id hf10-20020a0562140e8a00b0056eff376b6emr31812080qvb.10.1677251116493;
-        Fri, 24 Feb 2023 07:05:16 -0800 (PST)
-Received: from [192.168.0.189] (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
-        by smtp.gmail.com with ESMTPSA id a186-20020a3798c3000000b0073b878e3f30sm6538530qke.59.2023.02.24.07.05.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Feb 2023 07:05:16 -0800 (PST)
-Subject: Re: [Freedreno] [PATCH v3 4/7] drm/msm/a2xx: Implement .gpu_busy
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org
-References: <20230223-topic-opp-v3-0-5f22163cd1df@linaro.org>
- <20230223-topic-opp-v3-4-5f22163cd1df@linaro.org>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <2f2467d1-f5f3-86dd-edba-fc26e60d142f@marek.ca>
-Date:   Fri, 24 Feb 2023 10:04:19 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        Fri, 24 Feb 2023 10:25:51 -0500
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C57D59E4A;
+        Fri, 24 Feb 2023 07:25:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1677252351; x=1708788351;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=B1rko9fih8YgNn8TepqzPls+UuWXwaza22aUx0qcL00=;
+  b=ej+a3jVSiPH6KtI/xzzy4sQd5y50oWShXTp4AV6o3sE+cXnSlGs6K0CS
+   JY1PhQM4I7unfKIXOKcHCLgxkqChWxjmqldFfVum0tTmR17qDyEG0LIYb
+   vakrfyQ80QkoW8ldykBHjWJS/2EqjVcUXII13gIiwCj39fln8FykNEUMm
+   +xnbvT62aRro1YmaemSB8SUMMaxx6i4JKdlTU5aEmcTht7nfFdg3Ah0Nz
+   r/L5YhLiBMDCOlgar4WhiWc3OP8gfH4liDBsMJ0d0ir//Q4b7Qocc9w0/
+   Q0uKyTJa00HztWPsZZt+i1lsIK1GqYIPKWh6Bsfr3ONroVPaR7vIKz8tJ
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10631"; a="419731462"
+X-IronPort-AV: E=Sophos;i="5.97,325,1669104000"; 
+   d="scan'208";a="419731462"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2023 07:25:50 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10631"; a="736824545"
+X-IronPort-AV: E=Sophos;i="5.97,325,1669104000"; 
+   d="scan'208";a="736824545"
+Received: from joe-255.igk.intel.com (HELO localhost) ([10.91.220.57])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2023 07:25:48 -0800
+Date:   Fri, 24 Feb 2023 16:25:46 +0100
+From:   Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     ogabbay@kernel.org, airlied@gmail.com, daniel@ffwll.ch,
+        dri-devel@lists.freedesktop.org, jacek.lawrynowicz@linux.intel.com,
+        quic_pkanojiy@quicinc.com, quic_carlv@quicinc.com,
+        quic_ajitpals@quicinc.com, linux-doc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 5/8] accel/qaic: Add datapath
+Message-ID: <20230224152546.GB3547587@linux.intel.com>
+References: <1675698105-19025-1-git-send-email-quic_jhugo@quicinc.com>
+ <1675698105-19025-6-git-send-email-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
-In-Reply-To: <20230223-topic-opp-v3-4-5f22163cd1df@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1675698105-19025-6-git-send-email-quic_jhugo@quicinc.com>
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This won't work because a2xx freedreno userspace expects to own all the 
-perfcounters.
+On Mon, Feb 06, 2023 at 08:41:42AM -0700, Jeffrey Hugo wrote:
+> +#define SEM_VAL_MASK	GENMASK_ULL(11, 0)
+> +#define SEM_INDEX_MASK	GENMASK_ULL(4, 0)
+> +#define BULK_XFER	BIT(3)
+> +#define GEN_COMPLETION	BIT(4)
+> +#define INBOUND_XFER	1
+> +#define OUTBOUND_XFER	2
+> +#define REQHP_OFF	0x0 /* we read this */
+> +#define REQTP_OFF	0x4 /* we write this */
+> +#define RSPHP_OFF	0x8 /* we write this */
+> +#define RSPTP_OFF	0xc /* we read this */
+> +
+> +#define ENCODE_SEM(val, index, sync, cmd, flags)			\
+> +			((val) |					\
+> +			(index) << 16 |					\
+> +			(sync) << 22 |					\
+> +			(cmd) << 24 |					\
+> +			((cmd) ? BIT(31) : 0) |				\
+> +			(((flags) & SEM_INSYNCFENCE) ? BIT(30) : 0) |	\
+> +			(((flags) & SEM_OUTSYNCFENCE) ? BIT(29) : 0))
 
-This will break perfcounters for userspace, and when userspace isn't 
-using perfcounters, this won't count correctly because userspace writes 
-0 to CP_PERFMON_CNTL at the start of every submit.
+This could be probably better coded using FIELD_PREP()
+with integrated checks of passed values not exceed
+field width.
 
-On 2/23/23 5:52 AM, Konrad Dybcio wrote:
-> Implement gpu_busy based on the downstream msm-3.4 code [1]. This
-> allows us to use devfreq on this old old old hardware!
-> 
-> [1] https://github.com/LineageOS/android_kernel_sony_apq8064/blob/lineage-16.0/drivers/gpu/msm/adreno_a2xx.c#L1975
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   drivers/gpu/drm/msm/adreno/a2xx_gpu.c | 26 ++++++++++++++++++++++++++
->   1 file changed, 26 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-> index c67089a7ebc1..104bdf28cdaf 100644
-> --- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-> @@ -481,6 +481,31 @@ a2xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
->   	return aspace;
->   }
->   
-> +/* While the precise size of this field is unknown, it holds at least these three values.. */
-> +static u64 a2xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
+> +struct dbc_req { /* everything must be little endian encoded */
+
+This comment does not provide much value IMHO ...
+
+> +inline int get_dbc_req_elem_size(void)
 > +{
-> +	u64 busy_cycles;
-> +
-> +	/* Freeze the counter */
-> +	gpu_write(gpu, REG_A2XX_CP_PERFMON_CNTL, PERF_STATE_FREEZE);
-> +
-> +	busy_cycles = gpu_read64(gpu, REG_A2XX_RBBM_PERFCOUNTER1_LO);
-> +
-> +	/* Reset the counter */
-> +	gpu_write(gpu, REG_A2XX_CP_PERFMON_CNTL, PERF_STATE_RESET);
-> +
-> +	/* Re-enable the performance monitors */
-> +	gpu_rmw(gpu, REG_A2XX_RBBM_PM_OVERRIDE2,
-> +		A2XX_RBBM_PM_OVERRIDE2_DEBUG_PERF_SCLK_PM_OVERRIDE,
-> +		A2XX_RBBM_PM_OVERRIDE2_DEBUG_PERF_SCLK_PM_OVERRIDE);
-> +	gpu_write(gpu, REG_A2XX_RBBM_PERFCOUNTER1_SELECT, 1);
-> +	gpu_write(gpu, REG_A2XX_CP_PERFMON_CNTL, PERF_STATE_ENABLE);
-> +
-> +	*out_sample_rate = clk_get_rate(gpu->core_clk);
-> +
-> +	return busy_cycles;
+> +	return sizeof(struct dbc_req);
 > +}
 > +
->   static u32 a2xx_get_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
->   {
->   	ring->memptrs->rptr = gpu_read(gpu, REG_AXXX_CP_RB_RPTR);
-> @@ -502,6 +527,7 @@ static const struct adreno_gpu_funcs funcs = {
->   #if defined(CONFIG_DEBUG_FS) || defined(CONFIG_DEV_COREDUMP)
->   		.show = adreno_show,
->   #endif
-> +		.gpu_busy = a2xx_gpu_busy,
->   		.gpu_state_get = a2xx_gpu_state_get,
->   		.gpu_state_put = adreno_gpu_state_put,
->   		.create_address_space = a2xx_create_address_space,
-> 
+> +inline int get_dbc_rsp_elem_size(void)
+> +{
+> +	return sizeof(struct dbc_rsp);
+> +}
+
+.. as those those inliners, instead of using sizeof() directly.
+Up to you to change.
+
+> +static int reserve_pages(unsigned long start_pfn, unsigned long nr_pages,
+> +			 bool reserve)
+> +{
+> +	unsigned long pfn;
+> +	unsigned long end_pfn = start_pfn + nr_pages;
+> +	struct page *page;
+> +
+> +	for (pfn = start_pfn; pfn < end_pfn; pfn++) {
+> +		if (!pfn_valid(pfn))
+> +			return -EINVAL;
+> +		page =  pfn_to_page(pfn);
+> +		if (reserve)
+> +			SetPageReserved(page);
+> +		else
+> +			ClearPageReserved(page);
+
+It is needed? Looks like taken from some legacy code.
+
+> +static int copy_sgt(struct qaic_device *qdev, struct sg_table **sgt_out,
+> +		    struct sg_table *sgt_in, u64 size, u64 offset)
+> +{
+> +	int total_len, len, nents, offf = 0, offl = 0;
+> +	struct scatterlist *sg, *sgn, *sgf, *sgl;
+> +	struct sg_table *sgt;
+> +	int ret, j;
+> +
+> +	/* find out number of relevant nents needed for this mem */
+> +	total_len = 0;
+> +	sgf = NULL;
+> +	sgl = NULL;
+> +	nents = 0;
+> +
+> +	size = size ? size : PAGE_SIZE;
+> +	for (sg = sgt_in->sgl; sg; sg = sg_next(sg)) {
+> +		len = sg_dma_len(sg);
+> +
+> +		if (!len)
+> +			continue;
+> +		if (offset >= total_len && offset < total_len + len) {
+> +			sgf = sg;
+> +			offf = offset - total_len;
+> +		}
+> +		if (sgf)
+> +			nents++;
+> +		if (offset + size >= total_len &&
+> +		    offset + size <= total_len + len) {
+> +			sgl = sg;
+> +			offl = offset + size - total_len;
+> +			break;
+> +		}
+> +		total_len += len;
+> +	}
+> +
+> +	if (!sgf || !sgl) {
+> +		ret = -EINVAL;
+> +		goto out;
+> +	}
+> +
+> +	sgt = kzalloc(sizeof(*sgt), GFP_KERNEL);
+> +	if (!sgt) {
+> +		ret = -ENOMEM;
+> +		goto out;
+> +	}
+> +
+> +	ret = sg_alloc_table(sgt, nents, GFP_KERNEL);
+> +	if (ret)
+> +		goto free_sgt;
+> +
+> +	/* copy relevant sg node and fix page and length */
+> +	sgn = sgf;
+> +	for_each_sgtable_sg(sgt, sg, j) {
+> +		memcpy(sg, sgn, sizeof(*sg));
+> +		if (sgn == sgf) {
+> +			sg_dma_address(sg) += offf;
+> +			sg_dma_len(sg) -= offf;
+> +			sg_set_page(sg, sg_page(sgn),
+> +				    sg_dma_len(sg), offf);
+> +		} else {
+> +			offf = 0;
+> +		}
+> +		if (sgn == sgl) {
+> +			sg_dma_len(sg) = offl - offf;
+> +			sg_set_page(sg, sg_page(sgn),
+> +				    offl - offf, offf);
+> +			sg_mark_end(sg);
+> +			break;
+> +		}
+> +		sgn = sg_next(sgn);
+> +	}
+
+Why not use sg_copy_table() ? Overall copy_sgt() seems to be something
+that could be replaced by generic helper or at least simplify.
+
+Regards
+Stanislaw
+
