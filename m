@@ -2,92 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C3416A1A6B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 11:38:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DEB786A1A7D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 11:43:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229676AbjBXKii (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 05:38:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36914 "EHLO
+        id S230050AbjBXKnN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 05:43:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229532AbjBXKh5 (ORCPT
+        with ESMTP id S230060AbjBXKmn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 05:37:57 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 570F111677
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 02:36:58 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id j2so13248630wrh.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 02:36:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pvWmYx42QLJgDLZTYVYpNPOqGVtdvTfrF95OkRgApKM=;
-        b=vlRzqA79qlN+ZYpncwnSbHM941EsreF5zS4Rz7hEPtJP612EUMzXC00x1KIqJ6dZqc
-         Aw03cJBZh7IPEfEkKVNqwS/Aouaud1tgFe0w1JgZDFNeVwQ3ey1VwilSf3AWctzcHAkd
-         VLU0K8Cu5VJOdd6sYssYaMjXH5A4Wdlj00bXUA43zcaHMJU9Xqbf/vatckom2lB5s2lP
-         LDicGxgdfRoHkpZgRyeKvjN21LEOdNOsaCY+40fXl5eEJZKj016L9K6PFl/+6PFvMF6S
-         2JUtEHe8XhiFA8GVG1dEyR7Z6XWSbbdCHaneBNU5/RPo1WjecZGGFzJIRKSrMSMBRnz9
-         fPnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pvWmYx42QLJgDLZTYVYpNPOqGVtdvTfrF95OkRgApKM=;
-        b=dbU2rjIQNfoV/RLOAqrsrdcgkULYn73vV6VjtfzFAsaekpaT9xm3lJu8fRu/LrKKj+
-         rU7hSpXJd3YRXZj1BupLmbd/TwN3vvdvCHysrMAreWa44Rvbv1udz3WlwZ+W4LNRP6Hx
-         guEZx8cuxr1DiwLjSksQo2WO4ycal/CjGLs91tvNL+QNhTDc2B/iwoyeK9fKSbd4E0Ds
-         lAp6BzepsayEkmhKUGIo1dTSuPlVMcSdPPgQq0viiP+uu4wViDf0FyZVQnI8UmUrgUXx
-         6Eg+Nqrcq+Q3tNGIHNvYdcA4sGmoz4G5kWFYrmqD6g7gOUCQ57gpCncIb2tiMcJrh3Bp
-         0crQ==
-X-Gm-Message-State: AO0yUKWGiFH9DusPILcxnLXeyiwowy16iR5IyzFXADTQUzlu9FP6Ok5n
-        jk67sZdkVd6JluIE6Sk+YMS1Gw==
-X-Google-Smtp-Source: AK7set+ftr+1Us5pLfDMiYKzU/aFIDiOMntZLKpwkW2J4HZ+kkrJXl+yjlHb57cinOoe+r4IWJMmKg==
-X-Received: by 2002:a5d:60ca:0:b0:2c7:e909:5fcf with SMTP id x10-20020a5d60ca000000b002c7e9095fcfmr106364wrt.3.1677235016741;
-        Fri, 24 Feb 2023 02:36:56 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id o25-20020a05600c511900b003dfe549da4fsm2660059wms.18.2023.02.24.02.36.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Feb 2023 02:36:56 -0800 (PST)
-Message-ID: <82a6780a-71d5-746a-aa69-c2bc32755979@linaro.org>
-Date:   Fri, 24 Feb 2023 10:36:54 +0000
+        Fri, 24 Feb 2023 05:42:43 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DCEF5FD5;
+        Fri, 24 Feb 2023 02:41:15 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31OARbEx001357;
+        Fri, 24 Feb 2023 10:40:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=8cWmvPwNwNmGYejx+XOmF4t+iGtdVe0NNZaVfqLw+CM=;
+ b=m44a5+AZmREmQBqj3NVlwF80MBGPyQT8oPnPwWDDfrfrgm5Uh0s6qA/GHWsNBwnntku5
+ Sg0Kn/EUOUZiPLzK12O89fVL6jdw9xcoEvk/CHVl3BzMwjpWA5cIsqWpOZmmDYDQ7l2q
+ DEQpADRPrR2IEDaKQeERSZFnjPQqDMPe+HOUkMa0VWUnQwtOWq/u28qIULA3PafN15S1
+ jz95ugB2Y06cOAQzyA4+Gal2Qe/5Q7rGdtHJySyawrd2FQWwFMkcNN0ndK5A4RQOIqAN
+ jfmq7U4WpDCwULAjQ7QedgxcyWmah5wShuUF84ohWWRCo2hXbuZWL2ynTRccS5Vk3Tbn rg== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nxugh80tc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Feb 2023 10:40:51 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31OAeoqY024499
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Feb 2023 10:40:50 GMT
+Received: from [10.216.22.47] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 24 Feb
+ 2023 02:40:45 -0800
+Message-ID: <47542dbb-8cf3-6eae-a38e-910d38bd960b@quicinc.com>
+Date:   Fri, 24 Feb 2023 16:10:42 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v10 12/26] gunyah: vm_mgr: Add/remove user memory regions
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [RFC PATCH 0/6] Add basic Minidump kernel driver support
 Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212417.3315422-1-quic_eberman@quicinc.com>
- <db397198-d079-faa5-691f-c4b06822d2f3@linaro.org>
- <8f47b97a-9341-110e-c96b-7efdb395d110@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <8f47b97a-9341-110e-c96b-7efdb395d110@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Brian Masney <bmasney@redhat.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <keescook@chromium.org>,
+        <tony.luck@intel.com>, <gpiccoli@igalia.com>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-hardening@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <1676978713-7394-1-git-send-email-quic_mojha@quicinc.com>
+ <Y/deHzijzvuvCJ2M@x1>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <Y/deHzijzvuvCJ2M@x1>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: T7W3uxWLeUgO6aChRz5rQfM-dvuvUMbl
+X-Proofpoint-ORIG-GUID: T7W3uxWLeUgO6aChRz5rQfM-dvuvUMbl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-24_06,2023-02-24_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
+ bulkscore=0 phishscore=0 mlxlogscore=999 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 mlxscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302240087
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -95,48 +85,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Thanks Brian for your interest in this series.
 
-
-On 24/02/2023 00:43, Elliot Berman wrote:
->>> +/*
->>> + * ioctls for VM fds
->>> + */
->>> +
->>> +/**
->>> + * struct gh_userspace_memory_region - Userspace memory descripion 
->>> for GH_VM_SET_USER_MEM_REGION
->>> + * @label: Unique identifer to the region.
->>> + * @flags: Flags for memory parcel behavior
->>> + * @guest_phys_addr: Location of the memory region in guest's memory 
->>> space (page-aligned)#
+On 2/23/2023 6:07 PM, Brian Masney wrote:
+> On Tue, Feb 21, 2023 at 04:55:07PM +0530, Mukesh Ojha wrote:
+>> Minidump is a best effort mechanism to collect useful and predefined data
+>> for first level of debugging on end user devices running on Qualcomm SoCs.
+>> It is built on the premise that System on Chip (SoC) or subsystem part of
+>> SoC crashes, due to a range of hardware and software bugs. Hence, the
+>> ability to collect accurate data is only a best-effort. The data collected
+>> could be invalid or corrupted, data collection itself could fail, and so on.
 >>
->> Note about overlapping here would be useful.
+>> Qualcomm devices in engineering mode provides a mechanism for generating
+>> full system ramdumps for post mortem debugging. But in some cases it's
+>> however not feasible to capture the entire content of RAM. The minidump
+>> mechanism provides the means for selecting which snippets should be
+>> included in the ramdump.
 >>
+>> The core of minidump feature is part of Qualcomm's boot firmware code.
+>> It initializes shared memory (SMEM), which is a part of DDR and
+>> allocates a small section of SMEM to minidump table i.e also called
+>> global table of content (G-ToC). Each subsystem (APSS, ADSP, ...) has
+>> their own table of segments to be included in the minidump and all get
+>> their reference from G-ToC. Each segment/region has some details like
+>> name, physical address and it's size etc. and it could be anywhere
+>> scattered in the DDR.
+>>
+>> Existing upstream Qualcomm remoteproc driver[1] already supports minidump
+>> feature for remoteproc instances like ADSP, MODEM, ... where predefined
+>> selective segments of subsystem region can be dumped as part of
+>> coredump collection which generates smaller size artifacts compared to
+>> complete coredump of subsystem on crash.
+>>
+>> [1]
+>> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/remoteproc/qcom_common.c#n142
+>>
+>> In addition to managing and querying the APSS minidump description,
+>> the Linux driver maintains a ELF header in a segment. This segment
+>> gets updated with section/program header whenever a new entry gets
+>> registered.
+>
+> I'd like to test this series plus your series that sets the multiple
+> download modes.
+
+Sure, you are welcome, but for that you need a device running with 
+Qualcomm SoC and if it has a upstream support.
+
+Also, testing of this patch needs some minimal out of tree patches and
+i can help you with that.
+
+> Can you include documentation about how to actually use
+> this new feature?
+
+Will surely do, Since this is still RFC, and i am doubtful on the path 
+of it in documentation directory.
+
+  Also the information that you provided above is really
+> useful. I think that should also go in the documentation file as well.
 > 
-> I'd like to reduce duplicate documentation where possible. I was 
-This is exactly what .rst files can provide.
+> I already have a reliable way to make a board go BOOM and go into
+> ramdump mode.
 
-If you have a proper kernel-doc type documentation in header/source 
-files, these can be directly used in .rst files.
+That's very nice to hear; but again if you can specify your target 
+specification.
 
-The reStructuredText (.rst) files may contain directives to include 
-structured documentation comments, or kernel-doc comments, from source 
-files.
-
-ex:
-.. kernel-doc:: include/linux/gunyah.h
-    :internal:
-
-
---srini
-> generally following this procedure:
->   - include/uapi/linux/gunyah.h docstrings have basic information to 
-> remind what the field is
->   - Documentation/virt/gunyah/ documentation explains how to properly 
-> use the APIs
+-Mukesh
 > 
-> I think it's definitely good idea to have separate documentation beyond 
-> what can be described in docstrings here.
+> Brian
 > 
-> Thanks,
-> Elliot
