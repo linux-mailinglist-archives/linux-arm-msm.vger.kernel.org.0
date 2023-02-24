@@ -2,71 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9DCA6A2534
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Feb 2023 00:53:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 77F826A2541
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Feb 2023 00:57:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229569AbjBXXxz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 18:53:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48544 "EHLO
+        id S229577AbjBXX5P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 18:57:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbjBXXxz (ORCPT
+        with ESMTP id S229534AbjBXX5O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 18:53:55 -0500
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A19A31B2F1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 15:53:53 -0800 (PST)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-536bbe5f888so22559607b3.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 15:53:53 -0800 (PST)
+        Fri, 24 Feb 2023 18:57:14 -0500
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F15D56A7B0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 15:57:12 -0800 (PST)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-536cb25982eso21895657b3.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 15:57:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=il0Lfk8v/wMXGKCUf0z3B1RYBxM/gWsQLCwY0xU7Rj4=;
-        b=vLb5huxOZdbt+fxkhIICNLk5fYM/NFYIxomJZCdtaMZmIcBJFiMx++9oxie6uM5dxn
-         VG7N5L0OEV1NCjd4xTuK/DTAuT5HKLQAWmFEFx4O/wSk6vmK04gnQqpFhXezVNl6ZFar
-         s0LMQQTA4Pm6MvSt5B/Wuq0ZylSGU4w4vRABbXjc42asMDKKutfcvN7Hy9NFtBr4ZCaM
-         LhgQIXZPmQtNCFXGg1jkX12YokGy/fKemQd4BjXlnLd7g4cK5A4+DROnu3+uQWwSil/7
-         WdqFPow1DhtJ8eF70fGHzGHQv1dYmrJsysifbv58ozuodpMjCfNZ401q7fqGVkmFPOZW
-         3FNg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=oTwH63vhsPUHCzwdo61GhnH28Y4i2//starUXdJIgb8=;
+        b=DBw7IzE5NgvoWL7Yv3rGTZv8qnoe+Pzd9l8UT4RUfLxKwtC6hTLlnwF833rVKEmhSs
+         9xOt/hKIX65JKE4DdsPv6FZLEN2rb/X2Bo342B2EThsKH1Dqer/Ovpscw1NgzpPLT8X7
+         4emDysrEduOgZ9JLltkEdtPRBLVPtHgdAT0HNJkH5MZU2Dp+FgVixRp9E2nkmuv5gg/c
+         2+6tW2XElSs5Zdb36sWnRpn0wTx56nEX+qF4y4JPeMLpVQJOZJKIo9MzhcpxIb9R/ATX
+         +m/4KEPWint3sik9YaBKgH4CkikMVa+ad3Etdwzs5vMSmEMR9Nd8EEvy68/c9paG8HWm
+         73QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=il0Lfk8v/wMXGKCUf0z3B1RYBxM/gWsQLCwY0xU7Rj4=;
-        b=cl1kAkx3rjD4UVQ89O1JSgX0GplSyFxhOYlIeKCij7SPwgjaehSUIQhgAH69LsdCVk
-         1+IJ8mIW2tPQ8GQ962wA9QVfOCPO+EKA94zP5LslBIuT9OwLO8LEY815aJ5Bqw0GpjjJ
-         VIhRw/HIwn2MoBwsyM6VGlB4aBPFG1lyeHcipEzGBH5LIf3Krml6GMKGjjAAlX2DHfiB
-         nRD1tbsiN4NIPuFIGsLR5jr02l4gtezXXAzWEVzM37Rt7Z7I1CuSflLG1CyQAXypAAJA
-         i6KCg5G+CB4aQB/DZj+coOv0MQ/izExorrWEVj+h4jzGkgti7YrThhqg4qlfzWJhZPNk
-         Jk7Q==
-X-Gm-Message-State: AO0yUKVG0JD+YCij8Ffym3pZy3jM2Y349y7Y9pM8C3rCucU6OUJkDCoV
-        rYvylpw9JIloJAC7MbzFGPnRi3+20jAqyz22vxl1HQ==
-X-Google-Smtp-Source: AK7set+EYm4TvALJovISjq2Lgnd8DKcNgvkYPAlweBlG0TEQ64ieMnqAF9Zf4ZWxudAkuV/FHVn7XAIvyWRG7GnOEoI=
-X-Received: by 2002:a05:6902:1203:b0:a09:314f:9f09 with SMTP id
- s3-20020a056902120300b00a09314f9f09mr1172424ybu.6.1677282832795; Fri, 24 Feb
- 2023 15:53:52 -0800 (PST)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oTwH63vhsPUHCzwdo61GhnH28Y4i2//starUXdJIgb8=;
+        b=mCPHQMo6d7dbDtQfV2wDiZ+xH+OFdHUvkIp1j8LWr5EXV2E1nVwrdDOWcCvSjIDCxQ
+         gyvAlYL4flI2iwaf3fWSSwIsBoh8JCDszxx2Mu+nwkqutGjREYUxsGz04b1qihO12Zeg
+         UFplp/9gXivCtqASXPYC788Q0lGoDW8JM8UzQIJxHOMkY1Ie4Oje9ldMJKfBPOFI0e/Y
+         YsiGjrqNGdF0lPZLodZHUwRcSiG0SU2iV0QZbQrEolDLC0UjG90TdgKcDsWFGJO7RUO/
+         q/mLYS8bvj8aGQWNovT3k5BQQn6ZguannLBRShazbvXnEFh1LFOesfncKZF0cP05lHsA
+         iSxQ==
+X-Gm-Message-State: AO0yUKXNKmY+IL1rswsGF4RVcFLNOe5CiP/4sqfINPdSJjW/w+wFU6UB
+        CA3WWir/LMnxh/WmYtU58sh2UlCTwUzvZmYK4i9vaA==
+X-Google-Smtp-Source: AK7set+CKAAk4bPnyFYIOvxwz2JBmKTwmgqC3ZbR6JqTCAuMnOEE9zP/DONxCqzL8Q5pCNfKGzrSvc/9xN/AN4WKfEw=
+X-Received: by 2002:a05:6902:43:b0:9f2:a18c:90ed with SMTP id
+ m3-20020a056902004300b009f2a18c90edmr4212261ybh.10.1677283032150; Fri, 24 Feb
+ 2023 15:57:12 -0800 (PST)
 MIME-Version: 1.0
 References: <1677267647-28672-1-git-send-email-quic_khsieh@quicinc.com>
  <1677267647-28672-2-git-send-email-quic_khsieh@quicinc.com>
- <42b3c193-8897-cfe9-1cae-2f9a66f7983a@linaro.org> <741be2a3-0208-2f40-eedf-d439c4e6795b@quicinc.com>
- <F8A4FC18-C64E-4011-BC08-18EB3B95A357@linaro.org> <d5ee8233-66c8-9b88-417c-6cf9cc5c84fe@quicinc.com>
-In-Reply-To: <d5ee8233-66c8-9b88-417c-6cf9cc5c84fe@quicinc.com>
+ <42b3c193-8897-cfe9-1cae-2f9a66f7983a@linaro.org> <1b5afec9-454d-e1b9-0274-f0476edb4d21@quicinc.com>
+In-Reply-To: <1b5afec9-454d-e1b9-0274-f0476edb4d21@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 25 Feb 2023 01:53:41 +0200
-Message-ID: <CAA8EJpro5Q-2ZpnDJt40UhFX7Zp9oBhrto=FDOERzCDR2BDPvQ@mail.gmail.com>
+Date:   Sat, 25 Feb 2023 01:57:01 +0200
+Message-ID: <CAA8EJprowFyBMdW5QC2zG0gYUtxJ-hHXqhPfYTct2GzYJKLSHg@mail.gmail.com>
 Subject: Re: [RFC PATCH 1/2] drm/msm/dpu: add dsc helper functions
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
         sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
         vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -76,119 +73,125 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 25 Feb 2023 at 00:26, Abhinav Kumar <quic_abhinavk@quicinc.com> wro=
-te:
-> On 2/24/2023 1:36 PM, Dmitry Baryshkov wrote:
-> > 24 =D1=84=D0=B5=D0=B2=D1=80=D0=B0=D0=BB=D1=8F 2023 =D0=B3. 23:23:03 GMT=
-+02:00, Abhinav Kumar <quic_abhinavk@quicinc.com> =D0=BF=D0=B8=D1=88=D0=B5=
-=D1=82:
-> >> On 2/24/2023 1:13 PM, Dmitry Baryshkov wrote:
-> >>> On 24/02/2023 21:40, Kuogee Hsieh wrote:
-> >>>> Add DSC helper functions based on DSC configuration profiles to prod=
-uce
-> >>>> DSC related runtime parameters through both table look up and runtim=
-e
-> >>>> calculation to support DSC on DPU.
-> >>>>
-> >>>> There are 6 different DSC configuration profiles are supported curre=
-ntly.
-> >>>> DSC configuration profiles are differiented by 5 keys, DSC version (=
-V1.1),
-> >>>> chroma (444/422/420), colorspace (RGB/YUV), bpc(8/10),
-> >>>> bpp (6/7/7.5/8/9/10/12/15) and SCR (0/1).
-> >>>>
-> >>>> Only DSC version V1.1 added and V1.2 will be added later.
-> >>>
-> >>> These helpers should go to drivers/gpu/drm/display/drm_dsc_helper.c
-> >>> Also please check that they can be used for i915 or for amdgpu (ideal=
-ly for both of them).
-> >>>
+On Sat, 25 Feb 2023 at 01:51, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+>
+> On 2/24/2023 1:13 PM, Dmitry Baryshkov wrote:
+> > On 24/02/2023 21:40, Kuogee Hsieh wrote:
+> >> Add DSC helper functions based on DSC configuration profiles to produce
+> >> DSC related runtime parameters through both table look up and runtime
+> >> calculation to support DSC on DPU.
 > >>
-> >> No, it cannot. So each DSC encoder parameter is calculated based on th=
-e HW core which is being used.
+> >> There are 6 different DSC configuration profiles are supported
+> >> currently.
+> >> DSC configuration profiles are differiented by 5 keys, DSC version
+> >> (V1.1),
+> >> chroma (444/422/420), colorspace (RGB/YUV), bpc(8/10),
+> >> bpp (6/7/7.5/8/9/10/12/15) and SCR (0/1).
 > >>
-> >> They all get packed to the same DSC structure which is the struct drm_=
-dsc_config but the way the parameters are computed is specific to the HW.
-> >>
-> >> This DPU file helper still uses the drm_dsc_helper's drm_dsc_compute_r=
-c_parameters() like all other vendors do but the parameters themselves are =
-very HW specific and belong to each vendor's dir.
-> >>
-> >> This is not unique to MSM.
-> >>
-> >> Lets take a few other examples:
-> >>
-> >> AMD: https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gp=
-u/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c#L165
-> >>
-> >> i915: https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/g=
-pu/drm/i915/display/intel_vdsc.c#L379
+> >> Only DSC version V1.1 added and V1.2 will be added later.
 > >
-> > I checked several values here. Intel driver defines more bpc/bpp combin=
-ations, but the ones which are defined in intel_vdsc and in this patch seem=
- to match. If there are major differences there, please point me to the exa=
-ct case.
+> > These helpers should go to drivers/gpu/drm/display/drm_dsc_helper.c
+> > Also please check that they can be used for i915 or for amdgpu
+> > (ideally for both of them).
 > >
-> > I remember that AMD driver might have different values.
+> > I didn't check the tables against the standard (or against the current
+> > source code), will do that later.
 > >
->
-> Some values in the rc_params table do match. But the rc_buf_thresh[] does=
-nt.
-
-Because later they do:
-
-vdsc_cfg->rc_buf_thresh[i] =3D rc_buf_thresh[i] >> 6;
-
->
-> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/i9=
-15/display/intel_vdsc.c#L40
->
-> Vs
->
-> +static u16 dpu_dsc_rc_buf_thresh[DSC_NUM_BUF_RANGES - 1] =3D {
-> +               0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54,
-> +               0x62, 0x69, 0x70, 0x77, 0x79, 0x7b, 0x7d, 0x7e
-> +};
-
-I'd prefer to have 896, 1792, etc. here, as those values come from the
-standard. As it's done in the Intel driver.
-
-> I dont know the AMD calculation very well to say that moving this to the
-> helper is going to help.
-
-Those calculations correspond (more or less) at the first glance to
-what intel does for their newer generations. I think that's not our
-problem for now.
-
->
-> Also, i think its too risky to change other drivers to use whatever math
-> we put in the drm_dsc_helper to compute thr RC params because their code
-> might be computing and using this tables differently.
->
-> Its too much ownership for MSM developers to move this to drm_dsc_helper
-> and own that as it might cause breakage of basic DSC even if some values
-> are repeated.
-
-It's time to stop thinking about ownership and start thinking about
-shared code. We already have two instances of DSC tables. I don't
-think having a third instance, which is a subset of an existing
-dataset, would be beneficial to anybody.
-AMD has complicated code which supports half-bit bpp and calculates
-some of the parameters. But sharing data with the i915 driver is
-straightforward.
-
-> I would prefer to keep it in the msm code but in a top level directory
-> so that we dont have to make DSI dependent on DPU.
-
-I haven't changed my opinion. Please move relevant i915's code to
-helpers, verify data against standards and reuse it.
-
-> >> All vendors compute the values differently and eventually call drm_dsc=
-_compute_rc_parameters()
 > >>
-> >>> I didn't check the tables against the standard (or against the curren=
-t source code), will do that later.
+> >> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> >> ---
+> >>   drivers/gpu/drm/msm/Makefile                   |   1 +
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.c | 209
+> >> +++++++++++++++++++++++++
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.h |  34 ++++
+> >>   3 files changed, 244 insertions(+)
+> >>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.c
+> >>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.h
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+> >> index 7274c412..28cf52b 100644
+> >> --- a/drivers/gpu/drm/msm/Makefile
+> >> +++ b/drivers/gpu/drm/msm/Makefile
+> >> @@ -65,6 +65,7 @@ msm-$(CONFIG_DRM_MSM_DPU) += \
+> >>       disp/dpu1/dpu_hw_catalog.o \
+> >>       disp/dpu1/dpu_hw_ctl.o \
+> >>       disp/dpu1/dpu_hw_dsc.o \
+> >> +    disp/dpu1/dpu_dsc_helper.o \
+> >>       disp/dpu1/dpu_hw_interrupts.o \
+> >>       disp/dpu1/dpu_hw_intf.o \
+> >>       disp/dpu1/dpu_hw_lm.o \
+> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.c
+> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.c
+> >> new file mode 100644
+> >> index 00000000..88207e9
+> >> --- /dev/null
+> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.c
+> >> @@ -0,0 +1,209 @@
+> >> +// SPDX-License-Identifier: GPL-2.0-only
+> >> +/*
+> >> + * Copyright (c) 2023. Qualcomm Innovation Center, Inc. All rights
+> >> reserved
+> >> + */
+> >> +
+> >> +#include <drm/display/drm_dsc_helper.h>
+> >> +#include "msm_drv.h"
+> >> +#include "dpu_kms.h"
+> >> +#include "dpu_hw_dsc.h"
+> >> +#include "dpu_dsc_helper.h"
+> >> +
+> >> +
+> >
+> > Extra empty line
+> >
+> >> +#define DPU_DSC_PPS_SIZE       128
+> >> +
+> >> +enum dpu_dsc_ratio_type {
+> >> +    DSC_V11_8BPC_8BPP,
+> >> +    DSC_V11_10BPC_8BPP,
+> >> +    DSC_V11_10BPC_10BPP,
+> >> +    DSC_V11_SCR1_8BPC_8BPP,
+> >> +    DSC_V11_SCR1_10BPC_8BPP,
+> >> +    DSC_V11_SCR1_10BPC_10BPP,
+> >> +    DSC_RATIO_TYPE_MAX
+> >> +};
+> >> +
+> >> +
+> >> +static u16 dpu_dsc_rc_buf_thresh[DSC_NUM_BUF_RANGES - 1] = {
+> >> +        0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54,
+> >> +        0x62, 0x69, 0x70, 0x77, 0x79, 0x7b, 0x7d, 0x7e
+> >
+> > Weird indentation
+> >
+> >> +};
+> >> +
+> >> +/*
+> >> + * Rate control - Min QP values for each ratio type in
+> >> dpu_dsc_ratio_type
+> >> + */
+> >> +static char
+> >> dpu_dsc_rc_range_min_qp[DSC_RATIO_TYPE_MAX][DSC_NUM_BUF_RANGES] = {
+> >> +    /* DSC v1.1 */
+> >> +    {0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 7, 13},
+> >> +    {0, 4, 5, 5, 7, 7, 7, 7, 7, 7, 9, 9, 9, 11, 17},
+> >> +    {0, 4, 5, 6, 7, 7, 7, 7, 7, 7, 9, 9, 9, 11, 15},
+> >> +    /* DSC v1.1 SCR and DSC v1.2 RGB 444 */
+> >
+> > What is SCR? Is there any reason to use older min/max Qp params
+> > instead of always using the ones from the VESA-DSC-1.1 standard?
+>
+> Standards change request, some vendors may use scr to work with their panel.
+>
+> These table value are provided by system team.
 
---=20
+So, what will happen if we use values from 1.2 standard (aka 1.1 SCR
+1) with the older panel?
+
+> >> +    {0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 9, 12},
+> >> +    {0, 4, 5, 5, 7, 7, 7, 7, 7, 7, 9, 9, 9, 13, 16},
+> >> +    {0, 4, 5, 6, 7, 7, 7, 7, 7, 7, 9, 9, 9, 11, 15},
+
+
+-- 
 With best wishes
 Dmitry
