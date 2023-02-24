@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF06B6A1B4E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 12:20:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB5CE6A1B94
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 12:50:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229665AbjBXLUE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 06:20:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57474 "EHLO
+        id S229591AbjBXLuV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 06:50:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229613AbjBXLUD (ORCPT
+        with ESMTP id S229635AbjBXLuU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 06:20:03 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53CA21353E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 03:20:02 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id h16so53644497edz.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 03:20:02 -0800 (PST)
+        Fri, 24 Feb 2023 06:50:20 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FC4C521F8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 03:50:19 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id i9so17401441lfc.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 03:50:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=linaro.org; s=google; t=1677239417;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=/Njm30AQBCiZsl1r/A2bbjJBxbIy+rhISCg90BWo/8k=;
-        b=mIiZeEsUWzPmwXGwXcmoWAfjzZYvzoqU/vkxax57FwmpV3E5k28nSbg82tY2DhJ3QZ
-         xtulBn3jmkKp5RridDbhwmQELXZQ48vcYSp6Nj6q8TagLOxlPH0eBy5EVVvOzfeKRWmW
-         C+ERb6aIlJU1QWWVWfEU0HKhyWKqDM5B0HkVx2D80p7Qk1haolAv8j3yqLNOUKim9p+c
-         ZOG9iWs+KpRAWE6U/jfRpobjSlek692ZsXJUP0LLI0dmak+QJIfiASNRWYcsJjKpF/Lv
-         C+D5kJWzOJbWqaF6UEJuXr1+6qoCZqreQnnfaRPRcHwT+xKwx5e882GvbnuRcUrTDH+3
-         9XkQ==
+        bh=tRGKNu8+nQtfgk+o8BnV6TsJOhtE3fIGeixZ72M30Es=;
+        b=uojecS0jnQXyMuuky7+8Vn/P7ewJIsjqAc3BoNM/P5nAtzjlKb4SirE0DjYHlJpjvz
+         z3EKqL0jDsd8NR7RDXyMwa6xjn9wkI6u+d3GBN/5jjjH476wsPpfwWWy6V3mBfv3UbCZ
+         DIou4j3WeZiCnPxaxwGX9fmJlS3oMwNBmNgJhmALSozd4XxHuv945xEallYyT2EAW7LF
+         diRZdC1w6O8nhRfVyvScyPlSbvquMn+kH/heYVf136h8yfk94HXgUNKyi0izUE71OFdC
+         3uGwdxy/ulhsQrR/ISC9gewvLsEUMux4stdSTnKR7/wRCa+5vm7T0wie+/Ily77QEP40
+         0aVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
+        d=1e100.net; s=20210112; t=1677239417;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/Njm30AQBCiZsl1r/A2bbjJBxbIy+rhISCg90BWo/8k=;
-        b=m7gbROz6tDSfi5P++ncUbffTKo6273xOSOWa3ZzUKpw/HriWxht7ZO1WDvrpMHW5Of
-         WCVLsi6fwkytwcWaXj1i+z07opCr51zcBJ8auQA6Pe6EapvqRIDhksKyuyA+0/YfeHht
-         1aRICjdFNND4RAptCNxAaHy1LWRBMCsQJtdMRDBKDcniDbPz2tdKVgOUKBrLUfJp0+Wo
-         zfA04pG+y/sd4wawctmCM+9T+4PBvOAZgAUdwRbpU9uKfVFEoiMaB4vTHoz0luGAvkJt
-         zrqFabcJDX76OtjFralMUpAGIjEjzZjFHTiGkeChX4OH/4zSiw7oY+18Ek8eXOuxAFSV
-         m9jg==
-X-Gm-Message-State: AO0yUKWraCjhdqPwpL7PjL1dM8F+V9xEGwhC0caRbU3O2d8uWLbg0fNh
-        y8JTriDTsfVkTTtt3ZdUFMFYmQ==
-X-Google-Smtp-Source: AK7set8K/SNOhJHO32tZQmCDVnK5BSQ+/EUE74ldpMSsptNS/Vnl5kTCOFqgSob/GlzmFjZqj83ZwA==
-X-Received: by 2002:a17:906:f0d3:b0:8af:54d2:36af with SMTP id dk19-20020a170906f0d300b008af54d236afmr25060935ejb.76.1677237600869;
-        Fri, 24 Feb 2023 03:20:00 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id my22-20020a1709065a5600b008bc2c2134c5sm8165118ejc.216.2023.02.24.03.19.59
+        bh=tRGKNu8+nQtfgk+o8BnV6TsJOhtE3fIGeixZ72M30Es=;
+        b=DDYmTdoldPQe883Jy6sSeQQxYZp0w2kKN9Hpu4TrxnjX37AoyohsiPrqHRt/7RY98s
+         9DbsvrzuRjIqMFA7AKIQotg+w/Ucnc3gyImXEMN60/+5G+DSQHH9PkgcFs/WSfUTK5ZZ
+         52N+YWCT9FipjGhqtC8SsMHpZ8A33ReNFpV3Ngu0mGO1tTxWSHc13eITYt8hXQ8+dhhG
+         qoZ1r0gOUgmo/QUVUybGK8re2v+6R+wxpj7zd3ltc5Kdv4hvXenGIFDQuUDlDujQvrUv
+         y39gtmCbaPNqv+TkfTeJFUpRI1y71DTj5huTSG9MTiBwPVa/NA6zCE9lVPr0ZZfuwy82
+         99/A==
+X-Gm-Message-State: AO0yUKVK65G03VGcgIgtEOLS+LXkSdFk8pbs+bZ2ZRgnnRkrQI9kpJWv
+        S/tlwm0o25PPngr8Khi6k3xoBQ==
+X-Google-Smtp-Source: AK7set8zYxXQDEr3DaHDzu+XwBKc4RGTc9rFYpzvi/qL+BFDOihLu6FJODBvD7IcUJVtll2G21yhYQ==
+X-Received: by 2002:ac2:43d5:0:b0:4d5:a689:cd73 with SMTP id u21-20020ac243d5000000b004d5a689cd73mr4906894lfl.55.1677239417328;
+        Fri, 24 Feb 2023 03:50:17 -0800 (PST)
+Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
+        by smtp.gmail.com with ESMTPSA id l26-20020ac2555a000000b004cb45148027sm1600980lfk.203.2023.02.24.03.50.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Feb 2023 03:20:00 -0800 (PST)
-Message-ID: <2fb0ba58-c011-7896-9792-005d0ed9ad55@linaro.org>
-Date:   Fri, 24 Feb 2023 12:19:58 +0100
+        Fri, 24 Feb 2023 03:50:16 -0800 (PST)
+Message-ID: <40c42e36-9da7-73e1-8ae6-5a0a4abf17b1@linaro.org>
+Date:   Fri, 24 Feb 2023 12:50:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
 Subject: Re: [PATCH v3 02/15] dt-bindings: display/msm/gmu: Add GMU wrapper
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -73,8 +73,9 @@ Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>
 References: <20230223-topic-gmuwrapper-v3-0-5be55a336819@linaro.org>
  <20230223-topic-gmuwrapper-v3-2-5be55a336819@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230223-topic-gmuwrapper-v3-2-5be55a336819@linaro.org>
+ <2fb0ba58-c011-7896-9792-005d0ed9ad55@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <2fb0ba58-c011-7896-9792-005d0ed9ad55@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,38 +87,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/02/2023 13:06, Konrad Dybcio wrote:
-> GMU wrapper is essentially a register space within the GPU, which
-> Linux sees as a dumbed-down regular GMU: there's no clocks,
-> interrupts, multiple regs, iommus and OPP. Document it.
+
+
+On 24.02.2023 12:19, Krzysztof Kozlowski wrote:
+> On 23/02/2023 13:06, Konrad Dybcio wrote:
+>> GMU wrapper is essentially a register space within the GPU, which
+>> Linux sees as a dumbed-down regular GMU: there's no clocks,
+>> interrupts, multiple regs, iommus and OPP. Document it.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  .../devicetree/bindings/display/msm/gmu.yaml       | 49 ++++++++++++++++------
+>>  1 file changed, 37 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+>> index ab14e81cb050..021373e686e1 100644
+>> --- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
+>> +++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+>> @@ -19,16 +19,18 @@ description: |
+>>  
+>>  properties:
+>>    compatible:
+>> -    items:
+>> -      - pattern: '^qcom,adreno-gmu-6[0-9][0-9]\.[0-9]$'
+>> -      - const: qcom,adreno-gmu
+>> +    oneOf:
+>> +      - items:
+>> +          - pattern: '^qcom,adreno-gmu-6[0-9][0-9]\.[0-9]$'
+>> +          - const: qcom,adreno-gmu
+>> +      - const: qcom,adreno-gmu-wrapper
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../devicetree/bindings/display/msm/gmu.yaml       | 49 ++++++++++++++++------
->  1 file changed, 37 insertions(+), 12 deletions(-)
+> Why wrapper is part of this binding then? Usually wrapper means there is
+> wrapper node with a GMU child (at least this is what we call for all
+> wrappers of custom IP blocks like USB DWC). Where is the child?
+"GMU wrapper" is a sorta confusing name that Qualcomm chose for
+the "fake GMU" which has the GMU_CX and GMU_GX registers responsible
+for things like powering up some GPU things internally and some
+perf/pwr counters. It is _not_ a wrapper in the sense of a parent-child
+relationship. The GMU wrapper has no HFI (Hardware Firmware Interface)
+to communicate through crafted messages, but relies on plain register
+accesses.
+
+Konrad
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-> index ab14e81cb050..021373e686e1 100644
-> --- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-> @@ -19,16 +19,18 @@ description: |
->  
->  properties:
->    compatible:
-> -    items:
-> -      - pattern: '^qcom,adreno-gmu-6[0-9][0-9]\.[0-9]$'
-> -      - const: qcom,adreno-gmu
-> +    oneOf:
-> +      - items:
-> +          - pattern: '^qcom,adreno-gmu-6[0-9][0-9]\.[0-9]$'
-> +          - const: qcom,adreno-gmu
-> +      - const: qcom,adreno-gmu-wrapper
-
-Why wrapper is part of this binding then? Usually wrapper means there is
-wrapper node with a GMU child (at least this is what we call for all
-wrappers of custom IP blocks like USB DWC). Where is the child?
-
-
-Best regards,
-Krzysztof
-
+> 
+> Best regards,
+> Krzysztof
+> 
