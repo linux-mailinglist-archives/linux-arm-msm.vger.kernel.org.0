@@ -2,258 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0928E6A1780
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 08:49:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61A326A17A0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Feb 2023 09:01:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229452AbjBXHti (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Feb 2023 02:49:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41956 "EHLO
+        id S229628AbjBXIA7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Feb 2023 03:00:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbjBXHtg (ORCPT
+        with ESMTP id S229617AbjBXIA6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Feb 2023 02:49:36 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9817A4E5C3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 23:49:34 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id 6so12573220wrb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Feb 2023 23:49:34 -0800 (PST)
+        Fri, 24 Feb 2023 03:00:58 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 828CE25297
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 00:00:57 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id qa18-20020a17090b4fd200b0023750b675f5so1951006pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Feb 2023 00:00:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QbxEvBcANfCyv04vVI+P20GroH/CL1OZ8pzexawzCPA=;
-        b=tnQWyJSxP15q1apDQgYJZl7TiYEzVSdSDue1GfVVOaD0fB7R0X/Bpt/P+s54EvMarj
-         Y1GC+LfEvoa4d+LHbYhq1lLahNstbjvLM3CPlLNdcTMWd+6fEpU5pCFUdd1VfeuNgKwk
-         ibvjVqYpxqAiwq34+4XApexuqjYGbp4gt7qZw1iuaxGK1TvncfYmapRjGkD85NIMMmmP
-         NbuQi4uWSQWuuy9ihIFez+nKuGnq8M3VjfTqgeRzTTrLM/7QimIK9UBuRM43t1GjyADK
-         yey+QqJZp4HrIHUMyIt6xRNdgPgUO0A11h1Oks2iBavOIBt53d+FQQPLO4ynnVsaUe+U
-         aQBA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PcsnC67wn+CqlKF18BOklq3hhvo7C+mJm1DzOVZsLT8=;
+        b=cRnat+0Cs7+bku17Q0RWfYOyZoaY/AM3gR/A4qjMETzHJ8K/6cMg6sGIDgVGEUi2us
+         Siv6tVSk8OJ5+NMBcy4u69Wi+IRYTZb2yyEQ8cJnQqoajbwvM+r8ywhAxau9pRpMoh6z
+         OxNBb8aaTRh7b3QNsM/2CObzPZWXqGwDli3mx5Z+XP6TFOlawPctW5DeNRZSNWo3fZfw
+         /A0QLienw62/ybqG/1ipvDDFWQSzUISSJ47SFKk2HvEf//fPLO+YQKMZIg5CvhdKVQyw
+         GX5AhiDnxUK5seaggpfa44E6V7EvuGqu0myYlM0AI72dHew3HhKu5t27GC7z75uN4+TN
+         xRrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QbxEvBcANfCyv04vVI+P20GroH/CL1OZ8pzexawzCPA=;
-        b=ZZrDZDEtxn4I0BawElgPIli9Y/79pMBAOfCuX2V2iU2GkFqXVA9RYy2+YJKEOlLoCR
-         BiGG7bPnMHoUJuEQ6Sht76KKn2PuA1sdm75uidfjypjGLfrhLp7Ox+qjZJSRL/W5S4CJ
-         y00ICAjaLruaMB1scSBlDXNv7AUV9yw3JHon6KunEzaUqo1DdIpeq5SLQahLt8bbMhtZ
-         yhukjwUzhhx1JtdyK3SGw3RdQYfWc0BrZ1k6Y+TaqeTCZs2qpsUWZL7R8q9ZYM/WxSRh
-         ArdRK/tyr49UtmibA8LFatHuFxhq4y/FWn0qfl5ordJ2d9cXD+QxXiBpsr/le4W+VBEu
-         GlFw==
-X-Gm-Message-State: AO0yUKXBYTIDxqAFy1AQnXN9+Ek/NzfcaiOsTM/WE6GKrVyJE4CoV5Z4
-        jo5brreJ8WC5tHVCWSatPw6Jng==
-X-Google-Smtp-Source: AK7set/nHyhaRUq0Yd+9Qdd+3r2tbNOhcXsgs9HAHAccmP/VT5YKMYKugqE9ITyi4t9jCFYpx+UWhg==
-X-Received: by 2002:a05:6000:98c:b0:2c5:5ee9:6b27 with SMTP id by12-20020a056000098c00b002c55ee96b27mr11889818wrb.13.1677224973014;
-        Thu, 23 Feb 2023 23:49:33 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id j21-20020a5d6e55000000b002c3f81c51b6sm13600444wrz.90.2023.02.23.23.49.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 23:49:32 -0800 (PST)
-Message-ID: <78fc83d7-a31b-c6bd-4e08-f0696e0a275b@linaro.org>
-Date:   Fri, 24 Feb 2023 07:49:31 +0000
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PcsnC67wn+CqlKF18BOklq3hhvo7C+mJm1DzOVZsLT8=;
+        b=cGrzwlG9PyHgKi5gJc4LXheZVd6EJFQnhdeTsoCo94max11f4Zyn8lasvkdIRPOYs0
+         lHx/Pzeq9a7BN9D+CfKzZns0iH9OD38UlWQ9nJI92iLlfPGt8oWhXVX05JUaWt+BzMwN
+         4obAz4vMRmHLqjYne8Bj2Uw4paLgVcC8RZ5Nj0/E829ou2rWAcgXH7S4UMverRdpvSH/
+         9CTGosDaR+Bzl5yazOxGKkovgs89b9IpY2XGikZxq3nPHYFVLbaFqp+IQzXb9BiTdwgn
+         x7BL3rQYmv2Ohi4TEr3Ciz+EfEfrs1vF7mfbVwElncgv4/AKIGQiXJBJxDEyBcoAoQj1
+         4ORQ==
+X-Gm-Message-State: AO0yUKXU5XhDq9C4HJ9vdc1QrpW7L6abuM/00S3Eg2K46acEXU6OFx8O
+        9gMGVOTzU6f5W6Jf1iaA7FOF
+X-Google-Smtp-Source: AK7set/lzSiKZKtwDbb/ZwhiiXzU1IO4RluJP7aya+5eNvg/2KbycM28CZD5Iy/+ZPBhkHUjotDfcw==
+X-Received: by 2002:a17:90b:3144:b0:237:99b9:c415 with SMTP id ip4-20020a17090b314400b0023799b9c415mr725021pjb.38.1677225656986;
+        Fri, 24 Feb 2023 00:00:56 -0800 (PST)
+Received: from localhost.localdomain ([117.217.187.3])
+        by smtp.gmail.com with ESMTPSA id l3-20020a17090ac58300b002372106a5casm914211pjt.44.2023.02.24.00.00.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Feb 2023 00:00:56 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     andersson@kernel.org
+Cc:     konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bhupesh.sharma@linaro.org, srinivas.kandagatla@linaro.org,
+        quic_vkamble@quicinc.com,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        stable@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm8150: Fix the iommu mask used for PCIe controllers
+Date:   Fri, 24 Feb 2023 13:30:45 +0530
+Message-Id: <20230224080045.6577-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v10 07/26] mailbox: Add Gunyah message queue mailbox
-Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212316.3309053-1-quic_eberman@quicinc.com>
- <c8161a4c-fa45-cb9e-7211-5486ece1fc2d@linaro.org>
- <576aed85-a566-3645-559e-06b2135cf57f@quicinc.com>
- <7e3170e4-c530-0b5b-903f-e5ea6d8268dc@linaro.org>
- <d42cba3e-db22-5241-0ae2-ccec3b811a5a@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <d42cba3e-db22-5241-0ae2-ccec3b811a5a@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The iommu mask should be 0x3f as per Qualcomm internal documentation.
+Without the correct mask, the PCIe transactions from the endpoint will
+result in SMMU faults. Hence, fix it!
 
+Cc: stable@vger.kernel.org # 5.19
+Fixes: a1c86c680533 ("arm64: dts: qcom: sm8150: Add PCIe nodes")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-On 23/02/2023 23:15, Elliot Berman wrote:
-> 
-> 
-> On 2/23/2023 2:25 AM, Srinivas Kandagatla wrote:
->>
->>
->> On 23/02/2023 00:15, Elliot Berman wrote:
->>>
->>>
->>> On 2/20/2023 5:59 AM, Srinivas Kandagatla wrote:
->>>>
->>>>
->>>> On 14/02/2023 21:23, Elliot Berman wrote:
->>>>> Gunyah message queues are a unidirectional inter-VM pipe for 
->>>>> messages up
->>>>> to 1024 bytes. This driver supports pairing a receiver message 
->>>>> queue and
->>>>> a transmitter message queue to expose a single mailbox channel.
->>>>>
->>>>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
->>>>> ---
->>>>>   Documentation/virt/gunyah/message-queue.rst |   8 +
->>>>>   drivers/mailbox/Makefile                   |   2 +
->>>>>   drivers/mailbox/gunyah-msgq.c               | 214 
->>>>> ++++++++++++++++++++
->>>>>   include/linux/gunyah.h                      |  56 +++++
->>>>>   4 files changed, 280 insertions(+)
->>>>>   create mode 100644 drivers/mailbox/gunyah-msgq.c
->>>>>
->>>>> diff --git a/Documentation/virt/gunyah/message-queue.rst 
->>>>> b/Documentation/virt/gunyah/message-queue.rst
->>>>> index 0667b3eb1ff9..082085e981e0 100644
->>>>> --- a/Documentation/virt/gunyah/message-queue.rst
->>>>> +++ b/Documentation/virt/gunyah/message-queue.rst
->>>>> @@ -59,3 +59,11 @@ vIRQ: two TX message queues will have two vIRQs 
->>>>> (and two capability IDs).
->>>>>         |               |         |                 | 
->>>>> |               |
->>>>>         |               |         |                 | 
->>>>> |               |
->>>>>         +---------------+         +-----------------+ 
->>>>> +---------------+
->>>>> +
->>>>> +Gunyah message queues are exposed as mailboxes. To create the 
->>>>> mailbox, create
->>>>> +a mbox_client and call `gh_msgq_init`. On receipt of the RX_READY 
->>>>> interrupt,
->>>>> +all messages in the RX message queue are read and pushed via the 
->>>>> `rx_callback`
->>>>> +of the registered mbox_client.
->>>>> +
->>>>> +.. kernel-doc:: drivers/mailbox/gunyah-msgq.c
->>>>> +   :identifiers: gh_msgq_init
->>>>> diff --git a/drivers/mailbox/Makefile b/drivers/mailbox/Makefile
->>>>> index fc9376117111..5f929bb55e9a 100644
->>>>> --- a/drivers/mailbox/Makefile
->>>>> +++ b/drivers/mailbox/Makefile
->>>>> @@ -55,6 +55,8 @@ obj-$(CONFIG_MTK_CMDQ_MBOX)    += mtk-cmdq-mailbox.o
->>>>>   obj-$(CONFIG_ZYNQMP_IPI_MBOX)    += zynqmp-ipi-mailbox.o
->>>>> +obj-$(CONFIG_GUNYAH)        += gunyah-msgq.o
->>>>
->>>> Why are we reusing CONFIG_GUNYAH Kconfig symbol for mailbox, why not 
->>>> CONFIG_GUNYAH_MBOX?
->>>>
->>>
->>> There was some previous discussion about this:
->>>
->>> https://lore.kernel.org/all/2a7bb5f2-1286-b661-659a-a5037150eae8@quicinc.com/
->>>
->>>>> +
->>>>>   obj-$(CONFIG_SUN6I_MSGBOX)    += sun6i-msgbox.o
->>>>>   obj-$(CONFIG_SPRD_MBOX)       += sprd-mailbox.o
->>>>> diff --git a/drivers/mailbox/gunyah-msgq.c 
->>>>> b/drivers/mailbox/gunyah-msgq.c
->>>>> new file mode 100644
->>>>> index 000000000000..03ffaa30ce9b
->>>>> --- /dev/null
->>>>> +++ b/drivers/mailbox/gunyah-msgq.c
->>>>> @@ -0,0 +1,214 @@
->>>>> +// SPDX-License-Identifier: GPL-2.0-only
->>>>> +/*
->>>>> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All 
->>>>> rights reserved.
->>>>> + */
->>>>> +
->>>>> +#include <linux/mailbox_controller.h>
->>>>> +#include <linux/module.h>
->>>>> +#include <linux/interrupt.h>
->>>>> +#include <linux/gunyah.h>
->>>>> +#include <linux/printk.h>
->>>>> +#include <linux/init.h>
->>>>> +#include <linux/slab.h>
->>>>> +#include <linux/wait.h>
->>>>
->>>> ...
->>>>
->>>>> +/* Fired when message queue transitions from "full" to "space 
->>>>> available" to send messages */
->>>>> +static irqreturn_t gh_msgq_tx_irq_handler(int irq, void *data)
->>>>> +{
->>>>> +    struct gh_msgq *msgq = data;
->>>>> +
->>>>> +    mbox_chan_txdone(gh_msgq_chan(msgq), 0);
->>>>> +
->>>>> +    return IRQ_HANDLED;
->>>>> +}
->>>>> +
->>>>> +/* Fired after sending message and hypercall told us there was 
->>>>> more space available. */
->>>>> +static void gh_msgq_txdone_tasklet(struct tasklet_struct *tasklet)
->>>>
->>>> Tasklets have been long deprecated, consider using workqueues in 
->>>> this particular case.
->>>>
->>>
->>> Workqueues have higher latency and tasklets came as recommendation 
->>> from Jassi. drivers/mailbox/imx-mailbox.c uses tasklets in the same way.
->>>
->>> I did some quick unscientific measurements of ~1000x samples. The 
->>> median latency for resource manager went from 25.5 us (tasklet) to 26 
->>> us (workqueue) (2% slower). The mean went from 28.7 us to 32.5 us 
->>> (13% slower). Obviously, the outliers for workqueues were much more 
->>> extreme.
->>
->> TBH, this is expected because we are only testing resource manager, 
->> Note   the advantage that you will see shifting from tasket to 
->> workqueues is on overall system latencies and some drivers performance 
->> that need to react to events.
->>
->> please take some time to read this nice article about this 
->> https://lwn.net/Articles/830964/
->>
-> 
-> Hmm, this article is from 2020 and there was another effort in 2007. 
-> Neither seems to have succeeded. I'd like to stick to same mechanisms as 
-> other mailbox controllers.
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index fd20096cfc6e..13e0ce828606 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -1826,7 +1826,7 @@ pcie0: pci@1c00000 {
+ 				      "slave_q2a",
+ 				      "tbu";
+ 
+-			iommus = <&apps_smmu 0x1d80 0x7f>;
++			iommus = <&apps_smmu 0x1d80 0x3f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1d80 0x1>,
+ 				    <0x100 &apps_smmu 0x1d81 0x1>;
+ 
+@@ -1925,7 +1925,7 @@ pcie1: pci@1c08000 {
+ 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+ 			assigned-clock-rates = <19200000>;
+ 
+-			iommus = <&apps_smmu 0x1e00 0x7f>;
++			iommus = <&apps_smmu 0x1e00 0x3f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1e00 0x1>,
+ 				    <0x100 &apps_smmu 0x1e01 0x1>;
+ 
+-- 
+2.25.1
 
-I don't want to block this series because of this. We will have more 
-opportunity to improve this once some system wide profiling is done.
-
-AFAIU, In this system we will have atleast 2 tasklets between VM and RM 
-and 2 per inter-vm, so if the number of tasklets increase in the system 
-will be potentially spending more time in soft irq handling it.
-
-At somepoint in time its good to get some profiling done using 
-bcc/softirqs to see how much time is spent on softirqs.
-
-
---srini
-
-> 
-> Jassi, do you have any preferences?
-> 
-> Thanks,
-> Elliot
-> 
-> 
