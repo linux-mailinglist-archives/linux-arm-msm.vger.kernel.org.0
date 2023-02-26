@@ -2,254 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B52F16A2FBE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Feb 2023 14:13:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD6D66A302F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Feb 2023 15:47:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229520AbjBZNNo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Feb 2023 08:13:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51680 "EHLO
+        id S229785AbjBZOr2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Feb 2023 09:47:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbjBZNNn (ORCPT
+        with ESMTP id S229800AbjBZOrW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Feb 2023 08:13:43 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D86D10264
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Feb 2023 05:13:42 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id r27so5098341lfe.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Feb 2023 05:13:42 -0800 (PST)
+        Sun, 26 Feb 2023 09:47:22 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A33B01353C;
+        Sun, 26 Feb 2023 06:46:44 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id cp7-20020a17090afb8700b0023756229427so7573485pjb.1;
+        Sun, 26 Feb 2023 06:46:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=04CVCq5QDsSsRhbW4z4uIT/WR7uzqDfoUDjv5E0r+XE=;
-        b=JlUAT2RIAAGcMUotOo7foENJSQNz0aAzLQ7JI7d1AKy3Abw+klLl4+VfxqIwgSzRmt
-         OfbE4/H99S4/K3tIck2yrn+D/92rFPujJTVAh1Ns8t3OgjwI4Qn4zTUb2ubJU2dxHGCh
-         QUErcfDj2MTrhutjbpRzRtkuzCmXHx/je51ZgjrIBgHWJ0ANPynzmVGGE8QuK/dSsiOv
-         j6uSWLg9LI/UrdPY9sAiEI/FlZNnFQtjIJeRqSapY9MMkSX2bO9Y++9tQkp7ccr0dhC4
-         B5B+06AoY7War6i+MGjQBcDr8dxS7XXUQ53XextXKODDQJsatY3uwhIBFxpUVEAjVGYU
-         znJg==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6Eh6AmMfT4Z+u0BxDIOeBlEartGnGmnuI1Dw64al8WY=;
+        b=pP5ekyYkj7NMTorx/wTpbuMcCiQg3gopUUJX0FqPDE1nicPxdCSlEPbuEaXTHut52k
+         PIUIw3esd40bPzQ8F8CZf3dYarXzmUE7VRhZP4CB4xNtmgH+jUpxvuBW8gkmcfUeUMDY
+         x2PUjesUnaQr8eI56WbJOOo2Vr5+bBJgW+R5klg2mws0KG6hM80UI5HqJ/vcbuVcJeDq
+         V+1fWoMlL43fhs4m5VjQMfl9oLCfSnlaTuYLey4f8L+TXZP6/3xLhv8935/amIUCyjDI
+         IQWnG0B47gaoYe/hyid3o5mkAjp9zke07nN68ql8mfPWVSNs5WaaACfP82fhK4MS2lQs
+         FvWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=04CVCq5QDsSsRhbW4z4uIT/WR7uzqDfoUDjv5E0r+XE=;
-        b=O0TeJ1bC0EcOR4OJqa407TTKi8yzIepn47KSImpQg7ZbOuoFXusmMBuAWXQFbPmX8C
-         C+mp1+TBElh+e434qyl+VAIwBd17wTHyjcQmuk81UogwaE2gru7wtKHA6bCN2Zmzkved
-         XlGfHeIFqLYN7mKNCU3cO+crR754b/llU18b0EURTHExYf5sqXUWhfP4MynCx6IdUsa9
-         MpPhX1sCKtBUI5bT6+GFWJ/w+oNj44s0+gs8VANQL09JiA0Pj6Gb+1WVgI6HR5r4OkqK
-         ehH+2A9+nYOamQc0jVhZl4rb2uJIz8+EIYGPcOG/iAcrGvPeA9/NalTKBKifgkh8wppJ
-         FmZg==
-X-Gm-Message-State: AO0yUKVztkU/L+crpk95uiIWeOY25pX+Raxv2TfPe2GLsB2pO+7LxNHn
-        zci3SEPMcKuHRxGiirlejUc9Dg==
-X-Google-Smtp-Source: AK7set+BeKFRt03jsGvtd7WQ8AxrX4vGXFJalbx1uI46DSm15P8eB/PTAEtUpaG6Y2t21anZgAu8iQ==
-X-Received: by 2002:a19:c20c:0:b0:4db:26b1:ec4b with SMTP id l12-20020a19c20c000000b004db26b1ec4bmr6795399lfc.49.1677417220417;
-        Sun, 26 Feb 2023 05:13:40 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id q6-20020ac25146000000b004cc8196a308sm551952lfd.98.2023.02.26.05.13.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 26 Feb 2023 05:13:40 -0800 (PST)
-Message-ID: <11c43f8b-eb17-50c0-5158-6c485e5be423@linaro.org>
-Date:   Sun, 26 Feb 2023 15:13:39 +0200
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6Eh6AmMfT4Z+u0BxDIOeBlEartGnGmnuI1Dw64al8WY=;
+        b=WtgvyKwg9hfRV/2MOxu6x94hczU8Xg1x/j647Jnq6zuMtszaqA+Vx+1y2Oqa0QYIqT
+         B1791IofuTYYwARDY+v10diqAWWwZOzd4hixMAXWGb1O/9SPUimiNEpWs3JGrK60YPUW
+         mgyosEUF7yjz0lfqht2vrlw778L4ZnW9vD8pnIds2q8WUd/eCejyqCvstuMEnkE1dJvx
+         txgM+QocsAo95u6ME0M/5zAv6loZRmOpOzpShQ6MvGHXKFc3yKCcGCyg03QD6FnevgKu
+         kLVZPo4yhM8LkWNJhUqWrke8hjTRsOQexisj00zMQIjRtV5ES+sQXN7q1VweVaqQBhqS
+         scnw==
+X-Gm-Message-State: AO0yUKWnD9WkMpbShEYC04Q207yXEqxa/bCBGmrI25YHtwBKzXm+ezsb
+        dQv8/4h2ANKT6/e6B6zJ6N8=
+X-Google-Smtp-Source: AK7set/r42gZuvNsks4Vk9J9KM00FWB0ahB9jvPWHetB3KtfZqT2HXPauXzdqLggsnYBHBU9A0v0WA==
+X-Received: by 2002:a05:6a21:78a0:b0:cc:4db0:f2c7 with SMTP id bf32-20020a056a2178a000b000cc4db0f2c7mr6444731pzc.23.1677422769035;
+        Sun, 26 Feb 2023 06:46:09 -0800 (PST)
+Received: from passwd123-ThinkStation-P920.. ([222.20.94.23])
+        by smtp.gmail.com with ESMTPSA id k4-20020aa792c4000000b0058bcb42dd1asm2545898pfa.111.2023.02.26.06.46.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Feb 2023 06:46:08 -0800 (PST)
+From:   Kang Chen <void0red@gmail.com>
+To:     konrad.dybcio@linaro.org
+Cc:     agross@kernel.org, andersson@kernel.org, ohad@wizery.com,
+        baolin.wang@linux.alibaba.com, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Kang Chen <void0red@gmail.com>
+Subject: [PATCH] hwspinlock: add a check of devm_regmap_field_alloc in qcom_hwspinlock_probe
+Date:   Sun, 26 Feb 2023 22:45:45 +0800
+Message-Id: <20230226144545.4187442-1-void0red@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [RFC PATCH 1/2] drm/msm/dpu: add dsc helper functions
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1677267647-28672-1-git-send-email-quic_khsieh@quicinc.com>
- <1677267647-28672-2-git-send-email-quic_khsieh@quicinc.com>
- <42b3c193-8897-cfe9-1cae-2f9a66f7983a@linaro.org>
- <1b5afec9-454d-e1b9-0274-f0476edb4d21@quicinc.com>
- <CAA8EJprowFyBMdW5QC2zG0gYUtxJ-hHXqhPfYTct2GzYJKLSHg@mail.gmail.com>
- <7650f183-9860-9074-e5d5-539afdf41248@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <7650f183-9860-9074-e5d5-539afdf41248@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/02/2023 02:16, Abhinav Kumar wrote:
-> Hi Dmitry
-> 
-> On 2/24/2023 3:57 PM, Dmitry Baryshkov wrote:
->> On Sat, 25 Feb 2023 at 01:51, Kuogee Hsieh <quic_khsieh@quicinc.com> 
->> wrote:
->>>
->>>
->>> On 2/24/2023 1:13 PM, Dmitry Baryshkov wrote:
->>>> On 24/02/2023 21:40, Kuogee Hsieh wrote:
->>>>> Add DSC helper functions based on DSC configuration profiles to 
->>>>> produce
->>>>> DSC related runtime parameters through both table look up and runtime
->>>>> calculation to support DSC on DPU.
->>>>>
->>>>> There are 6 different DSC configuration profiles are supported
->>>>> currently.
->>>>> DSC configuration profiles are differiented by 5 keys, DSC version
->>>>> (V1.1),
->>>>> chroma (444/422/420), colorspace (RGB/YUV), bpc(8/10),
->>>>> bpp (6/7/7.5/8/9/10/12/15) and SCR (0/1).
->>>>>
->>>>> Only DSC version V1.1 added and V1.2 will be added later.
->>>>
->>>> These helpers should go to drivers/gpu/drm/display/drm_dsc_helper.c
->>>> Also please check that they can be used for i915 or for amdgpu
->>>> (ideally for both of them).
->>>>
->>>> I didn't check the tables against the standard (or against the current
->>>> source code), will do that later.
->>>>
->>>>>
->>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>>>> ---
->>>>>    drivers/gpu/drm/msm/Makefile                   |   1 +
->>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.c | 209
->>>>> +++++++++++++++++++++++++
->>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.h |  34 ++++
->>>>>    3 files changed, 244 insertions(+)
->>>>>    create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.c
->>>>>    create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.h
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/Makefile 
->>>>> b/drivers/gpu/drm/msm/Makefile
->>>>> index 7274c412..28cf52b 100644
->>>>> --- a/drivers/gpu/drm/msm/Makefile
->>>>> +++ b/drivers/gpu/drm/msm/Makefile
->>>>> @@ -65,6 +65,7 @@ msm-$(CONFIG_DRM_MSM_DPU) += \
->>>>>        disp/dpu1/dpu_hw_catalog.o \
->>>>>        disp/dpu1/dpu_hw_ctl.o \
->>>>>        disp/dpu1/dpu_hw_dsc.o \
->>>>> +    disp/dpu1/dpu_dsc_helper.o \
->>>>>        disp/dpu1/dpu_hw_interrupts.o \
->>>>>        disp/dpu1/dpu_hw_intf.o \
->>>>>        disp/dpu1/dpu_hw_lm.o \
->>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.c
->>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.c
->>>>> new file mode 100644
->>>>> index 00000000..88207e9
->>>>> --- /dev/null
->>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.c
->>>>> @@ -0,0 +1,209 @@
->>>>> +// SPDX-License-Identifier: GPL-2.0-only
->>>>> +/*
->>>>> + * Copyright (c) 2023. Qualcomm Innovation Center, Inc. All rights
->>>>> reserved
->>>>> + */
->>>>> +
->>>>> +#include <drm/display/drm_dsc_helper.h>
->>>>> +#include "msm_drv.h"
->>>>> +#include "dpu_kms.h"
->>>>> +#include "dpu_hw_dsc.h"
->>>>> +#include "dpu_dsc_helper.h"
->>>>> +
->>>>> +
->>>>
->>>> Extra empty line
->>>>
->>>>> +#define DPU_DSC_PPS_SIZE       128
->>>>> +
->>>>> +enum dpu_dsc_ratio_type {
->>>>> +    DSC_V11_8BPC_8BPP,
->>>>> +    DSC_V11_10BPC_8BPP,
->>>>> +    DSC_V11_10BPC_10BPP,
->>>>> +    DSC_V11_SCR1_8BPC_8BPP,
->>>>> +    DSC_V11_SCR1_10BPC_8BPP,
->>>>> +    DSC_V11_SCR1_10BPC_10BPP,
->>>>> +    DSC_RATIO_TYPE_MAX
->>>>> +};
->>>>> +
->>>>> +
->>>>> +static u16 dpu_dsc_rc_buf_thresh[DSC_NUM_BUF_RANGES - 1] = {
->>>>> +        0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54,
->>>>> +        0x62, 0x69, 0x70, 0x77, 0x79, 0x7b, 0x7d, 0x7e
->>>>
->>>> Weird indentation
->>>>
->>>>> +};
->>>>> +
->>>>> +/*
->>>>> + * Rate control - Min QP values for each ratio type in
->>>>> dpu_dsc_ratio_type
->>>>> + */
->>>>> +static char
->>>>> dpu_dsc_rc_range_min_qp[DSC_RATIO_TYPE_MAX][DSC_NUM_BUF_RANGES] = {
->>>>> +    /* DSC v1.1 */
->>>>> +    {0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 7, 13},
->>>>> +    {0, 4, 5, 5, 7, 7, 7, 7, 7, 7, 9, 9, 9, 11, 17},
->>>>> +    {0, 4, 5, 6, 7, 7, 7, 7, 7, 7, 9, 9, 9, 11, 15},
->>>>> +    /* DSC v1.1 SCR and DSC v1.2 RGB 444 */
->>>>
->>>> What is SCR? Is there any reason to use older min/max Qp params
->>>> instead of always using the ones from the VESA-DSC-1.1 standard?
->>>
->>> Standards change request, some vendors may use scr to work with their 
->>> panel.
->>>
->>> These table value are provided by system team.
->>
->> So, what will happen if we use values from 1.2 standard (aka 1.1 SCR
->> 1) with the older panel?
->>
-> 
-> Standards change request means fixing errors/errata for the given 
-> standard. Those are typically released as a different spec.
-> 
-> So I referred the DSC 1.1 SCR spec, and it does have a few differences 
-> in the table compared to DSC 1.1 which will get into DSC 1.2.
-> 
-> Hence the table entries are same between DSC 1.1 SCR and DSC 1.2
-> 
-> You are right, ideally DSC 1.2 should be backwards compatible with DSC 
-> 1.1 in terms of the values (thats what the spec says too) but I am not 
-> sure if we can expect every panel/DP monitor to be forward compatible 
-> without any SW change because it might need some firmware update (for 
-> the panel) or SW update to support that especially during transitions of 
-> the spec revisions (SCR to be precise).
-> 
-> Typically we do below for DP monitors exactly for the same reason:
-> 
-> DSC_ver_to_use = min(what_we_support, what_DP_monitor_supports) and use 
-> that table.
-> 
-> For DSI panels, typically in the panel spec it should say whether the 
-> SCR version needs to be used because we have seen that for some panels ( 
-> I dont remember exactly which one ) based on which panel and which 
-> revision of the panel, it might not.
+devm_regmap_field_alloc may fails, priv field might be error pointer and
+cause illegal address access later.
 
-So, what happens if we use DSC 1.1 SCR (= DSC 1.2) values with older 
-panel? Does it result in the broken image?
+Signed-off-by: Kang Chen <void0red@gmail.com>
+---
+ drivers/hwspinlock/qcom_hwspinlock.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-I'm asking here, because I think that these parameters tune the 
-_encoder_. The decoder should be able to handle different compressed 
-streams as long as values fit into the required 'profile'.
-
-> 
-> Thats why downstream started adding qcom,mdss-dsc-scr-version to the 
-> devicetree.
-> 
->>>>> +    {0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 9, 12},
->>>>> +    {0, 4, 5, 5, 7, 7, 7, 7, 7, 7, 9, 9, 9, 13, 16},
->>>>> +    {0, 4, 5, 6, 7, 7, 7, 7, 7, 7, 9, 9, 9, 11, 15},
->>
->>
-
+diff --git a/drivers/hwspinlock/qcom_hwspinlock.c b/drivers/hwspinlock/qcom_hwspinlock.c
+index 9cf186362..b69d43d30 100644
+--- a/drivers/hwspinlock/qcom_hwspinlock.c
++++ b/drivers/hwspinlock/qcom_hwspinlock.c
+@@ -197,6 +197,8 @@ static int qcom_hwspinlock_probe(struct platform_device *pdev)
+ 
+ 		bank->lock[i].priv = devm_regmap_field_alloc(&pdev->dev,
+ 							     regmap, field);
++		if (IS_ERR(bank->lock[i].priv)
++			return -ENOMEM;
+ 	}
+ 
+ 	return devm_hwspin_lock_register(&pdev->dev, bank, &qcom_hwspinlock_ops,
 -- 
-With best wishes
-Dmitry
+2.34.1
 
