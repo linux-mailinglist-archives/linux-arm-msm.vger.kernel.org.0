@@ -2,96 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD6D66A302F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Feb 2023 15:47:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE4A16A32D7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Feb 2023 17:32:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229785AbjBZOr2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Feb 2023 09:47:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43524 "EHLO
+        id S229515AbjBZQcH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Feb 2023 11:32:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229800AbjBZOrW (ORCPT
+        with ESMTP id S229445AbjBZQcH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Feb 2023 09:47:22 -0500
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A33B01353C;
-        Sun, 26 Feb 2023 06:46:44 -0800 (PST)
-Received: by mail-pj1-x1035.google.com with SMTP id cp7-20020a17090afb8700b0023756229427so7573485pjb.1;
-        Sun, 26 Feb 2023 06:46:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6Eh6AmMfT4Z+u0BxDIOeBlEartGnGmnuI1Dw64al8WY=;
-        b=pP5ekyYkj7NMTorx/wTpbuMcCiQg3gopUUJX0FqPDE1nicPxdCSlEPbuEaXTHut52k
-         PIUIw3esd40bPzQ8F8CZf3dYarXzmUE7VRhZP4CB4xNtmgH+jUpxvuBW8gkmcfUeUMDY
-         x2PUjesUnaQr8eI56WbJOOo2Vr5+bBJgW+R5klg2mws0KG6hM80UI5HqJ/vcbuVcJeDq
-         V+1fWoMlL43fhs4m5VjQMfl9oLCfSnlaTuYLey4f8L+TXZP6/3xLhv8935/amIUCyjDI
-         IQWnG0B47gaoYe/hyid3o5mkAjp9zke07nN68ql8mfPWVSNs5WaaACfP82fhK4MS2lQs
-         FvWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6Eh6AmMfT4Z+u0BxDIOeBlEartGnGmnuI1Dw64al8WY=;
-        b=WtgvyKwg9hfRV/2MOxu6x94hczU8Xg1x/j647Jnq6zuMtszaqA+Vx+1y2Oqa0QYIqT
-         B1791IofuTYYwARDY+v10diqAWWwZOzd4hixMAXWGb1O/9SPUimiNEpWs3JGrK60YPUW
-         mgyosEUF7yjz0lfqht2vrlw778L4ZnW9vD8pnIds2q8WUd/eCejyqCvstuMEnkE1dJvx
-         txgM+QocsAo95u6ME0M/5zAv6loZRmOpOzpShQ6MvGHXKFc3yKCcGCyg03QD6FnevgKu
-         kLVZPo4yhM8LkWNJhUqWrke8hjTRsOQexisj00zMQIjRtV5ES+sQXN7q1VweVaqQBhqS
-         scnw==
-X-Gm-Message-State: AO0yUKWnD9WkMpbShEYC04Q207yXEqxa/bCBGmrI25YHtwBKzXm+ezsb
-        dQv8/4h2ANKT6/e6B6zJ6N8=
-X-Google-Smtp-Source: AK7set/r42gZuvNsks4Vk9J9KM00FWB0ahB9jvPWHetB3KtfZqT2HXPauXzdqLggsnYBHBU9A0v0WA==
-X-Received: by 2002:a05:6a21:78a0:b0:cc:4db0:f2c7 with SMTP id bf32-20020a056a2178a000b000cc4db0f2c7mr6444731pzc.23.1677422769035;
-        Sun, 26 Feb 2023 06:46:09 -0800 (PST)
-Received: from passwd123-ThinkStation-P920.. ([222.20.94.23])
-        by smtp.gmail.com with ESMTPSA id k4-20020aa792c4000000b0058bcb42dd1asm2545898pfa.111.2023.02.26.06.46.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Feb 2023 06:46:08 -0800 (PST)
-From:   Kang Chen <void0red@gmail.com>
-To:     konrad.dybcio@linaro.org
-Cc:     agross@kernel.org, andersson@kernel.org, ohad@wizery.com,
+        Sun, 26 Feb 2023 11:32:07 -0500
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16D1C1B555;
+        Sun, 26 Feb 2023 08:32:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1677429125; x=1708965125;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=BDTv/+Ng0xD08RBhJx3v0/Xro4Wp1Fh/Ij2PGrRb2FY=;
+  b=RLPKCfQweDUcfqqGESel6B1XFpgxRTomZhvb7IORpuff64qU7nAz+QLL
+   8dX8nNTMfeH3UNxJeVvX0b20cLSp4pOzysWTe/EaFjf6MMkoFukYnBxtv
+   jM5ym4d7Dt25teexulrQJfKDhHsEzlOU+B7bxTBjB4pnOcOup2fDyRuQ/
+   KmTyq8L8sJI5GvC95SjaLSldqPM1r9hsO+6k3DHffxdPKTZHadcf21aW/
+   tWTs4+qlpixQ5k1D4Ex5EyBqVKjB1zvP+AEQlxiTGKqV+Ze6pIFGVpoYw
+   Ec3oR1hauwJFZdJ0jxoIeLrBK1n8Hkn2aEwXs6TWQSL0VthZRXUXc8igp
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10633"; a="332450552"
+X-IronPort-AV: E=Sophos;i="5.97,330,1669104000"; 
+   d="scan'208";a="332450552"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2023 08:32:04 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10633"; a="650932936"
+X-IronPort-AV: E=Sophos;i="5.97,330,1669104000"; 
+   d="scan'208";a="650932936"
+Received: from lkp-server01.sh.intel.com (HELO 3895f5c55ead) ([10.239.97.150])
+  by orsmga006.jf.intel.com with ESMTP; 26 Feb 2023 08:32:01 -0800
+Received: from kbuild by 3895f5c55ead with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pWJwP-0003p1-0l;
+        Sun, 26 Feb 2023 16:32:01 +0000
+Date:   Mon, 27 Feb 2023 00:31:42 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Kang Chen <void0red@gmail.com>, konrad.dybcio@linaro.org
+Cc:     oe-kbuild-all@lists.linux.dev, agross@kernel.org,
+        andersson@kernel.org, ohad@wizery.com,
         baolin.wang@linux.alibaba.com, linux-arm-msm@vger.kernel.org,
         linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
         Kang Chen <void0red@gmail.com>
-Subject: [PATCH] hwspinlock: add a check of devm_regmap_field_alloc in qcom_hwspinlock_probe
-Date:   Sun, 26 Feb 2023 22:45:45 +0800
-Message-Id: <20230226144545.4187442-1-void0red@gmail.com>
-X-Mailer: git-send-email 2.34.1
+Subject: Re: [PATCH] hwspinlock: add a check of devm_regmap_field_alloc in
+ qcom_hwspinlock_probe
+Message-ID: <202302270016.oJqq1tKy-lkp@intel.com>
+References: <20230226144545.4187442-1-void0red@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230226144545.4187442-1-void0red@gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-devm_regmap_field_alloc may fails, priv field might be error pointer and
-cause illegal address access later.
+Hi Kang,
 
-Signed-off-by: Kang Chen <void0red@gmail.com>
----
- drivers/hwspinlock/qcom_hwspinlock.c | 2 ++
- 1 file changed, 2 insertions(+)
+Thank you for the patch! Yet something to improve:
 
-diff --git a/drivers/hwspinlock/qcom_hwspinlock.c b/drivers/hwspinlock/qcom_hwspinlock.c
-index 9cf186362..b69d43d30 100644
---- a/drivers/hwspinlock/qcom_hwspinlock.c
-+++ b/drivers/hwspinlock/qcom_hwspinlock.c
-@@ -197,6 +197,8 @@ static int qcom_hwspinlock_probe(struct platform_device *pdev)
- 
- 		bank->lock[i].priv = devm_regmap_field_alloc(&pdev->dev,
- 							     regmap, field);
-+		if (IS_ERR(bank->lock[i].priv)
-+			return -ENOMEM;
- 	}
- 
- 	return devm_hwspin_lock_register(&pdev->dev, bank, &qcom_hwspinlock_ops,
+[auto build test ERROR on linus/master]
+[also build test ERROR on v6.2]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Kang-Chen/hwspinlock-add-a-check-of-devm_regmap_field_alloc-in-qcom_hwspinlock_probe/20230226-224824
+patch link:    https://lore.kernel.org/r/20230226144545.4187442-1-void0red%40gmail.com
+patch subject: [PATCH] hwspinlock: add a check of devm_regmap_field_alloc in qcom_hwspinlock_probe
+config: arm-randconfig-r046-20230226 (https://download.01.org/0day-ci/archive/20230227/202302270016.oJqq1tKy-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/b5a6ded03f6367c5e698c758864f3e569f1f762c
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Kang-Chen/hwspinlock-add-a-check-of-devm_regmap_field_alloc-in-qcom_hwspinlock_probe/20230226-224824
+        git checkout b5a6ded03f6367c5e698c758864f3e569f1f762c
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/hwspinlock/
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202302270016.oJqq1tKy-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   drivers/hwspinlock/qcom_hwspinlock.c: In function 'qcom_hwspinlock_probe':
+>> drivers/hwspinlock/qcom_hwspinlock.c:200:47: error: expected ')' before 'return'
+     200 |                 if (IS_ERR(bank->lock[i].priv)
+         |                    ~                          ^
+         |                                               )
+     201 |                         return -ENOMEM;
+         |                         ~~~~~~                 
+>> drivers/hwspinlock/qcom_hwspinlock.c:202:9: error: expected expression before '}' token
+     202 |         }
+         |         ^
+
+
+vim +200 drivers/hwspinlock/qcom_hwspinlock.c
+
+   168	
+   169	static int qcom_hwspinlock_probe(struct platform_device *pdev)
+   170	{
+   171		struct hwspinlock_device *bank;
+   172		struct reg_field field;
+   173		struct regmap *regmap;
+   174		size_t array_size;
+   175		u32 stride;
+   176		u32 base;
+   177		int i;
+   178	
+   179		regmap = qcom_hwspinlock_probe_syscon(pdev, &base, &stride);
+   180		if (IS_ERR(regmap) && PTR_ERR(regmap) == -ENODEV)
+   181			regmap = qcom_hwspinlock_probe_mmio(pdev, &base, &stride);
+   182	
+   183		if (IS_ERR(regmap))
+   184			return PTR_ERR(regmap);
+   185	
+   186		array_size = QCOM_MUTEX_NUM_LOCKS * sizeof(struct hwspinlock);
+   187		bank = devm_kzalloc(&pdev->dev, sizeof(*bank) + array_size, GFP_KERNEL);
+   188		if (!bank)
+   189			return -ENOMEM;
+   190	
+   191		platform_set_drvdata(pdev, bank);
+   192	
+   193		for (i = 0; i < QCOM_MUTEX_NUM_LOCKS; i++) {
+   194			field.reg = base + i * stride;
+   195			field.lsb = 0;
+   196			field.msb = 31;
+   197	
+   198			bank->lock[i].priv = devm_regmap_field_alloc(&pdev->dev,
+   199								     regmap, field);
+ > 200			if (IS_ERR(bank->lock[i].priv)
+   201				return -ENOMEM;
+ > 202		}
+   203	
+   204		return devm_hwspin_lock_register(&pdev->dev, bank, &qcom_hwspinlock_ops,
+   205						 0, QCOM_MUTEX_NUM_LOCKS);
+   206	}
+   207	
+
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
