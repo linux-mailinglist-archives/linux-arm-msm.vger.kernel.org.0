@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BD326A3896
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 03:31:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B1EE6A3891
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 03:30:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231629AbjB0CbX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Feb 2023 21:31:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42366 "EHLO
+        id S231605AbjB0Cah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Feb 2023 21:30:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231597AbjB0CbE (ORCPT
+        with ESMTP id S229894AbjB0CaX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Feb 2023 21:31:04 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C996B1EBDE;
-        Sun, 26 Feb 2023 18:28:59 -0800 (PST)
+        Sun, 26 Feb 2023 21:30:23 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E5451BADD;
+        Sun, 26 Feb 2023 18:28:12 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 5296ACE0F4C;
-        Mon, 27 Feb 2023 02:09:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F1EC433EF;
-        Mon, 27 Feb 2023 02:09:31 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5C29060DBF;
+        Mon, 27 Feb 2023 02:10:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A30C433D2;
+        Mon, 27 Feb 2023 02:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677463772;
-        bh=bJsrmwNRnazNjOb4CR0aliKEV+9KZrk49a1BvMKGwbE=;
+        s=k20201202; t=1677463816;
+        bh=8pI3Woyny19sMkMRLbRQd/2x9/qy/z5T7wLlnUGhihI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=pqXjNQr35h7wNvPySG71mXHbXdqCb9hg2QoukyWw8grXs6GgmbJnRx819g+vBUiYk
-         7esqIs6Y3ORGXfhwReHoDICvpdZ7Oswinj8UUHMZohJWJo72XLD9E1txzixGmaNEYF
-         IHwtRoYIST+SStrVGsqzxw/reFTy32TGemvSzwFAeWMwsjBLbTIDDq/kNVj4AYM8Rt
-         U+RCOm1ULkSYi7o6LPSOfThcGFxrm/3TTNFmCW6GCf64bEZZo3b1R+xpUeceXSdnvA
-         nOeW3RtlDSqHQZI1ytMw6AFX8TndzQp6HEJ51WjiDQUiTDM+7jNHtp2hoNS4mRWCxA
-         K5nRjfBggm/Uw==
+        b=H7vjkMs32Bct6efire9duONIQgWR5/1yjpRicvJSWj0vfhv5qHnvZa+eSPud6BfDs
+         QzadLSqFsEF9UgxZnOPLxXv9HRiiuCzpHbZKDC/EPfMs9q6GGUj9tIn1WkUrnojE0Y
+         69dlZ8VHZAebFa9HNtXWgiUkLdEyYskErTDKLqtMUW+bqMq7xBZAPoEKdkwb4+wD7s
+         aU+KewHl5o6YmtTZ1MYpw60718sENYWx9/eONPswkw8J15NQO5kYC0vEyMCA2ztYeb
+         B/TDN2to1yEsyBWb4dFHegt7M/MvE7c9HdT9H7cpokILAXfvcdLMf7m4XxPZxNEZzI
+         RfG1LiQEN7w6Q==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Jiasheng Jiang <jiasheng@iscas.ac.cn>,
@@ -42,12 +42,12 @@ Cc:     Jiasheng Jiang <jiasheng@iscas.ac.cn>,
         vkoul@kernel.org, dianders@chromium.org, marex@denx.de,
         vladimir.lypak@gmail.com, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.15 11/25] drm/msm/dsi: Add missing check for alloc_ordered_workqueue
-Date:   Sun, 26 Feb 2023 21:08:34 -0500
-Message-Id: <20230227020855.1051605-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 07/19] drm/msm/dsi: Add missing check for alloc_ordered_workqueue
+Date:   Sun, 26 Feb 2023 21:09:42 -0500
+Message-Id: <20230227020957.1052252-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230227020855.1051605-1-sashal@kernel.org>
-References: <20230227020855.1051605-1-sashal@kernel.org>
+In-Reply-To: <20230227020957.1052252-1-sashal@kernel.org>
+References: <20230227020957.1052252-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -79,10 +79,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index eb60ce125a1fc..d3ec4d67a9a35 100644
+index 51e8318cc8ff4..5a76aa1389173 100644
 --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
 +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1929,6 +1929,9 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+@@ -1913,6 +1913,9 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
  
  	/* setup workqueue */
  	msm_host->workqueue = alloc_ordered_workqueue("dsi_drm_work", 0);
