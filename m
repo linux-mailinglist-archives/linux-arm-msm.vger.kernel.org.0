@@ -2,75 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CAAC6A46C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 17:10:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D19EE6A46C7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 17:12:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229955AbjB0QKo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Feb 2023 11:10:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55390 "EHLO
+        id S230082AbjB0QMe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Feb 2023 11:12:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229619AbjB0QKo (ORCPT
+        with ESMTP id S229712AbjB0QMd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Feb 2023 11:10:44 -0500
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8C2821A02
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 08:10:41 -0800 (PST)
-Received: by mail-io1-xd34.google.com with SMTP id m22so2341971ioy.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 08:10:41 -0800 (PST)
+        Mon, 27 Feb 2023 11:12:33 -0500
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A43822796
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 08:12:31 -0800 (PST)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-536cd8f6034so189129317b3.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 08:12:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IDYao4+klqBlSHhE2pkjIhJjL+MuNJUDI23FLbU6dUE=;
-        b=mstgBzaiAVkACCuOMLp/3Dm8yNAa7Mwz9HyjdOlTalcAEs33vqm7hoMmEdunIx8+Ph
-         jnva3xFwWoCLp7wb33LqhUt4eOovHJI5pqheILP/D2MTbeVx4tnF1tVSdrB9VwugoGUs
-         oSetSr1v8KpT9TygcF1lVH47q+DYWFhJbRtXg=
+        d=amarulasolutions.com; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=uog+NC3JDX/3s4EEtusxfV7GL8cg3o3rXi47XL2zYCU=;
+        b=Gls/FT24wIDqw26A+35LedSLf7NuYWn6yBxWOp62zMIfBwD96VL75IXnSlFsREuqYo
+         qqO0Lz/Wzz5Hj6iHZcmRZOSeEfOfdcWrppQh7PAi7c6zYUyRInHljeLQOthAvCG3bNYE
+         CUtpnLIP+bYo/symJuOQHu3QRd1pYhA8sM050=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IDYao4+klqBlSHhE2pkjIhJjL+MuNJUDI23FLbU6dUE=;
-        b=KhRz5XjIaqgx8u/k3svhmqenBcgGN8AkGTD5Ke5vHTWq8KTbnobhDdpSlem/Hao1PS
-         RjLJ/wfSA8taoMuTvyYfV+WM38/QaCW7rIkxlCuaGpcdk3Ni5jDmwyoJaiI4XATVXwrF
-         Y3Q+XgyPARmOvMZvDb2vG46iyGezxA/cAMfJKd39JHqIsWkAsLKH6qzeQlj14HInNqjZ
-         yydw9pLqKj7s1Drj4BX3/oYtMYPkS5EuuESzvOk/ZF+6qTDPgWQYIw8h4uXKTbRPsmsE
-         c13z7SwXTJ+L3FXu0tnIkiXBFtZm07Gegm+bhTMg9osv0V828vcn7RhxFL/Th876D7JW
-         QUfA==
-X-Gm-Message-State: AO0yUKVS6u87c9AIPeSqTORGPTJn2xyP+R/Zbli5+4XQl4WIKznZnUvL
-        l2WygMk8Zh8EbclhTNPzyJ0z5t/2gvf14YXk
-X-Google-Smtp-Source: AK7set8dz9+u1JqVUnqnB4WdvmgepHw9aytLw1OHCsrts2jTzlFwD0b5OurIvg5gRuJlZghWN9ZtPQ==
-X-Received: by 2002:a6b:e705:0:b0:74c:8a51:ecf7 with SMTP id b5-20020a6be705000000b0074c8a51ecf7mr16812661ioh.11.1677514240936;
-        Mon, 27 Feb 2023 08:10:40 -0800 (PST)
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com. [209.85.166.44])
-        by smtp.gmail.com with ESMTPSA id n3-20020a92dd03000000b003158e48f1e9sm2067183ilm.60.2023.02.27.08.10.39
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Feb 2023 08:10:40 -0800 (PST)
-Received: by mail-io1-f44.google.com with SMTP id bf15so2736665iob.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 08:10:39 -0800 (PST)
-X-Received: by 2002:a6b:ac06:0:b0:745:6c2f:61dd with SMTP id
- v6-20020a6bac06000000b007456c2f61ddmr6111510ioe.2.1677514239445; Mon, 27 Feb
- 2023 08:10:39 -0800 (PST)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uog+NC3JDX/3s4EEtusxfV7GL8cg3o3rXi47XL2zYCU=;
+        b=ISm2Kzq4JsAwrTr5TetO6nePNo67StX2zcTG5HQf7eXe/zVlybFyayKjiMFsC4YY+X
+         HqD/vzhMVwJ61WrkC/Ogy9Puk6cm/BBjtlMvBool19SNe7LDL+lEw6B6e/1LDoghDNGe
+         07Dl9ogCmmXTsy/52jgma6y+Cwo8XRrUgW+4BKlpM5YxdLVF5erkmFKHGzMX+rBcAgM9
+         O8kXdMmzpg1JaYkzI46ssn9RW32X8vkum158BBu1udOVsoZMNd0VfiV0fp7woGqkWDcz
+         N3HDjiU6lDtCDp6YBJeGFUQzX9I23p9qPpz+sVpE3nBZac3h2bxt9PsKAHZHBpwnperV
+         Zxow==
+X-Gm-Message-State: AO0yUKUinJ2GjTBnaFGWItWzKxp7VkK1Fg8w4IN1qaVDId95MOpjtMnS
+        3iRIoY7En/0f4TOMJc6QVEOstfDYra0e0Q6oFrB8Kg==
+X-Google-Smtp-Source: AK7set/+umnF+0qsxKl5X8OIztsVGHe3kI/eFvpRVMUjBST0vTyvdYJ88amXAAJTSSmIvMwvDX6p6Y8TT11gxODv5xc=
+X-Received: by 2002:a05:690c:31c:b0:52f:184a:da09 with SMTP id
+ bg28-20020a05690c031c00b0052f184ada09mr26898ywb.2.1677514350621; Mon, 27 Feb
+ 2023 08:12:30 -0800 (PST)
 MIME-Version: 1.0
-References: <20230215071649.9078-1-quic_mkshah@quicinc.com> <20230227153848.auqs4e5hf2qmwmg2@ripper>
-In-Reply-To: <20230227153848.auqs4e5hf2qmwmg2@ripper>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 27 Feb 2023 08:10:27 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=UK9zyQ=Mg3BaVCwOGBG3G7rW2pdpMFtGptR88p8ce9kg@mail.gmail.com>
-Message-ID: <CAD=FV=UK9zyQ=Mg3BaVCwOGBG3G7rW2pdpMFtGptR88p8ce9kg@mail.gmail.com>
-Subject: Re: [PATCH 0/1] Use PSCI OS initiated mode for sc7280
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Maulik Shah <quic_mkshah@quicinc.com>, ulf.hansson@linaro.org,
-        swboyd@chromium.org, wingers@google.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_lsrao@quicinc.com, quic_rjendra@quicinc.com,
-        Julius Werner <jwerner@chromium.org>
+References: <20230216-topic-drm-panel-upstream-maintainance-v1-1-ae1cf9268217@linaro.org>
+In-Reply-To: <20230216-topic-drm-panel-upstream-maintainance-v1-1-ae1cf9268217@linaro.org>
+From:   Jagan Teki <jagan@amarulasolutions.com>
+Date:   Mon, 27 Feb 2023 21:42:19 +0530
+Message-ID: <CAMty3ZDCOHsei6yHxunk=zhEy7LAu20TwwFNiYmwWTM8NXLgbQ@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Add myself as co-maintainer for DRM Panels drivers
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,36 +64,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Mon, Feb 27, 2023 at 7:35=E2=80=AFAM Bjorn Andersson <andersson@kernel.o=
-rg> wrote:
+On Fri, Feb 17, 2023 at 3:28 PM Neil Armstrong
+<neil.armstrong@linaro.org> wrote:
 >
-> On Wed, Feb 15, 2023 at 12:46:48PM +0530, Maulik Shah wrote:
-> > This change adds power-domains for cpuidle states to use PSCI OS
-> > initiated mode for sc7280.
-> >
-> > This change depends on external project changes [1] & [2] which are und=
-er
-> > review/discussion to add PSCI os-initiated support in Arm Trusted Firmw=
-are.
-> >
-> > I can update here once the dependency are in and change is ready to mer=
-ge.
-> >
+> Add myself as co-maintainer for DRM Panel Drivers in order to help
+> reviewing and getting new panels drivers merged.
 >
-> Please do, I will drop this from the queue for now.
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
 
-I'm a bit confused about why we're doing this. There's always been a
-question about exactly why we need OSI mode. As far as I can tell it
-can't be for "correctness" reasons because we managed to ship sc7180
-without OSI mode. ...so I guess somehow the argument is that OSI mode
-is more performant in some cases? Are there actual numbers backing
-this up, or is it all theoretical? Before making such a big change, it
-would be good to actually understand what the motivation is and see
-real data. This should be easy to collect since we currently have
-things working without OSI and (presumably) you have OSI working. It
-would also be good to document this motivation in the commit message
-and/or cover letter.
+Thanks for doing this, I'm acking since I have potential involvement in Panels.
 
--Doug
+Acked-by: Jagan Teki <jagan@amarulasolutions.com>
