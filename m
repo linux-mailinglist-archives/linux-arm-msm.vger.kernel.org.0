@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA5EF6A3928
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 03:58:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A4F36A381A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 03:14:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229772AbjB0C6n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Feb 2023 21:58:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37812 "EHLO
+        id S231177AbjB0COn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Feb 2023 21:14:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230208AbjB0C6n (ORCPT
+        with ESMTP id S230434AbjB0CN7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Feb 2023 21:58:43 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DB3E7A96;
-        Sun, 26 Feb 2023 18:58:38 -0800 (PST)
+        Sun, 26 Feb 2023 21:13:59 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCA341B33B;
+        Sun, 26 Feb 2023 18:11:53 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D7A12B80D1E;
-        Mon, 27 Feb 2023 02:11:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0078AC4339E;
-        Mon, 27 Feb 2023 02:11:17 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7EC0860CFA;
+        Mon, 27 Feb 2023 02:11:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE04C433EF;
+        Mon, 27 Feb 2023 02:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677463879;
-        bh=PQNw72DCGaZXLXmZzkGwEP0TtMW72AT5i8oK2oJciKw=;
+        s=k20201202; t=1677463897;
+        bh=+7Cs4Pr9fcZVRxPC9pnSZsmTMYQjvqYBi6I84wnp8A4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=HxwvgBjWfPEF51yf03QjDt8NFpNx+/B/yxyXOTGhoUsvqKgLe4AW0SfcKXj46hpNw
-         cbWlH8OLrH0LwRrtvBpzoGDOjFCfQC45zLjqYUhPgM9NRFO+dPqnhoh93kLCMlz/e4
-         xKSg2oArXy8u9HhtO2VUEv5TG9pnCxygWvbCHXCYEr+DUuPRsgu1Bnr24tUojNXybH
-         18XsdxkmUvh+0iYRJoyyF2ia7mQbBee1SUwrteRZgyMe0nayO48ow4Vt4/pstzwAmg
-         7KSzZjrk5BZL/1m/rYC9SO9zEeEtRRt7fwDo2XuA3a/7BlDOBRXlyPty6/ddzELIlp
-         oRIv/KZXqPAVg==
+        b=GKvlDk9/BUTovnMGlraGMNkptNU0Wgp82IaEeoZCZqUCQFu2hh/YfQw8tFNEpnEKQ
+         eTzrkePoVB0zA/UYzoMAWXplozPACW4Kfo7voaR60hl2lcHztSBLRVE+5l44kCnzZu
+         rM+Sxz7Z0ESNZooGYoEEc3YMAA/E6i8Ium4lTtm/Wry733ghpoRsyyZolyyVG96ycC
+         ++uIGUgy2RmcK6K08ki/LKeUDVqiOl/ulggHN6/gTB7go4+PeEns6toPoJEpgI36PJ
+         iy2zCdr6ZvXewiDP/3opD1BFbg0BEvpTekbUkvbYCl9feTERqKNBJid5qKeXlLhKbM
+         qdvJCMwbunmfQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Jiasheng Jiang <jiasheng@iscas.ac.cn>,
@@ -39,21 +39,21 @@ Cc:     Jiasheng Jiang <jiasheng@iscas.ac.cn>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sasha Levin <sashal@kernel.org>, robdclark@gmail.com,
         airlied@gmail.com, daniel@ffwll.ch, marijn.suijten@somainline.org,
-        vkoul@kernel.org, dianders@chromium.org, marex@denx.de,
-        vladimir.lypak@gmail.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.19 03/10] drm/msm/dsi: Add missing check for alloc_ordered_workqueue
-Date:   Sun, 26 Feb 2023 21:11:00 -0500
-Message-Id: <20230227021110.1053474-3-sashal@kernel.org>
+        vkoul@kernel.org, dianders@chromium.org, vladimir.lypak@gmail.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 4.14 2/9] drm/msm/dsi: Add missing check for alloc_ordered_workqueue
+Date:   Sun, 26 Feb 2023 21:11:24 -0500
+Message-Id: <20230227021131.1053662-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230227021110.1053474-1-sashal@kernel.org>
-References: <20230227021110.1053474-1-sashal@kernel.org>
+In-Reply-To: <20230227021131.1053662-1-sashal@kernel.org>
+References: <20230227021131.1053662-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,10 +79,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 56cfa0a03fd5b..059578faa1c6d 100644
+index c9c8d21905159..43a3a48a15df5 100644
 --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
 +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1883,6 +1883,9 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+@@ -1769,6 +1769,9 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
  
  	/* setup workqueue */
  	msm_host->workqueue = alloc_ordered_workqueue("dsi_drm_work", 0);
