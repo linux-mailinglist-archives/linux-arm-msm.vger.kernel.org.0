@@ -2,317 +2,281 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 569566A4BEB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 21:03:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C52DD6A4C88
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 21:55:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229751AbjB0UDZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Feb 2023 15:03:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52068 "EHLO
+        id S229723AbjB0Uzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Feb 2023 15:55:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbjB0UDY (ORCPT
+        with ESMTP id S229592AbjB0Uzy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Feb 2023 15:03:24 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A3709EDD;
-        Mon, 27 Feb 2023 12:03:22 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 1D484B80C94;
-        Mon, 27 Feb 2023 20:03:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB412C433D2;
-        Mon, 27 Feb 2023 20:03:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677528199;
-        bh=L1hXB8aev1OB4sehbJ+LYymCKbtXDt8zn4Fj8SbEDdk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Hjh+RhQM5Frh2Y0d6+hbW2Uid+PrJOA3YIoiQd6Ea6veVMrCWOZ3RU+buTo5dl9KD
-         FM0r8XCOFnFkyWK5EtVI2zoOmhdThjDYsbuXcA1OPeqlXPpD4Xjp+d/Bu5a6k/mYUp
-         MNI/baP+IZLc25GMkGEkiuvLCangBfY3j3K31ZPJqFzHmXgEE/h4JzRXg3ric3tcIQ
-         AsOSNcpwE7aroqKLVJuHM5/pM9qzD8SRM1flI8QVR3TAr/ZMKpbR9UMzB9+w5XDkcw
-         cdjQkHIPhyQs8+rqhl7u4j43jvA3r/MYMzl3Ibp6nmpxtRA/z16AxORFHHmTdTnEfY
-         +qsQlNiMid3tA==
-Date:   Mon, 27 Feb 2023 12:06:39 -0800
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 1/1] remoteproc: qcom: Add remoteproc tracing
-Message-ID: <20230227200639.fei5rsb5omaquhqn@ripper>
-References: <20230224165142.17745-1-quic_gokukris@quicinc.com>
- <20230224165142.17745-2-quic_gokukris@quicinc.com>
+        Mon, 27 Feb 2023 15:55:54 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB76125E3F;
+        Mon, 27 Feb 2023 12:55:51 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31RD0R1Z008607;
+        Mon, 27 Feb 2023 20:55:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=LoXvMWyEAfQCVCMsBf7NgNnDVRCawaflNIjWJlJ7ovI=;
+ b=JysaNCY6HInJ4ylpFEgVk0DcHq7kpPBkQ2TGe8h/WixXbjy9Qx6QEQIeQ0Z7Z5uRtn4c
+ ky3ESlAtNLg7qR8ZhMr29eP4TZhnoITASrIG+ylvOMaM/2m/mTBVidXhoyr9LmOF7Yxc
+ fAUz7HjBmfyPglvnaMY4UJHLvARNCJyVCRs2CviKCOBw0xQVJCQeVKWDZOB6S3vu5iqA
+ PSxvQvOOc/FRCrUztHDDCKf4/mKQE9JonjzoSi9uasvQ8b3Gq4N6GYZ8pmXXMQ1w0zXo
+ K2HSbcyJPm0jLgQtIDUH2pccikQw/4l1xUtI4VVgc6rnEllBTBb24rergYeWCsxDeXap kw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p0u3thftx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 27 Feb 2023 20:55:44 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31RKthUU029168
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 27 Feb 2023 20:55:43 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Mon, 27 Feb 2023 12:55:43 -0800
+Date:   Mon, 27 Feb 2023 12:55:42 -0800
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Sarannya S <quic_sarannya@quicinc.com>
+CC:     <arnaud.pouliquen@foss.st.com>, <swboyd@chromium.org>,
+        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH V5 3/3] rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
+Message-ID: <20230227205542.GB4062527@hu-bjorande-lv.qualcomm.com>
+References: <1676994962-18206-1-git-send-email-quic_sarannya@quicinc.com>
+ <1676994962-18206-4-git-send-email-quic_sarannya@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20230224165142.17745-2-quic_gokukris@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <1676994962-18206-4-git-send-email-quic_sarannya@quicinc.com>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: RplLd9AGHLwN6wDAAe5PuEtFO-tapfl9
+X-Proofpoint-ORIG-GUID: RplLd9AGHLwN6wDAAe5PuEtFO-tapfl9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-27_17,2023-02-27_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 mlxscore=0 adultscore=0 clxscore=1011 phishscore=0
+ bulkscore=0 lowpriorityscore=0 mlxlogscore=955 malwarescore=0
+ suspectscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302270166
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 24, 2023 at 08:51:42AM -0800, Gokul krishna Krishnakumar wrote:
-> This change adds traces to the following rproc events:
-> 1. subdevices events - (STRAT/STOP/CRASH)
-> 2. subsystem events - (START/STOP/CRASH)
-> 3. RPROC framework events - (Firmware Load/Authentication)
+On Tue, Feb 21, 2023 at 09:26:02PM +0530, Sarannya S wrote:
+> Add TICOMGET and TIOCMSET ioctl support for rpmsg char device nodes
+> to get/set the low level transport signals.
+
+Please update subjet and this commit message as well.
+
 > 
-
-Thanks for proposing the introduction of tracepoints, this is something
-we have talked about for years, but no one has shown enough
-need/interest to do the work.
-
-Most of the proposed tracepoints would however be very useful if you
-move them one step up (or down...) in the stack.
-
-I.e. please move them into the common code.
-
-> Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
 > ---
->  drivers/remoteproc/Makefile           |  3 ++-
->  drivers/remoteproc/qcom_common.c      | 25 +++++++++++++++++++
->  drivers/remoteproc/qcom_q6v5.c        |  3 +++
->  drivers/remoteproc/qcom_q6v5_pas.c    | 17 +++++++++++++
->  drivers/remoteproc/qcom_sysmon.c      | 13 ++++++++++
->  drivers/remoteproc/qcom_tracepoints.c | 10 ++++++++
->  include/trace/events/rproc_qcom.h     | 36 +++++++++++++++++++++++++++
->  7 files changed, 106 insertions(+), 1 deletion(-)
->  create mode 100644 drivers/remoteproc/qcom_tracepoints.c
->  create mode 100644 include/trace/events/rproc_qcom.h
+>  drivers/rpmsg/rpmsg_char.c | 60 +++++++++++++++++++++++++++++++++++++++-------
+>  include/uapi/linux/rpmsg.h | 11 +++++++++
+>  2 files changed, 63 insertions(+), 8 deletions(-)
 > 
-> diff --git a/drivers/remoteproc/Makefile b/drivers/remoteproc/Makefile
-> index 91314a9b43ce..e52fa815ddc0 100644
-> --- a/drivers/remoteproc/Makefile
-> +++ b/drivers/remoteproc/Makefile
-> @@ -22,7 +22,8 @@ obj-$(CONFIG_KEYSTONE_REMOTEPROC)	+= keystone_remoteproc.o
->  obj-$(CONFIG_MESON_MX_AO_ARC_REMOTEPROC)+= meson_mx_ao_arc.o
->  obj-$(CONFIG_PRU_REMOTEPROC)		+= pru_rproc.o
->  obj-$(CONFIG_QCOM_PIL_INFO)		+= qcom_pil_info.o
-> -obj-$(CONFIG_QCOM_RPROC_COMMON)		+= qcom_common.o
-> +obj-$(CONFIG_QCOM_RPROC_COMMON)		+= rproc_qcom_common.o
-> +rproc_qcom_common-y			:= qcom_common.o qcom_tracepoints.o
->  obj-$(CONFIG_QCOM_Q6V5_COMMON)		+= qcom_q6v5.o
->  obj-$(CONFIG_QCOM_Q6V5_ADSP)		+= qcom_q6v5_adsp.o
->  obj-$(CONFIG_QCOM_Q6V5_MSS)		+= qcom_q6v5_mss.o
-> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-> index a0d4238492e9..7da3259be14a 100644
-> --- a/drivers/remoteproc/qcom_common.c
-> +++ b/drivers/remoteproc/qcom_common.c
-> @@ -18,6 +18,7 @@
+> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
+> index 3e0b8f3..fdcb4ff 100644
+> --- a/drivers/rpmsg/rpmsg_char.c
+> +++ b/drivers/rpmsg/rpmsg_char.c
+> @@ -23,6 +23,7 @@
+>  #include <linux/rpmsg.h>
+>  #include <linux/skbuff.h>
 >  #include <linux/slab.h>
->  #include <linux/soc/qcom/mdt_loader.h>
->  #include <linux/soc/qcom/smem.h>
-> +#include <trace/events/rproc_qcom.h>
+> +#include <linux/termios.h>
+>  #include <linux/uaccess.h>
+>  #include <uapi/linux/rpmsg.h>
 >  
->  #include "remoteproc_internal.h"
->  #include "qcom_common.h"
-> @@ -26,6 +27,10 @@
->  #define to_smd_subdev(d) container_of(d, struct qcom_rproc_subdev, subdev)
->  #define to_ssr_subdev(d) container_of(d, struct qcom_rproc_ssr, subdev)
+> @@ -68,6 +69,8 @@ struct rpmsg_eptdev {
+>  	struct sk_buff_head queue;
+>  	wait_queue_head_t readq;
 >  
-> +#define GLINK_SUBDEV_NAME	"glink"
-> +#define SMD_SUBDEV_NAME		"smd"
-> +#define SSR_SUBDEV_NAME		"ssr"
-> +
->  #define MAX_NUM_OF_SS           10
->  #define MAX_REGION_NAME_LENGTH  16
->  #define SBL_MINIDUMP_SMEM_ID	602
-> @@ -189,6 +194,8 @@ static int glink_subdev_start(struct rproc_subdev *subdev)
->  {
->  	struct qcom_rproc_glink *glink = to_glink_subdev(subdev);
+> +	u32 remote_signals;
+> +	bool flow_control;
+>  };
 >  
-> +	trace_rproc_qcom_event(dev_name(glink->dev->parent), GLINK_SUBDEV_NAME, "start");
+>  int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
+> @@ -109,7 +112,22 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
+>  	skb_queue_tail(&eptdev->queue, skb);
+>  	spin_unlock(&eptdev->queue_lock);
+>  
+> -	/* wake up any blocking processes, waiting for new data */
 
-Please do add individual events, rather than adding a single
-trace_printk()-like event. That allows the user to selectively enable
-events, and it becomes convenient to use the events in debugging.
+Is this comment no longer valid?
 
+> +	wake_up_interruptible(&eptdev->readq);
 > +
->  	glink->edge = qcom_glink_smem_register(glink->dev, glink->node);
->  
->  	return PTR_ERR_OR_ZERO(glink->edge);
-[..]
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 6cc4e13c5d36..27d3a6f8c92f 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -24,6 +24,7 @@
->  #include <linux/soc/qcom/mdt_loader.h>
->  #include <linux/soc/qcom/smem.h>
->  #include <linux/soc/qcom/smem_state.h>
-> +#include <trace/events/rproc_qcom.h>
->  
->  #include "qcom_common.h"
->  #include "qcom_pil_info.h"
-> @@ -206,10 +207,13 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
->  	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
->  	int ret;
->  
-> +	trace_rproc_qcom_event(dev_name(adsp->dev), "adsp_load", "enter");
+> +	return 0;
+> +}
 > +
->  	/* Store firmware handle to be used in adsp_start() */
->  	adsp->firmware = fw;
->  
->  	if (adsp->dtb_pas_id) {
-> +		trace_rproc_qcom_event(dev_name(adsp->dev), "dtb_firmware_loading", "enter");
->  		ret = request_firmware(&adsp->dtb_firmware, adsp->dtb_firmware_name, adsp->dev);
->  		if (ret) {
->  			dev_err(adsp->dev, "request_firmware failed for %s: %d\n",
-> @@ -231,6 +235,8 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
->  			goto release_dtb_metadata;
->  	}
->  
-> +	trace_rproc_qcom_event(dev_name(adsp->dev), "adsp_load", "exit");
+> +static int rpmsg_ept_flow_cb(struct rpmsg_device *rpdev, void *priv, bool enable)
+> +{
+> +	struct rpmsg_eptdev *eptdev = priv;
+> +
+> +	if (enable)
+> +		eptdev->remote_signals = RPMSG_FLOW_CONTROL_ON;
+> +	else
+> +		eptdev->remote_signals = 0;
+> +
+> +	eptdev->flow_control = true;
 
-I believe it would be more useful to capture the error path as well.
+So remote_signals is the state of the remote's requested flow control
+and flow_control is carrying the information that the flow control has
+been requested, to interrupt poll.
+
+I think something like remote_flow and remote_flow_updated would make
+that more intuitive.
+
+
+Also, remote_signals can be bool and you can just assign enable, no need
+for the conditional.
 
 > +
+>  	wake_up_interruptible(&eptdev->readq);
+>  
 >  	return 0;
->  
->  release_dtb_metadata:
-> @@ -247,6 +253,8 @@ static int adsp_start(struct rproc *rproc)
->  	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
->  	int ret;
->  
-> +	trace_rproc_qcom_event(dev_name(adsp->dev), "adsp_start", "enter");
-> +
->  	ret = qcom_q6v5_prepare(&adsp->q6v5);
->  	if (ret)
->  		return ret;
-> @@ -276,6 +284,7 @@ static int adsp_start(struct rproc *rproc)
+> @@ -146,6 +164,7 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
+>  		return -EINVAL;
 >  	}
 >  
->  	if (adsp->dtb_pas_id) {
-> +	        trace_rproc_qcom_event(dev_name(adsp->dev), "dtb_auth_reset", "enter");
->  		ret = qcom_scm_pas_auth_and_reset(adsp->dtb_pas_id);
->  		if (ret) {
->  			dev_err(adsp->dev,
-> @@ -289,6 +298,8 @@ static int adsp_start(struct rproc *rproc)
->  	if (ret)
->  		goto disable_px_supply;
->  
-> +	trace_rproc_qcom_event(dev_name(adsp->dev), "Q6_firmware_loading", "enter");
-
-I would like this to contain move useful information, e.g. what file is
-it that we're trying to load?
-
-And you only put "enter" here because you have a single tracepoint, it
-doesn't add any value...
-
-> +
->  	ret = qcom_mdt_load_no_init(adsp->dev, adsp->firmware, rproc->firmware, adsp->pas_id,
->  				    adsp->mem_region, adsp->mem_phys, adsp->mem_size,
->  				    &adsp->mem_reloc);
-> @@ -296,6 +307,7 @@ static int adsp_start(struct rproc *rproc)
->  		goto release_pas_metadata;
->  
->  	qcom_pil_info_store(adsp->info_name, adsp->mem_phys, adsp->mem_size);
-> +	trace_rproc_qcom_event(dev_name(adsp->dev), "Q6_auth_reset", "enter");
->  
-
-When is this tracepoint useful to you? (Same with the mdt loader above)
-
-Should mdt-loader and scm drivers have their own tracepoints defined?
-They are after all called from a variety of other drivers...
-
->  	ret = qcom_scm_pas_auth_and_reset(adsp->pas_id);
->  	if (ret) {
-> @@ -303,6 +315,7 @@ static int adsp_start(struct rproc *rproc)
->  			"failed to authenticate image and release reset\n");
->  		goto release_pas_metadata;
+> +	ept->flow_cb = rpmsg_ept_flow_cb;
+>  	eptdev->ept = ept;
+>  	filp->private_data = eptdev;
+>  	mutex_unlock(&eptdev->ept_lock);
+> @@ -166,6 +185,7 @@ static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
+>  		eptdev->ept = NULL;
 >  	}
-> +	trace_rproc_qcom_event(dev_name(adsp->dev), "Q6_auth_reset", "exit");
+>  	mutex_unlock(&eptdev->ept_lock);
+> +	eptdev->flow_control = false;
 >  
->  	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5000));
->  	if (ret == -ETIMEDOUT) {
-> @@ -364,6 +377,8 @@ static int adsp_stop(struct rproc *rproc)
->  	int handover;
->  	int ret;
+>  	/* Discard all SKBs */
+>  	skb_queue_purge(&eptdev->queue);
+> @@ -279,6 +299,9 @@ static __poll_t rpmsg_eptdev_poll(struct file *filp, poll_table *wait)
+>  	if (!skb_queue_empty(&eptdev->queue))
+>  		mask |= EPOLLIN | EPOLLRDNORM;
 >  
-> +	trace_rproc_qcom_event(dev_name(adsp->dev), "adsp_stop", "enter");
+> +	if (eptdev->flow_control)
+> +		mask |= EPOLLPRI;
 > +
->  	ret = qcom_q6v5_request_stop(&adsp->q6v5, adsp->sysmon);
->  	if (ret == -ETIMEDOUT)
->  		dev_err(adsp->dev, "timed out on wait\n");
-> @@ -385,6 +400,8 @@ static int adsp_stop(struct rproc *rproc)
->  	if (handover)
->  		qcom_pas_handover(&adsp->q6v5);
+>  	mask |= rpmsg_poll(eptdev->ept, filp, wait);
 >  
-> +	trace_rproc_qcom_event(dev_name(adsp->dev), "adsp_stop", "exit");
+>  	return mask;
+> @@ -289,14 +312,35 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
+>  {
+>  	struct rpmsg_eptdev *eptdev = fp->private_data;
+>  
+> -	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
+> -		return -EINVAL;
+> -
+> -	/* Don't allow to destroy a default endpoint. */
+> -	if (eptdev->default_ept)
+> -		return -EINVAL;
+> +	bool set;
+> +	u32 val;
+> +	int ret;
+> +	
+> +	switch (cmd) {
+> +	case RPMSG_GET_SIGNAL_IOCTL:
 
-You're missing an opportunity to convey the success/failure by not using
-"ret".
+Signals is a glink name for this, how about:
 
-> +
->  	return ret;
+RPMSG_GET_OUTGOING_FLOWCONTROL
+
+> +		eptdev->flow_control = false;
+> +		ret = put_user(eptdev->remote_signals, (int __user *)arg);
+> +		break;
+> +	case RPMSG_SET_SIGNAL_IOCTL:
+
+RPMSG_SET_INCOMING_FLOWCONTROL
+
+> +		ret = get_user(val, (int __user *)arg);
+> +		if (ret)
+> +			break;
+> +		set = (val & RPMSG_FLOW_CONTROL_ON) ? true : false;
+
+The reason for only considering some bit(s) in the argument is to allow
+for future expansion, but unless you validate that those bits are unused
+by the caller you could end up with clients passing unexpected bits in
+~1, effectively preventing such future modifications.
+
+So if we're masking out the state, then we need to also reject (arg &
+~1). But I would prefer that we instead treat it as a boolean and do:
+
+  set = !!arg;
+
+> +		ret = rpmsg_set_flow_control(eptdev->ept, set);
+> +		break;
+> +	case RPMSG_DESTROY_EPT_IOCTL:
+> +		/* Don't allow to destroy a default endpoint. */
+> +		if (eptdev->default_ept) {
+> +			ret = -EINVAL;
+> +			break;
+> +		}
+> +		ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
+> +		break;
+> +	default:
+> +		ret = -EINVAL;
+> +	}
+>  
+> -	return rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
+> +	return ret;
 >  }
 >  
-[..]
-> diff --git a/include/trace/events/rproc_qcom.h b/include/trace/events/rproc_qcom.h
-> new file mode 100644
-> index 000000000000..b8748873ab25
-> --- /dev/null
-> +++ b/include/trace/events/rproc_qcom.h
-> @@ -0,0 +1,36 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2021 The Linux Foundation. All rights reserved.
+>  static const struct file_operations rpmsg_eptdev_fops = {
+> diff --git a/include/uapi/linux/rpmsg.h b/include/uapi/linux/rpmsg.h
+> index 1637e68..e9aa6b9 100644
+> --- a/include/uapi/linux/rpmsg.h
+> +++ b/include/uapi/linux/rpmsg.h
+> @@ -10,6 +10,7 @@
+>  #include <linux/types.h>
+>  
+>  #define RPMSG_ADDR_ANY		0xFFFFFFFF
+> +#define RPMSG_FLOW_CONTROL_ON  0x001
+>  
+>  /**
+>   * struct rpmsg_endpoint_info - endpoint info representation
+> @@ -43,4 +44,14 @@ struct rpmsg_endpoint_info {
+>   */
+>  #define RPMSG_RELEASE_DEV_IOCTL	_IOW(0xb5, 0x4, struct rpmsg_endpoint_info)
+>  
+> +/**
+> + * Get the remote rpmsg char device's flow control signal.
+
+s/signal/state/
+
 > + */
+> +#define RPMSG_GET_SIGNAL_IOCTL _IOW(0xb5, 0x5, struct rpmsg_endpoint_info)
 > +
-> +#undef TRACE_SYSTEM
-> +#define TRACE_SYSTEM rproc_qcom
+> +/**
+> + * Set the flow control for the local rpmsg char device.
+> + */
+> +#define RPMSG_SET_SIGNAL_IOCTL _IOW(0xb5, 0x6, struct rpmsg_endpoint_info)
 > +
-> +#if !defined(_TRACE_RPROC_QCOM_H) || defined(TRACE_HEADER_MULTI_READ)
-> +#define _TRACE_RPROC_QCOM_H
-> +#include <linux/tracepoint.h>
-> +
-> +TRACE_EVENT(rproc_qcom_event,
-> +
-> +	TP_PROTO(const char *name, const char *event, const char *subevent),
-> +
-> +	TP_ARGS(name, event, subevent),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, name)
-> +		__string(event, event)
-> +		__string(subevent, subevent)
-
-Please ensure that your trace events are carrying useful information;
-as seen above, subevent is not useful in all cases, and in several other
-cases you're missing useful information.
-
-Please think beyond printk, and please consider that these buffers could
-be consumed by a machine.
 
 Regards,
 Bjorn
 
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, name);
-> +		__assign_str(event, event);
-> +		__assign_str(subevent, subevent);
-> +	),
-> +
-> +	TP_printk("%s: %s: %s", __get_str(name), __get_str(event), __get_str(subevent))
-> +);
-> +#endif /* _TRACE_RPROC_QCOM_H */
-> +
-> +/* This part must be outside protection */
-> +#include <trace/define_trace.h>
+>  #endif
 > -- 
-> 2.39.2
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 > 
