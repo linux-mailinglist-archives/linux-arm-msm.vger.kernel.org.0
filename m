@@ -2,160 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66CBD6A3F4E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 11:16:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A64A66A3F9F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 11:44:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229867AbjB0KQM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Feb 2023 05:16:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56428 "EHLO
+        id S229830AbjB0Kos (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Feb 2023 05:44:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbjB0KQL (ORCPT
+        with ESMTP id S229894AbjB0Kon (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Feb 2023 05:16:11 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A93D71F4AF;
-        Mon, 27 Feb 2023 02:16:09 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31R3t6k2018345;
-        Mon, 27 Feb 2023 10:15:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=9ULn6APhFpkbMZSaCjTHDmlWvN7u9qNdvH9HjL1FNu4=;
- b=bW/LDKdmCo1j8lSZjGLc1NqcWknH78lsZejNherre/HNcgSm5rqP8pMY6mbHjOFQhgRb
- +PAEZMC1xH09uX+nKW2Wli3CcgZ+utnEFvbmL3OXcW1qeYPiByHahDWdmzbxAi6fsdYf
- joIMoidw0PqQycOb6LjtPz01fQM5qlyqu8Q7c0ZpPPXNt3TECdxBR6GWaT3KDi+5yDgn
- MVW/6eP9V+s/VTCiQOsscsW9IsQT3xX/LVtYZIpFOSAIlJGNmqDq94WKDzvLM+y0Wqz/
- b2dOYQVz+TfH73ouBeMKpVysYXmCBK3Tdvc5lkOjicmOMU32omyyGNNyUsVOq33iMMFq hg== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ny9a0vre7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 27 Feb 2023 10:15:45 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31RAFi26009729
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 27 Feb 2023 10:15:44 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 27 Feb
- 2023 02:15:40 -0800
-Message-ID: <14b11c3c-353c-50f9-f9a4-837fc5d06fa4@quicinc.com>
-Date:   Mon, 27 Feb 2023 15:45:31 +0530
+        Mon, 27 Feb 2023 05:44:43 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 82465B455;
+        Mon, 27 Feb 2023 02:44:41 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 511B5C14;
+        Mon, 27 Feb 2023 02:45:24 -0800 (PST)
+Received: from [10.57.91.127] (unknown [10.57.91.127])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2B4E83F881;
+        Mon, 27 Feb 2023 02:44:38 -0800 (PST)
+Message-ID: <3c3c55a8-8979-76f9-3b61-31c50ceefd33@arm.com>
+Date:   Mon, 27 Feb 2023 10:44:28 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [RFC PATCH 0/6] Add basic Minidump kernel driver support
-To:     Brian Masney <bmasney@redhat.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <keescook@chromium.org>,
-        <tony.luck@intel.com>, <gpiccoli@igalia.com>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <1676978713-7394-1-git-send-email-quic_mojha@quicinc.com>
- <Y/deHzijzvuvCJ2M@x1> <47542dbb-8cf3-6eae-a38e-910d38bd960b@quicinc.com>
- <Y/kKn9tnvSQ2Pacn@x1>
-Content-Language: en-US
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <Y/kKn9tnvSQ2Pacn@x1>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KBHzKjGxe0aLYMo37AVUS3Ff5TaxFmUa
-X-Proofpoint-GUID: KBHzKjGxe0aLYMo37AVUS3Ff5TaxFmUa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-26_22,2023-02-24_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 mlxscore=0 malwarescore=0 suspectscore=0 adultscore=0
- mlxlogscore=999 spamscore=0 bulkscore=0 impostorscore=0 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302270080
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.7.2
+Subject: Re: [PATCH v2 1/9] dt-bindings: arm: Add support for DSB element
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        Tao Zhang <taozha@qti.qualcomm.com>
+References: <1674114105-16651-1-git-send-email-quic_taozha@quicinc.com>
+ <1674114105-16651-2-git-send-email-quic_taozha@quicinc.com>
+ <c55483da-8fa7-67d3-041d-930607768a2a@arm.com>
+ <7195d3dd-8c39-00c5-5037-5d6d01698cf5@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <7195d3dd-8c39-00c5-5037-5d6d01698cf5@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/25/2023 12:36 AM, Brian Masney wrote:
-> Hi Mukesh,
+On 27/02/2023 03:07, Tao Zhang wrote:
+> Hi Suzuki,
 > 
-> On Fri, Feb 24, 2023 at 04:10:42PM +0530, Mukesh Ojha wrote:
->> On 2/23/2023 6:07 PM, Brian Masney wrote:
->>> I'd like to test this series plus your series that sets the multiple
->>> download modes.
+> 在 2/22/2023 2:11 AM, Suzuki K Poulose 写道:
+>> On 19/01/2023 07:41, Tao Zhang wrote:
+>>> Add property "qcom,dsb-elem-size" to support DSB(Discrete Single
+>>> Bit) element for TPDA. Specifies the DSB element size supported
+>>> by each monitor connected to the aggregator on each port. Should
+>>> be specified in pairs (port, dsb element size).
+>>>
+>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>>> Signed-off-by: Tao Zhang <taozha@qti.qualcomm.com>
+>>> ---
+>>>   .../bindings/arm/qcom,coresight-tpda.yaml          | 22 
+>>> ++++++++++++++++++++++
+>>>   1 file changed, 22 insertions(+)
+>>>
+>>> diff --git 
+>>> a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml 
+>>> b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+>>> index 2ec9b5b..298db7f 100644
+>>> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+>>> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+>>> @@ -58,6 +58,26 @@ properties:
+>>>       minItems: 1
+>>>       maxItems: 2
+>>>   +  qcom,dsb-element-size:
+>>> +    description: |
+>>> +      Specifies the DSB(Discrete Single Bit) element size supported by
+>>> +      each monitor connected to the aggregator on each port. Should be
+>>> +      specified in pairs <port, dsb element size>.
 >>
->> Sure, you are welcome, but for that you need a device running with Qualcomm
->> SoC and if it has a upstream support.
-> 
-> I will be testing this series on a sa8540p (QDrive3 Automotive
-> Development Board), which has the sc8280xp SoC with good upstream
-> support. This is also the same board that I have a reliable way to
-> make the board crash due to a known firmware bug.
-> 
+>> Isn't this a property of the TPDM connected to the port ? i.e. the DSB 
+>> size ? Thus shouldn't this be part of the TPDM device (and the TPDA 
+>> will be able to find it from the TPDM device) ?
+>>
+> Since  the port number is about the input port of TPDA, this property 
+> needs to be configured in the TPDA-related settings.
+
+That is because, you chose to describe the property of TPDM in TPDA ?
+Instead if you do it as follows :
+
+  tpdm {
+        qcom,tpdm-dsb-elemenet-size = <32>
+        out_ports {
+
+	port {
+              remote-endpoint=<&tpda_port_number>;
+	}
+  }
+
+  tpda {
+        in_ports {
+            port {
+                  remote-endpoint=<&tpdm0_port0>;
+            }
+        }
+  }
 
 
-Can you try below patch to just select minidump download mode and make 
-the device crash ?
+The TPDA driver can figure out the "port" that a given TPDM is connected
+to and thus find out the DSB size. For the tpda driver, pdata->conns
+could hold the reference to the TPDM device and thus fetch the DSB size.
+(Note: James is working on a patch to add input port connections to the
+platform data).
 
---------------------------------------->8-------------------------------
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi 
-b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 0d02599..bd8e1a8 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -280,6 +280,7 @@
-         firmware {
-                 scm: scm {
-                         compatible = "qcom,scm-sc8280xp", "qcom,scm";
-+                       qcom,dload-mode = <&tcsr 0x13000>;
-                 };
-         };
+Suzuki
 
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index cdbfe54..e1539a2 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -20,7 +20,7 @@
-
-  #include "qcom_scm.h"
-
--static bool download_mode = 
-IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT);
-+static bool download_mode = true;
-  module_param(download_mode, bool, 0);
-
-  #define SCM_HAS_CORE_CLK       BIT(0)
-@@ -427,7 +427,7 @@ static void qcom_scm_set_download_mode(bool enable)
-                 ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
-         } else if (__scm->dload_mode_addr) {
-                 ret = qcom_scm_io_writel(__scm->dload_mode_addr,
--                               enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
-+                               enable ? 0x20 : 0);
-         } else {
-                 dev_err(__scm->dev,
-                         "No available mechanism for setting download 
-mode\n");
-
-
-
-
->> Also, testing of this patch needs some minimal out of tree patches and
->> i can help you with that.
-> 
-> Yup, that's fine. Hopefully we can also work to get those dependencies
-> merged upstream as well.
-> 
-> Brian
-> 
