@@ -2,130 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B5436A462E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 16:38:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2CA26A4628
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 16:35:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229527AbjB0PiC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Feb 2023 10:38:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52250 "EHLO
+        id S229649AbjB0Pfb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Feb 2023 10:35:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229644AbjB0PiB (ORCPT
+        with ESMTP id S229527AbjB0Pfb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Feb 2023 10:38:01 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8842D8A65;
-        Mon, 27 Feb 2023 07:38:00 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id t15so6679420wrz.7;
-        Mon, 27 Feb 2023 07:38:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8iPi5X24QTXkkpCSlIjxJGTxpv+NcI0Pnun45yeLmXE=;
-        b=JO352TRl2K8+Hym1qiP/MLj7LZc8IblPvaQ/6ojC/1cd0ZOHuhweFYbR2yiUnjFjtr
-         fS9SsCW/xfUTtoE3vcDxo9T7mtaDfImSJfSIPGj+uG1ru76KA1SD4A1+I2Z1m4jStAqy
-         1GErc96ncs9MAp4BUaKAXxFs994GWp0Ljd6o8aQ7ZHg8RddPb0v87loajDATtz2jHFZh
-         g69FYaR8wWAlFF2Kv5jYzNmZ7XW2E+nx5EcBMSxMVerVZsbim9Cnnf6sMZkM8ubu3mnz
-         dt2++KHUwqWUeRCQXmHe6HXbqXwCuoVDfnDcaWhNOO+Wwm8Fv++Od2ZnoJdBT/J6Y9JB
-         wBoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8iPi5X24QTXkkpCSlIjxJGTxpv+NcI0Pnun45yeLmXE=;
-        b=PRL3Z9OCRzLaWCF2xMmSN/CEJE5yRoK7zuDEQjDdn6kD0wXRg+ICQDRAvvuFL+iLUe
-         tsoETMQ7scDZyCPMSKmUKTy2IPcwEhpm4abtjgtaP2pyc/P3HFOh7GHW/xrFCFrDDLOM
-         8EFdVlMQCHDuO5ZgI3ZZwOPgEcSRHjU4HN9QwPlpOZBX/xdTMUm3ejSxSNYmBLGYAx9O
-         1NCfb5+jtploOVz5G6xNLGHQHPj8eSTKoOmgOQjvmTQdDRS/e/I0S74JbhEQQL1yK8Zs
-         wQtbtFRW1QUaOKIx1bCZ0sq755SLGyZ1Kl4ryAnx2es036fDrqPLyrApq/15fn80LdPE
-         RzEg==
-X-Gm-Message-State: AO0yUKV+oQa1/2a2JGNMrottVhEWetTkArPQvPewTbEksy7fSzKtjzK1
-        A/tYBAg3JBmCyQD7pMaTAgEkYkzaxlg=
-X-Google-Smtp-Source: AK7set+gzfKP7nIhtlLHVfD/hwBndJB2UaNuHF+7c4cyFENoyzpEL44waBdq7UQclvB5/RiKpgrjZQ==
-X-Received: by 2002:adf:f3ca:0:b0:2c7:832:8fc0 with SMTP id g10-20020adff3ca000000b002c708328fc0mr15915768wrp.3.1677512278977;
-        Mon, 27 Feb 2023 07:37:58 -0800 (PST)
-Received: from orome (p200300e41f1c0800f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f1c:800:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id d18-20020adfe892000000b002c707b336c9sm7433562wrm.36.2023.02.27.07.37.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Feb 2023 07:37:57 -0800 (PST)
-Date:   Mon, 27 Feb 2023 16:37:55 +0100
-From:   Thierry Reding <thierry.reding@gmail.com>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Sam Ravnborg <sam@ravnborg.org>, Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] MAINTAINERS: Add myself as co-maintainer for DRM Panels
- drivers
-Message-ID: <Y/zOU8cu29hOi9hk@orome>
-References: <20230216-topic-drm-panel-upstream-maintainance-v1-1-ae1cf9268217@linaro.org>
- <Y+9awrqcQIOQNeaX@ravnborg.org>
- <45387999-a930-c03f-1acd-a02b9b4b3b3b@linaro.org>
+        Mon, 27 Feb 2023 10:35:31 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90DCC15C90;
+        Mon, 27 Feb 2023 07:35:29 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 35AB760EA5;
+        Mon, 27 Feb 2023 15:35:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DC9C433D2;
+        Mon, 27 Feb 2023 15:35:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1677512128;
+        bh=9c4uq9wOs3GsNrUYMpDTYt/Y5TsB8KfI9Jand078aUc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=eP05/3UvGR5IEurbM/Qu4aEHvsQsmLbhRwbOpA4AGzS9XGEmKibP3m0AcW8qO5KdP
+         gSHQeDFH6qoeexqQM73PPEID23Iydn+llTCahxZDbPGjcPqkkx14+30yrc2NK0uBjC
+         72dZfqI1YzU24Y3zlikB+yEwT1ZA+y3KPVqD6HaJxG5K29YaY4N4XOzMA+KLRiQ8/C
+         KBVTOFC5JTRFqb2IOkJhz8yP0isRduWsZtivc4Laew82ZUcIgEmUdtqfBgjfKf+9Ud
+         UMJqPFxJYFBkmiBRHAJFV/jk+XXqycmmPO3v+iqe9SWE08CC6sWif5l++b2joVieau
+         /qj3UpXvihO6g==
+Date:   Mon, 27 Feb 2023 07:38:48 -0800
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Maulik Shah <quic_mkshah@quicinc.com>
+Cc:     ulf.hansson@linaro.org, dianders@chromium.org, swboyd@chromium.org,
+        wingers@google.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_lsrao@quicinc.com,
+        quic_rjendra@quicinc.com
+Subject: Re: [PATCH 0/1] Use PSCI OS initiated mode for sc7280
+Message-ID: <20230227153848.auqs4e5hf2qmwmg2@ripper>
+References: <20230215071649.9078-1-quic_mkshah@quicinc.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="yUOMNC0qfpAxvPUR"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <45387999-a930-c03f-1acd-a02b9b4b3b3b@linaro.org>
-User-Agent: Mutt/2.2.9 (2022-11-12)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230215071649.9078-1-quic_mkshah@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Feb 15, 2023 at 12:46:48PM +0530, Maulik Shah wrote:
+> This change adds power-domains for cpuidle states to use PSCI OS
+> initiated mode for sc7280.
+> 
+> This change depends on external project changes [1] & [2] which are under
+> review/discussion to add PSCI os-initiated support in Arm Trusted Firmware.
+> 
+> I can update here once the dependency are in and change is ready to merge.
+> 
 
---yUOMNC0qfpAxvPUR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Please do, I will drop this from the queue for now.
 
-On Mon, Feb 27, 2023 at 09:22:02AM +0100, Neil Armstrong wrote:
-> Hi Sam !
->=20
-> On 17/02/2023 11:45, Sam Ravnborg wrote:
-> > On Fri, Feb 17, 2023 at 10:58:15AM +0100, Neil Armstrong wrote:
-> > > Add myself as co-maintainer for DRM Panel Drivers in order to help
-> > > reviewing and getting new panels drivers merged.
-> > >=20
-> > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> >=20
-> > Thanks for stepping up!
-> >=20
-> > Acked-by: Sam Ravnborg <sam@ravnborg.org>
->=20
-> Thanks for you trust!
->=20
-> Is there anybody else willing to ack ? Thierry ?
+Thanks,
+Bjorn
 
-While at it, perhaps you want to remove me from the entry? I haven't
-had much time to look at these drivers for a while now and Sam has been
-doing a much better job than I ever have, so looks all in good hands.
-
-Acked-by: Thierry Reding <thierry.reding@gmail.com>
-
---yUOMNC0qfpAxvPUR
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmP8zlEACgkQ3SOs138+
-s6EoXQ//fx/b2TspW3plTFqmmm7ZdxDRNWPShZgH07yU4Us9KxNmsCABmuwxZxeT
-uyL05JiX1xlPGeRxnZHW9PywXPPAIJlFGjYW2zrepjYRhdvVhfirNlMhw5YQuce3
-ASnfcYx68BbOLfeTJma0+5/ZxkWklBn/Fbqki/b/cL8oSUCinUBEgVHGVrp2CyRi
-dWiny3jHQWDUdySpVBCZAJfOboi7V8IGfviRKz/PrJ0rMlNyGuISNCpsMF4P/ChO
-G9CKmN/qQlY3WE0S80TaBBBK420h7Ie7C31XgIkU/Ca6jXD3GilzeVQfjdfLiiQF
-MI379JWCwjP4S9urZgamJpukXR2ebEf/nZqz05hws7rRXjnbs+Ao78NnFyt6WfLs
-NIPCOsnzLu1nQiNgmNIqP0AFvm8NvWPz8hXTN3Z55/kKd0T8ukuNde+S8ET1jY02
-HnrMBdqWHfdMbaGFfuT7dYdB64/pcMJOyrXArYthwYj2xyh2stjZSFsvMPSSAr7L
-a8kEDl0299OP6HnYVFfRDNv04VY4lLe31Og2zfP+9q7+d5MCP35+7tjn2BvYEXP0
-tJuZcSlFXYWTxBTESFFheoWBKoWDhuH8MfFXOADXyyGhIv9m+HraWXLCGUTs2vPi
-wI1QUZxVsJSLZ4AQyxAZhxQJbSJolCIRHoDqiXFaGpSE6liRV2s=
-=h4Q5
------END PGP SIGNATURE-----
-
---yUOMNC0qfpAxvPUR--
+> [1] https://review.trustedfirmware.org/q/topic:psci-osi
+> [2] https://review.trustedfirmware.org/c/TF-A/trusted-firmware-a/+/19487
+> 
+> Maulik Shah (1):
+>   arm64: dts: qcom: sc7280: Add power-domains for cpuidle states
+> 
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 96 +++++++++++++++++++++-------
+>  1 file changed, 72 insertions(+), 24 deletions(-)
+> 
+> -- 
+> 2.17.1
+> 
