@@ -2,87 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 62F496A4A63
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 19:58:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EAF086A4A9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 20:11:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229470AbjB0S6h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Feb 2023 13:58:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37584 "EHLO
+        id S229753AbjB0TLN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Feb 2023 14:11:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229691AbjB0S6g (ORCPT
+        with ESMTP id S229703AbjB0TLN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Feb 2023 13:58:36 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA38D903A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 10:58:34 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id g17so9909021lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 10:58:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1677524313;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mRsKipwTaZMto6Q2Ot7ciKaa6dv/XDA9FjOe0TQ3/no=;
-        b=CWY8U8jhOLvKLGkjkUZAnFg/LXI2S72CxNcC4mseTG3U+TTx9Q5iV8VDC/vHHgetCt
-         7nf6bVU0rOsbFKGxFNWOcmhFydzbKSMmv5VOz/qhVWPLegkUtoqaYt/+Hm2zkMkI9STQ
-         NWNwVcjlaS9Ad9Ievzi8T0kPu6r3rkdRpusjs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677524313;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mRsKipwTaZMto6Q2Ot7ciKaa6dv/XDA9FjOe0TQ3/no=;
-        b=iubtItsQQY6i3dGa/wh+YRuLs9fNIB3g/G7/AOjxBiyPaPo/f+0bw4Qa70FnKsu5Rl
-         nmBawX2AztluNEtbc45JaXOtlAc29WevNJLYEpuISLzdgsC3bbNO9Y6KjHhMvYidmjX6
-         nvB89miRpNEMhkckMbXucvkvWiG6Ojkgfgth+xrnJjtZZbTO6kMFfeNBIIMQjgpu3VVX
-         j8RkZm6qR9kPxbVrAmNlnBKkSDpL54pf9VrcnoYcWhptO1GRqZX+1UG/+OuTB1c2YLC6
-         DZvY3fcDg4hSIw7fAOmNwMoSQ+C/KBcJYwiUScA+ltrdXDtYA36CRJGT6o7ZcwP33URW
-         lkLw==
-X-Gm-Message-State: AO0yUKXb2c61OkkRFtOkw5xVGlXGMiOcF8UIbEpCoj+eHbd2XpwAjY1x
-        YbXWP6Oi+q3Va/7EN9sT8BO3gZRP438xDpoUQgx3Jw==
-X-Google-Smtp-Source: AK7set8yKCM21HLcQlsUeT3bM88VXuBEcNpQS27/Aqoe0Fk8QBAzE2fMXsBi+t9fzPuZdWk9BMd16KTdWDB18VP6Ywo=
-X-Received: by 2002:ac2:520e:0:b0:4db:1999:67a3 with SMTP id
- a14-20020ac2520e000000b004db199967a3mr7871179lfl.13.1677524313029; Mon, 27
- Feb 2023 10:58:33 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 27 Feb 2023 13:58:32 -0500
+        Mon, 27 Feb 2023 14:11:13 -0500
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 151DF2412A;
+        Mon, 27 Feb 2023 11:11:10 -0800 (PST)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id B206C219F8;
+        Mon, 27 Feb 2023 19:11:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+        t=1677525068; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=k7KLqc0ddMXLeQzmWAODibPhNefuYjs5GZ/oLOoQbho=;
+        b=EWgOdMt9uLzuqoPUeB79LOuBCUrHjFTtVdJQ5hYBnMXNvMVzAbI98b3A6VjBIftUaWTooM
+        loUS2WCJYIvxXGxxbSqEkzoAdmgyMt343VMkKJepTyaE+bjL60uiM7N+tAR9fu4YnE8KXZ
+        mV62PV9lxoztijjx1ZaOzygRFLz9LBE=
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 8FB1413A43;
+        Mon, 27 Feb 2023 19:11:08 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id CzbTIEwA/WNcDAAAMHmgww
+        (envelope-from <mhocko@suse.com>); Mon, 27 Feb 2023 19:11:08 +0000
+Date:   Mon, 27 Feb 2023 20:11:07 +0100
+From:   Michal Hocko <mhocko@suse.com>
+To:     Suren Baghdasaryan <surenb@google.com>
+Cc:     Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>,
+        David Hildenbrand <david@redhat.com>,
+        Johannes Weiner <hannes@cmpxchg.org>,
+        Mike Rapoport <rppt@kernel.org>,
+        Oscar Salvador <osalvador@suse.de>,
+        Anshuman Khandual <anshuman.khandual@arm.com>,
+        mark.rutland@arm.com, will@kernel.org,
+        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Sukadev Bhattiprolu <quic_sukadev@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Patrick Daly <quic_pdaly@quicinc.com>, johunt@akamai.com
+Subject: Re: [PATCH] psi: reduce min window size to 50ms
+Message-ID: <Y/0ASztGOwfM6bNK@dhcp22.suse.cz>
+References: <e944536f-a04c-5528-601e-d7f505a761e8@quicinc.com>
+ <CAJuCfpGLkkS2yx0d9+2nYtEtxANSH5H3EgCmWZax4N-ieEBG7g@mail.gmail.com>
+ <15cd8816-b474-0535-d854-41982d3bbe5c@quicinc.com>
+ <CAJuCfpHihLgHCcsAqMJ_o2u7Ux9B5HFGsV2y_L2_5GXYAGYLnw@mail.gmail.com>
+ <82406da2-799e-f0b4-bce0-7d47486030d4@quicinc.com>
+ <CAJuCfpHrhO7_fMwNuu2hdQob=MPjZTW8eaJpNhEhPmDMqz2qTA@mail.gmail.com>
+ <Y/ix53x8i/ViuBXf@dhcp22.suse.cz>
+ <CAJuCfpG1c5v6qOotPV6t-o1T1p7EbOLs90eFnoEBjts+gafovA@mail.gmail.com>
+ <Y/yxSqhpQh9yR7L4@dhcp22.suse.cz>
+ <CAJuCfpHXwbtjdhH_K9r28-LUYtzC6+NaZ+RrKCtiNBk8PfXhLw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <1677517471-5947-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1677517471-5947-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Mon, 27 Feb 2023 13:58:32 -0500
-Message-ID: <CAE-0n51tvrbr1f2cRz4pCE-LMPjn09wXTAuiB9D_QeiF65pHVQ@mail.gmail.com>
-Subject: Re: [PATCH v1] drm/msm/disp/dpu: fix sc7280_pp base address
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@gmail.com, andersson@kernel.org, daniel@ffwll.ch,
-        dianders@chromium.org, dmitry.baryshkov@linaro.org,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJuCfpHXwbtjdhH_K9r28-LUYtzC6+NaZ+RrKCtiNBk8PfXhLw@mail.gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2023-02-27 09:04:31)
-> Correct sc7280 pp block base address.
+On Mon 27-02-23 09:49:59, Suren Baghdasaryan wrote:
+> On Mon, Feb 27, 2023 at 5:34 AM Michal Hocko <mhocko@suse.com> wrote:
+> >
+> > On Fri 24-02-23 13:07:57, Suren Baghdasaryan wrote:
+> > > On Fri, Feb 24, 2023 at 4:47 AM Michal Hocko <mhocko@suse.com> wrote:
+[...]
+> > > > Btw. it seems that there is is only a limit on a single trigger per fd
+> > > > but no limits per user so it doesn't sound too hard to end up with too
+> > > > much polling even with a larger timeouts. To me it seems like we need to
+> > > > contain the polling thread to be bound by the cpu controller.
+> > >
+> > > Hmm. We have one "psimon" thread per cgroup (+1 system-level one) and
+> > > poll_min_period for each thread is chosen as the min() of polling
+> > > periods between triggers created in that group. So, a bad trigger that
+> > > causes overly aggressive polling and polling thread being throttled,
+> > > might affect other triggers in that cgroup.
+> >
+> > Yes, and why that would be a problem?
+> 
+> If unprivileged processes are allowed to add new triggers then a
+> malicious process can add a bad trigger and affect other legit
+> processes. That sounds like a problem to me.
 
-What goes wrong if this is left unchanged? How important is it to fix
-this? Does the display fail to work? Does it fix something for a new
-feature that isn't yet enabled upstream?
+Hmm, I am not sure we are on the same page. My argument was that the
+monitoring kernel thread should be bound by the same cpu controller so
+even if it was excessive it would be bound to the cgroup constrains.
 
-This information is useful to put in the commit text so we know the
-severity of the problem that is being fixed and so that maintainers can
-understand the importance of the patch.
-
->
-> Fixes: 591e34a091d1 ("drm/msm/disp/dpu1: add support for display for SC7280 target")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+-- 
+Michal Hocko
+SUSE Labs
