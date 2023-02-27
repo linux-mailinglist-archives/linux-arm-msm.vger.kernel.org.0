@@ -2,83 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A22846A3943
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 04:09:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A405D6A3C10
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 09:13:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230419AbjB0DJh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Feb 2023 22:09:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46756 "EHLO
+        id S230078AbjB0INP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Feb 2023 03:13:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230205AbjB0DJf (ORCPT
+        with ESMTP id S229471AbjB0INO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Feb 2023 22:09:35 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7702D11EA6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Feb 2023 19:09:30 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id f41so6661459lfv.13
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Feb 2023 19:09:30 -0800 (PST)
+        Mon, 27 Feb 2023 03:13:14 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7642883F4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 00:13:12 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id h14so5219301wru.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 00:13:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ARwtmBoWPA0mYm8v1Q76EhykRCJejAkEWfpNQ6zu43c=;
-        b=TSiVzoeyw3I3ld9ftyMRaMMb1P+iJlpgniIXLOlhM4aJCoO4yPR0BiBHXGPdsb2Bq8
-         MXdnGEDPWbn/pFuqZ/vIx/+AX7lFGcSpv9MzkdW6A5xEWtUcxy/xcVc4tMUCNlO4pa0B
-         BUtwUnzw6TShTWQrv5g4IW7ra1tlTbLoyYp6bTK1GvwF2Z3fNfiXHJiljWCibDUpQs9h
-         GRs3zQRpeFT0IK5+LHTBygMdxEFOab1jv/PWWlIy88L2tIi/RuJqV4XFo/3hD64bv4Rh
-         bUAMqTjdhDmEkEpd5v8XMOnqPgvEPnrwIoJMXgDlRPHyg2hFfVnMsXgKiVha5msRyrm6
-         IncQ==
+        bh=0s3QlMH99J9txGN6IDDba9E7YuAuLZPQ1XK9+3yrepI=;
+        b=Lwri2+SAGcjuAQG337kAuh7T/1Xy5lNNdYXVC9+tcUxGnIExP8iqrdONHBEdIBeupu
+         Ci3Peomsl8WtHpiVOVOcN9pnFZ9yyD0zrsFq/GtKClsvzzar/2rs8EJxveaak+NQ+87w
+         u4jg7L8wZUqdkZ9oNQrXu3UT6YoOzBM+dB9utsj51cegG65wUMrVVwIziJA7MaIsIrbm
+         mX163nFAvv9J3EA0yXsyeobn7XW1ZRJp2FXgeH6biX0nFjM2NB2H4kFPKzFVfHMCbshC
+         /y6bAF73ZXuNkXVBMwQlNbdVXecKT7olWMHBFDL4oZN3zxus0KRVQ/AWTWZOFiKoZ1lk
+         C3xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ARwtmBoWPA0mYm8v1Q76EhykRCJejAkEWfpNQ6zu43c=;
-        b=X7Jf9hUfV4n3z6XiM8krmf5Mxz8CCVJS2O76N17t4d9s4IFFVtTQgqqtGqDEYUPnFo
-         pHKnTTHGAVCtcQRQMO+FuR+q2QlftsW5N19gn7TLNueJQTiB7Iq3XrUQ4LJm4DVP5925
-         TXBMWDAmbEEPR8rLzWlmXxrjUEgz33wIB8uLSJ0xsmFtVCNt+O4B6q+4fupfmOy7sR+j
-         Co+B870D3t1PPcSii08/XkWAo4QJynt+CKXK51GEkDCHHexBiHE7GEJtVYoxJqqbuebq
-         ALdeTISUi6FkmmFXFNs4C0UkesKq3oDs7ZdasyRj+C30L1UcCs+Tze8vS2hgwx/zHhs6
-         VZpg==
-X-Gm-Message-State: AO0yUKU9GAaTODPXfgpFwQyK6YYErWewNYsOgLF49LJTyr7v+yYVV6Aq
-        YXat085UqZwgrVNvY0ufWxKF6w==
-X-Google-Smtp-Source: AK7set+kOX9ZVq8UFIZXjwlJxsqmYLOD3l4OBOH0tMaLId1c201sit7u1DbbLAEzzUpkOVDe0gyiug==
-X-Received: by 2002:a05:6512:4c5:b0:4e0:c8ef:42b5 with SMTP id w5-20020a05651204c500b004e0c8ef42b5mr283404lfq.6.1677467368454;
-        Sun, 26 Feb 2023 19:09:28 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id s16-20020ac25ff0000000b004cb3e97bff8sm757705lfg.284.2023.02.26.19.09.27
+        bh=0s3QlMH99J9txGN6IDDba9E7YuAuLZPQ1XK9+3yrepI=;
+        b=vTmclKDSMMKxWAyPmlHUFlMm3kkkOl8o6tJVOHIRQk2PXyeF9F/TjJUFprKKwpu1VO
+         YSXqaDr0XGaU7xqEtZTyz/tI7j9NlAFaM6lUzqXKmEJ3JiUXNfi20e6lqGCrokdFe1BM
+         lObPx8zYx8WETZCzR27ogguEM8zKqiFu/7mfB6YJhOniQ1+cj8AVyROX32FO8puv5Mnj
+         MkirCrWkEyKoEDn4X4KTnNGxaX/izh8G5EYhHNa/GOBZcl3//5NbmdV3J97ypWbO+rUX
+         Hld8+wP3fadEbzWCsm+yDA8qx6vZGmmCa0mhANirEHPqjo5DTCQEWR1jz04E43qRPQJN
+         5nSg==
+X-Gm-Message-State: AO0yUKVxCGRKfJXpTHUl2HuSZIRNVkHJrLIhYhFVGuGoSm5PKzeY7/h1
+        wtCEPIoeU2OxPIxVvnxDWTy3zQ==
+X-Google-Smtp-Source: AK7set8zBqwByG8fmTxhMr+Ahl7JF9nL1tWM7uLVLQ+mkwTwXNLSS9DlEmBnIYzHkI02+nuuh9q1Pg==
+X-Received: by 2002:adf:f484:0:b0:2c7:fc61:12d4 with SMTP id l4-20020adff484000000b002c7fc6112d4mr7595144wro.47.1677485590923;
+        Mon, 27 Feb 2023 00:13:10 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id a4-20020a5d5704000000b002c559843748sm6395106wrv.10.2023.02.27.00.13.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 26 Feb 2023 19:09:28 -0800 (PST)
-Message-ID: <94c18cc3-4b1a-440b-3bd8-3c81ddffc148@linaro.org>
-Date:   Mon, 27 Feb 2023 05:09:27 +0200
+        Mon, 27 Feb 2023 00:13:10 -0800 (PST)
+Message-ID: <75b4da68-232c-7376-7806-8d475876dc59@linaro.org>
+Date:   Mon, 27 Feb 2023 09:13:08 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH v10 4/6] soc: qcom: cpr: Move common functions to new file
-Content-Language: en-GB
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 1/6] dt-bindings: arm-smmu: Use qcom,smmu compatible
+ for MMU500 adreno SMMUs
+Content-Language: en-US
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <nks@flawful.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>
-Cc:     Robert Marko <robimarko@gmail.com>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-References: <20230217-topic-cpr3h-v10-0-67aed8fdfa61@linaro.org>
- <20230217-topic-cpr3h-v10-4-67aed8fdfa61@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230217-topic-cpr3h-v10-4-67aed8fdfa61@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230217111613.306978-1-konrad.dybcio@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230217111613.306978-1-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -89,139 +82,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/02/2023 13:08, Konrad Dybcio wrote:
-> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+On 17/02/2023 12:16, Konrad Dybcio wrote:
+> qcom,smmu-500 was introduced to prevent people from adding new
+> compatibles for what seems to roughly be the same hardware. Use it for
+> qcom,adreno-smmu-compatible targets as well.
 > 
-> In preparation for implementing a new driver that will be handling
-> CPRv3, CPRv4 and CPR-Hardened, format out common functions to a new
-> file.
-> 
-> Update cpr_get_fuses in preparation for CPR3 implementation, change
-> parameters where necessary to not take cpr.c private data structures.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> [Konrad: rebase, apply review comments, don't break backwards compat, improve msg]
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   drivers/soc/qcom/Makefile     |   2 +-
->   drivers/soc/qcom/cpr-common.c | 363 +++++++++++++++++++++++++++++++++++++++
->   drivers/soc/qcom/cpr-common.h | 108 ++++++++++++
->   drivers/soc/qcom/cpr.c        | 386 +++---------------------------------------
->   4 files changed, 494 insertions(+), 365 deletions(-)
+> v1 -> v2:
+> - Add this patch, omitted previously (big oops)
 > 
 
-[skipped]
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> diff --git a/drivers/soc/qcom/cpr-common.h b/drivers/soc/qcom/cpr-common.h
-> new file mode 100644
-> index 000000000000..2cd15f7eac90
-> --- /dev/null
-> +++ b/drivers/soc/qcom/cpr-common.h
-> @@ -0,0 +1,108 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +
-> +#include <linux/clk.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/pm_opp.h>
-> +#include <linux/regulator/consumer.h>
-> +
-> +enum voltage_change_dir {
-> +	NO_CHANGE,
-> +	DOWN,
-> +	UP,
-> +};
-> +
-> +struct fuse_corner_data {
-> +	int ref_uV;
-> +	int max_uV;
-> +	int min_uV;
-> +	int range_uV;
-> +	/* fuse volt: closed/open loop */
-> +	int volt_cloop_adjust;
-> +	int volt_oloop_adjust;
-
-For CPR3 these values are per-fusing-rev.
-(for 8996 tables list per-fusing-rev values for min_uV, 
-volt_cloop_adjust and volt_oloop_adjust)
-
-Another option, of course, might be to have a per-SoC code that uses 
-fusing_rev to update the fuse_corner_data, but it would mean making it 
-non-const.
-
-> +	int max_volt_scale;
-> +	int max_quot_scale;
-
-Any reason for these limitations?
-
-> +	/* fuse quot */
-> +	int quot_offset;
-> +	int quot_scale;
-> +	int quot_adjust;
-
-I see that quot_offset/quot_scale/quot_adjust are set to 0/1/0 for all 
-the platforms I can assess at this moment (8996/8998/sdm660). Can we 
-drop them? If we need them later, we can readd them later.
-
-> +	/* fuse quot_offset */
-> +	int quot_offset_scale;
-> +	int quot_offset_adjust;
-> +};
-> +
-> +struct cpr_fuse {
-> +	char *ring_osc;
-> +	char *init_voltage;
-> +	char *quotient;
-> +	char *quotient_offset;
-> +};
-> +
-> +struct fuse_corner {
-> +	int min_uV;
-> +	int max_uV;
-> +	int uV;
-> +	int quot;
-> +	int step_quot;
-> +	const struct reg_sequence *accs;
-> +	int num_accs;
-> +	unsigned long max_freq;
-> +	u8 ring_osc_idx;
-> +};
-> +
-> +struct corner {
-> +	int min_uV;
-> +	int max_uV;
-> +	int uV;
-> +	int last_uV;
-> +	int quot_adjust;
-> +	u32 save_ctl;
-> +	u32 save_irq;
-> +	unsigned long freq;
-> +	bool is_open_loop;
-> +	struct fuse_corner *fuse_corner;
-> +};
-> +
-> +struct corner_data {
-> +	unsigned int fuse_corner;
-> +	unsigned long freq;
-> +};
-> +
-> +struct acc_desc {
-> +	unsigned int	enable_reg;
-> +	u32		enable_mask;
-> +
-> +	struct reg_sequence	*config;
-> +	struct reg_sequence	*settings;
-> +	int			num_regs_per_fuse;
-> +};
-> +
-> +struct cpr_acc_desc {
-> +	const struct cpr_desc *cpr_desc;
-> +	const struct acc_desc *acc_desc;
-> +};
-> +
-
-[skipped the rest]
-
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
