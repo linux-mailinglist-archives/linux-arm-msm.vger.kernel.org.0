@@ -2,88 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CD916A3E7C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 10:36:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E64D6A3ECB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Feb 2023 10:55:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229775AbjB0Jgw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Feb 2023 04:36:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49306 "EHLO
+        id S229968AbjB0Jzv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Feb 2023 04:55:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229613AbjB0Jgv (ORCPT
+        with ESMTP id S229699AbjB0Jzu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Feb 2023 04:36:51 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF9D3CA2A;
-        Mon, 27 Feb 2023 01:36:48 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31R4sGgM007031;
-        Mon, 27 Feb 2023 09:36:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=fFtKuRl7ltXe/gF9tHGWwksasGO5SrHc88zXuVbCr0M=;
- b=QG9RDgamUYYP+MGFS6MBi7K2COX9/ePqTIyTM4+FhV8ERz+An29WiltxbahRaGYanhoj
- Vh1VKBOzlyyeGQaIW/5OnqyqoIFHdWGPBdCfDpYjAqvK3hF/KFYKoN0n6q0o5kx0iuvc
- fX467DJtujjcjTTUKGxJzsP0KHhQWW4pFDoEiohg/tQ+DIaI16ZNkY6lQT7elECR/VzO
- y5pQdAYsH4ZGMTvi9vZFbty0Dv9StYEvmYgEPps2W6C+vd+gSk8jtZ75wT/X2NU1Cb4n
- QD9CQHdwyBMho4rpJ0971DFbEgpp0qWeZJSiOpD7ngIzZQWjruq5nN9ezvTuIEusphhK aQ== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nyajavhgx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 27 Feb 2023 09:36:29 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 31R9aOeS026273;
-        Mon, 27 Feb 2023 09:36:24 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3nybdkafcc-1;
-        Mon, 27 Feb 2023 09:36:24 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 31R9aO1R026268;
-        Mon, 27 Feb 2023 09:36:24 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.37])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 31R9aOMS026267;
-        Mon, 27 Feb 2023 09:36:24 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
-        id 65E4147AF; Mon, 27 Feb 2023 15:06:23 +0530 (+0530)
-From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
-To:     helgaas@kernel.org
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
-        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
-        svarbanov@mm-sol.com, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, lpieralisi@kernel.org,
-        robh@kernel.org, kw@linux.com, bhelgaas@google.com,
-        linux-phy@lists.infradead.org, vkoul@kernel.org, kishon@ti.com,
-        mturquette@baylibre.com, linux-clk@vger.kernel.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        Mon, 27 Feb 2023 04:55:50 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3152A1ADE3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 01:55:43 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id bi9so7775263lfb.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 01:55:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZhaELgleS6+r+Ibfx7TrEKluNYIWjG4LoxKJl7PWG5U=;
+        b=Pv5L5SFIBIKlbiDrf20eyYOxXqDu4tIMuaF7OCiVWutcAYW9vA5wMU4sMuFvpKVM9P
+         BRTsL77XTKS75AVm9PTrfthBrrqn9Yb1vpJUKmAmjzrwO/1QLt5RY3JR2TORrYLOn7r6
+         ZWjiR0bsNpktEgaoamv5CeD50tvanAqBvDG8guLdBk9EgaQ5TpJ+DdRVffbHAWu3NF2j
+         88aliUG9pEuMvv0eHAowiAagjmMqCC2oHtA7U8jriAS++fZdTmDLJtYwFgBaD08fhOHK
+         xujFFMJvumRb4SBbfdzClnV6arnZBMI0Hk5Rrj+U73I7/aeeonCC550VgqJLC62mjenT
+         piYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZhaELgleS6+r+Ibfx7TrEKluNYIWjG4LoxKJl7PWG5U=;
+        b=cOJ0kJRXjyj457tzV5bgGTg9s9zKKzNZcstvPGhF1zTqu0LkWMkbB1JVpL/Lb2tqFS
+         HUoQ0BGvf2lMwWU4HQdmlKMs0tB7PvnBs0Pv6hLAqMThtEzdeTzwF8ouYkBxKaxM7/Qh
+         YGkqoZN/uEA38pfXM3PmkpTr/VMFNqBeWDNL070pzZeeSylS5dJLu+TNf7pO9R+BGzje
+         RsGmyAUxRQopRAlevbYJvwR2yJKx0Qkg6FsmD6Pal5fbTmZuL+hNWwu7qnBqtCDLGpzT
+         /BsAl2v3MBY71aekVkteVaxybaJWFz8JnXP3oFZ9k7+cgG1wc9HxgPMqGh2gSehZISG1
+         mtrA==
+X-Gm-Message-State: AO0yUKUbXT0qq/06jhDOzQg7xLeO0Yfrn5yyHn74tnNv+kDQqRabuaFC
+        /BvfzA+n0GNDB4uF3UrjiDEEPP/deoD86Qy4k3w5Cg==
+X-Google-Smtp-Source: AK7set+eRFLwmofDycetmUw4kVPKIe20hDcCWvU1Q09bxSkaosoMqAzmXAjjIx3XbLUV25e/AgPwzszOwhyIFFWoK3k=
+X-Received: by 2002:a05:6512:b10:b0:4dd:9eb6:444e with SMTP id
+ w16-20020a0565120b1000b004dd9eb6444emr3712409lfu.5.1677491741277; Mon, 27 Feb
+ 2023 01:55:41 -0800 (PST)
+MIME-Version: 1.0
+References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
+ <20230214212417.3315422-1-quic_eberman@quicinc.com> <CA+EHjTxEeiBWXJMCnv0V+5n=jB8w=m0EFdgK=FKtSqKOkiaChg@mail.gmail.com>
+ <7b6d4c14-ebde-1bc3-04de-59cae9d4b7be@quicinc.com>
+In-Reply-To: <7b6d4c14-ebde-1bc3-04de-59cae9d4b7be@quicinc.com>
+From:   Fuad Tabba <tabba@google.com>
+Date:   Mon, 27 Feb 2023 09:55:05 +0000
+Message-ID: <CA+EHjTzZu4m_RGU0dbNjXhfHLRsHqnAWS24ZhL2SK0hV5M39dQ@mail.gmail.com>
+Subject: Re: [PATCH v10 12/26] gunyah: vm_mgr: Add/remove user memory regions
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS)
-Subject: [PATCH V1] arm64:dts:qcom:sc7280: mark memory of PCIe as cache coherent
-Date:   Mon, 27 Feb 2023 15:06:15 +0530
-Message-Id: <1677490575-29092-1-git-send-email-quic_krichai@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hv5wk8APxsiR4odzxFP3I-ezSliRXOvh
-X-Proofpoint-ORIG-GUID: hv5wk8APxsiR4odzxFP3I-ezSliRXOvh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-26_22,2023-02-24_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- bulkscore=0 clxscore=1011 phishscore=0 mlxscore=0 mlxlogscore=653
- priorityscore=1501 impostorscore=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302270074
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Chao Peng <chao.p.peng@linux.intel.com>,
+        "Kirill A . Shutemov" <kirill.shutemov@linux.intel.com>,
+        Sean Christopherson <seanjc@google.com>,
+        Quentin Perret <qperret@google.com>,
+        Will Deacon <will@kernel.org>,
+        "smoreland@google.com" <smoreland@google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,27 +95,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Mark the PCIe node as dma-coherent as the devices on PCIe bus are
-cache coherent.
+Hi,
 
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+On Fri, Feb 24, 2023 at 6:08 PM Elliot Berman <quic_eberman@quicinc.com> wrote:
+>
+>
+>
+> On 2/24/2023 2:19 AM, Fuad Tabba wrote:
+> > Hi,
+> >
+> > On Tue, Feb 14, 2023 at 9:26 PM Elliot Berman <quic_eberman@quicinc.com> wrote:
+> >>
+> >>
+> >> When launching a virtual machine, Gunyah userspace allocates memory for
+> >> the guest and informs Gunyah about these memory regions through
+> >> SET_USER_MEMORY_REGION ioctl.
+> >
+> > I'm working on pKVM [1], and regarding the problem of donating private
+> > memory to a guest, we and others working on confidential computing
+> > have faced a similar issue that this patch is trying to address. In
+> > pKVM, we've initially taken an approach similar to the one here by
+> > pinning the pages being donated to prevent swapping or migration [2].
+> > However, we've encountered issues with this approach since the memory
+> > is still mapped by the host, which could cause the system to crash on
+> > an errant access.
+> >
+> > Instead, we've been working on adopting an fd-based restricted memory
+> > approach that was initially proposed for TDX [3] and is now being
+> > considered by others in the confidential computing space as well
+> > (e.g., Arm CCA [4]). The basic idea is that the host manages the guest
+> > memory via a file descriptor instead of a userspace address. It cannot
+> > map that memory (unless explicitly shared by the guest [5]),
+> > eliminating the possibility of the host trying to access private
+> > memory accidentally or being tricked by a malicious actor. This is
+> > based on memfd with some restrictions. It handles swapping and
+> > migration by disallowing them (for now [6]), and adds a new type of
+> > memory region to KVM to accommodate having an fd representing guest
+> > memory.
+> >
+> > Although the fd-based restricted memory isn't upstream yet, we've
+> > ported the latest patches to arm64 and made changes and additions to
+> > make it work with pKVM, to test it and see if the solution is feasible
+> > for us (it is). I wanted to mention this work in case you find it
+> > useful, and in the hopes that we can all work on confidential
+> > computing using the same interfaces as much as possible.
+>
+> Thanks for highlighting the memfd_restricted changes to us! We'll
+> investigate how/if it can suit Gunyah usecases. It sounds like you
+> might've made memfd_restricted changes as well? Are those posted on the
+> mailing lists? Also, are example userspace (crosvm?) changes posted?
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index bdcb749..8f4ab6b 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2131,6 +2131,8 @@
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&pcie1_clkreq_n>;
- 
-+			dma-coherent;
-+
- 			iommus = <&apps_smmu 0x1c80 0x1>;
- 
- 			iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
--- 
-2.7.4
+I have posted kvmtool changes to make it work with memfd_restricted
+and pKVM as an RFC [1] (git [2]). I haven't posted the arm64 port, but
+it's in a git repo [3]. Chao has a repository with qemu support (TDX)
+as well [4].
 
+Eventually, we're likely to have crosvm support as well. If you're
+interested, I can keep you CCed on anything we post upstream.
+
+Cheers,
+/fuad
+
+[1] https://lore.kernel.org/all/20221202174417.1310826-1-tabba@google.com/
+[2] https://android-kvm.googlesource.com/kvmtool/+/refs/heads/tabba/fdmem-v10-core
+[3] https://android-kvm.googlesource.com/linux/+/refs/heads/tabba/fdmem-v10-core
+[4] https://github.com/chao-p/qemu/tree/privmem-v10
+
+>
+> Thanks,
+> Elliot
+>
+> >
+> > Some comments inline below...
+> >
+> > Cheers,
+> > /fuad
+> >
+> > [1] https://lore.kernel.org/kvmarm/20220519134204.5379-1-will@kernel.org/
+> > [2] https://lore.kernel.org/kvmarm/20220519134204.5379-34-will@kernel.org/
+> > [3] https://lore.kernel.org/all/20221202061347.1070246-1-chao.p.peng@linux.intel.com/
+> > [4] https://lore.kernel.org/lkml/20230127112932.38045-1-steven.price@arm.com/
+> > [5] This is a modification we've done for the arm64 port, after
+> > discussing it with the original authors.
+> > [6] Nothing inherent in the proposal to stop migration and swapping.
+> > There are some technical issues that need to be resolved.
+> >
+> > <snip>
+> <snip, looking at comments in parallel>
