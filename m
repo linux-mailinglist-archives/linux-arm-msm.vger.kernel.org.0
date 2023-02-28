@@ -2,224 +2,577 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1E2F6A5574
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 10:20:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 833C46A5637
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 11:02:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230369AbjB1JUN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 04:20:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60310 "EHLO
+        id S229485AbjB1KC0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 05:02:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230345AbjB1JUM (ORCPT
+        with ESMTP id S230361AbjB1KCZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 04:20:12 -0500
+        Tue, 28 Feb 2023 05:02:25 -0500
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC89D1B577;
-        Tue, 28 Feb 2023 01:20:10 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31S6vHLg007210;
-        Tue, 28 Feb 2023 09:19:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=uwOTuHrVMWpvvUNqAI8f62i8ckHBQO46YUiqhs/HMOo=;
- b=XdaXyaLcEoTDf3DAGXT7XF9+GZ2/Dy/TUV28vU1bD5llwDPRBbm3irTTd8Fcw/Ep7BYv
- SsC959stLi/NLwEw8gi4VT66aMSCg9ZXsyExGTKn7grywQChP3mOc3c7rorQWu4xqkW+
- wqOie4SJKsYIkO22Kcnkg9z/tVa2mxwkbSSxDZKPIYaO/+zcz2c2r8mIPplx8HY7Mf43
- o1/ZizwL0COALerhdv6+AVQnlQi4l+STi1a6YJQfR+oyRH9UslOQ73EfvjtQaF3MbS+Y
- jO5oEnEnK9owO5Ywqej2wIPlU52uF7Y0vCNvasBJrIHoF95Z+Aim4nfQL/WmWaxn4A3v gg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p1csvrc2s-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C0942CC65;
+        Tue, 28 Feb 2023 02:02:22 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31S4vWQC022070;
+        Tue, 28 Feb 2023 10:01:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=riIq3DvxV8VePygDhAadqcigQJuWvLEK3sryyyf57Yo=;
+ b=mxublvtqGKnjDfu5J6vEz9RlRk3aJPcNF56xhL3YocdjDP7IxOrwawvig1j5XxFEMYk4
+ xrWhFfWbDnI9bEFEuahg59tSuyoyrSSySmSigx8qTeq5RFerIkuNMNJCFuaDkMmoFCJ8
+ 1zWMLTcr237Shl+Y8SruM9L0yOAMDaS1CRuM7HI5HbXVQ72ABGgjj4z7ly4BaI70I11F
+ iZMPbw9wCJa4UbYReTpBDkPp2UemR2Tg2fZtOx62xE3M7YVAmDi2bZc/mQyWS9fpFlp2
+ 31JW/tQsSWiBFoDMYO9P0sQIg1uC1Y0KvT51fPnIo7wLN3IiiGh0HKHgTawYExA+CsF7 Aw== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p19m0gx2d-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 28 Feb 2023 09:19:36 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31S9JZwJ032179
+        Tue, 28 Feb 2023 10:01:49 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31SA1muD015280
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 28 Feb 2023 09:19:35 GMT
-Received: from [10.110.31.193] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 28 Feb
- 2023 01:19:33 -0800
-Message-ID: <b38b317e-9c5e-a655-4364-df49c3b64b88@quicinc.com>
-Date:   Tue, 28 Feb 2023 01:19:33 -0800
+        Tue, 28 Feb 2023 10:01:48 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Tue, 28 Feb 2023 02:01:39 -0800
+Date:   Tue, 28 Feb 2023 15:31:35 +0530
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Devi Priya <quic_devipriy@quicinc.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>
+Subject: Re: [PATCH V8 1/7] dt-bindings: clock: Add ipq9574 clock and reset
+ definitions
+Message-ID: <20230228100135.GA11977@varda-linux.qualcomm.com>
+References: <20230214163116.9924-1-quic_devipriy@quicinc.com>
+ <20230214163116.9924-2-quic_devipriy@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [RFC PATCH v2 12/22] sound: usb: card: Introduce USB SND platform
- op callbacks
-Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>
-CC:     <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <lgirdwood@gmail.com>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <Thinh.Nguyen@synopsys.com>,
-        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
-        <robh+dt@kernel.org>, <agross@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <quic_jackp@quicinc.com>,
-        <quic_plai@quicinc.com>
-References: <20230126031424.14582-1-quic_wcheng@quicinc.com>
- <20230126031424.14582-13-quic_wcheng@quicinc.com>
- <Y9Ui82OaI54Qx8Ft@kroah.com>
- <2c062ab0-905c-f1fe-eca2-02e23cc9fa6f@quicinc.com>
- <5e5c6481-8d5d-dc3f-e40e-986e3ac30387@quicinc.com>
- <Y/2tsfGGzAlLzxwd@kroah.com>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <Y/2tsfGGzAlLzxwd@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230214163116.9924-2-quic_devipriy@quicinc.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zegdGRIhjVcJgJu5qHW9tmkSNaG3Dc9t
-X-Proofpoint-ORIG-GUID: zegdGRIhjVcJgJu5qHW9tmkSNaG3Dc9t
+X-Proofpoint-GUID: uZXtvCb1B046f-U2k2AnQBzsl2YPHd6g
+X-Proofpoint-ORIG-GUID: uZXtvCb1B046f-U2k2AnQBzsl2YPHd6g
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
  definitions=2023-02-28_06,2023-02-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- suspectscore=0 phishscore=0 mlxscore=0 priorityscore=1501 malwarescore=0
- adultscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302280074
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1011 impostorscore=0 spamscore=0
+ mlxscore=0 suspectscore=0 adultscore=0 mlxlogscore=999 priorityscore=1501
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302280080
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
-
-On 2/27/2023 11:30 PM, Greg KH wrote:
-> On Mon, Feb 27, 2023 at 06:59:32PM -0800, Wesley Cheng wrote:
->> Hi Greg,
->>
->> On 2/10/2023 2:49 PM, Wesley Cheng wrote:
->>> Hi Greg,
->>>
->>> On 1/28/2023 5:28 AM, Greg KH wrote:
->>>> On Wed, Jan 25, 2023 at 07:14:14PM -0800, Wesley Cheng wrote:
->>>>> Allow for different platforms to be notified on USB SND
->>>>> connect/disconnect
->>>>> seqeunces.  This allows for platform USB SND modules to properly
->>>>> initialize
->>>>> and populate internal structures with references to the USB SND chip
->>>>> device.
->>>>>
->>>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->>>>> ---
->>>>>    sound/usb/card.c | 28 ++++++++++++++++++++++++++++
->>>>>    sound/usb/card.h | 20 ++++++++++++++++++++
->>>>>    2 files changed, 48 insertions(+)
->>>>>
->>>>> diff --git a/sound/usb/card.c b/sound/usb/card.c
->>>>> index 26268ffb8274..803230343c16 100644
->>>>> --- a/sound/usb/card.c
->>>>> +++ b/sound/usb/card.c
->>>>> @@ -117,6 +117,24 @@ MODULE_PARM_DESC(skip_validation, "Skip
->>>>> unit descriptor validation (default: no)
->>>>>    static DEFINE_MUTEX(register_mutex);
->>>>>    static struct snd_usb_audio *usb_chip[SNDRV_CARDS];
->>>>>    static struct usb_driver usb_audio_driver;
->>>>> +static struct snd_usb_platform_ops *platform_ops;
->>>>
->>>> You can not have a single "platform_ops" pointer, this HAS to be
->>>> per-bus.
->>>>
->>>
->>> Agreed.
->>>
->>
->> I looked at seeing how we could implement this at a per bus level, but the
->> USB class driver model doesn't exactly have a good framework for supporting
->> this.  Reason being is because, at the time of the USB SND class driver
->> initialization, there is a big chance that there isn't a USB bus registered
->> in the system, so the point of adding the operations is not clear.  However,
->> we need to ensure that we've added the platform/driver operations before any
->> USB SND devices are detected.
+On Tue, Feb 14, 2023 at 10:01:10PM +0530, Devi Priya wrote:
+> Add clock and reset ID definitions for ipq9574
 > 
-> But the offload "engine" is associated with the specific USB bus
-> controller instance in the system, so perhaps you are just not adding
-> this to the correct location?
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
+>  Changes in V8:
+> 	- Dropped clock-names from the binding as suggested
+> 	  by Bjorn
 > 
-
-There are several parts to the offload logic:
-1.  XHCI interrupter/resource components - fetching addresses to the 
-proper event ring and transfer rings for the audio DSP.  This is the 
-part which is specific to the controller instance, and APIs are being 
-directly exported from the XHCI HCD, as the offloading features utilized 
-are only specific for XHCI based controllers.  This is handled in 
-patches 1-6 in this series.  Each XHCI instance will have its own set of 
-interrupters, and transfer resources.
-
-2.  USB offload class driver - driver which interacts with USB SND for 
-operations like UAC descriptor parsing, USB audio device support params, 
-and USB endpoint setup (ie issuing SET_INTERFACE to enable the device to 
-start playback this is a SETUP transaction).  It will interact with the 
-USB backend and items in #1, to set up the audio playback.
-
-> The sound core shouldn't care about this at all, add the logic to the
-> USB host controller driver instead, why isn't this just another USB bus
-> function?
+>  .../bindings/clock/qcom,ipq9574-gcc.yaml      |  61 +++++
+>  include/dt-bindings/clock/qcom,ipq9574-gcc.h  | 213 ++++++++++++++++++
+>  include/dt-bindings/reset/qcom,ipq9574-gcc.h  | 164 ++++++++++++++
+>  3 files changed, 438 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,ipq9574-gcc.h
+>  create mode 100644 include/dt-bindings/reset/qcom,ipq9574-gcc.h
 > 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
+> new file mode 100644
+> index 000000000000..afc68eb9d7cc
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
+> @@ -0,0 +1,61 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,ipq9574-gcc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Global Clock & Reset Controller on IPQ9574
+> +
+> +maintainers:
+> +  - Anusha Rao <quic_anusha@quicinc.com>
+> +
+> +description: |
+> +  Qualcomm global clock control module provides the clocks, resets and power
+> +  domains on IPQ9574
+> +
+> +  See also::
+> +    include/dt-bindings/clock/qcom,ipq9574-gcc.h
+> +    include/dt-bindings/reset/qcom,ipq9574-gcc.h
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,ipq9574-gcc
+> +
+> +  clocks:
+> +    items:
+> +      - description: Board XO source
+> +      - description: Sleep clock source
+> +      - description: Bias PLL ubi clock source
+> +      - description: PCIE30 PHY0 pipe clock source
+> +      - description: PCIE30 PHY1 pipe clock source
+> +      - description: PCIE30 PHY2 pipe clock source
+> +      - description: PCIE30 PHY3 pipe clock source
+> +      - description: USB3 PHY pipe clock source
+> +
+> +required:
+> +  - compatible
+> +  - clocks
+> +
+> +allOf:
+> +  - $ref: qcom,gcc.yaml#
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    clock-controller@1800000 {
+> +      compatible = "qcom,ipq9574-gcc";
+> +      reg = <0x01800000 0x80000>;
+> +      clocks = <&xo_board_clk>,
+> +               <&sleep_clk>,
+> +               <&bias_pll_ubi_nc_clk>,
+> +               <&pcie30_phy0_pipe_clk>,
+> +               <&pcie30_phy1_pipe_clk>,
+> +               <&pcie30_phy2_pipe_clk>,
+> +               <&pcie30_phy3_pipe_clk>,
+> +               <&usb3phy_0_cc_pipe_clk>;
+> +      #clock-cells = <1>;
+> +      #reset-cells = <1>;
+> +      #power-domain-cells = <1>;
+> +    };
+> +...
+> diff --git a/include/dt-bindings/clock/qcom,ipq9574-gcc.h b/include/dt-bindings/clock/qcom,ipq9574-gcc.h
+> new file mode 100644
+> index 000000000000..feedfdd5e00a
+> --- /dev/null
+> +++ b/include/dt-bindings/clock/qcom,ipq9574-gcc.h
+> @@ -0,0 +1,213 @@
+> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> +/*
+> + * Copyright (c) 2018-2023 The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef _DT_BINDINGS_CLOCK_IPQ_GCC_9048_H
+> +#define _DT_BINDINGS_CLOCK_IPQ_GCC_9048_H
 
-The intention of the platform ops here is to mainly keep track of USB 
-SND card/pcm device creation, and access to the main "struct 
-snd_usb_audio".  This structure carries all the information about the 
-different substreams allocated, as well as the formats supported by the 
-audio device.  This is passed onto the USB backend, which will be 
-utilized in my next revision to allow userspace to specifically select 
-the proper card/PCM device to enable offload on.
+s/9048/9574/
 
->> To add to the above, in case of OTG/DRD (dual role) designs, the USB HCD/bus
->> isn't created until we move into the host role.  At that time, using DWC3 as
->> an example, we will create the XHCI platform device, and probe the USB HCD,
->> where a USB bus is created.
+> +
+> +#define GPLL0_MAIN					0
+> +#define GPLL0						1
+> +#define GPLL2_MAIN					2
+> +#define GPLL2						3
+> +#define GPLL4_MAIN					4
+> +#define GPLL4						5
+> +#define GCC_SLEEP_CLK_SRC				6
+> +#define APSS_AHB_CLK_SRC				7
+> +#define APSS_AXI_CLK_SRC				8
+> +#define BLSP1_QUP1_I2C_APPS_CLK_SRC			9
+> +#define BLSP1_QUP1_SPI_APPS_CLK_SRC			10
+> +#define BLSP1_QUP2_I2C_APPS_CLK_SRC			11
+> +#define BLSP1_QUP2_SPI_APPS_CLK_SRC			12
+> +#define BLSP1_QUP3_I2C_APPS_CLK_SRC			13
+> +#define BLSP1_QUP3_SPI_APPS_CLK_SRC			14
+> +#define BLSP1_QUP4_I2C_APPS_CLK_SRC			15
+> +#define BLSP1_QUP4_SPI_APPS_CLK_SRC			16
+> +#define BLSP1_QUP5_I2C_APPS_CLK_SRC			17
+> +#define BLSP1_QUP5_SPI_APPS_CLK_SRC			18
+> +#define BLSP1_QUP6_I2C_APPS_CLK_SRC			19
+> +#define BLSP1_QUP6_SPI_APPS_CLK_SRC			20
+> +#define BLSP1_UART1_APPS_CLK_SRC			21
+> +#define BLSP1_UART2_APPS_CLK_SRC			22
+> +#define BLSP1_UART3_APPS_CLK_SRC			23
+> +#define BLSP1_UART4_APPS_CLK_SRC			24
+> +#define BLSP1_UART5_APPS_CLK_SRC			25
+> +#define BLSP1_UART6_APPS_CLK_SRC			26
+> +#define GCC_APSS_AHB_CLK				27
+> +#define GCC_APSS_AXI_CLK				28
+> +#define GCC_BLSP1_QUP1_I2C_APPS_CLK			29
+> +#define GCC_BLSP1_QUP1_SPI_APPS_CLK			30
+> +#define GCC_BLSP1_QUP2_I2C_APPS_CLK			31
+> +#define GCC_BLSP1_QUP2_SPI_APPS_CLK			32
+> +#define GCC_BLSP1_QUP3_I2C_APPS_CLK			33
+> +#define GCC_BLSP1_QUP3_SPI_APPS_CLK			34
+> +#define GCC_BLSP1_QUP4_I2C_APPS_CLK			35
+> +#define GCC_BLSP1_QUP4_SPI_APPS_CLK			36
+> +#define GCC_BLSP1_QUP5_I2C_APPS_CLK			37
+> +#define GCC_BLSP1_QUP5_SPI_APPS_CLK			38
+> +#define GCC_BLSP1_QUP6_I2C_APPS_CLK			39
+> +#define GCC_BLSP1_QUP6_SPI_APPS_CLK			40
+> +#define GCC_BLSP1_UART1_APPS_CLK			41
+> +#define GCC_BLSP1_UART2_APPS_CLK			42
+> +#define GCC_BLSP1_UART3_APPS_CLK			43
+> +#define GCC_BLSP1_UART4_APPS_CLK			44
+> +#define GCC_BLSP1_UART5_APPS_CLK			45
+> +#define GCC_BLSP1_UART6_APPS_CLK			46
+> +#define PCIE0_AXI_M_CLK_SRC				47
+> +#define GCC_PCIE0_AXI_M_CLK				48
+> +#define PCIE1_AXI_M_CLK_SRC				49
+> +#define GCC_PCIE1_AXI_M_CLK				50
+> +#define PCIE2_AXI_M_CLK_SRC				51
+> +#define GCC_PCIE2_AXI_M_CLK				52
+> +#define PCIE3_AXI_M_CLK_SRC				53
+> +#define GCC_PCIE3_AXI_M_CLK				54
+> +#define PCIE0_AXI_S_CLK_SRC				55
+> +#define GCC_PCIE0_AXI_S_BRIDGE_CLK			56
+> +#define GCC_PCIE0_AXI_S_CLK				57
+> +#define PCIE1_AXI_S_CLK_SRC				58
+> +#define GCC_PCIE1_AXI_S_BRIDGE_CLK			59
+> +#define GCC_PCIE1_AXI_S_CLK				60
+> +#define PCIE2_AXI_S_CLK_SRC				61
+> +#define GCC_PCIE2_AXI_S_BRIDGE_CLK			62
+> +#define GCC_PCIE2_AXI_S_CLK				63
+> +#define PCIE3_AXI_S_CLK_SRC				64
+> +#define GCC_PCIE3_AXI_S_BRIDGE_CLK			65
+> +#define GCC_PCIE3_AXI_S_CLK				66
+> +#define PCIE0_PIPE_CLK_SRC				67
+> +#define PCIE1_PIPE_CLK_SRC				68
+> +#define PCIE2_PIPE_CLK_SRC				69
+> +#define PCIE3_PIPE_CLK_SRC				70
+> +#define PCIE_AUX_CLK_SRC				71
+> +#define GCC_PCIE0_AUX_CLK				72
+> +#define GCC_PCIE1_AUX_CLK				73
+> +#define GCC_PCIE2_AUX_CLK				74
+> +#define GCC_PCIE3_AUX_CLK				75
+> +#define PCIE0_RCHNG_CLK_SRC				76
+> +#define GCC_PCIE0_RCHNG_CLK				77
+> +#define PCIE1_RCHNG_CLK_SRC				78
+> +#define GCC_PCIE1_RCHNG_CLK				79
+> +#define PCIE2_RCHNG_CLK_SRC				80
+> +#define GCC_PCIE2_RCHNG_CLK				81
+> +#define PCIE3_RCHNG_CLK_SRC				82
+> +#define GCC_PCIE3_RCHNG_CLK				83
+> +#define GCC_PCIE0_AHB_CLK				84
+> +#define GCC_PCIE1_AHB_CLK				85
+> +#define GCC_PCIE2_AHB_CLK				86
+> +#define GCC_PCIE3_AHB_CLK				87
+> +#define USB0_AUX_CLK_SRC				88
+> +#define GCC_USB0_AUX_CLK				89
+> +#define USB0_MASTER_CLK_SRC				90
+> +#define GCC_USB0_MASTER_CLK				91
+> +#define GCC_SNOC_USB_CLK				92
+> +#define GCC_ANOC_USB_AXI_CLK				93
+> +#define USB0_MOCK_UTMI_CLK_SRC				94
+> +#define USB0_MOCK_UTMI_DIV_CLK_SRC			95
+> +#define GCC_USB0_MOCK_UTMI_CLK				96
+> +#define USB0_PIPE_CLK_SRC				97
+> +#define GCC_USB0_PHY_CFG_AHB_CLK			98
+> +#define SDCC1_APPS_CLK_SRC				99
+> +#define GCC_SDCC1_APPS_CLK				100
+> +#define SDCC1_ICE_CORE_CLK_SRC				101
+> +#define GCC_SDCC1_ICE_CORE_CLK				102
+> +#define GCC_SDCC1_AHB_CLK				103
+> +#define PCNOC_BFDCD_CLK_SRC				104
+> +#define GCC_NSSCFG_CLK					105
+> +#define GCC_NSSNOC_NSSCC_CLK				106
+> +#define GCC_NSSCC_CLK					107
+> +#define GCC_NSSNOC_PCNOC_1_CLK				108
+> +#define GCC_QDSS_DAP_AHB_CLK				109
+> +#define GCC_QDSS_CFG_AHB_CLK				110
+> +#define GCC_QPIC_AHB_CLK				111
+> +#define GCC_QPIC_CLK					112
+> +#define GCC_BLSP1_AHB_CLK				113
+> +#define GCC_MDIO_AHB_CLK				114
+> +#define GCC_PRNG_AHB_CLK				115
+> +#define GCC_UNIPHY0_AHB_CLK				116
+> +#define GCC_UNIPHY1_AHB_CLK				117
+> +#define GCC_UNIPHY2_AHB_CLK				118
+> +#define GCC_CMN_12GPLL_AHB_CLK				119
+> +#define GCC_CMN_12GPLL_APU_CLK				120
+> +#define SYSTEM_NOC_BFDCD_CLK_SRC			121
+> +#define GCC_NSSNOC_SNOC_CLK				122
+> +#define GCC_NSSNOC_SNOC_1_CLK				123
+> +#define GCC_QDSS_ETR_USB_CLK				124
+> +#define WCSS_AHB_CLK_SRC				125
+> +#define GCC_Q6_AHB_CLK					126
+> +#define GCC_Q6_AHB_S_CLK				127
+> +#define GCC_WCSS_ECAHB_CLK				128
+> +#define GCC_WCSS_ACMT_CLK				129
+> +#define GCC_SYS_NOC_WCSS_AHB_CLK			130
+> +#define WCSS_AXI_M_CLK_SRC				131
+> +#define GCC_ANOC_WCSS_AXI_M_CLK				132
+> +#define QDSS_AT_CLK_SRC					133
+> +#define GCC_Q6SS_ATBM_CLK				134
+> +#define GCC_WCSS_DBG_IFC_ATB_CLK			135
+> +#define GCC_NSSNOC_ATB_CLK				136
+> +#define GCC_QDSS_AT_CLK					137
+> +#define GCC_SYS_NOC_AT_CLK				138
+> +#define GCC_PCNOC_AT_CLK				139
+> +#define GCC_USB0_EUD_AT_CLK				140
+> +#define GCC_QDSS_EUD_AT_CLK				141
+> +#define QDSS_STM_CLK_SRC				142
+> +#define GCC_QDSS_STM_CLK				143
+> +#define GCC_SYS_NOC_QDSS_STM_AXI_CLK			144
+> +#define QDSS_TRACECLKIN_CLK_SRC				145
+> +#define GCC_QDSS_TRACECLKIN_CLK				146
+> +#define QDSS_TSCTR_CLK_SRC				147
+> +#define GCC_Q6_TSCTR_1TO2_CLK				148
+> +#define GCC_WCSS_DBG_IFC_NTS_CLK			149
+> +#define GCC_QDSS_TSCTR_DIV2_CLK				150
+> +#define GCC_QDSS_TS_CLK					151
+> +#define GCC_QDSS_TSCTR_DIV4_CLK				152
+> +#define GCC_NSS_TS_CLK					153
+> +#define GCC_QDSS_TSCTR_DIV8_CLK				154
+> +#define GCC_QDSS_TSCTR_DIV16_CLK			155
+> +#define GCC_Q6SS_PCLKDBG_CLK				156
+> +#define GCC_Q6SS_TRIG_CLK				157
+> +#define GCC_WCSS_DBG_IFC_APB_CLK			158
+> +#define GCC_WCSS_DBG_IFC_DAPBUS_CLK			159
+> +#define GCC_QDSS_DAP_CLK				160
+> +#define GCC_QDSS_APB2JTAG_CLK				161
+> +#define GCC_QDSS_TSCTR_DIV3_CLK				162
+> +#define QPIC_IO_MACRO_CLK_SRC				163
+> +#define GCC_QPIC_IO_MACRO_CLK                           164
+> +#define Q6_AXI_CLK_SRC					165
+> +#define GCC_Q6_AXIM_CLK					166
+> +#define GCC_WCSS_Q6_TBU_CLK				167
+> +#define GCC_MEM_NOC_Q6_AXI_CLK				168
+> +#define Q6_AXIM2_CLK_SRC				169
+> +#define NSSNOC_MEMNOC_BFDCD_CLK_SRC			170
+> +#define GCC_NSSNOC_MEMNOC_CLK				171
+> +#define GCC_NSSNOC_MEM_NOC_1_CLK			172
+> +#define GCC_NSS_TBU_CLK					173
+> +#define GCC_MEM_NOC_NSSNOC_CLK				174
+> +#define LPASS_AXIM_CLK_SRC				175
+> +#define LPASS_SWAY_CLK_SRC				176
+> +#define ADSS_PWM_CLK_SRC				177
+> +#define GCC_ADSS_PWM_CLK				178
+> +#define GP1_CLK_SRC					179
+> +#define GP2_CLK_SRC					180
+> +#define GP3_CLK_SRC					181
+> +#define DDRSS_SMS_SLOW_CLK_SRC				182
+> +#define GCC_XO_CLK_SRC					183
+> +#define GCC_XO_CLK					184
+> +#define GCC_NSSNOC_QOSGEN_REF_CLK			185
+> +#define GCC_NSSNOC_TIMEOUT_REF_CLK			186
+> +#define GCC_XO_DIV4_CLK					187
+> +#define GCC_UNIPHY0_SYS_CLK				188
+> +#define GCC_UNIPHY1_SYS_CLK				189
+> +#define GCC_UNIPHY2_SYS_CLK				190
+> +#define GCC_CMN_12GPLL_SYS_CLK				191
+> +#define GCC_NSSNOC_XO_DCD_CLK				192
+> +#define GCC_Q6SS_BOOT_CLK				193
+> +#define UNIPHY_SYS_CLK_SRC				194
+> +#define NSS_TS_CLK_SRC					195
+> +#define GCC_ANOC_PCIE0_1LANE_M_CLK			196
+> +#define GCC_ANOC_PCIE1_1LANE_M_CLK			197
+> +#define GCC_ANOC_PCIE2_2LANE_M_CLK			198
+> +#define GCC_ANOC_PCIE3_2LANE_M_CLK			199
+> +#define GCC_SNOC_PCIE0_1LANE_S_CLK			200
+> +#define GCC_SNOC_PCIE1_1LANE_S_CLK			201
+> +#define GCC_SNOC_PCIE2_2LANE_S_CLK			202
+> +#define GCC_SNOC_PCIE3_2LANE_S_CLK			203
+> +#endif
+> diff --git a/include/dt-bindings/reset/qcom,ipq9574-gcc.h b/include/dt-bindings/reset/qcom,ipq9574-gcc.h
+> new file mode 100644
+> index 000000000000..a11adbda45ec
+> --- /dev/null
+> +++ b/include/dt-bindings/reset/qcom,ipq9574-gcc.h
+> @@ -0,0 +1,164 @@
+> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> +/*
+> + * Copyright (c) 2018-2023, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef _DT_BINDINGS_RESET_IPQ_GCC_9048_H
+> +#define _DT_BINDINGS_RESET_IPQ_GCC_9048_H
+
+s/9048/9574/
+
+> +
+> +#define GCC_ADSS_BCR						0
+> +#define GCC_APC0_VOLTAGE_DROOP_DETECTOR_BCR			1
+> +#define GCC_BLSP1_BCR						2
+> +#define GCC_BLSP1_QUP1_BCR					3
+> +#define GCC_BLSP1_QUP2_BCR					4
+> +#define GCC_BLSP1_QUP3_BCR					5
+> +#define GCC_BLSP1_QUP4_BCR					6
+> +#define GCC_BLSP1_QUP5_BCR					7
+> +#define GCC_BLSP1_QUP6_BCR					8
+> +#define GCC_BLSP1_UART1_BCR					9
+> +#define GCC_BLSP1_UART2_BCR					10
+> +#define GCC_BLSP1_UART3_BCR					11
+> +#define GCC_BLSP1_UART4_BCR					12
+> +#define GCC_BLSP1_UART5_BCR					13
+> +#define GCC_BLSP1_UART6_BCR					14
+> +#define GCC_BOOT_ROM_BCR					15
+> +#define GCC_MDIO_BCR						16
+> +#define GCC_NSS_BCR						17
+> +#define GCC_NSS_TBU_BCR						18
+> +#define GCC_PCIE0_BCR						19
+> +#define GCC_PCIE0_LINK_DOWN_BCR					20
+> +#define GCC_PCIE0_PHY_BCR					21
+> +#define GCC_PCIE0PHY_PHY_BCR					22
+> +#define GCC_PCIE1_BCR						23
+> +#define GCC_PCIE1_LINK_DOWN_BCR					24
+> +#define GCC_PCIE1_PHY_BCR					25
+> +#define GCC_PCIE1PHY_PHY_BCR					26
+> +#define GCC_PCIE2_BCR						27
+> +#define GCC_PCIE2_LINK_DOWN_BCR					28
+> +#define GCC_PCIE2_PHY_BCR					29
+> +#define GCC_PCIE2PHY_PHY_BCR					30
+> +#define GCC_PCIE3_BCR						31
+> +#define GCC_PCIE3_LINK_DOWN_BCR					32
+> +#define GCC_PCIE3_PHY_BCR					33
+> +#define GCC_PCIE3PHY_PHY_BCR					34
+> +#define GCC_PRNG_BCR						35
+> +#define GCC_QUSB2_0_PHY_BCR					36
+> +#define GCC_SDCC_BCR						37
+> +#define GCC_TLMM_BCR						38
+> +#define GCC_UNIPHY0_BCR						39
+> +#define GCC_UNIPHY1_BCR						40
+> +#define GCC_UNIPHY2_BCR						41
+> +#define GCC_USB0_PHY_BCR					42
+> +#define GCC_USB3PHY_0_PHY_BCR					43
+> +#define GCC_USB_BCR						44
+> +#define GCC_ANOC0_TBU_BCR					45
+> +#define GCC_ANOC1_TBU_BCR					46
+> +#define GCC_ANOC_BCR						47
+> +#define GCC_APSS_TCU_BCR					48
+> +#define GCC_CMN_BLK_BCR						49
+> +#define GCC_CMN_BLK_AHB_ARES					50
+> +#define GCC_CMN_BLK_SYS_ARES					51
+> +#define GCC_CMN_BLK_APU_ARES					52
+> +#define GCC_DCC_BCR						53
+> +#define GCC_DDRSS_BCR						54
+> +#define GCC_IMEM_BCR						55
+> +#define GCC_LPASS_BCR						56
+> +#define GCC_MPM_BCR						57
+> +#define GCC_MSG_RAM_BCR						58
+> +#define GCC_NSSNOC_MEMNOC_1_ARES				59
+> +#define GCC_NSSNOC_PCNOC_1_ARES					60
+> +#define GCC_NSSNOC_SNOC_1_ARES					61
+> +#define GCC_NSSNOC_XO_DCD_ARES					62
+> +#define GCC_NSSNOC_TS_ARES					63
+> +#define GCC_NSSCC_ARES						64
+> +#define GCC_NSSNOC_NSSCC_ARES					65
+> +#define GCC_NSSNOC_ATB_ARES					66
+> +#define GCC_NSSNOC_MEMNOC_ARES					67
+> +#define GCC_NSSNOC_QOSGEN_REF_ARES				68
+> +#define GCC_NSSNOC_SNOC_ARES					69
+> +#define GCC_NSSNOC_TIMEOUT_REF_ARES				70
+> +#define GCC_NSS_CFG_ARES					71
+> +#define GCC_UBI0_DBG_ARES					72
+> +#define GCC_PCIE0_AHB_ARES					73
+> +#define GCC_PCIE0_AUX_ARES					74
+> +#define GCC_PCIE0_AXI_M_ARES					75
+> +#define GCC_PCIE0_AXI_M_STICKY_ARES				76
+> +#define GCC_PCIE0_AXI_S_ARES					77
+> +#define GCC_PCIE0_AXI_S_STICKY_ARES				78
+> +#define GCC_PCIE0_CORE_STICKY_ARES				79
+> +#define GCC_PCIE0_PIPE_ARES					80
+> +#define GCC_PCIE1_AHB_ARES					81
+> +#define GCC_PCIE1_AUX_ARES					82
+> +#define GCC_PCIE1_AXI_M_ARES					83
+> +#define GCC_PCIE1_AXI_M_STICKY_ARES				84
+> +#define GCC_PCIE1_AXI_S_ARES					85
+> +#define GCC_PCIE1_AXI_S_STICKY_ARES				86
+> +#define GCC_PCIE1_CORE_STICKY_ARES				87
+> +#define GCC_PCIE1_PIPE_ARES					88
+> +#define GCC_PCIE2_AHB_ARES					89
+> +#define GCC_PCIE2_AUX_ARES					90
+> +#define GCC_PCIE2_AXI_M_ARES					91
+> +#define GCC_PCIE2_AXI_M_STICKY_ARES				92
+> +#define GCC_PCIE2_AXI_S_ARES					93
+> +#define GCC_PCIE2_AXI_S_STICKY_ARES				94
+> +#define GCC_PCIE2_CORE_STICKY_ARES				95
+> +#define GCC_PCIE2_PIPE_ARES					96
+> +#define GCC_PCIE3_AHB_ARES					97
+> +#define GCC_PCIE3_AUX_ARES					98
+> +#define GCC_PCIE3_AXI_M_ARES					99
+> +#define GCC_PCIE3_AXI_M_STICKY_ARES				100
+> +#define GCC_PCIE3_AXI_S_ARES					101
+> +#define GCC_PCIE3_AXI_S_STICKY_ARES				102
+> +#define GCC_PCIE3_CORE_STICKY_ARES				103
+> +#define GCC_PCIE3_PIPE_ARES					104
+> +#define GCC_PCNOC_BCR						105
+> +#define GCC_PCNOC_BUS_TIMEOUT0_BCR				106
+> +#define GCC_PCNOC_BUS_TIMEOUT1_BCR				107
+> +#define GCC_PCNOC_BUS_TIMEOUT2_BCR				108
+> +#define GCC_PCNOC_BUS_TIMEOUT3_BCR				109
+> +#define GCC_PCNOC_BUS_TIMEOUT4_BCR				110
+> +#define GCC_PCNOC_BUS_TIMEOUT5_BCR				111
+> +#define GCC_PCNOC_BUS_TIMEOUT6_BCR				112
+> +#define GCC_PCNOC_BUS_TIMEOUT7_BCR				113
+> +#define GCC_PCNOC_BUS_TIMEOUT8_BCR				114
+> +#define GCC_PCNOC_BUS_TIMEOUT9_BCR				115
+> +#define GCC_PCNOC_TBU_BCR					116
+> +#define GCC_Q6SS_DBG_ARES					117
+> +#define GCC_Q6_AHB_ARES						118
+> +#define GCC_Q6_AHB_S_ARES					119
+> +#define GCC_Q6_AXIM2_ARES					120
+> +#define GCC_Q6_AXIM_ARES					121
+> +#define GCC_QDSS_BCR						122
+> +#define GCC_QPIC_BCR						123
+> +#define GCC_QPIC_AHB_ARES					124
+> +#define GCC_QPIC_ARES						125
+> +#define GCC_RBCPR_BCR						126
+> +#define GCC_RBCPR_MX_BCR					127
+> +#define GCC_SEC_CTRL_BCR					128
+> +#define GCC_SMMU_CFG_BCR					129
+> +#define GCC_SNOC_BCR						130
+> +#define GCC_SPDM_BCR						131
+> +#define GCC_TME_BCR						132
+> +#define GCC_UNIPHY0_SYS_RESET					133
+> +#define GCC_UNIPHY0_AHB_RESET					134
+> +#define GCC_UNIPHY0_XPCS_RESET					135
+> +#define GCC_UNIPHY1_SYS_RESET					136
+> +#define GCC_UNIPHY1_AHB_RESET					137
+> +#define GCC_UNIPHY1_XPCS_RESET					138
+> +#define GCC_UNIPHY2_SYS_RESET					139
+> +#define GCC_UNIPHY2_AHB_RESET					140
+> +#define GCC_UNIPHY2_XPCS_RESET					141
+> +#define GCC_USB_MISC_RESET					142
+> +#define GCC_WCSSAON_RESET					143
+> +#define GCC_WCSS_ACMT_ARES					144
+> +#define GCC_WCSS_AHB_S_ARES					145
+> +#define GCC_WCSS_AXI_M_ARES					146
+> +#define GCC_WCSS_BCR						147
+> +#define GCC_WCSS_DBG_ARES					148
+> +#define GCC_WCSS_DBG_BDG_ARES					149
+> +#define GCC_WCSS_ECAHB_ARES					150
+> +#define GCC_WCSS_Q6_BCR						151
+> +#define GCC_WCSS_Q6_TBU_BCR					152
+> +#define GCC_TCSR_BCR						153
+> +
+> +#endif
+> -- 
+> 2.17.1
 > 
-> Great, again, tie it to the specific xhci host controler instance.
-> 
->> In general, we currently think this USB offload driver should co-exist with
->> the USB SND class driver, which handles all devices connected across every
->> bus.
-> 
-> And that is incorrect, please do not do that.
-> 
-
-To clarify, I think we can summarize that the qc_audio_offload driver 
-(the one that registers the platform operations) is mainly responsible 
-for USB SND card management, and communicating that to the USB backend.
-
->> We can add a check to the platform connect routine to ensure that
->> there is a reference to the USB backend.  If so, then that particular USB
->> bus/sysdev can be supported by the audio DSP.  That way, we do not falsely
->> populate USB SND cards which are present on another USB bus/controller.
-> 
-> You should NEVER be able to populate a USB card unless the USB bus
-> controller has given you the USB interface structure to control, so I do
-> not understand how this is an issue.
-> 
-
-This might not be so clear with the current revision.  In the next 
-revision I have prepared, as I mentioned, we are proposing using the 
-platform connect/disconnect ops here to build a reference to all USB SND 
-card and PCM devices available in the system.
-
-For example, if you have an external hub connected to the root hub, and 
-each port on that hub has an audio device connected.  We want to allow 
-userspace to select which card# and pcm# to start offload on. (versus 
-userspace having to rely on trail and error, which Pierre touched on on 
-why that is not desired)
-
-Since the USB SND driver is based on udevs (not bus specific), if there 
-are multiple roothubs (correlates to usb buses), then we only want to 
-notify the USB backend of the USB SND cards on the controller which has 
-offloading enabled.  Otherwise, if userspace selects a device on an 
-unsupported controller, then that path would obviously fail.
-
-I hope that clarifies some things.
-
-Thanks
-Wesley Cheng
