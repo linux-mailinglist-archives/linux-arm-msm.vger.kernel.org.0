@@ -2,185 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 510BD6A585B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 12:34:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 17C316A5865
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 12:36:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230173AbjB1Lec (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 06:34:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59870 "EHLO
+        id S229612AbjB1LgB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 06:36:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231747AbjB1LeU (ORCPT
+        with ESMTP id S231277AbjB1Lfz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 06:34:20 -0500
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2144321944
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 03:33:54 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id j17so9790704ljq.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 03:33:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AXWuxeHMpQCt72Y6URHGm/0rqCv9ixM2ky1A1nPsEmM=;
-        b=TLaApNXQYt+GGH90M9J0kQTk3FAPpjSvTOoymUjW3a5rNLHt2/U70oZJRshp6YR1tr
-         q/0eaGAKH79ZmS3ARUVoCwgCf3V+fd7xrsTwI45x8Q06Sq3qCZV1Ui6uTmpRysDHipdL
-         GYAhJBhtMYk9htNtv4SJ/I6ALseEBhf+7JzbBqcjdE5zDaRvSUi9PtEBU7w2aqM+vqZ9
-         v6iwufFDtZBeQ1RD8IzG6L9M2C6BWz5Dznj6RVJIO/U0jwyrFEVoWSZdOHYoJ0YVaxCP
-         q1IcHSZryMDOms/6aWmXOSKzS1ha7O2UBJ4uu12CphpfICBox9C5YglP6bPZ+UkwhYB1
-         lbGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AXWuxeHMpQCt72Y6URHGm/0rqCv9ixM2ky1A1nPsEmM=;
-        b=QF9GsJsbj0OcaUWcdeUlkvvPVhciCR79j/IlJBckE5sRHHb65OXrrP9x67nzWVL5ga
-         b+azMUFaaEgDe+sI7RXmzqIAF8ljqHaQjrjiGht2BSreAaRJ0SVNRA5a6pyn5LdLbe3w
-         XUxP4en1dIOM+tKsD8msAJQbAGq451HaT1v5DaaW1uRz+iqgJJ5asLowDO6U3G3nB5K4
-         SnN0HpM0dMdtmC82UzQIJ8eYWh12hkvGgXw8UNEumOc/EextIPM3hjQCL0Py4iZHWvBq
-         4ly87FKWYW0ePR95XTHZtv4ycQEtbxoja96POQEUPyYa+xtFyrcCuxY6ievYqfbtcIsh
-         Kt0w==
-X-Gm-Message-State: AO0yUKV3gbRXFhKZJ5TYHEHrm9nxAs86A0vOn0USp4p0wu/AsFT2nL7l
-        jylG9+DsUz3CxnD/XWv/kyDP7w==
-X-Google-Smtp-Source: AK7set/4snBqz3dNu/V4QAfth2avIe2gSCEFSnkxR3/1JeO8KRGhQ2dLJ9tNjWaF2k7WvQPblTCjaQ==
-X-Received: by 2002:a05:651c:1691:b0:293:2cc5:47a7 with SMTP id bd17-20020a05651c169100b002932cc547a7mr578658ljb.52.1677584032099;
-        Tue, 28 Feb 2023 03:33:52 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id h20-20020ac25974000000b004dd0bbc89a1sm1288472lfp.244.2023.02.28.03.33.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Feb 2023 03:33:51 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
-        <ville.syrjala@linux.intel.com>, dri-devel@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 10/10] drm/msm/dsi: use new helpers for DSC setup
-Date:   Tue, 28 Feb 2023 13:33:42 +0200
-Message-Id: <20230228113342.2051425-11-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230228113342.2051425-1-dmitry.baryshkov@linaro.org>
-References: <20230228113342.2051425-1-dmitry.baryshkov@linaro.org>
+        Tue, 28 Feb 2023 06:35:55 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E0C1C1DB9C;
+        Tue, 28 Feb 2023 03:35:53 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CAD8DFEC;
+        Tue, 28 Feb 2023 03:36:36 -0800 (PST)
+Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 304F23F881;
+        Tue, 28 Feb 2023 03:35:51 -0800 (PST)
+Message-ID: <f4dcb4f8-c70b-3ca9-33fd-8889899d7481@arm.com>
+Date:   Tue, 28 Feb 2023 11:35:49 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v2 6/9] coresight-tpdm: Add node to set dsb programming
+ mode
+Content-Language: en-US
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        Tao Zhang <taozha@qti.qualcomm.com>
+References: <1674114105-16651-1-git-send-email-quic_taozha@quicinc.com>
+ <1674114105-16651-7-git-send-email-quic_taozha@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1674114105-16651-7-git-send-email-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use new DRM DSC helpers to setup DSI DSC configuration. The
-initial_scale_value needs to be adjusted according to the standard, but
-this is a separate change.
+On 19/01/2023 07:41, Tao Zhang wrote:
+> Add node to set and show programming mode for TPDM DSB subunit.
+> Once the DSB programming mode is set, it will be written to the
+> register DSB_CR. Bit[10:9] of the DSB_CR register is used to set
+> the DSB test mode.
+> 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> Signed-off-by: Tao Zhang <taozha@qti.qualcomm.com>
+> ---
+>   drivers/hwtracing/coresight/coresight-tpdm.c | 45 +++++++++++++++++++++++++++-
+>   drivers/hwtracing/coresight/coresight-tpdm.h | 12 ++++++++
+>   2 files changed, 56 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index 1dbb6c4..9126a37 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -4,6 +4,7 @@
+>    */
+>   
+>   #include <linux/amba/bus.h>
+> +#include <linux/bitfield.h>
+>   #include <linux/bitmap.h>
+>   #include <linux/coresight.h>
+>   #include <linux/coresight-pmu.h>
+> @@ -38,7 +39,7 @@ static umode_t tpdm_dsb_is_visible(struct kobject *kobj,
+>   
+>   static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
+>   {
+> -	u32 val;
+> +	u32 val, mode;
+>   
+>   	val = readl_relaxed(drvdata->base + TPDM_DSB_TIER);
+>   	/* Set trigger timestamp */
+> @@ -58,6 +59,19 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
+>   
+>   	/* Set the enable bit of DSB control register to 1 */
+>   	val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
+> +	/* Set the cycle accurate mode */
+> +	mode = TPDM_DSB_MODE_CYCACC(drvdata->dsb->mode);
+> +	val &= ~TPDM_DSB_TEST_MODE;
+> +	val |= FIELD_PREP(TPDM_DSB_TEST_MODE, mode);
+> +	/* Set the byte lane for high-performance mode */
+> +	mode = TPDM_DSB_MODE_HPBYTESEL(drvdata->dsb->mode);
+> +	val &= ~TPDM_DSB_HPSEL;
+> +	val |= FIELD_PREP(TPDM_DSB_HPSEL, mode);
+> +	/* Set the performance mode */
+> +	if (drvdata->dsb->mode & TPDM_DSB_MODE_PERF)
+> +		val |= TPDM_DSB_MODE;
+> +	else
+> +		val &= ~TPDM_DSB_MODE;
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 61 ++++--------------------------
- 1 file changed, 8 insertions(+), 53 deletions(-)
+This looks a bit tricky to me. Please could you add documentation of
+the values supported under Documentation/ABI/testing/sysfs-....-
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 18fa30e1e858..dda989727921 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1735,28 +1735,9 @@ static int dsi_host_parse_lane_data(struct msm_dsi_host *msm_host,
- 	return -EINVAL;
- }
- 
--static u32 dsi_dsc_rc_buf_thresh[DSC_NUM_BUF_RANGES - 1] = {
--	0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54, 0x62,
--	0x69, 0x70, 0x77, 0x79, 0x7b, 0x7d, 0x7e
--};
--
--/* only 8bpc, 8bpp added */
--static char min_qp[DSC_NUM_BUF_RANGES] = {
--	0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 7, 13
--};
--
--static char max_qp[DSC_NUM_BUF_RANGES] = {
--	4, 4, 5, 6, 7, 7, 7, 8, 9, 10, 11, 12, 13, 13, 15
--};
--
--static char bpg_offset[DSC_NUM_BUF_RANGES] = {
--	2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
--};
--
- static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc_config *dsc)
- {
--	int i;
--	u16 bpp = dsc->bits_per_pixel >> 4;
-+	int ret;
- 
- 	if (dsc->bits_per_pixel & 0xf) {
- 		DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support fractional bits_per_pixel\n");
-@@ -1768,49 +1749,23 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
- 		return -EOPNOTSUPP;
- 	}
- 
--	dsc->rc_model_size = 8192;
--	dsc->first_line_bpg_offset = 12;
--	dsc->rc_edge_factor = 6;
--	dsc->rc_tgt_offset_high = 3;
--	dsc->rc_tgt_offset_low = 3;
- 	dsc->simple_422 = 0;
- 	dsc->convert_rgb = 1;
- 	dsc->vbr_enable = 0;
- 
--	/* handle only bpp = bpc = 8 */
--	for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++)
--		dsc->rc_buf_thresh[i] = dsi_dsc_rc_buf_thresh[i];
-+	drm_dsc_set_const_params(dsc);
-+	drm_dsc_set_rc_buf_thresh(dsc);
- 
--	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
--		dsc->rc_range_params[i].range_min_qp = min_qp[i];
--		dsc->rc_range_params[i].range_max_qp = max_qp[i];
--		/*
--		 * Range BPG Offset contains two's-complement signed values that fill
--		 * 8 bits, yet the registers and DCS PPS field are only 6 bits wide.
--		 */
--		dsc->rc_range_params[i].range_bpg_offset = bpg_offset[i] & DSC_RANGE_BPG_OFFSET_MASK;
-+	/* handle only bpp = bpc = 8, pre-SCR panels */
-+	ret = drm_dsc_setup_rc_params(dsc, DRM_DSC_1_1_PRE_SCR);
-+	if (ret) {
-+		DRM_DEV_ERROR(&msm_host->pdev->dev, "could not find DSC RC parameters\n");
-+		return ret;
- 	}
- 
--	dsc->initial_offset = 6144;		/* Not bpp 12 */
--	if (bpp != 8)
--		dsc->initial_offset = 2048;	/* bpp = 12 */
--
--	if (dsc->bits_per_component <= 10)
--		dsc->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
--	else
--		dsc->mux_word_size = DSC_MUX_WORD_SIZE_12_BPC;
--
--	dsc->initial_xmit_delay = 512;
- 	dsc->initial_scale_value = 32;
--	dsc->first_line_bpg_offset = 12;
- 	dsc->line_buf_depth = dsc->bits_per_component + 1;
- 
--	/* bpc 8 */
--	dsc->flatness_min_qp = 3;
--	dsc->flatness_max_qp = 12;
--	dsc->rc_quant_incr_limit0 = 11;
--	dsc->rc_quant_incr_limit1 = 11;
--
- 	return drm_dsc_compute_rc_parameters(dsc);
- }
- 
--- 
-2.39.2
+Couldn't we provide separate handles for these "mode bits" ?
+
+cycacc
+perf
+hpsel
+
+Suzuki
+
+
+>   	val |= TPDM_DSB_CR_ENA;
+>   	writel_relaxed(val, drvdata->base + TPDM_DSB_CR);
+>   }
+> @@ -257,6 +271,34 @@ static struct attribute_group tpdm_attr_grp = {
+>   	.attrs = tpdm_attrs,
+>   };
+>   
+> +static ssize_t dsb_mode_show(struct device *dev,
+> +				  struct device_attribute *attr,
+> +				  char *buf)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	return sysfs_emit(buf, "%lx\n",
+> +			 (unsigned long)drvdata->dsb->mode);
+> +}
+> +
+> +static ssize_t dsb_mode_store(struct device *dev,
+> +				   struct device_attribute *attr,
+> +				   const char *buf,
+> +				   size_t size)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	unsigned long val;
+> +
+> +	if ((kstrtoul(buf, 0, &val)) || val < 0)
+> +		return -EINVAL;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	drvdata->dsb->mode = val & TPDM_MODE_ALL;
+> +	spin_unlock(&drvdata->spinlock);
+> +	return size;
+> +}
+> +static DEVICE_ATTR_RW(dsb_mode);
+> +
+>   static ssize_t dsb_trig_type_show(struct device *dev,
+>   				     struct device_attribute *attr,
+>   				     char *buf)
+> @@ -327,6 +369,7 @@ static ssize_t dsb_trig_ts_store(struct device *dev,
+>   }
+>   static DEVICE_ATTR_RW(dsb_trig_ts);
+>   static struct attribute *tpdm_dsb_attrs[] = {
+> +	&dev_attr_dsb_mode.attr,
+>   	&dev_attr_dsb_trig_ts.attr,
+>   	&dev_attr_dsb_trig_type.attr,
+>   	NULL,
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
+> index 3ad1be5..b3ecb9f 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
+> @@ -19,6 +19,16 @@
+>   #define TPDM_DSB_XTRIG_TSENAB		BIT(1)
+>   /* Enable bit for DSB subunit trigger type */
+>   #define TPDM_DSB_TRIG_TYPE		BIT(12)
+> +/* Enable bit for DSB subunit perfmance mode */
+> +#define TPDM_DSB_MODE		BIT(1)
+> +
+> +/* DSB programming modes */
+> +#define TPDM_DSB_MODE_CYCACC(val)	(val & GENMASK(2, 0))
+> +#define TPDM_DSB_MODE_PERF		BIT(3)
+> +#define TPDM_DSB_MODE_HPBYTESEL(val)	(val & GENMASK(8, 4))
+> +#define TPDM_MODE_ALL			(0xFFFFFFF)
+> +#define TPDM_DSB_TEST_MODE		GENMASK(11, 9)
+> +#define TPDM_DSB_HPSEL		GENMASK(6, 2)
+>   
+>   /* TPDM integration test registers */
+>   #define TPDM_ITATBCNTRL		(0xEF0)
+> @@ -48,10 +58,12 @@
+>   
+>   /**
+>    * struct dsb_dataset - specifics associated to dsb dataset
+> + * @mode:             DSB programming mode
+>    * @trig_ts:          Enable/Disable trigger timestamp.
+>    * @trig_type:        Enable/Disable trigger type.
+>    */
+>   struct dsb_dataset {
+> +	u32				mode;
+>   	bool			trig_ts;
+>   	bool			trig_type;
+>   };
 
