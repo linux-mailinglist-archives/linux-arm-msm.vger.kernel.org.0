@@ -1,89 +1,167 @@
 Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 595F56A5AD3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 15:31:07 +0100 (CET)
+Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
+	by mail.lfdr.de (Postfix) with ESMTP id C79246A5B15
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 15:51:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229577AbjB1ObF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 09:31:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55232 "EHLO
+        id S229630AbjB1Otw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 09:49:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbjB1ObF (ORCPT
+        with ESMTP id S229675AbjB1Ott (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 09:31:05 -0500
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31A042D171;
-        Tue, 28 Feb 2023 06:31:04 -0800 (PST)
-Received: by mail-ot1-f51.google.com with SMTP id q11-20020a056830440b00b00693c1a62101so5702468otv.0;
-        Tue, 28 Feb 2023 06:31:04 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8XtdomdrpB2aqEtkSgb8XMiwOG9PDyVF2pWLS4s97V0=;
-        b=YjnyLoVZWOUqvBmuqIe8OC39E1W7+mmqRxsARzYcY4Gvu7wFS2a597+eN+RbFFjkGm
-         OW+NkvyKDmG3+HFYV7zSsPkNW6NpZWGbkTxOtqlNp+hpuUBZSXo/Z+SQSS56NMBZla3Y
-         RtHvS8tlPWq0T8zo/Zy4l6IBBHMQ9ydiTKFm06NiNmBeUhFqxFzzhSgEyrGknqvGJ3IB
-         y7Os8TaecQ4xw0BDIY6PXxflszo14ijHIm2LQzgKfmNlibnsoANrseEE5VjNvFVEFbND
-         ZEuoge21iWiTAvlb7GRaSGr5ldW7zh1ogKTVEHMl93CdQ+aWq8kTueRcBHtFppEoE/F3
-         Jr+w==
-X-Gm-Message-State: AO0yUKX8r0divmYSKEyqGnSDdRsS6obRiyvkxHNE3rHDgSlkxDi99HeD
-        ROqMjw41AQILnwYxP5R9Oy0WV5R+cw==
-X-Google-Smtp-Source: AK7set+IYSCG82EmbLpvs8GpRkNamd+enUeLvFLiXGBjn60AQUO0OYNOR8+MxZCZ9INfN281fi93+w==
-X-Received: by 2002:a05:6830:3107:b0:693:d5c2:9a9a with SMTP id b7-20020a056830310700b00693d5c29a9amr1692776ots.36.1677594663333;
-        Tue, 28 Feb 2023 06:31:03 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id l96-20020a9d1b69000000b0068bcadcad5bsm3726856otl.57.2023.02.28.06.31.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Feb 2023 06:31:02 -0800 (PST)
-Received: (nullmailer pid 3198314 invoked by uid 1000);
-        Tue, 28 Feb 2023 14:31:01 -0000
-Date:   Tue, 28 Feb 2023 08:31:01 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Devi Priya <quic_devipriy@quicinc.com>
-Cc:     broonie@kernel.org, quic_sjaganat@quicinc.com,
-        andersson@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_ipkumar@quicinc.com,
-        devicetree@vger.kernel.org, quic_gokulsri@quicinc.com,
-        agross@kernel.org, konrad.dybcio@linaro.org,
-        quic_anusha@quicinc.com, quic_srichara@quicinc.com,
-        quic_kathirav@quicinc.com, krzysztof.kozlowski+dt@linaro.org,
-        quic_arajkuma@quicinc.com, lgirdwood@gmail.com, robh+dt@kernel.org
-Subject: Re: [PATCH V2 2/6] regulator: qcom_smd: Add s1 sub-node to mp5496
- regulator
-Message-ID: <167759466099.3198254.6194582057962133441.robh@kernel.org>
-References: <20230217142030.16012-1-quic_devipriy@quicinc.com>
- <20230217142030.16012-3-quic_devipriy@quicinc.com>
+        Tue, 28 Feb 2023 09:49:49 -0500
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21BB6CC3D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 06:49:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1677595782; x=1709131782;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=V4G61WSFnqEOguuAQwLLbjdFVdolGBb6jaifYOOPXHs=;
+  b=Vz4DfR0dNHCthCibdFxzXzTokrB8jphee6enPYWYD5WX1qzVn0OcnZca
+   qx5+KXF+OepjyydknrxumubBPJZjJT3qNNtCGuY+yHsCSRCutRXPbCcUV
+   gMq3qa15rI2gNr/rhwo30Zj0YgswxUUV/eDEWzx6TnybI4glaRmZBwB3f
+   69zBXUJ8JWX1Zv/TDOZBORUQFChrWmwm2AaFg6Sm1LyQFP2o5n8NVKwRN
+   wHM3EX+zwVghhm2lgH33u2i/D0FZuarOVGcoNixYQLuarY3gqQ0fzMtxN
+   +5NqI8thnuMTIlGZLjcRkkWVM/v2SbSuXA5Yv2WXGiwoUpYzdnmMRGyEl
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10635"; a="398930452"
+X-IronPort-AV: E=Sophos;i="5.98,222,1673942400"; 
+   d="scan'208";a="398930452"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2023 06:49:41 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10635"; a="676322534"
+X-IronPort-AV: E=Sophos;i="5.98,222,1673942400"; 
+   d="scan'208";a="676322534"
+Received: from lkp-server01.sh.intel.com (HELO 3895f5c55ead) ([10.239.97.150])
+  by fmsmga007.fm.intel.com with ESMTP; 28 Feb 2023 06:49:37 -0800
+Received: from kbuild by 3895f5c55ead with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pX1IP-0005T7-0b;
+        Tue, 28 Feb 2023 14:49:37 +0000
+Date:   Tue, 28 Feb 2023 22:49:00 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 03/10] drm/i915/dsc: move DSC tables to DRM DSC helper
+Message-ID: <202302282203.ghUPsryf-lkp@intel.com>
+References: <20230228113342.2051425-4-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230217142030.16012-3-quic_devipriy@quicinc.com>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230228113342.2051425-4-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Dmitry,
 
-On Fri, 17 Feb 2023 19:50:26 +0530, Devi Priya wrote:
-> Adding s1 sub-node entry to mp5496 regulator node
-> 
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> ---
->  Changes in V2:
-> 	- Dropped ipq9574 compatible as the existing MP5496 support is
-> 	  extended for S1 regulator
-> 
->  .../devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml   | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
+I love your patch! Perhaps something to improve:
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+[auto build test WARNING on drm-misc/drm-misc-next]
+[also build test WARNING on drm-intel/for-linux-next drm-intel/for-linux-next-fixes drm/drm-next linus/master v6.2 next-20230228]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
+url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-i915-dsc-change-DSC-param-tables-to-follow-the-DSC-model/20230228-193505
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20230228113342.2051425-4-dmitry.baryshkov%40linaro.org
+patch subject: [PATCH 03/10] drm/i915/dsc: move DSC tables to DRM DSC helper
+config: ia64-allyesconfig (https://download.01.org/0day-ci/archive/20230228/202302282203.ghUPsryf-lkp@intel.com/config)
+compiler: ia64-linux-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/ee048cb6c2ec7f7f92bea6b72e8cd3ef9921993e
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Dmitry-Baryshkov/drm-i915-dsc-change-DSC-param-tables-to-follow-the-DSC-model/20230228-193505
+        git checkout ee048cb6c2ec7f7f92bea6b72e8cd3ef9921993e
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=ia64 olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=ia64 SHELL=/bin/bash drivers/gpu/drm/display/
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202302282203.ghUPsryf-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/gpu/drm/display/drm_dsc_helper.c:635: warning: expecting prototype for drm_dsc_compute_rc_parameters(). Prototype was for drm_dsc_setup_rc_params() instead
+
+
+vim +635 drivers/gpu/drm/display/drm_dsc_helper.c
+
+   627	
+   628	/**
+   629	 * drm_dsc_compute_rc_parameters() - Set parameters and limits for RC model in
+   630	 * accordance with the DSC 1.1 or 1.2 specification and DSC C Model
+   631	 *
+   632	 * @vdsc_cfg: DSC Configuration data partially filled by driver
+   633	 */
+   634	int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg)
+ > 635	{
+   636		const struct rc_parameters *rc_params;
+   637		int i;
+   638	
+   639		/* fractional BPP is not supported */
+   640		if (vdsc_cfg->bits_per_pixel & 0xf)
+   641			return -EINVAL;
+   642	
+   643		rc_params = get_rc_params(vdsc_cfg->bits_per_pixel >> 4,
+   644					  vdsc_cfg->bits_per_component);
+   645		if (!rc_params)
+   646			return -EINVAL;
+   647	
+   648		vdsc_cfg->first_line_bpg_offset = rc_params->first_line_bpg_offset;
+   649		vdsc_cfg->initial_xmit_delay = rc_params->initial_xmit_delay;
+   650		vdsc_cfg->initial_offset = rc_params->initial_offset;
+   651		vdsc_cfg->flatness_min_qp = rc_params->flatness_min_qp;
+   652		vdsc_cfg->flatness_max_qp = rc_params->flatness_max_qp;
+   653		vdsc_cfg->rc_quant_incr_limit0 = rc_params->rc_quant_incr_limit0;
+   654		vdsc_cfg->rc_quant_incr_limit1 = rc_params->rc_quant_incr_limit1;
+   655	
+   656		for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
+   657			vdsc_cfg->rc_range_params[i].range_min_qp =
+   658				rc_params->rc_range_params[i].range_min_qp;
+   659			vdsc_cfg->rc_range_params[i].range_max_qp =
+   660				rc_params->rc_range_params[i].range_max_qp;
+   661			/*
+   662			 * Range BPG Offset uses 2's complement and is only a 6 bits. So
+   663			 * mask it to get only 6 bits.
+   664			 */
+   665			vdsc_cfg->rc_range_params[i].range_bpg_offset =
+   666				rc_params->rc_range_params[i].range_bpg_offset &
+   667				DSC_RANGE_BPG_OFFSET_MASK;
+   668		}
+   669	
+   670		return 0;
+   671	}
+   672	EXPORT_SYMBOL(drm_dsc_setup_rc_params);
+   673	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
