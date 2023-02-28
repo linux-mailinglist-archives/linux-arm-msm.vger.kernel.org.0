@@ -2,42 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A13266A5CF3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 17:20:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ED5916A5D1B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 17:28:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229574AbjB1QUJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 11:20:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42604 "EHLO
+        id S229523AbjB1Q24 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 11:28:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjB1QUI (ORCPT
+        with ESMTP id S229509AbjB1Q2z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 11:20:08 -0500
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22CBEC64F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:20:07 -0800 (PST)
+        Tue, 28 Feb 2023 11:28:55 -0500
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83C7793D3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:28:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1677601207; x=1709137207;
+  t=1677601708; x=1709137708;
   h=from:to:cc:subject:in-reply-to:references:date:
    message-id:mime-version;
-  bh=obuC4pfB4IUn9O4fCst2jPRasz8wImVX78Wr1XFNNik=;
-  b=PsoBj2XdeEH2Cpht/JCN1tDDS75t+MfxriCCMVl/949uLatX8S5QrFdL
-   IU2d2NfeW0OnUFSOpay+085kNwZgknAVj8Dm4F+QLgpX1kVVAO6X1ELWb
-   GfRLQi9yDmkXf5MbrweWGnnCtxn8I99XdVC4kzwP3LWMNfYQ89pUxS052
-   HdK9PdHUvdwTS15zqWYH7R0IKsiaZglZzMpC1SHfp2h1DolP1tWH7nIOu
-   v++jhn3AgUwLqisO7524NqAXQRG4IIjQf7j4TtOXaqI4fSVXZRmYivP5w
-   JDx69DqoaWv6BJFMUEGqaHf36DTIP1jwuiESTjV4uxy/c5xSqODChHp/K
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10635"; a="314604000"
+  bh=QAYHYjoz1QpHxb03FjRxf+lJPaKGkrlwXlJJxe8nEkw=;
+  b=nKm4xpeB/Ql3PJoDVod2XPTlAv8xTqAE5/ACFOksCfUXZ4D8nqyWwnOA
+   /bkRWxVWYSbYUfDhDMAcvWRM8DS8sNhQX4rimAKXMCl8IEZ3NlUtb6izu
+   8lDRFsnd6/Y8ODH5mo86qw6vmau65QVyZ9GYss2a8Anqh71arkxzp3gdo
+   FmvI/fyxSGvff7fRmzcwoLEG6FkvozyMv0u3EkmUBlY0a6go0OoDNruql
+   cHAMDsfxfZIn1YMSOoJiMI2iEXf75Q3QN4adMFill+OrRzo8Rj7Ux9lYe
+   IEDNX/IMgFk62/NkZzI6Zcl6CvyVMKgqQd3rCsb+piL7fF66mGWrgGhZJ
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10635"; a="336472434"
 X-IronPort-AV: E=Sophos;i="5.98,222,1673942400"; 
-   d="scan'208";a="314604000"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2023 08:20:06 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10635"; a="704463697"
+   d="scan'208";a="336472434"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2023 08:28:27 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10635"; a="651648537"
 X-IronPort-AV: E=Sophos;i="5.98,222,1673942400"; 
-   d="scan'208";a="704463697"
+   d="scan'208";a="651648537"
 Received: from barumuga-mobl1.ger.corp.intel.com (HELO localhost) ([10.252.47.26])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2023 08:20:01 -0800
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2023 08:28:23 -0800
 From:   Jani Nikula <jani.nikula@linux.intel.com>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         David Airlie <airlied@gmail.com>,
@@ -52,14 +52,14 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc:     Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
         dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 04/10] drm/i915/dsc: stop using interim structure for
- calculated params
-In-Reply-To: <20230228113342.2051425-5-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH 05/10] drm/display/dsc: use flat array for rc_parameters
+ lookup
+In-Reply-To: <20230228113342.2051425-6-dmitry.baryshkov@linaro.org>
 Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 References: <20230228113342.2051425-1-dmitry.baryshkov@linaro.org>
- <20230228113342.2051425-5-dmitry.baryshkov@linaro.org>
-Date:   Tue, 28 Feb 2023 18:19:58 +0200
-Message-ID: <87v8jlyd75.fsf@intel.com>
+ <20230228113342.2051425-6-dmitry.baryshkov@linaro.org>
+Date:   Tue, 28 Feb 2023 18:28:20 +0200
+Message-ID: <87sfepyct7.fsf@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -72,206 +72,434 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue, 28 Feb 2023, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> Stop using an interim structure rc_parameters for storing calculated
-> params and then setting drm_dsc_config using that structure. Instead put
-> calculated params into the struct drm_dsc_config directly.
+> Next commits are going to add support for additional RC parameter lookup
+> tables. These tables are going to use different bpp/bpc combinations,
+> thus it makes little sense to keep the 2d array for RC parameters.
+> Switch to using the flat array.
 >
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/gpu/drm/i915/display/intel_vdsc.c | 89 +++++------------------
->  1 file changed, 20 insertions(+), 69 deletions(-)
+>  drivers/gpu/drm/display/drm_dsc_helper.c | 188 +++++++++++------------
+>  1 file changed, 88 insertions(+), 100 deletions(-)
 >
-> diff --git a/drivers/gpu/drm/i915/display/intel_vdsc.c b/drivers/gpu/drm/i915/display/intel_vdsc.c
-> index d5a7e9494b23..1ee8d13c9d64 100644
-> --- a/drivers/gpu/drm/i915/display/intel_vdsc.c
-> +++ b/drivers/gpu/drm/i915/display/intel_vdsc.c
-> @@ -18,17 +18,6 @@
->  #include "intel_qp_tables.h"
->  #include "intel_vdsc.h"
+> diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
+> index deaa84722bd4..a6d11f474656 100644
+> --- a/drivers/gpu/drm/display/drm_dsc_helper.c
+> +++ b/drivers/gpu/drm/display/drm_dsc_helper.c
+> @@ -307,24 +307,6 @@ void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg)
+>  }
+>  EXPORT_SYMBOL(drm_dsc_set_rc_buf_thresh);
 >  
-> -struct rc_parameters {
-> -	u16 initial_xmit_delay;
-> -	u8 first_line_bpg_offset;
-> -	u16 initial_offset;
-> -	u8 flatness_min_qp;
-> -	u8 flatness_max_qp;
-> -	u8 rc_quant_incr_limit0;
-> -	u8 rc_quant_incr_limit1;
-> -	struct drm_dsc_rc_range_parameters rc_range_params[DSC_NUM_BUF_RANGES];
+> -enum ROW_INDEX_BPP {
+> -	ROW_INDEX_6BPP = 0,
+> -	ROW_INDEX_8BPP,
+> -	ROW_INDEX_10BPP,
+> -	ROW_INDEX_12BPP,
+> -	ROW_INDEX_15BPP,
+> -	MAX_ROW_INDEX
 > -};
 > -
->  bool intel_dsc_source_support(const struct intel_crtc_state *crtc_state)
->  {
->  	const struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
-> @@ -63,8 +52,7 @@ static bool is_pipe_dsc(struct intel_crtc *crtc, enum transcoder cpu_transcoder)
->  }
->  
->  static void
-> -calculate_rc_params(struct rc_parameters *rc,
-> -		    struct drm_dsc_config *vdsc_cfg)
-> +calculate_rc_params(struct drm_dsc_config *vdsc_cfg)
->  {
->  	int bpc = vdsc_cfg->bits_per_component;
->  	int bpp = vdsc_cfg->bits_per_pixel >> 4;
-> @@ -84,54 +72,54 @@ calculate_rc_params(struct rc_parameters *rc,
->  	u32 res, buf_i, bpp_i;
->  
->  	if (vdsc_cfg->slice_height >= 8)
-> -		rc->first_line_bpg_offset =
-> +		vdsc_cfg->first_line_bpg_offset =
->  			12 + DIV_ROUND_UP((9 * min(34, vdsc_cfg->slice_height - 8)), 100);
->  	else
-> -		rc->first_line_bpg_offset = 2 * (vdsc_cfg->slice_height - 1);
-> +		vdsc_cfg->first_line_bpg_offset = 2 * (vdsc_cfg->slice_height - 1);
->  
->  	/* Our hw supports only 444 modes as of today */
->  	if (bpp >= 12)
-> -		rc->initial_offset = 2048;
-> +		vdsc_cfg->initial_offset = 2048;
->  	else if (bpp >= 10)
-> -		rc->initial_offset = 5632 - DIV_ROUND_UP(((bpp - 10) * 3584), 2);
-> +		vdsc_cfg->initial_offset = 5632 - DIV_ROUND_UP(((bpp - 10) * 3584), 2);
->  	else if (bpp >= 8)
-> -		rc->initial_offset = 6144 - DIV_ROUND_UP(((bpp - 8) * 512), 2);
-> +		vdsc_cfg->initial_offset = 6144 - DIV_ROUND_UP(((bpp - 8) * 512), 2);
->  	else
-> -		rc->initial_offset = 6144;
-> +		vdsc_cfg->initial_offset = 6144;
->  
->  	/* initial_xmit_delay = rc_model_size/2/compression_bpp */
-> -	rc->initial_xmit_delay = DIV_ROUND_UP(DSC_RC_MODEL_SIZE_CONST, 2 * bpp);
-> +	vdsc_cfg->initial_xmit_delay = DIV_ROUND_UP(DSC_RC_MODEL_SIZE_CONST, 2 * bpp);
->  
-> -	rc->flatness_min_qp = 3 + qp_bpc_modifier;
-> -	rc->flatness_max_qp = 12 + qp_bpc_modifier;
-> +	vdsc_cfg->flatness_min_qp = 3 + qp_bpc_modifier;
-> +	vdsc_cfg->flatness_max_qp = 12 + qp_bpc_modifier;
->  
-> -	rc->rc_quant_incr_limit0 = 11 + qp_bpc_modifier;
-> -	rc->rc_quant_incr_limit1 = 11 + qp_bpc_modifier;
-> +	vdsc_cfg->rc_quant_incr_limit0 = 11 + qp_bpc_modifier;
-> +	vdsc_cfg->rc_quant_incr_limit1 = 11 + qp_bpc_modifier;
->  
->  	bpp_i  = (2 * (bpp - 6));
->  	for (buf_i = 0; buf_i < DSC_NUM_BUF_RANGES; buf_i++) {
->  		/* Read range_minqp and range_max_qp from qp tables */
-> -		rc->rc_range_params[buf_i].range_min_qp =
-> +		vdsc_cfg->rc_range_params[buf_i].range_min_qp =
->  			intel_lookup_range_min_qp(bpc, buf_i, bpp_i);
-> -		rc->rc_range_params[buf_i].range_max_qp =
-> +		vdsc_cfg->rc_range_params[buf_i].range_max_qp =
->  			intel_lookup_range_max_qp(bpc, buf_i, bpp_i);
->  
->  		/* Calculate range_bgp_offset */
->  		if (bpp <= 6) {
-> -			rc->rc_range_params[buf_i].range_bpg_offset = ofs_und6[buf_i];
-> +			vdsc_cfg->rc_range_params[buf_i].range_bpg_offset = ofs_und6[buf_i];
->  		} else if (bpp <= 8) {
->  			res = DIV_ROUND_UP(((bpp - 6) * (ofs_und8[buf_i] - ofs_und6[buf_i])), 2);
-> -			rc->rc_range_params[buf_i].range_bpg_offset =
-> +			vdsc_cfg->rc_range_params[buf_i].range_bpg_offset =
->  								ofs_und6[buf_i] + res;
->  		} else if (bpp <= 12) {
-> -			rc->rc_range_params[buf_i].range_bpg_offset =
-> +			vdsc_cfg->rc_range_params[buf_i].range_bpg_offset =
->  								ofs_und8[buf_i];
->  		} else if (bpp <= 15) {
->  			res = DIV_ROUND_UP(((bpp - 12) * (ofs_und15[buf_i] - ofs_und12[buf_i])), 3);
-> -			rc->rc_range_params[buf_i].range_bpg_offset =
-> +			vdsc_cfg->rc_range_params[buf_i].range_bpg_offset =
->  								ofs_und12[buf_i] + res;
->  		} else {
-> -			rc->rc_range_params[buf_i].range_bpg_offset =
-> +			vdsc_cfg->rc_range_params[buf_i].range_bpg_offset =
->  								ofs_und15[buf_i];
-
-This would benefit from a temp range_bpg_offset variable, assigned to
-vdsc_cfg->rc_range_params[buf_i].range_bpg_offset after the if ladder.
-
->  		}
->  	}
-> @@ -143,9 +131,6 @@ int intel_dsc_compute_params(struct intel_crtc_state *pipe_config)
->  	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
->  	struct drm_dsc_config *vdsc_cfg = &pipe_config->dsc.config;
->  	u16 compressed_bpp = pipe_config->dsc.compressed_bpp;
-> -	const struct rc_parameters *rc_params;
-> -	struct rc_parameters *rc = NULL;
-> -	u8 i = 0;
->  	int ret;
->  
->  	vdsc_cfg->pic_width = pipe_config->hw.adjusted_mode.crtc_hdisplay;
-> @@ -169,43 +154,12 @@ int intel_dsc_compute_params(struct intel_crtc_state *pipe_config)
->  	 * parameters
->  	 */
->  	if (DISPLAY_VER(dev_priv) >= 13) {
-> -		rc = kmalloc(sizeof(*rc), GFP_KERNEL);
-> -		if (!rc)
-> -			return -ENOMEM;
+> -enum COLUMN_INDEX_BPC {
+> -	COLUMN_INDEX_8BPC = 0,
+> -	COLUMN_INDEX_10BPC,
+> -	COLUMN_INDEX_12BPC,
+> -	COLUMN_INDEX_14BPC,
+> -	COLUMN_INDEX_16BPC,
+> -	MAX_COLUMN_INDEX
+> -};
 > -
-> -		calculate_rc_params(rc, vdsc_cfg);
-> -		rc_params = rc;
-> +		calculate_rc_params(vdsc_cfg);
->  	} else {
->  		ret = drm_dsc_setup_rc_params(vdsc_cfg);
->  		if (ret)
->  			return ret;
+>  struct rc_parameters {
+>  	u16 initial_xmit_delay;
+>  	u8 first_line_bpg_offset;
+> @@ -336,12 +318,20 @@ struct rc_parameters {
+>  	struct drm_dsc_rc_range_parameters rc_range_params[DSC_NUM_BUF_RANGES];
+>  };
 >  
-> -		goto out;
-> -	}
-> -
-> -	vdsc_cfg->first_line_bpg_offset = rc_params->first_line_bpg_offset;
-> -	vdsc_cfg->initial_xmit_delay = rc_params->initial_xmit_delay;
-> -	vdsc_cfg->initial_offset = rc_params->initial_offset;
-> -	vdsc_cfg->flatness_min_qp = rc_params->flatness_min_qp;
-> -	vdsc_cfg->flatness_max_qp = rc_params->flatness_max_qp;
-> -	vdsc_cfg->rc_quant_incr_limit0 = rc_params->rc_quant_incr_limit0;
-> -	vdsc_cfg->rc_quant_incr_limit1 = rc_params->rc_quant_incr_limit1;
-> -
-> -	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
-> -		vdsc_cfg->rc_range_params[i].range_min_qp =
-> -			rc_params->rc_range_params[i].range_min_qp;
-> -		vdsc_cfg->rc_range_params[i].range_max_qp =
-> -			rc_params->rc_range_params[i].range_max_qp;
-> -		/*
-> -		 * Range BPG Offset uses 2's complement and is only a 6 bits. So
-> -		 * mask it to get only 6 bits.
-> -		 */
-> -		vdsc_cfg->rc_range_params[i].range_bpg_offset =
-> -			rc_params->rc_range_params[i].range_bpg_offset &
-> -			DSC_RANGE_BPG_OFFSET_MASK;
+> +struct rc_parameters_data {
+> +	u8 bpp;
+> +	u8 bpc;
+> +	struct rc_parameters params;
+> +};
+> +
+> +#define DSC_BPP(bpp)	((bpp) << 4)
+> +
+>  /*
+>   * Selected Rate Control Related Parameter Recommended Values
+>   * from DSC_v1.11 spec & C Model release: DSC_model_20161212
+>   */
+> -static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+> -{
+> +static const struct rc_parameters_data rc_parameters[] = {
+> +{ DSC_BPP(6), 8,
 
-This masking needs to be added to the loop in
-calculate_rc_params(). With the temp variable I suggested above, it
-could be done while assigning.
+I was kind of hoping for a patch that would clean up the hideous
+indentation in the tables. Please at least let's not add more with the
+one space indent?
 
-With that fixed,
+>  	/* 6BPP/8BPC */
+
+With designated initializers I think we could just toss the comments
+out.
+
+	.bpp = DSC_BPP(6), .bpc = 8,
+
+With that,
 
 Reviewed-by: Jani Nikula <jani.nikula@intel.com>
 
-Also, this is awesome stuff, thanks!
 
-> -	}
-> -
-> -	if (DISPLAY_VER(dev_priv) < 13) {
->  		if (compressed_bpp == 6 &&
->  		    vdsc_cfg->bits_per_component == 8)
->  			vdsc_cfg->rc_quant_incr_limit1 = 23;
-> @@ -215,7 +169,6 @@ int intel_dsc_compute_params(struct intel_crtc_state *pipe_config)
->  			vdsc_cfg->rc_range_params[0].range_bpg_offset = 0;
+>  	{ 768, 15, 6144, 3, 13, 11, 11, {
+>  		{ 0, 4, 0 }, { 1, 6, -2 }, { 3, 8, -2 }, { 4, 8, -4 },
+> @@ -349,7 +339,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 7, 11, -8 }, { 8, 12, -10 }, { 9, 12, -10 }, { 10, 12, -12 },
+>  		{ 10, 12, -12 }, { 11, 12, -12 }, { 13, 14, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(6), 10,
+>  	/* 6BPP/10BPC */
+>  	{ 768, 15, 6144, 7, 17, 15, 15, {
+>  		{ 0, 8, 0 }, { 3, 10, -2 }, { 7, 12, -2 }, { 8, 12, -4 },
+> @@ -358,7 +350,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 14, 16, -12 }, { 14, 16, -12 }, { 15, 16, -12 },
+>  		{ 17, 18, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(6), 12,
+>  	/* 6BPP/12BPC */
+>  	{ 768, 15, 6144, 11, 21, 19, 19, {
+>  		{ 0, 12, 0 }, { 5, 14, -2 }, { 11, 16, -2 }, { 12, 16, -4 },
+> @@ -367,7 +361,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 18, 20, -12 }, { 18, 20, -12 }, { 19, 20, -12 },
+>  		{ 21, 22, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(6), 14,
+>  	/* 6BPP/14BPC */
+>  	{ 768, 15, 6144, 15, 25, 23, 23, {
+>  		{ 0, 16, 0 }, { 7, 18, -2 }, { 15, 20, -2 }, { 16, 20, -4 },
+> @@ -376,7 +372,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 22, 24, -12 }, { 22, 24, -12 }, { 23, 24, -12 },
+>  		{ 25, 26, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(6), 16,
+>  	/* 6BPP/16BPC */
+>  	{ 768, 15, 6144, 19, 29, 27, 27, {
+>  		{ 0, 20, 0 }, { 9, 22, -2 }, { 19, 24, -2 }, { 20, 24, -4 },
+> @@ -385,9 +383,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 26, 28, -12 }, { 26, 28, -12 }, { 27, 28, -12 },
+>  		{ 29, 30, -12 }
+>  		}
+> -	},
+> +	}
+>  },
+> -{
+> +{ DSC_BPP(8), 8,
+>  	/* 8BPP/8BPC */
+>  	{ 512, 12, 6144, 3, 12, 11, 11, {
+>  		{ 0, 4, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
+> @@ -395,7 +393,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 3, 9, -8 }, { 3, 10, -10 }, { 5, 11, -10 }, { 5, 12, -12 },
+>  		{ 5, 13, -12 }, { 7, 13, -12 }, { 13, 15, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(8), 10,
+>  	/* 8BPP/10BPC */
+>  	{ 512, 12, 6144, 7, 16, 15, 15, {
+>  		/*
+> @@ -407,7 +407,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 7, 13, -8 }, { 7, 14, -10 }, { 9, 15, -10 }, { 9, 16, -12 },
+>  		{ 9, 17, -12 }, { 11, 17, -12 }, { 17, 19, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(8), 12,
+>  	/* 8BPP/12BPC */
+>  	{ 512, 12, 6144, 11, 20, 19, 19, {
+>  		{ 0, 12, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 9, 14, -2 },
+> @@ -416,7 +418,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 13, 20, -12 }, { 13, 21, -12 }, { 15, 21, -12 },
+>  		{ 21, 23, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(8), 14,
+>  	/* 8BPP/14BPC */
+>  	{ 512, 12, 6144, 15, 24, 23, 23, {
+>  		{ 0, 12, 2 }, { 5, 13, 0 }, { 11, 15, 0 }, { 12, 17, -2 },
+> @@ -425,7 +429,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 17, 23, -12 }, { 17, 23, -12 }, { 21, 24, -12 },
+>  		{ 24, 25, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(8), 16,
+>  	/* 8BPP/16BPC */
+>  	{ 512, 12, 6144, 19, 28, 27, 27, {
+>  		{ 0, 12, 2 }, { 6, 14, 0 }, { 13, 17, 0 }, { 15, 20, -2 },
+> @@ -434,9 +440,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 21, 27, -12 }, { 21, 27, -12 }, { 25, 28, -12 },
+>  		{ 28, 29, -12 }
+>  		}
+> -	},
+> +	}
+>  },
+> -{
+> +{ DSC_BPP(10), 8,
+>  	/* 10BPP/8BPC */
+>  	{ 410, 15, 5632, 3, 12, 11, 11, {
+>  		{ 0, 3, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 2, 6, -2 },
+> @@ -444,7 +450,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 3, 9, -8 }, { 3, 9, -10 }, { 5, 10, -10 }, { 5, 10, -10 },
+>  		{ 5, 11, -12 }, { 7, 11, -12 }, { 11, 12, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(10), 10,
+>  	/* 10BPP/10BPC */
+>  	{ 410, 15, 5632, 7, 16, 15, 15, {
+>  		{ 0, 7, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 6, 10, -2 },
+> @@ -452,7 +460,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 7, 13, -8 }, { 7, 13, -10 }, { 9, 14, -10 }, { 9, 14, -10 },
+>  		{ 9, 15, -12 }, { 11, 15, -12 }, { 15, 16, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(10), 12,
+>  	/* 10BPP/12BPC */
+>  	{ 410, 15, 5632, 11, 20, 19, 19, {
+>  		{ 0, 11, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 10, 14, -2 },
+> @@ -461,7 +471,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 13, 18, -10 }, { 13, 19, -12 }, { 15, 19, -12 },
+>  		{ 19, 20, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(10), 14,
+>  	/* 10BPP/14BPC */
+>  	{ 410, 15, 5632, 15, 24, 23, 23, {
+>  		{ 0, 11, 2 }, { 5, 13, 0 }, { 11, 15, 0 }, { 13, 18, -2 },
+> @@ -470,7 +482,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 17, 22, -10 }, { 17, 23, -12 }, { 19, 23, -12 },
+>  		{ 23, 24, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(10), 16,
+>  	/* 10BPP/16BPC */
+>  	{ 410, 15, 5632, 19, 28, 27, 27, {
+>  		{ 0, 11, 2 }, { 6, 14, 0 }, { 13, 17, 0 }, { 16, 20, -2 },
+> @@ -479,9 +493,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 21, 26, -10 }, { 21, 27, -12 }, { 23, 27, -12 },
+>  		{ 27, 28, -12 }
+>  		}
+> -	},
+> +	}
+>  },
+> -{
+> +{ DSC_BPP(12), 8,
+>  	/* 12BPP/8BPC */
+>  	{ 341, 15, 2048, 3, 12, 11, 11, {
+>  		{ 0, 2, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
+> @@ -489,7 +503,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 3, 9, -8 }, { 3, 10, -10 }, { 5, 11, -10 },
+>  		{ 5, 12, -12 }, { 5, 13, -12 }, { 7, 13, -12 }, { 13, 15, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(12), 10,
+>  	/* 12BPP/10BPC */
+>  	{ 341, 15, 2048, 7, 16, 15, 15, {
+>  		{ 0, 2, 2 }, { 2, 5, 0 }, { 3, 7, 0 }, { 4, 8, -2 },
+> @@ -497,7 +513,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 7, 13, -8 }, { 7, 14, -10 }, { 9, 15, -10 }, { 9, 16, -12 },
+>  		{ 9, 17, -12 }, { 11, 17, -12 }, { 17, 19, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(12), 12,
+>  	/* 12BPP/12BPC */
+>  	{ 341, 15, 2048, 11, 20, 19, 19, {
+>  		{ 0, 6, 2 }, { 4, 9, 0 }, { 7, 11, 0 }, { 8, 12, -2 },
+> @@ -506,7 +524,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 13, 20, -12 }, { 13, 21, -12 }, { 15, 21, -12 },
+>  		{ 21, 23, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(12), 14,
+>  	/* 12BPP/14BPC */
+>  	{ 341, 15, 2048, 15, 24, 23, 23, {
+>  		{ 0, 6, 2 }, { 7, 10, 0 }, { 9, 13, 0 }, { 11, 16, -2 },
+> @@ -515,7 +535,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 17, 21, -12 }, { 17, 21, -12 }, { 19, 22, -12 },
+>  		{ 22, 23, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(12), 16,
+>  	/* 12BPP/16BPC */
+>  	{ 341, 15, 2048, 19, 28, 27, 27, {
+>  		{ 0, 6, 2 }, { 6, 11, 0 }, { 11, 15, 0 }, { 14, 18, -2 },
+> @@ -524,9 +546,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 21, 25, -12 }, { 21, 25, -12 }, { 23, 26, -12 },
+>  		{ 26, 27, -12 }
+>  		}
+> -	},
+> +	}
+>  },
+> -{
+> +{ DSC_BPP(15), 8,
+>  	/* 15BPP/8BPC */
+>  	{ 273, 15, 2048, 3, 12, 11, 11, {
+>  		{ 0, 0, 10 }, { 0, 1, 8 }, { 0, 1, 6 }, { 0, 2, 4 },
+> @@ -534,7 +556,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 2, 5, -6 }, { 3, 5, -8 }, { 4, 6, -10 }, { 4, 7, -10 },
+>  		{ 5, 7, -12 }, { 7, 8, -12 }, { 8, 9, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(15), 10,
+>  	/* 15BPP/10BPC */
+>  	{ 273, 15, 2048, 7, 16, 15, 15, {
+>  		{ 0, 2, 10 }, { 2, 5, 8 }, { 3, 5, 6 }, { 4, 6, 4 },
+> @@ -542,7 +566,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 6, 9, -6 }, { 7, 9, -8 }, { 8, 10, -10 }, { 8, 11, -10 },
+>  		{ 9, 11, -12 }, { 11, 12, -12 }, { 12, 13, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(15), 12,
+>  	/* 15BPP/12BPC */
+>  	{ 273, 15, 2048, 11, 20, 19, 19, {
+>  		{ 0, 4, 10 }, { 2, 7, 8 }, { 4, 9, 6 }, { 6, 11, 4 },
+> @@ -551,7 +577,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 13, 15, -10 }, { 13, 15, -12 }, { 15, 16, -12 },
+>  		{ 16, 17, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(15), 14,
+>  	/* 15BPP/14BPC */
+>  	{ 273, 15, 2048, 15, 24, 23, 23, {
+>  		{ 0, 4, 10 }, { 3, 8, 8 }, { 6, 11, 6 }, { 9, 14, 4 },
+> @@ -560,7 +588,9 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 17, 19, -10 }, { 17, 19, -12 }, { 19, 20, -12 },
+>  		{ 20, 21, -12 }
+>  		}
+> -	},
+> +	}
+> +},
+> +{ DSC_BPP(15), 16,
+>  	/* 15BPP/16BPC */
+>  	{ 273, 15, 2048, 19, 28, 27, 27, {
+>  		{ 0, 4, 10 }, { 4, 9, 8 }, { 8, 13, 6 }, { 12, 17, 4 },
+> @@ -570,59 +600,21 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
+>  		{ 24, 25, -12 }
+>  		}
 >  	}
+> -}
+> +},
+> +{ /* sentinel */ }
+>  };
 >  
-> -out:
->  	/*
->  	 * BitsPerComponent value determines mux_word_size:
->  	 * When BitsPerComponent is less than or 10bpc, muxWordSize will be equal to
-> @@ -230,8 +183,6 @@ int intel_dsc_compute_params(struct intel_crtc_state *pipe_config)
->  	vdsc_cfg->initial_scale_value = (vdsc_cfg->rc_model_size << 3) /
->  		(vdsc_cfg->rc_model_size - vdsc_cfg->initial_offset);
->  
-> -	kfree(rc);
+> -static int get_row_index_for_rc_params(u16 compressed_bpp)
+> -{
+> -	switch (compressed_bpp) {
+> -	case 6:
+> -		return ROW_INDEX_6BPP;
+> -	case 8:
+> -		return ROW_INDEX_8BPP;
+> -	case 10:
+> -		return ROW_INDEX_10BPP;
+> -	case 12:
+> -		return ROW_INDEX_12BPP;
+> -	case 15:
+> -		return ROW_INDEX_15BPP;
+> -	default:
+> -		return -EINVAL;
+> -	}
+> -}
 > -
->  	return 0;
+> -static int get_column_index_for_rc_params(u8 bits_per_component)
+> -{
+> -	switch (bits_per_component) {
+> -	case 8:
+> -		return COLUMN_INDEX_8BPC;
+> -	case 10:
+> -		return COLUMN_INDEX_10BPC;
+> -	case 12:
+> -		return COLUMN_INDEX_12BPC;
+> -	case 14:
+> -		return COLUMN_INDEX_14BPC;
+> -	case 16:
+> -		return COLUMN_INDEX_16BPC;
+> -	default:
+> -		return -EINVAL;
+> -	}
+> -}
+> -
+> -static const struct rc_parameters *get_rc_params(u16 compressed_bpp,
+> +static const struct rc_parameters *get_rc_params(u16 dsc_bpp,
+>  						 u8 bits_per_component)
+>  {
+> -	int row_index, column_index;
+> -
+> -	row_index = get_row_index_for_rc_params(compressed_bpp);
+> -	if (row_index < 0)
+> -		return NULL;
+> +	int i;
+>  
+> -	column_index = get_column_index_for_rc_params(bits_per_component);
+> -	if (column_index < 0)
+> -		return NULL;
+> +	for (i = 0; rc_parameters[i].bpp; i++)
+> +		if (rc_parameters[i].bpp == dsc_bpp &&
+> +		    rc_parameters[i].bpc == bits_per_component)
+> +			return &rc_parameters[i].params;
+>  
+> -	return &rc_parameters[row_index][column_index];
+> +	return NULL;
 >  }
+>  
+>  /**
+> @@ -636,11 +628,7 @@ int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg)
+>  	const struct rc_parameters *rc_params;
+>  	int i;
+>  
+> -	/* fractional BPP is not supported */
+> -	if (vdsc_cfg->bits_per_pixel & 0xf)
+> -		return -EINVAL;
+> -
+> -	rc_params = get_rc_params(vdsc_cfg->bits_per_pixel >> 4,
+> +	rc_params = get_rc_params(vdsc_cfg->bits_per_pixel,
+>  				  vdsc_cfg->bits_per_component);
+>  	if (!rc_params)
+>  		return -EINVAL;
 
 -- 
 Jani Nikula, Intel Open Source Graphics Center
