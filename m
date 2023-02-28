@@ -2,126 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A8886A5A3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 14:46:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7394C6A5A5D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 14:51:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229530AbjB1Nqq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 08:46:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43780 "EHLO
+        id S229727AbjB1NvC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 08:51:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229667AbjB1Noo (ORCPT
+        with ESMTP id S229699AbjB1NvB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 08:44:44 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E54430194
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 05:44:33 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id y14so10281944ljq.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 05:44:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677591872;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vveGd9sf9fGz7xfjIX4ynPRPTvQaFdGwhHtakqOTRYg=;
-        b=VLXw8x/HVK++rxyPE+23hHMFMSwTE3HGtekASbnCMGHZuPar3hClhNxfuQMN3uM/81
-         wNZlRETtkblRSd4rX6fxZtGipiuG/FJ3TPjMnVggM+q6Vqq3HAR9ozypQtbRcNDNxfl8
-         sjwWPtULXuothLPeRoF0e+yauL/i5EyFg0zsKoO+kaHb47CeXIuI4+V+QkmsXKOMNfVs
-         p9+75OjV2WKORkcqYS006WBS+44oaBFLj7qSQR2dF8MvlSmfWqQLNM10Snd8eW7CCuC6
-         FsszgvA5bu7t7l+bkKGo/4q1TYNWhk7Y0LnWnhTRY6FnksSMMI/Hv7BfRQexSQ1fwAKM
-         f0gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677591872;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vveGd9sf9fGz7xfjIX4ynPRPTvQaFdGwhHtakqOTRYg=;
-        b=Hbf9+jvoCW/nF+1J0EoNrJFLh1V/soEoSaj+8Yn1RQ/RlEkwUJmlBpdf5tyyrSIdcp
-         yGeD5ApZKIYITZuf2kG9bNvwdtJ8ttwKJnhfVqxPpisaczwfzrn7UegXORcjeH5gTSII
-         q5ajiWRwcl/gXrOMwnUnGGXMnBYoHk+3GDrXKYFnyjbQm3QaJDfjZXJ3/mUcv97dkp9/
-         WlLSTOdxXtvWrF0fxxs78WatvZEtvD2p/lGHNE7jOUDpNxeqNndhIIpWxkcNMXlPqzQS
-         sNnvKDlV4hEKYWyTJyuBbODwsGJRGXV5q7mg5t7b4+8F8Xpx7rOkgYhq5OwUPtcKVoHi
-         PpnQ==
-X-Gm-Message-State: AO0yUKX5y1ajs1eG4Z7ynDeTU21AhXUGluU53DEvEsor5SnWWLNSyD6P
-        wzEB6t+yudsoEqm/6aMZb6TLHw==
-X-Google-Smtp-Source: AK7set/yNx+ztYP2VxaFAU39vtO3EyYHHb4UMqld4Hkcce54kgL2KmeBXxl+aeseQybRjjAqsX3EoQ==
-X-Received: by 2002:a2e:9bc9:0:b0:295:9970:9f73 with SMTP id w9-20020a2e9bc9000000b0029599709f73mr766874ljj.29.1677591872728;
-        Tue, 28 Feb 2023 05:44:32 -0800 (PST)
-Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id j20-20020a2e3c14000000b00295a583a20bsm1203975lja.74.2023.02.28.05.44.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Feb 2023 05:44:32 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 28 Feb 2023 14:44:06 +0100
-Subject: [PATCH v6 9/9] interconnect: qcom: msm8996: Promote to
- core_initcall
+        Tue, 28 Feb 2023 08:51:01 -0500
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 058E0305E6;
+        Tue, 28 Feb 2023 05:50:54 -0800 (PST)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 9FA681FDC1;
+        Tue, 28 Feb 2023 13:50:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+        t=1677592253; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=a+axJ4fDmePQKpl5oDQ9xI+mAYeRUk3jBZn02hzcYwk=;
+        b=IYQKcMF4XvBnvvKRj/q+4NsA4zlgvalUeOeZo1lBfkaF3u2BNeUHa15J5mK2wKQUGa2QzL
+        7DHSTLBQQX4mHTOkhneDNjY8k6kwgvqUD4TOa2szu510WQDdc/g+V5bXW+oLqUMQDQCzLK
+        //rYSrtyAx9tgv/KUWmg5yxRdrZunok=
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 798E913440;
+        Tue, 28 Feb 2023 13:50:53 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id jU5ZG70G/mPKQQAAMHmgww
+        (envelope-from <mhocko@suse.com>); Tue, 28 Feb 2023 13:50:53 +0000
+Date:   Tue, 28 Feb 2023 14:50:52 +0100
+From:   Michal Hocko <mhocko@suse.com>
+To:     Suren Baghdasaryan <surenb@google.com>
+Cc:     Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>,
+        David Hildenbrand <david@redhat.com>,
+        Johannes Weiner <hannes@cmpxchg.org>,
+        Mike Rapoport <rppt@kernel.org>,
+        Oscar Salvador <osalvador@suse.de>,
+        Anshuman Khandual <anshuman.khandual@arm.com>,
+        mark.rutland@arm.com, will@kernel.org,
+        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Sukadev Bhattiprolu <quic_sukadev@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Patrick Daly <quic_pdaly@quicinc.com>, johunt@akamai.com
+Subject: Re: [PATCH] psi: reduce min window size to 50ms
+Message-ID: <Y/4GvIMtjVoEozWE@dhcp22.suse.cz>
+References: <15cd8816-b474-0535-d854-41982d3bbe5c@quicinc.com>
+ <CAJuCfpHihLgHCcsAqMJ_o2u7Ux9B5HFGsV2y_L2_5GXYAGYLnw@mail.gmail.com>
+ <82406da2-799e-f0b4-bce0-7d47486030d4@quicinc.com>
+ <CAJuCfpHrhO7_fMwNuu2hdQob=MPjZTW8eaJpNhEhPmDMqz2qTA@mail.gmail.com>
+ <Y/ix53x8i/ViuBXf@dhcp22.suse.cz>
+ <CAJuCfpG1c5v6qOotPV6t-o1T1p7EbOLs90eFnoEBjts+gafovA@mail.gmail.com>
+ <Y/yxSqhpQh9yR7L4@dhcp22.suse.cz>
+ <CAJuCfpHXwbtjdhH_K9r28-LUYtzC6+NaZ+RrKCtiNBk8PfXhLw@mail.gmail.com>
+ <Y/0ASztGOwfM6bNK@dhcp22.suse.cz>
+ <CAJuCfpHYMR6O_uJvaeq1f+ZvgW9oN6zTRG=UvTXyLJLSFOV3jw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230228-topic-qos-v6-9-3c37a349656f@linaro.org>
-References: <20230228-topic-qos-v6-0-3c37a349656f@linaro.org>
-In-Reply-To: <20230228-topic-qos-v6-0-3c37a349656f@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1677591861; l=1279;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=5H1KJ2r/pG170nOV3v3bsq3JNwWcNEZN04iD5DDB2kw=;
- b=yLfZUq5Z5xp1LtHleRTEckj0GMI3jzrt+GgHuw7jqq6epsR/JDBZ7/xLzu+YM7S7gah/Xn53SHWj
- OuJtKAZHBxh/lb5Uh3LGOzCaGd3xbVcn5ijbSbrKBi1QLMJaEP7c
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJuCfpHYMR6O_uJvaeq1f+ZvgW9oN6zTRG=UvTXyLJLSFOV3jw@mail.gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The interconnect driver is (or soon will be) vital to many other
-devices, as it's not a given that the bootloader will set up enough
-bandwidth for us or that the values we come into are reasonable.
+On Mon 27-02-23 11:50:48, Suren Baghdasaryan wrote:
+> On Mon, Feb 27, 2023 at 11:11 AM Michal Hocko <mhocko@suse.com> wrote:
+> >
+> > On Mon 27-02-23 09:49:59, Suren Baghdasaryan wrote:
+> > > On Mon, Feb 27, 2023 at 5:34 AM Michal Hocko <mhocko@suse.com> wrote:
+> > > >
+> > > > On Fri 24-02-23 13:07:57, Suren Baghdasaryan wrote:
+> > > > > On Fri, Feb 24, 2023 at 4:47 AM Michal Hocko <mhocko@suse.com> wrote:
+> > [...]
+> > > > > > Btw. it seems that there is is only a limit on a single trigger per fd
+> > > > > > but no limits per user so it doesn't sound too hard to end up with too
+> > > > > > much polling even with a larger timeouts. To me it seems like we need to
+> > > > > > contain the polling thread to be bound by the cpu controller.
+> > > > >
+> > > > > Hmm. We have one "psimon" thread per cgroup (+1 system-level one) and
+> > > > > poll_min_period for each thread is chosen as the min() of polling
+> > > > > periods between triggers created in that group. So, a bad trigger that
+> > > > > causes overly aggressive polling and polling thread being throttled,
+> > > > > might affect other triggers in that cgroup.
+> > > >
+> > > > Yes, and why that would be a problem?
+> > >
+> > > If unprivileged processes are allowed to add new triggers then a
+> > > malicious process can add a bad trigger and affect other legit
+> > > processes. That sounds like a problem to me.
+> >
+> > Hmm, I am not sure we are on the same page. My argument was that the
+> > monitoring kernel thread should be bound by the same cpu controller so
+> > even if it was excessive it would be bound to the cgroup constrains.
+> 
+> Right. But if cgroup constraints are violated then the psimon thread's
+> activity will be impacted by throttling. In such cases won't that
+> affect other "good" triggers served by that thread even if they are
+> using higher polling periods?
 
-Promote the driver to core_initcall to ensure the consumers (i.e.
-most "meaningful" parts of the SoC) can probe without deferrals.
+That is no different from any other part of the workload running within
+the same cpu bound cgroup running overboard with the cpu consumption. I
+do not see why psimon or anything else should be any different.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/interconnect/qcom/msm8996.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
-index 347fe59ec293..1eb51ed18b0b 100644
---- a/drivers/interconnect/qcom/msm8996.c
-+++ b/drivers/interconnect/qcom/msm8996.c
-@@ -2109,7 +2109,17 @@ static struct platform_driver qnoc_driver = {
- 		.sync_state = icc_sync_state,
- 	}
- };
--module_platform_driver(qnoc_driver);
-+static int __init qnoc_driver_init(void)
-+{
-+	return platform_driver_register(&qnoc_driver);
-+}
-+core_initcall(qnoc_driver_init);
-+
-+static void __exit qnoc_driver_exit(void)
-+{
-+	platform_driver_unregister(&qnoc_driver);
-+}
-+module_exit(qnoc_driver_exit);
- 
- MODULE_AUTHOR("Yassine Oudjana <y.oudjana@protonmail.com>");
- MODULE_DESCRIPTION("Qualcomm MSM8996 NoC driver");
-
+Actually the only difference here is that the psi monitoring is
+outsourced to a kernel thread which is running ourside of any constrains.
+I am not sure where do we stand with kernel thread cpu cgroup accounting
+and I suspect this is not a trivial thing to do ATM. Hence longer term
+plan.
 -- 
-2.39.2
-
+Michal Hocko
+SUSE Labs
