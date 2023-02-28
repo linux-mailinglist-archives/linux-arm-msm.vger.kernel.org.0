@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4C7F6A5CC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 17:09:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F4556A5CCB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 17:09:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230307AbjB1QJG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 11:09:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60908 "EHLO
+        id S229672AbjB1QJQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 11:09:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229781AbjB1QJF (ORCPT
+        with ESMTP id S229738AbjB1QJQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 11:09:05 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 434AA1CF4F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:09:03 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id f41so13831594lfv.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:09:03 -0800 (PST)
+        Tue, 28 Feb 2023 11:09:16 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E96CC31E14
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:09:14 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id s20so13839645lfb.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:09:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677600541;
+        d=linaro.org; s=google; t=1677600553;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JNvO5e3u+7eCvYpL2ndFdFKbFrDn2HG9Ge5MkD8Klws=;
-        b=W95gy/E2QikoBCEclZmrNzX8NqOhU3Kur9lLj7lltxCtcKJ9OijjXT3fKS1rb8Cxzr
-         BZK9ET1fr5QIN6hWZHIgj1Iee+QsdOLrdfIqayXsCv3wuE+u18RB9GX16a70vOSVmJtW
-         0VCIvo0APDNLKCR4BDo1uRQc5F9NHECExymqpEm2iF70hlHAlF3dIQsuqlxw0Z6G5T/J
-         EmE5D2ANFd296DzvhXThqarUlDw9eCN7EPiHZHzcFHJzgpECC4AgrAPpo+t7hG0aD+jS
-         1ah28ynA5FIUOMzhDfqiYHlhp6NBRvATvgvafZqm1eVOk7OoNZHWiAL4tII5JdZinZc9
-         P/mA==
+        bh=D0+3nGDlzKl6NDJH2dnTvIOkydjScaumH71LuWc5apI=;
+        b=l/qVc0FrdhdY0OG56NcsD5kTjXzcVFnr/yuCw1O+LCKv4MUDkCoa7/xc5QwV5KlER7
+         jHizgzEEufODsOJdX5k6740FZnQKP4Tz+xN8tuFFFibHnQJ9jfpI39Dk8RtDCMORMV05
+         1rusGXxsN6tBHUVtfdXVBFGlBFRrIJEsXzUJRIvkXIGy6EodNeIya9voP3yRFPR5ebTH
+         NY14XRFSleQ1AIv2FP6ulTDuxEXw95iYrZds0pkRIl2z4VrSkVsJOnnfGxXQMHWPyLMM
+         pOuW4E6HD9LJ1RxkRlMPBd5rXnYtUm6vdtmeKSdZvD40Io+FyPtiv7z8oOdPTQggUYbB
+         r9Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677600541;
+        d=1e100.net; s=20210112; t=1677600553;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JNvO5e3u+7eCvYpL2ndFdFKbFrDn2HG9Ge5MkD8Klws=;
-        b=e3XeQ0x3y0qXLH/9P51Efs6N+2rrU6h6CYG7m3gFAKmvdLfT8myHal79Vm2VCUryZh
-         /bfU6ENeE/LL9CkrosdE2EhtpN/ABlgiU3nGnrpH4d2ERUU5n1pkTHFCc01Wkpi0NE+2
-         +5nQM2PmTatSGPvIWuEuuNg4AiLe4BWLaKnGQKH+OaEevKTocrJlM5McswWjLQ4suSbf
-         0xYK5gaNKyU1NHJwt7pSMW0Iubiv17V0JuZXablsukyaknKKE1pdKgpy7zEfxV+sysr1
-         lhKZ2s5Ej7Vu3cutR4GO5RaI7EHWU2y3W5voqLXeLVNSQ1NqsR7q1liOGGZJXDb4lOq5
-         vXLg==
-X-Gm-Message-State: AO0yUKWw+vQvdAmg536i6WJi5Cd7UeI4Gn0vCC0y21shnd4LzaZG4h9s
-        wpZK5PYZY0VjeykvWV1CXE+X1g==
-X-Google-Smtp-Source: AK7set8npvfpONOaNtGpbVGxu5PKfiHa4cp8WjlSaVn1UmhsI/m4GhHWN0xSaXHZGJ7llkL9ObTN7w==
-X-Received: by 2002:ac2:4c0f:0:b0:4cb:1189:285c with SMTP id t15-20020ac24c0f000000b004cb1189285cmr1010331lfq.10.1677600541547;
-        Tue, 28 Feb 2023 08:09:01 -0800 (PST)
+        bh=D0+3nGDlzKl6NDJH2dnTvIOkydjScaumH71LuWc5apI=;
+        b=1i8J+38EQvJZk0dV5WPHBYy8agmpqabgRL08fZ40d+hxm3ds8LAbx8wcMUwWkmhpF4
+         jootM3om5z+NgYlphf40lOjWuIQZZvK/kW6A5m1fXi23+iHawvsdavqEDFArXyoaolUI
+         Uj5e1pgiS8iV+CAEhwByJeihoWV4G0kdz34n9/oDcCtNAFcTYkaWnAVQ5YfRf9rVHiEH
+         uk3kTweSmJey3reAT3w9k1NVi5xNExgJzAYwaaJMeyVV+NJZhL2k4XJCyMojuvZK36MH
+         il+lmNnwYZ0kwUdJ9GjqjaemdS1zoPQ+jAFl3wCZN6z72s1K+VWUWL498bkE3i0kKMQh
+         iZtA==
+X-Gm-Message-State: AO0yUKVzwLJY0FIKVMgbuOkZUe01saV4beqV0d5vh0cMs06BALw0boGq
+        31oncAcJpC1O4CnegbpLGkmZOA==
+X-Google-Smtp-Source: AK7set+Gb0M9AGyGXjayBOpZrDBMDp6k0sEctbXOpgRSOch7gFIIPiLkccZcGREIN+w3kPq+Nf0SnQ==
+X-Received: by 2002:ac2:43aa:0:b0:4b9:a91c:b0c9 with SMTP id t10-20020ac243aa000000b004b9a91cb0c9mr832345lfl.7.1677600553182;
+        Tue, 28 Feb 2023 08:09:13 -0800 (PST)
 Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id b1-20020a056512218100b004db3e445f1fsm1391872lft.97.2023.02.28.08.09.00
+        by smtp.gmail.com with ESMTPSA id l29-20020ac24a9d000000b004d8729d4150sm1388138lfp.145.2023.02.28.08.09.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Feb 2023 08:09:01 -0800 (PST)
-Message-ID: <0c522cb9-023b-63e1-dc48-3c0e82c2c7a8@linaro.org>
-Date:   Tue, 28 Feb 2023 17:08:59 +0100
+        Tue, 28 Feb 2023 08:09:12 -0800 (PST)
+Message-ID: <c795a7e0-3237-c100-986b-88faf35fa3de@linaro.org>
+Date:   Tue, 28 Feb 2023 17:09:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 12/18] media: venus: firmware: Correct IS_V6() checks
+Subject: Re: [PATCH 17/18] media: venus: Use newly-introduced
+ hfi_buffer_requirements accessors
 Content-Language: en-US
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
@@ -73,16 +74,15 @@ Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
         linux-kernel@vger.kernel.org,
         Vikash Garodia <vgarodia@codeaurora.org>
 References: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
- <20230228-topic-venus-v1-12-58c2c88384e9@linaro.org>
- <cb71bea2-088b-d4e9-b143-be9421b92c78@linaro.org>
+ <20230228-topic-venus-v1-17-58c2c88384e9@linaro.org>
+ <6a520b4f-f46e-72d9-44df-1faa9fa7fa0a@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <cb71bea2-088b-d4e9-b143-be9421b92c78@linaro.org>
+In-Reply-To: <6a520b4f-f46e-72d9-44df-1faa9fa7fa0a@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -91,22 +91,15 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 28.02.2023 16:48, Bryan O'Donoghue wrote:
+On 28.02.2023 16:56, Bryan O'Donoghue wrote:
 > On 28/02/2023 15:24, Konrad Dybcio wrote:
->> -    if (IS_V6(core))
->> +    /*
->> +     * This may sound counter-intuitive, but when there's no TZ, we gotta
->> +     * do things that it would otherwise do for us, such as initializing
->> +     * the hardware at a very basic level.
->> +     * */
+>> Now that we have a way to HFI-ver-independently set the correct
+>> fields in hfi_buffer_requirements, use it!
 > 
-> Suggest "When there is no TZ we have got to initialize hardware in-lieu of TZ" as an example.
-> 
-> Either way please drop that "gotta" - I ain't gonna ACK such a butchering of the language.
-Gotta do what you gotta do.. :P I can reword it.
+> "Now that we have a way which is independent of the HFI version"
+Right, I've been inventing words a lot lately..
 
 Konrad
 > 
-> Then
-> 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+> bod
