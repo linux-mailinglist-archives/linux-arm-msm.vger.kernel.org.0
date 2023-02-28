@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A53066A50A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 02:25:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4264B6A50A8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 02:25:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229767AbjB1BZK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Feb 2023 20:25:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34906 "EHLO
+        id S229605AbjB1BZe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Feb 2023 20:25:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229705AbjB1BZJ (ORCPT
+        with ESMTP id S229794AbjB1BZd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Feb 2023 20:25:09 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E02316ADA
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 17:25:05 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id bp25so11182674lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 17:25:05 -0800 (PST)
+        Mon, 27 Feb 2023 20:25:33 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A63B1C32D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 17:25:27 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id g18so6390301ljl.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 17:25:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ghYbiuae4Giu+YY0fM4G+aB2s++oD+nzVOPNd25Xma4=;
-        b=ZsNE9/X4m10iwSCMrF45bZNPFSRZQ4XC2BhOn+5am/qoDxM1N+MUMpIqxtyahf+Zdf
-         Z2QTGpvwr3BkO5dpBpjzXq/jFtiS+bfmDcmyKBdMH9MaleR2/R4QuTKvscdD93fjYVZ2
-         XFRIy4bU/FvS39m2fbfxas4tjymDj0EmH+qhvghhmhcuquWYcYZhfLgyHVEaFpIcAatG
-         r4iI/3de3AjNEWUXONWJLYbya0WWdON5VXajSU9XNpVv3vi44+ya3zEp9pSuah1Os713
-         Qaw6IfL32ckKBryHSL1ZM3+/RFT9zLRjNgbMzTb8WMu/tLiF/Vf1Hr9DYkmhHfO/Ytd+
-         OlGQ==
+        bh=KYhTvYPZzEGeLer7Re++n35w5MO/ZTMPUdgfAcWFn1w=;
+        b=v42k3Bh9dpaRO9B1/X2b+EafrIJH25nyylYb9uEeTMHwUmeDxzFb2v1wOjsFhQZu2L
+         +/lrdJ8bmA008gaVIAql6wsluwF4SQDvXmkILCEWCi4iyxCa5/NMzBJClkHhpAibUT/v
+         c3ReZEazhCOQ+93Zy70u2uaWYIrmXbbF6M89ho0LVixs3Z7+moMkvSz3X1x/yuvTqPQa
+         QVaJnLuOcvErKkgakWleHuoNCBE1HXjQOEv7JKQ23p8+QuVIaAdKqiwxF0RPO25i/fju
+         /Ouvlha2GNxmRQDjrG2t7DI+PY/BqEy+3Q0h93dGKOM8Tz+dlmpsrsmpuo0pY/kEXpAU
+         Cs1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ghYbiuae4Giu+YY0fM4G+aB2s++oD+nzVOPNd25Xma4=;
-        b=PrwQMS4l12QN+UaM0uw+b+NbKPBiHBL7e+zxEZWHiPhlZtiTDicqnnor2n106pxJb+
-         TkzlUa3sQWlI1Q+KGO9n9ILoQudqpYKnb3FQa5nadrE+FFVe+YbtRuSlBRQ8bGROwqK0
-         B0F4Pc4SeLXyZilJphRmJOBwPu8DtTHbe9+Afl9mSzUBe9NadoHVDevX27W9VSZTK/Pd
-         aOtsVxbP5vDadyqmzU2u6LVr0Bcv7EuZw70KYDGEi3T1eK6O5s7FhlMo6Dh+rSPXeaYR
-         YBFDVf9WPmGxMNPFpEZUBog9Najnvy3pKr33iNPqMHb2FkL/Cg58LJzXJhRKTklUf4Yp
-         UCnw==
-X-Gm-Message-State: AO0yUKXiXHJw8BHvB4NwreF3dciIA7ceNOwiOs4IqAfdUbDHbG8pNliL
-        9AruGhP7oopTtswj1UHwU/i5oA==
-X-Google-Smtp-Source: AK7set9Roec5f/bQctSsNwIs9OaAY+Pi+BG6vxc3tJornTJbXlbPWDeaF84mA+daLoyX75ZJopcF6Q==
-X-Received: by 2002:a19:f610:0:b0:4db:5122:2099 with SMTP id x16-20020a19f610000000b004db51222099mr128874lfe.32.1677547503901;
-        Mon, 27 Feb 2023 17:25:03 -0800 (PST)
+        bh=KYhTvYPZzEGeLer7Re++n35w5MO/ZTMPUdgfAcWFn1w=;
+        b=bd1CFUvcL2DLR5vx34Kb0wkSRikLPJmJf3G927gTgSIVBDFF2E/gsUFnKk4kz1cOtE
+         NcLtDf8JR3fz7sNlaFDtT1hlgR+b8SduGmhBTZ4Gtj9DG1TBhlOZiourfNugMPc9NNV+
+         sEkvWQyvUCeW7xROTX4xfgH56/m6qY5vpeouZ2PhD+NuSUG6d5FDV9kV/Ii0fsWttgnr
+         HZphIFKuofVaCDLdY/rOyz44OHixa+Ahm4tWR+wl6nv+DuOc26NbU1wN9C0OEs3Wggwl
+         QfRWpOhUhmU0cArPoND5Cp5n/mQBHkRXy6A8BG+4vQwr7nTX7YypavEspStdCubmT4Jr
+         cjoA==
+X-Gm-Message-State: AO0yUKWyS9EBnWgy34FVCLPOv0hn3i6QezfjFwLPn21GiPhiIylf/nNS
+        nYXoBfbAnJWapOCT+YA1KdX5zw==
+X-Google-Smtp-Source: AK7set8HWt0poqpEBnvKA789YwYaRsFJySTc6+Gq7FqVYPdnZoSOcIZFSf8cJ9a6tUbKysL80soD+w==
+X-Received: by 2002:a2e:8687:0:b0:295:9f20:bcdf with SMTP id l7-20020a2e8687000000b002959f20bcdfmr317412lji.9.1677547526235;
+        Mon, 27 Feb 2023 17:25:26 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id b10-20020a056512024a00b004db3890cb4bsm1114243lfo.94.2023.02.27.17.25.03
+        by smtp.gmail.com with ESMTPSA id 3-20020a2e0503000000b002959aecb63bsm977824ljf.53.2023.02.27.17.25.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Feb 2023 17:25:03 -0800 (PST)
-Message-ID: <259334b9-b255-004a-9772-8b252579a37c@linaro.org>
-Date:   Tue, 28 Feb 2023 03:25:02 +0200
+        Mon, 27 Feb 2023 17:25:25 -0800 (PST)
+Message-ID: <6d2a2647-9df7-5f32-20be-d54450e058b3@linaro.org>
+Date:   Tue, 28 Feb 2023 03:25:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.2
-Subject: Re: [RFT PATCH v2 1/3] drm/bridge: tc358762: Set
- pre_enable_prev_first
+Subject: Re: [RFT PATCH v2 2/3] drm/msm/dsi: Stop unconditionally powering up
+ DSI hosts at modeset
 Content-Language: en-GB
 To:     Douglas Anderson <dianders@chromium.org>,
         dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
@@ -75,13 +75,15 @@ Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
         Dave Stevenson <dave.stevenson@raspberrypi.com>,
         linux-kernel@vger.kernel.org
 References: <20230131141756.RFT.v2.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
+ <20230131141756.RFT.v2.2.I4cfeab9d0e07e98ead23dd0736ab4461e6c69002@changeid>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230131141756.RFT.v2.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
+In-Reply-To: <20230131141756.RFT.v2.2.I4cfeab9d0e07e98ead23dd0736ab4461e6c69002@changeid>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,17 +91,47 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 01/02/2023 00:18, Douglas Anderson wrote:
-> Set the "pre_enable_prev_first" as provided by commit 4fb912e5e190
-> ("drm/bridge: Introduce pre_enable_prev_first to alter bridge init
-> order"). This should allow us to revert commit ec7981e6c614
-> ("drm/msm/dsi: don't powerup at modeset time for parade-ps8640") and
-> commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
-> time").
+> In commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
+> time"), we moved powering up DSI hosts to modeset time. This wasn't
+> because it was an elegant design, but there were no better options.
+> 
+> That commit actually ended up breaking ps8640, and thus was born
+> commit ec7981e6c614 ("drm/msm/dsi: don't powerup at modeset time for
+> parade-ps8640") as a temporary hack to un-break ps8640 by moving it to
+> the old way of doing things. It turns out that ps8640 _really_ doesn't
+> like its pre_enable() function to be called after
+> dsi_mgr_bridge_power_on(). Specifically (from experimentation, not
+> because I have any inside knowledge), it looks like the assertion of
+> "RST#" in the ps8640 runtime resume handler seems like it's not
+> allowed to happen after dsi_mgr_bridge_power_on()
+> 
+> Recently, Dave Stevenson's series landed allowing bridges some control
+> over pre_enable ordering. The meaty commit for our purposes is commit
+> 4fb912e5e190 ("drm/bridge: Introduce pre_enable_prev_first to alter
+> bridge init order"). As documented by that series, if a bridge doesn't
+> set "pre_enable_prev_first" then we should use the old ordering.
+> 
+> Now that we have the commit ("drm/bridge: tc358762: Set
+> pre_enable_prev_first") we can go back to the old ordering, which also
+> allows us to remove the ps8640 special case.
+> 
+> One last note is that even without reverting commit 7d8e9a90509f
+> ("drm/msm/dsi: move DSI host powerup to modeset time"), if you _just_
+> revert the ps8640 special case and try it out then it doesn't seem to
+> fail anymore. I spent time bisecting / debugging this and it turns out
+> to be mostly luck, so we still want this patch to make sure it's
+> solid. Specifically the reason it sorta works these days is because
+> we implemented wait_hpd_asserted() in ps8640 now, plus the magic of
+> "pm_runtime" autosuspend. The fact that we have wait_hpd_asserted()
+> implemented means that we actually power the bridge chip up just a wee
+> bit earlier and then the bridge happens to stay on because of
+> autosuspend and thus ends up powered before dsi_mgr_bridge_power_on().
 > 
 > Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>
 > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
