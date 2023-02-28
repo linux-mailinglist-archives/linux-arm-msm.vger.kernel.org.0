@@ -2,197 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D73AA6A5CB2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 17:02:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B54E6A5CB7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 17:04:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230212AbjB1QCz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 11:02:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58234 "EHLO
+        id S230150AbjB1QEh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 11:04:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230283AbjB1QCx (ORCPT
+        with ESMTP id S230183AbjB1QEg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 11:02:53 -0500
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B198CF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:02:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1677600171; x=1709136171;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=uJ6b+0/zHOeAkP5Hg4XcILPc1vZObbE90DrMyXpviNQ=;
-  b=Lb0M3fIU2J8d8qDcWro9AzRXxciA5mhNkBo93F873Eh2j7lorvzOBzou
-   ew6cb7qAnmT8gu08Mba9SMTTn27tcKgNjR6lA8Lx3+h+LoeEPhvaC2LLN
-   gTyzcUBS0DgW74JK0B9tf5gnJjuOnVj2z1CF4xO/EoHQ9WviHXvoWsq8k
-   PxXUgKFmtlIvj9Hq96kDSBlYALCnMSXii3+6MrnXuC0N75F5nnWNWIaEJ
-   vVCu9QmNck78Oq0pbdBNEvNzlT2w9FwTeWj2KAbHiCld0lgl4u7WJxdYk
-   L3ayhyx8ig7W5JY6Fm7S4+xguL+rvbJ0Pyl1zF9lqzchNxdGlTP+MoCYU
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10635"; a="398954707"
-X-IronPort-AV: E=Sophos;i="5.98,222,1673942400"; 
-   d="scan'208";a="398954707"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2023 08:02:02 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10635"; a="798101078"
-X-IronPort-AV: E=Sophos;i="5.98,222,1673942400"; 
-   d="scan'208";a="798101078"
-Received: from barumuga-mobl1.ger.corp.intel.com (HELO localhost) ([10.252.47.26])
-  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2023 08:01:57 -0800
-From:   Jani Nikula <jani.nikula@linux.intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 02/10] drm/i915/dsc: move rc_buf_thresh values to common
- helper
-In-Reply-To: <20230228113342.2051425-3-dmitry.baryshkov@linaro.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20230228113342.2051425-1-dmitry.baryshkov@linaro.org>
- <20230228113342.2051425-3-dmitry.baryshkov@linaro.org>
-Date:   Tue, 28 Feb 2023 18:01:54 +0200
-Message-ID: <871qm9zslp.fsf@intel.com>
+        Tue, 28 Feb 2023 11:04:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2AF52331B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:03:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1677600231;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=ZWMAworI50CQabTilrteqDasDy+XoVkceugkq8E6Pr8=;
+        b=OzD6+RZKWu0ONd5ihNRzjvBWK7SshSf1RxLwK/cqR2upL++XxSr/jnzUd+OK2/0ux8koaT
+        gQk4FuPJCUUXyK0/UCSOS3afG/G4c3VULl+UVXyFt+ESAV7x89rswLNNYuxXT+EtNhIP4L
+        k5bLJqOZEKaEXt68qGV6CfpW0u5DrPY=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-647-AKM-KzBePb6bsoDMhgyQqQ-1; Tue, 28 Feb 2023 11:03:46 -0500
+X-MC-Unique: AKM-KzBePb6bsoDMhgyQqQ-1
+Received: by mail-wr1-f69.google.com with SMTP id u5-20020a5d6da5000000b002cd82373455so610573wrs.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:03:45 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677600225;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZWMAworI50CQabTilrteqDasDy+XoVkceugkq8E6Pr8=;
+        b=zpwPrXlUcPs8ELFD3R/3TDzYm6UxYGNY3ig3JCJWLZpX3E9vp0g9E3AvZSOM8/xCzy
+         jMhw5ZhX3fpArtyayzOGM5gL51ZaARNqPy9aPsVTltHnwAvYBJdoLP3q4m4rErh9SmM0
+         lZNS6NJW122M1VyDyueWotU7lO3PrkGAbV+f3KvAZ7Db4bjnJdn7tGOM0VeNZ8lKo2vs
+         onuu/IVPMf2OqlKq25w+1sl7FMiUAPxo6fcJBK3I9ctdoh7Pp4+qeCB7sJe1FohaBQle
+         xru/59AQwVECj6HZ/lst0rJykz0GSRcy00NYLjWpRKi2Eq9XvSK6KyDFusLRYQVDhof9
+         NBvg==
+X-Gm-Message-State: AO0yUKUK05zWytKLoPyNKwZ9VuEnQtuKKuO2L0Fl36OAf6MG2VrsX//0
+        6cFEUu8QhACTzsDCE02BldS4Fa/LvxWHLCEfZJqk6Fo5P225pJCKLOAaEvpdZl1EU+XDQXg9Zo2
+        AjJYQlzhz0L/zkNgQTkLl4V5OWg==
+X-Received: by 2002:a05:6000:1c5:b0:2ca:fd48:7c1e with SMTP id t5-20020a05600001c500b002cafd487c1emr2573797wrx.48.1677600224600;
+        Tue, 28 Feb 2023 08:03:44 -0800 (PST)
+X-Google-Smtp-Source: AK7set9v0g4E7whTc7rYOu89mROUSRxzGr6QXBdhfOQaLBzNnR8lC5RcL1m+NJS3PUR1LZvjFt2e1g==
+X-Received: by 2002:a05:6000:1c5:b0:2ca:fd48:7c1e with SMTP id t5-20020a05600001c500b002cafd487c1emr2573757wrx.48.1677600224266;
+        Tue, 28 Feb 2023 08:03:44 -0800 (PST)
+Received: from localhost (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id 13-20020a05600c020d00b003dc1d668866sm16485490wmi.10.2023.02.28.08.03.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Feb 2023 08:03:43 -0800 (PST)
+From:   Javier Martinez Canillas <javierm@redhat.com>
+To:     Vikash Garodia <vgarodia@qti.qualcomm.com>,
+        Linux regressions mailing list <regressions@lists.linux.dev>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "mka@chromium.org" <mka@chromium.org>,
+        Albert Esteve <aesteve@redhat.com>,
+        "stanimir.varbanov@linaro.org" <stanimir.varbanov@linaro.org>,
+        Enric Balletbo i Serra <eballetb@redhat.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        Fritz Koenig <frkoenig@google.com>,
+        "Dikshita Agarwal (QUIC)" <quic_dikshita@quicinc.com>,
+        "Rajeshwar Kurapaty (QUIC)" <quic_rkurapat@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: RE: [PATCH] Revert "venus: firmware: Correct non-pix start and end
+ addresses"
+In-Reply-To: <87356wn6xf.fsf@minerva.mail-host-address-is-not-set>
+References: <20230207102254.1446461-1-javierm@redhat.com>
+ <DM8PR02MB8169809493BF2822E6C29EECF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
+ <ef09bc9f-d570-be11-238b-bd34063917fc@redhat.com>
+ <70c01751-1dd7-c4bd-a96e-94dea437aa40@redhat.com>
+ <DM8PR02MB81696369DBFE619E43F81EEFF3DE9@DM8PR02MB8169.namprd02.prod.outlook.com>
+ <e87344c6-acef-7f3f-5cac-24961dbd9401@redhat.com>
+ <6f97a117-0d9c-e21b-9adf-50f2233ba9e3@leemhuis.info>
+ <ea283f0a-ca72-447e-ce87-68c1bbee793e@leemhuis.info>
+ <CAFOAJEdBbzqkGVqw+vgNYNxyaTHwvjFyskTwjycP820L2tOctA@mail.gmail.com>
+ <b548da46-bf91-6f1c-4b63-4002109056bc@leemhuis.info>
+ <9a0bfef8-0b5d-f4d0-a8a5-4bbcacc5c0fb@leemhuis.info>
+ <DM8PR02MB8169E16569616870A583B376F3AB9@DM8PR02MB8169.namprd02.prod.outlook.com>
+ <87356wn6xf.fsf@minerva.mail-host-address-is-not-set>
+Date:   Tue, 28 Feb 2023 17:03:43 +0100
+Message-ID: <87edq9hj4w.fsf@minerva.mail-host-address-is-not-set>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 28 Feb 2023, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> The rc_buf_thresh values are common to all DSC implementations. Move
-> them to the common helper together with the code to propagage them to
-> the drm_dsc_config.
+Javier Martinez Canillas <javierm@redhat.com> writes:
+
+> Vikash Garodia <vgarodia@qti.qualcomm.com> writes:
 >
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/display/drm_dsc_helper.c  | 37 +++++++++++++++++++++++
->  drivers/gpu/drm/i915/display/intel_vdsc.c | 24 +--------------
->  include/drm/display/drm_dsc_helper.h      |  1 +
->  3 files changed, 39 insertions(+), 23 deletions(-)
+> Hello Vikash,
 >
-> diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
-> index c869c6e51e2b..ab8679c158b5 100644
-> --- a/drivers/gpu/drm/display/drm_dsc_helper.c
-> +++ b/drivers/gpu/drm/display/drm_dsc_helper.c
-> @@ -270,6 +270,43 @@ void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_payload,
->  }
->  EXPORT_SYMBOL(drm_dsc_pps_payload_pack);
->  
-> +/* From DSC_v1.11 spec, rc_parameter_Set syntax element typically constant */
-> +const u16 drm_dsc_rc_buf_thresh[] = {
-> +	896, 1792, 2688, 3584, 4480, 5376, 6272, 6720, 7168, 7616,
-> +	7744, 7872, 8000, 8064
-> +};
-> +EXPORT_SYMBOL(drm_dsc_rc_buf_thresh);
-> +
-> +/**
-> + * drm_dsc_set_rc_buf_thresh() - Set thresholds for the RC model
-> + * in accordance with the DSC 1.2 specification.
-> + *
-> + * @vdsc_cfg: DSC Configuration data partially filled by driver
-> + */
-> +void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg)
-> +{
-> +	int i = 0;
-> +
-> +	for (i = 0; i < DSC_NUM_BUF_RANGES - 1; i++) {
-> +		/*
-> +		 * six 0s are appended to the lsb of each threshold value
-> +		 * internally in h/w.
-> +		 * Only 8 bits are allowed for programming RcBufThreshold
-> +		 */
+>> Hi All,
+>>
+>
+> [...]
+>
+>>>
+>>>No reply from Mauro and Linus chose to not apply the revert I pointed him to.
+>>>That at this point leads to the question:
+>>>
+>>>Vikash, did you or somebody else make any progress to fix this properly?
+>>
+>> We tried with different settings for the registers and arrive at a conclusion that
+>> the original configuration was proper. There is no need to explicitly configure
+>> the secure non-pixel region when there is no support for the usecase. So, in summary,
+>> we are good to have the revert.
+>>
+>
+> Perfect. Thanks a lot for looking at this.
+>
+>> Stan, could you please help with the revert and a pull request having this revert
+>> alongwith other pending changes ?
+>>
+>
+> Other fix posted is "media: venus: dec: Fix capture formats enumeration order":
+>
+> https://patchwork.kernel.org/project/linux-media/patch/20230210081835.2054482-1-javierm@redhat.com/
+>
 
-Not sure how appropriate the hardware references are, maybe clean it up
-a bit.
+Vikash,
 
-With that, and +static and -export mentioned earlier,
-
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-
-> +		vdsc_cfg->rc_buf_thresh[i] = drm_dsc_rc_buf_thresh[i] >> 6;
-> +	}
-> +
-> +	/*
-> +	 * For 6bpp, RC Buffer threshold 12 and 13 need a different value
-> +	 * as per C Model
-> +	 */
-> +	if (vdsc_cfg->bits_per_pixel == 6 << 4) {
-> +		vdsc_cfg->rc_buf_thresh[12] = 7936 >> 6;
-> +		vdsc_cfg->rc_buf_thresh[13] = 8000 >> 6;
-> +	}
-> +}
-> +EXPORT_SYMBOL(drm_dsc_set_rc_buf_thresh);
-> +
->  /**
->   * drm_dsc_compute_rc_parameters() - Write rate control
->   * parameters to the dsc configuration defined in
-> diff --git a/drivers/gpu/drm/i915/display/intel_vdsc.c b/drivers/gpu/drm/i915/display/intel_vdsc.c
-> index d080741fd0b3..b4faab4c8fb3 100644
-> --- a/drivers/gpu/drm/i915/display/intel_vdsc.c
-> +++ b/drivers/gpu/drm/i915/display/intel_vdsc.c
-> @@ -36,12 +36,6 @@ enum COLUMN_INDEX_BPC {
->  	MAX_COLUMN_INDEX
->  };
->  
-> -/* From DSC_v1.11 spec, rc_parameter_Set syntax element typically constant */
-> -static const u16 rc_buf_thresh[] = {
-> -	896, 1792, 2688, 3584, 4480, 5376, 6272, 6720, 7168, 7616,
-> -	7744, 7872, 8000, 8064
-> -};
-> -
->  struct rc_parameters {
->  	u16 initial_xmit_delay;
->  	u8 first_line_bpg_offset;
-> @@ -474,23 +468,7 @@ int intel_dsc_compute_params(struct intel_crtc_state *pipe_config)
->  	vdsc_cfg->bits_per_pixel = compressed_bpp << 4;
->  	vdsc_cfg->bits_per_component = pipe_config->pipe_bpp / 3;
->  
-> -	for (i = 0; i < DSC_NUM_BUF_RANGES - 1; i++) {
-> -		/*
-> -		 * six 0s are appended to the lsb of each threshold value
-> -		 * internally in h/w.
-> -		 * Only 8 bits are allowed for programming RcBufThreshold
-> -		 */
-> -		vdsc_cfg->rc_buf_thresh[i] = rc_buf_thresh[i] >> 6;
-> -	}
-> -
-> -	/*
-> -	 * For 6bpp, RC Buffer threshold 12 and 13 need a different value
-> -	 * as per C Model
-> -	 */
-> -	if (compressed_bpp == 6) {
-> -		vdsc_cfg->rc_buf_thresh[12] = 0x7C;
-> -		vdsc_cfg->rc_buf_thresh[13] = 0x7D;
-> -	}
-> +	drm_dsc_set_rc_buf_thresh(vdsc_cfg);
->  
->  	/*
->  	 * From XE_LPD onwards we supports compression bpps in steps of 1
-> diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
-> index 8b41edbbabab..706ba1d34742 100644
-> --- a/include/drm/display/drm_dsc_helper.h
-> +++ b/include/drm/display/drm_dsc_helper.h
-> @@ -14,6 +14,7 @@ void drm_dsc_dp_pps_header_init(struct dp_sdp_header *pps_header);
->  int drm_dsc_dp_rc_buffer_size(u8 rc_buffer_block_size, u8 rc_buffer_size);
->  void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_sdp,
->  			      const struct drm_dsc_config *dsc_cfg);
-> +void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg);
->  int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg);
->  
->  #endif /* _DRM_DSC_HELPER_H_ */
+Could you or someone else from QC please Review/Ack these two patches,
+since it seems that Stanimir moved on and maybe is not working in this
+driver anymore?
 
 -- 
-Jani Nikula, Intel Open Source Graphics Center
+Best regards,
+
+Javier Martinez Canillas
+Core Platforms
+Red Hat
+
