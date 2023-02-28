@@ -2,84 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 546636A518E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 04:00:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 280596A52A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 06:27:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229516AbjB1DAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Feb 2023 22:00:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45314 "EHLO
+        id S229652AbjB1F1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 00:27:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229585AbjB1DAL (ORCPT
+        with ESMTP id S229469AbjB1F1s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Feb 2023 22:00:11 -0500
+        Tue, 28 Feb 2023 00:27:48 -0500
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E7CF1D906;
-        Mon, 27 Feb 2023 19:00:10 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA0C123133;
+        Mon, 27 Feb 2023 21:27:45 -0800 (PST)
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31S2Rpqh010567;
-        Tue, 28 Feb 2023 02:59:41 GMT
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31S1DeCf029148;
+        Tue, 28 Feb 2023 05:27:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
+ mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=iGExTyfqA8UiNaWVM0CI3ERBpJ+ppSBXThFNDZNWvK0=;
- b=oXwk5/gMO3nnoQ3P1KcNZleSvKuZqit8I0FiBa65PV2bn6RtCDKE/6j95NxtdYUvXHxv
- mItLLNhIlVPQ+U/NehbpdViJwsZ1UufCsNhciEV6IKFYMO0kF8An6OjIe40ANQBnjMFm
- yePoXLWawYELCIbDaxtmWpqJRDgo2QTL4FQ9IgkWwGSJFTObPrsQBP5X/Dtc8wvUaFUh
- QYgG3LAXuYU0tdws+uFI3utDIprUOW16ubk7ECuLVhO+8czFLk98v+usiBXbzK9WwpXU
- bBh//Y0LZLu/8g41ES06UIxrjFJ65QBEad/9DRfHnUJv/rZtBwa5EloPxinJ8dP3FCcD pA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p17ryr78w-1
+ bh=i5bXA6ZKAB/LyxjgOJfForvyOfh4jgIzBHG/ngcVv1I=;
+ b=Ih1i8xGmnMlPC0nE7qWCM3tKNdT1pfpaZCCSS7TMbXwwWcx4UhVii0c22emhcrJN1dr7
+ OWJJGuxDMNx3YHuJgWv7wyuZfdhkvzuLana10o+O57knGkfBVLP4IyDSauEFgoifwWMP
+ IblRiqNWuy6qa7nbIR3rRL/QUwipTjGjLo7vaBkFYRObgrkWIL+pQXsuo/WyhsJjSEoQ
+ moXY/2f8gEh8tjJ2b0yEpiKC76oLFTEc1+JjtyJruy4lZYDIU1Fc8wlF7ElZi+q6xSSg
+ P9cNFbWxlbUUnNuazaiRzXZMNcDrcZ44nnnqLMGcbGLqrutZgCkhZyzBCVMttcDzZ4Dm wQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p17ryrg7n-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 28 Feb 2023 02:59:41 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31S2xe9F013059
+        Tue, 28 Feb 2023 05:27:17 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31S5RF7k000879
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 28 Feb 2023 02:59:40 GMT
-Received: from [10.110.31.193] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 28 Feb 2023 05:27:15 GMT
+Received: from [10.216.43.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 27 Feb
- 2023 18:59:39 -0800
-Message-ID: <5e5c6481-8d5d-dc3f-e40e-986e3ac30387@quicinc.com>
-Date:   Mon, 27 Feb 2023 18:59:32 -0800
+ 2023 21:27:06 -0800
+Message-ID: <bd153038-4427-1f11-1941-5f13fec01cf7@quicinc.com>
+Date:   Tue, 28 Feb 2023 10:56:53 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [RFC PATCH v2 12/22] sound: usb: card: Introduce USB SND platform
- op callbacks
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 1/7] dt-bindings: PCI: qcom: Add IPQ9574 specific
+ compatible
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lpieralisi@kernel.org>,
+        <kw@linux.com>, <robh@kernel.org>, <bhelgaas@google.com>,
+        <krzysztof.kozlowski+dt@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <p.zabel@pengutronix.de>, <svarbanov@mm-sol.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-clk@vger.kernel.org>,
+        <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>
+References: <20230214164135.17039-1-quic_devipriy@quicinc.com>
+ <20230214164135.17039-2-quic_devipriy@quicinc.com>
+ <20230224082332.GA5443@thinkpad>
 Content-Language: en-US
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-To:     Greg KH <gregkh@linuxfoundation.org>
-CC:     <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <lgirdwood@gmail.com>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <Thinh.Nguyen@synopsys.com>,
-        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
-        <robh+dt@kernel.org>, <agross@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <quic_jackp@quicinc.com>,
-        <quic_plai@quicinc.com>
-References: <20230126031424.14582-1-quic_wcheng@quicinc.com>
- <20230126031424.14582-13-quic_wcheng@quicinc.com>
- <Y9Ui82OaI54Qx8Ft@kroah.com>
- <2c062ab0-905c-f1fe-eca2-02e23cc9fa6f@quicinc.com>
-In-Reply-To: <2c062ab0-905c-f1fe-eca2-02e23cc9fa6f@quicinc.com>
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <20230224082332.GA5443@thinkpad>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 6SRmoeFCRlxObLlSUAo-jbjYTEJwar6h
-X-Proofpoint-GUID: 6SRmoeFCRlxObLlSUAo-jbjYTEJwar6h
+X-Proofpoint-ORIG-GUID: oho-CgnQr-z4KvUVh1hmEyhzT-BU0gUB
+X-Proofpoint-GUID: oho-CgnQr-z4KvUVh1hmEyhzT-BU0gUB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-27_19,2023-02-27_01,2023-02-09_01
+ definitions=2023-02-28_02,2023-02-27_01,2023-02-09_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
  lowpriorityscore=0 bulkscore=0 priorityscore=1501 mlxscore=0 phishscore=0
- adultscore=0 malwarescore=0 suspectscore=0 clxscore=1011 spamscore=0
+ adultscore=0 malwarescore=0 suspectscore=0 clxscore=1015 spamscore=0
  impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302280018
+ engine=8.12.0-2212070000 definitions=main-2302280038
 X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -89,64 +91,163 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
 
-On 2/10/2023 2:49 PM, Wesley Cheng wrote:
-> Hi Greg,
-> 
-> On 1/28/2023 5:28 AM, Greg KH wrote:
->> On Wed, Jan 25, 2023 at 07:14:14PM -0800, Wesley Cheng wrote:
->>> Allow for different platforms to be notified on USB SND 
->>> connect/disconnect
->>> seqeunces.  This allows for platform USB SND modules to properly 
->>> initialize
->>> and populate internal structures with references to the USB SND chip
->>> device.
->>>
->>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->>> ---
->>>   sound/usb/card.c | 28 ++++++++++++++++++++++++++++
->>>   sound/usb/card.h | 20 ++++++++++++++++++++
->>>   2 files changed, 48 insertions(+)
->>>
->>> diff --git a/sound/usb/card.c b/sound/usb/card.c
->>> index 26268ffb8274..803230343c16 100644
->>> --- a/sound/usb/card.c
->>> +++ b/sound/usb/card.c
->>> @@ -117,6 +117,24 @@ MODULE_PARM_DESC(skip_validation, "Skip unit 
->>> descriptor validation (default: no)
->>>   static DEFINE_MUTEX(register_mutex);
->>>   static struct snd_usb_audio *usb_chip[SNDRV_CARDS];
->>>   static struct usb_driver usb_audio_driver;
->>> +static struct snd_usb_platform_ops *platform_ops;
+
+On 2/24/2023 1:53 PM, Manivannan Sadhasivam wrote:
+> On Tue, Feb 14, 2023 at 10:11:29PM +0530, Devi Priya wrote:
+>> Document the compatible for IPQ9574
 >>
->> You can not have a single "platform_ops" pointer, this HAS to be
->> per-bus.
+Hi Mani, Thanks for taking time to review the patch.
+> 
+> You didn't mention about the "msi-parent" property that is being added
+> by this patch
+Sure, will update the commit message in the next spin
+> 
+>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>> ---
+>>   .../devicetree/bindings/pci/qcom,pcie.yaml    | 72 ++++++++++++++++++-
+>>   1 file changed, 70 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> index 872817d6d2bd..dabdf2684e2d 100644
+>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> @@ -26,6 +26,7 @@ properties:
+>>             - qcom,pcie-ipq8064-v2
+>>             - qcom,pcie-ipq8074
+>>             - qcom,pcie-ipq8074-gen3
+>> +          - qcom,pcie-ipq9574
+>>             - qcom,pcie-msm8996
+>>             - qcom,pcie-qcs404
+>>             - qcom,pcie-sa8540p
+>> @@ -44,11 +45,11 @@ properties:
+>>   
+>>     reg:
+>>       minItems: 4
+>> -    maxItems: 5
+>> +    maxItems: 6
+>>   
+>>     reg-names:
+>>       minItems: 4
+>> -    maxItems: 5
+>> +    maxItems: 6
+>>   
+>>     interrupts:
+>>       minItems: 1
+>> @@ -105,6 +106,8 @@ properties:
+>>       items:
+>>         - const: pciephy
+>>   
+>> +  msi-parent: true
+>> +
+>>     power-domains:
+>>       maxItems: 1
+>>   
+>> @@ -173,6 +176,27 @@ allOf:
+>>               - const: parf # Qualcomm specific registers
+>>               - const: config # PCIe configuration space
+>>   
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,pcie-ipq9574
+>> +    then:
+>> +      properties:
+>> +        reg:
+>> +          minItems: 5
+>> +          maxItems: 6
+>> +        reg-names:
+>> +          minItems: 5
+>> +          items:
+>> +            - const: dbi # DesignWare PCIe registers
+>> +            - const: elbi # External local bus interface registers
+>> +            - const: atu # ATU address space
+>> +            - const: parf # Qualcomm specific registers
+>> +            - const: config # PCIe configuration space
+>> +            - const: aggr_noc #PCIe aggr_noc
+> 
+> Why do you need this region unlike other SoCs? Is the driver making use of it?
+We have the aggr_noc region in ipq9574 to achieve higher throughput & to 
+handle multiple PCIe instances. The driver uses it to rate adapt 1-lane 
+PCIe clocks. My bad, missed it. Will add the driver changes in V2.
+> 
+> Thanks,
+> Mani
+> 
+>> +
+>>     - if:
+>>         properties:
+>>           compatible:
+>> @@ -365,6 +389,39 @@ allOf:
+>>               - const: ahb # AHB Reset
+>>               - const: axi_m_sticky # AXI Master Sticky reset
+>>   
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,pcie-ipq9574
+>> +    then:
+>> +      properties:
+>> +        clocks:
+>> +          minItems: 6
+>> +          maxItems: 6
+>> +        clock-names:
+>> +          items:
+>> +            - const: ahb  # AHB clock
+>> +            - const: aux  # Auxiliary clock
+>> +            - const: axi_m # AXI Master clock
+>> +            - const: axi_s # AXI Slave clock
+>> +            - const: axi_bridge # AXI bridge clock
+>> +            - const: rchng
+>> +        resets:
+>> +          minItems: 8
+>> +          maxItems: 8
+>> +        reset-names:
+>> +          items:
+>> +            - const: pipe # PIPE reset
+>> +            - const: sticky # Core Sticky reset
+>> +            - const: axi_s_sticky # AXI Slave Sticky reset
+>> +            - const: axi_s # AXI Slave reset
+>> +            - const: axi_m_sticky # AXI Master Sticky reset
+>> +            - const: axi_m # AXI Master reset
+>> +            - const: aux # AUX Reset
+>> +            - const: ahb # AHB Reset
+>> +
+>>     - if:
+>>         properties:
+>>           compatible:
+>> @@ -681,6 +738,16 @@ allOf:
+>>           - interconnects
+>>           - interconnect-names
+>>   
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,pcie-ipq9574
+>> +    then:
+>> +      required:
+>> +        - msi-parent
+>> +
+>>     - if:
+>>         not:
+>>           properties:
+>> @@ -693,6 +760,7 @@ allOf:
+>>                   - qcom,pcie-ipq8064v2
+>>                   - qcom,pcie-ipq8074
+>>                   - qcom,pcie-ipq8074-gen3
+>> +                - qcom,pcie-ipq9574
+>>                   - qcom,pcie-qcs404
+>>       then:
+>>         required:
+>> -- 
+>> 2.17.1
 >>
 > 
-> Agreed.
-> 
-
-I looked at seeing how we could implement this at a per bus level, but 
-the USB class driver model doesn't exactly have a good framework for 
-supporting this.  Reason being is because, at the time of the USB SND 
-class driver initialization, there is a big chance that there isn't a 
-USB bus registered in the system, so the point of adding the operations 
-is not clear.  However, we need to ensure that we've added the 
-platform/driver operations before any USB SND devices are detected.
-
-To add to the above, in case of OTG/DRD (dual role) designs, the USB 
-HCD/bus isn't created until we move into the host role.  At that time, 
-using DWC3 as an example, we will create the XHCI platform device, and 
-probe the USB HCD, where a USB bus is created.
-
-In general, we currently think this USB offload driver should co-exist 
-with the USB SND class driver, which handles all devices connected 
-across every bus.  We can add a check to the platform connect routine to 
-ensure that there is a reference to the USB backend.  If so, then that 
-particular USB bus/sysdev can be supported by the audio DSP.  That way, 
-we do not falsely populate USB SND cards which are present on another 
-USB bus/controller.
-
-Thanks
-Wesley Cheng
+Thanks,
+Devi Priya
