@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A28DC6A5BB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 16:25:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61EA56A5BB4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 16:25:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229973AbjB1PZA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 10:25:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40324 "EHLO
+        id S229987AbjB1PZD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 10:25:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229948AbjB1PYr (ORCPT
+        with ESMTP id S229972AbjB1PYx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 10:24:47 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9376923DAB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 07:24:44 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id t11so13741163lfr.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 07:24:44 -0800 (PST)
+        Tue, 28 Feb 2023 10:24:53 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C3EF24CAD
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 07:24:45 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id m7so13685361lfj.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 07:24:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677597883;
+        d=linaro.org; s=google; t=1677597885;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=S4xuvAnYE2JZwfKFXp7AV+YC6//bPuJqtQS+4kWNGBM=;
-        b=EZ2y2iBNaR+gVD9Ez/YMS/EJijOdC3Fep1XtCvcrLkyiJ1L+rjamEbj055LVNVS/+P
-         C23M6BNJV3xNALvnMI+ZJKsfNEdYtGgsvc9hUNsJgkauUMEtj+Ag2tRpFVbqGWcVywm2
-         SU/LHyGPIkYSYzzEpMZRQvXTUGngjc/TZthmUJOSMhis6zk+q7pulNReWj9WxnPo9INP
-         YKYsWEi+/WGNFXqbiM9BpHyjkZSuvlb8hSwZ/EzJTzGFyRvMgI5QTOM6PHsnzwPj+Kya
-         I45qAhzyChisUPYNIU9kTkB36hCRq1ADNrKdWDyGLVg4ZLEgJT4GDhb6SVTp+UJDJmHf
-         gCAw==
+        bh=QOZJv5Al1O3Nf++ajfeJZ7JKg8b2Wm5p9dwHgpwfHnI=;
+        b=T7ur33ww7+Maj6xcpM1Jp5Se+aSgDMOHmTLf1HO1vei0brYJ2BDAluQ9iq8UbEjiCC
+         IEVEYVn1C3T6jUhwOxiPAO9sQ8c7CNrppHI1auLgv5yhH3M0mhljelAlW8kMJx7ECJ4r
+         EAzNz+VyG/YI3u1ZoN9nUDWKNJhMymXn+wA7PeJGDhOuFvHnZbFTzB7YylrHTPKN8gpC
+         6w07B1KgEBxMyugRRdTaC8Bngjo5Yocmmaxq4q90QgcR7/S10pLcBw7hZzJ10nzPwYMC
+         /aft9RXS/0Nv8Sw1iJTKKrDXKvCYm7cx4+6BtHORQZ3tH6kNIbXHGwR8UUYJtc3AaR7q
+         HClg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677597883;
+        d=1e100.net; s=20210112; t=1677597885;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=S4xuvAnYE2JZwfKFXp7AV+YC6//bPuJqtQS+4kWNGBM=;
-        b=53jAUXIKfNs+aqqQSRArZl83eZ696IF2ofZOUUE+2/41Ro6f8qJyyg/8C/Nckr1+19
-         r+jN2uIfEFUJ/ddIs/bLtVHk/HOSRBU2XF9dxa5KEkJvfMmkh53RbDqbpTFVyB36h41U
-         Y1ymuF9h2SqoZvRY4h2KIRPYRhOLjjeCgJIeSc5pkthlqJ0TG6LTVIuN+tphLSUIz8vD
-         K6IkjtJlhV1WCIzC60uDotY1GAZfJX3ZU9UWrvZ0m35Wc7RSsKOiFbLt2iB5njQYzRBV
-         jmpOtwWseWPahZfkQP2+EU2G9PndSdQgm5eAA/cjAJkyUnPa9SWGAJaDP2uXvoHItF9N
-         SS1w==
-X-Gm-Message-State: AO0yUKV8m3732XsPBLn0nLpW4zm9DppVKKCq7dg32g2ti9hLR0w1zo6H
-        jYR5tZKZeS5qAKwz/XWOVn304g==
-X-Google-Smtp-Source: AK7set9Nx09q1xk3UMtxKXhFCB8Jru+j76Kv0PINz7jERmz0uIcjocFFwO4OgZenXTVeACxtmgyBnQ==
-X-Received: by 2002:ac2:539b:0:b0:4dd:821c:3688 with SMTP id g27-20020ac2539b000000b004dd821c3688mr754024lfh.66.1677597882849;
-        Tue, 28 Feb 2023 07:24:42 -0800 (PST)
+        bh=QOZJv5Al1O3Nf++ajfeJZ7JKg8b2Wm5p9dwHgpwfHnI=;
+        b=aqZKKuJbcOLtXbE7hz0sQnbeCvcxP8g+1S1BMQY+hJVTi3/uxaGHNKMp6syLwI8nwf
+         PPkE/ovhTGQ58UMVkD8Mt1yyRm0iueDFnfLJBLVzIWI0W6JPKTbb62uN5yzOiofZes1j
+         lpyBDVx6xledEj6NdGVkbyei3Xxv3lyfI+itJLUELTGqd4QnLP++7jvouADnqo0Gc2wg
+         SSLYH3RVjzRuBk/pPwpDSwPn/bK+IJnuZpUf3L63wy7DPL9JI2WZ0Fkhju+wXCJcH66X
+         zC/KPhPW9BdetkYw/Cea0yjJxOCZC6ATsK7/3pGu87Dmjx1nj3z6nCpGFCkHAXgjtzD/
+         BUhw==
+X-Gm-Message-State: AO0yUKU40LINW3+uH5T7ZN/bPEr5zHOZSdlMN0vcoSdtRMy4blK9Et8X
+        wxcxFDVkOUK/kI0c1OXy5hHMKg==
+X-Google-Smtp-Source: AK7set+O868kh/0KamQVaXo+Z+pRaMIpeU1oSERhi2KFO4LYHMFct3n5rQwzSHvyQzeY9WpQ268myw==
+X-Received: by 2002:a05:6512:1021:b0:4a4:68b7:d64b with SMTP id r1-20020a056512102100b004a468b7d64bmr838403lfr.50.1677597885374;
+        Tue, 28 Feb 2023 07:24:45 -0800 (PST)
 Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id h17-20020ac250d1000000b004db3aa3c542sm1363688lfm.47.2023.02.28.07.24.41
+        by smtp.gmail.com with ESMTPSA id h17-20020ac250d1000000b004db3aa3c542sm1363688lfm.47.2023.02.28.07.24.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Feb 2023 07:24:42 -0800 (PST)
+        Tue, 28 Feb 2023 07:24:43 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 28 Feb 2023 16:24:30 +0100
-Subject: [PATCH 06/18] media: venus: hfi_venus: Write to VIDC_CTRL_INIT
- after unmasking interrupts
+Date:   Tue, 28 Feb 2023 16:24:31 +0100
+Subject: [PATCH 07/18] media: venus: core: Assign registers based on VPU
+ version
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230228-topic-venus-v1-6-58c2c88384e9@linaro.org>
+Message-Id: <20230228-topic-venus-v1-7-58c2c88384e9@linaro.org>
 References: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
 In-Reply-To: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
 To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
@@ -77,51 +77,43 @@ Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
         Vikash Garodia <vgarodia@codeaurora.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1677597872; l=1424;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1677597872; l=889;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=4cqdrxrrUgh13B8sLIuOgZXxifYwhKNgm7jLLB9azJ0=;
- b=B8st5MyNmMBX79EtSQ6MZuilPEoKwlnJ0Rs0FLW47HrlhaXrxRM6spie1IVShxpnLMDf1R4BW8jF
- 9PWFeIsyDn7dNIV63jc3/QbMaq8OINVGSmzY++FcZ6+EZGg9DLkZ
+ bh=sx/AsEeutDVEzb05mFqQidBHgnDp5m3CRWWH6EqqBeA=;
+ b=m4cuQUCpvYiAZQbjgycB0N68xXrrz6IIK6w4NiPk96vWScEx1BdCbbgSAriCj8PHJlR7g3nxtMqb
+ //Wbg3VED9QLsRST2RgL4dngMe81BMwYI8DxA/obxxyOj59mrOtw
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The downstream driver signals the hardware to be enabled only after the
-interrupts are unmasked, which... makes sense. Follow suit.
+IRIS2(_1) has a different register map compared to other HFI6XX-
+using VPUs. Take care of it.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c | 2 +-
+ drivers/media/platform/qcom/venus/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index 772e5e9cf127..4d785e53aa0b 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -454,7 +454,6 @@ static int venus_boot_core(struct venus_hfi_device *hdev)
- 	void __iomem *wrapper_base = hdev->core->wrapper_base;
- 	int ret = 0;
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index c13436d58ed3..bdc14acc8399 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -246,7 +246,7 @@ static int venus_enumerate_codecs(struct venus_core *core, u32 type)
  
--	writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
- 	if (IS_IRIS1(hdev->core) || IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core)) {
- 		mask_val = readl(wrapper_base + WRAPPER_INTR_MASK);
- 		mask_val &= ~(WRAPPER_INTR_MASK_A2HWD_BASK_V6 |
-@@ -466,6 +465,7 @@ static int venus_boot_core(struct venus_hfi_device *hdev)
- 	writel(mask_val, wrapper_base + WRAPPER_INTR_MASK);
- 	writel(1, cpu_cs_base + CPU_CS_SCIACMDARG3);
- 
-+	writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
- 	while (!ctrl_status && count < max_tries) {
- 		ctrl_status = readl(cpu_cs_base + CPU_CS_SCIACMDARG0);
- 		if ((ctrl_status & CPU_CS_SCIACMDARG0_ERROR_STATUS_MASK) == 4) {
+ static void venus_assign_register_offsets(struct venus_core *core)
+ {
+-	if (IS_V6(core)) {
++	if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
+ 		core->vbif_base = core->base + VBIF_BASE;
+ 		core->cpu_base = core->base + CPU_BASE_V6;
+ 		core->cpu_cs_base = core->base + CPU_CS_BASE_V6;
 
 -- 
 2.39.2
