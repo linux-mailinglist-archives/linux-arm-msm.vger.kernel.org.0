@@ -2,74 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14CAC6A5894
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 12:52:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 956A16A58E9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 13:17:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230480AbjB1Lwq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 06:52:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47078 "EHLO
+        id S231345AbjB1MRI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 07:17:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229711AbjB1Lwp (ORCPT
+        with ESMTP id S230520AbjB1MRH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 06:52:45 -0500
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F4EC2C67A;
-        Tue, 28 Feb 2023 03:52:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1677585164; x=1709121164;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ggyx2CAu7EyosRp281wE2F+gng0S6AmQ8+oXpM+KpQ4=;
-  b=YeLWYsZ4z/YaWHrxYD+vojGJ9b4jEbXHPdxpc+FStpj1DjVBeXtBqut1
-   Aj/C5ejVUhPCxdgw/2X3ssi8Gt6YAjKzN2dozOGtBSYUWQ1uk3PWKJE/W
-   mXIchaoLl3tVuN+bZIDHQi2ccyj/hvJMFCycqa69GBTl7l1gZIs3mLCeP
-   0tbAA+WFmD/P2zVSfAAlrG4q94RS/gZCK/xDYrx0cJARq2DbMg9PEgoQ+
-   5dpvfE3BNTA66+GAhRQqxkkEqhgqeoSH6tNPvRvjjfldUGWBDyrNr2FGg
-   W/5NZ8anMfsotzXr9N/vCLt85lWlilmXJoH7j5oJxNZTLlod38lccX8d4
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10634"; a="336405103"
-X-IronPort-AV: E=Sophos;i="5.98,221,1673942400"; 
-   d="scan'208";a="336405103"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2023 03:52:44 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10634"; a="674099409"
-X-IronPort-AV: E=Sophos;i="5.98,221,1673942400"; 
-   d="scan'208";a="674099409"
-Received: from joe-255.igk.intel.com (HELO localhost) ([10.91.220.57])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2023 03:52:41 -0800
-Date:   Tue, 28 Feb 2023 12:52:39 +0100
-From:   Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     ogabbay@kernel.org, airlied@gmail.com, daniel@ffwll.ch,
-        dri-devel@lists.freedesktop.org, jacek.lawrynowicz@linux.intel.com,
-        quic_pkanojiy@quicinc.com, quic_carlv@quicinc.com,
-        quic_ajitpals@quicinc.com, linux-doc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 3/8] accel/qaic: Add MHI controller
-Message-ID: <20230228115239.GH3547587@linux.intel.com>
-References: <1675698105-19025-1-git-send-email-quic_jhugo@quicinc.com>
- <1675698105-19025-4-git-send-email-quic_jhugo@quicinc.com>
+        Tue, 28 Feb 2023 07:17:07 -0500
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F27A2B613
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 04:17:05 -0800 (PST)
+Received: by mail-pf1-x42e.google.com with SMTP id y10so5559527pfi.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 04:17:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7GDuRJNzB+FPcvVYxqkY8xWG29BxTJ0LYww4+9WZDNQ=;
+        b=soqfTf0BnDTlVqBS8PWubPPOErtzCuWTAhtUflMLeGsAwLCOiFJt2JfqTvKIxOM3mH
+         hunFX4sA33gFFTDEIdqgguK/u0KO1Un4HngqcYY0BcZT1NTr4pX0NaoA0LbhMtWJt+6V
+         MF0wi3aEpMYts+YAkCyLDeC2sFA6kJMYbUDwTKXrikxPmjYusFFduGHJQXibcfIYqBDQ
+         sbc820S7+Eq/o7is52t5mBVX2eVYfG5e3YrnScGWsABEeVo7XWQXgUukZbT9mKeJnuRm
+         n3uXAZKEOo0FXay+dPkGKxGkl2S3dFcq+OyF90OqUCYqR84IDYId7YuCrvGz+TOwr4x+
+         9Bgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7GDuRJNzB+FPcvVYxqkY8xWG29BxTJ0LYww4+9WZDNQ=;
+        b=g7Ar2h1NE5JeAqmNbNVbpl0YzodUorpU/VQ75ZVQpwNFtaRXKML2JlU5Z18La9o+mY
+         wXPw5Ij4HwClt4YNAxpf8wzpvKuLmx2cFzinSdzt1Da1CIVKnW4vahV4bT9twwbXzGhs
+         dwHldS2i83AVz76bkWvvldqwUwteq73HdwWraJ6wxAGdfoUyOxoWXN+GmXnbw+SiIN9+
+         22t4JvvJlIEQl7MUZptjAqnZnNZ7koohb6sl6oP5O5/jVNX37X9yB1GS0OEi0t/WBrzS
+         2T+7RtpSqFgfkLaXPv9to/m1ZPmXgL7aGckYatxEHOem/RBlmwesoIiq6mJwsaiddIzX
+         1REA==
+X-Gm-Message-State: AO0yUKXvAZkpHboyFHy4klVcfTJaEU7Tl6UlPKU1VekWTiXWNwFYNU9F
+        MLQNRsdu4DQI5xqaV2LIHiUjWJ4Hk3VKHt1s7s9+Yw==
+X-Google-Smtp-Source: AK7set/fnigsJgTfH/ZX7+1djP388HDAukz4aDVxJDWE3QImQwXnbumtvaLPAQmZUFw1jxD4pZyjtzAtg/JmKuRJ2Ps=
+X-Received: by 2002:a05:6a00:26eb:b0:5de:ece4:2674 with SMTP id
+ p43-20020a056a0026eb00b005deece42674mr875574pfw.3.1677586624954; Tue, 28 Feb
+ 2023 04:17:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1675698105-19025-4-git-send-email-quic_jhugo@quicinc.com>
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+References: <20230215071649.9078-1-quic_mkshah@quicinc.com>
+ <20230227153848.auqs4e5hf2qmwmg2@ripper> <CAD=FV=UK9zyQ=Mg3BaVCwOGBG3G7rW2pdpMFtGptR88p8ce9kg@mail.gmail.com>
+In-Reply-To: <CAD=FV=UK9zyQ=Mg3BaVCwOGBG3G7rW2pdpMFtGptR88p8ce9kg@mail.gmail.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 28 Feb 2023 13:16:28 +0100
+Message-ID: <CAPDyKFouhMbFFMHeT5vEo_LUQWVe5wKpagx8HUtDpcV7LCa4zQ@mail.gmail.com>
+Subject: Re: [PATCH 0/1] Use PSCI OS initiated mode for sc7280
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Maulik Shah <quic_mkshah@quicinc.com>, swboyd@chromium.org,
+        wingers@google.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_lsrao@quicinc.com,
+        quic_rjendra@quicinc.com, Julius Werner <jwerner@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 06, 2023 at 08:41:40AM -0700, Jeffrey Hugo wrote:
-> +	mhi_cntl = kzalloc(sizeof(*mhi_cntl), GFP_KERNEL);
-[snip]
-> +	mhi_cntl->irq = kmalloc(sizeof(*mhi_cntl->irq), GFP_KERNEL);
+On Mon, 27 Feb 2023 at 17:10, Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Mon, Feb 27, 2023 at 7:35=E2=80=AFAM Bjorn Andersson <andersson@kernel=
+.org> wrote:
+> >
+> > On Wed, Feb 15, 2023 at 12:46:48PM +0530, Maulik Shah wrote:
+> > > This change adds power-domains for cpuidle states to use PSCI OS
+> > > initiated mode for sc7280.
+> > >
+> > > This change depends on external project changes [1] & [2] which are u=
+nder
+> > > review/discussion to add PSCI os-initiated support in Arm Trusted Fir=
+mware.
+> > >
+> > > I can update here once the dependency are in and change is ready to m=
+erge.
+> > >
+> >
+> > Please do, I will drop this from the queue for now.
+>
+> I'm a bit confused about why we're doing this. There's always been a
+> question about exactly why we need OSI mode. As far as I can tell it
+> can't be for "correctness" reasons because we managed to ship sc7180
+> without OSI mode. ...so I guess somehow the argument is that OSI mode
+> is more performant in some cases? Are there actual numbers backing
+> this up, or is it all theoretical? Before making such a big change, it
+> would be good to actually understand what the motivation is and see
+> real data. This should be easy to collect since we currently have
+> things working without OSI and (presumably) you have OSI working. It
+> would also be good to document this motivation in the commit message
+> and/or cover letter.
 
-I recommend usage of devm_kzalloc(), devm_kmalloc() for those
-to simplify error and exit paths.
+I certainly don't object to what you say here. Although, let me also
+share some more background to these suggested changes.
 
-Regards
-Stanislaw
+As you know, for mobile platforms, Qcom have been using OS-initiated
+mode for years, but on Chromium platforms that has been limited to the
+default platform-coordinated mode. Whether that is a deliberate
+decision for the Chromium platforms or rather because the PSCI
+implementation in TF-A has been lacking OSI support, I don't know.
+Maybe you have some more insight to share around this?
+
+Note that, Wing has been working on adding support for PSCI OSI mode
+to TF-A [1], which hopefully should land soon. In this regard, it
+seems like we are getting closer to finally being able to run some
+more in-depth tests, that should allow us to better compare the
+behaviour of the PSCI CPU-suspend modes - at least on some platforms.
+In fact, Maulik/Wing also presented their work around this topic,
+including some results around performance/energy tests at the last
+TF-A call [2]. I think some of that data could be shared in the commit
+message too.
+
+Kind regards
+Uffe
+
+[1]
+https://review.trustedfirmware.org/q/topic:psci-osi
+
+[2]
+https://www.trustedfirmware.org/meetings/tf-a-technical-forum
