@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A4686A5D93
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 17:50:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B8016A5DA2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 17:50:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229845AbjB1Qt2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 11:49:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40498 "EHLO
+        id S229968AbjB1Qt3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 11:49:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229965AbjB1Qt1 (ORCPT
+        with ESMTP id S229940AbjB1Qt2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 11:49:27 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A5E3241C1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:48:43 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id a2so641961plm.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:48:43 -0800 (PST)
+        Tue, 28 Feb 2023 11:49:28 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8DF52CC74
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:48:46 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id h11-20020a17090a2ecb00b00237c740335cso9151875pjs.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:48:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+mOXZ9qyQvv5sAkxxgH4iBEQJ9SxMhQVCvClo14WEls=;
-        b=XT9Ge0azEd179tHlw2pSwavkiX0F9mGy47gdOEuNULHly3fiCsNMl7Tqn5xPYhNVse
-         IYHBsvuwFB/rtt6CnWX2Eu0YOeAWacGkFLQ3vvnJ6doGAo5imhBNdsUk6BNsf9RWIF+E
-         LQZouNgcGpKt6mqX/7qhCFuxeTD4QtmXAa7+Y0wZZDsqjB+YJ3N16zYdElts87jbfWhN
-         1JBvu+J4BLTrJoqSbJst/Mju5xvXoAP/z03RgIpyPHqCaxqtuwhDBMYjfaJ4l5u9bHDh
-         9JVl7SS/ZPrXpJsBW2dHWhfY2iIN9R/FnPAmMILB4oksgJD2yyNsZhJv7HGHAfmetspH
-         Gbjw==
+        bh=2eEMB9s5VCpJlF9KahYvaWlXJSQFG2Rpw7o2twh3Yp4=;
+        b=FQuMVxezTSRZiRV5XbRKPIaYLXP4B1Y3xCIXmpl9/LzT48Rm7keCfUTlCATPIUH/XV
+         mablt9ofSz3ZxMN5qztABjuTS2KLkTpJzsqic3rbJk4Kxye9+sn3GgxmWYUzn5Roq4vP
+         JduDPsRwxCalnhgQbGrqutA8D3d+H5z1E6iDXgKP/z6rjY+MtuA2xmKcNTQ+oA9RtQmN
+         BYWMv/jnzfuwZevBi42gKSn0Jl2Aq06fF/KJ666tgZterkO0ywPkQ6j/WdDdPyh7huZe
+         X56RATdR0zrQYI4fDd1VKTNy8yf1v0vEAQL01FIH2qVrZ84OHyLlijOt+/ot9zu9+uQy
+         u+iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+mOXZ9qyQvv5sAkxxgH4iBEQJ9SxMhQVCvClo14WEls=;
-        b=aQhCF7salfbgTkaMiTG7TLaYgFoSoa4z189G5oIgeYM+vaixIUfpaqOjqh2sUMNAI6
-         gYKRsvSH1PYoRvSEvnomv7ZyHaPAC/yy/PpstfW+Bd8HOWYHrSTb69xAUC1UQUutiHLS
-         6lfZlolKL4kEF1+sranyQyQ57+nqgywpk5d9iSaVnjc3zLbyL+CPfPYeXcfZCLPtQPKo
-         SEWCoWw725mZZ1nan/y/hwZowEMzNRbmiMtoP5mlB20hbUn+mPVrX7tun7Vjr7EeJWu1
-         yRfPRhNR9B88J8VC+v0v3q7zm5ZGq3xiTggmH0DwvUZPbohQLOnfW22XI0WdyeIg9kpt
-         G2nA==
-X-Gm-Message-State: AO0yUKVocH3f7yxyKZ8XEzNk3emBpVJwuLP9ndLn3hh+gK4RaGBNtEzB
-        nmXq6ll6KeOZuLww1fZgV0iB
-X-Google-Smtp-Source: AK7set9ZrqcVy8UGFbcDLQHMhw6Gg+BYvupVH/rHxZQU7eRrkxNSBkRhHUubgwjF62tE3xBTaXnbyg==
-X-Received: by 2002:a17:902:e801:b0:19a:b4a9:9df7 with SMTP id u1-20020a170902e80100b0019ab4a99df7mr3750511plg.53.1677602922957;
-        Tue, 28 Feb 2023 08:48:42 -0800 (PST)
+        bh=2eEMB9s5VCpJlF9KahYvaWlXJSQFG2Rpw7o2twh3Yp4=;
+        b=dmXgKjqfhdaCWBmCSI2p1zn1lxc3YBdc0Ga9X5xKWdA+ugJXODgEKEkeLeE9JVnVOi
+         uqeiCyL+Jw0nDZjcDt2deLhDAc/HrV74jSi3AhKIiUc2rVBmKGSaaqoIFuM7xiGLmSwk
+         kpvfijUSXT/mJhlmbm/nQpHQsLUOycEZt967otoWS9oELmYLRSzUGnzBXEN6OfyRcRNn
+         jjVU3h8Ertobhs5SBKMmX2eK6+IT8NUQPPdIud1HhOv+bflT9Y/c7pMBaseuGJF8C4PH
+         oRII+m+k9zTqotl2aEFn382O03/kzjL0FWA0eoLgiEypvz4bjh5Ieq8vd8Q4w3UcPpDL
+         PaGQ==
+X-Gm-Message-State: AO0yUKVbUgLd0pKYtwveJwJVGHCromnyeZEuN5vpJMBndJaiXdPfn3VY
+        13NZyxnO9r80nLbEcQZLNnG4
+X-Google-Smtp-Source: AK7set9KMqVsd6eMVqwnfYGpkyUkg18ps6Si1zK8tVHG6melJDr4hZN1JceEcyUtYMORaaVKOhU++A==
+X-Received: by 2002:a05:6a20:431d:b0:bc:8254:ddff with SMTP id h29-20020a056a20431d00b000bc8254ddffmr4842486pzk.1.1677602926154;
+        Tue, 28 Feb 2023 08:48:46 -0800 (PST)
 Received: from localhost.localdomain ([103.197.115.185])
-        by smtp.gmail.com with ESMTPSA id z11-20020a6552cb000000b00476dc914262sm5908792pgp.1.2023.02.28.08.48.40
+        by smtp.gmail.com with ESMTPSA id z11-20020a6552cb000000b00476dc914262sm5908792pgp.1.2023.02.28.08.48.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Feb 2023 08:48:42 -0800 (PST)
+        Tue, 28 Feb 2023 08:48:45 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     andersson@kernel.org
 Cc:     konrad.dybcio@linaro.org, robh+dt@kernel.org,
@@ -57,9 +57,9 @@ Cc:     konrad.dybcio@linaro.org, robh+dt@kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         arnd@arndb.de,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 10/16] arm64: dts: qcom: sc8280xp: Fix the PCI I/O port range
-Date:   Tue, 28 Feb 2023 22:17:46 +0530
-Message-Id: <20230228164752.55682-11-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 11/16] arm64: dts: qcom: sm8150: Fix the PCI I/O port range
+Date:   Tue, 28 Feb 2023 22:17:47 +0530
+Message-Id: <20230228164752.55682-12-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230228164752.55682-1-manivannan.sadhasivam@linaro.org>
 References: <20230228164752.55682-1-manivannan.sadhasivam@linaro.org>
@@ -77,66 +77,42 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 For 1MiB of the I/O region, the I/O ports of the legacy PCI devices are
 located in the range of 0x0 to 0x100000. Hence, fix the bogus PCI addresses
-(0x30200000, 0x32200000, 0x34200000, 0x38200000, 0x3c200000) specified in
-the ranges property for I/O region.
+(0x60200000, 0x40200000) specified in the ranges property for I/O region.
 
-Fixes: 813e83157001 ("arm64: dts: qcom: sc8280xp/sa8540p: add PCIe2-4 nodes")
+While at it, let's use the missing 0x prefix for the addresses.
+
+Fixes: a1c86c680533 ("arm64: dts: qcom: sm8150: Add PCIe nodes")
 Reported-by: Arnd Bergmann <arnd@arndb.de>
 Link: https://lore.kernel.org/linux-arm-msm/7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com/
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 0d02599d8867..a0065656442c 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -1657,7 +1657,7 @@ pcie4: pcie@1c00000 {
- 			reg-names = "parf", "dbi", "elbi", "atu", "config";
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index fd20096cfc6e..1fabfa05708c 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -1799,8 +1799,8 @@ pcie0: pci@1c00000 {
  			#address-cells = <3>;
  			#size-cells = <2>;
--			ranges = <0x01000000 0x0 0x30200000 0x0 0x30200000 0x0 0x100000>,
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x30200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x30300000 0x0 0x30300000 0x0 0x1d00000>;
- 			bus-range = <0x00 0xff>;
  
-@@ -1756,7 +1756,7 @@ pcie3b: pcie@1c08000 {
- 			reg-names = "parf", "dbi", "elbi", "atu", "config";
+-			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
+-				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
++			ranges = <0x01000000 0x0 0x00000000 0x0 0x60200000 0x0 0x100000>,
++				 <0x02000000 0x0 0x60300000 0x0 0x60300000 0x0 0x3d00000>;
+ 
+ 			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "msi";
+@@ -1895,7 +1895,7 @@ pcie1: pci@1c08000 {
  			#address-cells = <3>;
  			#size-cells = <2>;
--			ranges = <0x01000000 0x0 0x32200000 0x0 0x32200000 0x0 0x100000>,
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x32200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x32300000 0x0 0x32300000 0x0 0x1d00000>;
- 			bus-range = <0x00 0xff>;
  
-@@ -1853,7 +1853,7 @@ pcie3a: pcie@1c10000 {
- 			reg-names = "parf", "dbi", "elbi", "atu", "config";
- 			#address-cells = <3>;
- 			#size-cells = <2>;
--			ranges = <0x01000000 0x0 0x34200000 0x0 0x34200000 0x0 0x100000>,
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x34200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x34300000 0x0 0x34300000 0x0 0x1d00000>;
- 			bus-range = <0x00 0xff>;
+-			ranges = <0x01000000 0x0 0x40200000 0x0 0x40200000 0x0 0x100000>,
++			ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,
+ 				 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
  
-@@ -1953,7 +1953,7 @@ pcie2b: pcie@1c18000 {
- 			reg-names = "parf", "dbi", "elbi", "atu", "config";
- 			#address-cells = <3>;
- 			#size-cells = <2>;
--			ranges = <0x01000000 0x0 0x38200000 0x0 0x38200000 0x0 0x100000>,
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x38200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x38300000 0x0 0x38300000 0x0 0x1d00000>;
- 			bus-range = <0x00 0xff>;
- 
-@@ -2050,7 +2050,7 @@ pcie2a: pcie@1c20000 {
- 			reg-names = "parf", "dbi", "elbi", "atu", "config";
- 			#address-cells = <3>;
- 			#size-cells = <2>;
--			ranges = <0x01000000 0x0 0x3c200000 0x0 0x3c200000 0x0 0x100000>,
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x3c200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x3c300000 0x0 0x3c300000 0x0 0x1d00000>;
- 			bus-range = <0x00 0xff>;
- 
+ 			interrupts = <GIC_SPI 307 IRQ_TYPE_EDGE_RISING>;
 -- 
 2.25.1
 
