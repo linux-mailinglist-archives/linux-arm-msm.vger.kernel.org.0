@@ -2,132 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF4D66A5CAE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 17:01:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D73AA6A5CB2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 17:02:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230287AbjB1QBT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 11:01:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57076 "EHLO
+        id S230212AbjB1QCz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 11:02:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230259AbjB1QBS (ORCPT
+        with ESMTP id S230283AbjB1QCx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 11:01:18 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 072403251F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:01:14 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id bi9so13881884lfb.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:01:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677600072;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BLj8g7cWA02hy9idKplTTomEBJCXg5TfcG4v549D2mI=;
-        b=XTcy/2nOnCqrShLeYBIrtqCIEGQogKWvdj/potwrGdHpnyNfKT+/lETN9btMktP41F
-         tYTaO8DKwzWhDu5/fe95UzbUMDbiJ2ybvLebDdkKWrFv2jMnih/F5JDU2EVE/5zIz2YF
-         +ZXV/t8JkvwzY9f70zITcCSwDhUpl295OfF1osf+d4LqGmTH6vVAEDnJnsDuirCwGZ1T
-         iWAk3wV0r6Mi8vABQNEE4g0QLZe4isivl/5lqmK41cFz3C0SxPBQ6+JB8a31wC3+0zp9
-         2BvJHg6iRpsz1Kyl4OVBF7mn+xOszpbBOwgHB2ilGteXiJRR7ap8PDjoOL3OYMxgQngj
-         0/5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677600072;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BLj8g7cWA02hy9idKplTTomEBJCXg5TfcG4v549D2mI=;
-        b=Qc40yidMhIGLbZbGlwcicAjrI5+4Z2RWELdLY0l7e6zVYMSdMcIi+542yhj+yci9vu
-         VHg09/kVumv5xn+1fmGOe/TvCWmHz4V/0/DaJR6/Wh7GiyocstvJyW7ZDBKT3GSS8Soj
-         P9olRiNrIH0gxM1DBrboFFBttPLKClTL+L9msjqyW/aXiKDMFC20nfEji7FJhux6k56U
-         PMhGasvXFmID9ckVAjpqS7L1ZdSVGtHMz0uJ0daxdabgXBK02AT3CRWE6Dd0EsoUd3Ey
-         lhIFCUxBc0hKEQGnhMQsCrZ17Gdf/11LMXY4qIpbJmKs1j9AFym/Q/l6qVTAr7tOyDkW
-         Bpeg==
-X-Gm-Message-State: AO0yUKW0bOW3WwRkmJ1kmVidL/KgWJHe+4BkdEMcNSqG6rIRkg3v2Zj2
-        y64W9BMBwTUUtodUmzDT6StRuQ==
-X-Google-Smtp-Source: AK7set8s9zsE3ofLcRWplOeVWmWiD2DJYeZtoYujRVgUqRI0dBTPbgKPLSCiDcvvEjpyZqVpqeauvw==
-X-Received: by 2002:ac2:4465:0:b0:4e0:ce21:b90 with SMTP id y5-20020ac24465000000b004e0ce210b90mr972172lfl.14.1677600072137;
-        Tue, 28 Feb 2023 08:01:12 -0800 (PST)
-Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id u28-20020ac243dc000000b004d5a5d90d83sm1393752lfl.60.2023.02.28.08.01.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Feb 2023 08:01:11 -0800 (PST)
-Message-ID: <3d424869-dcdb-5ef7-5cba-0025924e2f50@linaro.org>
-Date:   Tue, 28 Feb 2023 17:01:10 +0100
+        Tue, 28 Feb 2023 11:02:53 -0500
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B198CF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:02:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1677600171; x=1709136171;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=uJ6b+0/zHOeAkP5Hg4XcILPc1vZObbE90DrMyXpviNQ=;
+  b=Lb0M3fIU2J8d8qDcWro9AzRXxciA5mhNkBo93F873Eh2j7lorvzOBzou
+   ew6cb7qAnmT8gu08Mba9SMTTn27tcKgNjR6lA8Lx3+h+LoeEPhvaC2LLN
+   gTyzcUBS0DgW74JK0B9tf5gnJjuOnVj2z1CF4xO/EoHQ9WviHXvoWsq8k
+   PxXUgKFmtlIvj9Hq96kDSBlYALCnMSXii3+6MrnXuC0N75F5nnWNWIaEJ
+   vVCu9QmNck78Oq0pbdBNEvNzlT2w9FwTeWj2KAbHiCld0lgl4u7WJxdYk
+   L3ayhyx8ig7W5JY6Fm7S4+xguL+rvbJ0Pyl1zF9lqzchNxdGlTP+MoCYU
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10635"; a="398954707"
+X-IronPort-AV: E=Sophos;i="5.98,222,1673942400"; 
+   d="scan'208";a="398954707"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2023 08:02:02 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10635"; a="798101078"
+X-IronPort-AV: E=Sophos;i="5.98,222,1673942400"; 
+   d="scan'208";a="798101078"
+Received: from barumuga-mobl1.ger.corp.intel.com (HELO localhost) ([10.252.47.26])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2023 08:01:57 -0800
+From:   Jani Nikula <jani.nikula@linux.intel.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 02/10] drm/i915/dsc: move rc_buf_thresh values to common
+ helper
+In-Reply-To: <20230228113342.2051425-3-dmitry.baryshkov@linaro.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20230228113342.2051425-1-dmitry.baryshkov@linaro.org>
+ <20230228113342.2051425-3-dmitry.baryshkov@linaro.org>
+Date:   Tue, 28 Feb 2023 18:01:54 +0200
+Message-ID: <871qm9zslp.fsf@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 08/18] media: venus: hfi_venus: Fix version checks in
- venus_halt_axi()
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Vikash Garodia <vgarodia@codeaurora.org>
-References: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
- <20230228-topic-venus-v1-8-58c2c88384e9@linaro.org>
- <a5fe6f7d-d410-9903-789c-d8c760ce6f1b@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <a5fe6f7d-d410-9903-789c-d8c760ce6f1b@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 28.02.2023 16:36, Bryan O'Donoghue wrote:
-> On 28/02/2023 15:24, Konrad Dybcio wrote:
->> Only IRIS2(_1) should enter the until-now-IS_V6() path and the
->> condition for skipping part of it should be IS_IRIS2_1 and not the
->> number of VPP pipes. Fix that.
->>
->> Fixes: 4b0b6e147dc9 ("media: venus: hfi: Add 6xx AXI halt logic")
->> Fixes: 78d434ba8659 ("media: venus: hfi: Skip AON register programming for V6 1pipe")
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/media/platform/qcom/venus/hfi_venus.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
->> index 4d785e53aa0b..0d137e070407 100644
->> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
->> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
->> @@ -550,10 +550,10 @@ static int venus_halt_axi(struct venus_hfi_device *hdev)
->>       u32 mask_val;
->>       int ret;
->>   -    if (IS_V6(hdev->core)) {
->> +    if (IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core)) {
->>           writel(0x3, cpu_cs_base + CPU_CS_X2RPMH_V6);
->>   -        if (hdev->core->res->num_vpp_pipes == 1)
->> +        if (IS_IRIS2_1(hdev->core))
->>               goto skip_aon_mvp_noc;
->>             writel(0x1, aon_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
->>
-> 
-> If you want to denote these as fixes, you need your patch 02/18 as a depend...
-The main purpose of the Fixes tag is to mark commits that fix bugs in
-existing code and it only assists in autoselecting stable patches.
-Backporting this makes little sense, as we only support IRIS2 (8250)
-and IRIS2_1 (7280) HFI6 platforms and new additions won't be backported.
-
-Konrad
-> 
+On Tue, 28 Feb 2023, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> The rc_buf_thresh values are common to all DSC implementations. Move
+> them to the common helper together with the code to propagage them to
+> the drm_dsc_config.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-> bod
+>  drivers/gpu/drm/display/drm_dsc_helper.c  | 37 +++++++++++++++++++++++
+>  drivers/gpu/drm/i915/display/intel_vdsc.c | 24 +--------------
+>  include/drm/display/drm_dsc_helper.h      |  1 +
+>  3 files changed, 39 insertions(+), 23 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
+> index c869c6e51e2b..ab8679c158b5 100644
+> --- a/drivers/gpu/drm/display/drm_dsc_helper.c
+> +++ b/drivers/gpu/drm/display/drm_dsc_helper.c
+> @@ -270,6 +270,43 @@ void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_payload,
+>  }
+>  EXPORT_SYMBOL(drm_dsc_pps_payload_pack);
+>  
+> +/* From DSC_v1.11 spec, rc_parameter_Set syntax element typically constant */
+> +const u16 drm_dsc_rc_buf_thresh[] = {
+> +	896, 1792, 2688, 3584, 4480, 5376, 6272, 6720, 7168, 7616,
+> +	7744, 7872, 8000, 8064
+> +};
+> +EXPORT_SYMBOL(drm_dsc_rc_buf_thresh);
+> +
+> +/**
+> + * drm_dsc_set_rc_buf_thresh() - Set thresholds for the RC model
+> + * in accordance with the DSC 1.2 specification.
+> + *
+> + * @vdsc_cfg: DSC Configuration data partially filled by driver
+> + */
+> +void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg)
+> +{
+> +	int i = 0;
+> +
+> +	for (i = 0; i < DSC_NUM_BUF_RANGES - 1; i++) {
+> +		/*
+> +		 * six 0s are appended to the lsb of each threshold value
+> +		 * internally in h/w.
+> +		 * Only 8 bits are allowed for programming RcBufThreshold
+> +		 */
+
+Not sure how appropriate the hardware references are, maybe clean it up
+a bit.
+
+With that, and +static and -export mentioned earlier,
+
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+
+> +		vdsc_cfg->rc_buf_thresh[i] = drm_dsc_rc_buf_thresh[i] >> 6;
+> +	}
+> +
+> +	/*
+> +	 * For 6bpp, RC Buffer threshold 12 and 13 need a different value
+> +	 * as per C Model
+> +	 */
+> +	if (vdsc_cfg->bits_per_pixel == 6 << 4) {
+> +		vdsc_cfg->rc_buf_thresh[12] = 7936 >> 6;
+> +		vdsc_cfg->rc_buf_thresh[13] = 8000 >> 6;
+> +	}
+> +}
+> +EXPORT_SYMBOL(drm_dsc_set_rc_buf_thresh);
+> +
+>  /**
+>   * drm_dsc_compute_rc_parameters() - Write rate control
+>   * parameters to the dsc configuration defined in
+> diff --git a/drivers/gpu/drm/i915/display/intel_vdsc.c b/drivers/gpu/drm/i915/display/intel_vdsc.c
+> index d080741fd0b3..b4faab4c8fb3 100644
+> --- a/drivers/gpu/drm/i915/display/intel_vdsc.c
+> +++ b/drivers/gpu/drm/i915/display/intel_vdsc.c
+> @@ -36,12 +36,6 @@ enum COLUMN_INDEX_BPC {
+>  	MAX_COLUMN_INDEX
+>  };
+>  
+> -/* From DSC_v1.11 spec, rc_parameter_Set syntax element typically constant */
+> -static const u16 rc_buf_thresh[] = {
+> -	896, 1792, 2688, 3584, 4480, 5376, 6272, 6720, 7168, 7616,
+> -	7744, 7872, 8000, 8064
+> -};
+> -
+>  struct rc_parameters {
+>  	u16 initial_xmit_delay;
+>  	u8 first_line_bpg_offset;
+> @@ -474,23 +468,7 @@ int intel_dsc_compute_params(struct intel_crtc_state *pipe_config)
+>  	vdsc_cfg->bits_per_pixel = compressed_bpp << 4;
+>  	vdsc_cfg->bits_per_component = pipe_config->pipe_bpp / 3;
+>  
+> -	for (i = 0; i < DSC_NUM_BUF_RANGES - 1; i++) {
+> -		/*
+> -		 * six 0s are appended to the lsb of each threshold value
+> -		 * internally in h/w.
+> -		 * Only 8 bits are allowed for programming RcBufThreshold
+> -		 */
+> -		vdsc_cfg->rc_buf_thresh[i] = rc_buf_thresh[i] >> 6;
+> -	}
+> -
+> -	/*
+> -	 * For 6bpp, RC Buffer threshold 12 and 13 need a different value
+> -	 * as per C Model
+> -	 */
+> -	if (compressed_bpp == 6) {
+> -		vdsc_cfg->rc_buf_thresh[12] = 0x7C;
+> -		vdsc_cfg->rc_buf_thresh[13] = 0x7D;
+> -	}
+> +	drm_dsc_set_rc_buf_thresh(vdsc_cfg);
+>  
+>  	/*
+>  	 * From XE_LPD onwards we supports compression bpps in steps of 1
+> diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
+> index 8b41edbbabab..706ba1d34742 100644
+> --- a/include/drm/display/drm_dsc_helper.h
+> +++ b/include/drm/display/drm_dsc_helper.h
+> @@ -14,6 +14,7 @@ void drm_dsc_dp_pps_header_init(struct dp_sdp_header *pps_header);
+>  int drm_dsc_dp_rc_buffer_size(u8 rc_buffer_block_size, u8 rc_buffer_size);
+>  void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_sdp,
+>  			      const struct drm_dsc_config *dsc_cfg);
+> +void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg);
+>  int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg);
+>  
+>  #endif /* _DRM_DSC_HELPER_H_ */
+
+-- 
+Jani Nikula, Intel Open Source Graphics Center
