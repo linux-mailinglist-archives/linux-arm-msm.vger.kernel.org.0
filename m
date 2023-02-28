@@ -2,111 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71F146A5DB7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 17:54:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CCC56A5DC0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 17:56:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229530AbjB1Qyj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 11:54:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48028 "EHLO
+        id S229516AbjB1Q4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 11:56:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229722AbjB1Qyi (ORCPT
+        with ESMTP id S229527AbjB1Q4c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 11:54:38 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFAAC30B0C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:54:12 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id l1so7425287wry.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 08:54:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xYp2p3X93FeaEj7oEUGNtbHjsSB1NBY4xkEV8MTn+HA=;
-        b=zQXQRE51CrDrBo29vO1Tc5fTWXPSm2IxiCK7swYieR+p8LZ9HmM5fU3n8M0kcUe9Nd
-         bLBf0u8CD5Iu+TMQ/b+vMdHcZ4uzYsN1R2/WT5t20eyKieynuW6y67BUyP68Eb72QPv1
-         WKVeXgb1nKdiHateM0XSZNG/AFFaGik+qiGFQZ9ZxILrIAxlOICl62RQqf3X49XSmj8V
-         IV/d1p4FhqktIWeGvE7YbrfkKZtKq8EECm5+VPeb7RoKmzTYhm+Xdp0qBMklotytQ/tH
-         luIzG76/BjgrKK4zc7TqplA4zsUUgy3i2vd8Tce4z0vsn2iuY5jE4ArDDFtyderm3U0j
-         usQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xYp2p3X93FeaEj7oEUGNtbHjsSB1NBY4xkEV8MTn+HA=;
-        b=VnEyuCa0lnyg2oyot6n8HczSiD/p71XcfrW7HClv9yHWEGu/Zl5LE7PToKMe2B8Uqv
-         kK3RWa7+ULApSvyUPB5AzwdwZPsgyLpNenyhttrdYewgcqlSrWowLFPCKFyPuWGSUp7b
-         cvprDjCd8TIdcz5ViAn2lcLKVPP1n6rIC0MfhKFeQ34LKOJDHtxRe72WdhqQDzgcw9Er
-         yBrAJhqN+BWNXbLWND/isOX1VE+C4U6fXUJxzy3B41ZC/wXUzUUYmvyIahNQG2ZkafEW
-         4/EBgPdnuQX+SCRHNjTxonzXzFN7IQuQgAKSEm6heRQO+R7b+rtPhvRbF3uqMbVis6al
-         nlUw==
-X-Gm-Message-State: AO0yUKUEXP+qA73lQVZJbxzt16gQuqncIAOMb0/sqdWo6sDv35a9nOWZ
-        XpJkpe0jJDQ/H9LLX1wbDLyomw==
-X-Google-Smtp-Source: AK7set9O1W8IF9/4cQ+nKRo+YTR7FO1qRItxfIH2oXmuYMagy2Ku0heeyAaJCNf8HhzveTSSwdXUig==
-X-Received: by 2002:a5d:4e0c:0:b0:2c5:5234:882c with SMTP id p12-20020a5d4e0c000000b002c55234882cmr2670053wrt.7.1677603215619;
-        Tue, 28 Feb 2023 08:53:35 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id i15-20020adffdcf000000b002c58ca558b6sm10357018wrs.88.2023.02.28.08.53.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Feb 2023 08:53:35 -0800 (PST)
-Message-ID: <aa8db9a1-ac11-acbe-1a05-b60c39989bc1@nexus-software.ie>
-Date:   Tue, 28 Feb 2023 16:53:33 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 01/18] media: venus: hfi_venus: Set
- venus_sys_idle_indicator to false on V6
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Vikash Garodia <vgarodia@codeaurora.org>
-References: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
- <20230228-topic-venus-v1-1-58c2c88384e9@linaro.org>
- <99eeebc6-69aa-c6ba-139b-92672c299747@linaro.org>
- <893851c9-c8be-ed7f-ebde-5d90b9313f6d@linaro.org>
- <48ac4272-0e11-d943-e950-0be8d93fb036@linaro.org>
- <b7f0c568-72b7-3342-decc-784cd5f68b1a@linaro.org>
- <1091d8b4-3dd3-427b-2fcb-c3e0d32b0a3b@linaro.org>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <1091d8b4-3dd3-427b-2fcb-c3e0d32b0a3b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Tue, 28 Feb 2023 11:56:32 -0500
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ABBA36080;
+        Tue, 28 Feb 2023 08:56:07 -0800 (PST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id 72B3F5C0181;
+        Tue, 28 Feb 2023 11:55:54 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute6.internal (MEProxy); Tue, 28 Feb 2023 11:55:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm3; t=1677603354; x=1677689754; bh=D3O9AUaCP9
+        tpAOYmxIG1pQXKHoCpHcgtdW48jYJAEyk=; b=iMjEX4ziqOBY6thDteXk6LobVr
+        8GW57Xr366EZE2GkRMATNS5cOrA2iNXvBvBEv7wJBGhn3Lkul6eyB6hjOv/pSpYT
+        Zhl33op7B0/BduSy7DSflQH/8qnE05JEex2Xj/1huJzhilXcyFAystiB0AZAle0M
+        kF0lzMhLpMo+f2IuxpGy3IHrYrrY0w1jpWh/alcuP8N1kN/VLgPM864IpvjCjvel
+        8hMWjSMhthjWdiUiWIFvlTHIKEAcn1OXDuXo/7mwKuevtNihSi4RnpMHFjPHnO21
+        eF+JLDK5HXUUmjPJIAbBuWJ+1pfiMPEPUncAjlsS1QbA6LdyJXZ0gifpsq7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm1; t=1677603354; x=1677689754; bh=D3O9AUaCP9tpAOYmxIG1pQXKHoCp
+        HcgtdW48jYJAEyk=; b=VWI/HOjsxeOqtxSgaCYWETXClPxhI9Ty3GWlPAWxdRYe
+        81wxreCo0UbHBRlod5xHM2Ckqw8Hv+JwpsCQsmlLi0ZIGA4LsF1ZcFpP8QlMDm8T
+        4+3FwiePSBvUorFloZDBzJVsb6itaKOmEZsdYG4kEliaLvw27lo0Fu3SctjSlzAu
+        NF12FJ4cWvaxkKrznIbHMzqvhS+305KSdc6AyNffG3zT2iqRjM3hHL+OQclO8TVd
+        gL3QmQvbwWAWARJ6r5sJzIxyBvDzTKOyIZrAkkbhfx/xfo0hLXXC8GpfbWqiz7dt
+        POXD2ffjUSEPeFs4+UdKUL9hDCeh79Oo+NADgKoUcw==
+X-ME-Sender: <xms:GjL-Y6OG2EO9xdgF2pNrwa-wwKTKDhdfkEQLYJoenBb7CAioRzziBQ>
+    <xme:GjL-Y4_hYSx0l9yly-TnpgPM7GfebLp1Lf2E5zil6HJINZ0fzb_eivzUoB1kpFT5t
+    S7ZPwrr-oenUJWO_9E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudelfedgfedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
+    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
+    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
+    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+    hrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:GjL-YxTch79ljI9nrxV2j485uua9b8p3wAX1jaYnWPGNBf5emULvmg>
+    <xmx:GjL-Y6sY5hvPQvzbtBGi9Xf9Jz5CybvCKQ1LLKNaKbGbdsKD83aswQ>
+    <xmx:GjL-YyfnCd9Qfb4FGOxCOi8prYJLXlzjw0nZwltqlrMuTQrgfWO0YQ>
+    <xmx:GjL-Y_EZFRLhckUY7DHs_sYeH5NRPxruGXSR0_AlWBi6vD9VkJpxIA>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 28EF1B60086; Tue, 28 Feb 2023 11:55:54 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-183-gbf7d00f500-fm-20230220.001-gbf7d00f5
+Mime-Version: 1.0
+Message-Id: <1e69e526-c270-49a0-bf00-8418d1aed121@app.fastmail.com>
+In-Reply-To: <20230228164752.55682-2-manivannan.sadhasivam@linaro.org>
+References: <20230228164752.55682-1-manivannan.sadhasivam@linaro.org>
+ <20230228164752.55682-2-manivannan.sadhasivam@linaro.org>
+Date:   Tue, 28 Feb 2023 17:55:33 +0100
+From:   "Arnd Bergmann" <arnd@arndb.de>
+To:     "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>,
+        "Bjorn Andersson" <andersson@kernel.org>
+Cc:     "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 01/16] arm64: dts: qcom: sdm845: Fix the PCI I/O port range
+Content-Type: text/plain
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/02/2023 15:41, Konrad Dybcio wrote:
->> Can you test it and make sure ?
-> As I mentioned in the cover letter, 8250 still seems to work with this
-> patchset. I have no idea how one would go about validating the
-> functionality enabled through this call.
+On Tue, Feb 28, 2023, at 17:47, Manivannan Sadhasivam wrote:
+> For 1MiB of the I/O region, the I/O ports of the legacy PCI devices are
+> located in the range of 0x0 to 0x100000. Hence, fix the bogus PCI addresses
+> (0x60200000, 0x40200000) specified in the ranges property for I/O region.
+> -			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
+> -				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0xd00000>;
+> +			ranges = <0x01000000 0x0 0x00000000 0x0 0x60200000 0x0 0x100000>,
+> +				 <0x02000000 0x0 0x60300000 0x0 0x60300000 0x0 0xd00000>;
+> 
 
-We offlined about this.
+This fixes the offset, but I wonder if the size of the I/O
+window should be changed as well. The normal size is 64KB
+(0x10000) per bus or less, while this one has 1MB.
 
-I think it is correct to say you don't have access to a display to test 
-this on sm8250.
+It's probably harmless since each device would only use
+a few bytes, and most devices don't need any I/O ports
+at all.
 
-I do so, I will try this out for you, though I'll wait for your V2 for 
-this series.
-
----
-bod
+     Arnd
