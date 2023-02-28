@@ -2,86 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32AF66A50AC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 02:26:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 546636A518E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 04:00:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229511AbjB1BZ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Feb 2023 20:25:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36304 "EHLO
+        id S229516AbjB1DAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Feb 2023 22:00:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjB1BZ6 (ORCPT
+        with ESMTP id S229585AbjB1DAL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Feb 2023 20:25:58 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9B9C2940C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 17:25:56 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id bi9so11145948lfb.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Feb 2023 17:25:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rmwusMnOHm/DxgvY9GP3587apLJbcqr+k5/KP8dCbmU=;
-        b=l9gFL6R0ZeUaGp5vqNFIVgf0nervZ/blHcqSWAAJ3akyiJo0o+FEfRw9jK8TzZC5ti
-         BxZugkf8qRGnbcPqWcL7MBGfXd16GvCA7gkaoaYMTFLt0P4CXhVqLXmWQ7m6jKiW4Lfb
-         ez9bUDGDV+3Yl2kWwxONAYk6I+CYIOjIaevR4yJLWG2q1yRKU+MxEHwJCX57LgkmAJUD
-         2N6sW2/xNWrn58aej9DrxJTV8rrzRQBk77qJlwCkChLtocebu58dD94nEye9+C0D3gLp
-         zwkf2x6BcIoYY6sTQF4VhYslAVaFwYBChMA70e4dOyc3Lkzf6ZKV7xQL8EKAairWJV4Q
-         5p7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rmwusMnOHm/DxgvY9GP3587apLJbcqr+k5/KP8dCbmU=;
-        b=LDSZ1YtgZrIwc03GgXy26TqEu0u7N7XwqihXbaJOgLlstUIUX6PPKWaRQ6DMIuTtER
-         7609rg0o1a7S/1LP7p+6RdLM4lm+yeAauGE/bD3p4VsMXavHqoOAF5NYLUK7ncqhOmxA
-         NmpZiL6tVrRj3nhdKUOTjpVnBBDYR4ffBApSALe0MAdUIcWtocd6BNBaJ6WG5awwtiQv
-         kMFZPltn11Zaf37z5bjX9hLyZ4ZKe8Ia6ie+gdtNLjSRGrT2Som8Aqd4K5F/hiccJJPT
-         hL7EqMrtPzu+driRIf/s+7T8TuwlIo5V8fE5J0JNEv/TlhYfhJP9tpFvakPuW2bKhnS8
-         +Asg==
-X-Gm-Message-State: AO0yUKUD/s7+6FPrjU6xQUuUZT8IkNNW9GfZqXkZ/bnoBuIj9yBQWKVD
-        T0LJMqFxYZHJjPbI0wJhkF5+uw==
-X-Google-Smtp-Source: AK7set+wUkjWfP0FQPZbEn8+4BJFJa33ECnOmccXlhexvKHG0RYGL+IOpBW8vLBtlEPwiYYjPRpKtQ==
-X-Received: by 2002:ac2:5dfb:0:b0:4dc:6ad4:5fe4 with SMTP id z27-20020ac25dfb000000b004dc6ad45fe4mr153887lfq.32.1677547555205;
-        Mon, 27 Feb 2023 17:25:55 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id z7-20020ac25de7000000b004db44dfd888sm1120737lfq.30.2023.02.27.17.25.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Feb 2023 17:25:54 -0800 (PST)
-Message-ID: <263e4bf2-6ade-600b-0fb6-e0a738ce830f@linaro.org>
-Date:   Tue, 28 Feb 2023 03:25:54 +0200
+        Mon, 27 Feb 2023 22:00:11 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E7CF1D906;
+        Mon, 27 Feb 2023 19:00:10 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31S2Rpqh010567;
+        Tue, 28 Feb 2023 02:59:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=iGExTyfqA8UiNaWVM0CI3ERBpJ+ppSBXThFNDZNWvK0=;
+ b=oXwk5/gMO3nnoQ3P1KcNZleSvKuZqit8I0FiBa65PV2bn6RtCDKE/6j95NxtdYUvXHxv
+ mItLLNhIlVPQ+U/NehbpdViJwsZ1UufCsNhciEV6IKFYMO0kF8An6OjIe40ANQBnjMFm
+ yePoXLWawYELCIbDaxtmWpqJRDgo2QTL4FQ9IgkWwGSJFTObPrsQBP5X/Dtc8wvUaFUh
+ QYgG3LAXuYU0tdws+uFI3utDIprUOW16ubk7ECuLVhO+8czFLk98v+usiBXbzK9WwpXU
+ bBh//Y0LZLu/8g41ES06UIxrjFJ65QBEad/9DRfHnUJv/rZtBwa5EloPxinJ8dP3FCcD pA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p17ryr78w-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 28 Feb 2023 02:59:41 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31S2xe9F013059
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 28 Feb 2023 02:59:40 GMT
+Received: from [10.110.31.193] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 27 Feb
+ 2023 18:59:39 -0800
+Message-ID: <5e5c6481-8d5d-dc3f-e40e-986e3ac30387@quicinc.com>
+Date:   Mon, 27 Feb 2023 18:59:32 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [RFT PATCH v2 3/3] drm/msm/dsi: More properly handle errors in
- regards to dsi_mgr_bridge_power_on()
-Content-Language: en-GB
-To:     Douglas Anderson <dianders@chromium.org>,
-        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Sean Paul <sean@poorly.run>, Jonas Karlman <jonas@kwiboo.se>,
-        Vinod Koul <vkoul@kernel.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        freedreno@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        linux-kernel@vger.kernel.org
-References: <20230131141756.RFT.v2.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
- <20230131141756.RFT.v2.3.I3c87b53c4ab61a7d5e05f601a4eb44c7e3809a01@changeid>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230131141756.RFT.v2.3.I3c87b53c4ab61a7d5e05f601a4eb44c7e3809a01@changeid>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [RFC PATCH v2 12/22] sound: usb: card: Introduce USB SND platform
+ op callbacks
+Content-Language: en-US
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+To:     Greg KH <gregkh@linuxfoundation.org>
+CC:     <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <lgirdwood@gmail.com>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <Thinh.Nguyen@synopsys.com>,
+        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
+        <robh+dt@kernel.org>, <agross@kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <quic_jackp@quicinc.com>,
+        <quic_plai@quicinc.com>
+References: <20230126031424.14582-1-quic_wcheng@quicinc.com>
+ <20230126031424.14582-13-quic_wcheng@quicinc.com>
+ <Y9Ui82OaI54Qx8Ft@kroah.com>
+ <2c062ab0-905c-f1fe-eca2-02e23cc9fa6f@quicinc.com>
+In-Reply-To: <2c062ab0-905c-f1fe-eca2-02e23cc9fa6f@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6SRmoeFCRlxObLlSUAo-jbjYTEJwar6h
+X-Proofpoint-GUID: 6SRmoeFCRlxObLlSUAo-jbjYTEJwar6h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-27_19,2023-02-27_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 mlxscore=0 phishscore=0
+ adultscore=0 malwarescore=0 suspectscore=0 clxscore=1011 spamscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302280018
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,45 +89,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/02/2023 00:18, Douglas Anderson wrote:
-> In commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
-> time") the error handling with regards to dsi_mgr_bridge_power_on()
-> got a bit worse. Specifically if we failed to power the bridge on then
-> nothing would really notice. The modeset function couldn't return an
-> error and thus we'd blindly go forward and try to do the pre-enable.
-> 
-> In commit ec7981e6c614 ("drm/msm/dsi: don't powerup at modeset time
-> for parade-ps8640") we added a special case to move the powerup back
-> to pre-enable time for ps8640. When we did that, we didn't try to
-> recover the old/better error handling just for ps8640.
-> 
-> In the patch ("drm/msm/dsi: Stop unconditionally powering up DSI hosts
-> at modeset") we've now moved the powering up back to exclusively being
-> during pre-enable. That means we can add the better error handling
-> back in, so let's do it. To do so we'll add a new function
-> dsi_mgr_bridge_power_off() that's matches how errors were handled
-> prior to commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to
-> modeset time").
-> 
-> NOTE: Now that we have dsi_mgr_bridge_power_off(), it feels as if we
-> should be calling it in dsi_mgr_bridge_post_disable(). That would make
-> some sense, but doing so would change the current behavior and thus
-> should be a separate patch. Specifically:
-> * dsi_mgr_bridge_post_disable() always calls dsi_mgr_phy_disable()
->    even in the slave-DSI case of bonded DSI. We'd need to add special
->    handling for this if it's truly needed.
-> * dsi_mgr_bridge_post_disable() calls msm_dsi_phy_pll_save_state()
->    midway through the poweroff.
-> * dsi_mgr_bridge_post_disable() has a different order of some of the
->    poweroffs / IRQ disables.
-> For now we'll leave dsi_mgr_bridge_post_disable() alone.
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+Hi Greg,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 2/10/2023 2:49 PM, Wesley Cheng wrote:
+> Hi Greg,
+> 
+> On 1/28/2023 5:28 AM, Greg KH wrote:
+>> On Wed, Jan 25, 2023 at 07:14:14PM -0800, Wesley Cheng wrote:
+>>> Allow for different platforms to be notified on USB SND 
+>>> connect/disconnect
+>>> seqeunces.  This allows for platform USB SND modules to properly 
+>>> initialize
+>>> and populate internal structures with references to the USB SND chip
+>>> device.
+>>>
+>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>>> ---
+>>>   sound/usb/card.c | 28 ++++++++++++++++++++++++++++
+>>>   sound/usb/card.h | 20 ++++++++++++++++++++
+>>>   2 files changed, 48 insertions(+)
+>>>
+>>> diff --git a/sound/usb/card.c b/sound/usb/card.c
+>>> index 26268ffb8274..803230343c16 100644
+>>> --- a/sound/usb/card.c
+>>> +++ b/sound/usb/card.c
+>>> @@ -117,6 +117,24 @@ MODULE_PARM_DESC(skip_validation, "Skip unit 
+>>> descriptor validation (default: no)
+>>>   static DEFINE_MUTEX(register_mutex);
+>>>   static struct snd_usb_audio *usb_chip[SNDRV_CARDS];
+>>>   static struct usb_driver usb_audio_driver;
+>>> +static struct snd_usb_platform_ops *platform_ops;
+>>
+>> You can not have a single "platform_ops" pointer, this HAS to be
+>> per-bus.
+>>
+> 
+> Agreed.
+> 
 
--- 
-With best wishes
-Dmitry
+I looked at seeing how we could implement this at a per bus level, but 
+the USB class driver model doesn't exactly have a good framework for 
+supporting this.  Reason being is because, at the time of the USB SND 
+class driver initialization, there is a big chance that there isn't a 
+USB bus registered in the system, so the point of adding the operations 
+is not clear.  However, we need to ensure that we've added the 
+platform/driver operations before any USB SND devices are detected.
 
+To add to the above, in case of OTG/DRD (dual role) designs, the USB 
+HCD/bus isn't created until we move into the host role.  At that time, 
+using DWC3 as an example, we will create the XHCI platform device, and 
+probe the USB HCD, where a USB bus is created.
+
+In general, we currently think this USB offload driver should co-exist 
+with the USB SND class driver, which handles all devices connected 
+across every bus.  We can add a check to the platform connect routine to 
+ensure that there is a reference to the USB backend.  If so, then that 
+particular USB bus/sysdev can be supported by the audio DSP.  That way, 
+we do not falsely populate USB SND cards which are present on another 
+USB bus/controller.
+
+Thanks
+Wesley Cheng
