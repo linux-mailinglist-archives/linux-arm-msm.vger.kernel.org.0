@@ -2,144 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 149DB6A53B3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 08:31:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CA946A5449
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 09:19:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229712AbjB1Hbh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 02:31:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53232 "EHLO
+        id S230318AbjB1ITc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 03:19:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229915AbjB1Hbd (ORCPT
+        with ESMTP id S230183AbjB1ITb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 02:31:33 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F4851167F;
-        Mon, 27 Feb 2023 23:31:01 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Tue, 28 Feb 2023 03:19:31 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3CAFEC46;
+        Tue, 28 Feb 2023 00:19:29 -0800 (PST)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4CD9460FF9;
-        Tue, 28 Feb 2023 07:31:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D778C4339B;
-        Tue, 28 Feb 2023 07:30:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1677569459;
-        bh=e6s4tpTO5in76O06wuyEcoiAxV018g78W3FW7CWNMG8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JmEu1GdtX8gza/6UTwGHjaJOKfGTpyVRZty6nHoB8l3XBYVjcnHFvZuVD8uvAxHWu
-         dvRJX31VrceN5IU2JK5gI4TmGk0hJy8ACiJJyk4+FAjShY4+Rg1xxlVx7K4AkHVlNh
-         9CLm3iCWZAZcdGukKvVwqxtbOhrftl2jqQBTKcAE=
-Date:   Tue, 28 Feb 2023 08:30:57 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
-        perex@perex.cz, lgirdwood@gmail.com, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, Thinh.Nguyen@synopsys.com,
-        broonie@kernel.org, bgoswami@quicinc.com, tiwai@suse.com,
-        robh+dt@kernel.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
-        quic_plai@quicinc.com
-Subject: Re: [RFC PATCH v2 12/22] sound: usb: card: Introduce USB SND
- platform op callbacks
-Message-ID: <Y/2tsfGGzAlLzxwd@kroah.com>
-References: <20230126031424.14582-1-quic_wcheng@quicinc.com>
- <20230126031424.14582-13-quic_wcheng@quicinc.com>
- <Y9Ui82OaI54Qx8Ft@kroah.com>
- <2c062ab0-905c-f1fe-eca2-02e23cc9fa6f@quicinc.com>
- <5e5c6481-8d5d-dc3f-e40e-986e3ac30387@quicinc.com>
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 52A386602E18;
+        Tue, 28 Feb 2023 08:19:27 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1677572368;
+        bh=fVVg1Oe8kqqB/BkhS1jgx+11KmQgwD13uKhiAsbngls=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=nO1R7DBBcZRJXbkS/4Q9JMHKaByMPOYF6twaPuQC0x0mlQ64uYAZ6L5fpJ8UP/Ldp
+         cRz6cmWxej3svM0Bw0sdUu0MdPwO3S3pq9zrkeOht9dph+Et3I5r/XlDW8/Hzp9JMP
+         c9Mgw6YCNXsgLxDyxaSqhl5bZPcnYJu7DJmo88ETktaPsbH72qGxZUpsfOGBsTfCvz
+         H4RcBAHmYEQTqFnQWKjDAm1ttYy9WyCbOb9aFJB4JRc7ArUk/GpBmVSOgATTdEPPb+
+         pMx3jb2lrUQp4geUGEiUIgly2Zvhc0HPVH3E4zzr9mJrlHVYdqc5agCbVPqO1L1dW3
+         DLpp8QuoYqPig==
+Message-ID: <5e7f9d22-b918-bdfc-931c-0e679c1e946d@collabora.com>
+Date:   Tue, 28 Feb 2023 09:19:24 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5e5c6481-8d5d-dc3f-e40e-986e3ac30387@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v10 5/6] soc: qcom: Add support for Core Power Reduction
+ v3, v4 and Hardened
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <nks@flawful.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+References: <20230217-topic-cpr3h-v10-0-67aed8fdfa61@linaro.org>
+ <20230217-topic-cpr3h-v10-5-67aed8fdfa61@linaro.org>
+ <153ef3e0-9978-d201-44ad-3a5e55eeef4f@linaro.org>
+ <8c105a4f-f450-8fbf-ff0b-5629a47c1463@collabora.com>
+ <d2784517-0f0c-43a5-63a6-57f6aa3e5912@linaro.org>
+ <8a813713-c60d-4726-0c62-de032db99ede@collabora.com>
+ <CAA8EJpprXe3k6Kecg6v-QHT-qP=QjimFZFpLWjPqky3M=J+x+A@mail.gmail.com>
+Content-Language: en-US
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <CAA8EJpprXe3k6Kecg6v-QHT-qP=QjimFZFpLWjPqky3M=J+x+A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 27, 2023 at 06:59:32PM -0800, Wesley Cheng wrote:
-> Hi Greg,
+Il 27/02/23 14:20, Dmitry Baryshkov ha scritto:
+> On Mon, 27 Feb 2023 at 15:06, AngeloGioacchino Del Regno
+> <angelogioacchino.delregno@collabora.com> wrote:
+>>
+>> Il 27/02/23 13:01, Dmitry Baryshkov ha scritto:
+>>>
+>>> I took a glance at the 'cpufreq: qcom-hw: Implement CPRh aware OSM programming'
+>>> patch, it doesn't seem to use the header (maybe I checked the older version of the
+>>> patch). As for me, this is another signal that cpr_ext_data should come together
+>>> with the LUT programming rather than with the CPRh itself.
+>>>
+>>>> Konrad, perhaps you can send the cpufreq-hw commits in a separate series, in
+>>>> which cover letter you mention a dependency on this one?
+>>>> That would *clearly* show the full picture to reviewers.
+>>>
+>>> Yes, that would be great. A small note regarding those patches. I see that you
+>>> patched the qcom-cpufreq-hw.c. This way first the driver programs the LUT, then it
+>>> reads it back to setup the OPPs. Would it be easier to split OSM-not-programmed
+>>> driver?
+>>>
+>>
+>> When I engineered that solution, I kept the cpufreq-hw reading *again* the values
+>> from OSM to keep the driver *fully* compatible with the bootloader-programmed OSM
+>> flow, which makes one thing (in my opinion) perfectly clear: that programming
+>> sequence is exactly the same as what happens "under the hood" on SDM845 (and later)
+>> but performed here-instead-of-there (linux instead of bootloader), with the actual
+>> scaling driver being 100% the same between the two flows in the end.
+>>
+>> Having two drivers as you suggested would indeed achieve the same, but wouldn't be
+>> any easier... if you do that, you'd have to *somehow* make sure that the
+>> programming driver does its job before the cpufreq driver tries to read the OSM
+>> status, adding one more link to an already long chain.
+>>
+>> Besides, I remember that this question got asked a while ago on the mailing lists
+>> and there was a short discussion about it:
+>>
+>> https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg2555580.html
 > 
-> On 2/10/2023 2:49 PM, Wesley Cheng wrote:
-> > Hi Greg,
-> > 
-> > On 1/28/2023 5:28 AM, Greg KH wrote:
-> > > On Wed, Jan 25, 2023 at 07:14:14PM -0800, Wesley Cheng wrote:
-> > > > Allow for different platforms to be notified on USB SND
-> > > > connect/disconnect
-> > > > seqeunces.  This allows for platform USB SND modules to properly
-> > > > initialize
-> > > > and populate internal structures with references to the USB SND chip
-> > > > device.
-> > > > 
-> > > > Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> > > > ---
-> > > >   sound/usb/card.c | 28 ++++++++++++++++++++++++++++
-> > > >   sound/usb/card.h | 20 ++++++++++++++++++++
-> > > >   2 files changed, 48 insertions(+)
-> > > > 
-> > > > diff --git a/sound/usb/card.c b/sound/usb/card.c
-> > > > index 26268ffb8274..803230343c16 100644
-> > > > --- a/sound/usb/card.c
-> > > > +++ b/sound/usb/card.c
-> > > > @@ -117,6 +117,24 @@ MODULE_PARM_DESC(skip_validation, "Skip
-> > > > unit descriptor validation (default: no)
-> > > >   static DEFINE_MUTEX(register_mutex);
-> > > >   static struct snd_usb_audio *usb_chip[SNDRV_CARDS];
-> > > >   static struct usb_driver usb_audio_driver;
-> > > > +static struct snd_usb_platform_ops *platform_ops;
-> > > 
-> > > You can not have a single "platform_ops" pointer, this HAS to be
-> > > per-bus.
-> > > 
-> > 
-> > Agreed.
-> > 
+> Ack, I see. Maybe splitting LUT programming to a separate source file
+> would emphasise the fact that it is only required for some (older)
+
+Maybe. I'm not sure it's worth adding a new helper file, but I don't really have
+any strong arguments against...
+
+Konrad, your call.
+
+Cheers!
+Angelo
+
+> SoCs. Other than that, I have no additional comments for that series.
 > 
-> I looked at seeing how we could implement this at a per bus level, but the
-> USB class driver model doesn't exactly have a good framework for supporting
-> this.  Reason being is because, at the time of the USB SND class driver
-> initialization, there is a big chance that there isn't a USB bus registered
-> in the system, so the point of adding the operations is not clear.  However,
-> we need to ensure that we've added the platform/driver operations before any
-> USB SND devices are detected.
-
-But the offload "engine" is associated with the specific USB bus
-controller instance in the system, so perhaps you are just not adding
-this to the correct location?
-
-The sound core shouldn't care about this at all, add the logic to the
-USB host controller driver instead, why isn't this just another USB bus
-function?
-
-> To add to the above, in case of OTG/DRD (dual role) designs, the USB HCD/bus
-> isn't created until we move into the host role.  At that time, using DWC3 as
-> an example, we will create the XHCI platform device, and probe the USB HCD,
-> where a USB bus is created.
-
-Great, again, tie it to the specific xhci host controler instance.
-
-> In general, we currently think this USB offload driver should co-exist with
-> the USB SND class driver, which handles all devices connected across every
-> bus.
-
-And that is incorrect, please do not do that.
-
-> We can add a check to the platform connect routine to ensure that
-> there is a reference to the USB backend.  If so, then that particular USB
-> bus/sysdev can be supported by the audio DSP.  That way, we do not falsely
-> populate USB SND cards which are present on another USB bus/controller.
-
-You should NEVER be able to populate a USB card unless the USB bus
-controller has given you the USB interface structure to control, so I do
-not understand how this is an issue.
-
-thanks,
-
-greg k-h
