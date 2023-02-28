@@ -2,107 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8A806A581B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 12:32:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 265516A5838
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Feb 2023 12:34:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229637AbjB1LcX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 06:32:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57414 "EHLO
+        id S231715AbjB1LeI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 06:34:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229841AbjB1LcW (ORCPT
+        with ESMTP id S231748AbjB1Ldz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 06:32:22 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 176139B;
-        Tue, 28 Feb 2023 03:32:17 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DF13D1688;
-        Tue, 28 Feb 2023 03:32:59 -0800 (PST)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4AE1A3F881;
-        Tue, 28 Feb 2023 03:32:14 -0800 (PST)
-Message-ID: <fa09722a-b251-bf60-35af-e6dc45ed9ae4@arm.com>
-Date:   Tue, 28 Feb 2023 11:32:13 +0000
+        Tue, 28 Feb 2023 06:33:55 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BEEE2B619
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 03:33:45 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id g17so12734544lfv.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 03:33:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gksnxxX/SJU2VlO4S7zB6Wz+KfFZU/24XQ8BPKrME5w=;
+        b=NtrmDXViP7EaLyJEdD7F+GwcHKGGv5Q3nGsFLVTXQh22Ev3JjLpBUDCys87d6I80Mt
+         FPKVMcrsiYuHpJX5Q+1XwH4aANtwIc2KPClmfs5gZ8OnXKPHCCBLkwzP/ty6/aj9mwTw
+         e7zvElqY+r7PS3FOpFnwBTMxiwrdyha9+fveC8flGbwOfYKPJ4oyGKcrrE6NNf1hng3Y
+         /N+kq1kpDgCJgueGAGkl4r8apJAVK+mr6y4q9dmGgNEPiPbDKyS6RjaxaaQlJTSJB0Qk
+         Gw3oQFK/Mx7/eePDkC75SftPYjPhWZi27cz+wRAXyEKpgPrYyOUWyG23H+T1R3J0ibQC
+         QSUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gksnxxX/SJU2VlO4S7zB6Wz+KfFZU/24XQ8BPKrME5w=;
+        b=xV+eu4+pue6KfhaOpzh2TxZURyRcLtsl2O2cVsjWWW0nXCYBsPYnJmQZ5bUaYXzNM0
+         Pcnt5mso6hLYDeo9uVFyKYm36AlFXavxZrqbqS5wapo89MMls/SBQ8dGWZhVkiDOfr8+
+         jzNw19h3mB7LfSNEsIgpc2/IL3kPpc4+Pk3ALzTX2i/HNNNS7soJtrWURUEuN7EM6dKS
+         NSk2ynCYHfYxLEHwmQp/lhuGTpbkkKVfW/veiR3W9EafXKSlRlNUfHkJZG9iM+MuEpMl
+         ihDy4/Lfeu4CaTQxm1VFbKAe1DivCvsBY1zv2X7bXh8qRfP+IrSJ6eFMDcenSzpoSL3m
+         12uw==
+X-Gm-Message-State: AO0yUKVuaxNT+W3tRtT12iTRng+RnLx8fHJHivT34EKWwcu0UL5ve/wt
+        j0TQ/RVXJ5abzkS7cU39dDSqCQ==
+X-Google-Smtp-Source: AK7set8LyLZxJ6mqchlZfX9cUnQCtJhEHIcCkYIveiPayIAkSS+07aUaymBatka4CHPDvAxThlXnew==
+X-Received: by 2002:a05:6512:481:b0:4db:ee9:7684 with SMTP id v1-20020a056512048100b004db0ee97684mr681618lfq.56.1677584023607;
+        Tue, 28 Feb 2023 03:33:43 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id h20-20020ac25974000000b004dd0bbc89a1sm1288472lfp.244.2023.02.28.03.33.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Feb 2023 03:33:43 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
+        <ville.syrjala@linux.intel.com>, dri-devel@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 00/10] drm/i915: move DSC RC tables to drm_dsc_helper.c
+Date:   Tue, 28 Feb 2023 13:33:32 +0200
+Message-Id: <20230228113342.2051425-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v2 5/9] coresight-tpdm: Add nodes to set trigger timestamp
- and type
-Content-Language: en-US
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, Tao Zhang <taozha@qti.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>
-References: <1674114105-16651-1-git-send-email-quic_taozha@quicinc.com>
- <1674114105-16651-6-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1674114105-16651-6-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/01/2023 07:41, Tao Zhang wrote:
-> The nodes are needed to set or show the trigger timestamp and
-> trigger type. This change is to add these nodes to achieve these
-> function.
-> 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> Signed-off-by: Tao Zhang <taozha@qti.qualcomm.com>
-> ---
->   drivers/hwtracing/coresight/coresight-tpdm.c | 97 ++++++++++++++++++++++++++++
->   1 file changed, 97 insertions(+)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index c29d667d..1dbb6c4 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -20,6 +20,22 @@
->   
+Other platforms (msm) will benefit from sharing the DSC config setup
+functions. This series moves parts of static DSC config data from the
+i915 driver to the common helpers to be used by other drivers.
 
+Note: the RC parameters were cross-checked against config files found in
+DSC model 2021062, 20161212 (and 20150914). The first patch modifies
+tables according to those config files, while preserving parameter
+values using the code. I have not changed one of the values in the
+pre-SCR config file as it clearly looks like a typo in the config file,
+considering the table E in DSC 1.1 and in the DSC 1.1 SCR.
 
-> +static struct attribute *tpdm_dsb_attrs[] = {
-> +	&dev_attr_dsb_trig_ts.attr,
-> +	&dev_attr_dsb_trig_type.attr,
-> +	NULL,
-> +};
-> +
-> +static struct attribute_group tpdm_dsb_attr_grp = {
-> +	.attrs = tpdm_dsb_attrs,
-> +	.is_visible = tpdm_dsb_is_visible,
-> +};
-> +
->   static const struct attribute_group *tpdm_attr_grps[] = {
->   	&tpdm_attr_grp,
-> +	&tpdm_dsb_attr_grp,
->   	NULL,
->   };
->   
+Dmitry Baryshkov (10):
+  drm/i915/dsc: change DSC param tables to follow the DSC model
+  drm/i915/dsc: move rc_buf_thresh values to common helper
+  drm/i915/dsc: move DSC tables to DRM DSC helper
+  drm/i915/dsc: stop using interim structure for calculated params
+  drm/display/dsc: use flat array for rc_parameters lookup
+  drm/display/dsc: split DSC 1.2 and DSC 1.1 (pre-SCR) parameters
+  drm/display/dsc: include the rest of pre-SCR parameters
+  drm/display/dsc: add YCbCr 4:2:2 and 4:2:0 RC parameters
+  drm/display/dsc: add helper to set semi-const parameters
+  drm/msm/dsi: use new helpers for DSC setup
 
+ drivers/gpu/drm/display/drm_dsc_helper.c  | 1001 +++++++++++++++++++++
+ drivers/gpu/drm/i915/display/intel_vdsc.c |  432 +--------
+ drivers/gpu/drm/msm/dsi/dsi_host.c        |   61 +-
+ include/drm/display/drm_dsc_helper.h      |   10 +
+ 4 files changed, 1058 insertions(+), 446 deletions(-)
 
-Please also add documentation of the new sysfs handles under :
-
-Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm*
-
-Suzuki
+-- 
+2.39.2
 
