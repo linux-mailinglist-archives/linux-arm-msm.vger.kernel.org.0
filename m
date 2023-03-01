@@ -2,142 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECC856A6BB9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 12:32:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AA726A6BFD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 12:58:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229973AbjCALcf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Mar 2023 06:32:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45504 "EHLO
+        id S229492AbjCAL6L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Mar 2023 06:58:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229942AbjCALce (ORCPT
+        with ESMTP id S229813AbjCAL6J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Mar 2023 06:32:34 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52DF63B0C1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 03:32:33 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id u5so10240901plq.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 03:32:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=9ZirgB4Yhckrz+KQPfBVSWT970rRQ3ZJ8hkrrrImAKU=;
-        b=fRUdo55YP+kpu+u7n/mRlMz0zACEsCL0MUGAInvz87WT0+d7aF0Ewv90GNOD4R7u+E
-         /uNIPY+sgorcaWXpnxnvf8Xg8VZXF/M4YovQEl3xc4m1tqjMDAWstYEllwUHHrIZ/bq2
-         koEz4VPy+FeqN/Hew4KCEZJxO0xRZyaEQk1R78gH45QBRrFmGyUMViWLky6KCvkOi/Ar
-         FxbIPMEZT8qY3fDLNO5PC1sbYTAE0zRwe4n6Q3fmeOQlqxcNn4/rEswo2cSqPtwh2+rm
-         jmPpmqT87oqyDEyljODM4JbQcIf8l8Pun1lIkLGGOyuLHXQb5OMYQEzLr/+Pyaz4JzSO
-         TKDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9ZirgB4Yhckrz+KQPfBVSWT970rRQ3ZJ8hkrrrImAKU=;
-        b=xk5MnrT8nd8jRhs7X0stK29fl5X3Ls6JeX/ouRj64Ye4xtK+MI3B66Ddcmj2zgBPqy
-         BkEv0yyIeyyJ/KIfOib3lFiUD5FDScJwFFw2ed1JbPQJQ5OJc9oQtt4VrtXW7hDAVQOX
-         RyTlI6QZGiX3imR0yGpFDqmnSu920hfo94WqCoSA215Ai537+q+FykJtK+z/Bs/8mt7f
-         Knt5Qp/rpCoXUx1C6YjEBdp4+8j94dZ+BHMCkbvhoBs1zdvRMMSG5R/hB5T0s2mqH++P
-         b5+eNL/Vjii22RxX2iSJ7D4UATghWhnS14kZpNCjgfHKYRPtQREyj5eXQYBpjzTwN7Bc
-         F3dg==
-X-Gm-Message-State: AO0yUKW28KkKOybor+3UYIsiLjWp3hYc4nxDDFo2qIf45hC2gtTuLI3o
-        wLEO1ki9mRtBXIziTAFH7T2f
-X-Google-Smtp-Source: AK7set/5zhlQ2n8EhkA2dk9M3y3CXiNyF31mQ7rxzlsC6LRSNjj/8Hi1X8Tcre/ZzbggK6znrmiM4w==
-X-Received: by 2002:a17:90a:190f:b0:233:c9e7:c885 with SMTP id 15-20020a17090a190f00b00233c9e7c885mr7009726pjg.36.1677670352586;
-        Wed, 01 Mar 2023 03:32:32 -0800 (PST)
-Received: from thinkpad ([220.158.159.248])
-        by smtp.gmail.com with ESMTPSA id q26-20020a63751a000000b00502e6c22c42sm7122236pgc.59.2023.03.01.03.32.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Mar 2023 03:32:32 -0800 (PST)
-Date:   Wed, 1 Mar 2023 17:02:27 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        arnd@arndb.de
-Subject: Re: [PATCH 00/16] Qcom: Fix PCI I/O range defined in devicetree
-Message-ID: <20230301113227.GE5409@thinkpad>
+        Wed, 1 Mar 2023 06:58:09 -0500
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07AB515891;
+        Wed,  1 Mar 2023 03:58:08 -0800 (PST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id B40215C004A;
+        Wed,  1 Mar 2023 06:58:04 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute6.internal (MEProxy); Wed, 01 Mar 2023 06:58:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm3; t=1677671884; x=1677758284; bh=DW3WbC75cz
+        X0LV0l9cu2j+K1Qv1UGQIUsfyeJalR0c4=; b=hLq3+W3boNQL75WBk1+3ShBkTz
+        9Gh0/EoeQQYqXomMVJ2NuF+8u8PZb5Yk0MyShtm+eBI25C6o21OiZbRYuvYFUe+F
+        6FkWSlDyP83+aDWERuh+uK/b4vp6kJQ0/rJjTHj4dGv8X+yXL5nD4+bU0+BcAary
+        hL/ZaSoDuYfUoD7p/RaCWT6pNQ6DiBICr4cMHBWhMt2+kMR0z/tUNGMCskCSL3qr
+        lhwhyxsPfeqWGyvGo5XGT1WghlMzUEO+/nvJlCuRFInJET99GG3mMIEVuY6vVCPJ
+        Sh/wpFENA4zLWZr/vS+cl4NzPJ2ltzZBr2Gcf5y6qc7Zn4juWPyYcc6eCnJQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm1; t=1677671884; x=1677758284; bh=DW3WbC75czX0LV0l9cu2j+K1Qv1U
+        GQIUsfyeJalR0c4=; b=FMRjJwkS5K+X0aFn3FqMwzUeQvzq24yiOf+kGLzFq802
+        GwWWIeTctc4rEWpiJOHb5MAlCY2y+yoX3OCo+bomfyTKKBTanmGg7CgPgE9lCuaT
+        hvaK/A32KlqwNGHJx8kejNtNWanZnLzLXPZRlz1xQtvpmhr9uMiR4BbiZi5eOFlr
+        YNE52w2HH7Ruj0hWR0wLDYGeytrbBCMuyfN+LV8e0bjHwixKQcGXkYJgQYZVWdv6
+        7SNMdGWoi442mXiwOHywwbO1zWqkpXVT55a6jcKDqHWamCOy6w1iB4wm8OQoVoSI
+        9OqSr5xTC4EgVpVkdT2MB3gRR9olb6Eg5b/Qz43+UA==
+X-ME-Sender: <xms:zD3_YwXkzxdEZqNJQiYdHWpLYWWAizy_YX87cx7F8FJi46zWkUoIAg>
+    <xme:zD3_Y0mw8rwNKTnXL08Ts6EHKbcWfUp0rkt7y6gsDrfBo_H96PwleH3Y_RohzZBt_
+    xYQKZ0s8R0Fp5VX2RY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudelhedgvdejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
+    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
+    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
+    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+    hrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:zD3_Y0b9YkYTaGxkS5tu06FYE_gtq5VGduPopIRcDwUdSBjji3TAxQ>
+    <xmx:zD3_Y_UmHl0K0n8H82M33u8R27OhwF1TQiCxVLvXmZjL3V3MyZfvgw>
+    <xmx:zD3_Y6l49lj89V8sSB879wFyYG5jsWP9TqhwkTrRQQRV9vsLVcgwOQ>
+    <xmx:zD3_Yxv2m2lLI9T2cS9dwHSC0IgZab28m-P3A3NiswR_TSD0V27H1w>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 685B9B60086; Wed,  1 Mar 2023 06:58:04 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-183-gbf7d00f500-fm-20230220.001-gbf7d00f5
+Mime-Version: 1.0
+Message-Id: <b19a25bd-7fa1-4220-b8d6-919399a9e7d7@app.fastmail.com>
+In-Reply-To: <20230301112935.GD5409@thinkpad>
 References: <20230228164752.55682-1-manivannan.sadhasivam@linaro.org>
- <20230228172952.nfjce7cjos6tume3@halaney-x13s>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230228172952.nfjce7cjos6tume3@halaney-x13s>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ <c5e36887-f84d-40ef-bef9-8a3947bbb73f@app.fastmail.com>
+ <20230301112935.GD5409@thinkpad>
+Date:   Wed, 01 Mar 2023 12:57:43 +0100
+From:   "Arnd Bergmann" <arnd@arndb.de>
+To:     "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>
+Cc:     "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 00/16] Qcom: Fix PCI I/O range defined in devicetree
+Content-Type: text/plain
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 28, 2023 at 11:29:52AM -0600, Andrew Halaney wrote:
-> On Tue, Feb 28, 2023 at 10:17:36PM +0530, Manivannan Sadhasivam wrote:
-> > Hi,
-> > 
-> > This series fixes the issue with PCI I/O ranges defined in devicetree of
-> > Qualcomm SoCs as reported by Arnd [1]. Most of the Qualcomm SoCs define
-> > identical mapping for the PCI I/O range. But the PCI device I/O ports
-> > are usually located between 0x0 to 64KiB/1MiB. So the defined PCI addresses are
-> > mostly bogus. The lack of bug report on this issue indicates that no one really
-> > tested legacy PCI devices with these SoCs.
-> > 
-> > This series also contains a couple of cleanup patches that aligns the entries of
-> > ranges property.
-> > 
-> > Thanks,
-> > Mani
-> > 
-> > [1] https://lore.kernel.org/linux-arm-msm/7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com/
-> > 
-> > Manivannan Sadhasivam (16):
-> >   arm64: dts: qcom: sdm845: Fix the PCI I/O port range
-> >   arm64: dts: qcom: msm8998: Fix the PCI I/O port range
-> >   arm64: dts: qcom: sc7280: Fix the PCI I/O port range
-> >   arm64: dts: qcom: sm8550: Fix the PCI I/O port range
-> >   arm64: dts: qcom: ipq8074: Fix the PCI I/O port range
-> >   arm64: dts: qcom: ipq6018: Fix the PCI I/O port range
-> >   arm64: dts: qcom: msm8996: Fix the PCI I/O port range
-> >   arm64: dts: qcom: sm8250: Fix the PCI I/O port range
-> >   arm64: dts: qcom: qcs404: Use 0x prefix for the PCI I/O and MEM ranges
-> >   arm64: dts: qcom: sc8280xp: Fix the PCI I/O port range
-> >   arm64: dts: qcom: sm8150: Fix the PCI I/O port range
-> >   arm64: dts: qcom: sm8450: Fix the PCI I/O port range
-> >   arm64: dts: qcom: sm8350: Fix the PCI I/O port range
-> >   ARM: dts: qcom: apq8064: Use 0x prefix for the PCI I/O and MEM ranges
-> >   ARM: dts: qcom: ipq4019: Fix the PCI I/O port range
-> >   ARM: dts: qcom: ipq8064: Fix the PCI I/O port range
-> > 
-> >  arch/arm/boot/dts/qcom-apq8064.dtsi    |  4 ++--
-> >  arch/arm/boot/dts/qcom-ipq4019.dtsi    |  4 ++--
-> >  arch/arm/boot/dts/qcom-ipq8064.dtsi    | 12 ++++++------
-> >  arch/arm64/boot/dts/qcom/ipq6018.dtsi  |  4 ++--
-> >  arch/arm64/boot/dts/qcom/ipq8074.dtsi  | 12 ++++--------
-> >  arch/arm64/boot/dts/qcom/msm8996.dtsi  | 12 ++++++------
-> >  arch/arm64/boot/dts/qcom/msm8998.dtsi  |  2 +-
-> >  arch/arm64/boot/dts/qcom/qcs404.dtsi   |  4 ++--
-> 
-> Would you mind giving sa8540p.dtsi to similiar treatment? I will admit
-> I know next to nothing about PCI techically, so I can't even comment
-> with confidence that this is needed there, but it looks similar to other
-> descriptions modified in this patch series.
-> 
->     https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/sa8540p.dtsi#n197
+On Wed, Mar 1, 2023, at 12:29, Manivannan Sadhasivam wrote:
+> On Tue, Feb 28, 2023 at 05:58:37PM +0100, Arnd Bergmann wrote:
+>> On Tue, Feb 28, 2023, at 17:47, Manivannan Sadhasivam wrote:
+>> > Hi,
+>> >
+>> > This series fixes the issue with PCI I/O ranges defined in devicetree of
+>> > Qualcomm SoCs as reported by Arnd [1]. Most of the Qualcomm SoCs define
+>> > identical mapping for the PCI I/O range. But the PCI device I/O ports
+>> > are usually located between 0x0 to 64KiB/1MiB. So the defined PCI addresses are
+>> > mostly bogus. The lack of bug report on this issue indicates that no one really
+>> > tested legacy PCI devices with these SoCs.
+>> >
+>> > This series also contains a couple of cleanup patches that aligns the entries of
+>> > ranges property.
+>> 
+>> Looks good to me. I already commented that we may also want to use
+>> 64KB everywhere instead of 1MB for the per-host window size.
+>
+> I also spotted this discrepancy while working on this series, but the size
+> seems to be not universal across SoCs from many vendors. So I settled with
+> whatever range that was used before.
 
-Ah, I didn't spot the separate ranges used for this SoC. Will fix it in next
-revision.
+Makes sense. We could add another patch if necessary of course, and
+it probably doesn't matter much. OTOH I don't think there is anything
+SoC specific in this and we used to just truncate this to 64KB per
+domain. It's only really a problem if the total size of the I/O ports
+for all domains in a system exceeds the 16MB of virtual memory area.
 
-Thanks,
-Mani
-
-> 
-> Thanks,
-> Andrew
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+     Arnd
