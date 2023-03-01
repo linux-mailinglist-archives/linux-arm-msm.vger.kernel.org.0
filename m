@@ -2,132 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37CB86A728B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 19:04:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 345586A72A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 19:07:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229771AbjCASEa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Mar 2023 13:04:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35148 "EHLO
+        id S229652AbjCASHr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Mar 2023 13:07:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229525AbjCASE3 (ORCPT
+        with ESMTP id S230007AbjCASHp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Mar 2023 13:04:29 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 007C31990;
-        Wed,  1 Mar 2023 10:04:27 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 321H5UYW003769;
-        Wed, 1 Mar 2023 18:04:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Q0zdVJDzr22M4csdbIqednl0Qpg1rg7ayxs2WRyps/I=;
- b=AjuCYAkKdUR9NyWHt4x+5kAB+Zyj8Uon5tWafHvcNsdWinkDjTmhg7CWdMOG3IMa71PH
- 2Hsp0XvVc/PkqrIZDGIHzvIDRRahJdazIOB4KBjW3PK99MMe4gVH0dJVadvVY2qYf5Kk
- Tzo2vV7GF0h9i2xXqA3QJ6v5R8kVLZKLAQUXB23T/o9IGhRveUmAjtOHiK4g/4Qo+L7e
- NmDL/pjg2LG3pWmv7zYfw1ACfRoxqlE4lwhitGOEMiV6zsGW2n6PYCOipnfP7udAWDxJ
- KMwIZeIaLh8JmM81HcgBZSgJVVDpjcXrIT7WVt5q9pJKHNOdG2lnmSZY80LyaVrE++ji Xg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p2aspr6s9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 01 Mar 2023 18:04:02 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 321I419T029012
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 1 Mar 2023 18:04:01 GMT
-Received: from [10.110.81.49] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 1 Mar 2023
- 10:03:59 -0800
-Message-ID: <41d287fa-3a0a-cac6-4595-ad47ef873d79@quicinc.com>
-Date:   Wed, 1 Mar 2023 10:03:58 -0800
+        Wed, 1 Mar 2023 13:07:45 -0500
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 889F0B464;
+        Wed,  1 Mar 2023 10:07:44 -0800 (PST)
+Received: by mail-pj1-f43.google.com with SMTP id qa18-20020a17090b4fd200b0023750b675f5so72674pjb.3;
+        Wed, 01 Mar 2023 10:07:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fz6WOZ/z5lwtTAg8FqEkEPXRRvxotq7sY4hiW57q0Vo=;
+        b=z5p+0eGYgWq0Uq61esGr6ir+1SX+VjyviJ5xjkQe5gV6BAASHRcRBuZKRZnYRiBGi6
+         i695Xkm5HW/Ru/77Kd5qWTgMhVpLbdG9xAh+IIStGIG9AT1PIHB1DO0XzOYguPdBxpNs
+         56sk+swjNUVme4LWo+YbLXLisuizB2JT6kfLSxi/Uv3si/vnhd+WrrqTt8ifrNle3mTE
+         yQsJAM4DHAC52KIkmx/SWp2bLjroxNIUTXWQe34z/6Jv7K0lVGdEUqKf96QzcfvA+tmA
+         EcnSnA8pWvYX15TIxbkcuT4lP1TaBnwEFs9uJacrCy403NBFNOXqsB/v9NvxHFzNbths
+         JItA==
+X-Gm-Message-State: AO0yUKVZG/uXPXc8ADYZklpEqWlItoowC6BKhWQrOjOiHQfqUX5lNoVJ
+        w5St6BwisHARyvJcNWWn9PCf0sxxzIQ=
+X-Google-Smtp-Source: AK7set9JhYtmNMV7lCXdQ9mo54Y2U1aBntVSGSDCFpGeGYqdnoGmlTk21DhG8GfJwnoV5I2xt7Rfug==
+X-Received: by 2002:a05:6a20:65b0:b0:cc:dd86:ca27 with SMTP id p48-20020a056a2065b000b000ccdd86ca27mr6552688pzh.17.1677694063831;
+        Wed, 01 Mar 2023 10:07:43 -0800 (PST)
+Received: from ?IPV6:2620:15c:211:201:e8e:76a3:8425:6d37? ([2620:15c:211:201:e8e:76a3:8425:6d37])
+        by smtp.gmail.com with ESMTPSA id a6-20020a631a46000000b004fc1d91e695sm7682911pgm.79.2023.03.01.10.07.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Mar 2023 10:07:43 -0800 (PST)
+Message-ID: <a3c08b5f-b8cb-fdd9-eb60-b1adc2879fff@acm.org>
+Date:   Wed, 1 Mar 2023 10:07:41 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2 0/2] Validating UAPI backwards compatibility
-To:     Nick Desaulniers <ndesaulniers@google.com>
-CC:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Todd Kjos <tkjos@google.com>,
-        Matthias Maennich <maennich@google.com>,
-        Giuliano Procida <gprocida@google.com>,
-        <kernel-team@android.com>, <libabigail@sourceware.org>,
-        Jordan Crouse <jorcrous@amazon.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Satya Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>
-References: <20230301075402.4578-1-quic_johmoo@quicinc.com>
- <CAKwvOdmqShYae=DrwP1JZBYXAYZyDB0SaOkVCvCzQC60MaJcpw@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH] ufs: host: ufs-qcom: Return directly if MCQ resource is
+ provided in DT
 Content-Language: en-US
-From:   John Moon <quic_johmoo@quicinc.com>
-In-Reply-To: <CAKwvOdmqShYae=DrwP1JZBYXAYZyDB0SaOkVCvCzQC60MaJcpw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: cbtX0ENhKptLgq19VBYYROGSZhnEkE_y
-X-Proofpoint-ORIG-GUID: cbtX0ENhKptLgq19VBYYROGSZhnEkE_y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-01_13,2023-03-01_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 mlxscore=0 bulkscore=0 phishscore=0 mlxlogscore=999
- malwarescore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2303010144
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        jejb@linux.ibm.com, martin.petersen@oracle.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_asutoshd@quicinc.com
+References: <20230301073110.9083-1-manivannan.sadhasivam@linaro.org>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20230301073110.9083-1-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/1/2023 9:50 AM, Nick Desaulniers wrote:
-> On Tue, Feb 28, 2023 at 11:54 PM John Moon <quic_johmoo@quicinc.com> wrote:
->>
->> Currently, the script works with gcc. It generates output like this when
->> a backwards-incompatible change is made to a UAPI header:
->>
->>   !!! ABI differences detected in include/uapi/linux/acct.h (compared to
->>   file at HEAD^1) !!!
->>
->>       [C] 'struct acct' changed:
->>         type size changed from 512 to 544 (in bits)
->>         1 data member insertion:
->>           '__u32 new_val', at offset 512 (in bits) at acct.h:71:1
->>
->>   0/1 UAPI header file changes are backwards compatible
->>   UAPI header ABI check failed
->>
->> However, we have not had success with clang. It seems clang is more
->> aggressive in optimizing dead code away (no matter which options we
->> pass). Therefore, no ABI differences are found.
+On 2/28/23 23:31, Manivannan Sadhasivam wrote:
+> Instead of using a goto label to return, let's return directly in the
+> "if" condition after setting mcq_base.
 > 
-> Hi John,
-> Do you have the list of bugs you've filed upstream against clang wrt.
-> information missing when using `-fno-eliminate-unused-debug-types`?
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>   drivers/ufs/host/ufs-qcom.c | 9 ++++-----
+>   1 file changed, 4 insertions(+), 5 deletions(-)
 > 
-> https://github.com/llvm/llvm-project/issues is the issue tracker.
-> 
-> Seeing a strong participant in both the Android and LLVM ecosystems
-> supply scripts that lack clang support...raises eyebrows.
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 34fc453f3eb1..d90f963eed02 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1460,8 +1460,10 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
+>   	/* MCQ resource provided in DT */
+>   	res = &hba->res[RES_MCQ];
+>   	/* Bail if MCQ resource is provided */
+> -	if (res->base)
+> -		goto out;
+> +	if (res->base) {
+> +		hba->mcq_base = res->base;
+> +		return 0;
+> +	}
+>   
+>   	/* Explicitly allocate MCQ resource from ufs_mem */
+>   	res_mcq = devm_kzalloc(hba->dev, sizeof(*res_mcq), GFP_KERNEL);
+> @@ -1489,9 +1491,6 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
+>   		goto ioremap_err;
+>   	}
+>   
+> -out:
+> -	hba->mcq_base = res->base;
+> -	return 0;
+>   ioremap_err:
+>   	res->base = NULL;
+>   	remove_resource(res_mcq);
 
-We have not filed a bug with upstream clang since we're not sure it's 
-*not* and issue on our end. Giuliano Procida (CC'd) has tested the 
-script with clang 13 and 14 and GCC 10, 11 and 12 and got the expected 
-diff. If it's convenient for anyone testing this script to give it a 
-whirl with clang and report back, it could help us determine if there's 
-a real issue with clang support. :)
+This patch changes the behavior for the success case without mentioning 
+this in the patch description. So I assume that the behavior change is 
+unintentional and hence that this patch should be dropped?
+
+Bart.
