@@ -2,189 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D964A6A73FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 20:06:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D14D26A7431
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 20:24:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229544AbjCATGe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Mar 2023 14:06:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45362 "EHLO
+        id S229555AbjCATYo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Mar 2023 14:24:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbjCATGd (ORCPT
+        with ESMTP id S229462AbjCATYo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Mar 2023 14:06:33 -0500
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B57BF48E3E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 11:06:32 -0800 (PST)
-Received: by mail-il1-x129.google.com with SMTP id i12so8944253ila.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 11:06:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4nKAIImYnR4VY+mZrL40T8w+LQbikOjFpNewqlXCyj8=;
-        b=OV8S586G9AFm1/8w9oYCFIsznJuud/neA8wqia26BClD7KXP2fGeGaDSsVRI8TIL37
-         4io6dzUbTNvMTMEN1uTw4P/Dv4z7VnZh6cp25YrBJ2G6r35Jszp2pJQSK3255wnfYC4j
-         h9AZfEPujFC6V+vLfeqxylvCcgQFSaDqrbeN4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4nKAIImYnR4VY+mZrL40T8w+LQbikOjFpNewqlXCyj8=;
-        b=FFmEkyNRIzNx7uNxO60AUUGJm0EMSGcuhUE4y2+/gETOuMB3rSR8baRQtjQ4M6r0+W
-         hjNwmaPaoTwL1RyJKCNQwCwc8PhMqtP7GuWbu+P3+VNAqcYJ24DTSBZ4cNUqhYLCx2sv
-         2Q3vHp9tJxdoIqAnRnr54qyZ6R6Tm0HLVHA8nwo7Iw1yO/ePO03DV2+vZME3tReMt2ei
-         ynSSQy8w506wtOstQgVKRnMFO+9oPjxCAbNVzIeOCOdMlI/Y4SfCKnOlJkYVU2w8aWQI
-         X34g6rP12EnarklOcRZLhkQyc3khEvfRHYbTN8ylmglttAAvk5/BOuQDhq9qRZReyNWd
-         zsbg==
-X-Gm-Message-State: AO0yUKVc3wvo7crWR/PteZNrbf6jZPZRD0x2x3X+DPKQbivyQfNFqOCN
-        WO4sQnw7wNOjZrayJtNrR5zPYtLmugAWcF8G
-X-Google-Smtp-Source: AK7set+m0nPqH1GOx329wgWsVpZfer9lAVTj/xJAW17WJZhGd9PVADlDca1htRm6EcDElm/sYodUSA==
-X-Received: by 2002:a05:6e02:1a6b:b0:316:ac37:1692 with SMTP id w11-20020a056e021a6b00b00316ac371692mr6836241ilv.1.1677697591637;
-        Wed, 01 Mar 2023 11:06:31 -0800 (PST)
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com. [209.85.166.41])
-        by smtp.gmail.com with ESMTPSA id t8-20020a92dc08000000b00315995ad15bsm3732989iln.81.2023.03.01.11.06.30
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Mar 2023 11:06:31 -0800 (PST)
-Received: by mail-io1-f41.google.com with SMTP id q6so5811233iot.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 11:06:30 -0800 (PST)
-X-Received: by 2002:a02:858c:0:b0:3c5:1971:1b7f with SMTP id
- d12-20020a02858c000000b003c519711b7fmr3401570jai.6.1677697590506; Wed, 01 Mar
- 2023 11:06:30 -0800 (PST)
+        Wed, 1 Mar 2023 14:24:44 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBD4223309;
+        Wed,  1 Mar 2023 11:24:42 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 321I17SW027768;
+        Wed, 1 Mar 2023 19:24:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=4hmOo7FaxBhqe/Ieuk7y0ebkwJe77i4ZNugorKt2Xhg=;
+ b=WaNJFqzC2cxdlZb75wtixAFM+TZW7sdI5Lal8fCe1SS32EkqD6MFH+OKNBVBqsjGFtEA
+ nVfpX5fsEJz7CBmyBEpLvOylW+AAjAvi6KuRqG6MOPL27H5iMm6QpCqFW2pyfDWSRVOF
+ qbQfqxIVbn1TyPUAz3ovrr9m9kjb6gKjlpgLBhRz+LZtdiXwWdaK7zTUGbpptM/d6KTz
+ 4UOZVUM5uZKd6KSVK3FeitfB3XksUaJckVGlwh8zC3/WALd8u7mhwSgBENDq15wSczMR
+ 2BEWZsPLWcGGu/Zj853RXbK5C3BWP/AG6RHvzmGQpyOYVrhS4xoCaKDG2uG0xa3YgI4U mw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p1vgejx8k-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 01 Mar 2023 19:24:20 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 321JOICF004277
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 1 Mar 2023 19:24:18 GMT
+Received: from [10.110.81.49] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 1 Mar 2023
+ 11:24:16 -0800
+Message-ID: <0c92e7b8-e415-8ad5-14e7-d94f18c3fa25@quicinc.com>
+Date:   Wed, 1 Mar 2023 11:24:15 -0800
 MIME-Version: 1.0
-References: <1676219337-6526-1-git-send-email-quic_vpolimer@quicinc.com>
-In-Reply-To: <1676219337-6526-1-git-send-email-quic_vpolimer@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 1 Mar 2023 11:06:19 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XvjFQ-7KNsW2YQQ-LzJonCcHz_rj-oOhB0jh_99ficKA@mail.gmail.com>
-Message-ID: <CAD=FV=XvjFQ-7KNsW2YQQ-LzJonCcHz_rj-oOhB0jh_99ficKA@mail.gmail.com>
-Subject: Re: [PATCH v13 00/13] Add PSR support for eDP
-To:     Vinod Polimera <quic_vpolimer@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        swboyd@chromium.org, quic_kalyant@quicinc.com,
-        dmitry.baryshkov@linaro.org, quic_khsieh@quicinc.com,
-        quic_vproddut@quicinc.com, quic_bjorande@quicinc.com,
-        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 0/2] Validating UAPI backwards compatibility
+Content-Language: en-US
+From:   John Moon <quic_johmoo@quicinc.com>
+To:     Nick Desaulniers <ndesaulniers@google.com>
+CC:     Masahiro Yamada <masahiroy@kernel.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Todd Kjos <tkjos@google.com>,
+        Matthias Maennich <maennich@google.com>,
+        Giuliano Procida <gprocida@google.com>,
+        <kernel-team@android.com>, <libabigail@sourceware.org>,
+        Jordan Crouse <jorcrous@amazon.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Satya Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>
+References: <20230301075402.4578-1-quic_johmoo@quicinc.com>
+ <CAKwvOdmqShYae=DrwP1JZBYXAYZyDB0SaOkVCvCzQC60MaJcpw@mail.gmail.com>
+ <41d287fa-3a0a-cac6-4595-ad47ef873d79@quicinc.com>
+In-Reply-To: <41d287fa-3a0a-cac6-4595-ad47ef873d79@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: E0zizhCDS3g96j56kAD31RGiXuL1t5pO
+X-Proofpoint-ORIG-GUID: E0zizhCDS3g96j56kAD31RGiXuL1t5pO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-01_14,2023-03-01_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 phishscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ bulkscore=0 impostorscore=0 mlxlogscore=999 spamscore=0 clxscore=1015
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303010155
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 3/1/2023 10:03 AM, John Moon wrote:
+> On 3/1/2023 9:50 AM, Nick Desaulniers wrote:
+>> On Tue, Feb 28, 2023 at 11:54 PM John Moon <quic_johmoo@quicinc.com> 
+>> wrote:
+>>>
+>>> Currently, the script works with gcc. It generates output like this when
+>>> a backwards-incompatible change is made to a UAPI header:
+>>>
+>>>   !!! ABI differences detected in include/uapi/linux/acct.h (compared to
+>>>   file at HEAD^1) !!!
+>>>
+>>>       [C] 'struct acct' changed:
+>>>         type size changed from 512 to 544 (in bits)
+>>>         1 data member insertion:
+>>>           '__u32 new_val', at offset 512 (in bits) at acct.h:71:1
+>>>
+>>>   0/1 UAPI header file changes are backwards compatible
+>>>   UAPI header ABI check failed
+>>>
+>>> However, we have not had success with clang. It seems clang is more
+>>> aggressive in optimizing dead code away (no matter which options we
+>>> pass). Therefore, no ABI differences are found.
+>>
+>> Hi John,
+>> Do you have the list of bugs you've filed upstream against clang wrt.
+>> information missing when using `-fno-eliminate-unused-debug-types`?
+>>
+>> https://github.com/llvm/llvm-project/issues is the issue tracker.
+>>
+>> Seeing a strong participant in both the Android and LLVM ecosystems
+>> supply scripts that lack clang support...raises eyebrows.
+> 
+> We have not filed a bug with upstream clang since we're not sure it's 
+> *not* and issue on our end. Giuliano Procida (CC'd) has tested the 
+> script with clang 13 and 14 and GCC 10, 11 and 12 and got the expected 
+> diff. If it's convenient for anyone testing this script to give it a 
+> whirl with clang and report back, it could help us determine if there's 
+> a real issue with clang support. :)
 
-On Sun, Feb 12, 2023 at 8:29=E2=80=AFAM Vinod Polimera
-<quic_vpolimer@quicinc.com> wrote:
->
-> Changes in v2:
->   - Use dp bridge to set psr entry/exit instead of dpu_enocder.
->   - Don't modify whitespaces.
->   - Set self refresh aware from atomic_check.
->   - Set self refresh aware only if psr is supported.
->   - Provide a stub for msm_dp_display_set_psr.
->   - Move dp functions to bridge code.
->
-> Changes in v3:
->   - Change callback names to reflect atomic interfaces.
->   - Move bridge callback change to separate patch as suggested by Dmitry.
->   - Remove psr function declaration from msm_drv.h.
->   - Set self_refresh_aware flag only if psr is supported.
->   - Modify the variable names to simpler form.
->   - Define bit fields for PSR settings.
->   - Add comments explaining the steps to enter/exit psr.
->   - Change DRM_INFO to drm_dbg_db.
->
-> Changes in v4:
->   - Move the get crtc functions to drm_atomic.
->   - Add atomic functions for DP bridge too.
->   - Add ternary operator to choose eDP or DP ops.
->   - Return true/false instead of 1/0.
->   - mode_valid missing in the eDP bridge ops.
->   - Move the functions to get crtc into drm_atomic.c.
->   - Fix compilation issues.
->   - Remove dpu_assign_crtc and get crtc from drm_enc instead of dpu_enc.
->   - Check for crtc state enable while reserving resources.
->
-> Changes in v5:
->   - Move the mode_valid changes into a different patch.
->   - Complete psr_op_comp only when isr is set.
->   - Move the DP atomic callback changes to a different patch.
->   - Get crtc from drm connector state crtc.
->   - Move to separate patch for check for crtc state enable while
-> reserving resources.
->
-> Changes in v6:
->   - Remove crtc from dpu_encoder_virt struct.
->   - fix crtc check during vblank toggle crtc.
->   - Misc changes.
->
-> Changes in v7:
->   - Add fix for underrun issue on kasan build.
->
-> Changes in v8:
->   - Drop the enc spinlock as it won't serve any purpose in
-> protetcing conn state.(Dmitry/Doug)
->
-> Changes in v9:
->   - Update commit message and fix alignment using spaces.(Marijn)
->   - Misc changes.(Marijn)
->
-> Changes in v10:
->   - Get crtc cached in dpu_enc during obj init.(Dmitry)
->
-> Changes in v11:
->   - Remove crtc cached in dpu_enc during obj init.
->   - Update dpu_enc crtc state on crtc enable/disable during self refresh.
->
-> Changes in v12:
->   - Update sc7180 intf mask to get intf timing gen status
-> based on DPU_INTF_STATUS_SUPPORTED bit.(Dmitry)
->   - Remove "clear active interface in the datapath cleanup" change
-> as it is already included.
->
-> Changes in v13:
->   - Move core changes to top of the series.(Dmitry)
->   - Drop self refresh aware disable change after psr entry.(Dmitry)
->
-> Vinod Polimera (13):
->   drm: add helper functions to retrieve old and new crtc
->   drm/bridge: use atomic enable/disable callbacks for panel bridge
->   drm/bridge: add psr support for panel bridge callbacks
->   drm/msm/disp/dpu: check for crtc enable rather than crtc active to
->     release shared resources
->   drm/msm/disp/dpu: get timing engine status from intf status register
->   drm/msm/disp/dpu: wait for extra vsync till timing engine status is
->     disabled
->   drm/msm/disp/dpu: reset the datapath after timing engine disable
->   drm/msm/dp: use atomic callbacks for DP bridge ops
->   drm/msm/dp: Add basic PSR support for eDP
->   drm/msm/dp: use the eDP bridge ops to validate eDP modes
->   drm/msm/disp/dpu: use atomic enable/disable callbacks for encoder
->     functions
->   drm/msm/disp/dpu: add PSR support for eDP interface in dpu driver
->   drm/msm/disp/dpu: update dpu_enc crtc state on crtc enable/disable
->     during self refresh
+With some additional internal testing, we've found that clang does not 
+work with this script on Ubuntu 18.04, but does work on Ubuntu 20.04. 
+This is controlling for the clang version and different installation 
+sources. The same clang-15 binary run on an 18.04 host fails while 
+working on 20.04.
 
-I'm curious what the plan is for landing this series. I could land the
-first two in drm-misc if you want, but I'm a lowly committer and so I
-couldn't make an immutable branch for you nor can I officially Ack the
-changes to land in your branch. That means you'd be blocked for an
-extra version. Do you already have a plan? If not, then maybe we need
-to get in touch with one of the maintainers [1] of drm-misc? That's
-documented [2] to be in their set of responsibilities.
-
-[1] https://drm.pages.freedesktop.org/maintainer-tools/repositories.html#dr=
-m-misc-repository
-[2] https://drm.pages.freedesktop.org/maintainer-tools/maintainer-drm-misc.=
-html#maintainer-s-duties
-
--Doug
+We'll investigate some more internally and potentially file a bug with 
+upstream clang.
