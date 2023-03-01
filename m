@@ -2,97 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAF4D6A71D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 18:08:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB6FC6A71D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 18:08:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229800AbjCARI1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Mar 2023 12:08:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38364 "EHLO
+        id S229437AbjCARIT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Mar 2023 12:08:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbjCARI1 (ORCPT
+        with ESMTP id S229769AbjCARIT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Mar 2023 12:08:27 -0500
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54E792278F;
-        Wed,  1 Mar 2023 09:08:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1677690506; x=1709226506;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=TSRL946VCrVcN13ijj0Qy0zPtQX22bNXoJ0kYvHRn2U=;
-  b=LuRzHbxvJQxkLXQCydwcVLjlitS/lG2x1cr5rSShS+OtacKCi6ft1xeS
-   e7dX6jUwp6FfwXHW30XX/XPiwoWl6j1SumMITtwiCKsy7KAJ8u2+5kpvR
-   vvnERWPsHwU2Cw1miJ7PjoY34AmNqhnS0/WBWCpMp8xd5TyylY2s1nXlQ
-   F0rohK8rGdTbDsHrxhQB3kr/mpSaCSnGF84N/2p3LOUEMMF0Ix28Qrxtt
-   Nk3Z34Qa9Mg4wHwLL1ZpL6fUzHcfnsNDZ9q6uWRa15TG+foslOJ78FIBD
-   TKsgGbIhQEkyeSN27D4uDfQVIWPF0ew6Ym1fxWJ5gU2JLM58E1Tzfxv0q
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10636"; a="314885437"
-X-IronPort-AV: E=Sophos;i="5.98,225,1673942400"; 
-   d="scan'208";a="314885437"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2023 09:05:18 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10636"; a="738703536"
-X-IronPort-AV: E=Sophos;i="5.98,225,1673942400"; 
-   d="scan'208";a="738703536"
-Received: from joe-255.igk.intel.com (HELO localhost) ([10.91.220.57])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2023 09:05:16 -0800
-Date:   Wed, 1 Mar 2023 18:05:14 +0100
-From:   Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        ogabbay@kernel.org, dri-devel@lists.freedesktop.org,
-        quic_ajitpals@quicinc.com, quic_pkanojiy@quicinc.com,
-        quic_carlv@quicinc.com, jacek.lawrynowicz@linux.intel.com
-Subject: Re: [PATCH v2 5/8] accel/qaic: Add datapath
-Message-ID: <20230301170514.GB3963532@linux.intel.com>
-References: <1675698105-19025-1-git-send-email-quic_jhugo@quicinc.com>
- <1675698105-19025-6-git-send-email-quic_jhugo@quicinc.com>
- <20230224152546.GB3547587@linux.intel.com>
- <00914fa9-8618-a3ef-d3c5-2a3bba68fa1f@quicinc.com>
- <20230227171454.GF3547587@linux.intel.com>
- <83543d98-e624-fadc-7f92-490efa602805@quicinc.com>
+        Wed, 1 Mar 2023 12:08:19 -0500
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 352E720D30
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 09:08:17 -0800 (PST)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 36EB13F97B;
+        Wed,  1 Mar 2023 18:08:14 +0100 (CET)
+Date:   Wed, 1 Mar 2023 18:08:12 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        seanpaul@chromium.org, swboyd@chromium.org,
+        dmitry.baryshkov@linaro.org
+Subject: Re: [PATCH v4 1/4] drm/msm/dpu: Move TE setup to
+ prepare_for_kickoff()
+Message-ID: <20230301170812.zcu6upwzcfkt4s7c@SoMainline.org>
+References: <20230221184256.1436-1-quic_jesszhan@quicinc.com>
+ <20230221184256.1436-2-quic_jesszhan@quicinc.com>
+ <20230301100331.3altimojtca4zx6m@SoMainline.org>
+ <5de60136-4150-dcc7-517f-5d65452c5e1b@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <83543d98-e624-fadc-7f92-490efa602805@quicinc.com>
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <5de60136-4150-dcc7-517f-5d65452c5e1b@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 01, 2023 at 09:08:03AM -0700, Jeffrey Hugo wrote:
-> > This looks a bit suspicious. Are you sure you can modify
-> > sg->dma_address and still use it as valid value ?
+On 2023-03-01 08:23:28, Abhinav Kumar wrote:
 > 
-> A single entry in the sg table is a contiguous mapping of memory.  If it
-> wasn't contiguous, it would have to be broken up into multiple entries.  In
-> the simple case, a driver is going to take the dma_address/len pair and hand
-> that directly to the device.  Then the device is going to access every
-> address in that range.
-> 
-> If the device can access every address from dma_address to dma_address +
-> len, why can't it access a subset of that?
-
-Required address alignment can be broken. Not sure if only that.
-
-> > > Are you suggesting renaming
-> > > this function?  I guess I'm not quite understanding your comment here. Can
-> > > you elaborate?
+> On 3/1/2023 2:03 AM, Marijn Suijten wrote:
+> > On 2023-02-21 10:42:53, Jessica Zhang wrote:
+> >> Currently, DPU will enable TE during prepare_commit(). However, this
+> >> will cause a crash and reboot to sahara when trying to read/write to
+> >> register in get_autorefresh_config(), because the core clock rates
+> >> aren't set at that time.
 > > 
-> > Renaming would be nice. I was thinking by simplifying it, not sure
-> > now if that's easy achievable, though.
+> > Haven't seeen a crash like this on any of my devices (after implementing
+> > INTF TE).  get_autorefresh_config() always reads zero (or 1 for
+> > frame_count) except the first time it is called (autorefresh is left
+> > enabled by our bootloader on SM6125) and triggers the disable codepath.
+> > 
 > 
-> Ok.  I'll think on this.
+> I feel that the fact that bootloader keeps things on for you is the 
+> reason you dont see the issue. With continuoush splash, clocks are kept 
+> enabled. We dont have it enabled (confirmed that).
 
-Maybe this function could be removed ? And create sg lists
-that hardware can handle without any modification.
-Just idea to consider, not any requirement.
+That is quite likely, we may even have them enabled because of
+simple-framebuffer in DTs; turning those off likely won't have any
+effect for testing this.
 
-Regards
-Stanislaw
+For what it's worth, my SM8150 reads 0 for autorefresh.
+
+<snip>
+
+> > Then, for some patch hygiene, starting here:
+> > 
+> >> Depends on: "Implement tearcheck support on INTF block" [3]
+> >>
+> >> Changes in V3:
+> >> - Added function prototypes
+> >> - Reordered function definitions to make change more legible
+> >> - Removed prepare_commit() function from dpu_encoder_phys_cmd
+> >>
+> >> Changes in V4:
+> >> - Reworded commit message to be more specific
+> >> - Removed dpu_encoder_phys_cmd_is_ongoing_pptx() prototype
+> > 
+> > ... until here: all this info belongs /below the cut/ outside of the
+> > messge that becomes part of the commit when this patch is applied to the
+> > tree.
+> 
+> For DRM, I thought we are keeping the change log above the ---- ?
+> Which means its allowed in the commit message.
+
+I hope not, seems unlikely to have different rules across kernel
+subsystems.  The main point is that this changelog and dependency chain
+isn't of any value when the final patch is applied, regardless of
+whether it is "allowed".
+
+> >> [1] https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c#L1109
+> >> [2] https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c#L2339
+> > 
+> > Please replace these with "permalinks" (to a commit hash): a branch with
+> > line number annotation will fall out of date soon as more patches are
+> > applied that touch these files.
+> > 
+> >> [3] https://patchwork.freedesktop.org/series/112332/
+> > 
+> > Is this a hard dependency?  It seems this series applies cleanly on
+> > -next and - from a cursory view - should be applicable and testable
+> > without my INTF TE series.  However, Dmitry asked me to move some code
+> > around in review resulting in separate callbacks in the encoder, rather
+> > than having various if(has_intf_te) within those callbacks.  That'll
+> > cause conflicts when I eventually get to respin a v2.
+> > 
+> 
+> I guess Jessica listed this because without intf_te series there is no 
+> crash because hw_pp would be NULL and autorefresh() would return early. 
+> So dependency is from the standpoint of when this series is needed and 
+> not from compilation point of view.
+
+That is indeed the question.  I'll leave it to the maintainers to decide
+what order to apply these in, which we should be made aware of before
+submitting v2 so that one of us can resolve the conflicts.
+
+- Marijn
