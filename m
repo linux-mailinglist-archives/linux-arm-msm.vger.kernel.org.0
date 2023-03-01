@@ -2,109 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75A1A6A74FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 21:16:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 912356A7557
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 21:32:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229511AbjCAUQR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Mar 2023 15:16:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51176 "EHLO
+        id S229470AbjCAUcY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Mar 2023 15:32:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229947AbjCAUPz (ORCPT
+        with ESMTP id S229533AbjCAUcX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Mar 2023 15:15:55 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AFA84FAA3
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 12:15:34 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id j19-20020a05600c1c1300b003e9b564fae9so313942wms.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 12:15:34 -0800 (PST)
+        Wed, 1 Mar 2023 15:32:23 -0500
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3383A474F2
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 12:32:22 -0800 (PST)
+Received: by mail-il1-x132.google.com with SMTP id r4so9129013ila.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 12:32:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677701733;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=noGAcNm9i/TJIg+l6poaaVPqMFcIQlGqlbm0Xx4JGsg=;
-        b=igPsbJmChyKrV0tBylJqf19CVy6KoLOkEEGlISUBQOa+KedqN1Dj4P/bdiTQMzGNm4
-         mZDYkKvVWpxbyb2vc8IGx5ZD7WKqbQulvCaiyFicehoRbO5SrNrltoaEaXqymEBf/E9M
-         rhXa7Dl1Fb2CnnXcrqyQ2nTqma9GiD4SOVs7rxkcjI6SVlPcGjN6JdQMb/7KuZmzmqdq
-         KaPRf/AlTLlRxHBngtSZUtuPHjGIWRq1l/LsG8/JMxGIcKdsoQpcsMjDFC3brunxZaTa
-         OR9VhmowWVIFhc5IAPiA9gGdEPc8hzJCK8zBBou6ZOXtoqsDfLSR3GW5P6sEPY2dy5dv
-         jAqQ==
+        bh=TYLUGupyjMeev27c+qWxeJczPJEjR3Ydgup+v8f48I0=;
+        b=GmGgxIMa7jgrR0m+YdLsk7vfyL/4rJnMGC5mfcGR/R7G0gFYRjWDlZl3TA0bO7F+Qg
+         RwBcF1jdEoNchqOUUlWul6LxOLORwwjrjhzZzDQPClEh29xaJAHBiR2Ma4FzFHT6dv+B
+         O8/SdUNfByPhJ947xgUUtecxVu5h5xtRet+y4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677701733;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=noGAcNm9i/TJIg+l6poaaVPqMFcIQlGqlbm0Xx4JGsg=;
-        b=5ARp3Q/G2m3pdDihKcN5DNAOasZ84ggjNQBw4H6rUN3Rp17aPqkiLq+8/tDJLG6OEA
-         HCkoDcbWkILrQCU9rC5iAtD0KOzTun3YjZYnkDg3THKz5VDL0vH22Ji+TpQEadzZtxw0
-         AVHkDbwH1gSGM2L6J79wiB8m8WV3nqN3HYWlSgBk2zclwEIRCkcdqv4nResmEFN6Js+w
-         T3LSGqOesaR3nOli3og/aqog01HD5jVItxjfeesBt6YqAJfymWCuwa0ubzeAVwccj2E7
-         slhGOaXNIb7ZVew4Pq/ZX4zJOCfRz77PDwosjV9AwXSeAM1CbOIXc42pSoLXxms9E7de
-         B03g==
-X-Gm-Message-State: AO0yUKUEho0k83oYcR6KXJ0VljhnyGoJc4GY6MlD2BNfYpYIHfpYtXJQ
-        tbcDOa57aqAALzpRxBKXHIPaFg==
-X-Google-Smtp-Source: AK7set9Sdn/XZnAGnYPhToVNLQiDYgUKQKhOW+Z9rk4YtpbwDDms5a+ia2gtqiyDytxSf8UsjBcC5Q==
-X-Received: by 2002:a05:600c:4da3:b0:3ea:e4f8:be09 with SMTP id v35-20020a05600c4da300b003eae4f8be09mr5852032wmp.30.1677701733468;
-        Wed, 01 Mar 2023 12:15:33 -0800 (PST)
-Received: from mai.box.freepro.com ([2a05:6e02:1041:c10:6ffe:ce4f:bd31:1e6d])
-        by smtp.gmail.com with ESMTPSA id x16-20020a1c7c10000000b003e70a7c1b73sm576546wmc.16.2023.03.01.12.15.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Mar 2023 12:15:33 -0800 (PST)
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-To:     rafael@kernel.org, daniel.lezcano@linaro.org
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Guillaume La Roque <glaroque@baylibre.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vasily Khoruzhick <anarsoul@gmail.com>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Keerthy <j-keerthy@ti.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Daniel Golle <daniel@makrotopia.org>,
-        Balsam CHIHI <bchihi@baylibre.com>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        ye xingchen <ye.xingchen@zte.com.cn>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        =?UTF-8?q?Niklas=20S=C3=B6derlund?= 
-        <niklas.soderlund+renesas@ragnatech.se>,
-        linux-amlogic@lists.infradead.org (open list:THERMAL DRIVER FOR AMLOGIC
-        SOCS),
-        linux-arm-kernel@lists.infradead.org (moderated list:ARM/FREESCALE IMX
-        / MXC ARM ARCHITECTURE),
-        linux-arm-msm@vger.kernel.org (open list:QUALCOMM TSENS THERMAL DRIVER),
-        linux-sunxi@lists.linux.dev (open list:ARM/Allwinner sunXi SoC support),
-        linux-tegra@vger.kernel.org (open list:TEGRA ARCHITECTURE SUPPORT),
-        linux-omap@vger.kernel.org (open list:TI BANDGAP AND THERMAL DRIVER),
-        linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek SoC
-        support)
-Subject: [PATCH v5 08/18] thermal/hwmon: Use the right device for devm_thermal_add_hwmon_sysfs()
-Date:   Wed,  1 Mar 2023 21:14:36 +0100
-Message-Id: <20230301201446.3713334-9-daniel.lezcano@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230301201446.3713334-1-daniel.lezcano@linaro.org>
-References: <20230301201446.3713334-1-daniel.lezcano@linaro.org>
+        bh=TYLUGupyjMeev27c+qWxeJczPJEjR3Ydgup+v8f48I0=;
+        b=MvFoDA5eGF3QftD616Lrk2ft+3hm1T1tHEy2rQGwA6eqyYIrkROHjusbI76JJBxHM2
+         UF8lGNtose/baWnBCTomzF3VfsSbOdmyoEpqOmGDaO7RBNuNDmBpmd3zOzlEzQ1iEazL
+         NvkQfxJMIQTRAen5Pt3Mxyq68WYfN7vjn1ttiqWSGykl6mex0syAhda8kfpCofFexA9h
+         NTKLQLgUAIiaB0uJjvsRxdn+UE2rJXILqPVKt6CqC8mjBRjCLRoMYYOBb4tdS/fy034R
+         +Zi/dc2KnpcUfc2WDRrruBWNqgjelvKYN0y1eo7esks/KFOPJ/Rh+ZyS+ODz+0vfkTFD
+         Bl9w==
+X-Gm-Message-State: AO0yUKWZr4PLN5McMaBJ+vvhi4/61d4eov3K4D0VMqlaewS3dCfdqw8M
+        Oilwl8NTxdXzuc1RZjOZPReao4/MZd/eOQbl
+X-Google-Smtp-Source: AK7set/lkgOmnSqdvzlt8ij9tga3QTaryZlS+wfzAF8VlBlCkKWCqe1KUUAeXY8C40PDNYWYgNDWbw==
+X-Received: by 2002:a05:6e02:218b:b0:317:9098:1d with SMTP id j11-20020a056e02218b00b003179098001dmr3021931ila.31.1677702740769;
+        Wed, 01 Mar 2023 12:32:20 -0800 (PST)
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com. [209.85.166.43])
+        by smtp.gmail.com with ESMTPSA id m21-20020a02c895000000b0039e07ca9ae5sm3944676jao.113.2023.03.01.12.32.20
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Mar 2023 12:32:20 -0800 (PST)
+Received: by mail-io1-f43.google.com with SMTP id t129so5883553iof.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 12:32:20 -0800 (PST)
+X-Received: by 2002:a05:6602:14a:b0:745:b287:c281 with SMTP id
+ v10-20020a056602014a00b00745b287c281mr3679858iot.2.1677702739460; Wed, 01 Mar
+ 2023 12:32:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+References: <1676219337-6526-1-git-send-email-quic_vpolimer@quicinc.com> <CAD=FV=XvjFQ-7KNsW2YQQ-LzJonCcHz_rj-oOhB0jh_99ficKA@mail.gmail.com>
+In-Reply-To: <CAD=FV=XvjFQ-7KNsW2YQQ-LzJonCcHz_rj-oOhB0jh_99ficKA@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 1 Mar 2023 12:32:07 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=VD2V=NvNCotU_bLH4LuGEO8W8a0sH0uc--KsaUsneSFg@mail.gmail.com>
+Message-ID: <CAD=FV=VD2V=NvNCotU_bLH4LuGEO8W8a0sH0uc--KsaUsneSFg@mail.gmail.com>
+Subject: Re: [PATCH v13 00/13] Add PSR support for eDP
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        swboyd@chromium.org, quic_kalyant@quicinc.com,
+        dmitry.baryshkov@linaro.org, quic_khsieh@quicinc.com,
+        quic_vproddut@quicinc.com, quic_bjorande@quicinc.com,
+        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -112,237 +80,147 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The devres variant of thermal_add_hwmon_sysfs() only takes the thermal
-zone structure pointer as parameter.
+Hi,
 
-Actually, it uses the tz->device to add it in the devres list.
+On Wed, Mar 1, 2023 at 11:06=E2=80=AFAM Doug Anderson <dianders@chromium.or=
+g> wrote:
+>
+> Hi,
+>
+> On Sun, Feb 12, 2023 at 8:29=E2=80=AFAM Vinod Polimera
+> <quic_vpolimer@quicinc.com> wrote:
+> >
+> > Changes in v2:
+> >   - Use dp bridge to set psr entry/exit instead of dpu_enocder.
+> >   - Don't modify whitespaces.
+> >   - Set self refresh aware from atomic_check.
+> >   - Set self refresh aware only if psr is supported.
+> >   - Provide a stub for msm_dp_display_set_psr.
+> >   - Move dp functions to bridge code.
+> >
+> > Changes in v3:
+> >   - Change callback names to reflect atomic interfaces.
+> >   - Move bridge callback change to separate patch as suggested by Dmitr=
+y.
+> >   - Remove psr function declaration from msm_drv.h.
+> >   - Set self_refresh_aware flag only if psr is supported.
+> >   - Modify the variable names to simpler form.
+> >   - Define bit fields for PSR settings.
+> >   - Add comments explaining the steps to enter/exit psr.
+> >   - Change DRM_INFO to drm_dbg_db.
+> >
+> > Changes in v4:
+> >   - Move the get crtc functions to drm_atomic.
+> >   - Add atomic functions for DP bridge too.
+> >   - Add ternary operator to choose eDP or DP ops.
+> >   - Return true/false instead of 1/0.
+> >   - mode_valid missing in the eDP bridge ops.
+> >   - Move the functions to get crtc into drm_atomic.c.
+> >   - Fix compilation issues.
+> >   - Remove dpu_assign_crtc and get crtc from drm_enc instead of dpu_enc=
+.
+> >   - Check for crtc state enable while reserving resources.
+> >
+> > Changes in v5:
+> >   - Move the mode_valid changes into a different patch.
+> >   - Complete psr_op_comp only when isr is set.
+> >   - Move the DP atomic callback changes to a different patch.
+> >   - Get crtc from drm connector state crtc.
+> >   - Move to separate patch for check for crtc state enable while
+> > reserving resources.
+> >
+> > Changes in v6:
+> >   - Remove crtc from dpu_encoder_virt struct.
+> >   - fix crtc check during vblank toggle crtc.
+> >   - Misc changes.
+> >
+> > Changes in v7:
+> >   - Add fix for underrun issue on kasan build.
+> >
+> > Changes in v8:
+> >   - Drop the enc spinlock as it won't serve any purpose in
+> > protetcing conn state.(Dmitry/Doug)
+> >
+> > Changes in v9:
+> >   - Update commit message and fix alignment using spaces.(Marijn)
+> >   - Misc changes.(Marijn)
+> >
+> > Changes in v10:
+> >   - Get crtc cached in dpu_enc during obj init.(Dmitry)
+> >
+> > Changes in v11:
+> >   - Remove crtc cached in dpu_enc during obj init.
+> >   - Update dpu_enc crtc state on crtc enable/disable during self refres=
+h.
+> >
+> > Changes in v12:
+> >   - Update sc7180 intf mask to get intf timing gen status
+> > based on DPU_INTF_STATUS_SUPPORTED bit.(Dmitry)
+> >   - Remove "clear active interface in the datapath cleanup" change
+> > as it is already included.
+> >
+> > Changes in v13:
+> >   - Move core changes to top of the series.(Dmitry)
+> >   - Drop self refresh aware disable change after psr entry.(Dmitry)
+> >
+> > Vinod Polimera (13):
+> >   drm: add helper functions to retrieve old and new crtc
+> >   drm/bridge: use atomic enable/disable callbacks for panel bridge
+> >   drm/bridge: add psr support for panel bridge callbacks
+> >   drm/msm/disp/dpu: check for crtc enable rather than crtc active to
+> >     release shared resources
+> >   drm/msm/disp/dpu: get timing engine status from intf status register
+> >   drm/msm/disp/dpu: wait for extra vsync till timing engine status is
+> >     disabled
+> >   drm/msm/disp/dpu: reset the datapath after timing engine disable
+> >   drm/msm/dp: use atomic callbacks for DP bridge ops
+> >   drm/msm/dp: Add basic PSR support for eDP
+> >   drm/msm/dp: use the eDP bridge ops to validate eDP modes
+> >   drm/msm/disp/dpu: use atomic enable/disable callbacks for encoder
+> >     functions
+> >   drm/msm/disp/dpu: add PSR support for eDP interface in dpu driver
+> >   drm/msm/disp/dpu: update dpu_enc crtc state on crtc enable/disable
+> >     during self refresh
+>
+> I'm curious what the plan is for landing this series. I could land the
+> first two in drm-misc if you want, but I'm a lowly committer and so I
+> couldn't make an immutable branch for you nor can I officially Ack the
+> changes to land in your branch. That means you'd be blocked for an
+> extra version. Do you already have a plan? If not, then maybe we need
+> to get in touch with one of the maintainers [1] of drm-misc? That's
+> documented [2] to be in their set of responsibilities.
+>
+> [1] https://drm.pages.freedesktop.org/maintainer-tools/repositories.html#=
+drm-misc-repository
+> [2] https://drm.pages.freedesktop.org/maintainer-tools/maintainer-drm-mis=
+c.html#maintainer-s-duties
 
-It is preferable to use the device registering the thermal zone
-instead of the thermal zone device itself. That prevents the driver
-accessing the thermal zone structure internals and it is from my POV
-more correct regarding how devm_ is used.
+The above question about how we'd land this is still a good one, but
+perhaps less relevant quite yet because, at least in my testing, the
+current series doesn't work. :-/
 
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com> #amlogic_thermal
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com> #sun8i_thermal
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com> #MediaTek auxadc
----
- drivers/thermal/amlogic_thermal.c                  | 2 +-
- drivers/thermal/imx8mm_thermal.c                   | 2 +-
- drivers/thermal/imx_sc_thermal.c                   | 2 +-
- drivers/thermal/k3_bandgap.c                       | 2 +-
- drivers/thermal/mediatek/auxadc_thermal.c          | 2 +-
- drivers/thermal/qcom/qcom-spmi-adc-tm5.c           | 2 +-
- drivers/thermal/qcom/qcom-spmi-temp-alarm.c        | 2 +-
- drivers/thermal/qcom/tsens.c                       | 2 +-
- drivers/thermal/qoriq_thermal.c                    | 2 +-
- drivers/thermal/sun8i_thermal.c                    | 2 +-
- drivers/thermal/tegra/tegra30-tsensor.c            | 2 +-
- drivers/thermal/thermal_hwmon.c                    | 4 ++--
- drivers/thermal/thermal_hwmon.h                    | 4 ++--
- drivers/thermal/ti-soc-thermal/ti-thermal-common.c | 2 +-
- 14 files changed, 16 insertions(+), 16 deletions(-)
+I know previous versions worked, so I went back and tried older
+versions. It turns out that v12 _does_ work for me, but v13 doesn't
+work. The difference is very small. I'm assuming you made some changes
+in v13 and they looked so small that you just sent v13 out without
+testing? ...or, of course, there's always a possibility that I messed
+up in testing this myself, though I did repeat my results and they
+were consistent.
 
-diff --git a/drivers/thermal/amlogic_thermal.c b/drivers/thermal/amlogic_thermal.c
-index dfcc93e45cdd..4bf36386462f 100644
---- a/drivers/thermal/amlogic_thermal.c
-+++ b/drivers/thermal/amlogic_thermal.c
-@@ -285,7 +285,7 @@ static int amlogic_thermal_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
--	if (devm_thermal_add_hwmon_sysfs(pdata->tzd))
-+	if (devm_thermal_add_hwmon_sysfs(&pdev->dev, pdata->tzd))
- 		dev_warn(&pdev->dev, "Failed to add hwmon sysfs attributes\n");
- 
- 	ret = amlogic_thermal_initialize(pdata);
-diff --git a/drivers/thermal/imx8mm_thermal.c b/drivers/thermal/imx8mm_thermal.c
-index efa1a4ffc368..e0de6ac49469 100644
---- a/drivers/thermal/imx8mm_thermal.c
-+++ b/drivers/thermal/imx8mm_thermal.c
-@@ -343,7 +343,7 @@ static int imx8mm_tmu_probe(struct platform_device *pdev)
- 		}
- 		tmu->sensors[i].hw_id = i;
- 
--		if (devm_thermal_add_hwmon_sysfs(tmu->sensors[i].tzd))
-+		if (devm_thermal_add_hwmon_sysfs(&pdev->dev, tmu->sensors[i].tzd))
- 			dev_warn(&pdev->dev, "failed to add hwmon sysfs attributes\n");
- 	}
- 
-diff --git a/drivers/thermal/imx_sc_thermal.c b/drivers/thermal/imx_sc_thermal.c
-index 2d7a6bd2846b..839bb9958f60 100644
---- a/drivers/thermal/imx_sc_thermal.c
-+++ b/drivers/thermal/imx_sc_thermal.c
-@@ -116,7 +116,7 @@ static int imx_sc_thermal_probe(struct platform_device *pdev)
- 			return ret;
- 		}
- 
--		if (devm_thermal_add_hwmon_sysfs(sensor->tzd))
-+		if (devm_thermal_add_hwmon_sysfs(&pdev->dev, sensor->tzd))
- 			dev_warn(&pdev->dev, "failed to add hwmon sysfs attributes\n");
- 	}
- 
-diff --git a/drivers/thermal/k3_bandgap.c b/drivers/thermal/k3_bandgap.c
-index b5cd2c85e0c3..791210458606 100644
---- a/drivers/thermal/k3_bandgap.c
-+++ b/drivers/thermal/k3_bandgap.c
-@@ -222,7 +222,7 @@ static int k3_bandgap_probe(struct platform_device *pdev)
- 			goto err_alloc;
- 		}
- 
--		if (devm_thermal_add_hwmon_sysfs(data[id].tzd))
-+		if (devm_thermal_add_hwmon_sysfs(dev, data[id].tzd))
- 			dev_warn(dev, "Failed to add hwmon sysfs attributes\n");
- 	}
- 
-diff --git a/drivers/thermal/mediatek/auxadc_thermal.c b/drivers/thermal/mediatek/auxadc_thermal.c
-index 755baa4e5bd2..7b146350050d 100644
---- a/drivers/thermal/mediatek/auxadc_thermal.c
-+++ b/drivers/thermal/mediatek/auxadc_thermal.c
-@@ -1210,7 +1210,7 @@ static int mtk_thermal_probe(struct platform_device *pdev)
- 		goto err_disable_clk_peri_therm;
- 	}
- 
--	ret = devm_thermal_add_hwmon_sysfs(tzdev);
-+	ret = devm_thermal_add_hwmon_sysfs(&pdev->dev, tzdev);
- 	if (ret)
- 		dev_warn(&pdev->dev, "error in thermal_add_hwmon_sysfs");
- 
-diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-index ed204489a950..5749149ae2e4 100644
---- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-+++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-@@ -689,7 +689,7 @@ static int adc_tm5_register_tzd(struct adc_tm5_chip *adc_tm)
- 			return PTR_ERR(tzd);
- 		}
- 		adc_tm->channels[i].tzd = tzd;
--		if (devm_thermal_add_hwmon_sysfs(tzd))
-+		if (devm_thermal_add_hwmon_sysfs(adc_tm->dev, tzd))
- 			dev_warn(adc_tm->dev,
- 				 "Failed to add hwmon sysfs attributes\n");
- 	}
-diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-index b196d8d01726..0f88e98428ac 100644
---- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-+++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-@@ -459,7 +459,7 @@ static int qpnp_tm_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
--	if (devm_thermal_add_hwmon_sysfs(chip->tz_dev))
-+	if (devm_thermal_add_hwmon_sysfs(&pdev->dev, chip->tz_dev))
- 		dev_warn(&pdev->dev,
- 			 "Failed to add hwmon sysfs attributes\n");
- 
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 6cc935379f00..d3218127e617 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -1189,7 +1189,7 @@ static int tsens_register(struct tsens_priv *priv)
- 		if (priv->ops->enable)
- 			priv->ops->enable(priv, i);
- 
--		if (devm_thermal_add_hwmon_sysfs(tzd))
-+		if (devm_thermal_add_hwmon_sysfs(priv->dev, tzd))
- 			dev_warn(priv->dev,
- 				 "Failed to add hwmon sysfs attributes\n");
- 	}
-diff --git a/drivers/thermal/qoriq_thermal.c b/drivers/thermal/qoriq_thermal.c
-index d2dc99247f61..e58756323457 100644
---- a/drivers/thermal/qoriq_thermal.c
-+++ b/drivers/thermal/qoriq_thermal.c
-@@ -157,7 +157,7 @@ static int qoriq_tmu_register_tmu_zone(struct device *dev,
- 			return ret;
- 		}
- 
--		if (devm_thermal_add_hwmon_sysfs(tzd))
-+		if (devm_thermal_add_hwmon_sysfs(dev, tzd))
- 			dev_warn(dev,
- 				 "Failed to add hwmon sysfs attributes\n");
- 
-diff --git a/drivers/thermal/sun8i_thermal.c b/drivers/thermal/sun8i_thermal.c
-index 6b550f0f90bf..793ddce72132 100644
---- a/drivers/thermal/sun8i_thermal.c
-+++ b/drivers/thermal/sun8i_thermal.c
-@@ -475,7 +475,7 @@ static int sun8i_ths_register(struct ths_device *tmdev)
- 		if (IS_ERR(tmdev->sensor[i].tzd))
- 			return PTR_ERR(tmdev->sensor[i].tzd);
- 
--		if (devm_thermal_add_hwmon_sysfs(tmdev->sensor[i].tzd))
-+		if (devm_thermal_add_hwmon_sysfs(tmdev->dev, tmdev->sensor[i].tzd))
- 			dev_warn(tmdev->dev,
- 				 "Failed to add hwmon sysfs attributes\n");
- 	}
-diff --git a/drivers/thermal/tegra/tegra30-tsensor.c b/drivers/thermal/tegra/tegra30-tsensor.c
-index 42c6fb494dd9..4b2ea17910cd 100644
---- a/drivers/thermal/tegra/tegra30-tsensor.c
-+++ b/drivers/thermal/tegra/tegra30-tsensor.c
-@@ -528,7 +528,7 @@ static int tegra_tsensor_register_channel(struct tegra_tsensor *ts,
- 		return 0;
- 	}
- 
--	if (devm_thermal_add_hwmon_sysfs(tsc->tzd))
-+	if (devm_thermal_add_hwmon_sysfs(ts->dev, tsc->tzd))
- 		dev_warn(ts->dev, "failed to add hwmon sysfs attributes\n");
- 
- 	return 0;
-diff --git a/drivers/thermal/thermal_hwmon.c b/drivers/thermal/thermal_hwmon.c
-index c594c42bea6d..964db7941e31 100644
---- a/drivers/thermal/thermal_hwmon.c
-+++ b/drivers/thermal/thermal_hwmon.c
-@@ -263,7 +263,7 @@ static void devm_thermal_hwmon_release(struct device *dev, void *res)
- 	thermal_remove_hwmon_sysfs(*(struct thermal_zone_device **)res);
- }
- 
--int devm_thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
-+int devm_thermal_add_hwmon_sysfs(struct device *dev, struct thermal_zone_device *tz)
- {
- 	struct thermal_zone_device **ptr;
- 	int ret;
-@@ -280,7 +280,7 @@ int devm_thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 	}
- 
- 	*ptr = tz;
--	devres_add(&tz->device, ptr);
-+	devres_add(dev, ptr);
- 
- 	return ret;
- }
-diff --git a/drivers/thermal/thermal_hwmon.h b/drivers/thermal/thermal_hwmon.h
-index 1a9d65f6a6a8..b429f6e7abdb 100644
---- a/drivers/thermal/thermal_hwmon.h
-+++ b/drivers/thermal/thermal_hwmon.h
-@@ -17,7 +17,7 @@
- 
- #ifdef CONFIG_THERMAL_HWMON
- int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz);
--int devm_thermal_add_hwmon_sysfs(struct thermal_zone_device *tz);
-+int devm_thermal_add_hwmon_sysfs(struct device *dev, struct thermal_zone_device *tz);
- void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz);
- #else
- static inline int
-@@ -27,7 +27,7 @@ thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- }
- 
- static inline int
--devm_thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
-+devm_thermal_add_hwmon_sysfs(struct device *dev, struct thermal_zone_device *tz)
- {
- 	return 0;
- }
-diff --git a/drivers/thermal/ti-soc-thermal/ti-thermal-common.c b/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
-index 3e998c9799bb..216b29068b08 100644
---- a/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
-+++ b/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
-@@ -182,7 +182,7 @@ int ti_thermal_expose_sensor(struct ti_bandgap *bgp, int id,
- 	ti_bandgap_set_sensor_data(bgp, id, data);
- 	ti_bandgap_write_update_interval(bgp, data->sensor_id, interval);
- 
--	if (devm_thermal_add_hwmon_sysfs(data->ti_thermal))
-+	if (devm_thermal_add_hwmon_sysfs(bgp->dev, data->ti_thermal))
- 		dev_warn(bgp->dev, "failed to add hwmon sysfs attributes\n");
- 
- 	return 0;
--- 
-2.34.1
+FWIW, my testing was roughly to do this on a device that had a
+PSR-enabled eDP display:
 
+echo "dp_catalog_ctrl_set_psr" > /sys/kernel/debug/tracing/set_ftrace_filte=
+r
+echo function > /sys/kernel/debug/tracing/current_tracer
+echo 1 > /sys/kernel/debug/tracing/tracing_on
+cat /sys/kernel/debug/tracing/trace_pipe
+
+I should see a splat in the trace buffers each time PSR is entered or
+exited. On v12 I get splats as the cursor on my screen blinks. On v13,
+it's just silence.
+
+Please confirm that you tested v13. If you're confident that v13 works
+then I can dig further myself.
+
+-Doug
