@@ -2,74 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D02376A7569
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 21:34:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 386736A7605
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 22:15:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229520AbjCAUes (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Mar 2023 15:34:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43486 "EHLO
+        id S229509AbjCAVPe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Mar 2023 16:15:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbjCAUen (ORCPT
+        with ESMTP id S229437AbjCAVPd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Mar 2023 15:34:43 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D241443475
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 12:34:39 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id i9so19327869lfc.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 12:34:39 -0800 (PST)
+        Wed, 1 Mar 2023 16:15:33 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D5CB4BEA7
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 13:15:26 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id t11so19509930lfr.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 13:15:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+Bio1FwTDmP6s7PTwzBTwNIhmdqRI0BuWFvXKEttprg=;
-        b=aVRw5XH4e4ZsXHGPWey9j2dwR1mj5fvYCRcfXpp8GcWGLzJi0BTzSgJWyTroC6FWO+
-         h5Xy3baWKbCp7i96d/5XgzwFBoHBZ/Hew4tfvOGKjctwwKe/qStsSlJFIFXLOQtsMljm
-         ze8ktmjdEr2WeHLBvUqR45qewSI5k+LP7ju0UBqUbbO5qAyrIf1RuhpHbKEprM4IsGbC
-         wUTTWu8bcM4oOkJym+Nof8vok/XGJcyAv06fuJZr3JWrU2EiagbPe3nJyvd0BfRwj12v
-         Qc2Un9NBjsBpEKDXtE2qCeBnoNTXukIKDx+q0kVEwDLX/koUKlVDyPY8Khvj6FWaHjar
-         pLrw==
+        bh=+t7bN+vbdlsmpnEw6FpJggio/ds3KE+IlPtPNhbSz/o=;
+        b=nD27E+SFsfYfEeC8tmYtQURee5bxHTpoMTHVmzm2iTC/QXVWbfZ0SRlGhFBKGO/92f
+         4nhRlj/KOGB0Z9nTKXZ6kNS7v6n+0c7KxWG47260iAyLI/kHhBGBJFe7WLAPyzpTDap0
+         pUywfMkZ+ABCf+naW7JeULWamWERHrGhZ2jm4aMoLXm+2gdvTI/Atmoc/XVyYZ3t0gBb
+         hyKE7wIDNmhiDiYa2Q85l1VL93I8/uZrLA+rFYEUiT/2UVrPWwq2qXEGB5QwkJ/cDiU+
+         kYzmC4exPauuQdsqQ6hBNh1Znwx3wCG7qC+f1b9oMM8gLUbShpAsvaWzk3c/pVrRvHBE
+         1ewg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+Bio1FwTDmP6s7PTwzBTwNIhmdqRI0BuWFvXKEttprg=;
-        b=MSite3CQyolAMHwlmXxBlBPk59DbApaCq/msriBbSBnPO+8MlbVM1nlJluaptj5xNv
-         5MnAUGaoq1uD/8tlLdzcQ0j/LKx9S2Uvn9f27XcjjdK4KABmBorfLVliXQIQ4tp6GR94
-         jIvYEgKD47Mg/aneLnHbld6+05DizHJiOkuAwrCKo7TNx/rBMLCOs0bcb7Bpf3B2gnvI
-         NBjW/VwHeJX3+k6SuGyCIKQjPYlec1QYpY3fgsao5vPvcMZdqJvQpHCu84iMmrWEFltV
-         uvq21vhkqWwgJSZcN9AzfSRVv6ss3YcqnQW4ERSCvWD4eM0nqrZWtgDSCxvsZXsOh9uB
-         RmVw==
-X-Gm-Message-State: AO0yUKWlrNAfHHawCc2xUk8C2pT/5q0BAGZUXDOBgDbu5zUQXrV365t6
-        xfscVwU/Spo33je47IXB6CnAiw==
-X-Google-Smtp-Source: AK7set9b0BaIdg1nOPIO+w/NWAwnjqGRwXBsgcVyCcbR8P+jKeVTalGz+f01nJKceWfJPSvHQWOkXA==
-X-Received: by 2002:ac2:46d9:0:b0:4b5:83b8:2c49 with SMTP id p25-20020ac246d9000000b004b583b82c49mr2038723lfo.1.1677702878022;
-        Wed, 01 Mar 2023 12:34:38 -0800 (PST)
+        bh=+t7bN+vbdlsmpnEw6FpJggio/ds3KE+IlPtPNhbSz/o=;
+        b=WMPac/1LG3LK0KoMeeso/XHuBykahX7SN5XJ6AzIkbkpAMmdFfgytzrGe30UdDhni8
+         dH2s4DskkEsWb40hvqK+9/lqpmSws08RIZxpjf2N6+Avuv0aKLLxHEfCZogmlhrMs+xh
+         dhunZV33UehCt17NDV9MAz0QJsmrixogFhwFnnXtkXibhGaIFjlE+tWTonriqBjG33vd
+         mscXn4SvKJajrOrCwxmZ5HkDP6sS1dIlvndyrs9ZnvPKS7rEC5q8IhGKbP6RTqqokipf
+         YPXaN0zsyDWJc0fhBQzNKWSvITkSjC8+zoPw026PKCL5+vCiUUAQcud1PhV7qT03k6MP
+         6T9w==
+X-Gm-Message-State: AO0yUKVYqzypNUHedK7YZBQ8Z4Q56JbPTQYn/qM2Bz2jgCY8YjFYbeEE
+        +eVcNhWi+1qOP9oEenF4E3FzCQ==
+X-Google-Smtp-Source: AK7set+pESwKWGqIuTj2Okqk+XOkiFg8hXqVZ2jA6DNWK+iXJy98GtUDRWaPrgd5gt1fyN6PK94J+g==
+X-Received: by 2002:ac2:483a:0:b0:4db:43b6:77b9 with SMTP id 26-20020ac2483a000000b004db43b677b9mr2057689lft.11.1677705324570;
+        Wed, 01 Mar 2023 13:15:24 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id d13-20020ac25ecd000000b004dd7f2854efsm1848676lfq.251.2023.03.01.12.34.37
+        by smtp.gmail.com with ESMTPSA id d13-20020ac25ecd000000b004dd7f2854efsm1859065lfq.251.2023.03.01.13.15.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Mar 2023 12:34:37 -0800 (PST)
-Message-ID: <05e59001-7ba8-ef31-552a-df23f37028f2@linaro.org>
-Date:   Wed, 1 Mar 2023 22:34:36 +0200
+        Wed, 01 Mar 2023 13:15:23 -0800 (PST)
+Message-ID: <86787af0-aa95-a2d8-d68c-555be54a3784@linaro.org>
+Date:   Wed, 1 Mar 2023 23:15:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v13 00/13] Add PSR support for eDP
+Subject: Re: [PATCH v3] drm/msm/dp: check core_initialized flag at both
+ host_init() and host_deinit()
 Content-Language: en-GB
-To:     Doug Anderson <dianders@chromium.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        swboyd@chromium.org, quic_kalyant@quicinc.com,
-        quic_khsieh@quicinc.com, quic_vproddut@quicinc.com,
-        quic_bjorande@quicinc.com, quic_abhinavk@quicinc.com,
-        quic_sbillaka@quicinc.com
-References: <1676219337-6526-1-git-send-email-quic_vpolimer@quicinc.com>
- <CAD=FV=XvjFQ-7KNsW2YQQ-LzJonCcHz_rj-oOhB0jh_99ficKA@mail.gmail.com>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch,
+        airlied@gmail.com, agross@kernel.org, andersson@kernel.org,
+        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1677629817-18891-1-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJpquZAhn+HswNxardN1fE8Zu1CKrCU5EiX=B8mGWuxfWnQ@mail.gmail.com>
+ <38bf75b4-799a-9758-aae3-69a7e0fc3f58@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAD=FV=XvjFQ-7KNsW2YQQ-LzJonCcHz_rj-oOhB0jh_99ficKA@mail.gmail.com>
+In-Reply-To: <38bf75b4-799a-9758-aae3-69a7e0fc3f58@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,117 +82,115 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/03/2023 21:06, Doug Anderson wrote:
-> Hi,
+On 01/03/2023 18:57, Kuogee Hsieh wrote:
 > 
-> On Sun, Feb 12, 2023 at 8:29 AM Vinod Polimera
-> <quic_vpolimer@quicinc.com> wrote:
->>
->> Changes in v2:
->>    - Use dp bridge to set psr entry/exit instead of dpu_enocder.
->>    - Don't modify whitespaces.
->>    - Set self refresh aware from atomic_check.
->>    - Set self refresh aware only if psr is supported.
->>    - Provide a stub for msm_dp_display_set_psr.
->>    - Move dp functions to bridge code.
->>
->> Changes in v3:
->>    - Change callback names to reflect atomic interfaces.
->>    - Move bridge callback change to separate patch as suggested by Dmitry.
->>    - Remove psr function declaration from msm_drv.h.
->>    - Set self_refresh_aware flag only if psr is supported.
->>    - Modify the variable names to simpler form.
->>    - Define bit fields for PSR settings.
->>    - Add comments explaining the steps to enter/exit psr.
->>    - Change DRM_INFO to drm_dbg_db.
->>
->> Changes in v4:
->>    - Move the get crtc functions to drm_atomic.
->>    - Add atomic functions for DP bridge too.
->>    - Add ternary operator to choose eDP or DP ops.
->>    - Return true/false instead of 1/0.
->>    - mode_valid missing in the eDP bridge ops.
->>    - Move the functions to get crtc into drm_atomic.c.
->>    - Fix compilation issues.
->>    - Remove dpu_assign_crtc and get crtc from drm_enc instead of dpu_enc.
->>    - Check for crtc state enable while reserving resources.
->>
->> Changes in v5:
->>    - Move the mode_valid changes into a different patch.
->>    - Complete psr_op_comp only when isr is set.
->>    - Move the DP atomic callback changes to a different patch.
->>    - Get crtc from drm connector state crtc.
->>    - Move to separate patch for check for crtc state enable while
->> reserving resources.
->>
->> Changes in v6:
->>    - Remove crtc from dpu_encoder_virt struct.
->>    - fix crtc check during vblank toggle crtc.
->>    - Misc changes.
->>
->> Changes in v7:
->>    - Add fix for underrun issue on kasan build.
->>
->> Changes in v8:
->>    - Drop the enc spinlock as it won't serve any purpose in
->> protetcing conn state.(Dmitry/Doug)
->>
->> Changes in v9:
->>    - Update commit message and fix alignment using spaces.(Marijn)
->>    - Misc changes.(Marijn)
->>
->> Changes in v10:
->>    - Get crtc cached in dpu_enc during obj init.(Dmitry)
->>
->> Changes in v11:
->>    - Remove crtc cached in dpu_enc during obj init.
->>    - Update dpu_enc crtc state on crtc enable/disable during self refresh.
->>
->> Changes in v12:
->>    - Update sc7180 intf mask to get intf timing gen status
->> based on DPU_INTF_STATUS_SUPPORTED bit.(Dmitry)
->>    - Remove "clear active interface in the datapath cleanup" change
->> as it is already included.
->>
->> Changes in v13:
->>    - Move core changes to top of the series.(Dmitry)
->>    - Drop self refresh aware disable change after psr entry.(Dmitry)
->>
->> Vinod Polimera (13):
->>    drm: add helper functions to retrieve old and new crtc
->>    drm/bridge: use atomic enable/disable callbacks for panel bridge
->>    drm/bridge: add psr support for panel bridge callbacks
->>    drm/msm/disp/dpu: check for crtc enable rather than crtc active to
->>      release shared resources
->>    drm/msm/disp/dpu: get timing engine status from intf status register
->>    drm/msm/disp/dpu: wait for extra vsync till timing engine status is
->>      disabled
->>    drm/msm/disp/dpu: reset the datapath after timing engine disable
->>    drm/msm/dp: use atomic callbacks for DP bridge ops
->>    drm/msm/dp: Add basic PSR support for eDP
->>    drm/msm/dp: use the eDP bridge ops to validate eDP modes
->>    drm/msm/disp/dpu: use atomic enable/disable callbacks for encoder
->>      functions
->>    drm/msm/disp/dpu: add PSR support for eDP interface in dpu driver
->>    drm/msm/disp/dpu: update dpu_enc crtc state on crtc enable/disable
->>      during self refresh
+> On 2/28/2023 6:16 PM, Dmitry Baryshkov wrote:
+>> On Wed, 1 Mar 2023 at 02:17, Kuogee Hsieh <quic_khsieh@quicinc.com> 
+>> wrote:
+>>> There is a reboot/suspend test case where system suspend is forced
+>>> during system booting up. Since dp_display_host_init() of external
+>>> DP is executed at hpd thread context, this test case may created a
+>>> scenario that dp_display_host_deinit() from pm_suspend() run before
+>>> dp_display_host_init() if hpd thread has no chance to run during
+>>> booting up while suspend request command was issued. At this scenario
+>>> system will crash at aux register access at dp_display_host_deinit()
+>>> since aux clock had not yet been enabled by dp_display_host_init().
+>>> Therefore we have to ensure aux clock enabled by checking
+>>> core_initialized flag before access aux registers at pm_suspend.
+>> Can a call to dp_display_host_init() be moved from
+>> dp_display_config_hpd() to dp_display_bind()?
 > 
-> I'm curious what the plan is for landing this series. I could land the
-> first two in drm-misc if you want, but I'm a lowly committer and so I
-> couldn't make an immutable branch for you nor can I officially Ack the
-> changes to land in your branch. That means you'd be blocked for an
-> extra version. Do you already have a plan? If not, then maybe we need
-> to get in touch with one of the maintainers [1] of drm-misc? That's
-> documented [2] to be in their set of responsibilities. 
+> yes,  Sankeerth's  "drm/msm/dp: enable pm_runtime support for dp driver" 
+> patch is doing that which is under review.
 > 
-> [1] https://drm.pages.freedesktop.org/maintainer-tools/repositories.html#drm-misc-repository
-> [2] https://drm.pages.freedesktop.org/maintainer-tools/maintainer-drm-misc.html#maintainer-s-duties
+> https://patchwork.freedesktop.org/patch/523879/?series=114297&rev=1
 
-My plan was to ask Thomas or Daniel to make an immutable branch. I just 
-didn't want to ping them before rc1.
+No, he is doing another thing. He is moving these calls to pm_runtime 
+callbacks, not to the dp_display_bind().
+
+>> Related question: what is the primary reason for having
+>> EV_HPD_INIT_SETUP and calling dp_display_config_hpd() via the event
+>> thread? Does DP driver really depend on DPU irqs being installed? As
+>> far as I understand, DP device uses MDSS interrupts and those IRQs are
+>> available and working at the time of dp_display_probe() /
+>> dp_display_bind().
+> 
+> HDP gpio pin has to run through DP aux module 100ms denouncing logic and 
+> have its mask bits.
+> 
+> Therefore DP irq has to be enabled to receive DP isr with mask bits set.
+
+So... DP irq is enabled by the MDSS, not by the DPU. Again, why does DP 
+driver depend on DPU irqs being installed?
+
+> Similar mechanism is used for mdp, dsi, etc.
+
+And none of them uses irq_postinstall callback.
 
 > 
-> -Doug
+> 
+>>> Changes in v2:
+>>> -- at commit text, dp_display_host_init() instead of host_init()
+>>> -- at commit text, dp_display_host_deinit() instead of host_deinit()
+>>>
+>>> Changes in v3:
+>>> -- re arrange to avoid commit text line over 75 chars
+>>>
+>>> Fixes: 989ebe7bc446 ("drm/msm/dp: do not initialize phy until plugin 
+>>> interrupt received")
+>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>>> ---
+>>>   drivers/gpu/drm/msm/dp/dp_display.c | 20 ++++++++++++--------
+>>>   1 file changed, 12 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
+>>> b/drivers/gpu/drm/msm/dp/dp_display.c
+>>> index bde1a7c..1850738 100644
+>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>>> @@ -460,10 +460,12 @@ static void dp_display_host_init(struct 
+>>> dp_display_private *dp)
+>>>                  dp->dp_display.connector_type, dp->core_initialized,
+>>>                  dp->phy_initialized);
+>>>
+>>> -       dp_power_init(dp->power, false);
+>>> -       dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
+>>> -       dp_aux_init(dp->aux);
+>>> -       dp->core_initialized = true;
+>>> +       if (!dp->core_initialized) {
+>>> +               dp_power_init(dp->power, false);
+>>> +               dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
+>>> +               dp_aux_init(dp->aux);
+>>> +               dp->core_initialized = true;
+>>> +       }
+>>>   }
+>>>
+>>>   static void dp_display_host_deinit(struct dp_display_private *dp)
+>>> @@ -472,10 +474,12 @@ static void dp_display_host_deinit(struct 
+>>> dp_display_private *dp)
+>>>                  dp->dp_display.connector_type, dp->core_initialized,
+>>>                  dp->phy_initialized);
+>>>
+>>> -       dp_ctrl_reset_irq_ctrl(dp->ctrl, false);
+>>> -       dp_aux_deinit(dp->aux);
+>>> -       dp_power_deinit(dp->power);
+>>> -       dp->core_initialized = false;
+>>> +       if (dp->core_initialized) {
+>>> +               dp_ctrl_reset_irq_ctrl(dp->ctrl, false);
+>>> +               dp_aux_deinit(dp->aux);
+>>> +               dp_power_deinit(dp->power);
+>>> +               dp->core_initialized = false;
+>>> +       }
+>>>   }
+>>>
+>>>   static int dp_display_usbpd_configure_cb(struct device *dev)
+>>> -- 
+>>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>>> Forum,
+>>> a Linux Foundation Collaborative Project
+>>>
+>>
 
 -- 
 With best wishes
