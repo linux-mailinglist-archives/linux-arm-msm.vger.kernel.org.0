@@ -2,175 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FE236A64F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 02:49:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 13DD16A655A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 03:16:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229568AbjCABtc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Feb 2023 20:49:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36464 "EHLO
+        id S229534AbjCACQ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Feb 2023 21:16:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjCABtb (ORCPT
+        with ESMTP id S229451AbjCACQ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Feb 2023 20:49:31 -0500
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58414CA18
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 17:49:30 -0800 (PST)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-536bf92b55cso325985667b3.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 17:49:30 -0800 (PST)
+        Tue, 28 Feb 2023 21:16:26 -0500
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C98A5305D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 18:16:24 -0800 (PST)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-536c2a1cc07so328252267b3.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Feb 2023 18:16:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1677635369;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yAu0VY4pG5lMmayDlpyajBcn4svB3LfzCeO1dyYvFcM=;
-        b=Ab6GA6qPithzXQRnd8yinlWyVvOV9spWEWMRYdNDQgxJvdgJqykgfhy8Jai7ztaQ09
-         HDf+2cmdKeONrf+4KpcPfHOxWmp4wmYJ3BwxrEV6oGtwgZgolD0nLnnjScV6w+3MEblI
-         8AYNpMXJoeWoJqmlZZw8kF+3SWNcz3QOQpprZDvNy3AVOyyyRxlTFFpuT2voN57o5wwi
-         KJvq/55aKxYW9gkwaXLVYKJslTRPL9GBds9yNmAWrQBdtAHSQS+RXIsNOhQDg9n+yvsC
-         vo9xO4z/bk6rpniBqxIc+vfp0SY1kMAMk3ZU69uQL0zvnxOYF1Cw+Kc+v8/qPjl3hyRB
-         sCfA==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=MpqcIMBd2WSo0/P0DK6pbtSqbDc0TAI/eMMDgcg1TZQ=;
+        b=NxPgCw/vamDZoC6wAFY0CZZqhAvRE+6GNrf2IQJUd2JkSWZXKVWV6kKpgWwEb0OuPo
+         XaKvab+cusGgfUSMfwVgqQI2Mk0z6Tfd+sjDxIlar069TnmcHsII29VV8FuC/59XvDAE
+         jmYzB8uOdfJfkn1912xcPkXrd2AQuW8/A8iqVeqIdXj/iqEcDgUBFKODKvYN8vqqY0YL
+         GbW+3X/wGZvvZx08fiQ4cYhUBmV9UERTg9cBw+xYTdo9ox/4Wm9CPaGVhSeMNh9r6at9
+         pKRnPlfhCB9BO4u9vkXsoV/nTL2UaKR6kuF+HpVeIpHCUXEuEMx4Z7gRdPYb75bX/L7A
+         G7NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677635369;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yAu0VY4pG5lMmayDlpyajBcn4svB3LfzCeO1dyYvFcM=;
-        b=7E0tJ70KFEAgZI5rcjmJNiRRo2p4+VlePINnTFKtMYaTAfck39/QwMyUMP6K+qk3O/
-         u/SNU6WaE35UiS1eWpnTyptag3CFqDoSa3xbh75fHRSe6rTLdYguDAd7OCv+Yfr/KtOR
-         lorVyBI1Fh6tFUd/faO27PswBX22bdlJcT5FklVwD6Jjz5vAD0ex3q5m2Bv2pP4Prn0q
-         3x3HWdAYD4gAo/FghKNOwN6ElOkS/FBae9tMJbrkB8lyo1CORCN33QcyMwRIwKIEcPhI
-         wobvdkcBLOth350YRTOiu+bU6OOZUWMMX9hSt+L5soVfbuaiqUvqDpaC3qBTB9dvYGTt
-         oBfQ==
-X-Gm-Message-State: AO0yUKWb4EWqx+MxJVURrslkjhXYshbtqUlDbJsVjlRomih5EwsNSovf
-        FOD/Y7FWn9LMFifhAJiL6fRiHhj3+YPiXHMQjMKoHQ==
-X-Google-Smtp-Source: AK7set+dFJSx78dk4VGv7wMamuwmK+ZqCmseIbFZi0QMwuE3BCrIawoUa/thhs72KuS9XQADzu8byCOGIewo885wKNU=
-X-Received: by 2002:a25:9704:0:b0:a30:38fb:a2e4 with SMTP id
- d4-20020a259704000000b00a3038fba2e4mr2102666ybo.6.1677635369232; Tue, 28 Feb
- 2023 17:49:29 -0800 (PST)
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MpqcIMBd2WSo0/P0DK6pbtSqbDc0TAI/eMMDgcg1TZQ=;
+        b=hZmld42cggWFHpJmRVGg8AB5c8YrdOgtCPEaJvq60VVXTdiQ4jfasKTOfnDm0U0ZVW
+         GbBnJ9SCtWI0TTnvSxJcYCnh6lENMLuR/3RT3SliTnbe+1GAuKK04xbT1l5jAq/xKdXj
+         uxbgAfzM4s847zvMo9J5b5reL4E7PYnCBSpCJZP9IhcdzCicQxAJAspxxrEkw219ey2z
+         zIVXD/UOOcgszNjk7nRCKaBoVVykat4H/pwu3PZ6cpTxoYwR+MUQNyHmsYls+jDKo1Ub
+         2UvrstT/M9LraFC/K9b38CYeoXd+pDoWIrthUnBQw0/pN7tw4NYDq8V1qZPrFONRtbhc
+         VOkw==
+X-Gm-Message-State: AO0yUKV3Kxtf2XFzOrPJaO6IxWnR8Nvd2kiVNu/08fmTBSkDLjBFOpNl
+        eapIr1CF8ZK+geBjkPYaY9fcXxtPmPIwrAy+9IegrA==
+X-Google-Smtp-Source: AK7set9Lp1Gh0mv/hx+7TRqP5+gdVfavRb+ucnWIMkd1Ht+MXDm9xptjUJoSoQMr+b9FBRyoF4PG1TI0vTGM/G+2nhA=
+X-Received: by 2002:a81:b609:0:b0:52f:24ac:9575 with SMTP id
+ u9-20020a81b609000000b0052f24ac9575mr2900807ywh.3.1677636984029; Tue, 28 Feb
+ 2023 18:16:24 -0800 (PST)
 MIME-Version: 1.0
-References: <15cd8816-b474-0535-d854-41982d3bbe5c@quicinc.com>
- <CAJuCfpHihLgHCcsAqMJ_o2u7Ux9B5HFGsV2y_L2_5GXYAGYLnw@mail.gmail.com>
- <82406da2-799e-f0b4-bce0-7d47486030d4@quicinc.com> <CAJuCfpHrhO7_fMwNuu2hdQob=MPjZTW8eaJpNhEhPmDMqz2qTA@mail.gmail.com>
- <Y/ix53x8i/ViuBXf@dhcp22.suse.cz> <CAJuCfpG1c5v6qOotPV6t-o1T1p7EbOLs90eFnoEBjts+gafovA@mail.gmail.com>
- <Y/yxSqhpQh9yR7L4@dhcp22.suse.cz> <CAJuCfpHXwbtjdhH_K9r28-LUYtzC6+NaZ+RrKCtiNBk8PfXhLw@mail.gmail.com>
- <Y/0ASztGOwfM6bNK@dhcp22.suse.cz> <CAJuCfpHYMR6O_uJvaeq1f+ZvgW9oN6zTRG=UvTXyLJLSFOV3jw@mail.gmail.com>
- <Y/4GvIMtjVoEozWE@dhcp22.suse.cz> <CAJuCfpEn-W5ffO7sEJPpu3TXeqK-XE1+TTVNnWcTcDBuoNUhGA@mail.gmail.com>
-In-Reply-To: <CAJuCfpEn-W5ffO7sEJPpu3TXeqK-XE1+TTVNnWcTcDBuoNUhGA@mail.gmail.com>
-From:   Suren Baghdasaryan <surenb@google.com>
-Date:   Tue, 28 Feb 2023 17:49:18 -0800
-Message-ID: <CAJuCfpE604=5QtPBFFhhgNf43iXJvobE3uvaN_yFFHS-n4fKZw@mail.gmail.com>
-Subject: Re: [PATCH] psi: reduce min window size to 50ms
-To:     Michal Hocko <mhocko@suse.com>
-Cc:     Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>,
-        David Hildenbrand <david@redhat.com>,
-        Johannes Weiner <hannes@cmpxchg.org>,
-        Mike Rapoport <rppt@kernel.org>,
-        Oscar Salvador <osalvador@suse.de>,
-        Anshuman Khandual <anshuman.khandual@arm.com>,
-        mark.rutland@arm.com, will@kernel.org,
-        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Sukadev Bhattiprolu <quic_sukadev@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Patrick Daly <quic_pdaly@quicinc.com>, johunt@akamai.com
+References: <1677629817-18891-1-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1677629817-18891-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 1 Mar 2023 04:16:12 +0200
+Message-ID: <CAA8EJpquZAhn+HswNxardN1fE8Zu1CKrCU5EiX=B8mGWuxfWnQ@mail.gmail.com>
+Subject: Re: [PATCH v3] drm/msm/dp: check core_initialized flag at both
+ host_init() and host_deinit()
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch,
+        airlied@gmail.com, agross@kernel.org, andersson@kernel.org,
+        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 28, 2023 at 10:18=E2=80=AFAM Suren Baghdasaryan <surenb@google.=
-com> wrote:
+On Wed, 1 Mar 2023 at 02:17, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
 >
-> On Tue, Feb 28, 2023 at 5:50 AM Michal Hocko <mhocko@suse.com> wrote:
-> >
-> > On Mon 27-02-23 11:50:48, Suren Baghdasaryan wrote:
-> > > On Mon, Feb 27, 2023 at 11:11 AM Michal Hocko <mhocko@suse.com> wrote=
-:
-> > > >
-> > > > On Mon 27-02-23 09:49:59, Suren Baghdasaryan wrote:
-> > > > > On Mon, Feb 27, 2023 at 5:34 AM Michal Hocko <mhocko@suse.com> wr=
-ote:
-> > > > > >
-> > > > > > On Fri 24-02-23 13:07:57, Suren Baghdasaryan wrote:
-> > > > > > > On Fri, Feb 24, 2023 at 4:47 AM Michal Hocko <mhocko@suse.com=
-> wrote:
-> > > > [...]
-> > > > > > > > Btw. it seems that there is is only a limit on a single tri=
-gger per fd
-> > > > > > > > but no limits per user so it doesn't sound too hard to end =
-up with too
-> > > > > > > > much polling even with a larger timeouts. To me it seems li=
-ke we need to
-> > > > > > > > contain the polling thread to be bound by the cpu controlle=
-r.
-> > > > > > >
-> > > > > > > Hmm. We have one "psimon" thread per cgroup (+1 system-level =
-one) and
-> > > > > > > poll_min_period for each thread is chosen as the min() of pol=
-ling
-> > > > > > > periods between triggers created in that group. So, a bad tri=
-gger that
-> > > > > > > causes overly aggressive polling and polling thread being thr=
-ottled,
-> > > > > > > might affect other triggers in that cgroup.
-> > > > > >
-> > > > > > Yes, and why that would be a problem?
-> > > > >
-> > > > > If unprivileged processes are allowed to add new triggers then a
-> > > > > malicious process can add a bad trigger and affect other legit
-> > > > > processes. That sounds like a problem to me.
-> > > >
-> > > > Hmm, I am not sure we are on the same page. My argument was that th=
-e
-> > > > monitoring kernel thread should be bound by the same cpu controller=
- so
-> > > > even if it was excessive it would be bound to the cgroup constrains=
-.
-> > >
-> > > Right. But if cgroup constraints are violated then the psimon thread'=
-s
-> > > activity will be impacted by throttling. In such cases won't that
-> > > affect other "good" triggers served by that thread even if they are
-> > > using higher polling periods?
-> >
-> > That is no different from any other part of the workload running within
-> > the same cpu bound cgroup running overboard with the cpu consumption. I
-> > do not see why psimon or anything else should be any different.
-> >
-> > Actually the only difference here is that the psi monitoring is
-> > outsourced to a kernel thread which is running ourside of any constrain=
-s.
-> > I am not sure where do we stand with kernel thread cpu cgroup accountin=
-g
-> > and I suspect this is not a trivial thing to do ATM. Hence longer term
-> > plan.
->
-> Yeah, that sounds right.
-> In the meantime I think the prudent thing to do is to add
-> CAP_SYS_RESOURCE check for cgroup interface for consistency with
-> system-wide one. After that we can change the min period to be
-> anything more than 0 and let userspace privileged services implement
-> policies to limit trigger cpu consumption (might be via cpu
-> controller, limiting the number of triggers/their periods, etc).
-> Sudarshan, I'll post the CAP_SYS_RESOURCE change shortly and you can
-> follow up with the change to the min trigger period.
+> There is a reboot/suspend test case where system suspend is forced
+> during system booting up. Since dp_display_host_init() of external
+> DP is executed at hpd thread context, this test case may created a
+> scenario that dp_display_host_deinit() from pm_suspend() run before
+> dp_display_host_init() if hpd thread has no chance to run during
+> booting up while suspend request command was issued. At this scenario
+> system will crash at aux register access at dp_display_host_deinit()
+> since aux clock had not yet been enabled by dp_display_host_init().
+> Therefore we have to ensure aux clock enabled by checking
+> core_initialized flag before access aux registers at pm_suspend.
 
-Patch to require CAP_SYS_RESOURCE for writing per-cgroup psi files is
-posted at https://lore.kernel.org/all/20230301014651.1370939-1-surenb@googl=
-e.com/
+Can a call to dp_display_host_init() be moved from
+dp_display_config_hpd() to dp_display_bind()?
 
-> Thanks for the input folks!
+Related question: what is the primary reason for having
+EV_HPD_INIT_SETUP and calling dp_display_config_hpd() via the event
+thread? Does DP driver really depend on DPU irqs being installed? As
+far as I understand, DP device uses MDSS interrupts and those IRQs are
+available and working at the time of dp_display_probe() /
+dp_display_bind().
+
 >
-> > --
-> > Michal Hocko
-> > SUSE Labs
+> Changes in v2:
+> -- at commit text, dp_display_host_init() instead of host_init()
+> -- at commit text, dp_display_host_deinit() instead of host_deinit()
+>
+> Changes in v3:
+> -- re arrange to avoid commit text line over 75 chars
+>
+> Fixes: 989ebe7bc446 ("drm/msm/dp: do not initialize phy until plugin interrupt received")
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 20 ++++++++++++--------
+>  1 file changed, 12 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index bde1a7c..1850738 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -460,10 +460,12 @@ static void dp_display_host_init(struct dp_display_private *dp)
+>                 dp->dp_display.connector_type, dp->core_initialized,
+>                 dp->phy_initialized);
+>
+> -       dp_power_init(dp->power, false);
+> -       dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
+> -       dp_aux_init(dp->aux);
+> -       dp->core_initialized = true;
+> +       if (!dp->core_initialized) {
+> +               dp_power_init(dp->power, false);
+> +               dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
+> +               dp_aux_init(dp->aux);
+> +               dp->core_initialized = true;
+> +       }
+>  }
+>
+>  static void dp_display_host_deinit(struct dp_display_private *dp)
+> @@ -472,10 +474,12 @@ static void dp_display_host_deinit(struct dp_display_private *dp)
+>                 dp->dp_display.connector_type, dp->core_initialized,
+>                 dp->phy_initialized);
+>
+> -       dp_ctrl_reset_irq_ctrl(dp->ctrl, false);
+> -       dp_aux_deinit(dp->aux);
+> -       dp_power_deinit(dp->power);
+> -       dp->core_initialized = false;
+> +       if (dp->core_initialized) {
+> +               dp_ctrl_reset_irq_ctrl(dp->ctrl, false);
+> +               dp_aux_deinit(dp->aux);
+> +               dp_power_deinit(dp->power);
+> +               dp->core_initialized = false;
+> +       }
+>  }
+>
+>  static int dp_display_usbpd_configure_cb(struct device *dev)
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
+
+
+-- 
+With best wishes
+Dmitry
