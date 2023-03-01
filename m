@@ -2,76 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C8476A7654
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 22:46:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 288C76A7684
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 22:59:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229480AbjCAVqu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Mar 2023 16:46:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41262 "EHLO
+        id S229546AbjCAV7z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Mar 2023 16:59:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbjCAVqt (ORCPT
+        with ESMTP id S229530AbjCAV7y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Mar 2023 16:46:49 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E07184AFCB
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 13:46:47 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id m6so19581158lfq.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 13:46:47 -0800 (PST)
+        Wed, 1 Mar 2023 16:59:54 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DD17303F9
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 13:59:52 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id m6so19618966lfq.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 13:59:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=linaro.org; s=google; t=1677707990;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SvEvYtECFjXZ14pQicD12i0aDPOh0c/iuZFDIRdeUxY=;
-        b=DmE74FCYBv2GQl82QmdjTejZeOwniQ+5ZzgeTd7/JjsbI26i3t+O8bpeUo7g/5K1uy
-         Hko1Zxm7uD9/8/9yivM5Tf4nxFMKi23t9h7QQaJ78CxmL/kgL6GIO4YchbJm2yIf3ftR
-         Ba4lVwegFr5+SBygGwn/3A30u9EN2Vg4KJBEhXWqkbKOqRI42eFGR72r03OSYK7x1dQM
-         xBD/930tIp6vwjGAx7UNXo28hcFHEgbgCaSU6fQGy+3+u2K9oWAm+Ngly6Xu6qzgjEDQ
-         +KSj0/qIPJNNy5QQo2CQ79ox6SRD6dA9vLvPmHySghSDgSwWryuESwwjCyfK53eSG+gC
-         pkqQ==
+        bh=Xveem0XZU8zbcJMVqhduNToGKrA015CFGtNmws1lpSg=;
+        b=sscPBx8VipUxfpdU3daFHeHI7ppgtWgE718q0dAf3+T8455XnGIqaoR/wFlEv9cR0C
+         5sMdrmFUEymTYJ+cF6x/yEEK73Pi3RewsC5JoQ+G+lybzcOu5rMeBjtLi7GL3JDyYiBT
+         FO4HCZVRdY5FHqgpL1m13/OJlu89Yajy1/gfFW5ls0XHRa+xBT8D3ssGo17QjiR1cwKX
+         MPIr6iRHByLSFsWGKLCvL/sBxh5vyacM3TfTW+PzksPzaWHT+aUNbGOOazDgFwiVOa3I
+         jEv3h0sOAHvcz1yydc/RzeqzysbIGj3R1q5NNlzeFuvqu+AeEjxx9Del2GhO158e3Nce
+         LEag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
+        d=1e100.net; s=20210112; t=1677707990;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SvEvYtECFjXZ14pQicD12i0aDPOh0c/iuZFDIRdeUxY=;
-        b=VXySztDATO6ynK2WTNWdenLSVbvVa3wZ+j66P5XACVhbnny/jvsKKqzoAxXFXXLw2R
-         ZYjKkkby/ti3nKxSZew0uXhfRRLAbakP6fmeGwE/jvPVUgYJlHRMeahoMe5ZqiPeK/dV
-         R6cmCHJMrBTfeokiNN5pfemiVNUa+aMOUUM5gs1woqCXboS2ZwwnQj1IRR0V2gvdbzE0
-         BkqAVjlVzRGFD22zIGZsfFa1K3RgFcAB9+praImGxxA9hVgmrVYmXWLbWtW/5nBExaae
-         DoifDoZVIVYhqPWixWEAJJPgh6p1UPmO1HmVmUgdjSGRxB5pn0e/uv7AAeajJA63ID35
-         4Ipw==
-X-Gm-Message-State: AO0yUKWyoFHunpR4oPXqhggjnbDbR3IYMh1x7zHKSkgN4R7wZaBBTDSX
-        nSU+jmsAlE/7L8Cj6N4qmhIzOg==
-X-Google-Smtp-Source: AK7set/+Xd7daAY2Co/XPkhqFnBQODqXXDc6d6eZAVH8x8ELROcdmctj91n/iSzcxHW1XyMSVOvVZA==
-X-Received: by 2002:ac2:5690:0:b0:4dc:4c1e:13ba with SMTP id 16-20020ac25690000000b004dc4c1e13bamr2025046lfr.23.1677707205112;
-        Wed, 01 Mar 2023 13:46:45 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id k11-20020a2ea26b000000b00293cc5f83b4sm1844046ljm.27.2023.03.01.13.46.44
+        bh=Xveem0XZU8zbcJMVqhduNToGKrA015CFGtNmws1lpSg=;
+        b=DQKKExNIvBvu9l+PbSuFw+d0SQkiV3oA8fbqgnjAGXRjYCv0vtSYpTZp3nQxsfIxH9
+         DkLk7LdN5n562snogL5OHgY+smQmQ3Mv7GquybYol0GXkqaTfE6ahlnWhQpENjYIIbfC
+         fagJFNqu58mdbpwOd3KJF4Cbcv8FG7L2/Wp7+rwqyWUW5d0zTK8uOZL9EuizddeJblU+
+         cvC33IZTwZtAmvhHFlKAFsO2IviGHpMTOtffCqJqzljSGBTtNxkQT3PS4mjRruZAfdYH
+         oog+1x2655ihBjIg+xtBdf69LHYoRM+XTybmlOLHOH++f1wNEWah/Rm1Y1PTE3UbUG/M
+         CMfw==
+X-Gm-Message-State: AO0yUKX5zM/TaKWLtQ0GTVpbMxlPBbFfJWhZ6xK9ADe/F2xp8RYLOBgg
+        3Hp+V7TMHjhvvAs5j/yk7QFnIg==
+X-Google-Smtp-Source: AK7set96xRRKf752/tKy8I/rX0/WG5Sw7M+TQ1tFyCV8QBvHb5x9PE/VW9BfVHW1H4UrciJp5dsr4A==
+X-Received: by 2002:ac2:491a:0:b0:4db:2977:508f with SMTP id n26-20020ac2491a000000b004db2977508fmr1811434lfi.68.1677707990543;
+        Wed, 01 Mar 2023 13:59:50 -0800 (PST)
+Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
+        by smtp.gmail.com with ESMTPSA id x21-20020ac24895000000b004b57162edfasm1865911lfc.117.2023.03.01.13.59.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Mar 2023 13:46:44 -0800 (PST)
-Message-ID: <3ae6709f-5d05-bc0b-3dec-c4819c832fbb@linaro.org>
-Date:   Wed, 1 Mar 2023 23:46:44 +0200
+        Wed, 01 Mar 2023 13:59:49 -0800 (PST)
+Message-ID: <43604015-3c48-e190-d5c0-32204d6201ff@linaro.org>
+Date:   Wed, 1 Mar 2023 22:59:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v4 1/4] drm/msm/dpu: Move TE setup to
- prepare_for_kickoff()
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        seanpaul@chromium.org, swboyd@chromium.org
-References: <20230221184256.1436-1-quic_jesszhan@quicinc.com>
- <20230221184256.1436-2-quic_jesszhan@quicinc.com>
- <20230301100331.3altimojtca4zx6m@SoMainline.org>
- <5de60136-4150-dcc7-517f-5d65452c5e1b@quicinc.com>
- <20230301170812.zcu6upwzcfkt4s7c@SoMainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230301170812.zcu6upwzcfkt4s7c@SoMainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc7180: Delete wormdingler-rev0
+Content-Language: en-US
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     mka@chromium.org, swboyd@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230301185007.1101006-1-dianders@chromium.org>
+ <20230301104859.1.Id0cd5120469eb200118c0c7b8ee8209f877767b4@changeid>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230301104859.1.Id0cd5120469eb200118c0c7b8ee8209f877767b4@changeid>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -82,43 +79,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/03/2023 19:08, Marijn Suijten wrote:
-> On 2023-03-01 08:23:28, Abhinav Kumar wrote:
->>
->> On 3/1/2023 2:03 AM, Marijn Suijten wrote:
->>> On 2023-02-21 10:42:53, Jessica Zhang wrote:
->>> Then, for some patch hygiene, starting here:
->>>
->>>> Depends on: "Implement tearcheck support on INTF block" [3]
->>>>
->>>> Changes in V3:
->>>> - Added function prototypes
->>>> - Reordered function definitions to make change more legible
->>>> - Removed prepare_commit() function from dpu_encoder_phys_cmd
->>>>
->>>> Changes in V4:
->>>> - Reworded commit message to be more specific
->>>> - Removed dpu_encoder_phys_cmd_is_ongoing_pptx() prototype
->>>
->>> ... until here: all this info belongs /below the cut/ outside of the
->>> messge that becomes part of the commit when this patch is applied to the
->>> tree.
->>
->> For DRM, I thought we are keeping the change log above the ---- ?
->> Which means its allowed in the commit message.
+
+
+On 1.03.2023 19:50, Douglas Anderson wrote:
+> The earliest wormdingler I could find in my pile of hardware is
+> -rev1. I believe that -rev0 boards were just distributed as a pile of
+> components with no case. At this point I can't imagine anyone needing
+> to make wormdingler-rev0 work, so let's delete support for it.
 > 
-> I hope not, seems unlikely to have different rules across kernel
-> subsystems.  The main point is that this changelog and dependency chain
-> isn't of any value when the final patch is applied, regardless of
-> whether it is "allowed".
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+Looks like sc7180-trogdor-wormdingler-rev0.dtsi can go as well!
 
-Unfortunately this is one of DRM peculiarities. So, some of the patches 
-have changelog in commit message.
-
-I myself prefer to have changelog in the cover letter, but I don't 
-enforce that.
-
--- 
-With best wishes
-Dmitry
-
+Konrad
+> 
+>  arch/arm64/boot/dts/qcom/Makefile             |  2 --
+>  .../sc7180-trogdor-wormdingler-rev0-boe.dts   | 22 -------------------
+>  .../sc7180-trogdor-wormdingler-rev0-inx.dts   | 22 -------------------
+>  3 files changed, 46 deletions(-)
+>  delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts
+>  delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 31aa54f0428c..a51060378ddc 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -118,8 +118,6 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r3.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r3-lte.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-quackingstick-r0.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-quackingstick-r0-lte.dtb
+> -dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev0-boe.dtb
+> -dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev0-inx.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev1-boe.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev1-inx.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts
+> deleted file mode 100644
+> index d6ed7d0afe4a..000000000000
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts
+> +++ /dev/null
+> @@ -1,22 +0,0 @@
+> -// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> -/*
+> - * Google Wormdingler board device tree source
+> - *
+> - * Copyright 2021 Google LLC.
+> - *
+> - * SKU: 0x10 => 16
+> - *  - bits 7..4: Panel ID: 0x1 (BOE)
+> - */
+> -
+> -/dts-v1/;
+> -
+> -#include "sc7180-trogdor-wormdingler-rev0.dtsi"
+> -
+> -/ {
+> -	model = "Google Wormdingler rev0 BOE panel board";
+> -	compatible = "google,wormdingler-rev0-sku16", "qcom,sc7180";
+> -};
+> -
+> -&panel {
+> -	compatible = "boe,tv110c9m-ll3";
+> -};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts
+> deleted file mode 100644
+> index c03525ea64ca..000000000000
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts
+> +++ /dev/null
+> @@ -1,22 +0,0 @@
+> -// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> -/*
+> - * Google Wormdingler board device tree source
+> - *
+> - * Copyright 2021 Google LLC.
+> - *
+> - * SKU: 0x0 => 0
+> - *  - bits 7..4: Panel ID: 0x0 (INX)
+> - */
+> -
+> -/dts-v1/;
+> -
+> -#include "sc7180-trogdor-wormdingler-rev0.dtsi"
+> -
+> -/ {
+> -	model = "Google Wormdingler rev0 INX panel board";
+> -	compatible = "google,wormdingler-rev0-sku0", "qcom,sc7180";
+> -};
+> -
+> -&panel {
+> -	compatible = "innolux,hj110iz-01a";
+> -};
