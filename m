@@ -2,76 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 051836A6963
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 10:03:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC9286A6A04
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 10:47:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229883AbjCAJDp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Mar 2023 04:03:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56642 "EHLO
+        id S229746AbjCAJrl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Mar 2023 04:47:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbjCAJDj (ORCPT
+        with ESMTP id S229744AbjCAJrk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Mar 2023 04:03:39 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1C5226CD1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 01:03:25 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id m8-20020a17090a4d8800b002377bced051so16586264pjh.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 01:03:25 -0800 (PST)
+        Wed, 1 Mar 2023 04:47:40 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1BEF3A84D
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 01:47:38 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id bw19so12522677wrb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 01:47:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7kLFJAEhf38Z91ErKT+SpxGk8u9CKv5JjAsWvmwSh1U=;
-        b=kFV6gWvUnLZUgZ3rx1fWN6XsMVZGaOvEhSfcLg/s8cO8hXYZcsfYyMQVpM1nPe0baw
-         9ArjHkD/rTNKS5uasdrwh9EyO2HLnFSdTwYbjkFKAu3WyoU4IHt3Tz34CYydA9oO369D
-         BObp7hV6riaekilNuiKshaOLfMCvvMGnhgoDEztu+nfov0YCkeX/+HL/23Yn7jAZ8k5x
-         NMf4axghp3wg1SxSNbK2DtkVk61xSTsSv7ln/oLuupE6mXwtZ4StRepp85j7sHIy6sLP
-         gDU3wf3dZ189e0zn3+AZIZ/STcotbaSfkInW+N3RhCLw3z5qel277LPsO3bAKE4Pkh8k
-         BMvw==
+        d=linaro.org; s=google; t=1677664057;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=K1pni8PEkrIGMBG+jXk+bVH6dacln+AXocrU2+hsam8=;
+        b=LaJ7npUADITLVfxDj5CjFSESLEac57tU7PrtsB3MDvLyeucQh/8rn4py00CGBOX7Xq
+         SI4zCnIpSoOo1D2X0Pmq0nxxf/IEJkIhbB1yULFW78IVzDypBR1iLHPsPNRwtgaMltIH
+         3ccxW2i98kJRQMqHIXdGpU4pOUiISZ0W/Oy/DeGLOl5VMFJ4iGgqBsMrmwX588z1c2Ur
+         mWH1HBZlav6W+/pIcqZAks0Swjw4azkcFQiAE5lSeAioYadhNEwd6y4HNAVkqqpb0Piy
+         2OkSoBbeBtGtU5B0/3tLJPITkeivD7lDgbVpDBbcLwTpgtMfi6Y4rQxq2bXAVEihhpMQ
+         AuOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20210112; t=1677664057;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7kLFJAEhf38Z91ErKT+SpxGk8u9CKv5JjAsWvmwSh1U=;
-        b=S7Qc7A/6aIU5OPeLgV/wyCvb9p9/uaYyrHrPUtX2Diz+g+7KO1dostor8S1Qxqloti
-         vuiMI5xhU49ptN/UAs95KEyk8UkUcSfCICp40kSxZRKTu14amm4WXImG5VlH3t76FN6h
-         ipLTffbtWaz7kIBRc8Lu8l5MC4EOn4N/hp7L76H4WLG2t85PyYXDA8Eu2zrvg/T9Z4lJ
-         uHfdp37A1gltHhKKLu6UP2KBELKUq5LmcHT5t29jZfzmzbOYixlKDxrepigGdecaQHPG
-         0/yyGoYKO7I5wRY2MH9Jk+DayRapKt4IiuEt74nyTOJLvWlblDw/2+Gb4adqSTzuw5S8
-         hlkA==
-X-Gm-Message-State: AO0yUKUDI2IqNV4K81v5aIdoXuNPCUnZRW05MvN7BiR1H4L52aDTZqQG
-        zklWjDgAGh714Qy/AKzsZz3IFmMWczdC8t0QPdkDZQ==
-X-Google-Smtp-Source: AK7set/EtY+OG6oXO/oVlz80z4XiEM8n0HHmXdl5DR+0gJsIWwZvMhJ6meksEeV5+DLgP3I/bf83eA0yaUAqAI17xbc=
-X-Received: by 2002:a17:902:e5d0:b0:19a:fa2f:559e with SMTP id
- u16-20020a170902e5d000b0019afa2f559emr3823016plf.3.1677661405158; Wed, 01 Mar
- 2023 01:03:25 -0800 (PST)
+        bh=K1pni8PEkrIGMBG+jXk+bVH6dacln+AXocrU2+hsam8=;
+        b=i2B+iXxIf9Rm40HEoE7uL1BJuAQ3fQcAhg1C+6+DFxiMYWiUIKdeGYn5OUgydMVzX/
+         8d8DlNz+A9dPI21XHAZSaCD4krBhthaFdlE41B4ZI1xeAmJ9a9wACNW2H0SzdmMjEYFx
+         vDFhVgAmAeCBMliep60xtxm24GflB7ZVpHteY0osIYtu6A5tqnI33TuK6xdkfHgeMN5m
+         6D/YiAF16XXkXxQniiJ6OKG8zRHvpR3rhrcIZOSU+UfW9MRu8+1RXAmIw+n9eb+S89CG
+         caQoH8+WvaVIxiqviiBH0kb0CELQsb4MN9nLEXkkdnCCoZnv+/b/tfLm685cAbNr3lg0
+         feLw==
+X-Gm-Message-State: AO0yUKVgcyakSaKD1k9MOzmCmPOlR/4QT/p+nYtauBxnM2kEQdshXWx6
+        FFiEJjfQY7yWaXO8TNWQlSRrIw==
+X-Google-Smtp-Source: AK7set+L+5GW0GgI9KztlmCUknRctTJccLaZrCPTKnfWNMHzWH7YoENj8bpyyBGhW0pO//0mMQZeBw==
+X-Received: by 2002:a5d:6a85:0:b0:2c9:6b87:962d with SMTP id s5-20020a5d6a85000000b002c96b87962dmr4265353wru.15.1677664057170;
+        Wed, 01 Mar 2023 01:47:37 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id a10-20020adfe5ca000000b002c3dc4131f5sm11880701wrn.18.2023.03.01.01.47.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Mar 2023 01:47:36 -0800 (PST)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Wed, 01 Mar 2023 10:47:35 +0100
+Subject: [PATCH v2] MAINTAINERS: Add myself as maintainer for DRM Panels
+ drivers
 MIME-Version: 1.0
-References: <20211006035407.1147909-1-dmitry.baryshkov@linaro.org>
- <Y0hr9XTGAg8Q6K6y@google.com> <CAA8EJppuGbDGb1D-yf2WL77U1bqx1QQStQeDArWmGFCUiOtnww@mail.gmail.com>
- <10237323.nUPlyArG6x@steina-w>
-In-Reply-To: <10237323.nUPlyArG6x@steina-w>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 1 Mar 2023 10:02:48 +0100
-Message-ID: <CAPDyKFq7NFx_cwTZajqjOnRsjJ1i-F0ip+b0ZjFUcOdLjMJSkQ@mail.gmail.com>
-Subject: Re: [PATCH v1 00/15] create power sequencing subsystem
-To:     Alexander Stein <alexander.stein@ew.tq-group.com>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230216-topic-drm-panel-upstream-maintainance-v2-1-ffd262b72f16@linaro.org>
+X-B4-Tracking: v=1; b=H4sIADYf/2MC/5WOQQ6CMBREr2K69htaFdGV9zAsSvuBJqVtfgvRE
+ O7ulxu4mMWbSWZmFRnJYRaPwyoIF5ddDAzqeBBm1GFAcJZZqEqdKyVrKDE5A5YmSDqghznlQqg
+ nmLQLhaWDQajt1WhUjZXNRXBXpzNCR5yN3BZm79lMhL177+Ovlnl0uUT67F8W+XP/nV0kSNAoT
+ X9XdaPk7ek5oXiKNIh227YvdFLT0fAAAAA=
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>
+Cc:     Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.0
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -81,51 +77,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 1 Mar 2023 at 09:17, Alexander Stein
-<alexander.stein@ew.tq-group.com> wrote:
->
-> Hi,
->
-> sorry for being late to the party.
->
-> Am Mittwoch, 19. Oktober 2022, 08:03:22 CET schrieb Dmitry Baryshkov:
-> > Ho,
-> >
-> > On Thu, 13 Oct 2022 at 22:50, Matthias Kaehlcke <mka@chromium.org> wrote:
-> > > Do you still plan to refresh this series?
-> > >
-> > > I know there have been multiple attempts to get something similar
-> > > landed in the past 10 year or so. Your series didn't seem to get
-> > > much pushback from maintainers, might be worth sending a refresh :)
-> >
-> > Yes, I hope to return to it eventually. I just had no time for it lately.
->
-> I just found this thread while searching for power sequencing devices in
-> Linux. From what I understand this is transforming the existing mmc pwrseq
-> drivers into generic ones. What is the intention of this new subsystem? What
-> is it supposed to address?
-> In my case I have an LTE module attached via USB, but in order to use it I
-> need to perform several steps:
-> 1. apply power supply
-> 2. Issue a reset pulse(!), the length actually defines whether its a reset or
-> poweroff/on
-> 3a. wait for a GPIO to toggle
-> 3b. wait a minimum time
-> 4a. device will enumerate on USB
-> 4b. device can be access using UART
->
-> This is something required to actually see/detect the device in the first
-> place, thus it cannot be part of the device driver side.
-> Is this something pwrseq is supposed to address?
+Add myself as co-maintainer for DRM Panel Drivers in order to help
+reviewing and getting new panels drivers merged, and Remove Thierry
+as he suggested since he wasn't active for a while.
 
-Yes, this is one of those typical use-cases for discoverable buses
-that we need to add support for, in one way or the other.
+Thanks Thierry for all your work!
 
->
-> Best regards,
-> Alexander
+Acked-by: Jagan Teki <jagan@amarulasolutions.com>
+Acked-by: Sam Ravnborg <sam@ravnborg.org>
+Acked-by: Thierry Reding <thierry.reding@gmail.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- Added Acked-by from Sam, Thierry and Jagan
+- Removed Thierry from maintainers list as he suggested, updated commit accordingly
+- Link to v1: https://lore.kernel.org/r/20230216-topic-drm-panel-upstream-maintainance-v1-1-ae1cf9268217@linaro.org
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[...]
+diff --git a/MAINTAINERS b/MAINTAINERS
+index be167c695c64..f8e1b80bf41f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -7042,7 +7042,7 @@ F:	Documentation/devicetree/bindings/display/xlnx/
+ F:	drivers/gpu/drm/xlnx/
+ 
+ DRM PANEL DRIVERS
+-M:	Thierry Reding <thierry.reding@gmail.com>
++M:	Neil Armstrong <neil.armstrong@linaro.org>
+ R:	Sam Ravnborg <sam@ravnborg.org>
+ L:	dri-devel@lists.freedesktop.org
+ S:	Maintained
 
-Kind regards
-Uffe
+---
+base-commit: 9d9019bcea1aac7eed64a1a4966282b6b7b141c8
+change-id: 20230216-topic-drm-panel-upstream-maintainance-6d5cae28d184
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
