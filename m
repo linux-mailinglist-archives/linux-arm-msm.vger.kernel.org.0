@@ -2,111 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27A0A6A733D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 19:16:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 507BD6A73CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 19:50:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229778AbjCASQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Mar 2023 13:16:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53254 "EHLO
+        id S229891AbjCASug (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Mar 2023 13:50:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229595AbjCASQm (ORCPT
+        with ESMTP id S229703AbjCASuf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Mar 2023 13:16:42 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6630457F1;
-        Wed,  1 Mar 2023 10:16:37 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5274061460;
-        Wed,  1 Mar 2023 18:16:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C3A3C433D2;
-        Wed,  1 Mar 2023 18:16:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677694596;
-        bh=MbNmv1qlx44l2UReHXBKDyqdtXbH1552C0xoBvoenxY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=aE/Z3aMl+W2YJ0hmOSa7j3h51QCSpwmZG197Kjaahd4LbjVZAc12oMw9E2t1r89OE
-         3F8g0VXfkBKu7V8L7hZNwHnHX2LuPR/gy+x3JWHD0bur+zSJGbot0vHZnlZLJZDrS3
-         VZrkDyE2NMrPM1zn9mtbXF8IjBT+96OGfOl0bXIVRqqm3qncEe8EaP2WoeQ2WgETLA
-         A/uaV80sKgznSw1ZjI2mK5Hb7XpYPw8VjFHVbHn/p2ysBzvHs352kh93+BU6c9C4pX
-         D18mk2f3R9srsxdNLOvLZFMOYrtqeDha8DY5+u4dGGKmHgJdL+6I+g9GhQc/u3W5Gx
-         vHlarjEXvDCew==
-Date:   Wed, 1 Mar 2023 11:16:34 -0700
-From:   Nathan Chancellor <nathan@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Wed, 1 Mar 2023 13:50:35 -0500
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C389022DEF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 10:50:33 -0800 (PST)
+Received: by mail-pl1-x635.google.com with SMTP id i3so15029446plg.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 10:50:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EjySFxB3u/yJmF2L0v+RXLMEaLGvfkABUreehEPy5PQ=;
+        b=mgDVJNJ8VEJ2ueKGgq3JfaokAscdSPqv2DLxGgE1XmKplb1bc2HUZYl9+pLS0KVVVr
+         IgMXwL71UCpY1a66RblhTCXQVN8AsdlzLOlnlTcV2C2FsCAgOWBpl1dbsaxKSMQwtOKw
+         ahrMcAu2whjZKc9SF8kb99HK8G/03tCImQI8I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EjySFxB3u/yJmF2L0v+RXLMEaLGvfkABUreehEPy5PQ=;
+        b=E0TyolWa+iTKu2JrlIQ6VAh3MKHMstsFch3GlDEt9RmHEyOQv5Z8DJpUpAnasE60Og
+         +vo+Qc9mWpgLWOrF0zkUO0Lks13o3ft/BUA4UbQOvSiQTlefrn/MKjWP+2jqxT3sG4x6
+         VoCUqmPXdZvI9eypSVXDJE4miPU2BkmaR489HglcUvGeXPrKsxA/ykLVf2E07rODyAbd
+         3f1asshj2tkHJSc/Wg7GTaAqZXS2SGAwOXFWhbCzHIzWmKNr7PkKeWF26YmqxN9ZVvJf
+         LLmSv42kxWcYLbeTOtqlhkLJhBSdDa0f2Asjk7jJ6HEySi7ridaYbGx8juYRLA2lTRFY
+         nEwA==
+X-Gm-Message-State: AO0yUKX52qh9CdHDMwhoujnUVBnbC1pwlt9G05wwcEVYelDFyj3lQo+d
+        n+/lQaH361AHfBTcM1iYGFak1+wR1ON9YKzE
+X-Google-Smtp-Source: AK7set9xrPfAg/LyDUfuKea8pYAEKZ7H/mBw5ppo/zgswkvRYZSeAVahAYgRDaZHaevxq3qRwaM4xA==
+X-Received: by 2002:a17:902:f54e:b0:19c:da7f:a238 with SMTP id h14-20020a170902f54e00b0019cda7fa238mr9362595plf.31.1677696633278;
+        Wed, 01 Mar 2023 10:50:33 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:f4ac:1f4d:6f3b:f98])
+        by smtp.gmail.com with ESMTPSA id p5-20020a170902780500b0019a8530c063sm8761982pll.102.2023.03.01.10.50.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Mar 2023 10:50:32 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     mka@chromium.org, swboyd@chromium.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] power: supply: qcom_battmgr: remove bogus do_div()
-Message-ID: <Y/+WghSbz3l6uipn@dev-arch.thelio-3990X>
-References: <20230214132052.1556699-1-arnd@kernel.org>
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/4] arm64: dts: qcom: sc7180: Delete a few unused trogdor dts files
+Date:   Wed,  1 Mar 2023 10:50:02 -0800
+Message-Id: <20230301185007.1101006-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.39.2.722.g9855ee24e9-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230214132052.1556699-1-arnd@kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Linus,
+In general on ChromeOS we try hard not to throw away perfectly good
+hardware, even if it has a few quirks. Many people keep early versions
+of boards around indefinitely and keep using them for testing /
+development if the feature they're working on doesn't need the latest
+and greatest. This is the reason why there are so many sc7180-trogdor
+device tree files.
 
-On Tue, Feb 14, 2023 at 02:20:42PM +0100, Arnd Bergmann wrote:
-> From: Arnd Bergmann <arnd@arndb.de>
-> 
-> The argument to do_div() is a 32-bit integer, and it was read from a
-> 32-bit register so there is no point in doing a 64-bit division on it.
-> 
-> On 32-bit arm, do_div() causes a compile-time warning here:
-> 
-> include/asm-generic/div64.h:238:22: error: passing argument 1 of '__div64_32' from incompatible pointer type [-Werror=incompatible-pointer-types]
->   238 |   __rem = __div64_32(&(n), __base); \
->       |                      ^~~~
->       |                      |
->       |                      unsigned int *
-> drivers/power/supply/qcom_battmgr.c:1130:4: note: in expansion of macro 'do_div'
->  1130 |    do_div(battmgr->status.percent, 100);
-> 
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> ---
->  drivers/power/supply/qcom_battmgr.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-> index ec31f887184f..de77df97b3a4 100644
-> --- a/drivers/power/supply/qcom_battmgr.c
-> +++ b/drivers/power/supply/qcom_battmgr.c
-> @@ -1126,8 +1126,7 @@ static void qcom_battmgr_sm8350_callback(struct qcom_battmgr *battmgr,
->  			battmgr->info.charge_type = le32_to_cpu(resp->intval.value);
->  			break;
->  		case BATT_CAPACITY:
-> -			battmgr->status.percent = le32_to_cpu(resp->intval.value);
-> -			do_div(battmgr->status.percent, 100);
-> +			battmgr->status.percent = le32_to_cpu(resp->intval.value) / 100;
->  			break;
->  		case BATT_VOLT_OCV:
->  			battmgr->status.voltage_ocv = le32_to_cpu(resp->intval.value);
-> -- 
-> 2.39.1
-> 
+That being said, _very_ early hardware tends not to be kept. -rev0
+hardware tends (not always) to be prototype hardware and often comes
+as a pile of parts. People are really only willing to put up with this
+for so long. Even if it's not a pile of parts, -rev0 tends to be a
+very small production run and isn't widely distributed. That means
+that, by and large, we can eventually drop support for -rev0. Here,
+we'll do that for kingoftown and wormdingler, and lazor.
 
-Would you be able to take this patch directly? It seems obviously
-correctTM, has an ack from Sebastian [1], and without it, 32-bit
-allmodconfig builds are broken [2] (the other warning in that log has a
-fix on the way to you soon).
+While looking at the -rev0 of mrbland, I noticed that mrbland appears
+to be long dead and unlikely to be revived. Let's just fully delete
+it.
 
-[1]: https://lore.kernel.org/20230214220210.cpviycsmcppylkgj@mercury.elektranox.org/
-[2]: https://storage.tuxsuite.com/public/clangbuiltlinux/continuous-integration2/builds/2MPmxwvmQ7FdpiMhdQN2ZJhcoUP/build.log
 
-Cheers,
-Nathan
+Douglas Anderson (4):
+  arm64: dts: qcom: sc7180: Delete wormdingler-rev0
+  arm64: dts: qcom: sc7180: Delete kingoftown-rev0
+  arm64: dts: qcom: sc7180: Delete lazor-rev0
+  arm64: dts: qcom: sc7180: Delete mrbland
+
+ arch/arm64/boot/dts/qcom/Makefile             |  10 +-
+ .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  38 ---
+ ...n-r1.dts => sc7180-trogdor-kingoftown.dts} |   0
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  34 --
+ .../qcom/sc7180-trogdor-mrbland-rev0-auo.dts  |  22 --
+ .../qcom/sc7180-trogdor-mrbland-rev0-boe.dts  |  22 --
+ .../dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi |  36 --
+ .../qcom/sc7180-trogdor-mrbland-rev1-auo.dts  |  22 --
+ .../qcom/sc7180-trogdor-mrbland-rev1-boe.dts  |  24 --
+ .../boot/dts/qcom/sc7180-trogdor-mrbland.dtsi | 320 ------------------
+ .../sc7180-trogdor-wormdingler-rev0-boe.dts   |  22 --
+ .../sc7180-trogdor-wormdingler-rev0-inx.dts   |  22 --
+ 12 files changed, 1 insertion(+), 571 deletions(-)
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
+ rename arch/arm64/boot/dts/qcom/{sc7180-trogdor-kingoftown-r1.dts => sc7180-trogdor-kingoftown.dts} (100%)
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-auo.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-boe.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-auo.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-boe.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts
+
+-- 
+2.39.2.722.g9855ee24e9-goog
+
