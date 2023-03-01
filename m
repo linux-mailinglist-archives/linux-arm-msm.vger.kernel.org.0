@@ -2,250 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FB666A68E6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 09:27:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96F756A6945
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Mar 2023 09:57:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229727AbjCAI1s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Mar 2023 03:27:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56276 "EHLO
+        id S229880AbjCAI5q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Mar 2023 03:57:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229753AbjCAI1q (ORCPT
+        with ESMTP id S229661AbjCAI5p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Mar 2023 03:27:46 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64AA13A859;
-        Wed,  1 Mar 2023 00:27:36 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32175soV018441;
-        Wed, 1 Mar 2023 08:27:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=nHCAjoF/dcQIIAjVnH1TzRBHOu66CmrIUn2Mu0lhfHE=;
- b=Vhh438V5ImrvTa8J0BNHjeW74sKMvnM0a8sviUtgdmgjyio0QXvAewK9n8VNFWTkcuWc
- 4NcFBk6wA/qqPhKZodiO8dd4kyYMz2TU9TkqUF8O3TUvvm1Phu2Qe4xpeTw8zkoOrzXV
- 0ASOFrHF6Luw7zsHBBnoOeunBEp5G+UX8ifbGXlyiXeb5jdkJjJkQqAF4i0JlX/Nt8ex
- //IPFqOGgSuwMI4SqF/FX+gbywra96zUolC6dsRY/AZYhoSMfRd9wmeSh7+5nmRHUcV+
- ky531Zfa78AmpB/fzuk3lFp6QojMGBw+ALG2WpOSSY9DupbkOnUiAUM6AEYUT/7hDWwW jA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p1f7n3g3p-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 01 Mar 2023 08:27:23 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3218RMCt008113
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 1 Mar 2023 08:27:22 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 1 Mar 2023
- 00:27:17 -0800
-Message-ID: <2e536776-21c3-4171-e5bf-660a61dd6738@quicinc.com>
-Date:   Wed, 1 Mar 2023 16:27:15 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH v2 6/9] coresight-tpdm: Add node to set dsb programming
- mode
-Content-Language: en-US
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+        Wed, 1 Mar 2023 03:57:45 -0500
+X-Greylist: delayed 129 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 01 Mar 2023 00:57:40 PST
+Received: from out203-205-221-210.mail.qq.com (out203-205-221-210.mail.qq.com [203.205.221.210])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E50339CE5;
+        Wed,  1 Mar 2023 00:57:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1677661058;
+        bh=JZCUr280TVXOzIU/SeraWYs3TeNzUiZ+HfvsNis9eW0=;
+        h=From:To:Cc:Subject:Date;
+        b=mo4D/VvIpXd7CoGk2vBu+tIzKk6b1/bGZRHhwby+4AKk5+Tu+fOjk0cvbllGOpJRG
+         vx89SXXOY8OPoE8MsPXXAICYL9UsJJjmKgvrLEdMYM8/FY9kpHborI4RzbXMTfL52b
+         EBTfxft+gNaWlfSHu1t/6xmOFFRFMP/QfXWHJmGI=
+Received: from DESKTOP-ZMX.localdomain ([115.156.140.94])
+        by newxmesmtplogicsvrszc2-1.qq.com (NewEsmtp) with SMTP
+        id D7505019; Wed, 01 Mar 2023 16:53:53 +0800
+X-QQ-mid: xmsmtpt1677660833tmme4ifea
+Message-ID: <tencent_7036BCA256055D05F8C49D86DF7F0E2D1A05@qq.com>
+X-QQ-XMAILINFO: MjPUT8lqGkgpRDW5LrkbLrR2FcGhaYdB26ailGldwavnWDIoQSdYBMY78Msis2
+         5+7xbQJIFDBIw0+1Uwbn5Cn485VI6egZDNqM09fi/lzykWmSqnng2llksq71fISVYfYbX+15a7nW
+         153euhMqZ6PoinVGdlLK0sGPPVWhwk4Cmg9L4aRstc9MnAwqZmJ8z41bcbr5CA+Hq2ctcNzu8ewN
+         FUklrhQyIiU54Pu7ll3P4IzA5NdCIPL9/6ejcus8MjaFVIOFKdm/jmTvFGp4jR6Sj6gqFyf+t0Dc
+         Fi/g8GBXpyvXTbHkr/PAQPnC6Qo57cTGzpMhLvi4BJ1PdIVbv2HrEhgZo0v/lBvbzSZSsv4MMil2
+         ArL7zmhGv7L/b0X3/4gdvaJ+jhiVKBpdOWcgXNfq953Jc8A4jQ2WSVg5IczbyEKDu3rquJauTYUV
+         q026jA0Aa9uPn0UtoNx31ocWFzqe9URUQIe9KqKfs97wlVc/zSzuwc7VMtZ+feoHgfF7M3AjUnJY
+         xWwsasIfXE1iFaf1XD6hA9AN+fv4Yrg/M6CPVmXyPtJrGGJjgUe//blUUIYI29dyhuasJUJ7TwDA
+         UWPr8dbJiCPXVaQPn7vyYsvFfBYUWWcahSwn1P11P/jx+exqv8JVMBkRcrJsnA8u8nJubZvaYMk0
+         wSYUwchl8WeupGgtKYSx1i3JN8uym0vGh8fOFgFqPAAHmrA5zF5C6Y2+ls9X+Y5VQQn9848FyUuU
+         au1J/vKb47o6l6n67wvzfwjEHDeUBf59WVJ5RRqM7sCUznEhweK/iP96PMapHZhLYpWxXx+bDmwz
+         a/t2HF1hZSfd7MtxyBsxaDWiBigmalF9oXvmFp/9JpfwV8QlUqao6QixQyvSu6L/fBN1VfeaS0HI
+         O65a9PwLBRBbhSGTVuTipGqBEG3ZEUd3VS+2VNbHjFOctWM+FPLV3ip83NpSSFuzrZUKz5R7Odmc
+         P3MT4PX5Dfc8u7KqodyQwqs7qY0EvxkFYn2Dcp0d+dIus5UsQ3SGUqKdeQx/bw
+From:   Yang Xiwen <forbidden405@foxmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <bjorn.andersson@linaro.org>,
-        Tao Zhang <taozha@qti.qualcomm.com>
-References: <1674114105-16651-1-git-send-email-quic_taozha@quicinc.com>
- <1674114105-16651-7-git-send-email-quic_taozha@quicinc.com>
- <f4dcb4f8-c70b-3ca9-33fd-8889899d7481@arm.com>
-From:   Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <f4dcb4f8-c70b-3ca9-33fd-8889899d7481@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Jaime Breva <jbreva@nayarsystems.com>,
+        Yang Xiwen <forbidden405@foxmail.com>,
+        Nikita Travkin <nikita@trvn.ru>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH] arm64: dts: qcom: msm8916-ufi: Fix sim card selection pinctrl
+Date:   Wed,  1 Mar 2023 16:53:50 +0800
+X-OQ-MSGID: <20230301085350.15512-1-forbidden405@foxmail.com>
+X-Mailer: git-send-email 2.39.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _me8IuirgNybzWlv73lm2rIxLOivncfR
-X-Proofpoint-ORIG-GUID: _me8IuirgNybzWlv73lm2rIxLOivncfR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-01_04,2023-02-28_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 impostorscore=0 bulkscore=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 mlxlogscore=999 clxscore=1015 mlxscore=0
- adultscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2303010068
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        RCVD_IN_SBL_CSS,RDNS_DYNAMIC,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Suzuki,
+The previous commit mistakenly introduced sim_ctrl_default as pinctrl,
+this is incorrect, the interface for sim card selection varies between
+different devices and should not be placed in the dtsi.
 
-在 2/28/2023 7:35 PM, Suzuki K Poulose 写道:
-> On 19/01/2023 07:41, Tao Zhang wrote:
->> Add node to set and show programming mode for TPDM DSB subunit.
->> Once the DSB programming mode is set, it will be written to the
->> register DSB_CR. Bit[10:9] of the DSB_CR register is used to set
->> the DSB test mode.
->>
->> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->> Signed-off-by: Tao Zhang <taozha@qti.qualcomm.com>
->> ---
->>   drivers/hwtracing/coresight/coresight-tpdm.c | 45 
->> +++++++++++++++++++++++++++-
->>   drivers/hwtracing/coresight/coresight-tpdm.h | 12 ++++++++
->>   2 files changed, 56 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c 
->> b/drivers/hwtracing/coresight/coresight-tpdm.c
->> index 1dbb6c4..9126a37 100644
->> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
->> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
->> @@ -4,6 +4,7 @@
->>    */
->>     #include <linux/amba/bus.h>
->> +#include <linux/bitfield.h>
->>   #include <linux/bitmap.h>
->>   #include <linux/coresight.h>
->>   #include <linux/coresight-pmu.h>
->> @@ -38,7 +39,7 @@ static umode_t tpdm_dsb_is_visible(struct kobject 
->> *kobj,
->>     static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
->>   {
->> -    u32 val;
->> +    u32 val, mode;
->>         val = readl_relaxed(drvdata->base + TPDM_DSB_TIER);
->>       /* Set trigger timestamp */
->> @@ -58,6 +59,19 @@ static void tpdm_enable_dsb(struct tpdm_drvdata 
->> *drvdata)
->>         /* Set the enable bit of DSB control register to 1 */
->>       val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
->> +    /* Set the cycle accurate mode */
->> +    mode = TPDM_DSB_MODE_CYCACC(drvdata->dsb->mode);
->> +    val &= ~TPDM_DSB_TEST_MODE;
->> +    val |= FIELD_PREP(TPDM_DSB_TEST_MODE, mode);
->> +    /* Set the byte lane for high-performance mode */
->> +    mode = TPDM_DSB_MODE_HPBYTESEL(drvdata->dsb->mode);
->> +    val &= ~TPDM_DSB_HPSEL;
->> +    val |= FIELD_PREP(TPDM_DSB_HPSEL, mode);
->> +    /* Set the performance mode */
->> +    if (drvdata->dsb->mode & TPDM_DSB_MODE_PERF)
->> +        val |= TPDM_DSB_MODE;
->> +    else
->> +        val &= ~TPDM_DSB_MODE;
->
-> This looks a bit tricky to me. Please could you add documentation of
-> the values supported under Documentation/ABI/testing/sysfs-....-
->
-> Couldn't we provide separate handles for these "mode bits" ?
->
-> cycacc
-> perf
-> hpsel
+This commit selects external SIM card slot for ufi001c as default.
+uf896 selects the correct SIM card slot automatically, thus does not need
+this pinctrl node.
 
-Sure, I will update this according to your advice in the next version of 
-the patch.
+Fixes: faf69431464b ("arm64: dts: qcom: msm8916-thwc: Add initial device trees")
+Signed-off-by: Yang Xiwen <forbidden405@foxmail.com>
+---
+ .../boot/dts/qcom/msm8916-thwc-uf896.dts      |  4 ---
+ .../boot/dts/qcom/msm8916-thwc-ufi001c.dts    | 28 +++++++++++++++++--
+ arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi     | 10 -------
+ 3 files changed, 26 insertions(+), 16 deletions(-)
 
-Tao
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts b/arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts
+index c492db8561904..82e260375174d 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts
+@@ -33,7 +33,3 @@ &button_default {
+ &gpio_leds_default {
+ 	pins = "gpio81", "gpio82", "gpio83";
+ };
+-
+-&sim_ctrl_default {
+-	pins = "gpio1", "gpio2";
+-};
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts b/arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts
+index 700cf81cbf8c0..8433c9710b1cf 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts
+@@ -25,6 +25,11 @@ &led_b {
+ 	gpios = <&msmgpio 20 GPIO_ACTIVE_HIGH>;
+ };
+ 
++&mpss {
++	pinctrl-0 = <&sim_ctrl_default>;
++	pinctrl-names = "default";
++};
++
+ &button_default {
+ 	pins = "gpio37";
+ 	bias-pull-down;
+@@ -34,6 +39,25 @@ &gpio_leds_default {
+ 	pins = "gpio20", "gpio21", "gpio22";
+ };
+ 
+-&sim_ctrl_default {
+-	pins = "gpio1", "gpio2";
++/* This selects the external SIM card slot by default */
++&msmgpio {
++	sim_ctrl_default: sim-ctrl-default-state {
++		esim-sel-pins {
++			pins = "gpio0", "gpio3";
++			bias-disable;
++			output-low;
++		};
++
++		sim-en-pins {
++			pins = "gpio1";
++			bias-disable;
++			output-low;
++		};
++
++		sim-sel-pins {
++			pins = "gpio2";
++			bias-disable;
++			output-high;
++		};
++	};
+ };
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
+index 790a9696da9de..cdf34b74fa8fa 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
+@@ -92,9 +92,6 @@ &gcc {
+ };
+ 
+ &mpss {
+-	pinctrl-0 = <&sim_ctrl_default>;
+-	pinctrl-names = "default";
+-
+ 	status = "okay";
+ };
+ 
+@@ -240,11 +237,4 @@ gpio_leds_default: gpio-leds-default-state {
+ 		drive-strength = <2>;
+ 		bias-disable;
+ 	};
+-
+-	sim_ctrl_default: sim-ctrl-default-state {
+-		function = "gpio";
+-		drive-strength = <2>;
+-		bias-disable;
+-		output-low;
+-	};
+ };
+-- 
+2.39.1
 
->
-> Suzuki
->
->
->>       val |= TPDM_DSB_CR_ENA;
->>       writel_relaxed(val, drvdata->base + TPDM_DSB_CR);
->>   }
->> @@ -257,6 +271,34 @@ static struct attribute_group tpdm_attr_grp = {
->>       .attrs = tpdm_attrs,
->>   };
->>   +static ssize_t dsb_mode_show(struct device *dev,
->> +                  struct device_attribute *attr,
->> +                  char *buf)
->> +{
->> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->> +
->> +    return sysfs_emit(buf, "%lx\n",
->> +             (unsigned long)drvdata->dsb->mode);
->> +}
->> +
->> +static ssize_t dsb_mode_store(struct device *dev,
->> +                   struct device_attribute *attr,
->> +                   const char *buf,
->> +                   size_t size)
->> +{
->> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->> +    unsigned long val;
->> +
->> +    if ((kstrtoul(buf, 0, &val)) || val < 0)
->> +        return -EINVAL;
->> +
->> +    spin_lock(&drvdata->spinlock);
->> +    drvdata->dsb->mode = val & TPDM_MODE_ALL;
->> +    spin_unlock(&drvdata->spinlock);
->> +    return size;
->> +}
->> +static DEVICE_ATTR_RW(dsb_mode);
->> +
->>   static ssize_t dsb_trig_type_show(struct device *dev,
->>                        struct device_attribute *attr,
->>                        char *buf)
->> @@ -327,6 +369,7 @@ static ssize_t dsb_trig_ts_store(struct device *dev,
->>   }
->>   static DEVICE_ATTR_RW(dsb_trig_ts);
->>   static struct attribute *tpdm_dsb_attrs[] = {
->> +    &dev_attr_dsb_mode.attr,
->>       &dev_attr_dsb_trig_ts.attr,
->>       &dev_attr_dsb_trig_type.attr,
->>       NULL,
->> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h 
->> b/drivers/hwtracing/coresight/coresight-tpdm.h
->> index 3ad1be5..b3ecb9f 100644
->> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
->> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
->> @@ -19,6 +19,16 @@
->>   #define TPDM_DSB_XTRIG_TSENAB        BIT(1)
->>   /* Enable bit for DSB subunit trigger type */
->>   #define TPDM_DSB_TRIG_TYPE        BIT(12)
->> +/* Enable bit for DSB subunit perfmance mode */
->> +#define TPDM_DSB_MODE        BIT(1)
->> +
->> +/* DSB programming modes */
->> +#define TPDM_DSB_MODE_CYCACC(val)    (val & GENMASK(2, 0))
->> +#define TPDM_DSB_MODE_PERF        BIT(3)
->> +#define TPDM_DSB_MODE_HPBYTESEL(val)    (val & GENMASK(8, 4))
->> +#define TPDM_MODE_ALL            (0xFFFFFFF)
->> +#define TPDM_DSB_TEST_MODE        GENMASK(11, 9)
->> +#define TPDM_DSB_HPSEL        GENMASK(6, 2)
->>     /* TPDM integration test registers */
->>   #define TPDM_ITATBCNTRL        (0xEF0)
->> @@ -48,10 +58,12 @@
->>     /**
->>    * struct dsb_dataset - specifics associated to dsb dataset
->> + * @mode:             DSB programming mode
->>    * @trig_ts:          Enable/Disable trigger timestamp.
->>    * @trig_type:        Enable/Disable trigger type.
->>    */
->>   struct dsb_dataset {
->> +    u32                mode;
->>       bool            trig_ts;
->>       bool            trig_type;
->>   };
->
