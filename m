@@ -2,89 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FC5C6A821D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 13:27:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EEF96A8227
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 13:28:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229449AbjCBM1V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 07:27:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52204 "EHLO
+        id S229665AbjCBM2j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 07:28:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjCBM1U (ORCPT
+        with ESMTP id S229494AbjCBM2i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 07:27:20 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1635F46156;
-        Thu,  2 Mar 2023 04:27:17 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3229fFKf031978;
-        Thu, 2 Mar 2023 12:27:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=/w7lQupZmeqPD5Z8pU6ZtSRWQ6MYh8vv2P922lnRo0w=;
- b=JxDGu/QQGYekye8r2PLvFh5lFZNNjPPUBOKF9AaN57jpvgPBzmufIvv3BDD0+/5es95S
- YWFVeS6syMcD5ODiR4S4GNO4JI8gk2hiXvqquXoMvQghAahapdNGGEL/Dx/BSiGBnjKz
- AAqCfkF25ZmAogUmM76CCRENmk98n5EhabbKhIf+SZrxT6H1riRuqM9/FWNPhA85GX1d
- Z4q6tTRu1OLj0y16mt6fxZOFjTtXQr4P5UdEWLuNzqGLfQfu/Ka/NdmF1JNHRSvJd4e0
- 04P+ENer6NeRzp3+BRVwUcrgI6Ntrs94mZjsMjeuV0jD4tvY5k7J8028LW/k9W567NYS Ww== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p2cur25ja-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 02 Mar 2023 12:27:12 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 322CRB4r002586
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 2 Mar 2023 12:27:11 GMT
-Received: from [10.50.55.202] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 2 Mar 2023
- 04:27:06 -0800
-Message-ID: <56671b88-af51-221f-5d72-8775fd07a433@quicinc.com>
-Date:   Thu, 2 Mar 2023 17:57:03 +0530
+        Thu, 2 Mar 2023 07:28:38 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9B5F7280
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 04:28:32 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id f16so17399910ljq.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 04:28:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1677760111;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QM9EzJ59d7bm12hYRBG6XOMDXAxFr+3VVIYgcW52hKU=;
+        b=lZIUY2xO9crjBnBglCG+jmfXGploPGWLi1NjlFyOGpVzQWKyDoe2m9nYrRtGHt/MwU
+         dGInHAH7wJx4Moi5TU1b0FoUn/6CpIc5ps0vqd+x3ta3xLYndI6VZoplvuQS6LfAo0mZ
+         8oYOb87lL2GqISnfyNi+xK7+ocr6kLZQ0Ha59By7OexU2iweDROpWTcXfwq7ss5VDaJk
+         +6GPno+LQxqgemVcxPHFMWOCCYQ2D82FDhf3ug6ZmB4eVC4BeN+7xGCyZ/DLxXTedkb1
+         1fGVnf8vxxlOdxy0QXukySqts6C+/0m/EzEArj75MDF4LGwgoJkn+/p982GXyAudP/7o
+         rTgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677760111;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QM9EzJ59d7bm12hYRBG6XOMDXAxFr+3VVIYgcW52hKU=;
+        b=OdcRti9DA7GgGbOrfiRIe8l+G1XuImCHXeS0wH2qNSgASKHmcYLhuMvRIi0WGIGQBK
+         cQy5sMOhlA7TxOtWEw1eFptECOuPBtLNZefujqa6X7NKdQlhHC5RGQmkDZSfkxbKmRYK
+         +p+Nux9gm1CBFHHakMcf5di19CjRyLl5iTha+DJagSBB0PP3nFwCFoOGAch5uBzm/5Qa
+         6gLevfY42+dqrT4qb8wPOmC+71x6dk20Y6OKwNKzRrojRJqcE3G3TmoDyQE5i/sWqI00
+         7KSYEn/B6msjtRwtpx0eTmjnPavb+3nxpVPQ4IMCpmNFPeskuaCEMQCu4Z6EzQlBdDDi
+         96dg==
+X-Gm-Message-State: AO0yUKXEbymHJpQGJd/Yk1KJNyG4UAhuJ2/NyT52Druu/8d3tOaTQwJq
+        dhLbxr5N0FMHxkc12vBkURSd6w==
+X-Google-Smtp-Source: AK7set/X14A60bT9t4QpESXUrKarmtui6NVnUQo6yUQoVYeTRj2Pq03+cx5bPgVW7QJbidOyAsln/g==
+X-Received: by 2002:a2e:9b49:0:b0:293:4b61:265a with SMTP id o9-20020a2e9b49000000b002934b61265amr3040517ljj.49.1677760111243;
+        Thu, 02 Mar 2023 04:28:31 -0800 (PST)
+Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
+        by smtp.gmail.com with ESMTPSA id g7-20020a2eb5c7000000b002946be8475esm2079985ljn.135.2023.03.02.04.28.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Mar 2023 04:28:30 -0800 (PST)
+Message-ID: <f39890de-54a9-297b-68ee-41dedd7bdf27@linaro.org>
+Date:   Thu, 2 Mar 2023 13:28:29 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 06/18] media: venus: hfi_venus: Write to VIDC_CTRL_INIT
- after unmasking interrupts
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc8280xp-x13s: fix va dmic dai
+ links and routing
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>
-CC:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
- <20230228-topic-venus-v1-6-58c2c88384e9@linaro.org>
- <54bd7d0b-b47b-dfae-f62e-9393162d79a7@linaro.org>
- <71fd2070-d986-6359-eeca-6105f0835a1b@linaro.org>
-From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <71fd2070-d986-6359-eeca-6105f0835a1b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jZ_8F9B4mkC17YfRcPtUaXeBH0aOUV49
-X-Proofpoint-ORIG-GUID: jZ_8F9B4mkC17YfRcPtUaXeBH0aOUV49
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-02_06,2023-03-02_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- priorityscore=1501 clxscore=1015 mlxscore=0 suspectscore=0 mlxlogscore=896
- lowpriorityscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2303020107
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        agross@kernel.org, andersson@kernel.org
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230302115741.7726-1-srinivas.kandagatla@linaro.org>
+ <20230302115741.7726-5-srinivas.kandagatla@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230302115741.7726-5-srinivas.kandagatla@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -92,43 +80,48 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 2/28/2023 9:29 PM, Konrad Dybcio wrote:
->
-> On 28.02.2023 16:33, Bryan O'Donoghue wrote:
->> On 28/02/2023 15:24, Konrad Dybcio wrote:
->>> The downstream driver signals the hardware to be enabled only after the
->>> interrupts are unmasked, which... makes sense. Follow suit.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->>>    drivers/media/platform/qcom/venus/hfi_venus.c | 2 +-
->>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
->>> index 772e5e9cf127..4d785e53aa0b 100644
->>> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
->>> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
->>> @@ -454,7 +454,6 @@ static int venus_boot_core(struct venus_hfi_device *hdev)
->>>        void __iomem *wrapper_base = hdev->core->wrapper_base;
->>>        int ret = 0;
->>>    -    writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
->>>        if (IS_IRIS1(hdev->core) || IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core)) {
->>>            mask_val = readl(wrapper_base + WRAPPER_INTR_MASK);
->>>            mask_val &= ~(WRAPPER_INTR_MASK_A2HWD_BASK_V6 |
->>> @@ -466,6 +465,7 @@ static int venus_boot_core(struct venus_hfi_device *hdev)
->>>        writel(mask_val, wrapper_base + WRAPPER_INTR_MASK);
->>>        writel(1, cpu_cs_base + CPU_CS_SCIACMDARG3);
->>>    +    writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
->>>        while (!ctrl_status && count < max_tries) {
->>>            ctrl_status = readl(cpu_cs_base + CPU_CS_SCIACMDARG0);
->>>            if ((ctrl_status & CPU_CS_SCIACMDARG0_ERROR_STATUS_MASK) == 4) {
->>>
->> This should go before you add your new macros in-place of IS_V6() and it should have a fixes.
-> Ack
->
-> Konrad
 
-Agree with Bryan and this change looks fine to me.
+On 2.03.2023 12:57, Srinivas Kandagatla wrote:
+> VA dmics 0, 1, 2 micbias on X13s are connected to WCD MICBIAS1, WCD MICBIAS1
+> and WCD MICBIAS3 respectively. Reflect this in dt to get dmics working.
+I'm far from good when it comes to sound, but is it expected that
+(VA DMICn) are are connected to both (MIC BIASn) and (VA MIC BIAS{1, 1, 3})?
 
->> ---
->> bod
+> Also fix dmics to go via VA Macro instead of TX macro to fix device switching.
+> 
+> Fixes: 8c1ea87e80b4 ("arm64: dts: qcom: sc8280xp-x13s: Add soundcard support")
+If that doesn't depend on any driver changes, please Cc stable
+so that distros will pick this up.
+
+Konrad
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  .../arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> index d18d405d1776..89230112e288 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> @@ -933,9 +933,9 @@
+>  		"VA DMIC0", "MIC BIAS1",
+>  		"VA DMIC1", "MIC BIAS1",
+>  		"VA DMIC2", "MIC BIAS3",
+> -		"TX DMIC0", "MIC BIAS1",
+> -		"TX DMIC1", "MIC BIAS2",
+> -		"TX DMIC2", "MIC BIAS3",
+> +		"VA DMIC0", "VA MIC BIAS1",
+> +		"VA DMIC1", "VA MIC BIAS1",
+> +		"VA DMIC2", "VA MIC BIAS3",
+>  		"TX SWR_ADC1", "ADC2_OUTPUT";
+>  
+>  	wcd-playback-dai-link {
+> @@ -986,7 +986,7 @@
+>  	va-dai-link {
+>  		link-name = "VA Capture";
+>  		cpu {
+> -			sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
+> +			sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
+>  		};
+>  
+>  		platform {
