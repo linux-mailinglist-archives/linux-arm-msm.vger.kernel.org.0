@@ -2,115 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D126B6A81B8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 12:58:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 662876A81CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 13:00:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229985AbjCBL6e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 06:58:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57530 "EHLO
+        id S229437AbjCBL77 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 06:59:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbjCBL6c (ORCPT
+        with ESMTP id S229502AbjCBL75 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 06:58:32 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE4E913513
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 03:58:03 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id g3so7387196wri.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 03:58:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677758274;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=53i6n/4N8iPHrAE+4akf4+FY/Eqzip/AN+jA8SQFls4=;
-        b=HVXAXJS37D1r4M20G4fME7mQhMV/po3gK33mAgGd9ONtA1KJIUHhUUYz7SaUJ6JKan
-         IYYZDZ5wCctvMCvxmUQGx6iooPIXQFxc8rPZOc5lFqLSiF1pPfoHaIVSd1ZhtbxVFoaW
-         96FDNf3QSRrqCdrQd8Wev47LdWAHKYJGiGXzgEr2Jp/E2P0JhAB8E0NedQ9TW4wXcBx4
-         IB+3B12W/AK2pPxT2lq6xI1bQ/SMiWslE9uXvjNLpfGT+2DY7a8Y56PWF3xCOyI/K2jL
-         vLAk8GpcurSNSbo8q9k4DE0gX7uusTyf88CgnXbxgljv0c/DsuTiSOLYT8Ol/mz3l9Qb
-         LcTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677758274;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=53i6n/4N8iPHrAE+4akf4+FY/Eqzip/AN+jA8SQFls4=;
-        b=IjsPr8ZTzI3gq3aFQkVwAAM1yTDrAW+FWBAng5PNZKNz2VL3Ek+4kBQnYGNEQJGBT+
-         +DeSlG5Dv/f+uM38OUenYW2du5IoUJHnQGioWA/VXORwGDgKWmhMGdnm8QNM4FHre10K
-         O2aVRHnf7WTj50X3+tUVUYQ6WjOi8VHLz744IBmjwMXKXvFtA1GVIMJNkRMpMaum2Q+5
-         IYgA5sJfIt5ttJEpvNvPvNo6OVocPxWtwViJWDESST4FdfiC1xq7f4PKGAlzPZy3zOUs
-         N6uEkx1BdWibQUHlxAmS9S42ZF0y23/uFOj0sEJ3oqrMgpuS802tqXx8+xVBCVtvmkRJ
-         zOkQ==
-X-Gm-Message-State: AO0yUKXayvPxauPHBG+qsiDkWHYxNHJvJwW+mueTXRjXvMSbjNHLtWAR
-        Bh+X2qGJOU+XBc6IAh6PmmJpfQ==
-X-Google-Smtp-Source: AK7set9JGhaVMVq1Aun7eorGLllXN0G+3ZY9aQjvAJK+0twIdWlGMLKeCpK9OMroCb5jMJzggb2DpQ==
-X-Received: by 2002:a5d:5141:0:b0:2c7:1a96:efcd with SMTP id u1-20020a5d5141000000b002c71a96efcdmr7390210wrt.1.1677758274590;
-        Thu, 02 Mar 2023 03:57:54 -0800 (PST)
-Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id v16-20020a5d4a50000000b002c5526234d2sm15298209wrs.8.2023.03.02.03.57.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Mar 2023 03:57:54 -0800 (PST)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     agross@kernel.org, andersson@kernel.org
-Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        konrad.dybcio@linaro.org, johan+linaro@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 4/4] arm64: dts: qcom: sc8280xp-x13s: fix va dmic dai links and routing
-Date:   Thu,  2 Mar 2023 11:57:41 +0000
-Message-Id: <20230302115741.7726-5-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20230302115741.7726-1-srinivas.kandagatla@linaro.org>
-References: <20230302115741.7726-1-srinivas.kandagatla@linaro.org>
+        Thu, 2 Mar 2023 06:59:57 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A869055B6;
+        Thu,  2 Mar 2023 03:59:38 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 322AW3sm030038;
+        Thu, 2 Mar 2023 11:59:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=qmjnkMxJ4zmJzvVkoEJ0ZsFem6vx55BrElJgxSTvyiU=;
+ b=FXi0ItLkgyZfGUUX7TVFsdm9H07dbhh9aONcqsirSgAmPGSjjntWpzeKuA3aTV3cZLL7
+ dq0DQt/rZTEvp3ym3/8ZOCE8EE+gNTZ9P65DajiUwAFkNiilCMIDbCp/on7Tf4AEBtIS
+ +hL8WcC4JjYqBbZvycBn9tqO5+5IshzPsDrjmuRXK1m9dAJJRKnmZB72+TFrCRizSrT7
+ uKWsiTbZgNP2fy6FR7datkJX+lQf2DWy44ELSGXkdtBcFWJVP2/A12CU/ahHp7SDGG0O
+ pxjxU7mkHtCygEte90+R3MJiaeQfdowbxwS0iboN9/3YyRycKceFEYduktGqUmhsWRYP 7g== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p25jwkes8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 02 Mar 2023 11:59:01 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 322Bx09W006667
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 2 Mar 2023 11:59:01 GMT
+Received: from [10.50.55.202] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 2 Mar 2023
+ 03:58:54 -0800
+Message-ID: <c9c324aa-6192-f878-9189-635626e76b13@quicinc.com>
+Date:   Thu, 2 Mar 2023 17:28:51 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 05/18] media: venus: hfi_venus: Sanitize venus_boot_core()
+ per-VPU-version
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Dikshita Agarwal <dikshita@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>
+CC:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        "Vikash Garodia" <vgarodia@codeaurora.org>
+References: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
+ <20230228-topic-venus-v1-5-58c2c88384e9@linaro.org>
+ <769b4971-aed8-ce6a-b77a-29660957ec38@quicinc.com>
+ <5f23ddc7-1bbf-320b-cb5a-9b1bfde3dfff@linaro.org>
+From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <5f23ddc7-1bbf-320b-cb5a-9b1bfde3dfff@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1T0v34Tu9WkXDs7npqpod84XMi8TxS2A
+X-Proofpoint-ORIG-GUID: 1T0v34Tu9WkXDs7npqpod84XMi8TxS2A
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-02_06,2023-03-02_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ lowpriorityscore=0 impostorscore=0 mlxlogscore=999 spamscore=0
+ priorityscore=1501 mlxscore=0 clxscore=1015 suspectscore=0 phishscore=0
+ adultscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2303020105
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-VA dmics 0, 1, 2 micbias on X13s are connected to WCD MICBIAS1, WCD MICBIAS1
-and WCD MICBIAS3 respectively. Reflect this in dt to get dmics working.
-Also fix dmics to go via VA Macro instead of TX macro to fix device switching.
 
-Fixes: 8c1ea87e80b4 ("arm64: dts: qcom: sc8280xp-x13s: Add soundcard support")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- .../arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+On 3/2/2023 4:40 PM, Konrad Dybcio wrote:
+>
+> On 2.03.2023 12:00, Dikshita Agarwal wrote:
+>> On 2/28/2023 8:54 PM, Konrad Dybcio wrote:
+>>> The current assumption of IS_V6 is overgeneralized. Adjust the logic
+>>> to take the VPU hardware version into account.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>    drivers/media/platform/qcom/venus/hfi_venus.c | 10 ++++++----
+>>>    1 file changed, 6 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+>>> index 4ccf31147c2a..772e5e9cf127 100644
+>>> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+>>> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+>>> @@ -448,20 +448,21 @@ static int venus_boot_core(struct venus_hfi_device *hdev)
+>>>    {
+>>>        struct device *dev = hdev->core->dev;
+>>>        static const unsigned int max_tries = 100;
+>>> -    u32 ctrl_status = 0, mask_val;
+>>> +    u32 ctrl_status = 0, mask_val = 0;
+>>>        unsigned int count = 0;
+>>>        void __iomem *cpu_cs_base = hdev->core->cpu_cs_base;
+>>>        void __iomem *wrapper_base = hdev->core->wrapper_base;
+>>>        int ret = 0;
+>>>          writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
+>>> -    if (IS_V6(hdev->core)) {
+>>> +    if (IS_IRIS1(hdev->core) || IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core)) {
+>> I think the IRIS1 check can be removed from here as we are not handling IRIS1 related things at other places.
+>>
+>> we can add the required checks for IRIS1 when we add support for any IRIS1 based chipset.
+> Up to you really, I plan on getting IRIS1 (SM8150) supported and have
+> some mumbling going on for that on my local branch. FWIW these checks
+> are logically correct and I would personally prefer not to have to go
+> through each one of them and remove them just to bring them back soon.
+>
+> Konrad
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index d18d405d1776..89230112e288 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -933,9 +933,9 @@
- 		"VA DMIC0", "MIC BIAS1",
- 		"VA DMIC1", "MIC BIAS1",
- 		"VA DMIC2", "MIC BIAS3",
--		"TX DMIC0", "MIC BIAS1",
--		"TX DMIC1", "MIC BIAS2",
--		"TX DMIC2", "MIC BIAS3",
-+		"VA DMIC0", "VA MIC BIAS1",
-+		"VA DMIC1", "VA MIC BIAS1",
-+		"VA DMIC2", "VA MIC BIAS3",
- 		"TX SWR_ADC1", "ADC2_OUTPUT";
- 
- 	wcd-playback-dai-link {
-@@ -986,7 +986,7 @@
- 	va-dai-link {
- 		link-name = "VA Capture";
- 		cpu {
--			sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-+			sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
- 		};
- 
- 		platform {
--- 
-2.21.0
+oh, I see. I wasn't aware about the plan for IRIS1.
 
+if you plan to add these checks on all relevant places then it should be 
+fine.
+
+Thanks,
+
+Dikshita
+
+>> Thanks,
+>>
+>> Dikshita
+>>
+>>>            mask_val = readl(wrapper_base + WRAPPER_INTR_MASK);
+>>>            mask_val &= ~(WRAPPER_INTR_MASK_A2HWD_BASK_V6 |
+>>>                      WRAPPER_INTR_MASK_A2HCPU_MASK);
+>>>        } else {
+>>>            mask_val = WRAPPER_INTR_MASK_A2HVCODEC_MASK;
+>>>        }
+>>> +
+>>>        writel(mask_val, wrapper_base + WRAPPER_INTR_MASK);
+>>>        writel(1, cpu_cs_base + CPU_CS_SCIACMDARG3);
+>>>    @@ -480,10 +481,11 @@ static int venus_boot_core(struct venus_hfi_device *hdev)
+>>>        if (count >= max_tries)
+>>>            ret = -ETIMEDOUT;
+>>>    -    if (IS_V6(hdev->core)) {
+>>> +    if (IS_AR50_LITE(hdev->core) || IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core))
+>>>            writel(0x1, cpu_cs_base + CPU_CS_H2XSOFTINTEN_V6);
+>>> +
+>>> +    if (IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core))
+>>>            writel(0x0, cpu_cs_base + CPU_CS_X2RPMH_V6);
+>>> -    }
+>>>          return ret;
+>>>    }
+>>>
