@@ -2,107 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 67CA46A8232
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 13:31:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 00D6B6A825A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 13:36:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbjCBMbK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 07:31:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57196 "EHLO
+        id S229603AbjCBMgq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 07:36:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229803AbjCBMbJ (ORCPT
+        with ESMTP id S229513AbjCBMgp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 07:31:09 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D76FCB472;
-        Thu,  2 Mar 2023 04:31:08 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id h9so17443471ljq.2;
-        Thu, 02 Mar 2023 04:31:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vxbzQRxlotF35HoO9qsC+Ig1zQBN/8fFR5R4WuxGdUM=;
-        b=LODNGYMJMr5hFdfGCMLk+B+UpONdrwVrqeGQ3sd88plafK5rC+h/UMZyxrIfX/SutQ
-         ySM7ASiOms/H/5GKMZpgftIOnwLo1DeDbdd3Zm/b/psDk+d82OBg2vMnwpKBg8zEsiYl
-         NH9i/NIuPetDXrXf2xjl6lbF/DtlN3z7pBShvcDZFheHBvgE15qrESIgwTJOgRG89eov
-         MbgJmopuNJweo22nFkf7g1qIflQxdfrD3l10u19Eq5/k7jxC3iYE6jfuuefoK7eWzFwt
-         uqRTJvxuqllgIkk8om2qL1kfY45OL5WO8FNjBi+C8A4blHAb3fT9Ojb4K7ah2lwgOQP7
-         2lzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vxbzQRxlotF35HoO9qsC+Ig1zQBN/8fFR5R4WuxGdUM=;
-        b=nWWHwFu5tZffXz5mdlc8s4qbJDLlcWGBrhCSxdeYe9P0My9Ju5c8mb/ekX0wfIvbfs
-         JqetA/+il6Od8q8eue46mpZEbc3Xc2L9zB4xbl1RzFXk1GtnJiSAwXn17HUtApbx+1j1
-         fy5rSbmmkGcemNdPz4eYyvZn64FtQBE51kZ5GSsoCWdW9WMont009uu9nzYLxVV1fMXH
-         bFM7hXJMixrXw7Ht2jf83l1cszkFDbGnDrbBhAKIXDXZzwfJMGgOyhooL00perzK6W62
-         ArtjWB7S9kRoeRtBitQ+uWEGIxUZvTAR8VPjS0jp4Cn7bg9lfLZEc68aK1QPV6FdHIv4
-         jNYA==
-X-Gm-Message-State: AO0yUKX4WljMiXYUq1Cu2T6G1TuSWr825OQlhi+o0hdbG0/PVYnjmSAQ
-        QlPitnT4bpuVHHc5sPkbplzv35qtclmupw==
-X-Google-Smtp-Source: AK7set8jcER6SpXOZo/GQqUQ5hRHhuPJnv6nMCus0v3GNBgDpeS8J3kTMRybpjGx7JNb7qwRDtC+XQ==
-X-Received: by 2002:a05:651c:1691:b0:293:2cc5:47a7 with SMTP id bd17-20020a05651c169100b002932cc547a7mr2813216ljb.52.1677760267178;
-        Thu, 02 Mar 2023 04:31:07 -0800 (PST)
-Received: from localhost.localdomain (ccv22.neoplus.adsl.tpnet.pl. [83.30.145.22])
-        by smtp.gmail.com with ESMTPSA id o15-20020a2eb44f000000b002934fe524d2sm2068942ljm.83.2023.03.02.04.31.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Mar 2023 04:31:06 -0800 (PST)
-From:   Adam Skladowski <a39.skl@gmail.com>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Adam Skladowski <a39.skl@gmail.com>,
+        Thu, 2 Mar 2023 07:36:45 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DDBA301A4;
+        Thu,  2 Mar 2023 04:36:44 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 322AD2tm024258;
+        Thu, 2 Mar 2023 12:36:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ik4MkDp+5de9ERY4gWJP4ao+AH0xhJotFGitbqYlW8g=;
+ b=JN8LwIVMya8YyKYiRND/RACCBusDXptvODHkVQov2iIXEe7/Hls5FZfmcyTYNPh5Gk7r
+ +mAtDHxALUNPzgSA44owVKZPLLgxajJ+ek9lchwLw5ZAstuW8Oxmuw502FCysyf6BS/V
+ QqhAP59iKdnmoiJrdQGlXX40G4IIc0Q2sh8/vwm5T/gFHgwgasYv8GTK2U61WZvSnNTH
+ Lse/DTZOg7fAQ5HjUwuED1/mkF4SHBb6kxoy+rIkd552EG/czayWmZY2oQuIh5IVUGd2
+ c8T4mALjwo9Kh777fmt4TF+pNkn01jQ3IqiCwyBEQAoPv9N3LW2j2CiRML6dDeCjGuq/ 2w== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p2ar12mjh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 02 Mar 2023 12:36:08 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 322Ca7Zr014391
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 2 Mar 2023 12:36:07 GMT
+Received: from [10.50.55.202] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 2 Mar 2023
+ 04:36:02 -0800
+Message-ID: <7b88b9c5-24cb-eca3-94f8-0592cb2348f1@quicinc.com>
+Date:   Thu, 2 Mar 2023 18:05:58 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 08/18] media: venus: hfi_venus: Fix version checks in
+ venus_halt_axi()
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: msm8956-loire: Provide rate for xo_board clock
-Date:   Thu,  2 Mar 2023 13:30:50 +0100
-Message-Id: <20230302123051.12440-2-a39.skl@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230302123051.12440-1-a39.skl@gmail.com>
-References: <20230302123051.12440-1-a39.skl@gmail.com>
-MIME-Version: 1.0
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
+        Dikshita Agarwal <dikshita@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>
+CC:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        "Vikash Garodia" <vgarodia@codeaurora.org>
+References: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
+ <20230228-topic-venus-v1-8-58c2c88384e9@linaro.org>
+ <a5fe6f7d-d410-9903-789c-d8c760ce6f1b@linaro.org>
+ <3d424869-dcdb-5ef7-5cba-0025924e2f50@linaro.org>
+From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <3d424869-dcdb-5ef7-5cba-0025924e2f50@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: dS8AQ0bOsVglZmrRrcaTH8jKcNh82KhS
+X-Proofpoint-ORIG-GUID: dS8AQ0bOsVglZmrRrcaTH8jKcNh82KhS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-02_06,2023-03-02_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ bulkscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 spamscore=0 mlxlogscore=999 adultscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2303020109
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As xo_board is part of board not soc we define rates per device tree,
-assign common 19.2Mhz rate to make consumers happy.
 
-Fixes: ff7f6d34ca07 ("arm64: dts: qcom: Add support for SONY Xperia X/X Compact")
-Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
----
- arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+On 2/28/2023 9:31 PM, Konrad Dybcio wrote:
+>
+> On 28.02.2023 16:36, Bryan O'Donoghue wrote:
+>> On 28/02/2023 15:24, Konrad Dybcio wrote:
+>>> Only IRIS2(_1) should enter the until-now-IS_V6() path and the
+>>> condition for skipping part of it should be IS_IRIS2_1 and not the
+>>> number of VPP pipes. Fix that.
+>>>
+>>> Fixes: 4b0b6e147dc9 ("media: venus: hfi: Add 6xx AXI halt logic")
+>>> Fixes: 78d434ba8659 ("media: venus: hfi: Skip AON register programming for V6 1pipe")
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>    drivers/media/platform/qcom/venus/hfi_venus.c | 4 ++--
+>>>    1 file changed, 2 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+>>> index 4d785e53aa0b..0d137e070407 100644
+>>> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+>>> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+>>> @@ -550,10 +550,10 @@ static int venus_halt_axi(struct venus_hfi_device *hdev)
+>>>        u32 mask_val;
+>>>        int ret;
+>>>    -    if (IS_V6(hdev->core)) {
+>>> +    if (IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core)) {
+>>>            writel(0x3, cpu_cs_base + CPU_CS_X2RPMH_V6);
+>>>    -        if (hdev->core->res->num_vpp_pipes == 1)
+>>> +        if (IS_IRIS2_1(hdev->core))
+>>>                goto skip_aon_mvp_noc;
+>>>              writel(0x1, aon_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+>>>
+>> If you want to denote these as fixes, you need your patch 02/18 as a depend...
+> The main purpose of the Fixes tag is to mark commits that fix bugs in
+> existing code and it only assists in autoselecting stable patches.
+> Backporting this makes little sense, as we only support IRIS2 (8250)
+> and IRIS2_1 (7280) HFI6 platforms and new additions won't be backported.
+>
+> Konrad
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-index 67baced639c9..085d79542e1b 100644
---- a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-@@ -280,3 +280,7 @@ &usb_hs_phy {
- 	vdda3p3-supply = <&pm8950_l13>;
- 	status = "okay";
- };
-+
-+&xo_board {
-+	clock-frequency = <19200000>;
-+};
--- 
-2.25.1
+IRIS2_1 is nothing but IRIS2 with 1 VPP pipe (just a downstream notation 
+to differentiate between two IRIS2 based chips).
 
+So having the num_vpp_pipes check was fine, nothing wrong with that.
+
+but since now you are introducing new VPU based check, it can be 
+replaced with IRIS2_1 check.
+
+Thanks,
+
+Dikshita
+
+>> ---
+>> bod
