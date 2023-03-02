@@ -2,71 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5D436A88F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 20:05:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F4FE6A8AF8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 22:11:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229751AbjCBTFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 14:05:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55910 "EHLO
+        id S229482AbjCBVL2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 16:11:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229736AbjCBTFb (ORCPT
+        with ESMTP id S229471AbjCBVL1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 14:05:31 -0500
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0490E1C7EE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 11:05:07 -0800 (PST)
-Received: by mail-yb1-xb31.google.com with SMTP id v13so4546176ybu.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 11:05:06 -0800 (PST)
+        Thu, 2 Mar 2023 16:11:27 -0500
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7684F56526
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 13:11:26 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id p3-20020a17090ad30300b0023a1cd5065fso339744pju.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 13:11:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9ysHfbJ97vMBV5FeNUYC1fvIuo5+8HIV1nyu+fIHIKk=;
-        b=KJ9idneEZX/ITvWSxQDU5xFEQ2xtqNs1kxFTIvJKr3vkFyaKzYtHphu/NEfnaVbjGt
-         egdqL1ir6HNBsKQzsQ5Kj7hmS6hEvVRfhm8jMvzdslN/YdMkt4anzmb3mavIuksiqYHW
-         KpNbPc7Lc6yJKcpJ4vr9u854tCRkXjGxWyyifL1YCMzKzj3Ge6BUDaAEHvwRDd8lMagM
-         CWSKlsif8Xi79ud7DstGOfaOPf1l1izwlyS6AB6mf+Z9Zo/rpjNe7mmNjNJ3It2zu1W+
-         STBwHy8NFCui/ez2L/WYJ2kE47Hc902jMIyfdL9nStru9HSLXVjXTVLqLnJQXcQVadUU
-         OjwA==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EnwhFazkXPQvwXTNDMdOsjKx8vo+Awf6ny6pAQlMJDY=;
+        b=MqdSEjH57O4po1moEnmjSKdlqQYM2mM96KvMIrdCbMZYwj0Cqb4G/NZ21sHZzyYjk7
+         oxb6XESSAOpEC6ptihSwWnGVN5dVIwHuAqlmO1yT9LctObyn/EmkbXD5kVXALgrbU5Df
+         zcvtYFespKYEfqUzBCksk9HPvzg8WeCio/5Q8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=9ysHfbJ97vMBV5FeNUYC1fvIuo5+8HIV1nyu+fIHIKk=;
-        b=mMRtY7R+C8fNgY0VBA9c3xx0HRwN1X9NtrrC93GowgEyOZsbfpLD/+IypqHpw0jxI6
-         +YF3zFgm5wxuhIXc4UE8JGPQLgYFuiHQTcN8Wa1mg3VdXnniLZDwvM013BJaSp+nUBBk
-         gxBC3BDI/Am2KT0edv+iHgL5NdqRpy/eClDL5oPrlZiCcLvyMPJ+CaJnD7MhAl4VkgHa
-         8YvBYMB3AmV3MDj3QrhLwe9zQP3Mf9jNYbSq0CVsOAQKSyKKx4x/4OhbDoaL+CXSQskO
-         PPgGiBL53fo/bt9eRa3HghDRdbxR4xnF+xZzu/gVd02OaZla0o7BMNj6s1BoWCMWIDlw
-         XUyw==
-X-Gm-Message-State: AO0yUKWyuFqkc9x2pPwRHtSGvuSFNirNyYXbpFXdcvv0kBH3ex114zFs
-        V5BvoxWcKY8zocQmbioF7fcioPGlrH9ogX4jeG93nw==
-X-Google-Smtp-Source: AK7set8d0FD8rtP+Lh3tGHIqRGLrxa4Zq1pePiy64LsjPezypYWt7F2MwLhdoCZOVWiYf54e7DQaQduSlbAkNiz1xrc=
-X-Received: by 2002:a5b:211:0:b0:91d:98cd:bfe4 with SMTP id
- z17-20020a5b0211000000b0091d98cdbfe4mr6063002ybl.10.1677783906198; Thu, 02
- Mar 2023 11:05:06 -0800 (PST)
-MIME-Version: 1.0
-References: <1677629817-18891-1-git-send-email-quic_khsieh@quicinc.com>
- <CAA8EJpquZAhn+HswNxardN1fE8Zu1CKrCU5EiX=B8mGWuxfWnQ@mail.gmail.com>
- <38bf75b4-799a-9758-aae3-69a7e0fc3f58@quicinc.com> <86787af0-aa95-a2d8-d68c-555be54a3784@linaro.org>
- <dddd3f2f-28e7-2188-5498-399cdb75adb4@quicinc.com>
-In-Reply-To: <dddd3f2f-28e7-2188-5498-399cdb75adb4@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 2 Mar 2023 21:04:55 +0200
-Message-ID: <CAA8EJpokgWnRZ6rvNtsY4=WVcQv-5bCPYRE+dTqcWjbgzO-bxw@mail.gmail.com>
-Subject: Re: [PATCH v3] drm/msm/dp: check core_initialized flag at both
- host_init() and host_deinit()
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch,
-        airlied@gmail.com, agross@kernel.org, andersson@kernel.org,
-        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        bh=EnwhFazkXPQvwXTNDMdOsjKx8vo+Awf6ny6pAQlMJDY=;
+        b=k8GOI5+2JMCDlq4Ci+JEj3ALKufAvh5yDQKtpWR7H84uTa3Tev3jP+3uVchiKdu5w/
+         8Tz/RefiOlwOzMHGh8BRCYWsGWeH37J0Q0RFQ6/k6zkT2lu/beDFbmuhaJkDFhFLPhWJ
+         VHjFDiI2hFIUP44owLXATm2GbCuRsv3IZJ+QoZNRUL/XO0uL4LLhJsEEQ4FvtBPbDsdD
+         G1Fbh4TXorvKTadE0qzIq/JOf//9klrDeokwupRv+N7dd6epamr4Zg78YOD/3jETfCn7
+         ZWoxei+jilFLnFOTNHkeZGbeann9cp5aXMCQv6xQpcfpH+64a7Pnc7u3MQRU6veIFlZn
+         38pw==
+X-Gm-Message-State: AO0yUKX9A6TFRCvtNj4dRwWKAF7+nL6D21XTT/Yaw8wXpydeRKdLZRpC
+        BaQLXqi6gdbx5OIJpKjui5b4GQ==
+X-Google-Smtp-Source: AK7set99OMd70i98XRexjgg2GjSnH0wDtEpGvO9yAFx0ZJP9ojiiVXhA88toAdirejoWx2g8Uj6qhA==
+X-Received: by 2002:a17:902:e5cd:b0:19e:6760:3a5d with SMTP id u13-20020a170902e5cd00b0019e67603a5dmr5066598plf.18.1677791485982;
+        Thu, 02 Mar 2023 13:11:25 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:a558:99c0:81e9:a93c])
+        by smtp.gmail.com with ESMTPSA id a16-20020a170902b59000b00195f242d0a0sm114497pls.194.2023.03.02.13.11.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Mar 2023 13:11:25 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>, mka@chromium.org,
+        swboyd@chromium.org, Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Subject: [PATCH v2 0/4] arm64: dts: qcom: sc7180: Delete a few unused trogdor dts files
+Date:   Thu,  2 Mar 2023 13:11:03 -0800
+Message-Id: <20230302211108.2129598-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.40.0.rc0.216.gc4246ad0f0-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,100 +69,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2 Mar 2023 at 20:41, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->
->
-> On 3/1/2023 1:15 PM, Dmitry Baryshkov wrote:
-> > On 01/03/2023 18:57, Kuogee Hsieh wrote:
-> >>
-> >> On 2/28/2023 6:16 PM, Dmitry Baryshkov wrote:
-> >>> On Wed, 1 Mar 2023 at 02:17, Kuogee Hsieh <quic_khsieh@quicinc.com>
-> >>> wrote:
-> >>>> There is a reboot/suspend test case where system suspend is forced
-> >>>> during system booting up. Since dp_display_host_init() of external
-> >>>> DP is executed at hpd thread context, this test case may created a
-> >>>> scenario that dp_display_host_deinit() from pm_suspend() run before
-> >>>> dp_display_host_init() if hpd thread has no chance to run during
-> >>>> booting up while suspend request command was issued. At this scenario
-> >>>> system will crash at aux register access at dp_display_host_deinit()
-> >>>> since aux clock had not yet been enabled by dp_display_host_init().
-> >>>> Therefore we have to ensure aux clock enabled by checking
-> >>>> core_initialized flag before access aux registers at pm_suspend.
-> >>> Can a call to dp_display_host_init() be moved from
-> >>> dp_display_config_hpd() to dp_display_bind()?
-> >>
-> >> yes,  Sankeerth's  "drm/msm/dp: enable pm_runtime support for dp
-> >> driver" patch is doing that which is under review.
-> >>
-> >> https://patchwork.freedesktop.org/patch/523879/?series=114297&rev=1
-> >
-> > No, he is doing another thing. He is moving these calls to pm_runtime
-> > callbacks, not to the dp_display_bind().
-> >
-> >>> Related question: what is the primary reason for having
-> >>> EV_HPD_INIT_SETUP and calling dp_display_config_hpd() via the event
-> >>> thread? Does DP driver really depend on DPU irqs being installed? As
-> >>> far as I understand, DP device uses MDSS interrupts and those IRQs are
-> >>> available and working at the time of dp_display_probe() /
-> >>> dp_display_bind().
-> >>
-> >> HDP gpio pin has to run through DP aux module 100ms denouncing logic
-> >> and have its mask bits.
-> >>
-> >> Therefore DP irq has to be enabled to receive DP isr with mask bits set.
-> >
-> > So... DP irq is enabled by the MDSS, not by the DPU. Again, why does
-> > DP driver depend on DPU irqs being installed?
->
-> sorry, previously i mis understand your question -- why does DP driver
-> depend on DPU irqs being installed?
->
-> now, I think you are asking why  dpu_irq_postinstall() ==>
-> msm_dp_irq_postinstall() ==> event_thread ==> dp_display_config_hdp()
-> ==> enable_irq(dp->irq)
->
-> With the below test i had run, i think the reason is to make sure
-> dp->irq be requested before enable it.
->
-> I just run the execution timing order test and collect execution order
-> as descending order at below,
->
-> 1) dp_display_probe() -- start
->
-> 2) dp_display_bind()
->
-> 3) msm_dp_modeset_init()  ==> dp_display_request_irq() ==>
-> dp_display_get_next_bridge()
->
-> 4) dpu_irq_postinstall() ==> msm_dp_irq_postinstall() ==>
-> enable_irq(dp->irq)
->
-> 5) dp_display_probe() -- end
->
-> dp->irq is request at msm_dp_modeset_init() and enabled after.
+In general on ChromeOS we try hard not to throw away perfectly good
+hardware, even if it has a few quirks. Many people keep early versions
+of boards around indefinitely and keep using them for testing /
+development if the feature they're working on doesn't need the latest
+and greatest. This is the reason why there are so many sc7180-trogdor
+device tree files.
 
-Should be moved to probe.
+That being said, _very_ early hardware tends not to be kept. -rev0
+hardware tends (not always) to be prototype hardware and often comes
+as a pile of parts. People are really only willing to put up with this
+for so long. Even if it's not a pile of parts, -rev0 tends to be a
+very small production run and isn't widely distributed. That means
+that, by and large, we can eventually drop support for -rev0. Here,
+we'll do that for kingoftown and wormdingler, and lazor.
 
->
-> That bring up the issue to move DP's dp_display_host_init() executed at
-> dp_display_bind().
->
-> Since eDP have dp_dispaly_host_init() executed at
-> dp_display_get_next_bridge() which executed after dp_display_bind().
->
-> If moved DP's dp_display_host_init() to dp_dispaly_bind() which means DP
-> will be ready to receive HPD irq before eDP ready.
+While looking at the -rev0 of mrbland, I noticed that mrbland appears
+to be long dead and unlikely to be revived. Let's just fully delete
+it.
 
-And the AUX bus population should also be moved to probe(), which
-means we should call dp_display_host_init() from probe() too.
-Having aux_bus_populate in probe would allow moving component_add() to
-the done_probing() callback, making probe/defer case more robust
+Changes in v2:
+- Also delete "sc7180-trogdor-wormdingler-rev0.dtsi" (Konrad)
+- Get rid of kingoftown.dtsi and merge into dts (Konrad)
 
-> This may create some uncertainties at execution flow and complicate
-> things up.
+Douglas Anderson (4):
+  arm64: dts: qcom: sc7180: Delete wormdingler-rev0
+  arm64: dts: qcom: sc7180: Delete kingoftown-rev0
+  arm64: dts: qcom: sc7180: Delete lazor-rev0
+  arm64: dts: qcom: sc7180: Delete mrbland
 
-Hopefully the changes suggested above will make it simpler.
+ arch/arm64/boot/dts/qcom/Makefile             |  10 +-
+ .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  38 ---
+ .../dts/qcom/sc7180-trogdor-kingoftown-r1.dts |  17 -
+ ...own.dtsi => sc7180-trogdor-kingoftown.dts} |  10 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  34 --
+ .../qcom/sc7180-trogdor-mrbland-rev0-auo.dts  |  22 --
+ .../qcom/sc7180-trogdor-mrbland-rev0-boe.dts  |  22 --
+ .../dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi |  36 --
+ .../qcom/sc7180-trogdor-mrbland-rev1-auo.dts  |  22 --
+ .../qcom/sc7180-trogdor-mrbland-rev1-boe.dts  |  24 --
+ .../boot/dts/qcom/sc7180-trogdor-mrbland.dtsi | 320 ------------------
+ .../sc7180-trogdor-wormdingler-rev0-boe.dts   |  22 --
+ .../sc7180-trogdor-wormdingler-rev0-inx.dts   |  22 --
+ .../qcom/sc7180-trogdor-wormdingler-rev0.dtsi |  36 --
+ 14 files changed, 10 insertions(+), 625 deletions(-)
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
+ rename arch/arm64/boot/dts/qcom/{sc7180-trogdor-kingoftown.dtsi => sc7180-trogdor-kingoftown.dts} (95%)
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-auo.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-boe.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-auo.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-boe.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0.dtsi
 
 -- 
-With best wishes
-Dmitry
+2.40.0.rc0.216.gc4246ad0f0-goog
+
