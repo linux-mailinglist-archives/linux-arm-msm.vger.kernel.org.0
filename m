@@ -2,62 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70B846A84FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 16:14:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 43C356A8587
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 16:47:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229745AbjCBPOZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 10:14:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46244 "EHLO
+        id S229835AbjCBPrd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 10:47:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229725AbjCBPOW (ORCPT
+        with ESMTP id S229781AbjCBPrd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 10:14:22 -0500
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F0825274
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 07:14:21 -0800 (PST)
-Received: by mail-yb1-xb32.google.com with SMTP id i6so3863971ybu.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 07:14:21 -0800 (PST)
+        Thu, 2 Mar 2023 10:47:33 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7BE0474CE
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 07:47:29 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id o12so69272218edb.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 07:47:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=i9qMDgluQ/cZqemfQqN+zkisdC/D/UT8rYvJMo/g8vQ=;
-        b=gse/Q2qYVdsWIHsneCUj75fKAvWwlha7XCN7Lv+IqCDcORt/SNVn+WdyRwGo9HRKWa
-         M/JTshQifXO+q10VJ4SG1ipkLDZ50iI4p1nsyzUEIxY2f5W7kOgrkcjJQl1ojq1Gq8MW
-         gPDZjzRk9Lf/baxCDxS360rXfYznTQuHoU/SC/WYr2SVs5+Mugh2v7wtBQnKuo6CGAUH
-         7DADx2lxEIuz92bU3JysQsQ7d+BYGprXywwO4+ipAcFEfPIfSH1ck1Hx022mq1vnKZ02
-         Dj6lkBBCo+FWjp0DC37kwKi8/wmyUjXEAlgExogR7BH+G5GiTDBjb2+9ijKzdyCn3loj
-         bnnA==
+        d=linaro.org; s=google; t=1677772048;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dqKWlu4oafIDXkVsoZON4g5bm9TG0oS+avsiFLrIa3Q=;
+        b=dI3OZkhzR51j0QCnviAzJ9aE0wGV6BZvCMMRbDsHnW9+P7rZpVWshptUoWtBAezIMv
+         M1bD9kbBeGnvJsVAZuRII/g7VSMEiJwtYPMSC+QXEpoahldjS4eMhBnRWr97eMyzSdGI
+         bpXcnCXa7LT/+VvCcMXkMC6EGOVF7Y3ZDEsSD4JZ+QUFFt5GmGBWABMUZ4ps5fw+y0iS
+         vb5Z/HmtH8p1SvyltnudBktW4pyzQMQHuqiSyDGZ0dFODOAYssdzWf0SHeegf5ZAFKn9
+         p8iIXiB/CmDLLmL2Lt9yN/3oAS7E7DXN+Lpf4eBEhEo8XMg3V0XakMxhkew1R9awU+X7
+         tC0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20210112; t=1677772048;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=i9qMDgluQ/cZqemfQqN+zkisdC/D/UT8rYvJMo/g8vQ=;
-        b=X6npdNEAa3Hq9Ey95gsNOKsljY+CH60hLBBAdHZfDwCuv8zgKKn7Tk5uSJEG+zGPKu
-         VRvWfORf3dISZAiDyDhy4xmkWld9qWZ0BxKLhxqs+a+aC9Xvn99aAyZHpv3ODgcvO7Ro
-         tRzqDlqCAir4lmv9yJZV+VbErdyT7qBEv9eBBQaWaZ/E4Az3Lk1HpdrIIAAynDeD+CBv
-         f/LGnKI7pOCPSJkGonckmdo+OlSDtKfxJUvpuK546fM5ZvclqdbRsnqwrfje7RHLPV/l
-         A539XBm4/CsVT/mjhYG3W39HXl9miAhISMTqN4hLWWZiHrUmQIhrtMdgK87Nn5b8wH8F
-         E7Jg==
-X-Gm-Message-State: AO0yUKXSQJDQfl1ddGGDkmOqhJ5lqm+U2+w4xSE7cZEJbl0gzpkPeNj4
-        R70Zg1aoyJip4ijhUKfN8zLNYp6ia5GxgCHjUzQx4A==
-X-Google-Smtp-Source: AK7set+FGGX80FAbGl6Gz+M3hmtr4hLGC4c5SSXvjFM1vVp178zHsOU3Qz77GkmNoTps02GebJxu/s3qCKoJNXL+Jlc=
-X-Received: by 2002:a25:9b86:0:b0:a8a:a652:2a69 with SMTP id
- v6-20020a259b86000000b00a8aa6522a69mr4544525ybo.10.1677770060764; Thu, 02 Mar
- 2023 07:14:20 -0800 (PST)
+        bh=dqKWlu4oafIDXkVsoZON4g5bm9TG0oS+avsiFLrIa3Q=;
+        b=ze262xoXCtj6XxDmsJDjIHf/ZiM/iI1N0hdWjQx3vrILVBB24wig7VHvglvRLubpPo
+         8NVQ3Vr5kcOesXvnBmMsHkHqH6HjBLOIw/mrtl/ejDYwrszifTvIyPQrTp0y5pNGHgJq
+         w0h9HQ3Vak6HmW4J/utjswsXi2jJeQZjgxxiTq6xoiqnZGKGbBD+E5NXXzIxTM6QQcUX
+         FH2VCc1w3bJ2SfgQ87nNbQnEVHkXMu73JcQ4KcppZHmttNOYJkClGUPLIWyZRJ+vSawr
+         YmZ8+Dz3mSyoRpd/qKYMWUWHDcVYgRRnvOfDpnhBfzXqiWkeGaceSYZzAaygl/57gXWT
+         T1Lw==
+X-Gm-Message-State: AO0yUKWiYeywKCXWnUwOLRvqPEAPSsTp0SYnJKeqZo2HN4ULPYI/C5OI
+        Iko41lluhekvVgiI06D8nq0iIQ==
+X-Google-Smtp-Source: AK7set9/EL5xiW42z57i/oU9/T0u9AToZFmXQSD3kl1JB7H8E5wlu3l7bUoHaceJZ+Cd3P92WWxE5g==
+X-Received: by 2002:aa7:cc0e:0:b0:4af:6c25:ed6a with SMTP id q14-20020aa7cc0e000000b004af6c25ed6amr9969049edt.3.1677772048193;
+        Thu, 02 Mar 2023 07:47:28 -0800 (PST)
+Received: from krzk-bin.. ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id u2-20020a50eac2000000b0049e1f167956sm9987edp.9.2023.03.02.07.47.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Mar 2023 07:47:27 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sm8550: fix LPASS pinctrl slew base address
+Date:   Thu,  2 Mar 2023 16:47:24 +0100
+Message-Id: <20230302154724.856062-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <b9cc99c3-7dd3-6a57-b67c-e9e0ddd60a49@linaro.org>
-In-Reply-To: <b9cc99c3-7dd3-6a57-b67c-e9e0ddd60a49@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 2 Mar 2023 17:14:10 +0200
-Message-ID: <CAA8EJpoDustJL5ua-cVW1DZcknSfbtudPaGNZeH1v2aFmhzoKg@mail.gmail.com>
-Subject: Re: [bug report] regulator-fixed-domain can't sleep
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -68,27 +74,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+The second LPASS pin controller IO address is supposed to be the MCC
+range which contains the slew rate registers.  The Linux driver then
+accesses slew rate register with hard-coded offset (0xa000).  However
+the DTS contained the address of slew rate register as the second IO
+address, thus any reads were effectively pass the memory space and lead
+to "Internal error: synchronous external aborts" when applying pin
+configuration.
 
-On Thu, 2 Mar 2023 at 15:43, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> Hello,
->
-> I've noticed that regulator-fixed-domain sets the performance state of the
-> attached genpd to 0 correctly, but will never actually let the power domain
-> it's attached to enter idle, as it has no PM ops. I was trying to come up
-> with a good set of PM ops, but I'm not sure what PM ops for a regulator
-> should look like.
+Fixes: 6de7f9c34358 ("arm64: dts: qcom: sm8550: add GPR and LPASS pin controller")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-I think the regulator-fixed-domain should not be used, it has been
-replaced with using power-domains directly. I think we should remove
-it now.
+---
 
->
-> Konrad
+Fix for current cycle - v6.3-rc1.
+---
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 1dea055a6815..6296eb7adecd 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -2001,7 +2001,7 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+ 		lpass_tlmm: pinctrl@6e80000 {
+ 			compatible = "qcom,sm8550-lpass-lpi-pinctrl";
+ 			reg = <0 0x06e80000 0 0x20000>,
+-			      <0 0x0725a000 0 0x10000>;
++			      <0 0x07250000 0 0x10000>;
+ 			gpio-controller;
+ 			#gpio-cells = <2>;
+ 			gpio-ranges = <&lpass_tlmm 0 0 23>;
 -- 
-With best wishes
-Dmitry
+2.34.1
+
