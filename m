@@ -2,187 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B97F46A7CD8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 09:36:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A36656A7EF8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 10:56:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229728AbjCBIgp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 03:36:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44704 "EHLO
+        id S230007AbjCBJza (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 04:55:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229738AbjCBIgm (ORCPT
+        with ESMTP id S230251AbjCBJzO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 03:36:42 -0500
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31C042203D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 00:36:40 -0800 (PST)
-Received: by mail-pj1-x1035.google.com with SMTP id q31-20020a17090a17a200b0023750b69614so1967534pja.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 00:36:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jmxYusaZZcaCSm0sR5ZUszZ82Vp7I8hpbdJ8Cb+CdPo=;
-        b=r9craTUyVx3uiDtRuxr4/PsO6K1XvUWzzxWl78/dUjOl/L8wD227JYgVbaPKALXV7d
-         AwT7JyTJwWwqbbltakIJvLX7CLUB9tmZ1FAl26xyS0zQ4e2XWy2rNSyswo+znHykXIiC
-         L64ErgYtW/eym+pT0buE046/tPbGvVYkktuAY8B6bPd8sNrozAnmkfHC/vmZLEAOoMp3
-         M4qfTRtDIzP6p9xtkg40jGtlNXciUo0Qs2fXCIdEmBrglff/9oNBHZIWaxlkD1cMMpzg
-         c2+DVFhE+Ma6GV881wTGMjyGitPtrtUuS8A3BgZf7ykT6iVpDyqmxJh1+m01dAvEkO4M
-         JaWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jmxYusaZZcaCSm0sR5ZUszZ82Vp7I8hpbdJ8Cb+CdPo=;
-        b=z+8dCuDlkH/VCW0xPfLZ2lipxQjRCk/0Jb6keWLqwjN3XZ0AwNdFn7mFt+0iqLZ9jh
-         ayXlkhvSTK6Aa9h5q3HTqP8XantHJjY2ACN4IWU/xEnDvxHGeLz63ONi8mbmE7Go2MvK
-         +IeF7mhq9hJ8xMqWFHlZgN0+MhB2cMdDVz+LsIxKW4kqb6p7Cg1/5NGyiiL2NRAKYccA
-         eRWp9FTRaCDELpd+Kn6jyIM/U1Y4qNL33aUvrIORVGgbSDTbwBFBTBcZZt2SB3c9OmLf
-         2mOQli4jxZnFFZ6NkcmDGgd193WTHQaeCRZ6kBL7ZWfoYc4HDv+ckm3acgB5w/KAKH33
-         yumg==
-X-Gm-Message-State: AO0yUKW2gvWdCMBpvuYqAqwfG9C6sFuTDXoluehOatgiHkCDhZB7ee50
-        23otezGfh6NpNfirfyVy++5x
-X-Google-Smtp-Source: AK7set/z9bTIY3KHWMDcd0q6mvDWU2SD8PHHfPO+bvu6xJYNkMZLXx5iYVwJ6PLrvUr0JyNNI9Jlzw==
-X-Received: by 2002:a17:902:da90:b0:19c:e405:4446 with SMTP id j16-20020a170902da9000b0019ce4054446mr10433381plx.30.1677746199325;
-        Thu, 02 Mar 2023 00:36:39 -0800 (PST)
-Received: from localhost.localdomain ([59.97.53.52])
-        by smtp.gmail.com with ESMTPSA id p7-20020a1709028a8700b00198ef93d556sm9791912plo.147.2023.03.02.00.36.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Mar 2023 00:36:38 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     lpieralisi@kernel.org, kw@linux.com, robh@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_krichai@quicinc.com, johan+linaro@kernel.org, steev@kali.org,
-        mka@chromium.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Dhruva Gole <d-gole@ti.com>
-Subject: [PATCH v2 1/1] PCI: qcom: Add support for system suspend and resume
-Date:   Thu,  2 Mar 2023 14:06:25 +0530
-Message-Id: <20230302083625.188482-2-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230302083625.188482-1-manivannan.sadhasivam@linaro.org>
-References: <20230302083625.188482-1-manivannan.sadhasivam@linaro.org>
+        Thu, 2 Mar 2023 04:55:14 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E312E125B2;
+        Thu,  2 Mar 2023 01:55:12 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3229giH1001800;
+        Thu, 2 Mar 2023 09:55:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=R0Z4E2YGg3YStUNJXj+bRr0mBgUwf/rrCLLWjjUXfrQ=;
+ b=igbe7EPKq3hXGUNxMgZ1SQ2+4gwFIMY7uWQWz1B/3Okv4ehwnsx9+nnI/zfQXXTjmgE5
+ uFH2CW+8WOacmQdXaYzqK/r+NGslByrT5FKICncM9Hizi+GDCvr03ueQtdbw8YXfPjZh
+ OuAt0o2HIRKTqqOSkP2KgC1cRPbKQwnPKs6M/6Lnl9EkBP6MI+U4QA4p+eTAUaVu9gbw
+ xcrC1oa/2aQXAuJ9RNQFPMvtfH+7rwz65nV0tn+IfmNGRGf25Cof7pCh63rc13WBM0wR
+ Rt4XtOjPC8tQqf204FOgmX/ksiwKvQY8jXHpf5q2yRpLmiXta6uj8ugD08CnxNP5je8O /Q== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p2cur1r2j-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 02 Mar 2023 09:55:01 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3229t0nn023470
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 2 Mar 2023 09:55:00 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Thu, 2 Mar 2023 01:54:54 -0800
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        "Varadarajan Narayanan" <quic_varada@quicinc.com>
+Subject: [PATCH 0/8] Enable IPQ9754 USB
+Date:   Thu, 2 Mar 2023 15:24:39 +0530
+Message-ID: <cover.1677749625.git.quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Z6URMhTjq3UewHaiTkifOH7i7DfQBNBT
+X-Proofpoint-ORIG-GUID: Z6URMhTjq3UewHaiTkifOH7i7DfQBNBT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-02_04,2023-03-02_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ priorityscore=1501 clxscore=1011 mlxscore=0 suspectscore=0 mlxlogscore=392
+ lowpriorityscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2303020085
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-During the system suspend, vote for minimal interconnect bandwidth and
-also turn OFF the resources like clock and PHY if there are no active
-devices connected to the controller. For the controllers with active
-devices, the resources are kept ON as removing the resources will
-trigger access violation during the late end of suspend cycle as kernel
-tries to access the config space of PCIe devices to mask the MSIs.
+This patch series adds the relevant phy and controller
+configurations for enabling USB on IPQ9754
 
-Also, it is not desirable to put the link into L2/L3 state as that
-implies VDD supply will be removed and the devices may go into powerdown
-state. This will affect the lifetime of storage devices like NVMe.
+Depends on:
+https://lore.kernel.org/all/20230217142030.16012-1-quic_devipriy@quicinc.com/
 
-And finally, during resume, turn ON the resources if the controller was
-truly suspended (resources OFF) and update the interconnect bandwidth
-based on PCIe Gen speed.
+Varadarajan Narayanan (8):
+  usb: dwc3: core: Handle fladj becoming zero
+  dt-bindings: phy: qcom,qusb2: Document IPQ9574 compatible
+  dt-bindings: phy: qcom,qmp-usb: Add IPQ9574 USB3 PHY
+  clk: qcom: gcc-ipq9574: Add USB related clocks
+  phy: qcom-qusb2: add QUSB2 support for IPQ9574
+  phy: qcom: qmp: Update IPQ9574 USB Phy initialization Sequence
+  arm64: dts: qcom: ipq9574: Add USB related nodes
+  arm64: dts: qcom: ipq9574: Enable USB
 
-Suggested-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Acked-by: Dhruva Gole <d-gole@ti.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 53 ++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
+ .../bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml    |   1 +
+ .../devicetree/bindings/phy/qcom,qusb2-phy.yaml    |   1 +
+ arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts       |   4 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi              |  92 +++++++++++++++
+ drivers/clk/qcom/gcc-ipq9574.c                     |  35 ++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c            | 130 +++++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qusb2.c              |   3 +
+ drivers/usb/dwc3/core.c                            |  27 +++++
+ include/dt-bindings/clock/qcom,ipq9574-gcc.h       |   2 +
+ 9 files changed, 295 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index a232b04af048..7147f0103026 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -227,6 +227,7 @@ struct qcom_pcie {
- 	struct gpio_desc *reset;
- 	struct icc_path *icc_mem;
- 	const struct qcom_pcie_cfg *cfg;
-+	bool suspended;
- };
- 
- #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-@@ -1820,6 +1821,53 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
-+static int qcom_pcie_suspend_noirq(struct device *dev)
-+{
-+	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-+	int ret;
-+
-+	/* Set minimum bandwidth required to keep data path functional during suspend */
-+	ret = icc_set_bw(pcie->icc_mem, 0, MBps_to_icc(250));
-+	if (ret) {
-+		dev_err(pcie->pci->dev, "Failed to set interconnect bandwidth: %d\n", ret);
-+		return ret;
-+	}
-+
-+	/*
-+	 * Turn OFF the resources only for controllers without active PCIe devices. For controllers
-+	 * with active devices, the resources are kept ON and the link is expected to be in L0/L1
-+	 * (sub)states.
-+	 *
-+	 * Turning OFF the resources for controllers with active PCIe devices will trigger access
-+	 * violation during the end of the suspend cycle, as kernel tries to access the PCIe devices
-+	 * config space for masking MSIs.
-+	 *
-+	 * Also, it is not desirable to put the link into L2/L3 state as that implies VDD supply
-+	 * will be removed and the devices may go into powerdown state. This will affect the
-+	 * lifetime of the storage devices like NVMe.
-+	 */
-+	if (!dw_pcie_link_up(pcie->pci)) {
-+		qcom_pcie_host_deinit(&pcie->pci->pp);
-+		pcie->suspended = true;
-+	}
-+
-+	return 0;
-+}
-+
-+static int qcom_pcie_resume_noirq(struct device *dev)
-+{
-+	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-+
-+	if (pcie->suspended) {
-+		qcom_pcie_host_init(&pcie->pci->pp);
-+		pcie->suspended = false;
-+	}
-+
-+	qcom_pcie_icc_update(pcie);
-+
-+	return 0;
-+}
-+
- static const struct of_device_id qcom_pcie_match[] = {
- 	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
- 	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
-@@ -1856,12 +1904,17 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
- 
-+static const struct dev_pm_ops qcom_pcie_pm_ops = {
-+	NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_suspend_noirq, qcom_pcie_resume_noirq)
-+};
-+
- static struct platform_driver qcom_pcie_driver = {
- 	.probe = qcom_pcie_probe,
- 	.driver = {
- 		.name = "qcom-pcie",
- 		.suppress_bind_attrs = true,
- 		.of_match_table = qcom_pcie_match,
-+		.pm = &qcom_pcie_pm_ops,
- 	},
- };
- builtin_platform_driver(qcom_pcie_driver);
 -- 
-2.25.1
+2.7.4
 
