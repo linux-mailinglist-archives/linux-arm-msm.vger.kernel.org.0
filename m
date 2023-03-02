@@ -2,90 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 504BC6A7C63
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 09:19:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE12E6A7CD4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 09:36:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229746AbjCBIS7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 03:18:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55620 "EHLO
+        id S229764AbjCBIgm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 03:36:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229700AbjCBISw (ORCPT
+        with ESMTP id S229739AbjCBIgk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 03:18:52 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19037168BE;
-        Thu,  2 Mar 2023 00:18:51 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 322892we031063;
-        Thu, 2 Mar 2023 08:18:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=OaoBen/kILXiB94wXBfZ7shxCwQxw2u9LfaYcuPIID4=;
- b=NcgLK1SBhiwxDrcy5CSEGuBsZdGATjmXwMAmqAl67l81spgw/sdzxN1oZ+IOEOpx+6Op
- rqbcGN4lV1Dlmc38BzIxs8tgKVFMvz1P6UlYE6dQh027QsY78Onu0NPNkEO9Snoy1Bbk
- AJaAGqWEQ+LWeWkpLAtdE6FSACdrV+dKmGyQJ8hPDtmRzE8jDbjZXr3qnLiNyXYnbxZM
- UWGzn0WttWFRe1UKp6OkXEATbjRpdDSHC8FHTVbrvuIlnm0krSyTvTcL36H4/qe2ftc0
- yEiKmDUw0m36OynpPvKE3kf+BdscUB3Pg01P4qKTQjaLrMYrLpC89bTFCMqGBlMsPdXm wQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p2r1hg0u5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 02 Mar 2023 08:18:14 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3228IDhi018597
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 2 Mar 2023 08:18:13 GMT
-Received: from [10.50.55.202] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 2 Mar 2023
- 00:18:08 -0800
-Message-ID: <f8e3ab38-64aa-ccda-9454-7f81a23a1839@quicinc.com>
-Date:   Thu, 2 Mar 2023 13:48:04 +0530
+        Thu, 2 Mar 2023 03:36:40 -0500
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 410C6196B8
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 00:36:35 -0800 (PST)
+Received: by mail-pl1-x636.google.com with SMTP id ky4so16818197plb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 00:36:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lzrqYLYLaVpd0UyrhZ0yR0aqCz0cuXCviR24aa0kuPw=;
+        b=D43eGydreZR1VKVNvxdCLXaLMjZQGQzTS38Jo088r8l4Eepbu5JxDDCNecIGPi38Su
+         Je57YvFacOR6isjgT/KYGTV+qijaz6DVD9kcCtAbbfJORvRabkcBs28mgi/cbR9t24rr
+         RIz8+acB3dX6x8c03CjeFen3gCE3t4dHY20BH+LY3KybsYfa4XJ0lVTsDDKt2oSOf1sG
+         HSx5utpv50HwHOGOnPimcYmU1oo7gPSrkwHHvukr4cc34DxI3Umw+1bjFkSx7UKZJymE
+         jDHZ23+4P0UHnUZEthOHPNPHWh7bBsi71sZSBsI7MOqVgGz3yKIZoTloQV0i6X8MoFSn
+         BvjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lzrqYLYLaVpd0UyrhZ0yR0aqCz0cuXCviR24aa0kuPw=;
+        b=TBOvw0JRym3LlIz/hqptNyJGHSJR0phlBRw8GexDB0t1GCcgzBxbaUg0phX+gdZ7Vc
+         v44OkYISAgL62h2ohicfWQozZOtxT1i73Il1gwRYB0ji7jkY8talw58OMIIaoPNMPhPD
+         DTUdr7xiJK4GoqwQJGxtA+km1MScZ0X7qgylWkqnK91dsFUZTu0pDIWniqjGbThSn2Nl
+         QbnRrbZyG4mDMTiYLR2+Ibv8jXq9a7zRhJwswwmAtX9ebXYyQSUYUEiXPeHwb002LK+l
+         y94pCCBiDX7JODWSbY9Grlf97GNAOf8nEAoSWIPmAQ+mKRuqp7LUL4P5ikFuawal9NCF
+         3p1A==
+X-Gm-Message-State: AO0yUKXv4jEZyvwBkelo6VVZsjumv2CfLq/rxgHb4vxUxnUY8Htkh7E5
+        ZTLt2KzknJoq8C5RE6pj0udF
+X-Google-Smtp-Source: AK7set+xaajcB0h5+hW2z33NsHRILEH9Ei8CBCfMkADOQc25cHl8/XAnaxyjni8gx1mPCvkbvVuKuw==
+X-Received: by 2002:a17:902:8603:b0:19e:711b:83c with SMTP id f3-20020a170902860300b0019e711b083cmr878146plo.39.1677746194689;
+        Thu, 02 Mar 2023 00:36:34 -0800 (PST)
+Received: from localhost.localdomain ([59.97.53.52])
+        by smtp.gmail.com with ESMTPSA id p7-20020a1709028a8700b00198ef93d556sm9791912plo.147.2023.03.02.00.36.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Mar 2023 00:36:34 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lpieralisi@kernel.org, kw@linux.com, robh@kernel.org
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_krichai@quicinc.com, johan+linaro@kernel.org, steev@kali.org,
+        mka@chromium.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 0/1] PCI: qcom: Add support for system suspend and resume
+Date:   Thu,  2 Mar 2023 14:06:24 +0530
+Message-Id: <20230302083625.188482-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 04/18] media: venus: firmware: Leave a clue for homegrown
- porters
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>
-CC:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Vikash Garodia" <vgarodia@codeaurora.org>
-References: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
- <20230228-topic-venus-v1-4-58c2c88384e9@linaro.org>
-From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <20230228-topic-venus-v1-4-58c2c88384e9@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: fYZMmSmGBDkbkmZc8KGJCvO_ZTQV5it4
-X-Proofpoint-GUID: fYZMmSmGBDkbkmZc8KGJCvO_ZTQV5it4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-02_04,2023-03-02_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- priorityscore=1501 mlxlogscore=999 bulkscore=0 malwarescore=0 adultscore=0
- impostorscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2303020070
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -93,32 +72,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello,
 
-On 2/28/2023 8:54 PM, Konrad Dybcio wrote:
-> Leave a clue about where the seemingly magic values come from, as it
-> is not obvious and requires some digging downstream..
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   drivers/media/platform/qcom/venus/firmware.c | 7 +++++++
->   1 file changed, 7 insertions(+)
->
-> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-> index 61ff20a7e935..1bb6406af564 100644
-> --- a/drivers/media/platform/qcom/venus/firmware.c
-> +++ b/drivers/media/platform/qcom/venus/firmware.c
-> @@ -241,6 +241,13 @@ int venus_boot(struct venus_core *core)
->   		return ret;
->   
->   	if (core->use_tz && res->cp_size) {
-> +		/*
-> +		 * Clues for porting using downstream data:
-> +		 * cp_start = 0
-> +		 * cp_size = venus_ns/virtual-addr-pool[0] (yes, addr not size)
-> +		 * cp_nonpixel_start = venus_sec_non_pixel/virtual-addr-pool[0]
-> +		 * cp_nonpixel_size = venus_sec_non_pixel/virtual-addr-pool[1]
-> +		 */
->   		ret = qcom_scm_mem_protect_video_var(res->cp_start,
->   						     res->cp_size,
->   						     res->cp_nonpixel_start,
-reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+This series (a single patch) adds the system suspend and resume support
+to the Qualcomm PCIe RC controller.
+
+Background
+==========
+
+There were previous attempts [1][2] to add system suspend and resume
+support to this driver.
+
+In previous versions, the controller was put into low power mode by turning
+OFF the resources even if there were active PCIe devices connected. Thanks
+to Qualcomm's internal power topology, the link did not enter L2/L3 state
+and the devices were still powered ON. But during very late end of suspend
+cycle, kernel tried to disable MSIs of the PCIe devices. This caused access
+violations as the resources needed to access the PCIe devices config space
+were turned OFF. Series [1] worked around this issue by not accessing the
+PCIe config space if the link was down in dw_msi_{un}mask_irq() functions.
+But that approach was not accepted.
+
+Then, series [2] implemented the suspend and resume operations using the
+syscore framework that disabled the resources at the end of the suspend
+cycle. But that approach also did not get much acceptance.
+
+Proposal
+========
+
+So the proposal here is to just vote for minimal interconnect bandwidth and
+not turn OFF the resources if there are active PCIe devices connected to
+the controllers. This avoids the access violation issue during suspend and
+also saves some power due to the lower interconnect bandwidth used.
+
+Then if there are no active PCIe devices connected to the controller,
+the resources are turned OFF completely and brought back during resume.
+This also saves power if there are controllers in a system without any
+devices connected.
+
+Testing
+=======
+
+This series has been tested on Lenovo Thinkpad X13s.
+
+Thanks,
+Mani
+
+[1] https://lore.kernel.org/linux-pci/1656055682-18817-1-git-send-email-quic_krichai@quicinc.com/
+[2] https://lore.kernel.org/linux-pci/1663669347-29308-1-git-send-email-quic_krichai@quicinc.com/
+
+Changes in v2:
+
+* Used minimum icc vote to keep data path functional during suspend
+* Collected Ack
+
+Manivannan Sadhasivam (1):
+  PCI: qcom: Add support for system suspend and resume
+
+ drivers/pci/controller/dwc/pcie-qcom.c | 53 ++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
+
+-- 
+2.25.1
+
