@@ -2,166 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 200A06A8CD5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 00:18:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 008836A8D61
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 00:54:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229487AbjCBXSA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 18:18:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33066 "EHLO
+        id S229634AbjCBXyB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 18:54:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbjCBXR7 (ORCPT
+        with ESMTP id S229486AbjCBXyA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 18:17:59 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9567259436;
-        Thu,  2 Mar 2023 15:17:39 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 322KJ1ZD005271;
-        Thu, 2 Mar 2023 23:17:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=/+JIn/xOjPrqhUPX6OH4D/agttYKI4KGRVhL+3f/bKU=;
- b=jI5LD53MaHL+o7hnEnElKdvvXzDhaW6VV3ZBOWH6ZXiibieKTQFWRBs1xZKI97b4InQv
- iP7y9J16c96ZefkPgurIkM1gFGD2/Borq+/lhw4FmOcxqztOkN0FNxhNCKJspE39sDHR
- j913N2IUkP5Ut20Hb7RQFzMHQobVPucfQadKnM18M6cM6af3zbyj+0Y7FOdu5jG85c/c
- NWz4/QoKde3tqhbFaDGGrW/90qzvzfEr8Shkim11TMp/V9ZS2yGCiuX/nPQWxt2eZON1
- ficp+gxBURxAjyToqU1FlAQPrN74bYrUZ5yw8SH8nubyHD0fRx1cvzci8Wa/g8yERQuA fg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p2ar144ku-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 02 Mar 2023 23:17:06 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 322NH5T2013534
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 2 Mar 2023 23:17:05 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Thu, 2 Mar 2023 15:17:05 -0800
-Date:   Thu, 2 Mar 2023 15:17:04 -0800
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Johan Hovold <johan@kernel.org>
-CC:     Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
+        Thu, 2 Mar 2023 18:54:00 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75A15EFB0;
+        Thu,  2 Mar 2023 15:53:59 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id oj5so789899pjb.5;
+        Thu, 02 Mar 2023 15:53:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1677801239;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OyLSbx0/2HCKV+XyudDPIH5gu/TF1itqU6uI7DgybHU=;
+        b=ccDb0QmiaSI/g5fDtKbFAD05MSRs9JZ4ogr4LJUmKiUwzSEGozDJ1U/5R76cxhoeic
+         cN9RNZlczzWk2davyP3aE0KL4vAiSrEdtZyEhAMnUHwtrfRVfqgb9D8xHuubKWXZZ5jx
+         UKrDRn7dtMawjAkoY0VFrpKfDyK/bu4qSuX58sjvZwjRAE89qK/Dhl8JOi4RoVX4nto+
+         a+/vDm4KPxcjrzQ4qWNDA5XaLhaS1PkHLFI050zCmEZeoCNFlzumszgiDttYqM3mR+0b
+         ciZapKd/Gg0yFNkHQF0LMQ7I3Zam3W0xJXfKTJiP7tyOTban3KNhI2TzqS+SUNb6QjNc
+         yXuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677801239;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OyLSbx0/2HCKV+XyudDPIH5gu/TF1itqU6uI7DgybHU=;
+        b=sYJDtxgYb4H7I+4AY6K9EkOqv9I1L4ZIbHkWHn44QKU0wD46JlmjfXOEzUKd9ocJhv
+         W0wbLzc0t1JDRzs+XsZhktXGEUSnBOg3/L8SRZLfjiz3e8ow6cRwCbq8NWZNADPP39nK
+         2shxiaJYYYenvzB0TUMX/B6/RTVnWG4URnEY0AZtU2Ik6NrO4f1e4CeWlcd1XeZlcA+w
+         sQE8lcFIDEpaZfhFa4dsitJ9reDwaHKLsSXjY90HeUrj1cS0xwO4MrFV6S1jDJEcBBFU
+         Ihcd9FmthhToo93JJI2g4eVjw4nZX/OTM88kICFb7GDDBVlibyrDxepUI5w8nbTFZvZU
+         rjpQ==
+X-Gm-Message-State: AO0yUKVHqBYV7M/Hjd0W3co+2Y8bWfRnYe7198gA99BeLQubGyQ4ZOdc
+        pPu9FYbqRXRrGrr7blSM/pg=
+X-Google-Smtp-Source: AK7set9/35wq0ATBCUsBq2tY0e+DqZ3e2ousn8AqoHPi9aaZQyqe5DO6bshHIRX2pfb1eGjcABG68w==
+X-Received: by 2002:a17:90b:1bd2:b0:237:8338:ef4c with SMTP id oa18-20020a17090b1bd200b002378338ef4cmr13364433pjb.9.1677801238781;
+        Thu, 02 Mar 2023 15:53:58 -0800 (PST)
+Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
+        by smtp.gmail.com with ESMTPSA id u65-20020a17090a51c700b00233ccd04a15sm2086251pjh.24.2023.03.02.15.53.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Mar 2023 15:53:58 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= 
+        <ckoenig.leichtzumerken@gmail.com>,
+        =?UTF-8?q?Michel=20D=C3=A4nzer?= <michel@daenzer.net>,
+        Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Pekka Paalanen <ppaalanen@gmail.com>,
+        Simon Ser <contact@emersion.fr>,
+        Luben Tuikov <luben.tuikov@amd.com>,
+        Rob Clark <robdclark@chromium.org>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] drm/msm: Initialize mode_config earlier
-Message-ID: <20230302231704.GA1373835@hu-bjorande-lv.qualcomm.com>
-References: <20230113041051.4189063-1-quic_bjorande@quicinc.com>
- <eea1c5dc-6bc5-4246-f0e1-0c790de9f078@linaro.org>
- <9a64c685-9ff0-bc1d-e604-e3773ff9edd7@linaro.org>
- <20230117025122.jt3wrjkqfnogu4ci@builder.lan>
- <Y8ZWl85gSpOaLgO4@hovoldconsulting.com>
- <Y86vaTQR7INWezyj@hovoldconsulting.com>
- <20230123171749.GA623918@hu-bjorande-lv.qualcomm.com>
- <Y8+SHQ/klPwusQRj@hovoldconsulting.com>
- <Y/9aGus6jzIHqjoK@hovoldconsulting.com>
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Gustavo Padovan <gustavo@padovan.org>,
+        intel-gfx@lists.freedesktop.org,
+        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING
+        FRAMEWORK),
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-doc@vger.kernel.org (open list:DOCUMENTATION),
+        linux-kernel@vger.kernel.org (open list),
+        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK),
+        Liu Shixin <liushixin2@huawei.com>,
+        Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>
+Subject: [PATCH v9 00/15] dma-fence: Deadline awareness
+Date:   Thu,  2 Mar 2023 15:53:22 -0800
+Message-Id: <20230302235356.3148279-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <Y/9aGus6jzIHqjoK@hovoldconsulting.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -CB_9uDJ1kIcrcrIE2q3T62hI2T5W_u5
-X-Proofpoint-ORIG-GUID: -CB_9uDJ1kIcrcrIE2q3T62hI2T5W_u5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-02_15,2023-03-02_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
- bulkscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 spamscore=0 mlxlogscore=999 adultscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2303020201
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 01, 2023 at 02:58:50PM +0100, Johan Hovold wrote:
-> On Tue, Jan 24, 2023 at 09:09:02AM +0100, Johan Hovold wrote:
-> > On Mon, Jan 23, 2023 at 09:17:49AM -0800, Bjorn Andersson wrote:
-> > > On Mon, Jan 23, 2023 at 05:01:45PM +0100, Johan Hovold wrote:
-> > > > On Tue, Jan 17, 2023 at 09:04:39AM +0100, Johan Hovold wrote:
-> > > > > On Mon, Jan 16, 2023 at 08:51:22PM -0600, Bjorn Andersson wrote:
-> > 
-> > > > > > Perhaps we have shuffled other things around to avoid this bug?  Either
-> > > > > > way, let's this on hold  until further proof that it's still
-> > > > > > reproducible.
-> > > > > 
-> > > > > As I've mentioned off list, I haven't hit the apparent race I reported
-> > > > > here:
-> > > > > 
-> > > > > 	https://lore.kernel.org/all/Y1efJh11B5UQZ0Tz@hovoldconsulting.com/
-> > > > > 
-> > > > > since moving to 6.2. I did hit it with both 6.0 and 6.1-rc2, but it
-> > > > > could very well be that something has changes that fixes (or hides) the
-> > > > > issue since.
-> > > > 
-> > > > For unrelated reasons, I tried enabling async probing, and apart from
-> > > > apparently causing the panel driver to probe defer indefinitely, I also
-> > > > again hit the WARN_ON() I had added to catch this:
-> > > > 
-> > > > [   13.593235] WARNING: CPU: 0 PID: 125 at drivers/gpu/drm/drm_probe_helper.c:664 drm_kms_helper_hotplug_event+0x48/0x7
-> > > > 0 [drm_kms_helper]
-> > 
-> > > > So the bug still appears to be there (and the MSM DRM driver is fragile
-> > > > and broken, but we knew that).
-> > > > 
-> > > 
-> > > But the ordering between mode_config.funcs = !NULL and
-> > > drm_kms_helper_poll_init() in msm_drm_init() seems pretty clear.
-> > > 
-> > > And my testing shows that drm_kms_helper_poll_init() is the cause for
-> > > getting bridge->hpd_cb != NULL.
-> > > 
-> > > So the ordering seems legit, unless there's something else causing the
-> > > assignment of bridge->hpd_cb to happen earlier in this scenario.
-> > 
-> > I'm not saying that this patch is correct (indeed it doesn't seem to
-> > be), but only that the bug I reported still appears to be present in
-> > 6.2.
-> 
-> So after debugging this issue a third time, I can conclude that it is
-> still very much present in 6.2.
-> 
-> It appears you looked at the linux-next tree when you concluded that
-> this patch was not needed. In 6.2 the bridge->hpd_cb callback is set
-> before mode_config.funcs is initialised as part of
-> kms->funcs->hw_init(kms).
-> 
-> The hpd DRM changes heading into 6.3 do appear to avoid the NULL-pointer
-> dereference by moving the bridge->hpd_cb initialisation to
-> drm_kms_helper_poll_init() as you mention above.
-> 
-> The PMIC GLINK altmode driver still happily forwards notifications
-> regardless of the DRM driver state though, which can lead to missed
-> hotplug events. It seems you need to implement the
-> hpd_enable()/disable() callbacks and either cache or not enable events
-> in fw until the DRM driver is ready.
-> 
+From: Rob Clark <robdclark@chromium.org>
 
-It's not clear to me what the expectation from the DRM framework is on
-this point. We register a drm_bridge which is only capable of signaling
-HPD events (DRM_BRIDGE_OP_HPD), not querying HPD state (DRM_BRIDGE_OP_DETECT).
+This series adds a deadline hint to fences, so realtime deadlines
+such as vblank can be communicated to the fence signaller for power/
+frequency management decisions.
 
-Does this imply that any such bridge must ensure that hpd events are
-re-delivered once hpd_enable() has been invoked (we can't invoke it from
-hpd_enable...)?
+This is partially inspired by a trick i915 does, but implemented
+via dma-fence for a couple of reasons:
 
-Is it reasonable to do this retriggering in the altmode driver? Or is it
-the job of the TCPM (it seems reasonable to not send the PAN_EN message
-until we get hpd_enable()...)?
+1) To continue to be able to use the atomic helpers
+2) To support cases where display and gpu are different drivers
 
-Regards,
-Bjorn
+This iteration adds a dma-fence ioctl to set a deadline (both to
+support igt-tests, and compositors which delay decisions about which
+client buffer to display), and a sw_sync ioctl to read back the
+deadline.  IGT tests utilizing these can be found at:
+
+  https://gitlab.freedesktop.org/robclark/igt-gpu-tools/-/commits/fence-deadline
+
+
+v1: https://patchwork.freedesktop.org/series/93035/
+v2: Move filtering out of later deadlines to fence implementation
+    to avoid increasing the size of dma_fence
+v3: Add support in fence-array and fence-chain; Add some uabi to
+    support igt tests and userspace compositors.
+v4: Rebase, address various comments, and add syncobj deadline
+    support, and sync_file EPOLLPRI based on experience with perf/
+    freq issues with clvk compute workloads on i915 (anv)
+v5: Clarify that this is a hint as opposed to a more hard deadline
+    guarantee, switch to using u64 ns values in UABI (still absolute
+    CLOCK_MONOTONIC values), drop syncobj related cap and driver
+    feature flag in favor of allowing count_handles==0 for probing
+    kernel support.
+v6: Re-work vblank helper to calculate time of _start_ of vblank,
+    and work correctly if the last vblank event was more than a
+    frame ago.  Add (mostly unrelated) drm/msm patch which also
+    uses the vblank helper.  Use dma_fence_chain_contained().  More
+    verbose syncobj UABI comments.  Drop DMA_FENCE_FLAG_HAS_DEADLINE_BIT.
+v7: Fix kbuild complaints about vblank helper.  Add more docs.
+v8: Add patch to surface sync_file UAPI, and more docs updates.
+v9: Drop (E)POLLPRI support.. I still like it, but not essential and
+    it can always be revived later.  Fix doc build warning.
+
+Rob Clark (15):
+  dma-buf/dma-fence: Add deadline awareness
+  dma-buf/fence-array: Add fence deadline support
+  dma-buf/fence-chain: Add fence deadline support
+  dma-buf/dma-resv: Add a way to set fence deadline
+  dma-buf/sync_file: Surface sync-file uABI
+  dma-buf/sync_file: Add SET_DEADLINE ioctl
+  dma-buf/sw_sync: Add fence deadline support
+  drm/scheduler: Add fence deadline support
+  drm/syncobj: Add deadline support for syncobj waits
+  drm/vblank: Add helper to get next vblank time
+  drm/atomic-helper: Set fence deadline for vblank
+  drm/msm: Add deadline based boost support
+  drm/msm: Add wait-boost support
+  drm/msm/atomic: Switch to vblank_start helper
+  drm/i915: Add deadline based boost support
+
+ Documentation/driver-api/dma-buf.rst    | 16 ++++-
+ drivers/dma-buf/dma-fence-array.c       | 11 ++++
+ drivers/dma-buf/dma-fence-chain.c       | 12 ++++
+ drivers/dma-buf/dma-fence.c             | 60 ++++++++++++++++++
+ drivers/dma-buf/dma-resv.c              | 22 +++++++
+ drivers/dma-buf/sw_sync.c               | 81 +++++++++++++++++++++++++
+ drivers/dma-buf/sync_debug.h            |  2 +
+ drivers/dma-buf/sync_file.c             | 19 ++++++
+ drivers/gpu/drm/drm_atomic_helper.c     | 36 +++++++++++
+ drivers/gpu/drm/drm_syncobj.c           | 64 +++++++++++++++----
+ drivers/gpu/drm/drm_vblank.c            | 53 +++++++++++++---
+ drivers/gpu/drm/i915/i915_request.c     | 20 ++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 15 -----
+ drivers/gpu/drm/msm/msm_atomic.c        |  8 ++-
+ drivers/gpu/drm/msm/msm_drv.c           | 12 ++--
+ drivers/gpu/drm/msm/msm_fence.c         | 74 ++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_fence.h         | 20 ++++++
+ drivers/gpu/drm/msm/msm_gem.c           |  5 ++
+ drivers/gpu/drm/msm/msm_kms.h           |  8 ---
+ drivers/gpu/drm/scheduler/sched_fence.c | 46 ++++++++++++++
+ drivers/gpu/drm/scheduler/sched_main.c  |  2 +-
+ include/drm/drm_vblank.h                |  1 +
+ include/drm/gpu_scheduler.h             | 17 ++++++
+ include/linux/dma-fence.h               | 22 +++++++
+ include/linux/dma-resv.h                |  2 +
+ include/uapi/drm/drm.h                  | 17 ++++++
+ include/uapi/drm/msm_drm.h              | 14 ++++-
+ include/uapi/linux/sync_file.h          | 59 +++++++++++-------
+ 28 files changed, 639 insertions(+), 79 deletions(-)
+
+-- 
+2.39.1
+
