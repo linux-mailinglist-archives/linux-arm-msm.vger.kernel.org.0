@@ -2,148 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4527D6A7BBF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 08:18:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A5176A7BD1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 08:26:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229877AbjCBHSw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 02:18:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36594 "EHLO
+        id S229971AbjCBH0r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 02:26:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229884AbjCBHSu (ORCPT
+        with ESMTP id S229966AbjCBH0q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 02:18:50 -0500
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5CC0D309;
-        Wed,  1 Mar 2023 23:18:45 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.west.internal (Postfix) with ESMTP id BC01D3200C42;
-        Thu,  2 Mar 2023 02:18:43 -0500 (EST)
-Received: from imap51 ([10.202.2.101])
-  by compute6.internal (MEProxy); Thu, 02 Mar 2023 02:18:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-        :cc:content-transfer-encoding:content-type:content-type:date
-        :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to; s=fm1; t=
-        1677741523; x=1677827923; bh=W1hdcOQxGQU0ebLTR8DQVhMf/+cpeg+06LD
-        xY0b8rGw=; b=D+YIcU2j34lGBuWzqi9hNCT5A321ctynb+rncz9FW+0FgZOq6m5
-        FTnJikUR9ynPIOyo+1Ua5y3jzZRENtQwP797kUDYe3Kmk49JwCXo3oVvRTenrWUP
-        OJbFYgzmmEB/VV3EbDjsHFrBAB4230wjWSpsmXdwA0iSiCHkR2ct34XoMjjYplIR
-        B6dfgGGG076O9Qre8Rde5xxqaddelftSPMYnsw8iiiG1umshV7yQmrYgXhwKw4F1
-        SBwpORK03D1MgrdeXLP1t0SeCEWt76Ifr6xYBN7HcY6poqoh1xY522AGa541EZBB
-        vr36Qg85SUGpvk6Eo5GRsoX0zXm9qg1jrJQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-        1677741523; x=1677827923; bh=W1hdcOQxGQU0ebLTR8DQVhMf/+cpeg+06LD
-        xY0b8rGw=; b=DOmMZdkdzJ87q/MWvxhvyaY1AObra5az/eCIi4Bw/KBikhfnBj5
-        1skrdule4Wj9kMPa41ZdzbFrcpqOh9oiCUZSuvcUwHf2vezqpLHam9CkD4vat61k
-        DRDahFMDr9LqXAokhyBwHpHWY1Kg8YZSipJALT22jGRUWYQYGvcJ+iUwNZ7wBHMK
-        ebielb1tj6m7fxWw/aNvRONJFY9mkCpWz4tCJJ/r3bf468b8kISoIdRVyLpk9ZDD
-        L8w7b7Opfvd0PscELJbvp8lPiZ7VMiNHANLs3xZPBPElXkj8IWHw1/lNYIDGYcXN
-        0B+AtayAY5Up3OhYSsV0DbIcvPWQtCl+zWA==
-X-ME-Sender: <xms:000AZLSiIuhAjVGIx2lFU7JMDsEjBq50CfKOYYTj7iKBmRbiLw1GOA>
-    <xme:000AZMwa01LBWHdjEEsfQ-29MlMKRLGLRxF9qEw-ihtBRKy_0S4EFyp7rbe5qu0i8
-    7OFgKWVYtnJK-WJYWE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudeliedguddtgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedf
-    tehrnhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrf
-    grthhtvghrnhepgeefjeehvdelvdffieejieejiedvvdfhleeivdelveehjeelteegudek
-    tdfgjeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
-    eprghrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:000AZA0JZoGQs_3zE-H29P78oQ7O7UdcjxLtw7YK_-e7n_ldrLSUQQ>
-    <xmx:000AZLD0cqeG6pY6GuiKq_0Rk-eseM-kDuWW8DigquEJBrlFgvPH1g>
-    <xmx:000AZEgTTAIV2GAEOnqQq1aqjzUU_HZ8Fv5SbDNS8pGgcTKcR9pjRQ>
-    <xmx:000AZBZfmFl32G7ZevTse5RwWb53QCHt4kNPQG5tth3yf4iuc2WBQQ>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 0A42BB60086; Thu,  2 Mar 2023 02:18:42 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-183-gbf7d00f500-fm-20230220.001-gbf7d00f5
-Mime-Version: 1.0
-Message-Id: <e449e759-ae59-4892-a453-75213d711ae1@app.fastmail.com>
-In-Reply-To: <9003dd79-00eb-72d4-18e5-51c0f52833f8@quicinc.com>
-References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214211229.3239350-4-quic_eberman@quicinc.com>
- <5d67ee67-e63f-1393-1455-bfb6b2ddaeb5@linaro.org>
- <9003dd79-00eb-72d4-18e5-51c0f52833f8@quicinc.com>
-Date:   Thu, 02 Mar 2023 08:18:21 +0100
-From:   "Arnd Bergmann" <arnd@arndb.de>
-To:     "Elliot Berman" <quic_eberman@quicinc.com>,
-        "Alex Elder" <alex.elder@linaro.org>,
-        "Alex Elder" <elder@linaro.org>,
-        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
-        "Prakruthi Deepak Heragu" <quic_pheragu@quicinc.com>
-Cc:     "Murali Nalajala" <quic_mnalajal@quicinc.com>,
-        "Trilok Soni" <quic_tsoni@quicinc.com>,
-        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
-        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Jonathan Corbet" <corbet@lwn.net>,
-        "Bagas Sanjaya" <bagasdotme@gmail.com>,
-        "Catalin Marinas" <catalin.marinas@arm.com>,
-        "Jassi Brar" <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v10 03/26] gunyah: Common types and error codes for Gunyah
- hypercalls
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Thu, 2 Mar 2023 02:26:46 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE00728D35
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 23:26:36 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id cp7-20020a17090afb8700b0023756229427so1959404pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 23:26:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=F3u3LErDLxQpcTw9IoCPajtVtH7Wl04gCGhYoZubMP8=;
+        b=zkjvhExvYB0B4Qs2sggCbs2HJYow4AZ9zqt/ddPcN68B/NhRqd/fHYIc05vyHqguXZ
+         rdItaGWqa2IRY4+HxOiaNJoPqQr+6IqEhaMmPndYTDYXW9VMkwjn0kmI5LdH77EKpMR7
+         bls32mHRPKTxAe5TWE5VR6SGKlVuHGgWzzexA6cIudfbgNAeNe1Sfc2WAyeeW6dZqqtN
+         C/TLFHEjXVGMOfeXm/HDP20KbV6bCY6ZxPfGCznWckEW5ywTk0vro+Yf8qYRdT0M+Nlw
+         L2xESFFyZ0BLBoYIhuLNiooS9uUP1M62M6ciAntjR+44Nmigwk5ZuiGwJKWA5LzhYYXh
+         T6iQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=F3u3LErDLxQpcTw9IoCPajtVtH7Wl04gCGhYoZubMP8=;
+        b=ExKBrHlhgqAIH9KtAcRbDB1esHbhBZj0KTeh665jFCGrCirk6DwFnirDrv5TtvY51h
+         dCduBQQqmbRVnItlgZ6EAHVB0x6NQNQVBX564o8sj0w8HM5SRYPHB0BE/P2XGWjYMt1U
+         Ft7+ij5UZL5bwfuhzwIKcqSPl7EHnJbRR01Eilz2FPPtoonfO126Qs45ba99YE4D5XUl
+         UxF8T2vgxZS1tixHFzNygJoDzuxRALHQMfn8v4NM55nMeACVBGieyrobTxgYS0KCTaqi
+         l2Kt8oHD3XCWAF+Gy3TNNm5NSzG9f6OMtuzCc53QAl9wOlKQ5vzdP5ZBikxgd+zeQBwa
+         sRsg==
+X-Gm-Message-State: AO0yUKVUi5qcccETlaWtq2emB63YU6r42hHq8qOtdPgaolytaR1lBB46
+        yQRn3agKloc00UcSNt7niHKu
+X-Google-Smtp-Source: AK7set+b5+DA7dn3dFlxWvnkmJ1pb3iQAsilUo7zXfjPyk+R+gXDelIQToIayCVkVSQPhcP2Tu7/Kg==
+X-Received: by 2002:a05:6a20:4c16:b0:cc:d44a:beaf with SMTP id fm22-20020a056a204c1600b000ccd44abeafmr8583578pzb.13.1677741995997;
+        Wed, 01 Mar 2023 23:26:35 -0800 (PST)
+Received: from thinkpad ([59.97.53.52])
+        by smtp.gmail.com with ESMTPSA id e18-20020a62aa12000000b00593cd0f37dcsm9077738pff.169.2023.03.01.23.26.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Mar 2023 23:26:35 -0800 (PST)
+Date:   Thu, 2 Mar 2023 12:56:31 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bart Van Assche <bvanassche@acm.org>
+Cc:     jejb@linux.ibm.com, martin.petersen@oracle.com,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_asutoshd@quicinc.com
+Subject: Re: [PATCH] ufs: host: ufs-qcom: Return directly if MCQ resource is
+ provided in DT
+Message-ID: <20230302072631.GA2890@thinkpad>
+References: <20230301073110.9083-1-manivannan.sadhasivam@linaro.org>
+ <a3c08b5f-b8cb-fdd9-eb60-b1adc2879fff@acm.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a3c08b5f-b8cb-fdd9-eb60-b1adc2879fff@acm.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 2, 2023, at 02:40, Elliot Berman wrote:
-> On 2/23/2023 1:58 PM, Alex Elder wrote:
+On Wed, Mar 01, 2023 at 10:07:41AM -0800, Bart Van Assche wrote:
+> On 2/28/23 23:31, Manivannan Sadhasivam wrote:
+> > Instead of using a goto label to return, let's return directly in the
+> > "if" condition after setting mcq_base.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >   drivers/ufs/host/ufs-qcom.c | 9 ++++-----
+> >   1 file changed, 4 insertions(+), 5 deletions(-)
+> > 
+> > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> > index 34fc453f3eb1..d90f963eed02 100644
+> > --- a/drivers/ufs/host/ufs-qcom.c
+> > +++ b/drivers/ufs/host/ufs-qcom.c
+> > @@ -1460,8 +1460,10 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
+> >   	/* MCQ resource provided in DT */
+> >   	res = &hba->res[RES_MCQ];
+> >   	/* Bail if MCQ resource is provided */
+> > -	if (res->base)
+> > -		goto out;
+> > +	if (res->base) {
+> > +		hba->mcq_base = res->base;
+> > +		return 0;
+> > +	}
+> >   	/* Explicitly allocate MCQ resource from ufs_mem */
+> >   	res_mcq = devm_kzalloc(hba->dev, sizeof(*res_mcq), GFP_KERNEL);
+> > @@ -1489,9 +1491,6 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
+> >   		goto ioremap_err;
+> >   	}
+> > -out:
+> > -	hba->mcq_base = res->base;
+> > -	return 0;
+> >   ioremap_err:
+> >   	res->base = NULL;
+> >   	remove_resource(res_mcq);
+> 
+> This patch changes the behavior for the success case without mentioning this
+> in the patch description. So I assume that the behavior change is
+> unintentional and hence that this patch should be dropped?
+> 
 
->>> +enum gh_error {
->>> +=C2=A0=C2=A0=C2=A0 GH_ERROR_OK=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 =3D 0,
->>> +=C2=A0=C2=A0=C2=A0 GH_ERROR_UNIMPLEMENTED=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 =3D -1,
->>> +=C2=A0=C2=A0=C2=A0 GH_ERROR_RETRY=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =3D -2,
->>=20
->> Do you expect this type to have a particular size?
->> Since you specify negative values, it matters, and
->> it's possible that this forces it to be a 4-byte value
->> (though I'm not sure what the rules are).=C2=A0 In other
->> words, UNIMPLEMENTED could conceivably have value 0xff
->> or 0xffffffff.=C2=A0 I'm not even sure you can tell whether
->> an enum is interpreted as signed or unsigned.
->
-> I'm not a C expert, but my understanding is that enums are signed.=20
-> Gunyah will be returning a signed 64-bit register, however there's no=20
-> intention to go beyond 32 bits of error codes since we want to work on=20
-> 32-bit architectures.
+Sorry, my bad here :( Please ignore this patch.
 
-This came up recently because gcc-13 changes the rules.
+Thanks,
+Mani
 
-In GNU C, the enum type will have the smallest type that fits all
-values, so if it contains a negative number it ends up as a signed
-type (int, long or long long), but if all values are positive and at
-least one of them exceeds the signed range (e.g. UINT_MAX), it is
-an unsigned type. If it contains both UINT_MAX and -1, the enum
-type gets changed to a signed 64-bit type in order to fit both.
+> Bart.
 
-Before gcc-13, the individual constants have the smallest type
-(at least 'int') that fits their value, but in gcc-13 they have
-the same type as the enum type itself.
-
-     Arnd
+-- 
+மணிவண்ணன் சதாசிவம்
