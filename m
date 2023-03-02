@@ -2,80 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFF426A85FF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 17:16:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AAFFE6A8608
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 17:17:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229835AbjCBQQz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 11:16:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47630 "EHLO
+        id S229557AbjCBQRd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 11:17:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229830AbjCBQQz (ORCPT
+        with ESMTP id S229486AbjCBQRc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 11:16:55 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9912E532A7
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 08:16:53 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id h14so17075658wru.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 08:16:53 -0800 (PST)
+        Thu, 2 Mar 2023 11:17:32 -0500
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88E294ECDE
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 08:17:31 -0800 (PST)
+Received: by mail-yb1-xb36.google.com with SMTP id y144so4078567yby.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 08:17:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677773812;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :to:content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=5HYjZpMpytZSGqDsP2K0KCRwhR+itCR/8/lFWesuhjo=;
-        b=H7oc1ycRYvXIKKZhYMMqwsHf+0g+8ypaFk6dk8L5BQShyqbanuGVkSK7X2pcd1OgMu
-         LoMDBDJr5ykK0DXXxaByjexZWLV3FhGEHajt9+gVqQp0r08o3yw9DysU+0LrRmHcoG/b
-         FGKPZheIN/qjKt1uBthr/5wkcnzrW+1pE1lslRipqA9+AxMNNqsjpWpFktS8FbKGEuut
-         +r/t1Q1iKlJzVA4Q3mG77VVnvaUhr/yt/CNRV/GI+0DYxhsERZPEBc8rd/+8s3djqVNc
-         WhswMp7LjlqAs3A+En9SfpZ2OH3Ion3sgOq9NVPpmNiDroJEiekiPG2f+Z4P6BFNKcbY
-         oisA==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=NI0M23snSIlgG0WB5X2PNxAxhc5m0Un7hrDW0ghCa80=;
+        b=PTdLDVC2te44CKlxyoUIJr1Tf5LUFqgnjuh2ICOBH6DN95EnmZ7tlSIGlHOM7WLni4
+         erjAQCUS32nHlzuEgalmNxo+9TENi8HmIGol6VNKv8zT62nPlUzBhZLexSDnb2qp6XDR
+         3L6+dJchw7Z+4+Y0BglmIbMZNpVoO6XtgHOHpJy/BNp2hlVjIgAORw6ChiL+0Wogw8rt
+         66OIR7lXthImjRC441/C3M05HZiT+P/QqHHEl4jdlD/7n4C0kqU/mHHRKHe9xiT2uyFx
+         6PTeOLT5gZ/X5+cSZ+CrlxOEyKjFC6t8nscJnK11BG6dKL3/ZnMA8IHb/9G5TAD/Tamf
+         QNHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677773812;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :to:content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5HYjZpMpytZSGqDsP2K0KCRwhR+itCR/8/lFWesuhjo=;
-        b=d2IiC7ZEt5jfEovNrSBleKJq5oa0OKHE/2c1sprWZ88F/FBJJoGpidSGzZa3xMHkM5
-         svow+BZXY1siwMG62DfCtb10RsUQ1AeCtlTrrE0xluN5zULkkjlAOhX4Y64UDqvx5O9a
-         HfVdza6nl+V9EEpxCS9HO+Mc+XnL742A2Uqcn0CEUIUFKDdXWfueEvoJnYwis64m18M+
-         uX46WZDpow34c/QsaPXLuiDVUiMvX5R7BycAw5WEtbjarsIq6FT0/2YYjC8899MV9CqC
-         0EsA+MeVmxPlrAEMlcpoLqJ0eQTjMkXhHH/l9AUgwvzzVx0fCDz7RxEaitq9IqG6CDir
-         ZQgQ==
-X-Gm-Message-State: AO0yUKVkM7uDtvrj1j9wCLlO4d1qFGHMOWwn30fxtrfCtaAgNZPIQ7wo
-        7jD1D4uusd8QbDpc1+NxwF6LjQ==
-X-Google-Smtp-Source: AK7set/OXYKwHtUzDjDTB14sUjIPRR5ax4v3gv1KunbFBF2UbUGo3zPLpddvJ30FI1tl/xvyYK6StQ==
-X-Received: by 2002:a5d:404b:0:b0:2c7:420:5d52 with SMTP id w11-20020a5d404b000000b002c704205d52mr8232023wrp.62.1677773812032;
-        Thu, 02 Mar 2023 08:16:52 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:217a:db24:fe27:6b35? ([2a01:e0a:982:cbb0:217a:db24:fe27:6b35])
-        by smtp.gmail.com with ESMTPSA id a18-20020a5d53d2000000b002c70ce264bfsm16250852wrw.76.2023.03.02.08.16.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Mar 2023 08:16:51 -0800 (PST)
-Message-ID: <3b6f866b-1d38-2605-df35-7a937e73a2fe@linaro.org>
-Date:   Thu, 2 Mar 2023 17:16:50 +0100
+        bh=NI0M23snSIlgG0WB5X2PNxAxhc5m0Un7hrDW0ghCa80=;
+        b=TjerzpOkBqpnMGn6aJg+z9zONS6EyU9Orp/4m5riIr2V2t3SPQPP1a0sIlNeeqmrK+
+         5aK6ftYpwA/BJMcTA9nXOikcT2f0vQs/WldW7QnJln+C3PvO54KQJ+SjajuwrsZgi1LL
+         yS5+VpUwmZoOk4drsPA/6rKeTSWRIbPytgohHTaXOqxP39elQOUnU8Y/5TBTyIshah+7
+         CSIl646OOSO5d1UYalGs1aCnp+25zsA9haQEZ28GqzrYIlGDjTimbqiw48emJ9939161
+         ug5uyVNpIkXIXGDJ4iOwjDeql4WQsOUhZ3bfZ+7irJTcjF5aIkDTuIqjWXa3qDRoNgTN
+         XuZQ==
+X-Gm-Message-State: AO0yUKWFK+wfqY8+0MxewAX//x5Qn6IdfHEqBoPNUjvp176XADH+6vbe
+        SvGKXRfBfxD8D9WVeeYVLDttJVCsmlcn7tGyyjTKng==
+X-Google-Smtp-Source: AK7set//Hf/uYZ6qY7gZ+y+C9vLjqGy41mZdgp9xBSwR+UQU8Q6plH3+dR/rhbu2vqltwmfL6OV8E+1WBVIFuRPVctM=
+X-Received: by 2002:a05:6902:10d:b0:a4a:a708:2411 with SMTP id
+ o13-20020a056902010d00b00a4aa7082411mr5711651ybh.10.1677773850767; Thu, 02
+ Mar 2023 08:17:30 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8550: fix LPASS pinctrl slew base
- address
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+References: <cover.1677749625.git.quic_varada@quicinc.com> <8f62ea9941fdb425f63f8389e10a370d2ce0d117.1677749625.git.quic_varada@quicinc.com>
+In-Reply-To: <8f62ea9941fdb425f63f8389e10a370d2ce0d117.1677749625.git.quic_varada@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 2 Mar 2023 18:17:20 +0200
+Message-ID: <CAA8EJppArws0PO1XQKsYB1H9OjpsHDRPwKgHtTGUkvDe=mdq_Q@mail.gmail.com>
+Subject: Re: [PATCH 5/8] phy: qcom-qusb2: add QUSB2 support for IPQ9574
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
-References: <20230302154724.856062-1-krzysztof.kozlowski@linaro.org>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20230302154724.856062-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,37 +73,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/03/2023 16:47, Krzysztof Kozlowski wrote:
-> The second LPASS pin controller IO address is supposed to be the MCC
-> range which contains the slew rate registers.  The Linux driver then
-> accesses slew rate register with hard-coded offset (0xa000).  However
-> the DTS contained the address of slew rate register as the second IO
-> address, thus any reads were effectively pass the memory space and lead
-> to "Internal error: synchronous external aborts" when applying pin
-> configuration.
-> 
-> Fixes: 6de7f9c34358 ("arm64: dts: qcom: sm8550: add GPR and LPASS pin controller")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
+On Thu, 2 Mar 2023 at 11:57, Varadarajan Narayanan
+<quic_varada@quicinc.com> wrote:
+>
+> Add the phy init sequence for the Super Speed ports found
+> on IPQ9574.
+>
+> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
-> 
-> Fix for current cycle - v6.3-rc1.
-> ---
->   arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index 1dea055a6815..6296eb7adecd 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -2001,7 +2001,7 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
->   		lpass_tlmm: pinctrl@6e80000 {
->   			compatible = "qcom,sm8550-lpass-lpi-pinctrl";
->   			reg = <0 0x06e80000 0 0x20000>,
-> -			      <0 0x0725a000 0 0x10000>;
-> +			      <0 0x07250000 0 0x10000>;
->   			gpio-controller;
->   			#gpio-cells = <2>;
->   			gpio-ranges = <&lpass_tlmm 0 0 23>;
+>  drivers/phy/qualcomm/phy-qcom-qusb2.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> index 2ef638b..c59413b 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> @@ -915,6 +915,9 @@ static const struct of_device_id qusb2_phy_of_match_table[] = {
+>                 .compatible     = "qcom,msm8953-qusb2-phy",
+>                 .data           = &msm8996_phy_cfg,
+>         }, {
+> +               .compatible     = "qcom,ipq9574-qusb2-phy",
+> +               .data           = &ipq6018_phy_cfg,
+> +       }, {
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+The table is sorted. Please keep it this way.
+
+>                 .compatible     = "qcom,msm8996-qusb2-phy",
+>                 .data           = &msm8996_phy_cfg,
+>         }, {
+> --
+> 2.7.4
+>
+
+
+-- 
+With best wishes
+Dmitry
