@@ -2,111 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46BCE6A86E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 17:39:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 430446A86F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 17:40:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229738AbjCBQjb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 11:39:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44728 "EHLO
+        id S229835AbjCBQkX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 11:40:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229728AbjCBQjW (ORCPT
+        with ESMTP id S229787AbjCBQkV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 11:39:22 -0500
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C58835A5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 08:39:01 -0800 (PST)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5384ff97993so438153537b3.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 08:39:01 -0800 (PST)
+        Thu, 2 Mar 2023 11:40:21 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA1AD15161
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 08:40:06 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id s22so12101lfi.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 08:40:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=PGC7FexSUDuE13biGFJ/Du9EMRxwYtWt7jLQYTTJIb0=;
-        b=JcpthHHzlczfHnEAWweKijtEL5eu+oR2yGMUKX4OU1/+JQS3ANQD3h7dAOp5V7TWV7
-         6Fw2vL5hy0DkeNBZ2DE0BrPiCTVwTrLZ/qCLVemHL/RZwHTnjPSXppBQ1NzFDZhbaFjg
-         ORDfPLvR3Bjnj0qPbMtCcHX1rZlM8P+rxekiSLKQa4XrGzp1e0k/Z9joOGIWuVdjNCln
-         4uy0JRmrdJCslGA/9taRcxMrX+2ox2CQi5pqTf0n++buftwlhEa71sGkaaxEhs2PYW1s
-         DqB/a658rixzYbTLSNW14o2keAYrAamjHFnR9/rkYXBGP8YWrjNZYSpulyOZ/92xkHep
-         5W1Q==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=clemDdlw5AVVfbBMfMMVk1mB/n91ZZIxJxGYFhtaE10=;
+        b=ZcWzd2VISv7VbjUNUOKAd/ScIHUIlD+kat046CfvIzTRNnRvWidoivUQJBI3P2pjEZ
+         CX+7iV9lc2HS9oMSqLt+RlZy/vON+VOJlP80aYDi62yiZnqnbfZU+sV082TlH2Ke1dGT
+         gWITtMMdjJOOHllC5SmBmxo5X6qF8xdJBoyLTyNAjEgb9ABPnWCtZ7CRyNwI1sQOEEOj
+         LDAE8Jgl0CkqG7rSUE7WHa2tiPGyLmMyer7I6eu4DqcYHosmuUrkbXuHOj8+8O9st8O6
+         qmzZrGuZ3/VKs4dkrfb1X+PZWK8sqxeb8v9+xmFTTQdnevZt4L6a8bcyHWWtoB7MgbmC
+         KWnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PGC7FexSUDuE13biGFJ/Du9EMRxwYtWt7jLQYTTJIb0=;
-        b=Nxwqyj6R5dPs9i0HJ4uPgAq9b2cLaUFZjooJ202e81MR2H5/yfN3TCxDF0No/oWh5d
-         kATRkbpDch+s2GdpbPY7I3QYGDMiB7RiuRyf2I0kk69MyNRlDkefxYOmk81xzaVEyfFs
-         AUZcecRn3WGI7JiA8aX1DtxYQPdeyZPof7onS4IS1+RJ0v5KP9yHnVunF1pjo0xmgZPB
-         A6ONqk7rbUbrz/tzNfB7O8mqXSxcnt6HBqM9dZCVpcyQRvHwVOdXh/5Cd5ZucG19VfyH
-         9lq91GfE49wZzlhTunU6RhCVpxPe0/mxruy9zK1UupQUeKv5uWWGMAaB3BMxggG4pXGH
-         qLbQ==
-X-Gm-Message-State: AO0yUKXRqPkDiasyr90niV9sJcYw15eoinVfyiIs24iYhZZ6/NJKj+PN
-        uPIyX3hCAjcz3mWk6DNy8Cac4+GXfIKvRaYEEAeMAg==
-X-Google-Smtp-Source: AK7set9K8jJPZUlDxy83PEHgBkdtZZCQuBT0j69TZkB7pMGcFEQExvBE0Z6nzo20Xj2S+Muoxl0GE46SntlTIf4bzFM=
-X-Received: by 2002:a81:b71b:0:b0:536:7529:55b4 with SMTP id
- v27-20020a81b71b000000b00536752955b4mr6642631ywh.3.1677775140455; Thu, 02 Mar
- 2023 08:39:00 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=clemDdlw5AVVfbBMfMMVk1mB/n91ZZIxJxGYFhtaE10=;
+        b=y0nxXtIs5EJZRCEJiO0N0nQ/lCzhI1eYAHOv9ZXmiaT+S8G4leAB1pov+QfZTuS4Ij
+         cruEYwDaifmzJrhGy9fkensG/8sILc5ZKCj8CMcxRX4Xz1IAP0Ce+P7xxxI6UU1uGGno
+         1U8gTgJ+ld32hHsdnS7Vn0EjtLUscK+7NP2qjGNECr1ch2ogHZp3KgolExM8fURd6H0t
+         pVAg4wTzczsLLoBKLpzTGL3WAHQwSeHGod9I3BLJcsxPrzdYO2BPuumzF44rn2+pGqa0
+         Gk4fsiIlfOkUJzEU5PXMYSx0IiO6cQk3F8ABvRBzCZtnWMLK3USsfLtO9KgGxdw+vqIu
+         TErw==
+X-Gm-Message-State: AO0yUKUtnhonnWGP3D0Z3Uv05IWUdUivwivrx5jT80AF9bYWng5yFYAW
+        I+8YNpEjZUDyalRs/E2hbys0Xw==
+X-Google-Smtp-Source: AK7set8kh2kDzBB4CHJkTz1iDmV3/IKPUx0riwaparu6P77949nYB2XB727Wg3k9aIn+VVypxEti2Q==
+X-Received: by 2002:ac2:5d41:0:b0:4de:ca63:b2d2 with SMTP id w1-20020ac25d41000000b004deca63b2d2mr2956571lfd.26.1677775204510;
+        Thu, 02 Mar 2023 08:40:04 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id e19-20020ac25473000000b0048a9e899693sm2211229lfn.16.2023.03.02.08.40.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Mar 2023 08:40:04 -0800 (PST)
+Message-ID: <7de00f26-cc93-b549-f66e-8d1f8867f8b7@linaro.org>
+Date:   Thu, 2 Mar 2023 18:40:03 +0200
 MIME-Version: 1.0
-References: <20230302123051.12440-1-a39.skl@gmail.com> <20230302123051.12440-2-a39.skl@gmail.com>
-In-Reply-To: <20230302123051.12440-2-a39.skl@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v14 14/14] drm/msm/dp: set self refresh aware based on PSR
+ support
+Content-Language: en-GB
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_kalyant@quicinc.com, quic_khsieh@quicinc.com,
+        quic_vproddut@quicinc.com, quic_bjorande@quicinc.com,
+        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com
+References: <1677774797-31063-1-git-send-email-quic_vpolimer@quicinc.com>
+ <1677774797-31063-15-git-send-email-quic_vpolimer@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 2 Mar 2023 18:38:49 +0200
-Message-ID: <CAA8EJpoxtKQfmdbX+CGmri6RUf3YauxNUc1z62Xn1TczcsWhDw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: msm8956-loire: Provide rate for
- xo_board clock
-To:     Adam Skladowski <a39.skl@gmail.com>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <1677774797-31063-15-git-send-email-quic_vpolimer@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2 Mar 2023 at 14:31, Adam Skladowski <a39.skl@gmail.com> wrote:
->
-> As xo_board is part of board not soc we define rates per device tree,
-> assign common 19.2Mhz rate to make consumers happy.
->
-> Fixes: ff7f6d34ca07 ("arm64: dts: qcom: Add support for SONY Xperia X/X Compact")
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-> index 67baced639c9..085d79542e1b 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-> @@ -280,3 +280,7 @@ &usb_hs_phy {
->         vdda3p3-supply = <&pm8950_l13>;
->         status = "okay";
->  };
-> +
-> +&xo_board {
-> +       clock-frequency = <19200000>;
+On 02/03/2023 18:33, Vinod Polimera wrote:
+> For the PSR to kick in, self_refresh_aware has to be set.
+> Initialize it based on the PSR support for the eDP interface.
+> 
+> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
 
-This doesn't seem to be board-specific. Please move it to msm8976.dtsi.
-
-> +};
-> --
-> 2.25.1
->
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
 Dmitry
+
