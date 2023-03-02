@@ -2,132 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B8306A7921
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 02:43:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D58A6A7972
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 03:21:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229660AbjCBBn5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Mar 2023 20:43:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48990 "EHLO
+        id S229817AbjCBCVP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Mar 2023 21:21:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbjCBBnz (ORCPT
+        with ESMTP id S229541AbjCBCVO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Mar 2023 20:43:55 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3869BBB90;
-        Wed,  1 Mar 2023 17:43:25 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 321H24d1022065;
-        Thu, 2 Mar 2023 01:43:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=WEt31C4rymQvGAxgTYp0HLRd/rePdGjn7Im2OeBw7/c=;
- b=cAOIPUm1srXoxZXh0SIX3iZPMKn6PyjMMXrC1msyGY+UKEYFugYbwX0Q+qlme3QUxK0l
- 6Dw7wPciEUL0EtFlZeC7d0sjChW9omQhFNL9VpC5XqYTemZCb994akaQ0U5DLmkOA/st
- NpONBZf9kRGWcUBG1g+IfdquYTpcN9Sh7GyaVdyTX9MALD9/uknyT9TdNGJ9QQtkX6lv
- xvEKoRq1YmMX/bDUBxWLxFrWGZe8xN5ZB0UcifkIo8OSdFQIX/WRlDZPY9nvcKrhPy0i
- +MOt0dXalobLvzsN/6Bl1xNhsIufazQ6KJon1DoMapk/OjWC7zc3r9sUn9DU0sdxGkGB tA== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p2ar115w4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 02 Mar 2023 01:43:05 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3221h4xs026549
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 2 Mar 2023 01:43:04 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Wed, 1 Mar 2023 17:43:04 -0800
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     <quic_cang@quicinc.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>
-CC:     <quic_nguyenb@quicinc.com>, <quic_xiaosenh@quicinc.com>,
-        <stanley.chu@mediatek.com>, <adrian.hunter@intel.com>,
-        <bvanassche@acm.org>, <avri.altman@wdc.com>, <mani@kernel.org>,
-        <beanhuo@micron.com>, Asutosh Das <quic_asutoshd@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Wed, 1 Mar 2023 21:21:14 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 104C41ADDB;
+        Wed,  1 Mar 2023 18:21:14 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9CE9061500;
+        Thu,  2 Mar 2023 02:21:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F20C433EF;
+        Thu,  2 Mar 2023 02:21:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1677723673;
+        bh=BNiSwl5bVs9FfHed24RoPHL5c4YDcOGCzi3T0koCfYs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QBAhNkJ3gA7Zt6c0zqtbXGrXqwLJQR5uRQ/ynI0UShqYD6DTk/C6Cd4EyzZpxA9fc
+         yBYKmxLlC6uuBMIXLxKhcWE7tORTtY1zZdUjI3o9ZeApHpBBeMmy96NWnv/obCT+NA
+         9zN14XOa5e0h94MFEXk+xYFwRWjKLAyOltFC2nV9JHIGILZBBMjw6ximn//6nCaJIv
+         OL1lRdysofoPsh+X8ssm2rkr8SJ2RfNVrqbnFlJ4VvEdNWpeKw9BpN4RwSu0jVLh0r
+         qBR9/KvE8aJOZ1L9wDPv13Xh8BztAQf5ZNdmyrMxsabDDRP3J1lgGCgPPJa6ez16rN
+         bRcBiZpD8PXPg==
+Date:   Wed, 1 Mar 2023 20:21:09 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Asutosh Das <quic_asutoshd@quicinc.com>
+Cc:     quic_cang@quicinc.com, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org, quic_nguyenb@quicinc.com,
+        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
+        adrian.hunter@intel.com, bvanassche@acm.org, avri.altman@wdc.com,
+        mani@kernel.org, beanhuo@micron.com, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "open list" <linux-kernel@vger.kernel.org>
-Subject: [PATCH v1 1/1] ufs: mcq: qcom: Clean the return path of ufs_qcom_mcq_config_resource
-Date:   Wed, 1 Mar 2023 17:42:56 -0800
-Message-ID: <3ebd2582af74b81ef7b57149f57c6a3bf0963953.1677721229.git.quic_asutoshd@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 1/1] ufs: mcq: qcom: Fix passing zero to PTR_ERR
+Message-ID: <20230302022109.uhmwbscg4mtofydd@baldur>
+References: <94ca99b327af634799ce5f25d0112c28cd00970d.1677721072.git.quic_asutoshd@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BcByXsSkGPPWTm1gUwOvYFj50264dzvy
-X-Proofpoint-ORIG-GUID: BcByXsSkGPPWTm1gUwOvYFj50264dzvy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-01_17,2023-03-01_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- bulkscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 spamscore=0 mlxlogscore=999 adultscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2303020011
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <94ca99b327af634799ce5f25d0112c28cd00970d.1677721072.git.quic_asutoshd@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Smatch static checker reported:
-drivers/ufs/host/ufs-qcom.c:1469
-ufs_qcom_mcq_config_resource() info: returning a literal zero is
-cleaner
+On Wed, Mar 01, 2023 at 05:41:06PM -0800, Asutosh Das wrote:
+> Fix an error case in ufs_qcom_mcq_config_resource(), where the
+> return value is set to 0 before passing it to PTR_ERR.
+> 
+> This led to Smatch warning:
+> drivers/ufs/host/ufs-qcom.c:1455 ufs_qcom_mcq_config_resource() warn:
+> passing zero to 'PTR_ERR'
+> 
+> Fixes: c263b4ef737e ("scsi: ufs: core: mcq: Configure resource regions")
+> Reported-by: Dan Carpenter <error27@gmail.com>
+> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
 
-Fix the above warning by returning in place instead of a jump to a
-label.
-Also remove the usage of devm_kfree() as it's unnecessary in this
-function.
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-Fixes: c263b4ef737e ("scsi: ufs: core: mcq: Configure resource regions")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 43b1fc1ad33e..cb20c7136c2c 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1466,7 +1466,7 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
- 	/* Explicitly allocate MCQ resource from ufs_mem */
- 	res_mcq = devm_kzalloc(hba->dev, sizeof(*res_mcq), GFP_KERNEL);
- 	if (!res_mcq)
--		return ret;
-+		return -ENOMEM;
- 
- 	res_mcq->start = res_mem->start +
- 			 MCQ_SQATTR_OFFSET(hba->mcq_capabilities);
-@@ -1478,7 +1478,7 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
- 	if (ret) {
- 		dev_err(hba->dev, "Failed to insert MCQ resource, err=%d\n",
- 			ret);
--		goto insert_res_err;
-+		return ret;
- 	}
- 
- 	res->base = devm_ioremap_resource(hba->dev, res_mcq);
-@@ -1495,8 +1495,6 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
- ioremap_err:
- 	res->base = NULL;
- 	remove_resource(res_mcq);
--insert_res_err:
--	devm_kfree(hba->dev, res_mcq);
- 	return ret;
- }
- 
--- 
-2.7.4
-
+> 
+> --
+> v1 -> v2
+> - Split to 2 patches
+> - Addressed Mani's comments
+> --
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 34fc453f3eb1..43b1fc1ad33e 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1451,8 +1451,8 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
+>  		if (IS_ERR(res->base)) {
+>  			dev_err(hba->dev, "Failed to map res %s, err=%d\n",
+>  					 res->name, (int)PTR_ERR(res->base));
+> -			res->base = NULL;
+>  			ret = PTR_ERR(res->base);
+> +			res->base = NULL;
+>  			return ret;
+>  		}
+>  	}
+> -- 
+> 2.7.4
+> 
