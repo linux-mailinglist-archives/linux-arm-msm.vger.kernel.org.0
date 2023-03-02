@@ -2,127 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A5176A7BD1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 08:26:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9DA96A7BDF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 08:30:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229971AbjCBH0r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 02:26:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43240 "EHLO
+        id S229704AbjCBHaR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 02:30:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229966AbjCBH0q (ORCPT
+        with ESMTP id S229692AbjCBHaQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 02:26:46 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE00728D35
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Mar 2023 23:26:36 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id cp7-20020a17090afb8700b0023756229427so1959404pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Mar 2023 23:26:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=F3u3LErDLxQpcTw9IoCPajtVtH7Wl04gCGhYoZubMP8=;
-        b=zkjvhExvYB0B4Qs2sggCbs2HJYow4AZ9zqt/ddPcN68B/NhRqd/fHYIc05vyHqguXZ
-         rdItaGWqa2IRY4+HxOiaNJoPqQr+6IqEhaMmPndYTDYXW9VMkwjn0kmI5LdH77EKpMR7
-         bls32mHRPKTxAe5TWE5VR6SGKlVuHGgWzzexA6cIudfbgNAeNe1Sfc2WAyeeW6dZqqtN
-         C/TLFHEjXVGMOfeXm/HDP20KbV6bCY6ZxPfGCznWckEW5ywTk0vro+Yf8qYRdT0M+Nlw
-         L2xESFFyZ0BLBoYIhuLNiooS9uUP1M62M6ciAntjR+44Nmigwk5ZuiGwJKWA5LzhYYXh
-         T6iQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F3u3LErDLxQpcTw9IoCPajtVtH7Wl04gCGhYoZubMP8=;
-        b=ExKBrHlhgqAIH9KtAcRbDB1esHbhBZj0KTeh665jFCGrCirk6DwFnirDrv5TtvY51h
-         dCduBQQqmbRVnItlgZ6EAHVB0x6NQNQVBX564o8sj0w8HM5SRYPHB0BE/P2XGWjYMt1U
-         Ft7+ij5UZL5bwfuhzwIKcqSPl7EHnJbRR01Eilz2FPPtoonfO126Qs45ba99YE4D5XUl
-         UxF8T2vgxZS1tixHFzNygJoDzuxRALHQMfn8v4NM55nMeACVBGieyrobTxgYS0KCTaqi
-         l2Kt8oHD3XCWAF+Gy3TNNm5NSzG9f6OMtuzCc53QAl9wOlKQ5vzdP5ZBikxgd+zeQBwa
-         sRsg==
-X-Gm-Message-State: AO0yUKVUi5qcccETlaWtq2emB63YU6r42hHq8qOtdPgaolytaR1lBB46
-        yQRn3agKloc00UcSNt7niHKu
-X-Google-Smtp-Source: AK7set+b5+DA7dn3dFlxWvnkmJ1pb3iQAsilUo7zXfjPyk+R+gXDelIQToIayCVkVSQPhcP2Tu7/Kg==
-X-Received: by 2002:a05:6a20:4c16:b0:cc:d44a:beaf with SMTP id fm22-20020a056a204c1600b000ccd44abeafmr8583578pzb.13.1677741995997;
-        Wed, 01 Mar 2023 23:26:35 -0800 (PST)
-Received: from thinkpad ([59.97.53.52])
-        by smtp.gmail.com with ESMTPSA id e18-20020a62aa12000000b00593cd0f37dcsm9077738pff.169.2023.03.01.23.26.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Mar 2023 23:26:35 -0800 (PST)
-Date:   Thu, 2 Mar 2023 12:56:31 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bart Van Assche <bvanassche@acm.org>
-Cc:     jejb@linux.ibm.com, martin.petersen@oracle.com,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_asutoshd@quicinc.com
-Subject: Re: [PATCH] ufs: host: ufs-qcom: Return directly if MCQ resource is
- provided in DT
-Message-ID: <20230302072631.GA2890@thinkpad>
-References: <20230301073110.9083-1-manivannan.sadhasivam@linaro.org>
- <a3c08b5f-b8cb-fdd9-eb60-b1adc2879fff@acm.org>
+        Thu, 2 Mar 2023 02:30:16 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D76F940D1;
+        Wed,  1 Mar 2023 23:30:06 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5E35C614B3;
+        Thu,  2 Mar 2023 07:30:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21595C433D2;
+        Thu,  2 Mar 2023 07:29:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1677742205;
+        bh=0jInCulAYvxpvR6qRc+YIfvF1Bh3US1vitFk/y2Z9Vk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=kUEnvHcyLH3+rI+/rP4jSlhiIxWMf7tyVz6/GRTplYU4bC1DlqzFYVwI0DUP7Hn2U
+         Ohb2Qlk1EmgZ2KLvZYlN7f6qOmebjpFLwvPpotESCgek74DzHKXmkHhEJzcnvjOT6p
+         7bsPnYaYtvmXczQFNnZr5/SZRr9C3YHJ2rh3e49Sop5HSs37NZYcB6u6dcZbAM0X7O
+         Ph6FcTHcuioJ1zQeTDgylujb8TV8xRdUkBwO5nxeh8MdzWsS+riETgm2b9RL6i7/hj
+         GrgVLrtUqsxFTmyCfS3x6mI4NbKWnZDSXXWOjauthXXbA0ejqnU5FjIhpPHbl6pRhw
+         MhxDbwgAj0PsA==
+Date:   Thu, 2 Mar 2023 12:59:53 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Asutosh Das <quic_asutoshd@quicinc.com>
+Cc:     quic_cang@quicinc.com, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org, quic_nguyenb@quicinc.com,
+        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
+        adrian.hunter@intel.com, bvanassche@acm.org, avri.altman@wdc.com,
+        beanhuo@micron.com, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 1/1] ufs: mcq: qcom: Clean the return path of
+ ufs_qcom_mcq_config_resource
+Message-ID: <20230302072953.GB2890@thinkpad>
+References: <3ebd2582af74b81ef7b57149f57c6a3bf0963953.1677721229.git.quic_asutoshd@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a3c08b5f-b8cb-fdd9-eb60-b1adc2879fff@acm.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <3ebd2582af74b81ef7b57149f57c6a3bf0963953.1677721229.git.quic_asutoshd@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 01, 2023 at 10:07:41AM -0800, Bart Van Assche wrote:
-> On 2/28/23 23:31, Manivannan Sadhasivam wrote:
-> > Instead of using a goto label to return, let's return directly in the
-> > "if" condition after setting mcq_base.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >   drivers/ufs/host/ufs-qcom.c | 9 ++++-----
-> >   1 file changed, 4 insertions(+), 5 deletions(-)
-> > 
-> > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> > index 34fc453f3eb1..d90f963eed02 100644
-> > --- a/drivers/ufs/host/ufs-qcom.c
-> > +++ b/drivers/ufs/host/ufs-qcom.c
-> > @@ -1460,8 +1460,10 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
-> >   	/* MCQ resource provided in DT */
-> >   	res = &hba->res[RES_MCQ];
-> >   	/* Bail if MCQ resource is provided */
-> > -	if (res->base)
-> > -		goto out;
-> > +	if (res->base) {
-> > +		hba->mcq_base = res->base;
-> > +		return 0;
-> > +	}
-> >   	/* Explicitly allocate MCQ resource from ufs_mem */
-> >   	res_mcq = devm_kzalloc(hba->dev, sizeof(*res_mcq), GFP_KERNEL);
-> > @@ -1489,9 +1491,6 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
-> >   		goto ioremap_err;
-> >   	}
-> > -out:
-> > -	hba->mcq_base = res->base;
-> > -	return 0;
-> >   ioremap_err:
-> >   	res->base = NULL;
-> >   	remove_resource(res_mcq);
+On Wed, Mar 01, 2023 at 05:42:56PM -0800, Asutosh Das wrote:
+> Smatch static checker reported:
+> drivers/ufs/host/ufs-qcom.c:1469
+> ufs_qcom_mcq_config_resource() info: returning a literal zero is
+> cleaner
 > 
-> This patch changes the behavior for the success case without mentioning this
-> in the patch description. So I assume that the behavior change is
-> unintentional and hence that this patch should be dropped?
+> Fix the above warning by returning in place instead of a jump to a
+> label.
+> Also remove the usage of devm_kfree() as it's unnecessary in this
+> function.
 > 
+> Fixes: c263b4ef737e ("scsi: ufs: core: mcq: Configure resource regions")
+> Reported-by: Dan Carpenter <error27@gmail.com>
+> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
 
-Sorry, my bad here :( Please ignore this patch.
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
 Thanks,
 Mani
 
-> Bart.
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 43b1fc1ad33e..cb20c7136c2c 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1466,7 +1466,7 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
+>  	/* Explicitly allocate MCQ resource from ufs_mem */
+>  	res_mcq = devm_kzalloc(hba->dev, sizeof(*res_mcq), GFP_KERNEL);
+>  	if (!res_mcq)
+> -		return ret;
+> +		return -ENOMEM;
+>  
+>  	res_mcq->start = res_mem->start +
+>  			 MCQ_SQATTR_OFFSET(hba->mcq_capabilities);
+> @@ -1478,7 +1478,7 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
+>  	if (ret) {
+>  		dev_err(hba->dev, "Failed to insert MCQ resource, err=%d\n",
+>  			ret);
+> -		goto insert_res_err;
+> +		return ret;
+>  	}
+>  
+>  	res->base = devm_ioremap_resource(hba->dev, res_mcq);
+> @@ -1495,8 +1495,6 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
+>  ioremap_err:
+>  	res->base = NULL;
+>  	remove_resource(res_mcq);
+> -insert_res_err:
+> -	devm_kfree(hba->dev, res_mcq);
+>  	return ret;
+>  }
+>  
+> -- 
+> 2.7.4
+> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
