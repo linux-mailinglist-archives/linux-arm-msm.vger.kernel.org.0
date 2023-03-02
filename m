@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84B976A81B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 12:58:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30BA36A81B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Mar 2023 12:58:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229920AbjCBL6c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 06:58:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57576 "EHLO
+        id S229968AbjCBL6d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 06:58:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229897AbjCBL6b (ORCPT
+        with ESMTP id S229661AbjCBL6c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 06:58:31 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42783A5DA
+        Thu, 2 Mar 2023 06:58:32 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D97A4C141
         for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 03:58:02 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id q16so16289697wrw.2
+Received: by mail-wr1-x42c.google.com with SMTP id r18so16285122wrx.1
         for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 03:58:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677758272;
+        d=linaro.org; s=google; t=1677758273;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vMSOEYbZIrYW4LAXPSptDIJKdwkIcCT5i6XvEkOqxb4=;
-        b=kNFPYwq+OUk2zmd8+vPXJWTNCjypK01F2P9d3hlHy3WuO//IsA3S08rDSXdGY7To9O
-         KfYJqcoEQ6GDYv6U7SdsBo3W9MUo6YMk4NvXphh1sAUpfqISaHkLUc01Q7PmkYuCRky5
-         xk1cNsLG5oIX5C+Bd7zRtCkikPGEjp5wSrnfYkRnenIGMvaOy0vZsU5JaWjrDvvBnCfc
-         BkRdI+Qekw7Bd/AJCjHhCn/RBtqp/Fnk9K3uhd2RM3yp/8VSywulWeVkN5SqFcII5d56
-         0MzHozrkGjl0+60luTnRpN1ed3LlxGNufu4vdz0aapV91o82pdF5mQlLJ3M1/vc5yI9z
-         EReQ==
+        bh=u9XPg1Z52HjMq8E0v0qy12uZXmzko/h/NRVbdc0uh8s=;
+        b=i3QL/EwRJB2/0Ne1csLoG3EdF3JqWTwRZ8H5AvroPf9H2zOe+fHIej+kO2r14Fsxaw
+         PdxyIElrMVK9ATDXMyRhbtXnq2vPabZ2bsx+lCgGWXW1Y/gOSu0cJEnDqiUr8oVYR8nM
+         6MrUbGCPvHzGAZlXB3KrBKTIDts8odJmReD8zDRLslUgIkrsCpddG/n4gnphMovgx0IP
+         LPFFx6SeSc9jz65eTsLqCxMV+tPASATsYDveODXBUx+6rZ9OhkO4OJRjxODvvhyqZJIB
+         b5BZ6t2Cj52BptS4Gw6JejdV/cxhGnyqfMCXtY7ETV50R8M3zw+fg4nmHIH2ZPn4NQf8
+         Mg9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677758272;
+        d=1e100.net; s=20210112; t=1677758273;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vMSOEYbZIrYW4LAXPSptDIJKdwkIcCT5i6XvEkOqxb4=;
-        b=MWoutXAfpmbIbydrVgDG1ltVzPhCXzWMWLLxJAXd0K3eDzvBXDGF5Stzzwj5IcD3QL
-         amXECqHBzMV7oG5NOhTwHnp0ngfHiY3HtD4LGzDMHIS/cb9Wchwnc3M+v2frrWhYbYh0
-         Dnw3fYxpp7OrlVNVmc30ePhUB7adBB1dtwXFS1CxviB6pANYhdNC3K0BpOdSuikU5mT8
-         S2FPTGniiwIgMx7IzSU1f1PW0XpiqwLRXFITFrjXjd09DY40qPtSQtEEwDPvR7YfiwLp
-         E21fKxiaeOBQmIOLu6fkxdun20AWXrJ/88/wjnRhSalHnkPVO0BQ9t5ATOIVOHgDjTxi
-         umNw==
-X-Gm-Message-State: AO0yUKUKdcZdLWrjZh8P+BJNo3i5mEYOz/vXFxcBAtALFygaQb0z7RlR
-        fqgJicXZ1SX2oRgTfkcnNT56WQ==
-X-Google-Smtp-Source: AK7set9VFtG8k2kTb72OmJCbkeTB+4vzeUCKgK+4G8gPwjoZDyQhSnddGv1DN8XaxM1PT27nTtFUug==
-X-Received: by 2002:a5d:42d2:0:b0:2cd:bc79:5432 with SMTP id t18-20020a5d42d2000000b002cdbc795432mr3912555wrr.25.1677758271927;
-        Thu, 02 Mar 2023 03:57:51 -0800 (PST)
+        bh=u9XPg1Z52HjMq8E0v0qy12uZXmzko/h/NRVbdc0uh8s=;
+        b=e3BiodGA/0U13zUtzImfyhsQ4xYJjqC9XywxL8T+elzppa6J05o3LZzmUFSyILbnoY
+         WHby7J8sNkbJZYjvf/97QB09ng0Y2A6Cwy6r5cn5kFKu+iLZZt1eBlronWf1ZVuAePod
+         0V7jKgWCnOpB+hddz5fkNVr+TAgLsVeKng3Qb0b635qHel/m2gMKO/WgFbdooHyEDt4Q
+         EtaPICJo2x8KC6B5AwRE/CAff2lqli9M2t+CjTsxnWGP7nkZUfOD9qcuOo+McNrEAH6n
+         4zMNYZd57XgFvscJIdMME1zIr8Tlow0pNqa2QoyeMDLHsSsXaZKZZWMaiiMOfiD5BN8/
+         VL2w==
+X-Gm-Message-State: AO0yUKWGa10CMSxdOLefQ1gANMuNq7NrMwax0vvrf7R3iTbk3hLmTa/B
+        LCAXwoszZuFENUKC8WTYNHsuF80WOVPOgaMV
+X-Google-Smtp-Source: AK7set+ce1McbLrytRvdw2eK37qzNDxYg7cD5idrh0Tf9V6wFeG6zE0K5jPlSmnnJcZ+eTs5BOhsFQ==
+X-Received: by 2002:a5d:6b10:0:b0:2c5:55cf:b1ab with SMTP id v16-20020a5d6b10000000b002c555cfb1abmr7226256wrw.48.1677758273329;
+        Thu, 02 Mar 2023 03:57:53 -0800 (PST)
 Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id v16-20020a5d4a50000000b002c5526234d2sm15298209wrs.8.2023.03.02.03.57.50
+        by smtp.gmail.com with ESMTPSA id v16-20020a5d4a50000000b002c5526234d2sm15298209wrs.8.2023.03.02.03.57.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Mar 2023 03:57:51 -0800 (PST)
+        Thu, 02 Mar 2023 03:57:52 -0800 (PST)
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 To:     agross@kernel.org, andersson@kernel.org
 Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
@@ -57,9 +57,9 @@ Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 2/4] arm64: dts: qcom: sc8280xp: fix lpass tx macro clocks
-Date:   Thu,  2 Mar 2023 11:57:39 +0000
-Message-Id: <20230302115741.7726-3-srinivas.kandagatla@linaro.org>
+Subject: [PATCH 3/4] arm64: dts: qcom: sc8280xp-x13s: fix dmic sample rate
+Date:   Thu,  2 Mar 2023 11:57:40 +0000
+Message-Id: <20230302115741.7726-4-srinivas.kandagatla@linaro.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20230302115741.7726-1-srinivas.kandagatla@linaro.org>
 References: <20230302115741.7726-1-srinivas.kandagatla@linaro.org>
@@ -67,36 +67,37 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Tx macro soundwire clock is for some reason is incorrectly assigned to
-va macro, fix this and use tx macro clock instead.
+The version of dmic that is on X13s panel supports clock frequency
+of range 1 Mhz to 4.8 MHz for normal operation.
 
-Fixes: 1749a8ae49a3 ("arm64: dts: qcom: sc8280xp: add SoundWire and LPASS")
+So correct the existing node to reflect this.
+
+Fixes: 8c1ea87e80b4 ("arm64: dts: qcom: sc8280xp-x13s: Add soundcard support")
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 022b0c041341..fc1504de6890 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -2020,7 +2020,7 @@
- 					      <&intc GIC_SPI 520 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "core", "wake";
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index 198a81405e6e..d18d405d1776 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -1111,7 +1111,7 @@
  
--			clocks = <&vamacro>;
-+			clocks = <&txmacro>;
- 			clock-names = "iface";
- 			label = "TX";
- 			#sound-dai-cells = <1>;
+ 	vdd-micb-supply = <&vreg_s10b>;
+ 
+-	qcom,dmic-sample-rate = <600000>;
++	qcom,dmic-sample-rate = <4800000>;
+ 
+ 	status = "okay";
+ };
 -- 
 2.21.0
 
