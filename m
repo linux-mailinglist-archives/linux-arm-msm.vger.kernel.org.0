@@ -2,82 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D1A36AA18C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 22:40:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C2E976AA23B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 22:46:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231728AbjCCVky (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 16:40:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53382 "EHLO
+        id S232388AbjCCVqL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 16:46:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231612AbjCCVkx (ORCPT
+        with ESMTP id S232398AbjCCVoz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 16:40:53 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 667C962D86
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Mar 2023 13:40:49 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id d36so2191613lfv.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Mar 2023 13:40:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677879647;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bpIHZbqG4jOKBXQdLzNeYd9B0dvVAyQI3ZBvRIsc4hI=;
-        b=ILL5my5lotlLpiq3EsEofQkisb/KeI2bI4YzQsZWffWvYqVS33LQXzQ87AmFuaB5t9
-         In3Cdou4p+fabvzkmUkr1W0adtJatUJL8i8wh/PtnkGKyQnFDRiZWHI4lrlLzZhYjqS3
-         KcL3SICclI6NLBp3/FCcg3YfDx8AAC/XIs49Wj73vaHvmgmsBvGuWfngbq9d7Ytd89+6
-         M2VqD8KcnY1DsSwNQ4dVyBNy3pTuHxLSITLMjqSC4vbOSl/wS4k/yLoNftAYOEyaVlJM
-         Gn0gFSo72NJqBUIc3/ATmKNwFZqi38/zVSalcjUzWyUTU8y2HECfjV7HKQBFtQrm9D3y
-         lahA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677879647;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bpIHZbqG4jOKBXQdLzNeYd9B0dvVAyQI3ZBvRIsc4hI=;
-        b=RsaxmAwuDgoIo57c4AeGBlOPSxwpJpYc4CIU2iBW2do7BMfxGsTDcC78TFL6xXKotZ
-         0gnA5MXyTP1tdk3g8+0UvuMhCD1jXtDC1DV/Ak2xHa+GZsZ+NoOqQAlE2JJIXVN+p3ua
-         MIRtjdStFZhATcNqsXgmQbBOiLlk8upKxVDG5kGxzTXN9g1KOjw6tNPSuZjxcTxtDcf9
-         QpKMQgVH7D77Jm48PlK2GAdQ9PnEwjJBPMSuPwo/cY0eLt760GyR71X+aPtZ5g5B1Xbn
-         oMrjA1t1MbzQN+yd79EJqffCL4dtag1lJY99wVrwEgr27IS26XoZO/VQe9Yo+6BNfZna
-         mXjw==
-X-Gm-Message-State: AO0yUKX0YNm2k0MXZqULBPd+lEK136SxR4NBvHRQ4PteIyaR7m1Cnl7Y
-        BRN7QIUfN785kjprPB3NfvvjTQ==
-X-Google-Smtp-Source: AK7set97JTTQCERdif8O22w1VHod9R3dHPKl/oTh+vyC+6i2IrX76Z+HQs5n+c2DhCn8OHTc4bv/qg==
-X-Received: by 2002:ac2:53ac:0:b0:4dd:a772:8d24 with SMTP id j12-20020ac253ac000000b004dda7728d24mr859637lfh.32.1677879647628;
-        Fri, 03 Mar 2023 13:40:47 -0800 (PST)
-Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id a6-20020a056512020600b004bb766e01a4sm543005lfo.245.2023.03.03.13.40.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Mar 2023 13:40:47 -0800 (PST)
-Message-ID: <e8abb887-821e-0a00-569a-1c00ca6ce758@linaro.org>
-Date:   Fri, 3 Mar 2023 22:40:45 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 4/4] cpufreq: qcom-nvmem: make qcom_cpufreq_get_msm_id()
- return the SoC ID
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
-        rafael@kernel.org, viresh.kumar@linaro.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        Fri, 3 Mar 2023 16:44:55 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73CC465C5F;
+        Fri,  3 Mar 2023 13:44:06 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7E6376194E;
+        Fri,  3 Mar 2023 21:43:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132ACC433A0;
+        Fri,  3 Mar 2023 21:43:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1677879830;
+        bh=0ykQITa9rK+UFQlUR4IjVhVNgB3E0ll98TQEFCA0pm4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=OHISzj/RvyNDZkH6Z3PEIRhNPfjGSSGj9dgha8YRAbC5ltJccjQmOHgBIbkLIrlQf
+         jsZptL0U1Zx6waR2lmdLrW4zHPkwp+pjpKRzIqpH3gEvOGX8dWm+VYAIJS3bU5TSI0
+         ZaW2+B932Sg6KM/Yleb1e/eQB6WMdc+wvBR51yyHTg9Cov0cDZh/KbZMkwkQsVAoVl
+         kltZKxCCObMPEfoNRiJ+PBp1hwsoZ5vZw1NKK7ln8ks7LtIFJehp/HebJp7yw6kXRD
+         8U7BxSssFGZ0pDb9jjEMjYdoSkMu9zKDfvVZaMeENXtF71K0PG/nEJakgJrpiEGoRy
+         IBlGIryHKVREA==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Sasha Levin <sashal@kernel.org>, elder@linaro.org,
+        gregkh@linuxfoundation.org, mhi@lists.linux.dev,
         linux-arm-msm@vger.kernel.org
-References: <20230121112947.53433-1-robimarko@gmail.com>
- <20230121112947.53433-4-robimarko@gmail.com>
- <d71e8a18-8a09-c722-d9dd-b2d48615828f@linaro.org>
- <CAA8EJppwNVtUjB7fUZSCrZ88Ssbhmc4HD6oA2nV0uEx+vHBXUw@mail.gmail.com>
- <2a7a43f1-a13d-f094-5167-de74d5092d91@linaro.org>
- <CAOX2RU6vociXPTQE4tegQE8YXjHgQAHgdQWm3N9PPekgaw3ung@mail.gmail.com>
- <2faac9b8-03b9-340f-d43f-317624d4d5bb@linaro.org>
- <CAOX2RU7GBuDc-uh_EKmXZu57GvRzfwzwESqgts2tUDbDoik-JA@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAOX2RU7GBuDc-uh_EKmXZu57GvRzfwzwESqgts2tUDbDoik-JA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Subject: [PATCH AUTOSEL 6.1 18/60] bus: mhi: ep: Fix the debug message for MHI_PKT_TYPE_RESET_CHAN_CMD cmd
+Date:   Fri,  3 Mar 2023 16:42:32 -0500
+Message-Id: <20230303214315.1447666-18-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230303214315.1447666-1-sashal@kernel.org>
+References: <20230303214315.1447666-1-sashal@kernel.org>
+MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,109 +58,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
+[ Upstream commit 8e697fcfdb9809634e268058ca743369c216b7ac ]
 
-On 3.03.2023 22:38, Robert Marko wrote:
-> On Fri, 3 Mar 2023 at 21:46, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->>
->> On 3.03.2023 19:38, Robert Marko wrote:
->>> On Sat, 18 Feb 2023 at 21:40, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>>>
->>>>
->>>>
->>>> On 18.02.2023 21:36, Dmitry Baryshkov wrote:
->>>>> On Sat, 18 Feb 2023 at 16:43, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>>>>>
->>>>>>
->>>>>>
->>>>>> On 21.01.2023 12:29, Robert Marko wrote:
->>>>>>> Currently, qcom_cpufreq_get_msm_id() does not simply return the SoC ID
->>>>>>> after getting it via SMEM call but instead uses an enum to encode the
->>>>>>> matched SMEM ID to 2 variants of MSM8996 which are then used in
->>>>>>> qcom_cpufreq_kryo_name_version() to set the supported version.
->>>>>>>
->>>>>>> This prevents qcom_cpufreq_get_msm_id() from being universal and its doing
->>>>>>> more than its name suggests, so lets make it just return the SoC ID
->>>>>>> directly which allows matching directly on the SoC ID and removes the need
->>>>>>> for msm8996_version enum which simplifies the driver.
->>>>>>> It also allows reusing the qcom_cpufreq_get_msm_id() for new SoC-s.
->>>>>>>
->>>>>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
->>>>>>> ---
->>>>>>>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 44 ++++++++--------------------
->>>>>>>  1 file changed, 12 insertions(+), 32 deletions(-)
->>>>>>>
->>>>>>> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
->>>>>>> index da55d2e1925a..9deaf9521d6d 100644
->>>>>>> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
->>>>>>> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
->>>>>>> @@ -32,12 +32,6 @@
->>>>>>>
->>>>>>>  #include <dt-bindings/arm/qcom,ids.h>
->>>>>>>
->>>>>>> -enum _msm8996_version {
->>>>>>> -     MSM8996_V3,
->>>>>>> -     MSM8996_SG,
->>>>>>> -     NUM_OF_MSM8996_VERSIONS,
->>>>>>> -};
->>>>>>> -
->>>>>>>  struct qcom_cpufreq_drv;
->>>>>>>
->>>>>>>  struct qcom_cpufreq_match_data {
->>>>>>> @@ -134,30 +128,16 @@ static void get_krait_bin_format_b(struct device *cpu_dev,
->>>>>>>       dev_dbg(cpu_dev, "PVS version: %d\n", *pvs_ver);
->>>>>>>  }
->>>>>>>
->>>>>>> -static enum _msm8996_version qcom_cpufreq_get_msm_id(void)
->>>>>>> +static int qcom_cpufreq_get_msm_id(void)
->>>>>> This should be u32 as info->id is __le32
->>>
->>> Nice catch.
->>>
->>>
->>>>>>
->>>>>> And please export this function from socinfo, it'll come in
->>>>>> useful for other drivers!
->>>
->>> I intentionally did not do that as socinfo is currently fully optional
->>> and I dont really like
->>> the idea of making it required for anything using SMEM.
->> "anything using SMEM"? As in the drivers, or SoCs?
->> If the former, I don't see how exporting a function from within
->> socid and using it here would make it required for other drivers.
->> If the latter, we're talking non-qcom SoCs. SMEM has been with
->> us forever.
-> 
-> I feel we have a misunderstanding,
-> currently, cpufreq-nvmem does not depend on socinfo being built
-> so I don't want to require it as a dependency in order to get the SMEM ID.
-Okay yeah we simply weren't on the same page.
+The debug log incorrectly mentions that STOP command is received instead of
+RESET command. Fix that.
 
-> 
-> Granted, socinfo is useful on any QCA SoC so if adding new dependecies to
-> cpufreq-nvmem is acceptable I am not against exporting it there.
-IMO, it would be acceptable. Let's hear if others are on board too.
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Link: https://lore.kernel.org/r/20221228161704.255268-5-manivannan.sadhasivam@linaro.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/bus/mhi/ep/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Konrad
->>
->>
->> I'm planning to reuse this for Adreno speedbin matching. It's one
->> of those blocks that don't have a revision and/or bin reigster
->> within themselves.
-> 
-> I understand the use case, I am sure it will be required in some other places
-> sooner or later as well.
-> 
-> Regards,
-> Robert
->>
->> Konrad
->>>
->>> Regards,
->>> Robert
->>>
->>>>
->>>> Konrad
->>>>>
+diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+index 1dc8a3557a464..8ffaf9c6e61d9 100644
+--- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -217,7 +217,7 @@ static int mhi_ep_process_cmd_ring(struct mhi_ep_ring *ring, struct mhi_ring_ele
+ 		mutex_unlock(&mhi_chan->lock);
+ 		break;
+ 	case MHI_PKT_TYPE_RESET_CHAN_CMD:
+-		dev_dbg(dev, "Received STOP command for channel (%u)\n", ch_id);
++		dev_dbg(dev, "Received RESET command for channel (%u)\n", ch_id);
+ 		if (!ch_ring->started) {
+ 			dev_err(dev, "Channel (%u) not opened\n", ch_id);
+ 			return -ENODEV;
+-- 
+2.39.2
+
