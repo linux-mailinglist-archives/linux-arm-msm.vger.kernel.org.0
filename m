@@ -2,162 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B22E6A9A0C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 16:00:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 227C66A9B0A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 16:48:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231268AbjCCPAX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 10:00:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43276 "EHLO
+        id S231386AbjCCPsS convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Fri, 3 Mar 2023 10:48:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231282AbjCCPAW (ORCPT
+        with ESMTP id S230436AbjCCPsR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 10:00:22 -0500
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FDF462333;
-        Fri,  3 Mar 2023 07:00:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1677855619; x=1709391619;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=TMNP08vwbk1/xlZyyZJWhOWKVuIm24PIkc1+069668g=;
-  b=k7UXAo8ANQzf/qRfG6hRzQAUlzcDhzGyiEGMk6TgFehp8NeGweN0YZbK
-   DBKWeK+UJg9FpEUvVWEcvyCoOcDYjV5DP9D7kjeG6T6gKARpLeuUcPKhl
-   gmBAT6yIpK9W1UQshoTILqFQmpNvjWjcvzwe0ULHBRy9UPEK5qhOfXsfj
-   +0U7Sy6vRRN1zVoXa8bCy8Td6LA2nv03iRRqrTfy9SZxjgBe+sGDi+h3u
-   w5MP47MzmIvI5rA2nhUOwIEQp4CvA/vet1QkQi+7N5ccE2FwI9xZClc+G
-   3Ye/gqgBupmv9n5V29j3C281vcQJuRTREaaJEEVDUXaB9og5FwzxQq9DZ
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="332539990"
-X-IronPort-AV: E=Sophos;i="5.98,230,1673942400"; 
-   d="scan'208";a="332539990"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 07:00:18 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="921142115"
-X-IronPort-AV: E=Sophos;i="5.98,230,1673942400"; 
-   d="scan'208";a="921142115"
-Received: from lkp-server01.sh.intel.com (HELO 776573491cc5) ([10.239.97.150])
-  by fmsmga006.fm.intel.com with ESMTP; 03 Mar 2023 07:00:16 -0800
-Received: from kbuild by 776573491cc5 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pY6tL-0001U8-2R;
-        Fri, 03 Mar 2023 15:00:15 +0000
-Date:   Fri, 3 Mar 2023 22:59:29 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Taniya Das <quic_tdas@quicinc.com>, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+        Fri, 3 Mar 2023 10:48:17 -0500
+Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D83ACA0C;
+        Fri,  3 Mar 2023 07:48:14 -0800 (PST)
+Received: from ip5b412258.dynamic.kabel-deutschland.de ([91.65.34.88] helo=diego.localnet)
+        by gloria.sntech.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <heiko@sntech.de>)
+        id 1pY7cn-0005si-GH; Fri, 03 Mar 2023 16:47:13 +0100
+From:   Heiko =?ISO-8859-1?Q?St=FCbner?= <heiko@sntech.de>
+To:     rafael@kernel.org, daniel.lezcano@linaro.org,
+        Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Niklas =?ISO-8859-1?Q?S=F6derlund?= 
+        <niklas.soderlund+renesas@ragnatech.se>,
+        Mark Brown <broonie@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Balsam CHIHI <bchihi@baylibre.com>,
+        Adam Ward <DLG-Adam.Ward.opensource@dm.renesas.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Dhruva Gole <d-gole@ti.com>,
+        Guillaume La Roque <glaroque@baylibre.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Markus Mayer <mmayer@broadcom.com>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>
-Subject: Re: [PATCH 2/2] clk: qcom: lpass: Initialize start_index
-Message-ID: <202303032224.tuvDnbbB-lkp@intel.com>
-References: <20230303092859.22094-3-quic_tdas@quicinc.com>
+        Niklas =?ISO-8859-1?Q?S=F6derlund?= 
+        <niklas.soderlund@ragnatech.se>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Vasily Khoruzhick <anarsoul@gmail.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Talel Shenhar <talel@amazon.com>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Keerthy <j-keerthy@ti.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Stefan Wahren <stefan.wahren@i2se.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        ye xingchen <ye.xingchen@zte.com.cn>,
+        Zheng Yongjun <zhengyongjun3@huawei.com>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Davidlohr Bueso <dave@stgolabs.net>,
+        Sumeet Pawnikar <sumeet.r.pawnikar@intel.com>,
+        "Lee, Chun-Yi" <joeyli.kernel@gmail.com>,
+        Shang XiaoJing <shangxiaojing@huawei.com>,
+        Tim Zimmermann <tim@linux4.de>,
+        Yang Li <yang.lee@linux.alibaba.com>,
+        Jiang Jian <jiangjian@cdjrlc.com>,
+        Daniel Golle <daniel@makrotopia.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Ido Schimmel <idosch@nvidia.com>,
+        Minghao Chi <chi.minghao@zte.com.cn>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Mikko Perttunen <mperttunen@nvidia.com>,
+        "open list:THERMAL DRIVER FOR AMLOGIC SOCS" 
+        <linux-amlogic@lists.infradead.org>,
+        "moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" 
+        <linux-rpi-kernel@lists.infradead.org>,
+        "moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:QUALCOMM TSENS THERMAL DRIVER" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:RENESAS R-CAR THERMAL DRIVERS" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "open list:ARM/Rockchip SoC support" 
+        <linux-rockchip@lists.infradead.org>,
+        "open list:SAMSUNG THERMAL DRIVER" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:ARM/STM32 ARCHITECTURE" 
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        "open list:ARM/Allwinner sunXi SoC support" 
+        <linux-sunxi@lists.linux.dev>,
+        "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
+        "open list:TI BANDGAP AND THERMAL DRIVER" 
+        <linux-omap@vger.kernel.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>
+Subject: Re: [PATCH v5 02/18] thermal/core: Use the thermal zone 'devdata' accessor in
+ thermal located drivers
+Date:   Fri, 03 Mar 2023 16:47:15 +0100
+Message-ID: <3152081.5fSG56mABF@diego>
+In-Reply-To: <20230301201446.3713334-3-daniel.lezcano@linaro.org>
+References: <20230301201446.3713334-1-daniel.lezcano@linaro.org>
+ <20230301201446.3713334-3-daniel.lezcano@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230303092859.22094-3-quic_tdas@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="iso-8859-1"
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_PASS,
+        T_SPF_HELO_TEMPERROR autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Taniya,
+Am Mittwoch, 1. März 2023, 21:14:30 CET schrieb Daniel Lezcano:
+> The thermal zone device structure is exposed to the different drivers
+> and obviously they access the internals while that should be
+> restricted to the core thermal code.
+> 
+> In order to self-encapsulate the thermal core code, we need to prevent
+> the drivers accessing directly the thermal zone structure and provide
+> accessor functions to deal with.
+> 
+> Use the devdata accessor introduced in the previous patch.
+> 
+> No functional changes intended.
+> 
+> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+> Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se> #R-Car
+> Acked-by: Mark Brown <broonie@kernel.org>
+> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com> #MediaTek auxadc and lvts
+> Reviewed-by: Balsam CHIHI <bchihi@baylibre.com> #Mediatek lvts
+> Reviewed-by: Adam Ward <DLG-Adam.Ward.opensource@dm.renesas.com> #da9062
+> Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>  #spread
+> Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com> #sun8i_thermal
+> Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+> Acked-by: Florian Fainelli <f.fainelli@gmail.com> #Broadcom
+> Reviewed-by: Dhruva Gole <d-gole@ti.com> # K3 bandgap
 
-Thank you for the patch! Yet something to improve:
-
-[auto build test ERROR on clk/clk-next]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Taniya-Das/clk-qcom-common-Handle-invalid-index-error/20230303-173158
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-patch link:    https://lore.kernel.org/r/20230303092859.22094-3-quic_tdas%40quicinc.com
-patch subject: [PATCH 2/2] clk: qcom: lpass: Initialize start_index
-config: hexagon-randconfig-r021-20230302 (https://download.01.org/0day-ci/archive/20230303/202303032224.tuvDnbbB-lkp@intel.com/config)
-compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project 67409911353323ca5edf2049ef0df54132fa1ca7)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/d26ce274e7b0af8a6c6985630d1da8e257c9031d
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Taniya-Das/clk-qcom-common-Handle-invalid-index-error/20230303-173158
-        git checkout d26ce274e7b0af8a6c6985630d1da8e257c9031d
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash drivers/clk/qcom/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303032224.tuvDnbbB-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from drivers/clk/qcom/lpassaudiocc-sc7280.c:13:
-   In file included from include/linux/regmap.h:20:
-   In file included from include/linux/iopoll.h:14:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:334:
-   include/asm-generic/io.h:547:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __raw_readb(PCI_IOBASE + addr);
-                             ~~~~~~~~~~ ^
-   include/asm-generic/io.h:560:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
-                                                           ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:37:51: note: expanded from macro '__le16_to_cpu'
-   #define __le16_to_cpu(x) ((__force __u16)(__le16)(x))
-                                                     ^
-   In file included from drivers/clk/qcom/lpassaudiocc-sc7280.c:13:
-   In file included from include/linux/regmap.h:20:
-   In file included from include/linux/iopoll.h:14:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:334:
-   include/asm-generic/io.h:573:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
-                                                           ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:35:51: note: expanded from macro '__le32_to_cpu'
-   #define __le32_to_cpu(x) ((__force __u32)(__le32)(x))
-                                                     ^
-   In file included from drivers/clk/qcom/lpassaudiocc-sc7280.c:13:
-   In file included from include/linux/regmap.h:20:
-   In file included from include/linux/iopoll.h:14:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:334:
-   include/asm-generic/io.h:584:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writeb(value, PCI_IOBASE + addr);
-                               ~~~~~~~~~~ ^
-   include/asm-generic/io.h:594:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
-                                                         ~~~~~~~~~~ ^
-   include/asm-generic/io.h:604:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
-                                                         ~~~~~~~~~~ ^
->> drivers/clk/qcom/lpassaudiocc-sc7280.c:705:56: error: unexpected ';' before '}'
-           .start_index = LPASS_AUDIO_CC_CDIV_RX_MCLK_DIV_CLK_SRC;
-                                                                 ^
-   6 warnings and 1 error generated.
+Acked-by: Heiko Stuebner <heiko@sntech.de> #rockchip
 
 
-vim +705 drivers/clk/qcom/lpassaudiocc-sc7280.c
-
-   700	
-   701	static const struct qcom_cc_desc lpass_audio_cc_sc7280_desc = {
-   702		.config = &lpass_audio_cc_sc7280_regmap_config,
-   703		.clks = lpass_audio_cc_sc7280_clocks,
-   704		.num_clks = ARRAY_SIZE(lpass_audio_cc_sc7280_clocks),
- > 705		.start_index = LPASS_AUDIO_CC_CDIV_RX_MCLK_DIV_CLK_SRC;
-   706	};
-   707	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
