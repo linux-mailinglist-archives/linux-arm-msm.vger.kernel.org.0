@@ -2,144 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1337B6A9587
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 11:46:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA6DF6A9632
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 12:28:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229681AbjCCKqV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 05:46:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57874 "EHLO
+        id S230359AbjCCL2t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 06:28:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbjCCKqV (ORCPT
+        with ESMTP id S230228AbjCCL2s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 05:46:21 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1780E5D8A4;
-        Fri,  3 Mar 2023 02:46:20 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 926F0CE20F7;
-        Fri,  3 Mar 2023 10:46:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD994C433EF;
-        Fri,  3 Mar 2023 10:46:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677840375;
-        bh=BaXSPFUKDYDeayh9el1NehZiPOOebhV9G7uXQK7ivfg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RWfsbGkkr/6oryzvQL6+myKR6tU3L14rK4onQ8E6dk10KmE9IG+MJUFa8S3tSlYhU
-         BZ044t15gzZwuiJ+oRi4Rlf94k9matUipNXjywBEnULT1apuxFqjSQHMvOxs/zagBb
-         +KaywpOmicRN/mgTIjj02Mtit5HS23aqwfl2gq8/DsSrGNeR0afkzDXtLUJSh0VLiy
-         0UQVgSQL9ifozO1za6vrPSGFmLf3Qtha/2jCTP6k/G5lgWuVXsXH81V3gCV+OEGPjY
-         XZfjyQTfu2CX8VbcjsFxIBZMdi5QmUUjwclSJvVwVjl4roKDVk8bYZPVSVX0yErvzD
-         tPEZFEFdOkAtA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pY2w2-0006CR-16; Fri, 03 Mar 2023 11:46:46 +0100
-Date:   Fri, 3 Mar 2023 11:46:46 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/4] drm/msm/adreno: drop redundant pm_runtime_disable()
-Message-ID: <ZAHQFn8CD9CNvz/0@hovoldconsulting.com>
-References: <20230221101430.14546-1-johan+linaro@kernel.org>
- <20230221101430.14546-4-johan+linaro@kernel.org>
- <CAF6AEGsco+h0f5twHz9CRFyCUeiK1WOJWcURW3wPiZx5muio0g@mail.gmail.com>
+        Fri, 3 Mar 2023 06:28:48 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361B65F224
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Mar 2023 03:28:26 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id i9so3153937lfc.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Mar 2023 03:28:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1677842904;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zIEyfJHn9nwX9v5jkEb3Mml1NwAILd6wX1VPBLhmV8k=;
+        b=L6JrqYu+FyX5oZB7UCc86qvZC2nGgX2c0s3VWm/Ol7LDmz1ju31M98rBuL2TNdKjsB
+         WMoaBX9a86UgVUcos9lD+PLW3VcOcArV9NKna5AxRx8G/QRUfenjOlRMpLltoE/nu9Vf
+         AqeohNQohxiH59X0XZbenYk2f8PmgsIfwTcYQObyyJ+sBF0Qktjri8klyiMav4m/O90z
+         4a1AR2IkLLz/Ral6esb6Nj7quE6UmqP8Fal4N7ZI0UqT0Az/5tQ8RFMY2oj3eqNdCmiH
+         RG8qIrwL/9pZmMfw6sr3mKsFm5JJ9VPgiJL521lmEmvZUA8VbXVsauAdqNL1Yh+1kxKa
+         fovA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677842904;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zIEyfJHn9nwX9v5jkEb3Mml1NwAILd6wX1VPBLhmV8k=;
+        b=zvXAURaQs8ZD2Pyse42byy2vDg4/7x+WBPo3Dk5PziARSHPaApB/fq+wvR343DGoTK
+         KGCL5++squL2/gF6pLXfGIWqclyuYcDA9pSSqeAooHM0yngq7Fjwsx/173k9+WVq4mKA
+         oSH3smyJxRIHIRl//ZQKLVZqvnMwPd+Pk9p7OwXOc/ra8m7ZQZ5Qtra320g3TbGSpIPi
+         nULRfaF9iCT5JbkWUEGVB3lqFNE3/hl0G52mQtoFDVvoUyrW84fZZDOpxJtata5/r9CU
+         4x6J7JcGv0og8Vtq7A7fVEYMRQb+cjhQvtyRNmr4n1OH/sHyRcHARVCOCWvLFjSDotqP
+         XInQ==
+X-Gm-Message-State: AO0yUKVJk0ftAA1zY2eS49325ahZsHTbClaqj+exz8+WNvfSroS9jrEy
+        5VrejNN4iHoVbmtI3J1AhCxgaQ==
+X-Google-Smtp-Source: AK7set8gz3IR0Ej3BL25630lurVOHrKBX4z4hGn4Nl4VSby22cKKgVQ5pRWxNONwUeLQRHQOXiHCwA==
+X-Received: by 2002:ac2:490f:0:b0:4cc:a166:e27f with SMTP id n15-20020ac2490f000000b004cca166e27fmr478998lfi.3.1677842903780;
+        Fri, 03 Mar 2023 03:28:23 -0800 (PST)
+Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
+        by smtp.gmail.com with ESMTPSA id u13-20020ac251cd000000b004d0b1327b75sm354945lfm.61.2023.03.03.03.28.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Mar 2023 03:28:23 -0800 (PST)
+Message-ID: <41665c73-1647-2cb2-bd33-8dc281a97ee5@linaro.org>
+Date:   Fri, 3 Mar 2023 12:28:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGsco+h0f5twHz9CRFyCUeiK1WOJWcURW3wPiZx5muio0g@mail.gmail.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 1/2] dt-bindings: ath10k: Add vdd-smps supply
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Kalle Valo <kvalo@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230303024246.2175382-1-konrad.dybcio@linaro.org>
+ <8e695c64-6abd-3c1e-8d80-de636d950442@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <8e695c64-6abd-3c1e-8d80-de636d950442@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
 
-Sorry about the late follow-up on this. Went down a bit of a DRM rabbit
-hole this week.
 
-On Wed, Feb 22, 2023 at 11:09:16AM -0800, Rob Clark wrote:
-> On Tue, Feb 21, 2023 at 2:16 AM Johan Hovold <johan+linaro@kernel.org> wrote:
-> >
-> > Since commit 4b18299b3365 ("drm/msm/adreno: Defer enabling runpm until
-> > hw_init()") runtime PM is no longer enabled at adreno_gpu_init(), which
-> > means that there are no longer any bind() error paths for which
-> > adreno_gpu_cleanup() is called with runtime PM enabled.
-> >
-> > As the runtime PM enable on first open() is balanced by the
-> > pm_runtime_force_suspend() call at unbind(), adreno_gpu_cleanup() is now
-> > always called with runtime PM disabled so that its pm_runtime_disable()
-> > call can be removed.
-> >
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > ---
-> >  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 5 -----
-> >  1 file changed, 5 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > index ce6b76c45b6f..1101b8234b49 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > @@ -1082,15 +1082,10 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
-> >
-> >  void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
-> >  {
-> > -       struct msm_gpu *gpu = &adreno_gpu->base;
-> > -       struct msm_drm_private *priv = gpu->dev ? gpu->dev->dev_private : NULL;
-> >         unsigned int i;
-> >
-> >         for (i = 0; i < ARRAY_SIZE(adreno_gpu->info->fw); i++)
-> >                 release_firmware(adreno_gpu->fw[i]);
-> >
-> > -       if (priv && pm_runtime_enabled(&priv->gpu_pdev->dev))
-> > -               pm_runtime_disable(&priv->gpu_pdev->dev);
-> > -
+On 3.03.2023 08:12, Krzysztof Kozlowski wrote:
+> On 03/03/2023 03:42, Konrad Dybcio wrote:
+>> Mention the newly added vdd-smps supply.
 > 
-> Maybe WARN_ON(priv && pm_runtime_enabled(&priv->gpu_pdev->dev))?
+> There is no explanation here, but looking at your driver change it
+> suggests name is not correct. You named it based on regulator (so the
+> provider), not the consumer.
 
-I'd rather not add warnings for something that can not happen, but it
-turns out there is indeed one corner case were this function could still
-end up being called with runtime PM enabled, namely if suspending the
-scheduler fails in adreno_system_suspend() during unbind:
+Right, I admit this could have been posted with an RFC tag.
+Maybe Kalle knows more.
 
-            adreno_bind()
-             info->init()                   // e.g. a6xx_gpu_init()
-               adreno_gpu_init()
-    
-            msm_open()
-              load_gpu()
-                adreno_load_gpu()
-                  pm_runtime_enable()
-    
-            adreno_unbind()
-              adreno_system_suspend()
-                err = suspend_scheduler(gpu)
-                if (!err)
-                  pm_runtime_force_suspend()
-                    pm_runtime_disable()
-              gpu->funcs->destroy()         // e.g. a6xx_destroy()
-                adreno_gpu_cleanup()
-
-I assume we'd be in bigger troubles than just having an unbalanced
-disable count if that ever happens, but we should probably just keep the
-conditional disable in adreno_gpu_cleanup() in place for now.
-
-> >         msm_gpu_cleanup(&adreno_gpu->base);
-> >  }
-> > --
-> > 2.39.2
-
-I've found another related runtime PM issue so I'll send a v2 anyway.
-
-Johan
+Konrad
+> 
+> Best regards,
+> Krzysztof
+> 
