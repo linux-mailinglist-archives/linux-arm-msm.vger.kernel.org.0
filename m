@@ -2,123 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C23986A948B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 10:54:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26D626A94AE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 11:01:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230285AbjCCJys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 04:54:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36778 "EHLO
+        id S229969AbjCCKBe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 05:01:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229625AbjCCJyr (ORCPT
+        with ESMTP id S229799AbjCCKBe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 04:54:47 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4411B36687;
-        Fri,  3 Mar 2023 01:54:31 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3236QsOa009479;
-        Fri, 3 Mar 2023 09:54:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=2sCFqWkUj5tuG3vQzE8IwXlJBkVraVjQuvLOaYp90/s=;
- b=ISrfwXNDjK+jSKSHsMqvwge6sdRBVU4InmajHjX8DmsfndO8B1HfP54f5fyBk+rGxFt7
- 7//xSp1+Oz4s+YrgisQYRp6sRoiBXnTvFEPwcqe62LbQyH+79A1ADxZ2CSUcNW8iKMFk
- xrGF1+nSgY6k583p9xWRm6hl5BGG5fbcj7N4D3nEFB5029sBrinS5Q7GxFVjNuoK9TQV
- ltS6R9lm2hqacazUTT5G7Ye2hx2T4/vsROkDVu6cNj/kQ/7waxKfP0MLWLkS5E3RkmJ9
- /xCDx+7I2KgonSUvzzKSQndP+j1xKRtF31yIkfmWP43qQnplklGntb1pNbD+hLTPvgdq nA== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p2veetv08-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Mar 2023 09:54:25 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3239sOSH016998
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Mar 2023 09:54:24 GMT
-Received: from [10.50.35.127] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 3 Mar 2023
- 01:54:21 -0800
-Message-ID: <2eef90b9-ff67-15bb-3fa1-e7b28a6f4244@quicinc.com>
-Date:   Fri, 3 Mar 2023 15:24:18 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 8/8] arm64: dts: qcom: ipq9574: Enable USB
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Fri, 3 Mar 2023 05:01:34 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 680505B5F5;
+        Fri,  3 Mar 2023 02:01:33 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id EF580617AE;
+        Fri,  3 Mar 2023 10:01:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF00FC433D2;
+        Fri,  3 Mar 2023 10:01:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1677837692;
+        bh=F8qMc/kfGDmlmCTH8pqJK45nXvS2wbqeBWFFGTQThoA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jQ/U8KTre7xLotXJWUmmjhXV32NdKPNjMDxLgtAIsdAo1YJ2GH3LigDvGn5Qaav8c
+         jWtTU4uQ6WsqyXzicVjAH1MT4Eo/BSNbxt4yjay/T67pWuBQa677TdtvG6yTPCO1yH
+         iWgPoLFE5FvCqtXqPw03mrGELvzcx4rKEiwEPnmgtQmYt0EAnGovbTjE4bV5+c7FBB
+         n77pvh0tQlfSJxHB4UxHB4n0GQ+NRKDQiWeJWK4TTxLAgClTUaxOFYxJv2Cv6320jm
+         ZehtWWM88kO1uoNaZyYS6eQjQRfSH64kxE80eLwtyILoZzoBXX+icurWVQpMEsSRMV
+         4o0XZ6MP5GCLw==
+Date:   Fri, 3 Mar 2023 10:01:26 +0000
+From:   Lee Jones <lee@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        marijn.suijten@somainline.org, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <cover.1677749625.git.quic_varada@quicinc.com>
- <405a87eebf3c6a971def16122b70158dd8c7ed03.1677749625.git.quic_varada@quicinc.com>
- <CAA8EJpqoocEYZPsaBe-pQ92ikLCAZD5hV46NZBC29pNv7U4dGg@mail.gmail.com>
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-In-Reply-To: <CAA8EJpqoocEYZPsaBe-pQ92ikLCAZD5hV46NZBC29pNv7U4dGg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: We0TW6e1lyEO-s2k1uzbwWV_K4E1GteT
-X-Proofpoint-GUID: We0TW6e1lyEO-s2k1uzbwWV_K4E1GteT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-03_01,2023-03-02_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- adultscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
- malwarescore=0 mlxlogscore=678 impostorscore=0 bulkscore=0 clxscore=1015
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303030087
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Stephen Boyd <sboyd@kernel.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: mfd: qcom,spmi-pmic: Allow RRADC as adc@
+ subnode
+Message-ID: <20230303100126.GL2303077@google.com>
+References: <20230213201337.2089970-1-konrad.dybcio@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230213201337.2089970-1-konrad.dybcio@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, 13 Feb 2023, Konrad Dybcio wrote:
 
-On 3/2/2023 9:48 PM, Dmitry Baryshkov wrote:
-> On Thu, 2 Mar 2023 at 11:57, Varadarajan Narayanan
-> <quic_varada@quicinc.com> wrote:
->> Turn on USB related nodes
->>
->> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts b/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
->> index 8a6caae..6a06ca4 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
->> @@ -121,3 +121,7 @@
->>   &xo_board_clk {
->>          clock-frequency = <24000000>;
->>   };
->> +
->> +&usb3 { status = "ok"; };
->> +&ssphy_0 { status = "ok"; };
->> +&qusb_phy_0 { status = "ok"; };
-> Please follow an example of how it is done on other platforms. DT
-> nodes are sorted, newlines and empty lines are inserted in proper
-> places.
->
->> --
->> 2.7.4
+> This was omitted when adding the RRADC bindings.
+> 
+> Fixes: 7ea58c951ab3 ("dt-bindings: iio: adc: document qcom-spmi-rradc")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-Will rectify and post a new version.
+Applied, thanks
 
-Thanks
-
-Varada
-
->
+-- 
+Lee Jones [李琼斯]
