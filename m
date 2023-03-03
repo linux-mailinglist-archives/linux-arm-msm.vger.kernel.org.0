@@ -2,193 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D35B6A8DA4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 00:55:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1376F6A8E47
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 01:48:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230224AbjCBXzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 18:55:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41960 "EHLO
+        id S229437AbjCCAsJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 19:48:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230164AbjCBXy6 (ORCPT
+        with ESMTP id S229566AbjCCAsH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 18:54:58 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A949D59E5A;
-        Thu,  2 Mar 2023 15:54:31 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id u5so979028plq.7;
-        Thu, 02 Mar 2023 15:54:31 -0800 (PST)
+        Thu, 2 Mar 2023 19:48:07 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFCA6166D1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 16:48:02 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id k14so1563582lfj.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 16:48:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1677801269;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e0nD4m6G0f9CfPGzBReP4EZd5C0mCrWqHJ9ftGkbyJg=;
-        b=PDqUk7/jMwKu/cwEsgWLOjZQbQpA+o7JVETru/SCYUXlcgkSQyhT+yAtUsY5ytutMr
-         OtPE2k3cxJ4DpLzh2V/eVbKng5uDRVXmkHOW13yyQwR8cdRqoLHYwhCDCFvK6UY3oPSN
-         3f4TJnbr+Xq58NcJ93EIcFU4Y/PlC9XdxKk7MLRk39ZslCXhWTbRp0jQ5Ez7l7tvJxt2
-         Y/CEyiUFsXTczVMpxQ3cck0XojwR4ayup+vyF38rdj7zUvCJ9kgo62mxmrVKdRJar+2h
-         Tw14f7yHa6LzeCaHrSNiq51+W/FMByntVZ4k433IwZ2ZYvHASgcVC2r/W728AEhRuEMt
-         8E2w==
+        d=linaro.org; s=google; t=1677804481;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3cyGxW8ui97HVK3mUGfF7ZKUtT+dnfhOrXubMs7ap9o=;
+        b=uuu6ybV2zUDTsLjHM2g9jFlT36/H0snddZivYWBVkCHmmHkEy3M4p2bN62toiU+EwT
+         XhNSuzrYrT8zLHPbrCPyudO3IVf+CEl93kECNbIzyIz0vwngk2aN8H865ENfNWCadLTl
+         WX58XiyUQj4aAQMFjjssB1rPVf4jZxsa3RvP2ChuJZq48narMg2XeUxKFhHWVjMwivEo
+         dQ3q7JwKmAx72F/lpVh4sYsmxBzsJsEvm5fbgNKI8FRBsO02R7wo2b1oSUagKxerBFW0
+         UY+C8Va2OrBZBiMoC1WTMF3x/Ii5pTi56WRimnLhqCJidWzM/PRYdh+LSihjpVfGzxmy
+         ES/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677801269;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e0nD4m6G0f9CfPGzBReP4EZd5C0mCrWqHJ9ftGkbyJg=;
-        b=cGOddS6l2qF4jijN8nmGkJUJY9XiCLjvPAFGuJfKAJS89jlHLApIU2gGbFWhnrRue8
-         2g+aVVBl6edee7YDcmA5grdESkjm0Y3RlucTvwK8VCXewZo2sn9ufQ80xDTHmQuIFgIm
-         8Aun6zMaWotCY1gxrjIqob3JtEn9dWRzwL6gUs8MV4D4guYeJu6fpnDvMRV8qhsGmpgQ
-         IQcl4kcDz8U8JiEh83/MuwsdcAN5L5iguKV+ze13zTp18ti8zGDvFJid8LTWGV4tq0pM
-         gTHdbs5aRoE5sJ6NNn5x5YvTorSXVOTvfyi9vbyIhHNY+8yu6YV89Eq5JL5JlhSomLhm
-         GhjQ==
-X-Gm-Message-State: AO0yUKVks8HxpumdfiXhVT9lw3tTA8INN9jM9cYbK5WzWH7wAxSKOXy7
-        ZoWh25HdhazuYt3d+U1YH9E=
-X-Google-Smtp-Source: AK7set+6q4JxbRCzC13Otypy+noHbr1V5rV6dlYqDiFgicPpvukw8zHX98U3EXugVXVFy0ty1hGEvA==
-X-Received: by 2002:a17:902:ea0c:b0:19a:727e:d4f3 with SMTP id s12-20020a170902ea0c00b0019a727ed4f3mr4274572plg.5.1677801269076;
-        Thu, 02 Mar 2023 15:54:29 -0800 (PST)
-Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
-        by smtp.gmail.com with ESMTPSA id p18-20020a170902e75200b00194c2f78581sm207782plf.199.2023.03.02.15.54.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Mar 2023 15:54:28 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= 
-        <ckoenig.leichtzumerken@gmail.com>,
-        =?UTF-8?q?Michel=20D=C3=A4nzer?= <michel@daenzer.net>,
-        Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Pekka Paalanen <ppaalanen@gmail.com>,
-        Simon Ser <contact@emersion.fr>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Liu Shixin <liushixin2@huawei.com>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v9 14/15] drm/msm/atomic: Switch to vblank_start helper
-Date:   Thu,  2 Mar 2023 15:53:36 -0800
-Message-Id: <20230302235356.3148279-15-robdclark@gmail.com>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230302235356.3148279-1-robdclark@gmail.com>
-References: <20230302235356.3148279-1-robdclark@gmail.com>
+        d=1e100.net; s=20210112; t=1677804481;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3cyGxW8ui97HVK3mUGfF7ZKUtT+dnfhOrXubMs7ap9o=;
+        b=iw1gr5sSjXBei9jJhM2IFQe+jSf2wIyz5Ankh5Qz0XCQw5P6dRxBbr/foybcils9+y
+         QQL6fXa8Aa4rVx82qaN+CT/YMdFzJV91Tdu9XgHpKHisi3qH5tsPlxKBZJNimhrlJyAY
+         eGBrkrYnmKiAWRyBm2DnBv8RUgrCYYOSQmwRR0SdyVtkDTMDRRU/x+TxzHW3OnjNcbJM
+         Rg3mTpOLzpj292wtuXer1eB17ECcXmfHGNDVWL/WETz7n9jTXjDXbK48233JqMhL9ds9
+         CgmncsxZifqjIqTwcimU6KuO+WrvxGUbg0vuDqpj5n+Mm252+tB0NQhhisRDiQjoi9Ub
+         lWyA==
+X-Gm-Message-State: AO0yUKVgw5GtajqYrUbuwZCHu29V4EBqq2L9l6wXoU8MTUXMNFL/K/BK
+        6G1N9fdBB+VHjN7BU9CgUVYx/w==
+X-Google-Smtp-Source: AK7set+KwQBLeRXWjuE4ZSIgisZlKnZ6wxOYXxkoXh3hxONhHEQ/gUKnBJPyOYDaV3GLvdIqEq7FCw==
+X-Received: by 2002:a19:a416:0:b0:4e1:8309:1db5 with SMTP id q22-20020a19a416000000b004e183091db5mr56628lfc.2.1677804481071;
+        Thu, 02 Mar 2023 16:48:01 -0800 (PST)
+Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
+        by smtp.gmail.com with ESMTPSA id x14-20020a19f60e000000b004d5a720e689sm151078lfe.126.2023.03.02.16.47.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Mar 2023 16:48:00 -0800 (PST)
+Message-ID: <0a4683b9-0f33-ab19-e4dc-c99f90b04f33@linaro.org>
+Date:   Fri, 3 Mar 2023 01:47:58 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: sc7180: Delete wormdingler-rev0
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     mka@chromium.org, swboyd@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230302211108.2129598-1-dianders@chromium.org>
+ <20230302131031.v2.1.Id0cd5120469eb200118c0c7b8ee8209f877767b4@changeid>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230302131031.v2.1.Id0cd5120469eb200118c0c7b8ee8209f877767b4@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
 
-Drop our custom thing and switch to drm_crtc_next_vblank_start() for
-calculating the time of the start of the next vblank period.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 15 ---------------
- drivers/gpu/drm/msm/msm_atomic.c        |  8 +++++---
- drivers/gpu/drm/msm/msm_kms.h           |  8 --------
- 3 files changed, 5 insertions(+), 26 deletions(-)
+On 2.03.2023 22:11, Douglas Anderson wrote:
+> The earliest wormdingler I could find in my pile of hardware is
+> -rev1. I believe that -rev0 boards were just distributed as a pile of
+> components with no case. At this point I can't imagine anyone needing
+> to make wormdingler-rev0 work, so let's delete support for it.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index a683bd9b5a04..43996aecaf8c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -411,20 +411,6 @@ static void dpu_kms_disable_commit(struct msm_kms *kms)
- 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
- }
- 
--static ktime_t dpu_kms_vsync_time(struct msm_kms *kms, struct drm_crtc *crtc)
--{
--	struct drm_encoder *encoder;
--
--	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask) {
--		ktime_t vsync_time;
--
--		if (dpu_encoder_vsync_time(encoder, &vsync_time) == 0)
--			return vsync_time;
--	}
--
--	return ktime_get();
--}
--
- static void dpu_kms_prepare_commit(struct msm_kms *kms,
- 		struct drm_atomic_state *state)
- {
-@@ -953,7 +939,6 @@ static const struct msm_kms_funcs kms_funcs = {
- 	.irq             = dpu_core_irq,
- 	.enable_commit   = dpu_kms_enable_commit,
- 	.disable_commit  = dpu_kms_disable_commit,
--	.vsync_time      = dpu_kms_vsync_time,
- 	.prepare_commit  = dpu_kms_prepare_commit,
- 	.flush_commit    = dpu_kms_flush_commit,
- 	.wait_flush      = dpu_kms_wait_flush,
-diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-index 1686fbb611fd..c5e71c05f038 100644
---- a/drivers/gpu/drm/msm/msm_atomic.c
-+++ b/drivers/gpu/drm/msm/msm_atomic.c
-@@ -186,8 +186,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 	struct msm_kms *kms = priv->kms;
- 	struct drm_crtc *async_crtc = NULL;
- 	unsigned crtc_mask = get_crtc_mask(state);
--	bool async = kms->funcs->vsync_time &&
--			can_do_async(state, &async_crtc);
-+	bool async = can_do_async(state, &async_crtc);
- 
- 	trace_msm_atomic_commit_tail_start(async, crtc_mask);
- 
-@@ -231,7 +230,9 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 
- 			kms->pending_crtc_mask |= crtc_mask;
- 
--			vsync_time = kms->funcs->vsync_time(kms, async_crtc);
-+			if (drm_crtc_next_vblank_start(async_crtc, &vsync_time))
-+				goto fallback;
-+
- 			wakeup_time = ktime_sub(vsync_time, ms_to_ktime(1));
- 
- 			msm_hrtimer_queue_work(&timer->work, wakeup_time,
-@@ -253,6 +254,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 		return;
- 	}
- 
-+fallback:
- 	/*
- 	 * If there is any async flush pending on updated crtcs, fold
- 	 * them into the current flush.
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index f8ed7588928c..086a3f1ff956 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -59,14 +59,6 @@ struct msm_kms_funcs {
- 	void (*enable_commit)(struct msm_kms *kms);
- 	void (*disable_commit)(struct msm_kms *kms);
- 
--	/**
--	 * If the kms backend supports async commit, it should implement
--	 * this method to return the time of the next vsync.  This is
--	 * used to determine a time slightly before vsync, for the async
--	 * commit timer to run and complete an async commit.
--	 */
--	ktime_t (*vsync_time)(struct msm_kms *kms, struct drm_crtc *crtc);
--
- 	/**
- 	 * Prepare for atomic commit.  This is called after any previous
- 	 * (async or otherwise) commit has completed.
--- 
-2.39.1
-
+Konrad
+> 
+> Changes in v2:
+> - Also delete "sc7180-trogdor-wormdingler-rev0.dtsi" (Konrad)
+> 
+>  arch/arm64/boot/dts/qcom/Makefile             |  2 --
+>  .../sc7180-trogdor-wormdingler-rev0-boe.dts   | 22 ------------
+>  .../sc7180-trogdor-wormdingler-rev0-inx.dts   | 22 ------------
+>  .../qcom/sc7180-trogdor-wormdingler-rev0.dtsi | 36 -------------------
+>  4 files changed, 82 deletions(-)
+>  delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts
+>  delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts
+>  delete mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 31aa54f0428c..a51060378ddc 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -118,8 +118,6 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r3.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r3-lte.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-quackingstick-r0.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-quackingstick-r0-lte.dtb
+> -dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev0-boe.dtb
+> -dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev0-inx.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev1-boe.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev1-inx.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts
+> deleted file mode 100644
+> index d6ed7d0afe4a..000000000000
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-boe.dts
+> +++ /dev/null
+> @@ -1,22 +0,0 @@
+> -// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> -/*
+> - * Google Wormdingler board device tree source
+> - *
+> - * Copyright 2021 Google LLC.
+> - *
+> - * SKU: 0x10 => 16
+> - *  - bits 7..4: Panel ID: 0x1 (BOE)
+> - */
+> -
+> -/dts-v1/;
+> -
+> -#include "sc7180-trogdor-wormdingler-rev0.dtsi"
+> -
+> -/ {
+> -	model = "Google Wormdingler rev0 BOE panel board";
+> -	compatible = "google,wormdingler-rev0-sku16", "qcom,sc7180";
+> -};
+> -
+> -&panel {
+> -	compatible = "boe,tv110c9m-ll3";
+> -};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts
+> deleted file mode 100644
+> index c03525ea64ca..000000000000
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0-inx.dts
+> +++ /dev/null
+> @@ -1,22 +0,0 @@
+> -// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> -/*
+> - * Google Wormdingler board device tree source
+> - *
+> - * Copyright 2021 Google LLC.
+> - *
+> - * SKU: 0x0 => 0
+> - *  - bits 7..4: Panel ID: 0x0 (INX)
+> - */
+> -
+> -/dts-v1/;
+> -
+> -#include "sc7180-trogdor-wormdingler-rev0.dtsi"
+> -
+> -/ {
+> -	model = "Google Wormdingler rev0 INX panel board";
+> -	compatible = "google,wormdingler-rev0-sku0", "qcom,sc7180";
+> -};
+> -
+> -&panel {
+> -	compatible = "innolux,hj110iz-01a";
+> -};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0.dtsi
+> deleted file mode 100644
+> index 7f272c6e95f6..000000000000
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev0.dtsi
+> +++ /dev/null
+> @@ -1,36 +0,0 @@
+> -// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> -/*
+> - * Google Wormdingler board device tree source
+> - *
+> - * Copyright 2021 Google LLC.
+> - *
+> - */
+> -
+> -/dts-v1/;
+> -
+> -#include "sc7180-trogdor-wormdingler.dtsi"
+> -
+> -&avdd_lcd {
+> -	gpio = <&tlmm 80 GPIO_ACTIVE_HIGH>;
+> -};
+> -
+> -&panel {
+> -	enable-gpios = <&tlmm 76 GPIO_ACTIVE_HIGH>;
+> -};
+> -
+> -&v1p8_mipi {
+> -	gpio = <&tlmm 81 GPIO_ACTIVE_HIGH>;
+> -};
+> -
+> -/* PINCTRL - modifications to sc7180-trogdor-wormdingler.dtsi */
+> -&avdd_lcd_en {
+> -	pins = "gpio80";
+> -};
+> -
+> -&mipi_1800_en {
+> -	pins = "gpio81";
+> -};
+> -
+> -&vdd_reset_1800 {
+> -	pins = "gpio76";
+> -};
