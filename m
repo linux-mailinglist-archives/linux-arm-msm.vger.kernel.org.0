@@ -2,81 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5646A6AA0B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 21:46:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C1F46AA0D9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 22:09:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231749AbjCCUq3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 15:46:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34598 "EHLO
+        id S231804AbjCCVJj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 16:09:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230286AbjCCUq2 (ORCPT
+        with ESMTP id S231799AbjCCVJi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 15:46:28 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F001E2B0
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Mar 2023 12:46:26 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id n2so5154071lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Mar 2023 12:46:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677876385;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WRrrrOctENJ0lt9tDk9GeKvNtvGiQOfbknvvZ5bHUUY=;
-        b=SezE0ABPAMRQQDhG5lpAx+yFoS1tjl5fLGBNxFmJhZrJDD1oDMuI+jC/ajzUTtfdgq
-         O8ez6MXb1ei2lFVzaYghlM+h29N5lRdsTD2wZZGYW/z5li2AePkhTMqc+M323pDGLUzE
-         HkVGLDsXXoQM4vNLYk9t2fLV4F47jH8ZxK3IxLhRB33XxNdfKkr5NE2KrmD2jtFmY68Y
-         ibvna+xXf6osN0T3irYGHoZ91e6yY2bN7npQGSyStMoOABbQLFNtbIM5Od6ryf3PigOt
-         jJmH4p4FcotQ1yhaGQouGz933kk7RMFDLM90sHLlE3Zv8HAz1evxv08p5r7vyhGlDQII
-         i2GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677876385;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WRrrrOctENJ0lt9tDk9GeKvNtvGiQOfbknvvZ5bHUUY=;
-        b=KB2tX0i7BWAFG6Vwnm0C0jYozi40068TtkSr37cpEzAnRKkoF7DM3ssUo6JRpcAnkL
-         GZVsIAvEeo/An2CTtJt8TooAIBtAkTP/gGVhoJwSu+I4zD+M8Zb+X+E/8IrVbz9a7Fsw
-         Pf4fhpSJWGnr1dZhj+j5jPTe/4psjMKjso9glrpVsQDnNoUCM/rmLnZ6Xb3Y+/sZXhjk
-         zTdkgW34HWTFJ1WGJ78AWoermoqS8hBjqnEMk/phyHpBJnkjxvSiUqWBYJDSSrukElvT
-         WmtHYX19OuYutvZ4tqHGIpmkdUmsw00FhsGQftu6n2tByF54Xl2pqS/6ZmDIPCxnoUYI
-         IQRw==
-X-Gm-Message-State: AO0yUKUHxPhNWPkXq02KV/2txmvcjt9fgenmYQWgCPa8QyqwAUvofCSq
-        CE9reIJCE65Hfk0fqxvWtbsp+g==
-X-Google-Smtp-Source: AK7set/QcaJ6OpTXM8OfQPl9HEMQXQ+LMjPG7w1tPxByoIzx/jFGhDFH4TMbPIUV1tVxI6TYyUrOaw==
-X-Received: by 2002:ac2:5dcf:0:b0:4e0:2455:3ade with SMTP id x15-20020ac25dcf000000b004e024553ademr967637lfq.60.1677876385151;
-        Fri, 03 Mar 2023 12:46:25 -0800 (PST)
-Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id h8-20020ac25968000000b004dc48d91061sm526214lfp.304.2023.03.03.12.46.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Mar 2023 12:46:24 -0800 (PST)
-Message-ID: <2faac9b8-03b9-340f-d43f-317624d4d5bb@linaro.org>
-Date:   Fri, 3 Mar 2023 21:46:22 +0100
+        Fri, 3 Mar 2023 16:09:38 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 685996150D;
+        Fri,  3 Mar 2023 13:09:35 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 323Hw71Q027393;
+        Fri, 3 Mar 2023 21:09:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : from : subject : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=0GV0GIblVbFArHNpmZ1Srz0Rk2Sez5YtbO96Shw/C94=;
+ b=K3GuB/c67HB+9X5scaPeKggDaitwzAl87gNnC3C2vueKKu5ykHfKheQhr1xKU/22aTAG
+ 2+qjLzzrcdUMfHDrMM8J2lxHIyVHw3312cEHlYqeO4nzKWp0jVnGkb3wsqgDTsz83U2S
+ nuBYJpzVB0bP0JlKacrywW+IItuotYBNMh/5qrIlH2w3bzY3RVFj2YEo71ZnLw2D5cs0
+ kiHUZjliGhYkEWITN3YHvZZeHW/E9PUMeEH2Yv/bx3TZjK2WeuMe2bZZma6hvZxrc/Ta
+ tyt1/AmHVAK43H2/wqZIiWRyYD0i8xWBH4KecTVsak0SRfxB0QClW+YoH0gbO2hx0Rh5 zQ== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p3dpxj579-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 03 Mar 2023 21:09:11 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 323L9ALS015416
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 3 Mar 2023 21:09:10 GMT
+Received: from [10.110.20.90] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 3 Mar 2023
+ 13:09:09 -0800
+Message-ID: <2ae96b75-82f1-165a-e56d-7446c90bb7af@quicinc.com>
+Date:   Fri, 3 Mar 2023 13:09:08 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 4/4] cpufreq: qcom-nvmem: make qcom_cpufreq_get_msm_id()
- return the SoC ID
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
-        rafael@kernel.org, viresh.kumar@linaro.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230121112947.53433-1-robimarko@gmail.com>
- <20230121112947.53433-4-robimarko@gmail.com>
- <d71e8a18-8a09-c722-d9dd-b2d48615828f@linaro.org>
- <CAA8EJppwNVtUjB7fUZSCrZ88Ssbhmc4HD6oA2nV0uEx+vHBXUw@mail.gmail.com>
- <2a7a43f1-a13d-f094-5167-de74d5092d91@linaro.org>
- <CAOX2RU6vociXPTQE4tegQE8YXjHgQAHgdQWm3N9PPekgaw3ung@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+From:   Elliot Berman <quic_eberman@quicinc.com>
+Subject: Re: [PATCH] firmware: qcom_scm: Use fixed width src vm bitmap
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>, Kalle Valo <kvalo@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        "Gokul krishna Krishnakumar" <quic_gokukris@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <ath10k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
+References: <20230213181832.3489174-1-quic_eberman@quicinc.com>
+ <20230213214417.mtcpeultvynyls6s@ripper> <Y+tNRPf0PGdShf5l@kroah.com>
+ <20230214172325.lplxgbprhj3bzvr3@ripper>
+ <bdda82f7-933d-443b-614a-6befad2899b5@quicinc.com>
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAOX2RU6vociXPTQE4tegQE8YXjHgQAHgdQWm3N9PPekgaw3ung@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <bdda82f7-933d-443b-614a-6befad2899b5@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: fFgsdjU-gZTIeIOv6LUxDDseAdoa3PuQ
+X-Proofpoint-GUID: fFgsdjU-gZTIeIOv6LUxDDseAdoa3PuQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-03_05,2023-03-03_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
+ spamscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0
+ mlxlogscore=999 clxscore=1011 priorityscore=1501 mlxscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2303030177
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,84 +96,69 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 3.03.2023 19:38, Robert Marko wrote:
-> On Sat, 18 Feb 2023 at 21:40, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->>
->> On 18.02.2023 21:36, Dmitry Baryshkov wrote:
->>> On Sat, 18 Feb 2023 at 16:43, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+On 2/14/2023 10:52 AM, Elliot Berman wrote:
+> 
+> 
+> On 2/14/2023 9:23 AM, Bjorn Andersson wrote:
+>> On Tue, Feb 14, 2023 at 09:58:44AM +0100, Greg Kroah-Hartman wrote:
+>>> On Mon, Feb 13, 2023 at 01:44:17PM -0800, Bjorn Andersson wrote:
+>>>> On Mon, Feb 13, 2023 at 10:18:29AM -0800, Elliot Berman wrote:
+>>>>> The maximum VMID for assign_mem is 63. Use a u64 to represent this
+>>>>> bitmap instead of architecture-dependent "unsigned int" which 
+>>>>> varies in
+>>>>> size on 32-bit and 64-bit platforms.
+>>>>>
+>>>>> Acked-by: Kalle Valo <kvalo@kernel.org> (ath10k)
+>>>>> Tested-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+>>>>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 >>>>
+>>>> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 >>>>
->>>>
->>>> On 21.01.2023 12:29, Robert Marko wrote:
->>>>> Currently, qcom_cpufreq_get_msm_id() does not simply return the SoC ID
->>>>> after getting it via SMEM call but instead uses an enum to encode the
->>>>> matched SMEM ID to 2 variants of MSM8996 which are then used in
->>>>> qcom_cpufreq_kryo_name_version() to set the supported version.
->>>>>
->>>>> This prevents qcom_cpufreq_get_msm_id() from being universal and its doing
->>>>> more than its name suggests, so lets make it just return the SoC ID
->>>>> directly which allows matching directly on the SoC ID and removes the need
->>>>> for msm8996_version enum which simplifies the driver.
->>>>> It also allows reusing the qcom_cpufreq_get_msm_id() for new SoC-s.
->>>>>
->>>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
->>>>> ---
->>>>>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 44 ++++++++--------------------
->>>>>  1 file changed, 12 insertions(+), 32 deletions(-)
->>>>>
->>>>> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
->>>>> index da55d2e1925a..9deaf9521d6d 100644
->>>>> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
->>>>> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
->>>>> @@ -32,12 +32,6 @@
->>>>>
->>>>>  #include <dt-bindings/arm/qcom,ids.h>
->>>>>
->>>>> -enum _msm8996_version {
->>>>> -     MSM8996_V3,
->>>>> -     MSM8996_SG,
->>>>> -     NUM_OF_MSM8996_VERSIONS,
->>>>> -};
->>>>> -
->>>>>  struct qcom_cpufreq_drv;
->>>>>
->>>>>  struct qcom_cpufreq_match_data {
->>>>> @@ -134,30 +128,16 @@ static void get_krait_bin_format_b(struct device *cpu_dev,
->>>>>       dev_dbg(cpu_dev, "PVS version: %d\n", *pvs_ver);
->>>>>  }
->>>>>
->>>>> -static enum _msm8996_version qcom_cpufreq_get_msm_id(void)
->>>>> +static int qcom_cpufreq_get_msm_id(void)
->>>> This should be u32 as info->id is __le32
-> 
-> Nice catch.
-> 
-> 
->>>>
->>>> And please export this function from socinfo, it'll come in
->>>> useful for other drivers!
-> 
-> I intentionally did not do that as socinfo is currently fully optional
-> and I dont really like
-> the idea of making it required for anything using SMEM.
-"anything using SMEM"? As in the drivers, or SoCs?
-If the former, I don't see how exporting a function from within
-socid and using it here would make it required for other drivers.
-If the latter, we're talking non-qcom SoCs. SMEM has been with
-us forever.
-
-
-I'm planning to reuse this for Adreno speedbin matching. It's one
-of those blocks that don't have a revision and/or bin reigster
-within themselves.
-
-Konrad
-> 
-> Regards,
-> Robert
-> 
->>
->> Konrad
+>>>> @Greg, would you mind taking this through your tree for v6.3, you
+>>>> already have a related change in fastrpc.c in your tree...
 >>>
+>>> I tried, but it doesn't apply to my char-misc tree at all:
+>>>
+>>> checking file drivers/firmware/qcom_scm.c
+>>> Hunk #1 succeeded at 898 (offset -7 lines).
+>>> Hunk #2 succeeded at 915 (offset -7 lines).
+>>> Hunk #3 succeeded at 930 (offset -7 lines).
+>>> checking file drivers/misc/fastrpc.c
+>>> checking file drivers/net/wireless/ath/ath10k/qmi.c
+>>> checking file drivers/remoteproc/qcom_q6v5_mss.c
+>>> Hunk #1 succeeded at 227 (offset -8 lines).
+>>> Hunk #2 succeeded at 404 (offset -10 lines).
+>>> Hunk #3 succeeded at 939 with fuzz 1 (offset -28 lines).
+>>> checking file drivers/remoteproc/qcom_q6v5_pas.c
+>>> Hunk #1 FAILED at 94.
+>>> 1 out of 1 hunk FAILED
+>>> checking file drivers/soc/qcom/rmtfs_mem.c
+>>> Hunk #1 succeeded at 30 (offset -1 lines).
+>>> can't find file to patch at input line 167
+>>> Perhaps you used the wrong -p or --strip option?
+>>> The text leading up to this was:
+>>> --------------------------
+>>> |diff --git a/include/linux/firmware/qcom/qcom_scm.h
+>>> b/include/linux/firmware/qcom/qcom_scm.h
+>>> |index 1e449a5d7f5c..250ea4efb7cb 100644
+>>> |--- a/include/linux/firmware/qcom/qcom_scm.h
+>>> |+++ b/include/linux/firmware/qcom/qcom_scm.h
+>>> --------------------------
+>>>
+>>> What tree is this patch made against?
+>>>
+>>
+>> Sorry about that, I missed the previous changes in qcom_q6v5_pas in the
+>> remoteproc tree. Elliot said he based it on linux-next, so I expect that
+>> it will merge fine on top of -rc1, once that arrives.
+>>
+> 
+> Yes, this patch applies on next-20230213. I guess there are enough 
+> changes were coming from QCOM side (via Bjorn's qcom tree) as well as 
+> the fastrpc change (via Greg's char-misc tree).
+> 
+> Let me know if I should do anything once -rc1 arrives. Happy to post 
+> version on the -rc1 if it helps.
+> 
+
+The patch now applies on tip of Linus's tree and on char-misc.
