@@ -2,86 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EEC26A9842
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 14:22:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C86F26A984F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 14:27:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229993AbjCCNWH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 08:22:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57824 "EHLO
+        id S230042AbjCCN1H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 08:27:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229698AbjCCNWF (ORCPT
+        with ESMTP id S229942AbjCCN1G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 08:22:05 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB2D5F511;
-        Fri,  3 Mar 2023 05:22:04 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3237R87M004261;
-        Fri, 3 Mar 2023 13:22:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ezmnzgleGoKIsUL8Pz0q/kFaBQ9AnYUqQ0G/Vtd+RuY=;
- b=J0j2bz4drb7odBmZpgWtveEuyf9mdoOF8h30RjxpqUSrs20gUb6Trmh9ucqbcELuAW/i
- 7a0fSIuhiMnCy6gRU/dRr5AUbHOsKuFjRbm2XyGGijIB6mTUG5OUs/Zmx33rdTyFO/2J
- /haMD0ymcRCy+NzHMOf1geCkcc9ssplJ1q0TMnscZxZjHvIbXcGBykKFNJQ/rA4E2bJE
- zEuXaVavljCuAWAGHzfr+cSPCCAiCNVEhWSABcsu82HyqMXe8c7ip0du40T0PsA6n8WN
- Tb04Ai8qU3PMUHXvi5XiklogSSVe477zQHoTUsrnjwAawVU7axo3CHAz3pDOJn8WLUKz aA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p2veeugbj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Mar 2023 13:22:00 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 323DLwM2024604
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Mar 2023 13:21:59 GMT
-Received: from [10.216.12.188] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 3 Mar 2023
- 05:21:53 -0800
-Message-ID: <39f73580-f263-de0e-6819-89c3f4c75c3a@quicinc.com>
-Date:   Fri, 3 Mar 2023 18:51:49 +0530
+        Fri, 3 Mar 2023 08:27:06 -0500
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63D4330295
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Mar 2023 05:27:04 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id b10so2374927ljr.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Mar 2023 05:27:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1677850022;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/nJxtHbroqM/Ddx9d2oTpdj+DoHaP62srzKbXybL1GM=;
+        b=tOA+O0cflEFx2RiZ8FbGpJxq3lOPnlQZp3jQKLtpqZ89uCM2+XBlHDTE73gAO5/5O+
+         4Bo8rbgQRGp2KIisrWeyx+y6Xhujt9oOYr/R2SgLt3CjSKLrSF/b8PBJFXN4dCUOUM1u
+         KkNBJ22AlA/YclVMrHDKMjuxooxXPeFE0j14ukk6Z6tGhKNTxqQW7S2G3M6haNpiPUZn
+         8FHpJpLKpmh9y8OWX3ydBAuVjOFO1IdzINE9JM/KVDMiguNT/QUhCBgYca9WcFqdW2g8
+         KsGB/rbUQIx1rCUIM/zsX3SRZQnldIz6MeaGtqPK/KI/k1Rb+LQDq13/3J8z/wjG5gOG
+         Xwwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677850022;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/nJxtHbroqM/Ddx9d2oTpdj+DoHaP62srzKbXybL1GM=;
+        b=nFfkVEBt/nUpVJciOHMKbUuxOi/gpxDmHns72HKyzK5ZllkRMUbNEnAkcPWMU+cJk/
+         mg0VK/UjXKP2ytiAwua4vHM2wryWXAWFjnPQENThKyR5g8hhZINVDd4IYte8R5T5nDFA
+         nigVIAELkjEHlAzY4AfwyVorLcBvLHaVILXHdYuAc49MhRqM9zC4Nxrpga6OvO7zZOG5
+         tcZHIHr4vUAOe3iuNYy/zi4ol8rrBY2fiASUOkrJOP9QoO9HzzqeCfBUVcwIJ1RLNHLd
+         Qp38hDYxG0EbVi2p5jzNeApuSxYkQ2ZmmXcTOKXduy3HzmO27dUZEPUvkwUpJ4HcXTD+
+         V9zA==
+X-Gm-Message-State: AO0yUKXySkIm9xly2MJCPL7WcacjiBxMWdopU8hwqchzBG2GZdi3AW38
+        vP0CKOW38x+7rsfeQL66AhS9kQ==
+X-Google-Smtp-Source: AK7set9iwZOEO26r8kgcdgCsken1oZY71ltNn1/FRGVYWoSjGmN8yVUO/iHWh8bm9KIrEwSPqoOP8w==
+X-Received: by 2002:a2e:881a:0:b0:27f:c02b:a04b with SMTP id x26-20020a2e881a000000b0027fc02ba04bmr576543ljh.42.1677850022557;
+        Fri, 03 Mar 2023 05:27:02 -0800 (PST)
+Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
+        by smtp.gmail.com with ESMTPSA id z14-20020a05651c022e00b00295a8e7a328sm308728ljn.54.2023.03.03.05.27.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Mar 2023 05:27:02 -0800 (PST)
+Message-ID: <8ce07abd-2d02-69d2-8dc6-fe11525aecda@linaro.org>
+Date:   Fri, 3 Mar 2023 14:27:00 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
 Subject: Re: [PATCH V2 4/6] regulator: qcom_smd: Add support to define the
  bootup voltage
-To:     Mark Brown <broonie@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_srichara@quicinc.com>,
-        <quic_gokulsri@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_ipkumar@quicinc.com>
+Content-Language: en-US
+To:     Devi Priya <quic_devipriy@quicinc.com>,
+        Mark Brown <broonie@kernel.org>
+Cc:     agross@kernel.org, andersson@kernel.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_gokulsri@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_anusha@quicinc.com, quic_ipkumar@quicinc.com
 References: <20230217142030.16012-1-quic_devipriy@quicinc.com>
  <20230217142030.16012-5-quic_devipriy@quicinc.com>
  <907628d1-b88d-5ac6-ed9d-7f63e2875738@linaro.org>
  <Y/aeu5ua7cY5cGON@sirena.org.uk>
-Content-Language: en-US
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <Y/aeu5ua7cY5cGON@sirena.org.uk>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8bh5hIIS522p9i9Jqvw0VHcf-WtwcpkN
-X-Proofpoint-GUID: 8bh5hIIS522p9i9Jqvw0VHcf-WtwcpkN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-03_01,2023-03-03_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- adultscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
- malwarescore=0 mlxlogscore=999 impostorscore=0 bulkscore=0 clxscore=1015
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303030115
+ <39f73580-f263-de0e-6819-89c3f4c75c3a@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <39f73580-f263-de0e-6819-89c3f4c75c3a@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,46 +88,51 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 2/23/2023 4:31 AM, Mark Brown wrote:
-> On Wed, Feb 22, 2023 at 11:11:42PM +0100, Konrad Dybcio wrote:
+On 3.03.2023 14:21, Devi Priya wrote:
 > 
->> Thinking about it again, this seems like something that could be
->> generalized and introduced into regulator core.. Hardcoding this
->> will not end well.. Not to mention it'll affect all mp5496-using
->> boards that are already upstream.
 > 
->> WDYT about regulator-init-microvolts Mark?
+> On 2/23/2023 4:31 AM, Mark Brown wrote:
+>> On Wed, Feb 22, 2023 at 11:11:42PM +0100, Konrad Dybcio wrote:
+>>
+>>> Thinking about it again, this seems like something that could be
+>>> generalized and introduced into regulator core.. Hardcoding this
+>>> will not end well.. Not to mention it'll affect all mp5496-using
+>>> boards that are already upstream.
+>>
+>>> WDYT about regulator-init-microvolts Mark?
+>>
+>> The overwhelming majority of devices that have variable voltages
+>> support readback, these Qualcomm firmware devices are pretty much
+>> unique in this regard.  We don't want a general property to set a
+>> specific voltage since normally we should be using the
+>> constraints and don't normally need to adjust things immediately
+>> since we can tell what the current voltage is.
+>>
+>> This is pretty much just going to be a device specific bodge,
+>> ideally something that does know what the voltage is would be
+>> able to tell us at runtime but if that's not possible then
+>> there's no good options.  If the initial voltage might vary based
+>> on board then a device specific DT property might be less
+>> terrible, if it's determined by the regulator the current code
+>> seems fine.  Or just leave the current behavour, if the
+>> constraints are accurate then hopefully a temporary dip in
+>> voltage is just inelegant rather than an issue.  Indeed the
+>> current behaviour might well save power if you've got a voltage
+>> range configured and nothing actually ever gets round to setting
+>> the voltage (which is depressingly common, people seem keen on
+>> setting voltage ranges even when the voltage is never varied in
+>> practice).
 > 
-> The overwhelming majority of devices that have variable voltages
-> support readback, these Qualcomm firmware devices are pretty much
-> unique in this regard.  We don't want a general property to set a
-> specific voltage since normally we should be using the
-> constraints and don't normally need to adjust things immediately
-> since we can tell what the current voltage is.
-> 
-> This is pretty much just going to be a device specific bodge,
-> ideally something that does know what the voltage is would be
-> able to tell us at runtime but if that's not possible then
-> there's no good options.  If the initial voltage might vary based
-> on board then a device specific DT property might be less
-> terrible, if it's determined by the regulator the current code
-> seems fine.  Or just leave the current behavour, if the
-> constraints are accurate then hopefully a temporary dip in
-> voltage is just inelegant rather than an issue.  Indeed the
-> current behaviour might well save power if you've got a voltage
-> range configured and nothing actually ever gets round to setting
-> the voltage (which is depressingly common, people seem keen on
-> setting voltage ranges even when the voltage is never varied in
-> practice).
+> Hi Mark, The initial bootup voltage is actually blown into the OTP register of the PMIC and it remains the same across boards for IPQ9574 SoC.
+But what about IPQ6018 which also uses MP5496? That's also gonna
+set the voltage on there, it may be too high/low..
 
-Hi Mark, The initial bootup voltage is actually blown into the OTP 
-register of the PMIC and it remains the same across boards for IPQ9574 
-SoC. Initially the SoC runs at 800MHz with a voltage of 875mV set by the 
-bootloaders. As kernel does not know the initial voltage, during 
-regulator registration the framework considers the current voltage to be 
-zero and tries to bring up the regulator to minimum supported voltage of 
-600mV. This causes the dip which might be of concern in SS parts where 
-the voltage might be insufficient leading to silent reboots.
+ Initially the SoC runs at 800MHz with a voltage of 875mV set by the bootloaders. As kernel does not know the initial voltage, during regulator registration the framework considers the current voltage to be zero and tries to bring up the regulator to minimum supported voltage of 600mV. This causes the dip which might be of concern in SS parts where the voltage might be insufficient leading to silent reboots.
+That's an SoC-specific thing, the same regulator can be used with
+many different ones. We can't just assume it'll always be like this.
+I see the problem, but I believe this is not the correct solution.
 
-Best Regards,
-Devi Priya
+Konrad
+> 
+> Best Regards,
+> Devi Priya
