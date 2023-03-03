@@ -2,435 +2,300 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBAD26A9705
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 13:10:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 708486A9724
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 13:18:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230207AbjCCMKm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 07:10:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58506 "EHLO
+        id S229476AbjCCMSd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 07:18:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbjCCMKl (ORCPT
+        with ESMTP id S231203AbjCCMSc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 07:10:41 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB2715565;
-        Fri,  3 Mar 2023 04:10:39 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3236PJk8006523;
-        Fri, 3 Mar 2023 12:10:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=W27oQmmqd80ebHmdHi5E+YAa2BMVJDVjNpmnAIgPR3c=;
- b=QIWBRS/4h+6eNeIS9LDXI61p/OJaKLw9pnZGlDQx4CYp0TGPhHKWxwnHOd3vHbrIGo/P
- 2ZvegiZwsl2wB1autPhHYjNj8pFjBlxWr03zdf+mTdyWzhC9YyT/4oIBXS06hwzS/2X4
- je3wlrJ3aMvdA//caDLQw6Q/J6OGc9N/ef8xLrOv9yBvvn5saHD4JkJDXQL0VgQFJLhp
- Z/LxrJLh+0he5PTxA2inbvntWuf5gb/i3a7vLbs4D56K7LQDtuAnF+JBKDP/aPyi1HsE
- EcWSPuaWVZpnMU2RoX4jFRZlcfKpiPOw3u4u7nsTZoBI7sfEL5mOo7BSfvpyUPzIDbsc bg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p2veeubmw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Mar 2023 12:10:16 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 323CAFrh006760
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Mar 2023 12:10:15 GMT
-Received: from [10.216.12.188] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 3 Mar 2023
- 04:10:05 -0800
-Message-ID: <7c12c509-dde5-413d-0ff6-6520029d5c59@quicinc.com>
-Date:   Fri, 3 Mar 2023 17:39:58 +0530
+        Fri, 3 Mar 2023 07:18:32 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F342B13D43
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Mar 2023 04:18:28 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id i28so3404369lfv.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Mar 2023 04:18:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Qp1OBL5Cz0Ky5RTqOAyRuAgYI/cQ60LL2lG7hCVsIvM=;
+        b=J5c5LE7QEUvOLp+LMUaHl3PMSsIZmuZw79W4eaPAEJzVMsjdikb4DMNGUItMCQKWZl
+         0ORQaj9I4sN9xdrjM4P6kC8gv4Tbitf5GJg7/PnPXlITbcILm4ie9THiYKZKtFP1lhsS
+         SWQ03GyHcMCZBoWPMMLWgmurpzHS9OiEEzQZDzrNK5GxhLRqtMdVM2exoZ/2oyTuDL5u
+         uklyzrsIrzaBzoFmLnqTWRY3e6pZthnkNNvHo085hk49sy+WT+E2lJZezSQ69FNjc80R
+         An6XXfTltlyTfePsg3+exmJl6f1t5XVoPQ2W9mjHaqB+yxID8iMKrRmfW0LLTmCNeALk
+         qAOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qp1OBL5Cz0Ky5RTqOAyRuAgYI/cQ60LL2lG7hCVsIvM=;
+        b=dwz8JZxh3sRoftWw0Qv74RsVE5ZXDdFDuVAR1ZBsqF7y9zw1Z9bCnHSXON1395KI6e
+         +JrkckOqpOhXyWN3LfyaTehwDC94m8+JB3dKDlT89z8hQbuHbSriUVoa3aGycEqSXmai
+         deEzzQ9k1q4mXEXwwPSOQ3a25VxRiqbqe65SA642UQvfxX1vzO0TeDlaO1mwqBmQW63T
+         PB7OxsFgCr+0kS9gy6Z2Isf+4r1X6gB794tfYejQmkJQUSWFj997enhiGkSK8E+xnaMb
+         4TDtZXa50DevDWIrKrliLGt+rQBqkOWGzrjuOjE8+yUWlXOEHqOPxbmIAGHMGpbjtRLx
+         IXdg==
+X-Gm-Message-State: AO0yUKUEVjzgxVHqNnu08tqvdKdLWG88p7H/aKZiS8kcHomoWLtZpL6H
+        6LDcUqVRZ8E6pd1sAzLc/q/OhQ==
+X-Google-Smtp-Source: AK7set+ukyhb920Gs8QsMCwXXqCDiY8Z8+7Wn0if2jbCcvuraPORjOA3FtOjrnBF2hEWLa3ibBBFFA==
+X-Received: by 2002:a05:6512:505:b0:4b5:688e:ee10 with SMTP id o5-20020a056512050500b004b5688eee10mr483013lfb.16.1677845907229;
+        Fri, 03 Mar 2023 04:18:27 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id h26-20020a19701a000000b004b7033da2d7sm368094lfc.128.2023.03.03.04.18.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Mar 2023 04:18:26 -0800 (PST)
+Message-ID: <e7423df3-12d4-7f76-7ac4-53c8179aa442@linaro.org>
+Date:   Fri, 3 Mar 2023 14:18:26 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 7/7] arm64: dts: qcom: ipq9574: Add PCIe PHYs and
- controller nodes
-Content-Language: en-US
-To:     Kathiravan T <quic_kathirav@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <lpieralisi@kernel.org>, <kw@linux.com>, <robh@kernel.org>,
-        <bhelgaas@google.com>, <krzysztof.kozlowski+dt@linaro.org>,
-        <vkoul@kernel.org>, <kishon@kernel.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <mani@kernel.org>, <p.zabel@pengutronix.de>,
-        <svarbanov@mm-sol.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <linux-clk@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_arajkuma@quicinc.com>,
-        <quic_anusha@quicinc.com>
-References: <20230214164135.17039-1-quic_devipriy@quicinc.com>
- <20230214164135.17039-8-quic_devipriy@quicinc.com>
- <d3403424-4adc-26d6-3a98-1807361fe0fc@quicinc.com>
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <d3403424-4adc-26d6-3a98-1807361fe0fc@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3 26/27] drm/msm/dpu: split pipe handling from
+ _dpu_crtc_blend_setup_mixer
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230203182132.1307834-1-dmitry.baryshkov@linaro.org>
+ <20230203182132.1307834-27-dmitry.baryshkov@linaro.org>
+ <133ba8d8-f52f-42a5-712c-039f225d61fa@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <133ba8d8-f52f-42a5-712c-039f225d61fa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: WHzwb6d0XtHZfE2SEet-ozEqsYIT9GfL
-X-Proofpoint-GUID: WHzwb6d0XtHZfE2SEet-ozEqsYIT9GfL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-03_01,2023-03-03_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- adultscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
- malwarescore=0 mlxlogscore=999 impostorscore=0 bulkscore=0 clxscore=1011
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303030105
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/24/2023 12:27 PM, Kathiravan T wrote:
+On 09/02/2023 01:44, Abhinav Kumar wrote:
 > 
-> On 2/14/2023 10:11 PM, Devi Priya wrote:
->> Add PCIe0, PCIe1, PCIe2, PCIe3 (and corresponding PHY) devices
->> found on IPQ9574 platform. The PCIe0 & PCIe1 are 1-lane Gen3
->> host whereas PCIe2 & PCIe3 are 2-lane Gen3 host.
+> 
+> On 2/3/2023 10:21 AM, Dmitry Baryshkov wrote:
+>> Rework _dpu_crtc_blend_setup_mixer() to split away pipe handling to a
+>> separate functon. This is a preparation for the r_pipe support.
 >>
->> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
->> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
->> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >> ---
->>   arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts |  28 ++
->>   arch/arm64/boot/dts/qcom/ipq9574.dtsi        | 477 ++++++++++++++++++-
->>   2 files changed, 499 insertions(+), 6 deletions(-)
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 86 ++++++++++++++++-------
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h | 10 ++-
+>>   2 files changed, 63 insertions(+), 33 deletions(-)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts 
->> b/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
->> index 2c8430197ec0..21b53f34ce84 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
->> @@ -8,6 +8,7 @@
->>   /dts-v1/;
->> +#include <dt-bindings/gpio/gpio.h>
->>   #include "ipq9574.dtsi"
->>   / {
->> @@ -29,6 +30,33 @@
->>       status = "okay";
->>   };
->> +&pcie1_phy {
->> +    status = "okay";
->> +};
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> index 73e1a8c69ef0..0ca3bc38ff7e 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> @@ -400,6 +400,47 @@ static void 
+>> _dpu_crtc_program_lm_output_roi(struct drm_crtc *crtc)
+>>       }
+>>   }
+>> +static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
+>> +                       struct drm_plane *plane,
+>> +                       struct dpu_crtc_mixer *mixer,
+>> +                       u32 num_mixers,
+>> +                       struct dpu_hw_stage_cfg *stage_cfg,
+>> +                       enum dpu_stage stage,
+>> +                       unsigned int stage_idx,
+>> +                       unsigned long *fetch_active,
+>> +                       struct dpu_sw_pipe *pipe
+>> +                      )
+>> +{
+>> +    uint32_t lm_idx;
+>> +    enum dpu_sspp sspp_idx;
+>> +    struct drm_plane_state *state;
 >> +
->> +&pcie1_x1 {
->> +    perst-gpios = <&tlmm 26 GPIO_ACTIVE_LOW>;
->> +    status = "okay";
->> +};
+>> +    if (!pipe->sspp)
+>> +        return;
 >> +
->> +&pcie2_phy {
->> +    status = "okay";
->> +};
+>> +    sspp_idx = pipe->sspp->idx;
 >> +
->> +&pcie2_x2 {
->> +    perst-gpios = <&tlmm 29 GPIO_ACTIVE_LOW>;
->> +    status = "okay";
->> +};
+>> +    state = plane->state;
 >> +
->> +&pcie3_phy {
->> +    status = "okay";
->> +};
+>> +    DRM_DEBUG_ATOMIC("crtc %d stage:%d - plane %d sspp %d fb %d\n",
+>> +             crtc->base.id,
+>> +             stage,
+>> +             plane->base.id,
+>> +             sspp_idx - SSPP_NONE,
+>> +             state->fb ? state->fb->base.id : -1);
 >> +
->> +&pcie3_x2 {
->> +    perst-gpios = <&tlmm 32 GPIO_ACTIVE_LOW>;
->> +    status = "okay";
->> +};
+>> +    set_bit(sspp_idx, fetch_active);
 >> +
->>   &sdhc_1 {
->>       pinctrl-0 = <&sdc_default_state>;
->>       pinctrl-names = "default";
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi 
->> b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> index 062f80798ebb..a32dbdeb5bed 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> @@ -6,8 +6,8 @@
->>    * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights 
->> reserved.
->>    */
->> -#include <dt-bindings/interrupt-controller/arm-gic.h>
->>   #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
->> +#include <dt-bindings/interrupt-controller/arm-gic.h>
->>   #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
->>   / {
->> @@ -22,11 +22,41 @@
->>               #clock-cells = <0>;
->>           };
->> +        pcie30_phy0_pipe_clk: pcie30_phy0_pipe_clk {
->> +            compatible = "fixed-clock";
->> +            clock-frequency = <250000000>;
->> +            #clock-cells = <0>;
->> +        };
+>> +    stage_cfg->stage[stage][stage_idx] = sspp_idx;
+>> +    stage_cfg->multirect_index[stage][stage_idx] =
+>> +                pipe->multirect_index;
 >> +
->> +        pcie30_phy1_pipe_clk: pcie30_phy1_pipe_clk {
->> +            compatible = "fixed-clock";
->> +            clock-frequency = <250000000>;
->> +            #clock-cells = <0>;
->> +        };
->> +
->> +        pcie30_phy2_pipe_clk: pcie30_phy2_pipe_clk {
->> +            compatible = "fixed-clock";
->> +            clock-frequency = <250000000>;
->> +            #clock-cells = <0>;
->> +        };
->> +
->> +        pcie30_phy3_pipe_clk: pcie30_phy3_pipe_clk {
->> +            compatible = "fixed-clock";
->> +            clock-frequency = <250000000>;
->> +            #clock-cells = <0>;
->> +        };
->> +
->>           sleep_clk: sleep-clk {
->>               compatible = "fixed-clock";
->>               #clock-cells = <0>;
->>           };
->> +        usb3phy_0_cc_pipe_clk: usb3phy_0_cc_pipe_clk {
->> +            compatible = "fixed-clock";
->> +            clock-frequency = <125000000>;
->> +            #clock-cells = <0>;
->> +        };
->> +
->>           xo_board_clk: xo-board-clk {
->>               compatible = "fixed-clock";
->>               #clock-cells = <0>;
->> @@ -121,6 +151,155 @@
->>           #size-cells = <1>;
->>           ranges = <0 0 0 0xffffffff>;
->> +        pcie0_phy: phy@84000 {
->> +            compatible = "qcom,ipq9574-qmp-gen3x1-pcie-phy";
->> +            reg = <0x00084000 0x1bc>; /* Serdes PLL */
->> +            #address-cells = <1>;
->> +            #size-cells = <1>;
->> +            ranges;
->> +            clocks = <&gcc GCC_PCIE0_AUX_CLK>,
->> +                 <&gcc GCC_PCIE0_AHB_CLK>,
->> +                 <&gcc GCC_ANOC_PCIE0_1LANE_M_CLK>,
->> +                 <&gcc GCC_SNOC_PCIE0_1LANE_S_CLK>;
->> +            clock-names = "aux", "cfg_ahb", "anoc_lane", "snoc_lane";
->> +
->> +            assigned-clocks = <&gcc GCC_PCIE0_AUX_CLK>;
->> +            assigned-clock-rates = <20000000>;
->> +
->> +            resets = <&gcc GCC_PCIE0_PHY_BCR>,
->> +                 <&gcc GCC_PCIE0PHY_PHY_BCR>;
->> +            reset-names = "phy", "common";
->> +
->> +            status = "disabled";
->> +
->> +            pcie0_lane: phy@84200 {
->> +                reg = <0x00084200 0x16c>, /* Serdes Tx */
->> +                      <0x00084400 0x200>, /* Serdes Rx */
->> +                      <0x00084800 0x1f0>, /* PCS: Lane0, COM, PCIE */
->> +                      <0x00084c00 0xf4>;  /* pcs_misc */
->> +                #phy-cells = <0>;
->> +
->> +                clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
->> +                clock-names = "pipe0";
->> +                clock-output-names = "gcc_pcie0_pipe_clk_src";
->> +                #clock-cells = <0>;
->> +            };
->> +        };
->> +
->> +        pcie2_phy: phy@8c000 {
->> +            compatible = "qcom,ipq9574-qmp-gen3x2-pcie-phy";
->> +            reg = <0x0008c000 0x1bc>; /* Serdes PLL */
->> +            #address-cells = <1>;
->> +            #size-cells = <1>;
->> +            ranges;
->> +
->> +            clocks = <&gcc GCC_PCIE2_AUX_CLK>,
->> +                 <&gcc GCC_PCIE2_AHB_CLK>,
->> +                 <&gcc GCC_ANOC_PCIE2_2LANE_M_CLK>,
->> +                 <&gcc GCC_SNOC_PCIE2_2LANE_S_CLK>;
->> +            clock-names = "aux", "cfg_ahb", "anoc_lane", "snoc_lane";
->> +
->> +            assigned-clocks = <&gcc GCC_PCIE2_AUX_CLK>;
->> +            assigned-clock-rates = <20000000>;
->> +
->> +            resets = <&gcc GCC_PCIE2_PHY_BCR>,
->> +                 <&gcc GCC_PCIE2PHY_PHY_BCR>;
->> +            reset-names = "phy", "common";
->> +
->> +            status = "disabled";
->> +
->> +            pcie2_lanes: phy@8c200 {
->> +                reg = <0x0008c200 0x16c>, /* Serdes Tx0 */
->> +                      <0x0008c400 0x200>, /* Serdes Rx0 */
->> +                      <0x0008d000 0x1f0>, /* PCS: Lane0, COM, PCIE */
->> +                      <0x0008c600 0x16c>, /* Serdes Tx1 */
->> +                      <0x0008c800 0x200>, /* Serdes Rx1 */
->> +                      <0x0008d400 0x0f8>; /* pcs_misc */
->> +
->> +                #phy-cells = <0>;
->> +
->> +                clocks = <&gcc GCC_PCIE2_PIPE_CLK>;
->> +                clock-names = "pipe0";
->> +                clock-output-names = "gcc_pcie2_pipe_clk_src";
->> +                #clock-cells = <0>;
->> +            };
->> +        };
->> +
->> +        pcie3_phy: phy@f4000 {
->> +            compatible = "qcom,ipq9574-qmp-gen3x2-pcie-phy";
->> +            reg = <0x000f4000 0x1bc>; /* Serdes PLL */
->> +            #address-cells = <1>;
->> +            #size-cells = <1>;
->> +            ranges;
->> +
->> +            clocks = <&gcc GCC_PCIE3_AUX_CLK>,
->> +                 <&gcc GCC_PCIE3_AHB_CLK>,
->> +                 <&gcc GCC_ANOC_PCIE3_2LANE_M_CLK>,
->> +                 <&gcc GCC_SNOC_PCIE3_2LANE_S_CLK>;
->> +            clock-names = "aux", "cfg_ahb", "anoc_lane", "snoc_lane";
->> +
->> +            assigned-clocks = <&gcc GCC_PCIE3_AUX_CLK>;
->> +            assigned-clock-rates = <20000000>;
->> +
->> +            resets = <&gcc GCC_PCIE3_PHY_BCR>,
->> +                 <&gcc GCC_PCIE3PHY_PHY_BCR>;
->> +            reset-names = "phy", "common";
->> +
->> +            status = "disabled";
->> +
->> +            pcie3_lanes: phy@f4200 {
->> +                reg = <0x000f4200 0x16c>, /* Serdes Tx0 */
->> +                      <0x000f4400 0x200>, /* Serdes Rx0 */
->> +                      <0x000f5000 0x1f0>, /* PCS: Lane0, COM, PCIE */
->> +                      <0x000f4600 0x16c>, /* Serdes Tx1 */
->> +                      <0x000f4800 0x200>, /* Serdes Rx1 */
->> +                      <0x000f5400 0x0f8>; /* pcs_misc */
->> +
->> +                #phy-cells = <0>;
->> +
->> +                clocks = <&gcc GCC_PCIE3_PIPE_CLK>;
->> +                clock-names = "pipe0";
->> +                clock-output-names = "gcc_pcie3_pipe_clk_src";
->> +                #clock-cells = <0>;
->> +            };
->> +        };
->> +
->> +        pcie1_phy: phy@fc000 {
->> +            compatible = "qcom,ipq9574-qmp-gen3x1-pcie-phy";
->> +            reg = <0x000fc000 0x1bc>; /* Serdes PLL */
->> +            #address-cells = <1>;
->> +            #size-cells = <1>;
->> +            ranges;
->> +
->> +            clocks = <&gcc GCC_PCIE1_AUX_CLK>,
->> +                 <&gcc GCC_PCIE1_AHB_CLK>,
->> +                 <&gcc GCC_ANOC_PCIE1_1LANE_M_CLK>,
->> +                 <&gcc GCC_SNOC_PCIE1_1LANE_S_CLK>;
->> +            clock-names = "aux", "cfg_ahb", "anoc_lane", "snoc_lane";
->> +
->> +            assigned-clocks = <&gcc GCC_PCIE1_AUX_CLK>;
->> +            assigned-clock-rates = <20000000>;
->> +
->> +            resets = <&gcc GCC_PCIE1_PHY_BCR>,
->> +                 <&gcc GCC_PCIE1PHY_PHY_BCR>;
->> +            reset-names = "phy", "common";
->> +
->> +            status = "disabled";
->> +
->> +            pcie1_lane: phy@fc200 {
->> +                reg = <0x000fc200 0x16c>, /* Serdes Tx */
->> +                      <0x000fc400 0x200>, /* Serdes Rx */
->> +                      <0x000fc800 0x1f0>, /* PCS: Lane0, COM, PCIE */
->> +                      <0x000fcc00 0xf4>;  /* pcs_misc */
->> +                #phy-cells = <0>;
->> +
->> +                clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
->> +                clock-names = "pipe0";
->> +                clock-output-names = "gcc_pcie1_pipe_clk_src";
->> +                #clock-cells = <0>;
->> +            };
->> +        };
->> +
->>           tlmm: pinctrl@1000000 {
->>               compatible = "qcom,ipq9574-tlmm";
->>               reg = <0x01000000 0x300000>;
->> @@ -145,11 +324,11 @@
->>               clocks = <&xo_board_clk>,
->>                    <&sleep_clk>,
->>                    <&bias_pll_ubi_nc_clk>,
->> -                 <0>,
->> -                 <0>,
->> -                 <0>,
->> -                 <0>,
->> -                 <0>;
->> +                 <&pcie30_phy0_pipe_clk>,
->> +                 <&pcie30_phy1_pipe_clk>,
->> +                 <&pcie30_phy2_pipe_clk>,
->> +                 <&pcie30_phy3_pipe_clk>,
->> +                 <&usb3phy_0_cc_pipe_clk>;
+>> +    /* blend config update */
+>> +    for (lm_idx = 0; lm_idx < num_mixers; lm_idx++)
+>> +        
+>> mixer[lm_idx].lm_ctl->ops.update_pending_flush_sspp(mixer[lm_idx].lm_ctl,
+>> +                                    sspp_idx);
 > 
+> If you just pass the format to this function you can move rest of the 
+> for loop also to this function.
+
+As a second thought, this would defeat the purpose of the split. We 
+don't have to call _dpu_crtc_setup_blend_cfg() or setup mixer_op_mode 
+for the second pipe separately. So, I'd leave the loops as is.
+
 > 
-> pipe clock source is PHY. So should we add the pcie_phy phandle here and 
-> use it like how it is done in other targets, ex: sm8550.dtsi?
-Yes sure kathir. Will update this in the next series
+> Also, you will be able to add the trace_dpu_crtc_setup_mixer() with 
+> complete information.
 > 
+> trace_dpu_crtc_setup_mixer is currently missing te stage_idx which is 
+> important to debug blend issues.
 > 
->>               #clock-cells = <1>;
->>               #reset-cells = <1>;
->>               #power-domain-cells = <1>;
->> @@ -282,6 +461,292 @@
->>                   status = "disabled";
->>               };
->>           };
+>> +}
 >> +
->> +        pcie1_x1: pci@10000000 {
->> +            compatible = "qcom,pcie-ipq9574";
->> +            reg =  <0x10000000 0xf1d>,
->> +                   <0x10000F20 0xa8>,
->> +                   <0x10001000 0x1000>,
->> +                   <0x000F8000 0x4000>,
->> +                   <0x10100000 0x1000>,
->> +                   <0x00618108 0x4>;
->> +            reg-names = "dbi", "elbi", "atu", "parf", "config", 
->> "aggr_noc";
->> +            device_type = "pci";
->> +            linux,pci-domain = <2>;
->> +            bus-range = <0x00 0xff>;
->> +            num-lanes = <1>;
->> +            #address-cells = <3>;
->> +            #size-cells = <2>;
+>>   static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>>       struct dpu_crtc *dpu_crtc, struct dpu_crtc_mixer *mixer,
+>>       struct dpu_hw_stage_cfg *stage_cfg)
+>> @@ -412,15 +453,12 @@ static void _dpu_crtc_blend_setup_mixer(struct 
+>> drm_crtc *crtc,
+>>       struct dpu_format *format;
+>>       struct dpu_hw_ctl *ctl = mixer->lm_ctl;
+>> -    uint32_t stage_idx, lm_idx;
+>> -    int zpos_cnt[DPU_STAGE_MAX + 1] = { 0 };
+>> +    uint32_t lm_idx;
+>>       bool bg_alpha_enable = false;
+>>       DECLARE_BITMAP(fetch_active, SSPP_MAX);
+>>       memset(fetch_active, 0, sizeof(fetch_active));
+>>       drm_atomic_crtc_for_each_plane(plane, crtc) {
+>> -        enum dpu_sspp sspp_idx;
+>> -
+>>           state = plane->state;
+>>           if (!state)
+>>               continue;
+>> @@ -431,39 +469,25 @@ static void _dpu_crtc_blend_setup_mixer(struct 
+>> drm_crtc *crtc,
+>>           pstate = to_dpu_plane_state(state);
+>>           fb = state->fb;
+>> -        sspp_idx = pstate->pipe.sspp->idx;
+>> -        set_bit(sspp_idx, fetch_active);
+>> -
+>> -        DRM_DEBUG_ATOMIC("crtc %d stage:%d - plane %d sspp %d fb %d\n",
+>> -                crtc->base.id,
+>> -                pstate->stage,
+>> -                plane->base.id,
+>> -                sspp_idx - SSPP_VIG0,
+>> -                state->fb ? state->fb->base.id : -1);
+>> -
+>>           format = 
+>> to_dpu_format(msm_framebuffer_format(pstate->base.fb));
+>>           if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
+>>               bg_alpha_enable = true;
+>> -        stage_idx = zpos_cnt[pstate->stage]++;
+>> -        stage_cfg->stage[pstate->stage][stage_idx] =
+>> -                    sspp_idx;
+>> -        stage_cfg->multirect_index[pstate->stage][stage_idx] =
+>> -                    pstate->pipe.multirect_index;
+>> -
+>>           trace_dpu_crtc_setup_mixer(DRMID(crtc), DRMID(plane),
+>> -                       state, pstate, stage_idx,
+>> +                       state, pstate,
+>>                          format->base.pixel_format,
+>>                          fb ? fb->modifier : 0);
+>> +        _dpu_crtc_blend_setup_pipe(crtc, plane,
+>> +                       mixer, cstate->num_mixers,
+>> +                       stage_cfg, pstate->stage, 0,
+>> +                       fetch_active,
+>> +                       &pstate->pipe);
 >> +
->> +            ranges = <0x81000000 0 0x10200000 0x10200000
->> +                  0 0x00100000   /* downstream I/O */
->> +                  0x82000000 0 0x10300000 0x10300000
->> +                  0 0x07d00000>; /* non-prefetchable memory */
->> +
->> +            #interrupt-cells = <1>;
->> +            interrupt-map-mask = <0 0 0 0x7>;
->> +            interrupt-map = <0 0 0 1 &intc 0 35
->> +                    IRQ_TYPE_LEVEL_HIGH>, /* int_a */
->> +                    <0 0 0 2 &intc 0 49
->> +                    IRQ_TYPE_LEVEL_HIGH>, /* int_b */
->> +                    <0 0 0 3 &intc 0 84
->> +                    IRQ_TYPE_LEVEL_HIGH>, /* int_c */
->> +                    <0 0 0 4 &intc 0 85
->> +                    IRQ_TYPE_LEVEL_HIGH>; /* int_d */
->> +
->> +            interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
->> +            interrupt-names = "global_irq";
-> 
-> 
-> Controller driver doesn't support the "global_irq" yet. Please correct 
-> me If I am wrong.
-> 
-> 
-> Thanks, Kathiravan T.
-> 
-Regards,
-Devi Priya
+>>           /* blend config update */
+>>           for (lm_idx = 0; lm_idx < cstate->num_mixers; lm_idx++) {
+>> -            _dpu_crtc_setup_blend_cfg(mixer + lm_idx,
+>> -                        pstate, format);
+>> -
+>> -            
+>> mixer[lm_idx].lm_ctl->ops.update_pending_flush_sspp(mixer[lm_idx].lm_ctl,
+>> -                                        sspp_idx);
+>> +            _dpu_crtc_setup_blend_cfg(mixer + lm_idx, pstate, format);
+>>               if (bg_alpha_enable && !format->alpha_enable)
+>>                   mixer[lm_idx].mixer_op_mode = 0;
+>> @@ -1297,8 +1321,16 @@ static int _dpu_debugfs_status_show(struct 
+>> seq_file *s, void *data)
+>>           seq_printf(s, "\tdst x:%4d dst_y:%4d dst_w:%4d dst_h:%4d\n",
+>>               state->crtc_x, state->crtc_y, state->crtc_w,
+>>               state->crtc_h);
+>> -        seq_printf(s, "\tmultirect: mode: %d index: %d\n",
+>> +        seq_printf(s, "\tsspp[0]:%d\n",
+>> +               pstate->pipe.sspp->idx - SSPP_NONE);
+>> +        seq_printf(s, "\tmultirect[0]: mode: %d index: %d\n",
+>>               pstate->pipe.multirect_mode, pstate->pipe.multirect_index);
+>> +        if (pstate->r_pipe.sspp) {
+>> +            seq_printf(s, "\tsspp[1]:%d\n",
+>> +                   pstate->r_pipe.sspp->idx - SSPP_NONE);
+>> +            seq_printf(s, "\tmultirect[1]: mode: %d index: %d\n",
+>> +                   pstate->r_pipe.multirect_mode, 
+>> pstate->r_pipe.multirect_index);
+>> +        }
+>>           seq_puts(s, "\n");
+>>       }
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+>> index 0ad148cc2fb8..5ec4f89e8814 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+>> @@ -633,9 +633,9 @@ TRACE_EVENT(dpu_enc_phys_vid_irq_ctrl,
+>>   TRACE_EVENT(dpu_crtc_setup_mixer,
+>>       TP_PROTO(uint32_t crtc_id, uint32_t plane_id,
+>>            struct drm_plane_state *state, struct dpu_plane_state *pstate,
+>> -         uint32_t stage_idx, uint32_t pixel_format,
+>> +         uint32_t pixel_format,
+>>            uint64_t modifier),
+>> -    TP_ARGS(crtc_id, plane_id, state, pstate, stage_idx,
+>> +    TP_ARGS(crtc_id, plane_id, state, pstate,
+>>           pixel_format, modifier),
+>>       TP_STRUCT__entry(
+>>           __field(    uint32_t,        crtc_id        )
+>> @@ -643,7 +643,6 @@ TRACE_EVENT(dpu_crtc_setup_mixer,
+>>           __field(    uint32_t,        fb_id        )
+>>           __field_struct(    struct drm_rect,    src_rect    )
+>>           __field_struct(    struct drm_rect,    dst_rect    )
+>> -        __field(    uint32_t,        stage_idx    )
+>>           __field(    enum dpu_stage,        stage        )
+>>           __field(    enum dpu_sspp,        sspp        )
+>>           __field(    uint32_t,        multirect_idx    )
+>> @@ -657,7 +656,6 @@ TRACE_EVENT(dpu_crtc_setup_mixer,
+>>           __entry->fb_id = state ? state->fb->base.id : 0;
+>>           __entry->src_rect = drm_plane_state_src(state);
+>>           __entry->dst_rect = drm_plane_state_dest(state);
+>> -        __entry->stage_idx = stage_idx;
+>>           __entry->stage = pstate->stage;
+>>           __entry->sspp = pstate->pipe.sspp->idx;
+>>           __entry->multirect_idx = pstate->pipe.multirect_index;
+>> @@ -666,13 +664,13 @@ TRACE_EVENT(dpu_crtc_setup_mixer,
+>>           __entry->modifier = modifier;
+>>       ),
+>>       TP_printk("crtc_id:%u plane_id:%u fb_id:%u src:" DRM_RECT_FP_FMT
+>> -          " dst:" DRM_RECT_FMT " stage_idx:%u stage:%d, sspp:%d "
+>> +          " dst:" DRM_RECT_FMT " stage:%d, sspp:%d "
+>>             "multirect_index:%d multirect_mode:%u pix_format:%u "
+>>             "modifier:%llu",
+>>             __entry->crtc_id, __entry->plane_id, __entry->fb_id,
+>>             DRM_RECT_FP_ARG(&__entry->src_rect),
+>>             DRM_RECT_ARG(&__entry->dst_rect),
+>> -          __entry->stage_idx, __entry->stage, __entry->sspp,
+>> +          __entry->stage, __entry->sspp,
+>>             __entry->multirect_idx, __entry->multirect_mode,
+>>             __entry->pixel_format, __entry->modifier)
+>>   );
+
+-- 
+With best wishes
+Dmitry
+
