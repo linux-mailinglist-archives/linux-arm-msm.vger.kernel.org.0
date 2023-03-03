@@ -2,74 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 429F76AA0D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 22:09:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 659086AA183
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 22:39:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231766AbjCCVJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 16:09:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50094 "EHLO
+        id S231891AbjCCVjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 16:39:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231270AbjCCVJW (ORCPT
+        with ESMTP id S231793AbjCCVjB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 16:09:22 -0500
-Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1759860D70;
-        Fri,  3 Mar 2023 13:09:19 -0800 (PST)
-Received: (Authenticated sender: dodji@seketeli.org)
-        by mail.gandi.net (Postfix) with ESMTPSA id 592651BF206;
-        Fri,  3 Mar 2023 21:09:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seketeli.org;
-        s=gm1; t=1677877758;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=cv66zFFxlrbcWbvrnbTnad6WW7AbCdUiUsmIER3GGNo=;
-        b=VJ3mH6zdWteY8M4XC4ovydcmbhNtEm1vA24Iv/QkNqJXO8RZpPW1T7U0bgq0raGYksTqtt
-        RLPkBW5UVyKF3rL2oSwz0sy91JQzNeAugxrnzxtmaBo6wElmPyvJhp6IgSNe284tAEYuID
-        p6r4YlwLtc8wfKWWJrGt46K9Od8MJJCQNL5K7eFmbaA4gdt/gJcSCHU7mLqk8NDhpiQFI1
-        viL6RZSpzLJi2mhYHneDXdI/M439SUELnvFcSwddbX6WinC0J4gnxPltN98lnelSo71nV3
-        1A8IAeBQ2AyVH2MPJ5zsJhbpkM2JTsR+rUOwWyV8q8uoTsxvj06aAn5K977Pvg==
-Received: by localhost (Postfix, from userid 1000)
-        id 4FFA9B4E34; Fri,  3 Mar 2023 22:09:11 +0100 (CET)
-From:   Dodji Seketeli <dodji@seketeli.org>
-To:     John Moon via Libabigail <libabigail@sourceware.org>
-Cc:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        "Nicolas Schier" <nicolas@fjasle.eu>,
-        John Moon <quic_johmoo@quicinc.com>,
-        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        "Arnd Bergmann" <arnd@arndb.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Todd Kjos <tkjos@google.com>,
-        Matthias Maennich <maennich@google.com>,
-        Giuliano Procida <gprocida@google.com>,
-        <kernel-team@android.com>, Jordan Crouse <jorcrous@amazon.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>
-Subject: Re: [PATCH v2 1/2] check-uapi: Introduce check-uapi.sh
-Organization: Me, myself and I
-References: <20230301075402.4578-1-quic_johmoo@quicinc.com>
-        <20230301075402.4578-2-quic_johmoo@quicinc.com>
-X-Operating-System: CentOS Stream release 9
-X-URL:  http://www.seketeli.net/~dodji
-Date:   Fri, 03 Mar 2023 22:09:11 +0100
-In-Reply-To: <20230301075402.4578-2-quic_johmoo@quicinc.com> (John Moon via
-        Libabigail's message of "Tue, 28 Feb 2023 23:54:01 -0800")
-Message-ID: <87zg8t5yq0.fsf@seketeli.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        Fri, 3 Mar 2023 16:39:01 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E90734230;
+        Fri,  3 Mar 2023 13:38:52 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id cp7-20020a17090afb8700b0023756229427so7534688pjb.1;
+        Fri, 03 Mar 2023 13:38:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1677879532;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7bcLQ/kVpuxdipjZe1ew1SkB7Qcp7vd86whAJ1c8evM=;
+        b=EgaDL3rhB0SyGn1aTe3CIDYplGrvoXkUG6Jr2/OHu6yfgiRZPgkF58K+XCGzkPAJSC
+         ghUmpIQJH7HmDO9lVoQOyG8T662K0bFZiSvSA5eFDYo71bjqXKMcg0MOS2nhJzol5rSL
+         1aUlOuSD5amKXmmDofXfzhoCwxOfSyVB1VwcG6m3i5yJBdRs2onLqsefemkI+lj5M8Nf
+         Q65KC4amJEdB5HdBLDOSXwAjywNyujGTdrz6GzsuqCED3gdRZWfQwmLsi4Wq5zKVYtrx
+         P1i0S9rt4lo1sKAKpbA6vTRhFwSbz8sKYDYWXJ+CPeZVWVGbCfaH+asIskKJJ8f2L9fv
+         1ukg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677879532;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7bcLQ/kVpuxdipjZe1ew1SkB7Qcp7vd86whAJ1c8evM=;
+        b=OXbaj1EJcMlWCFqs93xSHi+D/5ZMcWTBrtFnjXxsirXf3YYQLcEIwAZnPy9m5KWQfS
+         QGpFtdzkqYy2ux8DJwFlc7msW1g1jLtcICG/JX+pgtYrxwI6bJpzQFFV36NrorXOHtNL
+         ZMvbS2chuSbtVhejKu70qyXBDPv60I2nH45rHN1YMr11bYmkaGduiPEofyRDspieu4yj
+         +QpCYVNyC+0wJBRt9NrTiPDPY6J8JRc0EF6oeiCiqyS2nP1XncPEOTWlgA0e9SzFxiFp
+         T3W7NoELiDBgvGdDEJxE+C/+XP9E6gEWCMs6ihJZFwNu4Ng1Jh2/mdlvBQIFQChu5MQG
+         zTkg==
+X-Gm-Message-State: AO0yUKVPqj1FkkAVphEp5BYXYUxzwCr4296er1ndR3NaHLD+4ZCInKS5
+        p1lnMEg9+5xRV/CyMn1uq6wubBcUDpyg6igjs/qSKkMFQHU=
+X-Google-Smtp-Source: AK7set8xJhluwbKjbdiBJfuBibCdA1yaiCTHLZfumAnwRDfYz20sDp40J9Ke2WR/+hv6OHbeQWfYkXM5QAcZk2WcKXM=
+X-Received: by 2002:a17:903:2644:b0:19a:fdca:e3e9 with SMTP id
+ je4-20020a170903264400b0019afdcae3e9mr1218671plb.10.1677879532312; Fri, 03
+ Mar 2023 13:38:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=ham
+References: <20230121112947.53433-1-robimarko@gmail.com> <20230121112947.53433-4-robimarko@gmail.com>
+ <d71e8a18-8a09-c722-d9dd-b2d48615828f@linaro.org> <CAA8EJppwNVtUjB7fUZSCrZ88Ssbhmc4HD6oA2nV0uEx+vHBXUw@mail.gmail.com>
+ <2a7a43f1-a13d-f094-5167-de74d5092d91@linaro.org> <CAOX2RU6vociXPTQE4tegQE8YXjHgQAHgdQWm3N9PPekgaw3ung@mail.gmail.com>
+ <2faac9b8-03b9-340f-d43f-317624d4d5bb@linaro.org>
+In-Reply-To: <2faac9b8-03b9-340f-d43f-317624d4d5bb@linaro.org>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Fri, 3 Mar 2023 22:38:41 +0100
+Message-ID: <CAOX2RU7GBuDc-uh_EKmXZu57GvRzfwzwESqgts2tUDbDoik-JA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] cpufreq: qcom-nvmem: make qcom_cpufreq_get_msm_id()
+ return the SoC ID
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
+        rafael@kernel.org, viresh.kumar@linaro.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,88 +74,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello John,
-
-John Moon via Libabigail <libabigail@sourceware.org> a =C3=A9crit:
-
-> While the kernel community has been good at maintaining backwards
-> compatibility with kernel UAPIs, it would be helpful to have a tool
-> to check if a commit introduces changes that break backwards
-> compatibility.
+On Fri, 3 Mar 2023 at 21:46, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >
-> To that end, introduce check-uapi.sh: a simple shell script that
-> checks for changes to UAPI headers using libabigail.
 >
-> libabigail is "a framework which aims at helping developers and
-> software distributors to spot some ABI-related issues like interface
-> incompatibility in ELF shared libraries by performing a static
-> analysis of the ELF binaries at hand."
 >
-> The script uses one of libabigail's tools, "abidiff", to compile the
-> changed header before and after the commit to detect any changes.
+> On 3.03.2023 19:38, Robert Marko wrote:
+> > On Sat, 18 Feb 2023 at 21:40, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>
+> >>
+> >>
+> >> On 18.02.2023 21:36, Dmitry Baryshkov wrote:
+> >>> On Sat, 18 Feb 2023 at 16:43, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>>>
+> >>>>
+> >>>>
+> >>>> On 21.01.2023 12:29, Robert Marko wrote:
+> >>>>> Currently, qcom_cpufreq_get_msm_id() does not simply return the SoC ID
+> >>>>> after getting it via SMEM call but instead uses an enum to encode the
+> >>>>> matched SMEM ID to 2 variants of MSM8996 which are then used in
+> >>>>> qcom_cpufreq_kryo_name_version() to set the supported version.
+> >>>>>
+> >>>>> This prevents qcom_cpufreq_get_msm_id() from being universal and its doing
+> >>>>> more than its name suggests, so lets make it just return the SoC ID
+> >>>>> directly which allows matching directly on the SoC ID and removes the need
+> >>>>> for msm8996_version enum which simplifies the driver.
+> >>>>> It also allows reusing the qcom_cpufreq_get_msm_id() for new SoC-s.
+> >>>>>
+> >>>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> >>>>> ---
+> >>>>>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 44 ++++++++--------------------
+> >>>>>  1 file changed, 12 insertions(+), 32 deletions(-)
+> >>>>>
+> >>>>> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> >>>>> index da55d2e1925a..9deaf9521d6d 100644
+> >>>>> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> >>>>> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> >>>>> @@ -32,12 +32,6 @@
+> >>>>>
+> >>>>>  #include <dt-bindings/arm/qcom,ids.h>
+> >>>>>
+> >>>>> -enum _msm8996_version {
+> >>>>> -     MSM8996_V3,
+> >>>>> -     MSM8996_SG,
+> >>>>> -     NUM_OF_MSM8996_VERSIONS,
+> >>>>> -};
+> >>>>> -
+> >>>>>  struct qcom_cpufreq_drv;
+> >>>>>
+> >>>>>  struct qcom_cpufreq_match_data {
+> >>>>> @@ -134,30 +128,16 @@ static void get_krait_bin_format_b(struct device *cpu_dev,
+> >>>>>       dev_dbg(cpu_dev, "PVS version: %d\n", *pvs_ver);
+> >>>>>  }
+> >>>>>
+> >>>>> -static enum _msm8996_version qcom_cpufreq_get_msm_id(void)
+> >>>>> +static int qcom_cpufreq_get_msm_id(void)
+> >>>> This should be u32 as info->id is __le32
+> >
+> > Nice catch.
+> >
+> >
+> >>>>
+> >>>> And please export this function from socinfo, it'll come in
+> >>>> useful for other drivers!
+> >
+> > I intentionally did not do that as socinfo is currently fully optional
+> > and I dont really like
+> > the idea of making it required for anything using SMEM.
+> "anything using SMEM"? As in the drivers, or SoCs?
+> If the former, I don't see how exporting a function from within
+> socid and using it here would make it required for other drivers.
+> If the latter, we're talking non-qcom SoCs. SMEM has been with
+> us forever.
+
+I feel we have a misunderstanding,
+currently, cpufreq-nvmem does not depend on socinfo being built
+so I don't want to require it as a dependency in order to get the SMEM ID.
+
+Granted, socinfo is useful on any QCA SoC so if adding new dependecies to
+cpufreq-nvmem is acceptable I am not against exporting it there.
 >
-> abidiff "compares the ABI of two shared libraries in ELF format. It
-> emits a meaningful report describing the differences between the two
-> ABIs."
 >
-> The script also includes the ability to check the compatibilty of
-> all UAPI headers across commits. This allows developers to inspect
-> the stability of the UAPIs over time.
+> I'm planning to reuse this for Adreno speedbin matching. It's one
+> of those blocks that don't have a revision and/or bin reigster
+> within themselves.
 
-Thank you for working on this.
+I understand the use case, I am sure it will be required in some other places
+sooner or later as well.
 
-The libabigail bits look good to me, for what it's worth.  I just have
-some general considerations to discuss.
-
-[...]
-
-> +# Perform the A/B compilation and compare output ABI
-> +compare_abi() {
-
-[...]
-
-> +	if "$ABIDIFF" --non-reachable-types "${ref_header}.bin" "${base_header}=
-.bin" > "$log"; then
-> +		printf "No ABI differences detected in %s from %s -> %s\n" "$file" "$r=
-ef" "${base_ref:-dirty tree}"
-> +	else
-> +		# If the only changes were additions (not modifications to existing AP=
-Is), then
-> +		# there's no problem. Ignore these diffs.
-> +		if grep "Unreachable types summary" "$log" | grep -q "0 removed" &&
-> +		   grep "Unreachable types summary" "$log" | grep -q "0 changed"; then
-> +			return 0
-
-There is no problem in parsing the output of the tool like this.
-However, the return code of the tool has been designed as a bit field that
-could be analysed to know more about the kind of changes that were
-reported: https://sourceware.org/libabigail/manual/abidiff.html#return-valu=
-es.
-
-Right now, there is no bit assigned to detect new types (or interface)
-addition, but do you think that it would be a helpful new feature to add
-to abidiff for this use case?  We can discuss this in a separate thread
-if you prefer, so that we don't pollute others with this minutiae.
-
-> +		fi
-> +		{
-> +			printf "!!! ABI differences detected in %s from %s -> %s !!!\n\n" "$f=
-ile" "$ref" "${base_ref:-dirty tree}"
-> +			sed  -e '/summary:/d' -e '/changed type/d' -e '/^$/d' -e 's/^/  /g' "=
-$log"
-
-Here again, if you'd like to have a particular output format emitted by
-the tool, we'd be glad to discuss how to improve the plasticity of the
-tool enough to emit the right output for you.  For instance, we could
-add a new --no-summary that would let the tool display the change
-directly without the summary header that you are strimming out with this
-sed script.
-
-[...]
-
-Thanks again for this tool that I think might be very useful.
-
-Cheers,
-
---=20
-		Dodji
+Regards,
+Robert
+>
+> Konrad
+> >
+> > Regards,
+> > Robert
+> >
+> >>
+> >> Konrad
+> >>>
