@@ -2,211 +2,274 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCB656A91CC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 08:39:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 524976A91E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 08:47:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229752AbjCCHjt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 02:39:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39698 "EHLO
+        id S229586AbjCCHrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 02:47:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229586AbjCCHjs (ORCPT
+        with ESMTP id S229534AbjCCHq7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 02:39:48 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5A6D14980
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 23:39:45 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id g3so6909987eda.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 23:39:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677829184;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BGfQhG/t4N08bdM7OR/sIi9YbqrZcvYiGl1Zpsb/00E=;
-        b=qm+sRjzjWfPhDM5vw99jBp+rka6Tb/wWGoi99N0seSzXGNpg10ZNfvz0FmLVzmPgox
-         7j0aC6SEr3F0/SJ3QF6oNxmIObprZuh3Zv5jjjS9KrEmm0AdfDP/ANFgxz+Ad0INKhVF
-         njd4zOqN5WeEvllppaIjf+FX2rvFRL/AxJ/X/7dskF0ctfuFveoyz0HoaFEdGzHtDNsG
-         eXjFRb+qpaj9MsChZF2FuGLNwBQd5ilhFMjIYrsAlk3Nt1izDwSo8fmc6IuysABvmv8h
-         4+/6lF1qVlrZuQfrBXJgfIqpLGesRe1+rTAkxNd5bh+TeOyTDpjipaMpT97mnjVzVdjD
-         5nPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677829184;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BGfQhG/t4N08bdM7OR/sIi9YbqrZcvYiGl1Zpsb/00E=;
-        b=UtCGQfUTKNn6asTatWcBEVg9EErPw6baQgHCcHNxCl6UfA/sA5uzJs6TNMq5ymFRlT
-         VJckit5gAgTKbbIUUGYM/774kLHCdo1C5iqfu8ExViDl/enDXR25dSYLBbdJtfXxQ3rq
-         wxn1PEaMBzbg/I/XjqQoq7zfTmI/Gl+rhtWM0dAMnAOnxexwsFUCU/yx/roORrQp+/Po
-         MzcwA/sqBsv73bhEMKEA5LcHRYpZlgvIKvSBskWSLFxy8+3y4EJQwYuARtYuOkg9DmVn
-         XSWgjAUFL9n3gO1jbBJeNk+p9LJvhF0IRwwL00XyTLKvA8AZVPj5f/fat/jTD+uHzW+1
-         rKTw==
-X-Gm-Message-State: AO0yUKWByM0iEhawGNZkbbHo8gbmMCZjdftJQNIhUaawX1QBNF6LTsoD
-        EbMgrSflzuDloYH1CaQ3nQrk/A==
-X-Google-Smtp-Source: AK7set/LjHBtEwT+6v5RMbFWSyOlRzU4/Gmj8s46nsQwGhXtC/Up0AYfqUZfe2DNqka4LUW7LkdWRg==
-X-Received: by 2002:a17:907:72c2:b0:8ad:51e9:cd57 with SMTP id du2-20020a17090772c200b008ad51e9cd57mr1001868ejc.49.1677829184258;
-        Thu, 02 Mar 2023 23:39:44 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id n21-20020a17090625d500b00905a1abecbfsm650572ejb.47.2023.03.02.23.39.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Mar 2023 23:39:43 -0800 (PST)
-Message-ID: <1c692257-44b5-c443-33d8-1516da3be722@linaro.org>
-Date:   Fri, 3 Mar 2023 08:39:42 +0100
+        Fri, 3 Mar 2023 02:46:59 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 852A4521EF;
+        Thu,  2 Mar 2023 23:46:58 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32357uFJ011344;
+        Fri, 3 Mar 2023 07:46:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=NIT8nTfoZl7k2Y7KV2J6qVcc307frlqqTymfIe0oI6w=;
+ b=UoTOi4FigknZq+zCecWn+Wv/is2aP4fmLZvFxpo0lZuOvrFb6FMdUtbW+hHFrZR0yKcd
+ vrJKqFj4dHG8fKipomeoUS3F+2nzDa4ppLtQURiaq6ecqZ2yrejfP0eGtsDlhMjNQzam
+ diG8WW9VUGaSft3gaMycrYDlBXT4yGMTjln0Xwu0cT1LG/V5JaNvggxiDPVK1zZAIpEd
+ oMdGmwsbun2Kij/4UxyoKbRsTpaci7o0wfdlSGyyQDebIDagzWQfBZkVqni8efT2S6/Q
+ mjfrrj2wO6CBKfgGDE7Rrj+7O+5IP0bu7AG6880hetnlUXYHofczQqHehCX2hhvvThYl QQ== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p2ar1572c-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 03 Mar 2023 07:46:48 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3237kmo7003991
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 3 Mar 2023 07:46:48 GMT
+Received: from [10.216.34.86] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 2 Mar 2023
+ 23:46:45 -0800
+Message-ID: <fe07806e-e77b-1198-1ffb-be8e2df53dd6@quicinc.com>
+Date:   Fri, 3 Mar 2023 13:16:41 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
+Subject: Re: [PATCH v2 3/4] firmware: qcom_scm: Refactor code to support
+ multiple download mode
 Content-Language: en-US
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <cover.1677749625.git.quic_varada@quicinc.com>
- <6b8d17006d8ee9a1b0c4df803c1cc7caf53ea3ef.1677749625.git.quic_varada@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <6b8d17006d8ee9a1b0c4df803c1cc7caf53ea3ef.1677749625.git.quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1677664555-30191-1-git-send-email-quic_mojha@quicinc.com>
+ <1677664555-30191-4-git-send-email-quic_mojha@quicinc.com>
+ <469b4a3a-ea40-ad6b-2848-210325b8914c@linaro.org>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <469b4a3a-ea40-ad6b-2848-210325b8914c@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4dfNWHSxzdhU401kYcwlHKg-SFsvvD7p
+X-Proofpoint-ORIG-GUID: 4dfNWHSxzdhU401kYcwlHKg-SFsvvD7p
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-03_01,2023-03-02_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ bulkscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 spamscore=0 mlxlogscore=999 adultscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2303030068
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/03/2023 10:55, Varadarajan Narayanan wrote:
-> Add USB phy and controller related nodes
+Thanks for your time in checking this..
+
+On 3/1/2023 4:29 PM, Dmitry Baryshkov wrote:
+> On 01/03/2023 11:55, Mukesh Ojha wrote:
+>> Currently on Qualcomm SoC, download_mode is enabled if
+>> CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT is selected.
+>>
+>> Refactor the code such that it supports multiple download
+>> modes and drop CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT config
+>> instead, give interface to set the download mode from
+>> module parameter.
+>>
+>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>> ---
+>> Changes in v2:
+>>   - Passed download mode as parameter
+>>   - Accept human accepatable download mode string.
+>>   - enable = !!dload_mode
+>>   - Shifted module param callback to somewhere down in
+>>     the file so that it no longer need to know the
+>>     prototype of qcom_scm_set_download_mode()
+>>   - updated commit text.
+>>
+>>   drivers/firmware/Kconfig    | 11 --------
+>>   drivers/firmware/qcom_scm.c | 65 
+>> ++++++++++++++++++++++++++++++++++++++-------
+>>   2 files changed, 56 insertions(+), 20 deletions(-)
+>>
+>> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+>> index b59e304..ff7e9f3 100644
+>> --- a/drivers/firmware/Kconfig
+>> +++ b/drivers/firmware/Kconfig
+>> @@ -215,17 +215,6 @@ config MTK_ADSP_IPC
+>>   config QCOM_SCM
+>>       tristate
+>> -config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
+>> -    bool "Qualcomm download mode enabled by default"
+>> -    depends on QCOM_SCM
+>> -    help
+>> -      A device with "download mode" enabled will upon an unexpected
+>> -      warm-restart enter a special debug mode that allows the user to
+>> -      "download" memory content over USB for offline postmortem 
+>> analysis.
+>> -      The feature can be enabled/disabled on the kernel command line.
+>> -
+>> -      Say Y here to enable "download mode" by default.
+>> -
+>>   config SYSFB
+>>       bool
+>>       select BOOT_VESA_SUPPORT
+>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>> index c9f1fad..ca07208 100644
+>> --- a/drivers/firmware/qcom_scm.c
+>> +++ b/drivers/firmware/qcom_scm.c
+>> @@ -17,17 +17,22 @@
+>>   #include <linux/clk.h>
+>>   #include <linux/reset-controller.h>
+>>   #include <linux/arm-smccc.h>
+>> +#include <linux/kstrtox.h>
+>>   #include "qcom_scm.h"
+>> -static bool download_mode = 
+>> IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT);
+>> -module_param(download_mode, bool, 0);
+>> -
+>>   #define SCM_HAS_CORE_CLK    BIT(0)
+>>   #define SCM_HAS_IFACE_CLK    BIT(1)
+>>   #define SCM_HAS_BUS_CLK        BIT(2)
+>>   #define QCOM_DOWNLOAD_MODE_MASK 0x30
+>> +#define QCOM_DOWNLOAD_FULLDUMP    0x10
+>> +#define QCOM_DOWNLOAD_NODUMP    0x0
+>> +
+>> +#define MAX_DLOAD_LEN    8
+>> +
+>> +static char download_mode[] = "off";
+>> +static u32 dload_mode;
+>>   struct qcom_scm {
+>>       struct device *dev;
+>> @@ -417,8 +422,9 @@ static int __qcom_scm_set_dload_mode(struct device 
+>> *dev, bool enable)
+>>       return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
+>>   }
+>> -static void qcom_scm_set_download_mode(bool enable)
+>> +static void qcom_scm_set_download_mode(u32 dload_mode)
+>>   {
+>> +    bool enable = !!dload_mode;
+>>       bool avail;
+>>       int ret = 0;
+>>       u32 val;
+>> @@ -438,7 +444,7 @@ static void qcom_scm_set_download_mode(bool enable)
+>>           val &= ~QCOM_DOWNLOAD_MODE_MASK;
+>>           if (enable)
+>> -            val |= QCOM_SCM_BOOT_SET_DLOAD_MODE;
+>> +            val |= dload_mode;
+>>           ret = qcom_scm_io_writel(__scm->dload_mode_addr, val);
+>>       } else {
+>> @@ -1338,6 +1344,47 @@ bool qcom_scm_is_available(void)
+>>   }
+>>   EXPORT_SYMBOL(qcom_scm_is_available);
+>> +static int set_dload_mode(const char *val, const struct kernel_param 
+>> *kp)
+>> +{
+>> +    int ret;
+>> +
+>> +    if (!strncmp(val, "full", strlen("full"))) {
+>> +        dload_mode = QCOM_DOWNLOAD_FULLDUMP;
+>> +    } else if (!strncmp(val, "off", strlen("off"))) {
+>> +        dload_mode = QCOM_DOWNLOAD_NODUMP;
+>> +    } else {
+>> +        if (kstrtouint(val, 0, &dload_mode) ||
+>> +             !(dload_mode == 0 || dload_mode == 1)) {
+>> +            pr_err("unknown download mode\n");
+>> +            return -EINVAL;
+>> +        }
+>> +
+>> +    }
+>> +
+>> +    ret = param_set_copystring(val, kp);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>> +    if (__scm)
+>> +        qcom_scm_set_download_mode(dload_mode);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static const struct kernel_param_ops dload_mode_param_ops = {
+>> +    .set = set_dload_mode,
+>> +    .get = param_get_string,
 > 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 92 +++++++++++++++++++++++++++++++++++
->  1 file changed, 92 insertions(+)
+> Please follow the param_get_bool approach and return sanitized data 
+> here. In other words, "full" / "none" depending on the dload_mode 
+> instead of storing the passed string and returning it later.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 2bb4053..319b5bd 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -215,6 +215,98 @@
->  		#size-cells = <1>;
->  		ranges = <0 0 0 0xffffffff>;
->  
-> +		ssphy_0: ssphy@7D000 {
 
-Node names should be generic.
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+This could be done.
 
-Does not look like you tested the DTS against bindings. Please run `make
-dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-for instructions).
+>> +};
+>> +
+>> +static struct kparam_string dload_mode_param = {
+>> +    .string = download_mode,
+>> +    .maxlen = MAX_DLOAD_LEN,
+> 
+> I think writing "full" to this param might overwrite some kernel data. 
+> "00000000" should be even worse.
 
-> +			compatible = "qcom,ipq9574-qmp-usb3-phy";
-> +			reg = <0x7D000 0x1C4>;
-> +			#clock-cells = <1>;
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +			ranges;
-> +
-> +			clocks = <&gcc GCC_USB0_AUX_CLK>,
-> +				 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>;
-> +			clock-names = "aux", "cfg_ahb";
-> +
-> +			resets =  <&gcc GCC_USB0_PHY_BCR>,
-> +				 <&gcc GCC_USB3PHY_0_PHY_BCR>;
-> +			reset-names = "phy","common";
-> +			status = "disabled";
-> +
-> +			usb0_ssphy: lane@7D200 {
-> +				reg = <0x0007D200 0x130>,	/* Tx */
-> +				      <0x0007D400 0x200>,	/* Rx */
-> +				      <0x0007D800 0x1F8>,	/* PCS  */
-> +				      <0x0007D600 0x044>;	/* PCS misc */
-> +				#phy-cells = <0>;
-> +				clocks = <&gcc GCC_USB0_PIPE_CLK>;
-> +				clock-names = "pipe0";
-> +				clock-output-names = "gcc_usb0_pipe_clk_src";
-> +			};
-> +		};
-> +
-> +		qusb_phy_0: qusb@7B000 {
+There is check in param_set_copystring() which would avoid that.
 
-Node names should be generic.
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+> 
+>> +};
+>> +
+>> +module_param_cb(download_mode, &dload_mode_param_ops, 
+>> &dload_mode_param, 0644);
+>> +MODULE_PARM_DESC(download_mode,
+>> +         "Download mode: off/full or 0/1/off/on for existing users");
+> 
+> Nit: on is not supported even for existing users.
 
-Does not look like you tested the DTS against bindings. Please run `make
-dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-for instructions).
+Agree. just 0/1 would do fine there.
 
-> +			compatible = "qcom,ipq9574-qusb2-phy";
-> +			reg = <0x07B000 0x180>;
-
-Lowercase hex everywhere.
-
-> +			#phy-cells = <0>;
-> +
-> +			clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
-> +				<&xo_board_clk>;
-> +			clock-names = "cfg_ahb", "ref";
-> +
-> +			resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
-> +			status = "disabled";
-> +		};
-> +
-> +		usb3: usb3@8A00000 {
-
-Node names should be generic.
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-
-Does not look like you tested the DTS against bindings. Please run `make
-dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-for instructions).
-
-> +			compatible = "qcom,dwc3";
-> +			reg = <0x8AF8800 0x400>;
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +			ranges;
-> +
-> +			clocks = <&gcc GCC_SNOC_USB_CLK>,
-> +				<&gcc GCC_ANOC_USB_AXI_CLK>,
-> +				<&gcc GCC_USB0_MASTER_CLK>,
-> +				<&gcc GCC_USB0_SLEEP_CLK>,
-> +				<&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> +
-> +			clock-names = "sys_noc_axi",
-> +				"anoc_axi",
-> +				"master",
-> +				"sleep",
-> +				"mock_utmi";
-> +
-> +			assigned-clocks = <&gcc GCC_SNOC_USB_CLK>,
-> +					  <&gcc GCC_ANOC_USB_AXI_CLK>,
-> +					  <&gcc GCC_USB0_MASTER_CLK>,
-> +					  <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> +			assigned-clock-rates = <200000000>,
-> +					       <200000000>,
-> +					       <200000000>,
-> +					       <24000000>;
-> +
-> +			resets = <&gcc GCC_USB_BCR>;
-> +			status = "disabled";
-> +
-> +			dwc_0: dwc3@8A00000 {
-
-Node names should be generic.
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-
-Does not look like you tested the DTS against bindings. Please run `make
-dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-for instructions).
-
-
-Best regards,
-Krzysztof
-
+-Mukesh
+> 
+>> +
+>>   static int qcom_scm_probe(struct platform_device *pdev)
+>>   {
+>>       struct qcom_scm *scm;
+>> @@ -1418,12 +1465,12 @@ static int qcom_scm_probe(struct 
+>> platform_device *pdev)
+>>       __get_convention();
+>>       /*
+>> -     * If requested enable "download mode", from this point on warmboot
+>> +     * If download mode is requested, from this point on warmboot
+>>        * will cause the boot stages to enter download mode, unless
+>>        * disabled below by a clean shutdown/reboot.
+>>        */
+>> -    if (download_mode)
+>> -        qcom_scm_set_download_mode(true);
+>> +    if (dload_mode)
+>> +        qcom_scm_set_download_mode(dload_mode);
+>>       return 0;
+>>   }
+>> @@ -1431,7 +1478,7 @@ static int qcom_scm_probe(struct platform_device 
+>> *pdev)
+>>   static void qcom_scm_shutdown(struct platform_device *pdev)
+>>   {
+>>       /* Clean shutdown, disable download mode to allow normal restart */
+>> -    qcom_scm_set_download_mode(false);
+>> +    qcom_scm_set_download_mode(QCOM_DOWNLOAD_NODUMP);
+>>   }
+>>   static const struct of_device_id qcom_scm_dt_match[] = {
+> 
