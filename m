@@ -2,65 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C96D6A94F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 11:13:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7013C6A9579
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 11:43:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230500AbjCCKNS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 05:13:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60094 "EHLO
+        id S229683AbjCCKnq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 05:43:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230470AbjCCKNO (ORCPT
+        with ESMTP id S229447AbjCCKnp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 05:13:14 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AD78E3B7;
-        Fri,  3 Mar 2023 02:13:05 -0800 (PST)
+        Fri, 3 Mar 2023 05:43:45 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C60A0113D9;
+        Fri,  3 Mar 2023 02:43:44 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C304D617AE;
-        Fri,  3 Mar 2023 10:13:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACAFFC433EF;
-        Fri,  3 Mar 2023 10:12:58 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 7E83FB81854;
+        Fri,  3 Mar 2023 10:43:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF302C433D2;
+        Fri,  3 Mar 2023 10:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677838384;
-        bh=I3YTJmXVNHKlfct4pF/Gpd4n3hHW6jTk2WQfuDF+BRU=;
+        s=k20201202; t=1677840222;
+        bh=tUVMasFlU6t7eOjsQ/0W5M32YRxx/KOO9ZB7UVG3/ks=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=dQ2axPFmfU3mfTJVy8xDTiAEga1QW6aLT3ZcfF9Hdx/oQzhYdXpWkDyZnDsQ+9tlo
-         CeP42qCjJoi7MaLiwggDqe1bnQbUim1+yTDVEaZ9B0tXjYCyml7bKVOdN6uj0yqYhE
-         C320RI+BlD85isN103aAwUL0fT3H/t6Aqj/fmQijOmTO/EuxL6nwyEREIhzbu7GP1k
-         kcoANLKNexiN5w8T+YptWJdBkF+3J5HjjyJqUCKRwU000GNTtVPn63NUUSbXw9ATqB
-         hM1PYXdyQ8bucksmiXdPBnGLoWYiYzRS2oqibtGfCKRUq7x+sI1CgRduBzNABv5s3G
-         bXsyQ1eNZF5Ew==
-Date:   Fri, 3 Mar 2023 10:12:55 +0000
+        b=r5adkAsucnPwqxukbPfFcYy1aAG3UamVWCxS/zjh5BDpz6dZjx1EyTGhruL+jVK+4
+         rkVu3gDTf4LJJ+iNfAmME6Fqoh+99fbBJvgW3kqdBCBwzfH/HysKNkLhiUXqw5ND6Y
+         FODREBMBsZLCrWdH4yEWvQ28FBQzwKRK9o9FZlx/jBsXiWpxDETU8owylCkKu5xLGb
+         mmiPJos088VOPu574IqyHuj9zd0jqKxf0VHysys3R4QbSIkxEjDocTKYhqj2f9tyYa
+         ZxQjDBq5Usv86K+4W2LvQaLkz/F2SLOPQkI53Xiej32Yqh3t+7OasEemqBWwMU321F
+         fXA2JdE7OOTJA==
+Date:   Fri, 3 Mar 2023 10:43:37 +0000
 From:   Lee Jones <lee@kernel.org>
-To:     Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+To:     Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        jassisinghbrar@gmail.com, catalin.marinas@arm.com, will@kernel.org,
-        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
-        robimarko@gmail.com, dmitry.baryshkov@linaro.org,
-        nfraprado@collabora.com, broonie@kernel.org,
-        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_devipriy@quicinc.com
-Subject: Re: [PATCH V3 5/5] dt-bindings: mfd: Add the tcsr compatible for
- IPQ9574
-Message-ID: <20230303101255.GN2303077@google.com>
-References: <20230208053332.16537-1-quic_poovendh@quicinc.com>
- <20230208053332.16537-6-quic_poovendh@quicinc.com>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 1/4] mfd: qcom-pm8008: Fix swapped mask/unmask in irq
+ chip
+Message-ID: <20230303104337.GS2303077@google.com>
+References: <20230216222214.138671-1-aidanmacdonald.0x0@gmail.com>
+ <20230216222214.138671-2-aidanmacdonald.0x0@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230208053332.16537-6-quic_poovendh@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+In-Reply-To: <20230216222214.138671-2-aidanmacdonald.0x0@gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,19 +56,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 08 Feb 2023, Poovendhan Selvaraj wrote:
+On Thu, 16 Feb 2023, Aidan MacDonald wrote:
 
-> Add the tcsr compatible string for IPQ9574 SoC
+> The usual behavior of mask registers is writing a '1' bit to
+> disable (mask) an interrupt; similarly, writing a '1' bit to
+> an unmask register enables (unmasks) an interrupt.
 > 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+> Due to a longstanding issue in regmap-irq, mask and unmask
+> registers were inverted when both kinds of registers were
+> present on the same chip, ie. regmap-irq actually wrote '1's
+> to the mask register to enable an IRQ and '1's to the unmask
+> register to disable an IRQ.
+> 
+> This was fixed by commit e8ffb12e7f06 ("regmap-irq: Fix
+> inverted handling of unmask registers") but the fix is opt-in
+> via mask_unmask_non_inverted = true because it requires manual
+> changes for each affected driver. The new behavior will become
+> the default once all drivers have been updated.
+> 
+> The PM8008 appears to rely on the inverted behavior. It has
+> separate set & clear registers for a register called INT_EN,
+> which presumably enables interrupts by writing '1's. Opt in
+> to the new non-inverted behavior & swap mask_base/unmask_base.
+> 
+> Signed-off-by: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
 > ---
->  Changes in V3:
-> 	- Updated the subject
-> 	- Added the Acked by tag
-> 
->  Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  drivers/mfd/qcom-pm8008.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 
 Applied, thanks
 
