@@ -2,59 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 024ED6A9C1D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 17:48:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 90ED86A9DBB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 18:31:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231130AbjCCQsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 11:48:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57246 "EHLO
+        id S231173AbjCCRbs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 12:31:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231271AbjCCQst (ORCPT
+        with ESMTP id S231131AbjCCRbr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 11:48:49 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98C013B64E;
-        Fri,  3 Mar 2023 08:48:24 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E50366189A;
-        Fri,  3 Mar 2023 16:48:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D00C433A0;
-        Fri,  3 Mar 2023 16:48:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677862103;
-        bh=vLHp6zfTAtlmPAsNSVAaON653kcH7IWEthUS+f3d9jE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=BPi6ora5KkXwil7JTuFP5WMoI7+GYA51OE6LgUi8oxJmJKwxDEQacbEmofLEZs4bA
-         4vGdSTrlImplGjX1478iDKA6GEh3AflKGr0Kvw8MO4Ux5zhvz2eiGsZGhP4fRZ30Hs
-         oyQZ7y20+Z42gS9HAfM0O71N0rFOLGEYnwNUFE7kxDUzNFn6Vr1ofQkezosac0rXkI
-         IulhKXidHaoIzsrxVARyef5JI7RA1lI9TEYyyuNnT96XqpM8Rf02Uoipz/9+8c9NOa
-         22fRh35/cD2z7zIMl1Nw+lVgDnrjfBkEeV39TPEhD7ZW7Mwc9e3zSl/ZFbabxYC4O6
-         y8UqrN0WK0zRg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1pY8aV-0003Qi-Mx; Fri, 03 Mar 2023 17:48:55 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2 4/4] drm/msm/adreno: clean up component ops indentation
-Date:   Fri,  3 Mar 2023 17:48:07 +0100
-Message-Id: <20230303164807.13124-5-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230303164807.13124-1-johan+linaro@kernel.org>
-References: <20230303164807.13124-1-johan+linaro@kernel.org>
+        Fri, 3 Mar 2023 12:31:47 -0500
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EB485A6D6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Mar 2023 09:31:45 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id b10so3162847ljr.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Mar 2023 09:31:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Lulx79GyAFA+P6dFOCo5Azji9mlKR6wcVUynCnl38KE=;
+        b=JITNzhiSKTtjoAwF8+7ZzK3BFkI2QL7n7qvc8NL4tf2TdDiB42bCjsYe/izBt4P+9P
+         lczExnj88Gk6EJnFrpd+rDJqpJLXZrFWJejHE/41SNNpPSOPSMY/t+ka4b5SsJVrPLHS
+         yP8QlZ4A7u0QnpLqepfRRA6oRNAfFlMSLg9RFndTA4G2xf3m6mlZCv7MgAmlGP0c8oWl
+         i8wFp/FD38t10Lcua1M5QYwo/GKeCH7BrCeFC0Qg6KOLMCMSWiBQE04bFJRqxsde4oFG
+         7xr+53mwxla2EbiKtNRjabsAbACLLZZ8qk5BGu7Xf1wCkEqYOCB87CCuHWnFs7PFvCvc
+         ilNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Lulx79GyAFA+P6dFOCo5Azji9mlKR6wcVUynCnl38KE=;
+        b=dl5eVgOyvuQSDZ3U9uHcZVtqhKy402hxZp06rwhovEFLhnyxqCl9uQ78ThwqjeZlgF
+         Dkrp+QteJAnLzs5q2sdaAehOnzvpAELCBUQU5i1EC/NkpMWfcG5XDtFNhPnyaO0zPzG0
+         0zRrv8N1PRtmRdwgx8GPAxZtz4qnR/9POg4DwMRxigq1hSVzHKlhCBKaSATL3Eo+242H
+         rrz5PL2yX2g4IBPhSekFkjFPC98cMNVa7fyhW/82twN+qY9LMZ/8+WIM51EAKI40Wzij
+         W6BJShD/D20FMR7rWXKNmqoYzuWiY5SsnuuqweAIPNU3ozGAKvfjQ0VXEOL0kFUnwY/T
+         dulA==
+X-Gm-Message-State: AO0yUKVoN18NGfOgzw1fDTKWJV2/W485izgNt3OkunzHDosLjfF8SEh3
+        oyYLmuk1cH6w8YgHanVLgW8dQg==
+X-Google-Smtp-Source: AK7set+TY6SCuyHzL+clUmus/vGmZ+jVnXAk/MpTCOHfN+mCHX0WkFtQ6gXt+GN97vVUzr2U7gu7/g==
+X-Received: by 2002:a2e:b019:0:b0:295:a3a9:a3e4 with SMTP id y25-20020a2eb019000000b00295a3a9a3e4mr848742ljk.45.1677864703905;
+        Fri, 03 Mar 2023 09:31:43 -0800 (PST)
+Received: from [127.0.0.1] (85-76-129-102-nat.elisa-mobile.fi. [85.76.129.102])
+        by smtp.gmail.com with ESMTPSA id f8-20020a2e6a08000000b0029571d2226bsm402252ljc.11.2023.03.03.09.31.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Mar 2023 09:31:43 -0800 (PST)
+Date:   Fri, 03 Mar 2023 17:16:58 +0200
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Devi Priya <quic_devipriy@quicinc.com>
+CC:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, mturquette@baylibre.com,
+        sboyd@kernel.org, p.zabel@pengutronix.de, svarbanov@mm-sol.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-clk@vger.kernel.org,
+        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/7=5D_dt-bindings=3A_PCI=3A_q?= =?US-ASCII?Q?com=3A_Add_IPQ9574_specific_compatible?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20230228063358.GA4839@thinkpad>
+References: <20230214164135.17039-1-quic_devipriy@quicinc.com> <20230214164135.17039-2-quic_devipriy@quicinc.com> <20230224082332.GA5443@thinkpad> <bd153038-4427-1f11-1941-5f13fec01cf7@quicinc.com> <20230228063358.GA4839@thinkpad>
+Message-ID: <9BD62D8E-4E14-4269-B72D-C83EF4D43040@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,29 +83,183 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Clean up the component ops initialisers which were indented one level
-too far.
+28 =D1=84=D0=B5=D0=B2=D1=80=D0=B0=D0=BB=D1=8F 2023 =D0=B3=2E 08:33:58 GMT+0=
+2:00, Manivannan Sadhasivam <mani@kernel=2Eorg> =D0=BF=D0=B8=D1=88=D0=B5=D1=
+=82:
+>On Tue, Feb 28, 2023 at 10:56:53AM +0530, Devi Priya wrote:
+>>=20
+>>=20
+>> On 2/24/2023 1:53 PM, Manivannan Sadhasivam wrote:
+>> > On Tue, Feb 14, 2023 at 10:11:29PM +0530, Devi Priya wrote:
+>> > > Document the compatible for IPQ9574
+>> > >=20
+>> Hi Mani, Thanks for taking time to review the patch=2E
+>> >=20
+>> > You didn't mention about the "msi-parent" property that is being adde=
+d
+>> > by this patch
+>> Sure, will update the commit message in the next spin
+>> >=20
+>> > > Signed-off-by: Devi Priya <quic_devipriy@quicinc=2Ecom>
+>> > > ---
+>> > >   =2E=2E=2E/devicetree/bindings/pci/qcom,pcie=2Eyaml    | 72 ++++++=
+++++++++++++-
+>> > >   1 file changed, 70 insertions(+), 2 deletions(-)
+>> > >=20
+>> > > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie=2Eyaml=
+ b/Documentation/devicetree/bindings/pci/qcom,pcie=2Eyaml
+>> > > index 872817d6d2bd=2E=2Edabdf2684e2d 100644
+>> > > --- a/Documentation/devicetree/bindings/pci/qcom,pcie=2Eyaml
+>> > > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie=2Eyaml
+>> > > @@ -26,6 +26,7 @@ properties:
+>> > >             - qcom,pcie-ipq8064-v2
+>> > >             - qcom,pcie-ipq8074
+>> > >             - qcom,pcie-ipq8074-gen3
+>> > > +          - qcom,pcie-ipq9574
+>> > >             - qcom,pcie-msm8996
+>> > >             - qcom,pcie-qcs404
+>> > >             - qcom,pcie-sa8540p
+>> > > @@ -44,11 +45,11 @@ properties:
+>> > >     reg:
+>> > >       minItems: 4
+>> > > -    maxItems: 5
+>> > > +    maxItems: 6
+>> > >     reg-names:
+>> > >       minItems: 4
+>> > > -    maxItems: 5
+>> > > +    maxItems: 6
+>> > >     interrupts:
+>> > >       minItems: 1
+>> > > @@ -105,6 +106,8 @@ properties:
+>> > >       items:
+>> > >         - const: pciephy
+>> > > +  msi-parent: true
+>> > > +
+>> > >     power-domains:
+>> > >       maxItems: 1
+>> > > @@ -173,6 +176,27 @@ allOf:
+>> > >               - const: parf # Qualcomm specific registers
+>> > >               - const: config # PCIe configuration space
+>> > > +  - if:
+>> > > +      properties:
+>> > > +        compatible:
+>> > > +          contains:
+>> > > +            enum:
+>> > > +              - qcom,pcie-ipq9574
+>> > > +    then:
+>> > > +      properties:
+>> > > +        reg:
+>> > > +          minItems: 5
+>> > > +          maxItems: 6
+>> > > +        reg-names:
+>> > > +          minItems: 5
+>> > > +          items:
+>> > > +            - const: dbi # DesignWare PCIe registers
+>> > > +            - const: elbi # External local bus interface registers
+>> > > +            - const: atu # ATU address space
+>> > > +            - const: parf # Qualcomm specific registers
+>> > > +            - const: config # PCIe configuration space
+>> > > +            - const: aggr_noc #PCIe aggr_noc
+>> >=20
+>> > Why do you need this region unlike other SoCs? Is the driver making u=
+se of it?
+>> We have the aggr_noc region in ipq9574 to achieve higher throughput & t=
+o
+>> handle multiple PCIe instances=2E The driver uses it to rate adapt 1-la=
+ne PCIe
+>> clocks=2E My bad, missed it=2E Will add the driver changes in V2=2E
+>
+>Hmm, this is something new=2E How can you achieve higher throughput with =
+this
+>region? Can you explain more on how it is used?
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/gpu/drm/msm/adreno/adreno_device.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Based on the name of the region, it looks like it is an interconnect regio=
+n=2E=20
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index d9100e3870bc..f2cdc5ad7ce7 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -571,8 +571,8 @@ static void adreno_unbind(struct device *dev, struct device *master,
- }
- 
- static const struct component_ops a3xx_ops = {
--		.bind   = adreno_bind,
--		.unbind = adreno_unbind,
-+	.bind   = adreno_bind,
-+	.unbind = adreno_unbind,
- };
- 
- static void adreno_device_register_headless(void)
--- 
-2.39.2
+Devi, if this is the case, then you have to handle it through the intercon=
+nect driver, rather than poking directly into these registers=2E
+
+
+>
+>Thanks,
+>Mani
+>
+>> >=20
+>> > Thanks,
+>> > Mani
+>> >=20
+>> > > +
+>> > >     - if:
+>> > >         properties:
+>> > >           compatible:
+>> > > @@ -365,6 +389,39 @@ allOf:
+>> > >               - const: ahb # AHB Reset
+>> > >               - const: axi_m_sticky # AXI Master Sticky reset
+>> > > +  - if:
+>> > > +      properties:
+>> > > +        compatible:
+>> > > +          contains:
+>> > > +            enum:
+>> > > +              - qcom,pcie-ipq9574
+>> > > +    then:
+>> > > +      properties:
+>> > > +        clocks:
+>> > > +          minItems: 6
+>> > > +          maxItems: 6
+>> > > +        clock-names:
+>> > > +          items:
+>> > > +            - const: ahb  # AHB clock
+>> > > +            - const: aux  # Auxiliary clock
+>> > > +            - const: axi_m # AXI Master clock
+>> > > +            - const: axi_s # AXI Slave clock
+>> > > +            - const: axi_bridge # AXI bridge clock
+>> > > +            - const: rchng
+>> > > +        resets:
+>> > > +          minItems: 8
+>> > > +          maxItems: 8
+>> > > +        reset-names:
+>> > > +          items:
+>> > > +            - const: pipe # PIPE reset
+>> > > +            - const: sticky # Core Sticky reset
+>> > > +            - const: axi_s_sticky # AXI Slave Sticky reset
+>> > > +            - const: axi_s # AXI Slave reset
+>> > > +            - const: axi_m_sticky # AXI Master Sticky reset
+>> > > +            - const: axi_m # AXI Master reset
+>> > > +            - const: aux # AUX Reset
+>> > > +            - const: ahb # AHB Reset
+>> > > +
+>> > >     - if:
+>> > >         properties:
+>> > >           compatible:
+>> > > @@ -681,6 +738,16 @@ allOf:
+>> > >           - interconnects
+>> > >           - interconnect-names
+>> > > +  - if:
+>> > > +      properties:
+>> > > +        compatible:
+>> > > +          contains:
+>> > > +            enum:
+>> > > +              - qcom,pcie-ipq9574
+>> > > +    then:
+>> > > +      required:
+>> > > +        - msi-parent
+>> > > +
+>> > >     - if:
+>> > >         not:
+>> > >           properties:
+>> > > @@ -693,6 +760,7 @@ allOf:
+>> > >                   - qcom,pcie-ipq8064v2
+>> > >                   - qcom,pcie-ipq8074
+>> > >                   - qcom,pcie-ipq8074-gen3
+>> > > +                - qcom,pcie-ipq9574
+>> > >                   - qcom,pcie-qcs404
+>> > >       then:
+>> > >         required:
+>> > > --=20
+>> > > 2=2E17=2E1
+>> > >=20
+>> >=20
+>> Thanks,
+>> Devi Priya
+>
 
