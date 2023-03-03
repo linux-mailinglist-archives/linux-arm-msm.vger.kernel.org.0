@@ -2,258 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 083726A9DE2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 18:40:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 180FB6A9F48
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 19:40:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230443AbjCCRkw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 12:40:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58748 "EHLO
+        id S231794AbjCCSkV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 13:40:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230220AbjCCRkv (ORCPT
+        with ESMTP id S232023AbjCCSjz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 12:40:51 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FA5A1B55B;
-        Fri,  3 Mar 2023 09:40:50 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CF70C618B0;
-        Fri,  3 Mar 2023 17:40:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23E4C4339C;
-        Fri,  3 Mar 2023 17:40:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677865249;
-        bh=z/rHLZz/0hkO+xtkjFB3n0wD+uJunnsmtzF3M+39Xao=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=HZ+6phsdT8C1M8DaZ/UHcrcw2rnOepaj/Dwo1ZXPNO49+Jo0PeXI7WeclV6K7pp3O
-         vxOuBLYgJlSM5ylSQ2WxVdMZtzB75JeTd6x7aq2JD7crEVDBqT4gHY3QAypE7FTkEa
-         RAOgYBRR+rXOCsfx7vmZl0FaY8SP8XnStYa3pfYgmzV6ad/VKyrgn4HI+SpSZ5QUD9
-         Czmtoae2gseMWNI1p36kGBfVgGtpluGo63UEZNAy7zkxIcsMniQ0B2DWFqX+jh1TjJ
-         dB9a3oo4HWwOtDY5lcVY907g4Sk0egabZ0KnCVsRF1AwKm9mSsh7J2lEfss5vMKYDC
-         WY5d74vo6PJew==
-Date:   Fri, 3 Mar 2023 23:10:36 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, mturquette@baylibre.com,
-        sboyd@kernel.org, p.zabel@pengutronix.de, svarbanov@mm-sol.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-clk@vger.kernel.org,
-        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com
-Subject: Re: [PATCH 1/7] dt-bindings: PCI: qcom: Add IPQ9574 specific
- compatible
-Message-ID: <20230303174036.GB6782@thinkpad>
-References: <20230214164135.17039-1-quic_devipriy@quicinc.com>
- <20230214164135.17039-2-quic_devipriy@quicinc.com>
- <20230224082332.GA5443@thinkpad>
- <bd153038-4427-1f11-1941-5f13fec01cf7@quicinc.com>
- <20230228063358.GA4839@thinkpad>
- <9BD62D8E-4E14-4269-B72D-C83EF4D43040@linaro.org>
+        Fri, 3 Mar 2023 13:39:55 -0500
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E09F5A6DF;
+        Fri,  3 Mar 2023 10:39:07 -0800 (PST)
+Received: by mail-pf1-x42e.google.com with SMTP id fd25so2187085pfb.1;
+        Fri, 03 Mar 2023 10:39:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1677868735;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=KW5zlYPdh4KEZGnqXGymEZlZPZq2XOWrLglIoL3yYbM=;
+        b=NeSjzgAVcH618mykrKytTLTjNl+tmOdpa2naPP9um9V7H6W8FQTp/PoOzLPQ49UaRz
+         lLRb7Ei69pi2ttA1cpJMHunqc7/xtIxoTSCwBvtpRrBpw7lPYVsUa4Wm5TjHaoM5j7Vl
+         MCBEOvaNqPljFvYd+RlcEdKAGTnFqCak4MfIB6fx7a+xwsl0A4Oli6Fj3EB8lePCRZqz
+         KXs4C5Ci57j335oVTtHKMcxAMzMSOacoHIC9KAYBoWVHuDcjEHTUfZUf0GDUuJ5oPjwK
+         HMgvJN/cfRGDPxhyhZd1eWOj3P7VV34o613c69jHkTJc4SLJise+aT7n1MBqBxqlBGH9
+         DCwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677868735;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KW5zlYPdh4KEZGnqXGymEZlZPZq2XOWrLglIoL3yYbM=;
+        b=hgAmjzTqq37iG2vudO3VCX4chq1XYrBMc4k3iknhhKQv8AqOf3IGW0kmKv5Ipd/Hhv
+         Y/9x63zVgAS+TVwYV5rOeIa858egGFWkQWperA8llp1nwtnJ1/s2OhFaDGqQ/jdVmV9c
+         BpiV+yFdn0tYicr55oS4xxO/0/ii80MiYYvwl8CxtxfakfyA/qQXZ3WVGiiobeGI/NI3
+         Z2nTApPju41ZjibwEYbYT2EK4DdWBzMKhkhlhDI/DCDU8+eoPB6//zqxcSx7yjy+bqOn
+         4ka4XfCC576oyGkYZqHpZWnXOGs9SEI21hWEbE+lz8UDQyvfuciYKt1TCRIpgIM00jTu
+         16Nw==
+X-Gm-Message-State: AO0yUKV7m2U9ZG+vBZ9ILmoARS6Hqv0l7MjkzmR4pZY3TtTbjzwFB4s7
+        kROASSzOzKSVZsBvAalYndB8T3NHgG6e+31EnBA=
+X-Google-Smtp-Source: AK7set/hfR9Rcii36vKUJ5TL+U7hSRvp4CpKJDa6gvrZVAf+H0DuOQMNvIe5RszSZ05x7/BNECSknxdDDFn0nfZB81E=
+X-Received: by 2002:a63:9845:0:b0:503:8257:1cf0 with SMTP id
+ l5-20020a639845000000b0050382571cf0mr816437pgo.11.1677868734579; Fri, 03 Mar
+ 2023 10:38:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9BD62D8E-4E14-4269-B72D-C83EF4D43040@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230121112947.53433-1-robimarko@gmail.com> <20230121112947.53433-4-robimarko@gmail.com>
+ <d71e8a18-8a09-c722-d9dd-b2d48615828f@linaro.org> <CAA8EJppwNVtUjB7fUZSCrZ88Ssbhmc4HD6oA2nV0uEx+vHBXUw@mail.gmail.com>
+ <2a7a43f1-a13d-f094-5167-de74d5092d91@linaro.org>
+In-Reply-To: <2a7a43f1-a13d-f094-5167-de74d5092d91@linaro.org>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Fri, 3 Mar 2023 19:38:43 +0100
+Message-ID: <CAOX2RU6vociXPTQE4tegQE8YXjHgQAHgdQWm3N9PPekgaw3ung@mail.gmail.com>
+Subject: Re: [PATCH 4/4] cpufreq: qcom-nvmem: make qcom_cpufreq_get_msm_id()
+ return the SoC ID
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
+        rafael@kernel.org, viresh.kumar@linaro.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 03, 2023 at 05:16:58PM +0200, Dmitry Baryshkov wrote:
-> 28 февраля 2023 г. 08:33:58 GMT+02:00, Manivannan Sadhasivam <mani@kernel.org> пишет:
-> >On Tue, Feb 28, 2023 at 10:56:53AM +0530, Devi Priya wrote:
-> >> 
-> >> 
-> >> On 2/24/2023 1:53 PM, Manivannan Sadhasivam wrote:
-> >> > On Tue, Feb 14, 2023 at 10:11:29PM +0530, Devi Priya wrote:
-> >> > > Document the compatible for IPQ9574
-> >> > > 
-> >> Hi Mani, Thanks for taking time to review the patch.
-> >> > 
-> >> > You didn't mention about the "msi-parent" property that is being added
-> >> > by this patch
-> >> Sure, will update the commit message in the next spin
-> >> > 
-> >> > > Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> >> > > ---
-> >> > >   .../devicetree/bindings/pci/qcom,pcie.yaml    | 72 ++++++++++++++++++-
-> >> > >   1 file changed, 70 insertions(+), 2 deletions(-)
-> >> > > 
-> >> > > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >> > > index 872817d6d2bd..dabdf2684e2d 100644
-> >> > > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >> > > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >> > > @@ -26,6 +26,7 @@ properties:
-> >> > >             - qcom,pcie-ipq8064-v2
-> >> > >             - qcom,pcie-ipq8074
-> >> > >             - qcom,pcie-ipq8074-gen3
-> >> > > +          - qcom,pcie-ipq9574
-> >> > >             - qcom,pcie-msm8996
-> >> > >             - qcom,pcie-qcs404
-> >> > >             - qcom,pcie-sa8540p
-> >> > > @@ -44,11 +45,11 @@ properties:
-> >> > >     reg:
-> >> > >       minItems: 4
-> >> > > -    maxItems: 5
-> >> > > +    maxItems: 6
-> >> > >     reg-names:
-> >> > >       minItems: 4
-> >> > > -    maxItems: 5
-> >> > > +    maxItems: 6
-> >> > >     interrupts:
-> >> > >       minItems: 1
-> >> > > @@ -105,6 +106,8 @@ properties:
-> >> > >       items:
-> >> > >         - const: pciephy
-> >> > > +  msi-parent: true
-> >> > > +
-> >> > >     power-domains:
-> >> > >       maxItems: 1
-> >> > > @@ -173,6 +176,27 @@ allOf:
-> >> > >               - const: parf # Qualcomm specific registers
-> >> > >               - const: config # PCIe configuration space
-> >> > > +  - if:
-> >> > > +      properties:
-> >> > > +        compatible:
-> >> > > +          contains:
-> >> > > +            enum:
-> >> > > +              - qcom,pcie-ipq9574
-> >> > > +    then:
-> >> > > +      properties:
-> >> > > +        reg:
-> >> > > +          minItems: 5
-> >> > > +          maxItems: 6
-> >> > > +        reg-names:
-> >> > > +          minItems: 5
-> >> > > +          items:
-> >> > > +            - const: dbi # DesignWare PCIe registers
-> >> > > +            - const: elbi # External local bus interface registers
-> >> > > +            - const: atu # ATU address space
-> >> > > +            - const: parf # Qualcomm specific registers
-> >> > > +            - const: config # PCIe configuration space
-> >> > > +            - const: aggr_noc #PCIe aggr_noc
-> >> > 
-> >> > Why do you need this region unlike other SoCs? Is the driver making use of it?
-> >> We have the aggr_noc region in ipq9574 to achieve higher throughput & to
-> >> handle multiple PCIe instances. The driver uses it to rate adapt 1-lane PCIe
-> >> clocks. My bad, missed it. Will add the driver changes in V2.
+On Sat, 18 Feb 2023 at 21:40, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 18.02.2023 21:36, Dmitry Baryshkov wrote:
+> > On Sat, 18 Feb 2023 at 16:43, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>
+> >>
+> >>
+> >> On 21.01.2023 12:29, Robert Marko wrote:
+> >>> Currently, qcom_cpufreq_get_msm_id() does not simply return the SoC ID
+> >>> after getting it via SMEM call but instead uses an enum to encode the
+> >>> matched SMEM ID to 2 variants of MSM8996 which are then used in
+> >>> qcom_cpufreq_kryo_name_version() to set the supported version.
+> >>>
+> >>> This prevents qcom_cpufreq_get_msm_id() from being universal and its doing
+> >>> more than its name suggests, so lets make it just return the SoC ID
+> >>> directly which allows matching directly on the SoC ID and removes the need
+> >>> for msm8996_version enum which simplifies the driver.
+> >>> It also allows reusing the qcom_cpufreq_get_msm_id() for new SoC-s.
+> >>>
+> >>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> >>> ---
+> >>>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 44 ++++++++--------------------
+> >>>  1 file changed, 12 insertions(+), 32 deletions(-)
+> >>>
+> >>> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> >>> index da55d2e1925a..9deaf9521d6d 100644
+> >>> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> >>> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> >>> @@ -32,12 +32,6 @@
+> >>>
+> >>>  #include <dt-bindings/arm/qcom,ids.h>
+> >>>
+> >>> -enum _msm8996_version {
+> >>> -     MSM8996_V3,
+> >>> -     MSM8996_SG,
+> >>> -     NUM_OF_MSM8996_VERSIONS,
+> >>> -};
+> >>> -
+> >>>  struct qcom_cpufreq_drv;
+> >>>
+> >>>  struct qcom_cpufreq_match_data {
+> >>> @@ -134,30 +128,16 @@ static void get_krait_bin_format_b(struct device *cpu_dev,
+> >>>       dev_dbg(cpu_dev, "PVS version: %d\n", *pvs_ver);
+> >>>  }
+> >>>
+> >>> -static enum _msm8996_version qcom_cpufreq_get_msm_id(void)
+> >>> +static int qcom_cpufreq_get_msm_id(void)
+> >> This should be u32 as info->id is __le32
+
+Nice catch.
+
+
+> >>
+> >> And please export this function from socinfo, it'll come in
+> >> useful for other drivers!
+
+I intentionally did not do that as socinfo is currently fully optional
+and I dont really like
+the idea of making it required for anything using SMEM.
+
+Regards,
+Robert
+
+>
+> Konrad
 > >
-> >Hmm, this is something new. How can you achieve higher throughput with this
-> >region? Can you explain more on how it is used?
-> 
-> Based on the name of the region, it looks like it is an interconnect region. 
-> 
-
-Well, we only have BCM based interconnects so far. That's why I was curious
-about this region and its purpose.
-
-> Devi, if this is the case, then you have to handle it through the interconnect driver, rather than poking directly into these registers.
-
-If that so, it doesn't need to be added in this series itself. I believe that
-without aggr_noc region, the PCIe controller can still function properly with
-reduced performance. But you can add the interconnect support later as a
-separate series.
-
-Thanks,
-Mani
-
-> 
-> 
-> >
-> >Thanks,
-> >Mani
-> >
-> >> > 
-> >> > Thanks,
-> >> > Mani
-> >> > 
-> >> > > +
-> >> > >     - if:
-> >> > >         properties:
-> >> > >           compatible:
-> >> > > @@ -365,6 +389,39 @@ allOf:
-> >> > >               - const: ahb # AHB Reset
-> >> > >               - const: axi_m_sticky # AXI Master Sticky reset
-> >> > > +  - if:
-> >> > > +      properties:
-> >> > > +        compatible:
-> >> > > +          contains:
-> >> > > +            enum:
-> >> > > +              - qcom,pcie-ipq9574
-> >> > > +    then:
-> >> > > +      properties:
-> >> > > +        clocks:
-> >> > > +          minItems: 6
-> >> > > +          maxItems: 6
-> >> > > +        clock-names:
-> >> > > +          items:
-> >> > > +            - const: ahb  # AHB clock
-> >> > > +            - const: aux  # Auxiliary clock
-> >> > > +            - const: axi_m # AXI Master clock
-> >> > > +            - const: axi_s # AXI Slave clock
-> >> > > +            - const: axi_bridge # AXI bridge clock
-> >> > > +            - const: rchng
-> >> > > +        resets:
-> >> > > +          minItems: 8
-> >> > > +          maxItems: 8
-> >> > > +        reset-names:
-> >> > > +          items:
-> >> > > +            - const: pipe # PIPE reset
-> >> > > +            - const: sticky # Core Sticky reset
-> >> > > +            - const: axi_s_sticky # AXI Slave Sticky reset
-> >> > > +            - const: axi_s # AXI Slave reset
-> >> > > +            - const: axi_m_sticky # AXI Master Sticky reset
-> >> > > +            - const: axi_m # AXI Master reset
-> >> > > +            - const: aux # AUX Reset
-> >> > > +            - const: ahb # AHB Reset
-> >> > > +
-> >> > >     - if:
-> >> > >         properties:
-> >> > >           compatible:
-> >> > > @@ -681,6 +738,16 @@ allOf:
-> >> > >           - interconnects
-> >> > >           - interconnect-names
-> >> > > +  - if:
-> >> > > +      properties:
-> >> > > +        compatible:
-> >> > > +          contains:
-> >> > > +            enum:
-> >> > > +              - qcom,pcie-ipq9574
-> >> > > +    then:
-> >> > > +      required:
-> >> > > +        - msi-parent
-> >> > > +
-> >> > >     - if:
-> >> > >         not:
-> >> > >           properties:
-> >> > > @@ -693,6 +760,7 @@ allOf:
-> >> > >                   - qcom,pcie-ipq8064v2
-> >> > >                   - qcom,pcie-ipq8074
-> >> > >                   - qcom,pcie-ipq8074-gen3
-> >> > > +                - qcom,pcie-ipq9574
-> >> > >                   - qcom,pcie-qcs404
-> >> > >       then:
-> >> > >         required:
-> >> > > -- 
-> >> > > 2.17.1
-> >> > > 
-> >> > 
-> >> Thanks,
-> >> Devi Priya
-> >
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
