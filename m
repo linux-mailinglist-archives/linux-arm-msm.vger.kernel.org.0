@@ -2,149 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FE466AA044
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 20:48:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5646A6AA0B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 21:46:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231267AbjCCTsf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 14:48:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47730 "EHLO
+        id S231749AbjCCUq3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 15:46:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231377AbjCCTse (ORCPT
+        with ESMTP id S230286AbjCCUq2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 14:48:34 -0500
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EA6B136DD;
-        Fri,  3 Mar 2023 11:48:29 -0800 (PST)
-Received: by mail-ed1-f50.google.com with SMTP id d30so14743202eda.4;
-        Fri, 03 Mar 2023 11:48:29 -0800 (PST)
+        Fri, 3 Mar 2023 15:46:28 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F001E2B0
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Mar 2023 12:46:26 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id n2so5154071lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Mar 2023 12:46:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1677876385;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WRrrrOctENJ0lt9tDk9GeKvNtvGiQOfbknvvZ5bHUUY=;
+        b=SezE0ABPAMRQQDhG5lpAx+yFoS1tjl5fLGBNxFmJhZrJDD1oDMuI+jC/ajzUTtfdgq
+         O8ez6MXb1ei2lFVzaYghlM+h29N5lRdsTD2wZZGYW/z5li2AePkhTMqc+M323pDGLUzE
+         HkVGLDsXXoQM4vNLYk9t2fLV4F47jH8ZxK3IxLhRB33XxNdfKkr5NE2KrmD2jtFmY68Y
+         ibvna+xXf6osN0T3irYGHoZ91e6yY2bN7npQGSyStMoOABbQLFNtbIM5Od6ryf3PigOt
+         jJmH4p4FcotQ1yhaGQouGz933kk7RMFDLM90sHLlE3Zv8HAz1evxv08p5r7vyhGlDQII
+         i2GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677872908;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qr3wWyppk2JO5cvuGc7OJNqcMG2NC5hwXnkMjN+yuLE=;
-        b=mXnS1hzVlXCx/SEZZDeRfFq3BbGUQ+FjBtAfGFxEc85b/SDiGvfpUX5JGXb2Z9tljK
-         rOiGhppg1i6z9oMLxW9thrYeiO19ASWqZ2fscBNdgDaVbRpvwU2kwtYDrC6vmS4ODpst
-         +94sWKfQlegHXJGKnUd9gtUYoKXXAozsoxfrJ/I3LlSe5MNcgeLDUr/IejCmigtQ+v6a
-         aE3C/A91wSwmjfJSKSCXIYoP+gLDxRUD30cluv2duVOIxollBv24c0jL7g6HcgIKN/lU
-         I2NKB480pc2+1Sm8d+irHvwfGtMYgmUPvT3mhMHdnmRF2+yAst3bcCgQaV/1hRwlWBHT
-         a0tw==
-X-Gm-Message-State: AO0yUKUPkSB+bPBxfzvK+deUOKRvGuaCQHQ3KJTrVnZjqpQ/33IEcdjy
-        lQk3i8K6WdCn2pEMgIDr2SCbV4U9+BGn131FnjeSFLkp
-X-Google-Smtp-Source: AK7set8pOENE3qQdov6OdbnX8NZeqRAuHLeW/9RDr9g861DgXcdaR15YJISLt3N0xGeu3omTus0Ig7L1FfyytK0BbOU=
-X-Received: by 2002:a50:ce19:0:b0:4bc:2776:5b61 with SMTP id
- y25-20020a50ce19000000b004bc27765b61mr1748709edi.6.1677872907622; Fri, 03 Mar
- 2023 11:48:27 -0800 (PST)
+        d=1e100.net; s=20210112; t=1677876385;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WRrrrOctENJ0lt9tDk9GeKvNtvGiQOfbknvvZ5bHUUY=;
+        b=KB2tX0i7BWAFG6Vwnm0C0jYozi40068TtkSr37cpEzAnRKkoF7DM3ssUo6JRpcAnkL
+         GZVsIAvEeo/An2CTtJt8TooAIBtAkTP/gGVhoJwSu+I4zD+M8Zb+X+E/8IrVbz9a7Fsw
+         Pf4fhpSJWGnr1dZhj+j5jPTe/4psjMKjso9glrpVsQDnNoUCM/rmLnZ6Xb3Y+/sZXhjk
+         zTdkgW34HWTFJ1WGJ78AWoermoqS8hBjqnEMk/phyHpBJnkjxvSiUqWBYJDSSrukElvT
+         WmtHYX19OuYutvZ4tqHGIpmkdUmsw00FhsGQftu6n2tByF54Xl2pqS/6ZmDIPCxnoUYI
+         IQRw==
+X-Gm-Message-State: AO0yUKUHxPhNWPkXq02KV/2txmvcjt9fgenmYQWgCPa8QyqwAUvofCSq
+        CE9reIJCE65Hfk0fqxvWtbsp+g==
+X-Google-Smtp-Source: AK7set/QcaJ6OpTXM8OfQPl9HEMQXQ+LMjPG7w1tPxByoIzx/jFGhDFH4TMbPIUV1tVxI6TYyUrOaw==
+X-Received: by 2002:ac2:5dcf:0:b0:4e0:2455:3ade with SMTP id x15-20020ac25dcf000000b004e024553ademr967637lfq.60.1677876385151;
+        Fri, 03 Mar 2023 12:46:25 -0800 (PST)
+Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
+        by smtp.gmail.com with ESMTPSA id h8-20020ac25968000000b004dc48d91061sm526214lfp.304.2023.03.03.12.46.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Mar 2023 12:46:24 -0800 (PST)
+Message-ID: <2faac9b8-03b9-340f-d43f-317624d4d5bb@linaro.org>
+Date:   Fri, 3 Mar 2023 21:46:22 +0100
 MIME-Version: 1.0
-References: <20230301201446.3713334-1-daniel.lezcano@linaro.org> <1d3da42e-2499-7ff6-50fa-048a720e855f@linaro.org>
-In-Reply-To: <1d3da42e-2499-7ff6-50fa-048a720e855f@linaro.org>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Fri, 3 Mar 2023 20:48:16 +0100
-Message-ID: <CAJZ5v0i9fbEpedS-CCM5qvfaG095jUDzOFd-H83G3mpwDaxoAA@mail.gmail.com>
-Subject: Re: [PATCH v5 00/18] Self-encapsulate the thermal zone device structure
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     rafael@kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Zhang Rui <rui.zhang@intel.com>,
-        Len Brown <lenb@kernel.org>,
-        Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Jean Delvare <jdelvare@suse.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Ido Schimmel <idosch@nvidia.com>,
-        Petr Machata <petrm@nvidia.com>,
-        Gregory Greenman <gregory.greenman@intel.com>,
-        Kalle Valo <kvalo@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Markus Mayer <mmayer@broadcom.com>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Vasily Khoruzhick <anarsoul@gmail.com>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Talel Shenhar <talel@amazon.com>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Keerthy <j-keerthy@ti.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Stefan Wahren <stefan.wahren@i2se.com>,
-        Zheng Yongjun <zhengyongjun3@huawei.com>,
-        Yang Li <yang.lee@linux.alibaba.com>,
-        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-        Daniel Golle <daniel@makrotopia.org>,
-        Balsam CHIHI <bchihi@baylibre.com>,
-        Mikko Perttunen <mperttunen@nvidia.com>,
-        linux-acpi@vger.kernel.org, linux-ide@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org,
-        linux-iio@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-input@vger.kernel.org, netdev@vger.kernel.org,
-        linux-wireless@vger.kernel.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-omap@vger.kernel.org, linux-mediatek@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 4/4] cpufreq: qcom-nvmem: make qcom_cpufreq_get_msm_id()
+ return the SoC ID
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
+        rafael@kernel.org, viresh.kumar@linaro.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230121112947.53433-1-robimarko@gmail.com>
+ <20230121112947.53433-4-robimarko@gmail.com>
+ <d71e8a18-8a09-c722-d9dd-b2d48615828f@linaro.org>
+ <CAA8EJppwNVtUjB7fUZSCrZ88Ssbhmc4HD6oA2nV0uEx+vHBXUw@mail.gmail.com>
+ <2a7a43f1-a13d-f094-5167-de74d5092d91@linaro.org>
+ <CAOX2RU6vociXPTQE4tegQE8YXjHgQAHgdQWm3N9PPekgaw3ung@mail.gmail.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAOX2RU6vociXPTQE4tegQE8YXjHgQAHgdQWm3N9PPekgaw3ung@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Daniel,
 
-On Fri, Mar 3, 2023 at 10:24 AM Daniel Lezcano
-<daniel.lezcano@linaro.org> wrote:
->
->
-> Hi Rafael,
->
-> Do we have enough ack to apply this series, is it for you ?
 
-I've just queued it up for 6.4.
+On 3.03.2023 19:38, Robert Marko wrote:
+> On Sat, 18 Feb 2023 at 21:40, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>>
+>>
+>> On 18.02.2023 21:36, Dmitry Baryshkov wrote:
+>>> On Sat, 18 Feb 2023 at 16:43, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 21.01.2023 12:29, Robert Marko wrote:
+>>>>> Currently, qcom_cpufreq_get_msm_id() does not simply return the SoC ID
+>>>>> after getting it via SMEM call but instead uses an enum to encode the
+>>>>> matched SMEM ID to 2 variants of MSM8996 which are then used in
+>>>>> qcom_cpufreq_kryo_name_version() to set the supported version.
+>>>>>
+>>>>> This prevents qcom_cpufreq_get_msm_id() from being universal and its doing
+>>>>> more than its name suggests, so lets make it just return the SoC ID
+>>>>> directly which allows matching directly on the SoC ID and removes the need
+>>>>> for msm8996_version enum which simplifies the driver.
+>>>>> It also allows reusing the qcom_cpufreq_get_msm_id() for new SoC-s.
+>>>>>
+>>>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+>>>>> ---
+>>>>>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 44 ++++++++--------------------
+>>>>>  1 file changed, 12 insertions(+), 32 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+>>>>> index da55d2e1925a..9deaf9521d6d 100644
+>>>>> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+>>>>> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+>>>>> @@ -32,12 +32,6 @@
+>>>>>
+>>>>>  #include <dt-bindings/arm/qcom,ids.h>
+>>>>>
+>>>>> -enum _msm8996_version {
+>>>>> -     MSM8996_V3,
+>>>>> -     MSM8996_SG,
+>>>>> -     NUM_OF_MSM8996_VERSIONS,
+>>>>> -};
+>>>>> -
+>>>>>  struct qcom_cpufreq_drv;
+>>>>>
+>>>>>  struct qcom_cpufreq_match_data {
+>>>>> @@ -134,30 +128,16 @@ static void get_krait_bin_format_b(struct device *cpu_dev,
+>>>>>       dev_dbg(cpu_dev, "PVS version: %d\n", *pvs_ver);
+>>>>>  }
+>>>>>
+>>>>> -static enum _msm8996_version qcom_cpufreq_get_msm_id(void)
+>>>>> +static int qcom_cpufreq_get_msm_id(void)
+>>>> This should be u32 as info->id is __le32
+> 
+> Nice catch.
+> 
+> 
+>>>>
+>>>> And please export this function from socinfo, it'll come in
+>>>> useful for other drivers!
+> 
+> I intentionally did not do that as socinfo is currently fully optional
+> and I dont really like
+> the idea of making it required for anything using SMEM.
+"anything using SMEM"? As in the drivers, or SoCs?
+If the former, I don't see how exporting a function from within
+socid and using it here would make it required for other drivers.
+If the latter, we're talking non-qcom SoCs. SMEM has been with
+us forever.
 
-It will reach linux-next and the thermal branch some time next week,
-but I will be traveling, so there may be delays.
 
-Thanks!
+I'm planning to reuse this for Adreno speedbin matching. It's one
+of those blocks that don't have a revision and/or bin reigster
+within themselves.
+
+Konrad
+> 
+> Regards,
+> Robert
+> 
+>>
+>> Konrad
+>>>
