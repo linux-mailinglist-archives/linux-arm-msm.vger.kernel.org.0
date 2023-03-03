@@ -2,80 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C8346A9477
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 10:51:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28C686A947F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 10:53:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230240AbjCCJvv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 04:51:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60392 "EHLO
+        id S229771AbjCCJxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 04:53:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbjCCJvt (ORCPT
+        with ESMTP id S229699AbjCCJxJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 04:51:49 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 351DA2B29C;
-        Fri,  3 Mar 2023 01:51:48 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3235O6fV017065;
-        Fri, 3 Mar 2023 09:51:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=aMykm1529RSRKYLy5BBR1klB9BxD6Lr0yPQ+hOsFZKY=;
- b=eoixhPfPUT1lCTCvv1MGEDRxF8pNWCX45y407TaLdg1g1mGg6uCJcgYOZSrRvHKUwglz
- jJKU1N6tbwVvA9RJMc/YKunuH19Nc2RnhH/Om4SBmqUWCYHrsdues201U9syF5rYEzDC
- aY5RTNHOXDe5XveWNITE/uDeCGkd2wtcm36dM29K9eCtVa31Ds1JQ21AFUhICMCv9UzN
- uXuEWutpcsvjry/mhGNJnUhGld2EVSkbbwCqPjOfqzB2iju9qIdwie+UN2iBNR0yezEI
- mCai8ee2E4V7qZpZijWB9Tn4ZNsL3HEsDHf4QOyoinv4NBKjDUtV96kFSq9vZ8BZ7cEm hA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p2rbgbhp9-1
+        Fri, 3 Mar 2023 04:53:09 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEE274212;
+        Fri,  3 Mar 2023 01:53:08 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3236NO76031936;
+        Fri, 3 Mar 2023 09:53:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=br9VDlwrrZqq0MKPIV7Q8tN9gDoCB+CrqUsEZlSlqiQ=;
+ b=MLJ5SwDOA3NPF66GxkSXFeIcRh3c6yyXdM19mepE7ZDKii0YuA6Nbqt4fqhr7/HKDhN0
+ sXt5uGJtKubf/6yGJUC593j2DDIkO1o1iRXpA2mPh45eiwj38iBivEej04zdXqQ3BkXg
+ XsMpU9exwjLc8fFLLgwWa4YiE490LGehNLazWBv3NSbGL5YybI2+w/OJ9jo4T+gZVfwQ
+ FM7KzXMhY57qbpR9hFz75RxrLN3OJ/YCUstxyTyUIXX71JTnH+6XUmebQS5643t2lNRx
+ zhMhJgZitrV2yCJuTXGJcpxJ1ZwO06CiDMwOSER6dbcRShtcuOF3jaJs1/ETulBTcU5f Iw== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p32ty1q11-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Mar 2023 09:51:38 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3239pbDq032153
+        Fri, 03 Mar 2023 09:53:05 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3239r4Im013881
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Mar 2023 09:51:37 GMT
-Received: from fenglinw2-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Fri, 3 Mar 2023 01:51:33 -0800
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <lee@kernel.org>, <pavel@ucw.cz>, <krzysztof.kozlowski@linaro.org>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Fenglin Wu <quic_fenglinw@quicinc.com>,
-        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>
-CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>
-Subject: [PATCH v8 2/2] dt-bindings: leds: add QCOM flash LED controller
-Date:   Fri, 3 Mar 2023 17:50:23 +0800
-Message-ID: <20230303095023.538917-3-quic_fenglinw@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230303095023.538917-1-quic_fenglinw@quicinc.com>
-References: <20230303095023.538917-1-quic_fenglinw@quicinc.com>
+        Fri, 3 Mar 2023 09:53:04 GMT
+Received: from [10.50.35.127] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 3 Mar 2023
+ 01:53:01 -0800
+Message-ID: <93ec4d79-3d24-2a2a-30eb-ea7bab92f8b7@quicinc.com>
+Date:   Fri, 3 Mar 2023 15:22:58 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <cover.1677749625.git.quic_varada@quicinc.com>
+ <6b8d17006d8ee9a1b0c4df803c1cc7caf53ea3ef.1677749625.git.quic_varada@quicinc.com>
+ <1c692257-44b5-c443-33d8-1516da3be722@linaro.org>
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+In-Reply-To: <1c692257-44b5-c443-33d8-1516da3be722@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3E68xAV5BB3aCWTsp3UYCi5scA9cjMxw
-X-Proofpoint-ORIG-GUID: 3E68xAV5BB3aCWTsp3UYCi5scA9cjMxw
+X-Proofpoint-GUID: 7hkKHw-gMBX4bWk5ztAzu54Bopd6lIxu
+X-Proofpoint-ORIG-GUID: 7hkKHw-gMBX4bWk5ztAzu54Bopd6lIxu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-03-03_01,2023-03-02_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- mlxscore=0 spamscore=0 malwarescore=0 adultscore=0 bulkscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
+ impostorscore=0 priorityscore=1501 clxscore=1015 mlxlogscore=999
+ malwarescore=0 spamscore=0 lowpriorityscore=0 mlxscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2212070000 definitions=main-2303030087
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,138 +85,135 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add binding document for flash LED module inside Qualcomm Technologies,
-Inc. PMICs.
 
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../bindings/leds/qcom,spmi-flash-led.yaml    | 116 ++++++++++++++++++
- 1 file changed, 116 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
+On 3/3/2023 1:09 PM, Krzysztof Kozlowski wrote:
+> On 02/03/2023 10:55, Varadarajan Narayanan wrote:
+>> Add USB phy and controller related nodes
+>>
+>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 92 +++++++++++++++++++++++++++++++++++
+>>   1 file changed, 92 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> index 2bb4053..319b5bd 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> @@ -215,6 +215,98 @@
+>>   		#size-cells = <1>;
+>>   		ranges = <0 0 0 0xffffffff>;
+>>   
+>> +		ssphy_0: ssphy@7D000 {
+> Node names should be generic.
+> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+>
+> Does not look like you tested the DTS against bindings. Please run `make
+> dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
+> for instructions).
+>
+>> +			compatible = "qcom,ipq9574-qmp-usb3-phy";
+>> +			reg = <0x7D000 0x1C4>;
+>> +			#clock-cells = <1>;
+>> +			#address-cells = <1>;
+>> +			#size-cells = <1>;
+>> +			ranges;
+>> +
+>> +			clocks = <&gcc GCC_USB0_AUX_CLK>,
+>> +				 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>;
+>> +			clock-names = "aux", "cfg_ahb";
+>> +
+>> +			resets =  <&gcc GCC_USB0_PHY_BCR>,
+>> +				 <&gcc GCC_USB3PHY_0_PHY_BCR>;
+>> +			reset-names = "phy","common";
+>> +			status = "disabled";
+>> +
+>> +			usb0_ssphy: lane@7D200 {
+>> +				reg = <0x0007D200 0x130>,	/* Tx */
+>> +				      <0x0007D400 0x200>,	/* Rx */
+>> +				      <0x0007D800 0x1F8>,	/* PCS  */
+>> +				      <0x0007D600 0x044>;	/* PCS misc */
+>> +				#phy-cells = <0>;
+>> +				clocks = <&gcc GCC_USB0_PIPE_CLK>;
+>> +				clock-names = "pipe0";
+>> +				clock-output-names = "gcc_usb0_pipe_clk_src";
+>> +			};
+>> +		};
+>> +
+>> +		qusb_phy_0: qusb@7B000 {
+> Node names should be generic.
+> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+>
+> Does not look like you tested the DTS against bindings. Please run `make
+> dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
+> for instructions).
+>
+>> +			compatible = "qcom,ipq9574-qusb2-phy";
+>> +			reg = <0x07B000 0x180>;
+> Lowercase hex everywhere.
+>
+>> +			#phy-cells = <0>;
+>> +
+>> +			clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
+>> +				<&xo_board_clk>;
+>> +			clock-names = "cfg_ahb", "ref";
+>> +
+>> +			resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
+>> +			status = "disabled";
+>> +		};
+>> +
+>> +		usb3: usb3@8A00000 {
+> Node names should be generic.
+> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+>
+> Does not look like you tested the DTS against bindings. Please run `make
+> dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
+> for instructions).
+>
+>> +			compatible = "qcom,dwc3";
+>> +			reg = <0x8AF8800 0x400>;
+>> +			#address-cells = <1>;
+>> +			#size-cells = <1>;
+>> +			ranges;
+>> +
+>> +			clocks = <&gcc GCC_SNOC_USB_CLK>,
+>> +				<&gcc GCC_ANOC_USB_AXI_CLK>,
+>> +				<&gcc GCC_USB0_MASTER_CLK>,
+>> +				<&gcc GCC_USB0_SLEEP_CLK>,
+>> +				<&gcc GCC_USB0_MOCK_UTMI_CLK>;
+>> +
+>> +			clock-names = "sys_noc_axi",
+>> +				"anoc_axi",
+>> +				"master",
+>> +				"sleep",
+>> +				"mock_utmi";
+>> +
+>> +			assigned-clocks = <&gcc GCC_SNOC_USB_CLK>,
+>> +					  <&gcc GCC_ANOC_USB_AXI_CLK>,
+>> +					  <&gcc GCC_USB0_MASTER_CLK>,
+>> +					  <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+>> +			assigned-clock-rates = <200000000>,
+>> +					       <200000000>,
+>> +					       <200000000>,
+>> +					       <24000000>;
+>> +
+>> +			resets = <&gcc GCC_USB_BCR>;
+>> +			status = "disabled";
+>> +
+>> +			dwc_0: dwc3@8A00000 {
+> Node names should be generic.
+> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+>
+> Does not look like you tested the DTS against bindings. Please run `make
+> dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
+> for instructions).
+>
+>
+> Best regards,
+> Krzysztof
+>
+Sorry. Will rectify and post a new version.
 
-diff --git a/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml b/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
-new file mode 100644
-index 000000000000..1b273aecaaec
---- /dev/null
-+++ b/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
-@@ -0,0 +1,116 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/leds/qcom,spmi-flash-led.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Flash LED device inside Qualcomm Technologies, Inc. PMICs
-+
-+maintainers:
-+  - Fenglin Wu <quic_fenglinw@quicinc.com>
-+
-+description: |
-+  Flash LED controller is present inside some Qualcomm Technologies, Inc. PMICs.
-+  The flash LED module can have different number of LED channels supported
-+  e.g. 3 or 4. There are some different registers between them but they can
-+  both support maximum current up to 1.5 A per channel and they can also support
-+  ganging 2 channels together to supply maximum current up to 2 A. The current
-+  will be split symmetrically on each channel and they will be enabled and
-+  disabled at the same time.
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - qcom,pm8150c-flash-led
-+          - qcom,pm8150l-flash-led
-+          - qcom,pm8350c-flash-led
-+      - const: qcom,spmi-flash-led
-+
-+  reg:
-+    maxItems: 1
-+
-+patternProperties:
-+  "^led-[0-3]$":
-+    type: object
-+    $ref: common.yaml#
-+    unevaluatedProperties: false
-+    description:
-+      Represents the physical LED components which are connected to the
-+      flash LED channels' output.
-+
-+    properties:
-+      led-sources:
-+        description:
-+          The HW indices of the flash LED channels that connect to the
-+          physical LED
-+        allOf:
-+          - minItems: 1
-+            maxItems: 2
-+            items:
-+              enum: [1, 2, 3, 4]
-+
-+      led-max-microamp:
-+        anyOf:
-+          - minimum: 5000
-+            maximum: 500000
-+            multipleOf: 5000
-+          - minimum: 10000
-+            maximum: 1000000
-+            multipleOf: 10000
-+
-+      flash-max-microamp:
-+        anyOf:
-+          - minimum: 12500
-+            maximum: 1500000
-+            multipleOf: 12500
-+          - minimum: 25000
-+            maximum: 2000000
-+            multipleOf: 25000
-+
-+      flash-max-timeout-us:
-+        minimum: 10000
-+        maximum: 1280000
-+        multipleOf: 10000
-+
-+    required:
-+      - led-sources
-+      - led-max-microamp
-+
-+required:
-+  - compatible
-+  - reg
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/leds/common.h>
-+    spmi {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+        led-controller@ee00 {
-+            compatible = "qcom,pm8350c-flash-led", "qcom,spmi-flash-led";
-+            reg = <0xee00>;
-+
-+            led-0 {
-+                function = LED_FUNCTION_FLASH;
-+                color = <LED_COLOR_ID_WHITE>;
-+                led-sources = <1>, <4>;
-+                led-max-microamp = <300000>;
-+                flash-max-microamp = <2000000>;
-+                flash-max-timeout-us = <1280000>;
-+                function-enumerator = <0>;
-+            };
-+
-+            led-1 {
-+                function = LED_FUNCTION_FLASH;
-+                color = <LED_COLOR_ID_YELLOW>;
-+                led-sources = <2>, <3>;
-+                led-max-microamp = <300000>;
-+                flash-max-microamp = <2000000>;
-+                flash-max-timeout-us = <1280000>;
-+                function-enumerator = <1>;
-+            };
-+        };
-+    };
--- 
-2.25.1
+Thank
+
+Varada
 
