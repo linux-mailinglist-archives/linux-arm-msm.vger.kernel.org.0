@@ -2,264 +2,283 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90ED86A9DBB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 18:31:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CE9C6A9CA1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 18:04:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231173AbjCCRbs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 12:31:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48894 "EHLO
+        id S231434AbjCCREB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 12:04:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231131AbjCCRbr (ORCPT
+        with ESMTP id S230353AbjCCRD7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 12:31:47 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EB485A6D6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Mar 2023 09:31:45 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id b10so3162847ljr.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Mar 2023 09:31:45 -0800 (PST)
+        Fri, 3 Mar 2023 12:03:59 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CBF09EFF;
+        Fri,  3 Mar 2023 09:03:57 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id bm20so2277329oib.7;
+        Fri, 03 Mar 2023 09:03:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Lulx79GyAFA+P6dFOCo5Azji9mlKR6wcVUynCnl38KE=;
-        b=JITNzhiSKTtjoAwF8+7ZzK3BFkI2QL7n7qvc8NL4tf2TdDiB42bCjsYe/izBt4P+9P
-         lczExnj88Gk6EJnFrpd+rDJqpJLXZrFWJejHE/41SNNpPSOPSMY/t+ka4b5SsJVrPLHS
-         yP8QlZ4A7u0QnpLqepfRRA6oRNAfFlMSLg9RFndTA4G2xf3m6mlZCv7MgAmlGP0c8oWl
-         i8wFp/FD38t10Lcua1M5QYwo/GKeCH7BrCeFC0Qg6KOLMCMSWiBQE04bFJRqxsde4oFG
-         7xr+53mwxla2EbiKtNRjabsAbACLLZZ8qk5BGu7Xf1wCkEqYOCB87CCuHWnFs7PFvCvc
-         ilNA==
+        d=gmail.com; s=20210112; t=1677863037;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RZgVkTuvYky6LMx4NxO2XF22XxAb0kNEaLo11LroAxw=;
+        b=aOGeJ1/EH6Ky1XYhaXU0TsJT+zNZhRX4i75gv50jJxzyk5yPx96UkyKWieOtkzVY3O
+         hN8ODxeP1XYPMPf7SwNu4MHejDwj4TXGS127Jgd7gJ6noMxOwL8c8hhRkD0xL8fiHfqw
+         4Yn6kAQgFlodlvPaDknI06aIebmEk6VzQYnaal/4mCm9/a6wm7kZvsf0YFFcluYALTgS
+         hVPGHecfZ+8fmgoD1vBDQinhxKudGHCO+NGkek7Kz4ezJUXRP9zfBHKAKnrlnxw6V9nf
+         BqbKqMBGuwUM5XnAs+Tpf8v1vFBCE2qnZK4SAiwcPR7VcM1Jpf7gTqK7EMOg7C15qs/9
+         pOSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Lulx79GyAFA+P6dFOCo5Azji9mlKR6wcVUynCnl38KE=;
-        b=dl5eVgOyvuQSDZ3U9uHcZVtqhKy402hxZp06rwhovEFLhnyxqCl9uQ78ThwqjeZlgF
-         Dkrp+QteJAnLzs5q2sdaAehOnzvpAELCBUQU5i1EC/NkpMWfcG5XDtFNhPnyaO0zPzG0
-         0zRrv8N1PRtmRdwgx8GPAxZtz4qnR/9POg4DwMRxigq1hSVzHKlhCBKaSATL3Eo+242H
-         rrz5PL2yX2g4IBPhSekFkjFPC98cMNVa7fyhW/82twN+qY9LMZ/8+WIM51EAKI40Wzij
-         W6BJShD/D20FMR7rWXKNmqoYzuWiY5SsnuuqweAIPNU3ozGAKvfjQ0VXEOL0kFUnwY/T
-         dulA==
-X-Gm-Message-State: AO0yUKVoN18NGfOgzw1fDTKWJV2/W485izgNt3OkunzHDosLjfF8SEh3
-        oyYLmuk1cH6w8YgHanVLgW8dQg==
-X-Google-Smtp-Source: AK7set+TY6SCuyHzL+clUmus/vGmZ+jVnXAk/MpTCOHfN+mCHX0WkFtQ6gXt+GN97vVUzr2U7gu7/g==
-X-Received: by 2002:a2e:b019:0:b0:295:a3a9:a3e4 with SMTP id y25-20020a2eb019000000b00295a3a9a3e4mr848742ljk.45.1677864703905;
-        Fri, 03 Mar 2023 09:31:43 -0800 (PST)
-Received: from [127.0.0.1] (85-76-129-102-nat.elisa-mobile.fi. [85.76.129.102])
-        by smtp.gmail.com with ESMTPSA id f8-20020a2e6a08000000b0029571d2226bsm402252ljc.11.2023.03.03.09.31.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Mar 2023 09:31:43 -0800 (PST)
-Date:   Fri, 03 Mar 2023 17:16:58 +0200
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Devi Priya <quic_devipriy@quicinc.com>
-CC:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, mturquette@baylibre.com,
-        sboyd@kernel.org, p.zabel@pengutronix.de, svarbanov@mm-sol.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-clk@vger.kernel.org,
-        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/7=5D_dt-bindings=3A_PCI=3A_q?= =?US-ASCII?Q?com=3A_Add_IPQ9574_specific_compatible?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20230228063358.GA4839@thinkpad>
-References: <20230214164135.17039-1-quic_devipriy@quicinc.com> <20230214164135.17039-2-quic_devipriy@quicinc.com> <20230224082332.GA5443@thinkpad> <bd153038-4427-1f11-1941-5f13fec01cf7@quicinc.com> <20230228063358.GA4839@thinkpad>
-Message-ID: <9BD62D8E-4E14-4269-B72D-C83EF4D43040@linaro.org>
+        d=1e100.net; s=20210112; t=1677863037;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RZgVkTuvYky6LMx4NxO2XF22XxAb0kNEaLo11LroAxw=;
+        b=qKVK8JKB7j/cdHfhS5NtHACjTucZoRdNytP7P56l3fh2qaADrlxMIndKnMv2f3i1j4
+         NTGBypS5gEhhoXsEoT+EKY8/zW9cI0VHEcb+ZYetpg3CGDjRDZgn/pt3xr7rcFtsDZ8c
+         5PI6kOJpwvObjzjY6BQ6y48Q8aSDlmXtN/KhtCyeAoA9Xb+pbP39AWT99/89our2ZrEU
+         4FZmC+8MbBhTLZa/KBoAy2nJ1qvkbvQKXQRIn8ZamApuU0zy6xbwU8FEaFVLcnYANDwu
+         otOnayiLcUspqt/v1NuHP9pFU4xO1GAvISfae1G1FKWv0Fq1PeCJK9xBZh6qSzmVscHH
+         vJ8g==
+X-Gm-Message-State: AO0yUKVOwBb6fSVOBgkKBe1S3pc2MX1LpJePcTxIXVUPph2rv4bPbrh/
+        rBAdevUH40pkmiguX7XJZOwRuq1sX1ATSbTKtho=
+X-Google-Smtp-Source: AK7set8d1sH5CmkMtOZYFe3qHdkCNvFUCNh5IhHFhDkZUbzvMmuXQitmVFSmai3PhsUO/xlXcU4veEoq/pdQ4K3B4B8=
+X-Received: by 2002:a05:6808:913:b0:384:253:642d with SMTP id
+ w19-20020a056808091300b003840253642dmr796082oih.3.1677863036851; Fri, 03 Mar
+ 2023 09:03:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+References: <20230302235356.3148279-1-robdclark@gmail.com> <20230302235356.3148279-13-robdclark@gmail.com>
+ <a5249009-0bec-61a5-4dd2-5728ee3017e3@linaro.org>
+In-Reply-To: <a5249009-0bec-61a5-4dd2-5728ee3017e3@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 3 Mar 2023 09:03:45 -0800
+Message-ID: <CAF6AEGtmQu-8LEdm68vXJJSpssXq2AShEdexqTGVW0WO5VmtDQ@mail.gmail.com>
+Subject: Re: [PATCH v9 12/15] drm/msm: Add deadline based boost support
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Daniel Vetter <daniel@ffwll.ch>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>,
+        =?UTF-8?Q?Michel_D=C3=A4nzer?= <michel@daenzer.net>,
+        Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Pekka Paalanen <ppaalanen@gmail.com>,
+        Simon Ser <contact@emersion.fr>,
+        Luben Tuikov <luben.tuikov@amd.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DMA BUFFER SHARING FRAMEWORK" 
+        <linux-media@vger.kernel.org>,
+        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
+        <linaro-mm-sig@lists.linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-28 =D1=84=D0=B5=D0=B2=D1=80=D0=B0=D0=BB=D1=8F 2023 =D0=B3=2E 08:33:58 GMT+0=
-2:00, Manivannan Sadhasivam <mani@kernel=2Eorg> =D0=BF=D0=B8=D1=88=D0=B5=D1=
-=82:
->On Tue, Feb 28, 2023 at 10:56:53AM +0530, Devi Priya wrote:
->>=20
->>=20
->> On 2/24/2023 1:53 PM, Manivannan Sadhasivam wrote:
->> > On Tue, Feb 14, 2023 at 10:11:29PM +0530, Devi Priya wrote:
->> > > Document the compatible for IPQ9574
->> > >=20
->> Hi Mani, Thanks for taking time to review the patch=2E
->> >=20
->> > You didn't mention about the "msi-parent" property that is being adde=
-d
->> > by this patch
->> Sure, will update the commit message in the next spin
->> >=20
->> > > Signed-off-by: Devi Priya <quic_devipriy@quicinc=2Ecom>
->> > > ---
->> > >   =2E=2E=2E/devicetree/bindings/pci/qcom,pcie=2Eyaml    | 72 ++++++=
-++++++++++++-
->> > >   1 file changed, 70 insertions(+), 2 deletions(-)
->> > >=20
->> > > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie=2Eyaml=
- b/Documentation/devicetree/bindings/pci/qcom,pcie=2Eyaml
->> > > index 872817d6d2bd=2E=2Edabdf2684e2d 100644
->> > > --- a/Documentation/devicetree/bindings/pci/qcom,pcie=2Eyaml
->> > > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie=2Eyaml
->> > > @@ -26,6 +26,7 @@ properties:
->> > >             - qcom,pcie-ipq8064-v2
->> > >             - qcom,pcie-ipq8074
->> > >             - qcom,pcie-ipq8074-gen3
->> > > +          - qcom,pcie-ipq9574
->> > >             - qcom,pcie-msm8996
->> > >             - qcom,pcie-qcs404
->> > >             - qcom,pcie-sa8540p
->> > > @@ -44,11 +45,11 @@ properties:
->> > >     reg:
->> > >       minItems: 4
->> > > -    maxItems: 5
->> > > +    maxItems: 6
->> > >     reg-names:
->> > >       minItems: 4
->> > > -    maxItems: 5
->> > > +    maxItems: 6
->> > >     interrupts:
->> > >       minItems: 1
->> > > @@ -105,6 +106,8 @@ properties:
->> > >       items:
->> > >         - const: pciephy
->> > > +  msi-parent: true
->> > > +
->> > >     power-domains:
->> > >       maxItems: 1
->> > > @@ -173,6 +176,27 @@ allOf:
->> > >               - const: parf # Qualcomm specific registers
->> > >               - const: config # PCIe configuration space
->> > > +  - if:
->> > > +      properties:
->> > > +        compatible:
->> > > +          contains:
->> > > +            enum:
->> > > +              - qcom,pcie-ipq9574
->> > > +    then:
->> > > +      properties:
->> > > +        reg:
->> > > +          minItems: 5
->> > > +          maxItems: 6
->> > > +        reg-names:
->> > > +          minItems: 5
->> > > +          items:
->> > > +            - const: dbi # DesignWare PCIe registers
->> > > +            - const: elbi # External local bus interface registers
->> > > +            - const: atu # ATU address space
->> > > +            - const: parf # Qualcomm specific registers
->> > > +            - const: config # PCIe configuration space
->> > > +            - const: aggr_noc #PCIe aggr_noc
->> >=20
->> > Why do you need this region unlike other SoCs? Is the driver making u=
-se of it?
->> We have the aggr_noc region in ipq9574 to achieve higher throughput & t=
-o
->> handle multiple PCIe instances=2E The driver uses it to rate adapt 1-la=
-ne PCIe
->> clocks=2E My bad, missed it=2E Will add the driver changes in V2=2E
+On Fri, Mar 3, 2023 at 2:10=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
->Hmm, this is something new=2E How can you achieve higher throughput with =
-this
->region? Can you explain more on how it is used?
-
-Based on the name of the region, it looks like it is an interconnect regio=
-n=2E=20
-
-Devi, if this is the case, then you have to handle it through the intercon=
-nect driver, rather than poking directly into these registers=2E
-
-
+> On 03/03/2023 01:53, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Track the nearest deadline on a fence timeline and set a timer to expir=
+e
+> > shortly before to trigger boost if the fence has not yet been signaled.
+> >
+> > v2: rebase
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >   drivers/gpu/drm/msm/msm_fence.c | 74 ++++++++++++++++++++++++++++++++=
++
+> >   drivers/gpu/drm/msm/msm_fence.h | 20 +++++++++
+> >   2 files changed, 94 insertions(+)
 >
->Thanks,
->Mani
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >
->> >=20
->> > Thanks,
->> > Mani
->> >=20
->> > > +
->> > >     - if:
->> > >         properties:
->> > >           compatible:
->> > > @@ -365,6 +389,39 @@ allOf:
->> > >               - const: ahb # AHB Reset
->> > >               - const: axi_m_sticky # AXI Master Sticky reset
->> > > +  - if:
->> > > +      properties:
->> > > +        compatible:
->> > > +          contains:
->> > > +            enum:
->> > > +              - qcom,pcie-ipq9574
->> > > +    then:
->> > > +      properties:
->> > > +        clocks:
->> > > +          minItems: 6
->> > > +          maxItems: 6
->> > > +        clock-names:
->> > > +          items:
->> > > +            - const: ahb  # AHB clock
->> > > +            - const: aux  # Auxiliary clock
->> > > +            - const: axi_m # AXI Master clock
->> > > +            - const: axi_s # AXI Slave clock
->> > > +            - const: axi_bridge # AXI bridge clock
->> > > +            - const: rchng
->> > > +        resets:
->> > > +          minItems: 8
->> > > +          maxItems: 8
->> > > +        reset-names:
->> > > +          items:
->> > > +            - const: pipe # PIPE reset
->> > > +            - const: sticky # Core Sticky reset
->> > > +            - const: axi_s_sticky # AXI Slave Sticky reset
->> > > +            - const: axi_s # AXI Slave reset
->> > > +            - const: axi_m_sticky # AXI Master Sticky reset
->> > > +            - const: axi_m # AXI Master reset
->> > > +            - const: aux # AUX Reset
->> > > +            - const: ahb # AHB Reset
->> > > +
->> > >     - if:
->> > >         properties:
->> > >           compatible:
->> > > @@ -681,6 +738,16 @@ allOf:
->> > >           - interconnects
->> > >           - interconnect-names
->> > > +  - if:
->> > > +      properties:
->> > > +        compatible:
->> > > +          contains:
->> > > +            enum:
->> > > +              - qcom,pcie-ipq9574
->> > > +    then:
->> > > +      required:
->> > > +        - msi-parent
->> > > +
->> > >     - if:
->> > >         not:
->> > >           properties:
->> > > @@ -693,6 +760,7 @@ allOf:
->> > >                   - qcom,pcie-ipq8064v2
->> > >                   - qcom,pcie-ipq8074
->> > >                   - qcom,pcie-ipq8074-gen3
->> > > +                - qcom,pcie-ipq9574
->> > >                   - qcom,pcie-qcs404
->> > >       then:
->> > >         required:
->> > > --=20
->> > > 2=2E17=2E1
->> > >=20
->> >=20
->> Thanks,
->> Devi Priya
->
+> A small question: do we boost to fit into the deadline or to miss the
+> deadline for as little as possible? If the former is the case, we might
+> need to adjust 3ms depending on the workload.
 
+The goal is as much to run with higher clock on the next frame as it
+is to not miss a deadline.  Ie. we don't want devfreq to come to the
+conclusion that running at <50% clks is best due to the amount of
+utilization caused by missing ever other vblank.
+
+But 3ms is mostly just "seems like a good compromise" value.  It might chan=
+ge.
+
+BR,
+-R
+
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_=
+fence.c
+> > index 56641408ea74..51b461f32103 100644
+> > --- a/drivers/gpu/drm/msm/msm_fence.c
+> > +++ b/drivers/gpu/drm/msm/msm_fence.c
+> > @@ -8,6 +8,35 @@
+> >
+> >   #include "msm_drv.h"
+> >   #include "msm_fence.h"
+> > +#include "msm_gpu.h"
+> > +
+> > +static struct msm_gpu *fctx2gpu(struct msm_fence_context *fctx)
+> > +{
+> > +     struct msm_drm_private *priv =3D fctx->dev->dev_private;
+> > +     return priv->gpu;
+> > +}
+> > +
+> > +static enum hrtimer_restart deadline_timer(struct hrtimer *t)
+> > +{
+> > +     struct msm_fence_context *fctx =3D container_of(t,
+> > +                     struct msm_fence_context, deadline_timer);
+> > +
+> > +     kthread_queue_work(fctx2gpu(fctx)->worker, &fctx->deadline_work);
+> > +
+> > +     return HRTIMER_NORESTART;
+> > +}
+> > +
+> > +static void deadline_work(struct kthread_work *work)
+> > +{
+> > +     struct msm_fence_context *fctx =3D container_of(work,
+> > +                     struct msm_fence_context, deadline_work);
+> > +
+> > +     /* If deadline fence has already passed, nothing to do: */
+> > +     if (msm_fence_completed(fctx, fctx->next_deadline_fence))
+> > +             return;
+> > +
+> > +     msm_devfreq_boost(fctx2gpu(fctx), 2);
+> > +}
+> >
+> >
+> >   struct msm_fence_context *
+> > @@ -36,6 +65,13 @@ msm_fence_context_alloc(struct drm_device *dev, vola=
+tile uint32_t *fenceptr,
+> >       fctx->completed_fence =3D fctx->last_fence;
+> >       *fctx->fenceptr =3D fctx->last_fence;
+> >
+> > +     hrtimer_init(&fctx->deadline_timer, CLOCK_MONOTONIC, HRTIMER_MODE=
+_ABS);
+> > +     fctx->deadline_timer.function =3D deadline_timer;
+> > +
+> > +     kthread_init_work(&fctx->deadline_work, deadline_work);
+> > +
+> > +     fctx->next_deadline =3D ktime_get();
+> > +
+> >       return fctx;
+> >   }
+> >
+> > @@ -62,6 +98,8 @@ void msm_update_fence(struct msm_fence_context *fctx,=
+ uint32_t fence)
+> >       spin_lock_irqsave(&fctx->spinlock, flags);
+> >       if (fence_after(fence, fctx->completed_fence))
+> >               fctx->completed_fence =3D fence;
+> > +     if (msm_fence_completed(fctx, fctx->next_deadline_fence))
+> > +             hrtimer_cancel(&fctx->deadline_timer);
+> >       spin_unlock_irqrestore(&fctx->spinlock, flags);
+> >   }
+> >
+> > @@ -92,10 +130,46 @@ static bool msm_fence_signaled(struct dma_fence *f=
+ence)
+> >       return msm_fence_completed(f->fctx, f->base.seqno);
+> >   }
+> >
+> > +static void msm_fence_set_deadline(struct dma_fence *fence, ktime_t de=
+adline)
+> > +{
+> > +     struct msm_fence *f =3D to_msm_fence(fence);
+> > +     struct msm_fence_context *fctx =3D f->fctx;
+> > +     unsigned long flags;
+> > +     ktime_t now;
+> > +
+> > +     spin_lock_irqsave(&fctx->spinlock, flags);
+> > +     now =3D ktime_get();
+> > +
+> > +     if (ktime_after(now, fctx->next_deadline) ||
+> > +                     ktime_before(deadline, fctx->next_deadline)) {
+> > +             fctx->next_deadline =3D deadline;
+> > +             fctx->next_deadline_fence =3D
+> > +                     max(fctx->next_deadline_fence, (uint32_t)fence->s=
+eqno);
+> > +
+> > +             /*
+> > +              * Set timer to trigger boost 3ms before deadline, or
+> > +              * if we are already less than 3ms before the deadline
+> > +              * schedule boost work immediately.
+> > +              */
+> > +             deadline =3D ktime_sub(deadline, ms_to_ktime(3));
+> > +
+> > +             if (ktime_after(now, deadline)) {
+> > +                     kthread_queue_work(fctx2gpu(fctx)->worker,
+> > +                                     &fctx->deadline_work);
+> > +             } else {
+> > +                     hrtimer_start(&fctx->deadline_timer, deadline,
+> > +                                     HRTIMER_MODE_ABS);
+> > +             }
+> > +     }
+> > +
+> > +     spin_unlock_irqrestore(&fctx->spinlock, flags);
+> > +}
+> > +
+> >   static const struct dma_fence_ops msm_fence_ops =3D {
+> >       .get_driver_name =3D msm_fence_get_driver_name,
+> >       .get_timeline_name =3D msm_fence_get_timeline_name,
+> >       .signaled =3D msm_fence_signaled,
+> > +     .set_deadline =3D msm_fence_set_deadline,
+> >   };
+> >
+> >   struct dma_fence *
+> > diff --git a/drivers/gpu/drm/msm/msm_fence.h b/drivers/gpu/drm/msm/msm_=
+fence.h
+> > index 7f1798c54cd1..cdaebfb94f5c 100644
+> > --- a/drivers/gpu/drm/msm/msm_fence.h
+> > +++ b/drivers/gpu/drm/msm/msm_fence.h
+> > @@ -52,6 +52,26 @@ struct msm_fence_context {
+> >       volatile uint32_t *fenceptr;
+> >
+> >       spinlock_t spinlock;
+> > +
+> > +     /*
+> > +      * TODO this doesn't really deal with multiple deadlines, like
+> > +      * if userspace got multiple frames ahead.. OTOH atomic updates
+> > +      * don't queue, so maybe that is ok
+> > +      */
+> > +
+> > +     /** next_deadline: Time of next deadline */
+> > +     ktime_t next_deadline;
+> > +
+> > +     /**
+> > +      * next_deadline_fence:
+> > +      *
+> > +      * Fence value for next pending deadline.  The deadline timer is
+> > +      * canceled when this fence is signaled.
+> > +      */
+> > +     uint32_t next_deadline_fence;
+> > +
+> > +     struct hrtimer deadline_timer;
+> > +     struct kthread_work deadline_work;
+> >   };
+> >
+> >   struct msm_fence_context * msm_fence_context_alloc(struct drm_device =
+*dev,
+>
+> --
+> With best wishes
+> Dmitry
+>
