@@ -2,102 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A6DE6A8F41
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 03:32:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BD026A8F5A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 03:42:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229797AbjCCCcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Mar 2023 21:32:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59412 "EHLO
+        id S229821AbjCCCmy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Mar 2023 21:42:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229808AbjCCCck (ORCPT
+        with ESMTP id S229810AbjCCCmx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Mar 2023 21:32:40 -0500
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0AB33B21C;
-        Thu,  2 Mar 2023 18:32:38 -0800 (PST)
-Received: from dggpeml100012.china.huawei.com (unknown [172.30.72.57])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4PSX6h2jlKzrS8F;
-        Fri,  3 Mar 2023 10:31:56 +0800 (CST)
-Received: from localhost.localdomain (10.67.175.61) by
- dggpeml100012.china.huawei.com (7.185.36.121) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Fri, 3 Mar 2023 10:32:37 +0800
-From:   Zheng Yejian <zhengyejian1@huawei.com>
-To:     <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <balbi@kernel.org>, <lee.jones@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <zhengyejian1@huawei.com>
-Subject: [PATCH 5.4] usb: dwc3: dwc3-qcom: Add missing platform_device_put() in dwc3_qcom_acpi_register_core
-Date:   Fri, 3 Mar 2023 10:35:12 +0800
-Message-ID: <20230303023512.774777-1-zhengyejian1@huawei.com>
-X-Mailer: git-send-email 2.25.1
+        Thu, 2 Mar 2023 21:42:53 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 151AA1AC
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Mar 2023 18:42:51 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id i28so1932526lfv.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Mar 2023 18:42:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1677811370;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iDNEXw8teYXC1RePAZhjBh/dGMalMHP9Lg4fn2iWwxc=;
+        b=dbiBVX/9NCg6BYhGh8+LSwc0ol2iHOSJAG4s5qAC8SSKGGXFnOadO4zhO2ClOZxR+T
+         h57Xi6/m6alMV2KeoMcOwLJA60xhg5m6RjAK6+BoJZ4dx7z96UaS52+hN+DkPCwJQBJm
+         RHNHTKlIH4lcldJhSyQYjwdaAHxB/ubgYt5BqbeBSM8sSAnaw20m5OcPsoiABIHqU/JK
+         +fj74GC4nkL+uA3QG61opD2K90/6c6crSgwyJ9VnKZ1NguTDCU4irPdKTbOjJGFruvtB
+         SsgVDZ5RTYAneDGzXiT4gt+sDQ9u9pf7mqs7XGld37ce1IvRjhktTGktDeKxdJF8dZSJ
+         nE6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677811370;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iDNEXw8teYXC1RePAZhjBh/dGMalMHP9Lg4fn2iWwxc=;
+        b=fGvNk4iVGYdkAlEurmSfu6ZubLxicaNn3vFGpit3wwhNBZ3RZuTtJYKbE51j67mEdM
+         wxlQVy60VOy2Jjgo0lFh3b69SZ6lOmzD04HdvJChEclFD3CT+jeWUZ809gQmka+SuvBg
+         melRpjR8+n2bIhewYhEAz9dAyXxXjAPob0puwYQvhb0nSMLXXO7+ORTwIQxrUtZmaNQz
+         KIwGZgB4WvV31Hbu1TvGn5MO2ieN0I2p2k50GvSW97g0Ybd6siSP1MO0h26vcmv+nGM/
+         ynJBlRv/GExE5KgfuMGO6PWQD862abKuc9JNicUAYIlq9xO/qPL7xQqx6u4As929XePz
+         wNTg==
+X-Gm-Message-State: AO0yUKU/ciSfNsQHc9CiURasp65awvnb0qBiBJfnBrGyAOb58C86og0t
+        HldLh0bm7YDo0JI/jpojwpTeF89p2e2IfHhI
+X-Google-Smtp-Source: AK7set/6zMdHJiXD7PXCcw4098kJJxCA5Cq9XHtnY3BVqas1Stg1PK/SfGNLLtpNEMiO4rTo9aUbOw==
+X-Received: by 2002:ac2:548d:0:b0:4e0:ff8e:bbfc with SMTP id t13-20020ac2548d000000b004e0ff8ebbfcmr98941lfk.31.1677811369885;
+        Thu, 02 Mar 2023 18:42:49 -0800 (PST)
+Received: from localhost.localdomain (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
+        by smtp.gmail.com with ESMTPSA id x19-20020a19f613000000b004db1cd5efcesm181379lfe.241.2023.03.02.18.42.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Mar 2023 18:42:49 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kalle Valo <kvalo@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings: ath10k: Add vdd-smps supply
+Date:   Fri,  3 Mar 2023 03:42:45 +0100
+Message-Id: <20230303024246.2175382-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.67.175.61]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- dggpeml100012.china.huawei.com (7.185.36.121)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Miaoqian Lin <linmq006@gmail.com>
+Mention the newly added vdd-smps supply.
 
-commit fa0ef93868a6062babe1144df2807a8b1d4924d2 upstream.
-
-Add the missing platform_device_put() before return from
-dwc3_qcom_acpi_register_core in the error handling case.
-
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20211231113641.31474-1-linmq006@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CVE: CVE-2023-22995
-Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
-[Fix conflict due to lack of 8dc6e6dd1bee39cd65a232a17d51240fc65a0f4a]
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/net/wireless/qcom,ath10k.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 2dcdeb52fc29..35f94fd69bba 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -486,8 +486,10 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
- 	qcom->dwc3->dev.coherent_dma_mask = dev->coherent_dma_mask;
- 
- 	child_res = kcalloc(2, sizeof(*child_res), GFP_KERNEL);
--	if (!child_res)
-+	if (!child_res) {
-+		platform_device_put(qcom->dwc3);
- 		return -ENOMEM;
-+	}
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	if (!res) {
-@@ -519,10 +521,15 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
- 	}
- 
- 	ret = platform_device_add(qcom->dwc3);
--	if (ret)
-+	if (ret) {
- 		dev_err(&pdev->dev, "failed to add device\n");
-+		goto out;
-+	}
-+	kfree(child_res);
-+	return 0;
- 
- out:
-+	platform_device_put(qcom->dwc3);
- 	kfree(child_res);
- 	return ret;
- }
+diff --git a/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.txt b/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.txt
+index b61c2d5a0ff7..8697e63aeffa 100644
+--- a/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.txt
++++ b/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.txt
+@@ -66,7 +66,7 @@ Optional properties:
+ - <supply-name>-supply: handle to the regulator device tree node
+ 			   optional "supply-name" are "vdd-0.8-cx-mx",
+ 			   "vdd-1.8-xo", "vdd-1.3-rfa", "vdd-3.3-ch0",
+-			   and "vdd-3.3-ch1".
++			   "vdd-3.3-ch1" and "vdd-smps".
+ - memory-region:
+ 	Usage: optional
+ 	Value type: <phandle>
 -- 
-2.25.1
+2.39.2
 
