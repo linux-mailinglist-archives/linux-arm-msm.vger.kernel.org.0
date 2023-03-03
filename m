@@ -2,49 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98B8D6A924E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 09:22:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A16576A9257
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Mar 2023 09:23:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229471AbjCCIW0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 03:22:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43254 "EHLO
+        id S230053AbjCCIX4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 03:23:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229596AbjCCIW0 (ORCPT
+        with ESMTP id S230052AbjCCIXz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 03:22:26 -0500
+        Fri, 3 Mar 2023 03:23:55 -0500
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27DA859427;
-        Fri,  3 Mar 2023 00:21:09 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8164959E4B;
+        Fri,  3 Mar 2023 00:22:34 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 85609B816AA;
-        Fri,  3 Mar 2023 08:21:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0EE7C433D2;
-        Fri,  3 Mar 2023 08:20:58 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id ED4A0B8163C;
+        Fri,  3 Mar 2023 08:22:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EADFC433D2;
+        Fri,  3 Mar 2023 08:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677831660;
-        bh=z9KGA8lifz4GxgKkvFAFo8F3BsEmgUIp9Nq/FkbpkmI=;
+        s=k20201202; t=1677831735;
+        bh=lGJEP1G1aXwyc1cF9DwcVYzXKaNqepv+08/yCIhZ9Bc=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nvE1S47lMNo8DVfvjD/Q301UZtCJKC6SKoCWMEdn/qYUpaBtZKVp6TX+5Y0UOHEs9
-         gxGKxUzbJ3zAA7IDF0EBaXBWJdv6jmPCKwrF3Nj/gfMZz3dFaDkiAXMpqdHDaFM74A
-         Z62s1LzobHTNHBXiKLHb66bSKadFsSzAHfaKt1tfNtB/b2tQvtE8UTMy1GVDisShAs
-         QmxtO1fFNqIafwEN6V2mqxOhFk9zLh1ClIF8l1fpiyLxxapy+MzUfSPfpRZNRyRDn8
-         XclNNSL95rsc+FbsZhFm8Zs4fR7Lc8u+FKxQ+N5vay2ZyRXV/aya3MGBYVlUkMttZi
-         hTnbJ/ZG/S8aA==
-Date:   Fri, 3 Mar 2023 08:20:55 +0000
+        b=S4pz+XOQ3ymqUOiMjAVFWoWHLVR1ka+CvMe1Ta+XzTzuWc5rOhhTd5KaeD/maawUN
+         SUv8wKjlTmiOHxNnqqxBVjmm+mX1PwzT+uLlpgrqpOKNSnx70Uh8KBxMw8i7x1m1yz
+         Dx9qBYTSaKvwdLXXX55vUk3z82xO3MD8kSJg1ixgE6dI5QL+xzOZnKUn0oVKyn9cvI
+         IdpRhp2KI+0S9+J6NWNrvsG43NkgWonxuNZHh+a/Td+Fty5dgrw8WvPqWTTCENrAAo
+         QAKv3uV0TV2JKP5/RrkMSqikVVukAOV8pGwlk+XIy4FjLYEQ4wOQF/DS74cYMX0Z5F
+         4nRrJr57zsSjg==
+Date:   Fri, 3 Mar 2023 08:22:11 +0000
 From:   Lee Jones <lee@kernel.org>
 To:     ye.xingchen@zte.com.cn
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mfd: ssbi: use devm_platform_get_and_ioremap_resource()
-Message-ID: <20230303082055.GE2303077@google.com>
-References: <202302081735440864562@zte.com.cn>
+Subject: Re: [PATCH] mfd: qcom_rpm: use
+ devm_platform_get_and_ioremap_resource()
+Message-ID: <20230303082211.GH2303077@google.com>
+References: <202302081734511884545@zte.com.cn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <202302081735440864562@zte.com.cn>
+In-Reply-To: <202302081734511884545@zte.com.cn>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -64,7 +65,7 @@ On Wed, 08 Feb 2023, ye.xingchen@zte.com.cn wrote:
 > 
 > Signed-off-by: Ye Xingchen <ye.xingchen@zte.com.cn>
 > ---
->  drivers/mfd/ssbi.c | 4 +---
+>  drivers/mfd/qcom_rpm.c | 4 +---
 >  1 file changed, 1 insertion(+), 3 deletions(-)
 
 Applied, thanks
