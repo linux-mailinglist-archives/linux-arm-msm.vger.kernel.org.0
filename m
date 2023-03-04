@@ -2,287 +2,326 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6C806AA5EE
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Mar 2023 00:53:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04FFD6AA6CB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Mar 2023 02:07:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229834AbjCCXxl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 18:53:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58232 "EHLO
+        id S229752AbjCDBHI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 20:07:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229833AbjCCXxi (ORCPT
+        with ESMTP id S229644AbjCDBHF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 18:53:38 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04F66975B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Mar 2023 15:53:31 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id a25so16913895edb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Mar 2023 15:53:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gnDZ9x2blH5V8YINfT6XOEOEFytwM5xt/JuAKzXCEWU=;
-        b=CysvhjzJrWfpzLbmZMuln5F1LZXgBzBu4oR3PEjQqN/OQMt+Zh8GTxeYL9ZXR3QmSE
-         tyHKB8gKDZRKXHxB0zBebHIXxH0FX3fNke1AHBevQacjZXOEyvedakh+rWEEdRE4HHAe
-         D4Ci9kbvYC4wulP/eArIu7vNgMtZjjWcZG0OxuRi2gIxsqyFVj0ZZQobqXhgjoKFfcct
-         dCLOTpYmzE01SHLQTatMXTNpuCNlej00nsQS+PVyBCgfb2manXjYDA12QXhAEfjSWtW+
-         MqITV/TCHiEoJQJ3W9K4EGzf/rysfbK1CP/4eeauBSBf8P4A9s0zp9pktLwVtUGIyWIk
-         +JtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gnDZ9x2blH5V8YINfT6XOEOEFytwM5xt/JuAKzXCEWU=;
-        b=yVIjEYDMHw+bkGAR8wX7vHhVjCKLq751Uufiex3PzlCeK1SnTeRn4yAZ8UZhg/ME+V
-         wr86lCGuLGaKELG5wAjzOFI/q+1+N5K38APJyFQWN2j4+/qm5pbTOttU9xKlWb5tvkhO
-         L0Q3JEQQDoqQ8fz9bGUFQqLf7ohuJwvCHPBFp26s8irh6v9h1a8o5t32E4HaOncwXHME
-         2a4Hfcn0K8/1CpJV9ePlQN3eCdRP3wndvhCOLr43yjJfrU97eW4OFOdt3VShtC/QwBe8
-         H9DjrIN10gjotutbgx3LKCKzCsTK4jAisOY3uGRvol2Shd5MQCFbWvsmCAydRdwCbSbK
-         9Z4w==
-X-Gm-Message-State: AO0yUKVBewXIO+4mwzcMOrkfYUO4hPXwe3AnP3FM+1vZmJNFNgrSPUMK
-        xfS6079DohTHaFTt2EAvXYzaLQ==
-X-Google-Smtp-Source: AK7set9JmLUWJX+fB3FtuG1918iXvCOsgAoXJ70x5Nw9+h8/nbjmxtRgVk16QJDub3WUOofqGBZIpQ==
-X-Received: by 2002:a17:907:70e:b0:878:955e:b4a4 with SMTP id xb14-20020a170907070e00b00878955eb4a4mr4595666ejb.33.1677887610406;
-        Fri, 03 Mar 2023 15:53:30 -0800 (PST)
-Received: from [10.203.3.194] ([185.202.34.81])
-        by smtp.gmail.com with ESMTPSA id h17-20020a17090634d100b008ee5356801dsm1463032ejb.187.2023.03.03.15.53.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Mar 2023 15:53:30 -0800 (PST)
-Message-ID: <b9a5778c-0eae-28c1-1806-33550345e619@linaro.org>
-Date:   Sat, 4 Mar 2023 01:53:28 +0200
+        Fri, 3 Mar 2023 20:07:05 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5282360D70;
+        Fri,  3 Mar 2023 17:07:04 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3240N75u010520;
+        Sat, 4 Mar 2023 01:06:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=0GzSapir4/eqTrWhKwiE4McG39gEN8E3X2UnTUnJtvc=;
+ b=S6+xHO3HkAfyXkSgDF1aqDJDYgr7v9tP4Z+QT0tXxn+rKtvwrDkrkRYzhP3yA7U/+mxE
+ sMqpVxEu+9S6GVX8IY3zULZWOA7ncgKDpaqLDQ3B2+T334VUE29tXl4p2iSaYHyflstT
+ +fGVNGY+s0hXERUvBO7eyOh72HM+HmBNaxd2XGy1GJ/8XeXtMr0WhCseX+Lt1fdUuAQY
+ zEcf/P1V7kwd4J87WPmrSnR8KfXByl+lI9rJNBWbDAAFoEjbLayjULb/aMsV8cSSSiwk
+ yMEOdr6v73ZnGCPUP7h6B4YxKMnB3EkMgIEAMA0yOfgkGxUMOAz6oO9kKjNm65fGu7m+ /A== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p3ph4rpd8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 04 Mar 2023 01:06:45 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32416iKO028187
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 4 Mar 2023 01:06:44 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Fri, 3 Mar 2023 17:06:43 -0800
+From:   Elliot Berman <quic_eberman@quicinc.com>
+To:     Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+CC:     Elliot Berman <quic_eberman@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: [PATCH v11 00/26] Drivers for gunyah hypervisor
+Date:   Fri, 3 Mar 2023 17:06:06 -0800
+Message-ID: <20230304010632.2127470-1-quic_eberman@quicinc.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v9 12/15] drm/msm: Add deadline based boost support
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Daniel Vetter <daniel@ffwll.ch>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <ckoenig.leichtzumerken@gmail.com>,
-        =?UTF-8?Q?Michel_D=c3=a4nzer?= <michel@daenzer.net>,
-        Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Pekka Paalanen <ppaalanen@gmail.com>,
-        Simon Ser <contact@emersion.fr>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>
-References: <20230302235356.3148279-1-robdclark@gmail.com>
- <20230302235356.3148279-13-robdclark@gmail.com>
- <a5249009-0bec-61a5-4dd2-5728ee3017e3@linaro.org>
- <CAF6AEGtmQu-8LEdm68vXJJSpssXq2AShEdexqTGVW0WO5VmtDQ@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAF6AEGtmQu-8LEdm68vXJJSpssXq2AShEdexqTGVW0WO5VmtDQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: qL962zMWh0AmcQs4v1YJqIfY6A95-pcc
+X-Proofpoint-GUID: qL962zMWh0AmcQs4v1YJqIfY6A95-pcc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-03_07,2023-03-03_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
+ lowpriorityscore=0 mlxscore=0 suspectscore=0 priorityscore=1501
+ clxscore=1015 impostorscore=0 adultscore=0 mlxlogscore=999 bulkscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303040004
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/03/2023 19:03, Rob Clark wrote:
-> On Fri, Mar 3, 2023 at 2:10 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> On 03/03/2023 01:53, Rob Clark wrote:
->>> From: Rob Clark <robdclark@chromium.org>
->>>
->>> Track the nearest deadline on a fence timeline and set a timer to expire
->>> shortly before to trigger boost if the fence has not yet been signaled.
->>>
->>> v2: rebase
->>>
->>> Signed-off-by: Rob Clark <robdclark@chromium.org>
->>> ---
->>>    drivers/gpu/drm/msm/msm_fence.c | 74 +++++++++++++++++++++++++++++++++
->>>    drivers/gpu/drm/msm/msm_fence.h | 20 +++++++++
->>>    2 files changed, 94 insertions(+)
->>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>
->> A small question: do we boost to fit into the deadline or to miss the
->> deadline for as little as possible? If the former is the case, we might
->> need to adjust 3ms depending on the workload.
-> 
-> The goal is as much to run with higher clock on the next frame as it
-> is to not miss a deadline.  Ie. we don't want devfreq to come to the
-> conclusion that running at <50% clks is best due to the amount of
-> utilization caused by missing ever other vblank.
+Gunyah is a Type-1 hypervisor independent of any
+high-level OS kernel, and runs in a higher CPU privilege level. It does
+not depend on any lower-privileged OS kernel/code for its core
+functionality. This increases its security and can support a much smaller
+trusted computing base than a Type-2 hypervisor.
 
-Ack, thanks for the explanation.
+Gunyah is an open source hypervisor. The source repo is available at
+https://github.com/quic/gunyah-hypervisor.
 
-> 
-> But 3ms is mostly just "seems like a good compromise" value.  It might change.
-> 
-> BR,
-> -R
-> 
->>>
->>> diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_fence.c
->>> index 56641408ea74..51b461f32103 100644
->>> --- a/drivers/gpu/drm/msm/msm_fence.c
->>> +++ b/drivers/gpu/drm/msm/msm_fence.c
->>> @@ -8,6 +8,35 @@
->>>
->>>    #include "msm_drv.h"
->>>    #include "msm_fence.h"
->>> +#include "msm_gpu.h"
->>> +
->>> +static struct msm_gpu *fctx2gpu(struct msm_fence_context *fctx)
->>> +{
->>> +     struct msm_drm_private *priv = fctx->dev->dev_private;
->>> +     return priv->gpu;
->>> +}
->>> +
->>> +static enum hrtimer_restart deadline_timer(struct hrtimer *t)
->>> +{
->>> +     struct msm_fence_context *fctx = container_of(t,
->>> +                     struct msm_fence_context, deadline_timer);
->>> +
->>> +     kthread_queue_work(fctx2gpu(fctx)->worker, &fctx->deadline_work);
->>> +
->>> +     return HRTIMER_NORESTART;
->>> +}
->>> +
->>> +static void deadline_work(struct kthread_work *work)
->>> +{
->>> +     struct msm_fence_context *fctx = container_of(work,
->>> +                     struct msm_fence_context, deadline_work);
->>> +
->>> +     /* If deadline fence has already passed, nothing to do: */
->>> +     if (msm_fence_completed(fctx, fctx->next_deadline_fence))
->>> +             return;
->>> +
->>> +     msm_devfreq_boost(fctx2gpu(fctx), 2);
->>> +}
->>>
->>>
->>>    struct msm_fence_context *
->>> @@ -36,6 +65,13 @@ msm_fence_context_alloc(struct drm_device *dev, volatile uint32_t *fenceptr,
->>>        fctx->completed_fence = fctx->last_fence;
->>>        *fctx->fenceptr = fctx->last_fence;
->>>
->>> +     hrtimer_init(&fctx->deadline_timer, CLOCK_MONOTONIC, HRTIMER_MODE_ABS);
->>> +     fctx->deadline_timer.function = deadline_timer;
->>> +
->>> +     kthread_init_work(&fctx->deadline_work, deadline_work);
->>> +
->>> +     fctx->next_deadline = ktime_get();
->>> +
->>>        return fctx;
->>>    }
->>>
->>> @@ -62,6 +98,8 @@ void msm_update_fence(struct msm_fence_context *fctx, uint32_t fence)
->>>        spin_lock_irqsave(&fctx->spinlock, flags);
->>>        if (fence_after(fence, fctx->completed_fence))
->>>                fctx->completed_fence = fence;
->>> +     if (msm_fence_completed(fctx, fctx->next_deadline_fence))
->>> +             hrtimer_cancel(&fctx->deadline_timer);
->>>        spin_unlock_irqrestore(&fctx->spinlock, flags);
->>>    }
->>>
->>> @@ -92,10 +130,46 @@ static bool msm_fence_signaled(struct dma_fence *fence)
->>>        return msm_fence_completed(f->fctx, f->base.seqno);
->>>    }
->>>
->>> +static void msm_fence_set_deadline(struct dma_fence *fence, ktime_t deadline)
->>> +{
->>> +     struct msm_fence *f = to_msm_fence(fence);
->>> +     struct msm_fence_context *fctx = f->fctx;
->>> +     unsigned long flags;
->>> +     ktime_t now;
->>> +
->>> +     spin_lock_irqsave(&fctx->spinlock, flags);
->>> +     now = ktime_get();
->>> +
->>> +     if (ktime_after(now, fctx->next_deadline) ||
->>> +                     ktime_before(deadline, fctx->next_deadline)) {
->>> +             fctx->next_deadline = deadline;
->>> +             fctx->next_deadline_fence =
->>> +                     max(fctx->next_deadline_fence, (uint32_t)fence->seqno);
->>> +
->>> +             /*
->>> +              * Set timer to trigger boost 3ms before deadline, or
->>> +              * if we are already less than 3ms before the deadline
->>> +              * schedule boost work immediately.
->>> +              */
->>> +             deadline = ktime_sub(deadline, ms_to_ktime(3));
->>> +
->>> +             if (ktime_after(now, deadline)) {
->>> +                     kthread_queue_work(fctx2gpu(fctx)->worker,
->>> +                                     &fctx->deadline_work);
->>> +             } else {
->>> +                     hrtimer_start(&fctx->deadline_timer, deadline,
->>> +                                     HRTIMER_MODE_ABS);
->>> +             }
->>> +     }
->>> +
->>> +     spin_unlock_irqrestore(&fctx->spinlock, flags);
->>> +}
->>> +
->>>    static const struct dma_fence_ops msm_fence_ops = {
->>>        .get_driver_name = msm_fence_get_driver_name,
->>>        .get_timeline_name = msm_fence_get_timeline_name,
->>>        .signaled = msm_fence_signaled,
->>> +     .set_deadline = msm_fence_set_deadline,
->>>    };
->>>
->>>    struct dma_fence *
->>> diff --git a/drivers/gpu/drm/msm/msm_fence.h b/drivers/gpu/drm/msm/msm_fence.h
->>> index 7f1798c54cd1..cdaebfb94f5c 100644
->>> --- a/drivers/gpu/drm/msm/msm_fence.h
->>> +++ b/drivers/gpu/drm/msm/msm_fence.h
->>> @@ -52,6 +52,26 @@ struct msm_fence_context {
->>>        volatile uint32_t *fenceptr;
->>>
->>>        spinlock_t spinlock;
->>> +
->>> +     /*
->>> +      * TODO this doesn't really deal with multiple deadlines, like
->>> +      * if userspace got multiple frames ahead.. OTOH atomic updates
->>> +      * don't queue, so maybe that is ok
->>> +      */
->>> +
->>> +     /** next_deadline: Time of next deadline */
->>> +     ktime_t next_deadline;
->>> +
->>> +     /**
->>> +      * next_deadline_fence:
->>> +      *
->>> +      * Fence value for next pending deadline.  The deadline timer is
->>> +      * canceled when this fence is signaled.
->>> +      */
->>> +     uint32_t next_deadline_fence;
->>> +
->>> +     struct hrtimer deadline_timer;
->>> +     struct kthread_work deadline_work;
->>>    };
->>>
->>>    struct msm_fence_context * msm_fence_context_alloc(struct drm_device *dev,
->>
->> --
->> With best wishes
->> Dmitry
->>
+The diagram below shows the architecture.
 
+::
+
+         VM A                    VM B
+     +-----+ +-----+  | +-----+ +-----+ +-----+
+     |     | |     |  | |     | |     | |     |
+ EL0 | APP | | APP |  | | APP | | APP | | APP |
+     |     | |     |  | |     | |     | |     |
+     +-----+ +-----+  | +-----+ +-----+ +-----+
+ ---------------------|-------------------------
+     +--------------+ | +----------------------+
+     |              | | |                      |
+ EL1 | Linux Kernel | | |Linux kernel/Other OS |   ...
+     |              | | |                      |
+     +--------------+ | +----------------------+
+ --------hvc/smc------|------hvc/smc------------
+     +----------------------------------------+
+     |                                        |
+ EL2 |            Gunyah Hypervisor           |
+     |                                        |
+     +----------------------------------------+
+
+Gunyah provides these following features.
+
+- Threads and Scheduling: The scheduler schedules virtual CPUs (VCPUs) on
+physical CPUs and enables time-sharing of the CPUs.
+- Memory Management: Gunyah tracks memory ownership and use of all memory
+under its control. Memory partitioning between VMs is a fundamental
+security feature.
+- Interrupt Virtualization: All interrupts are handled in the hypervisor
+and routed to the assigned VM.
+- Inter-VM Communication: There are several different mechanisms provided
+for communicating between VMs.
+- Device Virtualization: Para-virtualization of devices is supported using
+inter-VM communication. Low level system features and devices such as
+interrupt controllers are supported with emulation where required.
+
+This series adds the basic framework for detecting that Linux is running
+under Gunyah as a virtual machine, communication with the Gunyah Resource
+Manager, and a virtual machine manager capable of launching virtual machines.
+
+The series relies on two other patches posted separately:
+ - https://lore.kernel.org/all/20230213181832.3489174-1-quic_eberman@quicinc.com/
+ - https://lore.kernel.org/all/20230213232537.2040976-2-quic_eberman@quicinc.com/
+
+Changes in v11:
+ - Rename struct gh_vm_dtb_config:gpa -> guest_phys_addr & overflow checks for this
+ - More docstrings throughout
+ - Make resp_buf and resp_buf_size optional
+ - Replace deprecated idr with xarray
+ - Refconting on misc device instead of RM's platform device
+ - Renaming variables, structs, etc. from gunyah_ -> gh_
+ - Drop removal of user mem regions
+ - Drop mem_lend functionality; to converge with restricted_memfd later
+
+Changes in v10: https://lore.kernel.org/all/20230214211229.3239350-1-quic_eberman@quicinc.com/
+ - Fix bisectability (end result of series is same, --fixups applied to wrong commits)
+ - Convert GH_ERROR_* and GH_RM_ERROR_* to enums
+ - Correct race condition between allocating/freeing user memory
+ - Replace offsetof with struct_size
+ - Series-wide renaming of functions to be more consistent
+ - VM shutdown & restart support added in vCPU and VM Manager patches
+ - Convert VM function name (string) to type (number)
+ - Convert VM function argument to value (which could be a pointer) to remove memory wastage for arguments
+ - Remove defensive checks of hypervisor correctness
+ - Clean ups to ioeventfd as suggested by Srivatsa
+
+Changes in v9: https://lore.kernel.org/all/20230120224627.4053418-1-quic_eberman@quicinc.com/
+ - Refactor Gunyah API flags to be exposed as feature flags at kernel level
+ - Move mbox client cleanup into gunyah_msgq_remove()
+ - Simplify gh_rm_call return value and response payload
+ - Missing clean-up/error handling/little endian fixes as suggested by Srivatsa and Alex in v8 series
+
+Changes in v8: https://lore.kernel.org/all/20221219225850.2397345-1-quic_eberman@quicinc.com/
+ - Treat VM manager as a library of RM
+ - Add patches 21-28 as RFC to support proxy-scheduled vCPUs and necessary bits to support virtio
+   from Gunyah userspace
+
+Changes in v7: https://lore.kernel.org/all/20221121140009.2353512-1-quic_eberman@quicinc.com/
+ - Refactor to remove gunyah RM bus
+ - Refactor allow multiple RM device instances
+ - Bump UAPI to start at 0x0
+ - Refactor QCOM SCM's platform hooks to allow CONFIG_QCOM_SCM=Y/CONFIG_GUNYAH=M combinations
+
+Changes in v6: https://lore.kernel.org/all/20221026185846.3983888-1-quic_eberman@quicinc.com/
+ - *Replace gunyah-console with gunyah VM Manager*
+ - Move include/asm-generic/gunyah.h into include/linux/gunyah.h
+ - s/gunyah_msgq/gh_msgq/
+ - Minor tweaks and documentation tidying based on comments from Jiri, Greg, Arnd, Dmitry, and Bagas.
+
+Changes in v5: https://lore.kernel.org/all/20221011000840.289033-1-quic_eberman@quicinc.com/
+ - Dropped sysfs nodes
+ - Switch from aux bus to Gunyah RM bus for the subdevices
+ - Cleaning up RM console
+
+Changes in v4: https://lore.kernel.org/all/20220928195633.2348848-1-quic_eberman@quicinc.com/
+ - Tidied up documentation throughout based on questions/feedback received
+ - Switched message queue implementation to use mailboxes
+ - Renamed "gunyah_device" as "gunyah_resource"
+
+Changes in v3: https://lore.kernel.org/all/20220811214107.1074343-1-quic_eberman@quicinc.com/
+ - /Maintained/Supported/ in MAINTAINERS
+ - Tidied up documentation throughout based on questions/feedback received
+ - Moved hypercalls into arch/arm64/gunyah/; following hyper-v's implementation
+ - Drop opaque typedefs
+ - Move sysfs nodes under /sys/hypervisor/gunyah/
+ - Moved Gunyah console driver to drivers/tty/
+ - Reworked gh_device design to drop the Gunyah bus.
+
+Changes in v2: https://lore.kernel.org/all/20220801211240.597859-1-quic_eberman@quicinc.com/
+ - DT bindings clean up
+ - Switch hypercalls to follow SMCCC 
+
+v1: https://lore.kernel.org/all/20220223233729.1571114-1-quic_eberman@quicinc.com/
+
+Elliot Berman (26):
+  docs: gunyah: Introduce Gunyah Hypervisor
+  dt-bindings: Add binding for gunyah hypervisor
+  gunyah: Common types and error codes for Gunyah hypercalls
+  virt: gunyah: Add hypercalls to identify Gunyah
+  virt: gunyah: Identify hypervisor version
+  virt: gunyah: msgq: Add hypercalls to send and receive messages
+  mailbox: Add Gunyah message queue mailbox
+  gunyah: rsc_mgr: Add resource manager RPC core
+  gunyah: rsc_mgr: Add VM lifecycle RPC
+  gunyah: vm_mgr: Introduce basic VM Manager
+  gunyah: rsc_mgr: Add RPC for sharing memory
+  gunyah: vm_mgr: Add/remove user memory regions
+  gunyah: vm_mgr: Add ioctls to support basic non-proxy VM boot
+  samples: Add sample userspace Gunyah VM Manager
+  gunyah: rsc_mgr: Add platform ops on mem_lend/mem_reclaim
+  firmware: qcom_scm: Register Gunyah platform ops
+  docs: gunyah: Document Gunyah VM Manager
+  virt: gunyah: Translate gh_rm_hyp_resource into gunyah_resource
+  gunyah: vm_mgr: Add framework to add VM Functions
+  virt: gunyah: Add resource tickets
+  virt: gunyah: Add IO handlers
+  virt: gunyah: Add proxy-scheduled vCPUs
+  virt: gunyah: Add hypercalls for sending doorbell
+  virt: gunyah: Add irqfd interface
+  virt: gunyah: Add ioeventfd
+  MAINTAINERS: Add Gunyah hypervisor drivers section
+
+ .../bindings/firmware/gunyah-hypervisor.yaml  |  82 ++
+ .../userspace-api/ioctl/ioctl-number.rst      |   1 +
+ Documentation/virt/gunyah/index.rst           | 114 +++
+ Documentation/virt/gunyah/message-queue.rst   |  71 ++
+ Documentation/virt/gunyah/vm-manager.rst      | 151 +++
+ Documentation/virt/index.rst                  |   1 +
+ MAINTAINERS                                   |  13 +
+ arch/arm64/Kbuild                             |   1 +
+ arch/arm64/gunyah/Makefile                    |   3 +
+ arch/arm64/gunyah/gunyah_hypercall.c          | 148 +++
+ arch/arm64/include/asm/gunyah.h               |  23 +
+ drivers/firmware/Kconfig                      |   2 +
+ drivers/firmware/qcom_scm.c                   | 100 ++
+ drivers/mailbox/Makefile                      |   2 +
+ drivers/mailbox/gunyah-msgq.c                 | 209 +++++
+ drivers/virt/Kconfig                          |   2 +
+ drivers/virt/Makefile                         |   1 +
+ drivers/virt/gunyah/Kconfig                   |  46 +
+ drivers/virt/gunyah/Makefile                  |  11 +
+ drivers/virt/gunyah/gunyah.c                  |  57 ++
+ drivers/virt/gunyah/gunyah_ioeventfd.c        | 117 +++
+ drivers/virt/gunyah/gunyah_irqfd.c            | 164 ++++
+ drivers/virt/gunyah/gunyah_platform_hooks.c   |  80 ++
+ drivers/virt/gunyah/gunyah_vcpu.c             | 465 +++++++++
+ drivers/virt/gunyah/rsc_mgr.c                 | 885 ++++++++++++++++++
+ drivers/virt/gunyah/rsc_mgr.h                 |  19 +
+ drivers/virt/gunyah/rsc_mgr_rpc.c             | 497 ++++++++++
+ drivers/virt/gunyah/vm_mgr.c                  | 785 ++++++++++++++++
+ drivers/virt/gunyah/vm_mgr.h                  |  71 ++
+ drivers/virt/gunyah/vm_mgr_mm.c               | 252 +++++
+ include/linux/gunyah.h                        | 194 ++++
+ include/linux/gunyah_rsc_mgr.h                | 168 ++++
+ include/linux/gunyah_vm_mgr.h                 | 112 +++
+ include/uapi/linux/gunyah.h                   | 257 +++++
+ samples/Kconfig                               |  10 +
+ samples/Makefile                              |   1 +
+ samples/gunyah/.gitignore                     |   2 +
+ samples/gunyah/Makefile                       |   6 +
+ samples/gunyah/gunyah_vmm.c                   | 270 ++++++
+ samples/gunyah/sample_vm.dts                  |  68 ++
+ 40 files changed, 5461 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+ create mode 100644 Documentation/virt/gunyah/index.rst
+ create mode 100644 Documentation/virt/gunyah/message-queue.rst
+ create mode 100644 Documentation/virt/gunyah/vm-manager.rst
+ create mode 100644 arch/arm64/gunyah/Makefile
+ create mode 100644 arch/arm64/gunyah/gunyah_hypercall.c
+ create mode 100644 arch/arm64/include/asm/gunyah.h
+ create mode 100644 drivers/mailbox/gunyah-msgq.c
+ create mode 100644 drivers/virt/gunyah/Kconfig
+ create mode 100644 drivers/virt/gunyah/Makefile
+ create mode 100644 drivers/virt/gunyah/gunyah.c
+ create mode 100644 drivers/virt/gunyah/gunyah_ioeventfd.c
+ create mode 100644 drivers/virt/gunyah/gunyah_irqfd.c
+ create mode 100644 drivers/virt/gunyah/gunyah_platform_hooks.c
+ create mode 100644 drivers/virt/gunyah/gunyah_vcpu.c
+ create mode 100644 drivers/virt/gunyah/rsc_mgr.c
+ create mode 100644 drivers/virt/gunyah/rsc_mgr.h
+ create mode 100644 drivers/virt/gunyah/rsc_mgr_rpc.c
+ create mode 100644 drivers/virt/gunyah/vm_mgr.c
+ create mode 100644 drivers/virt/gunyah/vm_mgr.h
+ create mode 100644 drivers/virt/gunyah/vm_mgr_mm.c
+ create mode 100644 include/linux/gunyah.h
+ create mode 100644 include/linux/gunyah_rsc_mgr.h
+ create mode 100644 include/linux/gunyah_vm_mgr.h
+ create mode 100644 include/uapi/linux/gunyah.h
+ create mode 100644 samples/gunyah/.gitignore
+ create mode 100644 samples/gunyah/Makefile
+ create mode 100644 samples/gunyah/gunyah_vmm.c
+ create mode 100644 samples/gunyah/sample_vm.dts
+
+
+base-commit: 2eb29d59ddf02e39774abfb60b2030b0b7e27c1f
+prerequisite-patch-id: 25a39c504532b2fcdf51baff6dc55f7885db2375
+prerequisite-patch-id: b48c45acdec06adf37e09fe35e6a9412c5784800
 -- 
-With best wishes
-Dmitry
+2.39.2
 
