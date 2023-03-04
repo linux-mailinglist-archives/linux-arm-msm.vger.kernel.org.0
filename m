@@ -2,77 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C56316AA9B1
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Mar 2023 13:58:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E64026AA9BE
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Mar 2023 14:03:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229718AbjCDM6h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Mar 2023 07:58:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34524 "EHLO
+        id S229616AbjCDNDa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Mar 2023 08:03:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbjCDM6d (ORCPT
+        with ESMTP id S229609AbjCDND3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Mar 2023 07:58:33 -0500
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9D8E1CF66
-        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Mar 2023 04:58:09 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id by8so5022852ljb.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Mar 2023 04:58:09 -0800 (PST)
+        Sat, 4 Mar 2023 08:03:29 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 597AC10AA6
+        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Mar 2023 05:03:20 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id ay14so17019677edb.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Mar 2023 05:03:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677934686;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FYMSRHuwQ2B7MwRzgsUDljDGS2/5eJ+xWvfbQY7oaIc=;
-        b=ZpLvFvH5zhAljbMeZiYKIvHzWc0tG0Vdi5QZLtItWn3/QjpxR9HsGVtAtpU8ZzUgCo
-         wdAydY7pvJmAygX7FPoe3H689tK2sNsEP7ObNdjCNrfPr+s6/LlN7dUYgntGKM7e1HyD
-         R09tvodfghxVnYKxBmE+geUR1P9Fnt2wLAyEGici7elkFZSmPg71JIwYLJwZ4TNvIHiQ
-         0YYZjOixo/xqwfBCQ6p2tx8w2Fv39UYN4Nb9H9VO/jO5XxTN1Nx/+Npcgi9n8z4PZoFK
-         XezUkw+mrh71gFdu+2ogr7KYWDj6TVCR+vFQtHTaCID7Ph1b19uga0E3XFpOeottTufP
-         kLUA==
+        d=linaro.org; s=google; t=1677934998;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pJR6oU4xKUs4lYSyYP5+zTHR16nQ+SugySt6CqU73PU=;
+        b=meLUljN1kRQFfQyXZaILv5wTYVAz93IaTM/ZaiGNZm1gYEIgmVg8bCm26nhhUzfX+g
+         ZQ6eDrcuq+lSFIuQGs4OGz7ySh516Lg985orujn9fUsbiCMPxbf+L938EGXNuMsJY4Cb
+         yP0lXx3UJeg3m0yFK66iYrOSSIjk4ZHsU6d2r4PALFcSyu7lGA7lg1vu5khfK9mG0O0Y
+         0hMuKC1pHnimNE6rPYb7z4cRxrO9Sc3gCLuTBkoD4B17Ct6+t8bi7hEVY+fFKQFkPegB
+         F5GsUWyt7vpuxlaljTqjei8tiZg6+WjeQghJlVH5g3qF68dMt7PdMbb5GAS76R4TckQF
+         oloA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677934686;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FYMSRHuwQ2B7MwRzgsUDljDGS2/5eJ+xWvfbQY7oaIc=;
-        b=h08jvtiMJzLPvz7UA9YRGkVxFEPoBYihLyc/HkYOBj2FjmieWRP6359TJ+IDRIit2B
-         6eaC8KvEa4A0B5nZSqRL+KyMMjwYIyHydRIgoLaUXQ8/MW1Oaj0sWZmI2e6G6DHxYPyV
-         yx4f6ymEz8kBSjYcFhiC+IXeHrbKqJ1KiAN4H9wbEwQ67T8baHxH5+Hc7Py4NEiFj0Ku
-         mzThoZOLJkgzCA4LwkCuAyZVSPSKvV2rLM+BvZOM6tC6b6luM8jAGFBXyc/qC5Za11dP
-         hK0vEKy4bDhLTh2bxNnay+eIrIEQosI0ZLjyN2Hnc0KEq1FOGfF/F6r4cFDV+0KvbDQy
-         sB+w==
-X-Gm-Message-State: AO0yUKWFSnRv0sDEQ4TLASW6hmMQNerBwZYcsyXtA3pO/2EO+HX+4LeW
-        4NuFSjZEUi8wa6HVf7qNaUhTmg==
-X-Google-Smtp-Source: AK7set+MqSpaYnExC/GfExY9FLU6cDEaWnLREbxw83VXS64ntfpMuRjFjEnxxwZl0iUb6g5sGJz1Mg==
-X-Received: by 2002:a05:651c:84:b0:293:4b96:1b6b with SMTP id 4-20020a05651c008400b002934b961b6bmr1480411ljq.25.1677934686555;
-        Sat, 04 Mar 2023 04:58:06 -0800 (PST)
-Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id y26-20020a2e979a000000b002934b5c5c67sm774283lji.32.2023.03.04.04.58.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 04 Mar 2023 04:58:06 -0800 (PST)
-Message-ID: <d05d7005-9c22-4548-0c65-261e575b9195@linaro.org>
-Date:   Sat, 4 Mar 2023 13:58:05 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 8/8] arm64: dts: qcom: sm8250-xiaomi-elish: correct GPIO
- keys wakeup
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20210112; t=1677934999;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pJR6oU4xKUs4lYSyYP5+zTHR16nQ+SugySt6CqU73PU=;
+        b=wYDiV97qH7gBvPh6xeK7LegCbXi8l8q0frTYqqr0XbaC7mqqtGmpQ78kUrD3KHH3Bz
+         DUxm8Nw1G+qplbSoYUSVd+sJa1EyycZ2tf2SFXfFeOsYCHEOTT4KlgU83GptfvO8OTQT
+         1QukBja9UQ7lOtIjv77Jq5/OtSkN01660byZKXIeQ8a4K+Z2Z+pbP8lsM/1IbW+M+VL9
+         WiSbXFb8Mb0d8O2DD2iob2wWGwlmnkQhTyg6rlHpVLWnbW0+cUxDdu+zDXiv8AMWdTtW
+         WYAmDAzLbjcc+eQdCuYOJW225s7tjv/9lcwFRYtiKMvAlmgCX7RMl2o0lDY8LKGn03Z0
+         6WCA==
+X-Gm-Message-State: AO0yUKXM0DM1BdzqEt6vk87CE64Af5pFx2QM5bavssyPxLkevjsIEQKT
+        3TBazDiDvCR2KFSyoRLxXS4DKg==
+X-Google-Smtp-Source: AK7set8B4W332A4II2SW8JiGYyWXFAhUHBnJ7z2y1vWrZX0ySzWjJIySJg8Gp0Za9rstQgX6XJ+wOw==
+X-Received: by 2002:a05:6402:2052:b0:4b6:5d88:3fc4 with SMTP id bc18-20020a056402205200b004b65d883fc4mr5213394edb.1.1677934998736;
+        Sat, 04 Mar 2023 05:03:18 -0800 (PST)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:b758:6326:1292:e2aa])
+        by smtp.gmail.com with ESMTPSA id u23-20020a50c057000000b004c19f1891fasm2423220edd.59.2023.03.04.05.03.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Mar 2023 05:03:18 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jianhua Lu <lujianhua000@gmail.com>,
+        Katherine Perez <kaperez@linux.microsoft.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230304123358.34274-1-krzysztof.kozlowski@linaro.org>
- <20230304123358.34274-8-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230304123358.34274-8-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] arm64: dts: qcom: sm8250-xiaomi-elish: fix USB maximum speed property
+Date:   Sat,  4 Mar 2023 14:03:14 +0100
+Message-Id: <20230304130315.51595-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,31 +76,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Fix typo in USB DWC3 node maximum speed property.
 
+Fixes: a41b617530bf ("arm64: dts: qcom: sm8250: Add device tree for Xiaomi Mi Pad 5 Pro")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On 4.03.2023 13:33, Krzysztof Kozlowski wrote:
-> gpio-keys,wakeup is a deprecated property:
-> 
->   sm8250-xiaomi-elish.dtb: gpio-keys: key-vol-up: Unevaluated properties are not allowed ('gpio-key,wakeup' was unexpected)
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
+index 24fc29f0ee5e..6bd0dda8b6e9 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
++++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
+@@ -595,7 +595,7 @@ &usb_1 {
+ 
+ &usb_1_dwc3 {
+ 	dr_mode = "peripheral";
+-	maximum-spped = "high-speed";
++	maximum-speed = "high-speed";
+ 	/* Remove USB3 phy */
+ 	phys = <&usb_1_hsphy>;
+ 	phy-names = "usb2-phy";
+-- 
+2.34.1
 
-Konrad
->  arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
-> index acaa99c5ff8b..24fc29f0ee5e 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
-> @@ -95,7 +95,7 @@ key-vol-up {
->  			linux,code = <KEY_VOLUMEUP>;
->  			debounce-interval = <15>;
->  			linux,can-disable;
-> -			gpio-key,wakeup;
-> +			wakeup-source;
->  		};
->  	};
->  
