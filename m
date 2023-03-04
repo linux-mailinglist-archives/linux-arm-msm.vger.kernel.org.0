@@ -2,62 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C56BD6AABA5
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Mar 2023 18:45:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28F8A6AABB3
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Mar 2023 18:53:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229506AbjCDRpR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Mar 2023 12:45:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50822 "EHLO
+        id S229628AbjCDRx4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Mar 2023 12:53:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229625AbjCDRpQ (ORCPT
+        with ESMTP id S229437AbjCDRxz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Mar 2023 12:45:16 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04A06126D5
-        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Mar 2023 09:45:13 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id r19-20020a05600c459300b003eb3e2a5e7bso2967532wmo.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Mar 2023 09:45:12 -0800 (PST)
+        Sat, 4 Mar 2023 12:53:55 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EF65125A5
+        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Mar 2023 09:53:54 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id v16so5147376wrn.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Mar 2023 09:53:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677951911;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1677952432;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=rsDOa+CNgxF+LrbSAZ/zI3/iIB1uuy0CX68cc9ZNyA0=;
-        b=NW7OlzaI4JzVr0yaqHB5GmJkZtcr0ESKphODI8Lm4R+gfUZlVH438JMYWhaB7LL1Ap
-         b84LlSJ56E8GM0WXUTekuV38nczf7lNeg6W/m/VP69nP2kFA3u/mec4lOjDtp07hLvf2
-         GjPJpJ9f4L+5xtIcjHn4orq53+6QujHEaFNurRPPBIVd30yIq8iJgTs4uPk/5VsRqqU2
-         v2CrJ8uDnkqBnMIp+N2F06ZY2LELmlz+jSlnFQKi2Ef1umyVOu8uckIFuEKyPb1gU990
-         3mRai8jzyA2vGAhjjgnox70CIe2dk1j76Wh/U9U2FbspyFjJqtLBixoYrYr6lDekjLE6
-         +8Gw==
+        bh=rHEvIkFqTLgxaMd8/19YTSXz3cbo7lRJ8eKob5TrLqk=;
+        b=lyOp+rYsZdKh1H2omPmNEuYyRcT9UccB7oYjQi5yr/+DkVHHK4/PcZjLk3Yq2p1nfr
+         EQn7n0MeMl2KLi9W+w9xLglC+zzNEa4S8t9LOPQT8WY6VeTC8L6QW7aETVqHHTA65RXT
+         c6CtWQPt+/MYzqVVbKDyop8+Nz0+xp/MAlrJ9N1dxecj+FOLCq2RjrhdXMXpMp6HshLx
+         rt0EgNf4/md0neyef/NbueHsiYJGpSWrhp/kam2Qruea+V+FW7tSbTzTAaHj/aCPQuEL
+         IXfJ+SxfChdhoy/Of0erRRYu5f3OcZgnXTFBf7sftSmHo8nKg6L6Ydziv4HKtEkSOUCJ
+         xzWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677951911;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20210112; t=1677952432;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rsDOa+CNgxF+LrbSAZ/zI3/iIB1uuy0CX68cc9ZNyA0=;
-        b=Mz0W+M/WrNvTGkM3StV0vNJDNM2xMt6WiCh+m49Wu4tXKTUOamrPQqeBHapwNS4soh
-         cPMAwtntbOzzHoz6Wl8SCh8YmRiCLAzRuH1q1nJY7GwtIeEzxoDtklkmtkpTHPkfyHQD
-         Nqj6pQWjvTKnFbDtFMX1xtLHaR21585mo1hmfCRwRRIBC4N5BcW9xwpq4g9gModt0jC8
-         C6wAjTHR3yJbdaw2Htsseb2Ep9p2/Y3HygEB7OVU5n/GdWpUc5UJDeyxcIL8kmqCqMSU
-         QE4kZ99lcqF88CAuxHGw33JqsaOI1Fsg1W9mXgb+WeSqiCxF+Ix8EJUZgEFDeedu7pLE
-         A3DQ==
-X-Gm-Message-State: AO0yUKWg4BXvKOR7UqtbQyx5o7qOw955NuKdo/FYAG+/g5Dz6nLdICmx
-        UaXUptRga7F9+XsNw90UE/3ESg==
-X-Google-Smtp-Source: AK7set/inqpSJRQRK+Fs1MdmEEpc2iqOvzWeyLhCqa0+AKUxKHSpRzR2JRlZJxO6iRpwlagKjhU5dA==
-X-Received: by 2002:a05:600c:1e0e:b0:3dc:55d9:ec8 with SMTP id ay14-20020a05600c1e0e00b003dc55d90ec8mr4784841wmb.41.1677951911204;
-        Sat, 04 Mar 2023 09:45:11 -0800 (PST)
+        bh=rHEvIkFqTLgxaMd8/19YTSXz3cbo7lRJ8eKob5TrLqk=;
+        b=Q7EKQiRb+ry+cNYpJ5aBEBd+F1ik40/LfnAwT1YM6dyFYzHXKmV7mDJleuJcv0TvkG
+         6qlDMU2QLyJWqIyYsZyzuBx+Ivs8q24vmyd0jl1UC/KFUWTn7wQ7A16HqITcj9iNHtxs
+         vC7X3j2eY0Ky/0wP3OH0ufZS59lndc4zl3cLwRim2pZBgHfP5FTPuCYJmftrBQmr+1tH
+         /ifp70JC8BCPL9IgDLCNKUsw+N/RnvMrnx6X7O12tKvz+aN6fzFqEVfU2aeBawOC0mO8
+         /ebYcnFpsTJneTKE+Gyvtcm4e4fdDSUuitQH8cablIwgfE/FEkr5gNboFa732Cco4N2V
+         8hvQ==
+X-Gm-Message-State: AO0yUKXqqK8uqCInvB8eXZBls0rhilKZHankOvRCdtUtuE4fn1wh/qKE
+        HWhMahqkem/P0FKWw1+yeJTD1g==
+X-Google-Smtp-Source: AK7set9WFBR5j0nxd+qqovwsRvSizgDMYkC09Qx1BKZCVE+JNDwpUEQbtysHHXgJ/uZDZfaUBrd9zw==
+X-Received: by 2002:adf:e9c2:0:b0:2c7:1d75:b0cc with SMTP id l2-20020adfe9c2000000b002c71d75b0ccmr3766253wrn.43.1677952432543;
+        Sat, 04 Mar 2023 09:53:52 -0800 (PST)
 Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id g11-20020adffc8b000000b002c7b229b1basm5522533wrr.15.2023.03.04.09.45.10
+        by smtp.gmail.com with ESMTPSA id k8-20020a5d66c8000000b002c573a6216fsm5531688wrw.37.2023.03.04.09.53.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 04 Mar 2023 09:45:10 -0800 (PST)
-Message-ID: <28561c8b-e9a3-b58e-429a-6dc331ad94e4@linaro.org>
-Date:   Sat, 4 Mar 2023 17:45:09 +0000
+        Sat, 04 Mar 2023 09:53:52 -0800 (PST)
+Message-ID: <35e19031-877c-329f-3bdd-4f04bc8ccc6f@linaro.org>
+Date:   Sat, 4 Mar 2023 17:53:50 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
 Subject: Re: [PATCH v3 1/2] dt-bindings: display/msm: dsi-controller-main: Fix
  deprecated compatible
 Content-Language: en-US
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -74,8 +75,8 @@ References: <20230304-topic-dsi_fixup-v3-0-b8565944d0e6@linaro.org>
  <20230304-topic-dsi_fixup-v3-1-b8565944d0e6@linaro.org>
  <c1a2ba5b-4cd9-362b-5a4e-e95a6bf27b3e@linaro.org>
  <30798bd2-5805-45e6-92d2-a9df6fb52600@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <30798bd2-5805-45e6-92d2-a9df6fb52600@linaro.org>
+ <28561c8b-e9a3-b58e-429a-6dc331ad94e4@linaro.org>
+In-Reply-To: <28561c8b-e9a3-b58e-429a-6dc331ad94e4@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,35 +89,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/03/2023 17:35, Konrad Dybcio wrote:
->> you'll see no error. However if you just do this
+On 04/03/2023 17:45, Bryan O'Donoghue wrote:
+> On 04/03/2023 17:35, Konrad Dybcio wrote:
+>>> you'll see no error. However if you just do this
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi 
+>>> b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+>>> index 0733c2f4f3798..829fbe05b5713 100644
+>>> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+>>> @@ -1094,8 +1094,7 @@ mdp5_intf1_out: endpoint {
+>>>                          };
+>>>
+>>>                          dsi0: dsi@1a98000 {
+>>> -                               compatible = "qcom,msm8916-dsi-ctrl",
+>>> -                                            "qcom,mdss-dsi-ctrl";
+>>> +                               compatible = "qcom,mdss-dsi-ctrl";
+>>>                                  reg = <0x01a98000 0x25c>;
+>>>                                  reg-names = "dsi_ctrl";
+>>>
+>>>
+>>> and run the same test you get
+>> Yes, correct. It's valid but it's deprecated, so the bindings are
+>> sane. Keep in mind there's an ABI-like aspect to this.
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
->> index 0733c2f4f3798..829fbe05b5713 100644
->> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
->> @@ -1094,8 +1094,7 @@ mdp5_intf1_out: endpoint {
->>                          };
->>
->>                          dsi0: dsi@1a98000 {
->> -                               compatible = "qcom,msm8916-dsi-ctrl",
->> -                                            "qcom,mdss-dsi-ctrl";
->> +                               compatible = "qcom,mdss-dsi-ctrl";
->>                                  reg = <0x01a98000 0x25c>;
->>                                  reg-names = "dsi_ctrl";
->>
->>
->> and run the same test you get
-> Yes, correct. It's valid but it's deprecated, so the bindings are
-> sane. Keep in mind there's an ABI-like aspect to this.
+>> Konrad
 > 
-> Konrad
+> The _driver_ will still accept "qcom,mdss-dsi-ctrl" which is ABI 
+> compliant but, I don't see why the yaml should.
+> 
+> If you declare a new .dts with only "qcom,mdss-dsi-ctrl", that should 
+> throw a yaml check error.
+> 
+> ---
+> bod
 
-The _driver_ will still accept "qcom,mdss-dsi-ctrl" which is ABI 
-compliant but, I don't see why the yaml should.
+Actually. I agree with you, I just dislike it.
 
-If you declare a new .dts with only "qcom,mdss-dsi-ctrl", that should 
-throw a yaml check error.
+- "qcom,mdss-dsi-ctrl" <- the driver will accept this
+- "qcom,dsi-ctrl-6g-qcm2290" <- the driver will not accept this
 
----
-bod
+bah
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
