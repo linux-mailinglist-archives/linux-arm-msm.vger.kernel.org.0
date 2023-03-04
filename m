@@ -2,132 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B6BA6AA76C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Mar 2023 02:46:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C634F6AA758
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Mar 2023 02:37:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229437AbjCDBqj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Mar 2023 20:46:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45482 "EHLO
+        id S229590AbjCDBhJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Mar 2023 20:37:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229652AbjCDBqi (ORCPT
+        with ESMTP id S229484AbjCDBhI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Mar 2023 20:46:38 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 587B46A06A;
-        Fri,  3 Mar 2023 17:46:36 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3240GUiE006914;
-        Sat, 4 Mar 2023 01:07:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=7qJRx+Bc0RxDhyPOVZD28FbA36S3iDuE8wdALiNyenI=;
- b=J8NQZwKWcYur1s1m5NYeBFjWzz67QB/EHDBVT/F3spr6hb/J8h8v78NZB58g7xzkl6i3
- xdGjqV81ROM37+HIP5qSjkfRUvm0wKTN2sIRYYo7d3xq+Q3rWBG6legbaj8l5na9F+M/
- u6TCMlax+lj0ParH+o7OlFJLJK/8mtCYF6yB/lWv75EKS7Dkit1adUSWilws77QsFI1e
- nbezafR1WKsq3vxA7xcfD9DSI+2acnf02jHClK8EJNfipVyfqk4B8GsnP95WBB6ktuP0
- F68PbjlZZVpqI5bNpTAKOQQd+Tu5gHB/HfKxS5Gdgab/HE5a6708R7ywVMgRwNP80+Ki lQ== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p3pu48mb8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 04 Mar 2023 01:07:24 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32417NMO019526
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 4 Mar 2023 01:07:23 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Fri, 3 Mar 2023 17:07:23 -0800
-From:   Elliot Berman <quic_eberman@quicinc.com>
-To:     Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-CC:     Elliot Berman <quic_eberman@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Fri, 3 Mar 2023 20:37:08 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 619D41498E;
+        Fri,  3 Mar 2023 17:37:07 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F125761994;
+        Sat,  4 Mar 2023 01:37:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C878C4339B;
+        Sat,  4 Mar 2023 01:37:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1677893826;
+        bh=w8npa/QcPOc0QlQAvkCwaGie8TZIB3LxWhBhOAvXSzI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XZa46LcJX87tM6P7SzLSI88luVTcrpsAblVKrw2UaHI5qOIVaFaFA6hgsPANm6Z8Y
+         WGL1/d4IgFbEV4SQGx3VLaX2DddxtDC0FG+1XY4N48gp2WoTOpL1jJmKYP7rijoKs6
+         NAlNXOqYrQOy/LPZu4FAYj8/7tt4zANJKtwsZqAqXHeYFsLZ5UjAS6LpRQDIsVWKJO
+         2tspWAoNT1fgCkZ4apb2BIE9OF4kr1HGWs+bWLHXZ7QrtHCo0/C9P/sLahASoQ+y2h
+         s3QVlP0MlsjGfZWSUAbaOIOtmIvl3ZZ6chRfkwYQ6w3PVcRIPwTwv4Ddr2oY0dPczt
+         P0FieekOkSN9Q==
+Received: by mercury (Postfix, from userid 1000)
+        id 45DD610609DD; Sat,  4 Mar 2023 02:37:03 +0100 (CET)
+Date:   Sat, 4 Mar 2023 02:37:03 +0100
+From:   Sebastian Reichel <sre@kernel.org>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Nathan Chancellor <nathan@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: [PATCH v11 26/26] MAINTAINERS: Add Gunyah hypervisor drivers section
-Date:   Fri, 3 Mar 2023 17:06:32 -0800
-Message-ID: <20230304010632.2127470-27-quic_eberman@quicinc.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230304010632.2127470-1-quic_eberman@quicinc.com>
-References: <20230304010632.2127470-1-quic_eberman@quicinc.com>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] power: supply: qcom_battmgr: remove bogus do_div()
+Message-ID: <c65e2dbc-c8f9-4481-85f1-4d1eb140a05f@mercury.local>
+References: <20230214132052.1556699-1-arnd@kernel.org>
+ <Y/+WghSbz3l6uipn@dev-arch.thelio-3990X>
+ <CAHk-=wj+O8OqVD36P+1cbe-B3wbB9BwfwtM1E6evObs9VpYz3A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: QDQdUgSvbm-CZtNLBf4mE_tACS6T5Faa
-X-Proofpoint-ORIG-GUID: QDQdUgSvbm-CZtNLBf4mE_tACS6T5Faa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-03_07,2023-03-03_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=916
- priorityscore=1501 suspectscore=0 phishscore=0 malwarescore=0 bulkscore=0
- spamscore=0 impostorscore=0 mlxscore=0 adultscore=0 clxscore=1015
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303040005
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ptb2hduxh2c7hxd4"
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wj+O8OqVD36P+1cbe-B3wbB9BwfwtM1E6evObs9VpYz3A@mail.gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add myself and Prakruthi as maintainers of Gunyah hypervisor drivers.
 
-Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
----
- MAINTAINERS | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+--ptb2hduxh2c7hxd4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b0db911207ba..26ba59610276 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -8916,6 +8916,19 @@ L:	linux-efi@vger.kernel.org
- S:	Maintained
- F:	block/partitions/efi.*
- 
-+GUNYAH HYPERVISOR DRIVER
-+M:	Elliot Berman <quic_eberman@quicinc.com>
-+M:	Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Supported
-+F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
-+F:	Documentation/virt/gunyah/
-+F:	arch/arm64/gunyah/
-+F:	drivers/mailbox/gunyah-msgq.c
-+F:	drivers/virt/gunyah/
-+F:	include/linux/gunyah*.h
-+F:	samples/gunyah/
-+
- HABANALABS PCI DRIVER
- M:	Oded Gabbay <ogabbay@kernel.org>
- L:	dri-devel@lists.freedesktop.org
--- 
-2.39.2
+Hi,
 
+On Wed, Mar 01, 2023 at 10:50:33AM -0800, Linus Torvalds wrote:
+> On Wed, Mar 1, 2023 at 10:16=E2=80=AFAM Nathan Chancellor <nathan@kernel.=
+org> wrote:
+> > Would you be able to take this patch directly? It seems obviously
+> > correctTM, has an ack from Sebastian [1], and without it, 32-bit
+> > allmodconfig builds are broken [2] (the other warning in that log has a
+> > fix on the way to you soon).
+>=20
+> Ok, I've taken it directly.
+>=20
+> However, the whole "seems obviously correct" is true in the sense that
+> it now doesn't complain (and doesn't overwrite an "int" with a 64-bit
+> value.
+>=20
+> The actual code still looks odd. Is that return value for
+> BATT_CAPACITY truly in that odd "hundredths of percent" format,
+> where dividing it by 100 gives you whole percent?
+>=20
+> Because "hundredths of percent" strikes me as a very odd interface.
+> Even for some firmware interface. I realize that anything is possible
+> with strange firmware, but still...
+
+I don't have the documentation for this Qualcomm interface, but I
+remember somebody from Qualcomm asking for a power-supply property
+exposing "hundredths of percent" to userspace some years ago (with
+the rationale, that percent was not precise enough).
+
+For reference: The upstream solution for that is exposing ENERGY_NOW
+and ENERGY_FULL in =C2=B5Wh (or CHARGE_NOW + CHARGE_FULL in =C2=B5Ah depend=
+ing
+on the fuel-gauge's capabilities), which is even more precise.
+
+-- Sebastian
+
+--ptb2hduxh2c7hxd4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmQCoLIACgkQ2O7X88g7
++pppCQ/9H/HYIEK4zvLcjjYOWK2EZdthvqhwrOrVHBDCAIrocPDIaTxK+gdv54KO
+Z3h6ab+h4RISbO7B5Uef4A1AjB03tWaa9Y8GkBikqhZsvqy/dwbfB9imF598pe7o
+t9DzfO4hWw5rmgArRVEPPmSIT9gdjCsI9/NwxDc3TDvDwy4PE5p7tsAmXckGUv+a
+w8anDtbI3AcuNI7oflLkE0yLknQAYKLzoYn+e/hyaDau1GOc/kyG5YrH+yar0iHh
+ksWt75CD4EzfMg+Kh3aWCz9sM0lAWVpeGH82w+wLqd+hadC14lF96C0bgGlsIqRl
+gYy/jXgqi8JcsNhRi1k6Jw5doB+7rSytevfREDI399j+St9kkOJ4va7GSIFMUDO1
+IfU6QPX5XNrvP8roI68bFRqelUJgJPlLGRLzUPaJgvB8DIUrGbjDFHqLuDbqrzw2
+B3lINUFBzEfiWPT65rt1KIU3uAMx4eZ5vOaDKY509TQF0g4Y7X08UG1WqGRFi1cb
+wgK2tbyWzbOnG8PSyKTMmSNwaNUg9pEiumdqqnKMtwBvpJ0OzxbGzAQfm20y/lI5
+T7aUqan9dtcFyiGJioqQFs5D9ziua6Y7thKpFlbJou8vbTjwqOmiazOtjJXpq8GH
+N5UcLb9hPTfa1cp3wD/GfWul+4io+OReUWyQjfXEucbKSKv4iZw=
+=ehxW
+-----END PGP SIGNATURE-----
+
+--ptb2hduxh2c7hxd4--
