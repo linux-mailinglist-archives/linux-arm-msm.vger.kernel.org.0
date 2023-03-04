@@ -2,79 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBC276AA9C9
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Mar 2023 14:06:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2158D6AA9D6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Mar 2023 14:27:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229641AbjCDNGd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Mar 2023 08:06:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43278 "EHLO
+        id S229736AbjCDN1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Mar 2023 08:27:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbjCDNGc (ORCPT
+        with ESMTP id S229698AbjCDN1q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Mar 2023 08:06:32 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7ECB1F5E2
-        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Mar 2023 05:06:25 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id t14so5045374ljd.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Mar 2023 05:06:25 -0800 (PST)
+        Sat, 4 Mar 2023 08:27:46 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11C821A4BC
+        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Mar 2023 05:27:45 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id s22so6998849lfi.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Mar 2023 05:27:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677935184;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nq7RQs0U77nY3Yu6+qe7lgnNWc3KY5n1/kyKW4La5xg=;
-        b=Ub3GmbAe9LdLddNEl8G7TY47M4k6pvwbcag0kyux7eGT7fCdPpBJqcuHsy9ZtjrhIA
-         r+A4PGSaZ0yp8fz7c2MrpJH0YdWj4lhv219GhYQe/4f42grcvvK3f0xtJbym6mger3Bz
-         h6vsmSPClri0lv0ybfTodUyyrwsDefKZ4poLBQ5M503WkMwv9llNx0ZHy88dm1JG+OPE
-         RxWDOaCT9vbObIEg+N0GpsN9ZAbvO3A01iI1zGwxQxPo5oXVRaGNYJrXFpgJoFh91O30
-         +Aaypm8Wwt/qq0D8jDR9EmnKrzGSi0G0MVVtHfYqGfBh1WAoEC/iCWFWhYt+pgWojVbw
-         WWmA==
+        d=linaro.org; s=google; t=1677936463;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=XgZ4hZqUy+tdTMafR0Y1NpglWZ1Uga2EatLNEtTwC9Q=;
+        b=L3XkohyhqWwukysfGvq18Qbo7HlBdn9yyiJGEp66AYu+WhhTh+APIUjvZcd5TLhs4a
+         p+oORRAdIc08RHTYBs75K6zJYKxAQcYM4+IeYvv12NiAri226p/PzobZlY6+bVs0YZSS
+         VAo3Gfd2luL/gKYxI869wsBXNwxHPaa7asoEMdWMpB0FfJ0kq6PLd4M450jTk7Up8P8f
+         blKX1DTnKYldTSFTb/im7wDu5k4GasIKBKVhxa0DvajyDteIwqTthwcMZ7lO4Z6Hhf+7
+         pV3VMm1btZ4sOJVZuJUoSL9SXAEm5kQWy/ziKL3y2l7QsdE+BrBQB/aEJR2xO4klrQMO
+         EtXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677935184;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nq7RQs0U77nY3Yu6+qe7lgnNWc3KY5n1/kyKW4La5xg=;
-        b=fksYJbvZiU3VORN1sipINJPaqOBFzQ3/QozudG5ehUFte64hUmJ/rIiX3VLSD5zhqf
-         JIXfIGIPHGfjAkH33sEfTN2hB9K2eXu8kfJM9Xh7Zd10mzIaY3CFtYOvq7ctKgRbz1ic
-         OEppKSLUsyBhb0aXZ73F+pT4zKgSadLftfCVkW94lS9zPBTbxycsb+QwEYfDDA8vl61Y
-         DxiWrSYLESIxKB9Q4JR2Z2GZJ+SWYWeTEPmlEYW3sCWhqLHksvlPGCTZbgz7xdBxB4Sn
-         W1spgeCq5ONWVqgGMteUPTzFuIa8E2/K6gcbobbIknafKGVtV3HT+lAqcbzzWajEjBhL
-         k6PA==
-X-Gm-Message-State: AO0yUKX1vWVW28AslT9jIsg+wLQLSRVphXDRnV9ABGT9mptGNmKK03/g
-        m8ycDbScKtSqv4NLpnLzbu3hWQ==
-X-Google-Smtp-Source: AK7set9kOJL7U5kmS2hwnyPHAFCjV+srmsFP+snsnMIBbIxjSGLOzmGP/uu7jJscrr3FDOwTC5ULeg==
-X-Received: by 2002:a2e:a411:0:b0:293:4b9c:a164 with SMTP id p17-20020a2ea411000000b002934b9ca164mr1549960ljn.48.1677935184215;
-        Sat, 04 Mar 2023 05:06:24 -0800 (PST)
+        d=1e100.net; s=20210112; t=1677936463;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XgZ4hZqUy+tdTMafR0Y1NpglWZ1Uga2EatLNEtTwC9Q=;
+        b=OwMgOa3IQngEnu9emmq6perulOsgd27mstQeY67Wi1vqgZCR33kNpCjVA/MyA5ZW3F
+         azakZztXp48tc+n1csvhqalbEN27t+mBvfuwbDXkUpnke+Rv7KVf/eclxBLapIUuJbZ5
+         mwlgCH4+gF+fIvBWAfNjlHk3KvumvlqK0XbYvgCoUUoZnVN40qCnIfidmzcXCB+/Ts4t
+         azD+VA+QMz5lfEGbFSQNc+tMGubRoTY+8LP2J6dao8bOmBMMwEK6T1zLLyK2ENytAvpq
+         KnaI8PrlneCsJU2K72j2r6KqkV/gYK0QoDu0yXAkDfveW73/KeTyiigdtNq0KwdqQ21e
+         gojw==
+X-Gm-Message-State: AO0yUKW/6PRyif1qTnI5SMME8KKuHCiSwCsrpEV8jRzq0KRxgm8bQoDh
+        QBudtdPI1r2EoW05RrDeMfGnow==
+X-Google-Smtp-Source: AK7set96p3e5eNUS0iELkOj3cIo7vkqtrQ+7naW1utqtFe42t0csa80IFs8GW3hrAko3ZC0q7B0MjA==
+X-Received: by 2002:ac2:5633:0:b0:4dd:9f86:859d with SMTP id b19-20020ac25633000000b004dd9f86859dmr1350094lff.13.1677936463369;
+        Sat, 04 Mar 2023 05:27:43 -0800 (PST)
 Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id o30-20020ac2495e000000b004d593f218absm817655lfi.108.2023.03.04.05.06.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 04 Mar 2023 05:06:23 -0800 (PST)
-Message-ID: <d90448f8-9bc4-3a14-1915-a18c2cba100a@linaro.org>
-Date:   Sat, 4 Mar 2023 14:06:22 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8350-microsoft-surface: fix USB
- dual-role mode property
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jianhua Lu <lujianhua000@gmail.com>,
-        Katherine Perez <kaperez@linux.microsoft.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230304130315.51595-1-krzysztof.kozlowski@linaro.org>
- <20230304130315.51595-2-krzysztof.kozlowski@linaro.org>
+        by smtp.gmail.com with ESMTPSA id j15-20020a19f50f000000b004e7fa99f2b5sm342975lfb.186.2023.03.04.05.27.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Mar 2023 05:27:42 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230304130315.51595-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: [PATCH RFT 00/20] SMD RPMCC sleep preparations
+Date:   Sat, 04 Mar 2023 14:27:35 +0100
+Message-Id: <20230303-topic-rpmcc_sleep-v1-0-d9cfaf9b27a7@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-B4-Tracking: v=1; b=H4sIAEdHA2QC/x2NQQrCMBBFr1Jm7UCagqIH8ADiroikk6kdiGnI2
+ CKU3t1B/up9eLwNlKuwwqXZoPIqKnM2aA8N0BTyi1GiMXjnO2fDz1yEsJY30VMTc8F4PIUQz2P
+ nWg/mDUEZhxoyTWbmJSU7S+VRvv9QD7frHR77/gM5DpYNfQAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+X-Mailer: b4 0.12.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1677936461; l=2001;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=XWLgT1bwHF7eV8z8nCWgSR4obUXZ6NlsDIoxUnshn8g=;
+ b=ZpizBgFMCTab1JVuT1rFMghCLQTENq7h2AK8wg7kkO10M9OSJBsWi5jjB//iVCA1xdsfodARzfd5
+ Bqdx4uysDag7+z4hjr582qNssUwRcnoLXuDe1Wd6c2ugkec298bi
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,33 +86,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series brings support for a couple of things necessary for the full
+system idle on SMD RPM SoCs, namely unused clk shutdown and keepalive
+votes (permanent active votes that are required on certain clocks for the
+platform to function).
 
+Tested on MSM8996 and SM6375, does not seem to introduce any additional
+regressions.
 
-On 4.03.2023 14:03, Krzysztof Kozlowski wrote:
-> The "dr_mode" is a property of USB DWC3 node, not the Qualcomm wrapper
-> one:
->   sm8350-microsoft-surface-duo2.dtb: usb@a6f8800: 'dr_mode' does not match any of the regexes: '^usb@[0-9a-f]+$', 'pinctrl-[0-9]+'
-> 
-> Fixes: c16160cfa565 ("arm64: dts: qcom: add minimal DTS for Microsoft Surface Duo 2")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Keepalive clocks for other platforms were gathered by digging in old
+downstream kernels, please give them a test.
 
-Konrad
->  arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts b/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-> index b536ae36ae6d..3bd5e57cbcda 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-> @@ -341,6 +341,9 @@ &ufs_mem_phy {
->  
->  &usb_1 {
->  	status = "okay";
-> +};
-> +
-> +&usb_1_dwc3 {
->  	dr_mode = "peripheral";
->  };
->  
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (18):
+      clk: qcom: smd-rpm: Add support for keepalive votes
+      clk: qcom: smd-rpm: Add keepalive_clks for SM6375
+      clk: qcom: smd-rpm: Add keepalive_clks for MSM8996
+      clk: qcom: smd-rpm: Add keepalive_clks for MSM8909
+      clk: qcom: smd-rpm: Add keepalive_clks for MSM8916
+      clk: qcom: smd-rpm: Add keepalive_clks for MSM8936
+      clk: qcom: smd-rpm: Add keepalive_clks for MSM8974
+      clk: qcom: smd-rpm: Add keepalive_clks for MSM8976
+      clk: qcom: smd-rpm: Add keepalive_clks for MSM8992
+      clk: qcom: smd-rpm: Add keepalive_clks for MSM8994
+      clk: qcom: smd-rpm: Add keepalive_clks for MSM8998
+      clk: qcom: smd-rpm: Add keepalive_clks for SDM660
+      clk: qcom: smd-rpm: Add keepalive_clks for MDM9607
+      clk: qcom: smd-rpm: Add keepalive_clks for MSM8953
+      clk: qcom: smd-rpm: Add keepalive_clks for SM6125
+      clk: qcom: smd-rpm: Add keepalive_clks for SM6115
+      clk: qcom: smd-rpm: Add keepalive_clks for QCM2290
+      clk: qcom: smd-rpm: Add keepalive_clks for QCS404
+
+Shawn Guo (2):
+      clk: qcom: smd-rpm: Add .is_enabled hook
+      clk: qcom: smd-rpm: Add .is_prepared hook
+
+ drivers/clk/qcom/clk-smd-rpm.c | 85 +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 83 insertions(+), 2 deletions(-)
+---
+base-commit: 1acf39ef8f1425cd105f630dc2c7c1d8fff27ed1
+change-id: 20230303-topic-rpmcc_sleep-d67aad9f3012
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
