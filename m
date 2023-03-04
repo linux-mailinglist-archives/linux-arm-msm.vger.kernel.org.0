@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2158D6AA9D6
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Mar 2023 14:27:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFABB6AA9D8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Mar 2023 14:27:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229736AbjCDN1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Mar 2023 08:27:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53446 "EHLO
+        id S229752AbjCDN1s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Mar 2023 08:27:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229698AbjCDN1q (ORCPT
+        with ESMTP id S229494AbjCDN1r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Mar 2023 08:27:46 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11C821A4BC
-        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Mar 2023 05:27:45 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id s22so6998849lfi.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Mar 2023 05:27:44 -0800 (PST)
+        Sat, 4 Mar 2023 08:27:47 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2823B1632F
+        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Mar 2023 05:27:46 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id i28so7104237lfv.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Mar 2023 05:27:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1677936463;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XgZ4hZqUy+tdTMafR0Y1NpglWZ1Uga2EatLNEtTwC9Q=;
-        b=L3XkohyhqWwukysfGvq18Qbo7HlBdn9yyiJGEp66AYu+WhhTh+APIUjvZcd5TLhs4a
-         p+oORRAdIc08RHTYBs75K6zJYKxAQcYM4+IeYvv12NiAri226p/PzobZlY6+bVs0YZSS
-         VAo3Gfd2luL/gKYxI869wsBXNwxHPaa7asoEMdWMpB0FfJ0kq6PLd4M450jTk7Up8P8f
-         blKX1DTnKYldTSFTb/im7wDu5k4GasIKBKVhxa0DvajyDteIwqTthwcMZ7lO4Z6Hhf+7
-         pV3VMm1btZ4sOJVZuJUoSL9SXAEm5kQWy/ziKL3y2l7QsdE+BrBQB/aEJR2xO4klrQMO
-         EtXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677936463;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1677936464;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=XgZ4hZqUy+tdTMafR0Y1NpglWZ1Uga2EatLNEtTwC9Q=;
-        b=OwMgOa3IQngEnu9emmq6perulOsgd27mstQeY67Wi1vqgZCR33kNpCjVA/MyA5ZW3F
-         azakZztXp48tc+n1csvhqalbEN27t+mBvfuwbDXkUpnke+Rv7KVf/eclxBLapIUuJbZ5
-         mwlgCH4+gF+fIvBWAfNjlHk3KvumvlqK0XbYvgCoUUoZnVN40qCnIfidmzcXCB+/Ts4t
-         azD+VA+QMz5lfEGbFSQNc+tMGubRoTY+8LP2J6dao8bOmBMMwEK6T1zLLyK2ENytAvpq
-         KnaI8PrlneCsJU2K72j2r6KqkV/gYK0QoDu0yXAkDfveW73/KeTyiigdtNq0KwdqQ21e
-         gojw==
-X-Gm-Message-State: AO0yUKW/6PRyif1qTnI5SMME8KKuHCiSwCsrpEV8jRzq0KRxgm8bQoDh
-        QBudtdPI1r2EoW05RrDeMfGnow==
-X-Google-Smtp-Source: AK7set96p3e5eNUS0iELkOj3cIo7vkqtrQ+7naW1utqtFe42t0csa80IFs8GW3hrAko3ZC0q7B0MjA==
-X-Received: by 2002:ac2:5633:0:b0:4dd:9f86:859d with SMTP id b19-20020ac25633000000b004dd9f86859dmr1350094lff.13.1677936463369;
-        Sat, 04 Mar 2023 05:27:43 -0800 (PST)
+        bh=SOECaGmGmUJLrulLw8TRNrQNT4lkSkMI20VbWaQaVaY=;
+        b=PxfrGqPCxEQt9X2O89hlvg/SXVn71ccJUG122XYCJEGj8DqJVCi81qd+UAV1ujqGgK
+         4lAg/LtneLVYzrPmcNUqg5g6plsvTrCzlnLjRFo4vr08J2C9mMN7HG/2DOUYb0nJa8Xo
+         RJyNALYcEM7s3k0nV6NYJFiRDYKU+Q5B1rTuncjED0cb8zctwT4pVrpxHQSDiLfi/wnx
+         kavK2firADnvOtKnLDJAtCMRHOou9TPJkOlGxO7UBjQLYtIfDpiP3yCBhitNn9vOqV8V
+         ETc8TnTjb4XgHV90ulhOXzFa8AKRLa6dLJhfyDlwlL/mVJk/SyR4dOzgJoVFQ8/ShrQ1
+         16gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677936464;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SOECaGmGmUJLrulLw8TRNrQNT4lkSkMI20VbWaQaVaY=;
+        b=KhSRnkZc5CMlKSS2jkQ25D5diFQMjTJnt5iWjpuTTITzR9XCnd5bcxIvA8voD4q9wN
+         5Hzdysb6PQbHp+oDyIoyaPca1zxictpew5tugrWqKmXmwwgui+xuVSKcn5whqpVVz7gf
+         UX+ejhxWClF9kRe1DR0ZP0hJdUY7Yy5xi/6aNpi9ZMfpiIjxXoUqhbwyMYFppw9YrNaz
+         zAcSg7jluKZJql3Jm/KwYb86bc/6eaxrEVc+dZuZzewcAUidhFm8VDMq3kd4rGKXjEMk
+         G66wi3nqT25b9nspZCnFvSYiPTF3bFQaV1cuHlHQxj+1Fhcqsp0kXhsPGeoo0K5L+43B
+         CzNQ==
+X-Gm-Message-State: AO0yUKUaSUX6SoGvVyiu2nVwNZQ6DgUJF/HRM6VIO+hgiGJIhSdJ8C+U
+        pl+rXDlB689GZzXTMQUZRMNj/w==
+X-Google-Smtp-Source: AK7set/1wEvzDxZi+/2UVaws5T7xRDzQNppg9F1VYRh53WKUdEqu9lmMB9lto1KR9/wHvPvCPT3ivw==
+X-Received: by 2002:ac2:5146:0:b0:4cb:88c:c794 with SMTP id q6-20020ac25146000000b004cb088cc794mr1442240lfd.35.1677936464443;
+        Sat, 04 Mar 2023 05:27:44 -0800 (PST)
 Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id j15-20020a19f50f000000b004e7fa99f2b5sm342975lfb.186.2023.03.04.05.27.41
+        by smtp.gmail.com with ESMTPSA id j15-20020a19f50f000000b004e7fa99f2b5sm342975lfb.186.2023.03.04.05.27.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Mar 2023 05:27:42 -0800 (PST)
+        Sat, 04 Mar 2023 05:27:44 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH RFT 00/20] SMD RPMCC sleep preparations
-Date:   Sat, 04 Mar 2023 14:27:35 +0100
-Message-Id: <20230303-topic-rpmcc_sleep-v1-0-d9cfaf9b27a7@linaro.org>
+Date:   Sat, 04 Mar 2023 14:27:36 +0100
+Subject: [PATCH RFT 01/20] clk: qcom: smd-rpm: Add .is_enabled hook
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEdHA2QC/x2NQQrCMBBFr1Jm7UCagqIH8ADiroikk6kdiGnI2
- CKU3t1B/up9eLwNlKuwwqXZoPIqKnM2aA8N0BTyi1GiMXjnO2fDz1yEsJY30VMTc8F4PIUQz2P
- nWg/mDUEZhxoyTWbmJSU7S+VRvv9QD7frHR77/gM5DpYNfQAAAA==
+Message-Id: <20230303-topic-rpmcc_sleep-v1-1-d9cfaf9b27a7@linaro.org>
+References: <20230303-topic-rpmcc_sleep-v1-0-d9cfaf9b27a7@linaro.org>
+In-Reply-To: <20230303-topic-rpmcc_sleep-v1-0-d9cfaf9b27a7@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
@@ -66,70 +66,70 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
+        Shawn Guo <shawn.guo@linaro.org>
 X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1677936461; l=2001;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1677936461; l=1448;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=XWLgT1bwHF7eV8z8nCWgSR4obUXZ6NlsDIoxUnshn8g=;
- b=ZpizBgFMCTab1JVuT1rFMghCLQTENq7h2AK8wg7kkO10M9OSJBsWi5jjB//iVCA1xdsfodARzfd5
- Bqdx4uysDag7+z4hjr582qNssUwRcnoLXuDe1Wd6c2ugkec298bi
+ bh=DkAvY529UR+RwkQzY1FO48/jck/x44pR7ssps7xiA3g=;
+ b=YXoN6u+y4uMm3usYO2+1lxRT7rL+nPk37A/NZn2isSkTCPveLpjtnsAE15jIJmlxZWNugmWTi21u
+ bI21veBjB3v2oDa2VDvQiU3VN0Hu6WSri90wlXv906zUErCAlUNW
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series brings support for a couple of things necessary for the full
-system idle on SMD RPM SoCs, namely unused clk shutdown and keepalive
-votes (permanent active votes that are required on certain clocks for the
-platform to function).
+From: Shawn Guo <shawn.guo@linaro.org>
 
-Tested on MSM8996 and SM6375, does not seem to introduce any additional
-regressions.
+The RPM clock enabling state can be found with 'enabled' in struct
+clk_smd_rpm.  Add .is_enabled hook so that clk_summary in debugfs can
+show a correct enabling state for RPM clocks.
 
-Keepalive clocks for other platforms were gathered by digging in old
-downstream kernels, please give them a test.
-
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+[Konrad: rebase]
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Konrad Dybcio (18):
-      clk: qcom: smd-rpm: Add support for keepalive votes
-      clk: qcom: smd-rpm: Add keepalive_clks for SM6375
-      clk: qcom: smd-rpm: Add keepalive_clks for MSM8996
-      clk: qcom: smd-rpm: Add keepalive_clks for MSM8909
-      clk: qcom: smd-rpm: Add keepalive_clks for MSM8916
-      clk: qcom: smd-rpm: Add keepalive_clks for MSM8936
-      clk: qcom: smd-rpm: Add keepalive_clks for MSM8974
-      clk: qcom: smd-rpm: Add keepalive_clks for MSM8976
-      clk: qcom: smd-rpm: Add keepalive_clks for MSM8992
-      clk: qcom: smd-rpm: Add keepalive_clks for MSM8994
-      clk: qcom: smd-rpm: Add keepalive_clks for MSM8998
-      clk: qcom: smd-rpm: Add keepalive_clks for SDM660
-      clk: qcom: smd-rpm: Add keepalive_clks for MDM9607
-      clk: qcom: smd-rpm: Add keepalive_clks for MSM8953
-      clk: qcom: smd-rpm: Add keepalive_clks for SM6125
-      clk: qcom: smd-rpm: Add keepalive_clks for SM6115
-      clk: qcom: smd-rpm: Add keepalive_clks for QCM2290
-      clk: qcom: smd-rpm: Add keepalive_clks for QCS404
+ drivers/clk/qcom/clk-smd-rpm.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-Shawn Guo (2):
-      clk: qcom: smd-rpm: Add .is_enabled hook
-      clk: qcom: smd-rpm: Add .is_prepared hook
+diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+index 198886c1b6c8..ecacfbc4a16c 100644
+--- a/drivers/clk/qcom/clk-smd-rpm.c
++++ b/drivers/clk/qcom/clk-smd-rpm.c
+@@ -424,18 +424,27 @@ static int clk_smd_rpm_enable_scaling(struct qcom_smd_rpm *rpm)
+ 	return 0;
+ }
+ 
++static int clk_smd_rpm_is_enabled(struct clk_hw *hw)
++{
++	struct clk_smd_rpm *r = to_clk_smd_rpm(hw);
++
++	return r->enabled;
++}
++
+ static const struct clk_ops clk_smd_rpm_ops = {
+ 	.prepare	= clk_smd_rpm_prepare,
+ 	.unprepare	= clk_smd_rpm_unprepare,
+ 	.set_rate	= clk_smd_rpm_set_rate,
+ 	.round_rate	= clk_smd_rpm_round_rate,
+ 	.recalc_rate	= clk_smd_rpm_recalc_rate,
++	.is_enabled	= clk_smd_rpm_is_enabled,
+ };
+ 
+ static const struct clk_ops clk_smd_rpm_branch_ops = {
+ 	.prepare	= clk_smd_rpm_prepare,
+ 	.unprepare	= clk_smd_rpm_unprepare,
+ 	.recalc_rate	= clk_smd_rpm_recalc_rate,
++	.is_enabled	= clk_smd_rpm_is_enabled,
+ };
+ 
+ DEFINE_CLK_SMD_RPM_BRANCH_A(bi_tcxo, QCOM_SMD_RPM_MISC_CLK, 0, 19200000);
 
- drivers/clk/qcom/clk-smd-rpm.c | 85 +++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 83 insertions(+), 2 deletions(-)
----
-base-commit: 1acf39ef8f1425cd105f630dc2c7c1d8fff27ed1
-change-id: 20230303-topic-rpmcc_sleep-d67aad9f3012
-
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.39.2
 
