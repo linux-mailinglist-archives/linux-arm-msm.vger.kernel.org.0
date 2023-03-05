@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD7F96AB034
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 14:53:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 484326AB07C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 14:56:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229971AbjCENxp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Mar 2023 08:53:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40196 "EHLO
+        id S230230AbjCEN40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Mar 2023 08:56:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229947AbjCENxg (ORCPT
+        with ESMTP id S230129AbjCEN4E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Mar 2023 08:53:36 -0500
+        Sun, 5 Mar 2023 08:56:04 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C643786BB;
-        Sun,  5 Mar 2023 05:53:11 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 716F818A85;
+        Sun,  5 Mar 2023 05:55:18 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6F8FA60B04;
-        Sun,  5 Mar 2023 13:53:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC9C0C433D2;
-        Sun,  5 Mar 2023 13:53:08 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2E9B060B0A;
+        Sun,  5 Mar 2023 13:54:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EEE6C433D2;
+        Sun,  5 Mar 2023 13:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678024389;
-        bh=GD7bRPnmKLbCghxsUKpSfGGru8Lwm80DFDBP/5YwPmo=;
+        s=k20201202; t=1678024442;
+        bh=Dla1IsGrNz19OS51ODt78sdv7tOeDKYhkB0skY089ck=;
         h=From:To:Cc:Subject:Date:From;
-        b=kvRHq0Hq7mQwW9t1yRfWnOGb4ILvaVCZxLlXvvYe19zsxA0MqD1tZdG49mt9HPGTh
-         MCXWFr6q+ol7wTya2+2h5AIQ4axztGvCMvb2AmdkUUtLoXxujiueaVsfYViQbI55PT
-         jivOrWQKKvn4E74eE0RThN91H/D4dvr+GYiZcxy1MEfzyksHszQChGd9fk2IzR5FsK
-         VkgeXcqUz0eRpcFj0smWsyW1qsaJ5CG9/10fm+penn0y8O27zw6BPnSHNPI+Hlp9nd
-         ByO9DatYtru19LmkKMraFxB/EqFaHj5vks7E3XsQ/SEq0t2rFBAhz8bpWgsvH4hBNm
-         GaNe4o51/PVwQ==
+        b=gLXsTZSBioEUv33YNDH02n+dWk7siCelC4jZOK/V7gxpFPXWXhKHx+DkAD4tlhXQ2
+         T9zxRo5xgp3iugG/6/LGy22ZYJnvNxdMr+pLOOkYBfw5/IuWWpUsm+sc4lnJIpnkJm
+         ymZlpGHPrCuBrodlFUrJdzfsX/5HjmBMhyHfIKkcqKVt1B/j2KQ1GeOE4d7GfCfEiO
+         rwJWUiP0hi3altxkikAQ7oaRzeGK12LSlanY/dms81Rghilc1N1ulzRWqlhnVTcgrw
+         I1FKAt195UFALN0KefKi6hSjyQvLSak+Jw3HIXhc1BNr9tifi6nB8wBa6+DVZIg2RR
+         VLcK60YjFSXqQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -42,9 +42,9 @@ Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
         mturquette@baylibre.com, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 01/15] clk: qcom: mmcc-apq8084: remove spdm clocks
-Date:   Sun,  5 Mar 2023 08:52:52 -0500
-Message-Id: <20230305135306.1793564-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 1/9] clk: qcom: mmcc-apq8084: remove spdm clocks
+Date:   Sun,  5 Mar 2023 08:53:51 -0500
+Message-Id: <20230305135359.1793830-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 X-stable: review
@@ -78,10 +78,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 271 deletions(-)
 
 diff --git a/drivers/clk/qcom/mmcc-apq8084.c b/drivers/clk/qcom/mmcc-apq8084.c
-index e9f9713591558..025e21793b3c4 100644
+index fbfcf00067394..893e5536f64c7 100644
 --- a/drivers/clk/qcom/mmcc-apq8084.c
 +++ b/drivers/clk/qcom/mmcc-apq8084.c
-@@ -2364,262 +2364,6 @@ static struct clk_branch mmss_rbcpr_clk = {
+@@ -2363,262 +2363,6 @@ static struct clk_branch mmss_rbcpr_clk = {
  	},
  };
  
@@ -344,7 +344,7 @@ index e9f9713591558..025e21793b3c4 100644
  static struct clk_branch mmss_misc_ahb_clk = {
  	.halt_reg = 0x502c,
  	.clkr = {
-@@ -3252,21 +2996,6 @@ static struct clk_regmap *mmcc_apq8084_clocks[] = {
+@@ -3251,21 +2995,6 @@ static struct clk_regmap *mmcc_apq8084_clocks[] = {
  	[MDSS_VSYNC_CLK] = &mdss_vsync_clk.clkr,
  	[MMSS_RBCPR_AHB_CLK] = &mmss_rbcpr_ahb_clk.clkr,
  	[MMSS_RBCPR_CLK] = &mmss_rbcpr_clk.clkr,
