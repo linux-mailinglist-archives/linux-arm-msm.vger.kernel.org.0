@@ -2,115 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 959DA6AB141
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 16:43:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFDC86AB172
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 17:58:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229615AbjCEPnO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Mar 2023 10:43:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36516 "EHLO
+        id S229694AbjCEQ6Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Mar 2023 11:58:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbjCEPnO (ORCPT
+        with ESMTP id S229437AbjCEQ6Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Mar 2023 10:43:14 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 235967AB7
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Mar 2023 07:43:12 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id o12so28871208edb.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Mar 2023 07:43:12 -0800 (PST)
+        Sun, 5 Mar 2023 11:58:24 -0500
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EC22CA27
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Mar 2023 08:58:22 -0800 (PST)
+Received: by mail-il1-x130.google.com with SMTP id 4so5016338ilz.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Mar 2023 08:58:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678030990;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nZhAqHuci1RWlTDGwl+KlPP4K312EVV0utv3oT4mocY=;
-        b=JQfeDmGb773XlYyqRJ5fgnVZyeFhj4mIWuOMhoL6YUcUX3pjyNc59ngOXcltluOk9i
-         CuDHNI+7+rvZPNFWWMEoGUT8EzxrgqqJouxuWUVyaFNCY2SBnWa6tlbritBWe8fj8iPT
-         vcPqA+bbaFaDM0xEohIgumaqQuCXFWoce10FN0XAFdFIZ64b5NDv6N/UqPS/WtoXuRuo
-         lZ8TpAGFNU1fyuOC0C7nITa/YHmk5bSiyGAT0PzmK7epeYcqpIJvrCFqIwy4Q4/1VSj1
-         aoK8W3T+wwj+3LLiD1Ua/rOyM4HbebCHwoC3L4wYlFGLXDCysXQx7sUC8ikyfuMZn8IO
-         yQew==
+        d=ieee.org; s=google; t=1678035502;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aj+sCMCZSrVKo/Uw+s7aitBRb/4NWTM49sBMqERhEpg=;
+        b=Ani9WhXYsvqGrbaM/ZwAoURorj6hFZNvybfaw90UB54nZEMgAdiyUOU1PiNPtRGQRa
+         pj/lrqdmWvoC8qaZ28RSh1P0XlTwcNx8UTpfk6+2Nw0866SfRfwdqD4V0ysNB5yMhGBu
+         2txFv7UUfQkC5ZQCH4nQrcfgaI+XomU50F+vM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678030990;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nZhAqHuci1RWlTDGwl+KlPP4K312EVV0utv3oT4mocY=;
-        b=rdLpCSx3kaKiAr+fI4Rj2waMtLSS0fdaBmSt9qkObOxdm/uLFsR3qw1Ww2t6Kdg4VB
-         bZL9S6lCs9SwoZnZe8cYEUSs7llDINHEzXt5rHlsRdCqGTYCh845Ts7ycAdKp6UKiruE
-         r9JBVGRfS93bbyDrJwyzqzlWwHknaonJm37MQj/kyhooI1M32qCnBIW1JLimbz+z5qr8
-         BnO7yBiT8+Vuc02IMLwPebzUGahCXqxnyPTtdQK82mfTYJjIbP8ngcUuW3u0aBMesqZz
-         77QVRJkfEyjsVjVcJco+f0RixEj22OwWs3nHvtr65C4VD5q4tKRI3+gkJKQ68ic/aUpJ
-         fizg==
-X-Gm-Message-State: AO0yUKXKeXbqreGfxSunYlSHcY5PTr5lstoOpOmXXG1kUxG9NufqMUeB
-        Sz1rQ0kd8x27AB44oiENNuhTzQ==
-X-Google-Smtp-Source: AK7set/MC7pPlD8NAif2wx5Lr45vnw0rPQoRyS7fTN9jgj2Rw5lvM7MOEW5UEOJQmL1L31B2UgHDpg==
-X-Received: by 2002:a17:906:16cd:b0:883:3c6e:23eb with SMTP id t13-20020a17090616cd00b008833c6e23ebmr7409295ejd.42.1678030990655;
-        Sun, 05 Mar 2023 07:43:10 -0800 (PST)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:71e7:13d:1c29:505f])
-        by smtp.gmail.com with ESMTPSA id v5-20020a1709063bc500b008c327bef167sm3346550ejf.7.2023.03.05.07.43.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Mar 2023 07:43:10 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: pm660: align thermal node names with bindings
-Date:   Sun,  5 Mar 2023 16:43:08 +0100
-Message-Id: <20230305154308.241651-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20210112; t=1678035502;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aj+sCMCZSrVKo/Uw+s7aitBRb/4NWTM49sBMqERhEpg=;
+        b=XK9tYr6yintV++c5jc4Rq0gNTqdVywrm0UtDafjsmG850TZCs/v2r8EXDnYHzd765o
+         yw5p966pvlQDdPQxBZ3abVnj2TbxmB2OTlvQvM/sRw1F6hOj3qlXafYseolvI6N6z+4B
+         7WesWKjXKc/CdKDopYg9dm77Q06ed/CoIci2NPwStesfmhK/o2yF4Meg9ztXD6Han4Cj
+         OULMuMrqPWSyr+aQ1kRSOoGCJ3mA3GxRT+rF2CGOCkLC3Qaj7WYt2rFBMlOGRU59XurE
+         Ul/Mp3/o6sVsR4CJzm60YtYiYzgBFiYbMG9VVE+rlB5W9KfsaQuqeaz3Q/ZIVSiXVfED
+         2Qwg==
+X-Gm-Message-State: AO0yUKXFfd/4nxx5ppJ8RtFj9zTpa6z4oHvP/m3CjjmtYHMDqJb6kfDr
+        VzMrdoGm1Z5SzieC2ksZxrgqAA==
+X-Google-Smtp-Source: AK7set+rwXEfKWTFcnCQMZXRHbEdVRTYlTfIugZqOftJv3Qt3HR7/P2Gcd3pkLvWzm380at8+xIWIQ==
+X-Received: by 2002:a05:6e02:1527:b0:317:e415:bc55 with SMTP id i7-20020a056e02152700b00317e415bc55mr8622126ilu.23.1678035501921;
+        Sun, 05 Mar 2023 08:58:21 -0800 (PST)
+Received: from [10.211.55.3] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id p17-20020a92da51000000b0031796c6d735sm2246671ilq.41.2023.03.05.08.58.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 05 Mar 2023 08:58:21 -0800 (PST)
+Message-ID: <5d90b252-c650-9908-05d3-fbbfdf47aa38@ieee.org>
+Date:   Sun, 5 Mar 2023 10:58:19 -0600
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH net-next 2/6] net: ipa: kill gsi->virt_raw
+To:     Alex Elder <elder@linaro.org>,
+        Alexander Lobakin <aleksander.lobakin@intel.com>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, caleb.connolly@linaro.org, mka@chromium.org,
+        evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230215195352.755744-1-elder@linaro.org>
+ <20230215195352.755744-3-elder@linaro.org>
+ <b0b2ae77-3311-34c8-d1a2-c6f30eca3f1e@intel.com>
+ <c76bbb06-b6b0-8dae-965f-95e8af3634b6@linaro.org>
+ <4c92160f-b2ea-c5ef-5647-6078ab47e518@intel.com>
+ <a919afca-d33e-618d-5db3-17a08d90e8af@linaro.org>
+Content-Language: en-US
+From:   Alex Elder <elder@ieee.org>
+In-Reply-To: <a919afca-d33e-618d-5db3-17a08d90e8af@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bindings expect thermal node names to end with '-thermal', so fix pm660
-and pm660l:
+On 2/17/23 7:04 AM, Alex Elder wrote:
+> On 2/17/23 5:57 AM, Alexander Lobakin wrote:
+>>>> just devm_platform_ioremap_resource_byname() be used here for 
+>>>> simplicity?
+>>> Previously, virt_raw would be the "real" re-mapped pointer, and then
+>>> virt would be adjusted downward from that.  It was a weird thing to
+>>> do, because the result pointed to a non-mapped address.  But all uses
+>>> of the virt pointer added an offset that was enough to put the result
+>>> into the mapped range.
+>>>
+>>> The new code updates all offsets to account for what the adjustment
+>>> previously did.  The test that got removed isn't necessary any more.
+>> Yeah I got it, just asked that maybe you can now use
+>> platform_ioremap_resource_byname() instead of
+>> platform_get_resource_byname() + ioremap() :)
+> 
+> Sorry, I focused on the "devm" part and not this part.
+> Yes I like that, but let me do that as a follow-on
+> patch, and I think I can do it in more than this
+> spot (possibly three, but I have to look closely).
 
-  sda660-inforce-ifc6560.dtb: thermal-zones: 'pm660', 'pm660l' do not match any of the regexes: '^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$', 'pinctrl-[0-9]+'
+Looking at this today, the only OF functions that look up a
+resource and I/O remap it in one call are devm_*() variants.
+There is no platform_ioremap_resource_byname() function.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/pm660.dtsi  | 2 +-
- arch/arm64/boot/dts/qcom/pm660l.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+One that's available is devm_platform_ioremap_resource_byname(),
+which could possibly be used in the two locations that call
+platform_get_resource_byname() followed by ioremap().
 
-diff --git a/arch/arm64/boot/dts/qcom/pm660.dtsi b/arch/arm64/boot/dts/qcom/pm660.dtsi
-index fc0eccaccdf6..4bc717917f44 100644
---- a/arch/arm64/boot/dts/qcom/pm660.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm660.dtsi
-@@ -11,7 +11,7 @@
- 
- / {
- 	thermal-zones {
--		pm660 {
-+		pm660-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/pm660l.dtsi b/arch/arm64/boot/dts/qcom/pm660l.dtsi
-index f9b3864bd3b9..87b71b7205b8 100644
---- a/arch/arm64/boot/dts/qcom/pm660l.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm660l.dtsi
-@@ -11,7 +11,7 @@
- 
- / {
- 	thermal-zones {
--		pm660l {
-+		pm660l-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
--- 
-2.34.1
+As I said earlier, if I were to use any devm_*() function
+calls the driver, I would want to convert *everything* to
+use devm_*() variants, and I have no plans to do that at
+this time.
+
+So I will not be implementing your suggestion.
+
+					-Alex
+
+> Thanks.
+> 
+>                      -Alex
+> 
+> 
 
