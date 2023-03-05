@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A18936AAFCD
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 14:00:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 43A026AAFCE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 14:00:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229800AbjCENA1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S229703AbjCENA1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sun, 5 Mar 2023 08:00:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56902 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229723AbjCENAO (ORCPT
+        with ESMTP id S229699AbjCENAT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Mar 2023 08:00:14 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D6CF12F17
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Mar 2023 05:00:07 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id g3so28074781eda.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Mar 2023 05:00:07 -0800 (PST)
+        Sun, 5 Mar 2023 08:00:19 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B50D13D55
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Mar 2023 05:00:08 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id x3so27868436edb.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Mar 2023 05:00:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678021205;
+        d=linaro.org; s=google; t=1678021206;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vY7fzQFeFA/CmOp2FT5Q/hTHbyPytHCEcFPp8zGHCRw=;
-        b=YoQEUxcUYeB5Njy/HweEPd4m3mysWARhBOFDs7xzJmj7ACrECj2Q8KFQ1VVtjkZxDz
-         +x1IGTG1kFO9gus22w52mpPPbUVhwlveWHoSyfvUL6VKV0UjUlU1WGAZddlY42itwqck
-         jVURALGl/b8kXaGf0cc3K9CnRT+mX6Za9wUE55zCMHUogJ2KEwEhw83FlUh+77gfnc9L
-         GnHQIuJmG1zF+OXOQwRIZ8rrIWRGtbTLzN4DCPlLnmq7p4N2u+iwKBzpK2ijZzcspuuu
-         1oy5BlF207xNMVhk+aJ5kkOYaIpm9wbuvcm5NgWQqq/cR9sWnoE2lpHJ6htuqn2h4sKa
-         UIPQ==
+        bh=AEJ3iniOoQqjtKRQMQS5oCYu9HLlPtutFtGbqThK5Is=;
+        b=ywjmn3UX9c6mfmrz/ZZXth8nn/jd/sTFqIhCBp/+maEmm1e1A5TmE36XgswFr04Cac
+         E3JIqEpERPFgGVM1CaShAcR6MFD+pRuh/SAedWWcCNRv53nmghV3Z9yciFP+Zu8SIMsU
+         gSgcmB2xIv2vzffZt5g17+xtQWJadwRb7UOHjToIT5qsOZxyDDOf0kBwBL5vP/HWb0b1
+         aHnDD+xK/qvRzU0HJdkqCGNQx/3RKUl5/hcweTkXNycJYBR62zBW6xfmJIK315JBABBo
+         1bI+MuYnvDN+o5rS9jhOgCE4t4ianBzacedaErKFJeEYaAn+HwKDxECOxQF7PrcNqtGM
+         pgzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678021205;
+        d=1e100.net; s=20210112; t=1678021206;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vY7fzQFeFA/CmOp2FT5Q/hTHbyPytHCEcFPp8zGHCRw=;
-        b=6pM/jVz7LGztSO8GrxsmR7LPEEqnhVAf5GDk6KLR7morkfKQB279vtTSUoitA97bCa
-         OxGyjNQpnZby/y/mbESfmXQ6Dn/xBfUGTii1eDhSBK0vZbIKqhHbrxqC4nM56TtruIWM
-         F2z9MP0nAYxqTgU+TaylvY+Vt9JcXBdfb2/2BWF3N4GnwN1wQP0a9u35E7fu6CZDTNlp
-         5RXTlVOT4SgZIGu8pKH1BWw8tPefQXEzTQxw9Q9RAcIhX57FhWwCSuZFMQd9h5npkCre
-         sQiiUxOqCxbKjYrKotNEQAR6brQP/nlkzPwcpC0uqoiI3JNqtWlxfGifdOmTjjxy3am5
-         ud5g==
-X-Gm-Message-State: AO0yUKU6QcaKciiM6lLJqv8FQ+xA6Eizuc4iF2rMvwR7wBzllEkWLUuZ
-        AdqhfdJJbyTY9f3XCGuJanNZHg==
-X-Google-Smtp-Source: AK7set+uyU0W114/8bnzHFpu+s26onjylyPyJix1xSod8f2e21FkvyejrcmujxM54Mjo2k2nhZzffA==
-X-Received: by 2002:a17:906:30d3:b0:8b1:3d04:c2da with SMTP id b19-20020a17090630d300b008b13d04c2damr7997580ejb.45.1678021205748;
-        Sun, 05 Mar 2023 05:00:05 -0800 (PST)
+        bh=AEJ3iniOoQqjtKRQMQS5oCYu9HLlPtutFtGbqThK5Is=;
+        b=oYQaoMIPMHkNURQU4FcMbPYxv1rpeRxfSLdelsJaAozurLP4enQlhb3Ac6iev8/BpS
+         Pd8bUqhxeB6d5bv7+wccQrxnGDWNJcSEbdmzEmCwcZXp6VqkETtTxUs4k7n1cggvIN1I
+         r9D76Q/FC5rSajSSJp7xoH0wRy+TEbPWSL15r9OpNXxI5EbR1xeYH1t17qloZLU/8UvS
+         FEbpreYux+yXhkS9TA+HjjvFoXSIeQeWW9S/P5qo+/sbZrQJYib4iM/tW9oRVHEpjqib
+         Citm6G06noI4kDa0bkyvld+aKt+Oo8ULi5WZqlZy9OHzZMhFtPN0oEc71XyyGPTNmT29
+         u21g==
+X-Gm-Message-State: AO0yUKWbTSaVYVExGQAbUxDS/jNG//qhtz8P3fVzU49shB+p5Q92K9xN
+        FtB4A2xBBX6gWRwBRl1C2Ma1sA==
+X-Google-Smtp-Source: AK7set/hkCNIeO2vQrQ2B6HQBipELdelycCLTeQ/RQxy25m+tObJZfIK65AHyZdPz0xMr3qs464l3w==
+X-Received: by 2002:a17:906:308e:b0:8b1:3ba7:723b with SMTP id 14-20020a170906308e00b008b13ba7723bmr7377010ejv.30.1678021206759;
+        Sun, 05 Mar 2023 05:00:06 -0800 (PST)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:71e7:13d:1c29:505f])
-        by smtp.gmail.com with ESMTPSA id l15-20020a170906078f00b008ea8effe947sm3193158ejc.225.2023.03.05.05.00.04
+        by smtp.gmail.com with ESMTPSA id l15-20020a170906078f00b008ea8effe947sm3193158ejc.225.2023.03.05.05.00.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Mar 2023 05:00:05 -0800 (PST)
+        Sun, 05 Mar 2023 05:00:06 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -62,9 +62,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 10/11] arm64: dts: qcom: sc7280: fix EUD port properties
-Date:   Sun,  5 Mar 2023 13:59:53 +0100
-Message-Id: <20230305125954.209559-10-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 11/11] arm64: dts: qcom: msm8996-oneplus: do not enable incomplete nodes
+Date:   Sun,  5 Mar 2023 13:59:54 +0100
+Message-Id: <20230305125954.209559-11-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230305125954.209559-1-krzysztof.kozlowski@linaro.org>
 References: <20230305125954.209559-1-krzysztof.kozlowski@linaro.org>
@@ -80,50 +80,144 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Nods with unit addresses must have also 'reg' property:
+status=okay should appear in final place where all required properties
+are provided, because that makes the code the easiest to read.  Move the
+status from common OnePlus DTSI to board DTS.  No functional changes.
 
-  sc7280-herobrine-crd.dtb: eud@88e0000: ports:port@0: 'reg' is a required property
-
-Fixes: 0b059979090d ("arm64: dts: qcom: sc7280: Add EUD dt node and dwc3 connector")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ .../boot/dts/qcom/msm8996-oneplus-common.dtsi   | 17 -----------------
+ arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts   |  6 ++++++
+ arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts  |  6 ++++++
+ 3 files changed, 12 insertions(+), 17 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index bdcb74925313..71179182c3b8 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -3593,12 +3593,17 @@ eud: eud@88e0000 {
- 			      <0 0x088e2000 0 0x1000>;
- 			interrupts-extended = <&pdc 11 IRQ_TYPE_LEVEL_HIGH>;
- 			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
+index 104deaee74e5..2adadc1e5b7c 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
+@@ -85,10 +85,6 @@ wlan_en: wlan-en-regulator {
+ 	};
+ };
+ 
+-&adsp_pil {
+-	status = "okay";
+-};
+-
+ &blsp1_i2c3 {
+ 	status = "okay";
+ 
+@@ -183,10 +179,6 @@ &dsi0_phy {
+ 	status = "okay";
+ };
+ 
+-&gpu {
+-	status = "okay";
+-};
+-
+ &hsusb_phy1 {
+ 	vdd-supply = <&vreg_l28a_0p925>;
+ 	vdda-pll-supply = <&vreg_l12a_1p8>;
+@@ -215,7 +207,6 @@ &mmcc {
+ 
+ &mss_pil {
+ 	pll-supply = <&vreg_l12a_1p8>;
+-	status = "okay";
+ };
+ 
+ &pcie0 {
+@@ -548,10 +539,6 @@ wcd9335: codec@1,0 {
+ 	};
+ };
+ 
+-&slpi_pil {
+-	status = "okay";
+-};
+-
+ &sound {
+ 	compatible = "qcom,apq8096-sndcard";
+ 	model = "OnePlus3";
+@@ -812,7 +799,3 @@ &usb3_dwc3 {
+ 
+ 	maximum-speed = "high-speed";
+ };
+-
+-&venus {
+-	status = "okay";
+-};
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts b/arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts
+index 1bdc1b134305..dfe75119b8d2 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts
++++ b/arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts
+@@ -17,6 +17,7 @@ / {
+ 
+ &adsp_pil {
+ 	firmware-name = "qcom/msm8996/oneplus3/adsp.mbn";
++	status = "okay";
+ };
+ 
+ &battery {
+@@ -25,6 +26,8 @@ &battery {
+ };
+ 
+ &gpu {
++	status = "okay";
 +
- 				port@0 {
-+					reg = <0>;
- 					eud_ep: endpoint {
- 						remote-endpoint = <&usb2_role_switch>;
- 					};
- 				};
- 				port@1 {
-+					reg = <1>;
- 					eud_con: endpoint {
- 						remote-endpoint = <&con_eud>;
- 					};
-@@ -3609,7 +3614,11 @@ eud_con: endpoint {
- 		eud_typec: connector {
- 			compatible = "usb-c-connector";
- 			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
+ 	zap-shader {
+ 		firmware-name = "qcom/msm8996/oneplus3/a530_zap.mbn";
+ 	};
+@@ -33,12 +36,15 @@ zap-shader {
+ &mss_pil {
+ 	firmware-name = "qcom/msm8996/oneplus3/mba.mbn",
+ 			"qcom/msm8996/oneplus3/modem.mbn";
++	status = "okay";
+ };
+ 
+ &slpi_pil {
+ 	firmware-name = "qcom/msm8996/oneplus3/slpi.mbn";
++	status = "okay";
+ };
+ 
+ &venus {
+ 	firmware-name = "qcom/msm8996/oneplus3/venus.mbn";
++	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts b/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts
+index 34f837dd0c12..51fce65e89f1 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts
++++ b/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts
+@@ -18,6 +18,7 @@ / {
+ 
+ &adsp_pil {
+ 	firmware-name = "qcom/msm8996/oneplus3t/adsp.mbn";
++	status = "okay";
+ };
+ 
+ &battery {
+@@ -26,6 +27,8 @@ &battery {
+ };
+ 
+ &gpu {
++	status = "okay";
 +
- 				port@0 {
-+					reg = <0>;
- 					con_eud: endpoint {
- 						remote-endpoint = <&eud_con>;
- 					};
+ 	zap-shader {
+ 		firmware-name = "qcom/msm8996/oneplus3t/a530_zap.mbn";
+ 	};
+@@ -34,12 +37,15 @@ zap-shader {
+ &mss_pil {
+ 	firmware-name = "qcom/msm8996/oneplus3t/mba.mbn",
+ 			"qcom/msm8996/oneplus3t/modem.mbn";
++	status = "okay";
+ };
+ 
+ &slpi_pil {
+ 	firmware-name = "qcom/msm8996/oneplus3t/slpi.mbn";
++	status = "okay";
+ };
+ 
+ &venus {
+ 	firmware-name = "qcom/msm8996/oneplus3t/venus.mbn";
++	status = "okay";
+ };
 -- 
 2.34.1
 
