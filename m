@@ -2,97 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01F616AAF15
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 11:33:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E15CB6AAF7A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 13:24:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229707AbjCEKdC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Mar 2023 05:33:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40536 "EHLO
+        id S229437AbjCEMYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Mar 2023 07:24:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229689AbjCEKdB (ORCPT
+        with ESMTP id S229660AbjCEMYg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Mar 2023 05:33:01 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B120165B7;
-        Sun,  5 Mar 2023 02:32:58 -0800 (PST)
-Received: from [192.168.178.23] (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 10565D2456;
-        Sun,  5 Mar 2023 10:32:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1678012377; bh=E4Nn6q29732yO0RGMOie+PoMN/NXb6oBg5btSiyJ2Ag=;
-        h=From:Date:Subject:References:In-Reply-To:To:Cc;
-        b=Enois8ElhoJBrqQVQGqJZpgzV7ZgZTpvo9rbhXoAc3faUVGXCkNj67AsG9H63kk2o
-         7wz2BlpwwgBrwSrWjXp7LBEizq/I+KcDpJEoAbHuqXNmqIR78uzbAv5za4jslUDryv
-         6L9AKeWE89Hr+1uXwaCnDHw5GEyQbdIrjosW/9/g=
-From:   Luca Weiss <luca@z3ntu.xyz>
-Date:   Sun, 05 Mar 2023 11:32:34 +0100
-Subject: [PATCH 2/2] soc: qcom: rmtfs: handle optional qcom,vmid correctly
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230305-rmtfs-vmid-fix-v1-2-6a7206081602@z3ntu.xyz>
-References: <20230305-rmtfs-vmid-fix-v1-0-6a7206081602@z3ntu.xyz>
-In-Reply-To: <20230305-rmtfs-vmid-fix-v1-0-6a7206081602@z3ntu.xyz>
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+        Sun, 5 Mar 2023 07:24:36 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 985E36A4F
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Mar 2023 04:24:34 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id u9so27882923edd.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Mar 2023 04:24:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678019073;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sGaUFmZmEPj6wjVZzqORlm4Vchur/nfexKJxUxV14Cc=;
+        b=bZyHcH617xd3qYRVsQMgkGFFwDrHr2l6GSnuO2/kk0SIu91z9kGvqpWx46g/FZfd0Z
+         WHpmiw58UaTwEGVJM82pEy1597CRc8X7jTtPdBr2oJ3ZfkZT/J/x9TfoCxcFXqbi9a6b
+         pR763pnCIztGEFr1fkkECnJkqRjkE0q2InCEl5SRl9C/+q4vN/OJalqchCzoctb8e52R
+         GP2j+PFeOV+4yTmTXDjdhwrWpFpu7Sx5UC4Jppd5dKLDgdYrCOTmJKjtb1AFBJc3tmeM
+         gW2C1PGc+BGt/YcpX3A6RU0PwCr815NUlhEqrSk94WoBbaQOfJiqE4N5qu77XHvwrIEy
+         8oyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678019073;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sGaUFmZmEPj6wjVZzqORlm4Vchur/nfexKJxUxV14Cc=;
+        b=SGwWo/VIX7FcqfiNnr9qLTx1veRRSPQPCXu7N+rpdk+G+WS7axsBlY9Fpm2sZ+cQZm
+         IVkyNkHlaCMNLwS677RUuRmvRr9d/6SLhalF7RkFhSFWrgJDhCgxhWmA0jDoSM/ILCpd
+         15B66+i4/j6OX+e48rtyX5Dh9W/CEKLa+xz5qBBlFnkSW4rLHt+IIiJaPMcppReocpaA
+         qqpKLg0SitQmZaf2Foifdu0mFjRMD+E7ItqPAtbHepExhhS7amJttrexpNFQreKL+xLi
+         lLH1i5i5jpKHU6Dar4lHyM0uYo65zhAPFfvmhiPbNEvCYQ/O0qdjjkzvuhlEc2BU4gXq
+         qjDg==
+X-Gm-Message-State: AO0yUKVrpHmmpg2/ShBnX7jtjeibqcx0E4kk8bL5m/iixGL6US24FWSn
+        bwchchmpQZ2tG+V9nfWD19TO/g==
+X-Google-Smtp-Source: AK7set9gt2HUS9+fvU1DUep1ABAuIXeNzq4i233SNrJScC52wtEoWP/F9lt7wMNFPGQvBsn33LRkcQ==
+X-Received: by 2002:aa7:c242:0:b0:4ab:4c5e:b0ed with SMTP id y2-20020aa7c242000000b004ab4c5eb0edmr6465546edo.21.1678019073090;
+        Sun, 05 Mar 2023 04:24:33 -0800 (PST)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:71e7:13d:1c29:505f])
+        by smtp.gmail.com with ESMTPSA id t26-20020a508d5a000000b004a9b5c957bfsm3621682edt.77.2023.03.05.04.24.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Mar 2023 04:24:32 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>
-X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1069; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=E4Nn6q29732yO0RGMOie+PoMN/NXb6oBg5btSiyJ2Ag=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkBG/X1uWFaEa8Dj5Bbd8Kqt4oQ4LKhymOWBT2Z
- GvoiDAxmBqJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZARv1wAKCRBy2EO4nU3X
- VmXmD/9DmeYCd/L3pNjS28ZhBUm7nfOF/3xuV5Xx8b/eQwM2J6U9ngDY1tdQd2Ao9tyB34hLCO2
- 9YMBMVgJUY7Gd2/oQMLtpNAdGZuKd/S/hx2ZZsMvSw3Yaiigqg0MjyJujNyALgpfU3B8gHrDFiB
- 5ovPbUPzKDhap1p1Rz7k/hhOTJ45I0C1w335pVZI68zFWQCViGiX3CM0vYWnkN+yio8OCgaPJAf
- G2ap9mQAjCcJp9dkekIbokDllzY6NL3Rd+wVuc4pHqw4zKhRpP+4mDXrvXTtQul3CXOvOLtls5S
- S4pS7iHGafvG2lZw8i5VarvwwYd5mO7l2z5hbwKD/IX6p9SHEbHmEAWki21nA74vd34qtSprlea
- BhprwUkfIJWmxrjQ8AOxJYNdZNnd68Z3DWIHhnu78xM5S+GINLvvcvlRozkUg8L3Ek2zpG9v+uE
- qLUDkbW31gEjz8z95iFzbIC3pMDSeT/ejPSeXZn2wGdKogyspF+QOtV13M7bqCB2c9ovzlxwSvu
- +MvdO+jEYOHuG0LH0gjpTJgkOLrmovUT8t5Vo3PUoQmVhK5OAXCbiofQylTj/hhaIRM0bJoPejH
- J2WipcQyywZSdpcaru28X6sJgQQIhdA8n0ks0m08QTSA4zz2iEbf3p51FcShURv8yqpLeUAtdw3
- k6Dl9nEzSwdxXNA==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] dt-bindings: soc: qcom: smd-rpm: re-add missing qcom,rpm-msm8994
+Date:   Sun,  5 Mar 2023 13:24:28 +0100
+Message-Id: <20230305122428.167580-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Older platforms don't have qcom,vmid set, handle -EINVAL return value
-correctly. And since num_vmids is passed to of_property_read_u32_array
-later we should make sure it has a sane value before continuing.
+Re-add the qcom,rpm-msm8994 compatible, dropped during conversion from
+TXT to DT schema:
 
-Fixes: e656cd0bcf3d ("soc: qcom: rmtfs: Optionally map RMTFS to more VMs")
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+  apq8094-sony-xperia-kitakami-karin_windy.dtb: smd: rpm:rpm-requests:compatible:0: 'qcom,rpm-msm8994' is not one of ['qcom,rpm-apq8084' ...]
+
+Fixes: f935a752f229 ("dt-bindings: soc: qcom: smd-rpm: Convert binding to YAML schema")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/soc/qcom/rmtfs_mem.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
-index 218397ab0c36f..fb6e4def8c78b 100644
---- a/drivers/soc/qcom/rmtfs_mem.c
-+++ b/drivers/soc/qcom/rmtfs_mem.c
-@@ -229,7 +229,10 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
- 	}
- 
- 	num_vmids = of_property_count_u32_elems(node, "qcom,vmid");
--	if (num_vmids < 0) {
-+	if (num_vmids == -EINVAL) {
-+		/* qcom,vmid is optional */
-+		num_vmids = 0;
-+	} else if (num_vmids < 0) {
- 		dev_err(&pdev->dev, "failed to count qcom,vmid elements: %d\n", num_vmids);
- 		goto remove_cdev;
- 	} else if (num_vmids > NUM_MAX_VMIDS) {
-
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
+index 16fd67c0bd1f..3580b209cd4a 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
+@@ -40,6 +40,7 @@ properties:
+       - qcom,rpm-msm8953
+       - qcom,rpm-msm8974
+       - qcom,rpm-msm8976
++      - qcom,rpm-msm8994
+       - qcom,rpm-msm8996
+       - qcom,rpm-msm8998
+       - qcom,rpm-sdm660
+@@ -84,6 +85,7 @@ if:
+           - qcom,rpm-msm8974
+           - qcom,rpm-msm8976
+           - qcom,rpm-msm8953
++          - qcom,rpm-msm8994
+ then:
+   properties:
+     qcom,glink-channels: false
 -- 
-2.39.2
+2.34.1
 
