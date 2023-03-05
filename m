@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F16AB6AB00E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 14:52:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD7F96AB034
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 14:53:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229750AbjCENwN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Mar 2023 08:52:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37164 "EHLO
+        id S229971AbjCENxp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Mar 2023 08:53:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229495AbjCENwN (ORCPT
+        with ESMTP id S229947AbjCENxg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Mar 2023 08:52:13 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B078C6EAE;
-        Sun,  5 Mar 2023 05:52:11 -0800 (PST)
+        Sun, 5 Mar 2023 08:53:36 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C643786BB;
+        Sun,  5 Mar 2023 05:53:11 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2C99660A54;
-        Sun,  5 Mar 2023 13:52:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D83AC433D2;
-        Sun,  5 Mar 2023 13:52:09 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6F8FA60B04;
+        Sun,  5 Mar 2023 13:53:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC9C0C433D2;
+        Sun,  5 Mar 2023 13:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678024330;
+        s=k20201202; t=1678024389;
         bh=GD7bRPnmKLbCghxsUKpSfGGru8Lwm80DFDBP/5YwPmo=;
         h=From:To:Cc:Subject:Date:From;
-        b=rFR/DWnLWlUVMsy6NTvekkzTcDVFaVcEkelmz80581gJwB+3LLPNT3Yw4u+NF+Y/p
-         L3yq9iegOwhWNQDHpOtXxuccO+hFGAGYo45p8f6koiAs2LlFMyAG+nD/abXVR/FMs5
-         ptFtymr/ntHAs1EX30kTnIsXcxZULfr89qVXdUsUdFvnRyZDx5rEdqlmXAgCd0QyXf
-         Tc2bYFGTPBEl3FKNl9O/rM4k1kc4c8f6txZPpl4YFh+Xd0VsYvy5jQ6tDpwTjRVr3b
-         I/nGLHTf1EGh8F7ZDhFQKq6mRfR/vpO1tvBmXfWNBctTzziF2c+Sco2r2XLEdCLEI7
-         4dxTdKzP2x7Gw==
+        b=kvRHq0Hq7mQwW9t1yRfWnOGb4ILvaVCZxLlXvvYe19zsxA0MqD1tZdG49mt9HPGTh
+         MCXWFr6q+ol7wTya2+2h5AIQ4axztGvCMvb2AmdkUUtLoXxujiueaVsfYViQbI55PT
+         jivOrWQKKvn4E74eE0RThN91H/D4dvr+GYiZcxy1MEfzyksHszQChGd9fk2IzR5FsK
+         VkgeXcqUz0eRpcFj0smWsyW1qsaJ5CG9/10fm+penn0y8O27zw6BPnSHNPI+Hlp9nd
+         ByO9DatYtru19LmkKMraFxB/EqFaHj5vks7E3XsQ/SEq0t2rFBAhz8bpWgsvH4hBNm
+         GaNe4o51/PVwQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -42,16 +42,16 @@ Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
         mturquette@baylibre.com, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.2 01/16] clk: qcom: mmcc-apq8084: remove spdm clocks
-Date:   Sun,  5 Mar 2023 08:51:52 -0500
-Message-Id: <20230305135207.1793266-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 01/15] clk: qcom: mmcc-apq8084: remove spdm clocks
+Date:   Sun,  5 Mar 2023 08:52:52 -0500
+Message-Id: <20230305135306.1793564-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
