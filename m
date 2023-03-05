@@ -2,222 +2,370 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43A026AAFCE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 14:00:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F16AB6AB00E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 14:52:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229703AbjCENA1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Mar 2023 08:00:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56576 "EHLO
+        id S229750AbjCENwN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Mar 2023 08:52:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229699AbjCENAT (ORCPT
+        with ESMTP id S229495AbjCENwN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Mar 2023 08:00:19 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B50D13D55
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Mar 2023 05:00:08 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id x3so27868436edb.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Mar 2023 05:00:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678021206;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AEJ3iniOoQqjtKRQMQS5oCYu9HLlPtutFtGbqThK5Is=;
-        b=ywjmn3UX9c6mfmrz/ZZXth8nn/jd/sTFqIhCBp/+maEmm1e1A5TmE36XgswFr04Cac
-         E3JIqEpERPFgGVM1CaShAcR6MFD+pRuh/SAedWWcCNRv53nmghV3Z9yciFP+Zu8SIMsU
-         gSgcmB2xIv2vzffZt5g17+xtQWJadwRb7UOHjToIT5qsOZxyDDOf0kBwBL5vP/HWb0b1
-         aHnDD+xK/qvRzU0HJdkqCGNQx/3RKUl5/hcweTkXNycJYBR62zBW6xfmJIK315JBABBo
-         1bI+MuYnvDN+o5rS9jhOgCE4t4ianBzacedaErKFJeEYaAn+HwKDxECOxQF7PrcNqtGM
-         pgzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678021206;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AEJ3iniOoQqjtKRQMQS5oCYu9HLlPtutFtGbqThK5Is=;
-        b=oYQaoMIPMHkNURQU4FcMbPYxv1rpeRxfSLdelsJaAozurLP4enQlhb3Ac6iev8/BpS
-         Pd8bUqhxeB6d5bv7+wccQrxnGDWNJcSEbdmzEmCwcZXp6VqkETtTxUs4k7n1cggvIN1I
-         r9D76Q/FC5rSajSSJp7xoH0wRy+TEbPWSL15r9OpNXxI5EbR1xeYH1t17qloZLU/8UvS
-         FEbpreYux+yXhkS9TA+HjjvFoXSIeQeWW9S/P5qo+/sbZrQJYib4iM/tW9oRVHEpjqib
-         Citm6G06noI4kDa0bkyvld+aKt+Oo8ULi5WZqlZy9OHzZMhFtPN0oEc71XyyGPTNmT29
-         u21g==
-X-Gm-Message-State: AO0yUKWbTSaVYVExGQAbUxDS/jNG//qhtz8P3fVzU49shB+p5Q92K9xN
-        FtB4A2xBBX6gWRwBRl1C2Ma1sA==
-X-Google-Smtp-Source: AK7set/hkCNIeO2vQrQ2B6HQBipELdelycCLTeQ/RQxy25m+tObJZfIK65AHyZdPz0xMr3qs464l3w==
-X-Received: by 2002:a17:906:308e:b0:8b1:3ba7:723b with SMTP id 14-20020a170906308e00b008b13ba7723bmr7377010ejv.30.1678021206759;
-        Sun, 05 Mar 2023 05:00:06 -0800 (PST)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:71e7:13d:1c29:505f])
-        by smtp.gmail.com with ESMTPSA id l15-20020a170906078f00b008ea8effe947sm3193158ejc.225.2023.03.05.05.00.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Mar 2023 05:00:06 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Sun, 5 Mar 2023 08:52:13 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B078C6EAE;
+        Sun,  5 Mar 2023 05:52:11 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2C99660A54;
+        Sun,  5 Mar 2023 13:52:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D83AC433D2;
+        Sun,  5 Mar 2023 13:52:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678024330;
+        bh=GD7bRPnmKLbCghxsUKpSfGGru8Lwm80DFDBP/5YwPmo=;
+        h=From:To:Cc:Subject:Date:From;
+        b=rFR/DWnLWlUVMsy6NTvekkzTcDVFaVcEkelmz80581gJwB+3LLPNT3Yw4u+NF+Y/p
+         L3yq9iegOwhWNQDHpOtXxuccO+hFGAGYo45p8f6koiAs2LlFMyAG+nD/abXVR/FMs5
+         ptFtymr/ntHAs1EX30kTnIsXcxZULfr89qVXdUsUdFvnRyZDx5rEdqlmXAgCd0QyXf
+         Tc2bYFGTPBEl3FKNl9O/rM4k1kc4c8f6txZPpl4YFh+Xd0VsYvy5jQ6tDpwTjRVr3b
+         I/nGLHTf1EGh8F7ZDhFQKq6mRfR/vpO1tvBmXfWNBctTzziF2c+Sco2r2XLEdCLEI7
+         4dxTdKzP2x7Gw==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 11/11] arm64: dts: qcom: msm8996-oneplus: do not enable incomplete nodes
-Date:   Sun,  5 Mar 2023 13:59:54 +0100
-Message-Id: <20230305125954.209559-11-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230305125954.209559-1-krzysztof.kozlowski@linaro.org>
-References: <20230305125954.209559-1-krzysztof.kozlowski@linaro.org>
+        Bjorn Andersson <andersson@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
+        mturquette@baylibre.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.2 01/16] clk: qcom: mmcc-apq8084: remove spdm clocks
+Date:   Sun,  5 Mar 2023 08:51:52 -0500
+Message-Id: <20230305135207.1793266-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-status=okay should appear in final place where all required properties
-are provided, because that makes the code the easiest to read.  Move the
-status from common OnePlus DTSI to board DTS.  No functional changes.
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+[ Upstream commit 7b347f4b677b6d84687e67d82b6b17c6f55ea2b4 ]
+
+SPDM is used for debug/profiling and does not have any other
+functionality. These clocks can safely be removed.
+
+Suggested-by: Stephen Boyd <sboyd@kernel.org>
+Suggested-by: Georgi Djakov <djakov@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230111060402.1168726-11-dmitry.baryshkov@linaro.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/qcom/msm8996-oneplus-common.dtsi   | 17 -----------------
- arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts   |  6 ++++++
- arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts  |  6 ++++++
- 3 files changed, 12 insertions(+), 17 deletions(-)
+ drivers/clk/qcom/mmcc-apq8084.c | 271 --------------------------------
+ 1 file changed, 271 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
-index 104deaee74e5..2adadc1e5b7c 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
-@@ -85,10 +85,6 @@ wlan_en: wlan-en-regulator {
- 	};
+diff --git a/drivers/clk/qcom/mmcc-apq8084.c b/drivers/clk/qcom/mmcc-apq8084.c
+index e9f9713591558..025e21793b3c4 100644
+--- a/drivers/clk/qcom/mmcc-apq8084.c
++++ b/drivers/clk/qcom/mmcc-apq8084.c
+@@ -2364,262 +2364,6 @@ static struct clk_branch mmss_rbcpr_clk = {
+ 	},
  };
  
--&adsp_pil {
--	status = "okay";
+-static struct clk_branch mmss_spdm_ahb_clk = {
+-	.halt_reg = 0x0230,
+-	.clkr = {
+-		.enable_reg = 0x0230,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_ahb_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_ahb_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
 -};
 -
- &blsp1_i2c3 {
- 	status = "okay";
- 
-@@ -183,10 +179,6 @@ &dsi0_phy {
- 	status = "okay";
- };
- 
--&gpu {
--	status = "okay";
+-static struct clk_branch mmss_spdm_axi_clk = {
+-	.halt_reg = 0x0210,
+-	.clkr = {
+-		.enable_reg = 0x0210,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_axi_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_axi_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
 -};
 -
- &hsusb_phy1 {
- 	vdd-supply = <&vreg_l28a_0p925>;
- 	vdda-pll-supply = <&vreg_l12a_1p8>;
-@@ -215,7 +207,6 @@ &mmcc {
- 
- &mss_pil {
- 	pll-supply = <&vreg_l12a_1p8>;
--	status = "okay";
- };
- 
- &pcie0 {
-@@ -548,10 +539,6 @@ wcd9335: codec@1,0 {
- 	};
- };
- 
--&slpi_pil {
--	status = "okay";
+-static struct clk_branch mmss_spdm_csi0_clk = {
+-	.halt_reg = 0x023c,
+-	.clkr = {
+-		.enable_reg = 0x023c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_csi0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_csi0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
 -};
 -
- &sound {
- 	compatible = "qcom,apq8096-sndcard";
- 	model = "OnePlus3";
-@@ -812,7 +799,3 @@ &usb3_dwc3 {
- 
- 	maximum-speed = "high-speed";
- };
--
--&venus {
--	status = "okay";
+-static struct clk_branch mmss_spdm_gfx3d_clk = {
+-	.halt_reg = 0x022c,
+-	.clkr = {
+-		.enable_reg = 0x022c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_gfx3d_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_gfx3d_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
 -};
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts b/arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts
-index 1bdc1b134305..dfe75119b8d2 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts
-@@ -17,6 +17,7 @@ / {
- 
- &adsp_pil {
- 	firmware-name = "qcom/msm8996/oneplus3/adsp.mbn";
-+	status = "okay";
- };
- 
- &battery {
-@@ -25,6 +26,8 @@ &battery {
- };
- 
- &gpu {
-+	status = "okay";
-+
- 	zap-shader {
- 		firmware-name = "qcom/msm8996/oneplus3/a530_zap.mbn";
- 	};
-@@ -33,12 +36,15 @@ zap-shader {
- &mss_pil {
- 	firmware-name = "qcom/msm8996/oneplus3/mba.mbn",
- 			"qcom/msm8996/oneplus3/modem.mbn";
-+	status = "okay";
- };
- 
- &slpi_pil {
- 	firmware-name = "qcom/msm8996/oneplus3/slpi.mbn";
-+	status = "okay";
- };
- 
- &venus {
- 	firmware-name = "qcom/msm8996/oneplus3/venus.mbn";
-+	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts b/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts
-index 34f837dd0c12..51fce65e89f1 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts
-@@ -18,6 +18,7 @@ / {
- 
- &adsp_pil {
- 	firmware-name = "qcom/msm8996/oneplus3t/adsp.mbn";
-+	status = "okay";
- };
- 
- &battery {
-@@ -26,6 +27,8 @@ &battery {
- };
- 
- &gpu {
-+	status = "okay";
-+
- 	zap-shader {
- 		firmware-name = "qcom/msm8996/oneplus3t/a530_zap.mbn";
- 	};
-@@ -34,12 +37,15 @@ zap-shader {
- &mss_pil {
- 	firmware-name = "qcom/msm8996/oneplus3t/mba.mbn",
- 			"qcom/msm8996/oneplus3t/modem.mbn";
-+	status = "okay";
- };
- 
- &slpi_pil {
- 	firmware-name = "qcom/msm8996/oneplus3t/slpi.mbn";
-+	status = "okay";
- };
- 
- &venus {
- 	firmware-name = "qcom/msm8996/oneplus3t/venus.mbn";
-+	status = "okay";
- };
+-
+-static struct clk_branch mmss_spdm_jpeg0_clk = {
+-	.halt_reg = 0x0204,
+-	.clkr = {
+-		.enable_reg = 0x0204,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_jpeg0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_jpeg0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_jpeg1_clk = {
+-	.halt_reg = 0x0208,
+-	.clkr = {
+-		.enable_reg = 0x0208,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_jpeg1_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_jpeg1_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_jpeg2_clk = {
+-	.halt_reg = 0x0224,
+-	.clkr = {
+-		.enable_reg = 0x0224,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_jpeg2_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_jpeg2_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_mdp_clk = {
+-	.halt_reg = 0x020c,
+-	.clkr = {
+-		.enable_reg = 0x020c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_mdp_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_mdp_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_pclk0_clk = {
+-	.halt_reg = 0x0234,
+-	.clkr = {
+-		.enable_reg = 0x0234,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_pclk0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_pclk0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_pclk1_clk = {
+-	.halt_reg = 0x0228,
+-	.clkr = {
+-		.enable_reg = 0x0228,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_pclk1_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_pclk1_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_vcodec0_clk = {
+-	.halt_reg = 0x0214,
+-	.clkr = {
+-		.enable_reg = 0x0214,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_vcodec0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_vcodec0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_vfe0_clk = {
+-	.halt_reg = 0x0218,
+-	.clkr = {
+-		.enable_reg = 0x0218,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_vfe0_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_vfe0_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_vfe1_clk = {
+-	.halt_reg = 0x021c,
+-	.clkr = {
+-		.enable_reg = 0x021c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_vfe1_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_spdm_vfe1_div_clk",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_rm_axi_clk = {
+-	.halt_reg = 0x0304,
+-	.clkr = {
+-		.enable_reg = 0x0304,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_rm_axi_clk",
+-			.parent_names = (const char *[]){
+-				"mmss_axi_clk_src",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch mmss_spdm_rm_ocmemnoc_clk = {
+-	.halt_reg = 0x0308,
+-	.clkr = {
+-		.enable_reg = 0x0308,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "mmss_spdm_rm_ocmemnoc_clk",
+-			.parent_names = (const char *[]){
+-				"ocmemnoc_clk_src",
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-
+ static struct clk_branch mmss_misc_ahb_clk = {
+ 	.halt_reg = 0x502c,
+ 	.clkr = {
+@@ -3252,21 +2996,6 @@ static struct clk_regmap *mmcc_apq8084_clocks[] = {
+ 	[MDSS_VSYNC_CLK] = &mdss_vsync_clk.clkr,
+ 	[MMSS_RBCPR_AHB_CLK] = &mmss_rbcpr_ahb_clk.clkr,
+ 	[MMSS_RBCPR_CLK] = &mmss_rbcpr_clk.clkr,
+-	[MMSS_SPDM_AHB_CLK] = &mmss_spdm_ahb_clk.clkr,
+-	[MMSS_SPDM_AXI_CLK] = &mmss_spdm_axi_clk.clkr,
+-	[MMSS_SPDM_CSI0_CLK] = &mmss_spdm_csi0_clk.clkr,
+-	[MMSS_SPDM_GFX3D_CLK] = &mmss_spdm_gfx3d_clk.clkr,
+-	[MMSS_SPDM_JPEG0_CLK] = &mmss_spdm_jpeg0_clk.clkr,
+-	[MMSS_SPDM_JPEG1_CLK] = &mmss_spdm_jpeg1_clk.clkr,
+-	[MMSS_SPDM_JPEG2_CLK] = &mmss_spdm_jpeg2_clk.clkr,
+-	[MMSS_SPDM_MDP_CLK] = &mmss_spdm_mdp_clk.clkr,
+-	[MMSS_SPDM_PCLK0_CLK] = &mmss_spdm_pclk0_clk.clkr,
+-	[MMSS_SPDM_PCLK1_CLK] = &mmss_spdm_pclk1_clk.clkr,
+-	[MMSS_SPDM_VCODEC0_CLK] = &mmss_spdm_vcodec0_clk.clkr,
+-	[MMSS_SPDM_VFE0_CLK] = &mmss_spdm_vfe0_clk.clkr,
+-	[MMSS_SPDM_VFE1_CLK] = &mmss_spdm_vfe1_clk.clkr,
+-	[MMSS_SPDM_RM_AXI_CLK] = &mmss_spdm_rm_axi_clk.clkr,
+-	[MMSS_SPDM_RM_OCMEMNOC_CLK] = &mmss_spdm_rm_ocmemnoc_clk.clkr,
+ 	[MMSS_MISC_AHB_CLK] = &mmss_misc_ahb_clk.clkr,
+ 	[MMSS_MMSSNOC_AHB_CLK] = &mmss_mmssnoc_ahb_clk.clkr,
+ 	[MMSS_MMSSNOC_BTO_AHB_CLK] = &mmss_mmssnoc_bto_ahb_clk.clkr,
 -- 
-2.34.1
+2.39.2
 
