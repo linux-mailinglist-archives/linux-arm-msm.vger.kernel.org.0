@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FC526AAFB3
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 14:00:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B7EB26AAFB6
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Mar 2023 14:00:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229614AbjCENAB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Mar 2023 08:00:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56012 "EHLO
+        id S229604AbjCENAD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Mar 2023 08:00:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229580AbjCENAA (ORCPT
+        with ESMTP id S229555AbjCENAB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Mar 2023 08:00:00 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30C8B12BE3
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Mar 2023 04:59:58 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id cy23so27842629edb.12
+        Sun, 5 Mar 2023 08:00:01 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 021B812BF5
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Mar 2023 04:59:59 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id a25so28235219edb.0
         for <linux-arm-msm@vger.kernel.org>; Sun, 05 Mar 2023 04:59:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678021196;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8c2yb4QaL3JCLZ0HwZ8OkD2d0yLIhaH9t78vVtlBE/A=;
-        b=Cq8ohg8BKAbp3khwYMaGdtt72nNTH20QHKg124wzLReL+dkwRbaFIOBn+Q6+M2BDJu
-         FCWldJwi/vhHrtJ7K5vI/8L6t3UdRG9VDdbU3LONsgDs7MlySEXwvfV97VtMH4Hra58u
-         lRM0g3cJslzrz1/nK9F8aqNIVX0BcoaxnNM+BZhY5z+UbY0OFcDegbkSgvgtnEt5kwAe
-         20a9IMhOVhUgsaJeAoTvCdNJq5bvvoLQWZTRfTCAkTTfvydbO9GHRrnTLVzVoFb99ZoE
-         w/JqWo2bRyig9HjK6L1eSnCgVfjEwslfivXBb9Ktk9306Wd8GrU5qI3oZyk0UE4uNaHC
-         ZJTQ==
+        d=linaro.org; s=google; t=1678021197;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VPnKiFwJo24AlZFkRpb1qIo2px1Ym2pVCnkq5ykK/M4=;
+        b=cOIqF2sQAmzQi+Wk/tDSYps0o6IGo9YNmzfdMEd5BgkseAaxgg1CpK1CqeilcARyOd
+         AB5BZKN5Mw5ZKNK8bb0w7MnvTFUbhHnoxhEDDn2uQvcW1XJHBtYZUE3grV6FVSCojhWK
+         UqZMlTJgpE5GaUlUONrIWI9bywm5kpzv5fJva1DHzAw0GqL5a8mlkAQ4ITh8AMcK80gP
+         swmRgUYEtsb7TYYXNdc26jXQi5Li1Rcz08kFAxrhzSj7XcuY55f259UJ2QFdhPtYcp/z
+         9u8ZfqvHYeaz/74Pv/AdyXHXl2z7m5QIHaMkGAbyFNlQQACOonTpeZ/eLSBH6Op9YJ9G
+         bLkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678021196;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8c2yb4QaL3JCLZ0HwZ8OkD2d0yLIhaH9t78vVtlBE/A=;
-        b=70cZoUPV8toPJuyI61e7Vzk4PAlmwkwMVpKcis40eSj7wZKTnS1WvzBXqh9djGv2x/
-         Iu20OVuvGLhafWPQXKUFIeKGvo7PIz5cjVrks+U0Jn1Gmu6kjn+4hgQDCxOlEwoKCXN/
-         mFbXtWX9qtWnm7Zhr6Kng30jmfeD0Ebgx94vzP/q7dGGLEQwn9dNXCKdLZY/V3vGPtio
-         uAekIGYrNiJZBODzdrSLIFI/UzQPwtX4iueVa3Y357i/1l+XNF1ZWovfMbeLTQFcAO7B
-         e+C/T1P7E5D7NWQ4XompiFjWdTAWUHpLZ+Xgf5N63v92qoEpXpX3SeV/crhYVhBemsaw
-         arCQ==
-X-Gm-Message-State: AO0yUKUT8OVnNM3qks+huTsYkFn1CPvz+vupw59UbmrZPOPjMvdFtGCP
-        2rGs38b87qeIsuHn6vvLmRRkVQ==
-X-Google-Smtp-Source: AK7set9ipj1J1gjoi5978HfQMZpW6LnNNVdFI5gAwsxpiqz1UogyZveke4chru6K2bFVL7U3d5oARQ==
-X-Received: by 2002:a17:906:5d07:b0:8b1:3467:d71b with SMTP id g7-20020a1709065d0700b008b13467d71bmr10703343ejt.48.1678021196734;
-        Sun, 05 Mar 2023 04:59:56 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678021197;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VPnKiFwJo24AlZFkRpb1qIo2px1Ym2pVCnkq5ykK/M4=;
+        b=mzDfy4SK1oLl1B4B+pcCupUoSYgwUTTvBMjsAJrvg7fprS1ND2QOd5UbY4Tby9A7o8
+         YjkJtZjaDnhovhUSXOs93sg9H/ofgd+dSJYyCoPisQelwc8lJ4tk8l2QZJM4iQXNIDXs
+         Ezi7fELrgGOtD29c6TwqTIDbZY55Cq8hRJxJ7epfk6lFGBrD5kuOq/8CDFK9kw3KxBLp
+         P12dtebU9JWWvz9rskb35JqfS4khDtLEuHBdo7r7XpHqQfd5g3zFQq0jzhe2lEYxCDsT
+         LDorwSUMiun8Ghp2e/bB6M4OQp28MK3IDR/rsbP+lRgaBbsLC6IMnAutcF0EzQJ+qBnh
+         nf3w==
+X-Gm-Message-State: AO0yUKVKBiGPvaUMIBQR9VuB6RKNxtM0/q6vKyUPebBFmWo9/oj0PTuU
+        zNWO8zl9nEDaVOmiLX5qQgThrw==
+X-Google-Smtp-Source: AK7set9bA5pQCrvs/z5SXArhEpVto4YPudHzdfUQrDooTg3wN1zWLXYSTvGXu/hRIrEwmeEeFSeyvw==
+X-Received: by 2002:aa7:c2da:0:b0:4bf:33e8:21ff with SMTP id m26-20020aa7c2da000000b004bf33e821ffmr6184976edp.30.1678021197624;
+        Sun, 05 Mar 2023 04:59:57 -0800 (PST)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:71e7:13d:1c29:505f])
-        by smtp.gmail.com with ESMTPSA id l15-20020a170906078f00b008ea8effe947sm3193158ejc.225.2023.03.05.04.59.55
+        by smtp.gmail.com with ESMTPSA id l15-20020a170906078f00b008ea8effe947sm3193158ejc.225.2023.03.05.04.59.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Mar 2023 04:59:56 -0800 (PST)
+        Sun, 05 Mar 2023 04:59:57 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,10 +62,12 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 01/11] arm64: dts: qcom: drop incorrect cell-index from SPMI
-Date:   Sun,  5 Mar 2023 13:59:44 +0100
-Message-Id: <20230305125954.209559-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 02/11] arm64: dts: qcom: sm8250: drop incorrect Coresight funnel properties
+Date:   Sun,  5 Mar 2023 13:59:45 +0100
+Message-Id: <20230305125954.209559-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230305125954.209559-1-krzysztof.kozlowski@linaro.org>
+References: <20230305125954.209559-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -77,119 +80,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SPMI controller (PMIC Arbiter)) does not use nor allow 'cell-index'
-property:
+There is only one output port, thus out-ports should not have
+'address/sice-cells' and unit addresses.  'reg-names' are also not
+allowed by bindings.
 
-  sm8150-microsoft-surface-duo.dtb: spmi@c440000: Unevaluated properties are not allowed ('cell-index' was unexpected)
+  qrb5165-rb5.dtb: funnel@6042000: out-ports: '#address-cells', '#size-cells', 'port@0' do not match any of the regexes: 'pinctrl-[0-9]+'
+  qrb5165-rb5.dtb: funnel@6b04000: Unevaluated properties are not allowed ('reg-names' was unexpected)
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 1 -
- arch/arm64/boot/dts/qcom/msm8976.dtsi | 1 -
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 1 -
- arch/arm64/boot/dts/qcom/sc7180.dtsi  | 1 -
- arch/arm64/boot/dts/qcom/sdm630.dtsi  | 1 -
- arch/arm64/boot/dts/qcom/sdm845.dtsi  | 1 -
- arch/arm64/boot/dts/qcom/sm6125.dtsi  | 1 -
- arch/arm64/boot/dts/qcom/sm8150.dtsi  | 1 -
- 8 files changed, 8 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 62d05d740646..f769e63c955c 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -397,7 +397,6 @@ spmi_bus: spmi@200f000 {
- 			#size-cells = <0>;
- 			interrupt-controller;
- 			#interrupt-cells = <4>;
--			cell-index = <0>;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 2f0e460acccd..88870d9e3348 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2799,11 +2799,7 @@ funnel@6042000 {
+ 			clock-names = "apb_pclk";
  
- 		sdhc_1: mmc@7824900 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-index 2d360d05aa5e..712f80fc865c 100644
---- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-@@ -809,7 +809,6 @@ spmi_bus: spmi@200f000 {
- 			#size-cells = <0>;
- 			interrupt-controller;
- 			#interrupt-cells = <4>;
--			cell-index = <0>;
- 		};
+ 			out-ports {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				port@0 {
+-					reg = <0>;
++				port {
+ 					funnel_in1_out_funnel_merg: endpoint {
+ 						remote-endpoint = <&funnel_merg_in_funnel_in1>;
+ 					};
+@@ -2904,7 +2900,6 @@ funnel@6b04000 {
+ 			arm,primecell-periphid = <0x000bb908>;
  
- 		sdhc_1: mmc@7824000 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index adf7258b3269..d450fe69fe33 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1993,7 +1993,6 @@ spmi_bus: spmi@800f000 {
- 			#size-cells = <0>;
- 			interrupt-controller;
- 			#interrupt-cells = <4>;
--			cell-index = <0>;
- 		};
+ 			reg = <0 0x06b04000 0 0x1000>;
+-			reg-names = "funnel-base";
  
- 		usb3: usb@a8f8800 {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index ebfa21e9ed8a..51bb0a2f25ef 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -3280,7 +3280,6 @@ spmi_bus: spmi@c440000 {
- 			#size-cells = <0>;
- 			interrupt-controller;
- 			#interrupt-cells = <4>;
--			cell-index = <0>;
- 		};
+ 			clocks = <&aoss_qmp>;
+ 			clock-names = "apb_pclk";
+@@ -3220,9 +3215,6 @@ funnel@7810000 {
+ 			clock-names = "apb_pclk";
  
- 		sram@146aa000 {
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 5827cda270a0..72d9a12b5e9c 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1189,7 +1189,6 @@ spmi_bus: spmi@800f000 {
- 			#size-cells = <0>;
- 			interrupt-controller;
- 			#interrupt-cells = <4>;
--			cell-index = <0>;
- 		};
- 
- 		usb3: usb@a8f8800 {
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 479859bd8ab3..dc43e438b64a 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4924,7 +4924,6 @@ spmi_bus: spmi@c440000 {
- 			#size-cells = <0>;
- 			interrupt-controller;
- 			#interrupt-cells = <4>;
--			cell-index = <0>;
- 		};
- 
- 		sram@146bf000 {
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index 65033227718a..fd577eb705f8 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -1134,7 +1134,6 @@ spmi_bus: spmi@1c40000 {
- 			#size-cells = <0>;
- 			interrupt-controller;
- 			#interrupt-cells = <4>;
--			cell-index = <0>;
- 		};
- 
- 		apps_smmu: iommu@c600000 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index fd20096cfc6e..f89abf131e01 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -3935,7 +3935,6 @@ spmi_bus: spmi@c440000 {
- 			#size-cells = <0>;
- 			interrupt-controller;
- 			#interrupt-cells = <4>;
--			cell-index = <0>;
- 		};
- 
- 		apps_smmu: iommu@15000000 {
+ 			out-ports {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+ 				port {
+ 					funnel_apss_merg_out_funnel_in1: endpoint {
+ 					remote-endpoint = <&funnel_in1_in_funnel_apss_merg>;
 -- 
 2.34.1
 
