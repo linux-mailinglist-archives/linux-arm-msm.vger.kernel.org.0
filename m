@@ -2,75 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD0C66AC204
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 14:58:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 574156AC227
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 15:04:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230096AbjCFN6J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 08:58:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52078 "EHLO
+        id S229923AbjCFOE2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 09:04:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229808AbjCFN6B (ORCPT
+        with ESMTP id S229483AbjCFOE1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 08:58:01 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ECFE449F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 05:57:55 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id v16so8963104wrn.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 05:57:55 -0800 (PST)
+        Mon, 6 Mar 2023 09:04:27 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADC3E1B540
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 06:04:20 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id n2so12819717lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 06:04:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678111074;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=P1EoLUuBr64ri9Y94yjd26dmmu4IbZltPwpImALUreU=;
-        b=PeOw80iYd9tp/JQfc6pX1uwoERV/YGNa6GxEY9RMum5+mpx348WzhUfKezkq9P3g7X
-         Mqs57h8I+f2F5Rrql2OpV+CDlkD27qFqfNpHQH/tHEPIswZ5UetMmypq0zGc8o2ioHYC
-         gEGXy2Gkj8tJCrJVQFv17yI+DetRocDl7vxh0nFE0VLBd8DS7B4jtsc/rAOgHEN4J6qA
-         XwPZiQTbSyCfGNpMsp/IAS76fnZdS/hRhPiq/vrkgwUdBdNp8DdzCVRAfH0St/iDoD42
-         KKkPN4N2qe1mHeIp2LFMqPTZa94icaH9Gveim0LmCj1Aj7zqq24S3iyCqDzSiklWLcTJ
-         p3eg==
+        d=linaro.org; s=google; t=1678111459;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KWRTdlHpgyAnKLxEj2H9HwDl4XdQfL0+b/sTa7A8fK8=;
+        b=uN3BUmzqfupm/CDaSHZwd6ACmy1ANEZaPp9pOx2vZF2LkQe2wjp4ZmiQ/CnLVAt6zS
+         B+Yggzdf3CXnsuw0JB9r6qOKTjsS2rL9KIjOgxQGGCZRN+CdshwozPPSWFOOT+08V86+
+         1c0G8/wo5k2k0jkV7X1rbLmmI3v3a+ycD7olk5PqsKByQfQS0C2iafE9lbKi1Nhq2OH/
+         CVzjGHR6n/CTs4osYqFcqEiWC27jZXfehdm6RJtetsi3x5yxfNEBSB1wpoT3UE4aumlM
+         Pii2ZnfawDOKe/A40ld/1+j3euA/KtAZ/K2UTpvg1vleHq/Dr61ffs3drDRR0R9wScTv
+         aqHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678111074;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P1EoLUuBr64ri9Y94yjd26dmmu4IbZltPwpImALUreU=;
-        b=ZQmC6pPMe8+I9kLl4X6GmHRf8I0zok8xT8pVX2c6cOgyWSC58qfiCD9sj08crahw8F
-         FJtbs2p1YLVj+p1Bf1snqH2zDDduH3fgFrd2oqG+M6+4OvIdRCO7/0W5LpHe1prmgRsC
-         3J54J3xpYrePhroXIa1HBK1SWUHZAk9yyHEF1JFBQmHvN6mwNoW0gUzfUk9vMOTfu+Hu
-         4B6fHWweYmwQAsjQPF/XuQaZUVXi5VxhnTFLOSO8xE4731NxukZG8Ci1Q9I1Gtl/Z/fm
-         IVBOkOJtXe1l+Yku9ni9O6hs5YXCKD3AVXjhMhfW+CzYWmDtgp++R5PAjAlEd5b/++G+
-         jOCA==
-X-Gm-Message-State: AO0yUKUDCkMZB4PSB+ocfEw3/b8n+mdIXR7J197EPg3cYcAVyJhFZpun
-        o1K8KhRO2E5fy/IQ1eBUrCSwVw==
-X-Google-Smtp-Source: AK7set/ThLdaGeyDxzUSTUcgVYoCng2a28njZtarQGUr197RpgLQFxyiGrv7EXzG2Np+FD1wrIGwrQ==
-X-Received: by 2002:a5d:4563:0:b0:2cd:8a2e:14e with SMTP id a3-20020a5d4563000000b002cd8a2e014emr7980239wrc.34.1678111073807;
-        Mon, 06 Mar 2023 05:57:53 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id f2-20020adfdb42000000b002c54fb024b2sm9822092wrj.61.2023.03.06.05.57.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Mar 2023 05:57:53 -0800 (PST)
-Date:   Mon, 6 Mar 2023 15:57:52 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Johan Hovold <johan@kernel.org>
+        d=1e100.net; s=20210112; t=1678111459;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KWRTdlHpgyAnKLxEj2H9HwDl4XdQfL0+b/sTa7A8fK8=;
+        b=poaOBSMOvCNaZlI6ZmOGT1ESGdfKw+EyLw29H0/S9q0zHtWlKtcD3W64VtUsfltTle
+         GHIFljwnd5oJI9NnJxwPSQof0qyHp4wDO9kVpluGQHbwTkXJBT4BDKZ1SlhvtyQGku6w
+         qRUgUMZTq+y6UWbh3Rj4/w+YYHHa01eeoTX9nLwvFyPznRwssKk7B6kJ0TGx/pjMWi1H
+         cZ5NUeT055PbpEnaI7q32a6lyiLjkUvsit1N+OzHR1TF+03FyIKnbKA987NL+r6QMlfB
+         ABpzQXgx/kZS9Mtl4efBm7Ylj6OdsLahYmKMZ+o8O2cbOWIgUBfefUGlDJZN4kMdS52L
+         8hpw==
+X-Gm-Message-State: AO0yUKVsQGEQNm4vvKtY0qYqYAoQ3yW25NsUrtmrxT2gTFUHFkEr4qfO
+        gXjh7YlJ3SgqTKezTNzbUy68yQ==
+X-Google-Smtp-Source: AK7set/OkOOsUmXuVK4imZlLDP1IyOB1m4u5y1VSrI+UbKHeFhKm5a+6WSZulwmwUQHUv3ET1yzvYA==
+X-Received: by 2002:a19:5519:0:b0:4db:3847:12f0 with SMTP id n25-20020a195519000000b004db384712f0mr3452173lfe.50.1678111458925;
+        Mon, 06 Mar 2023 06:04:18 -0800 (PST)
+Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
+        by smtp.gmail.com with ESMTPSA id q8-20020ac246e8000000b004b6efcb7bb5sm1651026lfo.169.2023.03.06.06.04.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Mar 2023 06:04:18 -0800 (PST)
+Message-ID: <27109715-ffda-2a4a-ee67-886713103d49@linaro.org>
+Date:   Mon, 6 Mar 2023 15:04:16 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH RFT 03/20] clk: qcom: smd-rpm: Add support for keepalive
+ votes
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Juerg Haefliger <juerg.haefliger@canonical.com>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        stable@vger.kernel.org
-Subject: Re: [PATCH v3] soc: qcom: llcc: Fix slice configuration values for
- SC8280XP
-Message-ID: <ZAXxYPZ/zarxcsNF@linaro.org>
-References: <20230219165701.2557446-1-abel.vesa@linaro.org>
- <ZAXkIHOom26DlVx0@hovoldconsulting.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZAXkIHOom26DlVx0@hovoldconsulting.com>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+References: <20230303-topic-rpmcc_sleep-v1-0-d9cfaf9b27a7@linaro.org>
+ <20230303-topic-rpmcc_sleep-v1-3-d9cfaf9b27a7@linaro.org>
+ <CAA8EJpp6cxY5+L28qsTeXCmA31e4dv21u1Tz9SquAugaV+EqfQ@mail.gmail.com>
+ <afa95a2d-dbf3-621e-a1ed-fa484d288432@linaro.org>
+In-Reply-To: <afa95a2d-dbf3-621e-a1ed-fa484d288432@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,68 +83,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-03-06 14:01:20, Johan Hovold wrote:
-> On Sun, Feb 19, 2023 at 06:57:01PM +0200, Abel Vesa wrote:
-> > The slice IDs for CVPFW, CPUSS1 and CPUWHT currently overflow the 32bit
-> > LLCC config registers. Fix that by using the slice ID values taken from
-> > the latest LLCC SC table.
+
+
+On 6.03.2023 12:28, Konrad Dybcio wrote:
 > 
-> This still doesn't really explain what the impact of this bug is (e.g.
-> for people doing backports), but I guess this will do.
 > 
+> On 6.03.2023 02:21, Dmitry Baryshkov wrote:
+>> On Sat, 4 Mar 2023 at 15:27, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>>
+>>> Some bus clock should always have a minimum (19.2 MHz) vote cast on
+>>> them, otherwise the platform will fall apart, hang and reboot.
+>>>
+>>> Add support for specifying which clocks should be kept alive and
+>>> always keep a vote on XO_A to make sure the clock tree doesn't
+>>> collapse. This removes the need to keep a maximum vote that was
+>>> previously guaranteed by clk_smd_rpm_handoff.
+>>>
+>>> This commit is a combination of existing (not-exactly-upstream) work
+>>> by Taniya Das, Shawn Guo and myself.
+>>>
+>>> Co-developed-by: Shawn Guo <shawn.guo@linaro.org>
+>>> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+[...]
 
-Sent a v4 here:
-https://lore.kernel.org/all/20230306135527.509796-1-abel.vesa@linaro.org/
+>>
+>>> +
+>>> +               ret = clk_set_rate(keepalive_clks[i]->clk, 19200000);
+>>
+>> Don't we also need to provide a determine_rate() that will not allow
+>> one to set clock frequency below 19.2 MHz?
+> Hm, sounds like a good idea..
+Thinking about it again, I'd have to do it before the clocks are registered
+and we'd either end up with 2 loops, one assigning the CLK_IS_CRITICAL flag
+and the other one setting the rate.. Will that not be too hacky?
 
-> > Fixes: ec69dfbdc426 ("soc: qcom: llcc: Add sc8180x and sc8280xp configurations")
-> > Cc: stable@vger.kernel.org	# 5.19+
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > Tested-by: Juerg Haefliger <juerg.haefliger@canonical.com>
-> > Reviewed-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-> > Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Konrad
+
 > 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-
-Added your R-b tag.
-
-Thanks.
-
+>>
+>>> +               if (ret)
+>>> +                       return ret;
+>>> +       }
+>>> +
+>>> +       /* Keep an active vote on CXO in case no other driver votes for it. */
+>>> +       if (rpm_smd_clks[RPM_SMD_XO_A_CLK_SRC])
+>>> +               return clk_prepare_enable(rpm_smd_clks[RPM_SMD_XO_A_CLK_SRC]->hw.clk);
+>>> +
+>>>         return 0;
+>>>  err:
+>>>         dev_err(&pdev->dev, "Error registering SMD clock driver (%d)\n", ret);
+>>
+>>
+>> I have mixed feelings towards this patch (and the rest of the
+>> patchset). It looks to me like we are trying to patch an issue of the
+>> interconnect drivers (or in kernel configuration).
+> Well, as you noticed, this patch tries to address a situation where a
+> critical clock could be disabled. The interconnect driver (as per my
+> other recent patchset) also has a concept of "keepalive", but:
 > 
-> > ---
-> > 
-> > The v2 is here:
-> > https://lore.kernel.org/all/20230127144724.1292580-1-abel.vesa@linaro.org/
-> > 
-> > Changes since v2:
-> >  * specifically mentioned the 3 slice IDs that are being fixed and
-> >    what is happening without this patch
-> >  * added stabke Cc line
-> >  * added Juerg's T-b tag
-> >  * added Sai's R-b tag
-> >  * added Konrad's A-b tag
-> > 
-> > Changes since v1:
-> >  * dropped the LLCC_GPU and LLCC_WRCACHE max_cap changes
-> >  * took the new values from documentatio this time rather than
-> >    downstream kernel
-> > 
-> >  drivers/soc/qcom/llcc-qcom.c | 6 +++---
-> >  1 file changed, 3 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> > index 23ce2f78c4ed..26efe12012a0 100644
-> > --- a/drivers/soc/qcom/llcc-qcom.c
-> > +++ b/drivers/soc/qcom/llcc-qcom.c
-> > @@ -191,9 +191,9 @@ static const struct llcc_slice_config sc8280xp_data[] = {
-> >  	{ LLCC_CVP,      28, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> >  	{ LLCC_APTCM,    30, 1024, 3, 1, 0x0,   0x1, 1, 0, 0, 1, 0, 0 },
-> >  	{ LLCC_WRCACHE,  31, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-> > -	{ LLCC_CVPFW,    32, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> > -	{ LLCC_CPUSS1,   33, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> > -	{ LLCC_CPUHWT,   36, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-> > +	{ LLCC_CVPFW,    17, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> > +	{ LLCC_CPUSS1,   3, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> > +	{ LLCC_CPUHWT,   5, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-> >  };
-> >  
-> >  static const struct llcc_slice_config sdm845_data[] =  {
+> 1. not very many SoCs already have a functional icc driver
+> 2. devices with an existing interconnect driver should also be
+>    testable without one (through painful ripping out everything-icc
+>    from the dts) for regression tracking
+> 
+> Konrad
+> 
+>>
+>>
+>> --
+>> With best wishes
+>> Dmitry
