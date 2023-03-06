@@ -2,203 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A13136ABE21
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 12:28:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E6356ABEB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 12:52:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229677AbjCFL2J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 06:28:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44630 "EHLO
+        id S229960AbjCFLv7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 06:51:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229663AbjCFL2I (ORCPT
+        with ESMTP id S229457AbjCFLv6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 06:28:08 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8982B20555
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 03:28:04 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id z5so9236739ljc.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 03:28:04 -0800 (PST)
+        Mon, 6 Mar 2023 06:51:58 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1905E2055F
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 03:51:57 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id u9so37437270edd.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 03:51:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678102083;
+        d=linaro.org; s=google; t=1678103515;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=205oYFe4/B3UC/X3qLrV4lWCFSwtZFx9u6zXNGXzdZg=;
-        b=tYxvsHkYitctMbDyn+0brKMs7h03vuc34++qTOgQCEXY0QOltjVFzavue7XOjwIBXz
-         LMKRO0A1xwNSzXZFnd0JnvqMD9VThgr+5mGucoUg14TXX2erPQBCSmP5U3Zv5gOQ65YF
-         aJr59vehRqEcPD2OJICJnlRAOPRS0o8Th0I/W50leAD4actrR0r66yCMpHZfK2W4QnVb
-         y2JpLiJKGSxhNvSnCXnVuO2CI3HaHH25c1zAjGpMDB/IfbeJY8iHeylBZssZHVRrvh0U
-         ZoIK374BF80gQZHCo+SjoxWz2s+K8KggfaBJCFuzAeZ4KmG3/3vlBTh6k7gY99yBx6HI
-         HjEQ==
+        bh=wSAV2m6KPnFi6yjsalmahzmYCHOYaQ3prrwvNZxIwUk=;
+        b=lSPY5dswBAhuVTG7FDrB7pDSL8QXUWReKgCO5HiLMYm/YEJ/Y7XrsV7R2P6J57XtAE
+         3vS/tWEzT9qVwbWbjqDOq9HF1xxtjC/bE1Wl1wwAlOiAcHr+q7d7S/oVid6pxGjZLYz8
+         CJyPL9sjKZrI8zYMOmyV+Bo5/VmQZbxfRCk4DP1HySHRsKbnnlOJrETeiVBGAar/Vxj6
+         a/PXcfbKU+9yn0a+XrZG2FmMUdJ17stvk+cbrCsMEXNVsVktotWMtxIMKKXJc8EnxFtO
+         W8nlURVuJOTe275dv0AVvqIwsroqkKUpFG0AvalViKQ8rdSzOnij7JXswuJgdiZc7Pb6
+         vxSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678102083;
+        d=1e100.net; s=20210112; t=1678103515;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=205oYFe4/B3UC/X3qLrV4lWCFSwtZFx9u6zXNGXzdZg=;
-        b=6VHQuKEX7hh7qlhMXidD+FCJsn2tTsrLMNMuMN/6gxSdD1wImXAqN16L9R7aFw0V89
-         1XkdkrCJ+CbvVG3F6HV+QG8MfQSln5cnSb7bndhic2lC5dhk+qD62ahGQN2Z7dBrS5Vo
-         BjAZCz84m7A0taeqLsakdGJgMohwhBfyswEEA6NXDSKbAaF4XJUHRK+cXRk3a2uqmrxs
-         Qi/AvJpfagFPx+fqlWm51m39exBp0x4xGIHZBDrvc/RsDSih7vm4eQF0UdhHwAMLUMtw
-         DjPd5KRPX+ntokFqqODcAy6CjW0A+f3T+TV70UZCZCc09glO674I8Ync6gTB5wLhTo5J
-         lfWA==
-X-Gm-Message-State: AO0yUKULWFL4OD8xZC1lHcBIx8HAuiiBd7nsNRRufWDDOyqXBIAp8UvF
-        JybhcizcWSTIxznyLj8KtbdGKg==
-X-Google-Smtp-Source: AK7set8aBql9IKQglXdI+C9VtpQK0WdlDEU+pVafNQuJJSo71a5RDLIA3RP28ZVtY1ImqHSRtfjaDw==
-X-Received: by 2002:a2e:86d5:0:b0:295:a932:8e40 with SMTP id n21-20020a2e86d5000000b00295a9328e40mr2943634ljj.17.1678102082812;
-        Mon, 06 Mar 2023 03:28:02 -0800 (PST)
-Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id c14-20020ac2530e000000b004db51387ad6sm1588681lfh.129.2023.03.06.03.28.01
+        bh=wSAV2m6KPnFi6yjsalmahzmYCHOYaQ3prrwvNZxIwUk=;
+        b=4Upd/hkgtXDfTXgT99IQ81hjeJsvQu5Z8PdLI0nviafcRrsts+SzYZTFIyjsxTO7Wf
+         X2nFeKgB+vzn4LVFAOrv/TBxMdikldHN/KPOTYpFzQZJxBoVEuZuYxEmBSiAXgeHukat
+         KMIj5ha/FQxBWp9vjKb/Qx+raYgCyv2lOd8W6bGN4eiLwxxOqsxPvyav1bIdFF3V6gIN
+         dALSsVQhblmzM2WA/g2IPz7VJ4qkhkOaLu+l9UcMCcodVnv7U30fQefjXqWyQyBzxMxb
+         +kOTaY89QlUP+MAVbLovQJcNalT7qiNVxOMg08GjGUDCI+trC24XIfCVSTUdRzn6V3eT
+         n2uA==
+X-Gm-Message-State: AO0yUKVL4+F6HyynmyQcBm6MQhPIjAo+5AtYmWine96dISLVZ6XCoE+G
+        XvRveioy81eVPBj2LvUiZwnbMw==
+X-Google-Smtp-Source: AK7set/vC98WymMaTZojQxVThW3BMzKq0AfTssygkCIDMIaOQFrL22hYj+heOJimoqFt0Z71CfI6sw==
+X-Received: by 2002:a17:907:3da7:b0:8de:baf0:338c with SMTP id he39-20020a1709073da700b008debaf0338cmr11663314ejc.14.1678103515621;
+        Mon, 06 Mar 2023 03:51:55 -0800 (PST)
+Received: from [10.203.3.194] ([185.202.34.81])
+        by smtp.gmail.com with ESMTPSA id r16-20020a170906a21000b008cafeec917dsm4469267ejy.101.2023.03.06.03.51.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Mar 2023 03:28:02 -0800 (PST)
-Message-ID: <afa95a2d-dbf3-621e-a1ed-fa484d288432@linaro.org>
-Date:   Mon, 6 Mar 2023 12:28:01 +0100
+        Mon, 06 Mar 2023 03:51:55 -0800 (PST)
+Message-ID: <83184da4-b183-3271-983f-3a1a62fb9f1a@linaro.org>
+Date:   Mon, 6 Mar 2023 13:51:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH RFT 03/20] clk: qcom: smd-rpm: Add support for keepalive
- votes
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
+Content-Language: en-GB
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-References: <20230303-topic-rpmcc_sleep-v1-0-d9cfaf9b27a7@linaro.org>
- <20230303-topic-rpmcc_sleep-v1-3-d9cfaf9b27a7@linaro.org>
- <CAA8EJpp6cxY5+L28qsTeXCmA31e4dv21u1Tz9SquAugaV+EqfQ@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJpp6cxY5+L28qsTeXCmA31e4dv21u1Tz9SquAugaV+EqfQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <cover.1677749625.git.quic_varada@quicinc.com>
+ <6b8d17006d8ee9a1b0c4df803c1cc7caf53ea3ef.1677749625.git.quic_varada@quicinc.com>
+ <CAA8EJprbMybV0o1-436yLhVnnEX6qywrj=JmWDCL5usaH0DXiQ@mail.gmail.com>
+ <61e8c730-e46d-728d-d770-f1ead4405d12@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <61e8c730-e46d-728d-d770-f1ead4405d12@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 06/03/2023 13:26, Varadarajan Narayanan wrote:
+> Dmitry,
+> 
+> On 3/2/2023 9:52 PM, Dmitry Baryshkov wrote:
+>> On Thu, 2 Mar 2023 at 11:57, Varadarajan Narayanan
+>> <quic_varada@quicinc.com> wrote:
+>>> Add USB phy and controller related nodes
+>>>
+>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 92 
+>>> +++++++++++++++++++++++++++++++++++
+>>>   1 file changed, 92 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi 
+>>> b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>> index 2bb4053..319b5bd 100644
+>>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+
+[skipped]
 
 
-On 6.03.2023 02:21, Dmitry Baryshkov wrote:
-> On Sat, 4 Mar 2023 at 15:27, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>> +               usb3: usb3@8A00000 {
+>> You know the drill. This node is in the wrong place.
 >>
->> Some bus clock should always have a minimum (19.2 MHz) vote cast on
->> them, otherwise the platform will fall apart, hang and reboot.
+>>> +                       compatible = "qcom,dwc3";
+>>> +                       reg = <0x8AF8800 0x400>;
+>>> +                       #address-cells = <1>;
+>>> +                       #size-cells = <1>;
+>>> +                       ranges;
+>>> +
+>>> +                       clocks = <&gcc GCC_SNOC_USB_CLK>,
+>>> +                               <&gcc GCC_ANOC_USB_AXI_CLK>,
+>>> +                               <&gcc GCC_USB0_MASTER_CLK>,
+>>> +                               <&gcc GCC_USB0_SLEEP_CLK>,
+>>> +                               <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+>>> +
+>>> +                       clock-names = "sys_noc_axi",
+>>> +                               "anoc_axi",
+>>> +                               "master",
+>>> +                               "sleep",
+>>> +                               "mock_utmi";
+>> Please fix the indentation of the lists.
 >>
->> Add support for specifying which clocks should be kept alive and
->> always keep a vote on XO_A to make sure the clock tree doesn't
->> collapse. This removes the need to keep a maximum vote that was
->> previously guaranteed by clk_smd_rpm_handoff.
->>
->> This commit is a combination of existing (not-exactly-upstream) work
->> by Taniya Das, Shawn Guo and myself.
->>
->> Co-developed-by: Shawn Guo <shawn.guo@linaro.org>
->> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/clk/qcom/clk-smd-rpm.c | 23 +++++++++++++++++++++++
->>  1 file changed, 23 insertions(+)
->>
->> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
->> index cce7daa97c1e..8e017c575361 100644
->> --- a/drivers/clk/qcom/clk-smd-rpm.c
->> +++ b/drivers/clk/qcom/clk-smd-rpm.c
->> @@ -4,6 +4,7 @@
->>   * Copyright (c) 2014, The Linux Foundation. All rights reserved.
->>   */
->>
->> +#include <linux/clk.h>
->>  #include <linux/clk-provider.h>
->>  #include <linux/err.h>
->>  #include <linux/export.h>
->> @@ -178,6 +179,8 @@ struct clk_smd_rpm_req {
->>  struct rpm_smd_clk_desc {
->>         struct clk_smd_rpm **clks;
->>         size_t num_clks;
->> +       struct clk_hw **keepalive_clks;
->> +       size_t num_keepalive_clks;
->>  };
->>
->>  static DEFINE_MUTEX(rpm_smd_clk_lock);
->> @@ -1278,6 +1281,7 @@ static int rpm_smd_clk_probe(struct platform_device *pdev)
->>         struct qcom_smd_rpm *rpm;
->>         struct clk_smd_rpm **rpm_smd_clks;
->>         const struct rpm_smd_clk_desc *desc;
->> +       struct clk_hw **keepalive_clks;
->>
->>         rpm = dev_get_drvdata(pdev->dev.parent);
->>         if (!rpm) {
->> @@ -1291,6 +1295,7 @@ static int rpm_smd_clk_probe(struct platform_device *pdev)
->>
->>         rpm_smd_clks = desc->clks;
->>         num_clks = desc->num_clks;
->> +       keepalive_clks = desc->keepalive_clks;
->>
->>         for (i = 0; i < num_clks; i++) {
->>                 if (!rpm_smd_clks[i])
->> @@ -1321,6 +1326,24 @@ static int rpm_smd_clk_probe(struct platform_device *pdev)
->>         if (ret)
->>                 goto err;
->>
->> +       /* Leave a permanent active vote on clocks that require it. */
->> +       for (i = 0; i < desc->num_keepalive_clks; i++) {
->> +               if (WARN_ON(!keepalive_clks[i]))
->> +                       continue;
->> +
->> +               ret = clk_prepare_enable(keepalive_clks[i]->clk);
->> +               if (ret)
->> +                       return ret;
+>>> +
+>>> +                       assigned-clocks = <&gcc GCC_SNOC_USB_CLK>,
+>>> +                                         <&gcc GCC_ANOC_USB_AXI_CLK>,
+>> Why do you assign clock rates to the NOC clocks? Should they be set
+>> using the interconnect instead?
 > 
-> Would it be better to use CLK_IS_CRITICAL instead? Using the existing
-> API has a bonus that it is more visible compared to the ad-hoc
-> solutions.
-Yeah, I think that makes sense.
+> The SNOC and ANOC run at a fixed speed of 350MHz and 342MHz respectively 
+> and are not scaled. These clocks are for the interface between the USB 
+> block and the SNOC/ANOC. Do we still need to use interconnect?
+
+Maybe I misunderstand something here. If the snoc and anoc speeds are at 
+350 MHz and 342 MHz, why do you assign clock-rates of 200 MHz?
+
+Is it enough to call clk_prepare_enable() for these clocks or the rate 
+really needs to be set?
+
 
 > 
->> +
->> +               ret = clk_set_rate(keepalive_clks[i]->clk, 19200000);
+>>> +                                         <&gcc GCC_USB0_MASTER_CLK>,
+>>> +                                         <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+>>> +                       assigned-clock-rates = <200000000>,
+>>> +                                              <200000000>,
+>>> +                                              <200000000>,
+>>> +                                              <24000000>;
+>>> +
+>>> +                       resets = <&gcc GCC_USB_BCR>;
+>>> +                       status = "disabled";
+>>> +
+>>> +                       dwc_0: dwc3@8A00000 {
+>>> +                               compatible = "snps,dwc3";
+>>> +                               reg = <0x8A00000 0xcd00>;
+>>> +                               clock-names = "ref";
+>>> +                               clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+>> clocks before clock-names
+>>
+>>> +                               interrupts = <GIC_SPI 140 
+>>> IRQ_TYPE_LEVEL_HIGH>;
+>>> +                               phys = <&qusb_phy_0>, <&usb0_ssphy>;
+>>> +                               phy-names = "usb2-phy", "usb3-phy";
+>>> +                               tx-fifo-resize;
+>>> +                               snps,dis_ep_cache_eviction;
+>>> +                               snps,is-utmi-l1-suspend;
+>>> +                               snps,hird-threshold = /bits/ 8 <0x0>;
+>>> +                               snps,dis_u2_susphy_quirk;
+>>> +                               snps,dis_u3_susphy_quirk;
+>>> +                               snps,quirk-frame-length-adjustment = 
+>>> <0x0A87F0A0>;
+>>> +                               dr_mode = "host";
+>>> +                       };
+>>> +               };
+>>> +
+>>>                  pcie0_phy: phy@84000 {
+>>>                          compatible = 
+>>> "qcom,ipq9574-qmp-gen3x1-pcie-phy";
+>>>                          reg = <0x00084000 0x1bc>; /* Serdes PLL */
+>>> -- 
+>>> 2.7.4
 > 
-> Don't we also need to provide a determine_rate() that will not allow
-> one to set clock frequency below 19.2 MHz?
-Hm, sounds like a good idea..
+> Will address these and post a new revision.
+> 
+> Thanks
+> 
+> Varada
+> 
 
-> 
->> +               if (ret)
->> +                       return ret;
->> +       }
->> +
->> +       /* Keep an active vote on CXO in case no other driver votes for it. */
->> +       if (rpm_smd_clks[RPM_SMD_XO_A_CLK_SRC])
->> +               return clk_prepare_enable(rpm_smd_clks[RPM_SMD_XO_A_CLK_SRC]->hw.clk);
->> +
->>         return 0;
->>  err:
->>         dev_err(&pdev->dev, "Error registering SMD clock driver (%d)\n", ret);
-> 
-> 
-> I have mixed feelings towards this patch (and the rest of the
-> patchset). It looks to me like we are trying to patch an issue of the
-> interconnect drivers (or in kernel configuration).
-Well, as you noticed, this patch tries to address a situation where a
-critical clock could be disabled. The interconnect driver (as per my
-other recent patchset) also has a concept of "keepalive", but:
+-- 
+With best wishes
+Dmitry
 
-1. not very many SoCs already have a functional icc driver
-2. devices with an existing interconnect driver should also be
-   testable without one (through painful ripping out everything-icc
-   from the dts) for regression tracking
-
-Konrad
-
-> 
-> 
-> --
-> With best wishes
-> Dmitry
