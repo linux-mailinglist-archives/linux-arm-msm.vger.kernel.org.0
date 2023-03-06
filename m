@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C72A6ABD35
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 11:48:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 740B56ABD73
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 11:57:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229918AbjCFKsj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 05:48:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56552 "EHLO
+        id S230011AbjCFK5C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 05:57:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229913AbjCFKsi (ORCPT
+        with ESMTP id S229967AbjCFK5A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 05:48:38 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E7041C331
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 02:48:37 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id t11so12129570lfr.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 02:48:37 -0800 (PST)
+        Mon, 6 Mar 2023 05:57:00 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82C2C25B92
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 02:56:58 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id r27so12111870lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 02:56:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678099715;
+        d=linaro.org; s=google; t=1678100217;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2lEWb9M+27usFFCg4r17f9lWCbgLfmjVxKsZzU2ZwyM=;
-        b=q7O0FGrmn41rY8tsM47xZZKULIR2uEQ1Q1xXgDy4e51HNv2SAJittZeN/fEEnyEt8t
-         uez/LH9Bs7sOifuQ5YveqdCIx8wPuhsE1G9e4gQMheFG6kd/RAzm9w5LCVubkOjF5SPQ
-         DxMlPLvqt+nPLKjcHB/qbiXJ969Q3jjzopJpR6micpUmyOPrv4+SJxnKRbszKRo6YVUa
-         uWC8FLZ6BrWupFxLA9vwVwxu2uLD5cnjBtbEg6nudoKVyzxliCSzjnDZfmtG6ETXPRcU
-         F547MeT7r34DYFMr+TZnCRcxJP2oEK4/9PP/wItJodP0r5KQF4z/lO/+gj7qalXBokEU
-         AriQ==
+        bh=t16VJ8HN3i2Mxttb1V2YQz28AmL+/99D0f1GpXqEHuU=;
+        b=dLgujvQz4qltbrfDfuCNPQISB1tezs52IbxJi2ndkui64xQxlY9BXjNmX5CF/5dFXj
+         isBEqwL9n6chsJceaI3T21O/H5h65xzHGw0fo0rhJp1BthyyOc/HNWUX3PuFkbRaUccf
+         ig457BgwN/KZXySmsRCL+z52SAvT/NL0h3qVKw88cjjtVim7FYGALVekrnHrOde1peab
+         pw7XIxhG4NySGD69mYbpS3ppgdZouZoc9nnrPFLW0vn7bATDcgkjJmnABuRdVon8LzIO
+         hrEniqQIYnnSnz/x6YR+9U91qiTVrpUfkY4Pb8/rSAxRh6FqJEHs8sYrdJCB+43BTmEE
+         m8OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678099715;
+        d=1e100.net; s=20210112; t=1678100217;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2lEWb9M+27usFFCg4r17f9lWCbgLfmjVxKsZzU2ZwyM=;
-        b=gltp2r98+/UURMgLunqu890ThL94rIIHFK95kWgujRGndaBmnU0uBDQmrbSI2aJrHE
-         qQtKxWg9SIXotouo4DiRpVtd46u8ct8l/T2KFkCXbSWS4W1WeXn6x7SDCz4ZCupB7Owk
-         6RVCihIU8Vmky7B7pGx0lXGk5VXavl1rAWHsdA3xBv+BNjmTNBccB4Re9FMXIw3BOts5
-         4Jv7WfhFQr1XaIYRMA9oOj5HKvFmSRoTsH+R6wc4CzSlK4VWRSCOCRF7654kdRgy9UnW
-         2HOZwVxXvMrlhiCIQqF/3W6P5++e3iuGtneCviC235TslrXARU6BaUJHhQuEwaO1K2U6
-         hZJg==
-X-Gm-Message-State: AO0yUKX0zikWvFLJn7nySYJBEHnAYzYU734pZNyVe1rcRK0aw7XGR80i
-        RjOsn7+QZzKuPmXgJEnr/dN35GDsv0JYYKIJRyQ=
-X-Google-Smtp-Source: AK7set/6LkeOMH3WQokq5Ob72HziBLcaxSdFyJaqE4F3uGUs0etpCVKPVO4f1bdeNW/ue7KuPE+dhQ==
-X-Received: by 2002:ac2:5181:0:b0:4cb:4571:9efe with SMTP id u1-20020ac25181000000b004cb45719efemr3333656lfi.35.1678099715563;
-        Mon, 06 Mar 2023 02:48:35 -0800 (PST)
+        bh=t16VJ8HN3i2Mxttb1V2YQz28AmL+/99D0f1GpXqEHuU=;
+        b=JTccGpBvaOO3xbZH1+MNSd6M7+oVO3M+iCyWNSkUDqT2ZMAee1Jg8ofWYfiy7WQVFZ
+         cghv5xHex+ATyfyDQwk7S7C0J6D2AzReuT+AuLHXV6dYsLb4IfcOu7KbUQDgGo4w0Lom
+         9/gnWNMz4BJeMgmBMf370Ipf8xQmSMIlbuIOiVcUNd5m1YE6kqznwgHUDik21rCKIMKk
+         GoKuyHMGs1mBPu/pKBj0ZDK1t+R0BT0KCCCpe9PU2zw+1Yjm/Vh8ptSxkrtfq9+tWyOX
+         Oix7BbNlhXf2KSM2dNGCDrqGbWsaS6HaT1PQJSRTZMV4Z9aODGCqzpKKlFKFSjKijhEl
+         JF1Q==
+X-Gm-Message-State: AO0yUKUgIKXO3oWGL6rqZTPbWRz7F11gkEgKqarAwL2NNutMC+kpBBoo
+        TTPHEC1qYsmepzgfA7ajYqJxnQ==
+X-Google-Smtp-Source: AK7set9BEwHzuIsRJnewmr9Wn1WXxKvRQG/F70MHUYG1zPBNs7JV7KHYTUD/Fz+kviavtjFnUqmA6Q==
+X-Received: by 2002:ac2:5dec:0:b0:4d6:df2e:16f6 with SMTP id z12-20020ac25dec000000b004d6df2e16f6mr2735079lfq.36.1678100216836;
+        Mon, 06 Mar 2023 02:56:56 -0800 (PST)
 Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id s9-20020ac25fa9000000b004dc807b904bsm1579512lfe.120.2023.03.06.02.48.34
+        by smtp.gmail.com with ESMTPSA id g18-20020ac25392000000b004d19e442d53sm1576841lfh.249.2023.03.06.02.56.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Mar 2023 02:48:35 -0800 (PST)
-Message-ID: <51eec3fc-3016-e314-d4a3-bce16f28eebc@linaro.org>
-Date:   Mon, 6 Mar 2023 11:48:33 +0100
+        Mon, 06 Mar 2023 02:56:56 -0800 (PST)
+Message-ID: <586bafd0-5ead-83d7-226f-d26e46d44c09@linaro.org>
+Date:   Mon, 6 Mar 2023 11:56:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 03/11] arm64: dts: qcom: qdu1000: drop incorrect serial
- properties
+Subject: Re: [PATCH 04/11] arm64: dts: qcom: sdm845-db845c: drop SPI label
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -69,15 +68,14 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230305125954.209559-1-krzysztof.kozlowski@linaro.org>
- <20230305125954.209559-3-krzysztof.kozlowski@linaro.org>
+ <20230305125954.209559-4-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230305125954.209559-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230305125954.209559-4-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -87,38 +85,29 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 5.03.2023 13:59, Krzysztof Kozlowski wrote:
-> The serial node does not use/allow address/size cells:
+> The SPI controller nodes do not use/allow label property:
 > 
->   qdu1000-idp.dtb: geniqup@9c0000: serial@99c000: Unevaluated properties are not allowed ('#address-cells', '#size-cells' were unexpected)
+>   sdm845-db845c.dtb: spi@888000: Unevaluated properties are not allowed ('label' was unexpected)
 > 
-> Fixes: 6bd20c54b589 ("arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs")
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
+Doesn't even seem to be used downstream, hm.
+
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 4 ----
->  1 file changed, 4 deletions(-)
+>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 1 -
+>  1 file changed, 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-> index f234159d2060..c72a51c32a30 100644
-> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-> @@ -412,8 +412,6 @@ uart0: serial@980000 {
->  				pinctrl-0 = <&qup_uart0_default>;
->  				pinctrl-names = "default";
->  				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
-> -				#address-cells = <1>;
-> -				#size-cells = <0>;
->  				status = "disabled";
->  			};
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> index d4866feef2c4..acd4f9ca6c09 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> @@ -819,7 +819,6 @@ can@0 {
 >  
-> @@ -581,8 +579,6 @@ uart7: serial@99c000 {
->  				pinctrl-0 = <&qup_uart7_tx>, <&qup_uart7_rx>;
->  				pinctrl-names = "default";
->  				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
-> -				#address-cells = <1>;
-> -				#size-cells = <0>;
->  				status = "disabled";
->  			};
->  		};
+>  &spi2 {
+>  	/* On Low speed expansion */
+> -	label = "LS-SPI0";
+>  	status = "okay";
+>  };
+>  
