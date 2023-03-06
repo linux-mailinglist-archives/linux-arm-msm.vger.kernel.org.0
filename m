@@ -2,83 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FD236AB44E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 02:26:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5167F6AB5DE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 06:19:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229555AbjCFB0f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Mar 2023 20:26:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55016 "EHLO
+        id S229555AbjCFFTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 00:19:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjCFB0f (ORCPT
+        with ESMTP id S229486AbjCFFTI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Mar 2023 20:26:35 -0500
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBEE8F97C;
-        Sun,  5 Mar 2023 17:26:33 -0800 (PST)
-Received: from dggpeml100012.china.huawei.com (unknown [172.30.72.53])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4PVLTS4DTLz9tLG;
-        Mon,  6 Mar 2023 09:24:28 +0800 (CST)
-Received: from [10.67.110.218] (10.67.110.218) by
- dggpeml100012.china.huawei.com (7.185.36.121) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Mon, 6 Mar 2023 09:26:31 +0800
-Message-ID: <acc08af9-fdb3-5451-5c53-44784982fe2a@huawei.com>
-Date:   Mon, 6 Mar 2023 09:26:31 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 5.15] usb: dwc3: dwc3-qcom: Add missing
- platform_device_put() in dwc3_qcom_acpi_register_core
-Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>
-CC:     <stable@vger.kernel.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <balbi@kernel.org>,
-        <lee.jones@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230303023439.774616-1-zhengyejian1@huawei.com>
- <ZAIW9mkHpKKQyIK+@kroah.com>
-From:   Zheng Yejian <zhengyejian1@huawei.com>
-In-Reply-To: <ZAIW9mkHpKKQyIK+@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.67.110.218]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- dggpeml100012.china.huawei.com (7.185.36.121)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mon, 6 Mar 2023 00:19:08 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2512AF950;
+        Sun,  5 Mar 2023 21:19:07 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3264XMUX007353;
+        Mon, 6 Mar 2023 05:18:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=T2YRtykldqSv9nxcM/r272FE9sEvHFw89ybca6/KIpQ=;
+ b=SXB9+JUHxRXZV3QIotX/dtFfv0v7z5E+pNZShX8liDvyrZWPbsvkrpj1N+bsO8cW5Yqr
+ I3ToJczFivOjJ2rzpBnUWmYFQisL7vuNYDs4IM7IcfhD3H4hwPtMV4jzi98SY/60waGE
+ PpBRokfGULYJhQCZkcS3R4aUTbsKjmGjrnG75i01g0Q+q5T9Yyb/n/sqMz2eFx9NCZl1
+ yapzu1YVKM3fPTclniztyTUss4zfgeLv1vT3v3I/YD7MyfYAT3/XKWkNg7EHHMcKqoK2
+ kw0iMGXEiTl4iH1k2LWfb7BHNmUN4zYjLh4tB8Z4HXs9HZEcOf809I0tu6E6a62D3wvR dQ== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p420c3b5e-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 06 Mar 2023 05:18:52 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3265Il2w011020;
+        Mon, 6 Mar 2023 05:18:47 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3p4fgk72et-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 06 Mar 2023 05:18:47 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3265IlZl011012;
+        Mon, 6 Mar 2023 05:18:47 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3265Ik5L011011;
+        Mon, 06 Mar 2023 05:18:47 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id 172EC4F98; Mon,  6 Mar 2023 10:48:46 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH 0/2] Add support for PCIe PHY in SDX65
+Date:   Mon,  6 Mar 2023 10:48:31 +0530
+Message-Id: <1678079913-27945-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: pRjMpeR0P27gfHGdAkp4lVCwsHw5nJ53
+X-Proofpoint-GUID: pRjMpeR0P27gfHGdAkp4lVCwsHw5nJ53
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-05_12,2023-03-03_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 spamscore=0 mlxscore=0 impostorscore=0
+ malwarescore=0 adultscore=0 clxscore=1015 suspectscore=0 mlxlogscore=798
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303060042
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023/3/3 23:49, Greg KH wrote:
-> On Fri, Mar 03, 2023 at 10:34:39AM +0800, Zheng Yejian wrote:
->> From: Miaoqian Lin <linmq006@gmail.com>
->>
->> commit fa0ef93868a6062babe1144df2807a8b1d4924d2 upstream.
->>
->> Add the missing platform_device_put() before return from
->> dwc3_qcom_acpi_register_core in the error handling case.
->>
->> Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
->> Link: https://lore.kernel.org/r/20211231113641.31474-1-linmq006@gmail.com
->> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->> CVE: CVE-2023-22995
-> 
-> That is a bogus CVE, please go revoke it.
+Hi,
 
-Agree. I see this CVE and its fixes information from NVD,
-so try to backport this patch to fix it:
-Link: https://nvd.nist.gov/vuln/detail/CVE-2023-22995
+This series adds support for PCIe PHY found in Qualcomm SDX65 platform.
+The PHY version is v5.20 which has different register offsets compared with
+previous v5.0x and v4.0x versions. So separate defines are introducted to 
+handle the differences.
 
-Then should I just remove the "CVE: " field and send a v2 patch?
-Or you mean "revoke" the CVE from NVD? I actually don't know how
-to do that :(
+Thanks,
+Rohit.
 
-> 
-> thanks,
-> 
-> greg k-h
+Rohit Agarwal (2):
+  dt-bindings: phy: qcom,qmp: Add SDX65 QMP PHY binding
+  phy: qcom-qmp: Add support for SDX65 QMP PCIe PHY
+
+ .../bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml    |   3 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           | 163 +++++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h |   3 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5_20.h      |   1 +
+ .../phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v5_20.h |  24 +++
+ 5 files changed, 194 insertions(+)
+
+-- 
+2.7.4
+
