@@ -2,43 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 409BF6AC968
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 18:10:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 810E36ACA03
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 18:25:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230379AbjCFRKY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 12:10:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47104 "EHLO
+        id S229486AbjCFRZh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 12:25:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231368AbjCFRKC (ORCPT
+        with ESMTP id S229704AbjCFRZg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 12:10:02 -0500
+        Mon, 6 Mar 2023 12:25:36 -0500
 Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51F3941B4C
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 09:09:28 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4F354741E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 09:24:59 -0800 (PST)
 Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
-        by amity.mint.lgbt (Postfix) with ESMTP id 4PVlQm5gllz1S5Jq
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 12:08:32 -0500 (EST)
+        by amity.mint.lgbt (Postfix) with ESMTP id 4PVlQw0q3Zz1S5Js
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 12:08:39 -0500 (EST)
 Authentication-Results: amity.mint.lgbt (amavisd-new);
         dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
         header.d=mint.lgbt
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
-        content-transfer-encoding:mime-version:x-mailer:message-id:date
-        :subject:to:from; s=dkim; t=1678122511; x=1678986512; bh=Cp0Pj3r
-        +o2NETU+8hKdAUsF77CSSWrab0rX6wePh+5w=; b=ycjXMdalEBc39Wr2qWrRfS6
-        ICUh45mzBKfMp4GOiXmyGGogv4S70CNnd2gyTxxTw2rchfYe9rxwgRcliEp33UMA
-        osq6BrXjx+dByZb0kwdMX964nxEPrkxAPb9mYfcV4daMh1FTw1Viewue5cI7Nc52
-        00NjsjWRGiOXaGKXrjYzcKskGlV/TuIcWN6ZosBHZ5fiRaCBpp4Cl+qzDmKewR56
-        mAQZTA4RA0SLEUb4ovZq9MPMx9o4kCgbMEF2keVNl9AmtZ+fsiDDpCKhoUeYjVbV
-        svqjwQErytf1rNuRv0r4cbRWacctW1PLB9IsH/cNLTDlcEP76YZVPZN7323K+NQ=
-        =
+        content-transfer-encoding:mime-version:references:in-reply-to
+        :x-mailer:message-id:date:subject:to:from; s=dkim; t=1678122519;
+         x=1678986520; bh=FkAuJdcUu5FTTMaBTqO+u5YZNyEm3L8Dndam8ecgfiA=; b=
+        yPWPjdT2FxiEbub+4d6cQaCvd0NMbUe5lfVLa5YbrTpVWdxQfwK5G8/m+pL22lcC
+        rVv8bVGxZ/G9h4QlM+US6BancfeyfZsNRAEAkOIWrdFQ+XAEZ9++N2mhlyxGXoED
+        RUOFydViyTJsOsEvgaeLmerlz1O+Wqfjy4rDXbgExZK1ZlrS97h1b/ddcGEHTYDR
+        CptzbdT8w1R0aOYRClCf1UX4w1RWjy9kWD9xpcU1JSRAR0QgwkWwnYNIdWjPM8Ay
+        PHMQHQswja1KUYDFdCgQ3kNbBEZJ8MQJiJUdDh/PcD1C2Yha+L8C7lzQy3jrW755
+        6GlwYAuXrspJVUl9s/NRqg==
 X-Virus-Scanned: amavisd-new at amity.mint.lgbt
 Received: from amity.mint.lgbt ([127.0.0.1])
         by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id yBbTatLgpfCv for <linux-arm-msm@vger.kernel.org>;
-        Mon,  6 Mar 2023 12:08:31 -0500 (EST)
+        with ESMTP id IfccqFlO8hCh for <linux-arm-msm@vger.kernel.org>;
+        Mon,  6 Mar 2023 12:08:39 -0500 (EST)
 Received: from dorothy.. (unknown [186.105.8.42])
-        by amity.mint.lgbt (Postfix) with ESMTPSA id 4PVlQZ50bjz1S4vb;
-        Mon,  6 Mar 2023 12:08:22 -0500 (EST)
+        by amity.mint.lgbt (Postfix) with ESMTPSA id 4PVlQk72msz1S52d;
+        Mon,  6 Mar 2023 12:08:30 -0500 (EST)
 From:   Lux Aliaga <they@mint.lgbt>
 To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
@@ -50,11 +50,14 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-scsi@vger.kernel.org, linux-hardening@vger.kernel.org,
         phone-devel@vger.kernel.org, martin.botka@somainline.org,
-        marijn.suijten@somainline.org
-Subject: [PATCH v7 0/6] arm64: dts: qcom: sm6125: UFS and xiaomi-laurel-sprout support
-Date:   Mon,  6 Mar 2023 14:08:10 -0300
-Message-Id: <20230306170817.3806-1-they@mint.lgbt>
+        marijn.suijten@somainline.org, Lux Aliaga <they@mint.lgbt>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v7 1/6] dt-bindings: ufs: qcom: Add SM6125 compatible string
+Date:   Mon,  6 Mar 2023 14:08:11 -0300
+Message-Id: <20230306170817.3806-2-they@mint.lgbt>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230306170817.3806-1-they@mint.lgbt>
+References: <20230306170817.3806-1-they@mint.lgbt>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -66,23 +69,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Introduce Universal Flash Storage support on SM6125 and add support for t=
-he Xiaomi Mi A3 based on the former platform.
+Document the compatible for UFS found on the SM6125.
 
-Changes since v6:
-- Add struct for v3-660 UFS PHY offsets and replace the v5 offsets in sm6=
-115 UFS PHY config to these
-- Set ufs_mem_phy reg size to 0xdb8 in sm6125.dtsi
-- Drop "#address-cells" and "#size-cells" properties on reserved-memory n=
-ode in xiaomi-laurel-sprout dts
-- Move "status" last on &pon_resin node in xiaomi-laurel-sprout dts
-- Modify "&pm6125_gpio" pointer to "&pm6125_gpios" in xiaomi-laurel-sprou=
-t dts
+Signed-off-by: Lux Aliaga <they@mint.lgbt>
+Reviewed-by: Martin Botka <martin.botka@somainline.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-v6: https://lore.kernel.org/linux-devicetree/20230108195336.388349-1-they=
-@mint.lgbt/
-v5: https://lore.kernel.org/linux-devicetree/20221231222420.75233-2-they@=
-mint.lgbt/
-
-
+diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Docume=
+ntation/devicetree/bindings/ufs/qcom,ufs.yaml
+index b517d76215e3..42422f3471b3 100644
+--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+@@ -29,6 +29,7 @@ properties:
+           - qcom,sc8280xp-ufshc
+           - qcom,sdm845-ufshc
+           - qcom,sm6115-ufshc
++          - qcom,sm6125-ufshc
+           - qcom,sm6350-ufshc
+           - qcom,sm8150-ufshc
+           - qcom,sm8250-ufshc
+@@ -185,6 +186,7 @@ allOf:
+           contains:
+             enum:
+               - qcom,sm6115-ufshc
++              - qcom,sm6125-ufshc
+     then:
+       properties:
+         clocks:
+--=20
+2.39.2
 
