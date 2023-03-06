@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC2326AC411
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 15:56:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C662C6AC416
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 15:56:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229548AbjCFO4K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 09:56:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36154 "EHLO
+        id S229732AbjCFO4Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 09:56:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229659AbjCFO4J (ORCPT
+        with ESMTP id S229691AbjCFO4W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 09:56:09 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E951270C
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 06:55:54 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id h9so9936834ljq.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 06:55:54 -0800 (PST)
+        Mon, 6 Mar 2023 09:56:22 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E38C92FCFF
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 06:56:17 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id s20so13070205lfb.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 06:56:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678114553;
+        d=linaro.org; s=google; t=1678114576;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wu38Rlz1IR8mP8Nh89bkjpaZ5IUcMWkU7u2ELQQVG30=;
-        b=vLNiWB2TjOEZ7dTr0ZUeRcrfok4M+fWLoIO/LRZxQuM7JUjo438Et2X6mrr2sVXHkV
-         7AQg2kC9qLS2UEwm5dwGoNabrB7ywfmZKn2dzlp90mvv73aXtUHNsFJ2SU60oddWJVnf
-         zOpdA0mmpkIheIp5QYPErdWgZCf9u2X0d/KKPWpfc1e/ENnggncDkj8QeDDM0sQ3dcPw
-         GTNZhlNdpqvKIhxYqjmib2+iIF7vYw/oaTIwkWDxUs/rnheLZVr4Hkh1Mezpwywl5OwZ
-         onTMxE8qAgyTZflMO0K/f5l7vAE3+IcOlV+wmq/Wgl6doazCjLIppyyHPUZRy5c5eqWF
-         hOaQ==
+        bh=+9LweKf4JzqL0IS+04n+yrHmshSKW/nm1KRbW1h+egk=;
+        b=txLbWTIYbhEtXnglrzpLkGVIdUq3Kf9SZgONKaR6wrJ25g0ycyvEmUrY9pB/u3f6xX
+         /BTKClMgKKrvAmGu9BKsiQp87kmFM50ZuxNE7fj2P31Zvcie7NprJxPpk4zH3nrVkULh
+         3Z3QuIZDX5QyRLlnMBBco4JaTj3KmI4TyGJfbXMxshuO1Dz7UpQebfXYukmxe4jASSp8
+         l1eIaYl95J/5JVY9W/Sg9xRY9Dt2AR2ZS6BjDHB8QuIzTVYL3CdADt9ef38lX9RJn1jy
+         TAeR0bgPs6RGDiS+9sbXgcVDeGh8gXv2evCJH/Tf4vBZoS1FK9pgC6P6HG5ZAGSi8Dp0
+         FNXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678114553;
+        d=1e100.net; s=20210112; t=1678114576;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wu38Rlz1IR8mP8Nh89bkjpaZ5IUcMWkU7u2ELQQVG30=;
-        b=ze4nzI/Uzl7dO3de/+8BQHH6a6h5h1yNwoM9O1UhPoabEdNnw+BZwWOzqUUFf8A6eB
-         E6284JsF7jWtuI6QYXub0gcxAmdEDqX/vgHdoeMcbkdmVH0XJlbUWTO3Zo/td+70vvZb
-         8Pvgg0k5HkFen4clmGA0Y8lUEVZEFPUt6VwgoEwEDWoEvy5DzbIi9xQ1Bvr25NZNFaU8
-         8i6U7sZAeU3XwarT+N1uwb4Nat1V22u+B/Zw+7h5a1AhXkiLo/uluZlUcmKS/kcGCtqR
-         M1MX/mCBVOx5rZ4MDk4EeLrxmlJ/MSgvI4bv4YH2G8Gw/L1Jj5iRq83oty8xWHpTTNfl
-         3qBQ==
-X-Gm-Message-State: AO0yUKVtk6ymeXNUUSbHOiyNSspBzO/RnTytItqLZK3G3XfYYGiN2Bke
-        067XeVH859/lKyaScLn8kD84bA==
-X-Google-Smtp-Source: AK7set+zCCAQSv/7gWaOmaO60uh020Go1KTzmRq9dd1DswrXdeuN8hM/zQThERIWy1lyNq10IKpe8A==
-X-Received: by 2002:a2e:7006:0:b0:294:6a83:fb28 with SMTP id l6-20020a2e7006000000b002946a83fb28mr3407870ljc.41.1678114552732;
-        Mon, 06 Mar 2023 06:55:52 -0800 (PST)
+        bh=+9LweKf4JzqL0IS+04n+yrHmshSKW/nm1KRbW1h+egk=;
+        b=syg5C3O4NF+HfTvxx0t8LyrX5ToK21ggxDeeP2mQ4BoN/Nw2nLs2FsEGUFq98Pu5A5
+         N/FBwO/DU+UTUeglwv4T0Nbr+HwWfFcNpS5KgrOqM+Q4K5c+JcJ+ZL6qTBrQIJDWjeqR
+         E7oGmDY+irGQbrNbFoQWTMbv/VOgi0SEpXu7R/ZNCu9eh/fJxf/3u5dItI5wKN0rDzFM
+         FAQ0OiadWRUIKxiPQdj8d4aKgrxkclq7NaWBSQh+hQoCZrHDq7xPd94OAoaaG3agcYLt
+         m2BO/MyGFYh98uaNna6rvexSVWC0PG5sztSSIDXmaNAbIB3vJgYhM2tEXHU2OLynb8iN
+         NXxg==
+X-Gm-Message-State: AO0yUKXRe9k+OsmE17akYtD9DGmwQl6axKDUkI5sNfU3rywQU3rxH+cC
+        HwFwMzoZGkOHWqbFwfbvI2Qi8g==
+X-Google-Smtp-Source: AK7set97r0sJJK2bJ6W3a0FtgTs/Fzkh401/msvyM73m8aF8nhQfFc9JddSVPhQFrlEeMzmNxmDY/g==
+X-Received: by 2002:a19:f00e:0:b0:4db:1b30:e634 with SMTP id p14-20020a19f00e000000b004db1b30e634mr2657388lfc.65.1678114576311;
+        Mon, 06 Mar 2023 06:56:16 -0800 (PST)
 Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id g4-20020a2e9e44000000b00295b1b6e063sm1753050ljk.34.2023.03.06.06.55.51
+        by smtp.gmail.com with ESMTPSA id z20-20020a05651c023400b00295d385481fsm1746147ljn.13.2023.03.06.06.56.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Mar 2023 06:55:52 -0800 (PST)
-Message-ID: <e171b997-258d-7f16-944d-9ece468be1ef@linaro.org>
-Date:   Mon, 6 Mar 2023 15:55:51 +0100
+        Mon, 06 Mar 2023 06:56:16 -0800 (PST)
+Message-ID: <0b02eefd-816c-1ee1-27bd-a04a681d9b37@linaro.org>
+Date:   Mon, 6 Mar 2023 15:56:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v3 5/9] arm64: dts: qcom: sa8775p: add the spi16 node
+Subject: Re: [PATCH v3 6/9] arm64: dts: qcom: sa8775p-ride: enable the SPI
+ node
 Content-Language: en-US
 To:     Bartosz Golaszewski <brgl@bgdev.pl>,
         Andy Gross <agross@kernel.org>,
@@ -66,9 +67,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 References: <20230216125257.112300-1-brgl@bgdev.pl>
- <20230216125257.112300-6-brgl@bgdev.pl>
+ <20230216125257.112300-7-brgl@bgdev.pl>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230216125257.112300-6-brgl@bgdev.pl>
+In-Reply-To: <20230216125257.112300-7-brgl@bgdev.pl>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,51 +86,51 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 16.02.2023 13:52, Bartosz Golaszewski wrote:
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Add the SPI controller node for the interface exposed on the sa8775p-ride
-> development board.
+> Enable the SPI interface exposed on the sa8775p-ride development board.
 > 
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index 4666e5341922..eda5d107961b 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -503,6 +503,27 @@ qupv3_id_2: geniqup@8c0000 {
->  			iommus = <&apps_smmu 0x5a3 0x0>;
->  			status = "disabled";
->  
-> +			spi16: spi@888000 {
-> +				compatible = "qcom,geni-spi";
-> +				reg = <0x0 0x888000 0x0 0x4000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-Meh, I sorta frown upon placing it here but it's been like that
-everywhere else.. If nobody else complains, I won't either.
-
-> +				interrupts = <GIC_SPI 584 IRQ_TYPE_LEVEL_HIGH>;
-> +				clocks = <&gcc GCC_QUPV3_WRAP2_S2_CLK>;
-> +				clock-names = "se";
-> +				interconnects = <&clk_virt MASTER_QUP_CORE_2 0
-#include <dt-bindings/interconnect/qcom,icc.h>
-
-0 -> QCOM_ICC_TAG_ALWAYS
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
-> +						 &clk_virt SLAVE_QUP_CORE_2 0>,
-> +						<&gem_noc MASTER_APPSS_PROC 0
-> +						 &config_noc SLAVE_QUP_2 0>,
-> +						<&aggre2_noc MASTER_QUP_2 0
-> +						 &mc_virt SLAVE_EBI1 0>;
-> +				interconnect-names = "qup-core",
-> +						     "qup-config",
-> +						     "qup-memory";
-> +				power-domains = <&rpmhpd SA8775P_CX>;
-> +				status = "disabled";
-> +			};
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> index 5fdce8279537..d01ca3a9ee37 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> @@ -14,6 +14,7 @@ / {
+>  	aliases {
+>  		serial0 = &uart10;
+>  		i2c18 = &i2c18;
+> +		spi16 = &spi16;
+>  	};
+>  
+>  	chosen {
+> @@ -40,12 +41,25 @@ &sleep_clk {
+>  	clock-frequency = <32764>;
+>  };
+>  
+> +&spi16 {
+> +	pinctrl-0 = <&qup_spi16_default>;
+> +	pinctrl-names = "default";
+> +	status = "okay";
+> +};
 > +
->  			i2c18: i2c@890000 {
->  				compatible = "qcom,geni-i2c";
->  				reg = <0x0 0x890000 0x0 0x4000>;
+>  &tlmm {
+>  	qup_uart10_default: qup-uart10-state {
+>  		pins = "gpio46", "gpio47";
+>  		function = "qup1_se3";
+>  	};
+>  
+> +	qup_spi16_default: qup-spi16-state {
+> +		pins = "gpio86", "gpio87", "gpio88", "gpio89";
+> +		function = "qup2_se2";
+> +		drive-strength = <6>;
+> +		bias-disable;
+> +	};
+> +
+>  	qup_i2c18_default: qup-i2c18-state {
+>  		pins = "gpio95", "gpio96";
+>  		function = "qup2_se4";
