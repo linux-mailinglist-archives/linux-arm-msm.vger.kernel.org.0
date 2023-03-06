@@ -2,139 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92A976AD038
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 22:28:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FAFC6AD08E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 22:35:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229557AbjCFV2H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 16:28:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52112 "EHLO
+        id S230039AbjCFVe7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 16:34:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229669AbjCFV2G (ORCPT
+        with ESMTP id S230124AbjCFVer (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 16:28:06 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 137A22057B;
-        Mon,  6 Mar 2023 13:28:02 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A8056B81135;
-        Mon,  6 Mar 2023 21:28:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA102C433A1;
-        Mon,  6 Mar 2023 21:27:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678138079;
-        bh=OPscq8j4gixbBXyx4rYRiqcOtug0pajWX+t3LwK0uPE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PsQMxWTNyqmjmOyLA6f4aBxEbqjXLjGnQvTHUoE4f6zTvuB0TEbKKoow7O0Bl6lqg
-         gYnqSQeBrO1rJ29HWmn+yvMly1eyD9pru67Ei5XhYPhftQR6cu4eDx5Y2uE63s5KIt
-         s3zsZ4FOYFUkiy7gTDlGyR2DhiXrF2ddTXSUbWfDk94k+YWjCuHsJXdkT6LOyMmw3/
-         OBMkdU9AXHfmpJlFP0bcKZdHq+IuioXEaW+oivplUHjLiBGkJeMjuBmdvu2rgkgh5Q
-         WG7SALFgV1PPXh9MrSvGscl5OUXQrlqRl1aL8dYkfSYDeEvI72A6J1sMyBNHxpS7Fw
-         LxAw7Z0FF0jTA==
-Date:   Mon, 6 Mar 2023 21:27:32 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
-Cc:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        jic23@kernel.org, tudor.ambarus@microchip.com, pratyush@kernel.org,
-        Sanju.Mehta@amd.com, chin-ting_kuo@aspeedtech.com, clg@kaod.org,
-        kdasu.kdev@gmail.com, f.fainelli@gmail.com, rjui@broadcom.com,
-        sbranden@broadcom.com, eajames@linux.ibm.com, olteanv@gmail.com,
-        han.xu@nxp.com, john.garry@huawei.com, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, narmstrong@baylibre.com,
-        khilman@baylibre.com, matthias.bgg@gmail.com, haibo.chen@nxp.com,
-        linus.walleij@linaro.org, daniel@zonque.org,
-        haojian.zhuang@gmail.com, robert.jarzmik@free.fr,
-        agross@kernel.org, bjorn.andersson@linaro.org, heiko@sntech.de,
-        krzysztof.kozlowski@linaro.org, andi@etezian.org,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com,
-        wens@csie.org, jernej.skrabec@gmail.com, samuel@sholland.org,
-        masahisa.kojima@linaro.org, jaswinder.singh@linaro.org,
-        rostedt@goodmis.org, mingo@redhat.com, l.stelmach@samsung.com,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, alex.aring@gmail.com, stefan@datenfreihafen.org,
-        kvalo@kernel.org, james.schulman@cirrus.com,
-        david.rhodes@cirrus.com, tanureal@opensource.cirrus.com,
-        rf@opensource.cirrus.com, perex@perex.cz, tiwai@suse.com,
-        npiggin@gmail.com, christophe.leroy@csgroup.eu, mpe@ellerman.id.au,
-        oss@buserror.net, windhl@126.com, yangyingliang@huawei.com,
-        william.zhang@broadcom.com, kursad.oney@broadcom.com,
-        jonas.gorski@gmail.com, anand.gore@broadcom.com, rafal@milecki.pl,
-        git@amd.com, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, joel@jms.id.au, andrew@aj.id.au,
-        radu_nicolae.pirea@upb.ro, nicolas.ferre@microchip.com,
-        alexandre.belloni@bootlin.com, claudiu.beznea@microchip.com,
-        bcm-kernel-feedback-list@broadcom.com, fancer.lancer@gmail.com,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        jbrunet@baylibre.com, martin.blumenstingl@googlemail.com,
-        avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
-        venture@google.com, yuenn@google.com, benjaminfair@google.com,
-        yogeshgaur.83@gmail.com, konrad.dybcio@somainline.org,
-        alim.akhtar@samsung.com, ldewangan@nvidia.com,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        michal.simek@amd.com, linux-aspeed@lists.ozlabs.org,
-        openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        netdev@vger.kernel.org, linux-wpan@vger.kernel.org,
-        libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org,
-        linux-mtd@lists.infradead.org, lars@metafoo.de,
-        Michael.Hennerich@analog.com, linux-iio@vger.kernel.org,
-        michael@walle.cc, palmer@dabbelt.com,
-        linux-riscv@lists.infradead.org, alsa-devel@alsa-project.org,
-        patches@opensource.cirrus.com, linuxppc-dev@lists.ozlabs.org,
-        amitrkcian2002@gmail.com, Dhruva Gole <d-gole@ti.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>
-Subject: Re: [PATCH V5 01/15] spi: Replace all spi->chip_select and
- spi->cs_gpiod references with function call
-Message-ID: <00684da3-520f-459d-b6bd-55e728e93ebf@sirena.org.uk>
-References: <20230306172109.595464-1-amit.kumar-mahapatra@amd.com>
- <20230306172109.595464-2-amit.kumar-mahapatra@amd.com>
+        Mon, 6 Mar 2023 16:34:47 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991CA2A14A;
+        Mon,  6 Mar 2023 13:34:41 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 326JW7gC015080;
+        Mon, 6 Mar 2023 21:34:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=+m+xg6oBSLb+hDqxmR3eS7hXggsAVG0eCx2mr+yodW8=;
+ b=lgQo140JeLjgM3Y/dRDozZB1NSJPJOkhPiN5nDq8Y/N0J31PzQ15UTZGALcgfIWvQtXB
+ 0Yy324m7oiOuwY6wcJqW44wHAd3AYU/J7ppYGIwnF0wyJ44B43paojmqII1xXJ5c257O
+ Ni7GJCG9tGXIBK+qske9hlAiaa4KVbHNwDonYyWtLmpKV1BWhE3TwtxbXXBQSLvyuwpJ
+ Cunbpurc9fApB8PbuGR6oLYfdAyPgR5qC+87Zt6h5seb8XGEWL+dgYORZ0OsmFkz1ccx
+ d+xcOJ1cAYyTTqVT/WBF/62duxmes3h0mQpZJBjHc1rZTWU6UNzCyWsGTNh8EEANpZ1+ Gw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p4g3mvvh4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 06 Mar 2023 21:34:32 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 326LYU2u019810
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 6 Mar 2023 21:34:30 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Mon, 6 Mar 2023 13:34:29 -0800
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     <dafna@fastmail.com>, <ogabbay@kernel.org>, <airlied@gmail.com>,
+        <daniel@ffwll.ch>, <jacek.lawrynowicz@linux.intel.com>,
+        <stanislaw.gruszka@linux.intel.com>,
+        <dri-devel@lists.freedesktop.org>
+CC:     <quic_pkanojiy@quicinc.com>, <quic_carlv@quicinc.com>,
+        <quic_ajitpals@quicinc.com>, <linux-doc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH v3 0/8] QAIC accel driver
+Date:   Mon, 6 Mar 2023 14:33:55 -0700
+Message-ID: <1678138443-2760-1-git-send-email-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="RfYQ7lwbbyjtjTUN"
-Content-Disposition: inline
-In-Reply-To: <20230306172109.595464-2-amit.kumar-mahapatra@amd.com>
-X-Cookie: teamwork, n.:
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: KYjFOp72e6y_EnY8RCV9zlv7VRhaDzFN
+X-Proofpoint-GUID: KYjFOp72e6y_EnY8RCV9zlv7VRhaDzFN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-06_14,2023-03-06_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 priorityscore=1501
+ suspectscore=0 mlxscore=0 clxscore=1015 adultscore=0 malwarescore=0
+ phishscore=0 mlxlogscore=760 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2303060186
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series introduces a driver under the accel subsystem (QAIC -
+Qualcomm AIC) for the Qualcomm Cloud AI 100 product (AIC100).  AIC100 is
+a PCIe adapter card that hosts a dedicated machine learning inference
+accelerator.
 
---RfYQ7lwbbyjtjTUN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Depends on "accel: Build sub-directories based on config options" found at
+https://lore.kernel.org/all/20230301162508.3963484-1-stanislaw.gruszka@linux.intel.com/
 
-On Mon, Mar 06, 2023 at 10:50:55PM +0530, Amit Kumar Mahapatra wrote:
+The previous version (v2) can be found at:
+https://lore.kernel.org/all/1675698105-19025-1-git-send-email-quic_jhugo@quicinc.com/
 
->  drivers/spi/spi-omap-100k.c       |  2 +-
+v3:
+-Various style updates and word smithing
+-Remove unused function declarations
+-Drop iommu workaround for sg lists and outdated reserve_pages()
+-Remove unnecessary includes
+-Refactor qaic_pci_probe()
+-Use FIELD_PREP for ENCODE_SEM
+-Gate qaic subdirectory on the kconfig symbol
+-Add dri-devel@lists.freedesktop.org to MAINTAINERS entry
+-Rename copy_sgt()
+-Correct guard macro for qaic.h and cplusplus macro
+-Add comment in qaic_mhi_remove
+-Fix qaic_open use after free
+-Use devm allocs in qaic_mhi_register_controller()
+-Remove partition device ioctl.
 
-This is also not against -rc1, this file was removed in bcace9c4c9270292
-("spi: remove omap 100K driver").
+v2:
+-Addressed comments from RFC
+-Reduced the code to the core minimum by dropping telemetery, etc
+-Conversion to accel subsystem
+-Dropped versioning
+-Add mhi_qaic_cntl component
+-Restructure the documentation
+-Pull in a few fixes from the downstream tree
 
---RfYQ7lwbbyjtjTUN
-Content-Type: application/pgp-signature; name="signature.asc"
+Jeffrey Hugo (7):
+  accel/qaic: Add documentation for AIC100 accelerator driver
+  accel/qaic: Add uapi and core driver file
+  accel/qaic: Add MHI controller
+  accel/qaic: Add control path
+  accel/qaic: Add datapath
+  accel/qaic: Add qaic driver to the build system
+  MAINTAINERS: Add entry for QAIC driver
 
------BEGIN PGP SIGNATURE-----
+Pranjal Ramajor Asha Kanojiya (1):
+  accel/qaic: Add mhi_qaic_cntl
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmQGWsMACgkQJNaLcl1U
-h9C7Fwf+MqZVyi3PlI6YIKPDaaFyWnmjZtweIjxd+4E2eEmTZq9MbcCHS/W56cUk
-TPWusPOjIa33XHC376rZpTYGqNTRjvOo8UwttJFAFQFbtMNui8BfC1bnrROwoyUE
-AxcOxhCAi3r1P0nRIkS126TepySOo1qXD1gf6YUQydf6/iDxzq7VddVjfqtt3dPF
-6rnt0G5xA5O0Z75Kc76h4ePCX7kXMqJhJSaJf7HFcGwD2P5HIeRcRyucD2q4Ddnr
-KzkdziV90/s6X7Q9cfiA620jfm8jVdqqN3yC+JX/L2Iu8kpeefFFgD49yG2aMtxv
-zgXP6uMpvQm5g7F9e/wo/JMWhjfh8g==
-=uJRe
------END PGP SIGNATURE-----
+ Documentation/accel/index.rst       |    1 +
+ Documentation/accel/qaic/aic100.rst |  501 ++++++++++
+ Documentation/accel/qaic/index.rst  |   13 +
+ Documentation/accel/qaic/qaic.rst   |  169 ++++
+ MAINTAINERS                         |    9 +
+ drivers/accel/Kconfig               |    1 +
+ drivers/accel/Makefile              |    1 +
+ drivers/accel/qaic/Kconfig          |   23 +
+ drivers/accel/qaic/Makefile         |   13 +
+ drivers/accel/qaic/mhi_controller.c |  563 +++++++++++
+ drivers/accel/qaic/mhi_controller.h |   16 +
+ drivers/accel/qaic/mhi_qaic_ctrl.c  |  581 +++++++++++
+ drivers/accel/qaic/mhi_qaic_ctrl.h  |   11 +
+ drivers/accel/qaic/qaic.h           |  282 ++++++
+ drivers/accel/qaic/qaic_control.c   | 1496 ++++++++++++++++++++++++++++
+ drivers/accel/qaic/qaic_data.c      | 1878 +++++++++++++++++++++++++++++++++++
+ drivers/accel/qaic/qaic_drv.c       |  648 ++++++++++++
+ include/uapi/drm/qaic_accel.h       |  397 ++++++++
+ 18 files changed, 6603 insertions(+)
+ create mode 100644 Documentation/accel/qaic/aic100.rst
+ create mode 100644 Documentation/accel/qaic/index.rst
+ create mode 100644 Documentation/accel/qaic/qaic.rst
+ create mode 100644 drivers/accel/qaic/Kconfig
+ create mode 100644 drivers/accel/qaic/Makefile
+ create mode 100644 drivers/accel/qaic/mhi_controller.c
+ create mode 100644 drivers/accel/qaic/mhi_controller.h
+ create mode 100644 drivers/accel/qaic/mhi_qaic_ctrl.c
+ create mode 100644 drivers/accel/qaic/mhi_qaic_ctrl.h
+ create mode 100644 drivers/accel/qaic/qaic.h
+ create mode 100644 drivers/accel/qaic/qaic_control.c
+ create mode 100644 drivers/accel/qaic/qaic_data.c
+ create mode 100644 drivers/accel/qaic/qaic_drv.c
+ create mode 100644 include/uapi/drm/qaic_accel.h
 
---RfYQ7lwbbyjtjTUN--
+-- 
+2.7.4
+
