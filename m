@@ -2,119 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA2886AC019
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 14:01:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E5226AC07D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 14:13:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230424AbjCFNB3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 08:01:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34864 "EHLO
+        id S231154AbjCFNNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 08:13:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230432AbjCFNB2 (ORCPT
+        with ESMTP id S231126AbjCFNNf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 08:01:28 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C23792CC40;
-        Mon,  6 Mar 2023 05:00:42 -0800 (PST)
+        Mon, 6 Mar 2023 08:13:35 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05E16298C0
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 05:13:32 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 5FE26B80DFE;
-        Mon,  6 Mar 2023 13:00:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53AAC433D2;
-        Mon,  6 Mar 2023 13:00:39 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B3351B80DFB
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 13:13:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7640AC433EF
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 13:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678107640;
-        bh=Tq+ejnM8EgKEmGpRqfw+eZW2i/bKA895J5AlzxwrEK4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Qs5sO7oW/Iqwf/4SBfKK0bBIBKsl2SLt7RBxapjEnAm7hU8mv9AYlmYE26eKWU+XV
-         1QQHGyJQdf8bUVoiVkoK/F79GJ+IQlyYCXgZMywKaCyyn57WqAQJzvm1pfLwRDAKiA
-         cRL8B9YoAvNqzzO/6oxB199bvUG9VNO+Sz9oi/VAwI0cLjgFQmAmXJuwNXrwIJHGa/
-         K2qIuPwui4ljBRkgIX3Z+qFAPNjy6EoUPC9pRscBeAtqomZbV+w9mxnFROwpk0YBNJ
-         DZPL7YvOJb7DvVpbgg6lgVI4Ort9Q6PPtohFNkfVT/DhnkIXmyRybTfNLKeUhFBH8P
-         B3nwh72Bt7pcw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pZASu-0001wC-Go; Mon, 06 Mar 2023 14:01:20 +0100
-Date:   Mon, 6 Mar 2023 14:01:20 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Juerg Haefliger <juerg.haefliger@canonical.com>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        stable@vger.kernel.org
-Subject: Re: [PATCH v3] soc: qcom: llcc: Fix slice configuration values for
- SC8280XP
-Message-ID: <ZAXkIHOom26DlVx0@hovoldconsulting.com>
-References: <20230219165701.2557446-1-abel.vesa@linaro.org>
+        s=k20201202; t=1678108409;
+        bh=c1/PkYQJFzuTDFjpkgl5i1HEQUXSgPFfa0wleHHxPtw=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=eiGMV00tgURLStN3zlJYKcMsBGN09Ib0QE0oZ5GLbN/jXxFpapceaG+L2yvjF/req
+         MPvjeVPF+gf3vxJK8DCFWxWBlcn5a9OrS9+bngkmwzdHvrfpGKCnC5+4dlspbZIujw
+         c8nQc4ghWvdlomX42o2F1vtT0oiHpzpczG8mExDjL19eNi1EHGfywEGq6jVNd8oNrP
+         orIPK+FPRrWQ6ymPFO02rkjuOoj1SMX80/XVECHPMXG2Ci+agyKrb+0OtkQhhA0jZj
+         muZAUCzqdWRfb405bNY4Q4lxxPYAAHrXrzakhgSnyWW7z5oJATnRYDpwHLASqr3RB6
+         IW62cZKS/Wa+A==
+Received: by mail-pg1-f172.google.com with SMTP id bn17so5468837pgb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 05:13:29 -0800 (PST)
+X-Gm-Message-State: AO0yUKUoRf2z3Ei+Dlpk3RmPtJMBz3aGoFpWyRTjr7EQ65JJmv7yR5hu
+        u4fWeAc25DUH+uh1fyvkuIwOKI4hsbwj7V5upW2HAw==
+X-Google-Smtp-Source: AK7set/csFkXt7yaspS+ia4wUJLHYUEqUnkqvAa+fGtX7XlJRt1POR5G7jC9fvxpdTnaBi4LsBGYhkAjjG8mgItZukA=
+X-Received: by 2002:a05:6a00:225a:b0:593:c9dd:9069 with SMTP id
+ i26-20020a056a00225a00b00593c9dd9069mr4809418pfu.5.1678108409079; Mon, 06 Mar
+ 2023 05:13:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230219165701.2557446-1-abel.vesa@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230302155353.3361129-1-bryan.odonoghue@linaro.org>
+In-Reply-To: <20230302155353.3361129-1-bryan.odonoghue@linaro.org>
+From:   Robert Foss <rfoss@kernel.org>
+Date:   Mon, 6 Mar 2023 14:13:17 +0100
+X-Gmail-Original-Message-ID: <CAN6tsi6H3X5owut3QvniTs-yt-jRomPxB_vYfrJCKzTbvrja1Q@mail.gmail.com>
+Message-ID: <CAN6tsi6H3X5owut3QvniTs-yt-jRomPxB_vYfrJCKzTbvrja1Q@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Add myself as CAMSS maintainer
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     todor.too@gmail.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, mchehab@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, alex.elder@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Feb 19, 2023 at 06:57:01PM +0200, Abel Vesa wrote:
-> The slice IDs for CVPFW, CPUSS1 and CPUWHT currently overflow the 32bit
-> LLCC config registers. Fix that by using the slice ID values taken from
-> the latest LLCC SC table.
+On Thu, Mar 2, 2023 at 5:03=E2=80=AFPM Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> I discussed with Robert a few ago lending a hand with CAMSS. Following up
+> on that discussion, I'm happy to help.
+>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-This still doesn't really explain what the impact of this bug is (e.g.
-for people doing backports), but I guess this will do.
-
-> Fixes: ec69dfbdc426 ("soc: qcom: llcc: Add sc8180x and sc8280xp configurations")
-> Cc: stable@vger.kernel.org	# 5.19+
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> Tested-by: Juerg Haefliger <juerg.haefliger@canonical.com>
-> Reviewed-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-> Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
 
 > ---
-> 
-> The v2 is here:
-> https://lore.kernel.org/all/20230127144724.1292580-1-abel.vesa@linaro.org/
-> 
-> Changes since v2:
->  * specifically mentioned the 3 slice IDs that are being fixed and
->    what is happening without this patch
->  * added stabke Cc line
->  * added Juerg's T-b tag
->  * added Sai's R-b tag
->  * added Konrad's A-b tag
-> 
-> Changes since v1:
->  * dropped the LLCC_GPU and LLCC_WRCACHE max_cap changes
->  * took the new values from documentatio this time rather than
->    downstream kernel
-> 
->  drivers/soc/qcom/llcc-qcom.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 23ce2f78c4ed..26efe12012a0 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -191,9 +191,9 @@ static const struct llcc_slice_config sc8280xp_data[] = {
->  	{ LLCC_CVP,      28, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
->  	{ LLCC_APTCM,    30, 1024, 3, 1, 0x0,   0x1, 1, 0, 0, 1, 0, 0 },
->  	{ LLCC_WRCACHE,  31, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-> -	{ LLCC_CVPFW,    32, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> -	{ LLCC_CPUSS1,   33, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> -	{ LLCC_CPUHWT,   36, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_CVPFW,    17, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_CPUSS1,   3, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_CPUHWT,   5, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
->  };
->  
->  static const struct llcc_slice_config sdm845_data[] =  {
+>  MAINTAINERS | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 409eadfba007a..ebb0228eb4ea1 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -17156,6 +17156,7 @@ F:      drivers/net/wwan/qcom_bam_dmux.c
+>  QUALCOMM CAMERA SUBSYSTEM DRIVER
+>  M:     Robert Foss <rfoss@kernel.org>
+>  M:     Todor Tomov <todor.too@gmail.com>
+> +M:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>  L:     linux-media@vger.kernel.org
+>  S:     Maintained
+>  F:     Documentation/admin-guide/media/qcom_camss.rst
+> --
+> 2.39.2
+>
