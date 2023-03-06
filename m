@@ -2,83 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A23496AB8F9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 09:59:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 70CDE6AB92E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 10:03:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229565AbjCFI65 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 03:58:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33996 "EHLO
+        id S229650AbjCFJDZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 04:03:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229821AbjCFI64 (ORCPT
+        with ESMTP id S229542AbjCFJDW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 03:58:56 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E1CE1968E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 00:58:36 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id a25so35606597edb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 00:58:36 -0800 (PST)
+        Mon, 6 Mar 2023 04:03:22 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96B0CAD12
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 01:03:19 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id r19-20020a05600c459300b003eb3e2a5e7bso4731508wmo.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 01:03:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678093115;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Qax62+Ek+98BjcfFBzDht0kDLSEKv3DkEE9gZpZsrKw=;
-        b=KnMl6Li/TvvidwiidEc3hQr/LFaEWlZpB0CExOUcrC3GR4XHZFgzeuMCa/b+/OwcLo
-         9N/5/j4+z2oJ65eC4Z7692mE+uMFROAZypFz5ajFuNyOW0jVeLEGFLLjiUcRyAiniHBI
-         IhR6fGOPtrh28nqIdV9nMXfPy7I5sze7udh/H0cuBR+5X/VoeFm0Lx3z7/L4VLq8PObD
-         VoxAh6G+ZGZbu3Lxf8lQRuwUYhNRmqtmdCsqZrtP1E2vJv/o173zi/MJ5o2kXJtFR+lE
-         W97Qbv0fVPnkXnY5p3T/s0j2X7K+EbfdAHshEauk/S6mh0g87fwZ5qDeBm43V8CjfSkX
-         PI9A==
+        d=linaro.org; s=google; t=1678093398;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=AJHpGiNNnS/iHuhCrLJC3kyZETQwy2cp7ry6pPyZxIQ=;
+        b=hzrwwOjdSHOzylUPLi1JyT0tk4upCyVExNtQamh0nS/rBJwh4KYQ/1Uvs7SCa7hm7d
+         YJ6OzeVIGuCpOxuY0QCGh3tgHIkJ67xL5qp37sVCVoKqQ7K6jLxzWurAmpI4z8jsxT1N
+         lKvRHne/mKFVmokyMoXSMBRmDoOIPHw5UqpNTRkpG/dCZ1BLzyptBqAYLVjSnWICedhE
+         rr+PzCy2PTxMdpb1ZpKr0Xgm0wC3ShJ4U5hRqV6RzF3zGufARNtQlHJsu4wDhR/DddmK
+         KKvo08qYT4lRD69xYqiIzG77MlihQHVIxUPdBa+XJkkX9teUea1H5h3SZZz3B6QFaIz/
+         2bNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678093115;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qax62+Ek+98BjcfFBzDht0kDLSEKv3DkEE9gZpZsrKw=;
-        b=mq7kOQ847BAstYP9sN8RHuiKuUxAjSIIA2XV0EZZJPtdl1KDMMNkKZOjXjP/Jo+XcD
-         rmfyffLbsSzJh2TK3qeTbgnqarSbOLX7OmBVtuEwV0HQ7s5q1UFsG0jbnbCEVLZq5mEF
-         OVuWRMSuv+PxD8XKf2WpVZqJ0k6GqfZqyMR/v1YRQToisTQYzZJBz+HCB0Dhu7NfOrRz
-         AFtlUwqGhWN+ndoy5AZ/XmRaWKZYglWFJ6sS71+832X5JQcfi3wjmsSTUpx3tS3T4QNC
-         BsnK7OGIuTWigSUaDNNBisJmoR1jM/wMdxW7kfAZokl0Te/nwDcS3ufF1V17hpw9D8SK
-         ZH8w==
-X-Gm-Message-State: AO0yUKVySw1TjY0biWcc69A7jbb09JqzywyMhXnZ1gSJAl9LtMvZYt2/
-        GjyOEuopAFEwG6BW2u1SaufLRw==
-X-Google-Smtp-Source: AK7set9p7B2EXwGRzK3tQA+hkA+tlIfV2D0L5YBCvz6MVJJeXyzr+RLTECAnVLpRF0B3jK9oPxzckQ==
-X-Received: by 2002:aa7:d910:0:b0:4ad:7c44:35fc with SMTP id a16-20020aa7d910000000b004ad7c4435fcmr8567769edr.6.1678093115026;
-        Mon, 06 Mar 2023 00:58:35 -0800 (PST)
-Received: from ?IPV6:2a02:810d:15c0:828:d85d:5a4b:9830:fcfe? ([2a02:810d:15c0:828:d85d:5a4b:9830:fcfe])
-        by smtp.gmail.com with ESMTPSA id v12-20020a170906338c00b008ba9e67ea4asm4300598eja.133.2023.03.06.00.58.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Mar 2023 00:58:34 -0800 (PST)
-Message-ID: <79c44d5b-c7ab-8a40-c17f-adf72f92a8ab@linaro.org>
-Date:   Mon, 6 Mar 2023 09:58:33 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 03/15] dt-bindings: sram: qcom,imem: document SM6375 IMEM
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
+        d=1e100.net; s=20210112; t=1678093398;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AJHpGiNNnS/iHuhCrLJC3kyZETQwy2cp7ry6pPyZxIQ=;
+        b=bxEimfcAk1B3Yj0XV9FncLSU5LJxoR6k1ISK3C5ZOZZIr2uJ+7pABhmHpF5kvYLjx0
+         VWn/FBoLpzc2uwJRD4f008JJRrpDn3e2dLnEF9XUFW6buHK6glgMqzydgbX/TTprbtha
+         cSfjBlXChn/m4nh3yo2KW41oGODNM8s87RBv4BhyYLRoOcc9p+CUfQ+Yvr145Q/Xh0m9
+         FbrVLXCn7y9qVCgft2vSJm+AaNZ3d0cfjgsL0Hfs6+bz0+APC0sEhQZu7yWIKooGtMqZ
+         8hj9IHjH1ozJw3cmOBL/g3xvZ31HDnONZGHdBUtCDzlMu9sVWNENgjSBpKDWTPcmx/3f
+         H5Og==
+X-Gm-Message-State: AO0yUKXDr7fh5AQxoXuhMAeLVbPB5V8QbkdzdjcziVKnBpG/t2oLVqZV
+        GjWFEuqtlNoUTfkPmDpEgtwgdQ==
+X-Google-Smtp-Source: AK7set87B67sTGmugB4xDggZWu9Lud32vEXYunKTICLonbRHmTLO7JqmrVgjWob32QN9cC5Jy5Nulw==
+X-Received: by 2002:a05:600c:1d24:b0:3da:1f6a:7b36 with SMTP id l36-20020a05600c1d2400b003da1f6a7b36mr8498979wms.0.1678093397987;
+        Mon, 06 Mar 2023 01:03:17 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id p20-20020a05600c205400b003e8dcc67bdesm12966260wmg.30.2023.03.06.01.03.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Mar 2023 01:03:17 -0800 (PST)
+Date:   Mon, 6 Mar 2023 11:03:14 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Georgi Djakov <djakov@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230303-topic-sm6375_features0_dts-v1-0-8c8d94fba6f0@linaro.org>
- <20230303-topic-sm6375_features0_dts-v1-3-8c8d94fba6f0@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230303-topic-sm6375_features0_dts-v1-3-8c8d94fba6f0@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Artur =?utf-8?B?xZp3aWdvxYQ=?= <a.swigon@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 13/23] interconnect: qcom: sm8550: fix registration
+ race
+Message-ID: <ZAWsUrlrOfmmNBy3@linaro.org>
+References: <20230306075651.2449-1-johan+linaro@kernel.org>
+ <20230306075651.2449-14-johan+linaro@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230306075651.2449-14-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,16 +88,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/03/2023 22:58, Konrad Dybcio wrote:
-> Add a compatible for SM6375 IMEM.
+On 23-03-06 08:56:41, Johan Hovold wrote:
+> The current interconnect provider registration interface is inherently
+> racy as nodes are not added until the after adding the provider. This
+> can specifically cause racing DT lookups to fail.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Switch to using the new API where the provider is not registered until
+> after it has been fully initialised.
+> 
+> Fixes: e6f0d6a30f73 ("interconnect: qcom: Add SM8550 interconnect provider driver")
+> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 1 +
 
+Any changes since v1 or is it just a resend? 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+>  drivers/interconnect/qcom/sm8550.c | 22 +++++++++++-----------
+>  1 file changed, 11 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/interconnect/qcom/sm8550.c b/drivers/interconnect/qcom/sm8550.c
+> index 54fa027ab961..7ab492ca8fe0 100644
+> --- a/drivers/interconnect/qcom/sm8550.c
+> +++ b/drivers/interconnect/qcom/sm8550.c
+> @@ -2197,9 +2197,10 @@ static int qnoc_probe(struct platform_device *pdev)
+>  	provider->pre_aggregate = qcom_icc_pre_aggregate;
+>  	provider->aggregate = qcom_icc_aggregate;
+>  	provider->xlate_extended = qcom_icc_xlate_extended;
+> -	INIT_LIST_HEAD(&provider->nodes);
+>  	provider->data = data;
+>  
+> +	icc_provider_init(provider);
+> +
+>  	qp->dev = &pdev->dev;
+>  	qp->bcms = desc->bcms;
+>  	qp->num_bcms = desc->num_bcms;
+> @@ -2208,12 +2209,6 @@ static int qnoc_probe(struct platform_device *pdev)
+>  	if (IS_ERR(qp->voter))
+>  		return PTR_ERR(qp->voter);
+>  
+> -	ret = icc_provider_add(provider);
+> -	if (ret) {
+> -		dev_err_probe(&pdev->dev, ret,
+> -			      "error adding interconnect provider\n");
+> -		return ret;
+> -	}
+>  
+>  	for (i = 0; i < qp->num_bcms; i++)
+>  		qcom_icc_bcm_init(qp->bcms[i], &pdev->dev);
+> @@ -2227,7 +2222,7 @@ static int qnoc_probe(struct platform_device *pdev)
+>  		node = icc_node_create(qnodes[i]->id);
+>  		if (IS_ERR(node)) {
+>  			ret = PTR_ERR(node);
+> -			goto err;
+> +			goto err_remove_nodes;
+>  		}
+>  
+>  		node->name = qnodes[i]->name;
+> @@ -2241,12 +2236,17 @@ static int qnoc_probe(struct platform_device *pdev)
+>  	}
+>  	data->num_nodes = num_nodes;
+>  
+> +	ret = icc_provider_register(provider);
+> +	if (ret)
+> +		goto err_remove_nodes;
+> +
+>  	platform_set_drvdata(pdev, qp);
+>  
+>  	return 0;
+> -err:
+> +
+> +err_remove_nodes:
+>  	icc_nodes_remove(provider);
+> -	icc_provider_del(provider);
+> +
+>  	return ret;
+>  }
+>  
+> @@ -2254,8 +2254,8 @@ static int qnoc_remove(struct platform_device *pdev)
+>  {
+>  	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
+>  
+> +	icc_provider_deregister(&qp->provider);
+>  	icc_nodes_remove(&qp->provider);
+> -	icc_provider_del(&qp->provider);
+>  
+>  	return 0;
+>  }
+> -- 
+> 2.39.2
+> 
