@@ -2,115 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 165C26AC900
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 18:02:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A5536ACC65
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 19:23:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230086AbjCFRCd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 12:02:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39586 "EHLO
+        id S229910AbjCFSXZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 13:23:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230458AbjCFRCF (ORCPT
+        with ESMTP id S229718AbjCFSXX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 12:02:05 -0500
-Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE4D4457F4
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 09:01:37 -0800 (PST)
-Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
-        by amity.mint.lgbt (Postfix) with ESMTP id 4PVlGS0bZKz1S5Jl
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 12:01:20 -0500 (EST)
-Authentication-Results: amity.mint.lgbt (amavisd-new);
-        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
-        header.d=mint.lgbt
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
-        content-transfer-encoding:content-type:in-reply-to:subject:from
-        :references:to:content-language:user-agent:mime-version:date
-        :message-id; s=dkim; t=1678122079; x=1678986080; bh=bI8Q9ZobF/m/
-        5zL0TsX0t3zOLtFDXF74jdm5TmV+sTA=; b=lpxCcPVNSQsn8dJBRjkyDQ1UdPaf
-        VaX/X+bTeGV7/cqy814VOAUxrhgnRQETMJzMA/TFoGeaEyZoEsadDeO1vQepfriP
-        1aYShJZZtxowD72iVqkjCNYSGG08KsvkVb0Ci4uWXRrlc75dtwNSOzGUNXBRuPJM
-        u/gtxHoOlLIaGOWoebhoNLbFboZZRdvRAHlK1vgQS/EbemYjvp6dkJJ+Rajhli51
-        zZz2c9XuEhcVYpJ7GAbQhQG2EBAHsid1iQ6IndRf1KaQK7keEIHd5P1UxOZcMdWl
-        24hzwbv09h9kkCTEnd1MfpAG6fMvgqoXJ2/ud9Ak1Pq5TzygC6J2NRUaiw==
-X-Virus-Scanned: amavisd-new at amity.mint.lgbt
-Received: from amity.mint.lgbt ([127.0.0.1])
-        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 0MajAIqwKZug for <linux-arm-msm@vger.kernel.org>;
-        Mon,  6 Mar 2023 12:01:19 -0500 (EST)
-Received: from [192.168.1.90] (unknown [186.105.8.42])
-        by amity.mint.lgbt (Postfix) with ESMTPSA id 4PVlGC5d4jz1S5Fp;
-        Mon,  6 Mar 2023 12:01:07 -0500 (EST)
-Message-ID: <4670ddae-6b01-1e5c-b0ed-1f2f498a4f66@mint.lgbt>
-Date:   Mon, 6 Mar 2023 14:01:04 -0300
+        Mon, 6 Mar 2023 13:23:23 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FFF359C7;
+        Mon,  6 Mar 2023 10:22:55 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 326DnQVb004336;
+        Mon, 6 Mar 2023 16:56:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : from : subject : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=u+HeMWCnDL/51+TscHscVQEY/G74ehiDJ2aQmcF8ul8=;
+ b=E9umlb3amdCqPwuBfvXhDkM2TEQoA+Txr25Jo1FN1uk0NO8jnfb3VdXMGszPeeLwh9XT
+ TyD9jAb5UBBnrNCPzDwPXN+8MLzMNYfckEqhbQW4B2bSkFAHoquEIlmAwMi1kTjE321U
+ O4FFZb/lmNNfpWApFrj+lXCKz37quB7KcAEPgVADJtq2S6KVvFEmHBEtkgx/tAaeM5yi
+ vzdAREK9OnG2s5AhFnmELOL3zMiJZY6qd+uJ13fp4iGY98mORsedR75rxmj70wsJZNTh
+ d5RidTDe5HGtXA1elfBxZa7Jij3XbPUYKMyfJFIqYRc4x+KGeIRqr5Jna1fWO1q+ENvT gQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p417jwep8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 06 Mar 2023 16:56:13 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 326GuCJB024582
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 6 Mar 2023 16:56:12 GMT
+Received: from [10.110.111.169] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 6 Mar 2023
+ 08:56:11 -0800
+Message-ID: <186dd23e-765f-584f-11e1-84b27f728abe@quicinc.com>
+Date:   Mon, 6 Mar 2023 08:56:10 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+From:   John Moon <quic_johmoo@quicinc.com>
+Subject: Re: [PATCH v2 2/2] docs: dev-tools: Add UAPI checker documentation
+To:     Masahiro Yamada <masahiroy@kernel.org>
+CC:     Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Todd Kjos <tkjos@google.com>,
+        Matthias Maennich <maennich@google.com>,
+        Giuliano Procida <gprocida@google.com>,
+        <kernel-team@android.com>, <libabigail@sourceware.org>,
+        Jordan Crouse <jorcrous@amazon.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Satya Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>
+References: <20230301075402.4578-1-quic_johmoo@quicinc.com>
+ <20230301075402.4578-3-quic_johmoo@quicinc.com>
+ <CAK7LNAQUgr0rrJv8ZvPKfyC8zZ1XX-Wv2Npw4iJXDGor=HSKyQ@mail.gmail.com>
 Content-Language: en-US
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, alim.akhtar@samsung.com,
-        avri.altman@wdc.com, bvanassche@acm.org, keescook@chromium.org,
-        tony.luck@intel.com, gpiccoli@igalia.com
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-scsi@vger.kernel.org, linux-hardening@vger.kernel.org,
-        phone-devel@vger.kernel.org, martin.botka@somainline.org,
-        marijn.suijten@somainline.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20230306165246.14782-1-they@mint.lgbt>
- <20230306165246.14782-2-they@mint.lgbt>
-From:   Lux Aliaga <they@mint.lgbt>
-Subject: Re: [PATCH v7 1/6] dt-bindings: ufs: qcom: Add SM6125 compatible
- string
-In-Reply-To: <20230306165246.14782-2-they@mint.lgbt>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <CAK7LNAQUgr0rrJv8ZvPKfyC8zZ1XX-Wv2Npw4iJXDGor=HSKyQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: A28HIHph3bEw3GIf7i0LrYogXJ86bcJ2
+X-Proofpoint-ORIG-GUID: A28HIHph3bEw3GIf7i0LrYogXJ86bcJ2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-06_10,2023-03-06_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ clxscore=1015 adultscore=0 impostorscore=0 lowpriorityscore=0
+ malwarescore=0 phishscore=0 suspectscore=0 priorityscore=1501 spamscore=0
+ mlxlogscore=823 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303060149
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 3/4/2023 10:20 PM, Masahiro Yamada wrote:
+> On Wed, Mar 1, 2023 at 4:54 PM John Moon <quic_johmoo@quicinc.com> wrote:
+>>
+>> Add detailed documentation for scripts/check-uapi.sh.
+>> ---
+>>   Documentation/dev-tools/checkuapi.rst | 258 ++++++++++++++++++++++++++
+>>   Documentation/dev-tools/index.rst     |   1 +
+>>   2 files changed, 259 insertions(+)
+>>   create mode 100644 Documentation/dev-tools/checkuapi.rst
+>>
+>> diff --git a/Documentation/dev-tools/checkuapi.rst b/Documentation/dev-tools/checkuapi.rst
+>> new file mode 100644
+>> index 000000000000..2255066658e3
+>> --- /dev/null
+>> +++ b/Documentation/dev-tools/checkuapi.rst
+>> @@ -0,0 +1,258 @@
+>> +.. SPDX-License-Identifier: GPL-2.0-only
+>> +
+>> +============
+>> +UAPI Checker
+>> +============
+>> +
+>> +The UAPI checker (scripts/check-uapi.sh) is a shell script which checks UAPI
+>> +header files for userspace backwards-compatibility across the git tree.
+>> +
+>> +The script can produce false positives in some cases, so developers are
+> 
+> 
+> and false negatives too.
+> 
 
-On 06/03/2023 13:52, Lux Aliaga wrote:
-> Document the compatible for UFS found on the SM6125.
->
-> Signed-off-by: Lux Aliaga <they@mint.lgbt>
-> Reviewed-by: Martin Botka <martin.botka@somainline.org>
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
->   1 file changed, 2 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index b517d76215e3..42422f3471b3 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -29,6 +29,7 @@ properties:
->             - qcom,sc8280xp-ufshc
->             - qcom,sdm845-ufshc
->             - qcom,sm6115-ufshc
-> +          - qcom,sm6125-ufshc
->             - qcom,sm6350-ufshc
->             - qcom,sm8150-ufshc
->             - qcom,sm8250-ufshc
-> @@ -185,6 +186,7 @@ allOf:
->             contains:
->               enum:
->                 - qcom,sm6115-ufshc
-> +              - qcom,sm6125-ufshc
->       then:
->         properties:
->           clocks:
-I have to apologize. I worked on a changelog for this patchset but I 
-skipped the subject header, therefore it didn't send, and as I realized 
-this I interrupted the process, leaving the patchset incomplete. I'll 
-retry sending it, this time correctly.
-
--- 
-Lux Aliaga
-https://nixgoat.me/
-
+Yes, I'll expand the notes to include examples of false negatives in v3.
