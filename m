@@ -2,74 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCED66ACB25
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 18:47:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9B016ACC1C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 19:12:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229736AbjCFRrj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 12:47:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60700 "EHLO
+        id S229953AbjCFSMO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 13:12:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229646AbjCFRrh (ORCPT
+        with ESMTP id S230227AbjCFSLx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 12:47:37 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5BF56BC22
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 09:46:57 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id j11so13792914lfg.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 09:46:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678124796;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Iez5Cv7gRrdlfiQeXfEnRiE70CNF7dHomy8QTYT6wEo=;
-        b=LiaIr3yWC4diYGZlpcnjyQ+ysdSZahUuTjd/17VwgHjhQ2vKo/yjtJjkIrSwhs93jp
-         TTz+syci5ZGqSwRxF/FnOvCtBtVfCKCygoC3GNMyhNxqWfY+zb7dlTnQVGK1oWmkZHyh
-         ViDhrxqxQo/hWXWeFOndoOkXCyc64cqOHc5gdSQ/b72cmFglipx3KtTDgZfkk8LnqrvV
-         Expudpi57K7olGzOhxywrk/3yxahcC3H+DOatNTgc2sQKF+GoWTgTQPDk9mikhqqhOJ7
-         mnMEZeTHNk8u0/6H22RdVCeIwjsKKKP0vp4OPaI6Pqf/xAAMvf4emYcmGg69gZRCJmkN
-         Wvsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678124796;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Iez5Cv7gRrdlfiQeXfEnRiE70CNF7dHomy8QTYT6wEo=;
-        b=lqA1whXX9is0GZeHxH7q2WH3k/WhcYF2MTmX7p9YnyRBTLY+1wYZlvKNoK7P89yixL
-         ZwNU/1jnpKzx1gYAsBoiaMX78CgZBBhXI4Mm8UiLjA3mgWGn2ce5doSr5m77pg8VS44G
-         1qseGv4M1+MeMhnWLBu3U5J5mzl/sj1LC3E1fh4E35zfOKsPVix4LBlaO3xqZ1ldpmtU
-         L0nLVohyRya1xybKt9HD+mC8yLzP440Ge8ue2SYGcONGWcp5qp8ulfBBMdDQsJNg42ZO
-         JC2pnrbycCaU87MryJ8nrdHbFmT18xyLURNMcCtdd6lSYGeC8QptVdW4XPq1p1yXZ32T
-         JIcw==
-X-Gm-Message-State: AO0yUKWiKRiH6X6uI6z44eLBScRM/grI/L5/Xae2LHY7lPN8RnZe9Vt4
-        IMOngfbaDMfqeYyz9oWniPqjGw==
-X-Google-Smtp-Source: AK7set+Lxi8EIh3U2avNhydgx1vaJcqiER4wWgnpUdfUG6sGjE275HO3WpMmXUh/efUsfXGRAdU1tA==
-X-Received: by 2002:ac2:5dd6:0:b0:4dd:ad4c:74b6 with SMTP id x22-20020ac25dd6000000b004ddad4c74b6mr3291459lfq.1.1678124796333;
-        Mon, 06 Mar 2023 09:46:36 -0800 (PST)
-Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id q8-20020ac246e8000000b004b6efcb7bb5sm1717494lfo.169.2023.03.06.09.46.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Mar 2023 09:46:35 -0800 (PST)
-Message-ID: <32c77f79-e2c2-d4fe-7c17-2d8ae97cfdcd@linaro.org>
-Date:   Mon, 6 Mar 2023 18:46:34 +0100
+        Mon, 6 Mar 2023 13:11:53 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 149596F61F;
+        Mon,  6 Mar 2023 10:11:25 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4618B61086;
+        Mon,  6 Mar 2023 18:10:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33998C433D2;
+        Mon,  6 Mar 2023 18:10:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1678126257;
+        bh=UtbJswbXqXi2I6w5vH95Sbdb/wUtOV35DRwtQbsJ3T4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LwAL4/VJ7YYBSdiaJQhfW4Gt8iYGD24Stxl2ArlxfbFRjcDcSfMm0d6iZT8T57MLm
+         UL5x3W8Fyq8ZyucInAnV7BJy1ySRsaqmipHvWNBRjnMVbxxbLdaoNbWwAUDaca4X3h
+         tvmF7NurmAqeUmO1ELDlfD0MpPADHchZSzlXCfIY=
+Date:   Mon, 6 Mar 2023 19:10:55 +0100
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        catalin.marinas@arm.com, will@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [RFC PATCH 0/6] Add basic Minidump kernel driver support
+Message-ID: <ZAYsr9xRC6sGs925@kroah.com>
+References: <1676978713-7394-1-git-send-email-quic_mojha@quicinc.com>
+ <8f3c6bea-ee49-dc0e-7491-19714b97255a@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-oneplus-common: add Hall sensor
-Content-Language: en-US
-To:     Gergo Koteles <soyer@irl.hu>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230306174147.185239-1-soyer@irl.hu>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230306174147.185239-1-soyer@irl.hu>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8f3c6bea-ee49-dc0e-7491-19714b97255a@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,65 +55,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Mar 06, 2023 at 08:58:04PM +0530, Mukesh Ojha wrote:
+> Friendly review reminder..
 
+It is a few hours after the merge window closed, please be patient.
 
-On 6.03.2023 18:41, Gergo Koteles wrote:
-> Enable the Hall effect sensor (flip cover) for OnePlus 6/6T.
-> The GPIO is mapped to SW_LID events as in msm8916, msm8994,
-> msm8998 devices.
-> 
-> Signed-off-by: Gergo Koteles <soyer@irl.hu>
-> ---
-One fun thing I discovered is that if suspend is broken for whatever
-reason and you get a magnet close to a device with it mapped to SW_LID,
-you'll essentially get a hang or a reboot lol
+And to help out, please review other submissions to reduce the review
+load on maintainers.  To not do that is just asking for others to do
+work for you without any help, right?
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+thanks,
 
-Konrad
->  .../boot/dts/qcom/sdm845-oneplus-common.dtsi  | 25 +++++++++++++++++++
->  1 file changed, 25 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> index 64638ea94db7..b01542d79ae2 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> @@ -29,6 +29,23 @@ chosen {
->  		stdout-path = "serial0:115200n8";
->  	};
->  
-> +	gpio-hall-sensor {
-> +		compatible = "gpio-keys";
-> +		label = "Hall effect sensor";
-> +
-> +		pinctrl-0 = <&hall_sensor_default>;
-> +		pinctrl-names = "default";
-> +
-> +		event-hall-sensor {
-> +			gpios = <&tlmm 124 GPIO_ACTIVE_LOW>;
-> +			label = "Hall Effect Sensor";
-> +			linux,input-type = <EV_SW>;
-> +			linux,code = <SW_LID>;
-> +			linux,can-disable;
-> +			wakeup-source;
-> +		};
-> +	};
-> +
->  	gpio-keys {
->  		compatible = "gpio-keys";
->  		label = "Volume keys";
-> @@ -753,6 +770,14 @@ &usb_1_hsphy {
->  &tlmm {
->  	gpio-reserved-ranges = <0 4>, <81 4>;
->  
-> +	hall_sensor_default: hall-sensor-default-state {
-> +		pins = "gpio124";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +		input-enable;
-> +	};
-> +
->  	tri_state_key_default: tri-state-key-default-state {
->  		pins = "gpio40", "gpio42", "gpio26";
->  		function = "gpio";
+greg k-h
