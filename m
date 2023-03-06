@@ -2,50 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9B016ACC1C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 19:12:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AB596ACE39
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 20:36:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229953AbjCFSMO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 13:12:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50310 "EHLO
+        id S230080AbjCFTgI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 14:36:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230227AbjCFSLx (ORCPT
+        with ESMTP id S230101AbjCFTgE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 13:11:53 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 149596F61F;
-        Mon,  6 Mar 2023 10:11:25 -0800 (PST)
+        Mon, 6 Mar 2023 14:36:04 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59E7272B17;
+        Mon,  6 Mar 2023 11:36:01 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4618B61086;
-        Mon,  6 Mar 2023 18:10:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33998C433D2;
-        Mon,  6 Mar 2023 18:10:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1678126257;
-        bh=UtbJswbXqXi2I6w5vH95Sbdb/wUtOV35DRwtQbsJ3T4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LwAL4/VJ7YYBSdiaJQhfW4Gt8iYGD24Stxl2ArlxfbFRjcDcSfMm0d6iZT8T57MLm
-         UL5x3W8Fyq8ZyucInAnV7BJy1ySRsaqmipHvWNBRjnMVbxxbLdaoNbWwAUDaca4X3h
-         tvmF7NurmAqeUmO1ELDlfD0MpPADHchZSzlXCfIY=
-Date:   Mon, 6 Mar 2023 19:10:55 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        catalin.marinas@arm.com, will@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [RFC PATCH 0/6] Add basic Minidump kernel driver support
-Message-ID: <ZAYsr9xRC6sGs925@kroah.com>
-References: <1676978713-7394-1-git-send-email-quic_mojha@quicinc.com>
- <8f3c6bea-ee49-dc0e-7491-19714b97255a@quicinc.com>
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9729DB810F5;
+        Mon,  6 Mar 2023 19:35:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25EFDC433D2;
+        Mon,  6 Mar 2023 19:35:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678131358;
+        bh=RBcizbc7RoVhJcp3jao7zJH9o7oiz1b3acXdvsLc7ag=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=INZ7wj7kxWlY8YnV5gGEXloVCVxhYGdkeMUR68pCIdzN0n1OkuvMLCXol+9wQLGQw
+         +5TsSjxTzPJwTqLXh2JZhabJMGvAsxRQUk+fbki7M/iLE3WnQc1siaREHe8j5CPa7t
+         UEB357WEz74SizrzHs/oRfXBMQ4mowquINIt4c5tvKNrjtOnFsDpx/BKE+SDL0eu8r
+         18boMKz0A/Bud7w4rLFWLvbSStAZlhRcBSgpA5d0ZjDaFjyNm+V4aq9k6UlgxzqlcY
+         5mVdrBDZfNxSdqS1uCnuVYGwwBPRR7Pj6Ox+Tb3FtnxukXYgIuf9QE/JiOV91Ul3Lk
+         9Mmy9B5DO3jcA==
+Message-ID: <e04a406045121aa31762cacc02b2300d.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8f3c6bea-ee49-dc0e-7491-19714b97255a@quicinc.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230303022912.2171177-1-konrad.dybcio@linaro.org>
+References: <20230303022912.2171177-1-konrad.dybcio@linaro.org>
+Subject: Re: [PATCH 1/2] clk: qcom: gcc-sm6375: Update the .pwrsts for usb gdsc
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, linux-arm-msm@vger.kernel.org
+Date:   Mon, 06 Mar 2023 11:35:55 -0800
+User-Agent: alot/0.10
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -55,15 +57,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 06, 2023 at 08:58:04PM +0530, Mukesh Ojha wrote:
-> Friendly review reminder..
+Quoting Konrad Dybcio (2023-03-02 18:29:11)
+> The USB controller on sm6375 doesn't retain its state when the system
+> goes into low power state and the GDSCs are turned off.
+>=20
+> This can be observed by the USB connection not coming back alive after
+> putting the device into suspend, essentially breaking USB.
+>=20
+> Fix this by updating the .pwrsts for the USB GDSCs so they only
+> transition to retention state in low power.
 
-It is a few hours after the merge window closed, please be patient.
-
-And to help out, please review other submissions to reduce the review
-load on maintainers.  To not do that is just asking for others to do
-work for you without any help, right?
-
-thanks,
-
-greg k-h
+Is this a temporary fix? Is that why there isn't a Fixes tag? If it's a
+workaround then please add a TODO comment indicating the USB driver
+doesn't work properly.
