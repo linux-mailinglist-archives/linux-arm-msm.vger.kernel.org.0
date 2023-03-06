@@ -2,167 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99F466AB78F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 08:58:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CC156AB80D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 09:14:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229937AbjCFH5x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 02:57:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53366 "EHLO
+        id S229699AbjCFIOj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 03:14:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229819AbjCFH5l (ORCPT
+        with ESMTP id S229734AbjCFIOh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 02:57:41 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A52B1F903;
-        Sun,  5 Mar 2023 23:57:40 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7764460C6F;
-        Mon,  6 Mar 2023 07:57:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78246C4FF06;
-        Mon,  6 Mar 2023 07:57:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678089457;
-        bh=a3kuHjgYNyulLZAsEDFoN+UatIjlAmI+HwT51CVFQPY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=nCrGJEX21WXgcEsGAk4UFHACAs4RlkJw1HpncMmUmsbc89kHB6gA8p6ve9V+R0SXS
-         nbdYLPsPtWWVHGRD4xMXnWkddnVD+GefeSJhWh0kjvLhV7igS0oaOZTJUsADKQnizE
-         JBLjdwMO/QSJHMvlMa9qFuOP6amlCqLPtcCsaj7o7e50+kVjErPAkW7UMgfWfiiiJ9
-         Hbb0EiHc/vLTvOkb5U2bp95rGC7vOYP2gB51Ps+M9zjbWXeVXeJzsCYoH+Y5Gubmes
-         8AC4buwsCi7bUG7Xw0Hj5pkhdo4JXVwLB6SRUmNmsmvnIucW3oQSvJafugKh+FmNTP
-         xvmzLcbitTCLg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1pZ5jd-0000iy-PL; Mon, 06 Mar 2023 08:58:17 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Georgi Djakov <djakov@kernel.org>
-Cc:     "Shawn Guo" <shawnguo@kernel.org>,
-        "Sascha Hauer" <s.hauer@pengutronix.de>,
-        "Pengutronix Kernel Team" <kernel@pengutronix.de>,
-        "Fabio Estevam" <festevam@gmail.com>,
-        "NXP Linux Team" <linux-imx@nxp.com>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Sylwester Nawrocki" <s.nawrocki@samsung.com>,
-        =?UTF-8?q?Artur=20=C5=9Awigo=C5=84?= <a.swigon@samsung.com>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        "Alim Akhtar" <alim.akhtar@samsung.com>,
-        "Thierry Reding" <thierry.reding@gmail.com>,
-        "Jonathan Hunter" <jonathanh@nvidia.com>, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2 23/23] interconnect: drop unused icc_link_destroy() interface
-Date:   Mon,  6 Mar 2023 08:56:51 +0100
-Message-Id: <20230306075651.2449-24-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230306075651.2449-1-johan+linaro@kernel.org>
-References: <20230306075651.2449-1-johan+linaro@kernel.org>
+        Mon, 6 Mar 2023 03:14:37 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98D7FCA1C
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 00:14:35 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id x3so34808850edb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 00:14:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678090474;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WhF4KrFqcJbSMrArGhXZMWlMUJL2MSMmf8H2b4xo83M=;
+        b=mZK+vEoyK3I5nbgQgsSWGv+ACXKR6Z7N+SPuspO5t7qs7iQV/Xc3bl6Qeb9ENbab02
+         WFYLlDTabX46bHOvNAEqz1JOc0KGRhCz8ene/N3HObvBW568N0uFYRs1y/YjWPt2AcTi
+         /PCPGhXRHmTlbIek6lvg4CPWRpEaPvXX4qdK6e2l5Xzxj2iCb5/+ThgxDEawdv4rv2ux
+         EyJhNBTzlyOXNsqSPFUfHaD5PMTYcD3o0jj9dlQM/PiPfM0uu5hiItZgZbML6dKP6Ky8
+         WGIOHJQzhP/VfHYxlL71DRpNVZgrzhMwxabj2t0xgfdX9sJGb1FpIJ2G91Zkl7APCCMe
+         +XfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678090474;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WhF4KrFqcJbSMrArGhXZMWlMUJL2MSMmf8H2b4xo83M=;
+        b=uJC/aVvXAr+e55AWeajN43fDcxXGMthyqM+c7aOVAzT2exZDGPWNI8uqGhm8nVIMgM
+         pdrkgiHbkPrHNbDBEHDj6V6VyPaxf4QiZBrg4Bnm0GWPog5IrU0v2hIL/nQdi96iaObZ
+         mBtQP3XdZ31Uu+lHnlxmVyqFbHI2BLdUi0V7RkH7Nic+6PX0pa9lUd2YkDzw5hF+RwGK
+         O9c2VEkrGRFbAUgmChc9NJ9sPVfaCLPFX7PWe81DDn28/L/xJF99YvWWGUCr7B4OHMK0
+         nHqt7NTQu0LUY1pVARmSrtfr4d8jySYmqRYc9nqYOp73G9G7uyOqDZoQu53OrdtvX7pZ
+         mGtA==
+X-Gm-Message-State: AO0yUKUFTn4gN1oqZ8GmVUqOcJz5FthYlCA+4lx6/+xDWjLhrmQZn5Io
+        6MH0RyDAba9RlVCRJdMYuBv8Ug==
+X-Google-Smtp-Source: AK7set+ccUGm/ekxar8jrwtdBdELFL4w2l8bZ9DCMJYVXL/cxUrmymd0+x67ZSd/62MNhKq1mn1+lQ==
+X-Received: by 2002:aa7:d683:0:b0:4ac:bbb4:9772 with SMTP id d3-20020aa7d683000000b004acbbb49772mr6410131edr.40.1678090474133;
+        Mon, 06 Mar 2023 00:14:34 -0800 (PST)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:d85d:5a4b:9830:fcfe])
+        by smtp.gmail.com with ESMTPSA id w26-20020a1709064a1a00b008c1952b63d8sm4247615eju.137.2023.03.06.00.14.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Mar 2023 00:14:33 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] arm64: dts: qcom: sdm845-db845c: drop empty node override
+Date:   Mon,  6 Mar 2023 09:14:29 +0100
+Message-Id: <20230306081430.28491-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that the link array is deallocated when destroying nodes and the
-explicit link removal has been dropped from the exynos driver there are
-no further users of and no need for the icc_link_destroy() interface.
+Drop empty override of pm8998_gpios.
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/interconnect/core.c           | 46 ---------------------------
- include/linux/interconnect-provider.h |  6 ----
- 2 files changed, 52 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index fd12f109c05e..6315d4256ac1 100644
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -862,52 +862,6 @@ int icc_link_create(struct icc_node *node, const int dst_id)
- }
- EXPORT_SYMBOL_GPL(icc_link_create);
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index acd4f9ca6c09..e14fe9bbb386 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -1135,10 +1135,6 @@ &qup_uart9_tx {
+ 	bias-disable;
+ };
  
--/**
-- * icc_link_destroy() - destroy a link between two nodes
-- * @src: pointer to source node
-- * @dst: pointer to destination node
-- *
-- * Return: 0 on success, or an error code otherwise
-- */
--int icc_link_destroy(struct icc_node *src, struct icc_node *dst)
--{
--	struct icc_node **new;
--	size_t slot;
--	int ret = 0;
+-&pm8998_gpios {
 -
--	if (IS_ERR_OR_NULL(src))
--		return -EINVAL;
+-};
 -
--	if (IS_ERR_OR_NULL(dst))
--		return -EINVAL;
--
--	mutex_lock(&icc_lock);
--
--	for (slot = 0; slot < src->num_links; slot++)
--		if (src->links[slot] == dst)
--			break;
--
--	if (WARN_ON(slot == src->num_links)) {
--		ret = -ENXIO;
--		goto out;
--	}
--
--	src->links[slot] = src->links[--src->num_links];
--
--	new = krealloc(src->links, src->num_links * sizeof(*src->links),
--		       GFP_KERNEL);
--	if (new)
--		src->links = new;
--	else
--		ret = -ENOMEM;
--
--out:
--	mutex_unlock(&icc_lock);
--
--	return ret;
--}
--EXPORT_SYMBOL_GPL(icc_link_destroy);
--
- /**
-  * icc_node_add() - add interconnect node to interconnect provider
-  * @node: pointer to the interconnect node
-diff --git a/include/linux/interconnect-provider.h b/include/linux/interconnect-provider.h
-index b9af9016a95e..e6d8aca6886d 100644
---- a/include/linux/interconnect-provider.h
-+++ b/include/linux/interconnect-provider.h
-@@ -118,7 +118,6 @@ int icc_std_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
- struct icc_node *icc_node_create(int id);
- void icc_node_destroy(int id);
- int icc_link_create(struct icc_node *node, const int dst_id);
--int icc_link_destroy(struct icc_node *src, struct icc_node *dst);
- void icc_node_add(struct icc_node *node, struct icc_provider *provider);
- void icc_node_del(struct icc_node *node);
- int icc_nodes_remove(struct icc_provider *provider);
-@@ -150,11 +149,6 @@ static inline int icc_link_create(struct icc_node *node, const int dst_id)
- 	return -ENOTSUPP;
- }
- 
--static inline int icc_link_destroy(struct icc_node *src, struct icc_node *dst)
--{
--	return -ENOTSUPP;
--}
--
- static inline void icc_node_add(struct icc_node *node, struct icc_provider *provider)
- {
- }
+ /* PINCTRL - additions to nodes defined in sdm845.dtsi */
+ &qup_spi0_default {
+ 	drive-strength = <6>;
 -- 
-2.39.2
+2.34.1
 
