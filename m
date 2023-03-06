@@ -2,157 +2,297 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AEE76AC437
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 16:00:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2214F6AC452
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 16:04:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229792AbjCFO75 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 09:59:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42814 "EHLO
+        id S230472AbjCFPEQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 10:04:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231190AbjCFO7p (ORCPT
+        with ESMTP id S229607AbjCFPEP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 09:59:45 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BAA52202B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 06:59:35 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id d36so9953208lfv.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 06:59:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678114773;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UB5v2RX+j52KB6eh5rlkxpiYT0kxV2odW5AsLehylHE=;
-        b=JkJQoAEOoT0EJWvMUm1p3O4ILrW2MG0eY0nRCc/uZtDAhje7A4Nk8wXJiVgAdiVnZ3
-         0hwKwd2y4O7a/MG22pbqL9jWkqT9wG+T/EiF9n/gECbnWRvXB6x/PjD1Zh1wEojlXtR7
-         WdNs41QHNiz9QhTVS2Th46wy6gb8XVftApjXz1BhTR3wtvSTXmVf+Fqss1YzfYJgrPm0
-         IH6gGnwhGIUMbqMLIc+enpxaAyMQb1eVi5jPG4vtTO0bOocu51uAvojNqC2i4W3hy0SJ
-         Qpy0xDbFiy4wRb5dmOk1SRq8Fcd3TzmTPLQdSTqWxNZMjsvCSkembelaJIlxoXVMu4F6
-         wmaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678114773;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UB5v2RX+j52KB6eh5rlkxpiYT0kxV2odW5AsLehylHE=;
-        b=UufGHSjXM97awkdFXNkjR8uYNWUxQMR00nmhbKqmmwp/LQ6qzq4IsxC3oJE/ZAsQAE
-         7TEmxgMMdOxwFITNR3xj28Gd8BuSeMhSuocnQTZn8YatP0Ml+Zz7sfAA5jTkmjFwbqyc
-         kGdr7V7ptQzR1xTFpklkiaXk9coGdXRJnON3vBknNFCqsnr/rgjS0Snhw9CLLktNVAj9
-         Bgf4ootmtISolCELBkUtPt9i8FicC8q+kBuaGhMXNfWRDNPl+qLIzvZ7McKNHNYonl3w
-         cpWFXqpCouZyLYZQF8bYIdW9oLEtcSRxqATnRUGfNLfls6pwpic/FoHDA5yypmGWUs21
-         93jA==
-X-Gm-Message-State: AO0yUKUO9mLXxVxdrdgShvrvET8lNh9BdySvvx6IDVKdU09uFJ+XU6Xd
-        DHjPy+7xoC0muDs5D2v5dxa1pg==
-X-Google-Smtp-Source: AK7set8ZWbOUzo0DgO03QfQEkl1/WMQa53Pglmv1mYEyANP/ITwKFhpjwVwPfYjweW6jSea/GJ+wUw==
-X-Received: by 2002:a05:6512:503:b0:4ae:8476:2df with SMTP id o3-20020a056512050300b004ae847602dfmr3021287lfb.10.1678114773354;
-        Mon, 06 Mar 2023 06:59:33 -0800 (PST)
-Received: from [192.168.1.101] (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id x8-20020ac25dc8000000b004db297957e8sm1689120lfq.305.2023.03.06.06.59.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Mar 2023 06:59:33 -0800 (PST)
-Message-ID: <de02c8af-7e20-a67c-a314-2944d755ec43@linaro.org>
-Date:   Mon, 6 Mar 2023 15:59:31 +0100
+        Mon, 6 Mar 2023 10:04:15 -0500
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6C7F1E5D5;
+        Mon,  6 Mar 2023 07:04:12 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1678115048; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=pGMr+NNICiymmqKaCk3a3F8vAlg21hMj3EX2VfFfcrT+DtcGCqAhVbRX/ka84yjxel
+    jNqn22q1+Wbv7wLfmPIJgainmUMFE9CeGPrPCIbcrDYRBAqzm+ejZho6E6u4PZD7933t
+    F0jb8xEvIEYaWHFfFLaTemsEQhoY5Y879YJxhc7P6aFYxS7Z4c6UdF/8SniSKcAzXP5N
+    veXsYB1SI/SFxwPOMDp5VLPQE0mos4gF5bCGYkqQJiJf82s7b1iFgu3V6FG1oCRn+wP/
+    KvQKAIDOiPP4CBEqNm98ZFJ003jXC5HKJbUveNwfeY5fa6RDV2EquV7PVJ+pSr/ogwpa
+    lo+A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1678115048;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=1GHCEc0q4f4WVSYLV+hSar8xE05C8WwGep10ieZ4YFE=;
+    b=cKj3Oy+RMgyO4IQyLQkn4IwO4D8ujHbf/QkwRt8fKlOnMZvUYD9KALk5azuxuOAVe+
+    E3F0EW9Rvexgw4AjPd5U25JYmi34gLdGrUKOGuys7xDymqSy9faAnt7I98YsT3e8qROb
+    UbdxmSREsesprWPmhemwhpdJWQt9jLE8zpJHkWnbAUV+yaOMbEFBDIyXXh5fNBGxaJ3J
+    pmMXRdqVJN3klBZcH0MDB3nHw26wZFB45pR9JMcKSgZPaHKnUR3iIyeWlUb30UPzNS7P
+    joAB91ulRhuRvpkK2BOFW17JvGziHOBJOZqFTXaHt4xBknfzAbF2IXLEPz51TIKRSUhQ
+    6HIw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo02
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1678115048;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=1GHCEc0q4f4WVSYLV+hSar8xE05C8WwGep10ieZ4YFE=;
+    b=bsUEpF0AkcdGbRizldeyejXMue/iK+hTQ4aC5di9/l8PgZPQCRKf3S/t6i+mIlUT8M
+    bTe6OiiSLWyEGVmaEna6wFTdboSvJPOTSIpmo6Q4TLdGDV7XpufFyycIxgYJ5kZBxByq
+    ER6Cx5SQncr5vAbtYQOL27gX6xF/ZlZ+3oSr+2y0VlJVNEBs4F2B70nFJZdH8SfLvLK4
+    IESvgPHIMnVEbpOJTBD4mHwr+KSdZAtzy+lGpRyvw7tVyHBkSG6ldQlNHbpAwWoytO1z
+    CJMvAtWj8auq2DQYaW6vXGrvm1dCZu9WzWBTe58TGO/Zhl3N4IqFLrS9JU2V3EmLqKw9
+    SBKQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKjXrKw8/qY="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.3.0 AUTH)
+    with ESMTPSA id jba5bez26F48JbV
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 6 Mar 2023 16:04:08 +0100 (CET)
+Date:   Mon, 6 Mar 2023 16:04:01 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        djakov@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, benl@squareup.com,
+        shawn.guo@linaro.org, fabien.parent@linaro.org, leo.yan@linaro.org,
+        dmitry.baryshkov@linaro.org, Jun Nie <jun.nie@linaro.org>,
+        James Willcox <jwillcox@squareup.com>,
+        Joseph Gates <jgates@squareup.com>,
+        Max Chen <mchen@squareup.com>, Zac Crosby <zac@squareup.com>,
+        Vincent Knecht <vincent.knecht@mailoo.org>
+Subject: Re: [PATCH v7 2/5] arm64: dts: qcom: Add msm8939 SoC
+Message-ID: <ZAYA4cdlpIfjdqt2@gerhold.net>
+References: <20230223153655.262783-1-bryan.odonoghue@linaro.org>
+ <20230223153655.262783-3-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3 9/9] arm64: dts: qcom: sa8775p-ride: enable the BT UART
- port
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230216125257.112300-1-brgl@bgdev.pl>
- <20230216125257.112300-10-brgl@bgdev.pl>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230216125257.112300-10-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230223153655.262783-3-bryan.odonoghue@linaro.org>
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Bryan,
 
+Thanks for making the changes. I only have some minor nitpicks now:
 
-On 16.02.2023 13:52, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Enable the high-speed UART port connected to the Bluetooth controller on
-> the sa8775p-adp development board.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
-Same comments as in the previous patch.
+On Thu, Feb 23, 2023 at 03:36:52PM +0000, Bryan O'Donoghue wrote:
+> Add msm8939 a derivative SoC of msm8916. This SoC contains a number of key
+> differences to msm8916.
+>
+> [...]
+> diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+> new file mode 100644
+> index 0000000000000..89a93f5e0a93b
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+> [...]
+> +		mba_mem: mba@8cb00000 {
+> +			no-map;
+> +			reg = <0x0 0x8cb00000 0x0 0x100000>;
+> +		};
 
-Konrad
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 33 +++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> index 6f96907b335c..1de3b9d4a05a 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> @@ -14,6 +14,7 @@ / {
->  	aliases {
->  		serial0 = &uart10;
->  		serial1 = &uart12;
-> +		serial2 = &uart17;
->  		i2c18 = &i2c18;
->  		spi16 = &spi16;
->  	};
-> @@ -89,6 +90,29 @@ qup_uart12_tx: qup-uart12-tx-state {
->  	qup_uart12_rx: qup-uart12-rx-state {
->  		pins = "gpio55";
->  		function = "qup1_se5";
-> +	};
+Nitpick: Please put no-map last for consistency.
+
+> [...]
+> +		qfprom: qfprom@5c000 {
+> +			compatible = "qcom,msm8916-qfprom", "qcom,qfprom";
+> +			reg = <0x0005c000 0x1000>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
 > +
-> +	qup_uart17_cts: qup-uart17-cts-state {
-> +		pins = "gpio91";
-> +		function = "qup2_se3";
-> +		bias-disable;
-> +	};
+> +			tsens_caldata: caldata@a0 {
+> +				reg = <0xa0 0x5c>;
+> +			};
+
+This is now unused and overlaps with the definitions below so I'd just
+drop it like in msm8916.dtsi.
+
 > +
-> +	qup_uart17_rts: qup0-uart17-rts-state {
-> +		pins = "gpio92";
-> +		function = "qup2_se3";
-> +		bias-pull-down;
-> +	};
+> +			tsens_base1: base1@a0 {
+> +				reg = <0xa0 0x1>;
+> +				bits = <0 8>;
+> +			};
 > +
-> +	qup_uart17_tx: qup0-uart17-tx-state {
-> +		pins = "gpio93";
-> +		function = "qup2_se3";
-> +		bias-pull-up;
-> +	};
+> +			tsens_s5_p1: s5-p1@a1 {
+> +				reg = <0xa1 0x1>;
+> +				bits = <0 6>;
+> +			};
+> [...]
+> +		tsens: thermal-sensor@4a9000 {
+> +			compatible = "qcom,msm8939-tsens", "qcom,tsens-v0_1";
+> +			reg = <0x004a9000 0x1000>, /* TM */
+> +			      <0x004a8000 0x1000>; /* SROT */
+> +			nvmem-cells = <&tsens_mode>,
+> +				      <&tsens_base1>, <&tsens_base2>,
+> +				      <&tsens_s0_p1>, <&tsens_s0_p2>,
+> +				      <&tsens_s1_p1>, <&tsens_s1_p2>,
+> +				      <&tsens_s2_p1>, <&tsens_s2_p2>,
+> +				      <&tsens_s3_p1>, <&tsens_s3_p2>,
+> +				      <&tsens_s4_p1>, <&tsens_s4_p2>,
+> +				      <&tsens_s4_p1>, <&tsens_s4_p2>,
+> +				      <&tsens_s5_p1>, <&tsens_s5_p2>,
+> +				      <&tsens_s6_p1>, <&tsens_s6_p2>,
+> +				      <&tsens_s7_p1>, <&tsens_s7_p2>,
+> +				      <&tsens_s8_p1>, <&tsens_s8_p2>;
+> +			nvmem-cell-names = "mode",
+> +					   "base1", "base2",
+> +					   "s0_p1", "s0_p2",
+> +					   "s1_p1", "s1_p2",
+> +					   "s2_p1", "s2_p2",
+> +					   "s3_p1", "s3_p2",
+> +					   "s4_p1", "s4_p2",
+> +					   "s4_p1", "s4_p2",
+
+s4_p1/p2 are specified twice, is this on purpose or accidental?
+
+> +					   "s5_p1", "s5_p2",
+> +					   "s6_p1", "s6_p2",
+> +					   "s7_p1", "s7_p2",
+> +					   "s8_p1", "s8_p2";
+> +			#qcom,sensors = <9>;
+> +			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow";
+> +			#thermal-sensor-cells = <1>;
+> +		};
+> [...]
+> +		usb: usb@78d9000 {
+> +			compatible = "qcom,ci-hdrc";
+> +			reg = <0x078d9000 0x200>,
+> +			      <0x078d9200 0x200>;
+> +			interrupts = <GIC_SPI 134 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&gcc GCC_USB_HS_AHB_CLK>,
+> +				 <&gcc GCC_USB_HS_SYSTEM_CLK>;
+> +			clock-names = "iface", "core";
+> +			assigned-clocks = <&gcc GCC_USB_HS_SYSTEM_CLK>;
+> +			assigned-clock-rates = <80000000>;
+> +			resets = <&gcc GCC_USB_HS_BCR>;
+> +			reset-names = "core";
+> +			#reset-cells = <1>;
+> +			phy_type = "ulpi";
+> +			dr_mode = "otg";
+
+Please add
+
+			hnp-disable;
+			srp-disable;
+			adp-disable;
+
+here for consistency with msm8916.dtsi. These are needed for correct
+behavior if you enable CONFIG_USB_OTG_FSM, see commit bfd5d21abcd5c
+("arm64: dts: qcom: msm8916: Move common USB properties to msm8916.dtsi")
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=bfd5d21abcd5c7941ad79b594f5f42e27496eb28
+
+> +			ahb-burst-config = <0>;
+> +			phy-names = "usb-phy";
+> +			phys = <&usb_hs_phy>;
+> +			status = "disabled";
 > +
-> +	qup_uart17_rx: qup0-uart17-rx-state {
-> +		pins = "gpio94";
-> +		function = "qup2_se3";
->  		bias-pull-down;
->  	};
->  };
-> @@ -109,6 +133,15 @@ &uart12 {
->  	status = "okay";
->  };
->  
-> +&uart17 {
-> +	pinctrl-0 = <&qup_uart17_cts>,
-> +		    <&qup_uart17_rts>,
-> +		    <&qup_uart17_tx>,
-> +		    <&qup_uart17_rx>;
-> +	pinctrl-names = "default";
-> +	status = "okay";
-> +};
+> +			ulpi {
+> +				usb_hs_phy: phy {
+> +					compatible = "qcom,usb-hs-phy-msm8916",
+> +						     "qcom,usb-hs-phy";
+> +					clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+> +						 <&gcc GCC_USB2A_PHY_SLEEP_CLK>;
+> +					clock-names = "ref", "sleep";
+> +					resets = <&gcc GCC_USB2A_PHY_BCR>, <&usb 0>;
+> +					reset-names = "phy", "por";
+> +					#phy-cells = <0>;
+> +					qcom,init-seq = /bits/ 8 <0x0 0x44>,
+> +								 <0x1 0x6b>,
+> +								 <0x2 0x24>,
+> +								 <0x3 0x13>;
+> +				};
+> +			};
+> +		};
 > +
->  &xo_board_clk {
->  	clock-frequency = <38400000>;
->  };
+> [...]
+> +		timer@b120000 {
+> +			compatible = "arm,armv7-timer-mem";
+> +			reg = <0x0b120000 0x1000>;
+
+This node needs to be reordered now, it should be below a53pll_c0.
+
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
+> +
+> +			frame@b121000 {
+> +				reg = <0x0b121000 0x1000>,
+> +				      <0x0b122000 0x1000>;
+> +				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
+> +					     <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <0>;
+> +			};
+> +
+> +			frame@b123000 {
+> +				reg = <0x0b123000 0x1000>;
+> +				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <1>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@b124000 {
+> +				reg = <0x0b124000 0x1000>;
+> +				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <2>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@b125000 {
+> +				reg = <0x0b125000 0x1000>;
+> +				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <3>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@b126000 {
+> +				reg = <0x0b126000 0x1000>;
+> +				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <4>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@b127000 {
+> +				reg = <0x0b127000 0x1000>;
+> +				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <5>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@b128000 {
+> +				reg = <0x0b128000 0x1000>;
+> +				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <6>;
+> +				status = "disabled";
+> +			};
+> +		};
+> +
+> +		pronto: remoteproc@a204000 {
+> +			compatible = "qcom,pronto-v2-pil", "qcom,pronto";
+> +			reg = <0x0a204000 0x2000>,
+> +			      <0x0a202000 0x1000>,
+> +			      <0x0a21b000 0x3000>;
+> +			reg-names = "ccu", "dxe", "pmu";
+
+and this node should be below usb/above intc (ordered by address).
+
+Thanks,
+Stephan
