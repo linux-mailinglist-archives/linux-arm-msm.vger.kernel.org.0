@@ -2,68 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D18586AB42A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 02:06:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E406B6AB446
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 02:21:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229639AbjCFBF7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Mar 2023 20:05:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40792 "EHLO
+        id S229613AbjCFBVf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Mar 2023 20:21:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229618AbjCFBF6 (ORCPT
+        with ESMTP id S229578AbjCFBVe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Mar 2023 20:05:58 -0500
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63D89DBC5
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Mar 2023 17:05:57 -0800 (PST)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-53852143afcso156109487b3.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Mar 2023 17:05:57 -0800 (PST)
+        Sun, 5 Mar 2023 20:21:34 -0500
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7A9DC642
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Mar 2023 17:21:31 -0800 (PST)
+Received: by mail-yb1-xb2b.google.com with SMTP id i6so6647008ybu.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Mar 2023 17:21:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=iXTV+ukgGZczlt36FuJ0b7ZG4x85hTYftSXbNYK5uHk=;
-        b=fOOImfhLfHXcFZcHu92d/lCr17JqQdY2T9stTHCH7RCjlnPcEe+0Gim2e4qVqB7Q94
-         YTNw/CJPWbXMVSE+dVYLjsVAutL13tUSdLxMda7s4ue9hqXTgoIkYaid7kABnWbflrA/
-         5N/xSm4uSKLHXmLMGOvHSR5aIGFeOqKW2R1hI/69DUyAG6aEGdf0x1CikYfw3QRXF6xh
-         wtjIoFXewVgyf2DAaERXmLSxfBc7xHMbUpnXZQCAGKl79UROkjytLsaq99JeNwHMW0HZ
-         dEXfp2GChOlWpDXDLJomKL/GREz5iDTfrkMSCN3poJ3Tw0sdW0mDFChSrHF/Cv/W7yZc
-         bm0Q==
+        bh=t4EaRQ3PQLnaSbIzJ1xDrG/yiuAekyCN/l27BB6BVow=;
+        b=hng/kQMZutgEdyE/gzZW30gqgQ7LhVkUP++nEdIxm37bN7/TPqJpom5c9XZhaF3KC3
+         C65H1wvNutb3l5fwFHyYHsqQAf+OoAgW8AAmWiweaxAbQWCCDuLArB73Wtifyx7rIi0X
+         GtV6s26Fvb2bfmz2QF9XXBCnfCA+TXvz8+/5yLs2b1gJGCgRvzZS9zrdLRwNZwxo9EGB
+         J4NZ1Y/lzgYfkpoQ1SZabVD3GOCw0vIfOZfN8lUwwKW0e77Xcn13T6TPNDscFNd2xWWA
+         BiFSyTmzY/GahaEP2InsRI+5MWzJ1B3eBOC/CdeuydrgLVpbtgOa8YkOF/pFrY+5btI/
+         2mNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=iXTV+ukgGZczlt36FuJ0b7ZG4x85hTYftSXbNYK5uHk=;
-        b=q47+Y/7x5w7XLcSHpeh9CMqhaq03V8vuchkSQOZGGG7I+ETbbrvoojwJWuEytw/SFQ
-         k+Xd2d1vPUf2+6kNCJj82pjsCRqiQik3uPeJ2uZDxVrzH7WHph3HamfC65n3JRtPndQR
-         eooev+QEgI3YwKSZ1vxDhV+zc4YBnGTYpLJJKfMyfJV0JpOIv40yDUTd+YIxkAd1iiAR
-         4BGq8vmwZPowBouHWH6yNbdVfloWAHWa/YxpxQrzJGbEc7c+ZyWElfqCGz1XKZJQfi6T
-         aPbLO7yFVyUBP+RL3YTzk9OKUo9iXvfIxcUr+K9ZxyFp2GgeNYRaulBEPFHej+Owaeyp
-         8fjg==
-X-Gm-Message-State: AO0yUKVMp+VmzB/ua+2xOB1/lmCXyAinpEq0Aao7NGH/R8f0sU+LRb4h
-        UoLBD6jd6J7JVghXuVDsoV2DYD4sECMuSAgW8c0Mtw==
-X-Google-Smtp-Source: AK7set+7lvIlBhLLvJXHzgbS8cubojx3XgaQg6Z+VarHhAQh/lbPyzWpzmdpJzUCNZx+ECPmZBjiRjLApaHWLmg+5DQ=
-X-Received: by 2002:a81:441e:0:b0:533:99bb:c299 with SMTP id
- r30-20020a81441e000000b0053399bbc299mr5626682ywa.3.1678064755110; Sun, 05 Mar
- 2023 17:05:55 -0800 (PST)
+        bh=t4EaRQ3PQLnaSbIzJ1xDrG/yiuAekyCN/l27BB6BVow=;
+        b=JNPBGsurJpD5GydxPiyXgugIZOadVfkEJ+OOP8M1Hn4LdMJcyq8D8EozpvbJBHDoto
+         dXPeOlT4YieYQgZ8SFhYKIMOQ5fL5Ngd9OJkn/X7v7bqB8ReLNar6Ax5Z2QiO1t4dxGz
+         nWUanHh4C+2Buz+AwTafJidpvNrIb0IpwkC1xbdEDBqoBJl8rOjVk14raw7AWwDn3J0D
+         sZPgG7QfONCLC1S2CpyA6lmippChe+g8lDC94uFmiXCUOYexx2rG4cm4J3Eq0jsJfgDk
+         eZLW6mJXemfR4UtqCc+5ubXT3/C/oIRU8kwlE6pubXdVrRGlsHADYoM6VWW1Qe0Z0/1c
+         IeXA==
+X-Gm-Message-State: AO0yUKUcCkhgVoLtu3Drgls524Qy/6DftwEf28DEcsCEfGjuSShEtPvc
+        o3Lwv1+lVXZkrOYPwo5bu8dYVsWB/SutMZ6wsKYiDw==
+X-Google-Smtp-Source: AK7set/GU8d4vjOxKd9fbYvSIG9uMb8Ul4SqQMbcOJrl45wmlirEe13RLR166rNZVHUvwShRO6tBgScmojzDuTIO1CU=
+X-Received: by 2002:a25:9b48:0:b0:a8a:a652:2a69 with SMTP id
+ u8-20020a259b48000000b00a8aa6522a69mr4075875ybo.10.1678065690998; Sun, 05 Mar
+ 2023 17:21:30 -0800 (PST)
 MIME-Version: 1.0
-References: <20230303-topic-rpmcc_sleep-v1-0-d9cfaf9b27a7@linaro.org> <20230303-topic-rpmcc_sleep-v1-2-d9cfaf9b27a7@linaro.org>
-In-Reply-To: <20230303-topic-rpmcc_sleep-v1-2-d9cfaf9b27a7@linaro.org>
+References: <20230303-topic-rpmcc_sleep-v1-0-d9cfaf9b27a7@linaro.org> <20230303-topic-rpmcc_sleep-v1-3-d9cfaf9b27a7@linaro.org>
+In-Reply-To: <20230303-topic-rpmcc_sleep-v1-3-d9cfaf9b27a7@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 6 Mar 2023 03:05:48 +0200
-Message-ID: <CAA8EJpoaaVoKqb4hZhahqyAH5C1zh8Z_GdUjaffGKsV2xQ25oQ@mail.gmail.com>
-Subject: Re: [PATCH RFT 02/20] clk: qcom: smd-rpm: Add .is_prepared hook
+Date:   Mon, 6 Mar 2023 03:21:24 +0200
+Message-ID: <CAA8EJpp6cxY5+L28qsTeXCmA31e4dv21u1Tz9SquAugaV+EqfQ@mail.gmail.com>
+Subject: Re: [PATCH RFT 03/20] clk: qcom: smd-rpm: Add support for keepalive votes
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>
+        Shawn Guo <shawn.guo@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -72,56 +74,102 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Sat, 4 Mar 2023 at 15:27, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >
-> From: Shawn Guo <shawn.guo@linaro.org>
+> Some bus clock should always have a minimum (19.2 MHz) vote cast on
+> them, otherwise the platform will fall apart, hang and reboot.
 >
-> The RPM clocks are enabled/disabled through clk framework prepare/unprepare
-> hooks.  Without .is_prepared hook, those unused RPM clocks will not be
-> disabled by core function clk_unprepare_unused_subtree(), because
-> clk_core_is_prepared() always returns 0.
+> Add support for specifying which clocks should be kept alive and
+> always keep a vote on XO_A to make sure the clock tree doesn't
+> collapse. This removes the need to keep a maximum vote that was
+> previously guaranteed by clk_smd_rpm_handoff.
 >
-> Add .is_prepared hook to clk_ops and return the clock prepare (enable)
-> state, so that those unused RPM clocks can be disabled by clk framework.
-
-Does it make any difference? Without this patch the clock framework
-depends on core->prepare_count to judge whether the clock should be
-unprepared. With this patch in place, it will depend on r->enabled,
-which is more or less the same thing.
-Probably there is one category, the prepared-but-not-enabled clocks.
-
+> This commit is a combination of existing (not-exactly-upstream) work
+> by Taniya Das, Shawn Guo and myself.
 >
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> [Konrad: rebase, don't duplicate the enable func]
+> Co-developed-by: Shawn Guo <shawn.guo@linaro.org>
+> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  drivers/clk/qcom/clk-smd-rpm.c | 2 ++
->  1 file changed, 2 insertions(+)
+>  drivers/clk/qcom/clk-smd-rpm.c | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
 >
 > diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
-> index ecacfbc4a16c..cce7daa97c1e 100644
+> index cce7daa97c1e..8e017c575361 100644
 > --- a/drivers/clk/qcom/clk-smd-rpm.c
 > +++ b/drivers/clk/qcom/clk-smd-rpm.c
-> @@ -438,6 +438,7 @@ static const struct clk_ops clk_smd_rpm_ops = {
->         .round_rate     = clk_smd_rpm_round_rate,
->         .recalc_rate    = clk_smd_rpm_recalc_rate,
->         .is_enabled     = clk_smd_rpm_is_enabled,
-> +       .is_prepared    = clk_smd_rpm_is_enabled,
+> @@ -4,6 +4,7 @@
+>   * Copyright (c) 2014, The Linux Foundation. All rights reserved.
+>   */
+>
+> +#include <linux/clk.h>
+>  #include <linux/clk-provider.h>
+>  #include <linux/err.h>
+>  #include <linux/export.h>
+> @@ -178,6 +179,8 @@ struct clk_smd_rpm_req {
+>  struct rpm_smd_clk_desc {
+>         struct clk_smd_rpm **clks;
+>         size_t num_clks;
+> +       struct clk_hw **keepalive_clks;
+> +       size_t num_keepalive_clks;
 >  };
 >
->  static const struct clk_ops clk_smd_rpm_branch_ops = {
-> @@ -445,6 +446,7 @@ static const struct clk_ops clk_smd_rpm_branch_ops = {
->         .unprepare      = clk_smd_rpm_unprepare,
->         .recalc_rate    = clk_smd_rpm_recalc_rate,
->         .is_enabled     = clk_smd_rpm_is_enabled,
-> +       .is_prepared    = clk_smd_rpm_is_enabled,
->  };
+>  static DEFINE_MUTEX(rpm_smd_clk_lock);
+> @@ -1278,6 +1281,7 @@ static int rpm_smd_clk_probe(struct platform_device *pdev)
+>         struct qcom_smd_rpm *rpm;
+>         struct clk_smd_rpm **rpm_smd_clks;
+>         const struct rpm_smd_clk_desc *desc;
+> +       struct clk_hw **keepalive_clks;
 >
->  DEFINE_CLK_SMD_RPM_BRANCH_A(bi_tcxo, QCOM_SMD_RPM_MISC_CLK, 0, 19200000);
+>         rpm = dev_get_drvdata(pdev->dev.parent);
+>         if (!rpm) {
+> @@ -1291,6 +1295,7 @@ static int rpm_smd_clk_probe(struct platform_device *pdev)
 >
-> --
-> 2.39.2
+>         rpm_smd_clks = desc->clks;
+>         num_clks = desc->num_clks;
+> +       keepalive_clks = desc->keepalive_clks;
 >
+>         for (i = 0; i < num_clks; i++) {
+>                 if (!rpm_smd_clks[i])
+> @@ -1321,6 +1326,24 @@ static int rpm_smd_clk_probe(struct platform_device *pdev)
+>         if (ret)
+>                 goto err;
+>
+> +       /* Leave a permanent active vote on clocks that require it. */
+> +       for (i = 0; i < desc->num_keepalive_clks; i++) {
+> +               if (WARN_ON(!keepalive_clks[i]))
+> +                       continue;
+> +
+> +               ret = clk_prepare_enable(keepalive_clks[i]->clk);
+> +               if (ret)
+> +                       return ret;
+
+Would it be better to use CLK_IS_CRITICAL instead? Using the existing
+API has a bonus that it is more visible compared to the ad-hoc
+solutions.
+
+> +
+> +               ret = clk_set_rate(keepalive_clks[i]->clk, 19200000);
+
+Don't we also need to provide a determine_rate() that will not allow
+one to set clock frequency below 19.2 MHz?
+
+> +               if (ret)
+> +                       return ret;
+> +       }
+> +
+> +       /* Keep an active vote on CXO in case no other driver votes for it. */
+> +       if (rpm_smd_clks[RPM_SMD_XO_A_CLK_SRC])
+> +               return clk_prepare_enable(rpm_smd_clks[RPM_SMD_XO_A_CLK_SRC]->hw.clk);
+> +
+>         return 0;
+>  err:
+>         dev_err(&pdev->dev, "Error registering SMD clock driver (%d)\n", ret);
 
 
--- 
+I have mixed feelings towards this patch (and the rest of the
+patchset). It looks to me like we are trying to patch an issue of the
+interconnect drivers (or in kernel configuration).
+
+
+--
 With best wishes
 Dmitry
