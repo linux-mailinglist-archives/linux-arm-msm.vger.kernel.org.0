@@ -2,95 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E5226AC07D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 14:13:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 59B706AC0CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Mar 2023 14:26:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231154AbjCFNNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 08:13:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50512 "EHLO
+        id S229486AbjCFN0p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 08:26:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231126AbjCFNNf (ORCPT
+        with ESMTP id S230023AbjCFN0o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 08:13:35 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05E16298C0
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 05:13:32 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B3351B80DFB
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 13:13:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7640AC433EF
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 13:13:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678108409;
-        bh=c1/PkYQJFzuTDFjpkgl5i1HEQUXSgPFfa0wleHHxPtw=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=eiGMV00tgURLStN3zlJYKcMsBGN09Ib0QE0oZ5GLbN/jXxFpapceaG+L2yvjF/req
-         MPvjeVPF+gf3vxJK8DCFWxWBlcn5a9OrS9+bngkmwzdHvrfpGKCnC5+4dlspbZIujw
-         c8nQc4ghWvdlomX42o2F1vtT0oiHpzpczG8mExDjL19eNi1EHGfywEGq6jVNd8oNrP
-         orIPK+FPRrWQ6ymPFO02rkjuOoj1SMX80/XVECHPMXG2Ci+agyKrb+0OtkQhhA0jZj
-         muZAUCzqdWRfb405bNY4Q4lxxPYAAHrXrzakhgSnyWW7z5oJATnRYDpwHLASqr3RB6
-         IW62cZKS/Wa+A==
-Received: by mail-pg1-f172.google.com with SMTP id bn17so5468837pgb.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 05:13:29 -0800 (PST)
-X-Gm-Message-State: AO0yUKUoRf2z3Ei+Dlpk3RmPtJMBz3aGoFpWyRTjr7EQ65JJmv7yR5hu
-        u4fWeAc25DUH+uh1fyvkuIwOKI4hsbwj7V5upW2HAw==
-X-Google-Smtp-Source: AK7set/csFkXt7yaspS+ia4wUJLHYUEqUnkqvAa+fGtX7XlJRt1POR5G7jC9fvxpdTnaBi4LsBGYhkAjjG8mgItZukA=
-X-Received: by 2002:a05:6a00:225a:b0:593:c9dd:9069 with SMTP id
- i26-20020a056a00225a00b00593c9dd9069mr4809418pfu.5.1678108409079; Mon, 06 Mar
- 2023 05:13:29 -0800 (PST)
+        Mon, 6 Mar 2023 08:26:44 -0500
+Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com [IPv6:2607:f8b0:4864:20::92b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35D842E0D4
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 05:26:40 -0800 (PST)
+Received: by mail-ua1-x92b.google.com with SMTP id m5so6383279uae.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 05:26:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1678109199;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MN/NRHsgi+29tfd9af/dsSJusS8NpVnuSBCAvZQTYLU=;
+        b=7EP5oRNffVWlv42EMexNJJHQGzZappwu9HafOabJl/FalPTaCDSc6GD9C6tzyDuNGG
+         C88uM05u6aD2iR4M0czzdAOiNBhyDeF0hK9qtEiyFNuSyB5J4DdCTT9ZcAQr1agz/ATn
+         EWXFAUiuNb/B9BZajYn6jZhJVqyJT0y9wsbGeJU1WxO573NA6fGK5O2szihp7tbLfjGe
+         6N47KmZMCXxsnYazY1XOUmZD7UF4Q6yjthz/kyCIrpDu+bpyiQjcxlKiYIA/cGcA8wyN
+         xRfiz9nQtkr2hAuyVw4/TnK0niUW0fWifHGLkEroY+fBPU52nbKpuEVsCdVGZ1VmlbIi
+         MPkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678109199;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MN/NRHsgi+29tfd9af/dsSJusS8NpVnuSBCAvZQTYLU=;
+        b=K33WwAPZOjmydZW5/sABzkahvM8TDGJX/3+7f2VvuDo/OefvRiQxj3KNmJMct+qoN2
+         2ZIDidl31GVQ/vDqOoA0SgH4iVCx9o9yemQqVFRe4FF5M1Eifk4rLhYLWS82AjNQkx+0
+         jOu5UGTS8zXECZT5RBRcY7hmO7DucbV5yTzd6AcHfEamGw67IP/wJEENwTk/rIxLw8eG
+         6o7uWFEhxWAqU6ysIWp3pG1nWiffFZ/Dw5WulT8nQsil0khnS3AsvmOoN1NqYzhxbFYW
+         l0PqnIIPYIumepNYpsp3MCmqTZz5xR9CA12gw2/AGJ1LBlhxbyW+4HAoVf37ObnsF/tX
+         xqCg==
+X-Gm-Message-State: AO0yUKVIvFzlDFj++PvRHoVuYWKQpBww0PcindZ9CxZTYMy+DWX4FABn
+        C7g7/2SEjongS10nopHcqqNukOQrOEtnVV/1W18xzhbGIxHKCBM0
+X-Google-Smtp-Source: AK7set9lpQfCvp9mgRUIQ9scJCpMlxJQDLmgtz3ZR8uJabc44QFXsFRgSzH64Or4jbCgc6vGisUQldmtXjT6xC5FvXU=
+X-Received: by 2002:a1f:4a81:0:b0:410:4a2c:1e9a with SMTP id
+ x123-20020a1f4a81000000b004104a2c1e9amr6165830vka.1.1678109199261; Mon, 06
+ Mar 2023 05:26:39 -0800 (PST)
 MIME-Version: 1.0
-References: <20230302155353.3361129-1-bryan.odonoghue@linaro.org>
-In-Reply-To: <20230302155353.3361129-1-bryan.odonoghue@linaro.org>
-From:   Robert Foss <rfoss@kernel.org>
-Date:   Mon, 6 Mar 2023 14:13:17 +0100
-X-Gmail-Original-Message-ID: <CAN6tsi6H3X5owut3QvniTs-yt-jRomPxB_vYfrJCKzTbvrja1Q@mail.gmail.com>
-Message-ID: <CAN6tsi6H3X5owut3QvniTs-yt-jRomPxB_vYfrJCKzTbvrja1Q@mail.gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: Add myself as CAMSS maintainer
-To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc:     todor.too@gmail.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, alex.elder@linaro.org
+References: <20230214092713.211054-1-brgl@bgdev.pl> <20230214092713.211054-3-brgl@bgdev.pl>
+In-Reply-To: <20230214092713.211054-3-brgl@bgdev.pl>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Mon, 6 Mar 2023 14:26:28 +0100
+Message-ID: <CAMRc=McU8RfXirCS=ErjVeRcXwVPJ9szePTFQ-foOKoP88KQZQ@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: add initial support for qcom sa8775p-ride
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 2, 2023 at 5:03=E2=80=AFPM Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
+On Tue, Feb 14, 2023 at 10:27=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl=
+> wrote:
 >
-> I discussed with Robert a few ago lending a hand with CAMSS. Following up
-> on that discussion, I'm happy to help.
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-
+> This adds basic support for the Qualcomm sa8775p platform and the
+> reference board: sa8775p-ride. The dt files describe the basics of the
+> SoC and enable booting to shell.
+>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  MAINTAINERS | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 409eadfba007a..ebb0228eb4ea1 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -17156,6 +17156,7 @@ F:      drivers/net/wwan/qcom_bam_dmux.c
->  QUALCOMM CAMERA SUBSYSTEM DRIVER
->  M:     Robert Foss <rfoss@kernel.org>
->  M:     Todor Tomov <todor.too@gmail.com>
-> +M:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->  L:     linux-media@vger.kernel.org
->  S:     Maintained
->  F:     Documentation/admin-guide/media/qcom_camss.rst
-> --
-> 2.39.2
->
+
+Bjorn,
+
+Now that the merge window is closed, could you pick this up into your tree?
+
+Thanks,
+Bartosz
