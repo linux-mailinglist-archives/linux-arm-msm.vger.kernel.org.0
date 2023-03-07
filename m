@@ -2,138 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A36A36AE58E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 16:57:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B25076AE5C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 17:03:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231422AbjCGP5A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 10:57:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43316 "EHLO
+        id S231422AbjCGQDZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 11:03:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230112AbjCGP43 (ORCPT
+        with ESMTP id S229899AbjCGQCy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 10:56:29 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A87992728
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 07:55:47 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id j19-20020a05600c191300b003eb3e1eb0caso10727929wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 07:55:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678204546;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P15p35qbKcAqVqsT9ttAQG6NVrmbwLtDEUCun7OYD7M=;
-        b=xG1h0yEbTGisiKYmRDyUt8v7SeyNiOl2wgMRcDZpR5hlJwpb/2UoUsll2kLQyml10I
-         mQjMYhtx6jahxTEtVgY+PGUg31xcm4N1EjRDKnoAohkSG3upA2lEprddJS1yNWjLTrwS
-         dw+1AmXgku8l64hHuiJsasVntg4iljribigsUpuihJLdwe3Rck8lB7AlqC7feO0bBkpJ
-         TUDkrZ8NYgWbJbhaVWU9VSLPXdoSmTn/dmts4wmRgeTmtfJgzAARoaKN4YCo0OV7zxRS
-         BNRsQgjfy4uBpSsqICwRDTh24Gm4AfFAv7j1vt5I+9G8cmsfDYHprb70kX7aanGixb9v
-         ikfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678204546;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P15p35qbKcAqVqsT9ttAQG6NVrmbwLtDEUCun7OYD7M=;
-        b=yfCaLpUrJSW7orvXx/pg3GATFK+pUzRr8a/JlzS9MX1y+qh0Vo5Wm/HlsEKpfmsSRb
-         8HlQVsakirjKA7iWZvN58AtJqNSGvtd250uWt2nTZ09VcDl9aUbCdDsOmGYq7LLSXOJ9
-         sd2+lBO10XHO1z7EDHvIRwxmmgjDoXWff4e+hVyZpiP0bRrDWgjNHcuJM70bJYZ4Hx0V
-         tq325yhGHuJtZWVMIjfkXO5UPIAlhf7dxMfN5eMGBvmG+qg/JKyBEIiMRQMhUKSipHPM
-         6PRBIwFgqYnjkxbKMA6T8vxjHKSSbc55zbf2yCueoHN4fQtEyiNnydttGIrNpUmFPNNA
-         v+Zg==
-X-Gm-Message-State: AO0yUKUvphU77EbWFrXryaXxYFCFG0AIGNIxbvVavLLs2VsIDDfqcfWq
-        55qMZt7+/R4ZsUvc353RWDtSuw==
-X-Google-Smtp-Source: AK7set9f/DHvbv2XVBWNvZ1EineBTV+wgavrkys7oed6bmp6CNQz1UnFeQUBASHcvALv/DpMVcfJHw==
-X-Received: by 2002:a05:600c:1c1f:b0:3eb:3b7e:7b89 with SMTP id j31-20020a05600c1c1f00b003eb3b7e7b89mr13606520wms.3.1678204546445;
-        Tue, 07 Mar 2023 07:55:46 -0800 (PST)
-Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id t14-20020a05600c450e00b003e1fee8baacsm18115389wmo.25.2023.03.07.07.55.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 07:55:45 -0800 (PST)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     agross@kernel.org, andersson@kernel.org, gregkh@linuxfoundation.org
-Cc:     konrad.dybcio@linaro.org, jirislaby@kernel.org,
-        bartosz.golaszewski@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 2/2] tty: serial: qcom-geni-serial: check for valid size before starting dma
-Date:   Tue,  7 Mar 2023 15:55:42 +0000
-Message-Id: <20230307155543.31021-2-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20230307155543.31021-1-srinivas.kandagatla@linaro.org>
-References: <20230307155543.31021-1-srinivas.kandagatla@linaro.org>
+        Tue, 7 Mar 2023 11:02:54 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5F497FD4D;
+        Tue,  7 Mar 2023 08:00:40 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 9B867CE1C17;
+        Tue,  7 Mar 2023 16:00:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A69C433EF;
+        Tue,  7 Mar 2023 16:00:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678204833;
+        bh=XELSBi6E3+FbM/LiXAELFwCSOKXenhaobdNpjoZaK00=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XzCfG+RbhV7fm4X9jGeuuYZ7Dwg/nLxgYz3b192FZwW0x7HfiQxE67RBV3apXnLsc
+         GmEZPntEaMxS1mHW1UiRtDnCD/+YdcgjHNM8UXEcNId/Tm75RtRwyEJx4Q8vcjU9Z8
+         6ZPFwQU/PcaPr0DZuEK11FbgDf7ubX5YuF+qQ0eGGEK6ggoR00RhVZE5tjgNHc8MO9
+         qL6U91zjPS5wYLBx6WdbtJdmthaakLZVWCK1PyoOAVO/JRv69gjqTuwoFp9/Vy2dxR
+         knYGWBBgk2fbrb3R8hBFSea/pw0ZOCqnlQEtb04UQm0YJ13k3pfptTx/Tv+Z3qLPXy
+         sk8V98dtkyISA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pZZka-0000Od-JP; Tue, 07 Mar 2023 17:01:16 +0100
+Date:   Tue, 7 Mar 2023 17:01:16 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        linux-serial@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        kgdb-bugreport@lists.sourceforge.net,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] tty: serial: qcom-geni-serial: Fix kdb/kgdb after
+ port shutdown (again)
+Message-ID: <ZAdfzHnRtBtcDbKK@hovoldconsulting.com>
+References: <20230307073155.1.Iaab0159b8d268060a0e131ebb27125af4750ef99@changeid>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230307073155.1.Iaab0159b8d268060a0e131ebb27125af4750ef99@changeid>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Check if there are valid length of bytes to transfer before starting dma.
+On Tue, Mar 07, 2023 at 07:32:11AM -0800, Douglas Anderson wrote:
+> Commit d8aca2f96813 ("tty: serial: qcom-geni-serial: stop operations
+> in progress at shutdown") was basically a straight revert of the
+> commit it claims to fix without any explanation of why the problems
+> talked about in the original patch were no longer relevant. Indeed,
+> commit d8aca2f96813 ("tty: serial: qcom-geni-serial: stop operations
+> in progress at shutdown") re-introduces the same problem that commit
+> e83766334f96 ("tty: serial: qcom_geni_serial: No need to stop tx/rx on
+> UART shutdown") fixed.
+> 
+> The problems are very easy to see by simply doing this on a
+> sc7180-based Chromebook:
+> 
+> 1. Boot in developer mode with serial console enabled and kdb setup on
+>    the serial console.
+> 2. via ssh: stop console-ttyMSM0; echo g > /proc/sysrq-trigger
+> 
+> When you do the above you'll see the "kdb" prompt printed on the
+> serial console but be unable to interact with it.
+> 
+> Let's fix the problem again by noting that the console port is never
+> configured in DMA mode and thus we don't need to stop things for the
+> console.
+> 
+> Fixes: d8aca2f96813 ("tty: serial: qcom-geni-serial: stop operations in progress at shutdown")
 
-without this check we can see below kernel warning when we try to map a zero size buffers.
+The offending commit broke serial console more generally by breaking TX
+and thus hanging the system when stopping the getty on reboot.
 
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 0 at drivers/iommu/dma-iommu.c:1046 iommu_dma_unmap_page+0xe0/0xfc
-Modules linked in:
-CPU: 0 PID: 0 Comm: swapper/0 Tainted: G        W          6.3.0-rc1-dirty #347
-Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
-pstate: 804000c5 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : iommu_dma_unmap_page+0xe0/0xfc
-lr : iommu_dma_unmap_page+0x38/0xfc
-...
-Call trace:
- iommu_dma_unmap_page+0xe0/0xfc
- dma_unmap_page_attrs+0x30/0x1ec
- geni_se_tx_dma_unprep+0x58/0x80
- qcom_geni_serial_isr+0x350/0x750
- __handle_irq_event_percpu+0x58/0x148
- handle_irq_event_percpu+0x18/0x4c
- handle_irq_event+0x48/0x88
- handle_fasteoi_irq+0xb0/0x130
- generic_handle_domain_irq+0x2c/0x44
- gic_handle_irq+0xd4/0x140
- call_on_irq_stack+0x24/0x4c
- do_interrupt_handler+0x80/0x84
- el1_interrupt+0x38/0x6c
- el1h_64_irq_handler+0x18/0x24
- el1h_64_irq+0x64/0x68
- cpuidle_enter_state+0x1e4/0x310
- cpuidle_enter+0x3c/0x54
- call_cpuidle+0x1c/0x40
- do_idle+0x204/0x260
- cpu_startup_entry+0x28/0x2c
- kernel_init+0x0/0x12c
- arch_post_acpi_subsys_init+0x0/0x8
- start_kernel+0x3cc/0x74c
- __primary_switched+0xbc/0xc4
+The underlying bug has been there since this driver was first merged,
+and as fixing it properly is going to be a bit involved, I was about to
+post a patch equivalent to this one to fix the immediate regression and
+get us back to status quo.
 
-Fixes: 2aaa43c70778 ("tty: serial: qcom-geni-serial: add support for serial engine DMA")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- drivers/tty/serial/qcom_geni_serial.c | 3 +++
- 1 file changed, 3 insertions(+)
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 5972b5c317d3..bb63a00f4c07 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -637,6 +637,9 @@ static void qcom_geni_serial_start_tx_dma(struct uart_port *uport)
- 
- 	xmit_size = CIRC_CNT_TO_END(xmit->head, xmit->tail, UART_XMIT_SIZE);
- 
-+	if (!xmit_size)
-+		return;
-+
- 	qcom_geni_serial_setup_tx(uport, xmit_size);
- 
- 	ret = geni_se_tx_dma_prep(&port->se, &xmit->buf[xmit->tail],
--- 
-2.21.0
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
+> ---
+> 
+>  drivers/tty/serial/qcom_geni_serial.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index d69592e5e2ec..74a0e074c2de 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -1070,8 +1070,10 @@ static int setup_fifos(struct qcom_geni_serial_port *port)
+>  static void qcom_geni_serial_shutdown(struct uart_port *uport)
+>  {
+>  	disable_irq(uport->irq);
+> -	qcom_geni_serial_stop_tx(uport);
+> -	qcom_geni_serial_stop_rx(uport);
+> +	if (!uart_console(uport)) {
+> +		qcom_geni_serial_stop_tx(uport);
+> +		qcom_geni_serial_stop_rx(uport);
+> +	}
+>  }
+>  
+>  static int qcom_geni_serial_port_setup(struct uart_port *uport)
+
+Johan
