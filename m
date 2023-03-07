@@ -2,127 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B25076AE5C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 17:03:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E289D6AE5E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 17:07:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231422AbjCGQDZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 11:03:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51584 "EHLO
+        id S230210AbjCGQHE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 11:07:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229899AbjCGQCy (ORCPT
+        with ESMTP id S230248AbjCGQGm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 11:02:54 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5F497FD4D;
-        Tue,  7 Mar 2023 08:00:40 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 9B867CE1C17;
-        Tue,  7 Mar 2023 16:00:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A69C433EF;
-        Tue,  7 Mar 2023 16:00:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678204833;
-        bh=XELSBi6E3+FbM/LiXAELFwCSOKXenhaobdNpjoZaK00=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XzCfG+RbhV7fm4X9jGeuuYZ7Dwg/nLxgYz3b192FZwW0x7HfiQxE67RBV3apXnLsc
-         GmEZPntEaMxS1mHW1UiRtDnCD/+YdcgjHNM8UXEcNId/Tm75RtRwyEJx4Q8vcjU9Z8
-         6ZPFwQU/PcaPr0DZuEK11FbgDf7ubX5YuF+qQ0eGGEK6ggoR00RhVZE5tjgNHc8MO9
-         qL6U91zjPS5wYLBx6WdbtJdmthaakLZVWCK1PyoOAVO/JRv69gjqTuwoFp9/Vy2dxR
-         knYGWBBgk2fbrb3R8hBFSea/pw0ZOCqnlQEtb04UQm0YJ13k3pfptTx/Tv+Z3qLPXy
-         sk8V98dtkyISA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pZZka-0000Od-JP; Tue, 07 Mar 2023 17:01:16 +0100
-Date:   Tue, 7 Mar 2023 17:01:16 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        linux-serial@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        kgdb-bugreport@lists.sourceforge.net,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] tty: serial: qcom-geni-serial: Fix kdb/kgdb after
- port shutdown (again)
-Message-ID: <ZAdfzHnRtBtcDbKK@hovoldconsulting.com>
-References: <20230307073155.1.Iaab0159b8d268060a0e131ebb27125af4750ef99@changeid>
+        Tue, 7 Mar 2023 11:06:42 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1FBBE041
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 08:04:50 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 327Db6NY022179;
+        Tue, 7 Mar 2023 16:04:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=O/CGX32N4Yo644oMTGLxLhdR0RnXuXD+8Bm6FtKxLm4=;
+ b=UAImtWI9jYrD89AYI1w/qlx2UpXifUxGTaxkRLy88eeaHBhDBDQASCQ0RP2e+LKCipnV
+ 3mK6vMRDruq0xJbMCgve9lG1DYJo61adWeSfNiZ137NeJinnTd61jQZW4syFWzDOEkQD
+ vLROGeewoeAGYZsvXtJH19agRR5ATZElk4/Cecito4GXnZt3ZYJDOS+7BfImCEVETUTM
+ 7E0WeSAod4qP8vTHrUaXIIDTIqHZVOZD1rTF1xUYURJuZlVkhBiwz2gSj11KZTOX1L0z
+ WFlnZpQY7vyLTNMMjaSatw/Ij+JXEUF6e1N5f0tyO1ZvCSpnZ73LGvQ+/j9XNQxQAejb zA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p5ukn2198-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 07 Mar 2023 16:04:40 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 327G4eSa004543
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 7 Mar 2023 16:04:40 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 7 Mar 2023
+ 08:04:39 -0800
+Message-ID: <a2a59236-302c-80f4-b4db-f3c704edbdd0@quicinc.com>
+Date:   Tue, 7 Mar 2023 09:04:38 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230307073155.1.Iaab0159b8d268060a0e131ebb27125af4750ef99@changeid>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] bus: mhi: ep: Demote unsupported channel error log to
+ debug
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>
+References: <20230307074248.86731-1-manivannan.sadhasivam@linaro.org>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20230307074248.86731-1-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: piayg_1LGFh7rbds7HgVU9E71jV7tYRX
+X-Proofpoint-GUID: piayg_1LGFh7rbds7HgVU9E71jV7tYRX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-07_11,2023-03-07_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 mlxscore=0 mlxlogscore=880 spamscore=0 bulkscore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 malwarescore=0 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303070145
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 07, 2023 at 07:32:11AM -0800, Douglas Anderson wrote:
-> Commit d8aca2f96813 ("tty: serial: qcom-geni-serial: stop operations
-> in progress at shutdown") was basically a straight revert of the
-> commit it claims to fix without any explanation of why the problems
-> talked about in the original patch were no longer relevant. Indeed,
-> commit d8aca2f96813 ("tty: serial: qcom-geni-serial: stop operations
-> in progress at shutdown") re-introduces the same problem that commit
-> e83766334f96 ("tty: serial: qcom_geni_serial: No need to stop tx/rx on
-> UART shutdown") fixed.
+On 3/7/2023 12:42 AM, Manivannan Sadhasivam wrote:
+> Not all MHI endpoints will support all available channels. Most of them
+> support only a selected number of channels based on the implementations.
+> In those cases, it is not needed to print error messages in the endpoint.
+> So let's demote the error log to debug.
 > 
-> The problems are very easy to see by simply doing this on a
-> sc7180-based Chromebook:
-> 
-> 1. Boot in developer mode with serial console enabled and kdb setup on
->    the serial console.
-> 2. via ssh: stop console-ttyMSM0; echo g > /proc/sysrq-trigger
-> 
-> When you do the above you'll see the "kdb" prompt printed on the
-> serial console but be unable to interact with it.
-> 
-> Let's fix the problem again by noting that the console port is never
-> configured in DMA mode and thus we don't need to stop things for the
-> console.
-> 
-> Fixes: d8aca2f96813 ("tty: serial: qcom-geni-serial: stop operations in progress at shutdown")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-The offending commit broke serial console more generally by breaking TX
-and thus hanging the system when stopping the getty on reboot.
+Makes sense to me.
 
-The underlying bug has been there since this driver was first merged,
-and as fixing it properly is going to be a bit involved, I was about to
-post a patch equivalent to this one to fix the immediate regression and
-get us back to status quo.
-
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-
-> ---
-> 
->  drivers/tty/serial/qcom_geni_serial.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index d69592e5e2ec..74a0e074c2de 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -1070,8 +1070,10 @@ static int setup_fifos(struct qcom_geni_serial_port *port)
->  static void qcom_geni_serial_shutdown(struct uart_port *uport)
->  {
->  	disable_irq(uport->irq);
-> -	qcom_geni_serial_stop_tx(uport);
-> -	qcom_geni_serial_stop_rx(uport);
-> +	if (!uart_console(uport)) {
-> +		qcom_geni_serial_stop_tx(uport);
-> +		qcom_geni_serial_stop_rx(uport);
-> +	}
->  }
->  
->  static int qcom_geni_serial_port_setup(struct uart_port *uport)
-
-Johan
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
