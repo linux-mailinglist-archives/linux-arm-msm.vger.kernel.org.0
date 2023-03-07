@@ -2,83 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FEEC6AD67B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 05:44:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B6D456AD687
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 05:47:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230158AbjCGEoW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 23:44:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58664 "EHLO
+        id S229579AbjCGErf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 23:47:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230209AbjCGEoL (ORCPT
+        with ESMTP id S230211AbjCGEre (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 23:44:11 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BEAB367C0;
-        Mon,  6 Mar 2023 20:43:45 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3274KHuj017089;
-        Tue, 7 Mar 2023 04:43:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=bV/tTebdqkEC/fcXxVlgJIGBuJKm7eTXWETRWlyJ25k=;
- b=XS8CbBRigRuAraGjLBYVMlKphaKmgcjDQ0Brl5ZOkp646NGpOCXCXyl1AwJqW/+II4pl
- gxNbhn3LN7iKpC68ybhraFx7vyo+jGAtMUsnTO/xs69ZZ1HJYcBl2p/akX9liBgz54mJ
- 5kU5D+Sp3EnVNYMiU44rbqVXyNcoKhcWzutdCMkM9wWVKOARe/tyDOhO/hTpbnK1tess
- 6s8+waSQAHcFcErD92r6m4wqkmw+HpS6i6th5Ek13Uq6K1FcmsVUtf0yZcAxx9Dg/uMk
- YyisVml3dm984D4YyZBiMhuIP1SRMp7dk87XIXIGeQ28nf9G4KvJnzv7+lLsHS1n5+IX LQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p5nkw966w-1
+        Mon, 6 Mar 2023 23:47:34 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7227337F3E;
+        Mon,  6 Mar 2023 20:47:11 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3272TPTg011713;
+        Tue, 7 Mar 2023 04:46:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=DKvqvzb5WzxlmzYw8eEdTTMow8wfzTGqnqd88w9RdPQ=;
+ b=AWPH2CqvNANYZlAmFyh/l7tPJ4CU1yTBqCuOvoA9V+4CXMCG4GXrIsDgDoZ/ukukGXku
+ TZ8dkIn+PxnsMpTK2cIBdxuECevnYgwPE7I7V7eu2HAFFIg4VN+VG7vgagvFWM9YT3hg
+ uGZ6HS6QVECq3OSYUublYgOpWTSB+jguxYmBfCiiRpgfNRzWwqNA6gkfllJiRrtM4RPj
+ mYYI4EDex4i70YlXUKoPiFgpizTLxuF3WSHLACWhYIYmvfS5wS+ZN2wRZiA/VwaAUhdY
+ g/MllHEX9uc6kyJNBM1aw041GVeXy3OPrE8xuNb/ARjlaD5O69Olf7nMGPd3d370SXGa 1A== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p5rqjrr8y-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 07 Mar 2023 04:43:19 +0000
+        Tue, 07 Mar 2023 04:46:02 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3274hIwX029795
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3274k1Mj020082
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 7 Mar 2023 04:43:18 GMT
-Received: from mmanikan-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Mon, 6 Mar 2023 20:43:11 -0800
-From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <jassisinghbrar@gmail.com>,
-        <mathieu.poirier@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <quic_mmanikan@quicinc.com>,
-        <quic_gurus@quicinc.com>, <loic.poulain@linaro.org>,
-        <quic_eberman@quicinc.com>, <robimarko@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_poovendh@quicinc.com>
-Subject: [PATCH 11/11] arm64: dtsi: qcom: ipq9574: Add nodes to bring up multipd
-Date:   Tue, 7 Mar 2023 10:11:37 +0530
-Message-ID: <1678164097-13247-12-git-send-email-quic_mmanikan@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
-References: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
+        Tue, 7 Mar 2023 04:46:01 GMT
+Received: from [10.50.8.76] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 6 Mar 2023
+ 20:45:55 -0800
+Message-ID: <3d0315fa-14ca-dc34-81ae-467d9ed5133d@quicinc.com>
+Date:   Tue, 7 Mar 2023 10:15:45 +0530
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] media: venus: dec: Fix capture formats enumeration order
+Content-Language: en-US
+To:     Javier Martinez Canillas <javierm@redhat.com>,
+        Jordan Crouse <jorcrous@amazon.com>
+CC:     <linux-kernel@vger.kernel.org>, Albert Esteve <aesteve@redhat.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Sergio Lopez <slp@redhat.com>,
+        Enric Balletbo i Serra <eballetb@redhat.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>
+References: <20230210081835.2054482-1-javierm@redhat.com>
+ <20230303220918.qr5ydbin3nye3qtz@amazon.com>
+ <87h6uydwel.fsf@minerva.mail-host-address-is-not-set>
+From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <87h6uydwel.fsf@minerva.mail-host-address-is-not-set>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: qPS7C2bFnGGR52C9N5WSF0b_6SJO9qhe
-X-Proofpoint-ORIG-GUID: qPS7C2bFnGGR52C9N5WSF0b_6SJO9qhe
+X-Proofpoint-ORIG-GUID: 0bLYU3qYMLhLGdt-CXXjJfU1If5MXsqK
+X-Proofpoint-GUID: 0bLYU3qYMLhLGdt-CXXjJfU1If5MXsqK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-03-06_14,2023-03-06_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- adultscore=0 malwarescore=0 mlxlogscore=666 lowpriorityscore=0
- suspectscore=0 mlxscore=0 phishscore=0 impostorscore=0 priorityscore=1501
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303070041
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ priorityscore=1501 clxscore=1011 lowpriorityscore=0 adultscore=0
+ mlxscore=0 spamscore=0 suspectscore=0 bulkscore=0 impostorscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303070042
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,183 +90,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable nodes required for multipd remoteproc bring up.
 
-Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 145 ++++++++++++++++++++++++++
- 1 file changed, 145 insertions(+)
+On 3/6/2023 3:38 PM, Javier Martinez Canillas wrote:
+> Jordan Crouse <jorcrous@amazon.com> writes:
+>
+> Hello Jordan,
+>
+>> On Fri, Feb 10, 2023 at 09:18:35AM +0100, Javier Martinez Canillas wrote:
+>>> Commit 9593126dae3e ("media: venus: Add a handling of QC08C compressed
+>>> format") and commit cef92b14e653 ("media: venus: Add a handling of QC10C
+>>> compressed format") added support for the QC08C and QC10C compressed
+>>> formats respectively.
+>>>
+>>> But these also caused a regression, because the new formats where added
+>>> at the beginning of the vdec_formats[] array and the vdec_inst_init()
+>>> function sets the default format output and capture using fixed indexes
+>>> of that array:
+>>>
+>>> static void vdec_inst_init(struct venus_inst *inst)
+>>> {
+>>> ...
+>>> 	inst->fmt_out = &vdec_formats[8];
+>>> 	inst->fmt_cap = &vdec_formats[0];
+>>> ...
+>>> }
+>>>
+>>> Since now V4L2_PIX_FMT_NV12 is not the first entry in the array anymore,
+>>> the default capture format is not set to that as it was done before.
+>>>
+>>> Both commits changed the first index to keep inst->fmt_out default format
+>>> set to V4L2_PIX_FMT_H264, but did not update the latter to keep .fmt_out
+>>> default format set to V4L2_PIX_FMT_NV12.
+>>>
+>>> Rather than updating the index to the current V4L2_PIX_FMT_NV12 position,
+>>> let's reorder the entries so that this format is the first entry again.
+>>>
+>>> This would also make VIDIOC_ENUM_FMT report the V4L2_PIX_FMT_NV12 format
+>>> with an index 0 as it did before the QC08C and QC10C formats were added.
+>>>
+>>> Fixes: 9593126dae3e ("media: venus: Add a handling of QC08C compressed format")
+>>> Fixes: cef92b14e653 ("media: venus: Add a handling of QC10C compressed format")
+>>> Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+>> I just came across this issue independently and can confirm this patch fixes
+>> the GStreamer V4L2 decoder on QRB5165.
+>>
+>> Tested-by: Jordan Crouse <jorcrous@amazon.com>
+>>
+> Thanks for testing it!
+>
+> Stanimir, can we please get this for v6.3 as well?
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index 2bb4053641da..e0645bc39db4 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -201,6 +201,11 @@ tz_region: tz@4a600000 {
- 			no-map;
- 		};
- 
-+		q6_region: wcnss@4ab00000 {
-+			reg = <0x0 0x4ab00000 0x0 0x02b00000>;
-+			no-map;
-+		};
-+
- 		smem@4aa00000 {
- 			compatible = "qcom,smem";
- 			reg = <0x0 0x4aa00000 0x0 0x00100000>;
-@@ -209,6 +214,30 @@ smem@4aa00000 {
- 		};
- 	};
- 
-+	wcss: wcss-smp2p {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <435>, <428>;
-+
-+		interrupt-parent = <&intc>;
-+		interrupts = <GIC_SPI 322 IRQ_TYPE_EDGE_RISING>;
-+
-+		mboxes = <&apcs_glb 9>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <1>;
-+
-+		wcss_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		wcss_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
- 	soc: soc@0 {
- 		compatible = "simple-bus";
- 		#address-cells = <1>;
-@@ -829,6 +858,122 @@ IRQ_TYPE_LEVEL_HIGH>, /* int_c */
- 			msi-parent = <&v2m0>;
- 			status = "disabled";
- 		};
-+
-+		q6v5_wcss: remoteproc@cd00000 {
-+			compatible = "qcom,ipq9574-q6-mpd";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
-+			reg = <0x0cd00000 0x4040>;
-+			interrupts-extended = <&intc GIC_SPI 325 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcss_smp2p_in 0 0>,
-+					      <&wcss_smp2p_in 1 0>,
-+					      <&wcss_smp2p_in 2 0>,
-+					      <&wcss_smp2p_in 3 0>;
-+			interrupt-names = "wdog",
-+					  "fatal",
-+					  "ready",
-+					  "handover",
-+					  "stop-ack";
-+
-+			clocks = <&gcc GCC_ANOC_WCSS_AXI_M_CLK>,
-+				 <&gcc GCC_WCSS_AHB_S_CLK>,
-+				 <&gcc GCC_WCSS_ECAHB_CLK>,
-+				 <&gcc GCC_WCSS_ACMT_CLK>,
-+				 <&gcc GCC_WCSS_AXI_M_CLK>,
-+				 <&gcc GCC_Q6_AXIM_CLK>,
-+				 <&gcc GCC_Q6_AXIM2_CLK>,
-+				 <&gcc GCC_Q6_AHB_CLK>,
-+				 <&gcc GCC_Q6_AHB_S_CLK>,
-+				 <&gcc GCC_Q6SS_BOOT_CLK>,
-+				 <&gcc GCC_WCSS_DBG_IFC_APB_BDG_CLK>,
-+				 <&gcc GCC_WCSS_DBG_IFC_ATB_BDG_CLK>,
-+				 <&gcc GCC_WCSS_DBG_IFC_DAPBUS_BDG_CLK>,
-+				 <&gcc GCC_WCSS_DBG_IFC_NTS_BDG_CLK>,
-+				 <&gcc GCC_WCSS_DBG_IFC_APB_CLK>,
-+				 <&gcc GCC_WCSS_DBG_IFC_ATB_CLK>,
-+				 <&gcc GCC_WCSS_DBG_IFC_DAPBUS_CLK>,
-+				 <&gcc GCC_WCSS_DBG_IFC_NTS_CLK>,
-+				 <&gcc GCC_Q6_TSCTR_1TO2_CLK>,
-+				 <&gcc GCC_Q6SS_ATBM_CLK>,
-+				 <&gcc GCC_Q6SS_PCLKDBG_CLK>,
-+				 <&gcc GCC_Q6SS_TRIG_CLK>,
-+				 <&gcc GCC_MEM_NOC_Q6_AXI_CLK>,
-+				 <&gcc GCC_WCSS_Q6_TBU_CLK>,
-+				 <&gcc GCC_SYS_NOC_WCSS_AHB_CLK>;
-+
-+			clock-names = "anoc_wcss_axi_m",
-+				      "wcss_ahb_s",
-+				      "wcss_ecahb",
-+				      "wcss_acmt",
-+				      "wcss_axi_m",
-+				      "q6_axim",
-+				      "q6_axim2",
-+				      "q6_ahb",
-+				      "q6_ahb_s",
-+				      "q6ss_boot",
-+				      "dbg-apb-bdg",
-+				      "dbg-atb-bdg",
-+				      "dbg-dapbus-bdg",
-+				      "dbg-nts-bdg",
-+				      "dbg-apb",
-+				      "dbg-atb",
-+				      "dbg-dapbus",
-+				      "dbg-nts",
-+				      "q6_tsctr_1to2_clk",
-+				      "q6ss_atbm_clk",
-+				      "q6ss_pclkdbg_clk",
-+				      "q6ss_trig_clk",
-+				      "mem_noc_q6_axi",
-+				      "wcss_q6_tbu",
-+				      "sys_noc_wcss_ahb";
-+
-+			assigned-clocks = <&gcc GCC_ANOC_WCSS_AXI_M_CLK>,
-+				 <&gcc GCC_WCSS_AHB_S_CLK>,
-+				 <&gcc GCC_WCSS_ECAHB_CLK>,
-+				 <&gcc GCC_WCSS_ACMT_CLK>,
-+				 <&gcc GCC_WCSS_AXI_M_CLK>,
-+				 <&gcc GCC_Q6_AXIM_CLK>,
-+				 <&gcc GCC_Q6_AXIM2_CLK>,
-+				 <&gcc GCC_Q6_AHB_CLK>,
-+				 <&gcc GCC_Q6_AHB_S_CLK>,
-+				 <&gcc GCC_Q6SS_BOOT_CLK>,
-+				 <&gcc GCC_MEM_NOC_Q6_AXI_CLK>,
-+				 <&gcc GCC_WCSS_Q6_TBU_CLK>,
-+				 <&gcc GCC_SYS_NOC_WCSS_AHB_CLK>;
-+
-+			assigned-clock-rates = <266666667>,
-+						<133333333>,
-+						<133333333>,
-+						<133333333>,
-+						<266666667>,
-+						<533000000>,
-+						<342857143>,
-+						<133333333>,
-+						<133333333>,
-+						<342857143>,
-+						<533000000>,
-+						<533000000>,
-+						<133333333>;
-+
-+			qcom,smem-states = <&wcss_smp2p_out 0>,
-+					   <&wcss_smp2p_out 1>;
-+			qcom,smem-state-names = "shutdown",
-+						"stop";
-+
-+			memory-region = <&q6_region>;
-+
-+			glink-edge {
-+				interrupts = <GIC_SPI 321 IRQ_TYPE_EDGE_RISING>;
-+				label = "rtr";
-+				qcom,remote-pid = <1>;
-+				mboxes = <&apcs_glb 8>;
-+			};
-+
-+			q6_wcss_pd1: remoteproc_pd1 {
-+				compatible = "qcom,ipq9574-wcss-ahb-mpd";
-+			};
-+		};
- 	};
- 
- 	rpm-glink {
--- 
-2.34.1
+Hi Javier, Jordan
+
+Could you please explain what regression/issue you see with patch?
+
+venus hardware supports QC08C which provides better performance hence 
+driver is publishing it as preferred color format.
+
+if client doesn't support this or want to use any other format, they can 
+set the desired format with s_fmt.
+
+Thanks,
+
+Dikshita
 
