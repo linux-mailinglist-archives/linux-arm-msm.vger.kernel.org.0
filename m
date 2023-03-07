@@ -2,157 +2,310 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 539246ADD1D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 12:19:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 030FA6ADDBB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 12:42:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229726AbjCGLS7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 06:18:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38578 "EHLO
+        id S231402AbjCGLmh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 06:42:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230395AbjCGLSh (ORCPT
+        with ESMTP id S231352AbjCGLlm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 06:18:37 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B01AF23331
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 03:18:33 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id h3so12726584lja.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 03:18:33 -0800 (PST)
+        Tue, 7 Mar 2023 06:41:42 -0500
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92EBB7D099
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 03:39:14 -0800 (PST)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-536be69eadfso239735497b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 03:39:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678187912;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kEJH2oPkbi1+iJDHn1rP4D2o13uzAezWWeXGGiglOnA=;
-        b=QXV5F31hp/CbDr8oy2zdsTE5WwhxjRPnx51w4/9yWPm0uBeR46c9+9h1eX9kKtAJGI
-         E+EcjkFBN2shyjHFFNIVK4ud0xBoVawDoqXj+GK99mgSglQjgghoXn3mzYC6ZeKcYB4z
-         tsXpS3Hrrp341UO9+ahGtCHBaY+2bveECG3utFb2Hp0RFlDNBuWFsixS4fqQvR9Yjzsd
-         gYxQUmRVp33Wcex8Fivdt5vFLasXpoc/1MUX+cJeSqZsHYnuA/9w4Dxubq02ZxIgByvK
-         63/L1XEa9dJfIj8WRbJU51KWLW/Ux6lOV9lPY42t0Zf5gYSPF0lX6SoE4GgfOQM9X4pq
-         otMQ==
+        d=linaro.org; s=google; t=1678189150;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p2QEPXAzp21Sp6krYXcMnpxNWR2KzEzr6+4RDpVrUlI=;
+        b=MZdIoa/638A2Xrr3aud37732QkFaaI23u93mUrKyx6hNqR+dj0TaQC+E8tBxYlg39i
+         L/nH+SGtV7eGgg/PH796jVppU9Ei/QUJfz6q87mKD5GhxAxOoDPEgO/cZatjxymQzf37
+         42vkTmcghIT1E1yUCpWhoKqAccG+KBBVheQz0Zfzfky2xjIOWnWNtgdtNSm8xyvhMhkK
+         c81jL8WhZzIZytyFxESA5Rk4LOth1GYguzxCQNaJ84tL7NMeJWBTOJzoVEbunqIGtfH8
+         XFURYFjvPIvO1pEdUE6hlmMg6Ibn2XB+FlNLycbR4iPAMi/LBU+Sc2jGQvrVRa1Z5UvN
+         jewg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678187912;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kEJH2oPkbi1+iJDHn1rP4D2o13uzAezWWeXGGiglOnA=;
-        b=scDdcZPcNr0EUn9dKJe7Ok/oxnMtoG922Ga/l0lzj1JCB6Ci1W7EvEzGCNArotNVCx
-         LK4u6ebIVY/WE/SE15B9u4lrwkrbd8hmg4by4b6BXI9FvSWyfgSSNcCmD/4l2PCg+zqn
-         6EKvBa0QOrec3s+bTrqXlRasMNljyK4A8jNNjfvi3bnxrLy82qCewgulfueqRCysmVCZ
-         sFPtn3GVaZyYGxPTwwUPc/PZvjB2HrtL2DVaLzo6Z8jN5cAfZm12HxouyZo2MXXZxHt1
-         i0ip/0XH3CLWpU/eel5gm9Eir09oJHTC51wkzZGPUE97OyPat+JucQBu6JZADz+deEn5
-         cPIQ==
-X-Gm-Message-State: AO0yUKWEK1TEJYdINXbFmX+82c0jJe7HtwwG02qAliuou2WoHbBHxa8B
-        LeC7aEkOPrBztUinJDt5WOqJtA==
-X-Google-Smtp-Source: AK7set+Ex4pJbRG4CQNBxxBBHsApvu6Oe1P+M6XD1BdlbnHPo+Fzz61dmlFW8f0MPwzp3MTYjk5Chg==
-X-Received: by 2002:a2e:998c:0:b0:295:aca0:8205 with SMTP id w12-20020a2e998c000000b00295aca08205mr3893351lji.52.1678187911960;
-        Tue, 07 Mar 2023 03:18:31 -0800 (PST)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id g10-20020ac2538a000000b004ddaea30ba6sm1993150lfh.235.2023.03.07.03.18.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Mar 2023 03:18:31 -0800 (PST)
-Message-ID: <9cb64f82-b6d0-44fa-4851-2cb1a5c2c94c@linaro.org>
-Date:   Tue, 7 Mar 2023 12:18:29 +0100
+        d=1e100.net; s=20210112; t=1678189150;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=p2QEPXAzp21Sp6krYXcMnpxNWR2KzEzr6+4RDpVrUlI=;
+        b=5eGy16QgtFpPEYOQERF2PUJNmGO/aJ37jGddZsyG5M2SDP/rTIBkan6//PZRbI9uWl
+         FBarlIeCA7GAh70ZErY5PPuhmcdrpvG5KG4xbUbihNHadgrSBu83h+BYtzDvkc9i+m77
+         vCDDONaJQ3gEbynbF9PEDq3+JS9he0PK6vyV5qgHb4/ain1Yof5neztTRyH4nbpRLquB
+         PtzfY14ckGzKL9u9bpKljVcMtALCbhCsEYrhWqlAloq8o/FnON8GlRVDUiUJ8MdBb37r
+         EXlbzMR1R+CdxkNwNtOHlsvvtpeR9/v3jz5zfHAVQKqyoWrmyHyHj9Zg69BAaTQR4LkZ
+         Y1mQ==
+X-Gm-Message-State: AO0yUKVfPYV7Ooe6sNszNThvwbwU1qL7c/1UYenS72hixEdRjEIKedfL
+        zz30djwFjwa1tPdhghjAgD+/pMHg+In30AeZe6bc8Q==
+X-Google-Smtp-Source: AK7set+pIPRCkUCY1DQn3/UnCDXcMdFY3wcXRpn0sqH288ZQWy/jCdAUknswqsGd/FYMEDrTW7d8/OAqi9oBGUQj+6g=
+X-Received: by 2002:a81:b243:0:b0:52e:d380:ab14 with SMTP id
+ q64-20020a81b243000000b0052ed380ab14mr7473835ywh.3.1678189150311; Tue, 07 Mar
+ 2023 03:39:10 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 07/18] media: venus: core: Assign registers based on VPU
- version
-Content-Language: en-US
-To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Vikash Garodia <vgarodia@codeaurora.org>
-References: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
- <20230228-topic-venus-v1-7-58c2c88384e9@linaro.org>
- <a93a16ec-2e56-1d0b-c326-25f490d8f5b5@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <a93a16ec-2e56-1d0b-c326-25f490d8f5b5@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+References: <20230214164135.17039-1-quic_devipriy@quicinc.com>
+ <20230214164135.17039-2-quic_devipriy@quicinc.com> <20230224082332.GA5443@thinkpad>
+ <bd153038-4427-1f11-1941-5f13fec01cf7@quicinc.com> <20230228063358.GA4839@thinkpad>
+ <9BD62D8E-4E14-4269-B72D-C83EF4D43040@linaro.org> <20230303174036.GB6782@thinkpad>
+ <30cf9717-dcca-e984-c506-c71b7f8e32cd@quicinc.com>
+In-Reply-To: <30cf9717-dcca-e984-c506-c71b7f8e32cd@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 7 Mar 2023 13:38:59 +0200
+Message-ID: <CAA8EJpohnJvFKMc5Ty4CQF65Gt1Kknqsf1B4mFZq4TvW7_dcnw@mail.gmail.com>
+Subject: Re: [PATCH 1/7] dt-bindings: PCI: qcom: Add IPQ9574 specific compatible
+To:     Devi Priya <quic_devipriy@quicinc.com>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, mturquette@baylibre.com,
+        sboyd@kernel.org, p.zabel@pengutronix.de, svarbanov@mm-sol.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-clk@vger.kernel.org,
+        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 7 Mar 2023 at 11:45, Devi Priya <quic_devipriy@quicinc.com> wrote:
+>
+>
+>
+> On 3/3/2023 11:10 PM, Manivannan Sadhasivam wrote:
+> > On Fri, Mar 03, 2023 at 05:16:58PM +0200, Dmitry Baryshkov wrote:
+> >> 28 =D1=84=D0=B5=D0=B2=D1=80=D0=B0=D0=BB=D1=8F 2023 =D0=B3. 08:33:58 GM=
+T+02:00, Manivannan Sadhasivam <mani@kernel.org> =D0=BF=D0=B8=D1=88=D0=B5=
+=D1=82:
+> >>> On Tue, Feb 28, 2023 at 10:56:53AM +0530, Devi Priya wrote:
+> >>>>
+> >>>>
+> >>>> On 2/24/2023 1:53 PM, Manivannan Sadhasivam wrote:
+> >>>>> On Tue, Feb 14, 2023 at 10:11:29PM +0530, Devi Priya wrote:
+> >>>>>> Document the compatible for IPQ9574
+> >>>>>>
+> >>>> Hi Mani, Thanks for taking time to review the patch.
+> >>>>>
+> >>>>> You didn't mention about the "msi-parent" property that is being ad=
+ded
+> >>>>> by this patch
+> >>>> Sure, will update the commit message in the next spin
+> >>>>>
+> >>>>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> >>>>>> ---
+> >>>>>>    .../devicetree/bindings/pci/qcom,pcie.yaml    | 72 ++++++++++++=
+++++++-
+> >>>>>>    1 file changed, 70 insertions(+), 2 deletions(-)
+> >>>>>>
+> >>>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml =
+b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> >>>>>> index 872817d6d2bd..dabdf2684e2d 100644
+> >>>>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> >>>>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> >>>>>> @@ -26,6 +26,7 @@ properties:
+> >>>>>>              - qcom,pcie-ipq8064-v2
+> >>>>>>              - qcom,pcie-ipq8074
+> >>>>>>              - qcom,pcie-ipq8074-gen3
+> >>>>>> +          - qcom,pcie-ipq9574
+> >>>>>>              - qcom,pcie-msm8996
+> >>>>>>              - qcom,pcie-qcs404
+> >>>>>>              - qcom,pcie-sa8540p
+> >>>>>> @@ -44,11 +45,11 @@ properties:
+> >>>>>>      reg:
+> >>>>>>        minItems: 4
+> >>>>>> -    maxItems: 5
+> >>>>>> +    maxItems: 6
+> >>>>>>      reg-names:
+> >>>>>>        minItems: 4
+> >>>>>> -    maxItems: 5
+> >>>>>> +    maxItems: 6
+> >>>>>>      interrupts:
+> >>>>>>        minItems: 1
+> >>>>>> @@ -105,6 +106,8 @@ properties:
+> >>>>>>        items:
+> >>>>>>          - const: pciephy
+> >>>>>> +  msi-parent: true
+> >>>>>> +
+> >>>>>>      power-domains:
+> >>>>>>        maxItems: 1
+> >>>>>> @@ -173,6 +176,27 @@ allOf:
+> >>>>>>                - const: parf # Qualcomm specific registers
+> >>>>>>                - const: config # PCIe configuration space
+> >>>>>> +  - if:
+> >>>>>> +      properties:
+> >>>>>> +        compatible:
+> >>>>>> +          contains:
+> >>>>>> +            enum:
+> >>>>>> +              - qcom,pcie-ipq9574
+> >>>>>> +    then:
+> >>>>>> +      properties:
+> >>>>>> +        reg:
+> >>>>>> +          minItems: 5
+> >>>>>> +          maxItems: 6
+> >>>>>> +        reg-names:
+> >>>>>> +          minItems: 5
+> >>>>>> +          items:
+> >>>>>> +            - const: dbi # DesignWare PCIe registers
+> >>>>>> +            - const: elbi # External local bus interface register=
+s
+> >>>>>> +            - const: atu # ATU address space
+> >>>>>> +            - const: parf # Qualcomm specific registers
+> >>>>>> +            - const: config # PCIe configuration space
+> >>>>>> +            - const: aggr_noc #PCIe aggr_noc
+> >>>>>
+> >>>>> Why do you need this region unlike other SoCs? Is the driver making=
+ use of it?
+> >>>> We have the aggr_noc region in ipq9574 to achieve higher throughput =
+& to
+> >>>> handle multiple PCIe instances. The driver uses it to rate adapt 1-l=
+ane PCIe
+> >>>> clocks. My bad, missed it. Will add the driver changes in V2.
+> >>>
+> >>> Hmm, this is something new. How can you achieve higher throughput wit=
+h this
+> >>> region? Can you explain more on how it is used?
+> >>
+> >> Based on the name of the region, it looks like it is an interconnect r=
+egion.
+> >>
+> >
+> > Well, we only have BCM based interconnects so far. That's why I was cur=
+ious
+> > about this region and its purpose.
+> For connected PCIe slave devices that are running at frequency lesser
+> than the ANOC frequency (342MHz), the rate adapter of ANOC needs to be
+> configured
+> >
+> >> Devi, if this is the case, then you have to handle it through the inte=
+rconnect driver, rather than poking directly into these registers.
+> >
+> > If that so, it doesn't need to be added in this series itself. I believ=
+e that
+> > without aggr_noc region, the PCIe controller can still function properl=
+y with
+> > reduced performance. But you can add the interconnect support later as =
+a
+> > separate series.
+> Sure, okay. The ANOC runs at a fixed frequency of 342MHz and the
+> interconnect clocks are not scaled. The aggr_noc register is just a
+> magic register for configuring it's rate adapter to ensure no wait
+> cycles are inserted.
 
+I have been hesitant at some point, but this looks more and more like
+a special kind of interconnect. Please consider moving all the NoC
+stuff into a separate driver implementing the ICC API.
 
-On 7.03.2023 05:57, Dikshita Agarwal wrote:
-> 
-> On 2/28/2023 8:54 PM, Konrad Dybcio wrote:
->> IRIS2(_1) has a different register map compared to other HFI6XX-
->> using VPUs. Take care of it.
->>
->> Signed-off-by: Konrad Dybcio<konrad.dybcio@linaro.org>
->> ---
->>   drivers/media/platform/qcom/venus/core.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->> index c13436d58ed3..bdc14acc8399 100644
->> --- a/drivers/media/platform/qcom/venus/core.c
->> +++ b/drivers/media/platform/qcom/venus/core.c
->> @@ -246,7 +246,7 @@ static int venus_enumerate_codecs(struct venus_core *core, u32 type)
->>     static void venus_assign_register_offsets(struct venus_core *core)
->>   {
->> -    if (IS_V6(core)) {
->> +    if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
->>           core->vbif_base = core->base + VBIF_BASE;
->>           core->cpu_base = core->base + CPU_BASE_V6;
->>           core->cpu_cs_base = core->base + CPU_CS_BASE_V6;
-> 
-> AR50_LITE also should be added here, as I see you have added the same to places where we are using V6 based registers.
-> 
-> if the base addresses are not assigned here properly. the register writing at other places will be wrong, ex: patch 05/18
-I have a separate patch set which specifically adds AR50L data,
-and they're not 1:1, vbif_base and aon_base are gone (at least
-according to techpack/video). I intend to push it when I get it
-all working, but here's what it looks like right now:
-
-
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index fd9ecb1f7a05..f88b4781c5d0 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -254,6 +254,14 @@ static void venus_assign_register_offsets(struct venus_core *core)
-                core->wrapper_base = core->base + WRAPPER_BASE_V6;
-                core->wrapper_tz_base = core->base + WRAPPER_TZ_BASE_V6;
-                core->aon_base = core->base + AON_BASE_V6;
-+       } else if (IS_AR50_LITE(core)) {
-+               core->vbif_base = NULL;
-+               core->cpu_base = core->base + CPU_BASE_V6;
-+               core->cpu_cs_base = core->base + CPU_CS_BASE_V6;
-+               core->cpu_ic_base = core->base + CPU_IC_BASE_V6;
-+               core->wrapper_base = core->base + WRAPPER_BASE_V6;
-+               core->wrapper_tz_base = core->base + WRAPPER_TZ_BASE_V6;
-+               core->aon_base = NULL;
-        } else {
-                core->vbif_base = core->base + VBIF_BASE;
-                core->cpu_base = core->base + CPU_BASE;
--- 
-2.39.2
-
-
-Konrad
-
-> 
+>
+> >
+> > Thanks,
+> > Mani
+> >
+> >>
+> >>
+> >>>
+> >>> Thanks,
+> >>> Mani
+> >>>
+> >>>>>
+> >>>>> Thanks,
+> >>>>> Mani
+> >>>>>
+> >>>>>> +
+> >>>>>>      - if:
+> >>>>>>          properties:
+> >>>>>>            compatible:
+> >>>>>> @@ -365,6 +389,39 @@ allOf:
+> >>>>>>                - const: ahb # AHB Reset
+> >>>>>>                - const: axi_m_sticky # AXI Master Sticky reset
+> >>>>>> +  - if:
+> >>>>>> +      properties:
+> >>>>>> +        compatible:
+> >>>>>> +          contains:
+> >>>>>> +            enum:
+> >>>>>> +              - qcom,pcie-ipq9574
+> >>>>>> +    then:
+> >>>>>> +      properties:
+> >>>>>> +        clocks:
+> >>>>>> +          minItems: 6
+> >>>>>> +          maxItems: 6
+> >>>>>> +        clock-names:
+> >>>>>> +          items:
+> >>>>>> +            - const: ahb  # AHB clock
+> >>>>>> +            - const: aux  # Auxiliary clock
+> >>>>>> +            - const: axi_m # AXI Master clock
+> >>>>>> +            - const: axi_s # AXI Slave clock
+> >>>>>> +            - const: axi_bridge # AXI bridge clock
+> >>>>>> +            - const: rchng
+> >>>>>> +        resets:
+> >>>>>> +          minItems: 8
+> >>>>>> +          maxItems: 8
+> >>>>>> +        reset-names:
+> >>>>>> +          items:
+> >>>>>> +            - const: pipe # PIPE reset
+> >>>>>> +            - const: sticky # Core Sticky reset
+> >>>>>> +            - const: axi_s_sticky # AXI Slave Sticky reset
+> >>>>>> +            - const: axi_s # AXI Slave reset
+> >>>>>> +            - const: axi_m_sticky # AXI Master Sticky reset
+> >>>>>> +            - const: axi_m # AXI Master reset
+> >>>>>> +            - const: aux # AUX Reset
+> >>>>>> +            - const: ahb # AHB Reset
+> >>>>>> +
+> >>>>>>      - if:
+> >>>>>>          properties:
+> >>>>>>            compatible:
+> >>>>>> @@ -681,6 +738,16 @@ allOf:
+> >>>>>>            - interconnects
+> >>>>>>            - interconnect-names
+> >>>>>> +  - if:
+> >>>>>> +      properties:
+> >>>>>> +        compatible:
+> >>>>>> +          contains:
+> >>>>>> +            enum:
+> >>>>>> +              - qcom,pcie-ipq9574
+> >>>>>> +    then:
+> >>>>>> +      required:
+> >>>>>> +        - msi-parent
+> >>>>>> +
+> >>>>>>      - if:
+> >>>>>>          not:
+> >>>>>>            properties:
+> >>>>>> @@ -693,6 +760,7 @@ allOf:
+> >>>>>>                    - qcom,pcie-ipq8064v2
+> >>>>>>                    - qcom,pcie-ipq8074
+> >>>>>>                    - qcom,pcie-ipq8074-gen3
+> >>>>>> +                - qcom,pcie-ipq9574
+> >>>>>>                    - qcom,pcie-qcs404
+> >>>>>>        then:
+> >>>>>>          required:
+> >>>>>> --
+> >>>>>> 2.17.1
+> >>>>>>
+> >>>>>
+> >>>> Thanks,
+> >>>> Devi Priya
+> >>>
+> >>
+> >
 > Thanks,
-> 
-> Dikshita
-> 
+> Devi Priya
+
+
+
+--=20
+With best wishes
+Dmitry
