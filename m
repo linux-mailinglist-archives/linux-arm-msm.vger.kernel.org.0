@@ -2,114 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 459236ADEC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 13:32:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DA9B6ADF0F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 13:48:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230217AbjCGMcL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 07:32:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52590 "EHLO
+        id S229611AbjCGMsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 07:48:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230153AbjCGMcK (ORCPT
+        with ESMTP id S229576AbjCGMsu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 07:32:10 -0500
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1DF377CAC
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 04:32:06 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id i20so12879065lja.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 04:32:06 -0800 (PST)
+        Tue, 7 Mar 2023 07:48:50 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B531B77C88
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 04:48:47 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id o12so51685142edb.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 04:48:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678192325;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xoKKJZFHs/8MSrXZ3Q3rY87HaTCz1bnlS/tCHR2CSg8=;
-        b=iukR/+gr8EDtbfyWkLTmOTMQnMAsxA/0IeNzNwgq/dhuq9kO6YGSJosg68f368zs15
-         YstaY/Co/MOS3Qp3JiWxIWMuC21LDZWh03BFpQKUDWfdx3935xpOSs8fPXDwYAIkHcAg
-         CH/HQ3F8DMCCNRdR4VFlCJhmbLftuEpuioYs28eaX9BzZHmtDgl/8B9vuHe527AMUNrp
-         rt/fT+PhZJbUQKKPYrfjuhZ8oStjiQSkHtyRuHmK/f5NiuCQL9phOn70TJwUaZE5cG4z
-         HbdZHc35xbDUnRBrad5Rm5jt3Xau35GnjeMdzmSjIfJ4WjfD8OlEgUt1DqwTCfaFa6a9
-         P7ow==
+        d=linaro.org; s=google; t=1678193326;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gXMDjluJDUvPLUicyi9DzXJkAKHHUVttkvC/e23H4Xg=;
+        b=gBNpW4hE+viaph3Z9oHqJD+5k9T0kLFVksSmYDaYHCpYrjYet2Y7xzwCXwhRqORnWg
+         wE/6W9M/kc2+Vve5aDGSeGrXaWB8YjgQ1XUCQyjvp3SwsV+/jnfGbM0RdpGcyF9bbsYV
+         lOYcZyKaGNtFSN4ipuq8gqyuTT3TnA4YFmx2/+HNIVvKoDFUhMgSCOj0EOxNurAeeMHR
+         BKML1W/QnpTHpizWDwPqbpCTwS8V3VqmklGMmeFRE+B+KdKB43IAX7OGr9zWxyZm3Tp3
+         zA0DYbSuK1C1R2g2MQFf5E8PEfKrZpH6MuFnOzGHIORxpGRoS/T/AApE89N8YE7aN/l5
+         UWXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678192325;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xoKKJZFHs/8MSrXZ3Q3rY87HaTCz1bnlS/tCHR2CSg8=;
-        b=J8ILpAUhLf0wgCe/+BDgStXfqCQrffF4Kw1dmy87dqZNS9bu4dZMkyq1x+G0wPHfZ5
-         nneikM6wK1gH91fhXNUGSoK6I97QpkInn2GsGgRD0daOb40NOIL/fcoUsvF0XJ9gmcre
-         29HhtZGWZlppiYpI+eUYpEcZw2p0J7gC3xiLBsgNoUkjYpLY4AeVZ84gXJlaPm3S0vxR
-         5v6z/2/Uo/DI4f+v2Mf9N77VGxDsRLbz0NyPIaEIQGhStR9s3XEAVGdaA6nBRjBdJyUY
-         qmEWokxakG3IUOETovLAjKFr03ETbEkMtSAdCorYpxEYHSVXby7nOhFoYqaoG6FpFfXW
-         Nfew==
-X-Gm-Message-State: AO0yUKUIsDuhOrYL9dk7oa43VENmEyJoLCbz53qyq+26WOjoOIWz8Yg+
-        q1ue/gm/SGsEVaOU7qtzAhGy7ZwJGb0t8iU6D0I=
-X-Google-Smtp-Source: AK7set+Ki5rtSIjZoBN2OEjShpSzxH5VtETDwMehoUs+K6eVTYuj1qKSTqNDshEDr94AhMQdAdLsfQ==
-X-Received: by 2002:a2e:808e:0:b0:295:9ba2:8a78 with SMTP id i14-20020a2e808e000000b002959ba28a78mr4869643ljg.17.1678192325107;
-        Tue, 07 Mar 2023 04:32:05 -0800 (PST)
-Received: from localhost.localdomain (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id t20-20020a2e7814000000b0029462e98c07sm2156501ljc.35.2023.03.07.04.32.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 04:32:04 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/3] clk: qcom: gcc-msm8998: Update the .pwrsts for usb gdsc
-Date:   Tue,  7 Mar 2023 13:31:59 +0100
-Message-Id: <20230307123159.3797551-3-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230307123159.3797551-1-konrad.dybcio@linaro.org>
-References: <20230307123159.3797551-1-konrad.dybcio@linaro.org>
+        d=1e100.net; s=20210112; t=1678193326;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gXMDjluJDUvPLUicyi9DzXJkAKHHUVttkvC/e23H4Xg=;
+        b=fc4W4pwtqpSTMLHrhyHtIb16K0kHbJFQ2VWcqB645wHcvanDFXvmtJ3fh7lVeVrLTn
+         jQVsVISRw0z18apflyLeoJp0ZTJA7wuHjBpNDVeAnT0qjii6kbLeCnF5twJCsRa9e9e4
+         4psxJU7jRL17eKcNVd4g1BaaPL+M28DMuDkTQ7JIBJAZAd6YFO6HaMCrc1/auEwBnra8
+         v28WwGdo+rkob+yx3v+OTBZytW0U8ho0oRFYYFlKn6XrBODaUHDL2miu4BxKzdRdM32Z
+         JQu9biqQaYBHGQGZecuJ1x4Nn7+gKYu7bpRUan1LB8xb+mn25OxL8oqrM+PhfrWs6vKZ
+         cw1Q==
+X-Gm-Message-State: AO0yUKVCzPnbsoX3Visf7QQomzziPI1DaCBzLi0BByd7ZwO5uqJkU7fH
+        MIjCbq7Ox0Y/UMz6vBJlY1Ie0A==
+X-Google-Smtp-Source: AK7set8MCzzEe4umSH1sYZCblI6WJ1yy9vx+YgB8ty6up6YK0RjeqU1A/CLPMaRwTV8qico7a1qLyw==
+X-Received: by 2002:a05:6402:7ce:b0:4c0:57b:47a9 with SMTP id u14-20020a05640207ce00b004c0057b47a9mr13267661edy.35.1678193326220;
+        Tue, 07 Mar 2023 04:48:46 -0800 (PST)
+Received: from ?IPV6:2a02:810d:15c0:828:a60f:e604:c252:1f3d? ([2a02:810d:15c0:828:a60f:e604:c252:1f3d])
+        by smtp.gmail.com with ESMTPSA id le16-20020a170907171000b008da6a37de1bsm6174070ejc.10.2023.03.07.04.48.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Mar 2023 04:48:45 -0800 (PST)
+Message-ID: <de9d5cdb-29d5-8252-6884-dd50a22d1580@linaro.org>
+Date:   Tue, 7 Mar 2023 13:48:44 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 8/9] dt-bindings: display/msm: dsi-controller-main: Add
+ SM6115
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230213121012.1768296-1-konrad.dybcio@linaro.org>
+ <20230213121012.1768296-9-konrad.dybcio@linaro.org>
+ <bcb5c17f-da78-9d68-66eb-b620ee583602@linaro.org>
+ <22970751-8bc0-9cbd-eec1-cbc92f0b4ea7@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <22970751-8bc0-9cbd-eec1-cbc92f0b4ea7@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The USB controller on msm8998 doesn't retain its state when the system
-goes into low power state and the GDSCs are turned off.
+On 07/03/2023 12:14, Konrad Dybcio wrote:
+> 
+> 
+> On 7.03.2023 10:17, Krzysztof Kozlowski wrote:
+>> On 13/02/2023 13:10, Konrad Dybcio wrote:
+>>> Add a compatible for the DSI on SM6115.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>  .../devicetree/bindings/display/msm/dsi-controller-main.yaml    | 2 ++
+>>>  1 file changed, 2 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+>>> index 2494817c1bd6..f195530ae964 100644
+>>> --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+>>> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+>>> @@ -25,6 +25,7 @@ properties:
+>>>                - qcom,sc7280-dsi-ctrl
+>>>                - qcom,sdm660-dsi-ctrl
+>>>                - qcom,sdm845-dsi-ctrl
+>>> +              - qcom,sm6115-dsi-ctrl
+>>
+>> This looks incomplete. You also need to add it to MDSS binding.
+> https://lore.kernel.org/linux-arm-msm/145066db-5723-6baa-237d-7c2b8fd476d9@linaro.org/
+> 
+> Does this.. but I guess I'll resend this as one series, as it only
+> makes sense.
 
-This can be observed by the USB connection not coming back alive after
-putting the device into suspend, essentially breaking USB.
+It should be one commit. Adding sm6115 here is incomplete if other
+binding (using this one) does not allow it.
 
-Work around this by updating the .pwrsts for the USB GDSCs so they only
-transition to retention state in low power.
-
-This change should be reverted when a proper suspend sequence is
-implemented in the USB drivers.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-v1 -> v2:
-New patch
-
- drivers/clk/qcom/gcc-msm8998.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/clk/qcom/gcc-msm8998.c b/drivers/clk/qcom/gcc-msm8998.c
-index f1aacbfe6bb4..8790bbdcd2e2 100644
---- a/drivers/clk/qcom/gcc-msm8998.c
-+++ b/drivers/clk/qcom/gcc-msm8998.c
-@@ -2901,7 +2901,8 @@ static struct gdsc usb_30_gdsc = {
- 	.pd = {
- 		.name = "usb_30_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	/* TODO: Change to OFF_ON when USB drivers get proper suspend support */
-+	.pwrsts = PWRSTS_RET_ON,
- 	.flags = VOTABLE,
- };
- 
--- 
-2.39.2
+Best regards,
+Krzysztof
 
