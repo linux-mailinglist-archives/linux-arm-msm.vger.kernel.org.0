@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1EF96AE258
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 15:27:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D30A6AE288
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 15:32:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230472AbjCGO1v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 09:27:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52868 "EHLO
+        id S231254AbjCGOck (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 09:32:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229919AbjCGO1h (ORCPT
+        with ESMTP id S230043AbjCGOcA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 09:27:37 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC7D42D5C;
-        Tue,  7 Mar 2023 06:22:56 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 327DdHq0022356;
-        Tue, 7 Mar 2023 14:22:48 GMT
+        Tue, 7 Mar 2023 09:32:00 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BADF95271;
+        Tue,  7 Mar 2023 06:27:39 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 327Bkl7l003106;
+        Tue, 7 Mar 2023 14:27:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=jLhYtsYcLckmbBLT5Zurw4k3j2sS8FptlRtzyXGuJxw=;
- b=apIuMFbrHvHNUyRBW1ltbrfmhRQeWJXQuVMbqKqFpj1IuCFcjXxy8lN14C90BYWvU21r
- /Q2mvvqnbv6AX3yz3ZIQnZIwcevFK0plBitAGJ6NmHxefeB6aY7PxZ9FUNZOiPm+24bM
- ddYSVRjP2aGvM/zgF5HM5cQgeSZ/HRiGiv9FW+zb/reqyl+8RdCixWNE5+yooAp6MzkK
- O0KdwlPfpi9nL4/8t6v8fAGjFRMBulW4BT9s25SVdVPrzuQ3NRmjTCJSfbY7m/PFJDbZ
- BJHlmbPDq+0gr/yE9JNfIvKvuRa5heweecaG3Qv+Rpk43Fd1V+I2zCwTf7s7tT98dTZm 0w== 
+ bh=j7xKvhj/h0KWXmpbPPwO4BWkzI/TMB2C0Mvwwx8q8xw=;
+ b=ccod04KFNVKnkpmeZlrGIY4LXYL0qXYxsBcGF3VZLJ/mwXv256BQRmCgiLnKjSBmbqIs
+ SlXUv15ue/S8+m1vvBR+jHgGXt6HUO+/m5h+krTmJ0BL8GqH/itIw+ijJ6Htc71Ms5MD
+ 6RhEmI4+oS7AGov/MSyspxlEOyln8G79JlUiu95T00OJ+NWoFKwiPCEFHsEuT2kReplx
+ kGVaLCxinjhgjZ+jiOT1LAUXueK6e0IHyz1fhqza/8WbEjhW/S2AAYzMpHD91ZgA8yXg
+ 1X1yr7FTgOQrdd43NrGwpM+XyqSmBZRHLQUA0O3lIAZ5wslqJVpmfhyw6EuRDeJUT7K3 3A== 
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p60bx942n-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p5x5c9ddx-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 07 Mar 2023 14:22:48 +0000
+        Tue, 07 Mar 2023 14:27:35 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 327EMlwC020071
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 327ERYX8024624
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 7 Mar 2023 14:22:47 GMT
+        Tue, 7 Mar 2023 14:27:34 GMT
 Received: from [10.50.22.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 7 Mar 2023
- 06:22:38 -0800
-Message-ID: <aec18281-f3c4-8631-acd8-337a0aa04316@quicinc.com>
-Date:   Tue, 7 Mar 2023 19:52:34 +0530
+ 06:27:25 -0800
+Message-ID: <619878c3-25a8-3875-efc3-3cf1c6bc262e@quicinc.com>
+Date:   Tue, 7 Mar 2023 19:57:20 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH 09/11] arm64: dtsi: qcom: ipq5018: enable nodes required
- for multipd
+Subject: Re: [PATCH 11/11] arm64: dtsi: qcom: ipq9574: Add nodes to bring up
+ multipd
 Content-Language: en-US
 To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
         <agross@kernel.org>, <andersson@kernel.org>,
@@ -61,30 +61,29 @@ CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
         <quic_sjaganat@quicinc.com>, <quic_arajkuma@quicinc.com>,
         <quic_anusha@quicinc.com>, <quic_poovendh@quicinc.com>
 References: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
- <1678164097-13247-10-git-send-email-quic_mmanikan@quicinc.com>
+ <1678164097-13247-12-git-send-email-quic_mmanikan@quicinc.com>
 From:   Kathiravan T <quic_kathirav@quicinc.com>
-In-Reply-To: <1678164097-13247-10-git-send-email-quic_mmanikan@quicinc.com>
+In-Reply-To: <1678164097-13247-12-git-send-email-quic_mmanikan@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: gkPbN-rr4zED9jjQA9pmD-c_mGA6OD2f
-X-Proofpoint-ORIG-GUID: gkPbN-rr4zED9jjQA9pmD-c_mGA6OD2f
+X-Proofpoint-ORIG-GUID: xpVsCW2n8pMaz-40qwEjMl73u0Xslf4u
+X-Proofpoint-GUID: xpVsCW2n8pMaz-40qwEjMl73u0Xslf4u
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-03-07_08,2023-03-07_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 impostorscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 mlxlogscore=952 spamscore=0 phishscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ lowpriorityscore=0 priorityscore=1501 impostorscore=0 mlxlogscore=742
+ phishscore=0 suspectscore=0 clxscore=1015 adultscore=0 malwarescore=0
  bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303070128
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+ engine=8.12.0-2212070000 definitions=main-2303070129
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -93,56 +92,36 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 3/7/2023 10:11 AM, Manikanta Mylavarapu wrote:
-> Enable nodes required for multipd remoteproc bring up
+> Enable nodes required for multipd remoteproc bring up.
 >
 > Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 > ---
->   arch/arm64/boot/dts/qcom/ipq5018.dtsi | 130 ++++++++++++++++++++++++++
->   1 file changed, 130 insertions(+)
+>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 145 ++++++++++++++++++++++++++
+>   1 file changed, 145 insertions(+)
 >
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> index 084fb7b30dfd..4fa0990ab543 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> @@ -95,6 +95,24 @@ tz: tz@4ac00000 {
->   			reg = <0x0 0x4ac00000 0x0 0x00400000>;
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> index 2bb4053641da..e0645bc39db4 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> @@ -201,6 +201,11 @@ tz_region: tz@4a600000 {
 >   			no-map;
 >   		};
-> +
-> +		q6_region: wcnss@4b000000 {
-> +			no-map;
-> +			reg = <0x0 0x4b000000 0x0 0x01700000>;
-
-
-move the no-map after reg property to keep it consistent with other 
-nodes. Also no need to pad the size in reg property
-
-
-> +		};
-> +
-> +		smem@4ab00000 {
-> +			compatible = "qcom,smem";
-> +			reg = <0x0 0x4ab00000 0x0 0x00100000>;
-> +			hwlocks = <&tcsr_mutex 0>;
-> +			no-map;
-> +		};
-> +	};
-> +
-> +	firmware {
-
-
-nodes should be in sorted order, please take care of this throughout the 
-changes.
-
-
-> +		scm {
-> +			compatible = "qcom,scm-ipq5018", "qcom,scm";
-> +		};
->   	};
 >   
->   	timer {
-> @@ -105,6 +123,30 @@ timer {
->   			     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+> +		q6_region: wcnss@4ab00000 {
+> +			reg = <0x0 0x4ab00000 0x0 0x02b00000>;
+
+
+No need to pad the size
+
+
+> +			no-map;
+> +		};
+> +
+>   		smem@4aa00000 {
+>   			compatible = "qcom,smem";
+>   			reg = <0x0 0x4aa00000 0x0 0x00100000>;
+> @@ -209,6 +214,30 @@ smem@4aa00000 {
+>   		};
 >   	};
 >   
 > +	wcss: wcss-smp2p {
@@ -150,7 +129,7 @@ changes.
 > +		qcom,smem = <435>, <428>;
 > +
 > +		interrupt-parent = <&intc>;
-> +		interrupts = <GIC_SPI 177 IRQ_TYPE_EDGE_RISING>;
+> +		interrupts = <GIC_SPI 322 IRQ_TYPE_EDGE_RISING>;
 > +
 > +		mboxes = <&apcs_glb 9>;
 > +
@@ -170,43 +149,25 @@ changes.
 > +	};
 > +
 >   	soc: soc@0 {
+>   		compatible = "simple-bus";
 >   		#address-cells = <1>;
->   		#size-cells = <1>;
-> @@ -217,5 +259,93 @@ frame@b128000 {
->   				status = "disabled";
->   			};
+> @@ -829,6 +858,122 @@ IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+>   			msi-parent = <&v2m0>;
+>   			status = "disabled";
 >   		};
 > +
-> +		tcsr_mutex: hwlock@1905000 {
-> +			compatible = "qcom,tcsr-mutex";
-> +			reg = <0x01905000 0x8000>;
-
-
-Please cover the entire region of size 128KB
-
-
-> +			#hwlock-cells = <1>;
-> +		};
-> +
-> +		apcs_glb: mailbox@b111000 {
-> +			compatible = "qcom,ipq5018-apcs-apps-global";
-> +			reg = <0x0b111000 0x1000>;
-> +			#clock-cells = <1>;
-> +			#mbox-cells = <1>;
-> +		};
-> +
 > +		q6v5_wcss: remoteproc@cd00000 {
-> +			compatible = "qcom,ipq5018-q6-mpd";
+> +			compatible = "qcom,ipq9574-q6-mpd";
 > +			#address-cells = <1>;
 > +			#size-cells = <1>;
 > +			ranges;
 > +			reg = <0x0cd00000 0x4040>;
 
 
-reg can be moved after compatible
+reg should go after compatible
 
 
-> +			interrupts-extended = <&intc GIC_SPI 291 IRQ_TYPE_EDGE_RISING>,
+> +			interrupts-extended = <&intc GIC_SPI 325 IRQ_TYPE_EDGE_RISING>,
 > +					      <&wcss_smp2p_in 0 0>,
 > +					      <&wcss_smp2p_in 1 0>,
 > +					      <&wcss_smp2p_in 2 0>,
@@ -217,67 +178,114 @@ reg can be moved after compatible
 > +					  "handover",
 > +					  "stop-ack";
 > +
+> +			clocks = <&gcc GCC_ANOC_WCSS_AXI_M_CLK>,
+> +				 <&gcc GCC_WCSS_AHB_S_CLK>,
+> +				 <&gcc GCC_WCSS_ECAHB_CLK>,
+> +				 <&gcc GCC_WCSS_ACMT_CLK>,
+> +				 <&gcc GCC_WCSS_AXI_M_CLK>,
+> +				 <&gcc GCC_Q6_AXIM_CLK>,
+> +				 <&gcc GCC_Q6_AXIM2_CLK>,
+> +				 <&gcc GCC_Q6_AHB_CLK>,
+> +				 <&gcc GCC_Q6_AHB_S_CLK>,
+> +				 <&gcc GCC_Q6SS_BOOT_CLK>,
+> +				 <&gcc GCC_WCSS_DBG_IFC_APB_BDG_CLK>,
+> +				 <&gcc GCC_WCSS_DBG_IFC_ATB_BDG_CLK>,
+> +				 <&gcc GCC_WCSS_DBG_IFC_DAPBUS_BDG_CLK>,
+> +				 <&gcc GCC_WCSS_DBG_IFC_NTS_BDG_CLK>,
+> +				 <&gcc GCC_WCSS_DBG_IFC_APB_CLK>,
+> +				 <&gcc GCC_WCSS_DBG_IFC_ATB_CLK>,
+> +				 <&gcc GCC_WCSS_DBG_IFC_DAPBUS_CLK>,
+> +				 <&gcc GCC_WCSS_DBG_IFC_NTS_CLK>,
+> +				 <&gcc GCC_Q6_TSCTR_1TO2_CLK>,
+> +				 <&gcc GCC_Q6SS_ATBM_CLK>,
+> +				 <&gcc GCC_Q6SS_PCLKDBG_CLK>,
+> +				 <&gcc GCC_Q6SS_TRIG_CLK>,
+> +				 <&gcc GCC_MEM_NOC_Q6_AXI_CLK>,
+> +				 <&gcc GCC_WCSS_Q6_TBU_CLK>,
+> +				 <&gcc GCC_SYS_NOC_WCSS_AHB_CLK>;
+> +
+> +			clock-names = "anoc_wcss_axi_m",
+> +				      "wcss_ahb_s",
+> +				      "wcss_ecahb",
+> +				      "wcss_acmt",
+> +				      "wcss_axi_m",
+> +				      "q6_axim",
+> +				      "q6_axim2",
+> +				      "q6_ahb",
+> +				      "q6_ahb_s",
+> +				      "q6ss_boot",
+> +				      "dbg-apb-bdg",
+> +				      "dbg-atb-bdg",
+> +				      "dbg-dapbus-bdg",
+> +				      "dbg-nts-bdg",
+> +				      "dbg-apb",
+> +				      "dbg-atb",
+> +				      "dbg-dapbus",
+> +				      "dbg-nts",
+> +				      "q6_tsctr_1to2_clk",
+> +				      "q6ss_atbm_clk",
+> +				      "q6ss_pclkdbg_clk",
+> +				      "q6ss_trig_clk",
+> +				      "mem_noc_q6_axi",
+> +				      "wcss_q6_tbu",
+> +				      "sys_noc_wcss_ahb";
+> +
+> +			assigned-clocks = <&gcc GCC_ANOC_WCSS_AXI_M_CLK>,
+> +				 <&gcc GCC_WCSS_AHB_S_CLK>,
+
+
+please take care of the alignment
+
+
+> +				 <&gcc GCC_WCSS_ECAHB_CLK>,
+> +				 <&gcc GCC_WCSS_ACMT_CLK>,
+> +				 <&gcc GCC_WCSS_AXI_M_CLK>,
+> +				 <&gcc GCC_Q6_AXIM_CLK>,
+> +				 <&gcc GCC_Q6_AXIM2_CLK>,
+> +				 <&gcc GCC_Q6_AHB_CLK>,
+> +				 <&gcc GCC_Q6_AHB_S_CLK>,
+> +				 <&gcc GCC_Q6SS_BOOT_CLK>,
+> +				 <&gcc GCC_MEM_NOC_Q6_AXI_CLK>,
+> +				 <&gcc GCC_WCSS_Q6_TBU_CLK>,
+> +				 <&gcc GCC_SYS_NOC_WCSS_AHB_CLK>;
+> +
+> +			assigned-clock-rates = <266666667>,
+> +						<133333333>,
+
+
+same here
+
+
+> +						<133333333>,
+> +						<133333333>,
+> +						<266666667>,
+> +						<533000000>,
+> +						<342857143>,
+> +						<133333333>,
+> +						<133333333>,
+> +						<342857143>,
+> +						<533000000>,
+> +						<533000000>,
+> +						<133333333>;
+> +
 > +			qcom,smem-states = <&wcss_smp2p_out 0>,
 > +					   <&wcss_smp2p_out 1>;
 > +			qcom,smem-state-names = "shutdown",
 > +						"stop";
+> +
 > +			memory-region = <&q6_region>;
 > +
 > +			glink-edge {
-> +				interrupts = <GIC_SPI 179 IRQ_TYPE_EDGE_RISING>;
+> +				interrupts = <GIC_SPI 321 IRQ_TYPE_EDGE_RISING>;
 > +				label = "rtr";
 > +				qcom,remote-pid = <1>;
 > +				mboxes = <&apcs_glb 8>;
 > +			};
 > +
 > +			q6_wcss_pd1: remoteproc_pd1 {
-> +				compatible = "qcom,ipq5018-wcss-ahb-mpd";
-> +			};
-> +
-> +			q6_wcss_pd2: remoteproc_pd2 {
-> +				compatible = "qcom,ipq5018-wcss-pcie-mpd";
-> +				interrupts-extended = <&wcss_smp2p_in 16 0>,
-> +					<&wcss_smp2p_in 17 0>,
-
-
-Please take care of the alignment
-
-
-> +					<&wcss_smp2p_in 20 0>,
-> +					<&wcss_smp2p_in 19 0>;
-> +				interrupt-names = "fatal",
-> +					"ready",
-> +					"spawn-ack",
-> +					"stop-ack";
-> +
-> +				qcom,smem-states = <&wcss_smp2p_out 16>,
-> +						<&wcss_smp2p_out 17>,
-> +						<&wcss_smp2p_out 18>;
-> +				qcom,smem-state-names = "shutdown",
-> +							"stop",
-> +							"spawn";
-> +				status = "disabled";
-> +			};
-> +
-> +			q6_wcss_pd3: remoteproc_pd3 {
-> +				compatible = "qcom,ipq5018-wcss-pcie-mpd";
-> +				interrupts-extended = <&wcss_smp2p_in 24 0>,
-> +							<&wcss_smp2p_in 25 0>,
-> +							<&wcss_smp2p_in 28 0>,
-> +							<&wcss_smp2p_in 27 0>;
-> +				interrupt-names = "fatal",
-> +						"ready",
-> +						"spawn-ack",
-> +						"stop-ack";
-> +
-> +				qcom,smem-states = <&wcss_smp2p_out 24>,
-> +						<&wcss_smp2p_out 25>,
-> +						<&wcss_smp2p_out 26>;
-> +				qcom,smem-state-names = "shutdown",
-> +							"stop",
-> +							"spawn";
-> +				status = "disabled";
+> +				compatible = "qcom,ipq9574-wcss-ahb-mpd";
 > +			};
 > +		};
 >   	};
->   };
+>   
+>   	rpm-glink {
