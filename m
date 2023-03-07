@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DCA296ADF92
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 14:02:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F151A6ADF94
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 14:02:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230062AbjCGNCN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 08:02:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33064 "EHLO
+        id S229760AbjCGNCO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 08:02:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229928AbjCGNBw (ORCPT
+        with ESMTP id S229954AbjCGNBx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 08:01:52 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF3632196B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 05:01:49 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id s20so16923550lfb.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 05:01:49 -0800 (PST)
+        Tue, 7 Mar 2023 08:01:53 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76C9024CAA
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 05:01:51 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id j11so16890053lfg.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 05:01:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678194109;
+        d=linaro.org; s=google; t=1678194111;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=55lMFXFd7GmMBP4PF1xB1lq9Cw+L1BmijVr1G6D/aP0=;
-        b=fRfy53cEsWZ9faDm5Cd0zlm9rKYQXRpJVLFZt2OVknK3ljQGsqfc1ZQHGRstMJeatU
-         OPNPlp0mlLvJU24T7Nyi8DLtqzcFambcmfWwoxANwdKOiJ65QD+CQO9PA2/l83lX8D11
-         S5anBLqxPqO+SvQKASzZmsVM83CV4tb83LwMfSs+zLGWggOAgOAMu6EFsexpad7x81Pc
-         GSrwhcqCcXOxQO2j+/LxxXQzHyRjggC+mjiIZ+fXZIijnNGYN3u9OaKMiZ0Ii1+2Q8kB
-         gCki9l2R1n6B1KK/Cid/IQf8Opf09tq/aIn3JN/BAPB3PtCUE7cB2LMgVBnNY6pM4W19
-         34AQ==
+        bh=Z5pR4WgQc9HEY23Sq27MPiR8dNOQq4AhkDDUyfnXpBY=;
+        b=XYOHftSIp51QGOWt8pZnbNohm/ua6EviqPB6m4t9y82KxkeLLpu6FXhg0BMoMtOfP+
+         wGeaRgJX67bGunMG7D8KDOCzu9lc0CH6yS3vnzOK6qZ8cQbG/TZAfOZonn/kaEdQqgK2
+         9MKmb68hxXIYNG33hZy4OT/Jc+Y6szJ/YxDNCKxLmV9DmlFuRv2cwhwuQ7oMRfwMhhut
+         TD54ZdsdgOfSP7YNk3EI8YDyYNXwYsgcgABSfh2nBjoOgMHw1J7/cVeTufSuW5dAKbP6
+         RHb14Cvun18zBgcN8l3bazXC9VPVmQ7qBJhb9M+EeBTiv7CkwjGVWsnkfibZpPzvUukI
+         J05Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678194109;
+        d=1e100.net; s=20210112; t=1678194111;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=55lMFXFd7GmMBP4PF1xB1lq9Cw+L1BmijVr1G6D/aP0=;
-        b=nsGoD0MYgOCsS+K3Pb+Fksh7dZeRW8hppkzFFTHNh+DoEBhTLxEmr82iWAIr1/kDVX
-         SosAwwHL2SZduzSaUOnDTt4fD2QHnpYUqK1CTrsE1Q++4NxJ1gz5/lRAP3DcVAzVaE1y
-         MWPreZpcAzQoPhA/XSakCBDpF8ySqFQrm2EB54pdrqRJInuMP6DKvRwozshtCfAfxV0/
-         8hB9KNMdTixiKejVkHnl7W2huH6MxbI3iRGdeHLBSJmtStQwuOD/Bl73zJbhJ8OBU6D2
-         v8MJ5Yt52bKt1FT3W7TumAD2WEGvG9BVRhgJ56OOM+iYyEEU8ceghI/s7FNt2CHHhrhp
-         Pang==
-X-Gm-Message-State: AO0yUKWlOj44GQw7La6rkG5bKoBgJALqjqFOgVWXrhCvSJpNWUiwO30Z
-        2DrWg7cTnju4CCLRNJ4IfncOTg==
-X-Google-Smtp-Source: AK7set87sMy1FszPQ3DFVXd9IWgFz6raEtqYLt7QEcdv4tEsY/E1WspeaJtD9IFkiPEzi5szujvaZg==
-X-Received: by 2002:ac2:5df6:0:b0:4b5:964d:499e with SMTP id z22-20020ac25df6000000b004b5964d499emr3789572lfq.8.1678194109317;
-        Tue, 07 Mar 2023 05:01:49 -0800 (PST)
+        bh=Z5pR4WgQc9HEY23Sq27MPiR8dNOQq4AhkDDUyfnXpBY=;
+        b=StNRvd+2IJALYDmU+u4kdx+t6KJqGtoA49WuO2tpXyW3MxJ15kluAw3td39qDxFXVc
+         DQrhUXivwYobRjBiHgCppy81f+XobHZn0gFcVM2w0QF9xyHX87DLzo9QA6AvrvnnhTWy
+         iBRsy3Kew/oym4izmd5k5JqFwzowfaG81C/TWGJUsMizCdu7QfqFnUXFnDBeslt47xrh
+         /nnZhNodBfX3PbWhXCibkAvDZd4hydvWMUeanJZlUCrSL5s+UaIqDLyboBMs2w68Xs6z
+         hSPnte1Nr1dAAVs+SO/M6mrROsn5KhkK5vPnyr94zsuDkApELAA0XN7G+LK7epiMcBHF
+         e5oQ==
+X-Gm-Message-State: AO0yUKVPzopn1TAC3sxFA4vvjD3ZC5MBAnXMzxRGRrPsHUDuQeg08IrW
+        jYFpPjmCKalky01Jd7E1EcWwsg==
+X-Google-Smtp-Source: AK7set8Tfe55LLhyLRQRBQYWkb+wwuPfq7m3hjK7jkiG2ZCjWLSQParDWJpsDC2F6uq0c6EgnqLAxQ==
+X-Received: by 2002:ac2:508b:0:b0:4dc:4afe:1622 with SMTP id f11-20020ac2508b000000b004dc4afe1622mr4328016lfm.42.1678194110798;
+        Tue, 07 Mar 2023 05:01:50 -0800 (PST)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id u2-20020ac248a2000000b004cc5e97d356sm2048265lfg.148.2023.03.07.05.01.47
+        by smtp.gmail.com with ESMTPSA id u2-20020ac248a2000000b004cc5e97d356sm2048265lfg.148.2023.03.07.05.01.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 05:01:49 -0800 (PST)
+        Tue, 07 Mar 2023 05:01:50 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 07 Mar 2023 14:01:43 +0100
-Subject: [PATCH v3 05/10] drm/msm/dsi: dsi_cfg: Merge SC7180 config into
- SDM845
+Date:   Tue, 07 Mar 2023 14:01:44 +0100
+Subject: [PATCH v3 06/10] drm/msm/dsi: Switch the QCM2290-specific
+ compatible to index autodetection
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230307-topic-dsi_qcm-v3-5-8bd7e1add38a@linaro.org>
+Message-Id: <20230307-topic-dsi_qcm-v3-6-8bd7e1add38a@linaro.org>
 References: <20230307-topic-dsi_qcm-v3-0-8bd7e1add38a@linaro.org>
 In-Reply-To: <20230307-topic-dsi_qcm-v3-0-8bd7e1add38a@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -76,11 +76,11 @@ Cc:     Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1678194100; l=2145;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1678194100; l=2792;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=FABCSvB5sJjrFfkmtzbHoBqH7FB7e/a49B1A9lWjwfw=;
- b=TJaWnNwL/YZbaSACXrVBkph5QhvBKJ7DBK7miT7PVfOpKqHUafq2Dask7moFQVTIwwTzqjuhfKpq
- l3JDU3AHBjIqQEBaUWt+8I/wXLi5YvT06nylSKUYBAdJoiNNtp9y
+ bh=tOEY+naDG6ZngTYbV5QlUfaQyGkhOYqaG0FLMZ1065Y=;
+ b=7jAUGQvPullBMwXQ4AJI84UFe2g79Mwjf6UICr6eBwcWViJdA3EVgmN0zMVGHhzYo//BQAq/Zfhm
+ bJxtNnOhBXFWLwYm0jrEYOJY1Y2yTQz06FI1GGIAhqU27ujHOUd4
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -93,60 +93,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The configs are identical, other than the number of *maximum* DSI
-hosts allowed. This isn't an issue, unless somebody deliberately
-tries to access the inexistent host by adding a dt node for it.
-
-Remove the SC7180 struct and point the hw revision match to the
-SDM845's one. On a note, this could have been done back when
-7180 support was introduced.
+Now that the logic can handle multiple sets of registers, move
+the QCM2290 to the common logic and mark it deprecated. This allows us
+to remove a couple of structs, saving some memory.
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_cfg.c | 15 ++-------------
- 1 file changed, 2 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi.c     |  4 +++-
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c | 28 ++--------------------------
+ 2 files changed, 5 insertions(+), 27 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
+index 31fdee2052be..90d43628b22b 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.c
++++ b/drivers/gpu/drm/msm/dsi/dsi.c
+@@ -174,7 +174,9 @@ static int dsi_dev_remove(struct platform_device *pdev)
+ 
+ static const struct of_device_id dt_match[] = {
+ 	{ .compatible = "qcom,mdss-dsi-ctrl", .data = NULL /* autodetect cfg */ },
+-	{ .compatible = "qcom,dsi-ctrl-6g-qcm2290", .data = &qcm2290_dsi_cfg_handler },
++
++	/* Deprecated, don't use */
++	{ .compatible = "qcom,dsi-ctrl-6g-qcm2290", .data = NULL },
+ 	{}
+ };
+ 
 diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-index d39521850018..6d4b2ce4b918 100644
+index 6d4b2ce4b918..29ccd755cc2e 100644
 --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
 +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-@@ -169,7 +169,7 @@ static const struct msm_dsi_config sdm845_dsi_cfg = {
+@@ -169,7 +169,8 @@ static const struct msm_dsi_config sdm845_dsi_cfg = {
  	.bus_clk_names = dsi_v2_4_clk_names,
  	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
  	.io_start = {
--		{ 0xae94000, 0xae96000 },
-+		{ 0xae94000, 0xae96000 }, /* SDM845 / SDM670 / SC7180 */
+-		{ 0xae94000, 0xae96000 }, /* SDM845 / SDM670 / SC7180 */
++		{ 0xae94000, 0xae96000 }, /* SDM845 / SDM670 */
++		{ 0x5e94000 }, /* QCM2290 / SM6115 / SM6125 / SM6375 */
  	},
  };
  
-@@ -188,17 +188,6 @@ static const struct msm_dsi_config sm8550_dsi_cfg = {
+@@ -203,25 +204,6 @@ static const struct msm_dsi_config sc7280_dsi_cfg = {
  	},
  };
  
--static const struct msm_dsi_config sc7180_dsi_cfg = {
+-static const char * const dsi_qcm2290_bus_clk_names[] = {
+-	"iface", "bus",
+-};
+-
+-static const struct regulator_bulk_data qcm2290_dsi_cfg_regulators[] = {
+-	{ .supply = "vdda", .init_load_uA = 21800 },	/* 1.2 V */
+-};
+-
+-static const struct msm_dsi_config qcm2290_dsi_cfg = {
 -	.io_offset = DSI_6G_REG_SHIFT,
--	.regulator_data = dsi_v2_4_regulators,
--	.num_regulators = ARRAY_SIZE(dsi_v2_4_regulators),
--	.bus_clk_names = dsi_v2_4_clk_names,
--	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
+-	.regulator_data = qcm2290_dsi_cfg_regulators,
+-	.num_regulators = ARRAY_SIZE(qcm2290_dsi_cfg_regulators),
+-	.bus_clk_names = dsi_qcm2290_bus_clk_names,
+-	.num_bus_clks = ARRAY_SIZE(dsi_qcm2290_bus_clk_names),
 -	.io_start = {
--		{ 0xae94000 },
+-		{ 0x5e94000 },
 -	},
 -};
 -
- static const struct regulator_bulk_data sc7280_dsi_regulators[] = {
- 	{ .supply = "vdda", .init_load_uA = 8350 },	/* 1.2 V */
- };
-@@ -299,7 +288,7 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_4_0,
- 		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_4_1,
--		&sc7180_dsi_cfg, &msm_dsi_6g_v2_host_ops},
-+		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_5_0,
- 		&sc7280_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_6_0,
+ static const struct msm_dsi_host_cfg_ops msm_dsi_v2_host_ops = {
+ 	.link_clk_set_rate = dsi_link_clk_set_rate_v2,
+ 	.link_clk_enable = dsi_link_clk_enable_v2,
+@@ -312,9 +294,3 @@ const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor)
+ 
+ 	return cfg_hnd;
+ }
+-
+-/*  Non autodetect configs */
+-const struct msm_dsi_cfg_handler qcm2290_dsi_cfg_handler = {
+-	.cfg = &qcm2290_dsi_cfg,
+-	.ops = &msm_dsi_6g_v2_host_ops,
+-};
 
 -- 
 2.39.2
