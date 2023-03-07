@@ -2,188 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFED46AEC3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 18:53:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 417FF6AEC18
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 18:52:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231331AbjCGRx1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 12:53:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44430 "EHLO
+        id S232210AbjCGRw3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 12:52:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232233AbjCGRxI (ORCPT
+        with ESMTP id S231958AbjCGRv6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 12:53:08 -0500
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6981392F0C
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 09:47:33 -0800 (PST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pZbOi-0001A8-23; Tue, 07 Mar 2023 18:46:48 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pZbOJ-002XP1-FG; Tue, 07 Mar 2023 18:46:23 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pZbOI-0034GD-GY; Tue, 07 Mar 2023 18:46:22 +0100
-Date:   Tue, 7 Mar 2023 18:46:22 +0100
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Kursad Oney <kursad.oney@broadcom.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Conor Dooley <conor.dooley@microchip.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Heiko Stuebner <heiko@sntech.de>,
-        linux-samsung-soc@vger.kernel.org,
-        Samuel Holland <samuel@sholland.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Haibo Chen <haibo.chen@nxp.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        linux-sunxi@lists.linux.dev, Anand Gore <anand.gore@broadcom.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Scott Branden <sbranden@broadcom.com>,
-        Andrew Jeffery <andrew@aj.id.au>, linux-spi@vger.kernel.org,
-        Yogesh Gaur <yogeshgaur.83@gmail.com>,
-        Sowjanya Komatineni <skomatineni@nvidia.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Max Filippov <jcmvbkbc@gmail.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Jonas Gorski <jonas.gorski@gmail.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        linux-xtensa@linux-xtensa.org, Andi Shyti <andi@etezian.org>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-arm-msm@vger.kernel.org,
-        Radu Pirea <radu_nicolae.pirea@upb.ro>,
-        Jay Fang <f.fangjian@huawei.com>,
-        Haojian Zhuang <haojian.zhuang@gmail.com>,
-        Jassi Brar <jaswinder.singh@linaro.org>,
-        =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
-        linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-        Masahisa Kojima <masahisa.kojima@linaro.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        linux-aspeed@lists.ozlabs.org,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Daire McNamara <daire.mcnamara@microchip.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Nancy Yuen <yuenn@google.com>, Chen-Yu Tsai <wens@csie.org>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Joel Stanley <joel@jms.id.au>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        William Zhang <william.zhang@broadcom.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Li-hao Kuo <lhjeff911@gmail.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        linux-riscv@lists.infradead.org,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Kamal Dasu <kdasu.kdev@gmail.com>,
-        Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-mediatek@lists.infradead.org,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Han Xu <han.xu@nxp.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Patrick Venture <venture@google.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Palmer Dabbelt <palmer@dabbelt.com>, openbmc@lists.ozlabs.org,
-        Daniel Mack <daniel@zonque.org>
-Subject: Re: [PATCH 00/87] spi: Convert to platform remove callback returning
- void
-Message-ID: <20230307174622.vluzrlicw2gdn7hq@pengutronix.de>
-References: <20230303172041.2103336-1-u.kleine-koenig@pengutronix.de>
- <ddcda593-f8e9-43a4-bba6-dae31e8d6b39@sirena.org.uk>
+        Tue, 7 Mar 2023 12:51:58 -0500
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB71DA4B28;
+        Tue,  7 Mar 2023 09:46:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+        MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+        Content-ID:Content-Description:In-Reply-To:References;
+        bh=kEQsvK3MQxnkVxlI0sD7IiDrMvuokvi8WefyhXs11HM=; b=Q7unhmlaPKTnVfqQx9l4VGvx/k
+        OxcEG8ujTo3Jtr3wGonwqkyHoAmvyZE5YlNhMVSma9Vwm2vVISUahP8bq7eDhnuFwj1Zg9elJtiZ0
+        9VB5TWOdO2TuZcLNMMxYd0UT4aQZIcODeWKf2uODP6lLFWtg06P42NClrlfqKEjf58hVeKpODH1il
+        OnhsO4mh/Q5cgw6n9guiVnGMPXW8uMclXL6r8uSCtSH1sYrRpN6rf4eYtLfL7t6xxWU7GtjOjEp+c
+        A3hQW2HP8EnnYxMEqBr67DKdBuuPnEpq/Ev8U365Zu9cfw6BsNaEkeUzg19+8lVHEGXSNgfj5zcTr
+        Fp3UEWZQ==;
+Received: from [2601:1c2:980:9ec0::df2f] (helo=bombadil.infradead.org)
+        by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1pZbOQ-001sqm-TV; Tue, 07 Mar 2023 17:46:30 +0000
+From:   Randy Dunlap <rdunlap@infradead.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Randy Dunlap <rdunlap@infradead.org>,
+        kernel test robot <lkp@intel.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Paul Gazzillo <paul@pgazz.com>,
+        Necip Fazil Yildiran <fazilyildiran@gmail.com>,
+        Chia-I Wu <olvaffe@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm: fix PM_DEVFREQ kconfig dependency warning
+Date:   Tue,  7 Mar 2023 09:46:27 -0800
+Message-Id: <20230307174627.23787-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="subqk3tp4gcmon6z"
-Content-Disposition: inline
-In-Reply-To: <ddcda593-f8e9-43a4-bba6-dae31e8d6b39@sirena.org.uk>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Since DEVFREQ_GOV_SIMPLE_ONDEMAND depends on PM_DEVFREQ, the latter
+should either be selected or DRM_MSM should depend on PM_DEVFREQ.
+Since most drivers select PM_DEVFREQ instead of depending on it,
+add a select here to satisfy kconfig.
 
---subqk3tp4gcmon6z
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+WARNING: unmet direct dependencies detected for DEVFREQ_GOV_SIMPLE_ONDEMAND
+  Depends on [n]: PM_DEVFREQ [=n]
+  Selected by [y]:
+  - DRM_MSM [=y] && HAS_IOMEM [=y] && DRM [=y] && (ARCH_QCOM || SOC_IMX5 || COMPILE_TEST [=y]) && COMMON_CLK [=y] && IOMMU_SUPPORT [=y] && (QCOM_OCMEM [=n] || QCOM_OCMEM [=n]=n) && (QCOM_LLCC [=n] || QCOM_LLCC [=n]=n) && (QCOM_COMMAND_DB [=y] || QCOM_COMMAND_DB [=y]=n)
 
-Hello Mark,
+Fixes: 6563f60f14cb ("drm/msm/gpu: Add devfreq tuning debugfs")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: lore.kernel.org/r/202303071922.wJqDWQpe-lkp@intel.com
+Cc: Rob Clark <robdclark@chromium.org>
+Cc: Paul Gazzillo <paul@pgazz.com>
+Cc: Necip Fazil Yildiran <fazilyildiran@gmail.com>
+Cc: Chia-I Wu <olvaffe@gmail.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+---
+ drivers/gpu/drm/msm/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
-On Tue, Mar 07, 2023 at 05:00:47PM +0000, Mark Brown wrote:
-> On Fri, Mar 03, 2023 at 06:19:14PM +0100, Uwe Kleine-K=F6nig wrote:
->=20
-> >   spi: mpc512x-psc: Convert to platform remove callback returning void
-> >   spi: mpc52xx-psc: Convert to platform remove callback returning void
->=20
-> As well as the Raspberry Pi patch dropped due to build failures I also
-> dropped these two as they conflicted with Rob's refactoring of that
-> driver, nothing especially complex but since there's stuff to resend
-> anyway...
-
-Fine for me. Given that my queue of patches to convert the remove
-callbacks is quite big, there is no pressure from my side to get these
-all in. 84 from 87 is great already, I'll care about the remaining 3
-patches (and the few drivers that don't return 0 in .remove()) later.
-
-Thanks
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---subqk3tp4gcmon6z
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmQHeGsACgkQwfwUeK3K
-7AmJQAf+OLFnhHHVOJXrgsKSMBVT9Qycgk1Nx3JjIocPvU73GYAc8BXwKRUCjb2G
-yTOGAdCjHSEwQuDZxv2NhBd/vpxLkpD7iy/doYJxHT2UMPWV54rl6CFYJEHlJPqW
-Z/Ml4CO3hzmB4BXtCN8RnFyPLmswQObzaXX8HL2DGHB1XE8S1ih7F9Kal3TQISuT
-hZmmMMLaoUtmq5BdGPNybIlL7hGGrMoH0ej+lkPelgMI+QnFAQ6ge26Uc1x9lkDb
-M9w96TPGO6fCBhTV7g21HUUO1P1MsEqJqTPxwUxg+iatcXPmt/w55d07QZQbST7b
-W1YrIAGbAt6hkfVtrrUIlqw3J57gTA==
-=WgaT
------END PGP SIGNATURE-----
-
---subqk3tp4gcmon6z--
+diff -- a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+--- a/drivers/gpu/drm/msm/Kconfig
++++ b/drivers/gpu/drm/msm/Kconfig
+@@ -23,6 +23,7 @@ config DRM_MSM
+ 	select SHMEM
+ 	select TMPFS
+ 	select QCOM_SCM
++	select PM_DEVFREQ
+ 	select DEVFREQ_GOV_SIMPLE_ONDEMAND
+ 	select WANT_DEV_COREDUMP
+ 	select SND_SOC_HDMI_CODEC if SND_SOC
