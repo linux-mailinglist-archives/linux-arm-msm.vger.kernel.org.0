@@ -2,239 +2,232 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 426EA6ADDFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 12:51:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B6276ADE37
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 13:00:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230211AbjCGLvS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 06:51:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56544 "EHLO
+        id S230467AbjCGMAK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 07:00:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230286AbjCGLu7 (ORCPT
+        with ESMTP id S229682AbjCGMAJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 06:50:59 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1B5351C8C
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 03:49:45 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id m6so16692546lfq.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 03:49:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678189781;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8NLnfgcJkBrupO9VeOIsatAqwiLwPWa5rkw2fb5PnaE=;
-        b=UYvQ5bO2RzR51Mh38ODTgBjtWo2rd01w2DzKJ+NpS1vMuXxsIZJk1UL0Y9tvMY/erS
-         WdcNtewN6BoWBvzNWdC7D5OzAVWUwrl418t7qzmoVXLW7HeQHGUJUllTxOAxPKMuos/I
-         FnEFJdlTkGoepl4EBTUDhWvpEm1hlggXZgbJrM2QDGjqMvK09RAhyBe4g/zdhhWeZs19
-         2H7fcl1zyhk9DpjhmRDIDtaXkwftLIFWTRPHIHuoKTmaWO3N6eMFm5Cla1kFSe7fPjxJ
-         Tas0sI2JB1IcP++DNwbqE8ksYqoqgZh125kLDgfhq0VIpwRgE5vveM3yXSMv/dLCUqEN
-         /+TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678189781;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8NLnfgcJkBrupO9VeOIsatAqwiLwPWa5rkw2fb5PnaE=;
-        b=gFUZyRHBgP1wddc51bvaov88tGhrL79c0zGuN3BD4NzuCQs9zMeIZUxpGG+A2Ej2Se
-         AJ2oA480BuDBN45g2ZnD1kai4OxvuwFCSZp8yxDP70hNrz/iiqeoMhvxMfs7Zsw6sSgf
-         F1T2DEKozItcXNYMhFWSy25T+1DXkZ7VVPPaVqfeIkky+fpSMOPQWG4s3Ke2OywJ4R2T
-         BAaHvIAO4fMsy/trqlHkSENesh2GCqguaIzNoldfoDUiuT7HDRokePxBXEBVadi0lUsw
-         A1N2VkKXl2n+3XmWMRDwpiUDZE57GmFZW0EM3R3NYE/TdmuBmZl1FTau+6y7fjLYpLaX
-         4wEA==
-X-Gm-Message-State: AO0yUKW0EPSAqILrio3UznjykgTdUn82D8SRtTb+quxyUNzmEU1/+EXt
-        4lQhxGc3ZmoqwPmxMMUa2+dNeg==
-X-Google-Smtp-Source: AK7set820Wh82BGJ6Ihvrw7CYOrPuMDU5y9XvpQtW63tea7D4cxj+nT71DKMYqTpL9A9f0fzFll76w==
-X-Received: by 2002:ac2:558e:0:b0:4dc:852d:9b88 with SMTP id v14-20020ac2558e000000b004dc852d9b88mr3812252lfg.45.1678189781415;
-        Tue, 07 Mar 2023 03:49:41 -0800 (PST)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id j19-20020a19f513000000b004dc721ea6a1sm1997226lfb.273.2023.03.07.03.49.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Mar 2023 03:49:40 -0800 (PST)
-Message-ID: <47b591c0-2f68-429d-6d1b-fa8b701785ac@linaro.org>
-Date:   Tue, 7 Mar 2023 13:49:40 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 7 Mar 2023 07:00:09 -0500
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50DAA233DC
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 04:00:08 -0800 (PST)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pZVyN-0006T7-KM; Tue, 07 Mar 2023 12:59:15 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pZVyF-002TEW-9a; Tue, 07 Mar 2023 12:59:07 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pZVyE-002yig-5U; Tue, 07 Mar 2023 12:59:06 +0100
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Andre Przywara <andre.przywara@arm.com>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Icenowy Zheng <uwu@icenowy.me>,
+        Justin Chen <justinpopo6@gmail.com>,
+        Al Cooper <alcooperx@gmail.com>,
+        Pratyush Yadav <p.yadav@ti.com>,
+        Rahul T R <r-ravikumar@ti.com>,
+        Swapnil Jakhade <sjakhade@cadence.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Liu Ying <victor.liu@nxp.com>, Yuan Can <yuancan@huawei.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Chunfeng Yun <chunfeng.yun@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Allison Randal <allison@lohutok.net>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Miaoqian Lin <linmq006@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Amelie Delaunay <amelie.delaunay@foss.st.com>,
+        Dan Carpenter <error27@gmail.com>,
+        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        JC Kuo <jckuo@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Roger Quadros <rogerq@kernel.org>,
+        Matt Ranostay <mranostay@ti.com>,
+        Sinthu Raja <sinthu.raja@ti.com>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tanmay Patil <t-patil@ti.com>,
+        Siddharth Vadapalli <s-vadapalli@ti.com>,
+        Lv Ruyi <lv.ruyi@zte.com.cn>
+Cc:     linux-phy@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        kernel@pengutronix.de,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        dri-devel@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Georgi Djakov <djakov@kernel.org>
-References: <cover.1677749625.git.quic_varada@quicinc.com>
- <6b8d17006d8ee9a1b0c4df803c1cc7caf53ea3ef.1677749625.git.quic_varada@quicinc.com>
- <CAA8EJprbMybV0o1-436yLhVnnEX6qywrj=JmWDCL5usaH0DXiQ@mail.gmail.com>
- <61e8c730-e46d-728d-d770-f1ead4405d12@quicinc.com>
- <83184da4-b183-3271-983f-3a1a62fb9f1a@linaro.org>
- <365f2609-d3b4-df23-5b6e-7a190815a640@quicinc.com>
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <365f2609-d3b4-df23-5b6e-7a190815a640@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-tegra@vger.kernel.org
+Subject: [PATCH 00/31] phy: Convert to platform remove callback returning void
+Date:   Tue,  7 Mar 2023 12:58:29 +0100
+Message-Id: <20230307115900.2293120-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.39.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5818; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=MYs5JN8sdLbdhFqX1o8FkbSoO7sfiFpKaRQbsKFPJqQ=; b=owEBbQGS/pANAwAKAcH8FHityuwJAcsmYgBkByZ3qXmeqAA+C0xt3Tbnmc2ihyUokkXi7q3YR NmSTiOqsGOJATMEAAEKAB0WIQR+cioWkBis/z50pAvB/BR4rcrsCQUCZAcmdwAKCRDB/BR4rcrs CQWGB/411PW1y2WnaZUJlgvVPVtj4QZujEz8AqlBRHTptyhx5CaQGlPe5Xdx6F1Q5b+kPwyAdD9 /HAdHufSEHfPbZGDUn4HLokWRJ8EGqimHminkBYxmUvdoH5XYFmaQwZ6a88+sD124laNpghG7TD rX6oqjXAt4PTE/fQrGyqD/tWwDxLRZpczwfFESmWk28IPcjCEOQQP+2oSas8Mef2Oc8JJQWBCvl YDEq69SPXLHguNB1ZudTCSbi4KAzJ9LHrwEWqumQjr2K3Du5Gg91o9+6EaSl2YQGu5XnPFgmqQ3 cWA/IVc9vOXlx2ruwlHvEB1wcclx//PSUSpKGg2356dPcYJG
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/03/2023 08:36, Varadarajan Narayanan wrote:
-> 
-> On 3/6/2023 5:21 PM, Dmitry Baryshkov wrote:
->> On 06/03/2023 13:26, Varadarajan Narayanan wrote:
->>> Dmitry,
->>>
->>> On 3/2/2023 9:52 PM, Dmitry Baryshkov wrote:
->>>> On Thu, 2 Mar 2023 at 11:57, Varadarajan Narayanan
->>>> <quic_varada@quicinc.com> wrote:
->>>>> Add USB phy and controller related nodes
->>>>>
->>>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->>>>> ---
->>>>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 92 
->>>>> +++++++++++++++++++++++++++++++++++
->>>>>   1 file changed, 92 insertions(+)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi 
->>>>> b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->>>>> index 2bb4053..319b5bd 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->>
->> [skipped]
->>
->>
->>>>> +               usb3: usb3@8A00000 {
->>>> You know the drill. This node is in the wrong place.
->>>>
->>>>> +                       compatible = "qcom,dwc3";
->>>>> +                       reg = <0x8AF8800 0x400>;
->>>>> +                       #address-cells = <1>;
->>>>> +                       #size-cells = <1>;
->>>>> +                       ranges;
->>>>> +
->>>>> +                       clocks = <&gcc GCC_SNOC_USB_CLK>,
->>>>> +                               <&gcc GCC_ANOC_USB_AXI_CLK>,
->>>>> +                               <&gcc GCC_USB0_MASTER_CLK>,
->>>>> +                               <&gcc GCC_USB0_SLEEP_CLK>,
->>>>> +                               <&gcc GCC_USB0_MOCK_UTMI_CLK>;
->>>>> +
->>>>> +                       clock-names = "sys_noc_axi",
->>>>> +                               "anoc_axi",
->>>>> +                               "master",
->>>>> +                               "sleep",
->>>>> +                               "mock_utmi";
->>>> Please fix the indentation of the lists.
->>>>
->>>>> +
->>>>> +                       assigned-clocks = <&gcc GCC_SNOC_USB_CLK>,
->>>>> +                                         <&gcc GCC_ANOC_USB_AXI_CLK>,
->>>> Why do you assign clock rates to the NOC clocks? Should they be set
->>>> using the interconnect instead?
->>>
->>> The SNOC and ANOC run at a fixed speed of 350MHz and 342MHz 
->>> respectively and are not scaled. These clocks are for the interface 
->>> between the USB block and the SNOC/ANOC. Do we still need to use 
->>> interconnect?
->>
->> Maybe I misunderstand something here. If the snoc and anoc speeds are 
->> at 350 MHz and 342 MHz, why do you assign clock-rates of 200 MHz?
->>
->> Is it enough to call clk_prepare_enable() for these clocks or the rate 
->> really needs to be set?
-> 
-> The rate of 200MHz is not being set for the SNOC/ANOC. It is for the
-> NIU that connects the USB and SNOC/ANOC. The reason for setting the
-> rate to 200MHz is to configure the RCG parent for these interface
-> clocks. That said can we configure this RCG standalone in the driver
-> and enable these clocks?
+Hello,
 
-We discussed this separately with Georgi Djakov. Let me quote his IRC 
-message: "it sounds like this is for USB port that connects to the NOC. 
-if bandwidth scaling is not needed (or other interconnect 
-configuration), then maybe this can go without interconnect provider 
-driver."
+this patch series adapts the platform drivers below drivers/phy to use the
+.remove_new() callback. Compared to the traditional .remove() callback
+.remove_new() returns no value. This is a good thing because the driver core
+doesn't (and cannot) cope for errors during remove. The only effect of a
+non-zero return value in .remove() is that the driver core emits a warning. The
+device is removed anyhow and an early return from .remove() usually yields a
+resource leak.
 
-However as we discover more and more about this platform (e.g. PCIe 
-using the aggre_noc region to setup some magic registers, see [1]), I'm 
-more and more biased towards suggesting implementing the interconnect 
-driver to setup all these tiny little things. With the DT tree being an 
-ABI, it is much preferable to overestimate the needs rather than 
-underestimating them (and having to cope with the backwards 
-compatibility issues).
+By changing the remove callback to return void driver authors cannot
+reasonably assume any more that there is some kind of cleanup later.
 
-Generally I think that PCIe/USB/whatever should not poke into NoC 
-registers or NoC/NIU clocks directly (because this is a very 
-platform-specific item). Rather than that it should tell the 
-icc/opp/whatever subsystem, "please configure the SoC for me to work".
+All drivers in drivers/spmi returned zero unconditionally in their remove
+callback, so they could all be converted trivially to .remove_new().
 
-[1] 
-https://lore.kernel.org/linux-arm-msm/30cf9717-dcca-e984-c506-c71b7f8e32cd@quicinc.com/
+Note that this series depends on commit 5c5a7680e67b ("platform: Provide
+a remove callback that returns no value") which is included in v6.3-rc1.
 
-> 
-> Thanks
-> Varada
-> 
-> 
->>
->>
->>>
->>>>> + <&gcc GCC_USB0_MASTER_CLK>,
->>>>> +                                         <&gcc 
->>>>> GCC_USB0_MOCK_UTMI_CLK>;
->>>>> +                       assigned-clock-rates = <200000000>,
->>>>> + <200000000>,
->>>>> + <200000000>,
->>>>> + <24000000>;
->>>>> +
->>>>> +                       resets = <&gcc GCC_USB_BCR>;
->>>>> +                       status = "disabled";
->>>>> +
->>>>> +                       dwc_0: dwc3@8A00000 {
->>>>> +                               compatible = "snps,dwc3";
->>>>> +                               reg = <0x8A00000 0xcd00>;
->>>>> +                               clock-names = "ref";
->>>>> +                               clocks = <&gcc 
->>>>> GCC_USB0_MOCK_UTMI_CLK>;
->>>> clocks before clock-names
->>>>
->>>>> + interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
->>>>> +                               phys = <&qusb_phy_0>, <&usb0_ssphy>;
->>>>> +                               phy-names = "usb2-phy", "usb3-phy";
->>>>> +                               tx-fifo-resize;
->>>>> +                               snps,dis_ep_cache_eviction;
->>>>> +                               snps,is-utmi-l1-suspend;
->>>>> +                               snps,hird-threshold = /bits/ 8 <0x0>;
->>>>> +                               snps,dis_u2_susphy_quirk;
->>>>> +                               snps,dis_u3_susphy_quirk;
->>>>> + snps,quirk-frame-length-adjustment = <0x0A87F0A0>;
->>>>> +                               dr_mode = "host";
->>>>> +                       };
->>>>> +               };
->>>>> +
->>>>>                  pcie0_phy: phy@84000 {
->>>>>                          compatible = 
->>>>> "qcom,ipq9574-qmp-gen3x1-pcie-phy";
->>>>>                          reg = <0x00084000 0x1bc>; /* Serdes PLL */
->>>>> -- 
->>>>> 2.7.4
->>>
->>> Will address these and post a new revision.
->>>
->>> Thanks
->>>
->>> Varada
->>>
->>
+Best regards
+Uwe
 
+Uwe Kleine-König (31):
+  phy: allwinner: phy-sun4i-usb: Convert to platform remove callback
+    returning void
+  phy: broadcom: phy-brcm-usb: Convert to platform remove callback
+    returning void
+  phy: cadence: cdns-dphy: Convert to platform remove callback returning
+    void
+  phy: cadence: phy-cadence-sierra: Convert to platform remove callback
+    returning void
+  phy: cadence: phy-cadence-torrent: Convert to platform remove callback
+    returning void
+  phy: freescale: phy-fsl-imx8qm-lvds-phy: Convert to platform remove
+    callback returning void
+  phy: intel: phy-intel-lgm-combo: Convert to platform remove callback
+    returning void
+  phy: mediatek: phy-mtk-mipi-dsi: Convert to platform remove callback
+    returning void
+  phy: motorola: phy-cpcap-usb: Convert to platform remove callback
+    returning void
+  phy: motorola: phy-mapphone-mdm6600: Convert to platform remove
+    callback returning void
+  phy: phy-lgm-usb: Convert to platform remove callback returning void
+  phy: qualcomm: phy-qcom-apq8064-sata: Convert to platform remove
+    callback returning void
+  phy: qualcomm: phy-qcom-eusb2-repeater: Convert to platform remove
+    callback returning void
+  phy: qualcomm: phy-qcom-ipq806x-sata: Convert to platform remove
+    callback returning void
+  phy: renesas: phy-rcar-gen3-pcie: Convert to platform remove callback
+    returning void
+  phy: renesas: phy-rcar-gen3-usb2: Convert to platform remove callback
+    returning void
+  phy: renesas: phy-rcar-gen3-usb3: Convert to platform remove callback
+    returning void
+  phy: renesas: r8a779f0-ether-serdes: Convert to platform remove
+    callback returning void
+  phy: rockchip: phy-rockchip-inno-csidphy: Convert to platform remove
+    callback returning void
+  phy: rockchip: phy-rockchip-inno-dsidphy: Convert to platform remove
+    callback returning void
+  phy: rockchip: phy-rockchip-inno-hdmi: Convert to platform remove
+    callback returning void
+  phy: rockchip: phy-rockchip-typec: Convert to platform remove callback
+    returning void
+  phy: st: phy-stm32-usbphyc: Convert to platform remove callback
+    returning void
+  phy: tegra: xusb: Convert to platform remove callback returning void
+  phy: ti: phy-am654-serdes: Convert to platform remove callback
+    returning void
+  phy: ti: phy-da8xx-usb: Convert to platform remove callback returning
+    void
+  phy: ti: phy-dm816x-usb: Convert to platform remove callback returning
+    void
+  phy: ti: phy-j721e-wiz: Convert to platform remove callback returning
+    void
+  phy: ti: phy-omap-usb2: Convert to platform remove callback returning
+    void
+  phy: ti: phy-ti-pipe3: Convert to platform remove callback returning
+    void
+  phy: ti: phy-twl4030-usb: Convert to platform remove callback
+    returning void
+
+ drivers/phy/allwinner/phy-sun4i-usb.c            | 6 ++----
+ drivers/phy/broadcom/phy-brcm-usb.c              | 6 ++----
+ drivers/phy/cadence/cdns-dphy.c                  | 6 ++----
+ drivers/phy/cadence/phy-cadence-sierra.c         | 6 ++----
+ drivers/phy/cadence/phy-cadence-torrent.c        | 6 ++----
+ drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c  | 6 ++----
+ drivers/phy/intel/phy-intel-lgm-combo.c          | 5 ++---
+ drivers/phy/mediatek/phy-mtk-mipi-dsi.c          | 5 ++---
+ drivers/phy/motorola/phy-cpcap-usb.c             | 6 ++----
+ drivers/phy/motorola/phy-mapphone-mdm6600.c      | 6 ++----
+ drivers/phy/phy-lgm-usb.c                        | 6 ++----
+ drivers/phy/qualcomm/phy-qcom-apq8064-sata.c     | 6 ++----
+ drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c   | 8 +++-----
+ drivers/phy/qualcomm/phy-qcom-ipq806x-sata.c     | 6 ++----
+ drivers/phy/renesas/phy-rcar-gen3-pcie.c         | 6 ++----
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c         | 6 ++----
+ drivers/phy/renesas/phy-rcar-gen3-usb3.c         | 6 ++----
+ drivers/phy/renesas/r8a779f0-ether-serdes.c      | 6 ++----
+ drivers/phy/rockchip/phy-rockchip-inno-csidphy.c | 6 ++----
+ drivers/phy/rockchip/phy-rockchip-inno-dsidphy.c | 6 ++----
+ drivers/phy/rockchip/phy-rockchip-inno-hdmi.c    | 6 ++----
+ drivers/phy/rockchip/phy-rockchip-typec.c        | 6 ++----
+ drivers/phy/st/phy-stm32-usbphyc.c               | 6 ++----
+ drivers/phy/tegra/xusb.c                         | 6 ++----
+ drivers/phy/ti/phy-am654-serdes.c                | 6 ++----
+ drivers/phy/ti/phy-da8xx-usb.c                   | 6 ++----
+ drivers/phy/ti/phy-dm816x-usb.c                  | 6 ++----
+ drivers/phy/ti/phy-j721e-wiz.c                   | 6 ++----
+ drivers/phy/ti/phy-omap-usb2.c                   | 6 ++----
+ drivers/phy/ti/phy-ti-pipe3.c                    | 6 ++----
+ drivers/phy/ti/phy-twl4030-usb.c                 | 6 ++----
+ 31 files changed, 63 insertions(+), 123 deletions(-)
+
+base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
 -- 
-With best wishes
-Dmitry
+2.39.1
 
