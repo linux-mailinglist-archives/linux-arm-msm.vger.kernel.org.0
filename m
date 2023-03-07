@@ -2,281 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B73866ADF49
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 13:57:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D10D26ADF73
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 14:01:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229873AbjCGM51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 07:57:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54384 "EHLO
+        id S229545AbjCGNBs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 08:01:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229868AbjCGM5Y (ORCPT
+        with ESMTP id S229587AbjCGNBp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 07:57:24 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6E893C10;
-        Tue,  7 Mar 2023 04:57:11 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 53DB1B818B6;
-        Tue,  7 Mar 2023 12:57:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A13C433EF;
-        Tue,  7 Mar 2023 12:56:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678193829;
-        bh=/6FWaTZ91tr7mn9JZhWid8/SD4XwCMsi0rdXaiPhcFI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LnHqQENGqGMcpLzuaQisy/OOZl3Wc7gQV71bkPsINseY82j6IAMcnYXJEZosZ2J9o
-         AvK/Q7OwO71dkyxeumiquEKBFZh9iDsQWjAc9eBDKVExdh/9uSRt5fLgUlwiZPQZ0C
-         Ta+M5SERCeQ/HPhkDeljpJIvDiuFiUiJHFSt2VC4TCMQt2JvNZ8IO6nvLSYIM+9Y0m
-         k0H2OEpyp1VTiV/otaWfYHfJ7bkUM7UDaoI2hrnAEUBaVpIG6neslNPQ8ixgLfnpe7
-         pXSbnX4O6+ixIWbCxMrDsuj3rkKk5CDpzcQowqGHuoW4Fs1gCzGgsN2b3SuJm65yCe
-         IktoDcs6uOi5w==
-Date:   Tue, 7 Mar 2023 18:26:55 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Devi Priya <quic_devipriy@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, mturquette@baylibre.com,
-        sboyd@kernel.org, p.zabel@pengutronix.de, svarbanov@mm-sol.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-clk@vger.kernel.org,
-        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com
-Subject: Re: [PATCH 1/7] dt-bindings: PCI: qcom: Add IPQ9574 specific
- compatible
-Message-ID: <20230307125655.GC5599@thinkpad>
-References: <20230214164135.17039-1-quic_devipriy@quicinc.com>
- <20230214164135.17039-2-quic_devipriy@quicinc.com>
- <20230224082332.GA5443@thinkpad>
- <bd153038-4427-1f11-1941-5f13fec01cf7@quicinc.com>
- <20230228063358.GA4839@thinkpad>
- <9BD62D8E-4E14-4269-B72D-C83EF4D43040@linaro.org>
- <20230303174036.GB6782@thinkpad>
- <30cf9717-dcca-e984-c506-c71b7f8e32cd@quicinc.com>
+        Tue, 7 Mar 2023 08:01:45 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78E0F6EBD
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 05:01:43 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id s22so16929001lfi.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 05:01:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678194102;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kAKt9oLN/3E5C6T5cNeSMYOM4tUix3c4gih76FZI0vA=;
+        b=IahDkcbRQh6PRKBga5k1xpkX1K12Pac+lBTOjur4Ti0gLOjDDwv1ebWjja2Amzvrhm
+         AVSfZeAxWC3H+QVzUX4wJh3PQPOP+uPGPtASewchwgX8v1WgPcJSxGgVQgBCroTPB/mg
+         HsMcEAxc695nc9l0DXFd6VCs9bT1zMaTsLnPVxLrfyQiZz305RiOFq5NmWZFETCwTxTc
+         9oRwQCpKs9+s2PIOpFs5WN8r4hx5aUJWzDWusUYGb0WLaHKFd0dV7mYbeEp0kMuhqCe6
+         Y2KZ83aFKHOAIT87E8HKO9M7AnhXKP18iZf56tRgRKqvRaMDaK5wzV+2K9LsK8WYusBs
+         wuiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678194102;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kAKt9oLN/3E5C6T5cNeSMYOM4tUix3c4gih76FZI0vA=;
+        b=neV8/x9V230QXkaeLMHsix5v0AGt5v8SVGa6WGv+e0knIivO/rS0uWD4eJQmMjjBpy
+         tN0xl3X2w9knULxU+aoZiJpady0rMaq2woov4vseumOHgGZ5Zv4G2QOW7YanqR7Wl88d
+         dKY2x7L38q3mTo+cfdxg9TTGT24MbZGRiPvA8WD13SSLj/p/zwTyxCKDSSPtpe+UqdaN
+         bvexSG7o3ruDGKK3npgy8qRfMSfG/O6d8xg1TwHMh1w9eJzvCniAYIvYH9D4kEdwY2cE
+         145N6jP4tF6XNaXHOTG/k2BNfWCMAUzHcaavL/W1V/BPUWdao7kt+ASZZOU4Iq89Gxnj
+         vbaQ==
+X-Gm-Message-State: AO0yUKVphdsu5eZrrAaNQASRVhzBv1gxeszX9v0coW1iLxbBiPiJgdad
+        jVsSBbQnHlFE/rCI+z2IiEyDww==
+X-Google-Smtp-Source: AK7set8z/qcx87HDZWoD6FwIXZM8Cu3r1uLjF3xt83ugybLjz1wVUQBna8yb7yA/JzAybC+nxf9qHQ==
+X-Received: by 2002:ac2:446b:0:b0:4d5:831a:1af8 with SMTP id y11-20020ac2446b000000b004d5831a1af8mr4246862lfl.40.1678194101601;
+        Tue, 07 Mar 2023 05:01:41 -0800 (PST)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id u2-20020ac248a2000000b004cc5e97d356sm2048265lfg.148.2023.03.07.05.01.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Mar 2023 05:01:41 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v3 00/10] Fix DSI host idx detection on HW revision clash
+Date:   Tue, 07 Mar 2023 14:01:38 +0100
+Message-Id: <20230307-topic-dsi_qcm-v3-0-8bd7e1add38a@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <30cf9717-dcca-e984-c506-c71b7f8e32cd@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALI1B2QC/x2N0QqDMAxFf0XybKBYxsRfkSE1TWdAq2tUBuK/L
+ +zxnMvhXqBchBW66oLCp6is2cDXFdAU8ptRojE0rvHOuyfu6yaEUWX40IIPis6TTalNYM0YlHE
+ sIdNkVT7m2eRWOMn3f9K/7vsHASMEV3QAAAA=
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1678194100; l=2768;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=w8f97gizhKeQlAufN/gAw/Y5LqIn6pMqeGASKnoEWho=;
+ b=eOnovxHa4VCfpFjQWjo/7ouKcm1gRhvXoxkVoIem0sV72MWp0RQkRWdMHfoK464VMtQQ+jCEmvl8
+ xv1AhdMGB6qQcL0Lqc6wVBgRMxS0VmSQ/b3zjT9XMv3HuJRhyP+u
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 07, 2023 at 03:15:08PM +0530, Devi Priya wrote:
-> 
-> 
-> On 3/3/2023 11:10 PM, Manivannan Sadhasivam wrote:
-> > On Fri, Mar 03, 2023 at 05:16:58PM +0200, Dmitry Baryshkov wrote:
-> > > 28 февраля 2023 г. 08:33:58 GMT+02:00, Manivannan Sadhasivam <mani@kernel.org> пишет:
-> > > > On Tue, Feb 28, 2023 at 10:56:53AM +0530, Devi Priya wrote:
-> > > > > 
-> > > > > 
-> > > > > On 2/24/2023 1:53 PM, Manivannan Sadhasivam wrote:
-> > > > > > On Tue, Feb 14, 2023 at 10:11:29PM +0530, Devi Priya wrote:
-> > > > > > > Document the compatible for IPQ9574
-> > > > > > > 
-> > > > > Hi Mani, Thanks for taking time to review the patch.
-> > > > > > 
-> > > > > > You didn't mention about the "msi-parent" property that is being added
-> > > > > > by this patch
-> > > > > Sure, will update the commit message in the next spin
-> > > > > > 
-> > > > > > > Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> > > > > > > ---
-> > > > > > >    .../devicetree/bindings/pci/qcom,pcie.yaml    | 72 ++++++++++++++++++-
-> > > > > > >    1 file changed, 70 insertions(+), 2 deletions(-)
-> > > > > > > 
-> > > > > > > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > > > > > > index 872817d6d2bd..dabdf2684e2d 100644
-> > > > > > > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > > > > > > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > > > > > > @@ -26,6 +26,7 @@ properties:
-> > > > > > >              - qcom,pcie-ipq8064-v2
-> > > > > > >              - qcom,pcie-ipq8074
-> > > > > > >              - qcom,pcie-ipq8074-gen3
-> > > > > > > +          - qcom,pcie-ipq9574
-> > > > > > >              - qcom,pcie-msm8996
-> > > > > > >              - qcom,pcie-qcs404
-> > > > > > >              - qcom,pcie-sa8540p
-> > > > > > > @@ -44,11 +45,11 @@ properties:
-> > > > > > >      reg:
-> > > > > > >        minItems: 4
-> > > > > > > -    maxItems: 5
-> > > > > > > +    maxItems: 6
-> > > > > > >      reg-names:
-> > > > > > >        minItems: 4
-> > > > > > > -    maxItems: 5
-> > > > > > > +    maxItems: 6
-> > > > > > >      interrupts:
-> > > > > > >        minItems: 1
-> > > > > > > @@ -105,6 +106,8 @@ properties:
-> > > > > > >        items:
-> > > > > > >          - const: pciephy
-> > > > > > > +  msi-parent: true
-> > > > > > > +
-> > > > > > >      power-domains:
-> > > > > > >        maxItems: 1
-> > > > > > > @@ -173,6 +176,27 @@ allOf:
-> > > > > > >                - const: parf # Qualcomm specific registers
-> > > > > > >                - const: config # PCIe configuration space
-> > > > > > > +  - if:
-> > > > > > > +      properties:
-> > > > > > > +        compatible:
-> > > > > > > +          contains:
-> > > > > > > +            enum:
-> > > > > > > +              - qcom,pcie-ipq9574
-> > > > > > > +    then:
-> > > > > > > +      properties:
-> > > > > > > +        reg:
-> > > > > > > +          minItems: 5
-> > > > > > > +          maxItems: 6
-> > > > > > > +        reg-names:
-> > > > > > > +          minItems: 5
-> > > > > > > +          items:
-> > > > > > > +            - const: dbi # DesignWare PCIe registers
-> > > > > > > +            - const: elbi # External local bus interface registers
-> > > > > > > +            - const: atu # ATU address space
-> > > > > > > +            - const: parf # Qualcomm specific registers
-> > > > > > > +            - const: config # PCIe configuration space
-> > > > > > > +            - const: aggr_noc #PCIe aggr_noc
-> > > > > > 
-> > > > > > Why do you need this region unlike other SoCs? Is the driver making use of it?
-> > > > > We have the aggr_noc region in ipq9574 to achieve higher throughput & to
-> > > > > handle multiple PCIe instances. The driver uses it to rate adapt 1-lane PCIe
-> > > > > clocks. My bad, missed it. Will add the driver changes in V2.
-> > > > 
-> > > > Hmm, this is something new. How can you achieve higher throughput with this
-> > > > region? Can you explain more on how it is used?
-> > > 
-> > > Based on the name of the region, it looks like it is an interconnect region.
-> > > 
-> > 
-> > Well, we only have BCM based interconnects so far. That's why I was curious
-> > about this region and its purpose.
-> For connected PCIe slave devices that are running at frequency lesser
-> than the ANOC frequency (342MHz), the rate adapter of ANOC needs to be
-> configured
-> > 
-> > > Devi, if this is the case, then you have to handle it through the interconnect driver, rather than poking directly into these registers.
-> > 
-> > If that so, it doesn't need to be added in this series itself. I believe that
-> > without aggr_noc region, the PCIe controller can still function properly with
-> > reduced performance. But you can add the interconnect support later as a
-> > separate series.
-> Sure, okay. The ANOC runs at a fixed frequency of 342MHz and the
-> interconnect clocks are not scaled. The aggr_noc register is just a magic
-> register for configuring it's rate adapter to ensure no wait cycles are
-> inserted.
-> 
+v2 -> v3:
+- Merge with [1], I should have done that earlier..
+  - Squash 6115 compatible patches into one
+- Pick up tags (except Rob's ack in 6115 compatible addition, as it was changed)
+- Use b4 (sorry if you got an incomplete set of messages before..)
 
-If the purpose of the aggr_noc region is to configure the interconnect clock,
-then it should be modeled as an interconnect driver.
+[1] https://lore.kernel.org/linux-arm-msm/145066db-5723-6baa-237d-7c2b8fd476d9@linaro.org/
+v2: https://lore.kernel.org/linux-arm-msm/20230213121012.1768296-1-konrad.dybcio@linaro.org/
 
-Thanks,
-Mani
+v1 -> v2:
+- squash the 2d-array-ification and fixing up the logic into one patch
+- drop num_variants, loop over VARIANTS_MAX*DSI_MAX unconditionally
+- drop inadequate Fixes: tags
+- pick up rbs
 
-> > 
-> > Thanks,
-> > Mani
-> > 
-> > > 
-> > > 
-> > > > 
-> > > > Thanks,
-> > > > Mani
-> > > > 
-> > > > > > 
-> > > > > > Thanks,
-> > > > > > Mani
-> > > > > > 
-> > > > > > > +
-> > > > > > >      - if:
-> > > > > > >          properties:
-> > > > > > >            compatible:
-> > > > > > > @@ -365,6 +389,39 @@ allOf:
-> > > > > > >                - const: ahb # AHB Reset
-> > > > > > >                - const: axi_m_sticky # AXI Master Sticky reset
-> > > > > > > +  - if:
-> > > > > > > +      properties:
-> > > > > > > +        compatible:
-> > > > > > > +          contains:
-> > > > > > > +            enum:
-> > > > > > > +              - qcom,pcie-ipq9574
-> > > > > > > +    then:
-> > > > > > > +      properties:
-> > > > > > > +        clocks:
-> > > > > > > +          minItems: 6
-> > > > > > > +          maxItems: 6
-> > > > > > > +        clock-names:
-> > > > > > > +          items:
-> > > > > > > +            - const: ahb  # AHB clock
-> > > > > > > +            - const: aux  # Auxiliary clock
-> > > > > > > +            - const: axi_m # AXI Master clock
-> > > > > > > +            - const: axi_s # AXI Slave clock
-> > > > > > > +            - const: axi_bridge # AXI bridge clock
-> > > > > > > +            - const: rchng
-> > > > > > > +        resets:
-> > > > > > > +          minItems: 8
-> > > > > > > +          maxItems: 8
-> > > > > > > +        reset-names:
-> > > > > > > +          items:
-> > > > > > > +            - const: pipe # PIPE reset
-> > > > > > > +            - const: sticky # Core Sticky reset
-> > > > > > > +            - const: axi_s_sticky # AXI Slave Sticky reset
-> > > > > > > +            - const: axi_s # AXI Slave reset
-> > > > > > > +            - const: axi_m_sticky # AXI Master Sticky reset
-> > > > > > > +            - const: axi_m # AXI Master reset
-> > > > > > > +            - const: aux # AUX Reset
-> > > > > > > +            - const: ahb # AHB Reset
-> > > > > > > +
-> > > > > > >      - if:
-> > > > > > >          properties:
-> > > > > > >            compatible:
-> > > > > > > @@ -681,6 +738,16 @@ allOf:
-> > > > > > >            - interconnects
-> > > > > > >            - interconnect-names
-> > > > > > > +  - if:
-> > > > > > > +      properties:
-> > > > > > > +        compatible:
-> > > > > > > +          contains:
-> > > > > > > +            enum:
-> > > > > > > +              - qcom,pcie-ipq9574
-> > > > > > > +    then:
-> > > > > > > +      required:
-> > > > > > > +        - msi-parent
-> > > > > > > +
-> > > > > > >      - if:
-> > > > > > >          not:
-> > > > > > >            properties:
-> > > > > > > @@ -693,6 +760,7 @@ allOf:
-> > > > > > >                    - qcom,pcie-ipq8064v2
-> > > > > > >                    - qcom,pcie-ipq8074
-> > > > > > >                    - qcom,pcie-ipq8074-gen3
-> > > > > > > +                - qcom,pcie-ipq9574
-> > > > > > >                    - qcom,pcie-qcs404
-> > > > > > >        then:
-> > > > > > >          required:
-> > > > > > > -- 
-> > > > > > > 2.17.1
-> > > > > > > 
-> > > > > > 
-> > > > > Thanks,
-> > > > > Devi Priya
-> > > > 
-> > > 
-> > 
-> Thanks,
-> Devi Priya
+v1: https://lore.kernel.org/linux-arm-msm/20230211115110.1462920-1-konrad.dybcio@linaro.org/
 
+Some DSI host versions are implemented on multiple SoCs which use
+vastly different register maps. This messes with our current
+assumptions of being able to map {dsi0, dsi1} to {reg0, reg1}.
+Solve that by adding a way of specifying multiple sets of base
+registers and try comparing them against the register specified in DT
+until we find a match.
+
+This removes the need for the QCM2290-specific compatible which was
+used in the SM6115 DT (which uses DSIv2.4.1, just like SC7180).
+The series also takes care of that.
+
+Tested on SM6115P Lenovo Tab P11 and SM8350 PDX215
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (10):
+      dt-bindings: display/msm: dsi-controller-main: Fix deprecated QCM2290 compatible
+      drm/msm/dsi: Get rid of msm_dsi_config::num_dsi
+      drm/msm/dsi: Fix DSI index detection when version clash occurs
+      drm/msm/dsi: dsi_cfg: Deduplicate identical structs
+      drm/msm/dsi: dsi_cfg: Merge SC7180 config into SDM845
+      drm/msm/dsi: Switch the QCM2290-specific compatible to index autodetection
+      drm/msm/dsi: Remove custom DSI config handling
+      dt-bindings: display/msm: dsi-controller-main: Fix deprecated compatible
+      dt-bindings: display/msm: dsi-controller-main: Add SM6115
+      arm64: dts: qcom: sm6115: Use the correct DSI compatible
+
+ .../bindings/display/msm/dsi-controller-main.yaml  |   6 +-
+ .../bindings/display/msm/qcom,sm6115-mdss.yaml     |   8 +-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi               |   2 +-
+ drivers/gpu/drm/msm/dsi/dsi.c                      |   6 +-
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c                  | 161 ++++++++-------------
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |   6 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 |  14 +-
+ 7 files changed, 82 insertions(+), 121 deletions(-)
+---
+base-commit: dc837c1a5137a8cf2e9432c1891392b6a66f4d8d
+change-id: 20230307-topic-dsi_qcm-5cd03c230f8f
+
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
