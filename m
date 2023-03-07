@@ -2,82 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 589FD6ADD17
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 12:17:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 539246ADD1D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 12:19:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230296AbjCGLRD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 06:17:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40900 "EHLO
+        id S229726AbjCGLS7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 06:18:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231233AbjCGLQe (ORCPT
+        with ESMTP id S230395AbjCGLSh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 06:16:34 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62C6677CA1
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 03:14:55 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id x6so12786441ljq.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 03:14:55 -0800 (PST)
+        Tue, 7 Mar 2023 06:18:37 -0500
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B01AF23331
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 03:18:33 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id h3so12726584lja.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 03:18:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678187693;
+        d=linaro.org; s=google; t=1678187912;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yT7vGhUXWJk9HYJN6I+M8kwXMyH9EI24q/vmlgWv3m8=;
-        b=CR/0+YSacYaMRbzWtuZLaj7mlcFerMdCQTGypTHtRsDDH/7zP+jryAMCIGgtkZj1nB
-         cp7IWqzXNdM6M0RUuwFnjx7g5YHlc6Bg6zv898iLDdEVsw837xpoJufcrRzh2KRdJoW0
-         lhx+4qSdJ6+YDj8o2nMSp+dhubOcpK4u9izJvnZ1nEcqm7DY9rnMRqxQUzGrPdobjKCP
-         zWWDFDIdU/6ma2QAo137K5aeIYiLvPZU2SyvRK5CeuIEWnnU41t67WruJXecCVyXSbXw
-         d081WmAqY29Ia63TpYuTJ1TkoswHKWmnk3oVq4/+AnAojdz7L0jDHV31Hxtthf4HCP7T
-         5CZQ==
+        bh=kEJH2oPkbi1+iJDHn1rP4D2o13uzAezWWeXGGiglOnA=;
+        b=QXV5F31hp/CbDr8oy2zdsTE5WwhxjRPnx51w4/9yWPm0uBeR46c9+9h1eX9kKtAJGI
+         E+EcjkFBN2shyjHFFNIVK4ud0xBoVawDoqXj+GK99mgSglQjgghoXn3mzYC6ZeKcYB4z
+         tsXpS3Hrrp341UO9+ahGtCHBaY+2bveECG3utFb2Hp0RFlDNBuWFsixS4fqQvR9Yjzsd
+         gYxQUmRVp33Wcex8Fivdt5vFLasXpoc/1MUX+cJeSqZsHYnuA/9w4Dxubq02ZxIgByvK
+         63/L1XEa9dJfIj8WRbJU51KWLW/Ux6lOV9lPY42t0Zf5gYSPF0lX6SoE4GgfOQM9X4pq
+         otMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678187693;
+        d=1e100.net; s=20210112; t=1678187912;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yT7vGhUXWJk9HYJN6I+M8kwXMyH9EI24q/vmlgWv3m8=;
-        b=dDS4GjxUf3NY4hgn7tRCQNmPVHbTktLsX8cjfP5+mO7MTeVerGs0XruQZKzV6y1Ide
-         dty+hSk7ZvEFEumFYsb11Id336je3z27EfQFADZRIAR8Ey5rhHI15SX5Qq92qceJdjKH
-         p5NVr8XFhePMAeK2EDaUjpccqKYP28PAoGHBDNiOaklN5kjO0wyBI57mti7BCRr8ifR5
-         zWMzIzlrxGuD3RveLBztKixtmegA3fXaJsHn5F7JzU7qq7tTb6teOnYBLkKhJFMi8bq0
-         +YhaoHnJKHkGQqkgx42cC825XZURTbpXM547jA9UOpjbxFyGZtGB/o6Q+kFrG1Ixt4oX
-         bkzg==
-X-Gm-Message-State: AO0yUKVtww+kB8wzSOllGkUXuv56UV4mTjaM9CLhvCqefPUGlZR9abY0
-        xROkhAmAHy0PcOGqTmOS3VYklQ==
-X-Google-Smtp-Source: AK7set/Wz0Rx9XUBw7YxwDmwy1KllOxzRErdeKK9Kj5JqFHHN2PNAGXEpEi5nSFHpUfQzppg5PLKFA==
-X-Received: by 2002:a2e:710b:0:b0:295:a969:d225 with SMTP id m11-20020a2e710b000000b00295a969d225mr3924432ljc.1.1678187693642;
-        Tue, 07 Mar 2023 03:14:53 -0800 (PST)
+        bh=kEJH2oPkbi1+iJDHn1rP4D2o13uzAezWWeXGGiglOnA=;
+        b=scDdcZPcNr0EUn9dKJe7Ok/oxnMtoG922Ga/l0lzj1JCB6Ci1W7EvEzGCNArotNVCx
+         LK4u6ebIVY/WE/SE15B9u4lrwkrbd8hmg4by4b6BXI9FvSWyfgSSNcCmD/4l2PCg+zqn
+         6EKvBa0QOrec3s+bTrqXlRasMNljyK4A8jNNjfvi3bnxrLy82qCewgulfueqRCysmVCZ
+         sFPtn3GVaZyYGxPTwwUPc/PZvjB2HrtL2DVaLzo6Z8jN5cAfZm12HxouyZo2MXXZxHt1
+         i0ip/0XH3CLWpU/eel5gm9Eir09oJHTC51wkzZGPUE97OyPat+JucQBu6JZADz+deEn5
+         cPIQ==
+X-Gm-Message-State: AO0yUKWEK1TEJYdINXbFmX+82c0jJe7HtwwG02qAliuou2WoHbBHxa8B
+        LeC7aEkOPrBztUinJDt5WOqJtA==
+X-Google-Smtp-Source: AK7set+Ex4pJbRG4CQNBxxBBHsApvu6Oe1P+M6XD1BdlbnHPo+Fzz61dmlFW8f0MPwzp3MTYjk5Chg==
+X-Received: by 2002:a2e:998c:0:b0:295:aca0:8205 with SMTP id w12-20020a2e998c000000b00295aca08205mr3893351lji.52.1678187911960;
+        Tue, 07 Mar 2023 03:18:31 -0800 (PST)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id 198-20020a2e05cf000000b00295a02569ebsm2167222ljf.124.2023.03.07.03.14.52
+        by smtp.gmail.com with ESMTPSA id g10-20020ac2538a000000b004ddaea30ba6sm1993150lfh.235.2023.03.07.03.18.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Mar 2023 03:14:53 -0800 (PST)
-Message-ID: <22970751-8bc0-9cbd-eec1-cbc92f0b4ea7@linaro.org>
-Date:   Tue, 7 Mar 2023 12:14:51 +0100
+        Tue, 07 Mar 2023 03:18:31 -0800 (PST)
+Message-ID: <9cb64f82-b6d0-44fa-4851-2cb1a5c2c94c@linaro.org>
+Date:   Tue, 7 Mar 2023 12:18:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v2 8/9] dt-bindings: display/msm: dsi-controller-main: Add
- SM6115
+Subject: Re: [PATCH 07/18] media: venus: core: Assign registers based on VPU
+ version
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230213121012.1768296-1-konrad.dybcio@linaro.org>
- <20230213121012.1768296-9-konrad.dybcio@linaro.org>
- <bcb5c17f-da78-9d68-66eb-b620ee583602@linaro.org>
+To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Dikshita Agarwal <dikshita@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>
+References: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
+ <20230228-topic-venus-v1-7-58c2c88384e9@linaro.org>
+ <a93a16ec-2e56-1d0b-c326-25f490d8f5b5@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <bcb5c17f-da78-9d68-66eb-b620ee583602@linaro.org>
+In-Reply-To: <a93a16ec-2e56-1d0b-c326-25f490d8f5b5@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
@@ -90,33 +93,66 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 7.03.2023 10:17, Krzysztof Kozlowski wrote:
-> On 13/02/2023 13:10, Konrad Dybcio wrote:
->> Add a compatible for the DSI on SM6115.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  .../devicetree/bindings/display/msm/dsi-controller-main.yaml    | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
->> index 2494817c1bd6..f195530ae964 100644
->> --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
->> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
->> @@ -25,6 +25,7 @@ properties:
->>                - qcom,sc7280-dsi-ctrl
->>                - qcom,sdm660-dsi-ctrl
->>                - qcom,sdm845-dsi-ctrl
->> +              - qcom,sm6115-dsi-ctrl
+On 7.03.2023 05:57, Dikshita Agarwal wrote:
 > 
-> This looks incomplete. You also need to add it to MDSS binding.
-https://lore.kernel.org/linux-arm-msm/145066db-5723-6baa-237d-7c2b8fd476d9@linaro.org/
+> On 2/28/2023 8:54 PM, Konrad Dybcio wrote:
+>> IRIS2(_1) has a different register map compared to other HFI6XX-
+>> using VPUs. Take care of it.
+>>
+>> Signed-off-by: Konrad Dybcio<konrad.dybcio@linaro.org>
+>> ---
+>>   drivers/media/platform/qcom/venus/core.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+>> index c13436d58ed3..bdc14acc8399 100644
+>> --- a/drivers/media/platform/qcom/venus/core.c
+>> +++ b/drivers/media/platform/qcom/venus/core.c
+>> @@ -246,7 +246,7 @@ static int venus_enumerate_codecs(struct venus_core *core, u32 type)
+>>     static void venus_assign_register_offsets(struct venus_core *core)
+>>   {
+>> -    if (IS_V6(core)) {
+>> +    if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
+>>           core->vbif_base = core->base + VBIF_BASE;
+>>           core->cpu_base = core->base + CPU_BASE_V6;
+>>           core->cpu_cs_base = core->base + CPU_CS_BASE_V6;
+> 
+> AR50_LITE also should be added here, as I see you have added the same to places where we are using V6 based registers.
+> 
+> if the base addresses are not assigned here properly. the register writing at other places will be wrong, ex: patch 05/18
+I have a separate patch set which specifically adds AR50L data,
+and they're not 1:1, vbif_base and aon_base are gone (at least
+according to techpack/video). I intend to push it when I get it
+all working, but here's what it looks like right now:
 
-Does this.. but I guess I'll resend this as one series, as it only
-makes sense.
+
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index fd9ecb1f7a05..f88b4781c5d0 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -254,6 +254,14 @@ static void venus_assign_register_offsets(struct venus_core *core)
+                core->wrapper_base = core->base + WRAPPER_BASE_V6;
+                core->wrapper_tz_base = core->base + WRAPPER_TZ_BASE_V6;
+                core->aon_base = core->base + AON_BASE_V6;
++       } else if (IS_AR50_LITE(core)) {
++               core->vbif_base = NULL;
++               core->cpu_base = core->base + CPU_BASE_V6;
++               core->cpu_cs_base = core->base + CPU_CS_BASE_V6;
++               core->cpu_ic_base = core->base + CPU_IC_BASE_V6;
++               core->wrapper_base = core->base + WRAPPER_BASE_V6;
++               core->wrapper_tz_base = core->base + WRAPPER_TZ_BASE_V6;
++               core->aon_base = NULL;
+        } else {
+                core->vbif_base = core->base + VBIF_BASE;
+                core->cpu_base = core->base + CPU_BASE;
+-- 
+2.39.2
+
 
 Konrad
+
 > 
-> Best regards,
-> Krzysztof
+> Thanks,
+> 
+> Dikshita
 > 
