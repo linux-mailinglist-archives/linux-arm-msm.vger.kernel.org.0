@@ -2,117 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B02EA6AF688
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 21:16:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BF2B6AF7F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 22:49:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231561AbjCGUQk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 15:16:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56836 "EHLO
+        id S230372AbjCGVtO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 16:49:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229672AbjCGUQj (ORCPT
+        with ESMTP id S231578AbjCGVtG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 15:16:39 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09C054E5C1;
-        Tue,  7 Mar 2023 12:16:35 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 90129B81A13;
-        Tue,  7 Mar 2023 20:16:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B3DC433EF;
-        Tue,  7 Mar 2023 20:16:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678220193;
-        bh=FupbKwelwLHLV++gMmX5dmMnAyDReIjpfS4XTY/hr5U=;
-        h=From:To:Cc:Subject:Date:From;
-        b=U5ni1xNATlVfMAIzrN1+nBzrPIn62wUdqocGJ1nsTr7ZeDSxyO2wmoxAqgdgWOp6V
-         e9WvLpw8HM1S003EyuAd8FNa4VEl9Ma+TXQgj+CZ3PkLVSgutM3hR6suMqqwpU+UgT
-         RSgxob6o1RiF3LI0rRh9ElDFu6LREuN0hSuh3OKedhaZHEXFsQu/y4gsQRiFdW5TqX
-         Grdl+1bW6ekgWha+9JKkcjV0vwo1BNEy5yjyY+DZrsBBJ0HenTW027ymdd58wbAapb
-         AKndnJGh9hZyEyeoBzq3nSQsCeduwT0PVTiYfJV0zUVMgmXx9joctHTAwFN20TAgND
-         0GqmMwk0jk5Ew==
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH] bus: mhi: host: pci_generic: Drop redundant pci_enable_pcie_error_reporting()
-Date:   Tue,  7 Mar 2023 14:16:25 -0600
-Message-Id: <20230307201625.879567-1-helgaas@kernel.org>
-X-Mailer: git-send-email 2.25.1
+        Tue, 7 Mar 2023 16:49:06 -0500
+Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B385695E27
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 13:49:00 -0800 (PST)
+Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
+        by amity.mint.lgbt (Postfix) with ESMTP id 4PWTbs3hlYz1S5Jp
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 16:48:57 -0500 (EST)
+Authentication-Results: amity.mint.lgbt (amavisd-new);
+        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
+        header.d=mint.lgbt
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
+        content-transfer-encoding:content-type:in-reply-to:from
+        :references:to:content-language:subject:user-agent:mime-version
+        :date:message-id; s=dkim; t=1678225735; x=1679089736; bh=LBDNRan
+        2Cd8nNBtnj8IHxtHFO6mc9pcFTMtM8qGwz6s=; b=X2z9Dsayhu4KWlNcB7whmXg
+        zKTUxyqY5o8Wv3jPrV1MVZPidmzBNHjcw6ieAS+0Jp+mFTMSXmQru2rnjvPal3F/
+        zQ/l0txh/kZBvWXTlED2861cz5kQj62mGQdXSH6hEKIfg98h1tHdX9X6KUQ+oSgR
+        Ksf1eG1t2y9rQ6fa0Q+XXLs8I//ScK/VBoT1qceeBg7U19KegpGz8qUH3bHOj+fx
+        /ytN7tiukSQ2mSKfASvDSbRQeBW5gV7zgboi8+JfqZBj+c4CRmc/3EuQOT2uyydy
+        gSjv+Sk7V3CHEscktNAtyBUk/8WNx0YWMXQfodu1B7+6Vcw//pIuvS8UwumnhEQ=
+        =
+X-Virus-Scanned: amavisd-new at amity.mint.lgbt
+Received: from amity.mint.lgbt ([127.0.0.1])
+        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id zQiEmhRNk1SY for <linux-arm-msm@vger.kernel.org>;
+        Tue,  7 Mar 2023 16:48:55 -0500 (EST)
+Received: from [192.168.1.90] (unknown [186.105.8.42])
+        by amity.mint.lgbt (Postfix) with ESMTPSA id 4PWTbS4Kjkz1S4yx;
+        Tue,  7 Mar 2023 16:48:35 -0500 (EST)
+Message-ID: <18156dee-4fd2-80e5-b04d-c96c267fb615@mint.lgbt>
+Date:   Tue, 7 Mar 2023 18:48:30 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v7 1/6] dt-bindings: ufs: qcom: Add SM6125 compatible
+ string
+Content-Language: en-US, es-CL
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        kishon@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
+        bvanassche@acm.org, keescook@chromium.org, tony.luck@intel.com,
+        gpiccoli@igalia.com
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-scsi@vger.kernel.org, linux-hardening@vger.kernel.org,
+        phone-devel@vger.kernel.org, martin.botka@somainline.org,
+        marijn.suijten@somainline.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20230306165246.14782-1-they@mint.lgbt>
+ <20230306165246.14782-2-they@mint.lgbt>
+ <4670ddae-6b01-1e5c-b0ed-1f2f498a4f66@mint.lgbt>
+ <dfd1d81e-76a0-f8eb-e529-9f8ea1e927b6@linaro.org>
+From:   Lux Aliaga <they@mint.lgbt>
+In-Reply-To: <dfd1d81e-76a0-f8eb-e529-9f8ea1e927b6@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+On 3/6/2023 14:09, Konrad Dybcio wrote:
 
-pci_enable_pcie_error_reporting() enables the device to send ERR_*
-Messages.  Since f26e58bf6f54 ("PCI/AER: Enable error reporting when AER is
-native"), the PCI core does this for all devices during enumeration, so the
-driver doesn't need to do it itself.
+>
+> On 6.03.2023 18:01, Lux Aliaga wrote:
+>> On 06/03/2023 13:52, Lux Aliaga wrote:
+>>> Document the compatible for UFS found on the SM6125.
+>>>
+>>> Signed-off-by: Lux Aliaga <they@mint.lgbt>
+>>> Reviewed-by: Martin Botka <martin.botka@somainline.org>
+>>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> ---
+>>>  =C2=A0 Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
+>>>  =C2=A0 1 file changed, 2 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Do=
+cumentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>>> index b517d76215e3..42422f3471b3 100644
+>>> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>>> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>>> @@ -29,6 +29,7 @@ properties:
+>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -=
+ qcom,sc8280xp-ufshc
+>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -=
+ qcom,sdm845-ufshc
+>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -=
+ qcom,sm6115-ufshc
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - qcom,sm6125=
+-ufshc
+>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -=
+ qcom,sm6350-ufshc
+>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -=
+ qcom,sm8150-ufshc
+>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -=
+ qcom,sm8250-ufshc
+>>> @@ -185,6 +186,7 @@ allOf:
+>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 c=
+ontains:
+>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 enum:
+>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 - qcom,sm6115-ufshc
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 - qcom,sm6125-ufshc
+>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 then:
+>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 properties:
+>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 clocks:
+>> I have to apologize. I worked on a changelog for this patchset but I s=
+kipped the subject header, therefore it didn't send, and as I realized th=
+is I interrupted the process, leaving the patchset incomplete. I'll retry=
+ sending it, this time correctly.
+> Happens, next time resend it with a RESEND prefix, e.g. [RESEND PATCH 1=
+/2]
+>
+> Konrad
 
-Remove the redundant pci_enable_pcie_error_reporting() call from the
-driver.  Also remove the corresponding pci_disable_pcie_error_reporting()
-from the driver .remove() path.
+Thank you! Will take this into consideration for the future. I received=20
+this email after I resent the patchset, so that's why I didn't add the=20
+prefix.
 
-Note that this only controls ERR_* Messages from the device.  An ERR_*
-Message may cause the Root Port to generate an interrupt, depending on the
-AER Root Error Command register managed by the AER service driver.
-
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
----
- drivers/bus/mhi/host/pci_generic.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
-
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index f39657f71483..6e13c43a84d1 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -8,7 +8,6 @@
-  * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
-  */
- 
--#include <linux/aer.h>
- #include <linux/delay.h>
- #include <linux/device.h>
- #include <linux/mhi.h>
-@@ -903,11 +902,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	mhi_pdev->pci_state = pci_store_saved_state(pdev);
- 	pci_load_saved_state(pdev, NULL);
- 
--	pci_enable_pcie_error_reporting(pdev);
--
- 	err = mhi_register_controller(mhi_cntrl, mhi_cntrl_config);
- 	if (err)
--		goto err_disable_reporting;
-+		return err;
- 
- 	/* MHI bus does not power up the controller by default */
- 	err = mhi_prepare_for_power_up(mhi_cntrl);
-@@ -941,8 +938,6 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	mhi_unprepare_after_power_down(mhi_cntrl);
- err_unregister:
- 	mhi_unregister_controller(mhi_cntrl);
--err_disable_reporting:
--	pci_disable_pcie_error_reporting(pdev);
- 
- 	return err;
- }
-@@ -965,7 +960,6 @@ static void mhi_pci_remove(struct pci_dev *pdev)
- 		pm_runtime_get_noresume(&pdev->dev);
- 
- 	mhi_unregister_controller(mhi_cntrl);
--	pci_disable_pcie_error_reporting(pdev);
- }
- 
- static void mhi_pci_shutdown(struct pci_dev *pdev)
--- 
-2.25.1
+--=20
+Lux Aliaga
+https://nixgoat.me/
 
