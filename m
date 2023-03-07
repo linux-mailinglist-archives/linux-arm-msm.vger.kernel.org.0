@@ -2,68 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A2306AD71F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 07:07:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 609A36AD72A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 07:12:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230374AbjCGGHZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 01:07:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41358 "EHLO
+        id S230189AbjCGGM3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 01:12:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230233AbjCGGHY (ORCPT
+        with ESMTP id S230055AbjCGGM2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 01:07:24 -0500
+        Tue, 7 Mar 2023 01:12:28 -0500
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D465659E5C;
-        Mon,  6 Mar 2023 22:07:22 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 326M9f3d016408;
-        Tue, 7 Mar 2023 06:07:18 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95698567AF;
+        Mon,  6 Mar 2023 22:12:27 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3272aIpU030883;
+        Tue, 7 Mar 2023 06:12:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=uQansOK1mZ4x3A7wUXf7Upk7GnaOl/6M0CSqX0qpn8I=;
- b=W0JO7enRYri1f1IlbLyr29FbeuzlxNlHExg0iRz/OM3nKU3169u2/smm2rNSrt7hFWhc
- XD1N9foqDAlS2p2hyoTZzXf/yCjtj/BlH117xEFt7sCfYVjgUX07mH46pAD+o0Z5cLSB
- uJZVE/NzZ9b84vpnBK3876AhgkbVaoJrp0fIMGpoZ5L6gIepHGnDxcOrF3t2yREXKXtB
- LtBFbBeKb/mKcyEiNesj5Mp1ecaHHz2mhvV5aEXcS9tZvSwWDn5cOxfPPO3lqnDpfECG
- pemTk4vnXMr1ibKLyAdJIgEK4rkeZf7Tx6acTlOHAtet8/ZSgDfHot6EB21zxHhtKZWh 7A== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p5rqjrwu2-1
+ bh=it/94AUcTq/LJ+zbFq0JcLSQYboFeEing8AEe40H7Qc=;
+ b=AWbtLkTAN+5R9imugVKO5D/T2O6gUb4vkHnztN1AN/dVGoXNiUUJsrNKo06o6foPtprA
+ YHiywBdyL9NoNQiH8O+m+n0FOSSG+q/gY7IlSO7w9rXNd03KHTz730z+/VK9bPVNiN/B
+ jpWJpcq5vj4mitjGzWGYF1aF1bG+Eoa0joLIdAaO2ThNcVUVY5Rz/1qVxqkI1b2dlbf6
+ qBWgftp1Id4ksgJo1bW99b5d28V7taWIs2g6zbHrkYiY6LGDxYy8gg/YRXp9ZXO7fEEu
+ HXtgjM4eyLB3ynlR+816FOGr2RsXncQfafQyHX0Ti/oLbilONPY1VyCwjnDhFhiGjcFE dg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p4g3mww6e-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 07 Mar 2023 06:07:18 +0000
+        Tue, 07 Mar 2023 06:12:22 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32767HoY000443
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3276CL0T024869
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 7 Mar 2023 06:07:17 GMT
-Received: from [10.50.22.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
+        Tue, 7 Mar 2023 06:12:21 GMT
+Received: from [10.50.8.76] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 6 Mar 2023
- 22:07:09 -0800
-Message-ID: <eee85f26-722c-08ae-8e41-6bd087df58a8@quicinc.com>
-Date:   Tue, 7 Mar 2023 11:37:05 +0530
+ 22:12:17 -0800
+Message-ID: <d22e37d3-4d3e-b702-c6b2-99c8f6fccfba@quicinc.com>
+Date:   Tue, 7 Mar 2023 11:42:13 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 07/11] mailbox: qcom-apcs-ipc: Add IPQ5018 APCS IPC
- support
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 09/18] media: venus: hfi_venus: Fix version checks in
+ venus_isr()
 Content-Language: en-US
-To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <jassisinghbrar@gmail.com>,
-        <mathieu.poirier@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <quic_gurus@quicinc.com>,
-        <loic.poulain@linaro.org>, <quic_eberman@quicinc.com>,
-        <robimarko@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-clk@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_arajkuma@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_poovendh@quicinc.com>
-References: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
- <1678164097-13247-8-git-send-email-quic_mmanikan@quicinc.com>
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-In-Reply-To: <1678164097-13247-8-git-send-email-quic_mmanikan@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>
+CC:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
+ <20230228-topic-venus-v1-9-58c2c88384e9@linaro.org>
+From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <20230228-topic-venus-v1-9-58c2c88384e9@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -71,16 +70,16 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -1-UUcE3XYTAc0nMUuaptMXQDX6sPba1
-X-Proofpoint-GUID: -1-UUcE3XYTAc0nMUuaptMXQDX6sPba1
+X-Proofpoint-ORIG-GUID: 4DwxnI2_4Q_2qKFcGxh4f-pm4Nh3AVYi
+X-Proofpoint-GUID: 4DwxnI2_4Q_2qKFcGxh4f-pm4Nh3AVYi
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-03-06_14,2023-03-06_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- priorityscore=1501 clxscore=1015 lowpriorityscore=0 adultscore=0
- mlxscore=0 spamscore=0 suspectscore=0 bulkscore=0 impostorscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303070055
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 priorityscore=1501
+ suspectscore=0 mlxscore=0 clxscore=1015 adultscore=0 malwarescore=0
+ phishscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2303070056
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
@@ -91,25 +90,37 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 3/7/2023 10:11 AM, Manikanta Mylavarapu wrote:
-> Enable IPQ5018 APCS IPC support by adding the compatible.
+On 2/28/2023 8:54 PM, Konrad Dybcio wrote:
+> IS_V6 was used there IS_IRIS2(_1) should have been and the !IS_V6
+> condition was only correct by luck and for now. Replace them both
+> with VPU version checks.
 >
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+> Fixes: 24fcc0522d87 ("media: venus: hfi: Add 6xx interrupt support")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   drivers/mailbox/qcom-apcs-ipc-mailbox.c | 1 +
->   1 file changed, 1 insertion(+)
+>   drivers/media/platform/qcom/venus/hfi_venus.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> index 6bbf87c6d60b..0b873c76fd7e 100644
-> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> @@ -141,6 +141,7 @@ static int qcom_apcs_ipc_remove(struct platform_device *pdev)
+> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+> index 0d137e070407..ecfbac36de20 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+> @@ -1136,7 +1136,7 @@ static irqreturn_t venus_isr(struct venus_core *core)
+>   	wrapper_base = hdev->core->wrapper_base;
 >   
->   /* .data is the offset of the ipc register within the global block */
->   static const struct of_device_id qcom_apcs_ipc_of_match[] = {
-> +	{ .compatible = "qcom,ipq5018-apcs-apps-global", .data = &ipq6018_apcs_data },
-
-With the bindings updated, you can drop this patch.
-
-Thanks, Kathiravan T.
-
+>   	status = readl(wrapper_base + WRAPPER_INTR_STATUS);
+> -	if (IS_V6(core)) {
+> +	if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
+>   		if (status & WRAPPER_INTR_STATUS_A2H_MASK ||
+>   		    status & WRAPPER_INTR_STATUS_A2HWD_MASK_V6 ||
+>   		    status & CPU_CS_SCIACMDARG0_INIT_IDLE_MSG_MASK)
+> @@ -1148,7 +1148,7 @@ static irqreturn_t venus_isr(struct venus_core *core)
+>   			hdev->irq_status = status;
+>   	}
+>   	writel(1, cpu_cs_base + CPU_CS_A2HSOFTINTCLR);
+> -	if (!IS_V6(core))
+> +	if (!(IS_AR50_LITE(core) || IS_IRIS2(core) || IS_IRIS2_1(core)))
+>   		writel(status, wrapper_base + WRAPPER_INTR_CLEAR);
+>   
+>   	return IRQ_WAKE_THREAD;
+reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
