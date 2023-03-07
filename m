@@ -2,93 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4084A6ADAF2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 10:52:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B82696ADA01
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 10:16:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229922AbjCGJwU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 04:52:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50362 "EHLO
+        id S230217AbjCGJQH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 04:16:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230272AbjCGJwR (ORCPT
+        with ESMTP id S229558AbjCGJQG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 04:52:17 -0500
-X-Greylist: delayed 86758 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 07 Mar 2023 01:51:51 PST
-Received: from mail.ettrick.pl (mail.ettrick.pl [141.94.21.111])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 535475DED3
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 01:51:50 -0800 (PST)
-Received: by mail.ettrick.pl (Postfix, from userid 1002)
-        id 28256A50EF; Mon,  6 Mar 2023 09:01:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ettrick.pl; s=mail;
-        t=1678093339; bh=KHux3km3Civcx5ChslOYQZwQRBjoJa4kWJfGcMIuN6w=;
-        h=Date:From:To:Subject:From;
-        b=dq4sqNEPwg9LM6cIeRY4ycaYTTIa30Igp0S5H3dN9HhxHelo9A4nhB/01Z9IJmAM4
-         okFI/sSUBctuA+lSviu7w0eRrjueSmY3WWZdHU7dbgqmqIYgAnSJc2WAXg1ft4D8Rh
-         PPnIcvZN5rMxpcbEyrO4wIn/BzSwk4YeyeQKek2snSnZkGeavjbThp1GwMoI0iv9oz
-         EuymUr7LJ4LIeLUH6L5ScUfDFqoibI/axSm68cgtUWTiQSN5McXdUTQ4MWWwiAjyA+
-         7xWwghjqssJULOq2l4i06KXb2mDJdIYjZxKUDfm5zUN5J997CUXBOKaJ0s82F27xwH
-         YvGhowtZC4yXg==
-Received: by mail.ettrick.pl for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 09:00:53 GMT
-Message-ID: <20230306074500-0.1.97.36z9v.0.6his5gahi9@ettrick.pl>
-Date:   Mon,  6 Mar 2023 09:00:53 GMT
-From:   "Norbert Karecki" <norbert.karecki@ettrick.pl>
-To:     <linux-arm-msm@vger.kernel.org>
-Subject: Fotowoltaika - nowe warunki
-X-Mailer: mail.ettrick.pl
+        Tue, 7 Mar 2023 04:16:06 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02B525292D
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 01:16:04 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id a25so49747430edb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 01:16:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678180562;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yV24tnK9cnyPzbacWjSliZZMed6YdF4OudMR8kk8ppo=;
+        b=yH9a2qzDZBDhJ0CfTaJ9KXbqMMM4/wOMfUo1FqnskAtuzQZSlvl1kudZ497aYuNam/
+         QvjK0cT0tFlr8BDWjQEhfmhc1iCxTDrz0WB9R+tliWK8IQmp7g1xOKMMCwezidS2Mk1o
+         g4w3cAAPNM3X3tuM5hdGORLZFuzoPLUN8MJJkAtfpMu4qYiCN89YuajEVKIx8ZWU8MtU
+         0gYZKYJyu/PWN5SxkxJtpqmvA+YCN6P3M9zhj3Vntqdw6YaBlMRCrdJRVVHkvFj/t2Dt
+         g7NC8sLTSANitWx+tNWC5gUyK7lzC1gv3O90yKsq1gGQaztL771BALmjGztArMt0xaEQ
+         wdoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678180562;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yV24tnK9cnyPzbacWjSliZZMed6YdF4OudMR8kk8ppo=;
+        b=Y7BXsXL1fcCifg91wAqiYiPUkALj2ADVeALKSgbYtwI8aJd+K/fu1QpoVTOz1UvvlC
+         7PpkZgz0seWMvrpBVcYznTTDfRkCRvhBQ4mlTLfp0I+pacjbc+Rt7CcXSXMijntjRp40
+         op3AJwhtDbtEW6tyx0Lnexhed/nT4Qi5zXJTLMRt8xOqJk+hU/l4+W2sSIQcO6XRCueu
+         V3Jj6dxjA6ZIQdN/6mWbCC//iKX7lI9PsaGd2DGyZXBjncUKJzbzSbusLMnviSyAyYN8
+         Dx2bc9EiJzgWCA09/AtIOkH2ZoskR+qBgPWbq/47qS1wymliyxrT/xS+0oF9wQcvYkUr
+         vN/A==
+X-Gm-Message-State: AO0yUKWadqycL8uT9w9kZ75RzCDVxsQ7Z34QIoGxD/Rue0QmM4EZbpxL
+        yGFA9Vony20ZQN8j3VMAlEeQZg==
+X-Google-Smtp-Source: AK7set/5IpkbYD1GA2/KmDTDjFB7vnpSTjf66uNF56xzvLTuwRLzp+tFB9oszzAXMniobHQSWmu+6Q==
+X-Received: by 2002:a17:907:cc1c:b0:8b1:781d:f9a8 with SMTP id uo28-20020a170907cc1c00b008b1781df9a8mr11869787ejc.72.1678180562499;
+        Tue, 07 Mar 2023 01:16:02 -0800 (PST)
+Received: from ?IPV6:2a02:810d:15c0:828:5310:35c7:6f9e:2cd3? ([2a02:810d:15c0:828:5310:35c7:6f9e:2cd3])
+        by smtp.gmail.com with ESMTPSA id my22-20020a1709065a5600b008eabe71429bsm5794543ejc.63.2023.03.07.01.16.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Mar 2023 01:16:02 -0800 (PST)
+Message-ID: <145066db-5723-6baa-237d-7c2b8fd476d9@linaro.org>
+Date:   Tue, 7 Mar 2023 10:16:01 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: Yes, score=6.5 required=5.0 tests=BAYES_05,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_SBL_CSS,SPF_HELO_NONE,
-        SPF_PASS,URIBL_ABUSE_SURBL,URIBL_BLOCKED,URIBL_CSS_A,URIBL_DBL_SPAM
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: *  0.0 URIBL_BLOCKED ADMINISTRATOR NOTICE: The query to URIBL was
-        *      blocked.  See
-        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
-        *      for more information.
-        *      [URIs: ettrick.pl]
-        *  1.2 URIBL_ABUSE_SURBL Contains an URL listed in the ABUSE SURBL
-        *      blocklist
-        *      [URIs: ettrick.pl]
-        *  2.5 URIBL_DBL_SPAM Contains a spam URL listed in the Spamhaus DBL
-        *      blocklist
-        *      [URIs: ettrick.pl]
-        *  3.3 RCVD_IN_SBL_CSS RBL: Received via a relay in Spamhaus SBL-CSS
-        *      [141.94.21.111 listed in zen.spamhaus.org]
-        *  0.1 URIBL_CSS_A Contains URL's A record listed in the Spamhaus CSS
-        *      blocklist
-        *      [URIs: ettrick.pl]
-        * -0.5 BAYES_05 BODY: Bayes spam probability is 1 to 5%
-        *      [score: 0.0132]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-X-Spam-Level: ******
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3 2/2] dt-bindings: display: msm: sm6115-mdss: Fix DSI
+ compatible
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230304-topic-dsi_fixup-v3-0-b8565944d0e6@linaro.org>
+ <20230304-topic-dsi_fixup-v3-2-b8565944d0e6@linaro.org>
+ <e105eff0-816e-b9e8-b47a-5c85731c9ba0@linaro.org>
+ <4b8745d8-144f-fb82-3e54-5ce6bd3162e6@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <4b8745d8-144f-fb82-3e54-5ce6bd3162e6@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dzie=C5=84 dobry,
+On 06/03/2023 11:06, Konrad Dybcio wrote:
+> 
+> 
+> On 6.03.2023 09:57, Krzysztof Kozlowski wrote:
+>> On 04/03/2023 16:55, Konrad Dybcio wrote:
+>>> Since the DSI autodetection is bound to work correctly on 6115 now,
+>>> switch to using the correct per-SoC + generic fallback compatible
+>>> combo.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>  .../devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml         | 8 +++++++-
+>>>  1 file changed, 7 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
+>>> index 2491cb100b33..605b1f654d78 100644
+>>> --- a/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
+>>> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
+>>> @@ -40,7 +40,13 @@ patternProperties:
+>>>      type: object
+>>>      properties:
+>>>        compatible:
+>>> -        const: qcom,dsi-ctrl-6g-qcm2290
+>>> +        oneOf:
+>>> +          - items:
+>>> +              - const: qcom,sm6115-dsi-ctrl
+>>> +              - const: qcom,mdss-dsi-ctrl
+>>
+>> Does it actually work? You did not define qcom,sm6115-dsi-ctrl in
+>> dsi-controller-main?
+> Check the "Depends on" in the cover letter.
+> 
 
-chcia=C5=82bym poinformowa=C4=87, i=C5=BC mog=C4=85 Pa=C5=84stwo uzyska=C4=
-=87 dofinansowanie na systemy fotowoltaiczne w ramach nowej edycji progra=
-mu M=C3=B3j Pr=C4=85d.
+Then it looks like it should be squashed with that patch. Why adding new
+compatible in multiple steps?
 
-Program zapewnia 6000 z=C5=82 dofinansowania na instalacj=C4=99 paneli i =
-16 000 z=C5=82 na magazyn energii, ni=C5=BCsze cen pr=C4=85du i mo=C5=BCl=
-iwo=C5=9B=C4=87 odliczenia koszt=C3=B3w zwi=C4=85zanych z instalacj=C4=85=
- fotowoltaiki w ramach rozliczenia PIT (tzw. ulga termomodernizacyjna).
+Best regards,
+Krzysztof
 
-Czy s=C4=85 Pa=C5=84stwo otwarci na wst=C4=99pn=C4=85 rozmow=C4=99 w tym =
-temacie?
-
-
-Pozdrawiam,
-Norbert Karecki
