@@ -2,118 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9B9E6AE745
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 17:52:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 988736AE748
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 17:52:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230487AbjCGQwx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 11:52:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40808 "EHLO
+        id S230520AbjCGQw4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 11:52:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231422AbjCGQwe (ORCPT
+        with ESMTP id S231450AbjCGQwh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 11:52:34 -0500
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50233888AC
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 08:48:28 -0800 (PST)
-Received: by mail-pg1-x52d.google.com with SMTP id d10so7960613pgt.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 08:48:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678207701;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FQnICWvYNs7bD2B+ziOmGBVgtAqH+5wOKJPUGlck5eg=;
-        b=z2ozD7ZRJgyIlEMW8q3T9LWyeevK9dBUmKibHc/1FJlFiyDrsvLAYj4xkJe3eFp3aY
-         PUj/lf0VBUulWKNWcGVh3nWijnzJfDrDv51PSbRfRvAG8EqAu/QetAk3Q91guu85Fnnf
-         DYpUtqsfxn2DLqozmhF71gsMFo4ekpt8nzABC3Z74/g7qDlK4H8RYSKVPDBAF2rsbcTR
-         KTwW/XPlmZQ2OpW6iE05808tI6+EWazlk1DeIcp7ZpebXLtfat2dtN/oBKw5rR9n0dTw
-         hFtlJUkUhislJFikc44YQKXYYGO0qyRKitUOlRGyGw7TYdPOexPHT3QquaiTPW5sH/rx
-         bv9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678207701;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FQnICWvYNs7bD2B+ziOmGBVgtAqH+5wOKJPUGlck5eg=;
-        b=oWAkbWNp+Wj3w9BvPAjWcsoBsip6WTCFUtZaKv1TmtxNCFHtXRgNcIyJH2GBqmUP8f
-         cpyAKuGSydy5LPIpZaCsGjbJtgiZCt3gyiuPXRIT9MuhKiqAVnpsCr0j3vKslznr4Xyx
-         UVZED6ZDA5i+d0te1DxVCB0TKQgHY/KUmzRdyVPPRKuXQVym16VfDmNfYqaj6vmsHhjr
-         UtaUpRrz50BRYomcP5EZWSA+UJWDbprBLabWoFhgp5Z3Mj8VYG73a24DBSD4vSsEl46Y
-         HZyarzYfhpxBN91gZvXVUBL7ybSWZ6Dg/euN9VrMTfCK8/SZcdVggsO6r1i3c8PyXc0u
-         nMpA==
-X-Gm-Message-State: AO0yUKXLm9RV+LOoAL89MYbywANLe+ovB9XvC2EyW1Db/InPvyfAM1wl
-        S6ZsG2z11qIi7khl3ZpjsAGR
-X-Google-Smtp-Source: AK7set/xI2XzvtghAIfjdss+dCxdLBLJoPdvd/R/wO5iEqlbPT2FT9l8MyPTUZxYk26HbVjL/HTF7w==
-X-Received: by 2002:aa7:9489:0:b0:5a9:d619:e5e4 with SMTP id z9-20020aa79489000000b005a9d619e5e4mr13037993pfk.0.1678207701215;
-        Tue, 07 Mar 2023 08:48:21 -0800 (PST)
-Received: from thinkpad ([59.97.52.140])
-        by smtp.gmail.com with ESMTPSA id d22-20020aa78e56000000b005a8512c9988sm8383488pfr.93.2023.03.07.08.48.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 08:48:20 -0800 (PST)
-Date:   Tue, 7 Mar 2023 22:18:16 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: ep: Demote unsupported channel error log to
- debug
-Message-ID: <20230307164816.GH5599@thinkpad>
-References: <20230307074248.86731-1-manivannan.sadhasivam@linaro.org>
+        Tue, 7 Mar 2023 11:52:37 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8CD3888A6;
+        Tue,  7 Mar 2023 08:48:35 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 194C2B8198E;
+        Tue,  7 Mar 2023 16:48:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39A8C433EF;
+        Tue,  7 Mar 2023 16:48:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678207706;
+        bh=GXI4lu3ZaljEq1OXKcXQrt5Ny7mGmhM/pubQG7ezf6I=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=Nx/5zTlkQHg9uB0G6bvU+EdULhBArcMMcJEAtGSs8nDbI2J7YAAwyieXj5UQokFWM
+         b0qd074nXE0Lr9yhqzWU+L6+FO4+K5/c7eUC7jTArChRcP2RHY8GlvMZ+HIfi+E51D
+         Cx8puH2tIVpaB+c/nSIXVinO673GbSg57DvxjKT3lZ2DP5zYu2tOQ8CFsdvR5rDLS4
+         zFja9bXfVxiXIhgOKt19tda0V5B5lvY66QFl1/tLJVEUHklmKo3GO++d+tYlvwwckj
+         ibBbQYtw4GtoHvQwz+qYQljCWtFiZCK0iZMVIyLPVA4fVfx2XoolYMc5OMqeSUzzVk
+         WI6LHRi3xiB6A==
+From:   Mark Brown <broonie@kernel.org>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc:     quic_sjaganat@quicinc.com, quic_srichara@quicinc.com,
+        quic_varada@quicinc.com
+In-Reply-To: <20230306144404.15517-1-quic_mdalam@quicinc.com>
+References: <20230306144404.15517-1-quic_mdalam@quicinc.com>
+Subject: Re: (subset) [PATCH 2/5] spi: qup: Use
+ devm_platform_get_and_ioremap_resource()
+Message-Id: <167820770450.97370.6271727230451860246.b4-ty@kernel.org>
+Date:   Tue, 07 Mar 2023 16:48:24 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230307074248.86731-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-bd1bf
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 07, 2023 at 01:12:48PM +0530, Manivannan Sadhasivam wrote:
-> Not all MHI endpoints will support all available channels. Most of them
-> support only a selected number of channels based on the implementations.
-> In those cases, it is not needed to print error messages in the endpoint.
-> So let's demote the error log to debug.
+On Mon, 06 Mar 2023 20:14:04 +0530, Md Sadre Alam wrote:
+> Convert platform_get_resource(), devm_ioremap_resource() to a single
+> call to devm_platform_get_and_ioremap_resource(), as this is exactly
+> what this function does.
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
 
-Applied to mhi-next!
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+
+Thanks!
+
+[2/5] spi: qup: Use devm_platform_get_and_ioremap_resource()
+      commit: dc2eb79496322d5f4790d38776c487bf7aa69be3
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
 Thanks,
-Mani
+Mark
 
-> ---
->  drivers/bus/mhi/ep/main.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> index 48bc6abb7b37..ba062df4fe25 100644
-> --- a/drivers/bus/mhi/ep/main.c
-> +++ b/drivers/bus/mhi/ep/main.c
-> @@ -126,7 +126,7 @@ static int mhi_ep_process_cmd_ring(struct mhi_ep_ring *ring, struct mhi_ring_ele
->  
->  	/* Check if the channel is supported by the controller */
->  	if ((ch_id >= mhi_cntrl->max_chan) || !mhi_cntrl->mhi_chan[ch_id].name) {
-> -		dev_err(dev, "Channel (%u) not supported!\n", ch_id);
-> +		dev_dbg(dev, "Channel (%u) not supported!\n", ch_id);
->  		return -ENODEV;
->  	}
->  
-> @@ -702,7 +702,7 @@ static void mhi_ep_cmd_ring_worker(struct work_struct *work)
->  		el = &ring->ring_cache[ring->rd_offset];
->  
->  		ret = mhi_ep_process_cmd_ring(ring, el);
-> -		if (ret)
-> +		if (ret && ret != -ENODEV)
->  			dev_err(dev, "Error processing cmd ring element: %zu\n", ring->rd_offset);
->  
->  		mhi_ep_ring_inc_index(ring);
-> -- 
-> 2.25.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
