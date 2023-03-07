@@ -2,88 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 150F76AF90E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 23:42:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DF5C6AF9A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 23:59:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230240AbjCGWmQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 17:42:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49754 "EHLO
+        id S229698AbjCGW66 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 17:58:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230206AbjCGWly (ORCPT
+        with ESMTP id S230009AbjCGW6j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 17:41:54 -0500
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6771F7301E;
-        Tue,  7 Mar 2023 14:41:19 -0800 (PST)
-Received: by mail-ot1-f54.google.com with SMTP id m25-20020a05683026d900b006941a2838caso8051279otu.7;
-        Tue, 07 Mar 2023 14:41:19 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678228865;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        Tue, 7 Mar 2023 17:58:39 -0500
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D2BA16332
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 14:55:45 -0800 (PST)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-536be69eadfso273607267b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 14:55:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678229744;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1CeVvunwdHuoUaMVyS5pFRs2OZmsVRqAhtJ35gavm5I=;
-        b=UyWiG0cLvY9/SPxvtljXcUYCwewj5zbYpME3qGb9TbPnerKo/f7NPKP82agVKZ6uO6
-         Usg0MZLNmwBMMoxUaN2F58T7QxwMCcqAgpfz/w+UXLsa2vdCHi8KYM1gSqRTmA44cu2V
-         aLklngdHywjNy5D8P0zua1LIWLGctBi2GIQlfV64iUlBcXEJTFu1j3B72IvJxT/VPxfn
-         9UfMTYZ30UBh7Ft/B41oA8LEEDmN0aNCmumY8XKX/8PcgdVUXZJ6nuaaB4KmPmU9jm5m
-         LIa00JGy4Mn4SFw1pgoSIGvLaoRuU1Bj0WKOihMbO0BYcPoUZ6HZ2NOo8fga02VKmuoo
-         03UQ==
-X-Gm-Message-State: AO0yUKUKTnH3gwyf3Shg4cV2I2VpSkgO8rvddm7bx2Z4tzfp31lZLDt7
-        CT6MzRPaALu3fPqfMQkAfQ==
-X-Google-Smtp-Source: AK7set9nxIPAEEt9FwJLZSPnZ+3GYIXSHR48XHujvHBP9qDwFmZrwSwHrMb5uHv7tkNeZ1p0RxUHZQ==
-X-Received: by 2002:a9d:603:0:b0:688:4670:e964 with SMTP id 3-20020a9d0603000000b006884670e964mr6826979otn.27.1678228864876;
-        Tue, 07 Mar 2023 14:41:04 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id x2-20020a9d6282000000b00690eeb8b436sm5747331otk.65.2023.03.07.14.41.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 14:41:04 -0800 (PST)
-Received: (nullmailer pid 280601 invoked by uid 1000);
-        Tue, 07 Mar 2023 22:41:03 -0000
-Date:   Tue, 7 Mar 2023 16:41:03 -0600
-From:   Rob Herring <robh@kernel.org>
+        bh=VOumxYNupJ270oxfqqpBEcjU4dd6uD/r4togrRDieg4=;
+        b=Lkva8Yqv6yfbbe56NAGI6TppDFJfd9ensNRUWXkdcF5LkmTeW55SEDYN3Qy+C2p9ai
+         YUlDDqKvcV24AFRf8W5qUxIU2gbHlDjFfhw9c69zvRJAFfmRUUgyIs3Jy8ye7F5W+yBn
+         6201eqKNf3VQMA2vlijZkLl+4M1P7lDqY1isu1mM7MKBiAHq/AUKY2yuN2ENw7IV2beP
+         xQnxBK6E2Iadt3LmOkoEhsqvin5VOhEbFDyOhKuXql1Fteg8j7yiOnhAnvutX6f6c2JF
+         YXjMcH4CJr37LyqPUIVFhNMkIjUTMkmEqFA/y67WMvUrq+HkVFQNnDQGNnDgxOlGQ33z
+         1MEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678229744;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VOumxYNupJ270oxfqqpBEcjU4dd6uD/r4togrRDieg4=;
+        b=LendZKanHW0UAbc3JCTm/SrHik0ZolO7iTXnUJ7azqqO3/x4xuHVIEtYt3RszSlc+C
+         uTe+5N5zc75zmO9vH3RWc/V1MCaPXCPRn+Hyg+wUsrgkyYbXsgwQpTj8OPBEteK1fXl2
+         tpzqzJXV3ghlcnnFKJ3gJJcrWEJ3Oo0yYS5T51VigXTKKcLhRH/tfI5zHZMB9VvczEmE
+         ywVs1PePj2gsLJyL+Hw98k8OkUtxovhfyeL+r6/wopX1whz9X8o/ypqh7D7SyHys+cPk
+         Jj7efKVBQRt9lOipfwfYJe+OuQwGpMp8BiiR140BL1avZ1xW762kBZuepQ0TTKhYDTJ3
+         5OEw==
+X-Gm-Message-State: AO0yUKUnLs80eOMOePB+wo16Dr8IxbbqA7b/clsAVWN0yiG+vZBKiWi5
+        CJcvQuIVHsWb0VG/jjH4j847axXXxsFPuAxk35Ukew==
+X-Google-Smtp-Source: AK7set9MfC1PxNng6Vma+yRI7hRnqfXJxNmDi52QuFYnS9zfjs79ZjNGCHl8MlsdVidRYygFsWFznmMwQJa3NB16f9E=
+X-Received: by 2002:a81:ac4b:0:b0:533:9ffb:cb12 with SMTP id
+ z11-20020a81ac4b000000b005339ffbcb12mr10523196ywj.10.1678229743868; Tue, 07
+ Mar 2023 14:55:43 -0800 (PST)
+MIME-Version: 1.0
+References: <20230119163201.580858-1-konrad.dybcio@linaro.org> <20230119163201.580858-2-konrad.dybcio@linaro.org>
+In-Reply-To: <20230119163201.580858-2-konrad.dybcio@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 7 Mar 2023 23:55:32 +0100
+Message-ID: <CACRpkdakgumdpkEdbcUkmSgGRzSOxX6rFD_a9bjMaE1yemgUbw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] gpu/drm/panel: Add Sony TD4353 JDI panel driver
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     marijn.suijten@somainline.org, Iskren Chernev <me@iskren.info>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Chanho Park <chanho61.park@samsung.com>,
-        linux-kernel@vger.kernel.org,
-        Conor Dooley <conor.dooley@microchip.com>,
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
         devicetree@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        agross@kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: arm: Add Cortex-A78C and X1C
-Message-ID: <167822886212.280531.2420228316244973879.robh@kernel.org>
-References: <20230224130759.45579-1-konrad.dybcio@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230224130759.45579-1-konrad.dybcio@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        Sam Ravnborg <sam@ravnborg.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        dri-devel@lists.freedesktop.org, marijn.suijten@somainline.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Jan 19, 2023 at 5:32=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
 
-On Fri, 24 Feb 2023 14:07:57 +0100, Konrad Dybcio wrote:
-> Add compatibles for the Cortex-A78C and X1C cores found in some
-> recent flagship designs.
-> 
+> From: Konrad Dybcio <konrad.dybcio@somainline.org>
+>
+> Add support for the Sony TD4353 JDI 2160x1080 display panel used in
+> some Sony Xperia XZ2 and XZ2 Compact smartphones. Due to the specifics
+> of smartphone manufacturing, it is impossible to retrieve a better name
+> for this panel.
+>
+> This revision adds support for the default 60 Hz configuration, however
+> there could possibly be some room for expansion, as the display panels
+> used on Sony devices have historically been capable of >2x refresh rate
+> overclocking.
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  Documentation/devicetree/bindings/arm/cpus.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-Applied, thanks!
+Looks good, so patch applied to drm-misc-next.
 
+Yours,
+Linus Walleij
