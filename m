@@ -2,310 +2,239 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 030FA6ADDBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 12:42:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 426EA6ADDFB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 12:51:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231402AbjCGLmh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 06:42:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39330 "EHLO
+        id S230211AbjCGLvS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 06:51:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231352AbjCGLlm (ORCPT
+        with ESMTP id S230286AbjCGLu7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 06:41:42 -0500
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92EBB7D099
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 03:39:14 -0800 (PST)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-536be69eadfso239735497b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 03:39:14 -0800 (PST)
+        Tue, 7 Mar 2023 06:50:59 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1B5351C8C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 03:49:45 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id m6so16692546lfq.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 03:49:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678189150;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p2QEPXAzp21Sp6krYXcMnpxNWR2KzEzr6+4RDpVrUlI=;
-        b=MZdIoa/638A2Xrr3aud37732QkFaaI23u93mUrKyx6hNqR+dj0TaQC+E8tBxYlg39i
-         L/nH+SGtV7eGgg/PH796jVppU9Ei/QUJfz6q87mKD5GhxAxOoDPEgO/cZatjxymQzf37
-         42vkTmcghIT1E1yUCpWhoKqAccG+KBBVheQz0Zfzfky2xjIOWnWNtgdtNSm8xyvhMhkK
-         c81jL8WhZzIZytyFxESA5Rk4LOth1GYguzxCQNaJ84tL7NMeJWBTOJzoVEbunqIGtfH8
-         XFURYFjvPIvO1pEdUE6hlmMg6Ibn2XB+FlNLycbR4iPAMi/LBU+Sc2jGQvrVRa1Z5UvN
-         jewg==
+        d=linaro.org; s=google; t=1678189781;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8NLnfgcJkBrupO9VeOIsatAqwiLwPWa5rkw2fb5PnaE=;
+        b=UYvQ5bO2RzR51Mh38ODTgBjtWo2rd01w2DzKJ+NpS1vMuXxsIZJk1UL0Y9tvMY/erS
+         WdcNtewN6BoWBvzNWdC7D5OzAVWUwrl418t7qzmoVXLW7HeQHGUJUllTxOAxPKMuos/I
+         FnEFJdlTkGoepl4EBTUDhWvpEm1hlggXZgbJrM2QDGjqMvK09RAhyBe4g/zdhhWeZs19
+         2H7fcl1zyhk9DpjhmRDIDtaXkwftLIFWTRPHIHuoKTmaWO3N6eMFm5Cla1kFSe7fPjxJ
+         Tas0sI2JB1IcP++DNwbqE8ksYqoqgZh125kLDgfhq0VIpwRgE5vveM3yXSMv/dLCUqEN
+         /+TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678189150;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p2QEPXAzp21Sp6krYXcMnpxNWR2KzEzr6+4RDpVrUlI=;
-        b=5eGy16QgtFpPEYOQERF2PUJNmGO/aJ37jGddZsyG5M2SDP/rTIBkan6//PZRbI9uWl
-         FBarlIeCA7GAh70ZErY5PPuhmcdrpvG5KG4xbUbihNHadgrSBu83h+BYtzDvkc9i+m77
-         vCDDONaJQ3gEbynbF9PEDq3+JS9he0PK6vyV5qgHb4/ain1Yof5neztTRyH4nbpRLquB
-         PtzfY14ckGzKL9u9bpKljVcMtALCbhCsEYrhWqlAloq8o/FnON8GlRVDUiUJ8MdBb37r
-         EXlbzMR1R+CdxkNwNtOHlsvvtpeR9/v3jz5zfHAVQKqyoWrmyHyHj9Zg69BAaTQR4LkZ
-         Y1mQ==
-X-Gm-Message-State: AO0yUKVfPYV7Ooe6sNszNThvwbwU1qL7c/1UYenS72hixEdRjEIKedfL
-        zz30djwFjwa1tPdhghjAgD+/pMHg+In30AeZe6bc8Q==
-X-Google-Smtp-Source: AK7set+pIPRCkUCY1DQn3/UnCDXcMdFY3wcXRpn0sqH288ZQWy/jCdAUknswqsGd/FYMEDrTW7d8/OAqi9oBGUQj+6g=
-X-Received: by 2002:a81:b243:0:b0:52e:d380:ab14 with SMTP id
- q64-20020a81b243000000b0052ed380ab14mr7473835ywh.3.1678189150311; Tue, 07 Mar
- 2023 03:39:10 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678189781;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8NLnfgcJkBrupO9VeOIsatAqwiLwPWa5rkw2fb5PnaE=;
+        b=gFUZyRHBgP1wddc51bvaov88tGhrL79c0zGuN3BD4NzuCQs9zMeIZUxpGG+A2Ej2Se
+         AJ2oA480BuDBN45g2ZnD1kai4OxvuwFCSZp8yxDP70hNrz/iiqeoMhvxMfs7Zsw6sSgf
+         F1T2DEKozItcXNYMhFWSy25T+1DXkZ7VVPPaVqfeIkky+fpSMOPQWG4s3Ke2OywJ4R2T
+         BAaHvIAO4fMsy/trqlHkSENesh2GCqguaIzNoldfoDUiuT7HDRokePxBXEBVadi0lUsw
+         A1N2VkKXl2n+3XmWMRDwpiUDZE57GmFZW0EM3R3NYE/TdmuBmZl1FTau+6y7fjLYpLaX
+         4wEA==
+X-Gm-Message-State: AO0yUKW0EPSAqILrio3UznjykgTdUn82D8SRtTb+quxyUNzmEU1/+EXt
+        4lQhxGc3ZmoqwPmxMMUa2+dNeg==
+X-Google-Smtp-Source: AK7set820Wh82BGJ6Ihvrw7CYOrPuMDU5y9XvpQtW63tea7D4cxj+nT71DKMYqTpL9A9f0fzFll76w==
+X-Received: by 2002:ac2:558e:0:b0:4dc:852d:9b88 with SMTP id v14-20020ac2558e000000b004dc852d9b88mr3812252lfg.45.1678189781415;
+        Tue, 07 Mar 2023 03:49:41 -0800 (PST)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id j19-20020a19f513000000b004dc721ea6a1sm1997226lfb.273.2023.03.07.03.49.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Mar 2023 03:49:40 -0800 (PST)
+Message-ID: <47b591c0-2f68-429d-6d1b-fa8b701785ac@linaro.org>
+Date:   Tue, 7 Mar 2023 13:49:40 +0200
 MIME-Version: 1.0
-References: <20230214164135.17039-1-quic_devipriy@quicinc.com>
- <20230214164135.17039-2-quic_devipriy@quicinc.com> <20230224082332.GA5443@thinkpad>
- <bd153038-4427-1f11-1941-5f13fec01cf7@quicinc.com> <20230228063358.GA4839@thinkpad>
- <9BD62D8E-4E14-4269-B72D-C83EF4D43040@linaro.org> <20230303174036.GB6782@thinkpad>
- <30cf9717-dcca-e984-c506-c71b7f8e32cd@quicinc.com>
-In-Reply-To: <30cf9717-dcca-e984-c506-c71b7f8e32cd@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Georgi Djakov <djakov@kernel.org>
+References: <cover.1677749625.git.quic_varada@quicinc.com>
+ <6b8d17006d8ee9a1b0c4df803c1cc7caf53ea3ef.1677749625.git.quic_varada@quicinc.com>
+ <CAA8EJprbMybV0o1-436yLhVnnEX6qywrj=JmWDCL5usaH0DXiQ@mail.gmail.com>
+ <61e8c730-e46d-728d-d770-f1ead4405d12@quicinc.com>
+ <83184da4-b183-3271-983f-3a1a62fb9f1a@linaro.org>
+ <365f2609-d3b4-df23-5b6e-7a190815a640@quicinc.com>
+Content-Language: en-GB
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 7 Mar 2023 13:38:59 +0200
-Message-ID: <CAA8EJpohnJvFKMc5Ty4CQF65Gt1Kknqsf1B4mFZq4TvW7_dcnw@mail.gmail.com>
-Subject: Re: [PATCH 1/7] dt-bindings: PCI: qcom: Add IPQ9574 specific compatible
-To:     Devi Priya <quic_devipriy@quicinc.com>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, mturquette@baylibre.com,
-        sboyd@kernel.org, p.zabel@pengutronix.de, svarbanov@mm-sol.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-clk@vger.kernel.org,
-        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <365f2609-d3b4-df23-5b6e-7a190815a640@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 7 Mar 2023 at 11:45, Devi Priya <quic_devipriy@quicinc.com> wrote:
->
->
->
-> On 3/3/2023 11:10 PM, Manivannan Sadhasivam wrote:
-> > On Fri, Mar 03, 2023 at 05:16:58PM +0200, Dmitry Baryshkov wrote:
-> >> 28 =D1=84=D0=B5=D0=B2=D1=80=D0=B0=D0=BB=D1=8F 2023 =D0=B3. 08:33:58 GM=
-T+02:00, Manivannan Sadhasivam <mani@kernel.org> =D0=BF=D0=B8=D1=88=D0=B5=
-=D1=82:
-> >>> On Tue, Feb 28, 2023 at 10:56:53AM +0530, Devi Priya wrote:
-> >>>>
-> >>>>
-> >>>> On 2/24/2023 1:53 PM, Manivannan Sadhasivam wrote:
-> >>>>> On Tue, Feb 14, 2023 at 10:11:29PM +0530, Devi Priya wrote:
-> >>>>>> Document the compatible for IPQ9574
-> >>>>>>
-> >>>> Hi Mani, Thanks for taking time to review the patch.
-> >>>>>
-> >>>>> You didn't mention about the "msi-parent" property that is being ad=
-ded
-> >>>>> by this patch
-> >>>> Sure, will update the commit message in the next spin
-> >>>>>
-> >>>>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> >>>>>> ---
-> >>>>>>    .../devicetree/bindings/pci/qcom,pcie.yaml    | 72 ++++++++++++=
-++++++-
-> >>>>>>    1 file changed, 70 insertions(+), 2 deletions(-)
-> >>>>>>
-> >>>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml =
-b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >>>>>> index 872817d6d2bd..dabdf2684e2d 100644
-> >>>>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >>>>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >>>>>> @@ -26,6 +26,7 @@ properties:
-> >>>>>>              - qcom,pcie-ipq8064-v2
-> >>>>>>              - qcom,pcie-ipq8074
-> >>>>>>              - qcom,pcie-ipq8074-gen3
-> >>>>>> +          - qcom,pcie-ipq9574
-> >>>>>>              - qcom,pcie-msm8996
-> >>>>>>              - qcom,pcie-qcs404
-> >>>>>>              - qcom,pcie-sa8540p
-> >>>>>> @@ -44,11 +45,11 @@ properties:
-> >>>>>>      reg:
-> >>>>>>        minItems: 4
-> >>>>>> -    maxItems: 5
-> >>>>>> +    maxItems: 6
-> >>>>>>      reg-names:
-> >>>>>>        minItems: 4
-> >>>>>> -    maxItems: 5
-> >>>>>> +    maxItems: 6
-> >>>>>>      interrupts:
-> >>>>>>        minItems: 1
-> >>>>>> @@ -105,6 +106,8 @@ properties:
-> >>>>>>        items:
-> >>>>>>          - const: pciephy
-> >>>>>> +  msi-parent: true
-> >>>>>> +
-> >>>>>>      power-domains:
-> >>>>>>        maxItems: 1
-> >>>>>> @@ -173,6 +176,27 @@ allOf:
-> >>>>>>                - const: parf # Qualcomm specific registers
-> >>>>>>                - const: config # PCIe configuration space
-> >>>>>> +  - if:
-> >>>>>> +      properties:
-> >>>>>> +        compatible:
-> >>>>>> +          contains:
-> >>>>>> +            enum:
-> >>>>>> +              - qcom,pcie-ipq9574
-> >>>>>> +    then:
-> >>>>>> +      properties:
-> >>>>>> +        reg:
-> >>>>>> +          minItems: 5
-> >>>>>> +          maxItems: 6
-> >>>>>> +        reg-names:
-> >>>>>> +          minItems: 5
-> >>>>>> +          items:
-> >>>>>> +            - const: dbi # DesignWare PCIe registers
-> >>>>>> +            - const: elbi # External local bus interface register=
-s
-> >>>>>> +            - const: atu # ATU address space
-> >>>>>> +            - const: parf # Qualcomm specific registers
-> >>>>>> +            - const: config # PCIe configuration space
-> >>>>>> +            - const: aggr_noc #PCIe aggr_noc
-> >>>>>
-> >>>>> Why do you need this region unlike other SoCs? Is the driver making=
- use of it?
-> >>>> We have the aggr_noc region in ipq9574 to achieve higher throughput =
-& to
-> >>>> handle multiple PCIe instances. The driver uses it to rate adapt 1-l=
-ane PCIe
-> >>>> clocks. My bad, missed it. Will add the driver changes in V2.
-> >>>
-> >>> Hmm, this is something new. How can you achieve higher throughput wit=
-h this
-> >>> region? Can you explain more on how it is used?
-> >>
-> >> Based on the name of the region, it looks like it is an interconnect r=
-egion.
-> >>
-> >
-> > Well, we only have BCM based interconnects so far. That's why I was cur=
-ious
-> > about this region and its purpose.
-> For connected PCIe slave devices that are running at frequency lesser
-> than the ANOC frequency (342MHz), the rate adapter of ANOC needs to be
-> configured
-> >
-> >> Devi, if this is the case, then you have to handle it through the inte=
-rconnect driver, rather than poking directly into these registers.
-> >
-> > If that so, it doesn't need to be added in this series itself. I believ=
-e that
-> > without aggr_noc region, the PCIe controller can still function properl=
-y with
-> > reduced performance. But you can add the interconnect support later as =
-a
-> > separate series.
-> Sure, okay. The ANOC runs at a fixed frequency of 342MHz and the
-> interconnect clocks are not scaled. The aggr_noc register is just a
-> magic register for configuring it's rate adapter to ensure no wait
-> cycles are inserted.
+On 07/03/2023 08:36, Varadarajan Narayanan wrote:
+> 
+> On 3/6/2023 5:21 PM, Dmitry Baryshkov wrote:
+>> On 06/03/2023 13:26, Varadarajan Narayanan wrote:
+>>> Dmitry,
+>>>
+>>> On 3/2/2023 9:52 PM, Dmitry Baryshkov wrote:
+>>>> On Thu, 2 Mar 2023 at 11:57, Varadarajan Narayanan
+>>>> <quic_varada@quicinc.com> wrote:
+>>>>> Add USB phy and controller related nodes
+>>>>>
+>>>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>>>> ---
+>>>>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 92 
+>>>>> +++++++++++++++++++++++++++++++++++
+>>>>>   1 file changed, 92 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi 
+>>>>> b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>>>> index 2bb4053..319b5bd 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>
+>> [skipped]
+>>
+>>
+>>>>> +               usb3: usb3@8A00000 {
+>>>> You know the drill. This node is in the wrong place.
+>>>>
+>>>>> +                       compatible = "qcom,dwc3";
+>>>>> +                       reg = <0x8AF8800 0x400>;
+>>>>> +                       #address-cells = <1>;
+>>>>> +                       #size-cells = <1>;
+>>>>> +                       ranges;
+>>>>> +
+>>>>> +                       clocks = <&gcc GCC_SNOC_USB_CLK>,
+>>>>> +                               <&gcc GCC_ANOC_USB_AXI_CLK>,
+>>>>> +                               <&gcc GCC_USB0_MASTER_CLK>,
+>>>>> +                               <&gcc GCC_USB0_SLEEP_CLK>,
+>>>>> +                               <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+>>>>> +
+>>>>> +                       clock-names = "sys_noc_axi",
+>>>>> +                               "anoc_axi",
+>>>>> +                               "master",
+>>>>> +                               "sleep",
+>>>>> +                               "mock_utmi";
+>>>> Please fix the indentation of the lists.
+>>>>
+>>>>> +
+>>>>> +                       assigned-clocks = <&gcc GCC_SNOC_USB_CLK>,
+>>>>> +                                         <&gcc GCC_ANOC_USB_AXI_CLK>,
+>>>> Why do you assign clock rates to the NOC clocks? Should they be set
+>>>> using the interconnect instead?
+>>>
+>>> The SNOC and ANOC run at a fixed speed of 350MHz and 342MHz 
+>>> respectively and are not scaled. These clocks are for the interface 
+>>> between the USB block and the SNOC/ANOC. Do we still need to use 
+>>> interconnect?
+>>
+>> Maybe I misunderstand something here. If the snoc and anoc speeds are 
+>> at 350 MHz and 342 MHz, why do you assign clock-rates of 200 MHz?
+>>
+>> Is it enough to call clk_prepare_enable() for these clocks or the rate 
+>> really needs to be set?
+> 
+> The rate of 200MHz is not being set for the SNOC/ANOC. It is for the
+> NIU that connects the USB and SNOC/ANOC. The reason for setting the
+> rate to 200MHz is to configure the RCG parent for these interface
+> clocks. That said can we configure this RCG standalone in the driver
+> and enable these clocks?
 
-I have been hesitant at some point, but this looks more and more like
-a special kind of interconnect. Please consider moving all the NoC
-stuff into a separate driver implementing the ICC API.
+We discussed this separately with Georgi Djakov. Let me quote his IRC 
+message: "it sounds like this is for USB port that connects to the NOC. 
+if bandwidth scaling is not needed (or other interconnect 
+configuration), then maybe this can go without interconnect provider 
+driver."
 
->
-> >
-> > Thanks,
-> > Mani
-> >
-> >>
-> >>
-> >>>
-> >>> Thanks,
-> >>> Mani
-> >>>
-> >>>>>
-> >>>>> Thanks,
-> >>>>> Mani
-> >>>>>
-> >>>>>> +
-> >>>>>>      - if:
-> >>>>>>          properties:
-> >>>>>>            compatible:
-> >>>>>> @@ -365,6 +389,39 @@ allOf:
-> >>>>>>                - const: ahb # AHB Reset
-> >>>>>>                - const: axi_m_sticky # AXI Master Sticky reset
-> >>>>>> +  - if:
-> >>>>>> +      properties:
-> >>>>>> +        compatible:
-> >>>>>> +          contains:
-> >>>>>> +            enum:
-> >>>>>> +              - qcom,pcie-ipq9574
-> >>>>>> +    then:
-> >>>>>> +      properties:
-> >>>>>> +        clocks:
-> >>>>>> +          minItems: 6
-> >>>>>> +          maxItems: 6
-> >>>>>> +        clock-names:
-> >>>>>> +          items:
-> >>>>>> +            - const: ahb  # AHB clock
-> >>>>>> +            - const: aux  # Auxiliary clock
-> >>>>>> +            - const: axi_m # AXI Master clock
-> >>>>>> +            - const: axi_s # AXI Slave clock
-> >>>>>> +            - const: axi_bridge # AXI bridge clock
-> >>>>>> +            - const: rchng
-> >>>>>> +        resets:
-> >>>>>> +          minItems: 8
-> >>>>>> +          maxItems: 8
-> >>>>>> +        reset-names:
-> >>>>>> +          items:
-> >>>>>> +            - const: pipe # PIPE reset
-> >>>>>> +            - const: sticky # Core Sticky reset
-> >>>>>> +            - const: axi_s_sticky # AXI Slave Sticky reset
-> >>>>>> +            - const: axi_s # AXI Slave reset
-> >>>>>> +            - const: axi_m_sticky # AXI Master Sticky reset
-> >>>>>> +            - const: axi_m # AXI Master reset
-> >>>>>> +            - const: aux # AUX Reset
-> >>>>>> +            - const: ahb # AHB Reset
-> >>>>>> +
-> >>>>>>      - if:
-> >>>>>>          properties:
-> >>>>>>            compatible:
-> >>>>>> @@ -681,6 +738,16 @@ allOf:
-> >>>>>>            - interconnects
-> >>>>>>            - interconnect-names
-> >>>>>> +  - if:
-> >>>>>> +      properties:
-> >>>>>> +        compatible:
-> >>>>>> +          contains:
-> >>>>>> +            enum:
-> >>>>>> +              - qcom,pcie-ipq9574
-> >>>>>> +    then:
-> >>>>>> +      required:
-> >>>>>> +        - msi-parent
-> >>>>>> +
-> >>>>>>      - if:
-> >>>>>>          not:
-> >>>>>>            properties:
-> >>>>>> @@ -693,6 +760,7 @@ allOf:
-> >>>>>>                    - qcom,pcie-ipq8064v2
-> >>>>>>                    - qcom,pcie-ipq8074
-> >>>>>>                    - qcom,pcie-ipq8074-gen3
-> >>>>>> +                - qcom,pcie-ipq9574
-> >>>>>>                    - qcom,pcie-qcs404
-> >>>>>>        then:
-> >>>>>>          required:
-> >>>>>> --
-> >>>>>> 2.17.1
-> >>>>>>
-> >>>>>
-> >>>> Thanks,
-> >>>> Devi Priya
-> >>>
-> >>
-> >
-> Thanks,
-> Devi Priya
+However as we discover more and more about this platform (e.g. PCIe 
+using the aggre_noc region to setup some magic registers, see [1]), I'm 
+more and more biased towards suggesting implementing the interconnect 
+driver to setup all these tiny little things. With the DT tree being an 
+ABI, it is much preferable to overestimate the needs rather than 
+underestimating them (and having to cope with the backwards 
+compatibility issues).
 
+Generally I think that PCIe/USB/whatever should not poke into NoC 
+registers or NoC/NIU clocks directly (because this is a very 
+platform-specific item). Rather than that it should tell the 
+icc/opp/whatever subsystem, "please configure the SoC for me to work".
 
+[1] 
+https://lore.kernel.org/linux-arm-msm/30cf9717-dcca-e984-c506-c71b7f8e32cd@quicinc.com/
 
---=20
+> 
+> Thanks
+> Varada
+> 
+> 
+>>
+>>
+>>>
+>>>>> + <&gcc GCC_USB0_MASTER_CLK>,
+>>>>> +                                         <&gcc 
+>>>>> GCC_USB0_MOCK_UTMI_CLK>;
+>>>>> +                       assigned-clock-rates = <200000000>,
+>>>>> + <200000000>,
+>>>>> + <200000000>,
+>>>>> + <24000000>;
+>>>>> +
+>>>>> +                       resets = <&gcc GCC_USB_BCR>;
+>>>>> +                       status = "disabled";
+>>>>> +
+>>>>> +                       dwc_0: dwc3@8A00000 {
+>>>>> +                               compatible = "snps,dwc3";
+>>>>> +                               reg = <0x8A00000 0xcd00>;
+>>>>> +                               clock-names = "ref";
+>>>>> +                               clocks = <&gcc 
+>>>>> GCC_USB0_MOCK_UTMI_CLK>;
+>>>> clocks before clock-names
+>>>>
+>>>>> + interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
+>>>>> +                               phys = <&qusb_phy_0>, <&usb0_ssphy>;
+>>>>> +                               phy-names = "usb2-phy", "usb3-phy";
+>>>>> +                               tx-fifo-resize;
+>>>>> +                               snps,dis_ep_cache_eviction;
+>>>>> +                               snps,is-utmi-l1-suspend;
+>>>>> +                               snps,hird-threshold = /bits/ 8 <0x0>;
+>>>>> +                               snps,dis_u2_susphy_quirk;
+>>>>> +                               snps,dis_u3_susphy_quirk;
+>>>>> + snps,quirk-frame-length-adjustment = <0x0A87F0A0>;
+>>>>> +                               dr_mode = "host";
+>>>>> +                       };
+>>>>> +               };
+>>>>> +
+>>>>>                  pcie0_phy: phy@84000 {
+>>>>>                          compatible = 
+>>>>> "qcom,ipq9574-qmp-gen3x1-pcie-phy";
+>>>>>                          reg = <0x00084000 0x1bc>; /* Serdes PLL */
+>>>>> -- 
+>>>>> 2.7.4
+>>>
+>>> Will address these and post a new revision.
+>>>
+>>> Thanks
+>>>
+>>> Varada
+>>>
+>>
+
+-- 
 With best wishes
 Dmitry
+
