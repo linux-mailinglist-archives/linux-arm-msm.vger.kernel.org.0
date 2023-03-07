@@ -2,104 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38C2C6AD863
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 08:43:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44C5F6AD8E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 09:14:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230119AbjCGHnB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 02:43:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40814 "EHLO
+        id S229891AbjCGIOO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 03:14:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbjCGHnA (ORCPT
+        with ESMTP id S229627AbjCGION (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 02:43:00 -0500
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18C03C646
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 23:42:59 -0800 (PST)
-Received: by mail-pf1-x42c.google.com with SMTP id cp12so7469382pfb.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 23:42:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678174978;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NCVxab7eeIvoCYFhseZDKzvVXTy0q475R4rKd4ZTd+o=;
-        b=xN+dBpAHLyfdr+jLD2boIzn+4DBUS/ZfK7oEQdn63WdI7ELYxRNzjdz9/yadb61cyk
-         w/PIWOcAqfyWRRAvN1rYSy+QHMB1fNYXYG+QwXz1Lt+rEtPSI8GPyFrNR382kWjqjlyu
-         x0Gs7kS2R/fuHD1j7Np1krpQHMfE+Obz24bha/X6TGlSPLwPtq7hp2pacR8VdRvciuK9
-         auJfWnqtJfrgwlkBGo6BOtA4xUfBRPErvQViuxYtUwvqMIFmjyZDcWBAQxt1QXDeHi0F
-         mCZtBTDv7dhEzSBVn6/fZAIVc4Cve3Q0p322uUNuQuHlqqVXNuoOtoSTh/UiNL5pL/tL
-         aXyA==
+        Tue, 7 Mar 2023 03:14:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B17632CFEA
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 00:13:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1678176801;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=eaDyYxdl8H5MCNMn5TQI1yfFN1klSnZ3ERr+2rNfpwQ=;
+        b=f0ZU6ShneMPGXG63r1w7KaaF4vOVCqYQgQqE9bpkvz7PeoqS57PqRXDjsbzl3vEGrOCvXu
+        D7wKZgj+xpQ8Cwn3GdEvt6pPX1P97I50JsAOUmqBJE4knW3rRv2ogAjT/5x8mJtSBLvtTQ
+        rdtJWlUY8/kTSdSDGu+/OLkDrNBax+c=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-457-KPEGJnFVNt26tKICYqEhAA-1; Tue, 07 Mar 2023 03:13:20 -0500
+X-MC-Unique: KPEGJnFVNt26tKICYqEhAA-1
+Received: by mail-wm1-f70.google.com with SMTP id j32-20020a05600c1c2000b003e9bdf02c9fso7925357wms.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 00:13:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678174978;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NCVxab7eeIvoCYFhseZDKzvVXTy0q475R4rKd4ZTd+o=;
-        b=FJiI6mXidf1Icczgi6A+H9oJyOQfEaVjRsc+nVmbiEWSdYir1HI06m9YoyAiKTDKk+
-         TkBnsOFPOU56MsSYpfZY1qwnXLrLMVH1GajsJ4coN0WRgOLeAb52QHLMKv4+5XujEYVX
-         enqpzmbY0/eKuOVVhRgiESWwabLUbgXx9y7hJtofwBrmpoKrHHqfxQiWTGe0scZCq062
-         Syt2JGrvR+iJ0SuEXRze0xdld/LG3bL8YwDDvRnNZQSA4hvJdHQ+fYIo/JPj2s6jCdnp
-         D9WnP1h4UbSbDQE9GfysdWYJ5IsjlLtcYSG9QsEHu82cNTRnSvdgNUeuqk9GxMvtU3eB
-         zWkg==
-X-Gm-Message-State: AO0yUKXxZlwqN/aXOZPaObZ6AXm9/5C7D0aPjG5heQ2321lq1oaEc9gK
-        jWRoLBCqkr6X3oY5QKK1kv3tbOakQO0w1K1g2Q==
-X-Google-Smtp-Source: AK7set9AQJg3JWQ2XDlVhjMlGGNAUyGIS+uIongGWw84/OEZkeE2PhD9LarXt5uNqvHDVeNfePLBKg==
-X-Received: by 2002:aa7:9497:0:b0:593:c9b6:dc5d with SMTP id z23-20020aa79497000000b00593c9b6dc5dmr10445797pfk.0.1678174978413;
-        Mon, 06 Mar 2023 23:42:58 -0800 (PST)
-Received: from localhost.localdomain ([59.97.52.140])
-        by smtp.gmail.com with ESMTPSA id d23-20020aa78697000000b005afda149679sm7535567pfo.179.2023.03.06.23.42.56
+        d=1e100.net; s=20210112; t=1678176799;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eaDyYxdl8H5MCNMn5TQI1yfFN1klSnZ3ERr+2rNfpwQ=;
+        b=hgPxEUFA2DX1YuTQe2Ju3aKkRZ6dMmdRmgTHcK4B7LBFntEggeq/3ILllL5WHCV1vU
+         gulGZ7iApWwrOA5SZwAp9KSfqxDjxwj1JiHu5+fi4MYxzb4Exo1OElRizTMP0bXfLX05
+         27yhOdECZkKmV2oPrRn8ar3DV8bHNGoKl74xtoDIaeCo5nxQOO6ZvjdAQA7VkqgSIJ6Q
+         7Ya6xY2Yv8r2R2wjZkC1Ry2SOnMZlKDmStuI20ezaTQy4y6u2h/nYt8OK8Lccbk7KZIl
+         uLLXPrV+l8lJFymOoGy1Bpr5WZGaLlWsRf6cdC5Dlix/YdbollfzQ1YSJeqJUjcuf6pu
+         CrXQ==
+X-Gm-Message-State: AO0yUKU6iGakbNKmosbvYXL82B6sz0rBct21BmDMmgSy9sHcqfzyiIcl
+        +w86/IK9mqKa2xReDueZQPU3tMzM89O0O0MUk8xwgvAiVQTijYXpbV8uI7Ic73FK3apGhxMjKmR
+        KaL+0HF8wmE6Jb25tUbN3WOYwyw==
+X-Received: by 2002:a05:600c:1c96:b0:3eb:3300:1d13 with SMTP id k22-20020a05600c1c9600b003eb33001d13mr11814551wms.14.1678176799078;
+        Tue, 07 Mar 2023 00:13:19 -0800 (PST)
+X-Google-Smtp-Source: AK7set/3pDAfxNUSHlkpssOCT65mbRgtyryaXs9mLdFkCSnDjoJ7oHIx91gGlBecogb8xOq+P40u8Q==
+X-Received: by 2002:a05:600c:1c96:b0:3eb:3300:1d13 with SMTP id k22-20020a05600c1c9600b003eb33001d13mr11814526wms.14.1678176798781;
+        Tue, 07 Mar 2023 00:13:18 -0800 (PST)
+Received: from localhost (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id h17-20020a05600c351100b003e4326a6d53sm17330660wmq.35.2023.03.07.00.13.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Mar 2023 23:42:58 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH] bus: mhi: ep: Demote unsupported channel error log to debug
-Date:   Tue,  7 Mar 2023 13:12:48 +0530
-Message-Id: <20230307074248.86731-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Tue, 07 Mar 2023 00:13:18 -0800 (PST)
+From:   Javier Martinez Canillas <javierm@redhat.com>
+To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Jordan Crouse <jorcrous@amazon.com>
+Cc:     linux-kernel@vger.kernel.org, Albert Esteve <aesteve@redhat.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Sergio Lopez <slp@redhat.com>,
+        Enric Balletbo i Serra <eballetb@redhat.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH] media: venus: dec: Fix capture formats enumeration order
+In-Reply-To: <3d0315fa-14ca-dc34-81ae-467d9ed5133d@quicinc.com>
+References: <20230210081835.2054482-1-javierm@redhat.com>
+ <20230303220918.qr5ydbin3nye3qtz@amazon.com>
+ <87h6uydwel.fsf@minerva.mail-host-address-is-not-set>
+ <3d0315fa-14ca-dc34-81ae-467d9ed5133d@quicinc.com>
+Date:   Tue, 07 Mar 2023 09:13:16 +0100
+Message-ID: <87sfeh0yjn.fsf@minerva.mail-host-address-is-not-set>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Not all MHI endpoints will support all available channels. Most of them
-support only a selected number of channels based on the implementations.
-In those cases, it is not needed to print error messages in the endpoint.
-So let's demote the error log to debug.
+Dikshita Agarwal <quic_dikshita@quicinc.com> writes:
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/ep/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Hello Dikshita,
 
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index 48bc6abb7b37..ba062df4fe25 100644
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -126,7 +126,7 @@ static int mhi_ep_process_cmd_ring(struct mhi_ep_ring *ring, struct mhi_ring_ele
- 
- 	/* Check if the channel is supported by the controller */
- 	if ((ch_id >= mhi_cntrl->max_chan) || !mhi_cntrl->mhi_chan[ch_id].name) {
--		dev_err(dev, "Channel (%u) not supported!\n", ch_id);
-+		dev_dbg(dev, "Channel (%u) not supported!\n", ch_id);
- 		return -ENODEV;
- 	}
- 
-@@ -702,7 +702,7 @@ static void mhi_ep_cmd_ring_worker(struct work_struct *work)
- 		el = &ring->ring_cache[ring->rd_offset];
- 
- 		ret = mhi_ep_process_cmd_ring(ring, el);
--		if (ret)
-+		if (ret && ret != -ENODEV)
- 			dev_err(dev, "Error processing cmd ring element: %zu\n", ring->rd_offset);
- 
- 		mhi_ep_ring_inc_index(ring);
+> On 3/6/2023 3:38 PM, Javier Martinez Canillas wrote:
+>> Jordan Crouse <jorcrous@amazon.com> writes:
+>>
+>> Hello Jordan,
+>>
+>>> On Fri, Feb 10, 2023 at 09:18:35AM +0100, Javier Martinez Canillas wrote:
+>>>> Commit 9593126dae3e ("media: venus: Add a handling of QC08C compressed
+>>>> format") and commit cef92b14e653 ("media: venus: Add a handling of QC10C
+>>>> compressed format") added support for the QC08C and QC10C compressed
+>>>> formats respectively.
+>>>>
+>>>> But these also caused a regression, because the new formats where added
+>>>> at the beginning of the vdec_formats[] array and the vdec_inst_init()
+>>>> function sets the default format output and capture using fixed indexes
+>>>> of that array:
+>>>>
+>>>> static void vdec_inst_init(struct venus_inst *inst)
+>>>> {
+>>>> ...
+>>>> 	inst->fmt_out = &vdec_formats[8];
+>>>> 	inst->fmt_cap = &vdec_formats[0];
+>>>> ...
+>>>> }
+>>>>
+>>>> Since now V4L2_PIX_FMT_NV12 is not the first entry in the array anymore,
+>>>> the default capture format is not set to that as it was done before.
+>>>>
+>>>> Both commits changed the first index to keep inst->fmt_out default format
+>>>> set to V4L2_PIX_FMT_H264, but did not update the latter to keep .fmt_out
+>>>> default format set to V4L2_PIX_FMT_NV12.
+>>>>
+>>>> Rather than updating the index to the current V4L2_PIX_FMT_NV12 position,
+>>>> let's reorder the entries so that this format is the first entry again.
+>>>>
+>>>> This would also make VIDIOC_ENUM_FMT report the V4L2_PIX_FMT_NV12 format
+>>>> with an index 0 as it did before the QC08C and QC10C formats were added.
+>>>>
+>>>> Fixes: 9593126dae3e ("media: venus: Add a handling of QC08C compressed format")
+>>>> Fixes: cef92b14e653 ("media: venus: Add a handling of QC10C compressed format")
+>>>> Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+>>> I just came across this issue independently and can confirm this patch fixes
+>>> the GStreamer V4L2 decoder on QRB5165.
+>>>
+>>> Tested-by: Jordan Crouse <jorcrous@amazon.com>
+>>>
+>> Thanks for testing it!
+>>
+>> Stanimir, can we please get this for v6.3 as well?
+>
+> Hi Javier, Jordan
+>
+> Could you please explain what regression/issue you see with patch?
+>
+> venus hardware supports QC08C which provides better performance hence 
+> driver is publishing it as preferred color format.
+>
+> if client doesn't support this or want to use any other format, they can 
+> set the desired format with s_fmt.
+>
+
+VIDIOC_S_FMT is currently broken for venus, at least on the HP X2
+Chromebook and only the default works. I'm still investigating why
+vdec_s_fmt() is not working.
+
+But basically, if VIDIOC_S_FMT is called for the capture queue,
+then later the VIDIOC_G_FMT ioctl fails with -EINVAL. This is due
+the following condition checked in vdec_check_src_change():
+
+static int vdec_check_src_change(struct venus_inst *inst)
+{
+...
+	if (inst->subscriptions & V4L2_EVENT_SOURCE_CHANGE &&
+	    inst->codec_state == VENUS_DEC_STATE_INIT &&
+	    !inst->reconfig)
+		return -EINVAL;
+...
+}
+
+But regardless, I think that it would be better for a driver to
+not change the order of advertised VIDIOC_ENUM_FMT pixel formats.
+
+Because what happens now is that a decoding that was previously
+working by default is not working anymore due a combination of
+the default being changed and S_FMT not working as expected.
+
 -- 
-2.25.1
+Best regards,
+
+Javier Martinez Canillas
+Core Platforms
+Red Hat
 
