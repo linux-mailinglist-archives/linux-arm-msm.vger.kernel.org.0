@@ -2,77 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 541BC6AE706
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 17:45:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E2496AE724
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 17:47:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229892AbjCGQpa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 11:45:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59446 "EHLO
+        id S230496AbjCGQrv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 11:47:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230513AbjCGQow (ORCPT
+        with ESMTP id S231156AbjCGQqw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 11:44:52 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DF1190B65
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 08:41:51 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id v11so14736083plz.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 08:41:51 -0800 (PST)
+        Tue, 7 Mar 2023 11:46:52 -0500
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B97C396C1D
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 08:43:59 -0800 (PST)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-536c02eea4dso255267517b3.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 08:43:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678207310;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=GZYi4jEDglb5+cxxkgMYuxcqeUvKtcEXdJWnoFmUgvI=;
-        b=pU3uYCWFrPgPTwgjIL3pOfcDsHx3zZsLxkPTj1ul0HWYp86W9bkbVzR0mGMViMA5vo
-         BHwFsf9n1d+Ph6cDcJuWHWfVyqKI5uyaNx9dSFV2ciKLXrDINLCqiiXbXPvWaJM2vxUN
-         N69cyhPsl7p4kCY7hvsgVBDu9/eJtrF/NQS7JTTKAs52s7dyi8UQdUqNHq7R7OwrDCTO
-         TrkjDLHd4QxNh87Q9iHk7RFoQ7tD9GldweR+P6Aklbdh0mbg/JZHYAIjv6JE75+40BJo
-         9q2+0WJxqcjlpytOkMHhchf/DKwxhD96/BJLnTmw7L6qBwKI5vDFggdtGGiT7SRXAs5t
-         AGiA==
+        d=linaro.org; s=google; t=1678207439;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=6C5p9QZU598TAHAlwTKJLIwHjrkkcrwzk82daiPRKVA=;
+        b=lF2ABLa10Km1tgp1B02FgcV22tgi3hdEJd3tigXnkCm+lIrPP32eRE8zt1Q5nRfEvt
+         8nTgUs0z0PZzWpxTRWVYcBkNUKzqXCecCuV9RhWU1/tKt5rxEdZ6ARL/XcQKkC6TogUq
+         evnAfQaNIbw9PCxzpzRGZkUBJKvQahhV9eN9ucPUEw63Ljwu+GrGo5zn5k61G9sxBZbn
+         ksMuFoXSSlmlPY//ve0ML6w6kAjZ0aeD6yS5K7JNJ81v5jsaXNzz4MpORLzPK+DMXK4Q
+         PSkc3KMyExFjos7/iG5QryNNjyJJd+g08a9epQlkknN+4O8fx6bBY8qKfFpSreSe+Izo
+         Qi9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678207310;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GZYi4jEDglb5+cxxkgMYuxcqeUvKtcEXdJWnoFmUgvI=;
-        b=59kkinaqsjXVCvVHfmKKUvpuhDHP2+AE6+awQPEZY7wSQ59E3bZu4HikL9TbOXIrus
-         KyGJogCKQe8vkcL9eaI43QulNqedZJiC0cepktZT59mffJLcfHBTfvLnxpHHdlf2SJ31
-         tqFdfQlNl2gotquvEXuMo+2YlmdCh87assVYozxZ3/QsxijWzFpJylJyHLNISPlzAd2O
-         hIjp7akNd8Ae1sF6WiN2IdvKMVsLa+2JA2lMmbmsvA75Bi9Lv11l4KBuDdC9ZdMOuUX3
-         wxP/Z6WzBcswGRLRhhf5qTxtPM036Dibj1pW9z/axtCK2Y/Q/PTaW/yo8RRrAqEo/o9N
-         qhOQ==
-X-Gm-Message-State: AO0yUKXUCCqBNvd/8jh5BfeBzHdpseEAilj3ORGohbduca1kgrko41sz
-        5YRaPprxpMAqe+qNnpyKn/Zo
-X-Google-Smtp-Source: AK7set+SOmaqiB/t3fmXqdM+2yPjiGEpfot8BFKE2TaBiHW8GWiWm3y851idkG45uPaO+zuNjeqhFw==
-X-Received: by 2002:a17:90a:190f:b0:237:d867:2260 with SMTP id 15-20020a17090a190f00b00237d8672260mr20226733pjg.4.1678207310034;
-        Tue, 07 Mar 2023 08:41:50 -0800 (PST)
-Received: from thinkpad ([59.97.52.140])
-        by smtp.gmail.com with ESMTPSA id y6-20020a17090a154600b002372107fc3dsm9216794pja.49.2023.03.07.08.41.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 08:41:49 -0800 (PST)
-Date:   Tue, 7 Mar 2023 22:11:41 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Vivek Pernamitta <quic_vpernami@quicinc.com>
-Cc:     mhi@lists.linux.dev, quic_qianyu@quicinc.com,
-        quic_vbadigan@quicinc.com, quic_krichai@quicinc.com,
-        quic_skananth@quicinc.com, mrana@quicinc.com,
-        Alex Elder <elder@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        "open list:MHI BUS" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5] bus: mhi: host: Avoid ringing EV DB if there is no
- elements to process
-Message-ID: <20230307164141.GG5599@thinkpad>
-References: <1677087470-7004-1-git-send-email-quic_vpernami@quicinc.com>
- <20230223154836.GC6422@workstation>
+        d=1e100.net; s=20210112; t=1678207439;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6C5p9QZU598TAHAlwTKJLIwHjrkkcrwzk82daiPRKVA=;
+        b=n5E+qeJU03GLCjcR3Fhpq2B3IpCkSMNVfcNEWchV3UDkLI9gOAgmYFMETrMOb+dV1w
+         fzZSGdd0kaJICFBq4C5HTk2Fjlthf2eWYQMK/P49mavA4q7qCE8rQPVYD8rDVk/ADthz
+         uyosQIQ9NY60F0UGFe0nzpB3EbEQJVtsBH2v/LDWrgYyCV20IVFj+IhE3NDlxsqAgCmj
+         h5fMJGo+JYCkWygJBOgVj40g6lwWfEdwOoqZEQ2KMlXvo7mMwBnXC8qhU0RMEJSAolzm
+         B/qHAONYu3lmWd5OimgxRWFYdsOzVjs1vIM2QsPqGqrOvmuWs15LiCOWiKFYtnY+lnVa
+         p06w==
+X-Gm-Message-State: AO0yUKVJX/U0MIav0/yJG4T+wOBPMaogTho3Zjl6w5EbOPXDu08BcaCQ
+        I/lp49XJybztgpJ/pHy9k6HRuZVkEHqJPeE6NSkuEw==
+X-Google-Smtp-Source: AK7set82pxw64ijxA1supSETlb7X6hjCvrTPUjlOU65pM8yLtKEOGgBzO5kUhk9SY1SMFL2SUZGw2wWx7jo+Qgg7bvQ=
+X-Received: by 2002:a81:ae26:0:b0:52f:1c40:b1f9 with SMTP id
+ m38-20020a81ae26000000b0052f1c40b1f9mr9642508ywh.7.1678207438737; Tue, 07 Mar
+ 2023 08:43:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230223154836.GC6422@workstation>
+References: <20230307155543.31021-1-srinivas.kandagatla@linaro.org>
+ <20230307155543.31021-2-srinivas.kandagatla@linaro.org> <c7830eaa-f4b9-dac9-93b2-c3cc032ed4fb@linaro.org>
+In-Reply-To: <c7830eaa-f4b9-dac9-93b2-c3cc032ed4fb@linaro.org>
+From:   Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date:   Tue, 7 Mar 2023 17:43:47 +0100
+Message-ID: <CACMJSevF=ur17LdYsYhN8nCcOg8k3mpz9poV_GGFUxo41DxXeQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] tty: serial: qcom-geni-serial: check for valid size
+ before starting dma
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        agross@kernel.org, andersson@kernel.org,
+        gregkh@linuxfoundation.org, jirislaby@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -83,84 +72,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 23, 2023 at 09:18:36PM +0530, Manivannan Sadhasivam wrote:
-> On Wed, Feb 22, 2023 at 11:07:48PM +0530, Vivek Pernamitta wrote:
-> > As mhi_poll function can be called by mhi client drivers
-> > which will call process_event, which will ring DB even if
-> > there no ring elements to process. This could cause
-> > doorbell event to be processed by MHI device to check for
-> > any ring elements even it is none and also it will occupy
-> > lot of bandwidth on peripheral when mhi_poll() is called in
-> > aggressive loop.
-> > 
-> 
-> The change looks good to me but who is the actual in-kernel user of
-> mhi_poll() API? It is being exported and if there is no upstream client
-> driver making use of it, then it shouldn't be.
-> 
-> I'm gonna submit a patch to remove this API altogether.
-> 
+On Tue, 7 Mar 2023 at 17:20, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 7.03.2023 16:55, Srinivas Kandagatla wrote:
+> > Check if there are valid length of bytes to transfer before starting dma.
+> >
+> > without this check we can see below kernel warning when we try to map a zero size buffers.
+> >
+> > ------------[ cut here ]------------
+> > WARNING: CPU: 0 PID: 0 at drivers/iommu/dma-iommu.c:1046 iommu_dma_unmap_page+0xe0/0xfc
+> > Modules linked in:
+> > CPU: 0 PID: 0 Comm: swapper/0 Tainted: G        W          6.3.0-rc1-dirty #347
+> > Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
+> > pstate: 804000c5 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> > pc : iommu_dma_unmap_page+0xe0/0xfc
+> > lr : iommu_dma_unmap_page+0x38/0xfc
+> > ...
+> > Call trace:
+> >  iommu_dma_unmap_page+0xe0/0xfc
+> >  dma_unmap_page_attrs+0x30/0x1ec
+> >  geni_se_tx_dma_unprep+0x58/0x80
+> >  qcom_geni_serial_isr+0x350/0x750
+> >  __handle_irq_event_percpu+0x58/0x148
+> >  handle_irq_event_percpu+0x18/0x4c
+> >  handle_irq_event+0x48/0x88
+> >  handle_fasteoi_irq+0xb0/0x130
+> >  generic_handle_domain_irq+0x2c/0x44
+> >  gic_handle_irq+0xd4/0x140
+> >  call_on_irq_stack+0x24/0x4c
+> >  do_interrupt_handler+0x80/0x84
+> >  el1_interrupt+0x38/0x6c
+> >  el1h_64_irq_handler+0x18/0x24
+> >  el1h_64_irq+0x64/0x68
+> >  cpuidle_enter_state+0x1e4/0x310
+> >  cpuidle_enter+0x3c/0x54
+> >  call_cpuidle+0x1c/0x40
+> >  do_idle+0x204/0x260
+> >  cpu_startup_entry+0x28/0x2c
+> >  kernel_init+0x0/0x12c
+> >  arch_post_acpi_subsys_init+0x0/0x8
+> >  start_kernel+0x3cc/0x74c
+> >  __primary_switched+0xbc/0xc4
+> >
+> > Fixes: 2aaa43c70778 ("tty: serial: qcom-geni-serial: add support for serial engine DMA")
+> > Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> S-o-b but no C-d-b? Weird..
+>
 
-The patch removing mhi_poll() API is now merged. Can you please respin this
-patch removing the note to the API?
+It was supposed to be Reviewed-by actually.
 
-I still think this patch is relevant without that API.
+Bart
 
-Thanks,
-Mani
-
-> > Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
-> > Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> 
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> Thanks,
-> Mani
-> 
-> > 
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > > ---
-> > changes since v4:
-> > 	updating the commit text with more information.
-> > changes since v3:
-> > 	- Updating commit text for multiple versions of patches.
-> > changes since v2:
-> > 	- Updated comments in code.
-> > changes since v1:
-> > 	- Add an check to avoid ringing EV DB in mhi_process_ctrl_ev_ring().
-> > ---
-> >  drivers/bus/mhi/host/main.c | 8 ++++++--
-> >  1 file changed, 6 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> > index df0fbfe..1bbdb75 100644
-> > --- a/drivers/bus/mhi/host/main.c
-> > +++ b/drivers/bus/mhi/host/main.c
-> > @@ -961,7 +961,9 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
-> >  	}
-> >  
-> >  	read_lock_bh(&mhi_cntrl->pm_lock);
-> > -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
+> Anyway, the change is good!
+>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>
+> Konrad
+> >  drivers/tty/serial/qcom_geni_serial.c | 3 +++
+> >  1 file changed, 3 insertions(+)
+> >
+> > diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> > index 5972b5c317d3..bb63a00f4c07 100644
+> > --- a/drivers/tty/serial/qcom_geni_serial.c
+> > +++ b/drivers/tty/serial/qcom_geni_serial.c
+> > @@ -637,6 +637,9 @@ static void qcom_geni_serial_start_tx_dma(struct uart_port *uport)
+> >
+> >       xmit_size = CIRC_CNT_TO_END(xmit->head, xmit->tail, UART_XMIT_SIZE);
+> >
+> > +     if (!xmit_size)
+> > +             return;
 > > +
-> > +	/* Ring EV DB only if there is any pending element to process */
-> > +	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)) && count)
-> >  		mhi_ring_er_db(mhi_event);
-> >  	read_unlock_bh(&mhi_cntrl->pm_lock);
-> >  
-> > @@ -1031,7 +1033,9 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
-> >  		count++;
-> >  	}
-> >  	read_lock_bh(&mhi_cntrl->pm_lock);
-> > -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
-> > +
-> > +	/* Ring EV DB only if there is any pending element to process */
-> > +	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)) && count)
-> >  		mhi_ring_er_db(mhi_event);
-> >  	read_unlock_bh(&mhi_cntrl->pm_lock);
-> >  
-> > -- 
-> > 2.7.4
-> > 
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+> >       qcom_geni_serial_setup_tx(uport, xmit_size);
+> >
+> >       ret = geni_se_tx_dma_prep(&port->se, &xmit->buf[xmit->tail],
