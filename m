@@ -2,69 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3859F6AE45A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 16:18:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A2F56AE46D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 16:20:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231244AbjCGPS0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 10:18:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33264 "EHLO
+        id S229981AbjCGPUH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 10:20:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230386AbjCGPRh (ORCPT
+        with ESMTP id S229978AbjCGPTZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 10:17:37 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E139B38EAE
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 07:14:48 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id a9so14382450plh.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 07:14:48 -0800 (PST)
+        Tue, 7 Mar 2023 10:19:25 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A78A72A6
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 07:17:30 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id u9so53742618edd.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 07:17:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678202088;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e/Olxjw+HQJK1P59lC+ASOiltstxhFqe09ROmonjaJY=;
-        b=bAbV0Tu6dO080lZVLDrrKoQ1a+/1uz5je3XSJ42DqKICOofONNLt0xeX2xiK4l8NDy
-         V4muFtNZq0YRy+6qZCVPJBpv9aF/XcenTLUjnOwNxRtPKQJ4LUQzZXDb1xChs2B24C3U
-         gHdBvQ+re+xV0M3plCqx+NDNr4QfJEdO5s9CLaJRg5w9UOfUK2j/r+l9WMOESDVX9TpX
-         ymu9yjA7oLJ1Q2hZTqLNi3A4SF960r/LizOgz/PbSXT+A9lOJ2yKIhUGM3CBdQX3kUdB
-         axsqt+gdDMPaHK0uufHipWhuJ9Vx6KElRVo4EEE9n4oAgpQYi3XuCMMGmRexlZ0Ha4fz
-         XtQw==
+        d=linaro.org; s=google; t=1678202249;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OuDrqTSCL2R3I+U9XcJAemdCTVBVc1LECPbO3KJHMls=;
+        b=OHwMobApvqjP2wXPCvYZbeHnpMT03cBKGaVGCmUDk/9YYjsrNPppfPRBdgftnMgKzb
+         iDMWGQKBT3gcdCgdU50xVHTD61S5ci1cLXfAzsb31sLdt+AhRC0fI6FKDQdVgyPNJxvk
+         cBpD2J9r3DdagzAPK7NaMJ1cXZOKWrD3rV3ubI3zateVP2oREz0QEBm6rj3Jy1N1xmP2
+         JoGUnwHhcu7GRzEAgoftQh+IYCY2cFMLqpyM5XmtRrBgfhM076SOJtUoGnFH1KpXMfMa
+         vLJZ77ApBT+72HHevSIF3a9Y4JZH3m7hImHHcJjgR3szMttWEtm3/K4zILmQzSt7YJCj
+         L8fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678202088;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e/Olxjw+HQJK1P59lC+ASOiltstxhFqe09ROmonjaJY=;
-        b=uOsiV/M/gO+6f26WNi5iJFCRFuVN6SsWzjGMaPOw3RV7zO9cX+3T4raRXHmae3p4op
-         OYHE8fB95QB2vt2DzVneuLy7c3gqlc0JiTv4rF1Zxq4UFzIE5f5i0o6560wxfQAEXOfq
-         is1p5s/7X0lXKGqc/DzWuTitjsiihnL/pB+Hdh3Jr7BZYuIKnyDCmIGvys+FkZiW6cKQ
-         jjmbaAjP6G4F/SgYhRtmtVFIWySawsaKMFihd1IFG9ymmWiAbjYt8oYyPs1hZcNat3pF
-         uy+eYhWsi2620kOh1I+WIc5JX1NrZ0NNRKkt/Kb6mo73YaVrMeF6lRv1fuyv6LDmd6ua
-         ne3g==
-X-Gm-Message-State: AO0yUKWLSFk94lO53CvV9C0xrj8fE0A/02l+i4dBazVStdh6CeFbF2ho
-        XOZf5gXGcID2W27++372cawt
-X-Google-Smtp-Source: AK7set91fGxZacQ00SHRYU7c0kHLQc7z5Qzh9Qlqi/RHAPxEelzrVdwhvSgHMm/mhdw/fbejA5BJUQ==
-X-Received: by 2002:a17:902:d492:b0:19d:abd:bb7e with SMTP id c18-20020a170902d49200b0019d0abdbb7emr18433278plg.34.1678202088270;
-        Tue, 07 Mar 2023 07:14:48 -0800 (PST)
-Received: from localhost.localdomain ([59.97.52.140])
-        by smtp.gmail.com with ESMTPSA id t8-20020a17090340c800b0019c2cf12d15sm8549332pld.116.2023.03.07.07.14.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 07:14:47 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     lpieralisi@kernel.org, kw@linux.com
-Cc:     kishon@kernel.org, bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 7/7] PCI: endpoint: Add PCI Endpoint function driver for MHI bus
-Date:   Tue,  7 Mar 2023 20:44:16 +0530
-Message-Id: <20230307151416.176595-8-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230307151416.176595-1-manivannan.sadhasivam@linaro.org>
-References: <20230307151416.176595-1-manivannan.sadhasivam@linaro.org>
+        d=1e100.net; s=20210112; t=1678202249;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OuDrqTSCL2R3I+U9XcJAemdCTVBVc1LECPbO3KJHMls=;
+        b=n6lZrSQb065y9d97KITYIO2Co6inTlQ0zCvlx5pN6c1Vhs4AO62dA1ZrmPG1LifyiR
+         7sik+Y1J66T9hJrzNJy41fR0Hyf/26hXP4WUx6mJzkfoL/ncNCt3Xqtz7DaZizIhgXFe
+         TrDd025HC0J7WJCGhIz/xg3VHzxH38hjtB0I8b0lJSBqdFXRszVOoDJ9TQrSEwmdAh7z
+         80nwDLav3jzmXRPgg7lX2O9LiFi4H8UCWTqyZ44tzIRbkRwP8xHrnjEg8FKrFOE3l1/S
+         3P9a+9IPXG/4EJQyqT0Ni4ZshUunX2xw59KUfuRqGYzeNHmCbv/r0gBf37BRjh/5YSih
+         RATg==
+X-Gm-Message-State: AO0yUKU4Hy7jeFsV2Y9GgpcXzCLyV2KXtQZG9lMj1TB0TEHiH2Isxv5J
+        iu/34lfpDSWT/Jve/4s72Zw51Q==
+X-Google-Smtp-Source: AK7set+4M704iTtRD8cAZX4hQzfah6EPB3z66wdzQFq1gqpvtlGuS+147XQihTBpr+pd8E3QjKfdbQ==
+X-Received: by 2002:a17:906:5656:b0:8dd:76b6:7b14 with SMTP id v22-20020a170906565600b008dd76b67b14mr17516721ejr.14.1678202249043;
+        Tue, 07 Mar 2023 07:17:29 -0800 (PST)
+Received: from ?IPV6:2a02:810d:15c0:828:a60f:e604:c252:1f3d? ([2a02:810d:15c0:828:a60f:e604:c252:1f3d])
+        by smtp.gmail.com with ESMTPSA id z19-20020a50cd13000000b004bd1fe2cc02sm6789814edi.16.2023.03.07.07.17.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Mar 2023 07:17:28 -0800 (PST)
+Message-ID: <38a5a268-7d8a-6e61-4272-8e9155df0034@linaro.org>
+Date:   Tue, 7 Mar 2023 16:17:26 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 01/11] dt-bindings: remoteproc: qcom: Add support for
+ multipd model
+Content-Language: en-US
+To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        jassisinghbrar@gmail.com, mathieu.poirier@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, quic_gurus@quicinc.com,
+        loic.poulain@linaro.org, quic_eberman@quicinc.com,
+        robimarko@gmail.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-clk@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+References: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
+ <1678164097-13247-2-git-send-email-quic_mmanikan@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1678164097-13247-2-git-send-email-quic_mmanikan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,508 +87,358 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add PCI Endpoint driver for the Qualcomm MHI (Modem Host Interface) bus.
-The driver implements the MHI function over PCI in the endpoint device
-such as SDX55 modem. The MHI endpoint function driver acts as a
-controller driver for the MHI Endpoint stack and carries out all PCI
-related activities like mapping the host memory using iATU, triggering
-MSIs etc...
+On 07/03/2023 05:41, Manikanta Mylavarapu wrote:
+> Add new binding document for multipd model remoteproc.
+> IPQ5018, IPQ9574 follows multipd model.
+> 
+> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+> ---
+>  .../bindings/remoteproc/qcom,multipd-pil.yaml | 282 ++++++++++++++++++
+>  1 file changed, 282 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
+> new file mode 100644
+> index 000000000000..b788607f5abd
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
+> @@ -0,0 +1,282 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/remoteproc/qcom,multipd-pil.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Multipd Secure Peripheral Image Loader
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +  - Mathieu Poirier <mathieu.poirier@linaro.org>
+> +
+> +description:
+> +  Multipd Peripheral Image Loader loads firmware and boots Q6 pd, WCSS pd
+> +  remoteproc's on the Qualcomm IPQ5018, IPQ9574 SoC.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/endpoint/functions/Kconfig       |  10 +
- drivers/pci/endpoint/functions/Makefile      |   1 +
- drivers/pci/endpoint/functions/pci-epf-mhi.c | 454 +++++++++++++++++++
- 3 files changed, 465 insertions(+)
- create mode 100644 drivers/pci/endpoint/functions/pci-epf-mhi.c
+What is a "pd"?
 
-diff --git a/drivers/pci/endpoint/functions/Kconfig b/drivers/pci/endpoint/functions/Kconfig
-index 9fd560886871..f5171b4fabbe 100644
---- a/drivers/pci/endpoint/functions/Kconfig
-+++ b/drivers/pci/endpoint/functions/Kconfig
-@@ -37,3 +37,13 @@ config PCI_EPF_VNTB
- 	  between PCI Root Port and PCIe Endpoint.
- 
- 	  If in doubt, say "N" to disable Endpoint NTB driver.
-+
-+config PCI_EPF_MHI
-+	tristate "PCI Endpoint driver for MHI bus"
-+	depends on PCI_ENDPOINT && MHI_BUS_EP
-+	help
-+	   Enable this configuration option to enable the PCI Endpoint
-+	   driver for Modem Host Interface (MHI) bus in Qualcomm Endpoint
-+	   devices such as SDX55.
-+
-+	   If in doubt, say "N" to disable Endpoint driver for MHI bus.
-diff --git a/drivers/pci/endpoint/functions/Makefile b/drivers/pci/endpoint/functions/Makefile
-index 5c13001deaba..696473fce50e 100644
---- a/drivers/pci/endpoint/functions/Makefile
-+++ b/drivers/pci/endpoint/functions/Makefile
-@@ -6,3 +6,4 @@
- obj-$(CONFIG_PCI_EPF_TEST)		+= pci-epf-test.o
- obj-$(CONFIG_PCI_EPF_NTB)		+= pci-epf-ntb.o
- obj-$(CONFIG_PCI_EPF_VNTB) 		+= pci-epf-vntb.o
-+obj-$(CONFIG_PCI_EPF_MHI)		+= pci-epf-mhi.o
-diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-new file mode 100644
-index 000000000000..03e7f42663b3
---- /dev/null
-+++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-@@ -0,0 +1,454 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * PCI EPF driver for MHI Endpoint devices
-+ *
-+ * Copyright (C) 2022 Linaro Ltd.
-+ * Author: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-+ */
-+
-+#include <linux/mhi_ep.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/pci-epc.h>
-+#include <linux/pci-epf.h>
-+
-+#define MHI_VERSION_1_0 0x01000000
-+
-+struct pci_epf_mhi_ep_info {
-+	const struct mhi_ep_cntrl_config *config;
-+	struct pci_epf_header *epf_header;
-+	enum pci_barno bar_num;
-+	u32 epf_flags;
-+	u32 msi_count;
-+	u32 mru;
-+};
-+
-+#define MHI_EP_CHANNEL_CONFIG_UL(ch_num, ch_name)	\
-+	{						\
-+		.num = ch_num,				\
-+		.name = ch_name,			\
-+		.dir = DMA_TO_DEVICE,			\
-+	}
-+
-+#define MHI_EP_CHANNEL_CONFIG_DL(ch_num, ch_name)	\
-+	{						\
-+		.num = ch_num,				\
-+		.name = ch_name,			\
-+		.dir = DMA_FROM_DEVICE,			\
-+	}
-+
-+static const struct mhi_ep_channel_config mhi_v1_channels[] = {
-+	MHI_EP_CHANNEL_CONFIG_UL(0, "LOOPBACK"),
-+	MHI_EP_CHANNEL_CONFIG_DL(1, "LOOPBACK"),
-+	MHI_EP_CHANNEL_CONFIG_UL(2, "SAHARA"),
-+	MHI_EP_CHANNEL_CONFIG_DL(3, "SAHARA"),
-+	MHI_EP_CHANNEL_CONFIG_UL(4, "DIAG"),
-+	MHI_EP_CHANNEL_CONFIG_DL(5, "DIAG"),
-+	MHI_EP_CHANNEL_CONFIG_UL(6, "SSR"),
-+	MHI_EP_CHANNEL_CONFIG_DL(7, "SSR"),
-+	MHI_EP_CHANNEL_CONFIG_UL(8, "QDSS"),
-+	MHI_EP_CHANNEL_CONFIG_DL(9, "QDSS"),
-+	MHI_EP_CHANNEL_CONFIG_UL(10, "EFS"),
-+	MHI_EP_CHANNEL_CONFIG_DL(11, "EFS"),
-+	MHI_EP_CHANNEL_CONFIG_UL(12, "MBIM"),
-+	MHI_EP_CHANNEL_CONFIG_DL(13, "MBIM"),
-+	MHI_EP_CHANNEL_CONFIG_UL(14, "QMI"),
-+	MHI_EP_CHANNEL_CONFIG_DL(15, "QMI"),
-+	MHI_EP_CHANNEL_CONFIG_UL(16, "QMI"),
-+	MHI_EP_CHANNEL_CONFIG_DL(17, "QMI"),
-+	MHI_EP_CHANNEL_CONFIG_UL(18, "IP-CTRL-1"),
-+	MHI_EP_CHANNEL_CONFIG_DL(19, "IP-CTRL-1"),
-+	MHI_EP_CHANNEL_CONFIG_UL(20, "IPCR"),
-+	MHI_EP_CHANNEL_CONFIG_DL(21, "IPCR"),
-+	MHI_EP_CHANNEL_CONFIG_UL(32, "DUN"),
-+	MHI_EP_CHANNEL_CONFIG_DL(33, "DUN"),
-+	MHI_EP_CHANNEL_CONFIG_UL(36, "IP_SW0"),
-+	MHI_EP_CHANNEL_CONFIG_DL(37, "IP_SW0"),
-+};
-+
-+static const struct mhi_ep_cntrl_config mhi_v1_config = {
-+	.max_channels = 128,
-+	.num_channels = ARRAY_SIZE(mhi_v1_channels),
-+	.ch_cfg = mhi_v1_channels,
-+	.mhi_version = MHI_VERSION_1_0,
-+};
-+
-+static struct pci_epf_header sdx55_header = {
-+	.vendorid = PCI_VENDOR_ID_QCOM,
-+	.deviceid = 0x0306,
-+	.baseclass_code = PCI_BASE_CLASS_COMMUNICATION,
-+	.subclass_code = PCI_CLASS_COMMUNICATION_MODEM & 0xff,
-+	.interrupt_pin	= PCI_INTERRUPT_INTA,
-+};
-+
-+static const struct pci_epf_mhi_ep_info sdx55_info = {
-+	.config = &mhi_v1_config,
-+	.epf_header = &sdx55_header,
-+	.bar_num = BAR_0,
-+	.epf_flags = PCI_BASE_ADDRESS_MEM_TYPE_32,
-+	.msi_count = 32,
-+	.mru = 0x8000,
-+};
-+
-+struct pci_epf_mhi {
-+	const struct pci_epf_mhi_ep_info *info;
-+	struct mhi_ep_cntrl mhi_cntrl;
-+	struct pci_epf *epf;
-+	struct mutex lock;
-+	void __iomem *mmio;
-+	resource_size_t mmio_phys;
-+	u32 mmio_size;
-+	int irq;
-+	bool mhi_registered;
-+};
-+
-+static int pci_epf_mhi_alloc_map(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr,
-+				 phys_addr_t *phys_ptr, void __iomem **virt, size_t size)
-+{
-+	struct pci_epf_mhi *epf_mhi = container_of(mhi_cntrl, struct pci_epf_mhi, mhi_cntrl);
-+	struct pci_epf *epf = epf_mhi->epf;
-+	struct pci_epc *epc = epf_mhi->epf->epc;
-+	size_t offset = pci_addr & (epc->mem->window.page_size - 1);
-+	void __iomem *virt_addr;
-+	phys_addr_t phys_addr;
-+	int ret;
-+
-+	virt_addr = pci_epc_mem_alloc_addr(epc, &phys_addr, size + offset);
-+	if (!virt_addr)
-+		return -ENOMEM;
-+
-+	ret = pci_epc_map_addr(epc, epf->func_no, epf->vfunc_no, phys_addr, pci_addr - offset,
-+			       size + offset);
-+	if (ret) {
-+		pci_epc_mem_free_addr(epc, phys_addr, virt_addr, size + offset);
-+
-+		return ret;
-+	}
-+
-+	*phys_ptr = phys_addr + offset;
-+	*virt = virt_addr + offset;
-+
-+	return 0;
-+}
-+
-+static void pci_epf_mhi_unmap_free(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr,
-+				   phys_addr_t phys_addr, void __iomem *virt_addr, size_t size)
-+{
-+	struct pci_epf_mhi *epf_mhi = container_of(mhi_cntrl, struct pci_epf_mhi, mhi_cntrl);
-+	struct pci_epf *epf = epf_mhi->epf;
-+	struct pci_epc *epc = epf->epc;
-+	size_t offset = pci_addr & (epc->mem->window.page_size - 1);
-+
-+	pci_epc_unmap_addr(epc, epf->func_no, epf->vfunc_no, phys_addr - offset);
-+	pci_epc_mem_free_addr(epc, phys_addr - offset, virt_addr - offset, size + offset);
-+}
-+
-+static void pci_epf_mhi_raise_irq(struct mhi_ep_cntrl *mhi_cntrl, u32 vector)
-+{
-+	struct pci_epf_mhi *epf_mhi = container_of(mhi_cntrl, struct pci_epf_mhi, mhi_cntrl);
-+	struct pci_epf *epf = epf_mhi->epf;
-+	struct pci_epc *epc = epf->epc;
-+
-+	/*
-+	 * Vector is incremented by 1 here as the DWC core will decrement it before
-+	 * writing to iATU.
-+	 */
-+	pci_epc_raise_irq(epc, epf->func_no, epf->vfunc_no, PCI_EPC_IRQ_MSI, vector + 1);
-+}
-+
-+static int pci_epf_mhi_read_from_host(struct mhi_ep_cntrl *mhi_cntrl, u64 from, void __iomem *to,
-+			       size_t size)
-+{
-+	struct pci_epf_mhi *epf_mhi = container_of(mhi_cntrl, struct pci_epf_mhi, mhi_cntrl);
-+	struct pci_epf *epf = epf_mhi->epf;
-+	struct pci_epc *epc = epf_mhi->epf->epc;
-+	void __iomem *tre_buf;
-+	phys_addr_t tre_phys;
-+	size_t offset = from % 0x1000;
-+	int ret;
-+
-+	mutex_lock(&epf_mhi->lock);
-+
-+	tre_buf = pci_epc_mem_alloc_addr(epc, &tre_phys, size + offset);
-+	if (!tre_buf) {
-+		mutex_unlock(&epf_mhi->lock);
-+		return -ENOMEM;
-+	}
-+
-+	ret = pci_epc_map_addr(epc, epf->func_no, epf->vfunc_no, tre_phys, from - offset,
-+			       size + offset);
-+	if (ret) {
-+		pci_epc_mem_free_addr(epc, tre_phys, tre_buf, size + offset);
-+		mutex_unlock(&epf_mhi->lock);
-+		return ret;
-+	}
-+
-+	memcpy_fromio(to, tre_buf + offset, size);
-+
-+	pci_epc_unmap_addr(epc, epf->func_no, epf->vfunc_no, tre_phys);
-+	pci_epc_mem_free_addr(epc, tre_phys, tre_buf, size + offset);
-+
-+	mutex_unlock(&epf_mhi->lock);
-+
-+	return 0;
-+}
-+
-+static int pci_epf_mhi_write_to_host(struct mhi_ep_cntrl *mhi_cntrl, void __iomem *from, u64 to,
-+			      size_t size)
-+{
-+	struct pci_epf_mhi *epf_mhi = container_of(mhi_cntrl, struct pci_epf_mhi, mhi_cntrl);
-+	struct pci_epf *epf = epf_mhi->epf;
-+	struct pci_epc *epc = epf_mhi->epf->epc;
-+	void __iomem *tre_buf;
-+	phys_addr_t tre_phys;
-+	size_t offset = to % 0x1000;
-+	int ret;
-+
-+	mutex_lock(&epf_mhi->lock);
-+
-+	tre_buf = pci_epc_mem_alloc_addr(epc, &tre_phys, size + offset);
-+	if (!tre_buf) {
-+		mutex_unlock(&epf_mhi->lock);
-+		return -ENOMEM;
-+	}
-+
-+	ret = pci_epc_map_addr(epc, epf->func_no, epf->vfunc_no, tre_phys, to - offset,
-+			       size + offset);
-+	if (ret) {
-+		pci_epc_mem_free_addr(epc, tre_phys, tre_buf, size + offset);
-+		mutex_unlock(&epf_mhi->lock);
-+		return ret;
-+	}
-+
-+	memcpy_toio(tre_buf + offset, from, size);
-+
-+	pci_epc_unmap_addr(epc, epf->func_no, epf->vfunc_no, tre_phys);
-+	pci_epc_mem_free_addr(epc, tre_phys, tre_buf, size + offset);
-+
-+	mutex_unlock(&epf_mhi->lock);
-+
-+	return 0;
-+}
-+
-+static int pci_epf_mhi_core_init(struct pci_epf *epf)
-+{
-+	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-+	const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
-+	struct pci_epf_bar *epf_bar = &epf->bar[info->bar_num];
-+	struct pci_epc *epc = epf->epc;
-+	struct device *dev = &epf->dev;
-+	int ret;
-+
-+	epf_bar->phys_addr = epf_mhi->mmio_phys;
-+	epf_bar->size = epf_mhi->mmio_size;
-+	epf_bar->barno = info->bar_num;
-+	epf_bar->flags = info->epf_flags;
-+	ret = pci_epc_set_bar(epc, epf->func_no, epf->vfunc_no, epf_bar);
-+	if (ret) {
-+		dev_err(dev, "Failed to set BAR: %d\n", ret);
-+		return ret;
-+	}
-+
-+	ret = pci_epc_set_msi(epc, epf->func_no, epf->vfunc_no,
-+			      order_base_2(info->msi_count));
-+	if (ret) {
-+		dev_err(dev, "Failed to set MSI configuration: %d\n", ret);
-+		return ret;
-+	}
-+
-+	ret = pci_epc_write_header(epc, epf->func_no, epf->vfunc_no, epf->header);
-+	if (ret) {
-+		dev_err(dev, "Failed to set Configuration header: %d\n", ret);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static int pci_epf_mhi_link_up(struct pci_epf *epf)
-+{
-+	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-+	const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
-+	struct mhi_ep_cntrl *mhi_cntrl = &epf_mhi->mhi_cntrl;
-+	struct pci_epc *epc = epf->epc;
-+	struct device *dev = &epf->dev;
-+	int ret;
-+
-+	mhi_cntrl->mmio = epf_mhi->mmio;
-+	mhi_cntrl->irq = epf_mhi->irq;
-+	mhi_cntrl->mru = info->mru;
-+
-+	/* Assign the struct dev of PCI EP as MHI controller device */
-+	mhi_cntrl->cntrl_dev = epc->dev.parent;
-+	mhi_cntrl->raise_irq = pci_epf_mhi_raise_irq;
-+	mhi_cntrl->alloc_map = pci_epf_mhi_alloc_map;
-+	mhi_cntrl->unmap_free = pci_epf_mhi_unmap_free;
-+	mhi_cntrl->read_from_host = pci_epf_mhi_read_from_host;
-+	mhi_cntrl->write_to_host = pci_epf_mhi_write_to_host;
-+
-+	/* Register the MHI EP controller */
-+	ret = mhi_ep_register_controller(mhi_cntrl, info->config);
-+	if (ret) {
-+		dev_err(dev, "Failed to register MHI EP controller: %d\n", ret);
-+		return ret;
-+	}
-+
-+	epf_mhi->mhi_registered = true;
-+
-+	return 0;
-+}
-+
-+static int pci_epf_mhi_link_down(struct pci_epf *epf)
-+{
-+	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-+	struct mhi_ep_cntrl *mhi_cntrl = &epf_mhi->mhi_cntrl;
-+
-+	if (epf_mhi->mhi_registered) {
-+		mhi_ep_power_down(mhi_cntrl);
-+		mhi_ep_unregister_controller(mhi_cntrl);
-+		epf_mhi->mhi_registered = false;
-+	}
-+
-+	return 0;
-+}
-+
-+static int pci_epf_mhi_bme(struct pci_epf *epf)
-+{
-+	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-+	struct mhi_ep_cntrl *mhi_cntrl = &epf_mhi->mhi_cntrl;
-+	struct device *dev = &epf->dev;
-+	int ret;
-+
-+	/* Power up the MHI EP stack if link is up and stack is in power down state */
-+	if (!mhi_cntrl->enabled && epf_mhi->mhi_registered) {
-+		ret = mhi_ep_power_up(mhi_cntrl);
-+		if (ret) {
-+			dev_err(dev, "Failed to power up MHI EP: %d\n", ret);
-+			mhi_ep_unregister_controller(mhi_cntrl);
-+			epf_mhi->mhi_registered = false;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+static int pci_epf_mhi_bind(struct pci_epf *epf)
-+{
-+	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-+	struct pci_epc *epc = epf->epc;
-+	struct platform_device *pdev = to_platform_device(epc->dev.parent);
-+	struct device *dev = &epf->dev;
-+	struct resource *res;
-+	int ret;
-+
-+	if (WARN_ON_ONCE(!epc))
-+		return -EINVAL;
-+
-+	/* Get MMIO base address from Endpoint controller */
-+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mmio");
-+	epf_mhi->mmio_phys = res->start;
-+	epf_mhi->mmio_size = resource_size(res);
-+
-+	epf_mhi->mmio = ioremap_wc(epf_mhi->mmio_phys, epf_mhi->mmio_size);
-+	if (IS_ERR(epf_mhi->mmio))
-+		return PTR_ERR(epf_mhi->mmio);
-+
-+	ret = platform_get_irq_byname(pdev, "doorbell");
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to get Doorbell IRQ\n");
-+		iounmap(epf_mhi->mmio);
-+		return ret;
-+	}
-+
-+	epf_mhi->irq = ret;
-+
-+	return 0;
-+}
-+
-+static void pci_epf_mhi_unbind(struct pci_epf *epf)
-+{
-+	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-+	const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
-+	struct pci_epf_bar *epf_bar = &epf->bar[info->bar_num];
-+	struct mhi_ep_cntrl *mhi_cntrl = &epf_mhi->mhi_cntrl;
-+	struct pci_epc *epc = epf->epc;
-+
-+	/*
-+	 * Forcefully power down the MHI EP stack. Only way to bring the MHI EP stack
-+	 * back to working state after successive bind is by getting BME from host.
-+	 */
-+	if (epf_mhi->mhi_registered) {
-+		mhi_ep_power_down(mhi_cntrl);
-+		mhi_ep_unregister_controller(mhi_cntrl);
-+		epf_mhi->mhi_registered = false;
-+	}
-+
-+	iounmap(epf_mhi->mmio);
-+	pci_epc_clear_bar(epc, epf->func_no, epf->vfunc_no, epf_bar);
-+}
-+
-+static struct pci_epc_event_ops pci_epf_mhi_event_ops = {
-+	.core_init = pci_epf_mhi_core_init,
-+	.link_up = pci_epf_mhi_link_up,
-+	.link_down = pci_epf_mhi_link_down,
-+	.bme = pci_epf_mhi_bme,
-+};
-+
-+static int pci_epf_mhi_probe(struct pci_epf *epf, const struct pci_epf_device_id *id)
-+{
-+	struct pci_epf_mhi_ep_info *info = (struct pci_epf_mhi_ep_info *) id->driver_data;
-+	struct pci_epf_mhi *epf_mhi;
-+	struct device *dev = &epf->dev;
-+
-+	epf_mhi = devm_kzalloc(dev, sizeof(*epf_mhi), GFP_KERNEL);
-+	if (!epf_mhi)
-+		return -ENOMEM;
-+
-+	epf->header = info->epf_header;
-+	epf_mhi->info = info;
-+	epf_mhi->epf = epf;
-+
-+	epf->event_ops = &pci_epf_mhi_event_ops;
-+
-+	mutex_init(&epf_mhi->lock);
-+
-+	epf_set_drvdata(epf, epf_mhi);
-+
-+	return 0;
-+}
-+
-+static const struct pci_epf_device_id pci_epf_mhi_ids[] = {
-+	{
-+		.name = "sdx55", .driver_data = (kernel_ulong_t) &sdx55_info,
-+	},
-+	{},
-+};
-+
-+static struct pci_epf_ops pci_epf_mhi_ops = {
-+	.unbind	= pci_epf_mhi_unbind,
-+	.bind	= pci_epf_mhi_bind,
-+};
-+
-+static struct pci_epf_driver pci_epf_mhi_driver = {
-+	.driver.name	= "pci_epf_mhi",
-+	.probe		= pci_epf_mhi_probe,
-+	.id_table	= pci_epf_mhi_ids,
-+	.ops		= &pci_epf_mhi_ops,
-+	.owner		= THIS_MODULE,
-+};
-+
-+static int __init pci_epf_mhi_init(void)
-+{
-+	return pci_epf_register_driver(&pci_epf_mhi_driver);
-+}
-+module_init(pci_epf_mhi_init);
-+
-+static void __exit pci_epf_mhi_exit(void)
-+{
-+	pci_epf_unregister_driver(&pci_epf_mhi_driver);
-+}
-+module_exit(pci_epf_mhi_exit);
-+
-+MODULE_DESCRIPTION("PCI EPF driver for MHI Endpoint devices");
-+MODULE_AUTHOR("Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>");
-+MODULE_LICENSE("GPL");
--- 
-2.25.1
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,ipq5018-q6-mpd
+> +      - qcom,ipq9574-q6-mpd
+> +
+> +  '#address-cells': true
+> +
+> +  '#size-cells': true
+
+Why do you need both?
+
+If really needed, these should be const.
+
+> +
+> +  'ranges': true
+> +
+
+Same question - why do you need it?
+
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts-extended:
+
+Instead interrupts
+
+> +    items:
+> +      - description: Watchdog interrupt
+> +      - description: Fatal interrupt
+> +      - description: Ready interrupt
+> +      - description: Handover interrupt
+> +      - description: Stop acknowledge interrupt
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: wdog
+> +      - const: fatal
+> +      - const: ready
+> +      - const: handover
+> +      - const: stop-ack
+> +
+> +  clocks:
+> +    minItems: 25
+> +    maxItems: 25
+
+Drop both and instead describe the items. Anyway minItems are not needed
+here.
+
+> +
+> +  clock-names:
+> +    minItems: 25
+> +    maxItems: 25
+
+Drop both and instead list the names.
+
+> +
+> +  assigned-clocks:
+> +    minItems: 13
+> +    maxItems: 13
+
+Drop, they do not have to be mentioned in the binding. If you think they
+need to, then why?
+
+> +
+> +  assigned-clock-rates:
+> +    minItems: 13
+> +    maxItems: 13
+
+Ditto
+
+> +
+> +  qcom,smem-states:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    description: States used by the AP to signal the remoteprocessor
+> +    items:
+> +      - description: Shutdown Q6
+> +      - description: Stop Q6
+> +
+> +  qcom,smem-state-names:
+> +    description:
+> +      Names of the states used by the AP to signal the remoteprocessor
+> +    items:
+> +      - const: shutdown
+> +      - const: stop
+> +
+> +  memory-region:
+> +    items:
+> +      - description: Q6 pd reserved region
+> +
+> +  glink-edge:
+> +    $ref: /schemas/remoteproc/qcom,glink-edge.yaml#
+
+unevaluatedProperties: false
+
+> +    description:
+> +      Qualcomm G-Link subnode which represents communication edge, channels
+> +      and devices related to the Modem.
+> +
+> +patternProperties:
+> +  "^remoteproc_pd1|remoteproc_pd2|remoteproc_pd3":
+
+No, underscores are not allowed. Also, what is pd?
+
+> +    type: object
+> +    description:
+> +      In Multipd model, WCSS pd depends on Q6 pd i.e Q6 pd should be up before
+> +      WCSS. It can be achieved by keeping wcss pd node as subnode of Q6
+> +      device node.
+> +
+> +    properties:
+> +      compatible:
+> +        enum:
+> +          - "qcom,ipq5018-wcss-ahb-mpd"
+> +          - "qcom,ipq9574-wcss-ahb-mpd"
+> +          - "qcom,ipq5018-wcss-pcie-mpd"
+
+Drop quotes
+
+> +
+> +      interrupts-extended:
+
+Same as before
+
+> +        items:
+> +          - description: Fatal interrupt
+> +          - description: Ready interrupt
+> +          - description: Spawn acknowledge interrupt
+> +          - description: Stop acknowledge interrupt
+> +
+> +      interrupt-names:
+> +        items:
+> +          - const: fatal
+> +          - const: ready
+> +          - const: spawn-ack
+> +          - const: stop-ack
+> +
+> +      qcom,smem-states:
+> +        $ref: /schemas/types.yaml#/definitions/phandle-array
+> +        description: States used by the AP to signal the remoteprocessor
+> +        items:
+> +          - description: Shutdown WCSS pd
+> +          - description: Stop WCSS pd
+> +          - description: Spawn WCSS pd
+> +
+> +      qcom,smem-state-names:
+> +        description:
+> +          Names of the states used by the AP to signal the remoteprocessor
+
+remote processor
+
+> +        items:
+> +          - const: shutdown
+> +          - const: stop
+> +          - const: spawn
+
+This is confusing. Why your children have the same properties as parent?
+
+> +
+> +    required:
+> +      - compatible
+> +
+> +    additionalProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts-extended
+
+interrupts
+
+> +  - interrupt-names
+> +  - qcom,smem-states
+> +  - qcom,smem-state-names
+> +  - memory-region
+> +
+> +additionalProperties: false
+> +
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          enum:
+> +            - qcom,ipq9574-q6-mpd
+> +    then:
+> +      properties:
+> +        assigned-clocks:
+> +          items:
+> +            - description: Phandle, clock specifier of GCC_ANOC_WCSS_AXI_M_CLK
+> +            - description: Phandle, clock specifier of GCC_WCSS_AHB_S_CLK
+> +            - description: Phandle, clock specifier of GCC_WCSS_ECAHB_CLK
+> +            - description: Phandle, clock specifier of GCC_WCSS_ACMT_CLK
+> +            - description: Phandle, clock specifier of GCC_WCSS_AXI_M_CLK
+> +            - description: Phandle, clock specifier of GCC_Q6_AXIM_CLK
+> +            - description: Phandle, clock specifier of GCC_Q6_AXIM2_CLK
+> +            - description: Phandle, clock specifier of GCC_Q6_AHB_CLK
+> +            - description: Phandle, clock specifier of GCC_Q6_AHB_S_CLK
+> +            - description: Phandle, clock specifier of GCC_Q6SS_BOOT_CLK
+> +            - description: Phandle, clock specifier of GCC_MEM_NOC_Q6_AXI_CLK
+> +            - description: Phandle, clock specifier of GCC_WCSS_Q6_TBU_CLK
+> +            - description: Phandle, clock specifier of GCC_SYS_NOC_WCSS_AHB_CLK
+
+Eh, so here they are. But Why? Do you expect different clocks for
+others? If so, where are they?
+
+Anyway, drop useless "Phandle, clock specifier of". Clocks cannot be
+anything else than phandle and a clock specifier. Instead of using some
+cryptic ACRONYM_OR_SOME_CLK, describe them. Just like we do for other
+bindings. You have plenty of good examples, so please start from them.
+
+
+> +        assigned-clock-rates:
+> +          items:
+> +            - description: Must be 266666667 HZ
+> +            - description: Must be 133333333 HZ
+> +            - description: Must be 133333333 HZ
+> +            - description: Must be 133333333 HZ
+> +            - description: Must be 266666667 HZ
+> +            - description: Must be 533000000 HZ
+> +            - description: Must be 342857143 HZ
+> +            - description: Must be 133333333 HZ
+> +            - description: Must be 133333333 HZ
+> +            - description: Must be 342857143 HZ
+> +            - description: Must be 533000000 HZ
+> +            - description: Must be 533000000 HZ
+> +            - description: Must be 133333333 HZ
+
+???
+
+If these are fixed, why this is in DT? DT is for variable and
+non-discoverable pieces and you do not have here anything variable, but
+fixed.
+
+> +
+> +examples:
+> +  - |
+> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +        #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
+> +        #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
+
+Use 4 spaces for example indentation.
+
+> +
+> +        q6v5_wcss: remoteproc@cd00000 {
+> +                compatible = "qcom,ipq5018-q6-mpd";
+> +                #address-cells = <1>;
+> +                #size-cells = <1>;
+> +                ranges;
+> +                reg = <0x0cd00000 0x4040>;
+> +                interrupts-extended = <&intc GIC_SPI 291 IRQ_TYPE_EDGE_RISING>,
+> +                                <&wcss_smp2p_in 0 0>,
+
+Wrong alignment of indentation
+
+> +                                <&wcss_smp2p_in 1 0>,
+> +                                <&wcss_smp2p_in 2 0>,
+> +                                <&wcss_smp2p_in 3 0>;
+> +                interrupt-names = "wdog",
+> +                                  "fatal",
+> +                                  "ready",
+> +                                  "handover",
+> +                                  "stop-ack";
+> +
+> +                qcom,smem-states = <&wcss_smp2p_out 0>,
+> +                                   <&wcss_smp2p_out 1>;
+> +                qcom,smem-state-names = "shutdown",
+> +                                        "stop";
+> +
+> +                memory-region = <&q6_region>;
+> +
+> +                glink-edge {
+> +                        interrupts = <GIC_SPI 179 IRQ_TYPE_EDGE_RISING>;
+> +                        label = "rtr";
+> +                        qcom,remote-pid = <1>;
+> +                        mboxes = <&apcs_glb 8>;
+> +                };
+> +
+> +                q6_wcss_pd1: remoteproc_pd1 {
+> +                        compatible = "qcom,ipq5018-wcss-ahb-mpd";
+> +                        interrupts-extended = <&wcss_smp2p_in 8 0>,
+> +                                        <&wcss_smp2p_in 9 0>,
+> +                                        <&wcss_smp2p_in 12 0>,
+> +                                        <&wcss_smp2p_in 11 0>;
+> +                        interrupt-names = "fatal",
+> +                                          "ready",
+> +                                          "spawn-ack",
+> +                                          "stop-ack";
+> +                        qcom,smem-states = <&wcss_smp2p_out 8>,
+> +                                           <&wcss_smp2p_out 9>,
+> +                                           <&wcss_smp2p_out 10>;
+> +                        qcom,smem-state-names = "shutdown",
+> +                                                "stop",
+> +                                                "spawn";
+> +                };
+> +
+> +                q6_wcss_pd2: remoteproc_pd2 {
+> +                        compatible = "qcom,ipq5018-wcss-pcie-mpd";
+> +                        interrupts-extended = <&wcss_smp2p_in 16 0>,
+> +                                        <&wcss_smp2p_in 17 0>,
+> +                                        <&wcss_smp2p_in 20 0>,
+> +                                        <&wcss_smp2p_in 19 0>;
+> +                        interrupt-names = "fatal",
+> +                                          "ready",
+> +                                          "spawn-ack",
+> +                                          "stop-ack";
+> +
+> +                        qcom,smem-states = <&wcss_smp2p_out 16>,
+> +                                           <&wcss_smp2p_out 17>,
+> +                                           <&wcss_smp2p_out 18>;
+> +                        qcom,smem-state-names = "shutdown",
+> +                                                "stop",
+> +                                                "spawn";
+> +                        status = "okay";
+
+Drop statuses from the example.
+
+
+Best regards,
+Krzysztof
 
