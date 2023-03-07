@@ -2,78 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 912546AE3D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 16:05:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFDEA6AE42A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 16:12:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230200AbjCGPFQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 10:05:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46326 "EHLO
+        id S230494AbjCGPMs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 10:12:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230434AbjCGPEw (ORCPT
+        with ESMTP id S229850AbjCGPM3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 10:04:52 -0500
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B84D0984DF
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 06:57:04 -0800 (PST)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-53d277c1834so73550527b3.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 06:57:04 -0800 (PST)
+        Tue, 7 Mar 2023 10:12:29 -0500
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD7473B23C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 07:07:09 -0800 (PST)
+Received: by mail-yb1-xb36.google.com with SMTP id t39so11689892ybi.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 07:07:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678201024;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=D3Cr5iHChPhVIM0IBEr0zNr4m47UpuB7ZQNBapGvsMA=;
-        b=Sa7p7I6Iw0SkeAUDEM6Hi3s/b5m+Yr2N5xRDEwsu9mpEv9pSTSN3BYW/4q+YKYBaxS
-         EPS1oVhC5aRhsxC73yzTe6WL6SngTSkoIZdCYU1E6l6mqj4vRrKKNoL9Opvd5TUgJdu+
-         OaAn1wlB6oRoincbTu02uO5l0JC4uqGi5hHKkBQpbMzl4iwaddSdYxsMqiow9E2oMh7m
-         Iv4IUaT9JtE9MorpZXVsuACbNecZ0TXkVlIQtFS1nBElteItPxnTe42RY0RKngls/hXG
-         wgiakHo2+zhspHzUrS/hqXZ1yAZtYBn02MQn9ir0T5WLdP4qD/b4I+Co2KANzqrEkwsm
-         XGxg==
+        d=linaro.org; s=google; t=1678201627;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=mZSPJH+f9oWHaxho+XViilCifY5cfExrCLjds8RGXCE=;
+        b=Zl1iwFTQ4MzHuEy5euVqmvX3rJVpoJHoWQ0T7JbQffO7j89sJ7HXBpmPIbJec7KGy+
+         dtliU7DYJmdu2PNcLBAugFyVpfwZbWFvVvvrz0WrJNeoZrRGAQApRxmyP7zgGLazGqqu
+         zZIDGWdH6d3ORb0YQx3OWMpGzwxpV0zZUNQXRo8Z//lGlF1XYhqfrMaNNvrC2CEqzEjO
+         Y77E8IQdxUNiYlFZIViCJANRIhM+7hohOtTPrOoRy8PPU/8Vs3oI70Xi1XyKylH8fJ3J
+         WGtfZMdTZyXtZWtzOeArMagz7fqB3MqplTkOgkeHlS9sHtypg4NbM76DLzciWbQoTiUr
+         liXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678201024;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=D3Cr5iHChPhVIM0IBEr0zNr4m47UpuB7ZQNBapGvsMA=;
-        b=JmR39iZ0paIgr/oP1YNltZfvRp+7YsqRM3OUvw2UZh5mVJ+P0kaQHnb+bi6DJnYNOZ
-         hde/kOjE/Ek1Qh/5iaBz6GvVhZm2yxF0SPfFJzhYQ8uxLXmZqCs5KYO4gBxTDbCcch9G
-         M9w7DrTEXzw9jIIOVzaBobYlQJcPoBFnOSPrUwCBl26cAetX9jxd2lrYcQSFiBs3D0u+
-         GE6HVAyHoEEpTCOLh9lzA5zfGrd7H9btSoEdTp+61gLektM2PqxaT03zO3spRju1boMC
-         Wx+2he+7qZXNBYqlkQNhbMfhecN7ncDdonTjSLTnMPG7jMsInbutwGybNxvh0EgBdCf6
-         XaeA==
-X-Gm-Message-State: AO0yUKWRmukBa/FJzGqD2Ws9vuCU727R4pdw4eqg0tp2n5N3+brgQmPy
-        chdUy0yKP8W0Z3B+foZeQpMfDIjZssGz+rsf9wrQBA==
-X-Google-Smtp-Source: AK7set/9HMCrF+azKo6YywINpZcVolMmW90oCUx+HqMoViVjHmvmFqQ4kHcS4RJgKU3KMXxpJW9El5ge0160PPUTuUw=
-X-Received: by 2002:a81:b71c:0:b0:536:7529:55b4 with SMTP id
- v28-20020a81b71c000000b00536752955b4mr9438563ywh.3.1678201023901; Tue, 07 Mar
- 2023 06:57:03 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678201627;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mZSPJH+f9oWHaxho+XViilCifY5cfExrCLjds8RGXCE=;
+        b=0kN+ksmUKMkaKMDSob0mQpHeKZqW7zhNW2PYA8eTpX8i/K8sCv0lCZn4TZbgKDPLtS
+         h52fQpDEBinn2yemRH3hI1b7txC/4sOx65rTRu2tcxX/8qrEIFh0/oqYFVa0vHp2S2bT
+         98JUP7vXVmgYTGXnp2eSY77YR9ZNwdSh9GEGgl0tncR3K8dS5/uUnBzRNUBBl1fB8Mg7
+         4dRCOwWjqo7XcE6HCa9PJ4a1tBLZp7yt0LZhVv07lNP9TZuNSiGJKNRdVngOLsyPcWcQ
+         qJ0zi9D5NdnKFcAikgqQdkkk5NxbF0Gg8PBJjfKMIoyh004WeyNub6gami5ve3BsPA6T
+         CKGg==
+X-Gm-Message-State: AO0yUKWHW7ecZO/FXHV9naAzc9Nu5oPum5ZcHzezd/Smm43GM0BsfBP5
+        Y+RI20XpWDAuhEM5DHQjsynA+Z+b4a5e9ez+4yUhPA==
+X-Google-Smtp-Source: AK7set/szA9fTwEGq01jVWq5968zVv7nn5uZGXTMr6CPkT1icZCpZ6kYz52R9ayoCJb2TM4NvSgYXxgeNLdlOn66Dbw=
+X-Received: by 2002:a25:7808:0:b0:a4a:a708:2411 with SMTP id
+ t8-20020a257808000000b00a4aa7082411mr8646562ybc.10.1678201627140; Tue, 07 Mar
+ 2023 07:07:07 -0800 (PST)
 MIME-Version: 1.0
-References: <20230214164135.17039-1-quic_devipriy@quicinc.com>
- <20230214164135.17039-2-quic_devipriy@quicinc.com> <20230224082332.GA5443@thinkpad>
- <bd153038-4427-1f11-1941-5f13fec01cf7@quicinc.com> <20230228063358.GA4839@thinkpad>
- <9BD62D8E-4E14-4269-B72D-C83EF4D43040@linaro.org> <20230303174036.GB6782@thinkpad>
- <30cf9717-dcca-e984-c506-c71b7f8e32cd@quicinc.com> <20230307125655.GC5599@thinkpad>
- <2afe8c7e-7e54-460f-7206-64a290beccfb@quicinc.com>
-In-Reply-To: <2afe8c7e-7e54-460f-7206-64a290beccfb@quicinc.com>
+References: <20230213-sm6350-camcc-runtime_pm-v3-0-d35e0d833cc4@fairphone.com>
+ <20230213-sm6350-camcc-runtime_pm-v3-1-d35e0d833cc4@fairphone.com>
+ <CAA8EJprzOLuLU8_tvRtQ9bX8M9xOqMFFnjuj-DwGz+24XPAQFg@mail.gmail.com> <CR08JR9XAIUO.3KF8TBTQ9UQP1@otso>
+In-Reply-To: <CR08JR9XAIUO.3KF8TBTQ9UQP1@otso>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 7 Mar 2023 16:56:53 +0200
-Message-ID: <CAA8EJpo-_PXhBnKWD-TWEqY8+uAEjbRsrhJ7XO1PTcYV-MHV9Q@mail.gmail.com>
-Subject: Re: [PATCH 1/7] dt-bindings: PCI: qcom: Add IPQ9574 specific compatible
-To:     Devi Priya <quic_devipriy@quicinc.com>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, mturquette@baylibre.com,
-        sboyd@kernel.org, p.zabel@pengutronix.de,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-clk@vger.kernel.org,
-        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com
+Date:   Tue, 7 Mar 2023 17:06:56 +0200
+Message-ID: <CAA8EJpotZjNqo72xhNVS+Fq7gbdADVF+tq8Ph4+tnPyO3HyQoA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] clk: qcom: camcc-sm6350: add pm_runtime support
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
@@ -84,149 +77,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 7 Mar 2023 at 16:40, Devi Priya <quic_devipriy@quicinc.com> wrote:
+On Tue, 7 Mar 2023 at 16:54, Luca Weiss <luca.weiss@fairphone.com> wrote:
 >
->
->
-> On 3/7/2023 6:26 PM, Manivannan Sadhasivam wrote:
-> > On Tue, Mar 07, 2023 at 03:15:08PM +0530, Devi Priya wrote:
-> >>
-> >>
-> >> On 3/3/2023 11:10 PM, Manivannan Sadhasivam wrote:
-> >>> On Fri, Mar 03, 2023 at 05:16:58PM +0200, Dmitry Baryshkov wrote:
-> >>>> 28 =D1=84=D0=B5=D0=B2=D1=80=D0=B0=D0=BB=D1=8F 2023 =D0=B3. 08:33:58 =
-GMT+02:00, Manivannan Sadhasivam <mani@kernel.org> =D0=BF=D0=B8=D1=88=D0=B5=
-=D1=82:
-> >>>>> On Tue, Feb 28, 2023 at 10:56:53AM +0530, Devi Priya wrote:
-> >>>>>>
-> >>>>>>
-> >>>>>> On 2/24/2023 1:53 PM, Manivannan Sadhasivam wrote:
-> >>>>>>> On Tue, Feb 14, 2023 at 10:11:29PM +0530, Devi Priya wrote:
-> >>>>>>>> Document the compatible for IPQ9574
-> >>>>>>>>
-> >>>>>> Hi Mani, Thanks for taking time to review the patch.
-> >>>>>>>
-> >>>>>>> You didn't mention about the "msi-parent" property that is being =
-added
-> >>>>>>> by this patch
-> >>>>>> Sure, will update the commit message in the next spin
-> >>>>>>>
-> >>>>>>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> >>>>>>>> ---
-> >>>>>>>>     .../devicetree/bindings/pci/qcom,pcie.yaml    | 72 +++++++++=
-+++++++++-
-> >>>>>>>>     1 file changed, 70 insertions(+), 2 deletions(-)
-> >>>>>>>>
-> >>>>>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yam=
-l b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >>>>>>>> index 872817d6d2bd..dabdf2684e2d 100644
-> >>>>>>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >>>>>>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >>>>>>>> @@ -26,6 +26,7 @@ properties:
-> >>>>>>>>               - qcom,pcie-ipq8064-v2
-> >>>>>>>>               - qcom,pcie-ipq8074
-> >>>>>>>>               - qcom,pcie-ipq8074-gen3
-> >>>>>>>> +          - qcom,pcie-ipq9574
-> >>>>>>>>               - qcom,pcie-msm8996
-> >>>>>>>>               - qcom,pcie-qcs404
-> >>>>>>>>               - qcom,pcie-sa8540p
-> >>>>>>>> @@ -44,11 +45,11 @@ properties:
-> >>>>>>>>       reg:
-> >>>>>>>>         minItems: 4
-> >>>>>>>> -    maxItems: 5
-> >>>>>>>> +    maxItems: 6
-> >>>>>>>>       reg-names:
-> >>>>>>>>         minItems: 4
-> >>>>>>>> -    maxItems: 5
-> >>>>>>>> +    maxItems: 6
-> >>>>>>>>       interrupts:
-> >>>>>>>>         minItems: 1
-> >>>>>>>> @@ -105,6 +106,8 @@ properties:
-> >>>>>>>>         items:
-> >>>>>>>>           - const: pciephy
-> >>>>>>>> +  msi-parent: true
-> >>>>>>>> +
-> >>>>>>>>       power-domains:
-> >>>>>>>>         maxItems: 1
-> >>>>>>>> @@ -173,6 +176,27 @@ allOf:
-> >>>>>>>>                 - const: parf # Qualcomm specific registers
-> >>>>>>>>                 - const: config # PCIe configuration space
-> >>>>>>>> +  - if:
-> >>>>>>>> +      properties:
-> >>>>>>>> +        compatible:
-> >>>>>>>> +          contains:
-> >>>>>>>> +            enum:
-> >>>>>>>> +              - qcom,pcie-ipq9574
-> >>>>>>>> +    then:
-> >>>>>>>> +      properties:
-> >>>>>>>> +        reg:
-> >>>>>>>> +          minItems: 5
-> >>>>>>>> +          maxItems: 6
-> >>>>>>>> +        reg-names:
-> >>>>>>>> +          minItems: 5
-> >>>>>>>> +          items:
-> >>>>>>>> +            - const: dbi # DesignWare PCIe registers
-> >>>>>>>> +            - const: elbi # External local bus interface regist=
-ers
-> >>>>>>>> +            - const: atu # ATU address space
-> >>>>>>>> +            - const: parf # Qualcomm specific registers
-> >>>>>>>> +            - const: config # PCIe configuration space
-> >>>>>>>> +            - const: aggr_noc #PCIe aggr_noc
-> >>>>>>>
-> >>>>>>> Why do you need this region unlike other SoCs? Is the driver maki=
-ng use of it?
-> >>>>>> We have the aggr_noc region in ipq9574 to achieve higher throughpu=
-t & to
-> >>>>>> handle multiple PCIe instances. The driver uses it to rate adapt 1=
--lane PCIe
-> >>>>>> clocks. My bad, missed it. Will add the driver changes in V2.
-> >>>>>
-> >>>>> Hmm, this is something new. How can you achieve higher throughput w=
-ith this
-> >>>>> region? Can you explain more on how it is used?
-> >>>>
-> >>>> Based on the name of the region, it looks like it is an interconnect=
- region.
-> >>>>
-> >>>
-> >>> Well, we only have BCM based interconnects so far. That's why I was c=
-urious
-> >>> about this region and its purpose.
-> >> For connected PCIe slave devices that are running at frequency lesser
-> >> than the ANOC frequency (342MHz), the rate adapter of ANOC needs to be
-> >> configured
-> >>>
-> >>>> Devi, if this is the case, then you have to handle it through the in=
-terconnect driver, rather than poking directly into these registers.
-> >>>
-> >>> If that so, it doesn't need to be added in this series itself. I beli=
-eve that
-> >>> without aggr_noc region, the PCIe controller can still function prope=
-rly with
-> >>> reduced performance. But you can add the interconnect support later a=
-s a
-> >>> separate series.
-> >> Sure, okay. The ANOC runs at a fixed frequency of 342MHz and the
-> >> interconnect clocks are not scaled. The aggr_noc register is just a ma=
-gic
-> >> register for configuring it's rate adapter to ensure no wait cycles ar=
-e
-> >> inserted.
-> >>
+> On Tue Feb 14, 2023 at 1:32 PM CET, Dmitry Baryshkov wrote:
+> > On Tue, 14 Feb 2023 at 13:01, Luca Weiss <luca.weiss@fairphone.com> wrote:
+> > >
+> > > Make sure that we can enable and disable the power domains used for
+> > > camcc when the clocks are and aren't used.
+> > >
+> > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > > ---
+> > >  drivers/clk/qcom/camcc-sm6350.c | 25 ++++++++++++++++++++++++-
+> > >  1 file changed, 24 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/drivers/clk/qcom/camcc-sm6350.c b/drivers/clk/qcom/camcc-sm6350.c
+> > > index acba9f99d960..fc5532e2ee5b 100644
+> > > --- a/drivers/clk/qcom/camcc-sm6350.c
+> > > +++ b/drivers/clk/qcom/camcc-sm6350.c
+> > > @@ -7,6 +7,8 @@
+> > >  #include <linux/clk-provider.h>
+> > >  #include <linux/module.h>
+> > >  #include <linux/platform_device.h>
+> > > +#include <linux/pm_clock.h>
+> > > +#include <linux/pm_runtime.h>
+> > >  #include <linux/regmap.h>
+> > >
+> > >  #include <dt-bindings/clock/qcom,sm6350-camcc.h>
+> > > @@ -1869,6 +1871,19 @@ MODULE_DEVICE_TABLE(of, camcc_sm6350_match_table);
+> > >  static int camcc_sm6350_probe(struct platform_device *pdev)
+> > >  {
+> > >         struct regmap *regmap;
+> > > +       int ret;
+> > > +
+> > > +       ret = devm_pm_runtime_enable(&pdev->dev);
+> > > +       if (ret < 0)
+> > > +               return ret;
+> > > +
+> > > +       ret = devm_pm_clk_create(&pdev->dev);
+> > > +       if (ret < 0)
+> > > +               return ret;
 > >
-> > If the purpose of the aggr_noc region is to configure the interconnect =
-clock,
-> > then it should be modeled as an interconnect driver.
-> Can we use 'syscon' here, as we are not scaling the interconnect
-> frequency and this is just a single register write for setting
-> the rate adapter?
+> > This makes me wonder, what is the use for the pm_clk in your case? The
+> > driver doesn't seem to use of_pm_clk_add_clk(), of_pm_clk_add_clks()
+> > or pm_clk_add_clk(). So pm_clk_suspend() and pm_clk_resume() do
+> > nothing.
+>
+> You're right that we're not using any of these functions in the driver.
+> However still when camcc is not used, the associated power domain turns
+> off correctly so that part works as expected.
+>
+> Honestly these lines have been copied from a different driver and I'm
+> not familiar enough with the pm_runtime APIs to know what to use here
+> without using the pm_clk* and pm_clk_suspend.
 
-It should be done outside of the PCIe driver.
-It is not "just a single register". It is also setting the anoc/snoc
-clocks for USB. And maybe something else, which we haven't seen at
-this moment. You are still setting up the NoC, even if the icc
-frequency is not scaled.
+Please don't blindly C&P code.
 
---=20
+>
+> Basically we need, if any clock is being used in the driver, the
+> power-domain needs to be enabled as well, and if nothing is used the
+> power-domain can be disabled again.
+
+Adding power-domains to the camcc node and calling
+devm_pm_runtime_enable() should be enough. Please see how this is
+managed for dispcc on sm8250.
+
+-- 
 With best wishes
 Dmitry
