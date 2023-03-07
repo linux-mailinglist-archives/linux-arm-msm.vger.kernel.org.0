@@ -2,413 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3547E6AEF08
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 19:19:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EDEB76AE7EC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 18:08:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232663AbjCGSTm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 13:19:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40092 "EHLO
+        id S230482AbjCGRIC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 12:08:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232646AbjCGSTS (ORCPT
+        with ESMTP id S230464AbjCGRHn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 13:19:18 -0500
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 898739E67C;
-        Tue,  7 Mar 2023 10:13:40 -0800 (PST)
-Received: by mail-oo1-f50.google.com with SMTP id o19-20020a056820041300b005259de79accso2160817oou.9;
-        Tue, 07 Mar 2023 10:13:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678212819;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aVYR7iCf0Df+fEXPePrJvbhIP5bkr3lqWWb+w4AwRWk=;
-        b=IZfad8LvQwb8QHz6s8Hjs/vnZz8N0+8QkinO+X0iRaMYywru6SEs6bdQ8+u31xHCRp
-         YMWavxAonOR16PdwRLTohkXWRGbT2610fjHLYgxSVKOaHxxgku6QQD3LWQI96SvKicyk
-         LR4sztSHHeECdZJR6+mRkls03oj+t30zWtjuBlwY6/oR2ocqwmxTyd2J8lPdzZ4ppArh
-         b0u6XoItQ7TFSYAbitnaJ1py5Ak+drJ5yNNaJOJyIc0QaRIoRWZuh+gFckN6dakJnhFM
-         PGBReRAGQXyfBWcPI/Z8k0bzC1t/HtgpvTTMn4aDi/DPq0x0HCJGIWFlt2AWc4z3Ut5x
-         72VQ==
-X-Gm-Message-State: AO0yUKXemqGFqURFZMk/51NwkNKaMc2pJfbmgt0j2kUTsXWPoHtV8fI6
-        J10feE8HzBjJ5yxpEmLxTw==
-X-Google-Smtp-Source: AK7set8eLT156rIwA09j47KeETEgRAy4QOXPej01e007ZSnYi5Kuz2t5OdgI72EGvup7N2c453icNw==
-X-Received: by 2002:a4a:d1b1:0:b0:525:a9ad:e2b9 with SMTP id z17-20020a4ad1b1000000b00525a9ade2b9mr7501603oor.6.1678212819442;
-        Tue, 07 Mar 2023 10:13:39 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id j15-20020a4adf4f000000b0051fce47fd1bsm608094oou.25.2023.03.07.10.13.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 10:13:38 -0800 (PST)
-Received: (nullmailer pid 2797 invoked by uid 1000);
-        Tue, 07 Mar 2023 14:26:14 -0000
-Date:   Tue, 7 Mar 2023 08:26:14 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, jassisinghbrar@gmail.com,
-        mathieu.poirier@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, quic_gurus@quicinc.com, loic.poulain@linaro.org,
-        quic_eberman@quicinc.com, robimarko@gmail.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-clk@vger.kernel.org, quic_srichara@quicinc.com,
-        quic_gokulsri@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
-        quic_anusha@quicinc.com, quic_poovendh@quicinc.com
-Subject: Re: [PATCH 01/11] dt-bindings: remoteproc: qcom: Add support for
- multipd model
-Message-ID: <20230307142614.GA2742-robh@kernel.org>
-References: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
- <1678164097-13247-2-git-send-email-quic_mmanikan@quicinc.com>
+        Tue, 7 Mar 2023 12:07:43 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C4DA59FA;
+        Tue,  7 Mar 2023 09:02:31 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E1E826147F;
+        Tue,  7 Mar 2023 17:01:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7A4C433B0;
+        Tue,  7 Mar 2023 17:00:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678208468;
+        bh=tKFTmiEx5lWVMe9kc/4siOWPAS1vRgintq9BdapPuw4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=gqt5/BmZ7eO+af/HjVRQiU3sw8JOtHGp6EMO4dWuOwrg2LueVE87FwMwbJmSMbDw3
+         ws29jqaUjUDjYiikTtt7/iKYg+2yrYf4T2JYLdR/uOCpmU1RmrY5zY6A63gtW5rM+x
+         DmiW0/1nByleyTnwwYj1Q66go/nxAjY8OGVSo4KWOto0Z75wa5ysvNT77Nh88lPcIm
+         kdDMXsZCBZ0GbSeik/wu87szoip24bAwSGhB4IwTpJH8yCVAVCuT2KqcDQtesriupl
+         JAFNPocJHQredNufuxvTfWTr5qcifQwWUjloMf3yohaiWo14eqm5mjyT1XK3IaJ4T9
+         RGF37doTHhI7Q==
+Date:   Tue, 7 Mar 2023 17:00:47 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+Cc:     Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
+        =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
+        Joel Stanley <joel@jms.id.au>,
+        Radu Pirea <radu_nicolae.pirea@upb.ro>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Tudor Ambarus <tudor.ambarus@linaro.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        William Zhang <william.zhang@broadcom.com>,
+        Kursad Oney <kursad.oney@broadcom.com>,
+        Jonas Gorski <jonas.gorski@gmail.com>,
+        Anand Gore <anand.gore@broadcom.com>,
+        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
+        Kamal Dasu <kdasu.kdev@gmail.com>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>, Han Xu <han.xu@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Jay Fang <f.fangjian@huawei.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Conor Dooley <conor.dooley@microchip.com>,
+        Daire McNamara <daire.mcnamara@microchip.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Haibo Chen <haibo.chen@nxp.com>,
+        Daniel Mack <daniel@zonque.org>,
+        Haojian Zhuang <haojian.zhuang@gmail.com>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andi Shyti <andi@etezian.org>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Li-hao Kuo <lhjeff911@gmail.com>,
+        Masahisa Kojima <masahisa.kojima@linaro.org>,
+        Jassi Brar <jaswinder.singh@linaro.org>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Sowjanya Komatineni <skomatineni@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Max Filippov <jcmvbkbc@gmail.com>, linux-spi@vger.kernel.org,
+        Andrew Jeffery <andrew@aj.id.au>,
+        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+        linux-arm-kernel@lists.infradead.org,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        linux-rpi-kernel@lists.infradead.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-amlogic@lists.infradead.org, linux-riscv@lists.infradead.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        linux-mediatek@lists.infradead.org,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Patrick Venture <venture@google.com>,
+        Nancy Yuen <yuenn@google.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Yogesh Gaur <yogeshgaur.83@gmail.com>,
+        linux-rockchip@lists.infradead.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-xtensa@linux-xtensa.org
+Subject: Re: [PATCH 00/87] spi: Convert to platform remove callback returning
+ void
+Message-ID: <ddcda593-f8e9-43a4-bba6-dae31e8d6b39@sirena.org.uk>
+References: <20230303172041.2103336-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Wo9frzy+aFktTPxK"
 Content-Disposition: inline
-In-Reply-To: <1678164097-13247-2-git-send-email-quic_mmanikan@quicinc.com>
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230303172041.2103336-1-u.kleine-koenig@pengutronix.de>
+X-Cookie: A rolling stone gathers momentum.
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 07, 2023 at 10:11:27AM +0530, Manikanta Mylavarapu wrote:
-> Add new binding document for multipd model remoteproc.
-> IPQ5018, IPQ9574 follows multipd model.
-> 
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> ---
->  .../bindings/remoteproc/qcom,multipd-pil.yaml | 282 ++++++++++++++++++
->  1 file changed, 282 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
-> new file mode 100644
-> index 000000000000..b788607f5abd
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
-> @@ -0,0 +1,282 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/remoteproc/qcom,multipd-pil.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Multipd Secure Peripheral Image Loader
-> +
-> +maintainers:
-> +  - Bjorn Andersson <andersson@kernel.org>
-> +  - Mathieu Poirier <mathieu.poirier@linaro.org>
-> +
-> +description:
-> +  Multipd Peripheral Image Loader loads firmware and boots Q6 pd, WCSS pd
-> +  remoteproc's on the Qualcomm IPQ5018, IPQ9574 SoC.
 
-What is PD? I don't see it defined anywhere.
+--Wo9frzy+aFktTPxK
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,ipq5018-q6-mpd
-> +      - qcom,ipq9574-q6-mpd
-> +
-> +  '#address-cells': true
+On Fri, Mar 03, 2023 at 06:19:14PM +0100, Uwe Kleine-K=F6nig wrote:
 
-Need to define the size.
+>   spi: mpc512x-psc: Convert to platform remove callback returning void
+>   spi: mpc52xx-psc: Convert to platform remove callback returning void
 
-> +
-> +  '#size-cells': true
+As well as the Raspberry Pi patch dropped due to build failures I also
+dropped these two as they conflicted with Rob's refactoring of that
+driver, nothing especially complex but since there's stuff to resend
+anyway...
 
-ditto
+--Wo9frzy+aFktTPxK
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> +
-> +  'ranges': true
+-----BEGIN PGP SIGNATURE-----
 
-Don't need quotes
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmQHbb4ACgkQJNaLcl1U
+h9DDDQf/eo3lXns3dzYdzJYf8MxUxafb8rgDkge5kzhM/iS9lEnDcJX8Vno7IHOa
+iZ7/NuWC1p4ofFyl04/WPa94f4hEYWTNqXgQ4TuEq9SRTyOTwZsqpS33uEc9v0zm
+3/ja2SHHOw97vKeI+1IjK8fycKlOze/YwzP38U0UTECpJou6+41HYgRgx8L+J3Js
+zILjs+qw1DhbaslGny+CEV6juxQO2LcIoNjdQYfWSbN4leZdcg8cW1+Obbr8KLen
+nbcN3szhArY3SvbxgXR5muD5yNFtETWVBmVtjlT0mBXX4Lzgj7Pf0SgN1haH9bq/
+jlQbNnEEvvkvGVicjB7wmDlS6gOoKw==
+=fVjM
+-----END PGP SIGNATURE-----
 
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts-extended:
-
-Just 'interrupts'. Both forms are always supported.
-
-> +    items:
-> +      - description: Watchdog interrupt
-> +      - description: Fatal interrupt
-> +      - description: Ready interrupt
-> +      - description: Handover interrupt
-> +      - description: Stop acknowledge interrupt
-> +
-> +  interrupt-names:
-> +    items:
-> +      - const: wdog
-> +      - const: fatal
-> +      - const: ready
-> +      - const: handover
-> +      - const: stop-ack
-> +
-> +  clocks:
-> +    minItems: 25
-> +    maxItems: 25
-
-You need to list out what the clocks are.
-
-> +
-> +  clock-names:
-> +    minItems: 25
-> +    maxItems: 25
-> +
-> +  assigned-clocks:
-
-You can drop this. Implicitly supported.
-
-> +    minItems: 13
-> +    maxItems: 13
-> +
-> +  assigned-clock-rates:
-> +    minItems: 13
-> +    maxItems: 13
-> +
-> +  qcom,smem-states:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-
-I believe this already has a type. It should be defined in a common 
-schema if not already and then included in this schema.
-
-> +    description: States used by the AP to signal the remoteprocessor
-> +    items:
-> +      - description: Shutdown Q6
-> +      - description: Stop Q6
-> +
-> +  qcom,smem-state-names:
-> +    description:
-> +      Names of the states used by the AP to signal the remoteprocessor
-> +    items:
-> +      - const: shutdown
-> +      - const: stop
-> +
-> +  memory-region:
-> +    items:
-> +      - description: Q6 pd reserved region
-> +
-> +  glink-edge:
-> +    $ref: /schemas/remoteproc/qcom,glink-edge.yaml#
-> +    description:
-> +      Qualcomm G-Link subnode which represents communication edge, channels
-> +      and devices related to the Modem.
-> +
-> +patternProperties:
-> +  "^remoteproc_pd1|remoteproc_pd2|remoteproc_pd3":
-> +    type: object
-> +    description:
-> +      In Multipd model, WCSS pd depends on Q6 pd i.e Q6 pd should be up before
-> +      WCSS. It can be achieved by keeping wcss pd node as subnode of Q6
-> +      device node.
-> +
-> +    properties:
-> +      compatible:
-> +        enum:
-> +          - "qcom,ipq5018-wcss-ahb-mpd"
-
-Don't need quotes.
-
-> +          - "qcom,ipq9574-wcss-ahb-mpd"
-> +          - "qcom,ipq5018-wcss-pcie-mpd"
-> +
-> +      interrupts-extended:
-
-Just interrupts
-
-> +        items:
-> +          - description: Fatal interrupt
-> +          - description: Ready interrupt
-> +          - description: Spawn acknowledge interrupt
-> +          - description: Stop acknowledge interrupt
-> +
-> +      interrupt-names:
-> +        items:
-> +          - const: fatal
-> +          - const: ready
-> +          - const: spawn-ack
-> +          - const: stop-ack
-> +
-> +      qcom,smem-states:
-> +        $ref: /schemas/types.yaml#/definitions/phandle-array
-> +        description: States used by the AP to signal the remoteprocessor
-> +        items:
-> +          - description: Shutdown WCSS pd
-> +          - description: Stop WCSS pd
-> +          - description: Spawn WCSS pd
-> +
-> +      qcom,smem-state-names:
-> +        description:
-> +          Names of the states used by the AP to signal the remoteprocessor
-> +        items:
-> +          - const: shutdown
-> +          - const: stop
-> +          - const: spawn
-> +
-> +    required:
-> +      - compatible
-> +
-> +    additionalProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts-extended
-> +  - interrupt-names
-> +  - qcom,smem-states
-> +  - qcom,smem-state-names
-> +  - memory-region
-> +
-> +additionalProperties: false
-> +
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          enum:
-> +            - qcom,ipq9574-q6-mpd
-> +    then:
-> +      properties:
-> +        assigned-clocks:
-
-Don't need to define assigned-clocks
-
-> +          items:
-> +            - description: Phandle, clock specifier of GCC_ANOC_WCSS_AXI_M_CLK
-> +            - description: Phandle, clock specifier of GCC_WCSS_AHB_S_CLK
-> +            - description: Phandle, clock specifier of GCC_WCSS_ECAHB_CLK
-> +            - description: Phandle, clock specifier of GCC_WCSS_ACMT_CLK
-> +            - description: Phandle, clock specifier of GCC_WCSS_AXI_M_CLK
-> +            - description: Phandle, clock specifier of GCC_Q6_AXIM_CLK
-> +            - description: Phandle, clock specifier of GCC_Q6_AXIM2_CLK
-> +            - description: Phandle, clock specifier of GCC_Q6_AHB_CLK
-> +            - description: Phandle, clock specifier of GCC_Q6_AHB_S_CLK
-> +            - description: Phandle, clock specifier of GCC_Q6SS_BOOT_CLK
-> +            - description: Phandle, clock specifier of GCC_MEM_NOC_Q6_AXI_CLK
-> +            - description: Phandle, clock specifier of GCC_WCSS_Q6_TBU_CLK
-> +            - description: Phandle, clock specifier of GCC_SYS_NOC_WCSS_AHB_CLK
-> +        assigned-clock-rates:
-> +          items:
-> +            - description: Must be 266666667 HZ
-> +            - description: Must be 133333333 HZ
-> +            - description: Must be 133333333 HZ
-> +            - description: Must be 133333333 HZ
-> +            - description: Must be 266666667 HZ
-> +            - description: Must be 533000000 HZ
-> +            - description: Must be 342857143 HZ
-> +            - description: Must be 133333333 HZ
-> +            - description: Must be 133333333 HZ
-> +            - description: Must be 342857143 HZ
-> +            - description: Must be 533000000 HZ
-> +            - description: Must be 533000000 HZ
-> +            - description: Must be 133333333 HZ
-> +
-> +examples:
-> +  - |
-> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +        #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
-> +        #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
-> +
-> +        q6v5_wcss: remoteproc@cd00000 {
-> +                compatible = "qcom,ipq5018-q6-mpd";
-> +                #address-cells = <1>;
-> +                #size-cells = <1>;
-> +                ranges;
-> +                reg = <0x0cd00000 0x4040>;
-> +                interrupts-extended = <&intc GIC_SPI 291 IRQ_TYPE_EDGE_RISING>,
-> +                                <&wcss_smp2p_in 0 0>,
-> +                                <&wcss_smp2p_in 1 0>,
-> +                                <&wcss_smp2p_in 2 0>,
-> +                                <&wcss_smp2p_in 3 0>;
-> +                interrupt-names = "wdog",
-> +                                  "fatal",
-> +                                  "ready",
-> +                                  "handover",
-> +                                  "stop-ack";
-> +
-> +                qcom,smem-states = <&wcss_smp2p_out 0>,
-> +                                   <&wcss_smp2p_out 1>;
-> +                qcom,smem-state-names = "shutdown",
-> +                                        "stop";
-> +
-> +                memory-region = <&q6_region>;
-> +
-> +                glink-edge {
-> +                        interrupts = <GIC_SPI 179 IRQ_TYPE_EDGE_RISING>;
-> +                        label = "rtr";
-> +                        qcom,remote-pid = <1>;
-> +                        mboxes = <&apcs_glb 8>;
-> +                };
-> +
-> +                q6_wcss_pd1: remoteproc_pd1 {
-> +                        compatible = "qcom,ipq5018-wcss-ahb-mpd";
-> +                        interrupts-extended = <&wcss_smp2p_in 8 0>,
-> +                                        <&wcss_smp2p_in 9 0>,
-> +                                        <&wcss_smp2p_in 12 0>,
-> +                                        <&wcss_smp2p_in 11 0>;
-> +                        interrupt-names = "fatal",
-> +                                          "ready",
-> +                                          "spawn-ack",
-> +                                          "stop-ack";
-> +                        qcom,smem-states = <&wcss_smp2p_out 8>,
-> +                                           <&wcss_smp2p_out 9>,
-> +                                           <&wcss_smp2p_out 10>;
-> +                        qcom,smem-state-names = "shutdown",
-> +                                                "stop",
-> +                                                "spawn";
-> +                };
-> +
-> +                q6_wcss_pd2: remoteproc_pd2 {
-> +                        compatible = "qcom,ipq5018-wcss-pcie-mpd";
-> +                        interrupts-extended = <&wcss_smp2p_in 16 0>,
-> +                                        <&wcss_smp2p_in 17 0>,
-> +                                        <&wcss_smp2p_in 20 0>,
-> +                                        <&wcss_smp2p_in 19 0>;
-> +                        interrupt-names = "fatal",
-> +                                          "ready",
-> +                                          "spawn-ack",
-> +                                          "stop-ack";
-> +
-> +                        qcom,smem-states = <&wcss_smp2p_out 16>,
-> +                                           <&wcss_smp2p_out 17>,
-> +                                           <&wcss_smp2p_out 18>;
-> +                        qcom,smem-state-names = "shutdown",
-> +                                                "stop",
-> +                                                "spawn";
-> +                        status = "okay";
-
-Don't need status in examples.
-
-> +                };
-> +
-> +                q6_wcss_pd3: remoteproc_pd3 {
-> +                        compatible = "qcom,ipq5018-wcss-pcie-mpd";
-> +                        interrupts-extended = <&wcss_smp2p_in 24 0>,
-> +                                        <&wcss_smp2p_in 25 0>,
-> +                                        <&wcss_smp2p_in 28 0>,
-> +                                        <&wcss_smp2p_in 27 0>;
-> +                        interrupt-names = "fatal",
-> +                                          "ready",
-> +                                          "spawn-ack",
-> +                                          "stop-ack";
-> +
-> +                        qcom,smem-states = <&wcss_smp2p_out 24>,
-> +                                           <&wcss_smp2p_out 25>,
-> +                                           <&wcss_smp2p_out 26>;
-> +                        qcom,smem-state-names = "shutdown",
-> +                                                "stop",
-> +                                                "spawn";
-> +                        status = "okay";
-> +                };
-> +        };
-> -- 
-> 2.34.1
-> 
+--Wo9frzy+aFktTPxK--
