@@ -2,80 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FAA36ADFB2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 14:05:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 032B66AE01D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 14:15:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229540AbjCGNFN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 08:05:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39154 "EHLO
+        id S229659AbjCGNPj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 08:15:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229935AbjCGNEy (ORCPT
+        with ESMTP id S231320AbjCGNPP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 08:04:54 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31BC9196A5
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 05:04:09 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id m6so16964312lfq.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 05:04:09 -0800 (PST)
+        Tue, 7 Mar 2023 08:15:15 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFA12BDD3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 05:13:58 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id k14so16997746lfj.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 05:13:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678194212;
+        d=linaro.org; s=google; t=1678194835;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cZoZqRwQw2mPc3FT0ESm5bliT9vqJS0eN0NPwlM2O8A=;
-        b=pTy9zV+nSfUYfqM/1zfsNA0t4CUHRMxxHsKkxfQoYwxLAxrOH9YfPIm4Lsmwt5ss+X
-         2cCgFSRChcRn/U685tiwcuHgct9/xjCGBJpXU4WkBCpNSllPMKtTkyuQsLt5NgDWHyCP
-         Rqa6H828uYujPntAZqbg4nzRrLALhJEgrNktCyZHZ7/krKFBvS21bpPvjIFEUq/byghs
-         Q4xpopy42X5jNXImmQjAwdGRv0AQi+eFWuUpygwstDdWR7FDQqhfkbwhl/NnwTRhYbd8
-         PT9IFbhQyobWv/55dWbDQn8sSs9ud3u6sXUfI5XXUKXEHIib1gDlPuv7dFjF8HxqJB8X
-         hTow==
+        bh=3RGJsxW2mZ6YK2vSWLUn1VWroGwxCh40q2+uvcFwRq0=;
+        b=Y2/HaVYbigstDk28wbyl0mnZ0+kQ4dcAaD+XWImVqSyju6Khcj5Ybc/ZOolUztOmRz
+         uHuYWAXWXVxIu7BGxLL4QVfTQKhLmNUJMB6L4MK9AIVkQp25231O1oL9rKlGZxZg2osA
+         kp1llG64T8PduVzZ6AWmlUuqsY+2kK52wBnJXGdsIzNoxFaSwtvbhXKvMHO6iF5vB4/q
+         GhGaZhvlUNGUsRdCLcD7XpYsazMax2If/EegMs8WWaX8C335KEzmCCBhb35VAP6hEKLT
+         D3D2KJ6ELsy9u5RaOX4fnxpUGYB83e8g07NfkYoF27N3RUFHARVu2hCFQTmzYmm17IPd
+         caHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678194212;
+        d=1e100.net; s=20210112; t=1678194835;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cZoZqRwQw2mPc3FT0ESm5bliT9vqJS0eN0NPwlM2O8A=;
-        b=DQkJHKfiswJFztRGdMnEbmtKqdkZPV9W+kYpsjXszp5hxxiKI7XKj3RILEYpq0REQ2
-         5dhZgXVfpncdHNkRz4azBAo0Vs4jTbNWwFrBhNIP5DF0DS/FJJYQV+rH6ajj9VAqSBn9
-         FqvFthuf+g+nb+9pA4mrZE+BEkQOdAk3YFHx0+jRm53BnOVcz951bgsef4utgbTO5mUt
-         tMUKzxMxbAqfKpDVeICRsPQxlqBjFfVXFaXgWf4QhsdnfcAXwIVI8LnQ/BTJyz03ZgF3
-         JEa23ejBDRRmLn2zma1UaAjLA/yKikX+og8tOm7Qji9jObInmRU7jfQP5FsgHal5uS+L
-         r02A==
-X-Gm-Message-State: AO0yUKWiJLfRhNDwFGY8bQM7TbgJQQdmrBQENnaq562QpoyrfQGenLgC
-        nxd1HRUO+/YkQHxam4udh9U5WQ==
-X-Google-Smtp-Source: AK7set9LdPVb1yvSjzZeatltLdpsSQ7CrahJHOhydl1P+RgMZzjzCdbBsNItb+4kmU2s/pfgkArhvg==
-X-Received: by 2002:ac2:5103:0:b0:4db:3848:86af with SMTP id q3-20020ac25103000000b004db384886afmr3652367lfb.12.1678194212169;
-        Tue, 07 Mar 2023 05:03:32 -0800 (PST)
+        bh=3RGJsxW2mZ6YK2vSWLUn1VWroGwxCh40q2+uvcFwRq0=;
+        b=UhH9HTPEZNE9OWXb2UFm6+URC3FXupe1bKPFPBn/oxVeGkOhe50BCNCfayhzhtjCfW
+         nty49ZZZq4nBZeBAhLZmGVnPhGvyYQ1XTYBTnIf6YZ5F4vNa9rbgYz2xVa7T+QBj+OkJ
+         dCCJHOvvNbHUNJ6Z5JUAFzJh78CqoBz0n4NgN7K5V38DPE3DQxsZAAfH1PRKrlWPiexh
+         ygj+jQQr7dG+KprsVmsZocHcA6Lk30+eI1oX5CKQTrsdENAZtiKDuxc5etsO7adUvH2O
+         eDi5/m01f+QCX6AxbycVxyfwo/C0WejUfqSaE+ucLPzZLZXvSD2yyhRb33y8wONpSHVB
+         7IGg==
+X-Gm-Message-State: AO0yUKXx07F1TRn8VJupsj/cbv+RSifgr2zMZXO/j8OW4Rmzn1QLjznP
+        eZKBWUzFZzWXcbSt6jU+Oi2C3xptyit/MP7F0kU=
+X-Google-Smtp-Source: AK7set9BnfzCM/0PKMhiTvDKoLbDXgQYTu5+SDyFFlcTRB7cIsnnJ7LgMS833H3WUFwTx5rLyGpfJg==
+X-Received: by 2002:a19:5210:0:b0:4a4:68b8:c2e4 with SMTP id m16-20020a195210000000b004a468b8c2e4mr3943261lfb.59.1678194835019;
+        Tue, 07 Mar 2023 05:13:55 -0800 (PST)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id t5-20020ac25485000000b004dc4b0a0543sm2021981lfk.58.2023.03.07.05.03.30
+        by smtp.gmail.com with ESMTPSA id j8-20020ac253a8000000b00497a32e2576sm2027677lfh.32.2023.03.07.05.13.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Mar 2023 05:03:31 -0800 (PST)
-Message-ID: <3dabf511-9d3a-0c9f-999e-35aeb3b48cf8@linaro.org>
-Date:   Tue, 7 Mar 2023 14:03:29 +0100
+        Tue, 07 Mar 2023 05:13:54 -0800 (PST)
+Message-ID: <ca7a9708-8909-d663-d02f-240f8087aa9a@linaro.org>
+Date:   Tue, 7 Mar 2023 14:13:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v3 08/10] dt-bindings: display/msm: dsi-controller-main:
- Fix deprecated compatible
+Subject: Re: [PATCH] firmware: qcom_scm: Add SM6375 compatible
 Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230307-topic-dsi_qcm-v3-0-58c5c5e392ee@linaro.org>
- <20230307-topic-dsi_qcm-v3-8-58c5c5e392ee@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, linux-kernel@vger.kernel.org
+References: <20230307012247.3655547-1-konrad.dybcio@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230307-topic-dsi_qcm-v3-8-58c5c5e392ee@linaro.org>
+In-Reply-To: <20230307012247.3655547-1-konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -90,38 +77,30 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 7.03.2023 14:01, Konrad Dybcio wrote:
-> The point of the previous cleanup was to disallow "qcom,mdss-dsi-ctrl"
-> alone. This however didn't quite work out and the property became
-> undocumented instead of deprecated. Fix that.
+On 7.03.2023 02:22, Konrad Dybcio wrote:
+> While it was introduced in bindings, requiring a core clock, and added
+> into the DT, this compatible was apparently forgotten about on the driver
+> side of things. Fix it.
 > 
-> Fixes: 0c0f65c6dd44 ("dt-bindings: msm: dsi-controller-main: Add compatible strings for every current SoC")
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-This actually also got:
-
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-in https://lore.kernel.org/linux-arm-msm/20230304-topic-dsi_fixup-v3-0-b8565944d0e6@linaro.org/
-
-but I only picked up trailers from the v2 of this series.. sorry about that..
+>  drivers/firmware/qcom_scm.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 916a0c2fc903..2e8961c84b68 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -1494,6 +1494,7 @@ static const struct of_device_id qcom_scm_dt_match[] = {
+>  	},
+>  	{ .compatible = "qcom,scm-msm8994" },
+>  	{ .compatible = "qcom,scm-msm8996" },
+> +	{ .compatible = "qcom,scm-sm6375", .data = (void *)SCM_HAS_CORE_CLK },
+On a second thought, maybe the qcom,scm compatible could optionally consume
+all three clocks with schema guarding how many should be used, to prevent
+having to add nonsensical compatibles?
 
 Konrad
->  Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> index 2494817c1bd6..94f4cdf88c95 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> @@ -34,7 +34,7 @@ properties:
->        - items:
->            - enum:
->                - qcom,dsi-ctrl-6g-qcm2290
-> -          - const: qcom,mdss-dsi-ctrl
-> +              - qcom,mdss-dsi-ctrl # This should always come with an SoC-specific compatible
->          deprecated: true
->  
->    reg:
-> 
+>  	{ .compatible = "qcom,scm" },
+>  	{}
+>  };
