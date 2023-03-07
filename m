@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C68E46ADF97
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 14:02:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 745456ADF99
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 14:02:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230107AbjCGNCP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 08:02:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33032 "EHLO
+        id S230135AbjCGNCR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 08:02:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229982AbjCGNBy (ORCPT
+        with ESMTP id S230009AbjCGNB4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 08:01:54 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D96E015167
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 05:01:52 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id i9so16947875lfc.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 05:01:52 -0800 (PST)
+        Tue, 7 Mar 2023 08:01:56 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 963D63B231
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 05:01:54 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id f18so16973264lfa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 05:01:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678194112;
+        d=linaro.org; s=google; t=1678194114;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7PaidmNsI4X4+HjLVSO/Mw/Vgb1gA+84W9VJP5fzGmw=;
-        b=ybDeVf3o3AYMMPETLq2Rdp9UGraYIOlwXEM3om7QZZEOw1tG4ydNiM9rck7drBz1h0
-         jWEFVmcl/EKs/NL/y1jVMDZ49zWO7OBk4um0M0rK9XpMSU7r8RZG17JZIxmgQ6hmXKA1
-         /jDMG8WfHpNXWlGxHtJrAP/YQeCgxwGS/Tw5baoUbjUo8glTUO0xB5AUpDZ92/0kwt7+
-         Sh99yfvUMkuPgHA+uCbGtpApsCwT9j1U0kUGYA6nyFASz+kT6rT0TzFm3NfXubj+9+7H
-         P1kJMStI5ESo46W0i1Za41E43Fqd2IOOTtWplXoKOocoX7tGl1tnkvilQleSmdrFDGIy
-         495A==
+        bh=CzTyTjVeEOwx0n8Fcur27AsP/7zLfRdjtQMUW7H4GE8=;
+        b=Y1f+YlSj6leQtVLh4lCNFkqAnnKyFkvUu4KNMasglEwHsnWS1CWIDaXG7NV3c9WUpX
+         NRiQgWMEX6piVxBRmiPzOJLCj9wq7Mndy58OUirCUh71Ng+EWAJp2N88aliHOiJBAM8E
+         7b+5iVUIMPTBh5XMzrbrJsAwhdEJ+pXbt4J/gOLoQl58q0//eingsEpM5Atz0mHjkfIL
+         MVds9sbVXLf6OJi3DteMUbxILXRjYwf9FtQPM9Fh9Wbrp/DCvlxsZx8ZUbFrPa7tcRYE
+         VAD1V182jVcf+x6kIIfb/LVWMkOiQ9MgZcBCAdKXMyruYXQzmOHE0jasp4f3/h/ddBQe
+         mstA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678194112;
+        d=1e100.net; s=20210112; t=1678194114;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7PaidmNsI4X4+HjLVSO/Mw/Vgb1gA+84W9VJP5fzGmw=;
-        b=lm18MAyxc2EMRrvOwP2ST+ojbSUA+K8v0rZOM0CZh8Y//QG8lTaSkJ/o0FcPAtSFRE
-         sDtuhFunR2dXiCK8XORwYMIWZbYtyVZUvn0cz1XGV8DQyl/OWX8DIEDY24/oU/gFSwvO
-         UiPQr3QYwIjELFqHnYcAOKpvFYC1hnqVyyvcJXIMBXQ26iBPmr76j4P5Hmf7hQcRXDaG
-         eZLnIQlVZ2xE7GeHIAuut854/yAldj1qRtSeZujIWgvsg8vMT7oGHlz+Ne1h5AWM2Tu1
-         qL0R1LxQtnSDeBgFwbGSHUJYLL5FqZCGG8AzpyykCxrne0++jO12WyKug4PxfFvxQsy6
-         BZGQ==
-X-Gm-Message-State: AO0yUKUrpBoxXevDAupjtD/g2dDga3OIGEXWC3pdm3EBkEJvZpTO/nbF
-        8kpImiF4/KW0Fkg9eReEvN7ZIw==
-X-Google-Smtp-Source: AK7set86logaWA856+uKhpszQ0hgdJdLY0fLjfYHHI2H8Bw8JAPRe3fTlXWXmcU0Ng9gw9NRXSTViw==
-X-Received: by 2002:ac2:5dfb:0:b0:4d5:8f3e:7852 with SMTP id z27-20020ac25dfb000000b004d58f3e7852mr4051427lfq.49.1678194112386;
-        Tue, 07 Mar 2023 05:01:52 -0800 (PST)
+        bh=CzTyTjVeEOwx0n8Fcur27AsP/7zLfRdjtQMUW7H4GE8=;
+        b=ckwcAMEYbadQyuelKr3Z9CzknZVAWUT9K91Ingub3UTt8H3IGLS+fHfBaR1f6cSa1D
+         cNVUZAxDg/5cBVCKrIHNIorsZyRv90y5f9tIqUPx3rCz6NcbDJ6Zt3O5H8yrtCxcMvQL
+         h1bFhmHn9Fv2KREU4tCRYxNe277X5QZnqXqqocRhvOv++TlOrNcIQAfWWvuDxhB4SKn5
+         aYoOaHdxMhvMJt3O9+Lm3hUNrJB9o4B3gIkI7lLin2wvs5P6MT/dijUlcM7nI3jCfPcf
+         6kpwb7lfAj8wSKRwJrxlpSKNWMHKWGcQOOyrV/o6oo+7kk70XsViogUhz4mV/iSqFNmv
+         GBrg==
+X-Gm-Message-State: AO0yUKXBbSBo/raxdtFenI+/6vlRt5eHtArBnTqaCTxqob2YXMeKYLjJ
+        lVPZN9LgaRNg2WWPUyvKX9Rjug==
+X-Google-Smtp-Source: AK7set8LRRjQl6lQLEVNGwZ+0gcThjUGm/9xpH5kwnxGoIMBR35JIMlsB+tSxqVDk6aJ4RD2FJiseA==
+X-Received: by 2002:ac2:5922:0:b0:4d6:ef7f:fc53 with SMTP id v2-20020ac25922000000b004d6ef7ffc53mr3535050lfi.34.1678194113951;
+        Tue, 07 Mar 2023 05:01:53 -0800 (PST)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id u2-20020ac248a2000000b004cc5e97d356sm2048265lfg.148.2023.03.07.05.01.50
+        by smtp.gmail.com with ESMTPSA id u2-20020ac248a2000000b004cc5e97d356sm2048265lfg.148.2023.03.07.05.01.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 05:01:51 -0800 (PST)
+        Tue, 07 Mar 2023 05:01:53 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 07 Mar 2023 14:01:45 +0100
-Subject: [PATCH v3 07/10] drm/msm/dsi: Remove custom DSI config handling
+Date:   Tue, 07 Mar 2023 14:01:46 +0100
+Subject: [PATCH v3 08/10] dt-bindings: display/msm: dsi-controller-main:
+ Fix deprecated compatible
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230307-topic-dsi_qcm-v3-7-8bd7e1add38a@linaro.org>
+Message-Id: <20230307-topic-dsi_qcm-v3-8-8bd7e1add38a@linaro.org>
 References: <20230307-topic-dsi_qcm-v3-0-8bd7e1add38a@linaro.org>
 In-Reply-To: <20230307-topic-dsi_qcm-v3-0-8bd7e1add38a@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -75,11 +76,11 @@ Cc:     Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1678194100; l=1669;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1678194100; l=1144;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=x9eSVOGZMp5LDI1BiTB/gmaSF0y+os8hsi63E66yEQw=;
- b=SE4rbaWLt+hWaIAtC7Qt02TIAq4KXSrCYpl8fpJ4Mi/B1KvuDGHtJetP3PvPm2tCvYDkNx2j6kcR
- POEjl9jlCTiSdZQTrezBPqu+t3WWg1iGpvdUwufC2NSGmldNRviD
+ bh=dS1N11h2C4bKZ0sJcpp7JilD8JmZ3GC3KRjbGbtwF6E=;
+ b=j/CpsyJ5hcGj4Xtxf52pKDseNdb0oMAW4eomJS4lqedzemS1xNJgvbpmqQMJyYoFFERldyqiFvqY
+ oNpwyFyeCer8XmHhcOK5oX/9ZOJQHICK1L5Zr8bg/kwTGDpgKXU2
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -92,51 +93,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that the only user is handled by common code, remove the option to
-specify custom handlers through match data.
+The point of the previous cleanup was to disallow "qcom,mdss-dsi-ctrl"
+alone. This however didn't quite work out and the property became
+undocumented instead of deprecated. Fix that.
 
-This is effectively a revert of commit:
-5ae15e76271 ("drm/msm/dsi: Allow to specify dsi config as pdata")
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 0c0f65c6dd44 ("dt-bindings: msm: dsi-controller-main: Add compatible strings for every current SoC")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi.c      | 4 ++--
- drivers/gpu/drm/msm/dsi/dsi_host.c | 4 ----
- 2 files changed, 2 insertions(+), 6 deletions(-)
+ Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-index 90d43628b22b..e0b911af618d 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi.c
-@@ -173,10 +173,10 @@ static int dsi_dev_remove(struct platform_device *pdev)
- }
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+index 2494817c1bd6..94f4cdf88c95 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+@@ -34,7 +34,7 @@ properties:
+       - items:
+           - enum:
+               - qcom,dsi-ctrl-6g-qcm2290
+-          - const: qcom,mdss-dsi-ctrl
++              - qcom,mdss-dsi-ctrl # This should always come with an SoC-specific compatible
+         deprecated: true
  
- static const struct of_device_id dt_match[] = {
--	{ .compatible = "qcom,mdss-dsi-ctrl", .data = NULL /* autodetect cfg */ },
-+	{ .compatible = "qcom,mdss-dsi-ctrl" },
- 
- 	/* Deprecated, don't use */
--	{ .compatible = "qcom,dsi-ctrl-6g-qcm2290", .data = NULL },
-+	{ .compatible = "qcom,dsi-ctrl-6g-qcm2290" },
- 	{}
- };
- 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 9cfb9e91bfea..961689a255c4 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -214,10 +214,6 @@ static const struct msm_dsi_cfg_handler *dsi_get_config(
- 	int ret;
- 	u32 major = 0, minor = 0;
- 
--	cfg_hnd = device_get_match_data(dev);
--	if (cfg_hnd)
--		return cfg_hnd;
--
- 	ahb_clk = msm_clk_get(msm_host->pdev, "iface");
- 	if (IS_ERR(ahb_clk)) {
- 		pr_err("%s: cannot get interface clock\n", __func__);
+   reg:
 
 -- 
 2.39.2
