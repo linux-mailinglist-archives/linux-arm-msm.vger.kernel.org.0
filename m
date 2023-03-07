@@ -2,102 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 021E56AF8BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 23:32:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 150F76AF90E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 23:42:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229938AbjCGWcs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 17:32:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36816 "EHLO
+        id S230240AbjCGWmQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 17:42:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229991AbjCGWcl (ORCPT
+        with ESMTP id S230206AbjCGWly (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 17:32:41 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CC9E7B114;
-        Tue,  7 Mar 2023 14:32:32 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 327FEULh003451;
-        Tue, 7 Mar 2023 22:32:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Ta5Vpfm87qjvX/lqhv2vJzZiXNq0T2VHXd4yuanzdD4=;
- b=YLJENy4O+Q9mVISQMwHmlye5cnmoe3E1d3I9wnRC4ipg7V4Qq5A0JvS5VNSQv86uRLIW
- gxjR25iLRSg5LJWFfSyCDTyfSj+GeARUnyI0LHFDGUB8JBqb/ZUucrR5AWCVK2lNohwK
- MJCHrtwO5+50wM0tvjrDj1Dmgew/W5QlYo5bqImNE0WWx4ZO1hIQQbcZ1Imrr0T+8iKE
- yXbxzU356F/b4AMiAIU1m5IkV0zIgYFV25w9JBUCE9VDKRB+B/Kyjt7xova5DJ4f0SCu
- YRU4Xd4aWzQ1m46b2+aAK3jjgoAwlErc/PGLuL4Tfi+J4hmGIWrovSZHo5nOy1af5wbw sw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p5usx2x00-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 07 Mar 2023 22:32:17 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 327MWGAd012529
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 7 Mar 2023 22:32:16 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 7 Mar 2023
- 14:32:15 -0800
-Message-ID: <71d2cafd-ddf7-25a6-4df7-01f686cb322f@quicinc.com>
-Date:   Tue, 7 Mar 2023 15:32:14 -0700
+        Tue, 7 Mar 2023 17:41:54 -0500
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6771F7301E;
+        Tue,  7 Mar 2023 14:41:19 -0800 (PST)
+Received: by mail-ot1-f54.google.com with SMTP id m25-20020a05683026d900b006941a2838caso8051279otu.7;
+        Tue, 07 Mar 2023 14:41:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678228865;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1CeVvunwdHuoUaMVyS5pFRs2OZmsVRqAhtJ35gavm5I=;
+        b=UyWiG0cLvY9/SPxvtljXcUYCwewj5zbYpME3qGb9TbPnerKo/f7NPKP82agVKZ6uO6
+         Usg0MZLNmwBMMoxUaN2F58T7QxwMCcqAgpfz/w+UXLsa2vdCHi8KYM1gSqRTmA44cu2V
+         aLklngdHywjNy5D8P0zua1LIWLGctBi2GIQlfV64iUlBcXEJTFu1j3B72IvJxT/VPxfn
+         9UfMTYZ30UBh7Ft/B41oA8LEEDmN0aNCmumY8XKX/8PcgdVUXZJ6nuaaB4KmPmU9jm5m
+         LIa00JGy4Mn4SFw1pgoSIGvLaoRuU1Bj0WKOihMbO0BYcPoUZ6HZ2NOo8fga02VKmuoo
+         03UQ==
+X-Gm-Message-State: AO0yUKUKTnH3gwyf3Shg4cV2I2VpSkgO8rvddm7bx2Z4tzfp31lZLDt7
+        CT6MzRPaALu3fPqfMQkAfQ==
+X-Google-Smtp-Source: AK7set9nxIPAEEt9FwJLZSPnZ+3GYIXSHR48XHujvHBP9qDwFmZrwSwHrMb5uHv7tkNeZ1p0RxUHZQ==
+X-Received: by 2002:a9d:603:0:b0:688:4670:e964 with SMTP id 3-20020a9d0603000000b006884670e964mr6826979otn.27.1678228864876;
+        Tue, 07 Mar 2023 14:41:04 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id x2-20020a9d6282000000b00690eeb8b436sm5747331otk.65.2023.03.07.14.41.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Mar 2023 14:41:04 -0800 (PST)
+Received: (nullmailer pid 280601 invoked by uid 1000);
+        Tue, 07 Mar 2023 22:41:03 -0000
+Date:   Tue, 7 Mar 2023 16:41:03 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     marijn.suijten@somainline.org, Iskren Chernev <me@iskren.info>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Chanho Park <chanho61.park@samsung.com>,
+        linux-kernel@vger.kernel.org,
+        Conor Dooley <conor.dooley@microchip.com>,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        agross@kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: arm: Add Cortex-A78C and X1C
+Message-ID: <167822886212.280531.2420228316244973879.robh@kernel.org>
+References: <20230224130759.45579-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Drop redundant
- pci_enable_pcie_error_reporting()
-Content-Language: en-US
-To:     Bjorn Helgaas <helgaas@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Bjorn Helgaas <bhelgaas@google.com>
-References: <20230307201625.879567-1-helgaas@kernel.org>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20230307201625.879567-1-helgaas@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: tiTRTKatob8zmhGKBaDS_yts7XMWj9P9
-X-Proofpoint-GUID: tiTRTKatob8zmhGKBaDS_yts7XMWj9P9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-07_16,2023-03-07_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- clxscore=1011 priorityscore=1501 mlxscore=0 bulkscore=0 impostorscore=0
- phishscore=0 adultscore=0 mlxlogscore=833 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303070198
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230224130759.45579-1-konrad.dybcio@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/7/2023 1:16 PM, Bjorn Helgaas wrote:
-> From: Bjorn Helgaas <bhelgaas@google.com>
-> 
-> pci_enable_pcie_error_reporting() enables the device to send ERR_*
-> Messages.  Since f26e58bf6f54 ("PCI/AER: Enable error reporting when AER is
-> native"), the PCI core does this for all devices during enumeration, so the
-> driver doesn't need to do it itself.
-> 
-> Remove the redundant pci_enable_pcie_error_reporting() call from the
-> driver.  Also remove the corresponding pci_disable_pcie_error_reporting()
-> from the driver .remove() path.
-> 
-> Note that this only controls ERR_* Messages from the device.  An ERR_*
-> Message may cause the Root Port to generate an interrupt, depending on the
-> AER Root Error Command register managed by the AER service driver.
-> 
-> Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 
-Looks sane to me.
+On Fri, 24 Feb 2023 14:07:57 +0100, Konrad Dybcio wrote:
+> Add compatibles for the Cortex-A78C and X1C cores found in some
+> recent flagship designs.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/arm/cpus.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Applied, thanks!
+
