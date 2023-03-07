@@ -2,77 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71E226AD925
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 09:21:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0ABA76AD9C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 09:59:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230266AbjCGIVR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 03:21:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57798 "EHLO
+        id S230006AbjCGI7T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 03:59:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230181AbjCGIUr (ORCPT
+        with ESMTP id S230182AbjCGI7J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 03:20:47 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7767052F47
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 00:20:26 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id cy23so48872419edb.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 00:20:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678177225;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4bBbMIO52bX8nLA3I9RO9BGA5L/h4IrDmKoZAMdQou0=;
-        b=SFXKtozJdDUk4x2ISKLmDv+b9wGwbGMJmaxKqfeHAbrs88w+D7J25EhyHoMd2xoCgt
-         SstTFgl1z2pVWnUDpIqBA3nvdMe2HfzlUk+o5fyByolJi12PBMTPOGLViEi3IC+wZ2J0
-         qnsXn8yJav3eGTmeH4EUKKJsC/EdV9XS82GoZsx8Ud+rxBLd9LNnl3hXFjEMs53IiIuC
-         ScpKZ47SapZcoZDwuS+iASA2u5o/7E/M6N7wxMgkhIQM2Kh7T4aJa6tFfXbjeTGgjPiw
-         LtseF2CI4Z5dIZoc78QIdD4cKteJi0zeIqkiFW+Sr4YeP3mIedS4VnBQV3peMCNh8Ely
-         g1qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678177225;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4bBbMIO52bX8nLA3I9RO9BGA5L/h4IrDmKoZAMdQou0=;
-        b=NGn90GwbWCZueF18/nOaZuDUqmP4rpNQ8+LeNMC5jZA8XnQKFovoirEHrWr4KNTuEZ
-         HuVIO21d3pGW78r2cRoyby9b5+k0zyiwBcG0zc2S3EA9BavYlK6C0rNdwL23UY27CZKl
-         9rlYlgAiHWKuRBCtPYioy22Kcrf1AwF+LVTabdUwt3s2I0gXVst4vOer7ztFE0X1qvBw
-         JrCyslNxixdYQc3+ohHKcJtxIr+DNMkcgfZYEK1+0+AHHgvmRUXpTxCIBHqPt1ZC/pSf
-         JnsM9jMEsbGrL1BeQQMJbUrldYLc4Ko3TPJstnDiYoOqFmRe4N8CYznyerXbJ81tashw
-         05SA==
-X-Gm-Message-State: AO0yUKXRwX5LPLjWPLzJKdOfOQAcmVcKqE4oH0TBrvDQYbhLDLLKBdz7
-        J16+HbsIA0nveChP2CAyv902oQ==
-X-Google-Smtp-Source: AK7set+Lndiph5rP0jDSlwKu9kKCS0MqGFZPqqrr9CUWlCqqr/hZdRmLdppeqacwAvCmG+Fi2iW+dA==
-X-Received: by 2002:a17:907:6092:b0:872:6bd0:d2b with SMTP id ht18-20020a170907609200b008726bd00d2bmr16709606ejc.45.1678177224834;
-        Tue, 07 Mar 2023 00:20:24 -0800 (PST)
-Received: from ?IPV6:2a02:810d:15c0:828:5310:35c7:6f9e:2cd3? ([2a02:810d:15c0:828:5310:35c7:6f9e:2cd3])
-        by smtp.gmail.com with ESMTPSA id q8-20020a170906940800b008eb89a435c9sm5652005ejx.164.2023.03.07.00.20.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Mar 2023 00:20:24 -0800 (PST)
-Message-ID: <1587de60-244a-d97f-dea0-36fe8a5be2c2@linaro.org>
-Date:   Tue, 7 Mar 2023 09:20:23 +0100
+        Tue, 7 Mar 2023 03:59:09 -0500
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C23D5CC3E;
+        Tue,  7 Mar 2023 00:59:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678179542; x=1709715542;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=3umUm4ahFVMYfF3/FeLculY9PKxRgx3vNRzzbJ6yOzU=;
+  b=TMMvdFMiX5NfeQVBtwrp0c8GuZIbHlGIcxGC0LOT4LO3uL/QeaX42IMC
+   VlgcLevCgk4GUtl9/3GouvZLVaaVOk/I4Lxz9jkX4O3Dxy4BMwzEEeMHO
+   mqSA+v+tAXX4M2erlQRICPo9KaI95R4tbM9/9YjrzS2EWkpyExwAeTXom
+   FdrMorhJJBT1SRa5I/EVNjQ3OkiFEAlY37n/GYSeN3febQLieklXC/9YD
+   fFo5ex8aJvYkLAsaaLoK7SY+gRV3z7/CZRudidqcxPT4SP2DmAkFUroGk
+   YjexWvc3ORMesrTKbDEMBbA4P+5w8S/hIYTQr4cGloRD6PjQYY77DA3am
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="400624120"
+X-IronPort-AV: E=Sophos;i="5.98,240,1673942400"; 
+   d="scan'208";a="400624120"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Mar 2023 00:59:02 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10641"; a="626464657"
+X-IronPort-AV: E=Sophos;i="5.98,240,1673942400"; 
+   d="scan'208";a="626464657"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by orsmga003.jf.intel.com with ESMTP; 07 Mar 2023 00:58:58 -0800
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pZT9t-00019L-1R;
+        Tue, 07 Mar 2023 08:58:57 +0000
+Date:   Tue, 7 Mar 2023 16:58:01 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, lee@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        mani@kernel.org, lpieralisi@kernel.org, kw@linux.com,
+        bhelgaas@google.com, manivannan.sadhasivam@linaro.org
+Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pci@vger.kernel.org,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: Re: [PATCH 6/6] ARM: dts: qcom: sdx65-mtp: Enable PCIe EP
+Message-ID: <202303071612.HZ9bDCp7-lkp@intel.com>
+References: <1678080302-29691-7-git-send-email-quic_rohiagar@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 16/19] arm64: dts: qcom: sdm845: Add "mhi" region to the
- PCIe nodes
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        andersson@kernel.org, lpieralisi@kernel.org, kw@linux.com,
-        krzysztof.kozlowski+dt@linaro.org, robh@kernel.org
-Cc:     konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
-References: <20230306153222.157667-1-manivannan.sadhasivam@linaro.org>
- <20230306153222.157667-17-manivannan.sadhasivam@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230306153222.157667-17-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1678080302-29691-7-git-send-email-quic_rohiagar@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,32 +71,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/03/2023 16:32, Manivannan Sadhasivam wrote:
-> The "mhi" region contains the debug registers that could be used to monitor
-> the PCIe link transitions.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 479859bd8ab3..0104e77dd8d5 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -2280,10 +2280,11 @@ opp-4 {
->  		pcie0: pci@1c00000 {
->  			compatible = "qcom,pcie-sdm845";
->  			reg = <0 0x01c00000 0 0x2000>,
-> +			      <0 0x01c07000 0 0x1000>,
->  			      <0 0x60000000 0 0xf1d>,
->  			      <0 0x60000f20 0 0xa8>,
->  			      <0 0x60100000 0 0x100000>;
-> -			reg-names = "parf", "dbi", "elbi", "config";
-> +			reg-names = "parf", "mhi", "dbi", "elbi", "config";
+Hi Rohit,
 
-Indexes are fixed, thus this breaks other users of DTS.
+Thank you for the patch! Yet something to improve:
 
-Best regards,
-Krzysztof
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on lee-mfd/for-mfd-next lee-mfd/for-mfd-fixes pci/next pci/for-linus linus/master v6.3-rc1 next-20230306]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
+url:    https://github.com/intel-lab-lkp/linux/commits/Rohit-Agarwal/dt-bindings-mfd-qcom-tcsr-Add-compatible-for-sdx65/20230306-132618
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/1678080302-29691-7-git-send-email-quic_rohiagar%40quicinc.com
+patch subject: [PATCH 6/6] ARM: dts: qcom: sdx65-mtp: Enable PCIe EP
+config: arm-allmodconfig (https://download.01.org/0day-ci/archive/20230307/202303071612.HZ9bDCp7-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/51b8272710554bf9cbee6604f73951179e85ffa7
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Rohit-Agarwal/dt-bindings-mfd-qcom-tcsr-Add-compatible-for-sdx65/20230306-132618
+        git checkout 51b8272710554bf9cbee6604f73951179e85ffa7
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202303071612.HZ9bDCp7-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> Error: arch/arm/boot/dts/qcom-sdx65-mtp.dts:287.1-2 syntax error
+   FATAL ERROR: Unable to parse input tree
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
