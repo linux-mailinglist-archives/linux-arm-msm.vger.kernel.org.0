@@ -2,64 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B82696ADA01
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 10:16:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 379EF6ADA0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 10:17:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230217AbjCGJQH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 04:16:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58740 "EHLO
+        id S230281AbjCGJRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 04:17:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229558AbjCGJQG (ORCPT
+        with ESMTP id S229870AbjCGJRR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 04:16:06 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02B525292D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 01:16:04 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id a25so49747430edb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 01:16:03 -0800 (PST)
+        Tue, 7 Mar 2023 04:17:17 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5B3D6905A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 01:17:07 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id g3so49655528eda.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 01:17:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678180562;
+        d=linaro.org; s=google; t=1678180626;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yV24tnK9cnyPzbacWjSliZZMed6YdF4OudMR8kk8ppo=;
-        b=yH9a2qzDZBDhJ0CfTaJ9KXbqMMM4/wOMfUo1FqnskAtuzQZSlvl1kudZ497aYuNam/
-         QvjK0cT0tFlr8BDWjQEhfmhc1iCxTDrz0WB9R+tliWK8IQmp7g1xOKMMCwezidS2Mk1o
-         g4w3cAAPNM3X3tuM5hdGORLZFuzoPLUN8MJJkAtfpMu4qYiCN89YuajEVKIx8ZWU8MtU
-         0gYZKYJyu/PWN5SxkxJtpqmvA+YCN6P3M9zhj3Vntqdw6YaBlMRCrdJRVVHkvFj/t2Dt
-         g7NC8sLTSANitWx+tNWC5gUyK7lzC1gv3O90yKsq1gGQaztL771BALmjGztArMt0xaEQ
-         wdoQ==
+        bh=WFABy9U7esu++afwwpsJQiDnIZRoaCQ7T2FtObsP3io=;
+        b=M9FcPcGCviYeDHBK3iUL8M9xZII/LkzvDQWrPLfi7uuNQkf6x6Y6ofBP4fGdNCgIA4
+         ikkicI1LPvFBXsllIRa7ewtEZjZHtv/phVduUl7oBPegVP4QP1UJQgLjd7/QOsICnUMF
+         qq1Vnj01oNURFjKZaZN+nNaVgTBiYhdJEgmiVG/dT6Jk6zlhFXUmwfEdeDHz1K+QKk7v
+         Qr7QC231FBTwCgiD133Z8YTy/8aV7sAsPbj3sTUIg016uV1cE93r2Quaw1C2jJuHyNPJ
+         /rx4HimNxva0J6WSHtlGJDY+5q7LDNPVCiJdljNmbg8n1dMoKMg/C3MRZrtELDYFvw3a
+         awPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678180562;
+        d=1e100.net; s=20210112; t=1678180626;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yV24tnK9cnyPzbacWjSliZZMed6YdF4OudMR8kk8ppo=;
-        b=Y7BXsXL1fcCifg91wAqiYiPUkALj2ADVeALKSgbYtwI8aJd+K/fu1QpoVTOz1UvvlC
-         7PpkZgz0seWMvrpBVcYznTTDfRkCRvhBQ4mlTLfp0I+pacjbc+Rt7CcXSXMijntjRp40
-         op3AJwhtDbtEW6tyx0Lnexhed/nT4Qi5zXJTLMRt8xOqJk+hU/l4+W2sSIQcO6XRCueu
-         V3Jj6dxjA6ZIQdN/6mWbCC//iKX7lI9PsaGd2DGyZXBjncUKJzbzSbusLMnviSyAyYN8
-         Dx2bc9EiJzgWCA09/AtIOkH2ZoskR+qBgPWbq/47qS1wymliyxrT/xS+0oF9wQcvYkUr
-         vN/A==
-X-Gm-Message-State: AO0yUKWadqycL8uT9w9kZ75RzCDVxsQ7Z34QIoGxD/Rue0QmM4EZbpxL
-        yGFA9Vony20ZQN8j3VMAlEeQZg==
-X-Google-Smtp-Source: AK7set/5IpkbYD1GA2/KmDTDjFB7vnpSTjf66uNF56xzvLTuwRLzp+tFB9oszzAXMniobHQSWmu+6Q==
-X-Received: by 2002:a17:907:cc1c:b0:8b1:781d:f9a8 with SMTP id uo28-20020a170907cc1c00b008b1781df9a8mr11869787ejc.72.1678180562499;
-        Tue, 07 Mar 2023 01:16:02 -0800 (PST)
+        bh=WFABy9U7esu++afwwpsJQiDnIZRoaCQ7T2FtObsP3io=;
+        b=bkM/OrL/EqLXKJrawH6UDjerlnP1VbxcAe1DDFXEeKB0AVQ3EAtySWv0x9QrGGWIX7
+         k3vjG8ey+hfy0Zbee1hGzv+7lWwjDhWAj3chMZljy1MnSkfrIJ1//mJpn+arpp+Jgvdo
+         fjK9BVoiKQF/hYHKmiTKosZm0hStXhaMRnCQmKz7zkGmBSdVuBuSc6gzQ/qhRwiZ2CD4
+         zTa7QtLm4xsGPFG//sqr/5BY0uiz1FmWnAhOlNsKZsqnj3EvLYZoVt3SmVXieLv3Tm3g
+         XpWENlxlr9J/zepPL8D4nzinC2VC1b6Db64AuPNqTLDUcCja9kMh7y4LWr2fqnAiMKDd
+         8f0A==
+X-Gm-Message-State: AO0yUKVWznc6mDfJOgiZU1NJXTkg8TcvgQAyq3aCLuRizBSSCm6ZsMPR
+        ycVBItzJwSH2rlA/DJlF/1VEsGlIXE+KtFvP1+Y=
+X-Google-Smtp-Source: AK7set+C7U+DtyopUxx2vW7YdSkRAjedWzNsOMtGriAwgL9ZCFn9LzJVtn+nGFhe7mYGjehkdPQYCA==
+X-Received: by 2002:aa7:d78b:0:b0:4ac:c029:ea72 with SMTP id s11-20020aa7d78b000000b004acc029ea72mr12779040edq.36.1678180626355;
+        Tue, 07 Mar 2023 01:17:06 -0800 (PST)
 Received: from ?IPV6:2a02:810d:15c0:828:5310:35c7:6f9e:2cd3? ([2a02:810d:15c0:828:5310:35c7:6f9e:2cd3])
-        by smtp.gmail.com with ESMTPSA id my22-20020a1709065a5600b008eabe71429bsm5794543ejc.63.2023.03.07.01.16.01
+        by smtp.gmail.com with ESMTPSA id s30-20020a508d1e000000b004c5d1a15bd5sm2350448eds.69.2023.03.07.01.17.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Mar 2023 01:16:02 -0800 (PST)
-Message-ID: <145066db-5723-6baa-237d-7c2b8fd476d9@linaro.org>
-Date:   Tue, 7 Mar 2023 10:16:01 +0100
+        Tue, 07 Mar 2023 01:17:05 -0800 (PST)
+Message-ID: <bcb5c17f-da78-9d68-66eb-b620ee583602@linaro.org>
+Date:   Tue, 7 Mar 2023 10:17:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v3 2/2] dt-bindings: display: msm: sm6115-mdss: Fix DSI
- compatible
+Subject: Re: [PATCH v2 8/9] dt-bindings: display/msm: dsi-controller-main: Add
+ SM6115
 Content-Language: en-US
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
@@ -67,63 +69,43 @@ To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230304-topic-dsi_fixup-v3-0-b8565944d0e6@linaro.org>
- <20230304-topic-dsi_fixup-v3-2-b8565944d0e6@linaro.org>
- <e105eff0-816e-b9e8-b47a-5c85731c9ba0@linaro.org>
- <4b8745d8-144f-fb82-3e54-5ce6bd3162e6@linaro.org>
+References: <20230213121012.1768296-1-konrad.dybcio@linaro.org>
+ <20230213121012.1768296-9-konrad.dybcio@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <4b8745d8-144f-fb82-3e54-5ce6bd3162e6@linaro.org>
+In-Reply-To: <20230213121012.1768296-9-konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/03/2023 11:06, Konrad Dybcio wrote:
+On 13/02/2023 13:10, Konrad Dybcio wrote:
+> Add a compatible for the DSI on SM6115.
 > 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  .../devicetree/bindings/display/msm/dsi-controller-main.yaml    | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> On 6.03.2023 09:57, Krzysztof Kozlowski wrote:
->> On 04/03/2023 16:55, Konrad Dybcio wrote:
->>> Since the DSI autodetection is bound to work correctly on 6115 now,
->>> switch to using the correct per-SoC + generic fallback compatible
->>> combo.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->>>  .../devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml         | 8 +++++++-
->>>  1 file changed, 7 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
->>> index 2491cb100b33..605b1f654d78 100644
->>> --- a/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
->>> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
->>> @@ -40,7 +40,13 @@ patternProperties:
->>>      type: object
->>>      properties:
->>>        compatible:
->>> -        const: qcom,dsi-ctrl-6g-qcm2290
->>> +        oneOf:
->>> +          - items:
->>> +              - const: qcom,sm6115-dsi-ctrl
->>> +              - const: qcom,mdss-dsi-ctrl
->>
->> Does it actually work? You did not define qcom,sm6115-dsi-ctrl in
->> dsi-controller-main?
-> Check the "Depends on" in the cover letter.
-> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> index 2494817c1bd6..f195530ae964 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> @@ -25,6 +25,7 @@ properties:
+>                - qcom,sc7280-dsi-ctrl
+>                - qcom,sdm660-dsi-ctrl
+>                - qcom,sdm845-dsi-ctrl
+> +              - qcom,sm6115-dsi-ctrl
 
-Then it looks like it should be squashed with that patch. Why adding new
-compatible in multiple steps?
+This looks incomplete. You also need to add it to MDSS binding.
 
 Best regards,
 Krzysztof
