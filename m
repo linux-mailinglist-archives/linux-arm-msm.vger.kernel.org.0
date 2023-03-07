@@ -2,68 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14C8C6AD3CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 02:22:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B6E86AD51C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 03:58:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229484AbjCGBWz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Mar 2023 20:22:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50366 "EHLO
+        id S230180AbjCGC6D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Mar 2023 21:58:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229614AbjCGBWy (ORCPT
+        with ESMTP id S230163AbjCGC5x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Mar 2023 20:22:54 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30E2697
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Mar 2023 17:22:52 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id k14so15189838lfj.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Mar 2023 17:22:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678152170;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=v2x8CT0qC69q7YoY7JhCMWzXWvhAS15Aiyex8pxnv7E=;
-        b=RQdubjvBLAVFreilW44I42iQiHFUhj1JbyenLwezjpLlLVlGhy2HWQWxrGj74EeQ7H
-         QcR4HXjUoRM2gjf8O5gXoG93Uar0xzDxgKOuFCz0iyqBToqHIGJSQdI78e2vj9QZLEay
-         QdVnOdJH387WGiXeRRZulzPsl4Dr7xIRsQ11gXmAUoOvvW4G96DN/4lM7UVTuyh6MJz9
-         FIzFUz7cbKkqByIZwefZCb0EyHI62Mw9nTrwjoCDhKUQ/mxEAlkgFRpM3BZ++KEUO4jp
-         6JZEvduDK1Je8SojN76prW4Ln4U2pad5U1w8ND2n9Ez/Co/wvUilJKuarXR1CV+yxDZH
-         Ubpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678152170;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=v2x8CT0qC69q7YoY7JhCMWzXWvhAS15Aiyex8pxnv7E=;
-        b=qFSO32LSV/8m2Fd/mzy9F2ZQgbNKTM/zC+1dn/YhYftr38gYW8OaVAHDHwCaGqeoNy
-         KL85c8YQ2jQ7Yn5jhWs0Czo47kb5JimyVubzCufr62wy3fHDAuqGGo7/tPpHzVN1aTi1
-         sfihVOaFehQGzSnELz4f4FBxquaniAo1o6Lv9DMX625EC0UYo1yydOejkKOo3wq2xEcZ
-         rU7u8i3zhDTq3S0RxCd5P8qYhE1D6+cpaLQcdeiGpa50pYH8j0ygeF8A5yd5nFo1VORI
-         uTSB1+uTxq3CQkzDRqzra+Tbte54sQnHzWluZ7IinJUOx/zxRujDMUDiR9aE+ovc+Y4F
-         FEzw==
-X-Gm-Message-State: AO0yUKWb+U6PUVEpQFjzNLjsetCgqPJvT75/1Yq5ucqqX8IriAGM0RYU
-        O7QCCY8I1GyWJXRiD5V+KnpbdedW6rydWTcfiDI=
-X-Google-Smtp-Source: AK7set/Wo1Bhvg6d91uy/i9lev8howJuGnZgjPUqpM2a4K9IBOjlWDJyG/BbkIgCqi1LhJ/QsW5k/A==
-X-Received: by 2002:a19:7506:0:b0:4dc:790c:910b with SMTP id y6-20020a197506000000b004dc790c910bmr3198637lfe.20.1678152170215;
-        Mon, 06 Mar 2023 17:22:50 -0800 (PST)
-Received: from localhost.localdomain (abym99.neoplus.adsl.tpnet.pl. [83.9.32.99])
-        by smtp.gmail.com with ESMTPSA id u28-20020ac2519c000000b004dd7fefd2c8sm1819076lfi.242.2023.03.06.17.22.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Mar 2023 17:22:49 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org,
+        Mon, 6 Mar 2023 21:57:53 -0500
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 333142697;
+        Mon,  6 Mar 2023 18:57:52 -0800 (PST)
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 326NwsuW024457;
+        Tue, 7 Mar 2023 02:57:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2022-7-12;
+ bh=p4nGdLCKpXQ5iIfc/erFrIsfuZ6KAXNNSQSV/wwY81g=;
+ b=1KiKYa00DsK7822OA0l6kzJT19Oh1fZqtcnBo8/vB3UhBvtgZUSZWS4oxx6s/fltmEFx
+ CmTXEQkDlYapEnbLKkX61YgwNSNTVS4J5ZmI+V8+es5gStPLAeUYzNfsfPIrfObuDN3y
+ CKoZKcBXT8sfZfg2GzVh0uCJfpuMsDMt+zmMX7ay7gDPm8eJUiF51mWF1nJP5ef95lJi
+ jMpTlDJIrGJ0u48xlXCVeuMPVID2RpFACyA2GKPZgvEgPso8btWM2kfQcoK4jA/Sbh9v
+ vLdjNgz+V1Ch4R4IcyfS3Rjs+MbgztjPdFPnY5J/iprgzNlqzKAWt9wZtCUhnZH3w6w1 oA== 
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+        by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3p416wmgr9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 07 Mar 2023 02:57:43 +0000
+Received: from pps.filterd (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+        by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.5/8.17.1.5) with ESMTP id 3270hBrc037537;
+        Tue, 7 Mar 2023 02:57:41 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 3p4txdvjkw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 07 Mar 2023 02:57:41 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3272vY2O009567;
+        Tue, 7 Mar 2023 02:57:41 GMT
+Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
+        by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id 3p4txdvjhj-8;
+        Tue, 07 Mar 2023 02:57:41 +0000
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+To:     quic_cang@quicinc.com, linux-scsi@vger.kernel.org,
+        Asutosh Das <quic_asutoshd@quicinc.com>
+Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
+        quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
+        stanley.chu@mediatek.com, adrian.hunter@intel.com,
+        bvanassche@acm.org, avri.altman@wdc.com, mani@kernel.org,
+        beanhuo@micron.com, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] firmware: qcom_scm: Add SM6375 compatible
-Date:   Tue,  7 Mar 2023 02:22:47 +0100
-Message-Id: <20230307012247.3655547-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.2
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 1/1] ufs: mcq: qcom: Fix passing zero to PTR_ERR
+Date:   Mon,  6 Mar 2023 21:57:25 -0500
+Message-Id: <167815780209.2075334.14673618232448098943.b4-ty@oracle.com>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <94ca99b327af634799ce5f25d0112c28cd00970d.1677721072.git.quic_asutoshd@quicinc.com>
+References: <94ca99b327af634799ce5f25d0112c28cd00970d.1677721072.git.quic_asutoshd@quicinc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-06_14,2023-03-06_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 mlxscore=0 adultscore=0
+ spamscore=0 suspectscore=0 mlxlogscore=826 phishscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2303070025
+X-Proofpoint-GUID: wfCDcqvgeC5zKXOkx1OArp9XpEWMUziK
+X-Proofpoint-ORIG-GUID: wfCDcqvgeC5zKXOkx1OArp9XpEWMUziK
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,27 +85,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While it was introduced in bindings, requiring a core clock, and added
-into the DT, this compatible was apparently forgotten about on the driver
-side of things. Fix it.
+On Wed, 01 Mar 2023 17:41:06 -0800, Asutosh Das wrote:
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/firmware/qcom_scm.c | 1 +
- 1 file changed, 1 insertion(+)
+> Fix an error case in ufs_qcom_mcq_config_resource(), where the
+> return value is set to 0 before passing it to PTR_ERR.
+> 
+> This led to Smatch warning:
+> drivers/ufs/host/ufs-qcom.c:1455 ufs_qcom_mcq_config_resource() warn:
+> passing zero to 'PTR_ERR'
+> 
+> [...]
 
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 916a0c2fc903..2e8961c84b68 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -1494,6 +1494,7 @@ static const struct of_device_id qcom_scm_dt_match[] = {
- 	},
- 	{ .compatible = "qcom,scm-msm8994" },
- 	{ .compatible = "qcom,scm-msm8996" },
-+	{ .compatible = "qcom,scm-sm6375", .data = (void *)SCM_HAS_CORE_CLK },
- 	{ .compatible = "qcom,scm" },
- 	{}
- };
+Applied to 6.3/scsi-fixes, thanks!
+
+[1/1] ufs: mcq: qcom: Fix passing zero to PTR_ERR
+      https://git.kernel.org/mkp/scsi/c/c8be073bd2bc
+
 -- 
-2.39.2
-
+Martin K. Petersen	Oracle Linux Engineering
