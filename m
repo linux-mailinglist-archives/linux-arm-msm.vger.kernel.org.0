@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F05076AE144
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 14:50:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 58E916AE146
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Mar 2023 14:50:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230374AbjCGNu3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 08:50:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48368 "EHLO
+        id S231192AbjCGNue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 08:50:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231415AbjCGNuN (ORCPT
+        with ESMTP id S231438AbjCGNuP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 08:50:13 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3791485A7B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 05:49:07 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id h3so13167481lja.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 05:49:07 -0800 (PST)
+        Tue, 7 Mar 2023 08:50:15 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CF4885B3B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 05:49:11 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id i9so17129896lfc.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 05:49:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678196943;
+        d=linaro.org; s=google; t=1678196944;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oLhwdTzEgqNvfiwBrG4FezeIHFtBjdYJVxoW18hMrf4=;
-        b=UOyoPP1+MObqrzn4UqO+C17eKNkJuXuz2JCwdWbqRymUfd53YP30YrAhZ/njVkxuHk
-         B6e2IZvruE+VOtVxi7eJkcM2o9c8KmxEDvEW8HxPp/gQoV27rYS45hIk/4WBuPo7ctkm
-         id8VBAZfzvynOEDLJ9+YwD3S4DKjfdFXSMxtEU1PKMJdir6Cd5onCsFszrAEmgQEsaDG
-         fki27x8kqISFTBeQqwZaTT/ekSfhv764Xrp/vOg467gGytJ2O4tJnkksY7SQY4Vd9g7R
-         6BpZz/YhH9z6iBL3EYmjg3AdiaUd7tWiyq6rCSrtfbWfriwG2DyZFjwzV/lt+EDdpea3
-         3rpw==
+        bh=riIjfbDisoG/IEZvEL1VBt+tiGGPrlfSRo9F+nVYIAM=;
+        b=UqU34oqosaOrINZ/ZKhE+g5ftICIjD17XXso4ue+cbIsgrAm+qHaLd86nB8K4gcAw7
+         rJHMjAdqke7k3wR3nN+zlgtGqjHEUBnfE2Fpt/a3mEyMC8OI8R9o8ngQUS31DFdaXrkj
+         3OfVX8B1Vb/jh7NqkZnjnSTvzMoxNi0uEXqvK3qL2beHg0Ri+85PNbtYTsy7SifAKHBv
+         D6BbpzhcHJzKWwJ19aZyvtqAkiTfciAjgq51m9s/tyi/iemBkYxrAd6C4KW/rtIJsLD2
+         yciViHjWqmnjhvkcHrUgrdwxV6lYpRf/XfbD2j1ScwSNRRsGOQ/XYidE1SVeIE7kHoJr
+         57tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678196943;
+        d=1e100.net; s=20210112; t=1678196944;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oLhwdTzEgqNvfiwBrG4FezeIHFtBjdYJVxoW18hMrf4=;
-        b=YUQciUWBBluADo9e4D35zqq3zUbYOc85MILDppqbrDSbgTToya5Aq0ZOBaoAxY+xY9
-         LwpsWE2KXSeKtNS4lxoTHsCZJTbOuo8iTvtjbJXRpP5R5tyWLKNDRJoSbmWMRpoDNrMG
-         A3TOve2D2gt2kW7KxH+mizEdknd9tZ9PL8BGi4eClpHNP8JrlagNC9djlkbIjDYd+KRx
-         HCxS3Km6LA7kjtXwPSPVfUaM0oamGSf6rOOGsaopSFh0cKPyDWd7FUYy1XNLBF3s1GqT
-         36peS3QMg8bHWNL1tz63s0KuhB0eUUMHq8oob6BlhXPkEI4lBsk2Xp+cmL3EuJkCZmg2
-         HwtQ==
-X-Gm-Message-State: AO0yUKWq+x3IUb4Epg2Y1W431ZvjpuLFjeIBB+ZvToJpuOKoeTjv9Brv
-        sfV2Gsy0tu/8p45V7unJuBVweg==
-X-Google-Smtp-Source: AK7set/rudU8YqzkQ6ly/e4PJvLPdqv69x+rHIB1OHuByHe4Iw276Qb7LIZSBC9CK0Hs82zP6azYMw==
-X-Received: by 2002:a2e:be25:0:b0:295:c306:ec40 with SMTP id z37-20020a2ebe25000000b00295c306ec40mr5539295ljq.34.1678196943684;
-        Tue, 07 Mar 2023 05:49:03 -0800 (PST)
+        bh=riIjfbDisoG/IEZvEL1VBt+tiGGPrlfSRo9F+nVYIAM=;
+        b=BNhOqT2zQeAna/vHNq9oioM5npOiIa5eGIYhfxtZCdngZydCFhaj0KduLJmEcGy+G+
+         86h2mSXwAH03fOofcszQA37upYzsHU+TRQ302Pz5SM5BFJGdlAPTb97/f/udLyyIvd12
+         MfU4bJekkiH5xowpGkSzWmFjRbZr6TDIYIm6OjhFHwI3kMbu2svSi0HjlVv0RXWIVuOU
+         pV41yydh5Jgky/j5y7K8+PBYIINdkOOFNHLMq3b2BZi+A04iGPorn8ETXGQMmPs1aDGk
+         eMukt5zVQB+QVWOhqNH0J5tONXKLE7/0pORUcnJwVGVcyrjejDNjHwqKn4GwPSaytJX5
+         RWJA==
+X-Gm-Message-State: AO0yUKXDRhvQ9EhaGKWa+NMKWnub3nSdsnJAYnMqGJiKwl/tKjMd82b2
+        i/lnSvASB/6lM8z7041eONZQ3Q==
+X-Google-Smtp-Source: AK7set877RykBlfNYe/oY4NOnV9ZBz61t9VLGrEryCtOm8ZyhWnDVg4D/O6Aj7iIX3SOk7BDv6A3OA==
+X-Received: by 2002:a19:7611:0:b0:4b5:b705:9bf7 with SMTP id c17-20020a197611000000b004b5b7059bf7mr4002065lff.11.1678196944406;
+        Tue, 07 Mar 2023 05:49:04 -0800 (PST)
 Received: from eriador.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id u14-20020a2e91ce000000b0029597ebacd0sm2128991ljg.64.2023.03.07.05.49.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 05:49:03 -0800 (PST)
+        Tue, 07 Mar 2023 05:49:04 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
         Jani Nikula <jani.nikula@linux.intel.com>,
@@ -65,9 +65,9 @@ Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?=
         intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org,
         Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH v2 01/10] drm/i915/dsc: change DSC param tables to follow the DSC model
-Date:   Tue,  7 Mar 2023 15:48:52 +0200
-Message-Id: <20230307134901.322560-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 02/10] drm/i915/dsc: move rc_buf_thresh values to common helper
+Date:   Tue,  7 Mar 2023 15:48:53 +0200
+Message-Id: <20230307134901.322560-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307134901.322560-1-dmitry.baryshkov@linaro.org>
 References: <20230307134901.322560-1-dmitry.baryshkov@linaro.org>
@@ -83,74 +83,118 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-After cross-checking DSC models (20150914, 20161212, 20210623) change
-values in rc_parameters tables to follow config files present inside
-the DSC model. Handle two places, where i915 tables diverged from the
-model, by patching the rc values in the code.
-
-Note: I left one case uncorrected, 8bpp/10bpc/range_max_qp[0], because
-the table in the VESA DSC 1.1 sets it to 4.
+The rc_buf_thresh values are common to all DSC implementations. Move
+them to the common helper together with the code to propagage them to
+the drm_dsc_config.
 
 Reviewed-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/i915/display/intel_vdsc.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/display/drm_dsc_helper.c  | 35 +++++++++++++++++++++++
+ drivers/gpu/drm/i915/display/intel_vdsc.c | 24 +---------------
+ include/drm/display/drm_dsc_helper.h      |  1 +
+ 3 files changed, 37 insertions(+), 23 deletions(-)
 
+diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
+index c869c6e51e2b..be91abe2cfb2 100644
+--- a/drivers/gpu/drm/display/drm_dsc_helper.c
++++ b/drivers/gpu/drm/display/drm_dsc_helper.c
+@@ -270,6 +270,41 @@ void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_payload,
+ }
+ EXPORT_SYMBOL(drm_dsc_pps_payload_pack);
+ 
++/* From DSC_v1.11 spec, rc_parameter_Set syntax element typically constant */
++static const u16 drm_dsc_rc_buf_thresh[] = {
++	896, 1792, 2688, 3584, 4480, 5376, 6272, 6720, 7168, 7616,
++	7744, 7872, 8000, 8064
++};
++
++/**
++ * drm_dsc_set_rc_buf_thresh() - Set thresholds for the RC model
++ * in accordance with the DSC 1.2 specification.
++ *
++ * @vdsc_cfg: DSC Configuration data partially filled by driver
++ */
++void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg)
++{
++	int i;
++
++	BUILD_BUG_ON(ARRAY_SIZE(drm_dsc_rc_buf_thresh) !=
++		     DSC_NUM_BUF_RANGES - 1);
++	BUILD_BUG_ON(ARRAY_SIZE(drm_dsc_rc_buf_thresh) !=
++		     ARRAY_SIZE(vdsc_cfg->rc_buf_thresh));
++
++	for (i = 0; i < ARRAY_SIZE(drm_dsc_rc_buf_thresh); i++)
++		vdsc_cfg->rc_buf_thresh[i] = drm_dsc_rc_buf_thresh[i] >> 6;
++
++	/*
++	 * For 6bpp, RC Buffer threshold 12 and 13 need a different value
++	 * as per C Model
++	 */
++	if (vdsc_cfg->bits_per_pixel == 6 << 4) {
++		vdsc_cfg->rc_buf_thresh[12] = 7936 >> 6;
++		vdsc_cfg->rc_buf_thresh[13] = 8000 >> 6;
++	}
++}
++EXPORT_SYMBOL(drm_dsc_set_rc_buf_thresh);
++
+ /**
+  * drm_dsc_compute_rc_parameters() - Write rate control
+  * parameters to the dsc configuration defined in
 diff --git a/drivers/gpu/drm/i915/display/intel_vdsc.c b/drivers/gpu/drm/i915/display/intel_vdsc.c
-index 207b2a648d32..a91b70301640 100644
+index a91b70301640..38cc4b43f1cb 100644
 --- a/drivers/gpu/drm/i915/display/intel_vdsc.c
 +++ b/drivers/gpu/drm/i915/display/intel_vdsc.c
-@@ -86,7 +86,7 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
- 		}
- 	},
- 	/* 6BPP/14BPC */
--	{ 768, 15, 6144, 15, 25, 23, 27, {
-+	{ 768, 15, 6144, 15, 25, 23, 23, {
- 		{ 0, 16, 0 }, { 7, 18, -2 }, { 15, 20, -2 }, { 16, 20, -4 },
- 		{ 17, 21, -6 }, { 17, 21, -6 }, { 18, 21, -6 }, { 18, 22, -8 },
- 		{ 19, 23, -8 }, { 20, 24, -10 }, { 21, 24, -10 },
-@@ -115,6 +115,10 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
- 	},
- 	/* 8BPP/10BPC */
- 	{ 512, 12, 6144, 7, 16, 15, 15, {
-+		/*
-+		 * DSC model/pre-SCR-cfg has 8 for range_max_qp[0], however
-+		 * VESA DSC 1.1 Table E-5 sets it to 4.
-+		 */
- 		{ 0, 4, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 5, 10, -2 },
- 		{ 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
- 		{ 7, 13, -8 }, { 7, 14, -10 }, { 9, 15, -10 }, { 9, 16, -12 },
-@@ -132,7 +136,7 @@ static const struct rc_parameters rc_parameters[][MAX_COLUMN_INDEX] = {
- 	},
- 	/* 8BPP/14BPC */
- 	{ 512, 12, 6144, 15, 24, 23, 23, {
--		{ 0, 12, 0 }, { 5, 13, 0 }, { 11, 15, 0 }, { 12, 17, -2 },
-+		{ 0, 12, 2 }, { 5, 13, 0 }, { 11, 15, 0 }, { 12, 17, -2 },
- 		{ 15, 19, -4 }, { 15, 19, -6 }, { 15, 19, -8 }, { 15, 20, -8 },
- 		{ 15, 21, -8 }, { 15, 22, -10 }, { 17, 22, -10 },
- 		{ 17, 23, -12 }, { 17, 23, -12 }, { 21, 24, -12 },
-@@ -529,6 +533,20 @@ int intel_dsc_compute_params(struct intel_crtc_state *pipe_config)
- 			DSC_RANGE_BPG_OFFSET_MASK;
- 	}
+@@ -36,12 +36,6 @@ enum COLUMN_INDEX_BPC {
+ 	MAX_COLUMN_INDEX
+ };
  
-+	if (DISPLAY_VER(dev_priv) < 13) {
-+		/*
-+		 * FIXME: verify that the hardware actually needs these
-+		 * modifications rather than them being simple typos.
-+		 */
-+		if (compressed_bpp == 6 &&
-+		    vdsc_cfg->bits_per_component == 8)
-+			vdsc_cfg->rc_quant_incr_limit1 = 23;
-+
-+		if (compressed_bpp == 8 &&
-+		    vdsc_cfg->bits_per_component == 14)
-+			vdsc_cfg->rc_range_params[0].range_bpg_offset = 0;
-+	}
-+
+-/* From DSC_v1.11 spec, rc_parameter_Set syntax element typically constant */
+-static const u16 rc_buf_thresh[] = {
+-	896, 1792, 2688, 3584, 4480, 5376, 6272, 6720, 7168, 7616,
+-	7744, 7872, 8000, 8064
+-};
+-
+ struct rc_parameters {
+ 	u16 initial_xmit_delay;
+ 	u8 first_line_bpg_offset;
+@@ -474,23 +468,7 @@ int intel_dsc_compute_params(struct intel_crtc_state *pipe_config)
+ 	vdsc_cfg->bits_per_pixel = compressed_bpp << 4;
+ 	vdsc_cfg->bits_per_component = pipe_config->pipe_bpp / 3;
+ 
+-	for (i = 0; i < DSC_NUM_BUF_RANGES - 1; i++) {
+-		/*
+-		 * six 0s are appended to the lsb of each threshold value
+-		 * internally in h/w.
+-		 * Only 8 bits are allowed for programming RcBufThreshold
+-		 */
+-		vdsc_cfg->rc_buf_thresh[i] = rc_buf_thresh[i] >> 6;
+-	}
+-
+-	/*
+-	 * For 6bpp, RC Buffer threshold 12 and 13 need a different value
+-	 * as per C Model
+-	 */
+-	if (compressed_bpp == 6) {
+-		vdsc_cfg->rc_buf_thresh[12] = 0x7C;
+-		vdsc_cfg->rc_buf_thresh[13] = 0x7D;
+-	}
++	drm_dsc_set_rc_buf_thresh(vdsc_cfg);
+ 
  	/*
- 	 * BitsPerComponent value determines mux_word_size:
- 	 * When BitsPerComponent is less than or 10bpc, muxWordSize will be equal to
+ 	 * From XE_LPD onwards we supports compression bpps in steps of 1
+diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
+index 8b41edbbabab..706ba1d34742 100644
+--- a/include/drm/display/drm_dsc_helper.h
++++ b/include/drm/display/drm_dsc_helper.h
+@@ -14,6 +14,7 @@ void drm_dsc_dp_pps_header_init(struct dp_sdp_header *pps_header);
+ int drm_dsc_dp_rc_buffer_size(u8 rc_buffer_block_size, u8 rc_buffer_size);
+ void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_sdp,
+ 			      const struct drm_dsc_config *dsc_cfg);
++void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg);
+ int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg);
+ 
+ #endif /* _DRM_DSC_HELPER_H_ */
 -- 
 2.39.2
 
