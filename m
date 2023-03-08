@@ -2,199 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 317946AFDFA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 05:46:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3621F6AFE3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 06:21:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229645AbjCHEqo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 23:46:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57046 "EHLO
+        id S229553AbjCHFVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 00:21:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229558AbjCHEqn (ORCPT
+        with ESMTP id S229635AbjCHFVR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 23:46:43 -0500
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AED1A2F38;
-        Tue,  7 Mar 2023 20:46:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678250801; x=1709786801;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=QcAdQ6QzcChdpvESziFs8Z8K0GlMk1y8BSQSURRc0Bo=;
-  b=JfMUtXcdO29exUBkWdSyLz91AjK+BVy4+dCGB6odsScuSkpQLXOKMMPq
-   cvr0niLvBXAZplQDKTWxFZxZwZlhQ/5EvTLn/AvSFDOo7EAULJZFK0rRx
-   eIBbMLWMW+lyse+cgI0vLX+SMT+aZZUPtuhdgRnlMkZ3VlxVj3sy/t+gh
-   apKSXrHek2mDBLz8w+4/FdjVcR+DziGfsBr1O5vF3B+TyiqSDpPtM1+XJ
-   0RxeCfqf8Hs2ZLgLWJua49TJNm/+PXSrsnT26Nz77T53dZ21q/XZOiw9X
-   E+eY/gzy23HGdTBnOl2FW1bbaS7kCrp0pGu199OD7Pi2raE441biGo5l6
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10642"; a="316458534"
-X-IronPort-AV: E=Sophos;i="5.98,242,1673942400"; 
-   d="scan'208";a="316458534"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Mar 2023 20:46:40 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10642"; a="800624035"
-X-IronPort-AV: E=Sophos;i="5.98,242,1673942400"; 
-   d="scan'208";a="800624035"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by orsmga004.jf.intel.com with ESMTP; 07 Mar 2023 20:46:36 -0800
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pZlhD-0001sx-1S;
-        Wed, 08 Mar 2023 04:46:35 +0000
-Date:   Wed, 8 Mar 2023 12:45:56 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Melody Olvera <quic_molvera@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>
-Cc:     oe-kbuild-all@lists.linux.dev,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Gokul Krishna Krishnakumar <quic_gokukris@quicinc.com>
-Subject: Re: [PATCH v2 4/7] soc: qcom: mdt_loader: Enhance split binary
- detection
-Message-ID: <202303081259.uohZV4ZE-lkp@intel.com>
-References: <20230306231202.12223-5-quic_molvera@quicinc.com>
+        Wed, 8 Mar 2023 00:21:17 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA0CCA0F0C;
+        Tue,  7 Mar 2023 21:21:15 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AF0E861689;
+        Wed,  8 Mar 2023 05:21:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433C5C433EF;
+        Wed,  8 Mar 2023 05:21:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678252874;
+        bh=za1Q16N+OKXL1B8Fsh9XF7M5Y5D0OFnawDBveqfsM6s=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=UDaAIu1ThDvVYCUo/dl7gDw8bAKGfvzpE/etz4q+6fhRTG9kPX2PxZ5GXe4vWPjty
+         qmD9gucVgghFw6vvNntTbvEqcQscnexMQeXPrrDVvUFXyubWKURVNy/L8z9/y19ISQ
+         SJH88FzFTwULj1egNf98pGML27XjeyrRh9HlDX1m3J9J0TfLykICcEZrIcYBukEIPw
+         ed3NdgwZITCC+Ria7SlklapDj954Eq4NmePz5ARTAnWSoRWJx2LuXRn65+le+78n/L
+         +VpFw95rjWCdULqoRi4mXHP/mLiCiyeeVToFjjxTn+U9BCyVlUsIcqguJOBZRmTXcg
+         7UMEXY3Ma8BjA==
+Date:   Wed, 8 Mar 2023 10:51:08 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH] bus: mhi: host: pci_generic: Drop redundant
+ pci_enable_pcie_error_reporting()
+Message-ID: <20230308052108.GA5124@thinkpad>
+References: <20230307201625.879567-1-helgaas@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230306231202.12223-5-quic_molvera@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230307201625.879567-1-helgaas@kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Melody,
+On Tue, Mar 07, 2023 at 02:16:25PM -0600, Bjorn Helgaas wrote:
+> From: Bjorn Helgaas <bhelgaas@google.com>
+> 
+> pci_enable_pcie_error_reporting() enables the device to send ERR_*
+> Messages.  Since f26e58bf6f54 ("PCI/AER: Enable error reporting when AER is
+> native"), the PCI core does this for all devices during enumeration, so the
+> driver doesn't need to do it itself.
+> 
+> Remove the redundant pci_enable_pcie_error_reporting() call from the
+> driver.  Also remove the corresponding pci_disable_pcie_error_reporting()
+> from the driver .remove() path.
+> 
+> Note that this only controls ERR_* Messages from the device.  An ERR_*
+> Message may cause the Root Port to generate an interrupt, depending on the
+> AER Root Error Command register managed by the AER service driver.
+> 
+> Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 
-Thank you for the patch! Perhaps something to improve:
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
-[auto build test WARNING on dc837c1a5137a8cf2e9432c1891392b6a66f4d8d]
+Thanks,
+Mani
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Melody-Olvera/dt-bindings-firmware-qcom-scm-Update-QDU1000-QRU1000-compatible/20230307-071438
-base:   dc837c1a5137a8cf2e9432c1891392b6a66f4d8d
-patch link:    https://lore.kernel.org/r/20230306231202.12223-5-quic_molvera%40quicinc.com
-patch subject: [PATCH v2 4/7] soc: qcom: mdt_loader: Enhance split binary detection
-config: arm-allmodconfig (https://download.01.org/0day-ci/archive/20230308/202303081259.uohZV4ZE-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/3964310160b68a6246f85828ecbcebf1fb9137a7
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Melody-Olvera/dt-bindings-firmware-qcom-scm-Update-QDU1000-QRU1000-compatible/20230307-071438
-        git checkout 3964310160b68a6246f85828ecbcebf1fb9137a7
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/soc/qcom/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303081259.uohZV4ZE-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/soc/qcom/mdt_loader.c: In function 'qcom_mdt_read_metadata':
->> drivers/soc/qcom/mdt_loader.c:156:17: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
-     156 |         ssize_t ret;
-         |                 ^~~
-
-
-vim +/ret +156 drivers/soc/qcom/mdt_loader.c
-
-051fb70fd4ea40f drivers/remoteproc/qcom_mdt_loader.c Bjorn Andersson            2016-06-20  126  
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  127  /**
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  128   * qcom_mdt_read_metadata() - read header and metadata from mdt or mbn
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  129   * @fw:		firmware of mdt header or mbn
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  130   * @data_len:	length of the read metadata blob
-d11a34a404ee556 drivers/soc/qcom/mdt_loader.c        Krzysztof Kozlowski        2022-05-19  131   * @fw_name:	name of the firmware, for construction of segment file names
-d11a34a404ee556 drivers/soc/qcom/mdt_loader.c        Krzysztof Kozlowski        2022-05-19  132   * @dev:	device handle to associate resources with
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  133   *
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  134   * The mechanism that performs the authentication of the loading firmware
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  135   * expects an ELF header directly followed by the segment of hashes, with no
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  136   * padding inbetween. This function allocates a chunk of memory for this pair
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  137   * and copy the two pieces into the buffer.
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  138   *
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  139   * In the case of split firmware the hash is found directly following the ELF
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  140   * header, rather than at p_offset described by the second program header.
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  141   *
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  142   * The caller is responsible to free (kfree()) the returned pointer.
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  143   *
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  144   * Return: pointer to data, or ERR_PTR()
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  145   */
-8bd42e2341a7857 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  146  void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
-8bd42e2341a7857 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  147  			     const char *fw_name, struct device *dev)
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  148  {
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  149  	const struct elf32_phdr *phdrs;
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  150  	const struct elf32_hdr *ehdr;
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  151  	unsigned int hash_segment = 0;
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  152  	size_t hash_offset;
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  153  	size_t hash_size;
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  154  	size_t ehdr_size;
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  155  	unsigned int i;
-8bd42e2341a7857 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27 @156  	ssize_t ret;
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  157  	void *data;
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  158  
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  159  	ehdr = (struct elf32_hdr *)fw->data;
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  160  	phdrs = (struct elf32_phdr *)(ehdr + 1);
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  161  
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  162  	if (ehdr->e_phnum < 2)
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  163  		return ERR_PTR(-EINVAL);
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  164  
-833d51d7c66d670 drivers/soc/qcom/mdt_loader.c        Shawn Guo                  2021-08-28  165  	if (phdrs[0].p_type == PT_LOAD)
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  166  		return ERR_PTR(-EINVAL);
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  167  
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  168  	for (i = 1; i < ehdr->e_phnum; i++) {
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  169  		if ((phdrs[i].p_flags & QCOM_MDT_TYPE_MASK) == QCOM_MDT_TYPE_HASH) {
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  170  			hash_segment = i;
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  171  			break;
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  172  		}
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  173  	}
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  174  
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  175  	if (!hash_segment) {
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  176  		dev_err(dev, "no hash segment found in %s\n", fw_name);
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  177  		return ERR_PTR(-EINVAL);
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  178  	}
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  179  
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  180  	ehdr_size = phdrs[0].p_filesz;
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  181  	hash_size = phdrs[hash_segment].p_filesz;
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  182  
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  183  	data = kmalloc(ehdr_size + hash_size, GFP_KERNEL);
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  184  	if (!data)
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  185  		return ERR_PTR(-ENOMEM);
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  186  
-8bd42e2341a7857 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  187  	/* Copy ELF header */
-8bd42e2341a7857 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  188  	memcpy(data, fw->data, ehdr_size);
-8bd42e2341a7857 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  189  
-3964310160b68a6 drivers/soc/qcom/mdt_loader.c        Gokul Krishna Krishnakumar 2023-03-06  190  
-3964310160b68a6 drivers/soc/qcom/mdt_loader.c        Gokul Krishna Krishnakumar 2023-03-06  191  	if (qcom_mdt_bins_are_split(fw)) {
-3964310160b68a6 drivers/soc/qcom/mdt_loader.c        Gokul Krishna Krishnakumar 2023-03-06  192  		ret = mdt_load_split_segment(data + ehdr_size, phdrs, hash_segment, fw_name, dev);
-3964310160b68a6 drivers/soc/qcom/mdt_loader.c        Gokul Krishna Krishnakumar 2023-03-06  193  	} else {
-64fb5eb87d5815f drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  194  		hash_offset = phdrs[hash_segment].p_offset;
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  195  		memcpy(data + ehdr_size, fw->data + hash_offset, hash_size);
-8bd42e2341a7857 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2022-01-27  196  	}
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  197  	*data_len = ehdr_size + hash_size;
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  198  
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  199  	return data;
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  200  }
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  201  EXPORT_SYMBOL_GPL(qcom_mdt_read_metadata);
-498b98e939007f8 drivers/soc/qcom/mdt_loader.c        Bjorn Andersson            2019-06-21  202  
+> ---
+>  drivers/bus/mhi/host/pci_generic.c | 8 +-------
+>  1 file changed, 1 insertion(+), 7 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index f39657f71483..6e13c43a84d1 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -8,7 +8,6 @@
+>   * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
+>   */
+>  
+> -#include <linux/aer.h>
+>  #include <linux/delay.h>
+>  #include <linux/device.h>
+>  #include <linux/mhi.h>
+> @@ -903,11 +902,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>  	mhi_pdev->pci_state = pci_store_saved_state(pdev);
+>  	pci_load_saved_state(pdev, NULL);
+>  
+> -	pci_enable_pcie_error_reporting(pdev);
+> -
+>  	err = mhi_register_controller(mhi_cntrl, mhi_cntrl_config);
+>  	if (err)
+> -		goto err_disable_reporting;
+> +		return err;
+>  
+>  	/* MHI bus does not power up the controller by default */
+>  	err = mhi_prepare_for_power_up(mhi_cntrl);
+> @@ -941,8 +938,6 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>  	mhi_unprepare_after_power_down(mhi_cntrl);
+>  err_unregister:
+>  	mhi_unregister_controller(mhi_cntrl);
+> -err_disable_reporting:
+> -	pci_disable_pcie_error_reporting(pdev);
+>  
+>  	return err;
+>  }
+> @@ -965,7 +960,6 @@ static void mhi_pci_remove(struct pci_dev *pdev)
+>  		pm_runtime_get_noresume(&pdev->dev);
+>  
+>  	mhi_unregister_controller(mhi_cntrl);
+> -	pci_disable_pcie_error_reporting(pdev);
+>  }
+>  
+>  static void mhi_pci_shutdown(struct pci_dev *pdev)
+> -- 
+> 2.25.1
+> 
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+மணிவண்ணன் சதாசிவம்
