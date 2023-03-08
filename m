@@ -2,106 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09D686B074F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 13:39:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 97F746B075A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 13:43:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229628AbjCHMja (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 07:39:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42696 "EHLO
+        id S229901AbjCHMn2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 07:43:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229651AbjCHMja (ORCPT
+        with ESMTP id S229676AbjCHMn0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 07:39:30 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC3FA92F0A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 04:39:28 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id i28so21231916lfv.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 04:39:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678279167;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5hmcG2UWhXNchx0pwsSX8IpSqNDNxpn3mwIF759kHaI=;
-        b=BOdpcUvdmbUjPkrstf7gB2JH0NbvU6mUF+keeAdBeUhDgkwzTzt5L/7h7br4sNblbN
-         VtTtJbN5K6mjBckWXWUvFGppZQJC3MzMl6NmAJMcmk55C691kgjHpOtGZA5PqdijxvKW
-         fAdWimpwHqCDfn0jx6RNtVN1B5ArViiMyE4RX/3rPO7b6eCW+B2PGCUG8JrnUP6NVPA/
-         SqqptRu9mkrOqw7KS7i/sueMx4P5FSCGtBBa+Pmx4ZSCF87ZeqjckUiU7Cc5YtUaeO9k
-         y5y5SIXnBtyElz4YrbDVt2aiqamktJRTbW888g0hNS7ugGiJVUYbYCcBJq1xLhsZZOjY
-         ezxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678279167;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5hmcG2UWhXNchx0pwsSX8IpSqNDNxpn3mwIF759kHaI=;
-        b=klV4978b31YTF2JuYSI0Ib3Pczdlewu2wBCYXuKQ0ChveTJ60p7spYTAzSliUO32H1
-         fn7hbhhkQVWilyJ9OhsR8mkpqeQ3IszOF+VXC06ilZmfhG+vw4VnipK/OxiET9z2z/IR
-         zaPVrK3F/Razc85T+k8cQSApdrWBNnLEqZ0smPrNFNE26FMT0ZcdCAHkk/cZlDUZgms1
-         SfdviX/XKrRDEnSf6a7BAG5KMmAZxf283/DqoCGfWJtpVC1qnAdXiwvDR0+GpWyAXa5e
-         pm1+0qWUIPT1vIe48BAWLy+ESANWxzAgiRwSapLnEYKZyTKtcHTxpiRvc+69vzM/qj50
-         A64A==
-X-Gm-Message-State: AO0yUKWQBR1vD3kaPohOSoT1JmxgkmGfirL0XSjEvZW1xDL4v/SXSjo7
-        a7JxkJXvNbaEHbKSZV+z1mkqkQ==
-X-Google-Smtp-Source: AK7set8ttLSrTpugWburGiKogGB7R9p305QhKryyqzgpWPO4AC3PS82+mBLoUqQgk3TQ6ibVTy4X5w==
-X-Received: by 2002:ac2:4c48:0:b0:4d8:86c1:477b with SMTP id o8-20020ac24c48000000b004d886c1477bmr6183417lfk.16.1678279167171;
-        Wed, 08 Mar 2023 04:39:27 -0800 (PST)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id w11-20020a05651c102b00b00293526a0c87sm2557510ljm.41.2023.03.08.04.39.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 04:39:26 -0800 (PST)
-Message-ID: <46f123d0-4ef1-faa9-afb7-2dd31bf834dc@linaro.org>
-Date:   Wed, 8 Mar 2023 13:39:25 +0100
+        Wed, 8 Mar 2023 07:43:26 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE0EB5D8AE;
+        Wed,  8 Mar 2023 04:43:24 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4B9D96178F;
+        Wed,  8 Mar 2023 12:43:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA996C433D2;
+        Wed,  8 Mar 2023 12:43:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678279403;
+        bh=DocI4dram1oaC2Qxu/FVDptKl4AwjtU4IjvD88IptJQ=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=S1OcYFQhrdN0g87cCs7ucc59mYtX+9rZx1K3co4u0/4mnfPQTJa0Htd86uTqQbJAd
+         E32xrPsntaL2VE59IPZPYKNFWQCweqb132+OzEfgrwxY6/2lqs4OBaVUba0wiid4hV
+         BFzc3w8ujd6hCct6aT3bFarUZh3vCioIQAChUi43k/slsd7Au3aa+10ug7n56GWSQh
+         JBMrDULJzkmOv5CzRJ1pfbPTrpo6aGEkXsnb2okTd66UHBZ0Zvv4rWZm/kK94TZW+P
+         E9BlraHJ4sayQuF7aGEo8bYma/UOlCWhJShBfMVy0wsZ/B+6D6N4tP+D4BQRWASw3O
+         IgYdgx7wNCvkQ==
+From:   Kalle Valo <kvalo@kernel.org>
+To:     Robert Marko <robert.marko@sartura.hr>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Robert Marko <robimarko@gmail.com>, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+        gregkh@linuxfoundation.org, elder@linaro.org,
+        hemantk@codeaurora.org, quic_jhugo@quicinc.com,
+        quic_qianyu@quicinc.com, bbhatt@codeaurora.org,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, ansuelsmth@gmail.com
+Subject: Re: [PATCH 2/2] wifi: ath11k: use unique QRTR instance ID
+References: <20221105194943.826847-1-robimarko@gmail.com>
+        <20221105194943.826847-2-robimarko@gmail.com>
+        <20221107174727.GA7535@thinkpad> <87cz9xcqbd.fsf@kernel.org>
+        <877czn8c2n.fsf@kernel.org>
+        <CA+HBbNFCFtJwzN=6SCsWnDmAjPkmxE4guH1RrLc+-HByLcVVXA@mail.gmail.com>
+        <87k02jzgkz.fsf@kernel.org>
+        <CA+HBbNHi0zTeV0DRmwLjZu+XzUQEZQNnSpBMeQeUPiBu3v-2BQ@mail.gmail.com>
+        <87358hyp3x.fsf@kernel.org>
+        <CA+HBbNGdOrOiCxhSouZ6uRPRnZmsBSAL+wWpLkczMK9cO8Mczg@mail.gmail.com>
+        <877cxsdrax.fsf@kernel.org>
+        <CA+HBbNGbg88_3FDu+EZhqMj0UKb8Ja_vyYsxGtmJ_HGt4fNVBQ@mail.gmail.com>
+        <87y1q8ccc4.fsf@kernel.org>
+        <CA+HBbNH2fzr_knOE9EWD4bUi-guvRa07FAxc9WyCH0jK10BLvw@mail.gmail.com>
+Date:   Wed, 08 Mar 2023 14:43:16 +0200
+In-Reply-To: <CA+HBbNH2fzr_knOE9EWD4bUi-guvRa07FAxc9WyCH0jK10BLvw@mail.gmail.com>
+        (Robert Marko's message of "Mon, 23 Jan 2023 20:21:08 +0100")
+Message-ID: <87fsafpg63.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916: Fix tsens_mode unit address
-Content-Language: en-US
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230308123617.101211-1-stephan.gerhold@kernkonzept.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230308123617.101211-1-stephan.gerhold@kernkonzept.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Robert Marko <robert.marko@sartura.hr> writes:
 
+> On Thu, Jan 12, 2023 at 10:49 AM Kalle Valo <kvalo@kernel.org> wrote:
+>
+>>
+>> Robert Marko <robert.marko@sartura.hr> writes:
+>>
+>> > On Thu, Jan 12, 2023 at 10:40 AM Kalle Valo <kvalo@kernel.org> wrote:
+>> >>
+>> >> Robert Marko <robert.marko@sartura.hr> writes:
+>> >>
+>> >> > On Wed, Jan 11, 2023 at 6:10 PM Kalle Valo <kvalo@kernel.org> wrote:
+>> >> >>
+>> >> >> Robert Marko <robert.marko@sartura.hr> writes:
+>> >> >>
+>> >> >> >> Really sorry, I just didn't manage to get this finalised due to other
+>> >> >> >> stuff and now I'm leaving for a two week vacation :(
+>> >> >> >
+>> >> >> > Any news regarding this, I have a PR for ipq807x support in OpenWrt
+>> >> >> > and the current workaround for supporting AHB + PCI or multiple PCI
+>> >> >> > cards is breaking cards like QCA6390 which are obviously really
+>> >> >> > popular.
+>> >> >>
+>> >> >> Sorry, came back only on Monday and trying to catch up slowly. But I
+>> >> >> submitted the RFC now:
+>> >> >>
+>> >> >> https://patchwork.kernel.org/project/linux-wireless/patch/20230111170033.32454-1-kvalo@kernel.org/
+>> >> >
+>> >> > Great, thanks for that.
+>> >> >
+>> >> > Does it depend on firmware-2 being available?
+>> >>
+>> >> The final solution for the users will require firmware-2.bin. But for a
+>> >> quick test you can omit the feature bit test by replacing
+>> >> "test_bit(ATH11K_FW_FEATURE_MULTI_QRTR_ID, ab->fw.fw_features)" with
+>> >> "true". Just make sure that the firmware release you are using supports
+>> >> this feature, I believe only recent QCN9074 releases do that.
+>> >
+>> > I was able to test on IPQ8074+QCN9074 yesterday by just bypassing the
+>> > test and it worked.
+>> >
+>> > Sideffect is that until firmware-2.bin is available cards like QCA6390
+>> > wont work like with my hack.
+>>
+>> Not following here, can you elaborate what won't work with QCA6390?
+>
+> Our downstream hack does not work with QCA6390,
 
-On 8.03.2023 13:36, Stephan Gerhold wrote:
-> The reg address of the tsens_mode nvmem cell is correct but the unit
-> address does not match (0xec vs 0xef). Fix it. No functional change.
-> 
-> Fixes: 24aafd041fb2 ("arm64: dts: qcom: msm8916: specify per-sensor calibration cells")
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Still not sure what you mean. Are you saying that this patch under
+discussion ("wifi: ath11k: use unique QRTR instance ID") also works with
+QCA6390 and it's possible to connect two QCA6390 devices on the same
+host?
 
-Konrad
->  arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> index 0733c2f4f379..0d5283805f42 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> @@ -503,7 +503,7 @@ tsens_base2: base2@d7 {
->  				bits = <1 7>;
->  			};
->  
-> -			tsens_mode: mode@ec {
-> +			tsens_mode: mode@ef {
->  				reg = <0xef 0x1>;
->  				bits = <5 3>;
->  			};
+Or are you referring to some other hack? Or have I totally
+misunderstood? :)
+
+> so that is why its quite important for OpenWrt to have a generic
+> solution that works on all cards.
+
+I fully agree on importance of having a generic solution. It's just sad
+that it seems people who designed this didn't consider about having
+multiple devices on the same host. It looks like there's no easy way to
+implement a generic solution, we have only bad choices to choose from.
+Your solution[1] is racy and writing to a register which is marked as
+read-only in the spec.
+
+Qualcomm's solution[2] needs changes in firmware and it's uncertain if
+I'm able to convince all firmware teams to implement the support.
+(Currently only QCN9074 firmware supports this.)
+
+Thoughts?
+
+[1] https://patchwork.kernel.org/project/linux-wireless/patch/20221105194943.826847-2-robimarko@gmail.com/
+
+[2] https://patchwork.kernel.org/project/linux-wireless/patch/20230111170033.32454-1-kvalo@kernel.org/
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
