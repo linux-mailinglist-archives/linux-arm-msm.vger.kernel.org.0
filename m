@@ -2,99 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F17166B069E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 13:07:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2616A6B06E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 13:20:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231206AbjCHMHN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 07:07:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46026 "EHLO
+        id S231216AbjCHMUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 07:20:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230509AbjCHMHL (ORCPT
+        with ESMTP id S229960AbjCHMUU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 07:07:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A0C45C11E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 04:06:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1678277183;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=fPaX9pdabP6JQosCXDJl3Igxu4+FbhmhgJXUTxNfUvs=;
-        b=ey1xDOTLvHU/5OinXjd+fWpjFNfy1LT2yYKYwwsQLX6yHPx9sHMX8khRaAc0xFEbXmNHOu
-        Iilh6X1hImus/6ZtTwmvQemNIBMCh1ffpOEyX9FsHpKiaxN92ESWKONl44SteZMJ7MvDqj
-        9waXRwG2XSrRjYJHZF6MkPcOepqycto=
-Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
- [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-314-8a3OA0vtNvmZYZy0gCz9Pw-1; Wed, 08 Mar 2023 07:06:22 -0500
-X-MC-Unique: 8a3OA0vtNvmZYZy0gCz9Pw-1
-Received: by mail-il1-f197.google.com with SMTP id q8-20020a92ca48000000b00320ed437f04so4303932ilo.19
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 04:06:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678277181;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fPaX9pdabP6JQosCXDJl3Igxu4+FbhmhgJXUTxNfUvs=;
-        b=lRyDd/vnsYbc4CRAjHdYLu61kZ2rw78aj+v46TZMey30AztgdABjF+OLpQ2vT52Eqp
-         DgT9Lgni2ncJD4Pv5XxhLXgnrDWE6Cy0x92vE98qBZKksoI2nfX6OMHDgQYRwZQagnFw
-         vkWWiTwmsUtkloWtrRnCyJSlGZaqVEG7147U4qcjEsFXqL6INBmvkcRAuKCz7UOOFzEf
-         9VSn2dodjzzFQmvesMI+3NLopKVoV3O9qWn3rylUwFqUdhI1CYTaretq77hoHq+HFfF+
-         rqMpFtG2JUry5FwHHQW6nXAui8BBEquC8NUiJ5puMM21MdZvvWiQVxJzeXbeCfMEw7Et
-         NcpA==
-X-Gm-Message-State: AO0yUKVN94JBNZGPSMFjcyrHYTTd3KR2w6+r5pWepVCW9HjaZiyrIBm5
-        RAtmtPsOTCPV1rjb/C7RTDG9h3JGS/HGwY5cn+8kO/OwlqBIr208XEbqqqg2llu4sSsJ/bR/kUE
-        6ycEBerJuHN042VKjzohceNZNIQ==
-X-Received: by 2002:a05:6e02:1987:b0:316:b0b2:c2f2 with SMTP id g7-20020a056e02198700b00316b0b2c2f2mr16913176ilf.3.1678277181566;
-        Wed, 08 Mar 2023 04:06:21 -0800 (PST)
-X-Google-Smtp-Source: AK7set9uY+GlPLXK8LkX+GE1LtB5w/LJF1oVXckLfL3zNH8Xsv3v09degyuUCbAT1+n+cqB1ZJ1vCw==
-X-Received: by 2002:a05:6e02:1987:b0:316:b0b2:c2f2 with SMTP id g7-20020a056e02198700b00316b0b2c2f2mr16913166ilf.3.1678277181374;
-        Wed, 08 Mar 2023 04:06:21 -0800 (PST)
-Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id u5-20020a02c045000000b003b1d7fbf810sm4971683jam.148.2023.03.08.04.06.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Mar 2023 04:06:20 -0800 (PST)
-Date:   Wed, 8 Mar 2023 07:06:19 -0500
-From:   Brian Masney <bmasney@redhat.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     andersson@kernel.org, quic_shazhuss@quicinc.com, agross@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sa8540p-ride: correct name of
- remoteproc_nsp0 firmware
-Message-ID: <ZAh6O9TbX/pnOnxp@x1>
-References: <20230307232340.2370476-1-bmasney@redhat.com>
- <1a915c33-ef32-852c-a856-10c8d35be151@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1a915c33-ef32-852c-a856-10c8d35be151@linaro.org>
-User-Agent: Mutt/2.2.7 (2022-08-07)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 8 Mar 2023 07:20:20 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77DA9E05D;
+        Wed,  8 Mar 2023 04:20:15 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3286gFbL031891;
+        Wed, 8 Mar 2023 12:20:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=pY4Xq6Yq5zErRw5UQf3nP9HIt4Fc1cQLytOP9DkxLE4=;
+ b=g4bBQN6ubD23FoqgxALB0wQWHcIv4IZwFrdAsA40zxgUlLDkG33RkyZGeID54kVNoiKS
+ uYxKUzGq45CU3LPy+0dbZ/iIVtvwLKrpkjk+Ic1bmzIs72k/6IpoPeCkQJYHvZ/a6IFI
+ n0kFWIqpYCBMfE9QShTaVhXJ0GVNt6wvSAVSCEbxO0WfH+VOAolT2wwdO4+uhLtL6/PG
+ olours7vbwFA/Qg7uBX6oTWBDZEqkLdkHP7C7LjUmeu8V+oJQJXH7kBy4vmBNePrxH4j
+ cBqR51cO1uD9f/e1QLJNKg0Snsq7vCORlgHMbpSzAGM1M0tQtJHEdM+6oFQE570LntX5 pA== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p6fgh1js7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 08 Mar 2023 12:20:09 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 328CK4An031392;
+        Wed, 8 Mar 2023 12:20:04 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3p4fgkn0bj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 08 Mar 2023 12:20:04 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 328CK4cD031377;
+        Wed, 8 Mar 2023 12:20:04 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 328CK44d031372;
+        Wed, 08 Mar 2023 12:20:04 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id 89DC24F94; Wed,  8 Mar 2023 17:50:03 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        lee@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mani@kernel.org,
+        lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH v2 0/6] Add PCIe EP support for SDX65
+Date:   Wed,  8 Mar 2023 17:49:47 +0530
+Message-Id: <1678277993-18836-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BLsBo_XMRaS5fL07OuVS3a1nZZW-j_9V
+X-Proofpoint-GUID: BLsBo_XMRaS5fL07OuVS3a1nZZW-j_9V
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-08_07,2023-03-08_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=701 spamscore=0
+ phishscore=0 priorityscore=1501 mlxscore=0 suspectscore=0 adultscore=0
+ impostorscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303080106
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 08, 2023 at 12:02:04PM +0100, Krzysztof Kozlowski wrote:
-> On 08/03/2023 00:23, Brian Masney wrote:
-> > The cdsp.mbn firmware that's referenced in sa8540p-ride.dts is actually
-> > named cdsp0.mbn in the deliverables from Qualcomm. Let's go ahead and
-> > correct the name to match what's in Qualcomm's deliverable.
-> 
-> I don't think vendor deliverables matter. linux-firmware is here more
-> important. The file will be cdsp.mbn in the firmware, won't it?
+Hi,
 
-cdsp0.mbn and cdsp1.mbn for the sa8540p are not in linux-firmware and I
-far as I know there's no plan for someone to submit those since QC would
-need to approve that. I can ask though since the DTS for these two bits
-has been submitted upstream.
+Changes in v2:
+ - Addressing comments from Konrad and Dmitry.
+ - Rebased on top of 6.3-rc1.
 
-Brian
+This series adds the devicetree support for PCIe PHY and PCIe EP on SDX65.
+The PCIe EP is enabled on SDX65 MTP board.
+
+Thanks,
+Rohit.
+
+Rohit Agarwal (6):
+  dt-bindings: mfd: qcom,tcsr: Add compatible for sdx65
+  dt-bindings: PCI: qcom: Add SDX65 SoC
+  ARM: dts: qcom: sdx65: Add support for PCIe PHY
+  ARM: dts: qcom: sdx65: Add support for PCIe EP
+  ARM: dts: qcom: sdx65-mtp: Enable PCIe PHY
+  ARM: dts: qcom: sdx65-mtp: Enable PCIe EP
+
+ .../devicetree/bindings/mfd/qcom,tcsr.yaml         |  1 +
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml      |  2 +
+ arch/arm/boot/dts/qcom-sdx65-mtp.dts               | 50 ++++++++++--
+ arch/arm/boot/dts/qcom-sdx65.dtsi                  | 92 ++++++++++++++++++++++
+ 4 files changed, 140 insertions(+), 5 deletions(-)
+
+-- 
+2.7.4
 
