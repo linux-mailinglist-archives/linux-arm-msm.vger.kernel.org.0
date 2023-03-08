@@ -2,84 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF8716B0774
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 13:54:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9724B6B0786
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 13:59:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230435AbjCHMx6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 07:53:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58208 "EHLO
+        id S230326AbjCHM7O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 07:59:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230440AbjCHMxz (ORCPT
+        with ESMTP id S229574AbjCHM7M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 07:53:55 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAFC6B79F4
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 04:53:45 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id s11so65289757edy.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 04:53:45 -0800 (PST)
+        Wed, 8 Mar 2023 07:59:12 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F6495F23F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 04:59:11 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id k10so41455120edk.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 04:59:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678280024;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=66PBEHLuoBHi5dP79a5TGRn1C5ICF0qRu69ManVqQR0=;
-        b=K1HkAKtDVpeQ4XArvfQu0D+mZCmjmHYnXtRR/EdZtvb2noWLzodKeDhezQHx+K5gcK
-         3jSaa2wQy2yWpGZgCrusY2K//W0qBy085ndtPdCcfsT06/f+BdX03OepLmgvzC4nZJtX
-         LU8cbfKOy/IM0LKmrFqe4GO7JQbtQNNYJCNGdfUHM8rX+8UOvMDBAJ72QTo0R00ae40M
-         ATgEXTlf7yIe6EyrIELaZ82xXqprCsatJV/FhMTTYiinbsFkTp+eGrFPUG4NLfVXNg85
-         Ays+BVBKm/RpPbEO3ZArk0C3p/MoFJH8Vjp6dElbv9n/TK18HwFs1ZUwO+bbswzlur5B
-         O0bg==
+        d=linaro.org; s=google; t=1678280350;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HiCFcfPz4vPvuEH64Q/QQyo/8CvlqmI3Zu6iYxq1KAY=;
+        b=oqywNHrY2LOFE44e/YQQOlG1p5zYNt1QY6CjHhLE+vDPnAzbiHJwnc6Uws5c3EF1kz
+         qEPiumsMDFB8C/ZaOFu8GXTzyc7XuNF11mHhh1m5iVgjsVl5R3bv9CcejTFppwo9HNw1
+         jOEneZQLuNiHvrCNob6aBiwOFLEVthdAQco2M9pkNlywsUO/BKCvhy7XvB66gWYXSnXT
+         9K/529XmA4K/+l9xuTgWipqyD5as574EVbMxD/Cm1aAVyMDU9PxG6MyRxOELZj79Aaon
+         RmvhB54+s8iKJRSzwlynGI3mSMzFsD+pVp9tZ+2sRUANZ+tuvPl5IAH29Z1yoi+ZPHbL
+         LO8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678280024;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=66PBEHLuoBHi5dP79a5TGRn1C5ICF0qRu69ManVqQR0=;
-        b=12zHiQT+Iw89ZNfY2Ywaug67k636tWtLZfNkZaQMJcMYixqrTqFiCYoESzVg98WnPY
-         VrG1bZolJXPRVgcX86OHMB9K60jdo+HwBWPns8Ct5Q+7KJImhyOmhptyjZjAIjgrPz8V
-         4kGk3v5FRCUyIXJyfVkX9Kacf32wI+ZeliquhDFAOBwtwmZliH//b8Ct9bDLTe5XUtRC
-         DyBMkX9rbCdfOpfkGOqeAkNHsyefOq7Fn7KRPDqKUsXgX+Hrv2EilVoJmO6bAb+yfu4o
-         +KL/5W5QXaWgN19cEj+VWX7cuJAl6Dg2iNL/fKSpi0yBacTJwvmnoCcoiJNrx4IC0jG7
-         frxg==
-X-Gm-Message-State: AO0yUKX3NfMSYT6EbMlQB0G2gie4dK4dno2xad+PPeFp93AJf7oNpzOe
-        8XRlii9e1a4LqCqK85scu6ccUQ==
-X-Google-Smtp-Source: AK7set+E35x60NTcteiH0pNOUZAw9vG7PdnXC0LoxRe3x7P7UWNCvpb2BGmoA3MNv+KLUHytkEGxww==
-X-Received: by 2002:a17:907:72c9:b0:889:b38b:4bb2 with SMTP id du9-20020a17090772c900b00889b38b4bb2mr21140310ejc.49.1678280024347;
-        Wed, 08 Mar 2023 04:53:44 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id uk19-20020a170907ca1300b008cecb8f374asm7427112ejc.0.2023.03.08.04.53.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 04:53:43 -0800 (PST)
-Message-ID: <615d907e-fd7c-f235-405b-d112f1373280@linaro.org>
-Date:   Wed, 8 Mar 2023 12:53:42 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v3 1/4] firmware: qcom_scm: Export SCM call functions
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20210112; t=1678280350;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HiCFcfPz4vPvuEH64Q/QQyo/8CvlqmI3Zu6iYxq1KAY=;
+        b=oNVsxKe8KQWNVWJ+svEHoEiRbJDLiaLfHSmluSD8+/S4upx1EbbnPpXLM5/FEuRIoU
+         ZTdcMZO4+EvcEcQqXFDVT7PQ9ZdgVePxb4gXMZHLPqcstUXQZDzhoFUVGk8feE5DamLR
+         E+65ojaOEgi/fajQTaQerGRPf1bBy+H+lo1N9fr8mPYrTfGWP34huO0UxlvUqFKjsMwi
+         rpCruL3bMbZa+jrjAQTKI9mKVYmEZXOegIthIp6ROEOEu+laS912tnO88r0Y8sQ4UsCf
+         DxR9UF1O7B2EO2AA3kpk+v49qZckM6VKrtyzDVH1csQrixAkVEyvF5pPZZKZyiyJlYON
+         /7Rw==
+X-Gm-Message-State: AO0yUKWFVJpqAoW3yrlg7bdj/+gTZsvz6yBy2eFyXQcCaoalZGmbNdx3
+        yCgZDQDFIhm0W4MV+DEzURAWUg==
+X-Google-Smtp-Source: AK7set9MEhomBCqQEldq0RiKVhcfaK8V/xJLce5XBS7QVYO1ZYuFj0L6udIMtMoVVDwS4PpnOGEG3Q==
+X-Received: by 2002:a17:907:cb85:b0:8af:a53a:189d with SMTP id un5-20020a170907cb8500b008afa53a189dmr19334950ejc.44.1678280349779;
+        Wed, 08 Mar 2023 04:59:09 -0800 (PST)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:ff33:9b14:bdd2:a3da])
+        by smtp.gmail.com with ESMTPSA id h25-20020a1709063b5900b008d0dbf15b8bsm7464141ejf.212.2023.03.08.04.59.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Mar 2023 04:59:09 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Johan Hovold <johan@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Sumit Garg <sumit.garg@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230305022119.1331495-1-luzmaximilian@gmail.com>
- <20230305022119.1331495-2-luzmaximilian@gmail.com>
- <a2c97f09-3360-b2b1-184a-8e3b869a70ef@linaro.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <a2c97f09-3360-b2b1-184a-8e3b869a70ef@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 01/11] arm64: dts: qcom: drop incorrect cell-index from SPMI
+Date:   Wed,  8 Mar 2023 13:58:56 +0100
+Message-Id: <20230308125906.236885-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,30 +77,125 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The SPMI controller (PMIC Arbiter)) does not use nor allow 'cell-index'
+property:
 
+  sm8150-microsoft-surface-duo.dtb: spmi@c440000: Unevaluated properties are not allowed ('cell-index' was unexpected)
 
-On 07/03/2023 15:23, Dmitry Baryshkov wrote:
-> 
->> Make qcom_scm_call, qcom_scm_call_atomic and associated types accessible
->> to other modules.
-> 
-> Generally all the qcom_scm calls are a part of qcom_scm.c. I think it is 
-> better to make qseecom_scm_call a part qcom_scm.c (as we were previously 
-> doing) rather than exporting the core function.
->
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Other big issue I see in exporting qcom_scm_call() is that there is 
-danger of misuse of this api as this could lead to a path where new apis 
-and its payloads can come directly from userspace via a rogue/hacking 
-modules. This will bypass scm layer completely within kernel.
+---
 
---srini
+Changes since v1:
+1. None
+---
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 1 -
+ arch/arm64/boot/dts/qcom/msm8976.dtsi | 1 -
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 1 -
+ arch/arm64/boot/dts/qcom/sc7180.dtsi  | 1 -
+ arch/arm64/boot/dts/qcom/sdm630.dtsi  | 1 -
+ arch/arm64/boot/dts/qcom/sdm845.dtsi  | 1 -
+ arch/arm64/boot/dts/qcom/sm6125.dtsi  | 1 -
+ arch/arm64/boot/dts/qcom/sm8150.dtsi  | 1 -
+ 8 files changed, 8 deletions(-)
 
-> If you wish to limit the kernel bloat, you can split the qcom_scm into 
-> per-driver backend and add Kconfig symbols to limit the impact. However 
-> I think that these functions are pretty small to justify the effort.
-> 
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index 62d05d740646..f769e63c955c 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -397,7 +397,6 @@ spmi_bus: spmi@200f000 {
+ 			#size-cells = <0>;
+ 			interrupt-controller;
+ 			#interrupt-cells = <4>;
+-			cell-index = <0>;
+ 		};
+ 
+ 		sdhc_1: mmc@7824900 {
+diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+index 2d360d05aa5e..712f80fc865c 100644
+--- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+@@ -809,7 +809,6 @@ spmi_bus: spmi@200f000 {
+ 			#size-cells = <0>;
+ 			interrupt-controller;
+ 			#interrupt-cells = <4>;
+-			cell-index = <0>;
+ 		};
+ 
+ 		sdhc_1: mmc@7824000 {
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index 8bc1c59127e5..d78fe822b4c3 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -1993,7 +1993,6 @@ spmi_bus: spmi@800f000 {
+ 			#size-cells = <0>;
+ 			interrupt-controller;
+ 			#interrupt-cells = <4>;
+-			cell-index = <0>;
+ 		};
+ 
+ 		usb3: usb@a8f8800 {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 00932bcba12d..99ec844da32e 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -3279,7 +3279,6 @@ spmi_bus: spmi@c440000 {
+ 			#size-cells = <0>;
+ 			interrupt-controller;
+ 			#interrupt-cells = <4>;
+-			cell-index = <0>;
+ 		};
+ 
+ 		sram@146aa000 {
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index 5827cda270a0..72d9a12b5e9c 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -1189,7 +1189,6 @@ spmi_bus: spmi@800f000 {
+ 			#size-cells = <0>;
+ 			interrupt-controller;
+ 			#interrupt-cells = <4>;
+-			cell-index = <0>;
+ 		};
+ 
+ 		usb3: usb@a8f8800 {
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 479859bd8ab3..dc43e438b64a 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -4924,7 +4924,6 @@ spmi_bus: spmi@c440000 {
+ 			#size-cells = <0>;
+ 			interrupt-controller;
+ 			#interrupt-cells = <4>;
+-			cell-index = <0>;
+ 		};
+ 
+ 		sram@146bf000 {
+diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+index 65033227718a..fd577eb705f8 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+@@ -1134,7 +1134,6 @@ spmi_bus: spmi@1c40000 {
+ 			#size-cells = <0>;
+ 			interrupt-controller;
+ 			#interrupt-cells = <4>;
+-			cell-index = <0>;
+ 		};
+ 
+ 		apps_smmu: iommu@c600000 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 74c0527d6929..d565f56ec4d2 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -3934,7 +3934,6 @@ spmi_bus: spmi@c440000 {
+ 			#size-cells = <0>;
+ 			interrupt-controller;
+ 			#interrupt-cells = <4>;
+-			cell-index = <0>;
+ 		};
+ 
+ 		apps_smmu: iommu@15000000 {
+-- 
+2.34.1
 
-
->>
->> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
