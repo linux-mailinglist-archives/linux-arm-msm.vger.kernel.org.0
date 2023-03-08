@@ -2,154 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97F746B075A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 13:43:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF8716B0774
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 13:54:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229901AbjCHMn2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 07:43:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47368 "EHLO
+        id S230435AbjCHMx6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 07:53:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbjCHMn0 (ORCPT
+        with ESMTP id S230440AbjCHMxz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 07:43:26 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE0EB5D8AE;
-        Wed,  8 Mar 2023 04:43:24 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4B9D96178F;
-        Wed,  8 Mar 2023 12:43:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA996C433D2;
-        Wed,  8 Mar 2023 12:43:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678279403;
-        bh=DocI4dram1oaC2Qxu/FVDptKl4AwjtU4IjvD88IptJQ=;
-        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-        b=S1OcYFQhrdN0g87cCs7ucc59mYtX+9rZx1K3co4u0/4mnfPQTJa0Htd86uTqQbJAd
-         E32xrPsntaL2VE59IPZPYKNFWQCweqb132+OzEfgrwxY6/2lqs4OBaVUba0wiid4hV
-         BFzc3w8ujd6hCct6aT3bFarUZh3vCioIQAChUi43k/slsd7Au3aa+10ug7n56GWSQh
-         JBMrDULJzkmOv5CzRJ1pfbPTrpo6aGEkXsnb2okTd66UHBZ0Zvv4rWZm/kK94TZW+P
-         E9BlraHJ4sayQuF7aGEo8bYma/UOlCWhJShBfMVy0wsZ/B+6D6N4tP+D4BQRWASw3O
-         IgYdgx7wNCvkQ==
-From:   Kalle Valo <kvalo@kernel.org>
-To:     Robert Marko <robert.marko@sartura.hr>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Robert Marko <robimarko@gmail.com>, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
-        gregkh@linuxfoundation.org, elder@linaro.org,
-        hemantk@codeaurora.org, quic_jhugo@quicinc.com,
-        quic_qianyu@quicinc.com, bbhatt@codeaurora.org,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, ansuelsmth@gmail.com
-Subject: Re: [PATCH 2/2] wifi: ath11k: use unique QRTR instance ID
-References: <20221105194943.826847-1-robimarko@gmail.com>
-        <20221105194943.826847-2-robimarko@gmail.com>
-        <20221107174727.GA7535@thinkpad> <87cz9xcqbd.fsf@kernel.org>
-        <877czn8c2n.fsf@kernel.org>
-        <CA+HBbNFCFtJwzN=6SCsWnDmAjPkmxE4guH1RrLc+-HByLcVVXA@mail.gmail.com>
-        <87k02jzgkz.fsf@kernel.org>
-        <CA+HBbNHi0zTeV0DRmwLjZu+XzUQEZQNnSpBMeQeUPiBu3v-2BQ@mail.gmail.com>
-        <87358hyp3x.fsf@kernel.org>
-        <CA+HBbNGdOrOiCxhSouZ6uRPRnZmsBSAL+wWpLkczMK9cO8Mczg@mail.gmail.com>
-        <877cxsdrax.fsf@kernel.org>
-        <CA+HBbNGbg88_3FDu+EZhqMj0UKb8Ja_vyYsxGtmJ_HGt4fNVBQ@mail.gmail.com>
-        <87y1q8ccc4.fsf@kernel.org>
-        <CA+HBbNH2fzr_knOE9EWD4bUi-guvRa07FAxc9WyCH0jK10BLvw@mail.gmail.com>
-Date:   Wed, 08 Mar 2023 14:43:16 +0200
-In-Reply-To: <CA+HBbNH2fzr_knOE9EWD4bUi-guvRa07FAxc9WyCH0jK10BLvw@mail.gmail.com>
-        (Robert Marko's message of "Mon, 23 Jan 2023 20:21:08 +0100")
-Message-ID: <87fsafpg63.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Wed, 8 Mar 2023 07:53:55 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAFC6B79F4
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 04:53:45 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id s11so65289757edy.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 04:53:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678280024;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=66PBEHLuoBHi5dP79a5TGRn1C5ICF0qRu69ManVqQR0=;
+        b=K1HkAKtDVpeQ4XArvfQu0D+mZCmjmHYnXtRR/EdZtvb2noWLzodKeDhezQHx+K5gcK
+         3jSaa2wQy2yWpGZgCrusY2K//W0qBy085ndtPdCcfsT06/f+BdX03OepLmgvzC4nZJtX
+         LU8cbfKOy/IM0LKmrFqe4GO7JQbtQNNYJCNGdfUHM8rX+8UOvMDBAJ72QTo0R00ae40M
+         ATgEXTlf7yIe6EyrIELaZ82xXqprCsatJV/FhMTTYiinbsFkTp+eGrFPUG4NLfVXNg85
+         Ays+BVBKm/RpPbEO3ZArk0C3p/MoFJH8Vjp6dElbv9n/TK18HwFs1ZUwO+bbswzlur5B
+         O0bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678280024;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=66PBEHLuoBHi5dP79a5TGRn1C5ICF0qRu69ManVqQR0=;
+        b=12zHiQT+Iw89ZNfY2Ywaug67k636tWtLZfNkZaQMJcMYixqrTqFiCYoESzVg98WnPY
+         VrG1bZolJXPRVgcX86OHMB9K60jdo+HwBWPns8Ct5Q+7KJImhyOmhptyjZjAIjgrPz8V
+         4kGk3v5FRCUyIXJyfVkX9Kacf32wI+ZeliquhDFAOBwtwmZliH//b8Ct9bDLTe5XUtRC
+         DyBMkX9rbCdfOpfkGOqeAkNHsyefOq7Fn7KRPDqKUsXgX+Hrv2EilVoJmO6bAb+yfu4o
+         +KL/5W5QXaWgN19cEj+VWX7cuJAl6Dg2iNL/fKSpi0yBacTJwvmnoCcoiJNrx4IC0jG7
+         frxg==
+X-Gm-Message-State: AO0yUKX3NfMSYT6EbMlQB0G2gie4dK4dno2xad+PPeFp93AJf7oNpzOe
+        8XRlii9e1a4LqCqK85scu6ccUQ==
+X-Google-Smtp-Source: AK7set+E35x60NTcteiH0pNOUZAw9vG7PdnXC0LoxRe3x7P7UWNCvpb2BGmoA3MNv+KLUHytkEGxww==
+X-Received: by 2002:a17:907:72c9:b0:889:b38b:4bb2 with SMTP id du9-20020a17090772c900b00889b38b4bb2mr21140310ejc.49.1678280024347;
+        Wed, 08 Mar 2023 04:53:44 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id uk19-20020a170907ca1300b008cecb8f374asm7427112ejc.0.2023.03.08.04.53.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Mar 2023 04:53:43 -0800 (PST)
+Message-ID: <615d907e-fd7c-f235-405b-d112f1373280@linaro.org>
+Date:   Wed, 8 Mar 2023 12:53:42 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v3 1/4] firmware: qcom_scm: Export SCM call functions
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Johan Hovold <johan@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Sumit Garg <sumit.garg@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230305022119.1331495-1-luzmaximilian@gmail.com>
+ <20230305022119.1331495-2-luzmaximilian@gmail.com>
+ <a2c97f09-3360-b2b1-184a-8e3b869a70ef@linaro.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <a2c97f09-3360-b2b1-184a-8e3b869a70ef@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Robert Marko <robert.marko@sartura.hr> writes:
 
-> On Thu, Jan 12, 2023 at 10:49 AM Kalle Valo <kvalo@kernel.org> wrote:
+
+On 07/03/2023 15:23, Dmitry Baryshkov wrote:
+> 
+>> Make qcom_scm_call, qcom_scm_call_atomic and associated types accessible
+>> to other modules.
+> 
+> Generally all the qcom_scm calls are a part of qcom_scm.c. I think it is 
+> better to make qseecom_scm_call a part qcom_scm.c (as we were previously 
+> doing) rather than exporting the core function.
 >
+
+Other big issue I see in exporting qcom_scm_call() is that there is 
+danger of misuse of this api as this could lead to a path where new apis 
+and its payloads can come directly from userspace via a rogue/hacking 
+modules. This will bypass scm layer completely within kernel.
+
+--srini
+
+> If you wish to limit the kernel bloat, you can split the qcom_scm into 
+> per-driver backend and add Kconfig symbols to limit the impact. However 
+> I think that these functions are pretty small to justify the effort.
+> 
+
+
 >>
->> Robert Marko <robert.marko@sartura.hr> writes:
->>
->> > On Thu, Jan 12, 2023 at 10:40 AM Kalle Valo <kvalo@kernel.org> wrote:
->> >>
->> >> Robert Marko <robert.marko@sartura.hr> writes:
->> >>
->> >> > On Wed, Jan 11, 2023 at 6:10 PM Kalle Valo <kvalo@kernel.org> wrote:
->> >> >>
->> >> >> Robert Marko <robert.marko@sartura.hr> writes:
->> >> >>
->> >> >> >> Really sorry, I just didn't manage to get this finalised due to other
->> >> >> >> stuff and now I'm leaving for a two week vacation :(
->> >> >> >
->> >> >> > Any news regarding this, I have a PR for ipq807x support in OpenWrt
->> >> >> > and the current workaround for supporting AHB + PCI or multiple PCI
->> >> >> > cards is breaking cards like QCA6390 which are obviously really
->> >> >> > popular.
->> >> >>
->> >> >> Sorry, came back only on Monday and trying to catch up slowly. But I
->> >> >> submitted the RFC now:
->> >> >>
->> >> >> https://patchwork.kernel.org/project/linux-wireless/patch/20230111170033.32454-1-kvalo@kernel.org/
->> >> >
->> >> > Great, thanks for that.
->> >> >
->> >> > Does it depend on firmware-2 being available?
->> >>
->> >> The final solution for the users will require firmware-2.bin. But for a
->> >> quick test you can omit the feature bit test by replacing
->> >> "test_bit(ATH11K_FW_FEATURE_MULTI_QRTR_ID, ab->fw.fw_features)" with
->> >> "true". Just make sure that the firmware release you are using supports
->> >> this feature, I believe only recent QCN9074 releases do that.
->> >
->> > I was able to test on IPQ8074+QCN9074 yesterday by just bypassing the
->> > test and it worked.
->> >
->> > Sideffect is that until firmware-2.bin is available cards like QCA6390
->> > wont work like with my hack.
->>
->> Not following here, can you elaborate what won't work with QCA6390?
->
-> Our downstream hack does not work with QCA6390,
-
-Still not sure what you mean. Are you saying that this patch under
-discussion ("wifi: ath11k: use unique QRTR instance ID") also works with
-QCA6390 and it's possible to connect two QCA6390 devices on the same
-host?
-
-Or are you referring to some other hack? Or have I totally
-misunderstood? :)
-
-> so that is why its quite important for OpenWrt to have a generic
-> solution that works on all cards.
-
-I fully agree on importance of having a generic solution. It's just sad
-that it seems people who designed this didn't consider about having
-multiple devices on the same host. It looks like there's no easy way to
-implement a generic solution, we have only bad choices to choose from.
-Your solution[1] is racy and writing to a register which is marked as
-read-only in the spec.
-
-Qualcomm's solution[2] needs changes in firmware and it's uncertain if
-I'm able to convince all firmware teams to implement the support.
-(Currently only QCN9074 firmware supports this.)
-
-Thoughts?
-
-[1] https://patchwork.kernel.org/project/linux-wireless/patch/20221105194943.826847-2-robimarko@gmail.com/
-
-[2] https://patchwork.kernel.org/project/linux-wireless/patch/20230111170033.32454-1-kvalo@kernel.org/
-
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+>> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
