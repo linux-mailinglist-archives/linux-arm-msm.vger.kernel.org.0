@@ -2,108 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7382C6B138B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 22:07:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B1906B13F5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 22:35:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229645AbjCHVHX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 16:07:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45334 "EHLO
+        id S230007AbjCHVfr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 16:35:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbjCHVHW (ORCPT
+        with ESMTP id S229965AbjCHVfq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 16:07:22 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6590CC78C7;
-        Wed,  8 Mar 2023 13:07:21 -0800 (PST)
-Received: from [192.168.178.23] (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 269E9C3FE3;
-        Wed,  8 Mar 2023 21:06:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1678309609; bh=PMrX5xa0wF8TVVqsH1Pb5phtfnFDeFZawPyCqxh4toA=;
-        h=From:Date:Subject:To:Cc;
-        b=fAk8YoCYgnE/Ev2v3jup6D8PiSI11iWUDBVrmUek0/hylb+wOeMbFVXITu6Se61jg
-         7+1FxQXeUIXKUroC+b727uPoXux7umrx0/+3S4WfFFjkwCYd9TNp7839PA3Ot/v1vX
-         Q6sQ5n55kVbckFqft+C21K3OyIzuWhviR0632Ym8=
-From:   Luca Weiss <luca@z3ntu.xyz>
-Date:   Wed, 08 Mar 2023 22:06:03 +0100
-Subject: [PATCH] ARM: dts: qcom: apq8026-lg-lenok: add missing reserved
- memory
+        Wed, 8 Mar 2023 16:35:46 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AF7BB8550
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 13:35:38 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id s20so23095762lfb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 13:35:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678311336;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yx3K8KXfYeN1w6FBBGidGftrh4dFPASfNQz/HmCNuJ8=;
+        b=Ul/itAD16p+95xv4fGh1OJ/KR0f+oFGvCtotcuPrQfa9VgDxo/A1SAp8F8YDoqwI74
+         lVMCy44wkwYFZrHNnvBe7mF09/7GMZMXoTLpoUXWyZo8B1i1HmY/AC3OF87f+JEf4iho
+         /pyGCdDxL79VrH9tEx0hkVm7r3OdTo5f2D3FUuLW5N8v1z4i2Th7+amOUygNV/x1K2/E
+         mkQ+DWU8tI9DkyWqZfrkoD57JA8JBgHiPiLEFmGJsFPuDgZjRwfqmdjevLUjoKhsokZI
+         7S2Alegth4zMb/Kuw56A3tsYZSlvVVSwloT8xA/mMBLH+oZwXUxfQfaN3MmSnihcj8G3
+         mxOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678311336;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Yx3K8KXfYeN1w6FBBGidGftrh4dFPASfNQz/HmCNuJ8=;
+        b=SBR0ugGoKAfG+8QdWbRJWlxQqoCgTxp1tNpOYlVaLROin4CQOOqb6BA4yR9XnOAVy2
+         HmKXaM+SiYEk/c+iURNOrp9b+sK/s/h7EIEjC0RpYfpHVxKBIL/7kqTxWdfsQ0vL+MR0
+         10b7cVXpf4EgZ15ktAXnlBovVY/SKiMXve1BcVN+OUXOxoVJlDftkG2jPHHqKEZtp5dY
+         Z4lXCmtvSxv6C5ygT1dQX30lWcCSKoCi4nYSlRhg9+k8XfeATgC/OV6CsOBEO4mCnH8N
+         Ltxu3rvNZpFodeR+pvRxq2BxWkq64QYbPj36MwrQPElLmGA9X2QmZUX6YpCMRGyf+yj8
+         pSXg==
+X-Gm-Message-State: AO0yUKVKqjzQ1oBW2pNJpT2NuNa0/Or+x2QCVNCiiE62znaKGhWCnW6h
+        27W/t93ysPMBd9fCZCRmQKfpRw==
+X-Google-Smtp-Source: AK7set/DjKLJA19+zcHCwu+AW5vV0IYu8eoUU+rBhf2JR453NmNf/hM7fz8BUXz4HDuZGxsjiI4ESQ==
+X-Received: by 2002:ac2:48a7:0:b0:4da:ae47:6615 with SMTP id u7-20020ac248a7000000b004daae476615mr5800547lfg.49.1678311336396;
+        Wed, 08 Mar 2023 13:35:36 -0800 (PST)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id u7-20020ac243c7000000b004dc4d26c324sm2467479lfl.143.2023.03.08.13.35.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Mar 2023 13:35:35 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH RFT v2 00/14] SMD RPMCC sleep preparations
+Date:   Wed, 08 Mar 2023 22:35:16 +0100
+Message-Id: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230308-lenok-reserved-memory-v1-1-b8bf6ff01207@z3ntu.xyz>
-X-B4-Tracking: v=1; b=H4sIALr4CGQC/x3NQQrCMBCF4auUWTslTqAmXkVcJOnUBk2iEyiW0
- rubuvzhfbwNKkvkCtduA+El1lhyi/OpgzC7/GCMY2sgRVppZfDFuTxRuLmFR0yciqzorb7oyQZ
- jrYZmvauMXlwO86E/oSRMNRmiAYee+vUYvYWn+P2f3+77/gMAbL/ujAAAAA==
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+X-B4-Tracking: v=1; b=H4sIAJT/CGQC/32NQQrCMBBFr1JmbSRNwVJXrjyAuJMi02TSBmISJ
+ rUopXc39ADyV+9/Pm+FTOwow7lagWlx2cVQQB0q0BOGkYQzhUFJ1cgSMcfktOD00vqZPVES5tQ
+ ims42slZQfgNmEgNj0FN5hrf3pUxM1n120QNu1zv0pZxcniN/d/lS79Mfz1ILKUynLdpuUC22F
+ +8CcjxGHqHftu0HCyZurc0AAAA=
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
 X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1037; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=PMrX5xa0wF8TVVqsH1Pb5phtfnFDeFZawPyCqxh4toA=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkCPjd/i4LQcuKqckTs5eRrV8+OxildEvCxJBdz
- DKzdIcdlUqJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZAj43QAKCRBy2EO4nU3X
- Vq2lD/9+1I6fYor0IucI89r7Vz4yq8Wgi2Uvr2pp06CZiyMGAbu0KxAoIr6lhIN9ZhU8vj7m0DE
- 1qWGEKe3UsFBYmwA1cCjChkCSUd+Qzqau7r6fK/LuP0eZNs6STXsxdUPKwYIv6qQnUq4cYPF3Yp
- nCQN4vbjlQtLGIy5bWj3sDwX9mYGKInMI6egWwtDBlnHaPfgVrYAfmxPkNOybwknip1l31QAzqF
- Cue8ZOI6zoDweIm7V4wzW+3FQT/cx4UPeD4gzVqtKfh3hSLjlsskKgddXVKAnzExzrnLNWS257t
- eZG7//f14T7lizdVxQV5BKSIwpuzGjyNgRN2MR2Sw+TYAx3K50y+sVid5qnMLFF96V6av8cMNJK
- Tr3gziyoKvQhugVCpDGxz4IeP8obiWMb0vEfqvx7zOkQkYge9Y3vTaYGWYJGu4EIEZ+wbuao7++
- 1bu2fWmheKzcR8Cx6sqgh3kWDaXu4MVgyUrXSQ8HP3JKQs5mld7s8O36NO9TFjqSCXCwGb2LkrO
- CNuZlTvmTik3rLWqH4PUzZHt60ABqWbjgoHV1iaH2nek09Y7N30Gup/VXnc3btGHM5F1a4XtbT/
- TM2xuezwhaJP1IOMracMGWEurn0HpaDONUu0GiRrJ40pM9W5N+LJYcVeXDzlDHm8LRBbKUQyinp
- NTjeY6NhvzNEtzA==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1678311334; l=2646;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=ag6sS2vNWieo5YFXrKuNAA3nF1wtvbbIdfAZ+4LnBg4=;
+ b=872IBcUN9ZTJYbHMIDpj9icWsfsYZZXpj4dUIVgvkburRlwinDvLaWezNUvaqPTK6LEF2H5Gj73+
+ FO+gbPVbBcZRRL+aTA/MEpZhZWRq3u23wIVoPxogJ9LsAbIBCrES
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Turns out these two memory regions also need to be avoided, otherwise
-weird things will happen when Linux tries to use this memory.
+v1 -> v2:
+- Use CLK_IS_CRITICAL instead of leaving a clk enable vote, expand macros
+  to do so
+- Fix the keepalive clocks for 8998 & 660 (CNoC -> PNoC, it was
+  confusingly named cnoc_periph downstream)
+- Introduce .determinte_rate to ensure we don't set keepalive clocks'
+  rates below 19.2 MHz
+- Add a (!conditional!) way to test the ultimate goal of all these changes
+  by essentially enabling unused clk cleanup through a dt property (for
+  legacy reasons)
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+v2 was tested on:
+
+- MSM8996 Sony Kagura (can disable unused)
+- MSM8998 Sony Maple (can disable unused with OOT icc)
+- SM6375 Sony PDX225 (can disable unused with OOT icc)
+
+v1: https://lore.kernel.org/r/20230303-topic-rpmcc_sleep-v1-0-d9cfaf9b27a7@linaro.org
+
+This series brings support for a couple of things necessary for the full
+system idle on SMD RPM SoCs, namely unused clk shutdown and keepalive
+votes (permanent active votes that are required on certain clocks for the
+platform to function).
+
+Tested on MSM8996 and SM6375, does not seem to introduce any additional
+regressions.
+
+Keepalive clocks for other platforms were gathered by digging in old
+downstream kernels, please give them a test.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Konrad Dybcio (11):
+      dt-bindings: clock: qcom,rpmcc: Add a way to enable unused clock cleanup
+      clk: qcom: smd-rpm_ Make __DEFINE_CLK_SMD_RPM_BRANCH_PREFIX accept flags
+      clk: qcom: smd-rpm: Make DEFINE_CLK_SMD_RPM_BRANCH_A accept flags
+      clk: qcom: smd-rpm: Make BI_TCXO_AO critical
+      clk: qcom: smd-rpm: Make __DEFINE_CLK_SMD_RPM_PREFIX accept flags
+      clk: qcom: smd-rpm: Separate out a macro for defining an AO clock
+      clk: qcom: smd-rpm: Add support for keepalive votes
+      clk: qcom: smd-rpm: Introduce DEFINE_CLK_SMD_RPM_BUS_KEEPALIVE
+      clk: qcom: smd-rpm: Hook up PCNoC_0 keep_alive
+      clk: qcom: smd-rpm: Hook up CNoC_1 and SNoC_2 keep_alive
+      arm64: dts: qcom: msm8996: Enable rpmcc unused clk disablement
 
-diff --git a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-index de2fb1c01b6e3..b82381229adf6 100644
---- a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-+++ b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-@@ -27,6 +27,16 @@ chosen {
- 	};
- 
- 	reserved-memory {
-+		sbl_region: sbl@2f00000 {
-+			reg = <0x02f00000 0x100000>;
-+			no-map;
-+		};
-+
-+		external_image_region: external-image@3100000 {
-+			reg = <0x03100000 0x200000>;
-+			no-map;
-+		};
-+
- 		adsp_region: adsp@3300000 {
- 			reg = <0x03300000 0x1400000>;
- 			no-map;
+Shawn Guo (3):
+      clk: qcom: smd-rpm: Add .is_enabled hook
+      clk: qcom: smd-rpm: Add .is_prepared hook
+      clk: qcom: smd-rpm: Mark clock enabled in clk_smd_rpm_handoff()
 
+ .../devicetree/bindings/clock/qcom,rpmcc.yaml      |   6 +
+ arch/arm64/boot/dts/qcom/msm8996.dtsi              |   1 +
+ drivers/clk/qcom/clk-smd-rpm.c                     | 133 +++++++++++++++------
+ 3 files changed, 106 insertions(+), 34 deletions(-)
 ---
-base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
-change-id: 20230308-lenok-reserved-memory-b9373f9c8993
+base-commit: fc31900c948610e7b5c2f15fb7795832c8325327
+change-id: 20230303-topic-rpmcc_sleep-d67aad9f3012
 
 Best regards,
 -- 
-Luca Weiss <luca@z3ntu.xyz>
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
