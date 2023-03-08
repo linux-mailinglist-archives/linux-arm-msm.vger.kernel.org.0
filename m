@@ -2,52 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CEDD6AFE5B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 06:31:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFE4A6AFE8A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 06:43:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbjCHFa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 00:30:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42686 "EHLO
+        id S229720AbjCHFnI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 00:43:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbjCHFa6 (ORCPT
+        with ESMTP id S229654AbjCHFnI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 00:30:58 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A45809884D;
-        Tue,  7 Mar 2023 21:30:56 -0800 (PST)
+        Wed, 8 Mar 2023 00:43:08 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90EC2E05C;
+        Tue,  7 Mar 2023 21:43:05 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 24237B81A3C;
-        Wed,  8 Mar 2023 05:30:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD49C433EF;
-        Wed,  8 Mar 2023 05:30:51 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 48084B81BC2;
+        Wed,  8 Mar 2023 05:43:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B6AC433D2;
+        Wed,  8 Mar 2023 05:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678253453;
-        bh=lGONHaeJ8GBUprLoz6RTtZDYCoOi74fna+rLPn2pNTU=;
+        s=k20201202; t=1678254183;
+        bh=qAHauBFZuHWDue6Ue3uyDXFjtoPdxblGDLd6QAcnlrw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=r2PoY3PZnJMJJ0nk37fxg2eEwLfz8DPPBLrwAuFrZk6dwuUttjiwBmVODWMqSep8i
-         JrYmukTHaKr+ve46ca+t8YqKnsMpLCEknOifUi3IECfIv4ThQAwg6whU0dD6YDVym1
-         jHvSXvAta7LlLYzbqpPI91uHMvsgk8EXrnNHRDDfPswKnAlTLbExrWBhCNMD56omlI
-         gOdcfJUzn3mmnBXtansp6/JYx64BFpalwBdf6f9P3fvwvvj9kNjOOvSisv1yTW/QJI
-         +4SfLbhb/au2PTexxW4g8maE6Nua269917oKGK6fn9ym0YAWDd4Dx3+214AFBnv58l
-         nvCpuCkf7GfNg==
-Date:   Wed, 8 Mar 2023 11:00:47 +0530
+        b=mAAgnxiSveYE/+/NiFEtR+ElfJ3D5C0deEUOHYfYgtDhtpkbUYPoXRYL3N4ZmkcGY
+         PY1w6bRUG2MtM65dBavpJNkLJ7VEDk8pVWUAUOkKbTlrFP9AMYnB32eRHRRi7obFUC
+         V4DJxmGHz7Uf+JT0jy+u02aXLXrURmt3usU5Uqg8cr+HeRx6J65SdBdWNnqThuY+h7
+         n9pIL8VyzERXmNDv//21ZyuQO0w2+0MWIcJTCtrfTe5IApQZ6cK3BxjUMkGBv8FvFs
+         lhV5fJxpuZ7kO91gTnzzoO1FFhnZ+T9j9lVNVtw5Bzf1DagCKtz4VmkyYU73J/aYUw
+         avyrqVczO8nTg==
+Date:   Wed, 8 Mar 2023 11:12:53 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Drop redundant
- pci_enable_pcie_error_reporting()
-Message-ID: <20230308053047.GC5124@thinkpad>
-References: <20230307201625.879567-1-helgaas@kernel.org>
+To:     Asutosh Das <quic_asutoshd@quicinc.com>
+Cc:     quic_cang@quicinc.com, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org, quic_nguyenb@quicinc.com,
+        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
+        adrian.hunter@intel.com, bvanassche@acm.org, avri.altman@wdc.com,
+        beanhuo@micron.com, linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 1/1] scsi: ufs: mcq: Use active_reqs to check busy in
+ clock scaling
+Message-ID: <20230308054253.GD5124@thinkpad>
+References: <e8d303eff0713a3e5f3c3725cdf6e5c5d3de2b01.1678244386.git.quic_asutoshd@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230307201625.879567-1-helgaas@kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <e8d303eff0713a3e5f3c3725cdf6e5c5d3de2b01.1678244386.git.quic_asutoshd@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -55,78 +61,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 07, 2023 at 02:16:25PM -0600, Bjorn Helgaas wrote:
-> From: Bjorn Helgaas <bhelgaas@google.com>
+On Tue, Mar 07, 2023 at 07:00:09PM -0800, Asutosh Das wrote:
+> Multi Circular Queue doesn't use outstanding_reqs.
+> But the ufs clock scaling functions use outstanding_reqs to
+> determine if there're requests pending. When MCQ is enabled
+> this check always returns false.
 > 
-> pci_enable_pcie_error_reporting() enables the device to send ERR_*
-> Messages.  Since f26e58bf6f54 ("PCI/AER: Enable error reporting when AER is
-> native"), the PCI core does this for all devices during enumeration, so the
-> driver doesn't need to do it itself.
+> Hence use active_reqs to check if there're pending requests.
 > 
-> Remove the redundant pci_enable_pcie_error_reporting() call from the
-> driver.  Also remove the corresponding pci_disable_pcie_error_reporting()
-> from the driver .remove() path.
-> 
-> Note that this only controls ERR_* Messages from the device.  An ERR_*
-> Message may cause the Root Port to generate an interrupt, depending on the
-> AER Root Error Command register managed by the AER service driver.
-> 
-> Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
 
-Amended the commit message to fix a checkpatch warning and applied to
-mhi-next!
+This looks like a fix to me. Hence there should be a fixes tag. With that,
+
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
 Thanks,
 Mani
 
 > ---
->  drivers/bus/mhi/host/pci_generic.c | 8 +-------
->  1 file changed, 1 insertion(+), 7 deletions(-)
+>  drivers/ufs/core/ufshcd.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index f39657f71483..6e13c43a84d1 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -8,7 +8,6 @@
->   * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
->   */
+> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+> index 172d25fef740..c6b35123c83b 100644
+> --- a/drivers/ufs/core/ufshcd.c
+> +++ b/drivers/ufs/core/ufshcd.c
+> @@ -1500,7 +1500,7 @@ static int ufshcd_devfreq_get_dev_status(struct device *dev,
+>  	scaling->window_start_t = curr_t;
+>  	scaling->tot_busy_t = 0;
 >  
-> -#include <linux/aer.h>
->  #include <linux/delay.h>
->  #include <linux/device.h>
->  #include <linux/mhi.h>
-> @@ -903,11 +902,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  	mhi_pdev->pci_state = pci_store_saved_state(pdev);
->  	pci_load_saved_state(pdev, NULL);
+> -	if (hba->outstanding_reqs) {
+> +	if (scaling->active_reqs) {
+>  		scaling->busy_start_t = curr_t;
+>  		scaling->is_busy_started = true;
+>  	} else {
+> @@ -2118,7 +2118,7 @@ static void ufshcd_clk_scaling_update_busy(struct ufs_hba *hba)
 >  
-> -	pci_enable_pcie_error_reporting(pdev);
-> -
->  	err = mhi_register_controller(mhi_cntrl, mhi_cntrl_config);
->  	if (err)
-> -		goto err_disable_reporting;
-> +		return err;
->  
->  	/* MHI bus does not power up the controller by default */
->  	err = mhi_prepare_for_power_up(mhi_cntrl);
-> @@ -941,8 +938,6 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  	mhi_unprepare_after_power_down(mhi_cntrl);
->  err_unregister:
->  	mhi_unregister_controller(mhi_cntrl);
-> -err_disable_reporting:
-> -	pci_disable_pcie_error_reporting(pdev);
->  
->  	return err;
->  }
-> @@ -965,7 +960,6 @@ static void mhi_pci_remove(struct pci_dev *pdev)
->  		pm_runtime_get_noresume(&pdev->dev);
->  
->  	mhi_unregister_controller(mhi_cntrl);
-> -	pci_disable_pcie_error_reporting(pdev);
->  }
->  
->  static void mhi_pci_shutdown(struct pci_dev *pdev)
+>  	spin_lock_irqsave(hba->host->host_lock, flags);
+>  	hba->clk_scaling.active_reqs--;
+> -	if (!hba->outstanding_reqs && scaling->is_busy_started) {
+> +	if (!scaling->active_reqs && scaling->is_busy_started) {
+>  		scaling->tot_busy_t += ktime_to_us(ktime_sub(ktime_get(),
+>  					scaling->busy_start_t));
+>  		scaling->busy_start_t = 0;
 > -- 
-> 2.25.1
+> 2.7.4
 > 
 
 -- 
