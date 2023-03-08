@@ -2,117 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6E426B1371
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 21:58:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7382C6B138B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 22:07:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230235AbjCHU6x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 15:58:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34886 "EHLO
+        id S229645AbjCHVHX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 16:07:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230337AbjCHU6r (ORCPT
+        with ESMTP id S229475AbjCHVHW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 15:58:47 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED7F48C824
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 12:58:45 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id g17so23022868lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 12:58:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678309124;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uNJiJRqzTIJmEZGIdAoWu3k4M01PZusme6WbXOwMXeU=;
-        b=s2qIda+Ogt9+xzbriwpMjHJZyITeYygTX8UZbSnQcMAvlzbnQE+F6r+98c9l0ATB9j
-         GATbrKf284ZP/7TYJbqjVKgChQwuiiEY82tNaUYBksKBzs+PxMcV1G/KlHWedTgDVKn/
-         nMcvfVFn2DIGBDYxxqRlAdN5cQ1pnjMwa5FrPwaWfppR1JUafs+X5J8b+GVBd4fv7BQm
-         veLJaJMzhTIYtJR+lEp3GtMDQXEw9Win8tvDv7dGnH9yooEhua3Jl1FIMD+2BVgjHNdo
-         qbjHmLxFTqTKfLf8lobJXPGFA9S2kNzqRh4O7iSijU3q0BYxOpSbeUskTvR5cjb7FwWv
-         wYRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678309124;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uNJiJRqzTIJmEZGIdAoWu3k4M01PZusme6WbXOwMXeU=;
-        b=jfXAjx38HkroEvcI6NxMgDAOw7Bw1TCec2iDxdHZklXQa+HauGGJX/e5zu2e6woEAX
-         way5pxfZaOB+wlcDBafOBerUdUJSss6KWFxk1bN13G//OddyhnoIzeCgzHJSGzNBip7i
-         kLoAjrr9oJFe99F0AZg2fKW9rIwqCx5vSksTcNpNqfH9I429KkNE0irugr2pcmodwwsp
-         cRNIWFStp/aOjPvkfraLJLx+3NSmB4BVV3vU2J+1NbCEWYQpTxFbnE0XFww9E0pdmDUQ
-         5jKQSL4s9/0rGnpMbeHmwzxgnB78jCpZ5K2LYf4RL8AcT4G0uTCn2exIvYyBoLKuJwEq
-         jMLw==
-X-Gm-Message-State: AO0yUKWkp4sTWnPbzsjol01zrQ/3fwVxS8BHRy+WGlptbi8XL90jbz7B
-        lO8t3h+GXB9mp+z8uFjmd27d5g==
-X-Google-Smtp-Source: AK7set801/CtXpPx1Z9upNz1VTWuexNLTuuutWkKmfXN/t0hFJPIRYY7dwhJWUFLtc2A04pLrzZOAg==
-X-Received: by 2002:ac2:46e5:0:b0:4db:3e31:20fa with SMTP id q5-20020ac246e5000000b004db3e3120famr5515822lfo.53.1678309124067;
-        Wed, 08 Mar 2023 12:58:44 -0800 (PST)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id t5-20020ac25485000000b004dc4b0a0543sm2441721lfk.58.2023.03.08.12.58.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 12:58:43 -0800 (PST)
-Message-ID: <2563238d-b480-1717-4afa-dba52159508b@linaro.org>
-Date:   Wed, 8 Mar 2023 21:58:42 +0100
+        Wed, 8 Mar 2023 16:07:22 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6590CC78C7;
+        Wed,  8 Mar 2023 13:07:21 -0800 (PST)
+Received: from [192.168.178.23] (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 269E9C3FE3;
+        Wed,  8 Mar 2023 21:06:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1678309609; bh=PMrX5xa0wF8TVVqsH1Pb5phtfnFDeFZawPyCqxh4toA=;
+        h=From:Date:Subject:To:Cc;
+        b=fAk8YoCYgnE/Ev2v3jup6D8PiSI11iWUDBVrmUek0/hylb+wOeMbFVXITu6Se61jg
+         7+1FxQXeUIXKUroC+b727uPoXux7umrx0/+3S4WfFFjkwCYd9TNp7839PA3Ot/v1vX
+         Q6sQ5n55kVbckFqft+C21K3OyIzuWhviR0632Ym8=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Date:   Wed, 08 Mar 2023 22:06:03 +0100
+Subject: [PATCH] ARM: dts: qcom: apq8026-lg-lenok: add missing reserved
+ memory
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8450-hdk: align WCD9385 reset pin
- with downstream config
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230308-lenok-reserved-memory-v1-1-b8bf6ff01207@z3ntu.xyz>
+X-B4-Tracking: v=1; b=H4sIALr4CGQC/x3NQQrCMBCF4auUWTslTqAmXkVcJOnUBk2iEyiW0
+ rubuvzhfbwNKkvkCtduA+El1lhyi/OpgzC7/GCMY2sgRVppZfDFuTxRuLmFR0yciqzorb7oyQZ
+ jrYZmvauMXlwO86E/oSRMNRmiAYee+vUYvYWn+P2f3+77/gMAbL/ujAAAAA==
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230308183317.559253-1-krzysztof.kozlowski@linaro.org>
- <20230308183317.559253-2-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230308183317.559253-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1037; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=PMrX5xa0wF8TVVqsH1Pb5phtfnFDeFZawPyCqxh4toA=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkCPjd/i4LQcuKqckTs5eRrV8+OxildEvCxJBdz
+ DKzdIcdlUqJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZAj43QAKCRBy2EO4nU3X
+ Vq2lD/9+1I6fYor0IucI89r7Vz4yq8Wgi2Uvr2pp06CZiyMGAbu0KxAoIr6lhIN9ZhU8vj7m0DE
+ 1qWGEKe3UsFBYmwA1cCjChkCSUd+Qzqau7r6fK/LuP0eZNs6STXsxdUPKwYIv6qQnUq4cYPF3Yp
+ nCQN4vbjlQtLGIy5bWj3sDwX9mYGKInMI6egWwtDBlnHaPfgVrYAfmxPkNOybwknip1l31QAzqF
+ Cue8ZOI6zoDweIm7V4wzW+3FQT/cx4UPeD4gzVqtKfh3hSLjlsskKgddXVKAnzExzrnLNWS257t
+ eZG7//f14T7lizdVxQV5BKSIwpuzGjyNgRN2MR2Sw+TYAx3K50y+sVid5qnMLFF96V6av8cMNJK
+ Tr3gziyoKvQhugVCpDGxz4IeP8obiWMb0vEfqvx7zOkQkYge9Y3vTaYGWYJGu4EIEZ+wbuao7++
+ 1bu2fWmheKzcR8Cx6sqgh3kWDaXu4MVgyUrXSQ8HP3JKQs5mld7s8O36NO9TFjqSCXCwGb2LkrO
+ CNuZlTvmTik3rLWqH4PUzZHt60ABqWbjgoHV1iaH2nek09Y7N30Gup/VXnc3btGHM5F1a4XtbT/
+ TM2xuezwhaJP1IOMracMGWEurn0HpaDONUu0GiRrJ40pM9W5N+LJYcVeXDzlDHm8LRBbKUQyinp
+ NTjeY6NhvzNEtzA==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Turns out these two memory regions also need to be avoided, otherwise
+weird things will happen when Linux tries to use this memory.
 
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+ arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-On 8.03.2023 19:33, Krzysztof Kozlowski wrote:
-> Downstream DTS uses 16 mA drive strength for the WCD9385 audio codec
-> RESET_N reset pin.  It also pulls the pin down in shutdown mode, thus it
-> is more like a shutdown pin, not a reset.  Use the same settings here
-> for HDK8450 and keep the WCD9385 by default in powered off (so pin as
-> low).  Align the name of pin configuration node with other pins in the
-> DTS.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+diff --git a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
+index de2fb1c01b6e3..b82381229adf6 100644
+--- a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
++++ b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
+@@ -27,6 +27,16 @@ chosen {
+ 	};
+ 
+ 	reserved-memory {
++		sbl_region: sbl@2f00000 {
++			reg = <0x02f00000 0x100000>;
++			no-map;
++		};
++
++		external_image_region: external-image@3100000 {
++			reg = <0x03100000 0x200000>;
++			no-map;
++		};
++
+ 		adsp_region: adsp@3300000 {
+ 			reg = <0x03300000 0x1400000>;
+ 			no-map;
 
-Konrad
->  arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> index 9cd1d1bd86cb..4020e54e16f5 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> @@ -767,9 +767,11 @@ spkr_2_sd_n_active: spkr-2-sd-n-active-state {
->  		output-low;
->  	};
->  
-> -	wcd_default: wcd-default-state {
-> +	wcd_default: wcd-reset-n-active-state {
->  		pins = "gpio43";
->  		function = "gpio";
-> +		drive-strength = <16>;
->  		bias-disable;
-> +		output-low;
->  	};
->  };
+---
+base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
+change-id: 20230308-lenok-reserved-memory-b9373f9c8993
+
+Best regards,
+-- 
+Luca Weiss <luca@z3ntu.xyz>
+
