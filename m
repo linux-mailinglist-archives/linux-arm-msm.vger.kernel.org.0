@@ -2,89 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FD856B1164
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 19:51:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 994D26B128A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 21:01:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229761AbjCHSvU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 13:51:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53938 "EHLO
+        id S230108AbjCHUBu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 15:01:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229685AbjCHSvT (ORCPT
+        with ESMTP id S230111AbjCHUBr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 13:51:19 -0500
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FEB1CB646;
-        Wed,  8 Mar 2023 10:51:06 -0800 (PST)
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-17683b570b8so16980246fac.13;
-        Wed, 08 Mar 2023 10:51:06 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678301465;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KxHmoWTI8MLGT4ZibFgSPu97U/Mok0BTnkOY7p1ZoA8=;
-        b=Y7bOUeJsW30SfQlyAwUbcZxDGUn+1w6xgPT0FFwamxiuMW+JVX/0RMfx4CL2z3OK2D
-         QX3f+6v3bSTSDMvn9vWU5GWi4OD6Q/TK1OdMMm+vILumMIjet1wGSpkgrxKIDl9Wdry0
-         fRsMR8Vv7clUoNjLo2Cm6Ji3zbwxMERghVEIHd2LZOpvUE7gdOrDXHlhxuz/WCKooxeY
-         m7ZEoB9kBQSolvt90sYpnuxV0rPoz8Z2L6d7Nc6qTN/9b3wqXUIQGbfWE8jBYhdPZ/42
-         1fptw90aKnHKUgAk/hn1XlHG9pHO1RhBXMG49CbpTVcg/BP1u3eR3ma7iN2m8Zka3EvT
-         Ltxg==
-X-Gm-Message-State: AO0yUKXLAOfPfSlBzLnsMI503+dKEv2OAuoE7AnfyY06N81AaafMcAqJ
-        3/SFrtP/W6U/XbVa4FlRgsIrqyoWQQ==
-X-Google-Smtp-Source: AK7set9i5XHntQJl5sc/hGUJ494y7HgMwr3hwqLZ0laP2jB5VlHjCdPUWv4BQRChS7BqTraYIEMKDA==
-X-Received: by 2002:a05:6870:7394:b0:16d:eac4:7b5f with SMTP id z20-20020a056870739400b0016deac47b5fmr11900569oam.48.1678301465508;
-        Wed, 08 Mar 2023 10:51:05 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id du41-20020a0568703a2900b001764b4a05f6sm6504401oab.39.2023.03.08.10.51.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Mar 2023 10:51:04 -0800 (PST)
-Received: (nullmailer pid 3587173 invoked by uid 1000);
-        Wed, 08 Mar 2023 18:51:03 -0000
-Date:   Wed, 8 Mar 2023 12:51:03 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        dri-devel@lists.freedesktop.org, Rob Herring <robh+dt@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Wed, 8 Mar 2023 15:01:47 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4725CE967;
+        Wed,  8 Mar 2023 12:01:46 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 51CEEB81DEF;
+        Wed,  8 Mar 2023 20:01:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64CA9C433EF;
+        Wed,  8 Mar 2023 20:01:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678305704;
+        bh=AkqRrQZvitrDRxlLCdBGZF5qiD811jL2TzZPP/iKUno=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=VQXVlmxqltM5l/JMngR1vQzCicyHmGinHxmGV4RoO46t/Eo/oRmkWeyv0nx+uCLtf
+         lbzThSIo93UB5w8AB27wXclmx9VxSfaW47tiHPeOCP7FkBwIq7lu3auhagWZwqwU8y
+         evM3HFOE2bzJue6V1uL2LQS8vU+pbtC201aEapZ+PpLfFP3UMpKcLP9BZ+mJlin513
+         LB4li9yB+8rSMZN8z5N0AL7fyd2SOzUN4W5tmJGNJMmHwea4jLwkUTc28Ma4F4AKPI
+         DnWurixaLo6mErZGmksqEHgjzrrwAqHUcNmAQHaOf9YKYiLHcsGBuuKqIX1Q2EAgab
+         /W1M6s5x/MNIw==
+Date:   Wed, 8 Mar 2023 12:01:41 -0800
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
         Andy Gross <agross@kernel.org>,
-        Rob Clark <robdclark@gmail.com>, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 09/10] dt-bindings: display/msm: dsi-controller-main:
- Add SM6115
-Message-ID: <167830146346.3587111.3542934829511061872.robh@kernel.org>
-References: <20230307-topic-dsi_qcm-v3-0-8bd7e1add38a@linaro.org>
- <20230307-topic-dsi_qcm-v3-9-8bd7e1add38a@linaro.org>
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org
+Subject: Re: [RFC PATCH v2 4/7] soc: qcom: Make the Qualcomm UFS/SDCC ICE a
+ dedicated driver
+Message-ID: <ZAjppY2K0/XPBHxG@sol.localdomain>
+References: <20230308155838.1094920-1-abel.vesa@linaro.org>
+ <20230308155838.1094920-5-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230307-topic-dsi_qcm-v3-9-8bd7e1add38a@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <20230308155838.1094920-5-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Mar 08, 2023 at 05:58:35PM +0200, Abel Vesa wrote:
+>  * Switched QCOM_INLINE_CRYPTO_ENGINE to tristate and made it built-in
+>    if any of the UFS or the SDHC drivers are built-in. This is to allow
+>    the API to be available even if the built-in driver doesn't have
+>    crypto enabled.
+[...]
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index a8f283086a21..c584369e9810 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -275,4 +275,10 @@ config QCOM_ICC_BWMON
+>  	  the fixed bandwidth votes from cpufreq (CPU nodes) thus achieve high
+>  	  memory throughput even with lower CPU frequencies.
+>  
+> +config QCOM_INLINE_CRYPTO_ENGINE
+> +	tristate
+> +	depends on SCSI_UFS_CRYPTO || MMC_CRYPTO
+> +	default y if SCSI_UFS_QCOM=y || MMC_SDHCI_MSM=y
+> +	select QCOM_SCM
 
-On Tue, 07 Mar 2023 14:01:47 +0100, Konrad Dybcio wrote:
-> Add a compatible for the DSI on SM6115.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../devicetree/bindings/display/msm/dsi-controller-main.yaml      | 2 ++
->  .../devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml         | 8 +++++++-
->  2 files changed, 9 insertions(+), 1 deletion(-)
-> 
+What are the "depends on" and "default y" lines above for?
 
-Acked-by: Rob Herring <robh@kernel.org>
+You're already selecting this from SCSI_UFS_QCOM and MSM_SDHCI_MSM, as I had
+suggested.  Isn't that enough?
 
+- Eric
