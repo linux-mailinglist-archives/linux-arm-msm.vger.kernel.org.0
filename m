@@ -2,44 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3621F6AFE3E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 06:21:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CEDD6AFE5B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 06:31:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229553AbjCHFVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 00:21:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60388 "EHLO
+        id S229586AbjCHFa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 00:30:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229635AbjCHFVR (ORCPT
+        with ESMTP id S229483AbjCHFa6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 00:21:17 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA0CCA0F0C;
-        Tue,  7 Mar 2023 21:21:15 -0800 (PST)
+        Wed, 8 Mar 2023 00:30:58 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A45809884D;
+        Tue,  7 Mar 2023 21:30:56 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AF0E861689;
-        Wed,  8 Mar 2023 05:21:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433C5C433EF;
-        Wed,  8 Mar 2023 05:21:11 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 24237B81A3C;
+        Wed,  8 Mar 2023 05:30:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD49C433EF;
+        Wed,  8 Mar 2023 05:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678252874;
-        bh=za1Q16N+OKXL1B8Fsh9XF7M5Y5D0OFnawDBveqfsM6s=;
+        s=k20201202; t=1678253453;
+        bh=lGONHaeJ8GBUprLoz6RTtZDYCoOi74fna+rLPn2pNTU=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UDaAIu1ThDvVYCUo/dl7gDw8bAKGfvzpE/etz4q+6fhRTG9kPX2PxZ5GXe4vWPjty
-         qmD9gucVgghFw6vvNntTbvEqcQscnexMQeXPrrDVvUFXyubWKURVNy/L8z9/y19ISQ
-         SJH88FzFTwULj1egNf98pGML27XjeyrRh9HlDX1m3J9J0TfLykICcEZrIcYBukEIPw
-         ed3NdgwZITCC+Ria7SlklapDj954Eq4NmePz5ARTAnWSoRWJx2LuXRn65+le+78n/L
-         +VpFw95rjWCdULqoRi4mXHP/mLiCiyeeVToFjjxTn+U9BCyVlUsIcqguJOBZRmTXcg
-         7UMEXY3Ma8BjA==
-Date:   Wed, 8 Mar 2023 10:51:08 +0530
+        b=r2PoY3PZnJMJJ0nk37fxg2eEwLfz8DPPBLrwAuFrZk6dwuUttjiwBmVODWMqSep8i
+         JrYmukTHaKr+ve46ca+t8YqKnsMpLCEknOifUi3IECfIv4ThQAwg6whU0dD6YDVym1
+         jHvSXvAta7LlLYzbqpPI91uHMvsgk8EXrnNHRDDfPswKnAlTLbExrWBhCNMD56omlI
+         gOdcfJUzn3mmnBXtansp6/JYx64BFpalwBdf6f9P3fvwvvj9kNjOOvSisv1yTW/QJI
+         +4SfLbhb/au2PTexxW4g8maE6Nua269917oKGK6fn9ym0YAWDd4Dx3+214AFBnv58l
+         nvCpuCkf7GfNg==
+Date:   Wed, 8 Mar 2023 11:00:47 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
 To:     Bjorn Helgaas <helgaas@kernel.org>
 Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>
 Subject: Re: [PATCH] bus: mhi: host: pci_generic: Drop redundant
  pci_enable_pcie_error_reporting()
-Message-ID: <20230308052108.GA5124@thinkpad>
+Message-ID: <20230308053047.GC5124@thinkpad>
 References: <20230307201625.879567-1-helgaas@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -73,7 +73,8 @@ On Tue, Mar 07, 2023 at 02:16:25PM -0600, Bjorn Helgaas wrote:
 > 
 > Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Amended the commit message to fix a checkpatch warning and applied to
+mhi-next!
 
 Thanks,
 Mani
