@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 705216B0517
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 11:55:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F5806B0523
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 11:57:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230343AbjCHKzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 05:55:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54582 "EHLO
+        id S231258AbjCHK5K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 05:57:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231295AbjCHKy6 (ORCPT
+        with ESMTP id S230244AbjCHK5I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 05:54:58 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA551B9BCB
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 02:54:53 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id s20so20759012lfb.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 02:54:53 -0800 (PST)
+        Wed, 8 Mar 2023 05:57:08 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D4FF8535A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 02:57:05 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id r27so20760224lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 02:57:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678272892;
+        d=linaro.org; s=google; t=1678273023;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ssSpXejupljBu7s+chVTmZj6gncLEO2kMpW23Kzh/hU=;
-        b=oZ4aOoCs1oNBOVpBFiyPeBPXNfJtef+ibd21LX2yMhzaNPq6MSSCSpdN8eHbjQXAi8
-         vLJRLZFZASKTbT+GJhUELwOHi+IJ4wBZ+uO9tPNqrhybcCWBneiLR//wA9ewGIcL/F39
-         tY2WNzktnIcIDBby7kunpyoLNKE4pOh9C92w+4ttAvBepHnvfLJ91+wuniRkxlrEEY7X
-         Izz2P3/dZEyL1Q1yE91xgiAV3QMZsoV3BT29uheKR/GyAE/ulCiUY7giKYgvrozO3DVO
-         /w44mMtJiHYMyMXjhQBTIcUuY4rzVzP2BxTYNnhb1fopGIk6EMukp85bq341DzfUYcpx
-         jMfQ==
+        bh=Jjrvifk3hoLu+5A7NzoK71qTT7T1RL2golQG0+F871E=;
+        b=lnPsrGa+Rim39l1kDJTZU14avWSF6O9tpV3+ZkOS7ewyx9eXEgKVMByDlfAPPs+j3n
+         844XI4s4b510R8B4VfJIKQIsPSKKNOl0/NJdZQHbMwt4/dW6sVjcPmSYDk1Osn8AkKTj
+         0IGa3uzTQOKAmItuUH2YoEwJkDbKXffVf0KHJdcpBgbLgzs5/9J64O78XomnugB3Gnf1
+         c2HfxCBGIsAmtltHSV9jSm3uZhA4Zd/HAKj/uVFVLgNBFdoyv93jFu0zc0PznKsw6WZV
+         WT1k47Gv/f4nw6C2VSVLaWJkjq10kBj7UpMCflz8R+MncDcmcOqhgPvxwiwXbUdDX7ve
+         CM9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678272892;
+        d=1e100.net; s=20210112; t=1678273023;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ssSpXejupljBu7s+chVTmZj6gncLEO2kMpW23Kzh/hU=;
-        b=1+wKz84Da05Ajb052M9vpxoUWO9zK6BaLh6XZtq45wDfiuF6MLdghmmXE7W81vPsra
-         5tW3xl+zrBg0tIxNTYZFScWuKOtEvhRDdcGJVmGEtfWTkJvZZZpP1MMnvBjG5aBvSHjB
-         2Nc5WbvAWStoPBQYFSADWoGg3VBk3Qr6nOO3QvsV+/rv2zv7LxBYwan7gr0EFQ2UY/se
-         W4jEflIcKysJahjQo92JjnBMxlYK09M0zlThQIhUO/UI1oMj35pT5+nP0ZxVa/m3ODsc
-         mFduwJA+QgvlHGCsmpXdHsoIKOrlV6CgU/fGitQIizWKsmA+ue2eogVzmV8MY9rUPQ+h
-         tJtw==
-X-Gm-Message-State: AO0yUKVYIeumwAvyAY1XI7SWyHrPkSg4+bF1khDXKIkL3KvXkk6asYFc
-        /HZ4ohD3S22gQfUVfsq6IgvRCA==
-X-Google-Smtp-Source: AK7set/aECR0OOCdS+p35O/ccWJ++I68onOenGnO667xnuzCDZKrngIjumoLrkPhA1weiBstxFz0/A==
-X-Received: by 2002:ac2:46f6:0:b0:4db:2ac7:d372 with SMTP id q22-20020ac246f6000000b004db2ac7d372mr5327084lfo.55.1678272891971;
-        Wed, 08 Mar 2023 02:54:51 -0800 (PST)
+        bh=Jjrvifk3hoLu+5A7NzoK71qTT7T1RL2golQG0+F871E=;
+        b=tQZEPQR0sVRzVxf07/0r/xP49COeJ3ec+54CDaFnroVcptyMC9gFLCMGl7CD4od3xs
+         D1BT5u22WraVbN8mviwJEXOlIKHSeU3vA92EiO2VAinyKjNuBHd77n2amrliPQB9i+6d
+         Ofv12VOna2mEkgkIbYgWqulfc5gzWRQYBe/XfFCeRvyjtl76D747WLv97g16/pfc2KcJ
+         1RfFI4/oSt8nEcptkOFcM6n+HZkUavjXHPFNG52YPTqgBS97xAXG8DJnwEVv3g6AswLL
+         SHK5NPUhwhR3AOxq43vz4iSA07sdWGqwJ1oMssswEWbaGn1ckx20bdWvb06nNQ2a2LyY
+         AZBg==
+X-Gm-Message-State: AO0yUKU7yOi63r2WkdUD80re6yL9iRWMG0P5C7Ip2EJv3XMc62gU1E9Z
+        JGMiUIoTdayDpqgdjZQLBYbj7A==
+X-Google-Smtp-Source: AK7set8IUiobytVzogXsg+T3ARfx0uDbLVnBQfqBlnGONNwk+E4xgjjZ/7jObj9J4UsG1Pk2KkGwIw==
+X-Received: by 2002:ac2:5973:0:b0:4b6:e494:a98d with SMTP id h19-20020ac25973000000b004b6e494a98dmr4652502lfp.44.1678273023569;
+        Wed, 08 Mar 2023 02:57:03 -0800 (PST)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id h26-20020a19701a000000b004b7033da2d7sm2291984lfc.128.2023.03.08.02.54.50
+        by smtp.gmail.com with ESMTPSA id i25-20020ac25239000000b004e81fdac4a1sm200980lfl.278.2023.03.08.02.57.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 02:54:51 -0800 (PST)
-Message-ID: <a0b7566f-c6e4-bcae-24e2-be5eb7efc58a@linaro.org>
-Date:   Wed, 8 Mar 2023 11:54:50 +0100
+        Wed, 08 Mar 2023 02:57:03 -0800 (PST)
+Message-ID: <ca257415-afd4-155d-bbdb-822f6eedd554@linaro.org>
+Date:   Wed, 8 Mar 2023 11:57:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v4 8/9] arm64: dts: qcom: sa8775p-ride: enable the GNSS
- UART port
+Subject: Re: [PATCH v4 7/9] arm64: dts: qcom: sa8775p: add high-speed UART
+ nodes
 Content-Language: en-US
 To:     Bartosz Golaszewski <brgl@bgdev.pl>,
         Andy Gross <agross@kernel.org>,
@@ -67,9 +67,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 References: <20230308104009.260451-1-brgl@bgdev.pl>
- <20230308104009.260451-9-brgl@bgdev.pl>
+ <20230308104009.260451-8-brgl@bgdev.pl>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230308104009.260451-9-brgl@bgdev.pl>
+In-Reply-To: <20230308104009.260451-8-brgl@bgdev.pl>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,72 +87,66 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 8.03.2023 11:40, Bartosz Golaszewski wrote:
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Enable the high-speed UART port connected to the GNSS controller on the
-> sa8775p-adp development board.
+> Add two UART nodes that are known to be used by existing development
+> boards with this SoC.
 > 
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 31 +++++++++++++++++++++++++++
+>  1 file changed, 31 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 992864e3e0c8..5ebfe8c10eac 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -490,6 +490,21 @@ &clk_virt SLAVE_QUP_CORE_1 0>,
+>  				operating-points-v2 = <&qup_opp_table_100mhz>;
+>  				status = "disabled";
+>  			};
+> +
+> +			uart12: serial@a94000 {
+> +				compatible = "qcom,geni-uart";
+> +				reg = <0x0 0x00a94000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
+> +				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
+> +				clock-names = "se";
+> +				interconnects = <&clk_virt MASTER_QUP_CORE_1 QCOM_ICC_TAG_ALWAYS
+> +						 &clk_virt SLAVE_QUP_CORE_1 QCOM_ICC_TAG_ALWAYS>,
+> +						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+> +						 &config_noc SLAVE_QUP_1 QCOM_ICC_TAG_ALWAYS>;
+> +				interconnect-names = "qup-core", "qup-config";
+> +				power-domains = <&rpmhpd SA8775P_CX>;
+> +				status = "disabled";
+> +			};
+>  		};
+>  
+>  		qupv3_id_2: geniqup@8c0000 {
+> @@ -525,6 +540,22 @@ &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>,
+>  				status = "disabled";
+>  			};
+>  
+> +			uart17: serial@88c000 {
+> +				compatible = "qcom,geni-uart";
+> +				reg = <0x0 0x0088c000 0x0 0x4000>;
+> +				interrupts-extended = <&intc GIC_SPI 585 IRQ_TYPE_LEVEL_HIGH>,
+> +						      <&tlmm 94 IRQ_TYPE_LEVEL_HIGH>;
+This hunk is board-specific and only makes sense if bluetooth
+(or some other "important" peripheral) is connected to this
+uart. Generally the uart interrupt is the one coming from the GIC
+and the other one should probably go to the board dtsi.
 
 Konrad
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 33 +++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> index d01ca3a9ee37..cba7c8116141 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> @@ -13,6 +13,7 @@ / {
->  
->  	aliases {
->  		serial0 = &uart10;
-> +		serial1 = &uart12;
->  		i2c18 = &i2c18;
->  		spi16 = &spi16;
->  	};
-> @@ -66,6 +67,32 @@ qup_i2c18_default: qup-i2c18-state {
->  		drive-strength = <2>;
->  		bias-pull-up;
->  	};
+> +				clocks = <&gcc GCC_QUPV3_WRAP2_S3_CLK>;
+> +				clock-names = "se";
+> +				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
+> +						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
+> +						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+> +						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
+> +				interconnect-names = "qup-core", "qup-config";
+> +				power-domains = <&rpmhpd SA8775P_CX>;
+> +				status = "disabled";
+> +			};
 > +
-> +	qup_uart12_default: qup-uart12-state {
-> +		qup_uart12_cts: qup-uart12-cts-pins {
-> +			pins = "gpio52";
-> +			function = "qup1_se5";
-> +			bias-disable;
-> +		};
-> +
-> +		qup_uart12_rts: qup-uart12-rts-pins {
-> +			pins = "gpio53";
-> +			function = "qup1_se5";
-> +			bias-pull-down;
-> +		};
-> +
-> +		qup_uart12_tx: qup-uart12-tx-pins {
-> +			pins = "gpio54";
-> +			function = "qup1_se5";
-> +			bias-pull-up;
-> +		};
-> +
-> +		qup_uart12_rx: qup-uart12-rx-pins {
-> +			pins = "gpio55";
-> +			function = "qup1_se5";
-> +			bias-pull-down;
-> +		};
-> +	};
->  };
->  
->  &uart10 {
-> @@ -75,6 +102,12 @@ &uart10 {
->  	status = "okay";
->  };
->  
-> +&uart12 {
-> +	pinctrl-0 = <&qup_uart12_default>;
-> +	pinctrl-names = "default";
-> +	status = "okay";
-> +};
-> +
->  &xo_board_clk {
->  	clock-frequency = <38400000>;
->  };
+>  			i2c18: i2c@890000 {
+>  				compatible = "qcom,geni-i2c";
+>  				reg = <0x0 0x00890000 0x0 0x4000>;
