@@ -2,101 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D631B6B1664
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 00:17:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D9C936B16C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 00:47:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230173AbjCHXRN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 18:17:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36642 "EHLO
+        id S229835AbjCHXro (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 18:47:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229891AbjCHXRN (ORCPT
+        with ESMTP id S229572AbjCHXrn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 18:17:13 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5026C85346;
-        Wed,  8 Mar 2023 15:17:12 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id EE48FB81E2E;
-        Wed,  8 Mar 2023 23:17:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B66EC433EF;
-        Wed,  8 Mar 2023 23:17:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678317429;
-        bh=NmAkrHScLnTkuJqXt6bZ77v1FswLx79ftH2PnKG/MzQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mIGEjYo8FRg4ruvD0SpUwymB/BrCJyhUJC2i5rpF1yeKIdQWx2dmOJfUWtw9Ed3Id
-         J7PJRAcoKC4+44Xcm4z0RZmZuOXo5nUynJY+tdBSOebBBUHgUjzJhKpHvxJhMfGBfd
-         ERW/59pb9v6lzQ7iwl6Se1puzoQtyWHkrbuiuxvfTBu9rjyaJfgGoNDpQd3DVge69M
-         pZrDdsvnivZEqk2YVjs1qL2RxLEvnOyjVpBvSQ0ymd1mF7Jooi0/E6Bhw1jv+X/B3W
-         4Jj17CuWzNZqqHmkJ0BsVN2tWEIeidJ5fFgtjyJEzhmQpabHrmB2S+pZMfj6W98ful
-         72+9jyUK4Xzag==
-Date:   Wed, 8 Mar 2023 23:17:07 +0000
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org
-Subject: Re: [RFC PATCH 1/5] soc: qcom: Make the Qualcomm UFS/SDCC ICE a
- dedicated driver
-Message-ID: <ZAkXcyIlAhgdU3lF@gmail.com>
-References: <20230214120253.1098426-1-abel.vesa@linaro.org>
- <20230214120253.1098426-2-abel.vesa@linaro.org>
- <Y+3ZyVRowJplzm9t@sol.localdomain>
- <ZAkEEXHbmxiJf7Fu@linaro.org>
+        Wed, 8 Mar 2023 18:47:43 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27E53C0811
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 15:47:41 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id n2so98667lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 15:47:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678319259;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=M4O4DInYmnmPW3qkpEVN6D/y/D8gTnxRIuiXa1zYY4g=;
+        b=Uhrm33GLaIYiCIZB9lN3Hf7FHypuIe+bmVAXfcWDczO4QEFK511YiTw3Wn2dK2+AlN
+         Cs4kgHdnR5pQ49LrwqL8pH05iHknmkA8/m83rs9J6DwUsCLzAfnHu4ta4v+Bq2aRSPG3
+         7kjWLxDyQsT7HCmdOT4S7gqmfwySu9DtOJyC9DtVqT5u0ThgRC12FLV2UfBaaThQ1uMf
+         xFhne9O0JFfmtXLfapiCI7TYZujGmz370f6LmOkCfYt03cE+4g3JrAt6WB1qR3izmox9
+         OglFM75ZCRukJI+MXt2t8xAyLALliEri1FClEocF8P2IN3xPcs1D/V1oOwbuiGyP7fwQ
+         iTOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678319259;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=M4O4DInYmnmPW3qkpEVN6D/y/D8gTnxRIuiXa1zYY4g=;
+        b=aqLBARqqh8tgCT9DUUSk7/YVbhRnPRKiJyRUzLbJsWHLG3eaDUKcouWKFEfw6c1CND
+         +jE+US/vPBj2vRerh9jzAFJK1W43lrjJQWKl9BqjjSaJFgH9F1A7Ydpg5Na22hm4PJQ0
+         ldcoyJqXa1Krf+Z8+QRhcpj1UBLlPch+YKCQ/B98cSGMnOESilndiZTfYOq0PoMqe7JI
+         lr4i+/U1Oqd3dU4URuyxv/3rGC2+LJqxdRqaMNzsN5cfufQS86u5BirOTH+gh3b78xj8
+         b34qCiNz4c4YaQAV+kC+iJ7Yqi9o+dVTjs0IS3R1SVv5wb1yHsHd9omPh5HaDqgC0bf3
+         1chQ==
+X-Gm-Message-State: AO0yUKUpWfMyUVHQOJQqvZ6ZsiOpRNWJoC3hLH71yrhiMu8UA2L5Ej+U
+        F7F2vbcp/5LpO6RnZhPtREdn5w==
+X-Google-Smtp-Source: AK7set8SlhE25hMC6moDgRT3PPDqoQqG0ViLSQNOii7VJ8vKJE/dbOEejcP2OGn2P3LQoGPCFNYwpQ==
+X-Received: by 2002:ac2:4462:0:b0:4b5:8f03:a2bc with SMTP id y2-20020ac24462000000b004b58f03a2bcmr5360447lfl.9.1678319259415;
+        Wed, 08 Mar 2023 15:47:39 -0800 (PST)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id d3-20020ac25ec3000000b004db9dbe09c6sm2474998lfq.89.2023.03.08.15.47.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Mar 2023 15:47:38 -0800 (PST)
+Message-ID: <17ac3a17-7e54-991d-3f6e-e6cee7348ba6@linaro.org>
+Date:   Thu, 9 Mar 2023 00:47:37 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZAkEEXHbmxiJf7Fu@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] ARM: dts: qcom: apq8026-lg-lenok: add missing reserved
+ memory
+Content-Language: en-US
+To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230308-lenok-reserved-memory-v1-1-b8bf6ff01207@z3ntu.xyz>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230308-lenok-reserved-memory-v1-1-b8bf6ff01207@z3ntu.xyz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 08, 2023 at 11:54:25PM +0200, Abel Vesa wrote:
-> > Also, in both cases, how will the ICE clock be controlled?  Currently the ICE
-> > clock gets turned on and off by the UFS and eMMC drivers.  I don't see any logic
-> > in your new driver that turns the clock on and off.
+
+
+On 8.03.2023 22:06, Luca Weiss wrote:
+> Turns out these two memory regions also need to be avoided, otherwise
+> weird things will happen when Linux tries to use this memory.
 > 
-> I added clock enablement in v2. We can decide later on if the clocks
-> need to be disabled and when.
-
-To reduce power usage, the ICE clock should be disabled when the UFS (or eMMC)
-host controller clocks are disabled, as is currently the case.
-
-> > > +struct qcom_ice {
-> > > +	struct device *dev;
-> > > +	struct device_node *np;
-> > > +	void __iomem *base;
-> > > +
-> > > +	struct clk *core_clk;
-> > > +
-> > > +	bool supported;
-> > > +};
-> > 
-> > Shouldn't struct qcom_ice be private to the driver?
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+>  arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 > 
-> Nope. If the QCOM_INLINE_CRYPTO_ENGINE is not set, the consumer still
-> need to be able to call the ICE API (which in this case does really
-> nothing). Again, this allows the consumer drivers to keep clean of
-> unnecessary #ifdefs.
+> diff --git a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
+> index de2fb1c01b6e3..b82381229adf6 100644
+> --- a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
+> +++ b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
+> @@ -27,6 +27,16 @@ chosen {
+>  	};
+>  
+>  	reserved-memory {
+> +		sbl_region: sbl@2f00000 {
+oh that must have been fun
 
-But isn't struct qcom_ice only dereferenced by drivers/soc/qcom/ice.c?  If other
-.c files do not need it, the definition should be private to that file.
 
-- Eric
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+> +			reg = <0x02f00000 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		external_image_region: external-image@3100000 {
+> +			reg = <0x03100000 0x200000>;
+> +			no-map;
+> +		};
+> +
+>  		adsp_region: adsp@3300000 {
+>  			reg = <0x03300000 0x1400000>;
+>  			no-map;
+> 
+> ---
+> base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
+> change-id: 20230308-lenok-reserved-memory-b9373f9c8993
+> 
+> Best regards,
