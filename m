@@ -2,128 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 777066B001C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 08:45:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EAE16B0038
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 08:51:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229639AbjCHHpv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 02:45:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49664 "EHLO
+        id S229682AbjCHHv2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 02:51:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbjCHHpt (ORCPT
+        with ESMTP id S229501AbjCHHv1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 02:45:49 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50F4F9BA48
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 23:45:48 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id j11so20142874lfg.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 23:45:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678261546;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AFL3ZUb7HpahLDE8FfXA001OsdRV/Xs92oVS76+8kYw=;
-        b=zXKgDeV1enxfpTyMsDWf+08lPxrZhVG52NgFQopDBhqMWtn4uhlFcMMBHLrSVPGLrT
-         Ee+2i19gF62b3yc1tdEvwElZu2rSUQbRZE/LFyyVgibXnBuP81fKh54xMRfhY1QrlFyf
-         XtzNBmI5BwpSfR2KX925lNUlLLHBWewHsV5+fjHx8ILojDp0JXuEpWxEvP6lGPicPpFM
-         E2mV+uBWZ9/05ExW38foIvbmSu6vQTeFZwoxAJcYNHfdI80wIKUts22q7UdPmj0PaAMQ
-         f+Hutel/Wb9i7Lcvgw/opIG/Pm+CLKhyJ/V+AOXoX9rUir/r0oKRSzX2DlVqpzOhtRdY
-         BpNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678261546;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AFL3ZUb7HpahLDE8FfXA001OsdRV/Xs92oVS76+8kYw=;
-        b=4340u+HvPGxN0kofjwfZPwRGeRfPlKk/ydPIQj1ETDahQ8J6r7OVvfLcLP4/Pw+e6q
-         dou9QCKlpF+gvC0qswQ7RIYOB+TR3QvCeKCFJaWr0xC/yGwNw2ao/3pMdWaVOzjw4zhM
-         EhywxmxMyfeIJW9Etvq2A98pQH96Us5GYD0qUC7sPE2IcNF+kVuLBsaP6FNFRCgRRedx
-         kOKwjWfx7q35qdB5rGyDfbuvgH3JlChZ01oQzmrS2PUukDXRDFf9pGDnTl3mjMF0oJjD
-         eqsn8HCeLnZX9d5qRbWU9VDeQP1YRr08m40wn7PdPAHq4WiR15R5gbKjElF7XSpvJ8t4
-         e3Qw==
-X-Gm-Message-State: AO0yUKWxI4i7xyI1tH1RownmAvr6CC2TM5X2AOP2V6dupeKvhurAe1bK
-        nCBXDTY1mQyzNjg8e4u9QwUnxYbIzUFDAeAl5YU=
-X-Google-Smtp-Source: AK7set9fueMt93wtX8Sf+Pq3yfiV3O1MMRZAIydubcT3yM73j94cXzxjjri0Y+Qvya+N8kAqSLEt5g==
-X-Received: by 2002:ac2:5317:0:b0:4b5:61e8:8934 with SMTP id c23-20020ac25317000000b004b561e88934mr4724659lfh.64.1678261546608;
-        Tue, 07 Mar 2023 23:45:46 -0800 (PST)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id w25-20020ac24439000000b004d86808fd33sm2287696lfl.15.2023.03.07.23.45.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Mar 2023 23:45:46 -0800 (PST)
-Message-ID: <9858ecfc-6a51-71a9-70e7-dd1e3eb9ba65@linaro.org>
-Date:   Wed, 8 Mar 2023 08:45:44 +0100
+        Wed, 8 Mar 2023 02:51:27 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D27B5984FD;
+        Tue,  7 Mar 2023 23:51:16 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id EA377CE1E87;
+        Wed,  8 Mar 2023 07:51:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EACBC4339B;
+        Wed,  8 Mar 2023 07:51:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678261873;
+        bh=eDUO7aWiJI6PcUc6kJ44VSrhyl3mjhoGXUohXuPNExA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=tq3SX0oMDUYD7p+E0wpqhUjxSxcpKbK7SjqJP1wc/pObkFVJ2KHptlK/BKDWZ00gn
+         xTeGU7xPeJcEgmjF6J/jM+fbnOcx0OjXaP25beeSpYUUhbn204Jy7e4rlKfJUJXnAk
+         3zbmw043ihfxC20+FBXECrF+DRWbUGgWMhgjzYh1VrRWQk/yTU62xPqEvoVFtpdkdd
+         4dB4LbJA6iTKTSI3kQuT5iMCNFbMZIrajidnSspcHbSpQSTZEiPx5BTvpDBCgTWGi5
+         qkh1qHh9grDDZwXnNfQZjiWPIuy88i/iDOTXSX0bXPrNmnwU7IwE5ktxC9ll54iISt
+         cySXgmHkkAFGw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pZoab-0007bT-Vx; Wed, 08 Mar 2023 08:51:58 +0100
+Date:   Wed, 8 Mar 2023 08:51:57 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/4] serial: qcom-geni: fix mapping of empty DMA buffer
+Message-ID: <ZAg+neaKU51D59QJ@hovoldconsulting.com>
+References: <20230307164405.14218-1-johan+linaro@kernel.org>
+ <20230307164405.14218-4-johan+linaro@kernel.org>
+ <CAD=FV=VR5oCThAuc29Bum-VHQUcH_H+s4nr55YpJk1aYaqZKTQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] dt-bindings: interrupt-controller: Allow
- #power-domain-cells
-Content-Language: en-US
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, marijn.suijten@somainline.org,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230308011705.291337-1-konrad.dybcio@linaro.org>
- <CAAQ0ZWSXP59cgyHNkR8UfXRHqRrJGLxuNwMBh2N6=W_x18-BTg@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAAQ0ZWSXP59cgyHNkR8UfXRHqRrJGLxuNwMBh2N6=W_x18-BTg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <CAD=FV=VR5oCThAuc29Bum-VHQUcH_H+s4nr55YpJk1aYaqZKTQ@mail.gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Mar 07, 2023 at 10:41:46AM -0800, Doug Anderson wrote:
+> Hi,
+> 
+> On Tue, Mar 7, 2023 at 8:43 AM Johan Hovold <johan+linaro@kernel.org> wrote:
+> >
+> > Make sure that there is data in the ring buffer before trying to set up
+> > a zero-length DMA transfer.
+> >
+> > This specifically fixes the following warning when unmapping the empty
+> > buffer on the sc8280xp-crd:
+> >
+> >    WARNING: CPU: 0 PID: 138 at drivers/iommu/dma-iommu.c:1046 iommu_dma_unmap_page+0xbc/0xd8
+> >    ...
+> >    Call trace:
+> >     iommu_dma_unmap_page+0xbc/0xd8
+> >     dma_unmap_page_attrs+0x30/0x1c8
+> >     geni_se_tx_dma_unprep+0x28/0x38
+> >     qcom_geni_serial_isr+0x358/0x75c
+> >
+> > Fixes: 2aaa43c70778 ("tty: serial: qcom-geni-serial: add support for serial engine DMA")
+> > Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >  drivers/tty/serial/qcom_geni_serial.c | 3 +++
+> >  1 file changed, 3 insertions(+)
+> >
+> > diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> > index 2aa3872e6283..9871225b2f9b 100644
+> > --- a/drivers/tty/serial/qcom_geni_serial.c
+> > +++ b/drivers/tty/serial/qcom_geni_serial.c
+> > @@ -631,6 +631,9 @@ static void qcom_geni_serial_start_tx_dma(struct uart_port *uport)
+> >         if (port->tx_dma_addr)
+> >                 return;
+> >
+> > +       if (uart_circ_empty(xmit))
+> > +               return;
+> 
+> I guess you could remove the uart_circ_empty() test in
+> qcom_geni_serial_handle_tx_dma() now?
 
+I considered that, but decided to leave it in as it makes the flow in
+qcom_geni_serial_handle_tx_dma() a bit more obvious (and that function
+already handles the related uart_write_wakeup() which the check could
+potentially be combined with).
 
-On 8.03.2023 08:24, Shawn Guo wrote:
-> On Wed, Mar 8, 2023 at 9:17 AM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> MPM provides a single genpd. Allow #power-domain-cells = <0>.
+> In any case, with or without that:
 > 
-> Indeed! It was missing from the initial submission.  Thanks for fixing it up!
-> 
->>
->> Fixes: 54fc9851c0e0 ("dt-bindings: interrupt-controller: Add Qualcomm MPM support")
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  .../devicetree/bindings/interrupt-controller/qcom,mpm.yaml     | 3 +++
->>  1 file changed, 3 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
->> index 509d20c091af..4c470dc143e5 100644
->> --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
->> +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
->> @@ -62,6 +62,9 @@ properties:
->>          - description: MPM pin number
->>          - description: GIC SPI number for the MPM pin
->>
->> +  '#power-domain-cells':
-> 
-> Should we add it to the "required" list and examples?
-I was debating it.. it's definitely not *required*, as the
-irqchip part works even without it and then on SoCs with MPM
-but without PSCI the setup may be tricky..
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
-About the example, both yes/no are okay for me
+Thanks for reviewing.
 
-Konrad
-> 
-> Shawn
-> 
->> +    const: 0
->> +
->>  required:
->>    - compatible
->>    - reg
->> --
->> 2.39.2
->>
+Johan
