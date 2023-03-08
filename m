@@ -2,88 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C0B96B1597
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 23:49:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F3536B1642
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 00:11:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229672AbjCHWtv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 17:49:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52146 "EHLO
+        id S230331AbjCHXL0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 18:11:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229558AbjCHWth (ORCPT
+        with ESMTP id S230126AbjCHXLJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 17:49:37 -0500
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FAC5D1AF5;
-        Wed,  8 Mar 2023 14:49:26 -0800 (PST)
-Received: by mail-oo1-f43.google.com with SMTP id a23-20020a4ad5d7000000b005250867d3d9so15774oot.10;
-        Wed, 08 Mar 2023 14:49:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678315765;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T2TpnogMj4vUPaTlq7bpoDp3iLB6FDUzALqa0LC9Px0=;
-        b=V/HpQpiCQQUZ0qjDQyXRYg/FuvJjkUDCfI74QgPuSFVIL6LABE1wxLaE0WHyKRNPPO
-         tc9syNSWG0Y18ZdkkhgKaDFynPgfANJjAKwpPH55sSY/6qgSg5f4qWbh7M1Jxngnu10L
-         n3eESqFGU4vevT06m0qwooUvFRdPw074Rc2delV4Ge35GpiHK1GGD8kB9i3gix4OeW/L
-         oFMBi6ZK2X1vcuz9YIZI4vl/vCD7+lFHqDMhGbW4XfX/KrDdhq+wwAt3tkhn+Kv46IA8
-         zN9fs2FHdMuRE14th6EbX759F+zXHdVBukAGdPPYZZnCZDYyPrMmcd9kl/GyLh7BeQGv
-         nZFg==
-X-Gm-Message-State: AO0yUKWdOA2Ad8STC82bQhESQJz2AE9oV5L0XaeEtJHrsnRUYIJlJ128
-        2nzb87dYoiGB7LeqdOYpbQ==
-X-Google-Smtp-Source: AK7set8wFQCgQWACR9OuJZlNvOHih3Bj6M1zc2HG87rzCgIHYQRwdUMJEe+BZ3n169lN51V1SvrCaQ==
-X-Received: by 2002:a4a:b149:0:b0:525:4e79:8715 with SMTP id e9-20020a4ab149000000b005254e798715mr8320919ooo.8.1678315765466;
-        Wed, 08 Mar 2023 14:49:25 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id m29-20020a4a391d000000b00517a7ac36c8sm6745239ooa.24.2023.03.08.14.49.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Mar 2023 14:49:25 -0800 (PST)
-Received: (nullmailer pid 4013517 invoked by uid 1000);
-        Wed, 08 Mar 2023 22:49:24 -0000
-Date:   Wed, 8 Mar 2023 16:49:24 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Wed, 8 Mar 2023 18:11:09 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D6CC6923C;
+        Wed,  8 Mar 2023 15:10:41 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AF7856193B;
+        Wed,  8 Mar 2023 23:10:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F94C433EF;
+        Wed,  8 Mar 2023 23:10:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678317031;
+        bh=6K5Aos/pHDOzNcZcmESeumuhe0HreLjKYHuJ1XTrzPQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=k/DseVQbYHn/At0guNyNZP4BN8i6WzjB0uRmhQobxO94ZBF0jJgd1PQlMGc04OpGE
+         lIyKOJJTGkFOUXl1nCFzpKhe2MBgIyG30zjvFh8gaq/Ry3OWbr6iw/+DwdTHfdbfT6
+         g6tDn+K/sH73TtnH0pXB6xFjCYSDJE5U8ygmaBnmDVCUtS25eS1W9ltWXSYuZK1Lzi
+         iDbk9WM5rfiKALXn+gKk6Nwn52Qcpy8GlvtIpdkRhyG0wvRL1waJ4isIaHZAuLd/8b
+         zYsmc2akgBrq5ajRhZNYtg8BOomZdsybcO3o7ld6yFFSh3hJ8IslyB0hPBarBpdIEO
+         E4LzQ0XBIIc5A==
+Date:   Wed, 8 Mar 2023 23:10:29 +0000
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Danila Tikhonov <danila@jiaxyga.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH] regulator: dt-bindings: qcom,rpmh: combine PM6150L and
- PM8150L if-then
-Message-ID: <167831576358.4013320.10159171018922729938.robh@kernel.org>
-References: <20230305173535.18046-1-krzysztof.kozlowski@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org
+Subject: Re: [RFC PATCH v2 4/7] soc: qcom: Make the Qualcomm UFS/SDCC ICE a
+ dedicated driver
+Message-ID: <ZAkV5ZNeK5iHU0Uq@gmail.com>
+References: <20230308155838.1094920-1-abel.vesa@linaro.org>
+ <20230308155838.1094920-5-abel.vesa@linaro.org>
+ <ZAjppY2K0/XPBHxG@sol.localdomain>
+ <ZAkBwZNWMTsXlt+p@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230305173535.18046-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+In-Reply-To: <ZAkBwZNWMTsXlt+p@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Mar 08, 2023 at 11:44:33PM +0200, Abel Vesa wrote:
+> On 23-03-08 12:01:41, Eric Biggers wrote:
+> > On Wed, Mar 08, 2023 at 05:58:35PM +0200, Abel Vesa wrote:
+> > >  * Switched QCOM_INLINE_CRYPTO_ENGINE to tristate and made it built-in
+> > >    if any of the UFS or the SDHC drivers are built-in. This is to allow
+> > >    the API to be available even if the built-in driver doesn't have
+> > >    crypto enabled.
+> > [...]
+> > > diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> > > index a8f283086a21..c584369e9810 100644
+> > > --- a/drivers/soc/qcom/Kconfig
+> > > +++ b/drivers/soc/qcom/Kconfig
+> > > @@ -275,4 +275,10 @@ config QCOM_ICC_BWMON
+> > >  	  the fixed bandwidth votes from cpufreq (CPU nodes) thus achieve high
+> > >  	  memory throughput even with lower CPU frequencies.
+> > >  
+> > > +config QCOM_INLINE_CRYPTO_ENGINE
+> > > +	tristate
+> > > +	depends on SCSI_UFS_CRYPTO || MMC_CRYPTO
+> > > +	default y if SCSI_UFS_QCOM=y || MMC_SDHCI_MSM=y
+> > > +	select QCOM_SCM
+> > 
+> > What are the "depends on" and "default y" lines above for?
+> > 
+> > You're already selecting this from SCSI_UFS_QCOM and MSM_SDHCI_MSM, as I had
+> > suggested.  Isn't that enough?
+> 
+> We have the following:
+> (SCSI_UFS_QCOM && SCSI_UFS_CRYPTO) || (MMC_SDHCI_MSM && MMC_CRYPTO)
+> 
+> So lets take as example the scenario: (m && y) || (y && n).
+> 
+> The QCOM_INLINE_CRYPTO_ENGINE will be set to 'm' and the sdhci driver
+> will not be able to link properly since the ICE API is part of a module.
+> 
+> Therefore, if just one of SCSI_UFS_QCOM and MMC_SDHCI_MSM is built-in
+> and at least one of the crypto options are enabled, set the
+> QCOM_INLINE_CRYPTO_ENGINE to 'y' by default in order to make the
+> built-in one linkage will not fail.
+> 
 
-On Sun, 05 Mar 2023 18:35:35 +0100, Krzysztof Kozlowski wrote:
-> The supplies for PM6150L and PM8150L are the same, so they can be part
-> of one if-then block, for smaller code.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Cc: Danila Tikhonov <danila@jiaxyga.com>
-> ---
->  .../regulator/qcom,rpmh-regulator.yaml         | 18 +-----------------
->  1 file changed, 1 insertion(+), 17 deletions(-)
-> 
+That does not make sense.  If MMC_CRYPTO is disabled, then the sdhci-msm driver
+should not call any of the ICE APIs.  Likewise for ufs-qcom and SCSI_UFS_CRYPTO.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
-
+- Eric
