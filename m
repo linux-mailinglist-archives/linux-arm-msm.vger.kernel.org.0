@@ -2,167 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 649626B0834
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 14:15:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8ACA6B09AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 14:45:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229522AbjCHNPC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 08:15:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60320 "EHLO
+        id S229901AbjCHNp5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 08:45:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230403AbjCHNOb (ORCPT
+        with ESMTP id S229852AbjCHNpc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 08:14:31 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 400DED008C;
-        Wed,  8 Mar 2023 05:11:15 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 328CnaIV032421;
-        Wed, 8 Mar 2023 13:10:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=aAsuReQiNd2jwcSVqHIhRcJu0mkLCAPpVs0DGN7TsXo=;
- b=CuD7mWoe6Ek5hdfPR+77cE0tOQ4DKlVVHPvhjNjqcvH6udnRWzc3l4OFBWDxMhbJxqkg
- VW0dxmHPpePfbkTB/xjKMLYTXF9Ka6aEJLdrLDixj0FlQPT77kPa7TX/atv2Rlzu63/u
- TTiTxY1hwryWc8DXftola243ngLOWvRrtwsy8RrXO+lj2zkAuHdI+DECfNLfk7qWlZYn
- klJ2WZaX2PqkiZV6eIoikUV5ddaqCc9mLETueAbNV/N+QyitOiUqyb1ba2QSlWEJ3Moj
- H6A9c1lHYMYw8TW+yIgbSvnJDhC3RK0N6XT1DZoLmPV60mxvDzOpwIuu9LbK2d97o52/ 4w== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p6femhmau-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 08 Mar 2023 13:10:45 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 328DAiqI028779
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 8 Mar 2023 13:10:44 GMT
-Received: from [10.216.42.241] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 8 Mar 2023
- 05:10:38 -0800
-Message-ID: <97a12bba-27e8-2cab-a211-5ed9b4ce49b6@quicinc.com>
-Date:   Wed, 8 Mar 2023 18:40:33 +0530
+        Wed, 8 Mar 2023 08:45:32 -0500
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9F6D36082;
+        Wed,  8 Mar 2023 05:44:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:Message-Id
+        :Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=LxRacmfIvgaRbB0Z7H5JqLVFHGGbxKZooKh3Y/fevhQ=; b=OWyNqP5VtJqiLvOll6ZCZ/blLf
+        SgLyYURcHGgydwvt5+GLjluW6HSVvYRQj63d3S66GfiGdK7Ry4IVo1Tk0kBSCXCflguCicwh/QTQd
+        YxgHBe6GY1OD3lHB+QZvtcj9Nbj0rufg5Ebn4LJMWe7fZPmY11rqS6fPwdIQKry4ePsjMMCDmujRn
+        5cfLYSh2ui67tr4XT1aGr+Uf0qAIJuUqxEQw2uCaONcClNwewsGfqoWbJEA0k/oke4UGpfg14av2Y
+        HSJQRsgIVRkn6Fn40tS/lRcjyPM9qOYireUyhslSBm+SSSRNGbzO8zeOKeKXl3ai1NkL5dozOfadx
+        +0ZJnLUA==;
+Received: from [10.22.3.24] (helo=kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
+        id 1pZtZp-00FDCA-TN; Wed, 08 Mar 2023 14:11:29 +0100
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Subject: [PATCH v2 0/6] thermal: qcom: tsens: Fix MDM9607, add MSM8909
+Date:   Wed,  8 Mar 2023 14:10:35 +0100
+Message-Id: <20230308131041.124482-1-stephan.gerhold@kernkonzept.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v2 5/6] ARM: dts: qcom: sdx65-mtp: Enable PCIe PHY
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <lee@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <mani@kernel.org>,
-        <lpieralisi@kernel.org>, <kw@linux.com>, <bhelgaas@google.com>,
-        <manivannan.sadhasivam@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>
-References: <1678277993-18836-1-git-send-email-quic_rohiagar@quicinc.com>
- <1678277993-18836-6-git-send-email-quic_rohiagar@quicinc.com>
- <34e0dc8a-2879-b1c2-8567-8ac0cf0ced80@linaro.org>
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-In-Reply-To: <34e0dc8a-2879-b1c2-8567-8ac0cf0ced80@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9XQ2-K-apGTIETDH427-2Y8lUJjykygK
-X-Proofpoint-ORIG-GUID: 9XQ2-K-apGTIETDH427-2Y8lUJjykygK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-08_08,2023-03-08_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- bulkscore=0 clxscore=1015 malwarescore=0 priorityscore=1501
- impostorscore=0 adultscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0
- mlxlogscore=568 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303080112
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Make the MDM9607 thermal sensor support consistent with Qualcomm's
+vendor kernel (msm-3.18) by applying the correct default slope values
+and adding "correction factors" to the factory calibration values in
+the fuses. Use the same functionality to add the very similar MSM8909 SoC
+to the tsens driver.
 
-On 3/8/2023 6:08 PM, Konrad Dybcio wrote:
->
-> On 8.03.2023 13:19, Rohit Agarwal wrote:
->> Enable PCIe PHY on SDX65 MTP for PCIe EP. While at it,
->> updating status as last property for each node.
->>
->> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
->> ---
->>   arch/arm/boot/dts/qcom-sdx65-mtp.dts | 20 +++++++++++++++-----
->>   1 file changed, 15 insertions(+), 5 deletions(-)
->>
->> diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
->> index ed98c83..facb8e2 100644
->> --- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
->> +++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
->> @@ -245,13 +245,18 @@
->>   	status = "okay";
->>   };
->>   
->> -&qpic_bam {
->> +&pcie_phy {
->> +	vdda-phy-supply = <&vreg_l1b_1p2>;
->> +	vdda-pll-supply = <&vreg_l4b_0p88>;
->> +
->>   	status = "okay";
->>   };
->>   
->> -&qpic_nand {
->> +&qpic_bam {
->>   	status = "okay";
->> +};
->>   
->> +&qpic_nand {
->>   	nand@0 {
->>   		reg = <0>;
->>   
->> @@ -262,11 +267,14 @@
->>   		secure-regions = /bits/ 64 <0x500000 0x500000
->>   					    0xa00000 0xb00000>;
->>   	};
->> +
->> +	status = "okay";
-> Did you compiletest this?
+---
+Changes in v2:
+  - Rewrite on top of per-sensor nvmem cell changes that landed in 6.3
+  - Add patches to fix existing support for MDM9607
 
-So Sorry, Missed some of the patches for compiletest.
-Will update immediately.
+Stephan Gerhold (6):
+  thermal: qcom: tsens: Drop unused legacy structs
+  thermal: qcom: tsens-v0_1: Fix mdm9607 slope values
+  thermal: qcom: tsens-v0_1: Add mdm9607 correction offsets
+  dt-bindings: thermal: qcom-tsens: Drop redundant compatibles
+  dt-bindings: thermal: qcom-tsens: Add MSM8909 compatible
+  thermal: qcom: tsens-v0_1: Add MSM8909 data
 
-Thanks,
-Rohit.
->
-> Konrad
->>   };
->>   
->>   &remoteproc_mpss {
->> -	status = "okay";
->>   	memory-region = <&mpss_adsp_mem>;
->> +
->> +	status = "okay";
->>   };
->>   
->>   &usb {
->> @@ -278,14 +286,16 @@
->>   };
->>   
->>   &usb_hsphy {
->> -	status = "okay";
->>   	vdda-pll-supply = <&vreg_l4b_0p88>;
->>   	vdda33-supply = <&vreg_l10b_3p08>;
->>   	vdda18-supply = <&vreg_l5b_1p8>;
->> +
->> +	status = "okay";
->>   };
->>   
->>   &usb_qmpphy {
->> -	status = "okay";
->>   	vdda-phy-supply = <&vreg_l4b_0p88>;
->>   	vdda-pll-supply = <&vreg_l1b_1p2>;
->> +
->> +	status = "okay";
->>   };
+ .../bindings/thermal/qcom-tsens.yaml          | 23 +----
+ drivers/thermal/qcom/tsens-v0_1.c             | 97 +++++++++++--------
+ drivers/thermal/qcom/tsens-v1.c               | 22 -----
+ drivers/thermal/qcom/tsens.c                  | 19 +++-
+ drivers/thermal/qcom/tsens.h                  |  6 +-
+ 5 files changed, 84 insertions(+), 83 deletions(-)
+
+-- 
+2.30.2
+
