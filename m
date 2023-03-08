@@ -2,376 +2,304 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A291D6B0A35
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 14:57:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EC84D6B0A43
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 15:01:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231739AbjCHN5x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 08:57:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54694 "EHLO
+        id S232001AbjCHOBb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 09:01:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231945AbjCHN5a (ORCPT
+        with ESMTP id S231816AbjCHOBE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 08:57:30 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F09995BD89;
-        Wed,  8 Mar 2023 05:55:57 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 328CkLh9001219;
-        Wed, 8 Mar 2023 13:54:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=2LEm1rlOKk4SFDtjTM+UU6Fh8rO/dnWJ0pWJPyDocQ8=;
- b=morZcsTf0LCCrrAt6GU0IIbiL4I4ka+k9ox6mUg0WRaNsff1eHEQBXNKRYye2u1z38KF
- KoA2m1EGmpEemVr/oguPahBolKqrTeckwVRTnqS6mWvYEg1ZL5d02SixWhYoPYjzYWRB
- HQ+ft7dEJMDwODCNc/+Wqutl98hVcIfv3nLu5urCLX/1Y7vwVrH3phvSPBGi0wrfn1ca
- 1ylsUwltm98Ne9/Xo9mm2y5pLxgIiAqqqvScnviWTmd+28qiEd5MDJ+w4qeyz6YXOtVR
- L6Fe7A1VdfRsc6imA3ub1HPsXhECqN9X7yoYgLFVw/7flwslhMHDIFs3Ol8Hm4/mJmTV UA== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p6fg2htjw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 08 Mar 2023 13:54:55 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 328Dsqai004236;
-        Wed, 8 Mar 2023 13:54:52 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3p4fftc0g6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 08 Mar 2023 13:54:52 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 328Dspvf004221;
-        Wed, 8 Mar 2023 13:54:51 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 328Dspq3004216;
-        Wed, 08 Mar 2023 13:54:51 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
-        id DEC834FB4; Wed,  8 Mar 2023 19:24:50 +0530 (+0530)
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>
-Subject: [PATCH v2 2/2] phy: qcom-qmp: Add support for SDX65 QMP PCIe PHY
-Date:   Wed,  8 Mar 2023 19:24:48 +0530
-Message-Id: <1678283688-4020-3-git-send-email-quic_rohiagar@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1678283688-4020-1-git-send-email-quic_rohiagar@quicinc.com>
-References: <1678283688-4020-1-git-send-email-quic_rohiagar@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nz9Dx2Axq3VBMew19PLnxqprrXbKHREB
-X-Proofpoint-ORIG-GUID: nz9Dx2Axq3VBMew19PLnxqprrXbKHREB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-08_08,2023-03-08_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- mlxlogscore=999 priorityscore=1501 lowpriorityscore=0 adultscore=0
- malwarescore=0 impostorscore=0 spamscore=0 phishscore=0 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303080118
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
-        SPF_NONE,UPPERCASE_50_75,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.6
+        Wed, 8 Mar 2023 09:01:04 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E03D4559CC;
+        Wed,  8 Mar 2023 05:59:41 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id p26so9851904wmc.4;
+        Wed, 08 Mar 2023 05:59:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678283980;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=26JRsQbm8LklpGgTHZk/N66FsR+GeBLWZuEGhgsGUwk=;
+        b=p5uzC325NbrV4IPvJDKa8wbAU5VpPu77CJW86xuFYddoyuzih6rHfOxP5ioMHhPBA0
+         tBHFwJR0+fpLqjJMN6SpZahgJV4cZImJt7P99kNYHt7iWSybuIPQf99Rke5kLtitSQQu
+         IwmrHq0cAab45bjb5447GBdBgqzyUprsRfK+2Bvp0fIx3MqrB8uM3gyVE1WGmgdoVEtA
+         W8NxD5WVIgIDafCvp6QyVR5bsgxG6NuHEyCvtZX6rx+6kI9YorSZkmf1cXhgiwda7ncs
+         A0XoYOfUq0INkqNJC8vprAC9Ll1JZTQUrTwiz6EqUDQQcEAdSzwe5Yvdy8fSnvsm6vwj
+         NvKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678283980;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=26JRsQbm8LklpGgTHZk/N66FsR+GeBLWZuEGhgsGUwk=;
+        b=qRIs/v7ErRe81bbJbtmwDvodkRli3y1Twdb8g+p9ChWWdi4AKMbRM/k2i3nhwQIpn+
+         CY/TjGvxhEAmxNaFiNE/FdpwPY4orq421C6DazP9K4bWzLDVpuGgjsY9+rU+9J0DhqUE
+         R915CoKM5bpy/roJCpyvLOVkQdRj9newkU+FYy/f5Wj5XV88LYw5jKZPz3NhOuM6p3fb
+         J0YEzFXY94uwsdf4aUQgVSrYcd8Djrv4cXg6yuNED4kpfHqd4/RS+4RLmasi88GNW2ye
+         pronJH91YiOzBmwzF2aPm7tVo92jdt+rVfJJg0b0CLEwCN8xQV0sKp72f8E9mfPtjkVf
+         VUqw==
+X-Gm-Message-State: AO0yUKV8wn29gEQAjU3ncFloswGWA/NTgF1XT2P6ZXBNgQ+193vISOFq
+        u427p78OG6wCY4iXQpdDb4I=
+X-Google-Smtp-Source: AK7set9jWxQwohKUg0VMQGvHSKNeuRt3lE+H+gDDIqupEr1qrzG0tc2S1P2gagh5jGICDfIUvTvdmQ==
+X-Received: by 2002:a05:600c:46ce:b0:3eb:383c:187d with SMTP id q14-20020a05600c46ce00b003eb383c187dmr16485464wmo.27.1678283980349;
+        Wed, 08 Mar 2023 05:59:40 -0800 (PST)
+Received: from [10.28.0.5] ([194.126.177.75])
+        by smtp.gmail.com with ESMTPSA id v2-20020adfe282000000b002c7066a6f77sm15144142wri.31.2023.03.08.05.59.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Mar 2023 05:59:39 -0800 (PST)
+Message-ID: <fa9cfc41-1d6c-1003-e6d9-6a1545487177@gmail.com>
+Date:   Wed, 8 Mar 2023 14:59:38 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3 2/4] firmware: Add support for Qualcomm Secure
+ Execution Environment SCM interface
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Johan Hovold <johan@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Sumit Garg <sumit.garg@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230305022119.1331495-1-luzmaximilian@gmail.com>
+ <20230305022119.1331495-3-luzmaximilian@gmail.com>
+ <84e6cfd8-ee4b-a5f4-5249-d87df9909246@linaro.org>
+From:   Maximilian Luz <luzmaximilian@gmail.com>
+In-Reply-To: <84e6cfd8-ee4b-a5f4-5249-d87df9909246@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The PCIe PHY version used in SDX65 is v5.20 which has different register
-offsets compared to the v5.0x and v4.0x PHYs. So separate register defines are
-used for init sequence and PHY status.
+On 3/7/23 16:32, Dmitry Baryshkov wrote:
+> On 05/03/2023 04:21, Maximilian Luz wrote:
 
-Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
----
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           | 165 +++++++++++++++++++++
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h |   3 +
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5_20.h      |   1 +
- .../phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v5_20.h |  24 +++
- 4 files changed, 193 insertions(+)
+[...]
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 5182aea..e6c19fae 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1224,6 +1224,139 @@ static const struct qmp_phy_init_tbl sdx55_qmp_pcie_pcs_misc_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V4_20_PCS_LANE1_INSIG_MX_CTRL2, 0x00),
- };
- 
-+static const struct qmp_phy_init_tbl sdx65_qmp_pcie_serdes_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BG_TIMER, 0x02),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x14),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYS_CLK_CTRL, 0x07),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_IVCO, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE0, 0x27),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE1, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_RCTRL_MODE0, 0x17),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_RCTRL_MODE1, 0x19),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE1, 0x03),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYSCLK_EN_SEL, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP_EN, 0x46),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP_CFG, 0x04),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP1_MODE0, 0xff),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE0, 0x04),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP1_MODE1, 0xff),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE1, 0x09),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_DEC_START_MODE0, 0x19),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_DEC_START_MODE1, 0x28),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN0_MODE0, 0xfb),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN1_MODE0, 0x01),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN0_MODE1, 0xfb),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN1_MODE1, 0x01),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_VCO_TUNE_MAP, 0x02),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_HSCLK_SEL, 0x12),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_HSCLK_HS_SWITCH_SEL, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CORECLK_DIV_MODE0, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CORECLK_DIV_MODE1, 0x04),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CORE_CLK_EN, 0x60),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CMN_MISC1, 0x88),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CMN_CONFIG, 0x06),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CMN_MODE, 0x14),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CMN_MODE_CONTD, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_VCO_DC_LEVEL_CTRL, 0x0f),
-+};
-+
-+static const struct qmp_phy_init_tbl sdx65_qmp_pcie_tx_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_TX_LANE_MODE_1, 0x05),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_TX_LANE_MODE_2, 0xf6),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_TX_LANE_MODE_3, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_TX_VMODE_CTRL1, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_TX_PI_QEC_CTRL, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_TX_RES_CODE_LANE_OFFSET_TX, 0x1a),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_TX_RES_CODE_LANE_OFFSET_RX, 0x0c),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_TX_RCV_DETECT_LVL_2, 0x12),
-+};
-+
-+static const struct qmp_phy_init_tbl sdx65_qmp_pcie_rx_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_AUX_DATA_THRESH_BIN_RATE_0_1, 0x3f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_DFE_1, 0x06),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_DFE_2, 0x06),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_TX_ADAPT_PRE_THRESH1, 0x3e),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_TX_ADAPT_PRE_THRESH2, 0x1e),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_TX_ADAPT_POST_THRESH1, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_TX_ADAPT_POST_THRESH2, 0x1f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_TX_ADAPT_MAIN_THRESH1, 0x02),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_TX_ADAPT_MAIN_THRESH2, 0x1d),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_VGA_CAL_CNTRL1, 0x44),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_VGA_CAL_CNTRL2, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_EQU_ADAPTOR_CNTRL2, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_EQU_ADAPTOR_CNTRL3, 0x4a),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_EQ_OFFSET_ADAPTOR_CNTRL1, 0x74),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_OFFSET_ADAPTOR_CNTRL2, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_SIGDET_ENABLES, 0x1c),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_SIGDET_CNTRL, 0x03),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_SIGDET_DEGLITCH_CNTRL, 0x14),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B0, 0x04),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B1, 0xcc),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B2, 0x12),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B3, 0xcc),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B4, 0x64),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B5, 0x4a),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B6, 0x29),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_PHPRE_CTRL, 0x20),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_DCC_CTRL1, 0x0c),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MARG_COARSE_THRESH1_RATE210, 0x1f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MARG_COARSE_THRESH1_RATE3, 0x1f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MARG_COARSE_THRESH2_RATE210, 0x1f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MARG_COARSE_THRESH2_RATE3, 0x1f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MARG_COARSE_THRESH3_RATE210, 0x1f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MARG_COARSE_THRESH3_RATE3, 0x1f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MARG_COARSE_THRESH4_RATE3, 0x1f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MARG_COARSE_THRESH5_RATE3, 0x1f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MARG_COARSE_THRESH6_RATE3, 0x1f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_UCDR_FO_GAIN_RATE2, 0x0c),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_UCDR_FO_GAIN_RATE3, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_UCDR_PI_CONTROLS, 0x16),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_AUX_DATA_THRESH_BIN_RATE_2_3, 0x37),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_IDAC_SAOFFSET, 0x10),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_DFE_3, 0x05),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_DFE_DAC_ENABLE1, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_DFE_DAC_ENABLE2, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_VGA_CAL_MAN_VAL, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_GM_CAL, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_EQU_ADAPTOR_CNTRL4, 0x0b),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE2_B0, 0xc5),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE2_B1, 0xac),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE2_B2, 0xb6),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE2_B3, 0xc0),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE2_B4, 0x07),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE2_B5, 0xfb),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE2_B6, 0x0d),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE3_B0, 0xc5),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE3_B1, 0xee),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE3_B2, 0xbf),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE3_B3, 0xa0),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE3_B4, 0x81),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE3_B5, 0xde),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_MODE_RATE3_B6, 0x7f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_DFE_EN_TIMER, 0x28),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_DFE_CTLE_POST_CAL_OFFSET, 0x38),
-+};
-+
-+static const struct qmp_phy_init_tbl sdx65_qmp_pcie_pcs_tbl[] = {
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_G3S2_PRE_GAIN, 0x2e),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_RX_SIGDET_LVL, 0xaa),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_EQ_CONFIG2, 0x0d),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_EQ_CONFIG4, 0x16),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_EQ_CONFIG5, 0x22),
-+};
-+
-+static const struct qmp_phy_init_tbl sdx65_qmp_pcie_pcs_misc_tbl[] = {
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_EQ_CONFIG1, 0x16),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_RX_MARGINING_CONFIG3, 0x28),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_OSC_DTCT_MODE2_CONFIG5, 0x08),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_G4_EQ_CONFIG2, 0x0d),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_G4_EQ_CONFIG5, 0x02),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_G4_PRE_GAIN, 0x2e),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_LANE1_INSIG_SW_CTRL2, 0x00),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_LANE1_INSIG_MX_CTRL2, 0x00),
-+};
-+
- static const struct qmp_phy_init_tbl sm8450_qmp_gen3_pcie_serdes_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYSCLK_EN_SEL, 0x08),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CLK_SELECT, 0x34),
-@@ -2387,6 +2520,35 @@ static const struct qmp_phy_cfg sm8350_qmp_gen3x2_pciephy_cfg = {
- 	.phy_status		= PHYSTATUS,
- };
- 
-+static const struct qmp_phy_cfg sdx65_qmp_pciephy_cfg = {
-+	.lanes                  = 2,
-+
-+	.offsets		= &qmp_pcie_offsets_v6_20,
-+
-+	.tbls = {
-+			.serdes         = sdx65_qmp_pcie_serdes_tbl,
-+			.serdes_num     = ARRAY_SIZE(sdx65_qmp_pcie_serdes_tbl),
-+			.tx             = sdx65_qmp_pcie_tx_tbl,
-+			.tx_num         = ARRAY_SIZE(sdx65_qmp_pcie_tx_tbl),
-+			.rx             = sdx65_qmp_pcie_rx_tbl,
-+			.rx_num         = ARRAY_SIZE(sdx65_qmp_pcie_rx_tbl),
-+			.pcs            = sdx65_qmp_pcie_pcs_tbl,
-+			.pcs_num        = ARRAY_SIZE(sdx65_qmp_pcie_pcs_tbl),
-+			.pcs_misc       = sdx65_qmp_pcie_pcs_misc_tbl,
-+			.pcs_misc_num   = ARRAY_SIZE(sdx65_qmp_pcie_pcs_misc_tbl),
-+		},
-+	.clk_list               = sdm845_pciephy_clk_l,
-+	.num_clks               = ARRAY_SIZE(sdm845_pciephy_clk_l),
-+	.reset_list             = sdm845_pciephy_reset_l,
-+	.num_resets             = ARRAY_SIZE(sdm845_pciephy_reset_l),
-+	.vreg_list              = qmp_phy_vreg_l,
-+	.num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs                   = pciephy_v5_regs_layout,
-+
-+	.pwrdn_ctrl             = SW_PWRDN,
-+	.phy_status             = PHYSTATUS_4_20,
-+};
-+
- static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
- 	.lanes			= 1,
- 
-@@ -3181,6 +3343,9 @@ static const struct of_device_id qmp_pcie_of_match_table[] = {
- 		.compatible = "qcom,sdx55-qmp-pcie-phy",
- 		.data = &sdx55_qmp_pciephy_cfg,
- 	}, {
-+		.compatible = "qcom,sdx65-qmp-gen4x2-pcie-phy",
-+		.data = &sdx65_qmp_pciephy_cfg,
-+	}, {
- 		.compatible = "qcom,sm8250-qmp-gen3x1-pcie-phy",
- 		.data = &sm8250_qmp_gen3x1_pciephy_cfg,
- 	}, {
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h
-index 3d9713d..a3a0567 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h
-@@ -12,8 +12,11 @@
- #define QPHY_V5_20_PCS_PCIE_OSC_DTCT_ACTIONS		0x090
- #define QPHY_V5_20_PCS_PCIE_EQ_CONFIG1			0x0a0
- #define QPHY_V5_20_PCS_PCIE_PRESET_P10_POST		0x0e0
-+#define QPHY_V5_20_PCS_PCIE_G4_EQ_CONFIG2		0x0fc
- #define QPHY_V5_20_PCS_PCIE_G4_EQ_CONFIG5		0x108
- #define QPHY_V5_20_PCS_PCIE_G4_PRE_GAIN			0x15c
- #define QPHY_V5_20_PCS_PCIE_RX_MARGINING_CONFIG3	0x184
-+#define QPHY_V5_20_PCS_LANE1_INSIG_SW_CTRL2		0xa24
-+#define QPHY_V5_20_PCS_LANE1_INSIG_MX_CTRL2		0xa28
- 
- #endif
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5_20.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5_20.h
-index 9a5a20d..f0754b6 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5_20.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5_20.h
-@@ -8,6 +8,7 @@
- 
- #define QPHY_V5_20_PCS_G3S2_PRE_GAIN			0x170
- #define QPHY_V5_20_PCS_RX_SIGDET_LVL			0x188
-+#define QPHY_V5_20_PCS_EQ_CONFIG2			0x1d8
- #define QPHY_V5_20_PCS_EQ_CONFIG4			0x1e0
- #define QPHY_V5_20_PCS_EQ_CONFIG5			0x1e4
- 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v5_20.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v5_20.h
-index 86c0110..c7b12c1 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v5_20.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v5_20.h
-@@ -11,6 +11,10 @@
- #define QSERDES_V5_20_TX_RES_CODE_LANE_OFFSET_RX	0x34
- #define QSERDES_V5_20_TX_LANE_MODE_1			0x78
- #define QSERDES_V5_20_TX_LANE_MODE_2			0x7c
-+#define QSERDES_V5_20_TX_LANE_MODE_3			0x80
-+#define QSERDES_V5_20_TX_RCV_DETECT_LVL_2		0x90
-+#define QSERDES_V5_20_TX_VMODE_CTRL1			0xb0
-+#define QSERDES_V5_20_TX_PI_QEC_CTRL			0xcc
- 
- /* Only for QMP V5_20 PHY - RX registers */
- #define QSERDES_V5_20_RX_UCDR_FO_GAIN_RATE2		0x008
-@@ -19,16 +23,33 @@
- #define QSERDES_V5_20_RX_AUX_DATA_THRESH_BIN_RATE_0_1	0x02c
- #define QSERDES_V5_20_RX_AUX_DATA_THRESH_BIN_RATE_2_3	0x030
- #define QSERDES_V5_20_RX_RX_IDAC_SAOFFSET		0x07c
-+#define QSERDES_V5_20_RX_DFE_1				0x088
-+#define QSERDES_V5_20_RX_DFE_2				0x08c
- #define QSERDES_V5_20_RX_DFE_3				0x090
- #define QSERDES_V5_20_RX_DFE_DAC_ENABLE1		0x0b4
-+#define QSERDES_V5_20_RX_TX_ADAPT_PRE_THRESH1		0x0bc
-+#define QSERDES_V5_20_RX_TX_ADAPT_PRE_THRESH2		0x0c0
- #define QSERDES_V5_20_RX_TX_ADAPT_POST_THRESH1		0x0c4
- #define QSERDES_V5_20_RX_TX_ADAPT_POST_THRESH2		0x0c8
-+#define QSERDES_V5_20_RX_TX_ADAPT_MAIN_THRESH1		0x0cc
-+#define QSERDES_V5_20_RX_TX_ADAPT_MAIN_THRESH2		0x0d0
-+#define QSERDES_V5_20_RX_VGA_CAL_CNTRL1			0x0d4
-+#define QSERDES_V5_20_RX_VGA_CAL_CNTRL2			0x0d8
- #define QSERDES_V5_20_RX_VGA_CAL_MAN_VAL		0x0dc
- #define QSERDES_V5_20_RX_GM_CAL				0x0ec
-+#define QSERDES_V5_20_RX_RX_EQU_ADAPTOR_CNTRL2		0x100
-+#define QSERDES_V5_20_RX_RX_EQU_ADAPTOR_CNTRL3		0x104
- #define QSERDES_V5_20_RX_RX_EQU_ADAPTOR_CNTRL4		0x108
-+#define QSERDES_V5_20_RX_RX_EQ_OFFSET_ADAPTOR_CNTRL1	0x118
-+#define QSERDES_V5_20_RX_RX_OFFSET_ADAPTOR_CNTRL2	0x11c
-+#define QSERDES_V5_20_RX_SIGDET_ENABLES			0x120
-+#define QSERDES_V5_20_RX_SIGDET_CNTRL			0x124
-+#define QSERDES_V5_20_RX_SIGDET_DEGLITCH_CNTRL		0x12c
-+#define QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B0		0x160
- #define QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B1		0x164
- #define QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B2		0x168
- #define QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B3		0x16c
-+#define QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B4		0x170
- #define QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B5		0x174
- #define QSERDES_V5_20_RX_RX_MODE_RATE_0_1_B6		0x178
- #define QSERDES_V5_20_RX_RX_MODE_RATE2_B0		0x17c
-@@ -46,7 +67,10 @@
- #define QSERDES_V5_20_RX_RX_MODE_RATE3_B5		0x1ac
- #define QSERDES_V5_20_RX_RX_MODE_RATE3_B6		0x1b0
- #define QSERDES_V5_20_RX_PHPRE_CTRL			0x1b4
-+#define QSERDES_V5_20_RX_DFE_DAC_ENABLE2		0x1b8
-+#define QSERDES_V5_20_RX_DFE_EN_TIMER			0x1bc
- #define QSERDES_V5_20_RX_DFE_CTLE_POST_CAL_OFFSET	0x1c0
-+#define QSERDES_V5_20_RX_DCC_CTRL1			0x1c4
- #define QSERDES_V5_20_RX_RX_MARG_COARSE_THRESH1_RATE210	0x1f4
- #define QSERDES_V5_20_RX_RX_MARG_COARSE_THRESH1_RATE3	0x1f8
- #define QSERDES_V5_20_RX_RX_MARG_COARSE_THRESH2_RATE210	0x1fc
--- 
-2.7.4
+>> +/* -- DMA helpers. ---------------------------------------------------------- */
+>> +
+>> +/* DMA requirements for QSEECOM SCM calls. */
+>> +#define QSEECOM_DMA_ALIGNMENT        8
+>> +#define QSEECOM_DMA_ALIGN(ptr)        ALIGN(ptr, QSEECOM_DMA_ALIGNMENT)
+>> +
+>> +/**
+>> + * struct qseecom_dma - DMA memory region.
+>> + * @size: Size of the memory region, in bytes.
+>> + * @virt: Pointer / virtual address to the memory, accessible by the kernel.
+>> + * @phys: Physical address of the memory region.
+>> + */
+>> +struct qseecom_dma {
+>> +    unsigned long size;
+> 
+> size_t ?
 
+Will fix.
+
+>> +    void *virt;
+>> +    dma_addr_t phys;
+>> +};
+> 
+> Do we really need this wrapper and the wrappers bellow? They look like a pure syntax sugar for me, hiding the dma functions from the user.
+
+The idea was that they take care of proper allocation. The Windows driver that
+I've reverse-engineered this from allocates memory in multiples of PAGE_SIZE,
+so I believe that this might be a requirement (at least on some systems). These
+functions are there to ensure that and with that prevent potential bugs by
+taking that responsibility from the caller.
+
+>> +
+>> +/**
+>> + * qseecom_dma_alloc() - Allocate a DMA-able memory region suitable for QSEECOM
+>> + * SCM calls.
+>> + * @dev:  The device used for DMA memory allocation.
+>> + * @dma:  Where to write the allocated memory addresses and size to.
+>> + * @size: Minimum size of the memory to be allocated.
+>> + * @gfp:  Flags used for allocation.
+>> + *
+>> + * Allocate a DMA-able memory region suitable for interaction with SEE
+>> + * services/applications and the TzOS. The provided size is treated as the
+>> + * minimum required size and rounded up, if necessary. The actually allocated
+>> + * memory region will be stored in @dma. Allocated memory must be freed via
+>> + * qseecom_dma_free().
+>> + *
+>> + * Return: Returns zero on success, -ENOMEM on allocation failure.
+>> + */
+>> +static inline int qseecom_dma_alloc(struct device *dev, struct qseecom_dma *dma,
+>> +                    unsigned long size, gfp_t gfp)
+> 
+> size_t size
+> 
+> gfp is not used
+
+Right, that should have been passed to dma_alloc_coherent(). Will fix that.
+
+>> +{
+>> +    size = PAGE_ALIGN(size);
+>> +
+>> +    dma->virt = dma_alloc_coherent(dev, size, &dma->phys, GFP_KERNEL);
+>> +    if (!dma->virt)
+>> +        return -ENOMEM;
+>> +
+>> +    dma->size = size;
+>> +    return 0;
+>> +}
+>> +
+>> +/**
+>> + * qseecom_dma_free() - Free a DMA memory region.
+>> + * @dev: The device used for allocation.
+>> + * @dma: The DMA region to be freed.
+>> + *
+>> + * Free a DMA region previously allocated via qseecom_dma_alloc(). Note that
+>> + * freeing sub-regions is not supported.
+>> + */
+>> +static inline void qseecom_dma_free(struct device *dev, struct qseecom_dma *dma)
+>> +{
+>> +    dma_free_coherent(dev, dma->size, dma->virt, dma->phys);
+>> +}
+>> +
+>> +/**
+>> + * qseecom_dma_realloc() - Re-allocate DMA memory region with the requested size.
+>> + * @dev:  The device used for allocation.
+>> + * @dma:  The region descriptor to be updated.
+>> + * @size: The new requested size.
+>> + * @gfp:  Flags used for allocation.
+>> + *
+>> + * Re-allocates a DMA memory region suitable for QSEECOM SCM calls to fit the
+>> + * requested amount of bytes, if necessary. Does nothing if the provided region
+>> + * already has enough space to store the requested data.
+>> + *
+>> + * See qseecom_dma_alloc() for details.
+>> + *
+>> + * Return: Returns zero on success, -ENOMEM on allocation failure.
+>> + */
+>> +static inline int qseecom_dma_realloc(struct device *dev, struct qseecom_dma *dma,
+>> +                      unsigned long size, gfp_t gfp)
+>> +{
+>> +    if (PAGE_ALIGN(size) <= dma->size)
+>> +        return 0;
+>> +
+>> +    qseecom_dma_free(dev, dma);
+>> +    return qseecom_dma_alloc(dev, dma, size, gfp);
+>> +}
+> 
+> I'll comment on this function when commenting patch 4.
+> 
+>> +
+>> +/**
+>> + * qseecom_dma_aligned() - Create a aligned DMA memory sub-region suitable for
+>> + * QSEECOM SCM calls.
+>> + * @base:   Base DMA memory region, in which the new region will reside.
+>> + * @out:    Descriptor to store the aligned sub-region in.
+>> + * @offset: The offset inside base region at which to place the new sub-region.
+>> + *
+>> + * Creates an aligned DMA memory region suitable for QSEECOM SCM calls at or
+>> + * after the given offset. The size of the sub-region will be set to the
+>> + * remaining size in the base region after alignment, i.e., the end of the
+>> + * sub-region will be equal the end of the base region.
+>> + *
+>> + * Return: Returns zero on success or -EINVAL if the new aligned memory address
+>> + * would point outside the base region.
+>> + */
+>> +static inline int qseecom_dma_aligned(const struct qseecom_dma *base, struct qseecom_dma *out,
+>> +                      unsigned long offset)
+>> +{
+>> +    void *aligned = (void *)QSEECOM_DMA_ALIGN((uintptr_t)base->virt + offset);
+>> +
+>> +    if (aligned - base->virt > base->size)
+>> +        return -EINVAL;
+>> +
+>> +    out->virt = aligned;
+>> +    out->phys = base->phys + (out->virt - base->virt);
+>> +    out->size = base->size - (out->virt - base->virt);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +
+>> +/* -- Common interface. ----------------------------------------------------- */
+>> +
+>> +struct qseecom_device {
+>> +    struct device *dev;
+>> +    struct mutex scm_call_lock;    /* Guards QSEECOM SCM calls. */
+> 
+> There can be only one instance of the qseecom call infrastructure. Make this mutex static in the qcom_scm.c
+
+Right, will do that.
+
+>> +};
+>> +
+>> +
+>> +/* -- Secure-OS SCM call interface. ----------------------------------------- */
+>> +
+>> +#define QSEECOM_TZ_OWNER_TZ_APPS        48
+>> +#define QSEECOM_TZ_OWNER_QSEE_OS        50
+>> +
+>> +#define QSEECOM_TZ_SVC_APP_ID_PLACEHOLDER    0
+>> +#define QSEECOM_TZ_SVC_APP_MGR            1
+>> +
+>> +enum qseecom_scm_result {
+>> +    QSEECOM_RESULT_SUCCESS            = 0,
+>> +    QSEECOM_RESULT_INCOMPLETE        = 1,
+>> +    QSEECOM_RESULT_BLOCKED_ON_LISTENER    = 2,
+>> +    QSEECOM_RESULT_FAILURE            = 0xFFFFFFFF,
+>> +};
+>> +
+>> +enum qseecom_scm_resp_type {
+>> +    QSEECOM_SCM_RES_APP_ID            = 0xEE01,
+>> +    QSEECOM_SCM_RES_QSEOS_LISTENER_ID    = 0xEE02,
+>> +};
+>> +
+>> +/**
+>> + * struct qseecom_scm_resp - QSEECOM SCM call response.
+>> + * @status:    Status of the SCM call. See &enum qseecom_scm_result.
+>> + * @resp_type: Type of the response. See &enum qseecom_scm_resp_type.
+>> + * @data:      Response data. The type of this data is given in @resp_type.
+>> + */
+>> +struct qseecom_scm_resp {
+>> +    u64 status;
+>> +    u64 resp_type;
+>> +    u64 data;
+>> +};
+>> +
+>> +int qseecom_scm_call(struct qseecom_device *qsee, const struct qcom_scm_desc *desc,
+>> +             struct qseecom_scm_resp *res);
+>> +
+>> +
+>> +/* -- Secure App interface. ------------------------------------------------- */
+>> +
+>> +#define QSEECOM_MAX_APP_NAME_SIZE            64
+>> +
+>> +int qseecom_app_get_id(struct qseecom_device *qsee, const char *app_name, u32 *app_id);
+>> +int qseecom_app_send(struct qseecom_device *qsee, u32 app_id, struct qseecom_dma *req,
+>> +             struct qseecom_dma *rsp);
+> 
+> I think that only these calls should be made public / available to other modules. qseecom_scm_call also is an internal helper.
+
+So move all calls to qcom_scm and only make these two public? Or move only
+qseecom_scm_call() to qcom_scm (which would require to make it public there,
+however). Or how would you want this to look?
+
+>> +
+>> +#endif /* _LINUX_QCOM_QSEECOM_H */
+> 
+
+Regards,
+Max
