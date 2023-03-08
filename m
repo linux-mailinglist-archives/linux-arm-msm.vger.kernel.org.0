@@ -2,109 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD4126AFC66
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 02:30:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 302336AFCD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 03:19:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229733AbjCHBaC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 20:30:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47218 "EHLO
+        id S229695AbjCHCS7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 21:18:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229840AbjCHBaB (ORCPT
+        with ESMTP id S229483AbjCHCS6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 20:30:01 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78F9993122
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 17:29:20 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id i9so19477504lfc.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 17:29:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678238940;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=wcH6ChrdybSOEpD7JCkvJREKmTq11gzbfL1luIuLXkc=;
-        b=WmCAqaprgGN011ev+tuC6gu8/acpauS9IYp7lJcpFioq7F2/WLgU3NW9A5dF9AwsrF
-         R5H6XwXd1tHuiypD7DoIr6e1pSNoLm166oGUlJrE0/jZXzBvDA99YeOjSsxpHed9J3z9
-         nBHt/Zp0C71yln6yjUpOdMrPVK9keRog1l816ixjn1WtnT7bibSa8UIipjd69TBX39Z7
-         nF5m5c2vIIP1TdG/w10l1p+OJXBVPY4ipVrF0iktNQJHHiIyzqxe9PxD2Y8yPn7DFIIo
-         CrnYHlL5H2GbGKBjDRJQALiMN0oifRnPbuQ9qK04rjlz2vLCLQnhH3EmKJXaZpY+fi99
-         GVXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678238940;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wcH6ChrdybSOEpD7JCkvJREKmTq11gzbfL1luIuLXkc=;
-        b=CT+YgfM3fj4a14q45WaWBEGfJt6/7QvD5hl5M8xHFKSNHz35qFaLSnZa9SVO196E7m
-         RnGq1vEeoFP6a8Wn5Zzyq+wXDYUfJHOft3MB1MN9RzUSUUXo3o2S/LVFF59wBf9wf8Zh
-         2uNA1hbTnx2eGyL9WKTxGZcM4HzKxDiZcLzAVet8Oqk+293pKKMjfnFwqXkjdmAhTpgJ
-         9sY1Yc4UVs/kPaH8FnKRTQJjfwL3Kk0dqM0SZvttU4M6Dh6D0WBcf12W+N62rQdQfANt
-         JUqjRSj7E1LyAOA4ZF3IXBeEp9DF6856kwm8FdUWySId9CSX0jnwIoHzCBQdIL7DRcMd
-         RucQ==
-X-Gm-Message-State: AO0yUKV0GjquplO6yMAjR+as2GqKE5lmOwttEj6hotGngBrvk9hqNiqR
-        t/SPx8SHnuNZnmCfwLcT2B4JMvfV+kUNepxf2UM=
-X-Google-Smtp-Source: AK7set/O2zOF0Eaq703LtV0Eck2mcIfZt4f+MvTQ56hwhaKSJtxi6wC+KRR0lHtAlI17pP5pDT60Rw==
-X-Received: by 2002:ac2:4ac9:0:b0:4dc:84dd:eb91 with SMTP id m9-20020ac24ac9000000b004dc84ddeb91mr5202676lfp.22.1678238939731;
-        Tue, 07 Mar 2023 17:28:59 -0800 (PST)
-Received: from localhost.localdomain (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id u17-20020ac25191000000b004db3aa3c542sm2174173lfi.47.2023.03.07.17.28.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 17:28:59 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH] dt-bindings: timer: armv7: Don't sanction address/size-cells values
-Date:   Wed,  8 Mar 2023 02:28:53 +0100
-Message-Id: <20230308012854.294939-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.2
+        Tue, 7 Mar 2023 21:18:58 -0500
+X-Greylist: delayed 472 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 07 Mar 2023 18:18:55 PST
+Received: from cstnet.cn (smtp80.cstnet.cn [159.226.251.80])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A9712A4033;
+        Tue,  7 Mar 2023 18:18:55 -0800 (PST)
+Received: from localhost.localdomain (unknown [124.16.138.125])
+        by APP-01 (Coremail) with SMTP id qwCowAAHDUmR7gdkilbQDA--.15016S2;
+        Wed, 08 Mar 2023 10:10:25 +0800 (CST)
+From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
+To:     johan+linaro@kernel.org
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Subject: Re: [PATCH 01/10] Revert "drm/msm: Add missing check and destroy for alloc_ordered_workqueue"
+Date:   Wed,  8 Mar 2023 10:10:24 +0800
+Message-Id: <20230308021024.13566-1-jiasheng@iscas.ac.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+X-CM-TRANSID: qwCowAAHDUmR7gdkilbQDA--.15016S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrZw4rtFW5Cr1UKF4Uury5CFg_yoWDuFb_Wr
+        yS93yUG3yDKFyDGw4Fqr1fWrnaka1SvFyxJrnxJrs3tryfArn5uw4DJr9a9r1xG340qFnI
+        9F1UJF42vr1S9jkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUIcSsGvfJTRUUUbVAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+        6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+        A2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
+        Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AKxVW8Jr
+        0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
+        6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr
+        0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E
+        8cxan2IY04v7MxkIecxEwVAFwVW8JwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbV
+        WUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF
+        67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42
+        IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF
+        0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxh
+        VjvjDU0xZFpf9x0JUHWlkUUUUU=
+X-Originating-IP: [124.16.138.125]
+X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The driver itself does not read the -cells values (and frankly, it
-shouldn't), so there's little sense in only allowing [1, 2] x [1].
-Allow any values.
+On Mon, 06 Mar 2023 18:07:13 +0800, Johan Hovold wrote:
+> This reverts commit 643b7d0869cc7f1f7a5ac7ca6bd25d88f54e31d0.
 
-Fixes: 4d2bb3e65035 ("dt-bindings: timer: Convert ARM timer bindings to json-schema")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- .../devicetree/bindings/timer/arm,arch_timer_mmio.yaml      | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+The commit not only adds the allocation sanity check, but also adds the
+destroy_workqueue to release the allocated priv->wq.
+Therefore, revert the commit will cause memory leak.
 
-diff --git a/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml b/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml
-index f6efa48c4256..236e2a05c1ad 100644
---- a/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml
-+++ b/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml
-@@ -26,11 +26,9 @@ properties:
-     maxItems: 1
-     description: The control frame base address
- 
--  '#address-cells':
--    enum: [1, 2]
-+  '#address-cells': true
- 
--  '#size-cells':
--    const: 1
-+  '#size-cells': true
- 
-   ranges: true
- 
--- 
-2.39.2
+> A recent patch that tried to fix up the msm_drm_init() paths with
+> respect to the workqueue but only ended up making things worse:
+> 
+> First, the newly added calls to msm_drm_uninit() on early errors would
+> trigger NULL-pointer dereferences, for example, as the kms pointer would
+> not have been initialised. (Note that these paths were also modified by
+> a second broken error handling patch which in effect cancelled out this
+> part when merged.)
+
+There is a check for the kms pointer to avoid NULL-pointer dereference in
+the msm_drm_uninit().
+
+> Second, the newly added allocation sanity check would still leak the
+> previously allocated drm device.
+
+The ddev is allocated by drm_dev_alloc which support automatic cleanup.
+
+Thanks,
+Jiang
 
