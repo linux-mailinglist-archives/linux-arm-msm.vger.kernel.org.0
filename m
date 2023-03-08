@@ -2,70 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98D0E6B03AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 11:05:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AA6D6B03BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 11:10:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230021AbjCHKFJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 05:05:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60348 "EHLO
+        id S230082AbjCHKKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 05:10:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230317AbjCHKEy (ORCPT
+        with ESMTP id S230388AbjCHKJ6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 05:04:54 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE4649E64E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 02:04:50 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id s20so20589506lfb.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 02:04:50 -0800 (PST)
+        Wed, 8 Mar 2023 05:09:58 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 889F990B47
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 02:09:52 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id g17so20644504lfv.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 02:09:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678269889;
+        d=linaro.org; s=google; t=1678270191;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=mWFsxFwVhSvF2tAKj3NHwOEqpw5p0HkmWs0foz0pDZY=;
-        b=erwupAxvDOxXVOj8/ykksCMf2Z4w0WPsUhgizUqPAysFg/85cO6cilSYHfUBqzr5H1
-         Ma2NzZ0ZKav/qwAj9KVraK2g75OtOjCG09j3fSPzFfOu4aZrs1iculEkKpuHPy/sOHo/
-         98mFiceKRg+TSjvNVX8XmtqSgm5ppSc7PT2zfKKMkbxpXDULIXjmoFKSuM0iTf0CMcxL
-         n9k8bGFoXR74IfnqBjF+R4byAU14W0TTKeTjEQpxzpzIskZ0AsK6cRnZXEUW2goz03ug
-         3d5xw1i9YWggJ4RCT0ZyIxMDHdE8Ef0PJmrGgghLOl7X90PEkgIL1pGivP/1Sr0QG84i
-         XEng==
+        bh=48aNbwgEHUhRck6RQPE3THIY0DWr0lbu5a/+Lgdggd4=;
+        b=ZpIS/ppyxfpXVtWdulOE8xfF9Trl8FC1LTCOGkEGgcYDHAzfMZ0atkilaKPxpJvAWN
+         8/r5IBkuBVTlKiuk/0IvmuJAe/0NNMQYwsfpqBSj/aON3fvWkOMzOyYK+HPszgxKdE8O
+         WLY8W94YzAgaMh+USZUe+iWyNB5gTgdpKEs5GIqQoPXHWoze4mRx0MVGcnXcu2/LVKv0
+         vJaRoJcdxIvGFklGv398ovf9T0BKN+aEFVYbpLH1xzZV3oUIFlzD9m0AAWBOP5G09DxY
+         sMmb9q7McAkQUVwwtQ/fJfjkAFsllWEGOgB+ey8DZ6yJB62xIjqCpKEBBQ7FNgx1+nRn
+         ldTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678269889;
+        d=1e100.net; s=20210112; t=1678270191;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mWFsxFwVhSvF2tAKj3NHwOEqpw5p0HkmWs0foz0pDZY=;
-        b=iR67aSAYR26P/krZ3jcYQAvvz4eXybbjss+epAHqmyVo5FMlGmIQHfmdxlsg4A03by
-         GPvUJ6UbEOEvJ/Z9nYWVvCw9vPFCYF54mP3ss3OAStS5WpN2wapyRLCzjWoZYNSlIcqN
-         kLhv2tqDPu+a4fQW4hdUqS9uqcRtkNeuQ8M+hoeMjwI26hgIISmkvgdenwYWvJLGho8v
-         sSdo/wt+pVtwKlYea8xtMZbk5GpWwTa407E3iXXbgAw9UONzz+qny5OXxAgoa4wbiXDv
-         EoB9MWjTR7vcxhBBB4iw5/H6C83U8KwBFnhN5BhnsrboKOLluen7P8Eff7lll8buQuv2
-         l+Dw==
-X-Gm-Message-State: AO0yUKXG4bnj9a4PVc0bZKU7rKOKeFxkHgQE+wQxXngNDECFgx2vWk9A
-        sWL8SYfT6iDbyW/QlJMSh1PpgA==
-X-Google-Smtp-Source: AK7set/3DbXL/15LtNeEfZzRF6XvdQIUlZ9EDlQo3opU2yBVuA22cY5ZBZqtpmBAPCOHczkZFPgQcg==
-X-Received: by 2002:a19:a409:0:b0:4e7:fa9a:4d3c with SMTP id q9-20020a19a409000000b004e7fa9a4d3cmr3952540lfc.16.1678269888787;
-        Wed, 08 Mar 2023 02:04:48 -0800 (PST)
+        bh=48aNbwgEHUhRck6RQPE3THIY0DWr0lbu5a/+Lgdggd4=;
+        b=Nq4IsLWqhIXgePON5/i0qyUhwB71bAb5hfhvdhk6f9u1q9M7uhW2t1N7VXpEyUNKib
+         D7AqU7QmykBaOi9w27awOoQikvDE4R8lPf38/iWRiQG7NAc5yzEDPN1Zl5nYtKhR/KiD
+         yHThGqG26W/E/47L82RvZ/+I3Qu4wjqgabCMPeVeOFue5+y6CAL7ExU4CFlztGH0egd8
+         EVZ+uA6NWZpLJVDMNWsvvOXybjhyT/zRiEBFIImu+YxYytnICUBd47NgWyqN9jqvS12D
+         AGRLNDi097yi/IxhlGUtfeHHja/vwacnOis20ITmurP/AIwStS1S02kwcPF4R9H4O1Ah
+         gXDw==
+X-Gm-Message-State: AO0yUKXdLVVAE/HGpiUnFD95TJtI85Yq3iAqQ5XZZf07xR5S9KYSl04D
+        aVg5+5ST3WT3Z3WDnXtkJkozlg==
+X-Google-Smtp-Source: AK7set/s4WTptWdpKAuGcr/1Ufve3MJkvhM6ta3Z9PV0H8GqEWXsPUHjTWDVZBqRuABACPYawiXzmA==
+X-Received: by 2002:ac2:558e:0:b0:4dc:852d:9b88 with SMTP id v14-20020ac2558e000000b004dc852d9b88mr4906462lfg.45.1678270190690;
+        Wed, 08 Mar 2023 02:09:50 -0800 (PST)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id q15-20020ac2510f000000b004cb8de497ffsm2275424lfb.154.2023.03.08.02.04.47
+        by smtp.gmail.com with ESMTPSA id d21-20020ac25455000000b004dc7fe3a2d3sm2283801lfn.135.2023.03.08.02.09.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 02:04:48 -0800 (PST)
-Message-ID: <6b35ba80-3fc8-8815-60e4-49a9b8f443d7@linaro.org>
-Date:   Wed, 8 Mar 2023 11:04:47 +0100
+        Wed, 08 Mar 2023 02:09:50 -0800 (PST)
+Message-ID: <25c17af5-8f6b-a2c3-dab3-f9bc69711db7@linaro.org>
+Date:   Wed, 8 Mar 2023 11:09:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm8550: Mark UFS controller as cache
- coherent
+Subject: Re: [PATCH v7 3/6] phy: qcom-qmp: Add SM6125 UFS PHY support
 Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+To:     Lux Aliaga <they@mint.lgbt>, agross@kernel.org,
         andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230308054630.7202-1-manivannan.sadhasivam@linaro.org>
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        kishon@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
+        bvanassche@acm.org, keescook@chromium.org, tony.luck@intel.com,
+        gpiccoli@igalia.com
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-scsi@vger.kernel.org, linux-hardening@vger.kernel.org,
+        phone-devel@vger.kernel.org, martin.botka@somainline.org,
+        marijn.suijten@somainline.org
+References: <20230306170817.3806-1-they@mint.lgbt>
+ <20230306170817.3806-4-they@mint.lgbt>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230308054630.7202-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20230306170817.3806-4-they@mint.lgbt>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,30 +87,55 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 8.03.2023 06:46, Manivannan Sadhasivam wrote:
-> The UFS controller on SM8550 supports cache coherency, hence add the
-> "dma-coherent" property to mark it as such.
+On 6.03.2023 18:08, Lux Aliaga wrote:
+> The SM6125 UFS PHY is compatible with the one from SM6115. Add a
+> compatible for it and modify the config from SM6115 to make them
+> compatible with the SC8280XP binding
 > 
-> Fixes: 35cf1aaab169 ("arm64: dts: qcom: sm8550: Add UFS host controller and phy nodes")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Lux Aliaga <they@mint.lgbt>
+> Reviewed-by: Martin Botka <martin.botka@somainline.org>
 > ---
-Cc: stable@vger.kernel.org # 6.2
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> index 318eea35b972..44c29fdfc551 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> @@ -620,6 +620,13 @@ static const char * const qmp_phy_vreg_l[] = {
+>  	"vdda-phy", "vdda-pll",
+>  };
+>  
+> +static const struct qmp_ufs_offsets qmp_ufs_offsets_v3_660 = {
+> +	.serdes		= 0,
+> +	.pcs		= 0xc00,
+> +	.tx		= 0x400,
+> +	.rx		= 0x600,
+> +};
+> +
+>  static const struct qmp_ufs_offsets qmp_ufs_offsets_v5 = {
+>  	.serdes		= 0,
+>  	.pcs		= 0xc00,
+> @@ -693,6 +700,8 @@ static const struct qmp_phy_cfg sdm845_ufsphy_cfg = {
+>  static const struct qmp_phy_cfg sm6115_ufsphy_cfg = {
+>  	.lanes			= 1,
+>  
+> +	.offsets		= &qmp_ufs_offsets_v3_660,
+Will this not trigger OOB r/w for the users of qcom,sm6115-smp-ufs-phy
+which specify the regions separately (old binding style)?
 
 Konrad
->  arch/arm64/boot/dts/qcom/sm8550.dtsi | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index ff4d342c0725..5315e24fa525 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -1905,6 +1905,7 @@ ufs_mem_hc: ufs@1d84000 {
->  			required-opps = <&rpmhpd_opp_nom>;
->  
->  			iommus = <&apps_smmu 0x60 0x0>;
-> +			dma-coherent;
->  
->  			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
->  					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
+> +
+>  	.serdes_tbl		= sm6115_ufsphy_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(sm6115_ufsphy_serdes_tbl),
+>  	.tx_tbl			= sm6115_ufsphy_tx_tbl,
+> @@ -1172,6 +1181,9 @@ static const struct of_device_id qmp_ufs_of_match_table[] = {
+>  	}, {
+>  		.compatible = "qcom,sm6115-qmp-ufs-phy",
+>  		.data = &sm6115_ufsphy_cfg,
+> +	}, {
+> +		.compatible = "qcom,sm6125-qmp-ufs-phy",
+> +		.data = &sm6115_ufsphy_cfg,
+>  	}, {
+>  		.compatible = "qcom,sm6350-qmp-ufs-phy",
+>  		.data = &sdm845_ufsphy_cfg,
