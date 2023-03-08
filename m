@@ -2,227 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 191B86B1167
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 19:51:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E92D6B10C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 19:13:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230190AbjCHSvc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 13:51:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54224 "EHLO
+        id S229456AbjCHSNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 13:13:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229747AbjCHSv0 (ORCPT
+        with ESMTP id S230062AbjCHSNP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 13:51:26 -0500
-X-Greylist: delayed 2317 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 08 Mar 2023 10:51:18 PST
-Received: from 2.mo560.mail-out.ovh.net (2.mo560.mail-out.ovh.net [188.165.53.149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13E5A59E74
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 10:51:17 -0800 (PST)
-Received: from director8.ghost.mail-out.ovh.net (unknown [10.108.1.161])
-        by mo560.mail-out.ovh.net (Postfix) with ESMTP id D2CAF25EE6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 18:12:38 +0000 (UTC)
-Received: from ghost-submission-6684bf9d7b-cqldr (unknown [10.110.115.240])
-        by director8.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 1EF4D1FDE9;
-        Wed,  8 Mar 2023 18:12:33 +0000 (UTC)
-Received: from RCM-web1.webmail.mail.ovh.net ([176.31.238.120])
-        by ghost-submission-6684bf9d7b-cqldr with ESMTPSA
-        id NAwlBhHQCGQKAhoAZIOUGg
-        (envelope-from <rafal@milecki.pl>); Wed, 08 Mar 2023 18:12:33 +0000
-MIME-Version: 1.0
-Date:   Wed, 08 Mar 2023 19:12:32 +0100
-From:   =?UTF-8?Q?Rafa=C5=82_Mi=C5=82ecki?= <rafal@milecki.pl>
-To:     Miquel Raynal <miquel.raynal@bootlin.com>
-Cc:     =?UTF-8?Q?Rafa=C5=82_Mi=C5=82ecki?= <zajec5@gmail.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Wed, 8 Mar 2023 13:13:15 -0500
+Received: from smtp-fw-33001.amazon.com (smtp-fw-33001.amazon.com [207.171.190.10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFF0112BD2;
+        Wed,  8 Mar 2023 10:12:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1678299177; x=1709835177;
+  h=date:from:to:cc:message-id:references:mime-version:
+   content-transfer-encoding:in-reply-to:subject;
+  bh=XPPM5cG1Lc8BsmZVegn83SYjFbU765xkniaab9xstAw=;
+  b=jsk9bG+VLj4zCW4VEQsLkiOpSb2Qd9yvoC/OgmmCSXxI71Yx/2efhxp0
+   FDQS66VRqB71d2mD1yQL4i6xkyRMsWF26WJq7nIjNvfvFlDDMHhpwVGTJ
+   jc1328bvQ2vgpMldNN3WeP+NTOrCTMMYMS22k8uTmpMonMMB0ipuLB4y+
+   U=;
+X-IronPort-AV: E=Sophos;i="5.98,244,1673913600"; 
+   d="scan'208";a="268068705"
+Subject: Re: [PATCH] media: venus: dec: Fix capture formats enumeration order
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO email-inbound-relay-iad-1a-m6i4x-366646a6.us-east-1.amazon.com) ([10.43.8.6])
+  by smtp-border-fw-33001.sea14.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2023 18:12:55 +0000
+Received: from EX13MTAUWB002.ant.amazon.com (iad12-ws-svc-p26-lb9-vlan2.iad.amazon.com [10.40.163.34])
+        by email-inbound-relay-iad-1a-m6i4x-366646a6.us-east-1.amazon.com (Postfix) with ESMTPS id 97F6DA2702;
+        Wed,  8 Mar 2023 18:12:49 +0000 (UTC)
+Received: from EX19D047UWB002.ant.amazon.com (10.13.138.34) by
+ EX13MTAUWB002.ant.amazon.com (10.43.161.202) with Microsoft SMTP Server (TLS)
+ id 15.0.1497.45; Wed, 8 Mar 2023 18:12:48 +0000
+Received: from amazon.com (10.187.170.17) by EX19D047UWB002.ant.amazon.com
+ (10.13.138.34) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.24; Wed, 8 Mar
+ 2023 18:12:47 +0000
+Date:   Wed, 8 Mar 2023 11:12:45 -0700
+From:   Jordan Crouse <jorcrous@amazon.com>
+To:     Enric Balletbo i Serra <eballetb@redhat.com>
+CC:     Javier Martinez Canillas <javierm@redhat.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, Albert Esteve <aesteve@redhat.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Sergio Lopez <slp@redhat.com>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Evgeniy Polyakov <zbr@ioremap.net>,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rtc@vger.kernel.org
-Subject: Re: [PATCH V2] nvmem: add explicit config option to read OF fixed
- cells
-In-Reply-To: <20230308190636.7fabab9c@xps-13>
-References: <20230224072903.20945-1-zajec5@gmail.com>
- <20230308173256.3837b87b@xps-13>
- <91ff425b4c901648b1faf34c784f20ad@milecki.pl>
- <20230308190636.7fabab9c@xps-13>
-User-Agent: Roundcube Webmail/1.4.13
-Message-ID: <5974d28426057975e701c4a8454b5a13@milecki.pl>
-X-Sender: rafal@milecki.pl
-X-Originating-IP: 194.187.74.233
-X-Webmail-UserID: rafal@milecki.pl
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>
+Message-ID: <20230308181245.nbnwkdtdnsldd65l@amazon.com>
+References: <20230210081835.2054482-1-javierm@redhat.com>
+ <20230303220918.qr5ydbin3nye3qtz@amazon.com>
+ <87h6uydwel.fsf@minerva.mail-host-address-is-not-set>
+ <3d0315fa-14ca-dc34-81ae-467d9ed5133d@quicinc.com>
+ <87sfeh0yjn.fsf@minerva.mail-host-address-is-not-set>
+ <CALE0LRvR=DjUp2_DBuPQkEr9jvzGH4Mx4-7=rc6zOw1APQdyeQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 14994172011305216839
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvhedrvddufedgiedvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepggffhffvvefujghffgfkgihitgfgsehtkehjtddtreejnecuhfhrohhmpeftrghfrghlucfoihhlvggtkhhiuceorhgrfhgrlhesmhhilhgvtghkihdrphhlqeenucggtffrrghtthgvrhhnpeejvdelgfeutdfhfeelheegfedtleduleeuvdfgfeefvefhvedtheetjeetfeehgeenucfkphepuddvjedrtddrtddruddpudelgedrudekjedrjeegrddvfeefpddujeeirdefuddrvdefkedruddvtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepoehrrghfrghlsehmihhlvggtkhhirdhplheqpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhsmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheeitddpmhhouggvpehsmhhtphhouhht
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <CALE0LRvR=DjUp2_DBuPQkEr9jvzGH4Mx4-7=rc6zOw1APQdyeQ@mail.gmail.com>
+X-Originating-IP: [10.187.170.17]
+X-ClientProxiedBy: EX19D046UWA001.ant.amazon.com (10.13.139.112) To
+ EX19D047UWB002.ant.amazon.com (10.13.138.34)
+X-Spam-Status: No, score=-11.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_SPF_WL
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-03-08 19:06, Miquel Raynal wrote:
-> Hi Rafał,
+On Tue, Mar 07, 2023 at 05:20:18PM +0100, Enric Balletbo i Serra wrote:
+> Hi all,
 > 
-> rafal@milecki.pl wrote on Wed, 08 Mar 2023 17:55:46 +0100:
+> On Tue, Mar 7, 2023 at 9:13 AM Javier Martinez Canillas
+> <javierm@redhat.com> wrote:
+> >
+> > Dikshita Agarwal <quic_dikshita@quicinc.com> writes:
+> >
+> > Hello Dikshita,
+> >
+> > > On 3/6/2023 3:38 PM, Javier Martinez Canillas wrote:
+> > >> Jordan Crouse <jorcrous@amazon.com> writes:
+> > >>
+> > >> Hello Jordan,
+> > >>
+> > >>> On Fri, Feb 10, 2023 at 09:18:35AM +0100, Javier Martinez Canillas wrote:
+> > >>>> Commit 9593126dae3e ("media: venus: Add a handling of QC08C compressed
+> > >>>> format") and commit cef92b14e653 ("media: venus: Add a handling of QC10C
+> > >>>> compressed format") added support for the QC08C and QC10C compressed
+> > >>>> formats respectively.
+> > >>>>
+> > >>>> But these also caused a regression, because the new formats where added
+> > >>>> at the beginning of the vdec_formats[] array and the vdec_inst_init()
+> > >>>> function sets the default format output and capture using fixed indexes
+> > >>>> of that array:
+> > >>>>
+> > >>>> static void vdec_inst_init(struct venus_inst *inst)
+> > >>>> {
+> > >>>> ...
+> > >>>>    inst->fmt_out = &vdec_formats[8];
+> > >>>>    inst->fmt_cap = &vdec_formats[0];
+> > >>>> ...
+> > >>>> }
+> > >>>>
+> > >>>> Since now V4L2_PIX_FMT_NV12 is not the first entry in the array anymore,
+> > >>>> the default capture format is not set to that as it was done before.
+> > >>>>
+> > >>>> Both commits changed the first index to keep inst->fmt_out default format
+> > >>>> set to V4L2_PIX_FMT_H264, but did not update the latter to keep .fmt_out
+> > >>>> default format set to V4L2_PIX_FMT_NV12.
+> > >>>>
+> > >>>> Rather than updating the index to the current V4L2_PIX_FMT_NV12 position,
+> > >>>> let's reorder the entries so that this format is the first entry again.
+> > >>>>
+> > >>>> This would also make VIDIOC_ENUM_FMT report the V4L2_PIX_FMT_NV12 format
+> > >>>> with an index 0 as it did before the QC08C and QC10C formats were added.
+> > >>>>
+> > >>>> Fixes: 9593126dae3e ("media: venus: Add a handling of QC08C compressed format")
+> > >>>> Fixes: cef92b14e653 ("media: venus: Add a handling of QC10C compressed format")
+> > >>>> Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+> > >>> I just came across this issue independently and can confirm this patch fixes
+> > >>> the GStreamer V4L2 decoder on QRB5165.
+> > >>>
+> > >>> Tested-by: Jordan Crouse <jorcrous@amazon.com>
+> > >>>
 > 
->> On 2023-03-08 17:34, Miquel Raynal wrote:
->> > Hi Rafał,
->> >
->> > zajec5@gmail.com wrote on Fri, 24 Feb 2023 08:29:03 +0100:
->> >
->> >> From: Rafał Miłecki <rafal@milecki.pl>
->> >> >> NVMEM subsystem looks for fixed NVMEM cells (specified in DT) by
->> >> default. This behaviour made sense in early days before adding support
->> >> for dynamic cells.
->> >> >> With every new supported NVMEM device with dynamic cells current
->> >> behaviour becomes non-optimal. It results in unneeded iterating over >> DT
->> >> nodes and may result in false discovery of cells (depending on used DT
->> >> properties).
->> >> >> This behaviour has actually caused a problem already with the MTD
->> >> subsystem. MTD subpartitions were incorrectly treated as NVMEM cells.
->> >
->> > That's true, but I expect this to be really MTD specific.
->> >
->> > A concrete proposal below.
->> >
->> >> Also with upcoming support for NVMEM layouts no new binding or driver
->> >> should support fixed cells defined in device node.
->> >
->> > I'm not sure I agree with this statement. We are not preventing new
->> > binding/driver to use fixed cells, or...? We offer a new way to expose
->> > nvmem cells with another way than "fixed-offset" and "fixed-size" OF
->> > nodes.
->> 
->>  From what I understood all new NVMEM bindings should have cells 
->> defined
->> in the nvmem-layout { } node. That's what I mean by saying they should
->> not be defined in device node (but its "nvmem-layout" instead).
+> This patch also fixes an issue running a V4L2 based decoder on Acer
+> Chromebook Spin 513 which is very similar to the HP X2 Chromebook, not
+> surprising as both platforms are basically the same, but anyway:
 > 
-> Layouts are just another possibility, either you user the nvmem-cells
-> compatible and produce nvmem cells with fixed OF nodes, or you use the
-> nvmem-layout container. I don't think all new bindings should have
-> cells in layouts. It depends if the content is static or not.
+> Tested-by: Enric Balletbo i Serra <eballetbo@redhat.com>
 > 
->> >> Solve this by modifying drivers for bindings that support specifying
->> >> fixed NVMEM cells in DT. Make them explicitly tell NVMEM subsystem to
->> >> read cells from DT.
->> >> >> It wasn't clear (to me) if rtc and w1 code actually uses fixed cells. >> I
->> >> enabled them to don't risk any breakage.
->> >> >> Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
->> >> [for drivers/nvmem/meson-{efuse,mx-efuse}.c]
->> >> Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
->> >> ---
->> >> V2: Fix stm32-romem.c typo breaking its compilation
->> >>     Pick Martin's Acked-by
->> >>     Add paragraph about layouts deprecating use_fixed_of_cells
->> >> ---
->> >>  drivers/mtd/mtdcore.c          | 2 ++
->> >>  drivers/nvmem/apple-efuses.c   | 1 +
->> >>  drivers/nvmem/core.c           | 8 +++++---
->> >>  drivers/nvmem/imx-ocotp-scu.c  | 1 +
->> >>  drivers/nvmem/imx-ocotp.c      | 1 +
->> >>  drivers/nvmem/meson-efuse.c    | 1 +
->> >>  drivers/nvmem/meson-mx-efuse.c | 1 +
->> >>  drivers/nvmem/microchip-otpc.c | 1 +
->> >>  drivers/nvmem/mtk-efuse.c      | 1 +
->> >>  drivers/nvmem/qcom-spmi-sdam.c | 1 +
->> >>  drivers/nvmem/qfprom.c         | 1 +
->> >>  drivers/nvmem/rave-sp-eeprom.c | 1 +
->> >>  drivers/nvmem/rockchip-efuse.c | 1 +
->> >>  drivers/nvmem/sc27xx-efuse.c   | 1 +
->> >>  drivers/nvmem/sprd-efuse.c     | 1 +
->> >>  drivers/nvmem/stm32-romem.c    | 1 +
->> >>  drivers/nvmem/sunplus-ocotp.c  | 1 +
->> >>  drivers/nvmem/sunxi_sid.c      | 1 +
->> >>  drivers/nvmem/uniphier-efuse.c | 1 +
->> >>  drivers/nvmem/zynqmp_nvmem.c   | 1 +
->> >>  drivers/rtc/nvmem.c            | 1 +
->> >>  drivers/w1/slaves/w1_ds250x.c  | 1 +
->> >>  include/linux/nvmem-provider.h | 2 ++
->> >>  23 files changed, 29 insertions(+), 3 deletions(-)
->> >> >> diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
->> >> index 0feacb9fbdac..1bb479c0f758 100644
->> >> --- a/drivers/mtd/mtdcore.c
->> >> +++ b/drivers/mtd/mtdcore.c
->> >> @@ -523,6 +523,7 @@ static int mtd_nvmem_add(struct mtd_info *mtd)
->> >>  	config.dev = &mtd->dev;
->> >>  	config.name = dev_name(&mtd->dev);
->> >>  	config.owner = THIS_MODULE;
->> >> +	config.use_fixed_of_cells = of_device_is_compatible(node, >> "nvmem-cells");
->> >
->> > I am wondering how mtd specific this is? For me all OF nodes containing
->> > the nvmem-cells compatible should be treated as cells providers and
->> > populate nvmem cells as for each children.
->> >
->> > Why don't we just check for this compatible to be present? in
->> > nvmem_add_cells_from_of() ? And if not we just skip the operation.
->> >
->> > This way we still follow the bindings (even though using nvmem-cells in
->> > the compatible property to require cells population was a mistake in
->> > the first place, as discussed in the devlink thread recently) but there
->> > is no need for a per-driver config option?
->> 
->> This isn't mtd specific. Please check this patch for all occurrences 
->> of
->> the:
->> use_fixed_of_cells = true
->> 
->> The very first one: drivers/nvmem/apple-efuses.c driver for the
->> "apple,efuses" binding. That binding supports fixed OF cells, see:
->> Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
+> >
+> > >> Thanks for testing it!
+> > >>
+> > >> Stanimir, can we please get this for v6.3 as well?
+> > >
+> > > Hi Javier, Jordan
+> > >
+> > > Could you please explain what regression/issue you see with patch?
+> > >
+> > > venus hardware supports QC08C which provides better performance hence
+> > > driver is publishing it as preferred color format.
+> > >
+> > > if client doesn't support this or want to use any other format, they can
+> > > set the desired format with s_fmt.
+> > >
 > 
-> I'm saying: based on what has been enforced so far, I would expect all
-> fixed cell providers to come with nvmem-cells as compatible, no?
+> I guess general clients are unlikely to support this format as it is
+> an opaque intermediate format used by Qualcomm platforms, and the
+> purpose of that format is to be used for other Qualcomm hardware
+> blocks that know about this format. So I'd say that returning by
+> default a more common format is more reliable. Using your argument if
+> someone wants to use QC08C (because he knows it can use it) set with
+> s_fmt will do the trick too.
 > 
-> If that's the case we could use that as a common denominator?
+> In any case, the problem here seems to be that s_fmt is not working,
+> so it would be nice to have a solution for that first and meanwhile do
+> not change the old behaviour. Just my two cents.
+> 
+> Best regards,
+>  Enric Balletbo
+> 
+> >
+> > VIDIOC_S_FMT is currently broken for venus, at least on the HP X2
+> > Chromebook and only the default works. I'm still investigating why
+> > vdec_s_fmt() is not working.
+> >
+> > But basically, if VIDIOC_S_FMT is called for the capture queue,
+> > then later the VIDIOC_G_FMT ioctl fails with -EINVAL. This is due
+> > the following condition checked in vdec_check_src_change():
+> >
+> > static int vdec_check_src_change(struct venus_inst *inst)
+> > {
+> > ...
+> >         if (inst->subscriptions & V4L2_EVENT_SOURCE_CHANGE &&
+> >             inst->codec_state == VENUS_DEC_STATE_INIT &&
+> >             !inst->reconfig)
+> >                 return -EINVAL;
+> > ...
+> > }
+> >
+> > But regardless, I think that it would be better for a driver to
+> > not change the order of advertised VIDIOC_ENUM_FMT pixel formats.
+> >
+> > Because what happens now is that a decoding that was previously
+> > working by default is not working anymore due a combination of
+> > the default being changed and S_FMT not working as expected.
 
-Sorry, I don't get it. Have you checked
-Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
-?
+For my part, I was using the gstreamer v4l2 decoder which for some reason tries
+to verify it can support whatever format it gets with G_FMT *before*
+trying a S_FMT. I can't confirm or deny if S_FMT currently works or not.
 
-It's a NVMEM provied binding with fixed cells that doesn't use
-nvmem-cells as compatible. There are many more.
+That said, I entirely agree with Javier. While it might be more
+bandwidth efficient, QC08C is a obscure format. It is far more likely that the
+average open source user would rather use a well known output format and, as
+has been mentioned, once S_FMT is fixed those in the know can use the other
+formats if they are working with other Qualcomm hardware blocks.
+
+Jordan
