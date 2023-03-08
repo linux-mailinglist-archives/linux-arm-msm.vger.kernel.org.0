@@ -2,78 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99E2E6B061B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 12:38:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 74B8D6B0627
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 12:40:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbjCHLiN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 06:38:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32966 "EHLO
+        id S229869AbjCHLkU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 06:40:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230071AbjCHLiG (ORCPT
+        with ESMTP id S229986AbjCHLj6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 06:38:06 -0500
-Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEDA432CC6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 03:38:04 -0800 (PST)
-Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
-        by amity.mint.lgbt (Postfix) with ESMTP id 4PWr0V6y9yz1S5Js
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 06:38:02 -0500 (EST)
-Authentication-Results: amity.mint.lgbt (amavisd-new);
-        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
-        header.d=mint.lgbt
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
-        content-transfer-encoding:content-type:mime-version:message-id
-        :references:in-reply-to:user-agent:subject:to:from:date; s=dkim;
-         t=1678275481; x=1679139482; bh=fUz9L+nr5UDOp/B833d5gx+2B4OI8cyq
-        Eq9E6OrbgcI=; b=UN6D8dnST+XKjTWS913Q7OEzJ3ygWd9dgU9tmDYqDlJfdG4L
-        VJUjbgwsEPKR2dXobJSvBBkxhh1wo+BBDK60X/AJZPS7WMwy6ARXf+JIng80VE4V
-        61ta0oGW/PiN3FAqjgx7CH4xHVsGxiKrD4ptwqT6gauc2Rtq+FM7GCYXzNFwtOdl
-        hjFQDpUB1kBL58x0Dz88ijU4gtCaBlReJC4oXUV7zfEQXmKgO7SPj8MM7lcbR5lD
-        tIjsufg4a6NR2UEXd/ylLY/QetUmeeoaHDAQrs1JEyWRx0yxvdxDQq8jPx4ssy3i
-        QFMu6y8UwUCurqZdf54ngHfsFQk5k8f6/JrH4w==
-X-Virus-Scanned: amavisd-new at amity.mint.lgbt
-Received: from amity.mint.lgbt ([127.0.0.1])
-        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 8cfNQFGlTNfC for <linux-arm-msm@vger.kernel.org>;
-        Wed,  8 Mar 2023 06:38:01 -0500 (EST)
-Received: from [127.0.0.1] (unknown [186.105.8.42])
-        by amity.mint.lgbt (Postfix) with ESMTPSA id 4PWr0L6QcFz1S4yx;
-        Wed,  8 Mar 2023 06:37:54 -0500 (EST)
-Date:   Wed, 08 Mar 2023 08:37:48 -0300
-From:   Lux Aliaga <they@mint.lgbt>
-To:     Johan Hovold <johan@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
-        bvanassche@acm.org, keescook@chromium.org, tony.luck@intel.com,
-        gpiccoli@igalia.com, ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-scsi@vger.kernel.org, linux-hardening@vger.kernel.org,
-        phone-devel@vger.kernel.org, martin.botka@somainline.org,
-        marijn.suijten@somainline.org
-Subject: Re: [PATCH v7 3/6] phy: qcom-qmp: Add SM6125 UFS PHY support
-User-Agent: K-9 Mail for Android
-In-Reply-To: <ZAhwTcMZoCQVULQe@hovoldconsulting.com>
-References: <20230306170817.3806-1-they@mint.lgbt> <20230306170817.3806-4-they@mint.lgbt> <25c17af5-8f6b-a2c3-dab3-f9bc69711db7@linaro.org> <ZAhrT1ICTQjfdeGq@hovoldconsulting.com> <64ab4061-6a8b-662e-1c7a-99b0da26751c@linaro.org> <ZAhwTcMZoCQVULQe@hovoldconsulting.com>
-Message-ID: <DE127158-6956-42E9-B7AE-9687B4ABD6DA@mint.lgbt>
+        Wed, 8 Mar 2023 06:39:58 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1616BB9516;
+        Wed,  8 Mar 2023 03:39:52 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 328ALAcT003303;
+        Wed, 8 Mar 2023 11:39:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=XL6sBXUdI8fO6TdzSnsuYZBf6t10PbWpM6nPzLYjPpQ=;
+ b=k35uiSFyWXiHMYgceNjU4BmhTgxMtAanjwFEkbFPIS82MK9zqrVdeReKL4PRjpvH1DLG
+ Z0nDyO3g4mmQ9Hx+tCPc0+A+9vuqOXVHCgQ6p9+JP3WvsBbGQ2JHdm9Kts0EJE+DeMI6
+ /HfnLU3MNaDEF2TvThAD6PX8U4BpvFHNL0wdEXC0DA68U34wjkAPnCl6ug9j/xUUQhi6
+ 1K+vS1PJgDntZni8l4ZbS2R3nSE7B+U/CgQbWxQsXA3P9EBqlyORxZqkG+UWILalogYc
+ tQXYiLfsh+x+PsI+oIjLOrTGfLZWoKBFoXmWZ4+RDQqBh9krl29QxX+g8rqfLG5xF/Vq Cg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p6fgh1g0q-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 08 Mar 2023 11:39:48 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 328Bdl7s015680
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 8 Mar 2023 11:39:47 GMT
+Received: from [10.131.117.137] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 8 Mar 2023
+ 03:39:43 -0800
+Message-ID: <ecc7309e-792a-0a2b-f8ba-2ea25fbec2cb@quicinc.com>
+Date:   Wed, 8 Mar 2023 17:09:31 +0530
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Autocrypt: addr=they@mint.lgbt; keydata=
- mDMEYyUigxYJKwYBBAHaRw8BAQdA4Emr08ZPSL9p/JLdojT2GPRmh6URPjLQf9l/Kf7x5eC0G0x1
- eCBBbGlhZ2EgPHRoZXlAbWludC5sZ2J0PoiTBBMWCgA7FiEEYa2kUv8kbagAwdmwtWyAWWhjdDcF
- AmMlIoMCGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQtWyAWWhjdDf/YQD/VfoHtwZa
- OyBStI87Sv3Wdydps+MALWt7RfPA/AVd/i0A/21kQ+Wr6Hrb7Lz43H3+JLTaQk1XGKn7HMvpARdw
- tVYBuDgEYyUigxIKKwYBBAGXVQEFAQEHQJE2MuI8EY9+pcwq9ynsMxCh1J0AGGo7hO2n9EQtOClI
- AwEIB4h4BBgWCgAgFiEEYa2kUv8kbagAwdmwtWyAWWhjdDcFAmMlIoMCGwwACgkQtWyAWWhjdDe+
- xwD/ZtWx58K/+zLhrdO/kjGftMVM+J3mPA5fJxRYC2Ut42ABAKb0aGOEwFS5XvkOwCLUAMqLGjRg
- SDwi1EbSA+iQnkkB
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 10/11] arm64: dts: qcom: sc7280: fix EUD port properties
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230305125954.209559-1-krzysztof.kozlowski@linaro.org>
+ <20230305125954.209559-10-krzysztof.kozlowski@linaro.org>
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <20230305125954.209559-10-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ZVLhtDAIUMVgFIyC8fwQ34iEqa4CVrtK
+X-Proofpoint-GUID: ZVLhtDAIUMVgFIyC8fwQ34iEqa4CVrtK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-08_06,2023-03-08_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=737 spamscore=0
+ phishscore=0 priorityscore=1501 mlxscore=0 suspectscore=0 adultscore=0
+ impostorscore=0 clxscore=1011 malwarescore=0 lowpriorityscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303080102
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,76 +88,54 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 8 March 2023 08:23:57 GMT-03:00, Johan Hovold <johan@kernel=2Eorg> wrot=
-e:
->On Wed, Mar 08, 2023 at 12:15:39PM +0100, Konrad Dybcio wrote:
->>=20
->>=20
->> On 8=2E03=2E2023 12:02, Johan Hovold wrote:
->> > On Wed, Mar 08, 2023 at 11:09:48AM +0100, Konrad Dybcio wrote:
->> >>
->> >>
->> >> On 6=2E03=2E2023 18:08, Lux Aliaga wrote:
->> >>> The SM6125 UFS PHY is compatible with the one from SM6115=2E Add a
->> >>> compatible for it and modify the config from SM6115 to make them
->> >>> compatible with the SC8280XP binding
->> >>>
->> >>> Signed-off-by: Lux Aliaga <they@mint=2Elgbt>
->> >>> Reviewed-by: Martin Botka <martin=2Ebotka@somainline=2Eorg>
->> >>> ---
->> >>>  drivers/phy/qualcomm/phy-qcom-qmp-ufs=2Ec | 12 ++++++++++++
->> >>>  1 file changed, 12 insertions(+)
->> >>>
->> >>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs=2Ec b/drivers/ph=
-y/qualcomm/phy-qcom-qmp-ufs=2Ec
->> >>> index 318eea35b972=2E=2E44c29fdfc551 100644
->> >>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs=2Ec
->> >>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs=2Ec
->> >>> @@ -620,6 +620,13 @@ static const char * const qmp_phy_vreg_l[] =3D=
- {
->> >>>  	"vdda-phy", "vdda-pll",
->> >>>  };
->> >>> =20
->> >>> +static const struct qmp_ufs_offsets qmp_ufs_offsets_v3_660 =3D {
->> >>> +	=2Eserdes		=3D 0,
->> >>> +	=2Epcs		=3D 0xc00,
->> >>> +	=2Etx		=3D 0x400,
->> >>> +	=2Erx		=3D 0x600,
->> >>> +};
->> >>> +
->> >>>  static const struct qmp_ufs_offsets qmp_ufs_offsets_v5 =3D {
->> >>>  	=2Eserdes		=3D 0,
->> >>>  	=2Epcs		=3D 0xc00,
->> >>> @@ -693,6 +700,8 @@ static const struct qmp_phy_cfg sdm845_ufsphy_c=
-fg =3D {
->> >>>  static const struct qmp_phy_cfg sm6115_ufsphy_cfg =3D {
->> >>>  	=2Elanes			=3D 1,
->> >>> =20
->> >>> +	=2Eoffsets		=3D &qmp_ufs_offsets_v3_660,
->> >> Will this not trigger OOB r/w for the users of qcom,sm6115-smp-ufs-p=
-hy
->> >> which specify the regions separately (old binding style)?
->> >=20
->> > No, that should work fine=2E
->> So do you think the SM6115 binding could be updated too? Or should
->> we keep it as-is for ABI purposes?=2E=2E
->
->They could be and the possibility has been raised=2E I think it may be
->more important to convert the old combo-phy binding (it's on my list,
->but I keep getting preempted), but at some point we can get rid of the
->legacy UFS binding as well=2E
->
->> > But looks like this series needs to be rebased on 6=2E3-rc1 as these
->> > offsets are now already set in mainline=2E
->> =2E=2EOr did you do that already and I can't find it?
->
->It seems a previous version of this patch was merged almost two months
->ago=2E
->
->	9b9e29af984c ("phy: qcom-qmp: Add SM6125 UFS PHY support")
->
->Not sure what failed here=2E
->
->Johan
-Yes, but it received some comments regarding using v5 offsets instead of v=
-3-660=2E I could spin off this change into a new patch if necessary=2E
+On 3/5/2023 6:29 PM, Krzysztof Kozlowski wrote:
+> Nods with unit addresses must have also 'reg' property:
+
+Nit: Should be "Nodes"
+
+> 
+>    sc7280-herobrine-crd.dtb: eud@88e0000: ports:port@0: 'reg' is a required property
+> 
+> Fixes: 0b059979090d ("arm64: dts: qcom: sc7280: Add EUD dt node and dwc3 connector")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+
+Reviewed-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+
+>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index bdcb74925313..71179182c3b8 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -3593,12 +3593,17 @@ eud: eud@88e0000 {
+>   			      <0 0x088e2000 0 0x1000>;
+>   			interrupts-extended = <&pdc 11 IRQ_TYPE_LEVEL_HIGH>;
+>   			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+>   				port@0 {
+> +					reg = <0>;
+>   					eud_ep: endpoint {
+>   						remote-endpoint = <&usb2_role_switch>;
+>   					};
+>   				};
+>   				port@1 {
+> +					reg = <1>;
+>   					eud_con: endpoint {
+>   						remote-endpoint = <&con_eud>;
+>   					};
+> @@ -3609,7 +3614,11 @@ eud_con: endpoint {
+>   		eud_typec: connector {
+>   			compatible = "usb-c-connector";
+>   			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+>   				port@0 {
+> +					reg = <0>;
+>   					con_eud: endpoint {
+>   						remote-endpoint = <&eud_con>;
+>   					};
