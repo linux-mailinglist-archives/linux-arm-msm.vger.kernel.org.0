@@ -2,140 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 756046B0734
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 13:35:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3513E6B073D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 13:36:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230358AbjCHMf3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 07:35:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34690 "EHLO
+        id S230248AbjCHMgU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 07:36:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230123AbjCHMf1 (ORCPT
+        with ESMTP id S229668AbjCHMgS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 07:35:27 -0500
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C7D7BCB9F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 04:35:24 -0800 (PST)
-Received: by mail-yb1-xb2c.google.com with SMTP id 82so14431933ybn.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 04:35:24 -0800 (PST)
+        Wed, 8 Mar 2023 07:36:18 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64004C0817
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 04:36:01 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id by8so16408316ljb.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 04:36:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678278923;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Te0Wm1LBiLHbyjBQ4apLHzIYIeF5VCMITHqDeFoeL3c=;
-        b=wjrI5GBxcLK2TpY/oAthDy4jtf1z+fsJuQ9xjcbxHaIlP6smp1deqrOVtdOkNnjFIA
-         2UrygRCRUkSvYhYIP206gLrLjl0xPM+AD4S5GNdOAcW4d8tIqfe3pZYgXtRsu5Y6lGcH
-         j16ROAYlk8/QmUFivnX7oGT1kpc1TF2IyACh3W9NPSJUUaFMKuOvXh7itExrkzx08ERc
-         PyntbpEt932gCKkR86biuXCM/rCAdWH4X1ofg+KEsTel8id7WapS80VxZU77UhUOU/Rw
-         e70eEtSpzO80RkRXAQg+49btgEFiOrqzTapKjhJrIL/0rBejgJQOCpfPh+HJmAmXw0Xc
-         tW7A==
+        d=linaro.org; s=google; t=1678278959;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3ZpdSgX43Mq+ODhE1K9G2P1+evJkHGWtMYj5Dwnw8gQ=;
+        b=Xk9Znw5jGSeoR8gwxLs/3zhqRHZDsXJShUIn6dsURMqAjamt5YfH29TGvztqyaqBUn
+         RNZVtYP0DuiSEyQmEe7IPB6Rrz6FVkpsdktzza6SJopw55ku7ttNJW9Y/sdgILhdNKE6
+         95NK0Bp2m+dYw4g81pY/9xbRmL+63nwHOIXUL8n4BlQfcqzBP+tvt5FaA5bVMutWUHNs
+         WqU/01Bqhr/fr3jc7agJp4rI9+aFKMfG0dwSmHYtBG0es39jJcsWOyGqKNCzqefL4vzP
+         Wjp6hQ0Tbo4CcxUwcxUE25UmjVtHVSEKvAZznh3sZRdRkv8sqA/KVzyJ5XyL9qr9q/7m
+         QRrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678278923;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Te0Wm1LBiLHbyjBQ4apLHzIYIeF5VCMITHqDeFoeL3c=;
-        b=Uu4oE8hgfeCMWwpTrSRDZgrNtR/I7ss08B5J1cZvyEo6O4jnHO/5T5jCcZPwBe5EDF
-         XaTVVoyMU24OiYRHTPE+izCdPSrdmgTdAm+n7ZMZrFiEAQw0PIhuKxVK1x1MI3Fb/Ihb
-         /S6fDSTFAJiIqv6+FU3dG/+cy6vw4uUrkGsWI/tQcmHyJ3Mx9OK/WCKjIegUjuoLJJ3O
-         MtVtSeqzp8lVt87UAe6CAWJ6KdPObg+pNEu3S08Vn+//3z80ur0QsaHDnl58/nwLpdpt
-         KYpaGwpOY1U6rqpf4UsKvclsJ2Ht80NtP0oA7QOaULScA8hUsHYBfp67XuBgMrx2XY03
-         lJXg==
-X-Gm-Message-State: AO0yUKXd/OFl3ODOznoHKzJ9SZHlc1iloUxQkjOvoQwLliUwHuS0MLmQ
-        9zRPueVdPSEbA9qHMSOS8chmbpOsZqc6zydoIpLfXA==
-X-Google-Smtp-Source: AK7set+wT84PGBj+94QLZa9jjubNNjq68RKKqm41jG5BChuSqdm07c0307nCBlq5YlWDhnsqSvsRE1NW+v6KzhRiMcM=
-X-Received: by 2002:a5b:70c:0:b0:a30:38fb:a0b8 with SMTP id
- g12-20020a5b070c000000b00a3038fba0b8mr11038426ybq.9.1678278923492; Wed, 08
- Mar 2023 04:35:23 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678278959;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3ZpdSgX43Mq+ODhE1K9G2P1+evJkHGWtMYj5Dwnw8gQ=;
+        b=5q1MFpmUfsbZVfgfq9TG40FJjhxYOe/fOPklIeh3rLWFrZWUffscOv6PSPE/aHfcgu
+         Q6skpD+R8cKdBkZ5b7hjGJtYMF04xNOxsczE6vuIKDfaUHbfDwB3EiI1SZC3HbkqMarA
+         qxGZoEU/mNd6vUyFX77YDPbJ7DHnmTvbh90JcE3h/wzL3nz52rjRuoQisUMrHGibmzyu
+         sfSz/DBVSUIBVoOmBgSdMpeTqLIfeeTesBzdIf1/qBO1mD1aUBWaLWFZGqTOd7SMQ2Ra
+         oxhOnUiRAe/V6aTd6n6AX00PM8Hy5KLAz41aRwqXLoG8foqYO2+gdJKemxC3g4Vfyqxq
+         5r8Q==
+X-Gm-Message-State: AO0yUKV2aYs90z4Yx6JM811gAxYigtjt/KbPq9hCTqRdd8bvhu7VJmFZ
+        Ava0EVjuHtixUV9XHbOH+KmDeA==
+X-Google-Smtp-Source: AK7set8QN8XuVSRs0alwNTJXovC9xlgO2NzhZ6xDlt7EvrZzUVP4mtJTHN6zGdIPQ1iYb6w2mIAROA==
+X-Received: by 2002:a2e:b8d2:0:b0:290:6a6f:48d1 with SMTP id s18-20020a2eb8d2000000b002906a6f48d1mr5679650ljp.43.1678278959655;
+        Wed, 08 Mar 2023 04:35:59 -0800 (PST)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id i19-20020a056512007300b004db508326c0sm2341220lfo.90.2023.03.08.04.35.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Mar 2023 04:35:59 -0800 (PST)
+Message-ID: <a1ae9cb4-1fde-67f9-360f-67c2771a54e4@linaro.org>
+Date:   Wed, 8 Mar 2023 13:35:57 +0100
 MIME-Version: 1.0
-References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
- <20221102180705.459294-6-dmitry.baryshkov@linaro.org> <ZAhhrG6CliC83Oxr@hovoldconsulting.com>
-In-Reply-To: <ZAhhrG6CliC83Oxr@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 8 Mar 2023 14:35:12 +0200
-Message-ID: <CAA8EJprKDXYjd2zUdAGZkUEVt++XtA03RnCoYAfb-gJUz7tMsg@mail.gmail.com>
-Subject: Re: [PATCH v3 5/7] drm/msm/hdmi: stop using drm_bridge_connector_en/disable_hpd()
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 3/6] ARM: dts: qcom: sdx65: Add support for PCIe PHY
+Content-Language: en-US
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, lee@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mani@kernel.org,
+        lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
+References: <1678277993-18836-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1678277993-18836-4-git-send-email-quic_rohiagar@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1678277993-18836-4-git-send-email-quic_rohiagar@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 8 Mar 2023 at 12:20, Johan Hovold <johan@kernel.org> wrote:
->
-> On Wed, Nov 02, 2022 at 09:07:03PM +0300, Dmitry Baryshkov wrote:
-> > The functionality of drm_bridge_connector_enable_hpd() and
-> > drm_bridge_connector_disable_hpd() is provided automatically by the
-> > drm_kms_poll helpers. Stop calling these functions manually.
->
-> I stumbled over this one when investigating a hotplug-related crash in
-> the MSM DRM driver which this series prevents by moving hotplug
-> notification enable to drm_kms_helper_poll_enable().
->
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/gpu/drm/msm/hdmi/hdmi.c | 2 --
-> >  1 file changed, 2 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-> > index 93fe61b86967..a540c45d4fd3 100644
-> > --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-> > +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-> > @@ -348,8 +348,6 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
-> >               goto fail;
-> >       }
-> >
-> > -     drm_bridge_connector_enable_hpd(hdmi->connector);
-> > -
-> >       ret = msm_hdmi_hpd_enable(hdmi->bridge);
-> >       if (ret < 0) {
-> >               DRM_DEV_ERROR(&hdmi->pdev->dev, "failed to enable HPD: %d\n", ret);
->
-> It looks like you are now enabling hotplug events before the DRM driver
-> is ready to receive them (i.e. msm_hdmi_hpd_enable() is called before
-> drm_bridge_connector_enable_hpd()).
->
-> Could this not lead to missed events or is the state being setup
-> correctly somewhere else?
->
-> Shouldn't the call to msm_hdmi_hpd_enable() be moved to when HPD is
-> enabled either way (e.g. by being converted to a hpd_enable callback)?
-
-Eventually I'll get to it (hopefully during this weekend). There is
-one item which needs to be investigated, see [1]. I have to check if
-this is applicable to earlier generations, which also means
-resurrecting the msm8974 HDMI PHY patchset posted ages ago. I think
-the initial status is determined correctly using the .detect(). At
-least I saw no issues with this patchset. However, thanks for the
-pointer.
-
-[1] https://git.codelinaro.org/linaro/qcomlt/kernel/-/commit/6ae2c308555f470ba63f90b7171519a242f96a67
 
 
--- 
-With best wishes
-Dmitry
+On 8.03.2023 13:19, Rohit Agarwal wrote:
+> Add devicetree support for PCIe PHY used in SDX65 platform. This PHY is
+> used by the PCIe EP controller.
+> 
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> ---
+>  arch/arm/boot/dts/qcom-sdx65.dtsi | 33 +++++++++++++++++++++++++++++++++
+>  1 file changed, 33 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
+> index 192f9f9..df9d428 100644
+> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
+> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
+> @@ -293,6 +293,39 @@
+>  			status = "disabled";
+>  		};
+>  
+> +		pcie_phy: phy@1c06000 {
+> +			compatible = "qcom,sdx65-qmp-gen4x2-pcie-phy";
+> +			reg = <0x01c06000 0x2000>;
+
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
+No child nodes, please drop this hunk.
+
+
+Konrad
+> +			clocks = <&gcc GCC_PCIE_AUX_PHY_CLK_SRC>,
+> +				 <&gcc GCC_PCIE_CFG_AHB_CLK>,
+> +				 <&gcc GCC_PCIE_0_CLKREF_EN>,
+> +				 <&gcc GCC_PCIE_RCHNG_PHY_CLK>;
+> +				 <&gcc GCC_PCIE_PIPE_CLK>;
+> +			clock-names = "aux",
+> +				      "cfg_ahb",
+> +				      "ref",
+> +				      "rchng",
+> +				      "pipe";
+> +
+> +			resets = <&gcc GCC_PCIE_PHY_BCR>;
+> +			reset-names = "phy";
+> +
+> +			assigned-clocks = <&gcc GCC_PCIE_RCHNG_PHY_CLK>;
+> +			assigned-clock-rates = <100000000>;
+> +
+> +			power-domains = <&gcc PCIE_GDSC>;
+> +
+> +			#clock-cells = <0>;
+> +			clock-output-names = "pcie_pipe_clk";
+> +
+> +			#phy-cells = <0>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+>  		tcsr_mutex: hwlock@1f40000 {
+>  			compatible = "qcom,tcsr-mutex";
+>  			reg = <0x01f40000 0x40000>;
