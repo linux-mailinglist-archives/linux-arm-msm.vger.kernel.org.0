@@ -2,82 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87A426AFC5F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 02:27:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD4126AFC66
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 02:30:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230228AbjCHB1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Mar 2023 20:27:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42056 "EHLO
+        id S229733AbjCHBaC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Mar 2023 20:30:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230112AbjCHB1i (ORCPT
+        with ESMTP id S229840AbjCHBaB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Mar 2023 20:27:38 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CD09AFBBA
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 17:27:30 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id t11so19501268lfr.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 17:27:30 -0800 (PST)
+        Tue, 7 Mar 2023 20:30:01 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78F9993122
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Mar 2023 17:29:20 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id i9so19477504lfc.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Mar 2023 17:29:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678238849;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2LQI9ML6EtIY5x2Onb8YDmJNrTIH7IXM1Yy3nDfRXp0=;
-        b=KKQ4SGYWQPAl0zLwAIPtGSy2yEIvv0iTIjQBfy2YjhLByyOOuzkmc5RHjpBwvKB3IL
-         bUXyPczJHo5noF09pgD2wLsM0udBMgBDY2vSRbpTothLzBsHFsFrNmQIdWoJZUShmRK3
-         ku1V/AwuuP3n38SpYCL/cLu2KKqb9iaztwK9q+AiFG92oXVZXq8J1TogJ1D7OLSZ/DsX
-         AdGcyuuYMuaBURPfRoyFzXpOlzfQ2vDYJ+O3sMDNVS+cx4X5fu9/Qfm5seR83gU1dDi5
-         mjnCaLEs9l6rE2hwx7LMmt/DScjxC4uX5jkUJ6YQr4ptH0j/lnpMkpqHd5XEPl2BBl0K
-         Wyrg==
+        d=linaro.org; s=google; t=1678238940;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wcH6ChrdybSOEpD7JCkvJREKmTq11gzbfL1luIuLXkc=;
+        b=WmCAqaprgGN011ev+tuC6gu8/acpauS9IYp7lJcpFioq7F2/WLgU3NW9A5dF9AwsrF
+         R5H6XwXd1tHuiypD7DoIr6e1pSNoLm166oGUlJrE0/jZXzBvDA99YeOjSsxpHed9J3z9
+         nBHt/Zp0C71yln6yjUpOdMrPVK9keRog1l816ixjn1WtnT7bibSa8UIipjd69TBX39Z7
+         nF5m5c2vIIP1TdG/w10l1p+OJXBVPY4ipVrF0iktNQJHHiIyzqxe9PxD2Y8yPn7DFIIo
+         CrnYHlL5H2GbGKBjDRJQALiMN0oifRnPbuQ9qK04rjlz2vLCLQnhH3EmKJXaZpY+fi99
+         GVXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678238849;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2LQI9ML6EtIY5x2Onb8YDmJNrTIH7IXM1Yy3nDfRXp0=;
-        b=L+uFLG2Y2Hqpy9Gg53eb1MIhi6H3Nyc9mxwiEgf2YoTasjdx6llDMHNAA73AajHS52
-         74s24D3z5QMYKhU2Z8uCmF5uzUkbJnfvB4xbt6tjdSLv/0sQnzVAWlc5a1Ylj5T9NW8x
-         7UAer02ctbREHmr3FbxFURpZO1VlaLUpJ/YQYrKd0OSAFWm+nAN7A6bcawL3HYoKKbLz
-         5+gHHlqKYN3wIOL2tS1weisO7lcNuDiPCgWxA/sbq7gcuH8dURok3BuLJ7vvn8GaT+tc
-         1jJoXLlernX/ivexCeNIYzx7BfKx66qU5DGtATos1+smEI9r88o95AVY3fCAh1aLQ5Zh
-         tSNw==
-X-Gm-Message-State: AO0yUKUNJJ6PPsCyrwF/c6tYMPQIhjQ8jGgEURZ9NaNtHGfZyyca6JK9
-        S960PPBdZgAtg0hl+B5yINHR8GzvExnFa9Tmw9s=
-X-Google-Smtp-Source: AK7set+14UI2X2BxTanZ6TiN8wnmzbGjWZgA+1gA3ZV/aMIytYT5IgJ7eFAN/NGvxElOsykb7BcE2A==
-X-Received: by 2002:ac2:46e5:0:b0:4db:3e31:20fa with SMTP id q5-20020ac246e5000000b004db3e3120famr4701910lfo.53.1678238848995;
-        Tue, 07 Mar 2023 17:27:28 -0800 (PST)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id o24-20020a056512051800b004a2c447598fsm2182944lfb.159.2023.03.07.17.27.27
+        d=1e100.net; s=20210112; t=1678238940;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wcH6ChrdybSOEpD7JCkvJREKmTq11gzbfL1luIuLXkc=;
+        b=CT+YgfM3fj4a14q45WaWBEGfJt6/7QvD5hl5M8xHFKSNHz35qFaLSnZa9SVO196E7m
+         RnGq1vEeoFP6a8Wn5Zzyq+wXDYUfJHOft3MB1MN9RzUSUUXo3o2S/LVFF59wBf9wf8Zh
+         2uNA1hbTnx2eGyL9WKTxGZcM4HzKxDiZcLzAVet8Oqk+293pKKMjfnFwqXkjdmAhTpgJ
+         9sY1Yc4UVs/kPaH8FnKRTQJjfwL3Kk0dqM0SZvttU4M6Dh6D0WBcf12W+N62rQdQfANt
+         JUqjRSj7E1LyAOA4ZF3IXBeEp9DF6856kwm8FdUWySId9CSX0jnwIoHzCBQdIL7DRcMd
+         RucQ==
+X-Gm-Message-State: AO0yUKV0GjquplO6yMAjR+as2GqKE5lmOwttEj6hotGngBrvk9hqNiqR
+        t/SPx8SHnuNZnmCfwLcT2B4JMvfV+kUNepxf2UM=
+X-Google-Smtp-Source: AK7set/O2zOF0Eaq703LtV0Eck2mcIfZt4f+MvTQ56hwhaKSJtxi6wC+KRR0lHtAlI17pP5pDT60Rw==
+X-Received: by 2002:ac2:4ac9:0:b0:4dc:84dd:eb91 with SMTP id m9-20020ac24ac9000000b004dc84ddeb91mr5202676lfp.22.1678238939731;
+        Tue, 07 Mar 2023 17:28:59 -0800 (PST)
+Received: from localhost.localdomain (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id u17-20020ac25191000000b004db3aa3c542sm2174173lfi.47.2023.03.07.17.28.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 17:27:27 -0800 (PST)
+        Tue, 07 Mar 2023 17:28:59 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 08 Mar 2023 02:27:05 +0100
-Subject: [PATCH 8/8] arm64: dts: qcom: sm8150: Add SoC-specific compatible
- to cpufreq_hw
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230308-topic-cpufreq_bindings-v1-8-3368473ec52d@linaro.org>
-References: <20230308-topic-cpufreq_bindings-v1-0-3368473ec52d@linaro.org>
-In-Reply-To: <20230308-topic-cpufreq_bindings-v1-0-3368473ec52d@linaro.org>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1678238834; l=815;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=Yil8E/XkNgavmPfgeJjlA348O7O8bWH2q0Xhcem/1o4=;
- b=hT4GJN2Clqv+qZfFWTcy+kaTyXx+kQRgm3+nrlVcLvq6/tsjnzeUpGcpB1SYf6u0c7n8JhG9chDO
- aJylT8yJDDTOC8E8wXgbXPNEqb4rs18SEtLmt6j349tG8+IuSpKZ
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+        Marc Zyngier <maz@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH] dt-bindings: timer: armv7: Don't sanction address/size-cells values
+Date:   Wed,  8 Mar 2023 02:28:53 +0100
+Message-Id: <20230308012854.294939-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
@@ -88,27 +77,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a SoC-specific compatbile to cpufreq_hw for compliancy with bindings.
+The driver itself does not read the -cells values (and frankly, it
+shouldn't), so there's little sense in only allowing [1, 2] x [1].
+Allow any values.
 
+Fixes: 4d2bb3e65035 ("dt-bindings: timer: Convert ARM timer bindings to json-schema")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/timer/arm,arch_timer_mmio.yaml      | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index fd20096cfc6e..e7e66bc3e6c4 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -4263,7 +4263,7 @@ osm_l3: interconnect@18321000 {
- 		};
+diff --git a/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml b/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml
+index f6efa48c4256..236e2a05c1ad 100644
+--- a/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml
++++ b/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml
+@@ -26,11 +26,9 @@ properties:
+     maxItems: 1
+     description: The control frame base address
  
- 		cpufreq_hw: cpufreq@18323000 {
--			compatible = "qcom,cpufreq-hw";
-+			compatible = "qcom,sm8150-cpufreq-hw", "qcom,cpufreq-hw";
- 			reg = <0 0x18323000 0 0x1400>, <0 0x18325800 0 0x1400>,
- 			      <0 0x18327800 0 0x1400>;
- 			reg-names = "freq-domain0", "freq-domain1",
-
+-  '#address-cells':
+-    enum: [1, 2]
++  '#address-cells': true
+ 
+-  '#size-cells':
+-    const: 1
++  '#size-cells': true
+ 
+   ranges: true
+ 
 -- 
 2.39.2
 
