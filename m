@@ -2,86 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1309D6B1566
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 23:44:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7571A6B1583
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 23:47:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229672AbjCHWoQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 17:44:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42850 "EHLO
+        id S229468AbjCHWrm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 17:47:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229513AbjCHWoP (ORCPT
+        with ESMTP id S229651AbjCHWrk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 17:44:15 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC05F637F6;
-        Wed,  8 Mar 2023 14:44:13 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id l25so139836wrb.3;
-        Wed, 08 Mar 2023 14:44:13 -0800 (PST)
+        Wed, 8 Mar 2023 17:47:40 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DBBBD3336
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 14:47:10 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id d41-20020a05600c4c2900b003e9e066550fso117957wmp.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 14:47:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678315452;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YsrEEEaC8AeRdb7KQgiMRTrbEFjeV3mmDKW8pToUANA=;
-        b=L5k3XOLSbO+wb4L5FL1hKM+j2lV9IwZVJQ+LE6A7ZfHQE2X7YgTpbDfclFpp5WrueI
-         yUdqcRH83uSOj3bp39No3oVpncovTJB/+D4wkcZaH2KlhiWMFPy8Vv1zWGUvtwVTun2l
-         sCbR6mz8PIntD3RLpkqBQEt3paEeOIxNbySyNr/TfdzdAL4b2ZcCx10M3WDXpUm/6St7
-         qfi1Hdet2g5zS2kpVW9ZZ5KC9zJvB8jDvMfhOJtCNfOZnAv0p1zCr9iB65pq4B0l2eqq
-         4CSs5V0HRjqYNJH0IzL1khnWq6LUTJJy/VygGr9E6sTkdYO8NIEkJ8seh9fWfKPRwoyP
-         FOwQ==
+        d=linaro.org; s=google; t=1678315627;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vFSUC14oqsmNlN+YIHQ3Lf0QikUQ/wjNjy9O8VYjGBg=;
+        b=Nc4gE5bYmtLo4bxhZ5VJxnAJkeMlP5NlB7FSxJjDhrjoddyIQeAPgTpQmVCr2hlIs6
+         RN0PvJqlTYBdVYDS/+Bg7WF03lNIAWa6tinLU6YZEorqHzUILY+R4vFScJv9Cv2mRI6r
+         Ru65aOLn0K4oEzhTV3/m/19CeNpzbMivmogwuCt/Nl7kig18S2i+JedqiTnT4o6tVaHU
+         U2sQtTPIbzpq+Ub8+OQp4Qx9mSeueyozNI1+vDWm0+qVAnGMuO0P6pBNUd7nHL2/PxLY
+         qULXjs/2Jtb2IVbECitxTFACxon++Tj+2Zr26JlI1OhKCVCs19Fd7tvtvjTFZJyfYMW8
+         VAtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678315452;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YsrEEEaC8AeRdb7KQgiMRTrbEFjeV3mmDKW8pToUANA=;
-        b=sLV99zqMsY4HwJUsXEKvbX1TBChG1Q4NfRl8LTKj2GCRCGevbcT5r9zbTLCKfl1Lwg
-         4kulck/8nHfkWTQuKRm5xoXRQx/rSgWoOFjvKiTZsvfOdUgef6TMPqL8kgpIQUSQUDpB
-         cSpkelr7TZBx1Ycx1+O1UhTLD0nTP67L2FyMKuHRsscmlPeTssoY4sZ47+nsZJVgT5p/
-         YMScbmVu0HMOVdvKu4NUWdDK5yznfGPP7igy/sj0aIf6npFkmgL3Qv9uZPBiy5PhvJ+r
-         CF/GT5vz7DKBFu+v5BYXmMABIxd1m4pVmPElSqHp6tqjvdGESL4D5K6ws6Ex20vRYDes
-         KBvQ==
-X-Gm-Message-State: AO0yUKWiNFeLJzILwygx//lfWSIOMTYDcnteA3pWiIg25HRMDQPuWhxU
-        SZR929KvvehA2JYOvMrey58=
-X-Google-Smtp-Source: AK7set/12zv05R923rnXYe6FPoJd28KNc2Y3GYMlNG5n7SFRiIyqRVzt3NDBRNKz/D834zT+2yVl/Q==
-X-Received: by 2002:adf:e54b:0:b0:2ce:7b14:62fa with SMTP id z11-20020adfe54b000000b002ce7b1462famr4698320wrm.18.1678315452191;
-        Wed, 08 Mar 2023 14:44:12 -0800 (PST)
-Received: from [192.168.2.202] (p5487be6d.dip0.t-ipconnect.de. [84.135.190.109])
-        by smtp.gmail.com with ESMTPSA id d14-20020a056000114e00b002c57475c375sm16621500wrx.110.2023.03.08.14.44.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 14:44:11 -0800 (PST)
-Message-ID: <93657561-d545-7ead-7f6c-dd2c62aab319@gmail.com>
-Date:   Wed, 8 Mar 2023 23:44:07 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3 3/4] dt-bindings: firmware: Add Qualcomm QSEECOM
- interface
-To:     Rob Herring <robh@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20210112; t=1678315627;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vFSUC14oqsmNlN+YIHQ3Lf0QikUQ/wjNjy9O8VYjGBg=;
+        b=VRmmTECWYBDnkmeKs0CxPCm+K0FvJQOz1W1KAoQqhUIV14O/Jn4d1A7nSM7bWgCw4y
+         YU+pz0DJG+nGeSyXoEfMaBbSq0KSqBuzDdD8nvTpDXWTkCNtpDUaijM8YK7m7730CDgk
+         uMnr8Om2bAiJFrDwJlggRuWHXk2xgA0U0quGIB8L3tFlBt4Fg1InMB8JqgqTNjx4oo50
+         /MwGi4ATft9kYEfQLzDvnUiQIRXXGYkC/H+atBDmreSYH2z+KT7GojTLPMH7a7yUZ/S+
+         DLEmYRwWi3KSzFa4adB6BUcIaeIEd23ZxinI1RLT1TYxH1SDR041zi1DDKfb/BQO/rEb
+         prGA==
+X-Gm-Message-State: AO0yUKWbSnIl7U+8kccjxuuvgIGP/mTDRwh73po6FZUuf1bbByMnS3kA
+        hITCSWGkjbNyuxlYobyvhsFmdA==
+X-Google-Smtp-Source: AK7set+EjH5Er33hmQRt2og8WL8QaPL6kOqPTM8EuoH+l7tfjNtyNqWgIEi+NXTHbkPEhrQAtwiqyg==
+X-Received: by 2002:a05:600c:3553:b0:3e2:1e31:36bc with SMTP id i19-20020a05600c355300b003e21e3136bcmr17586983wmq.12.1678315627625;
+        Wed, 08 Mar 2023 14:47:07 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id hg6-20020a05600c538600b003dc49e0132asm753033wmb.1.2023.03.08.14.47.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Mar 2023 14:47:07 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Johan Hovold <johan@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sumit Garg <sumit.garg@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230305022119.1331495-1-luzmaximilian@gmail.com>
- <20230305022119.1331495-4-luzmaximilian@gmail.com>
- <20230308221657.GA3935330-robh@kernel.org>
-Content-Language: en-US
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <20230308221657.GA3935330-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Johan Hovold <johan@kernel.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v10] arm64: dts: qcom: sm8550: Fix PCIe PHYs and controllers nodes
+Date:   Thu,  9 Mar 2023 00:46:42 +0200
+Message-Id: <20230308224642.2640030-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,40 +75,207 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/8/23 23:16, Rob Herring wrote:
-> On Sun, Mar 05, 2023 at 03:21:18AM +0100, Maximilian Luz wrote:
->> Add bindings for the Qualcomm Secure Execution Environment interface
->> (QSEECOM).
-> 
-> Pretty sure I already asked, but no answer in the commit message. Why do
-> we need this? You've already declared the platform supports SCM calls
-> with "qcom,scm". Why can't you probe whether you have QSEECOM or not? DT
-> is for non-discoverable h/w we are stuck with.
+First, move the pinctrl related propeties out from SoC dtsi and into the
+board dts and add blank lines before status properties in the PHY nodes
+to be consistent with the rest of the nodes. Then drop the pipe clock
+from the controller nodes. Rename the aggre0 and aggre1 clocks to more
+generic noc_aggr, and then the cnoc_pcie_sf_axi to cnoc_sf_axi. Add the
+cpu-pcie interconnects to both controller nodes. Rename the pcie1 second
+reset to link_down and drop the unnecessary enable-gpios. Switch the aux
+clock to GCC_PCIE_1_PHY_AUX_CLK for the pcie1 PHY and drop the aux_phy
+from clock-names. Also rename the nocsr reset to phy_nocsr. With this
+changes we are now in line with the SC8280XP bindings.
 
-Yes, you've asked this before but I can only repeat what I've written in
-my last response to your question: I am not aware of any way to properly
-discover the interface at runtime from software.
+Fixes: 98a4dc3a78fa ("arm64: dts: qcom: sm8550: Add PCIe PHYs and controllers nodes")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+---
 
-If it makes you happy, I can put this in the commit message as well...
+The v9 of this patch was here:
+https://lore.kernel.org/all/20230208180020.2761766-12-abel.vesa@linaro.org/
 
-> Why is software made non-discoverable too?
+Changes since v9:
+ * moved the pinctrl-names below the pinctrl-0 for pcie HC nodes in MTP
+   dts board file
+ * all other patches from v9 patchset have been dropped from v10 as they
+   are already merged
 
-Please direct that question at the Qualcomm guys who actually designed
-that interface. I can't give you an answer to that, and I'm not all that
-happy about this either.
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 10 +++++
+ arch/arm64/boot/dts/qcom/sm8550.dtsi    | 52 +++++++++----------------
+ 2 files changed, 28 insertions(+), 34 deletions(-)
 
-To reiterate: I've reverse engineered this based on the Windows driver.
-The Windows driver loads on an ACPI HID and it doesn't use any function
-to check/verify whether the interface is actually present. Adding a DT
-entry is the straight-forward adaption to having a HID in ACPI.
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+index 5db6e789e6b8..8d5e8ab679b2 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+@@ -414,18 +414,27 @@ &pcie_1_phy_aux_clk {
+ &pcie0 {
+ 	wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
+ 	perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
++
++	pinctrl-0 = <&pcie0_default_state>;
++	pinctrl-names = "default";
++
+ 	status = "okay";
+ };
+ 
+ &pcie0_phy {
+ 	vdda-phy-supply = <&vreg_l1e_0p88>;
+ 	vdda-pll-supply = <&vreg_l3e_1p2>;
++
+ 	status = "okay";
+ };
+ 
+ &pcie1 {
+ 	wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
+ 	perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
++
++	pinctrl-0 = <&pcie1_default_state>;
++	pinctrl-names = "default";
++
+ 	status = "okay";
+ };
+ 
+@@ -433,6 +442,7 @@ &pcie1_phy {
+ 	vdda-phy-supply = <&vreg_l3c_0p91>;
+ 	vdda-pll-supply = <&vreg_l3e_1p2>;
+ 	vdda-qref-supply = <&vreg_l1e_0p88>;
++
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 25f51245fe9b..2e42e8c210bd 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -1672,25 +1672,24 @@ pcie0: pci@1c00000 {
+ 					<0 0 0 3 &intc 0 0 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+ 					<0 0 0 4 &intc 0 0 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+ 
+-			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
+-				 <&gcc GCC_PCIE_0_AUX_CLK>,
++			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
+ 				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
+ 				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+ 				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
+ 				 <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>,
+ 				 <&gcc GCC_DDRSS_PCIE_SF_QTB_CLK>,
+ 				 <&gcc GCC_AGGRE_NOC_PCIE_AXI_CLK>;
+-			clock-names = "pipe",
+-				      "aux",
++			clock-names = "aux",
+ 				      "cfg",
+ 				      "bus_master",
+ 				      "bus_slave",
+ 				      "slave_q2a",
+ 				      "ddrss_sf_tbu",
+-				      "aggre0";
++				      "noc_aggr";
+ 
+-			interconnect-names = "pcie-mem";
+-			interconnects = <&pcie_noc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>;
++			interconnects = <&pcie_noc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
++					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_0 0>;
++			interconnect-names = "pcie-mem", "cpu-pcie";
+ 
+ 			iommus = <&apps_smmu 0x1400 0x7f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
+@@ -1704,12 +1703,6 @@ pcie0: pci@1c00000 {
+ 			phys = <&pcie0_phy>;
+ 			phy-names = "pciephy";
+ 
+-			perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
+-			wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
+-
+-			pinctrl-names = "default";
+-			pinctrl-0 = <&pcie0_default_state>;
+-
+ 			status = "disabled";
+ 		};
+ 
+@@ -1771,8 +1764,7 @@ pcie1: pci@1c08000 {
+ 					<0 0 0 3 &intc 0 0 0 438 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+ 					<0 0 0 4 &intc 0 0 0 439 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+ 
+-			clocks = <&gcc GCC_PCIE_1_PIPE_CLK>,
+-				 <&gcc GCC_PCIE_1_AUX_CLK>,
++			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
+ 				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
+ 				 <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
+ 				 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
+@@ -1780,21 +1772,21 @@ pcie1: pci@1c08000 {
+ 				 <&gcc GCC_DDRSS_PCIE_SF_QTB_CLK>,
+ 				 <&gcc GCC_AGGRE_NOC_PCIE_AXI_CLK>,
+ 				 <&gcc GCC_CNOC_PCIE_SF_AXI_CLK>;
+-			clock-names = "pipe",
+-				      "aux",
++			clock-names = "aux",
+ 				      "cfg",
+ 				      "bus_master",
+ 				      "bus_slave",
+ 				      "slave_q2a",
+ 				      "ddrss_sf_tbu",
+-				      "aggre1",
+-				      "cnoc_pcie_sf_axi";
++				      "noc_aggr",
++				      "cnoc_sf_axi";
+ 
+ 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+ 			assigned-clock-rates = <19200000>;
+ 
+-			interconnect-names = "pcie-mem";
+-			interconnects = <&pcie_noc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>;
++			interconnects = <&pcie_noc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>,
++					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_1 0>;
++			interconnect-names = "pcie-mem", "cpu-pcie";
+ 
+ 			iommus = <&apps_smmu 0x1480 0x7f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
+@@ -1802,20 +1794,13 @@ pcie1: pci@1c08000 {
+ 
+ 			resets = <&gcc GCC_PCIE_1_BCR>,
+ 				<&gcc GCC_PCIE_1_LINK_DOWN_BCR>;
+-			reset-names = "pci",
+-				"pcie_1_link_down_reset";
++			reset-names = "pci", "link_down";
+ 
+ 			power-domains = <&gcc PCIE_1_GDSC>;
+ 
+ 			phys = <&pcie1_phy>;
+ 			phy-names = "pciephy";
+ 
+-			perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
+-			enable-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
+-
+-			pinctrl-names = "default";
+-			pinctrl-0 = <&pcie1_default_state>;
+-
+ 			status = "disabled";
+ 		};
+ 
+@@ -1823,18 +1808,17 @@ pcie1_phy: phy@1c0e000 {
+ 			compatible = "qcom,sm8550-qmp-gen4x2-pcie-phy";
+ 			reg = <0x0 0x01c0e000 0x0 0x2000>;
+ 
+-			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
++			clocks = <&gcc GCC_PCIE_1_PHY_AUX_CLK>,
+ 				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
+ 				 <&tcsr TCSR_PCIE_1_CLKREF_EN>,
+ 				 <&gcc GCC_PCIE_1_PHY_RCHNG_CLK>,
+-				 <&gcc GCC_PCIE_1_PIPE_CLK>,
+-				 <&gcc GCC_PCIE_1_PHY_AUX_CLK>;
++				 <&gcc GCC_PCIE_1_PIPE_CLK>;
+ 			clock-names = "aux", "cfg_ahb", "ref", "rchng",
+-				      "pipe", "aux_phy";
++				      "pipe";
+ 
+ 			resets = <&gcc GCC_PCIE_1_PHY_BCR>,
+ 				 <&gcc GCC_PCIE_1_NOCSR_COM_PHY_BCR>;
+-			reset-names = "phy", "nocsr";
++			reset-names = "phy", "phy_nocsr";
+ 
+ 			assigned-clocks = <&gcc GCC_PCIE_1_PHY_RCHNG_CLK>;
+ 			assigned-clock-rates = <100000000>;
+-- 
+2.34.1
 
-> Nodes with only a compatible string are usually just an abuse of DT to
-> instantiate some driver.
-
-If you or anyone here has any idea on how to discover the presence of
-this, please feel free to let me know and I'd be happy to implement
-that. Until then, I unfortunately don't see any other way of dealing
-with this.
-
-Regards,
-Max
