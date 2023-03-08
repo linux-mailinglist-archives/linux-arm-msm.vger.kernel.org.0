@@ -2,144 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C34166B089F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 14:27:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CA536B08A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 14:28:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230495AbjCHN1n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 08:27:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60184 "EHLO
+        id S231708AbjCHN2v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 08:28:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230491AbjCHN1V (ORCPT
+        with ESMTP id S231414AbjCHN2b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 08:27:21 -0500
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A17DDC5ACD;
-        Wed,  8 Mar 2023 05:24:37 -0800 (PST)
-Received: by mail-qk1-x734.google.com with SMTP id a65so5638974qkg.13;
-        Wed, 08 Mar 2023 05:24:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678281876;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qZoP71+5c3FVKBx98Aqiaa+ZcAlza86aEyQCRu3z974=;
-        b=Q4QesLjAGlM42tRSwoI+HcvMCyjJlBF+MYJeMSF2XPXBTWsvyYPu6iekvSGCkG7K3M
-         ZU/XdVEunzvpxGOr7gUeUo1E/0qRwzJlaw/1f6N/4eBsyhkMDJA4cnshQDglSrFfkD4r
-         0OeYmtW6Y7gFIdTZBL+6yi9LiE+OSKDMe4d3Hj9AlkKZRWHbYKzqoLZTmfxSnoA0TQa9
-         zaVnSwD7KgYWnPg7f0VHzCVWaqRlF3btsJJBIrXNRxZ4M53M8TkkIRmE36Psy9CG6JQ5
-         chas3FBi7Bsd59EEdSKSCA3Xo/cZW2SzjqHNLdY0G/ZMywVBZSiQNu/la/6XNiavwvp0
-         BOng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678281876;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qZoP71+5c3FVKBx98Aqiaa+ZcAlza86aEyQCRu3z974=;
-        b=bReBjz09RD1L5PK5pspcQ2ryeyaC/F/8rWQE269OBxZ/+PppEGsA7fx6hINnWJZ6Z+
-         h+vfRNyEbupHcdSfcQ3dUPYXEGHZafi3LjQu/orTmTYCYXXnr3i2zZgBAmERwmqi1gTj
-         8SQUbm39YSthUVT7YAj56rAoq4XVa0KwA+VUicMWg5eeXiVlWuEqwk9Mn+0viJQ/fhzF
-         1y8aifU3/OiogW4Gp0mLOwmdH1r3juK2o//FQRUURSLIqXlrE6hZLg72iQWxkvBRpiiW
-         pa6/gvxPFty8qnbGXci9trRWNlcDfy8VmCUiH1eH3G84iO+gjhpDnNL5WKRX7XJxQ6B1
-         I44A==
-X-Gm-Message-State: AO0yUKVtBNmwGE0kEpl8E2NDkbv0Tm4lYzKmxlKIViqCDhpzjB2g7jWZ
-        TZycdLIOOn3OAzk5kc1TaiJAE4N9/BiCzlXeZNU=
-X-Google-Smtp-Source: AK7set+3+KOGVmoTKCyVDclv+hazU63yGvn2mTBscxNnBRm23ESammya3zfhhVhmcnKROal6d062iEm7APHU+6r5cjY=
-X-Received: by 2002:a05:620a:713:b0:742:7e5a:4cee with SMTP id
- 19-20020a05620a071300b007427e5a4ceemr5114611qkc.10.1678281876099; Wed, 08 Mar
- 2023 05:24:36 -0800 (PST)
-MIME-Version: 1.0
-References: <20230214163116.9924-1-quic_devipriy@quicinc.com>
- <20230214163116.9924-5-quic_devipriy@quicinc.com> <ZAZ+GeGu8mW1XqpG@surfacebook>
- <15d270ca-1068-b926-efc9-a14ddfc90a54@quicinc.com>
-In-Reply-To: <15d270ca-1068-b926-efc9-a14ddfc90a54@quicinc.com>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Wed, 8 Mar 2023 15:24:00 +0200
-Message-ID: <CAHp75VfMae9M2R0Bw6-sYuHPPberakEzKct65SXV0XEaOFtXTg@mail.gmail.com>
-Subject: Re: [PATCH V8 4/7] pinctrl: qcom: Add IPQ9574 pinctrl driver
-To:     Devi Priya <quic_devipriy@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de, shawnguo@kernel.org, arnd@arndb.de,
-        marcel.ziswiler@toradex.com, dmitry.baryshkov@linaro.org,
-        nfraprado@collabora.com, broonie@kernel.org,
+        Wed, 8 Mar 2023 08:28:31 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EBB720561;
+        Wed,  8 Mar 2023 05:27:16 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id DC973CE1FB1;
+        Wed,  8 Mar 2023 13:27:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F74C433D2;
+        Wed,  8 Mar 2023 13:27:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678282032;
+        bh=zPgPnfEx7TTfrpkIeqTBW0I7Azvx8nMPmWHtRyKCwJE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=PFA7LXhTxi7fZ0XL539AtLSO14qzEVc3qRSHZy8NzpDARtmQqjMxzVgOIO/i9razz
+         9SqttdgquWwv3rVzJ83PZ9Ply3rP+zSq5Wo9Od0WkyYzSRgsIJTya8mmsfggl/ITnb
+         HrIc39qcOOnH3pFuQAn7ju2jrrVGxwqNUWj8gKyaFrb9QmYvb51CIyEhvCbHAT7X23
+         byaEILnWonIBblDNm5t4/oVA5/NoRc68LykNHJvOIrIPkO6KHM5jh2RT+1MJH+570D
+         6u5b7X1/sKTIRApWNN534etwOZWnFezOiNFNfnHgjivzezXlnwHHd3ZRbsyAZwE8ad
+         K+Ey++rv4dnyA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pZtpm-0006Xi-Px; Wed, 08 Mar 2023 14:27:58 +0100
+Date:   Wed, 8 Mar 2023 14:27:58 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Lux Aliaga <they@mint.lgbt>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        kishon@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
+        bvanassche@acm.org, keescook@chromium.org, tony.luck@intel.com,
+        gpiccoli@igalia.com, ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-scsi@vger.kernel.org, linux-hardening@vger.kernel.org,
+        phone-devel@vger.kernel.org, martin.botka@somainline.org,
+        marijn.suijten@somainline.org
+Subject: Re: [PATCH v7 3/6] phy: qcom-qmp: Add SM6125 UFS PHY support
+Message-ID: <ZAiNXmbep8nR6nkj@hovoldconsulting.com>
+References: <20230306170817.3806-1-they@mint.lgbt>
+ <20230306170817.3806-4-they@mint.lgbt>
+ <25c17af5-8f6b-a2c3-dab3-f9bc69711db7@linaro.org>
+ <ZAhrT1ICTQjfdeGq@hovoldconsulting.com>
+ <64ab4061-6a8b-662e-1c7a-99b0da26751c@linaro.org>
+ <ZAhwTcMZoCQVULQe@hovoldconsulting.com>
+ <DE127158-6956-42E9-B7AE-9687B4ABD6DA@mint.lgbt>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DE127158-6956-42E9-B7AE-9687B4ABD6DA@mint.lgbt>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 8, 2023 at 11:52 AM Devi Priya <quic_devipriy@quicinc.com> wrote:
-> On 3/7/2023 5:28 AM, andy.shevchenko@gmail.com wrote:
+On Wed, Mar 08, 2023 at 08:37:48AM -0300, Lux Aliaga wrote:
+> On 8 March 2023 08:23:57 GMT-03:00, Johan Hovold <johan@kernel.org> wrote:
 
-...
-
-> >> +    depends on OF
+> >It seems a previous version of this patch was merged almost two months
+> >ago.
 > >
-> > No compile test on non-OF configurations?
-
-> As per the generic convention followed in other
-> SoCs, we do not have compile test on non-OF configurations
-
-Why not? So, you have to explain the deliberate narrowing of the test coverage.
-
-> >> +    depends on ARM64 || COMPILE_TEST
-
-...
-
-> >> +#define FUNCTION(fname)                                     \
+> >	9b9e29af984c ("phy: qcom-qmp: Add SM6125 UFS PHY support")
 > >
-> > PINCTRL_PINFUNCTION() ?
-> I see that there are quite a bunch of files that has to
-> be modified for using the generic data type and
-> macro for the pin function definition
-> We shall post a separate series to accommodate the changes
+> >Not sure what failed here.
 
-Sure, that's fine. Please do!
+> Yes, but it received some comments regarding using v5 offsets instead
+> of v3-660. I could spin off this change into a new patch if necessary.
 
-> >> +    [msm_mux_##fname] = {                           \
-> >> +            .name = #fname,                         \
-> >> +            .groups = fname##_groups,               \
-> >> +            .ngroups = ARRAY_SIZE(fname##_groups),  \
-> >> +    }
+Once a patch has been applied, you generally need to do any further
+changes incrementally on top.
 
-...
+It seems Dmitry renamed the struct himself after the patch was applied
+in this case.
 
-> >> +#define PINGROUP(id, f1, f2, f3, f4, f5, f6, f7, f8, f9)    \
-> >> +    {                                               \
-> >> +            .name = "gpio" #id,                     \
-> >> +            .pins = gpio##id##_pins,                \
-> >> +            .npins = (unsigned int)ARRAY_SIZE(gpio##id##_pins),     \
-> >
-> > Can you embed struct pingroup?
-> Will take care of this in a separate series
-
-Ditto. Thanks!
-
-> >> +    }
-
-...
-
-> >> +};
-> >
-> > No MODULE_DEVICE_TABLE()?
-> The MODULE_DEVICE_TABLE(of, ipq9574_pinctrl_of_match) entry has
-> been added at the end of the file
-
-So, you know what to do then to address my comment :-)
-
--- 
-With Best Regards,
-Andy Shevchenko
+Johan
