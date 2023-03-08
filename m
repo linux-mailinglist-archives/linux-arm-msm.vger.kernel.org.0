@@ -2,228 +2,398 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82FEC6B07AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 14:00:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D0486B07AD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 14:00:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229580AbjCHNAJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 08:00:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37670 "EHLO
+        id S231463AbjCHNAh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 08:00:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229891AbjCHM72 (ORCPT
+        with ESMTP id S231557AbjCHNAA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 07:59:28 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1A8E746E6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 04:59:20 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id u9so65460827edd.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 04:59:20 -0800 (PST)
+        Wed, 8 Mar 2023 08:00:00 -0500
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C57AC081B
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 04:59:36 -0800 (PST)
+Received: by mail-yb1-xb2f.google.com with SMTP id v13so14513209ybu.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 04:59:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678280359;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9mfOwfdbZ8exDjskYwjwEpahRmFliTcBB+dyiGdmM5Y=;
-        b=ULyvRxpUzy0CMYgaNIiHjXHo5dPts/WbAbqxkj/5ve1xBAKhXPYUSKHTFsw6KEBxgI
-         +zBQh/xbnhgIjJSvqtGHhK5FKaGTiEmhz8uGDqCWaeYOdYCa5xP+rVlVz5uUjWtymSsi
-         8hTSYC55YFlgpPXufnajXUR2NFM2wqcFZBXps7IQ2WT6dUvrdhuPKRV+aMrltPtBisKR
-         P0bMV/bz2UUt/+k0xVVHfH4RnI4Er+cI22gBrt8+sxeCW4Z7etkW52q6S8PIzC7Hndxk
-         FMMwP8o0iJUz92d1xMT+Z3KPcLPlvXxsXMXE6HPpaBnJ+oh7TyK+ynmNh7cgvKQJkJcq
-         cGnA==
+        d=linaro.org; s=google; t=1678280375;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vuZ96zJVKWNmZEH17q/c2pi8K6hjpfwOw4TxoGdfv5c=;
+        b=gPNBiMVjt77oqXb/SLjJnEEh7TBZRE8kwzONEnLWHMZ9d+DDVtxz1vR2dwK4aGfC7u
+         XnklS1yYklntt1gve4fRqRgPleMSJHBJENZrrGDnWBLRYupl6N8fVZ6Pn9RhAp6AIzOB
+         DF7PSyLKbucxRWFv/Tn6PS1ziEQVC2ZGlbFcpeT67KI+qM59eo7AvbENQKqPm9cpliHo
+         lssbDq5XjLiR3l3ZZei30Whe3yZ6AYTrZ4GNZC/JeJwtPAfmPecI51ZOuI6ul62A7xi+
+         4uKBmuQOorS+ZfirUsp3bCcoAKxftza0iShIPu2607tCyHSUGIPgVoU59j7aCGjCii4T
+         +CEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678280359;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9mfOwfdbZ8exDjskYwjwEpahRmFliTcBB+dyiGdmM5Y=;
-        b=1rZtyzZvxyou2sxRPoG9THOsAJ1MGxdVje+epyrv7KlZpMN+jDffQXKFK1gxvFdxTw
-         Ni6QOUD4vd+8oO7b4rveD9iNK8MUlslSxgIxSOpIhqRIc/yM3BvSNjnkaMiaTVY0OVvK
-         dot6BQ5GySBTWDT55p4T7WPvUOSL2RUy9m2hAl7t4dw+TjzCBgJhvXaTtfSvmYfk2eJb
-         XA4Alam7Esd3I4n+wk9YiNI7Pu1IEMkViz+DpZPcTnU2lWVMbrLULO9DsEDOt81afsu4
-         s8tmaf6roroPR9drZvBYLySMijbdz/kzyRTDA8HnowuOyyylVgNQwcvtn3o1czYH8CbO
-         AzDQ==
-X-Gm-Message-State: AO0yUKXqsgujyfP2ogGJ5rym5GRnGLF0NkyIiMxOx/46BJ/0tAHR/Z5T
-        aagNH4rDOTCbEfEk492OVAD79A==
-X-Google-Smtp-Source: AK7set9oNdnuX0f4MvhnHStYIyiVAVetbxLKMQwiPT3mSYnsKFPTKtwHVaG7Ct3T6eSirdqajWRyPw==
-X-Received: by 2002:a17:907:7f0b:b0:888:7ac8:c0f4 with SMTP id qf11-20020a1709077f0b00b008887ac8c0f4mr17839200ejc.25.1678280359078;
-        Wed, 08 Mar 2023 04:59:19 -0800 (PST)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:ff33:9b14:bdd2:a3da])
-        by smtp.gmail.com with ESMTPSA id h25-20020a1709063b5900b008d0dbf15b8bsm7464141ejf.212.2023.03.08.04.59.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Mar 2023 04:59:18 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 11/11] arm64: dts: qcom: msm8996-oneplus: do not enable incomplete nodes
-Date:   Wed,  8 Mar 2023 13:59:06 +0100
-Message-Id: <20230308125906.236885-11-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230308125906.236885-1-krzysztof.kozlowski@linaro.org>
-References: <20230308125906.236885-1-krzysztof.kozlowski@linaro.org>
+        d=1e100.net; s=20210112; t=1678280375;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vuZ96zJVKWNmZEH17q/c2pi8K6hjpfwOw4TxoGdfv5c=;
+        b=pmZasCCGNAIngvNQHcRHsjS74J8332JTUmcT3ZITbf9hK3zWk1Wa8U8r83T2B1tv5B
+         wh1AVuEk9xy+9j3nHwCRiOv/UPd2syzv2YmkAS1kk4bm2iIGlZEt8VQo1DzDy5oIq48d
+         XktAWXPVbkjnj4m/tFEafEABTrH1yAlLlFCO14WNVvl8SWr9SbuoyOK6NCI0frlE6X2r
+         +5tvVoHsJ7fbyNbqYXUSlqMQQvFCS6V2GA0X9tsSS75zzhjgu4SRCgoxNdk9Mwe9jQC/
+         7ZQUnno/rJ+sqdQ1JIQIO7cs5ZeoWiISJ3KjvQZHlkNGfzaCfKInzhjzKApyvMateH7j
+         B6/Q==
+X-Gm-Message-State: AO0yUKXrYFLU238iLstNfMakYXvhKk36w5VJUeIDK+rO3Rae/jyzMA+v
+        mLGgPvdu9F22TYKtBAJtDWFxAG8dTjDs+zluF5vkjw==
+X-Google-Smtp-Source: AK7set+ZMDJIom1EJY7ctY0iU5XOeviK9nz4J/6dQRP8TvKmBP7sAwSlGgCZUz733434EvfAnl9/HgLhHN0BNRwzYOU=
+X-Received: by 2002:a25:9f84:0:b0:8ac:72e3:c743 with SMTP id
+ u4-20020a259f84000000b008ac72e3c743mr1393881ybq.9.1678280374584; Wed, 08 Mar
+ 2023 04:59:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230307134901.322560-1-dmitry.baryshkov@linaro.org>
+ <20230307134901.322560-7-dmitry.baryshkov@linaro.org> <874jqvczy1.fsf@intel.com>
+In-Reply-To: <874jqvczy1.fsf@intel.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 8 Mar 2023 14:59:23 +0200
+Message-ID: <CAA8EJprgvhS0YavBi2QfMLnkr+KhRge4FhfQz09ani794uYDcQ@mail.gmail.com>
+Subject: Re: [PATCH v2 06/10] drm/display/dsc: split DSC 1.2 and DSC 1.1
+ (pre-SCR) parameters
+To:     Jani Nikula <jani.nikula@linux.intel.com>
+Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-status=okay should appear in final place where all required properties
-are provided, because that makes the code the easiest to read.  Move the
-status from common OnePlus DTSI to board DTS.  No functional changes.
+On Wed, 8 Mar 2023 at 12:14, Jani Nikula <jani.nikula@linux.intel.com> wrote:
+>
+> On Tue, 07 Mar 2023, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> > The array of rc_parameters contains a mixture of parameters from DSC 1.1
+> > and DSC 1.2 standards. Split these tow configuration arrays in
+> > preparation to adding more configuration data.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/gpu/drm/display/drm_dsc_helper.c  | 127 ++++++++++++++++++----
+> >  drivers/gpu/drm/i915/display/intel_vdsc.c |  10 +-
+> >  include/drm/display/drm_dsc_helper.h      |   7 +-
+> >  3 files changed, 119 insertions(+), 25 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
+> > index acb93d4116e0..35b39f3109c4 100644
+> > --- a/drivers/gpu/drm/display/drm_dsc_helper.c
+> > +++ b/drivers/gpu/drm/display/drm_dsc_helper.c
+> > @@ -324,11 +324,81 @@ struct rc_parameters_data {
+> >
+> >  #define DSC_BPP(bpp) ((bpp) << 4)
+> >
+> > +static const struct rc_parameters_data rc_parameters_pre_scr[] = {
+> > +     {
+> > +             .bpp = DSC_BPP(8), .bpc = 8,
+> > +             { 512, 12, 6144, 3, 12, 11, 11, {
+> > +                     { 0, 4, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
+> > +                     { 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
+> > +                     { 3, 9, -8 }, { 3, 10, -10 }, { 5, 11, -10 }, { 5, 12, -12 },
+> > +                     { 5, 13, -12 }, { 7, 13, -12 }, { 13, 15, -12 }
+> > +                     }
+> > +             }
+> > +     },
+> > +     {
+> > +             .bpp = DSC_BPP(8), .bpc = 10,
+> > +             { 512, 12, 6144, 7, 16, 15, 15, {
+> > +                     /*
+> > +                      * DSC model/pre-SCR-cfg has 8 for range_max_qp[0], however
+> > +                      * VESA DSC 1.1 Table E-5 sets it to 4.
+> > +                      */
+> > +                     { 0, 4, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 5, 10, -2 },
+> > +                     { 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
+> > +                     { 7, 13, -8 }, { 7, 14, -10 }, { 9, 15, -10 }, { 9, 16, -12 },
+> > +                     { 9, 17, -12 }, { 11, 17, -12 }, { 17, 19, -12 }
+> > +                     }
+> > +             }
+> > +     },
+> > +     {
+> > +             .bpp = DSC_BPP(8), .bpc = 12,
+> > +             { 512, 12, 6144, 11, 20, 19, 19, {
+> > +                     { 0, 12, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 9, 14, -2 },
+> > +                     { 11, 15, -4 }, { 11, 15, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
+> > +                     { 11, 17, -8 }, { 11, 18, -10 }, { 13, 19, -10 },
+> > +                     { 13, 20, -12 }, { 13, 21, -12 }, { 15, 21, -12 },
+> > +                     { 21, 23, -12 }
+> > +                     }
+> > +             }
+> > +     },
+> > +     {
+> > +             .bpp = DSC_BPP(12), .bpc = 8,
+> > +             { 341, 15, 2048, 3, 12, 11, 11, {
+> > +                     { 0, 2, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
+> > +                     { 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
+> > +                     { 3, 9, -8 }, { 3, 10, -10 }, { 5, 11, -10 },
+> > +                     { 5, 12, -12 }, { 5, 13, -12 }, { 7, 13, -12 }, { 13, 15, -12 }
+> > +                     }
+> > +             }
+> > +     },
+> > +     {
+> > +             .bpp = DSC_BPP(12), .bpc = 10,
+> > +             { 341, 15, 2048, 7, 16, 15, 15, {
+> > +                     { 0, 2, 2 }, { 2, 5, 0 }, { 3, 7, 0 }, { 4, 8, -2 },
+> > +                     { 6, 9, -4 }, { 7, 10, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
+> > +                     { 7, 13, -8 }, { 7, 14, -10 }, { 9, 15, -10 }, { 9, 16, -12 },
+> > +                     { 9, 17, -12 }, { 11, 17, -12 }, { 17, 19, -12 }
+> > +                     }
+> > +             }
+> > +     },
+> > +     {
+> > +             .bpp = DSC_BPP(12), .bpc = 12,
+> > +             { 341, 15, 2048, 11, 20, 19, 19, {
+> > +                     { 0, 6, 2 }, { 4, 9, 0 }, { 7, 11, 0 }, { 8, 12, -2 },
+> > +                     { 10, 13, -4 }, { 11, 14, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
+> > +                     { 11, 17, -8 }, { 11, 18, -10 }, { 13, 19, -10 },
+> > +                     { 13, 20, -12 }, { 13, 21, -12 }, { 15, 21, -12 },
+> > +                     { 21, 23, -12 }
+> > +                     }
+> > +             }
+> > +     },
+> > +     { /* sentinel */ }
+> > +};
+> > +
+> >  /*
+> >   * Selected Rate Control Related Parameter Recommended Values
+> >   * from DSC_v1.11 spec & C Model release: DSC_model_20161212
+> >   */
+>
+> The comment is no longer accurate, is it?
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Ugh, yes. it is no longer DSC 1.1. I cross-checked, the rc*cfg files
+are the same between 20161212 and 20210623
 
----
+>
+> There are various ways to determine the parameters to use. There's even
+> an application note "VESA DSC v1.2a Guidance on Deriving DSC Rate
+> Control Parameters" that lists the options. They are all valid and
+> should "provide visually lossless quality".
+>
+> Would it be simplest to always use the C model parameters in the tables
+> here, referencing the zip file name with date above each table? That
+> could at least be consistent, and drivers could override parameters
+> using other methods if they desire. And it would be easiest to review.
 
-Changes since v1:
-1. None
----
- .../boot/dts/qcom/msm8996-oneplus-common.dtsi   | 17 -----------------
- arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts   |  6 ++++++
- arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts  |  6 ++++++
- 3 files changed, 12 insertions(+), 17 deletions(-)
+Do you mean the calculated RC parameters? As I mentioned in another
+email, it is at least worth investigating. I haven't looked into that,
+as my primary goal (driven by the forthcoming drm/msm needs) were the
+.cfg tables. I targeted cleaning up the simplest path to reduce
+duplication (see [1]). Anyway, with the proposed patches we have the
+API, which tells nothing about the way it fills out the RC tables.
+They can be based on top of the cfg files (method 2) or calculated
+(methods 3, 4).
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
-index 104deaee74e5..2adadc1e5b7c 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
-@@ -85,10 +85,6 @@ wlan_en: wlan-en-regulator {
- 	};
- };
- 
--&adsp_pil {
--	status = "okay";
--};
--
- &blsp1_i2c3 {
- 	status = "okay";
- 
-@@ -183,10 +179,6 @@ &dsi0_phy {
- 	status = "okay";
- };
- 
--&gpu {
--	status = "okay";
--};
--
- &hsusb_phy1 {
- 	vdd-supply = <&vreg_l28a_0p925>;
- 	vdda-pll-supply = <&vreg_l12a_1p8>;
-@@ -215,7 +207,6 @@ &mmcc {
- 
- &mss_pil {
- 	pll-supply = <&vreg_l12a_1p8>;
--	status = "okay";
- };
- 
- &pcie0 {
-@@ -548,10 +539,6 @@ wcd9335: codec@1,0 {
- 	};
- };
- 
--&slpi_pil {
--	status = "okay";
--};
--
- &sound {
- 	compatible = "qcom,apq8096-sndcard";
- 	model = "OnePlus3";
-@@ -812,7 +799,3 @@ &usb3_dwc3 {
- 
- 	maximum-speed = "high-speed";
- };
--
--&venus {
--	status = "okay";
--};
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts b/arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts
-index 1bdc1b134305..dfe75119b8d2 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts
-@@ -17,6 +17,7 @@ / {
- 
- &adsp_pil {
- 	firmware-name = "qcom/msm8996/oneplus3/adsp.mbn";
-+	status = "okay";
- };
- 
- &battery {
-@@ -25,6 +26,8 @@ &battery {
- };
- 
- &gpu {
-+	status = "okay";
-+
- 	zap-shader {
- 		firmware-name = "qcom/msm8996/oneplus3/a530_zap.mbn";
- 	};
-@@ -33,12 +36,15 @@ zap-shader {
- &mss_pil {
- 	firmware-name = "qcom/msm8996/oneplus3/mba.mbn",
- 			"qcom/msm8996/oneplus3/modem.mbn";
-+	status = "okay";
- };
- 
- &slpi_pil {
- 	firmware-name = "qcom/msm8996/oneplus3/slpi.mbn";
-+	status = "okay";
- };
- 
- &venus {
- 	firmware-name = "qcom/msm8996/oneplus3/venus.mbn";
-+	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts b/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts
-index 34f837dd0c12..51fce65e89f1 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts
-@@ -18,6 +18,7 @@ / {
- 
- &adsp_pil {
- 	firmware-name = "qcom/msm8996/oneplus3t/adsp.mbn";
-+	status = "okay";
- };
- 
- &battery {
-@@ -26,6 +27,8 @@ &battery {
- };
- 
- &gpu {
-+	status = "okay";
-+
- 	zap-shader {
- 		firmware-name = "qcom/msm8996/oneplus3t/a530_zap.mbn";
- 	};
-@@ -34,12 +37,15 @@ zap-shader {
- &mss_pil {
- 	firmware-name = "qcom/msm8996/oneplus3t/mba.mbn",
- 			"qcom/msm8996/oneplus3t/modem.mbn";
-+	status = "okay";
- };
- 
- &slpi_pil {
- 	firmware-name = "qcom/msm8996/oneplus3t/slpi.mbn";
-+	status = "okay";
- };
- 
- &venus {
- 	firmware-name = "qcom/msm8996/oneplus3t/venus.mbn";
-+	status = "okay";
- };
+[1] https://patchwork.freedesktop.org/patch/524051/?series=114355&rev=1
+
+>
+> I'm having a hard time finding time to review all this in a timely
+> fashion. Would be good to try to get other folks to review the rest,
+> it's really not very i915 specific anyway. In the mean time I think
+> patches 1-5 are okay to merge via drm-misc.
+
+For reference, the tables here are a direct conversion of the rc*cfg
+files found in the DSC model. If you wish, I can post the program that
+I used to convert these files into C arrays. Will that help the
+review?
+
+>
+> BR,
+> Jani.
+>
+> > -static const struct rc_parameters_data rc_parameters[] = {
+> > +static const struct rc_parameters_data rc_parameters_1_2_444[] = {
+> >       {
+> >               .bpp = DSC_BPP(6), .bpc = 8,
+> >               { 768, 15, 6144, 3, 13, 11, 11, {
+> > @@ -388,22 +458,18 @@ static const struct rc_parameters_data rc_parameters[] = {
+> >               { 512, 12, 6144, 3, 12, 11, 11, {
+> >                       { 0, 4, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
+> >                       { 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
+> > -                     { 3, 9, -8 }, { 3, 10, -10 }, { 5, 11, -10 }, { 5, 12, -12 },
+> > -                     { 5, 13, -12 }, { 7, 13, -12 }, { 13, 15, -12 }
+> > +                     { 3, 9, -8 }, { 3, 10, -10 }, { 5, 10, -10 }, { 5, 11, -12 },
+> > +                     { 5, 11, -12 }, { 9, 12, -12 }, { 12, 13, -12 }
+> >                       }
+> >               }
+> >       },
+> >       {
+> >               .bpp = DSC_BPP(8), .bpc = 10,
+> >               { 512, 12, 6144, 7, 16, 15, 15, {
+> > -                     /*
+> > -                      * DSC model/pre-SCR-cfg has 8 for range_max_qp[0], however
+> > -                      * VESA DSC 1.1 Table E-5 sets it to 4.
+> > -                      */
+> > -                     { 0, 4, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 5, 10, -2 },
+> > +                     { 0, 8, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 5, 10, -2 },
+> >                       { 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
+> > -                     { 7, 13, -8 }, { 7, 14, -10 }, { 9, 15, -10 }, { 9, 16, -12 },
+> > -                     { 9, 17, -12 }, { 11, 17, -12 }, { 17, 19, -12 }
+> > +                     { 7, 13, -8 }, { 7, 14, -10 }, { 9, 14, -10 }, { 9, 15, -12 },
+> > +                     { 9, 15, -12 }, { 13, 16, -12 }, { 16, 17, -12 }
+> >                       }
+> >               }
+> >       },
+> > @@ -412,9 +478,9 @@ static const struct rc_parameters_data rc_parameters[] = {
+> >               { 512, 12, 6144, 11, 20, 19, 19, {
+> >                       { 0, 12, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 9, 14, -2 },
+> >                       { 11, 15, -4 }, { 11, 15, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
+> > -                     { 11, 17, -8 }, { 11, 18, -10 }, { 13, 19, -10 },
+> > -                     { 13, 20, -12 }, { 13, 21, -12 }, { 15, 21, -12 },
+> > -                     { 21, 23, -12 }
+> > +                     { 11, 17, -8 }, { 11, 18, -10 }, { 13, 18, -10 },
+> > +                     { 13, 19, -12 }, { 13, 19, -12 }, { 17, 20, -12 },
+> > +                     { 20, 21, -12 }
+> >                       }
+> >               }
+> >       },
+> > @@ -498,8 +564,8 @@ static const struct rc_parameters_data rc_parameters[] = {
+> >               { 341, 15, 2048, 3, 12, 11, 11, {
+> >                       { 0, 2, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
+> >                       { 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
+> > -                     { 3, 9, -8 }, { 3, 10, -10 }, { 5, 11, -10 },
+> > -                     { 5, 12, -12 }, { 5, 13, -12 }, { 7, 13, -12 }, { 13, 15, -12 }
+> > +                     { 3, 8, -8 }, { 3, 9, -10 }, { 5, 9, -10 }, { 5, 9, -12 },
+> > +                     { 5, 9, -12 }, { 7, 10, -12 }, { 10, 11, -12 }
+> >                       }
+> >               }
+> >       },
+> > @@ -508,8 +574,8 @@ static const struct rc_parameters_data rc_parameters[] = {
+> >               { 341, 15, 2048, 7, 16, 15, 15, {
+> >                       { 0, 2, 2 }, { 2, 5, 0 }, { 3, 7, 0 }, { 4, 8, -2 },
+> >                       { 6, 9, -4 }, { 7, 10, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
+> > -                     { 7, 13, -8 }, { 7, 14, -10 }, { 9, 15, -10 }, { 9, 16, -12 },
+> > -                     { 9, 17, -12 }, { 11, 17, -12 }, { 17, 19, -12 }
+> > +                     { 7, 12, -8 }, { 7, 13, -10 }, { 9, 13, -10 }, { 9, 13, -12 },
+> > +                     { 9, 13, -12 }, { 11, 14, -12 }, { 14, 15, -12 }
+> >                       }
+> >               }
+> >       },
+> > @@ -518,9 +584,9 @@ static const struct rc_parameters_data rc_parameters[] = {
+> >               { 341, 15, 2048, 11, 20, 19, 19, {
+> >                       { 0, 6, 2 }, { 4, 9, 0 }, { 7, 11, 0 }, { 8, 12, -2 },
+> >                       { 10, 13, -4 }, { 11, 14, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
+> > -                     { 11, 17, -8 }, { 11, 18, -10 }, { 13, 19, -10 },
+> > -                     { 13, 20, -12 }, { 13, 21, -12 }, { 15, 21, -12 },
+> > -                     { 21, 23, -12 }
+> > +                     { 11, 16, -8 }, { 11, 17, -10 }, { 13, 17, -10 },
+> > +                     { 13, 17, -12 }, { 13, 17, -12 }, { 15, 18, -12 },
+> > +                     { 18, 19, -12 }
+> >                       }
+> >               }
+> >       },
+> > @@ -602,7 +668,8 @@ static const struct rc_parameters_data rc_parameters[] = {
+> >       { /* sentinel */ }
+> >  };
+> >
+> > -static const struct rc_parameters *get_rc_params(u16 dsc_bpp,
+> > +static const struct rc_parameters *get_rc_params(const struct rc_parameters_data *rc_parameters,
+> > +                                              u16 dsc_bpp,
+> >                                                u8 bits_per_component)
+> >  {
+> >       int i;
+> > @@ -622,11 +689,13 @@ static const struct rc_parameters *get_rc_params(u16 dsc_bpp,
+> >   * function.
+> >   *
+> >   * @vdsc_cfg: DSC Configuration data partially filled by driver
+> > + * @kind: operating mode and standard to follow
+> >   *
+> >   * Return: 0 or -error code in case of an error
+> >   */
+> > -int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg)
+> > +int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum drm_dsc_params_kind kind)
+> >  {
+> > +     const struct rc_parameters_data *data;
+> >       const struct rc_parameters *rc_params;
+> >       int i;
+> >
+> > @@ -634,7 +703,19 @@ int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg)
+> >                        !vdsc_cfg->bits_per_component))
+> >               return -EINVAL;
+> >
+> > -     rc_params = get_rc_params(vdsc_cfg->bits_per_pixel,
+> > +     switch (kind) {
+> > +     case DRM_DSC_1_2_444:
+> > +             data = rc_parameters_1_2_444;
+> > +             break;
+> > +     case DRM_DSC_1_1_PRE_SCR:
+> > +             data = rc_parameters_pre_scr;
+> > +             break;
+> > +     default:
+> > +             return -EINVAL;
+> > +     }
+> > +
+> > +     rc_params = get_rc_params(data,
+> > +                               vdsc_cfg->bits_per_pixel,
+> >                                 vdsc_cfg->bits_per_component);
+> >       if (!rc_params)
+> >               return -EINVAL;
+> > diff --git a/drivers/gpu/drm/i915/display/intel_vdsc.c b/drivers/gpu/drm/i915/display/intel_vdsc.c
+> > index 20a4c2f343fe..a4d1d2ba71bb 100644
+> > --- a/drivers/gpu/drm/i915/display/intel_vdsc.c
+> > +++ b/drivers/gpu/drm/i915/display/intel_vdsc.c
+> > @@ -157,7 +157,15 @@ int intel_dsc_compute_params(struct intel_crtc_state *pipe_config)
+> >       if (DISPLAY_VER(dev_priv) >= 13) {
+> >               calculate_rc_params(vdsc_cfg);
+> >       } else {
+> > -             ret = drm_dsc_setup_rc_params(vdsc_cfg);
+> > +             if ((compressed_bpp == 8 ||
+> > +                  compressed_bpp == 12) &&
+> > +                 (vdsc_cfg->bits_per_component == 8 ||
+> > +                  vdsc_cfg->bits_per_component == 10 ||
+> > +                  vdsc_cfg->bits_per_component == 12))
+> > +                     ret = drm_dsc_setup_rc_params(vdsc_cfg, DRM_DSC_1_1_PRE_SCR);
+> > +             else
+> > +                     ret = drm_dsc_setup_rc_params(vdsc_cfg, DRM_DSC_1_2_444);
+> > +
+> >               if (ret)
+> >                       return ret;
+> >
+> > diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
+> > index 1681791f65a5..c634bb2935d3 100644
+> > --- a/include/drm/display/drm_dsc_helper.h
+> > +++ b/include/drm/display/drm_dsc_helper.h
+> > @@ -10,12 +10,17 @@
+> >
+> >  #include <drm/display/drm_dsc.h>
+> >
+> > +enum drm_dsc_params_kind {
+> > +     DRM_DSC_1_2_444,
+> > +     DRM_DSC_1_1_PRE_SCR, /* legacy params from DSC 1.1 */
+> > +};
+> > +
+> >  void drm_dsc_dp_pps_header_init(struct dp_sdp_header *pps_header);
+> >  int drm_dsc_dp_rc_buffer_size(u8 rc_buffer_block_size, u8 rc_buffer_size);
+> >  void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_sdp,
+> >                             const struct drm_dsc_config *dsc_cfg);
+> >  void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg);
+> > -int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg);
+> > +int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum drm_dsc_params_kind kind);
+> >  int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg);
+> >
+> >  #endif /* _DRM_DSC_HELPER_H_ */
+>
+> --
+> Jani Nikula, Intel Open Source Graphics Center
+
+
+
 -- 
-2.34.1
-
+With best wishes
+Dmitry
