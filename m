@@ -2,111 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFE926B072E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 13:35:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 756046B0734
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 13:35:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230384AbjCHMfF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 07:35:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34298 "EHLO
+        id S230358AbjCHMf3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 07:35:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230358AbjCHMfE (ORCPT
+        with ESMTP id S230123AbjCHMf1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 07:35:04 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 466C1BC7BE
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 04:34:59 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id d36so17966227lfv.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 04:34:59 -0800 (PST)
+        Wed, 8 Mar 2023 07:35:27 -0500
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C7D7BCB9F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 04:35:24 -0800 (PST)
+Received: by mail-yb1-xb2c.google.com with SMTP id 82so14431933ybn.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 04:35:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678278897;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Bm/wFhbM4wm/xhFq134yVQd8tiMNGqmrnN+0G9WMMBo=;
-        b=jezxfYXi0ZzQdUXQiclKaruTD3zvxoLksYnruQsiQqBwDKaH8n36RCyM0npUBwOV6B
-         IVB3hwX529vMxqRUMOV0nhehAYbEXB8hfbTzA3qSk73gbtbwKKqA53GdPCmfT3T7y0fS
-         hFj5UQfd+b7fcCBDZfTMr8xiTIFr2Pzs994o4QMmE3c8HMzhLwYvq3/G/7Qxk6QTmr8I
-         qlf7Be6eyMUYYZp64djVLq6oIVjeDNfLyyOEN157cMVX0Wk4NF6w+AhiqC0al66fVeCb
-         ztz3wVSQ84P1wU0tYnnrFTrhc05EIcPWriUd8J8Q6NyVGUZ0HtZfRYKkM/iPut5uLggo
-         8EMA==
+        d=linaro.org; s=google; t=1678278923;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Te0Wm1LBiLHbyjBQ4apLHzIYIeF5VCMITHqDeFoeL3c=;
+        b=wjrI5GBxcLK2TpY/oAthDy4jtf1z+fsJuQ9xjcbxHaIlP6smp1deqrOVtdOkNnjFIA
+         2UrygRCRUkSvYhYIP206gLrLjl0xPM+AD4S5GNdOAcW4d8tIqfe3pZYgXtRsu5Y6lGcH
+         j16ROAYlk8/QmUFivnX7oGT1kpc1TF2IyACh3W9NPSJUUaFMKuOvXh7itExrkzx08ERc
+         PyntbpEt932gCKkR86biuXCM/rCAdWH4X1ofg+KEsTel8id7WapS80VxZU77UhUOU/Rw
+         e70eEtSpzO80RkRXAQg+49btgEFiOrqzTapKjhJrIL/0rBejgJQOCpfPh+HJmAmXw0Xc
+         tW7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678278897;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Bm/wFhbM4wm/xhFq134yVQd8tiMNGqmrnN+0G9WMMBo=;
-        b=a3YIMJum04dWQ95Ol2KEqPdfKraG4dpNRktHrvGPRpuHiK/LsDI/0o3+oJ3UvCW5EX
-         Ym3P8O7ujCCraPlsBtPpCx376Xn6Cwa3s2p16Q+ejTswIESy47lS4VqzenE25s4cV8P5
-         gkMVJKrEc3pvmxS0Ott+/steZV6UvO777c7bMo5nQosi77jkmDQFWMY1ma4kkEYLjmQS
-         pIC7mjY/HPk8YYKSWvLAU1qr61h+LbeGDtJ3LQ8VkeYJvXejunzkF+EzcMir+Njo44lK
-         hz6Et7E/H56fPCnd+y0JsSZUW9D5N2PTnC1woMYg6SO0puutqtO5A0QN4T6RRPxENtXV
-         YVdA==
-X-Gm-Message-State: AO0yUKX3SnYq6jAy3cpE4F+5xSCzTNSZB4EPvpb8inMyUHclBZ/AtxFh
-        NVd7D3jiGkcnSYxqwS398e4LKg==
-X-Google-Smtp-Source: AK7set9Fwpz4ucWoyfrUg0MFawQVc4nuIyYWmuOSFKkGSlG8En1qe8k2LLAB82bku8RZnPRIt+xXgQ==
-X-Received: by 2002:ac2:5613:0:b0:4cb:13d7:77e2 with SMTP id v19-20020ac25613000000b004cb13d777e2mr5109380lfd.26.1678278897568;
-        Wed, 08 Mar 2023 04:34:57 -0800 (PST)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id d2-20020a2e96c2000000b00295a2d07558sm2569871ljj.112.2023.03.08.04.34.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 04:34:57 -0800 (PST)
-Message-ID: <2fbf7a1c-fa1a-8834-63b0-0796b2993293@linaro.org>
-Date:   Wed, 8 Mar 2023 13:34:55 +0100
+        d=1e100.net; s=20210112; t=1678278923;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Te0Wm1LBiLHbyjBQ4apLHzIYIeF5VCMITHqDeFoeL3c=;
+        b=Uu4oE8hgfeCMWwpTrSRDZgrNtR/I7ss08B5J1cZvyEo6O4jnHO/5T5jCcZPwBe5EDF
+         XaTVVoyMU24OiYRHTPE+izCdPSrdmgTdAm+n7ZMZrFiEAQw0PIhuKxVK1x1MI3Fb/Ihb
+         /S6fDSTFAJiIqv6+FU3dG/+cy6vw4uUrkGsWI/tQcmHyJ3Mx9OK/WCKjIegUjuoLJJ3O
+         MtVtSeqzp8lVt87UAe6CAWJ6KdPObg+pNEu3S08Vn+//3z80ur0QsaHDnl58/nwLpdpt
+         KYpaGwpOY1U6rqpf4UsKvclsJ2Ht80NtP0oA7QOaULScA8hUsHYBfp67XuBgMrx2XY03
+         lJXg==
+X-Gm-Message-State: AO0yUKXd/OFl3ODOznoHKzJ9SZHlc1iloUxQkjOvoQwLliUwHuS0MLmQ
+        9zRPueVdPSEbA9qHMSOS8chmbpOsZqc6zydoIpLfXA==
+X-Google-Smtp-Source: AK7set+wT84PGBj+94QLZa9jjubNNjq68RKKqm41jG5BChuSqdm07c0307nCBlq5YlWDhnsqSvsRE1NW+v6KzhRiMcM=
+X-Received: by 2002:a5b:70c:0:b0:a30:38fb:a0b8 with SMTP id
+ g12-20020a5b070c000000b00a3038fba0b8mr11038426ybq.9.1678278923492; Wed, 08
+ Mar 2023 04:35:23 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: correct WSA2 assigned clocks
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230308123129.232642-1-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230308123129.232642-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
+ <20221102180705.459294-6-dmitry.baryshkov@linaro.org> <ZAhhrG6CliC83Oxr@hovoldconsulting.com>
+In-Reply-To: <ZAhhrG6CliC83Oxr@hovoldconsulting.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 8 Mar 2023 14:35:12 +0200
+Message-ID: <CAA8EJprKDXYjd2zUdAGZkUEVt++XtA03RnCoYAfb-gJUz7tMsg@mail.gmail.com>
+Subject: Re: [PATCH v3 5/7] drm/msm/hdmi: stop using drm_bridge_connector_en/disable_hpd()
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, 8 Mar 2023 at 12:20, Johan Hovold <johan@kernel.org> wrote:
+>
+> On Wed, Nov 02, 2022 at 09:07:03PM +0300, Dmitry Baryshkov wrote:
+> > The functionality of drm_bridge_connector_enable_hpd() and
+> > drm_bridge_connector_disable_hpd() is provided automatically by the
+> > drm_kms_poll helpers. Stop calling these functions manually.
+>
+> I stumbled over this one when investigating a hotplug-related crash in
+> the MSM DRM driver which this series prevents by moving hotplug
+> notification enable to drm_kms_helper_poll_enable().
+>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/hdmi/hdmi.c | 2 --
+> >  1 file changed, 2 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> > index 93fe61b86967..a540c45d4fd3 100644
+> > --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> > +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> > @@ -348,8 +348,6 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
+> >               goto fail;
+> >       }
+> >
+> > -     drm_bridge_connector_enable_hpd(hdmi->connector);
+> > -
+> >       ret = msm_hdmi_hpd_enable(hdmi->bridge);
+> >       if (ret < 0) {
+> >               DRM_DEV_ERROR(&hdmi->pdev->dev, "failed to enable HPD: %d\n", ret);
+>
+> It looks like you are now enabling hotplug events before the DRM driver
+> is ready to receive them (i.e. msm_hdmi_hpd_enable() is called before
+> drm_bridge_connector_enable_hpd()).
+>
+> Could this not lead to missed events or is the state being setup
+> correctly somewhere else?
+>
+> Shouldn't the call to msm_hdmi_hpd_enable() be moved to when HPD is
+> enabled either way (e.g. by being converted to a hpd_enable callback)?
+
+Eventually I'll get to it (hopefully during this weekend). There is
+one item which needs to be investigated, see [1]. I have to check if
+this is applicable to earlier generations, which also means
+resurrecting the msm8974 HDMI PHY patchset posted ages ago. I think
+the initial status is determined correctly using the .detect(). At
+least I saw no issues with this patchset. However, thanks for the
+pointer.
+
+[1] https://git.codelinaro.org/linaro/qcomlt/kernel/-/commit/6ae2c308555f470ba63f90b7171519a242f96a67
 
 
-On 8.03.2023 13:31, Krzysztof Kozlowski wrote:
-> The WSA2 assigned-clocks were copied from WSA, but the WSA2 uses its
-> own.
-> 
-> Fixes: 14341e76dbc7 ("arm64: dts: qcom: sm8450: add Soundwire and LPASS")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 42833188a257..a315c0a61c5f 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -2142,8 +2142,8 @@ wsa2macro: codec@31e0000 {
->  				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->  				 <&vamacro>;
->  			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
-> -			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> -					  <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA2_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +					  <&q6prmcc LPASS_CLK_ID_WSA2_CORE_TX_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
->  			assigned-clock-rates = <19200000>, <19200000>;
->  
->  			#clock-cells = <0>;
+-- 
+With best wishes
+Dmitry
