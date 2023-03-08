@@ -2,74 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 930926B040D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 11:24:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F6076B042C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 11:27:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229751AbjCHKYZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 05:24:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57304 "EHLO
+        id S229981AbjCHK1k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 05:27:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229956AbjCHKYS (ORCPT
+        with ESMTP id S229903AbjCHK1j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 05:24:18 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD9ADB7883
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 02:24:06 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id h9so16059250ljq.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 02:24:06 -0800 (PST)
+        Wed, 8 Mar 2023 05:27:39 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DB2F509A8
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 02:27:37 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id t11so20696959lfr.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 02:27:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678271045;
+        d=linaro.org; s=google; t=1678271255;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=22tvz7hmUhdUMGwlv3bBZauun78318c7+zodMrcgnh4=;
-        b=lyj3zjbFHBUC7c40rpMNeqDFzcZXQwsu3mQ5gHW12YIls1c8ZzsY6vpffu2Fw/ywEC
-         Qfq3R5tdLU7Vn4lFe4mV8q72bkrohE4ZWdAqt6lt/YZjQxEc/i2aODl9ed7A5NyliKPo
-         T1rdl47NbhkaOtWXPNU+UH/wGLo8//aB/UaZrAPeL/P167Xrj4t/SocYgyP0azHZKqN0
-         c1/nsjwh4sLef8G6vwjyflX6l2PvH0GQkOmQCLqhV0K3RwD3BHoWGjBRqxPKuqo3Vx5m
-         81hyeNzaUsfPhF2ozmCK9B1pE7fU0Qso7/q5MPxJuFX3yHA4gxSkvTzlZ+gDJ+noy1kM
-         P0eA==
+        bh=pqzvhzkr/44Xe2mAkHsd6BfnXsY6v0my5G9rUWaLipM=;
+        b=OJ0sHLu2NiW+5HgUqYDWsaniLsOoz3prGjF3BcnnTrgstffXbGmanm39XDoIMR5Rrh
+         gbleXmZVye3Bpz3VL7e6mIUY51SL66z6jl1CAm8/jJonUbVAR9hU3QIDpcxc+uiBLfuf
+         BbPMc7SUbAmCdvZWdLrb0HAy+yQZooJtJmurLgdCwFla6uUFjyZSDBXI7qxHec3qosW1
+         4Koi3FXDfqFlG92+iMM/IccXGikM/56/W3o7UtECQE4dbXMOm3jNGTnwlfM3Ugak0ISJ
+         dTB/x02BYRhfaWql1CYreZhA4ScNYe98o6KIKfZhfrgsV8j/u1KMUr8Qbm9UKIIKdR9q
+         6QDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678271045;
+        d=1e100.net; s=20210112; t=1678271255;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=22tvz7hmUhdUMGwlv3bBZauun78318c7+zodMrcgnh4=;
-        b=wZ1L6nCeULq+MQKXK2QCWU+Gsfs4mFH4QygQtJxOF0Nb87cJEnwmKQ8fjd7LznaNS+
-         Gl4GjhB2drAz2jfIiUfBFDP35mP7kDzYA//HpTzV8YN/eSWJoVnyw4Ics5N486M7vSpI
-         aDi+C7H7FXHCDIcHg2aMa+gTD40kwB76aFLTyOCR/san//Ua4syacheOqF0WZE6f86HQ
-         qIja97MAvQbeLh6MmtDrHslO4pyzQM7G5tXbeyB1RtjYY9jwyeHlN7msogYu5o6ka51z
-         mdzikSgsUNXbPWcReDJWbA5s+S1hpiZhr987XkK+Vm9HHo9HGFEUMEgWuTQPW0uDbt7m
-         GU2Q==
-X-Gm-Message-State: AO0yUKU7ezx4g0H3ipj4T6e5Lw+ZtQn23PFYiYSI9Y9ttoYXsa3Qn0x8
-        8XKFNPEZSJqAVdK6ITx4zVZNqw==
-X-Google-Smtp-Source: AK7set/ojTfB9bk7Hvjw+gMTM2pvvv4YV0OSl3AYY0DHaV7OR6qIoRzrKfRy+3tOBu9KW6kmsrUzdA==
-X-Received: by 2002:a2e:22c2:0:b0:298:6d2f:f76 with SMTP id i185-20020a2e22c2000000b002986d2f0f76mr673841lji.1.1678271045162;
-        Wed, 08 Mar 2023 02:24:05 -0800 (PST)
+        bh=pqzvhzkr/44Xe2mAkHsd6BfnXsY6v0my5G9rUWaLipM=;
+        b=GF8azBKoS1vKlGV3DWFzUnRLnQS9J02N+47J8VxjVMnjxY3fo8aBAk95va6yibxiwD
+         l6+sOwlO/HEuDm1+rZ90zBIuiNW+7eG37a4+N89DQ+0zHhGU65WJPJdOOZbSuf8SJWDr
+         UoZxOj0HO0Fv28ewf4tC3eEPkN9Cx49qHyNZVFWvK5EIeRWME2k2iU2kM1y2MQQpnxZ/
+         Ax9+zQfQh5Ko9CxG9D34EL0lq9itmY3KTq7i7jMdgnO/940nyBhW7JIgmigjR6ilC3ci
+         Lmvi9Y6S57+c8XbjE8VZNQagGLAXbOeMw97knKh0Bc9jRENCkNx2l41GmrGhfDgQXhWt
+         YUbQ==
+X-Gm-Message-State: AO0yUKV/xuP5YOiPDWwCNYJvvVwGKYEyEGmT927z+Z7hbrjGR6OgoZ2f
+        ZH3uRuNaH4idRbC4IDURQ+Fk6g==
+X-Google-Smtp-Source: AK7set8jnuRcG3P/eMiLoTvW4l+ACk0ugQ9b6JGpPojSXJRUFXtieXCL5NzLxCgY+3amPTIZb5cOJA==
+X-Received: by 2002:ac2:4a77:0:b0:4e2:cb9:e266 with SMTP id q23-20020ac24a77000000b004e20cb9e266mr4435744lfp.50.1678271255626;
+        Wed, 08 Mar 2023 02:27:35 -0800 (PST)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id p18-20020ac246d2000000b004cc9ddce3adsm2306471lfo.82.2023.03.08.02.24.04
+        by smtp.gmail.com with ESMTPSA id v24-20020ac25598000000b004cb1e2f8f4dsm2290138lfg.152.2023.03.08.02.27.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 02:24:04 -0800 (PST)
-Message-ID: <27ddd18b-3816-1b12-3e79-4f7f414921b2@linaro.org>
-Date:   Wed, 8 Mar 2023 11:24:03 +0100
+        Wed, 08 Mar 2023 02:27:35 -0800 (PST)
+Message-ID: <3f434777-c4b6-272f-1971-f9adf3faefe4@linaro.org>
+Date:   Wed, 8 Mar 2023 11:27:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: qdu1000-idp: Enable mpss
+Subject: Re: [PATCH V2 4/6] regulator: qcom_smd: Add support to define the
+ bootup voltage
 Content-Language: en-US
-To:     Melody Olvera <quic_molvera@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230306231719.22263-1-quic_molvera@quicinc.com>
- <20230306231719.22263-3-quic_molvera@quicinc.com>
+To:     Devi Priya <quic_devipriy@quicinc.com>,
+        Mark Brown <broonie@kernel.org>
+Cc:     agross@kernel.org, andersson@kernel.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_gokulsri@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_anusha@quicinc.com, quic_ipkumar@quicinc.com
+References: <20230217142030.16012-1-quic_devipriy@quicinc.com>
+ <20230217142030.16012-5-quic_devipriy@quicinc.com>
+ <907628d1-b88d-5ac6-ed9d-7f63e2875738@linaro.org>
+ <Y/aeu5ua7cY5cGON@sirena.org.uk>
+ <39f73580-f263-de0e-6819-89c3f4c75c3a@quicinc.com>
+ <8ce07abd-2d02-69d2-8dc6-fe11525aecda@linaro.org>
+ <11b05b9f-b969-6648-2204-2da5f8465c96@quicinc.com>
+ <751e5129-3c11-0156-719e-3fe996a149be@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230306231719.22263-3-quic_molvera@quicinc.com>
+In-Reply-To: <751e5129-3c11-0156-719e-3fe996a149be@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
@@ -82,31 +91,77 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 7.03.2023 00:17, Melody Olvera wrote:
-> Add MPSS firmware paths for the QDU1000 IDP platform.
+On 7.03.2023 07:55, Devi Priya wrote:
 > 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> On 3/6/2023 6:39 PM, Devi Priya wrote:
+>>
+>>
+>> On 3/3/2023 6:57 PM, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 3.03.2023 14:21, Devi Priya wrote:
+>>>>
+>>>>
+>>>> On 2/23/2023 4:31 AM, Mark Brown wrote:
+>>>>> On Wed, Feb 22, 2023 at 11:11:42PM +0100, Konrad Dybcio wrote:
+>>>>>
+>>>>>> Thinking about it again, this seems like something that could be
+>>>>>> generalized and introduced into regulator core.. Hardcoding this
+>>>>>> will not end well.. Not to mention it'll affect all mp5496-using
+>>>>>> boards that are already upstream.
+>>>>>
+>>>>>> WDYT about regulator-init-microvolts Mark?
+>>>>>
+>>>>> The overwhelming majority of devices that have variable voltages
+>>>>> support readback, these Qualcomm firmware devices are pretty much
+>>>>> unique in this regard.  We don't want a general property to set a
+>>>>> specific voltage since normally we should be using the
+>>>>> constraints and don't normally need to adjust things immediately
+>>>>> since we can tell what the current voltage is.
+>>>>>
+>>>>> This is pretty much just going to be a device specific bodge,
+>>>>> ideally something that does know what the voltage is would be
+>>>>> able to tell us at runtime but if that's not possible then
+>>>>> there's no good options.  If the initial voltage might vary based
+>>>>> on board then a device specific DT property might be less
+>>>>> terrible, if it's determined by the regulator the current code
+>>>>> seems fine.  Or just leave the current behavour, if the
+>>>>> constraints are accurate then hopefully a temporary dip in
+>>>>> voltage is just inelegant rather than an issue.  Indeed the
+>>>>> current behaviour might well save power if you've got a voltage
+>>>>> range configured and nothing actually ever gets round to setting
+>>>>> the voltage (which is depressingly common, people seem keen on
+>>>>> setting voltage ranges even when the voltage is never varied in
+>>>>> practice).
+>>>>
+>>>> Hi Mark, The initial bootup voltage is actually blown into the OTP register of the PMIC and it remains the same across boards for IPQ9574 SoC.
+>>> But what about IPQ6018 which also uses MP5496? That's also gonna
+>>> set the voltage on there, it may be too high/low..
+> For IPQ6018, the bootup voltage is the same as that of IPQ9574 which is
+> 875mV
+Okay, but what about any other design that employs or may employ
+MP5496 in the future?
+
+>>>
+>>>   Initially the SoC runs at 800MHz with a voltage of 875mV set by the bootloaders. As kernel does not know the initial voltage, during regulator registration the framework considers the current voltage to be zero and tries to bring up the regulator to minimum supported voltage of 600mV. This causes the dip which might be of concern in SS parts where the voltage might be insufficient leading to silent reboots.
+>>> That's an SoC-specific thing, the same regulator can be used with
+>>> many different ones. We can't just assume it'll always be like this.
+>>> I see the problem, but I believe this is not the correct solution
+> Okay, As we had discussions on reading back the voltage & the generic
+> DT property, do you suggest any other possible solutions here?
+Due to the sudden influx of various IPQ SoCs on the mailing list lately
+I have no idea if it concerned this one too, but at least one of them
+was said not to use RPM for controlling the clocks. If that's the case,
+I see no reason at all to use it for scaling the regulators, the PMIC
+could be addressed directly over I2C as a normal device. You'd probably
+want to keep VDD_[CM]X scaling through rpmpd, but it's easily done by
+simply not registering the CX/MX registers as children of the I2C
+regulator IC.
 
 Konrad
->  arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-> index 9e9fd4b8023e..c012da026a10 100644
-> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-> @@ -448,6 +448,12 @@ &qupv3_id_0 {
->  	status = "okay";
->  };
->  
-> +&remoteproc_mpss {
-> +	firmware-name = "qcom/qdu1000/modem.mbn",
-> +			"qcom/qdu1000/modem_dtb.mbn";
-> +	status = "okay";
-> +};
-> +
->  &uart7 {
->  	status = "okay";
->  };
+>>>
+>>> Konrad
+>>>>
+>>>> Best Regards,
+>>>> Devi Priya
