@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE7946B018A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 09:33:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FD1C6B018F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Mar 2023 09:34:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229974AbjCHIdy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 03:33:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33438 "EHLO
+        id S229587AbjCHIeB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 03:34:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230007AbjCHIdd (ORCPT
+        with ESMTP id S230305AbjCHIdg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 03:33:33 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02AF71F48B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 00:33:00 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id fm20-20020a05600c0c1400b003ead37e6588so672106wmb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 00:33:00 -0800 (PST)
+        Wed, 8 Mar 2023 03:33:36 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1542026CD5
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 00:33:03 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id bx12so14517374wrb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 00:33:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678264379;
+        d=linaro.org; s=google; t=1678264381;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NEYgWwd5LnYdEY07sfIkwmR+iqIyuF3pIvbNU+g6904=;
-        b=pxYu3YiTcCQc/OvW1v/Vuko+gLQ055vVjL9GibywEdMBZwaHTC5XAABSSVFggRQTAl
-         Lz5AdZHZBHrQnqYW9Wi+VvOxjhILeYtDvf0R212bgb2/2g5rPuB45k3fD9hprQlwhT3O
-         hmk5RfZLZxXxuZ3zzK2vLNbBMeHreY0zw9h/YaoDo/D9xf5wCPwryNThh07S8fDcowmj
-         tU+T+GYJNWulaRqWX4MXqGyl2E/4csMz6P75URv7xDATQA6sz3l6CPuyxqKAsIq+4ckS
-         AD4L6UKW7HJoC8IFqgIxuXLcyynTvF6UvKtlis/j1gICHHn2QLpgEbly+Re9fmCSWzx5
-         yeFA==
+        bh=mrjzbycvahC2qWo4+g2dlQgsce4F08+8FUswfvS3fdc=;
+        b=vjIMj4YrRtXCIYL0GYTNI06bij3LwCKaY/BhO+GRH0cClgMCxoi7HlBCHXRrt4OwPw
+         NchY00cYcr3fQSMs79jfFoUrv8UxI4e8t4ZpnN/76yjxRwLCaDlogZlO79vHQN6Mbwej
+         JOCsW0fInPM5mkVLahhl+NA2obrELsJxm6qFrox29jsXXgPVogFDmu5sLqYKhhqwlVkM
+         CQQt3Eurjj3Hb1KE1MxDdkuxHWhRVi40iwDoIMdNXFbuWJdzPzDZo2wSXRnzYGNac4Qa
+         LCunR9fg2Z4U9iXsJO97RC6mcg8YBtZXmg/zKQ9lk9Q8nKaO50PviyrA63yxBqiEiEbm
+         ksAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678264379;
+        d=1e100.net; s=20210112; t=1678264381;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NEYgWwd5LnYdEY07sfIkwmR+iqIyuF3pIvbNU+g6904=;
-        b=UlS8ewfJiPLPy12ptdaFV9t0nG/2ClmOU9CdK0dnMsTTnltWywOIqgk2LiK6GE3ICo
-         ZEP5P63h3NDDGNCSb1+sEApn04Yb+NZ3JYazq9VFw/JXOUK6XoX6tqJRGLpQXlfLX2GZ
-         /uIjv9ti0mb28otiu0yvXX4VQEt0FmpQt2p2uhZrRFp1m/Ls35fsbD6/j/J4HfTzNVUw
-         QZwDiM+Gdo4qrjXWcXxKE/7MxzBp5LTaT5HcrqkQzKvE1vbmKQ/dz+Tp054zy45sEJwN
-         vmEMKdJx0qYlW090oG3nOkpH6JDDPui93PjfKFjd7j3ElSY/OVqsZ6R3y8eGaUoKgJUn
-         Ytww==
-X-Gm-Message-State: AO0yUKX1bE+EqAHrW2Prgg69DnXFNMa5gF44+Dg+iou0vMPrX9qk2wL/
-        FgwOXWSs6nt/xKF9FSR8Yx42rQ==
-X-Google-Smtp-Source: AK7set/atw0zF8Ds6d5mUuYNLYEnldx5CzVb6d72M7Ppv+eD2EDtU5TvE4rf67zIrkcSVmtENXeu+w==
-X-Received: by 2002:a05:600c:1990:b0:3e2:20c7:6553 with SMTP id t16-20020a05600c199000b003e220c76553mr15749876wmq.13.1678264378791;
-        Wed, 08 Mar 2023 00:32:58 -0800 (PST)
+        bh=mrjzbycvahC2qWo4+g2dlQgsce4F08+8FUswfvS3fdc=;
+        b=xqP9NIouP47X49LPjZTQ5myYPcclNz6OeOkMl5MGyIpAApOnHa4DpLToOgQciFUdoo
+         5Kv0TILCnHaWYI0kDpnFWhHLU3jC9LyTQkfs0xTXZMl99FGMokzlNVFxYsAQCULzN1n7
+         0mdLrD+nweH8PpQN7rcD6xxYVL6ya/7bVvs1XCinal6720c/lmgbYVUPBd7PqRfh/ThX
+         GOk+ZhXqy6Nsg9cDLfGI1EtR6YD3S9rGFsF8ONd/kPFwKZqQjc0qvWdXF2zQPpml3dfM
+         YVoFRwkMXkszDGXxJkhaiKRT2xBrVbbh3kyE0ZkB4dsPYKIeYsRwm3ARO7/RjGs5JojX
+         Rmqw==
+X-Gm-Message-State: AO0yUKUwb32P/wYceFgsvdfwAByEVmddbBcUPw86cX43C8AFR9c/dTiR
+        crqloZmBxmQpG0ABzyVLOjYt7g==
+X-Google-Smtp-Source: AK7set8oS+rGpxMJbjUjyrLII6bqdfrz7UWEgw0XQcKOu8pVfIoTB543vno3mUILoTr+ZTk2IziWEg==
+X-Received: by 2002:adf:f18a:0:b0:2c7:1d20:7743 with SMTP id h10-20020adff18a000000b002c71d207743mr11907012wro.21.1678264380980;
+        Wed, 08 Mar 2023 00:33:00 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id n1-20020adffe01000000b002c4084d3472sm14797907wrr.58.2023.03.08.00.32.57
+        by smtp.gmail.com with ESMTPSA id n1-20020adffe01000000b002c4084d3472sm14797907wrr.58.2023.03.08.00.32.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Mar 2023 00:32:57 -0800 (PST)
+        Wed, 08 Mar 2023 00:32:59 -0800 (PST)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 08 Mar 2023 09:32:53 +0100
-Subject: [PATCH 2/3] arm64: dts: qcom: sm8550: fix qup_spi0_cs node
+Date:   Wed, 08 Mar 2023 09:32:54 +0100
+Subject: [PATCH 3/3] arm64: dts: qcom: sm8550: misc style fixes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230308-topic-sm8550-upstream-dt-fixups-v1-2-595b02067672@linaro.org>
+Message-Id: <20230308-topic-sm8550-upstream-dt-fixups-v1-3-595b02067672@linaro.org>
 References: <20230308-topic-sm8550-upstream-dt-fixups-v1-0-595b02067672@linaro.org>
 In-Reply-To: <20230308-topic-sm8550-upstream-dt-fixups-v1-0-595b02067672@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -73,42 +73,67 @@ Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 X-Mailer: b4 0.12.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The node is incomplete and doesn't need a subnode, add the missing
-properties and move everything to the root of qup-spi0-cs-state node.
+Miscellaneous DT fixes to remove spurious blank line and enhance readability.
 
 Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
+Fixes: d7da51db5b81 ("arm64: dts: qcom: sm8550: add display hardware devices")
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index fe8b92954550..c25c68257412 100644
+index c25c68257412..6208a6196090 100644
 --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -2807,10 +2807,10 @@ qup_i2c15_data_clk: qup-i2c15-data-clk-state {
- 			};
+@@ -412,7 +412,6 @@ xbl_sc_mem: xbl-sc-region@d8100000 {
+ 			no-map;
+ 		};
  
- 			qup_spi0_cs: qup-spi0-cs-state {
--				cs-pins {
--					pins = "gpio31";
--					function = "qup1_se0";
--				};
-+				pins = "gpio31";
-+				function = "qup1_se0";
-+				drive-strength = <6>;
-+				bias-disable;
- 			};
+-
+ 		hyp_tags_reserved_mem: hyp-tags-reserved-region@811d0000 {
+ 			reg = <0 0x811d0000 0 0x30000>;
+ 			no-map;
+@@ -2210,7 +2209,8 @@ mdss_dsi0: dsi@ae94000 {
  
- 			qup_spi0_data_clk: qup-spi0-data-clk-state {
+ 				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
+ 						  <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
+-				assigned-clock-parents = <&mdss_dsi0_phy 0>, <&mdss_dsi0_phy 1>;
++				assigned-clock-parents = <&mdss_dsi0_phy 0>,
++							 <&mdss_dsi0_phy 1>;
+ 
+ 				operating-points-v2 = <&mdss_dsi_opp_table>;
+ 
+@@ -2302,8 +2302,10 @@ mdss_dsi1: dsi@ae96000 {
+ 
+ 				power-domains = <&rpmhpd SM8550_MMCX>;
+ 
+-				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>, <&dispcc DISP_CC_MDSS_PCLK1_CLK_SRC>;
+-				assigned-clock-parents = <&mdss_dsi1_phy 0>, <&mdss_dsi1_phy 1>;
++				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>,
++						  <&dispcc DISP_CC_MDSS_PCLK1_CLK_SRC>;
++				assigned-clock-parents = <&mdss_dsi1_phy 0>,
++							 <&mdss_dsi1_phy 1>;
+ 
+ 				operating-points-v2 = <&mdss_dsi_opp_table>;
+ 
+@@ -3171,7 +3173,7 @@ apps_smmu: iommu@15000000 {
+ 
+ 		intc: interrupt-controller@17100000 {
+ 			compatible = "arm,gic-v3";
+-			reg = <0 0x17100000 0 0x10000>,	/* GICD */
++			reg = <0 0x17100000 0 0x10000>,		/* GICD */
+ 			      <0 0x17180000 0 0x200000>;	/* GICR * 8 */
+ 			ranges;
+ 			#interrupt-cells = <3>;
 
 -- 
 2.34.1
