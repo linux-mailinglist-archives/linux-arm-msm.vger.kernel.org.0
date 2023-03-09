@@ -2,229 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D35C6B2372
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 12:52:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E3AAA6B239E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 13:01:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230388AbjCILv4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 06:51:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50164 "EHLO
+        id S229799AbjCIMBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 07:01:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231649AbjCILvx (ORCPT
+        with ESMTP id S229958AbjCIMB0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 06:51:53 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86BD0E6835;
-        Thu,  9 Mar 2023 03:51:51 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3298QivW009122;
-        Thu, 9 Mar 2023 11:51:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=DNOlz2EYTj6weFcohqxG0NnpJE4xB0UXowa/63Q892w=;
- b=BWLzr8NZdvaEdimvictYzpPUd7ujpjmZBI3GgiDwXkZ6PhARNXOwN2t9iFHHcIcQIW5p
- DU6tkAarZ970FAtXfn3dDi6Bc/LIyl2vwusneKbeblFgCoEWKmGbjnUQ3T0gxx+o1ABf
- QYKx+33uALemidDt5054wxL9g2PrkVXzexnkZUTJV+UGrRfGYV3eoaWeIoZhpZ1YTWPE
- 7Fdky2qICPpO3DjxEmkXnJIlynienapTsp37qjwvR+aPf7AvYibAsz6z8qY9PXTzkrMU
- P4Vlt1afSETdnr+hfyqle+oHocZ0rSWe0he6Wb/4Lu1SkG5OVrB3TPYwYS1rKTYX3JgQ RA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p74drhkxe-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 09 Mar 2023 11:51:46 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 329BpjFS014867
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 9 Mar 2023 11:51:45 GMT
-Received: from [10.201.3.182] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 9 Mar 2023
- 03:51:41 -0800
-Message-ID: <73269ad0-5662-519c-f6c0-e5e2f918cd4e@quicinc.com>
-Date:   Thu, 9 Mar 2023 17:21:38 +0530
+        Thu, 9 Mar 2023 07:01:26 -0500
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E547593128;
+        Thu,  9 Mar 2023 04:01:24 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id y14so1557182ljq.4;
+        Thu, 09 Mar 2023 04:01:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678363283;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=J4GSqIKfh+fPPQrFXuCrH3ba1s5AAafXmlJ7Rizwh8Y=;
+        b=PKXkA4WiA8duFtEJwBSGgeMQh5pTE1KoLqyioyMj57ImMT8E5tzaJa8Cezr5Ac+udB
+         dohArEBcvlwsvfpPY/VkRXG5pxCBioA5v30rcjLDCviR5gJkkP+XEeaxVWr0R1GXSFvu
+         mY8AgbmcW96ld6ZTFuaKaIVYvXqY/NhH4+SN/hXF64q2DtSBpOxlBJylrbxJP0DtVtbJ
+         TcNfMSR8WLEoUXOdxw7vbbTtl0ApDDk2b+AAUsrOlX0v292IdbqAfhmHmtHrqnLZPbyl
+         GnohTfVo+Y+Anb2hVBX+PfQYYZpSMgOXg1CmZBureC9Z8PeQccZB2IijuNg/SeGIYztr
+         dS/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678363283;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=J4GSqIKfh+fPPQrFXuCrH3ba1s5AAafXmlJ7Rizwh8Y=;
+        b=iTfNJl1333R+W/fTk47NXtq81+0+cRu5vCI3vNzYApLAjgfKO7K68EbCrzSZEAVpqV
+         0Mmn21biiLMBj+L2jy53mwRHcBhGBEFcZamIs4ppOgae6RIzEsyg7rHWXg4N6eslfLtH
+         tKF6Af17zeGfHiRiBSCbaLOj2zOegkrTTP6zhiGf36qjykg9c+11GsB3K34icss3rPTV
+         iYoN3PmU5UUpOImIrNWJZy7c4VxpIQQz8AHbgrbnyu3xfBv8oZjfIW0NXdqkZcthvyAm
+         svd7U7eNa/9Zm9n8/CRRHvqwVCuNM3fxF5KRbJZFD7FFTHf5Y6kIkjzhc6M6tmqQTRev
+         xolg==
+X-Gm-Message-State: AO0yUKWqpCxSfAP+So5PpZTD3AOMLaPbCkwZArrRGwymdRxGvTk3P4Di
+        gYNWT78giqsyH3TSCimQKmI=
+X-Google-Smtp-Source: AK7set+NMF/8gy2PgvVPpR4O7pSBLhYbUzPDmj5xP0+SqTAcGzlCByQXPVnKs759lKsD9WYcfwK9nw==
+X-Received: by 2002:a05:651c:b1f:b0:290:4d4b:481f with SMTP id b31-20020a05651c0b1f00b002904d4b481fmr7275446ljr.16.1678363283077;
+        Thu, 09 Mar 2023 04:01:23 -0800 (PST)
+Received: from [192.168.26.149] (ip-194-187-74-233.konfederacka.maverick.com.pl. [194.187.74.233])
+        by smtp.googlemail.com with ESMTPSA id s2-20020a2e98c2000000b002934fce87bfsm2846420ljj.108.2023.03.09.04.01.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Mar 2023 04:01:22 -0800 (PST)
+Message-ID: <e845b38c-d0eb-716c-dc51-b89582750f07@gmail.com>
+Date:   Thu, 9 Mar 2023 13:01:19 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v2 17/17] PCI: qcom: Expose link transition counts via
- debugfs
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <andersson@kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <krzysztof.kozlowski+dt@linaro.org>, <robh@kernel.org>
-CC:     <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230309085102.120977-1-manivannan.sadhasivam@linaro.org>
- <20230309085102.120977-18-manivannan.sadhasivam@linaro.org>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <20230309085102.120977-18-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: VrZ95vLubBXKCvrVPVzCJ29OTewhHoUI
-X-Proofpoint-ORIG-GUID: VrZ95vLubBXKCvrVPVzCJ29OTewhHoUI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-09_06,2023-03-08_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 priorityscore=1501 mlxscore=0 suspectscore=0
- clxscore=1011 adultscore=0 phishscore=0 spamscore=0 mlxlogscore=999
- bulkscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303090095
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:96.0) Gecko/20100101
+ Thunderbird/96.0
+Subject: Re: [PATCH V3] nvmem: add explicit config option to read OF fixed
+ cells
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Vincent Shih <vincent.sunplus@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Evgeniy Polyakov <zbr@ioremap.net>,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-rtc@vger.kernel.org,
+        Michael Walle <michael@walle.cc>,
+        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
+References: <20230309112028.19215-1-zajec5@gmail.com>
+ <20230309123513.43b7134f@xps-13>
+From:   =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
+In-Reply-To: <20230309123513.43b7134f@xps-13>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 3/9/2023 2:21 PM, Manivannan Sadhasivam wrote:
-> Qualcomm PCIe controllers have debug registers in the MHI region that
-> count PCIe link transitions. Expose them over debugfs to userspace to
-> help debug the low power issues.
+On 9.03.2023 12:35, Miquel Raynal wrote:
+>> diff --git a/include/linux/nvmem-provider.h b/include/linux/nvmem-provider.h
+>> index 0262b86194eb..b3c14ce87a65 100644
+>> --- a/include/linux/nvmem-provider.h
+>> +++ b/include/linux/nvmem-provider.h
+>> @@ -73,6 +73,7 @@ struct nvmem_cell_info {
+>>    * @owner:	Pointer to exporter module. Used for refcounting.
+>>    * @cells:	Optional array of pre-defined NVMEM cells.
+>>    * @ncells:	Number of elements in cells.
+>> + * @use_fixed_of_cells:	Read fixed NVMEM cells from OF.
 > 
-> Note that even though the registers are prefixed as PARF_, they don't
-> live under the "parf" register region. The register naming is following
-> the Qualcomm's internal documentation as like other registers.
+> I'm still unhappy with the naming, especially since you explained in
+> more details the whole plan which involves using a container to put
+> these fixed cells from now on. In both cases you extract cells from
+> fixed OF nodes but this boolean needs to be set to true in one
+> case, and false in the other, which would not make sense.
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->   drivers/pci/controller/dwc/pcie-qcom.c | 59 ++++++++++++++++++++++++++
->   1 file changed, 59 insertions(+)
+> Also, regarding the bindings changes, I'm fairly happy with the idea,
+> but if we go this way I would prefer a full series instead of
+> individual changes with:
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index e1180c84f0fa..6d9bde64c9e9 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -10,6 +10,7 @@
->   
->   #include <linux/clk.h>
->   #include <linux/crc8.h>
-> +#include <linux/debugfs.h>
->   #include <linux/delay.h>
->   #include <linux/gpio/consumer.h>
->   #include <linux/interconnect.h>
-> @@ -62,6 +63,13 @@
->   #define AXI_MSTR_RESP_COMP_CTRL1		0x81c
->   #define MISC_CONTROL_1_REG			0x8bc
->   
-> +/* MHI registers */
-> +#define PARF_DEBUG_CNT_PM_LINKST_IN_L2		0xc04
-> +#define PARF_DEBUG_CNT_PM_LINKST_IN_L1		0xc0c
-> +#define PARF_DEBUG_CNT_PM_LINKST_IN_L0S		0xc10
-> +#define PARF_DEBUG_CNT_AUX_CLK_IN_L1SUB_L1	0xc84
-> +#define PARF_DEBUG_CNT_AUX_CLK_IN_L1SUB_L2	0xc88
-> +
->   /* PARF_SYS_CTRL register fields */
->   #define MAC_PHY_POWERDOWN_IN_P2_D_MUX_EN	BIT(29)
->   #define MST_WAKEUP_EN				BIT(13)
-> @@ -229,11 +237,13 @@ struct qcom_pcie {
->   	struct dw_pcie *pci;
->   	void __iomem *parf;			/* DT parf */
->   	void __iomem *elbi;			/* DT elbi */
-> +	void __iomem *mhi;
->   	union qcom_pcie_resources res;
->   	struct phy *phy;
->   	struct gpio_desc *reset;
->   	struct icc_path *icc_mem;
->   	const struct qcom_pcie_cfg *cfg;
-> +	struct dentry *debugfs;
->   };
->   
->   #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> @@ -1385,6 +1395,37 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
->   	}
->   }
->   
-> +static int qcom_pcie_link_transition_count(struct seq_file *s, void *data)
-> +{
-> +	struct qcom_pcie *pcie = (struct qcom_pcie *)
-> +				     dev_get_drvdata(s->private);
-> +
-> +	seq_printf(s, "L0s transition count: %u\n",
-> +		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_PM_LINKST_IN_L0S));
-> +
-> +	seq_printf(s, "L1 transition count: %u\n",
-> +		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_PM_LINKST_IN_L1));
-> +
-> +	seq_printf(s, "L1.1 transition count: %u\n",
-> +		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_AUX_CLK_IN_L1SUB_L1));
-> +
-> +	seq_printf(s, "L1.2 transition count: %u\n",
-> +		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_AUX_CLK_IN_L1SUB_L2));
-> +
-> +	seq_printf(s, "L2 transition count: %u\n",
-> +		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_PM_LINKST_IN_L2));
-> +
-> +	return 0;
-> +}
-> +
-> +static void qcom_pcie_init_debugfs(struct qcom_pcie *pcie)
-> +{
-> +	struct dw_pcie *pci = pcie->pci;
-> +
-> +	debugfs_create_devm_seqfile(pci->dev, "link_transition_count", pcie->debugfs,
-> +				    qcom_pcie_link_transition_count);
-> +}
-> +
->   static int qcom_pcie_probe(struct platform_device *pdev)
->   {
->   	struct device *dev = &pdev->dev;
-> @@ -1392,6 +1433,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->   	struct dw_pcie *pci;
->   	struct qcom_pcie *pcie;
->   	const struct qcom_pcie_cfg *pcie_cfg;
-> +	char *name;
->   	int ret;
->   
->   	pcie_cfg = of_device_get_match_data(dev);
-> @@ -1439,6 +1481,12 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->   		goto err_pm_runtime_put;
->   	}
->   
-> +	pcie->mhi = devm_platform_ioremap_resource_byname(pdev, "mhi");
-> +	if (IS_ERR(pcie->mhi)) {
-> +		ret = PTR_ERR(pcie->mhi);
-> +		goto err_pm_runtime_put;
-> +	}
-> +
+> - the boolean you introduce here (renamed, at the very least)
+> - the new bindings
 
-  Tested this series on ipq4019-ap.dk07.1-c1 board and the above hunk
-  breaks enumeration because there is no 'mhi' region. All the debug bits
-  used in the transition_count function is inside the PARF_STTS register
-  at offset 0x24 inside the PARF region.
+I assume you mean fixed-layout.yaml?
 
-  Register: PCIE_0_PCIE20_PARF_PM_STTS | 0x80024
-  Offset:    0x24    Reset State:    0x00040000
 
-Bits    Field Name
-31    LINK_REQ_RST_NOT
-30    XMLH_LINK_UP
-29    PM_DSTATE_0
-0x0: D0
-0x1: D3
-28    PHYSTATUS
-27:16    PM_DSTATE
-15:12    PM_PME_EN
-11    PHYCLK_REQ_N
-10    L1SS_CLKREQN_OE
-9    L1SS_CLKREQN_IN
-8    PM_LINKST_IN_L1SUB
-7    PM_LINKST_IN_L0S
-6    PM_LINKST_L2_EXIT
-5    PM_LINKST_IN_L2
-4    PM_LINKST_IN_L1
-3:0    PM_STATUS
+> - the update of the current provider bindings to take the new bindings
+>    into account and deprecate the old ones officially
 
-Otherwise, with rest of the patches enumeration was fine.
-Tested with a pcie ethernet adapter.
+What has to be updated in current proceds? It seems to me that:
+1. Current NVMEM providers reference nvmem.yaml
+2. nvmem.yaml references nvmem-layout.yaml
+3. nvmem-layout.yaml references fixed-layout.yaml
 
-Regards,
-  Sricharan
+what else is missing?
+
+
+> - support for the new bindings in the core
+
+Please, don't get me wrong, but I'm not going to spend more hours on
+actual coding without approval of chosen path.
+
+I'll need to have
+[PATCH V2] dt-bindings: nvmem: layouts: add fixed-layout
+reviewed/acked first. If you can do that that's great.
+
+
+>>    * @keepout:	Optional array of keepout ranges (sorted ascending by start).
+>>    * @nkeepout:	Number of elements in the keepout array.
+>>    * @type:	Type of the nvmem storage
+>> @@ -103,6 +104,7 @@ struct nvmem_config {
+>>   	struct module		*owner;
+>>   	const struct nvmem_cell_info	*cells;
+>>   	int			ncells;
+>> +	bool			use_fixed_of_cells;
+>>   	const struct nvmem_keepout *keepout;
+>>   	unsigned int		nkeepout;
+>>   	enum nvmem_type		type;
+> 
+> Thanks,
+> Miquèl
+
