@@ -2,192 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6B3A6B251E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 14:19:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AEABF6B253D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 14:28:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230293AbjCINTc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 08:19:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40344 "EHLO
+        id S230174AbjCIN2G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 08:28:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230268AbjCINTb (ORCPT
+        with ESMTP id S229958AbjCIN2E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 08:19:31 -0500
-Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::228])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F28764C06;
-        Thu,  9 Mar 2023 05:19:29 -0800 (PST)
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id D29391BF203;
-        Thu,  9 Mar 2023 13:19:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1678367968;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=KCS0grjDle8LqIHXYUqxgW9dQGLLuD8q9UNKbRuhYbk=;
-        b=Xwei8LaM7A3PtmP2nNF4x28yyM+iJOS9s9PrMxCrGzZC58KjSVM8cHaBeXrAZI/NtfH/9j
-        r01nhfdqw3Y5E4seWycsQrKTDFGGLW5n7wwD+gr+9XPRGo17l49ulVlJXO+zEXIj6W/wVp
-        xHnGPGBF0BnN6CjB6Mu7s0CWOOvq/3wpWShvMBXpv9A0NVrQOjh4c49bXdwQz2Qj8hWt33
-        zxizmlPdNsdJMSab2n/Xqmakf0DwsfvgnyFw9d/JVszhf957LuH1cfuu0MN5C7gxIvLwp6
-        eigmkj5aTAo76n4kZiDx68XnLa0GLX9JeCOa/Bk5Ds7ImdmzV7EC+0ot+vZz3Q==
-Date:   Thu, 9 Mar 2023 14:19:20 +0100
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
+        Thu, 9 Mar 2023 08:28:04 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F25A21ABF6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 05:28:02 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id az36so1153332wmb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 05:28:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678368481;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eI0q9N1LmPrgG1bPRrjXueV1/2pjR5jMVC1vrOlTxZk=;
+        b=mCyJ+pIu3fJnTZ6AxJoX7FX8aPOAthn2nT3CsX0nqJKPj4QmqhC9gze/VRLUfv+Noj
+         Z0ksc+0Vv3AeUUkntSYoi8z4RtrHBIGxBpu7QoSDHYMssnqETL24QdQDzPVX44BLbHz+
+         IPvDqGBGsOxREuxuMZizM1egLLHAfsw5AxDqIaO3854FYwpjiPYJDjTNlqodPhdzQzOU
+         z5v4mvjClRbMMlV3vNbzbl46+MRpvMaoBL8VV9Ift2EJZL7Y6ndlw2Y/iOd8IoH6+9NU
+         qxXhXLa0z9/PkzeJ2Db9cwJjaokjuaW3rjb6ywd4BXxUYUB4ka5XVvt5/+m5ECTce6OJ
+         Lpqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678368481;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eI0q9N1LmPrgG1bPRrjXueV1/2pjR5jMVC1vrOlTxZk=;
+        b=LceYntHPsBcNW3RXtdWnht1Vch4LXtNvNTpTf5xSZmW9VJY4/9TOLBsXuKWHQZ9k20
+         f8yWh91z3NVSOvlWvOCmSyyzX4fJglfjSyrysXJfzC3xOAa6f3+2xCSqp9F2Gb3KyloO
+         iSGxiphy/YgV/xDKb7O9wQrGv088sycKhmcrDijotlX/sUNgIhmiDrZsuK5O29vJxi8W
+         Llo5cXAmN6PkI+PDN5ZaGos8geuAcR27I5sLp0KHAMQa3/aPQUXUbRL/SJCAPNvbs2PC
+         GakAWaZnMeYOMcQY/JNr+ipy+KrzL6jsgxTFz1IbjLkrkjJw6HxEFnXcgcqCiuSm861m
+         MRpA==
+X-Gm-Message-State: AO0yUKWp2NmmJE2ig0K/SilTFXPxmP/9bpJNVUAo6cIW/JrSRFu/i/RK
+        2DjzTe6TMg5Ma4cVei5F5u5ubQ==
+X-Google-Smtp-Source: AK7set+RVr9R3x1jEVqWgBX5muzCjd74ZneQf6HVDVVZ6rAykvzMMvKkHyAxnK5MmTsoxUGY97yRdQ==
+X-Received: by 2002:a05:600c:3d8f:b0:3e2:91c:7cb7 with SMTP id bi15-20020a05600c3d8f00b003e2091c7cb7mr20553312wmb.39.1678368481425;
+        Thu, 09 Mar 2023 05:28:01 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id r7-20020a05600c458700b003eb966d39desm2926714wmo.2.2023.03.09.05.28.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Mar 2023 05:28:00 -0800 (PST)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v3 00/12] soc: qcom: add UCSI function to PMIC GLINK
+Date:   Thu, 09 Mar 2023 14:27:51 +0100
+Message-Id: <20230130-topic-sm8450-upstream-pmic-glink-v3-0-4c860d265d28@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANfeCWQC/5WOQQ6CMBBFr2K6dkxpQYwr72FcTMsAjdCSFoiGc
+ HcHdi5ZvpfM+7OIRNFREvfTIiLNLrngGfT5JGyLviFwFbNQUmmZaQljGJyF1N/yQsI0pDES9jD
+ 0LJvO+Tdoo1Ga0thKa8EZg4nARPS25ZCfuo7lEKl2n333+WJuXRpD/O5vzNlmDyzOGUiQRqKts
+ eIberDGGC4hNmKrz+poUXGxzGpCVVzzMq//iuu6/gDYO/DtOAEAAA==
+To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Evgeniy Polyakov <zbr@ioremap.net>,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rtc@vger.kernel.org,
-        Michael Walle <michael@walle.cc>,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
-Subject: Re: [PATCH V3] nvmem: add explicit config option to read OF fixed
- cells
-Message-ID: <20230309141920.1d3f774e@xps-13>
-In-Reply-To: <e845b38c-d0eb-716c-dc51-b89582750f07@gmail.com>
-References: <20230309112028.19215-1-zajec5@gmail.com>
-        <20230309123513.43b7134f@xps-13>
-        <e845b38c-d0eb-716c-dc51-b89582750f07@gmail.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh@kernel.org>
+X-Mailer: b4 0.12.1
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rafa=C5=82,
+The PMIC GLINK interface offers an UCSI endpoint for newer
+SoCs, the UCSI exchange is necessary to configure the USB-C
+port USB role and altmode on the SM8450 HDK and SM8550 MTP
+boards.
+Since the DT description is the same, support for SM8350 HDK
+is also added.
 
-zajec5@gmail.com wrote on Thu, 9 Mar 2023 13:01:19 +0100:
+This patchset focuses on USB and disables altmode support
+on those 2 SoCs until DP altmode over the combo phy is
+supported.
 
-> On 9.03.2023 12:35, Miquel Raynal wrote:
-> >> diff --git a/include/linux/nvmem-provider.h b/include/linux/nvmem-prov=
-ider.h
-> >> index 0262b86194eb..b3c14ce87a65 100644
-> >> --- a/include/linux/nvmem-provider.h
-> >> +++ b/include/linux/nvmem-provider.h
-> >> @@ -73,6 +73,7 @@ struct nvmem_cell_info {
-> >>    * @owner:	Pointer to exporter module. Used for refcounting.
-> >>    * @cells:	Optional array of pre-defined NVMEM cells.
-> >>    * @ncells:	Number of elements in cells.
-> >> + * @use_fixed_of_cells:	Read fixed NVMEM cells from OF. =20
-> >=20
-> > I'm still unhappy with the naming, especially since you explained in
-> > more details the whole plan which involves using a container to put
-> > these fixed cells from now on. In both cases you extract cells from
-> > fixed OF nodes but this boolean needs to be set to true in one
-> > case, and false in the other, which would not make sense.
-> >=20
-> > Also, regarding the bindings changes, I'm fairly happy with the idea,
-> > but if we go this way I would prefer a full series instead of
-> > individual changes with:
-> >=20
-> > - the boolean you introduce here (renamed, at the very least)
-> > - the new bindings =20
->=20
-> I assume you mean fixed-layout.yaml?
+Depends on PMIC Glink patchset at [1].
 
-Yes!
+[1] https://lore.kernel.org/all/20230130042003.577063-1-quic_bjorande@quicinc.com/
 
-> > - the update of the current provider bindings to take the new bindings
-> >    into account and deprecate the old ones officially =20
->=20
-> What has to be updated in current proceds? It seems to me that:
-> 1. Current NVMEM providers reference nvmem.yaml
-> 2. nvmem.yaml references nvmem-layout.yaml
-> 3. nvmem-layout.yaml references fixed-layout.yaml
->=20
-> what else is missing?
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v3:
+- Fixed patch 1 by moving mask to pmic_glink_of_match
+- Fixed patch 8 by adding back hsphy
+- Add bindings change to dwc3 to support separate HS & SS OF graph links
+- Link to v2: https://lore.kernel.org/r/20230130-topic-sm8450-upstream-pmic-glink-v2-0-71fea256474f@linaro.org
 
-That's the theory, but then provider bindings should reflect the
-changes as well in their own binding documents.
+Changes in v2:
+- Moved the dwc3 port subnodes to dtsi
+- Added SM8350 HDK support
+- Added help about ucsi module name
+- Added bindings acks
+- Fixed sm8550 pmic glink compatible
+- Added more description in config update patch
+- Link to v1: https://lore.kernel.org/r/20230130-topic-sm8450-upstream-pmic-glink-v1-0-0b0acfad301e@linaro.org
 
-IOW, this one (and all its cousins) becomes legacy and must be updated:
+---
+Neil Armstrong (12):
+      usb: typec: ucsi: add PMIC Glink UCSI driver
+      dt-bindings: soc: qcom: qcom,pmic-glink: document SM8450 compatible
+      dt-bindings: soc: qcom: qcom,pmic-glink: document SM8550 compatible
+      soc: qcom: pmic_glink: register ucsi aux device
+      dt-bindings: usb: snps,dwc3: document HS & SS OF graph ports
+      arm64: dts: qcom: sm8350: add port subnodes in dwc3 node
+      arm64: dts: qcom: sm8450: add port subnodes in dwc3 node
+      arm64: dts: qcom: sm8550: add port subnodes in dwc3 node
+      arm64: dts: qcom: sm8350-hdk: add pmic glink node
+      arm64: dts: qcom: sm8450-hdk: add pmic glink node
+      arm64: dts: qcom: sm8550-mtp: add pmic glink node
+      arm64: defconfig: add PMIC GLINK modules
 
-https://elixir.bootlin.com/linux/latest/source/Documentation/devicetree/bin=
-dings/nvmem/imx-ocotp.yaml#L92
+ .../bindings/soc/qcom/qcom,pmic-glink.yaml         |   2 +
+ .../devicetree/bindings/usb/snps,dwc3.yaml         |  16 ++
+ arch/arm64/boot/dts/qcom/sm8350-hdk.dts            |  67 ++++-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               |  19 ++
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts            |  45 ++-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               |  19 ++
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts            |  45 ++-
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               |  19 ++
+ arch/arm64/configs/defconfig                       |   4 +
+ drivers/soc/qcom/pmic_glink.c                      |  63 +++-
+ drivers/usb/typec/ucsi/Kconfig                     |  10 +
+ drivers/usb/typec/ucsi/Makefile                    |   1 +
+ drivers/usb/typec/ucsi/ucsi_glink.c                | 320 +++++++++++++++++++++
+ 13 files changed, 616 insertions(+), 14 deletions(-)
+---
+base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
+change-id: 20230130-topic-sm8450-upstream-pmic-glink-3b3a0b7bcd33
 
-(and there are many files to update then)
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
->=20
->=20
-> > - support for the new bindings in the core =20
->=20
-> Please, don't get me wrong, but I'm not going to spend more hours on
-> actual coding without approval of chosen path.
-
-Well, you want to make the bindings evolve. Just updating a single
-binding file is not enough, I believe we should at least provide full
-support for the new description. But of course I'm fine discussing what
-description we want first.
-
-> I'll need to have
-> [PATCH V2] dt-bindings: nvmem: layouts: add fixed-layout
-> reviewed/acked first. If you can do that that's great.
->=20
->=20
-> >>    * @keepout:	Optional array of keepout ranges (sorted ascending by s=
-tart).
-> >>    * @nkeepout:	Number of elements in the keepout array.
-> >>    * @type:	Type of the nvmem storage
-> >> @@ -103,6 +104,7 @@ struct nvmem_config {
-> >>   	struct module		*owner;
-> >>   	const struct nvmem_cell_info	*cells;
-> >>   	int			ncells;
-> >> +	bool			use_fixed_of_cells;
-> >>   	const struct nvmem_keepout *keepout;
-> >>   	unsigned int		nkeepout;
-> >>   	enum nvmem_type		type; =20
-> >=20
-> > Thanks,
-> > Miqu=C3=A8l =20
->=20
-
-
-Thanks,
-Miqu=C3=A8l
