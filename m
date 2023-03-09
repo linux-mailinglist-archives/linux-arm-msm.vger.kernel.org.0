@@ -2,84 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACBED6B1D52
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 09:07:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8AA06B1DA4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 09:16:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229873AbjCIIHV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 03:07:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51786 "EHLO
+        id S230022AbjCIIQq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 03:16:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229922AbjCIIHT (ORCPT
+        with ESMTP id S230062AbjCIIQ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 03:07:19 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DA7A61AA8
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 00:07:17 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id f18so1230030lfa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 00:07:17 -0800 (PST)
+        Thu, 9 Mar 2023 03:16:26 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A122CE824D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 00:12:38 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id cw28so3691340edb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 00:12:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678349235;
+        d=linaro.org; s=google; t=1678349556;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TJjf5SXhDUnOVKgTWO2udYlDtkJmP/p6P7yAfKPKoiY=;
-        b=s0WK+tFPTi01w8LgIeHC/7DNEOmp7gK1a7D+zcdN4Ie04XfqnOqZI5BaKj+Su79mBA
-         1XrFeJ8dVmUtluPN5KHDhP99lTF0PXVk7X1+kXSMe7XICupWwXZwfT4PoItbzTm8OMEh
-         4EPZbHG/4t11ddd1OB1DRmeDB9kiFglPqFtXvBR+CRqnDv9VfNDX7B5oDG6CYXbOm1+1
-         kkvhoQKNS0rhKAcfN/JU7GACRls8d5r3+VdyNIWGtrXnF5yRWL5IIPtdbVkz/X4Ooiiq
-         bUevg9+CN6H2ji4i+SzFc8/e/w+rWH0QSLlcuK/1v2RpX6g07pGtRuaWL3wldi7t92qj
-         NDhA==
+        bh=uYm9P1JkEDejWKuqMqpfHHenbNm4YviIcvuWWtmhvow=;
+        b=QC3/LYCdp476HZFI7aLNfH0My/Uv9YwaEcU+Za6KrBg86nPd0Qt6ihaE9n/CupJqg/
+         cYhnoYFCjZMmMXZ5+j0usBXjqvBuPT7MuFTPpkJFHpela5HxsriY3gTip/VFT9A4hmfZ
+         5VZZMqarRzAdxhO7zZHTBCVck01k4ABsRfPjBkOfOqY1I6HsW1VI2QXWyKEe3vIZ9pWT
+         p0kcktw/fQXr0C/R2tdFWi6dP+Tc5lVCjS6wvKlZOuIhOyQsERCZbtbp8bFO6kmzqKlk
+         KR3Pup0BeWX7jQCV828/5EcbUEXG86J6KhmkX7jY7GHl0OCso3WLBpNHaasckvhcALZ3
+         WUfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678349235;
+        d=1e100.net; s=20210112; t=1678349556;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TJjf5SXhDUnOVKgTWO2udYlDtkJmP/p6P7yAfKPKoiY=;
-        b=DuHAqYdSdbmxtpkyGdMiMmI7twYb0rwXUN51k+6YTg8u8qsD6dINy+WL5dczO+QuQ+
-         BkAlZlcmgba2NqrnGX5JUaDlEaa5k4EiqzchFqMKdtpGO1f0XkOPO9Hm3zf0z7utKxRR
-         4UW5pZSPsyPsSfdUnKGytFScXWpKnjv3ZjcjR21ZRAnk/M8EPCCVmPHRvUBuJKXQKEdA
-         UubxKQfEHzaWk/jAns8kg1yIc/Vv2yGGcJJmTaiWZbcPBpygpy2CvGTxv1c3W/iGN4WT
-         QW+3SuzRU7LDSuCp1Lg27sezay/jeCg0CQLIWuVHE7szVTT9hQ4uwSBsVdtX2jYKzqE1
-         Bbcg==
-X-Gm-Message-State: AO0yUKUPA9JhU1A1QZtyoDN+xzI53uRgwHwho6g2khUwXvFOYadTBsw9
-        rID5lXqR6zAKMxV3qLTqU+NcUA==
-X-Google-Smtp-Source: AK7set9Vzw2UU4JXxOsa6OuHp0wRluytlOXjOJE27OSTzyhNvfv+VBtYRPowAgff48osf6ywGWSsqw==
-X-Received: by 2002:ac2:55a9:0:b0:4dd:9f4d:7459 with SMTP id y9-20020ac255a9000000b004dd9f4d7459mr5936893lfg.67.1678349235345;
-        Thu, 09 Mar 2023 00:07:15 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id b23-20020ac25637000000b004d5ae3f5e9bsm2552203lff.130.2023.03.09.00.07.14
+        bh=uYm9P1JkEDejWKuqMqpfHHenbNm4YviIcvuWWtmhvow=;
+        b=QnzKGaJHWtpJzHHMII3NsL1Cb7G5xn2LGXjg4ijzebhh6OrHJJ0AxTo3yKjQJhtYn6
+         Hj1NKjK2kqGXilUn1wdnLe1Hk2Fa5fEN9WLjEd+93u1WjtytbIuJTsGrCOSiZYsQQbDN
+         U9TSsaEA85H1lf+W61pzW9/xgyCKljIKGfkMEObTZ4NDLIzYo0QNOgRuDXs3NmTufsJ1
+         RhSMBVnmOFSlLP11nKbvUdylEG/vzhH+4t+HiFiexLhAQXA9MED/r/iUhuWoTelvu5Ub
+         Y885UQYn+E2PYaCkRudkg5Bl7Lo7sUR7DuteDRshb+9oKPnGHRFvfTPw/MfajlzM3ads
+         AVMw==
+X-Gm-Message-State: AO0yUKXSTWzJ/WxzhCeF5eZCTTNPSsQn3ZVKQ0kVlczwU7fgu6UqzyXL
+        detBdFrNrHDExcWPf7PNsJd27g==
+X-Google-Smtp-Source: AK7set/qe5GBqABr4mK0/ODbegQ7W2jBFy0I8L1wJDsX7DeCizSHPxON59pp/33fyjgaTU4kp90Bfg==
+X-Received: by 2002:a17:907:7e9a:b0:88a:a27c:c282 with SMTP id qb26-20020a1709077e9a00b0088aa27cc282mr27844083ejc.47.1678349556084;
+        Thu, 09 Mar 2023 00:12:36 -0800 (PST)
+Received: from ?IPV6:2a02:810d:15c0:828:7ee2:e73e:802e:45c1? ([2a02:810d:15c0:828:7ee2:e73e:802e:45c1])
+        by smtp.gmail.com with ESMTPSA id i9-20020a1709063c4900b008d427df3245sm8554756ejg.58.2023.03.09.00.12.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Mar 2023 00:07:14 -0800 (PST)
-Message-ID: <7ddda680-b169-5105-a3cb-20790f0868ee@linaro.org>
-Date:   Thu, 9 Mar 2023 10:07:13 +0200
+        Thu, 09 Mar 2023 00:12:35 -0800 (PST)
+Message-ID: <b60455eb-ec43-2e94-24b1-31fa94b2f7f2@linaro.org>
+Date:   Thu, 9 Mar 2023 09:12:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v3 2/4] firmware: Add support for Qualcomm Secure
- Execution Environment SCM interface
-Content-Language: en-GB
-To:     Maximilian Luz <luzmaximilian@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
+Subject: Re: [PATCH v2 2/7] dt-bindings: soc: qcom: aoss: Document
+ QDU1000/QRU1000 compatible
+Content-Language: en-US
+To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Johan Hovold <johan@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sumit Garg <sumit.garg@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230305022119.1331495-1-luzmaximilian@gmail.com>
- <20230305022119.1331495-3-luzmaximilian@gmail.com>
- <6ddeba6f-9816-730e-28ce-0f1efbc11367@linaro.org>
- <157cf27f-e890-1e46-f320-8e6bf8f3be4b@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <157cf27f-e890-1e46-f320-8e6bf8f3be4b@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
+References: <20230306231202.12223-1-quic_molvera@quicinc.com>
+ <20230306231202.12223-3-quic_molvera@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230306231202.12223-3-quic_molvera@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -89,116 +86,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/03/2023 16:06, Maximilian Luz wrote:
-> On 3/7/23 16:36, Dmitry Baryshkov wrote:
->> On 05/03/2023 04:21, Maximilian Luz wrote:
->>> Add support for SCM calls to Secure OS and the Secure Execution
->>> Environment (SEE) residing in the TrustZone (TZ) via the QSEECOM
->>> interface. This allows communication with Secure/TZ applications, for
->>> example 'uefisecapp' managing access to UEFI variables.
->>>
->>> The interface is managed by a platform device to ensure correct lifetime
->>> and establish a device link to the Qualcomm SCM device.
->>>
->>> While this patch introduces only a very basic interface without the more
->>> advanced features (such as re-entrant and blocking SCM calls and
->>> listeners/callbacks), this is enough to talk to the aforementioned
->>> 'uefisecapp'.
->>>
->>> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
->>> ---
->>>
->>> Changes in v3:
->>>   - Rebase ontop of latest qcom_scm changes (qcom_scm.h moved).
->>>   - Move qcom_qseecom.h in accordance with qcom_scm.
->>>
->>> Changes in v2:
->>>   - Bind the interface to a device.
->>>   - Establish a device link to the SCM device to ensure proper ordering.
->>>   - Register client apps as child devices instead of requiring them 
->>> to be
->>>     specified in the device tree.
->>>   - Rename (qctree -> qseecom) to allow differentiation between old
->>>     (qseecom) and new (smcinvoke) interfaces to the trusted execution
->>>     environment.
->>>
->>> ---
->>>   MAINTAINERS                                |   7 +
->>>   drivers/firmware/Kconfig                   |  15 +
->>>   drivers/firmware/Makefile                  |   1 +
->>>   drivers/firmware/qcom_qseecom.c            | 314 +++++++++++++++++++++
->>>   include/linux/firmware/qcom/qcom_qseecom.h | 190 +++++++++++++
->>>   5 files changed, 527 insertions(+)
->>>   create mode 100644 drivers/firmware/qcom_qseecom.c
->>>   create mode 100644 include/linux/firmware/qcom/qcom_qseecom.h
->>>
->>> diff --git a/MAINTAINERS b/MAINTAINERS
->>> index 9201967d198d..1545914a592c 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -17380,6 +17380,13 @@ F:    
->>> Documentation/networking/device_drivers/cellular/qualcomm/rmnet.rst
->>>   F:    drivers/net/ethernet/qualcomm/rmnet/
->>>   F:    include/linux/if_rmnet.h
->>> +QUALCOMM SECURE EXECUTION ENVIRONMENT COMMUNICATION DRIVER
->>> +M:    Maximilian Luz <luzmaximilian@gmail.com>
->>> +L:    linux-arm-msm@vger.kernel.org
->>> +S:    Maintained
->>> +F:    drivers/firmware/qcom_qseecom.c
->>> +F:    include/linux/firmware/qcom/qcom_qseecom.h
->>> +
->>>   QUALCOMM TSENS THERMAL DRIVER
->>>   M:    Amit Kucheria <amitk@kernel.org>
->>>   M:    Thara Gopinath <thara.gopinath@gmail.com>
->>
->>
->>
->>> +
->>> +
->>> +/* -- Platform specific data. 
->>> ----------------------------------------------- */
->>> +
->>> +struct qseecom_data {
->>> +    const struct mfd_cell *cells;
->>
->> The child qseecom devices are not platform devices, so MFD should not 
->> be used here. Please use aux devices instead.
+On 07/03/2023 00:11, Melody Olvera wrote:
+> Add compatible for QDU1000 and QRU1000 aoss devices.
 > 
-> Okay, makes sense. Would this still work with your suggestion in patch 4
-> regarding a custom (?) bus or can the aux bus be used to implement that? 
-> From a
-> quick look, I believe we could use aux bus for this but I haven't worked 
-> with
-> that before, so I don't know if I'm missing something.
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml | 1 +
 
-Initially I thought that a custom bus might be required, to provide 
-custom probe function. After giving it a thought, I think you can get 
-away with using aux bus. So, embed the struct auxiliary_device into 
-qseecom_app_device.
 
-> 
->>> +    int num_cells;
->>> +};
->>> +
->>> +static const struct of_device_id qseecom_dt_match[] = {
->>> +    { .compatible = "qcom,qseecom-sc8280xp", },
->>
->> Forgot to mention, while doign review. There is no need for this 
->> compat until you provide the actual data. Please move it to the patch 4.
-> 
-> Sure, will do that.
-> 
->>> +    { .compatible = "qcom,qseecom", },
->>> +    { }
->>> +};
->>> +MODULE_DEVICE_TABLE(of, qseecom_dt_match);
->>
->>
-> 
-> Regards,
-> Max
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
