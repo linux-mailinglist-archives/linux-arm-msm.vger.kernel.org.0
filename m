@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F1F16B2EDA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 21:44:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7C106B2F20
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 21:52:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231132AbjCIUox (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 15:44:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54828 "EHLO
+        id S231367AbjCIUwx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 15:52:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231171AbjCIUov (ORCPT
+        with ESMTP id S231401AbjCIUwe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 15:44:51 -0500
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7539AFAEF3
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 12:44:47 -0800 (PST)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-53916ab0c6bso57915907b3.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 12:44:47 -0800 (PST)
+        Thu, 9 Mar 2023 15:52:34 -0500
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 031D5104610
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 12:51:54 -0800 (PST)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-536c2a1cc07so58406417b3.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 12:51:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678394686;
+        d=linaro.org; s=google; t=1678395099;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=zsg12oEDEiCGQizPiB6v1VIIN7ssVMwVI7Jn0aroOOo=;
-        b=ZCLScd7RtY51SvqL7NHWLqy4Glcw6iBOxfIAay6Bv5sSfTGNVrMhIwU8/UGS+AxbUc
-         41OyUUhJb8BcpdDcxFLsHJl7NhO8VYM8821xQXifPwRfcAS1bSr6sIUKxOJDB/qmONT7
-         RrwOOknXTK6hxA5T9x5K/64JBOeM4YlTIg4qQNljLRVEn4j3voI+y/niVOmvi2QRkpfc
-         Y5HM6y0UerdnWMhoXM3IiDiRcx8a/3HwaRR+ThZfWJz4RYD+wD+yTAFDcrPgMBDOgPCK
-         ZAaL+IMiuRdipHgvzv3b5MvojXm+YiY3kOMNqKo9kwyYhp+iRQPhKDhDSFjPfzbvtNlA
-         V2MQ==
+        bh=DVyH5Scagmn8M2FdEHJJzRQ2otfZzX/LecF/bU29usc=;
+        b=ewFOH5yb72RmNHDiCx2HOTeujA5fnIty0yxunY0lGAcd5g7kjRh4En8fmjKnQJNym0
+         d7XYzGg57wrG7c71v5pe1yCYRuyBjZYBzfU0N1rgVETVgzgkDgSuj940AjslAexq/OxV
+         D+/pVLl83zJw6ZZVh97KLNX3ZcAlf6X23uQ6yIhbyveXNg7TzBfrmfrVlxwy/yt5xPqB
+         Fx22rHLXWeQJRYnnTC0cmuhXSxpf4Ax+4wEralzv5ROXr4qO8X/QseDHTUJh0pyxAXMa
+         7OoBzsW3GE+AlpADzjE+4a+O8VkrcAbcADtbqe2xQBO0vJxWjA/U5TpbD64WQSvuSpIa
+         pzZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678394686;
+        d=1e100.net; s=20210112; t=1678395099;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=zsg12oEDEiCGQizPiB6v1VIIN7ssVMwVI7Jn0aroOOo=;
-        b=RZf7vRf6mKIO6ND4SFCPvNXHIXmcOV5KqU06y3sziZtarwzuDlDVGXCRh2HlPT+E+T
-         APzQiy4AjPWM92BTGNgQjyAsM4muZYEaRNCSuFBQ5VC4fs1OTFbxSTK84LyQoXJaOkBY
-         v6vmSSEWwamgOE0AJHhOYXtm9ID7YyJclex7TP+HPxaj20SgFjbnZMy0dP+yLutgO/5R
-         g1tkCxQONZ9xYG5w3/Wtj2URxSBCsbaZnjJoRpF0MbJF9Etl9PjxjgQ2BEDWJyK4l3Io
-         4Td1aVEboR1xkr8VnCAQ1G2/qGCmNwzwbIR3sGZUCcXDGBg0WtnU8Hhg3FYQHVDvt+iG
-         GscA==
-X-Gm-Message-State: AO0yUKXegPVFJXpi7YZZPLIjdio8uaz3rSPFrovVB+08OtzaIWLrFbCX
-        HIx4K1NlISL4krj02InWkijZFDGXopSVPMdEvaidqw==
-X-Google-Smtp-Source: AK7set8N216joVB3r3L/ek5sz4l8MebjRQuwEsbDMvXnhoeYi2e66BnSt5ysXC+4If5k5wgiHNaCZIFLJZo+xq9gy1U=
+        bh=DVyH5Scagmn8M2FdEHJJzRQ2otfZzX/LecF/bU29usc=;
+        b=uy/CMmCt8W4DaE6silyw+WEKsKKyiij7Qn4bNghzskdWjhzqXKEu1+S2z//aRfDwRC
+         pzkN9zut91OPo5FUvJGWq4fiXePlj8ufvu55PJuRDCfwS2QxwPfol7c10iyqFeLE5fpf
+         J+EvlZNHkv500qn7MaTnSlwrEB9+cJ6oQZewYwRsQ8m7sXjApE/ZqdZOAhZzP47oIfUx
+         e0t0xtSv15teB84Ia6EVW5+e/g1gapPLnih13Ges7iZ96bL7fSqY6PbMn2yDAcYldiso
+         kcF90UHviPLhqKYp2SLrPKuRkqFNb/agC/ozSV8JeFmi8PmKoNqYY+v0Va+yJ0sFQq9p
+         mtQg==
+X-Gm-Message-State: AO0yUKUFKRAgeIlKiK4JshPrKVqWQ2Ch/Q5SqZtHqmBoPIyFJKTIT39C
+        6V7yRoUFIjEEj7SJkkOyTwsOfXEVroYwR0caMqhkpA==
+X-Google-Smtp-Source: AK7set+IGWJTWMpcZhF0FcDlsEsg14MwUcebqHQCLXHDdzScK2lva1JI9YbEyAFi319Z87T+SK2+6OFgE1BOX9ELMLA=
 X-Received: by 2002:a81:b285:0:b0:533:99bb:c296 with SMTP id
- q127-20020a81b285000000b0053399bbc296mr14224207ywh.5.1678394686599; Thu, 09
- Mar 2023 12:44:46 -0800 (PST)
+ q127-20020a81b285000000b0053399bbc296mr14235206ywh.5.1678395099441; Thu, 09
+ Mar 2023 12:51:39 -0800 (PST)
 MIME-Version: 1.0
-References: <20230309185049.170878-1-danila@jiaxyga.com> <20230309185049.170878-2-danila@jiaxyga.com>
-In-Reply-To: <20230309185049.170878-2-danila@jiaxyga.com>
+References: <20230309185049.170878-1-danila@jiaxyga.com> <20230309185049.170878-3-danila@jiaxyga.com>
+In-Reply-To: <20230309185049.170878-3-danila@jiaxyga.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 9 Mar 2023 22:44:35 +0200
-Message-ID: <CAA8EJpr866ejThuXkqEABST_awZkbuk+vtPAW_WAn3CoyYhfRA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: phy: Add QMP UFS PHY comptible for SM7150
+Date:   Thu, 9 Mar 2023 22:51:28 +0200
+Message-ID: <CAA8EJpq14e0+-d4m8bZTsQGiOifPr6HU7WNRL+FKGVMDx6YDQw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] phy: qcom-qmp-ufs: Add SM7150 support
 To:     Danila Tikhonov <danila@jiaxyga.com>
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
@@ -74,46 +74,112 @@ On Thu, 9 Mar 2023 at 20:51, Danila Tikhonov <danila@jiaxyga.com> wrote:
 >
 > From: David Wronek <davidwronek@gmail.com>
 >
-> Document the QMP UFS PHY compatible for SM7150.
-
-Please switch to using new bindings (see
-Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml).
-
+> Add the tables and constants for init sequences for UFS QMP phy found in
+> SM7150 SoC.
 >
 > Signed-off-by: David Wronek <davidwronek@gmail.com>
 > Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 > ---
->  .../devicetree/bindings/phy/qcom,msm8996-qmp-ufs-phy.yaml      | 3 +++
->  1 file changed, 3 insertions(+)
+>  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 57 +++++++++++++++++++++++++
+>  1 file changed, 57 insertions(+)
 >
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-ufs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-ufs-phy.yaml
-> index 80a5348dbfde..da223abaa3a2 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-ufs-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-ufs-phy.yaml
-> @@ -25,6 +25,7 @@ properties:
->        - qcom,sdm845-qmp-ufs-phy
->        - qcom,sm6115-qmp-ufs-phy
->        - qcom,sm6350-qmp-ufs-phy
-> +      - qcom,sm7150-qmp-ufs-phy
->        - qcom,sm8150-qmp-ufs-phy
->        - qcom,sm8250-qmp-ufs-phy
->        - qcom,sm8350-qmp-ufs-phy
-> @@ -127,6 +128,7 @@ allOf:
->                - qcom,sdm845-qmp-ufs-phy
->                - qcom,sm6115-qmp-ufs-phy
->                - qcom,sm6350-qmp-ufs-phy
-> +              - qcom,sm7150-qmp-ufs-phy
->                - qcom,sm8150-qmp-ufs-phy
->                - qcom,sm8250-qmp-ufs-phy
->      then:
-> @@ -162,6 +164,7 @@ allOf:
->                - qcom,msm8998-qmp-ufs-phy
->                - qcom,sdm845-qmp-ufs-phy
->                - qcom,sm6350-qmp-ufs-phy
-> +              - qcom,sm7150-qmp-ufs-phy
->                - qcom,sm8150-qmp-ufs-phy
->                - qcom,sm8250-qmp-ufs-phy
->                - qcom,sm8350-qmp-ufs-phy
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> index 994ddd5d4a81..b4f2d6c63beb 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> @@ -349,6 +349,36 @@ static const struct qmp_phy_init_tbl sdm845_ufsphy_pcs[] = {
+>         QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
+>  };
+>
+> +static const struct qmp_phy_init_tbl sm7150_ufsphy_rx[] = {
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_SIGDET_LVL, 0x24),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_SIGDET_CNTRL, 0x0f),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_SIGDET_DEGLITCH_CNTRL, 0x1e),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_RX_INTERFACE_MODE, 0x40),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_UCDR_FASTLOCK_FO_GAIN, 0x0b),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_RX_TERM_BW, 0x5b),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_RX_EQU_ADAPTOR_CNTRL2, 0x06),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_RX_EQU_ADAPTOR_CNTRL3, 0x04),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_RX_EQU_ADAPTOR_CNTRL4, 0x1b),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_UCDR_SVS_SO_GAIN_HALF, 0x04),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_UCDR_SVS_SO_GAIN_QUARTER, 0x04),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_UCDR_SVS_SO_GAIN, 0x04),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_UCDR_SO_SATURATION_AND_ENABLE, 0x5b),
+
+It is a pity to duplicate the whole table just for the single register
+difference.
+
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_UCDR_PI_CONTROLS, 0x81),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_UCDR_FASTLOCK_COUNT_LOW, 0x80),
+> +       QMP_PHY_INIT_CFG(QSERDES_V3_RX_RX_MODE_00, 0x59),
+> +};
+> +
+> +static const struct qmp_phy_init_tbl sm7150_ufsphy_pcs[] = {
+> +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_RX_SIGDET_CTRL2, 0x6f),
+> +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0f),
+> +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_TX_SMALL_AMP_DRV_LVL, 0x02),
+> +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_RX_SYM_RESYNC_CTRL, 0x03),
+> +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
+> +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_RX_SIGDET_CTRL1, 0x0f),
+> +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_RX_MIN_HIBERN8_TIME, 0xFF),
+
+s/0xFF/0xff/ , please
+
+> +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
+> +};)
+> +
+>  static const struct qmp_phy_init_tbl sm8150_ufsphy_serdes[] = {
+>         QMP_PHY_INIT_CFG(QSERDES_V4_COM_SYSCLK_EN_SEL, 0xd9),
+>         QMP_PHY_INIT_CFG(QSERDES_V4_COM_HSCLK_SEL, 0x11),
+> @@ -911,6 +941,30 @@ static const struct qmp_phy_cfg sm6115_ufsphy_cfg = {
+>         .no_pcs_sw_reset        = true,
+>  };
+>
+> +static const struct qmp_phy_cfg sm7150_ufsphy_cfg = {
+
+Please add offsets here. With that fixed:
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> +       .lanes                  = 1,
+> +
+> +       .tbls = {
+> +               .serdes         = sdm845_ufsphy_serdes,
+> +               .serdes_num     = ARRAY_SIZE(sdm845_ufsphy_serdes),
+> +               .tx             = sdm845_ufsphy_tx,
+> +               .tx_num         = ARRAY_SIZE(sdm845_ufsphy_tx),
+> +               .rx             = sm7150_ufsphy_rx,
+> +               .rx_num         = ARRAY_SIZE(sm7150_ufsphy_rx),
+> +               .pcs            = sm7150_ufsphy_pcs,
+> +               .pcs_num        = ARRAY_SIZE(sm7150_ufsphy_pcs),
+> +       },
+> +       .tbls_hs_b = {
+> +               .serdes         = sdm845_ufsphy_hs_b_serdes,
+> +               .serdes_num     = ARRAY_SIZE(sdm845_ufsphy_hs_b_serdes),
+> +       },
+> +       .clk_list               = sdm845_ufs_phy_clk_l,
+> +       .num_clks               = ARRAY_SIZE(sdm845_ufs_phy_clk_l),
+> +       .vreg_list              = qmp_phy_vreg_l,
+> +       .num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
+> +       .regs                   = ufsphy_v3_regs_layout,
+
+sdm845 has .no_pcs_sw_reset set to true. Do we need to set it for this PHY?
+
+> +};
+> +
+>  static const struct qmp_phy_cfg sm8150_ufsphy_cfg = {
+>         .lanes                  = 2,
+>
+> @@ -1560,6 +1614,9 @@ static const struct of_device_id qmp_ufs_of_match_table[] = {
+>         }, {
+>                 .compatible = "qcom,sm6350-qmp-ufs-phy",
+>                 .data = &sdm845_ufsphy_cfg,
+> +       }, {
+> +               .compatible = "qcom,sm7150-qmp-ufs-phy",
+> +               .data = &sm7150_ufsphy_cfg,
+>         }, {
+>                 .compatible = "qcom,sm8150-qmp-ufs-phy",
+>                 .data = &sm8150_ufsphy_cfg,
 > --
 > 2.39.2
 >
