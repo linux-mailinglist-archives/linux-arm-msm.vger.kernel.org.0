@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C75A6B2164
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 11:28:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB0E06B2173
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 11:31:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231401AbjCIK2X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 05:28:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47854 "EHLO
+        id S229680AbjCIKbx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 05:31:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231437AbjCIK17 (ORCPT
+        with ESMTP id S229922AbjCIKbx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 05:27:59 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F8CEEDB4C
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 02:27:33 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id a25so5148950edb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 02:27:33 -0800 (PST)
+        Thu, 9 Mar 2023 05:31:53 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 448114E5D0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 02:31:50 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id cw28so5024528edb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 02:31:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678357652;
+        d=linaro.org; s=google; t=1678357909;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=9Ue1zOWQijm9xPkRtJ+/7K/ZGdSe/BpRmw+d4pMpBfY=;
-        b=n4+1uH7MfEukiOD7pfOpj1R5Uu+tPOfpKvc/BTPCePaEXdNexYRS/l8iAYqaS84hrh
-         5MqdanC79f7VLI4CvvxQjOyQwKXW0Paov9rsSxcd36sXWNUFdui5DxsR1Kls89hwFJZi
-         nXn+WNQMM3iAZPnQMMemLXP19A9Rnhm6jlGKRQGfi7XP0TvwYPb1UszQpRxY5WVgDkMy
-         XJB+8RnClaVSVAckiNapewDKJjaZo0PP/z3TZUedmXnZ3DJFRYPDyf6EFCCswtxCQosJ
-         V5LhvHm4hCI+9Nbnmf3KayCQBCAphksGgQgYF2h9HMKI29D+ADb3wvDUdz5JD/Xc4cq0
-         BuVg==
+        bh=7CF8z9jOtSHETZ35/S5CyQ9qW+jDKWLcnRE2tTycAxk=;
+        b=lz2qXv02Qi0cPLKJ8qrTLl4kUwKDbhY5yYCkCKeO+SS273hkfqFOlMrGvpxRj8f1Bx
+         BiI6EVRN9nGDJTdNGPXh1msUnHkck/zaquorFZGQpIUCDDN3W/uqpBDSOR29It0BoNsG
+         cZLZ8fZYx/LdZcNQ+Pi1qhuSLRynQpoCYntoSrxF7KP2wGdzoWSJizeDiGBgMSE1PISH
+         aw6LYPGBlqG6Q2CSfwyq4LgIl/lfCASstHMuiYOdLDFjI16fVozkvDijYIMMF8wAXZQd
+         dtxLnPXKfcW1OsJk6VY4iXoV2m5MvlSvkEDJWWeJtMdJPy9AfhHBsQ/A+xrkLkXOOwn0
+         lMrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678357652;
+        d=1e100.net; s=20210112; t=1678357909;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9Ue1zOWQijm9xPkRtJ+/7K/ZGdSe/BpRmw+d4pMpBfY=;
-        b=ZHTjDOB8yleKOGq8iH7XfaAangmgqGSIaAypoMu++mp1g7qV3V//0GEJoohyMzcOdL
-         TDm2zxETG95ngbGV1qi3rB+0Q1plUxxbCfVq2wOw2Pvpq9F5m6EOPxFdFHgEDikOftqI
-         akSvHKseJx+bCaU8ftYzMcoU7n9565xnank/vKJT+GJYKyw2dsJzbftCwE920x3Rnx3g
-         O8lw6ejAukKf27J85UfkJQgNtXBjq/PSoVvlnwskqvvJV27hQ/q10aZQBCvO9tOKd32O
-         78BmpIBiSWqmaYBgflznNnZA7CPFZzZltsOyHwXtLMZhRsED2Bd9hmzMkRT8voIgNdmz
-         ot0w==
-X-Gm-Message-State: AO0yUKXcGktgPmQuLhlhqWcPtYhvO5W/MHjFn3r1d1xw93djZyjxuaNJ
-        bVvb58U3Ea5+8Tew9FfgnaT5Pw==
-X-Google-Smtp-Source: AK7set8tW7PnzMeJ+C+RgT1Em5SLgV5Ou1OI1A7f6SIF5krFYdVjXLIAY2SG06B5EK6r15YdHPO98w==
-X-Received: by 2002:a17:906:eb4c:b0:8aa:bea6:ce8b with SMTP id mc12-20020a170906eb4c00b008aabea6ce8bmr19801761ejb.53.1678357652007;
-        Thu, 09 Mar 2023 02:27:32 -0800 (PST)
+        bh=7CF8z9jOtSHETZ35/S5CyQ9qW+jDKWLcnRE2tTycAxk=;
+        b=fTMK2ZrmndidSxoYsXfG1dn7xl8578btlHIe7JnsoQ4LDKFYGCfbo9C/dDYINJjnP4
+         ZF7LxWpMeiNW3VLGOduv5VSSN1iiyGY0LEojoVP8YayHrelnmojybPmHAJHaqP//qeH9
+         YoNEU9mL0KS8220nH8g3uvTHyKZUEHUvnGiTglOCU5jUajdBtOzgNX3Z2eUIyQ94AHgU
+         ScgE33KuIOevcSYPSMUzMie40czp/C70FQTQHpthORtOJ7AJQ57b6hHfuYuZ59argGRE
+         OeATXWqvSj0LJRJkRZA+A7qbdwigA92MNVBn7fnTicw9UH4EsTCPhm2HyVoOmLCL7Xm4
+         RlUA==
+X-Gm-Message-State: AO0yUKWT9hNrQ5L8ABLGywVGsqVAfXaEAsUMzBuZxbmRKbBnQ7zYznB4
+        BRFL2/EdoxodHQ2N9oBRxhieUw==
+X-Google-Smtp-Source: AK7set9Dg6O4cO0YA5JkJqzyy2QEjbu78MIGWlRIZmzieAqsZkY6bSqEUGwojwHo/WXVK7gGEqKJlw==
+X-Received: by 2002:a17:907:7e82:b0:8f4:6efd:833f with SMTP id qb2-20020a1709077e8200b008f46efd833fmr26844959ejc.3.1678357908781;
+        Thu, 09 Mar 2023 02:31:48 -0800 (PST)
 Received: from ?IPV6:2a02:810d:15c0:828:7ee2:e73e:802e:45c1? ([2a02:810d:15c0:828:7ee2:e73e:802e:45c1])
-        by smtp.gmail.com with ESMTPSA id u7-20020a50d507000000b004acc6cbc451sm9409885edi.36.2023.03.09.02.27.30
+        by smtp.gmail.com with ESMTPSA id mb3-20020a170906eb0300b008e772c97db6sm8603741ejb.128.2023.03.09.02.31.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Mar 2023 02:27:31 -0800 (PST)
-Message-ID: <c8eea30f-5ea2-cfc9-273a-3c6e99a316b9@linaro.org>
-Date:   Thu, 9 Mar 2023 11:27:29 +0100
+        Thu, 09 Mar 2023 02:31:48 -0800 (PST)
+Message-ID: <4eab53fc-2d26-dc93-3ae6-c0b2546ad3e0@linaro.org>
+Date:   Thu, 9 Mar 2023 11:31:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [RFC PATCH v2 3/7] dt-bindings: mmc: sdhci-msm: Add ICE phandle
- and drop core clock
+Subject: Re: [RFC PATCH v2 7/7] arm64: dts: qcom: Add the Inline Crypto Engine
+ nodes
 Content-Language: en-US
 To:     Abel Vesa <abel.vesa@linaro.org>,
         Ulf Hansson <ulf.hansson@linaro.org>,
@@ -76,9 +76,9 @@ Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org
 References: <20230308155838.1094920-1-abel.vesa@linaro.org>
- <20230308155838.1094920-4-abel.vesa@linaro.org>
+ <20230308155838.1094920-8-abel.vesa@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230308155838.1094920-4-abel.vesa@linaro.org>
+In-Reply-To: <20230308155838.1094920-8-abel.vesa@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -92,34 +92,51 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 08/03/2023 16:58, Abel Vesa wrote:
-> The ICE will have its own devicetree node, so drop the ICE core clock
-> and add the qcom,ice property instead.
+> Drop all properties related to ICE from every UFS and SDCC node,
+> for all platforms, and add dedicated ICE nodes for each platform.
+> On most platforms, there is only one ICE instance, used by either
+> UFS or SDCC, but there are some platforms that have two separate
+> instances and, therefore, two separate nodes are added.
 > 
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
 > 
-> This patch was not part of the v1.
+> Changes since v1:
+>  * Made changes for all platforms that use ICE, as a single patch since
+>    most changes look really similar.
 > 
->  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 9 ++++-----
->  1 file changed, 4 insertions(+), 5 deletions(-)
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi | 18 +++++++++-----
+>  arch/arm64/boot/dts/qcom/sdm670.dtsi | 15 +++++++----
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 21 +++++++++-------
+>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 37 +++++++++++++++++-----------
+>  arch/arm64/boot/dts/qcom/sm6350.dtsi | 31 ++++++++++++++---------
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 21 +++++++++-------
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 22 ++++++++++-------
+>  7 files changed, 102 insertions(+), 63 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> index 64df6919abaf..92f6316c423f 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> @@ -80,7 +80,6 @@ properties:
->        - const: iface
->        - const: core
->        - const: xo
-> -      - const: ice
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> index 5827cda270a0..2aed49104d9d 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> @@ -1330,9 +1330,8 @@ opp-200000000 {
+>  		sdhc_1: mmc@c0c4000 {
+>  			compatible = "qcom,sdm630-sdhci", "qcom,sdhci-msm-v5";
+>  			reg = <0x0c0c4000 0x1000>,
+> -			      <0x0c0c5000 0x1000>,
+> -			      <0x0c0c8000 0x8000>;
+> -			reg-names = "hc", "cqhci", "ice";
+> +			      <0x0c0c5000 0x1000>;
+> +			reg-names = "hc", "cqhci";
 
-Same as for UFS - order is fixed, you cannot drop entries from the middle.
+I believe this will break the ICE on these platforms without valid
+reason. The commit msg does not explain why you do it or why this is
+necessary.
 
->        - const: bus
->        - const: cal
->        - const: sleep
-> @@ -120,6 +119,10 @@ properties:
+We already we received comment that we keep breaking Qualcomm platforms
+all the time and need to keep them in some shape.
 
+Also, patchset is non-applicable in current set (breaks users) and
+neither commit nor cover letter mentions it.
 
 Best regards,
 Krzysztof
