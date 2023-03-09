@@ -2,109 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A1F96B21D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 11:51:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D762B6B2271
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 12:16:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230143AbjCIKvY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 05:51:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57310 "EHLO
+        id S231510AbjCILQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 06:16:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229994AbjCIKvW (ORCPT
+        with ESMTP id S231515AbjCILQ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 05:51:22 -0500
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [IPv6:2001:67c:2178:6::1d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7701BE1C8D;
-        Thu,  9 Mar 2023 02:51:20 -0800 (PST)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        Thu, 9 Mar 2023 06:16:28 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71C37ED0D1;
+        Thu,  9 Mar 2023 03:12:06 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id F030320039;
-        Thu,  9 Mar 2023 10:51:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1678359079; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=5z2z1TJRrdW4HC7J8YkWQ4B4sI+z+nwQyG06Gl2UpNU=;
-        b=s6TuZFD4hUUzMvLOY0n/a3FbGguBQZrA9xzMLNkZYyabhbTdgD1fHao1uVahkZ2m3AEaxa
-        e28LW86HNtiQooegxTnT/GnfyBNlJaGuG7WE5DghorZP68g1lCBU+8iWIgJhYMbOGju+fA
-        DivY3jFcnlwgEBSQkVpPASiEmsiNDoQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1678359079;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=5z2z1TJRrdW4HC7J8YkWQ4B4sI+z+nwQyG06Gl2UpNU=;
-        b=OROPJXhr44+iv79vzrIuVXGiS4nuc4IpTbFyPLtrCFNleZh2uKWD8Qqu71+tucY98rhZL9
-        f/S1VATGqy0pkIBw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 930E313A10;
-        Thu,  9 Mar 2023 10:51:18 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id dhekIia6CWR9OwAAMHmgww
-        (envelope-from <tiwai@suse.de>); Thu, 09 Mar 2023 10:51:18 +0000
-Date:   Thu, 09 Mar 2023 11:51:18 +0100
-Message-ID: <87356egpuh.wl-tiwai@suse.de>
-From:   Takashi Iwai <tiwai@suse.de>
-To:     Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <krzysztof.kozlowski+dt@linaro.org>, <agross@kernel.org>,
-        <Thinh.Nguyen@synopsys.com>, <bgoswami@quicinc.com>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <tiwai@suse.com>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <quic_jackp@quicinc.com>,
-        <quic_plai@quicinc.com>,
-        Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: Re: [PATCH v3 01/28] xhci: Add support to allocate several interrupters
-In-Reply-To: <20230308235751.495-2-quic_wcheng@quicinc.com>
-References: <20230308235751.495-1-quic_wcheng@quicinc.com>
-        <20230308235751.495-2-quic_wcheng@quicinc.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        by ams.source.kernel.org (Postfix) with ESMTPS id 29F42B81ED6;
+        Thu,  9 Mar 2023 11:12:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29EEC433D2;
+        Thu,  9 Mar 2023 11:12:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678360323;
+        bh=UjTdMRVXaqEY+xVySMqwPf3Ofga2yedHc4jEmU/eCFY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=t2iOlfHELw7E8hKJOA+2s/bUMo5oUk0AujU2MOqNAxEQpNwTJpoxnOMelHDAi0vlv
+         w5vW92q34ANgty4tpHBVnjUGRPPuF0fiow8Gj+0KP0sIqG1E94iV0KbAjQzN4mMtf+
+         RXrVduRxNTPKq9oh7x/H3432IyWqEfy+EFint5/Gl0o1+IH7ZUPNlTAlRs9YM8ZEib
+         LwbTIBN58VXpZuE5s8xgM2hvkCjKCnAR1GBfZ6LAdOemo5mt5mitK0YAH2sm336gRm
+         AP4pMHDJOu17fnHV9RjbLD55XuL33Lgq3bngiN+v/6FBPd0K+vGPrN5eLtrOW+mYXk
+         yCA/mA7CfTj+w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1paECa-0008EG-Kc; Thu, 09 Mar 2023 12:12:52 +0100
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH] firmware: qcom: scm: fix bogus irq error at probe
+Date:   Thu,  9 Mar 2023 12:12:09 +0100
+Message-Id: <20230309111209.31606-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 09 Mar 2023 00:57:24 +0100,
-Wesley Cheng wrote:
-> +struct xhci_interrupter *
-> +xhci_create_secondary_interrupter(struct usb_hcd *hcd, int intr_num)
-> +{
-> +	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
-> +	struct xhci_interrupter *ir;
-> +	unsigned int i;
-> +	unsigned int idx = 0;
-> +	unsigned long flags;
-> +
-> +	if (!xhci->interrupters || intr_num > xhci->max_interrupters)
-> +		return NULL;
-> +
-> +	spin_lock_irqsave(&xhci->lock, flags);
-....
-> +	if (idx > 0) {
-> +		ir = xhci_alloc_interrupter(xhci, idx, GFP_KERNEL);
-> +		if (!ir) {
-> +			spin_unlock_irqrestore(&xhci->lock, flags);
-> +			return NULL;
-> +		}
-> +		ir->intr_num = idx;
-> +		xhci->interrupters[idx] = ir;
-> +		spin_unlock_irqrestore(&xhci->lock, flags);
+A recent commit added support for an optional interrupt which is only
+available on some platforms.
 
-You can't use GFP_KERNEL allocation inside the spinlock.
+Stop spamming the logs with bogus error messages on platforms that do
+not use this new optional resource:
 
+	qcom_scm firmware:scm: error -ENXIO: IRQ index 0 not found
 
-Takashi
+Fixes: 6bf325992236 ("firmware: qcom: scm: Add wait-queue handling logic")
+Cc: Guru Das Srinagesh <quic_gurus@quicinc.com>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+ drivers/firmware/qcom_scm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+index 468d4d5ab550..b1e11f85b805 100644
+--- a/drivers/firmware/qcom_scm.c
++++ b/drivers/firmware/qcom_scm.c
+@@ -1479,7 +1479,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
+ 
+ 	init_completion(&__scm->waitq_comp);
+ 
+-	irq = platform_get_irq(pdev, 0);
++	irq = platform_get_irq_optional(pdev, 0);
+ 	if (irq < 0) {
+ 		if (irq != -ENXIO)
+ 			return irq;
+-- 
+2.39.2
+
