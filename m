@@ -2,98 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1A796B27BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 15:51:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A3DDE6B2800
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 15:57:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231946AbjCIOv2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 09:51:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36148 "EHLO
+        id S232236AbjCIO5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 09:57:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231734AbjCIOvM (ORCPT
+        with ESMTP id S232125AbjCIO5U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 09:51:12 -0500
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA323EE77D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 06:49:35 -0800 (PST)
-Received: by mail-lf1-x144.google.com with SMTP id n2so2574816lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 06:49:35 -0800 (PST)
+        Thu, 9 Mar 2023 09:57:20 -0500
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F28A637D8
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 06:53:43 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id n6so2240048plf.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 06:53:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678373360;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6IEW8M/aeCm2sE5fVkmadnoct+8r+q1Vjruu3SWPyz4=;
-        b=JDGWw6n/bGtww37vqF5bJEUF5OLuzOGZoRY3GeMOF0jknYjbBC4WV51Qe3htdU4oB4
-         KaLBMDzhCwVC1vD/kxoF9lGJUtnE5u9RZAARdJu54kZLN4L7lguTv5XkyzR4DIMedS5Q
-         Ap20WlP9mnwSWYVuPLalJo9WTO8CD9m7xL5G6OGu3zbvNlbJwxJObleGQzMx0LQj1lnL
-         mvtoBMcRwu9mXunuhwdrZmg/Pl6oyYiRpOrBKxM9rnpXgsVVsaNAd54Er485w13aFkM6
-         56iKRoSCedVc1svUs20og8E0aK1MCoF4yv96W21egG58IzZlEz+8oE3O1mJuBR1QQJVN
-         +L5w==
+        d=linaro.org; s=google; t=1678373619;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ajn0irKfODeu29T27vBEk3b6tZAzgItP9Y7adDy5FNY=;
+        b=X51svFjqtC/TCcW6bPWDvW2nWe6HnqmaZdaU3RapG4c14StMzoHfQFaA6yVRuOcTYs
+         SspI1wIlrYGHWdAL2eR0qZFqfF+0w9jqnCsbQgbckbCw9eiEVUcCI8icdSaDzMFUX7ZW
+         Y7wQB1AfbittvehB0lglNiL6hJd/koqdQH/f0RHW6vDxrlSv0ubC1hW1yhht3C7c7nJn
+         3aDwpRhMO+1v1AWYHLQKfwDa9p5OmawEsPvEnzIIo+5CYjGi3E7DdjuL+4tAZfe6YSxM
+         h6gYNEd0lgNjTE3txJ+3P7FdgnaPMeAiEdrX69b62TcDo5SYHm+1Jhr+LUQoKKQy1DCH
+         DntQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678373360;
-        h=to:subject:message-id:date:from:reply-to:mime-version
+        d=1e100.net; s=20210112; t=1678373619;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6IEW8M/aeCm2sE5fVkmadnoct+8r+q1Vjruu3SWPyz4=;
-        b=aubLjUhK9/RCZgqaV8K8U/8eYrVfYDObFxHUu2oPixQHKaakG3qpzHCMY+Vfy7c8Wo
-         y3ctliJMI/r2FDDSjGX0IydfgdDV2mNoe1JmpHCUpmgKGSCt4QHTUg5m27wIfE4FPnbD
-         9VEUTPjgQEfE/QLAWIUQ0Kf2lNe1U57m6Ig15Iyq8TzNyyNsLj9ct2XH6mk+hNtfGKZZ
-         Xe9QXTr/C7wzDcurZcl9hrwNj0QAQDV4a5MfMVpKxuDwPbvtGOSjoD1IKcuXGLO5+JGh
-         rVncjVt4GS6HlU2mXLqV6wojkFaj04SNcY4RbmFvbchjT5uk6FpaFWWkMf0OAAv9JdUp
-         tPBQ==
-X-Gm-Message-State: AO0yUKVNm4eLhAmLwGOXe83IPHfpriG8tZ/kiqNuzvInm3f3FNmkt3bs
-        dlaMjxe0Vez8FtPbR2tAgSlLHWjZO+QHtZ2P6Vk=
-X-Google-Smtp-Source: AK7set+JGAQzKxmezNd7RQx8YEGiJc1RmAtTo+6cEJpQm6vgJINCoqE/RuqNP6OEM0zj+lk2yqH0G8QsAxMhcjQgxSI=
-X-Received: by 2002:a05:6512:281f:b0:4db:1e7d:5d42 with SMTP id
- cf31-20020a056512281f00b004db1e7d5d42mr12673495lfb.0.1678373359921; Thu, 09
- Mar 2023 06:49:19 -0800 (PST)
+        bh=ajn0irKfODeu29T27vBEk3b6tZAzgItP9Y7adDy5FNY=;
+        b=Buoxlo3nkqHgA+0RjlUhbyi/aNmTHUU40i3RPQpyIkhUTg3nq63M+ZMR4ofQzH8LXa
+         AfPhDz/wj/AWMjEeaJKDrjKJrMHe5MYHk9nGK/MWLU2wqZFEOsJ5YK//jEC0HSBYfEIq
+         nFPw2tVBy77dWz3C0OmvUc/1eb8oBN5IB12BYr7ls41D3oBL7q6F9oDwKLgnn0N0Itq2
+         /i88eqn5OCtBp7sIl8LP/S8a+F60VlHmQp7UKxvpeFOV70AgHfI3lDJ3gBO28R5f3WGN
+         P2DI0PlchJKeYvg/Js7PO+Ll/6ib003Sx46km+WU0Chc18WMtvneAax4g+PKHywkTRP2
+         M4pA==
+X-Gm-Message-State: AO0yUKVj1Cfb2wahMNxcRm/UcM2XNk0S7LJOg785IfKhkWb7M3J8JwTV
+        bwmHQNk5WrzZ7HW+rpcDqLZi
+X-Google-Smtp-Source: AK7set92yPbWSlSCHKtu9usIcTPG8eCz611nJqbZEe/CFsZ7limy7zblGDwjR3R+vpZ99bzTp9pDQQ==
+X-Received: by 2002:a17:902:e5c2:b0:19c:d5c7:e3d5 with SMTP id u2-20020a170902e5c200b0019cd5c7e3d5mr27426127plf.65.1678373618860;
+        Thu, 09 Mar 2023 06:53:38 -0800 (PST)
+Received: from thinkpad ([27.111.75.67])
+        by smtp.gmail.com with ESMTPSA id la15-20020a170902fa0f00b0019ee0ad15b4sm4566964plb.191.2023.03.09.06.53.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Mar 2023 06:53:38 -0800 (PST)
+Date:   Thu, 9 Mar 2023 20:23:28 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Cc:     andersson@kernel.org, lpieralisi@kernel.org, kw@linux.com,
+        krzysztof.kozlowski+dt@linaro.org, robh@kernel.org,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 17/17] PCI: qcom: Expose link transition counts via
+ debugfs
+Message-ID: <20230309145328.GD5151@thinkpad>
+References: <20230309085102.120977-1-manivannan.sadhasivam@linaro.org>
+ <20230309085102.120977-18-manivannan.sadhasivam@linaro.org>
+ <73269ad0-5662-519c-f6c0-e5e2f918cd4e@quicinc.com>
 MIME-Version: 1.0
-Received: by 2002:a05:6022:9116:b0:3a:4b9f:4650 with HTTP; Thu, 9 Mar 2023
- 06:49:19 -0800 (PST)
-Reply-To: wormer.amos@aol.com
-From:   Wormer Amos <devynurmalayousef01@gmail.com>
-Date:   Thu, 9 Mar 2023 15:49:19 +0100
-Message-ID: <CAApZ1XwamMYRdqTQ8KLsA3my=iG4wuCoyrDWKFTX791BLZNPbQ@mail.gmail.com>
-Subject: CAN I KNOW MORE ABOUT YOU
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=6.5 required=5.0 tests=BAYES_80,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,SUBJ_ALL_CAPS,UNDISC_FREEM autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2a00:1450:4864:20:0:0:0:144 listed in]
-        [list.dnswl.org]
-        *  2.0 BAYES_80 BODY: Bayes spam probability is 80 to 95%
-        *      [score: 0.8967]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [devynurmalayousef01[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [devynurmalayousef01[at]gmail.com]
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  2.9 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: ******
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <73269ad0-5662-519c-f6c0-e5e2f918cd4e@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dear how are you? Are you capable for investment in your country. i
-need serious investment project with good background, kindly connect
-me to discuss details immediately. i will appreciate you to contact me
-on this email address Thanks and awaiting your quick response yours
-Amos
+On Thu, Mar 09, 2023 at 05:21:38PM +0530, Sricharan Ramabadhran wrote:
+> 
+> 
+> On 3/9/2023 2:21 PM, Manivannan Sadhasivam wrote:
+> > Qualcomm PCIe controllers have debug registers in the MHI region that
+> > count PCIe link transitions. Expose them over debugfs to userspace to
+> > help debug the low power issues.
+> > 
+> > Note that even though the registers are prefixed as PARF_, they don't
+> > live under the "parf" register region. The register naming is following
+> > the Qualcomm's internal documentation as like other registers.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >   drivers/pci/controller/dwc/pcie-qcom.c | 59 ++++++++++++++++++++++++++
+> >   1 file changed, 59 insertions(+)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > index e1180c84f0fa..6d9bde64c9e9 100644
+> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > @@ -10,6 +10,7 @@
+> >   #include <linux/clk.h>
+> >   #include <linux/crc8.h>
+> > +#include <linux/debugfs.h>
+> >   #include <linux/delay.h>
+> >   #include <linux/gpio/consumer.h>
+> >   #include <linux/interconnect.h>
+> > @@ -62,6 +63,13 @@
+> >   #define AXI_MSTR_RESP_COMP_CTRL1		0x81c
+> >   #define MISC_CONTROL_1_REG			0x8bc
+> > +/* MHI registers */
+> > +#define PARF_DEBUG_CNT_PM_LINKST_IN_L2		0xc04
+> > +#define PARF_DEBUG_CNT_PM_LINKST_IN_L1		0xc0c
+> > +#define PARF_DEBUG_CNT_PM_LINKST_IN_L0S		0xc10
+> > +#define PARF_DEBUG_CNT_AUX_CLK_IN_L1SUB_L1	0xc84
+> > +#define PARF_DEBUG_CNT_AUX_CLK_IN_L1SUB_L2	0xc88
+> > +
+> >   /* PARF_SYS_CTRL register fields */
+> >   #define MAC_PHY_POWERDOWN_IN_P2_D_MUX_EN	BIT(29)
+> >   #define MST_WAKEUP_EN				BIT(13)
+> > @@ -229,11 +237,13 @@ struct qcom_pcie {
+> >   	struct dw_pcie *pci;
+> >   	void __iomem *parf;			/* DT parf */
+> >   	void __iomem *elbi;			/* DT elbi */
+> > +	void __iomem *mhi;
+> >   	union qcom_pcie_resources res;
+> >   	struct phy *phy;
+> >   	struct gpio_desc *reset;
+> >   	struct icc_path *icc_mem;
+> >   	const struct qcom_pcie_cfg *cfg;
+> > +	struct dentry *debugfs;
+> >   };
+> >   #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+> > @@ -1385,6 +1395,37 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+> >   	}
+> >   }
+> > +static int qcom_pcie_link_transition_count(struct seq_file *s, void *data)
+> > +{
+> > +	struct qcom_pcie *pcie = (struct qcom_pcie *)
+> > +				     dev_get_drvdata(s->private);
+> > +
+> > +	seq_printf(s, "L0s transition count: %u\n",
+> > +		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_PM_LINKST_IN_L0S));
+> > +
+> > +	seq_printf(s, "L1 transition count: %u\n",
+> > +		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_PM_LINKST_IN_L1));
+> > +
+> > +	seq_printf(s, "L1.1 transition count: %u\n",
+> > +		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_AUX_CLK_IN_L1SUB_L1));
+> > +
+> > +	seq_printf(s, "L1.2 transition count: %u\n",
+> > +		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_AUX_CLK_IN_L1SUB_L2));
+> > +
+> > +	seq_printf(s, "L2 transition count: %u\n",
+> > +		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_PM_LINKST_IN_L2));
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static void qcom_pcie_init_debugfs(struct qcom_pcie *pcie)
+> > +{
+> > +	struct dw_pcie *pci = pcie->pci;
+> > +
+> > +	debugfs_create_devm_seqfile(pci->dev, "link_transition_count", pcie->debugfs,
+> > +				    qcom_pcie_link_transition_count);
+> > +}
+> > +
+> >   static int qcom_pcie_probe(struct platform_device *pdev)
+> >   {
+> >   	struct device *dev = &pdev->dev;
+> > @@ -1392,6 +1433,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> >   	struct dw_pcie *pci;
+> >   	struct qcom_pcie *pcie;
+> >   	const struct qcom_pcie_cfg *pcie_cfg;
+> > +	char *name;
+> >   	int ret;
+> >   	pcie_cfg = of_device_get_match_data(dev);
+> > @@ -1439,6 +1481,12 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> >   		goto err_pm_runtime_put;
+> >   	}
+> > +	pcie->mhi = devm_platform_ioremap_resource_byname(pdev, "mhi");
+> > +	if (IS_ERR(pcie->mhi)) {
+> > +		ret = PTR_ERR(pcie->mhi);
+> > +		goto err_pm_runtime_put;
+> > +	}
+> > +
+> 
+>  Tested this series on ipq4019-ap.dk07.1-c1 board and the above hunk
+>  breaks enumeration because there is no 'mhi' region. All the debug bits
+>  used in the transition_count function is inside the PARF_STTS register
+>  at offset 0x24 inside the PARF region.
+> 
+
+Ah, "mhi" is supposed to be optional, my bad. Will fix it in next revision.
+
+>  Register: PCIE_0_PCIE20_PARF_PM_STTS | 0x80024
+>  Offset:    0x24    Reset State:    0x00040000
+> 
+
+Hmm, is this register present on other IPQ/APQ SoCs?
+
+> Bits    Field Name
+> 31    LINK_REQ_RST_NOT
+> 30    XMLH_LINK_UP
+> 29    PM_DSTATE_0
+> 0x0: D0
+> 0x1: D3
+> 28    PHYSTATUS
+> 27:16    PM_DSTATE
+> 15:12    PM_PME_EN
+> 11    PHYCLK_REQ_N
+> 10    L1SS_CLKREQN_OE
+> 9    L1SS_CLKREQN_IN
+> 8    PM_LINKST_IN_L1SUB
+> 7    PM_LINKST_IN_L0S
+> 6    PM_LINKST_L2_EXIT
+> 5    PM_LINKST_IN_L2
+> 4    PM_LINKST_IN_L1
+> 3:0    PM_STATUS
+> 
+> Otherwise, with rest of the patches enumeration was fine.
+> Tested with a pcie ethernet adapter.
+> 
+
+Thanks a lot for testing!
+
+- Mani
+
+> Regards,
+>  Sricharan
+
+-- 
+மணிவண்ணன் சதாசிவம்
