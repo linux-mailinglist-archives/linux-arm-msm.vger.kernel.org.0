@@ -2,116 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ABEA6B1A7C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 05:48:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E375B6B1B6D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 07:27:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229605AbjCIEsA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 23:48:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48532 "EHLO
+        id S229686AbjCIG1X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 01:27:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbjCIEr5 (ORCPT
+        with ESMTP id S229523AbjCIG1V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 23:47:57 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19CCD1FC6;
-        Wed,  8 Mar 2023 20:47:54 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 328NttiG018268;
-        Thu, 9 Mar 2023 04:47:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=2iD4qKrKVuTY9r+EQEmj3UNps1cWE5eVskoKOcWH9VI=;
- b=Fq//dHoOyTJfoFZMUpjJN+Im6A4d8i8533j94YAhpcXmsY7inzogwGZ5l+jdeAoy1Qul
- MyJFiRDppTjVJiFIXxv6vN3I4+shxKTsBqUM5fqS/cJQY4VAgCyqcqcy+TPi+GsZiGWq
- MTz/bpla7x+A/wcW7K7mXoiIJshY6+2MlIGgyt/d8ptuNm6HP5r+ITwfmrPOk5PXnod+
- o1sSuzMuNdV6iQRLSJCRvEV9H1ABOXnPRJHRbQgzkiSsNtrgInaMdxK+2rChLsJAAIdm
- R/I43aD4juPoPTjJbC26pfG39t7hmfBv3YP0Chdt5KcDNKbzx+s/VmRPwrX+Ut9tu/83 Qg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p72qarsgf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 09 Mar 2023 04:47:29 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3294lRLA032394
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 9 Mar 2023 04:47:27 GMT
-Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 8 Mar 2023
- 20:47:21 -0800
-Message-ID: <bc2680cb-e81f-4afb-5a8c-ac0f5a9aed78@quicinc.com>
-Date:   Thu, 9 Mar 2023 10:17:17 +0530
+        Thu, 9 Mar 2023 01:27:21 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22C591C5B1
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 22:27:20 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id u9so2926786edd.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 22:27:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678343238;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zGFQnDrQBIiVyn9kddrJO7rpyZ4MXu5CWKlUhDi2u0g=;
+        b=aj3BzEBY4Uo21mdLrBRWNwMs3LGQRkDqO+fzc+cnzpiVqpAiwAtLEYiFi9umdikWLg
+         bcvsa5AfXPqH9TV9SvMagFF2U80bRbR145ok4KqF2ze2wM2VdkgpY7LCMTBr8Fmrj5V9
+         qxQrwkRGdpGJuqDqpl9d8stLfoqTBj6l5xqJe27LCulHCwzSM7kz6lAsPJB7evhQ3zQH
+         NpcPz1NJsMcdxBiwVNZt7jwoBEr+ERZrLlv8Zof7QBPL/N7hNC28jAbbismfS7AASssB
+         MdX6H8quM7BCUkkcAi9jGnkmZ9HGIUfYEmO4rzqgT1MPdTb1EERt0k/zR66BTrAkwqdS
+         +PHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678343238;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zGFQnDrQBIiVyn9kddrJO7rpyZ4MXu5CWKlUhDi2u0g=;
+        b=eSd9xNKzAltgIhv6c9aQPDbfd/JHDhKbIEVLg472d53gYxt02V2QxoM9zDD8fKmat9
+         0xiQmDx2iiVZVRd0Pc7bf67fc36fomiwDkPN3d30Ly5h2uLVVmb3WtKI+rX1X7rZSqIF
+         KiWgZabh7TheFFk+OnWRH7mA5ZqCdIG/IL7Yl0dak5pGOWIA1t+I/RQQAio38eYisg84
+         z4vwOq7s/+4DxBpvW6hgtkzPPgnMPXMx7deuZFrK+/Z3UdlcwejJSgCIHpaBEzM1N0QG
+         Tgvc/e36soMKUX96cmCZTHgmg6XSHtMzzivwuCW9LSxVlv05OrMWq8NLXBFmxJaRoYXY
+         kNYQ==
+X-Gm-Message-State: AO0yUKVcer8rqSTb5RoCZ/tQHMmhr3CohW7Qlngv9eW0ze1A4SCkyQ5f
+        zjKD1biVBJqNARh8Qpvw4M9vLQ==
+X-Google-Smtp-Source: AK7set9bprPmsq40zKSYFropkIOReUtzA33UKmaaS4PewfQrVtMYpRPcJQQxlSLJMr7PhtmXPVmd3A==
+X-Received: by 2002:aa7:c245:0:b0:4ac:c44e:a493 with SMTP id y5-20020aa7c245000000b004acc44ea493mr19500817edo.2.1678343238615;
+        Wed, 08 Mar 2023 22:27:18 -0800 (PST)
+Received: from ?IPV6:2a02:810d:15c0:828:7ee2:e73e:802e:45c1? ([2a02:810d:15c0:828:7ee2:e73e:802e:45c1])
+        by smtp.gmail.com with ESMTPSA id kq17-20020a170906abd100b008e82cb55195sm8325008ejb.203.2023.03.08.22.27.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Mar 2023 22:27:18 -0800 (PST)
+Message-ID: <bce148d7-7e22-dda7-820d-5d940f313add@linaro.org>
+Date:   Thu, 9 Mar 2023 07:27:16 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH V6 7/9] dt-bindings: firmware: qcom,scm: document IPQ5332
- SCM
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <catalin.marinas@arm.com>, <will@kernel.org>,
-        <arnd@arndb.de>, <dmitry.baryshkov@linaro.org>,
-        <geert+renesas@glider.be>, <nfraprado@collabora.com>,
-        <broonie@kernel.org>, <rafal@milecki.pl>, <robimarko@gmail.com>,
-        <quic_gurus@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
-References: <20230307062232.4889-1-quic_kathirav@quicinc.com>
- <20230307062232.4889-8-quic_kathirav@quicinc.com>
- <754a2d38-dd7b-48b6-80e5-683ca193e0b1@linaro.org>
- <ab803e21-76bf-308c-9df0-8b7b45b472b2@quicinc.com>
- <2d1661fe-92bd-a117-27a5-cf1803ce363f@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] dt-bindings: remoteproc: qcom,adsp: bring back
+ firmware-name
 Content-Language: en-US
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-In-Reply-To: <2d1661fe-92bd-a117-27a5-cf1803ce363f@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230305125917.209262-1-krzysztof.kozlowski@linaro.org>
+ <20230308224848.GA3947747-robh@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230308224848.GA3947747-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: aDjSsLTmGoKWbN1wCRgxawY3sQscZdUM
-X-Proofpoint-ORIG-GUID: aDjSsLTmGoKWbN1wCRgxawY3sQscZdUM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-09_01,2023-03-08_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015 bulkscore=0
- mlxlogscore=912 spamscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303090036
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 3/8/2023 9:14 PM, Konrad Dybcio wrote:
->
-> On 8.03.2023 16:39, Kathiravan T wrote:
->> On 3/8/2023 4:31 PM, Konrad Dybcio wrote:
->>> On 7.03.2023 07:22, Kathiravan T wrote:
->>>> Document the compatible for IPQ5332 SCM.
->>>>
->>>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
->>>> ---
->>> Does this board not have a crypto engine / CE1 clock exposed via
->>> RPMCC? It will be enabled by default, but Linux should be aware
->>> of it, so that we don't gate it by accident.
+On 08/03/2023 23:48, Rob Herring wrote:
+> On Sun, Mar 05, 2023 at 01:59:17PM +0100, Krzysztof Kozlowski wrote:
+>> The firmware-name property was moved from common qcom,pas-common.yaml
+>> binding to each device-specific schema, but the qcom,adsp.yaml was not
+>> updated.
 >>
->> IPQ5332 doesn't have the crypto engine and also it doesn't have RPMCC. Sorry, could you please help to explain how it is related to SCM?
-> SCM usually requires certain clocks to be up and that often includes
-> the CE1 clock on fairly recent designs.
+>> Fixes: cee616c68846 ("dt-bindings: remoteproc: qcom: adsp: move memory-region and firmware-name out of pas-common")
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 4 ++++
+>>  1 file changed, 4 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+>> index 643ee787a81f..828dfebaef6a 100644
+>> --- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+>> @@ -44,6 +44,10 @@ properties:
+>>      maxItems: 1
+>>      description: Reference to the reserved-memory for the Hexagon core
+>>  
+>> +  firmware-name:
+>> +    $ref: /schemas/types.yaml#/definitions/string
+> 
+> We need to stop redefining the type for 'firmware-name'. I'm adding it 
+> to dtschema, so here just put 'maxItems: 1'. 
+
+Oh, yes! But maybe we should add string pattern to "-name" in general?
+Just like we have for "-names"?
 
 
-Thanks for the explanation. I don't see such requirements for this SoC.
 
+Best regards,
+Krzysztof
 
-> Konrad
->> Thanks, Kathiravan T.
