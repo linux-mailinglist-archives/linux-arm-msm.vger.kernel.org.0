@@ -2,171 +2,296 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B00DB6B2DEF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 20:51:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C65956B2E24
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 21:08:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229706AbjCITvk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 14:51:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34754 "EHLO
+        id S230093AbjCIUIO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 15:08:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229639AbjCITvk (ORCPT
+        with ESMTP id S229786AbjCIUIN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 14:51:40 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 419CDF7EE2;
-        Thu,  9 Mar 2023 11:51:38 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 329Jmu0O017492;
-        Thu, 9 Mar 2023 19:51:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=RCEYb1Ihg59IinP+txkWtQHoA64JPH94f7dtWtPgKEs=;
- b=VI5vS0TLXE11Qhq/53pkIMtV4dW5FASfwLhdzoHM+ICxdhfwSUrqsi44oIgNO+Hf9jsf
- fY07IEMg2wYO5aweMMAt1QMaDPMRYAbf+Hd8cj616/isUkdvqpebPL6wu1O5LkCx8ypx
- XW4NR4Pm8l2EhkvouE8YICy5WGgRY3yFazmUL1z2JqPxYDv6iPJ491HMDxUXoYB7EC1x
- smzcvd2RsONRRJ8aCKaAN514led6L/pX0Jk9OJJWvqHZN3kwciZlT9OqtvHTM8Gxlapz
- gG09U/qkVLIid3qPLz595MR4yj/IicuDZd5VWLYiTaAMOrr1CjylUvGBnCkjYna+sEAn Ew== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p72qau466-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 09 Mar 2023 19:51:06 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 329Jp5cO030563
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 9 Mar 2023 19:51:05 GMT
-Received: from [10.110.90.116] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 9 Mar 2023
- 11:51:04 -0800
-Message-ID: <74b92725-8596-2f86-02b9-8dbfd6df9d95@quicinc.com>
-Date:   Thu, 9 Mar 2023 11:51:03 -0800
+        Thu, 9 Mar 2023 15:08:13 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 427D130EAA
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 12:08:11 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id da10so11824655edb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 12:08:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google; t=1678392490;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rkdqh8Mn4yYVcJRbj0k73VKeCBqKduyHj6J+C4uNHbk=;
+        b=GHJNSGs0ozGdUpE1NfeN06yA+sKV9j8iM4T3MaizrYC8y3Xkguqdvt9CGLF+wVxabQ
+         GjHtzIdzGaMVhs5kRs0zcAZigoMTMgRR3rL/Un1Kdj9TWTmskh7OXWXP7oEMC1d+Gaxe
+         t/J+tUlSjq7iO4QQtq3+CIcOZzkezl1W3+2ugK7blV0TOX4eWV+IWwKc6zwt7uqdFCaM
+         iElGs/PMnlpE3t3Y/qyPUXjTpFM9GYMwcEAn/LZBqxW9FxupcNIsq5o1jzifC4uMTivz
+         UA8uNSGT+x0gFE+bF+Hw5dOyKAhBM6CGLvIFEaBLVfQV1uT2DWqpO8z3uPf9wyUfgvK0
+         ykrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678392490;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rkdqh8Mn4yYVcJRbj0k73VKeCBqKduyHj6J+C4uNHbk=;
+        b=yIrTsSdzcpn1Ss/pr9SgRg9brbOvj+EHLi7bnCOM6+DEHaSrxcI+wb4Vvj59pwL7CR
+         rUtRtCdW+63dD9kgxH6/G4SUAU9xvNa9rdTpzoRmJyFeMU3nJaUhj+K3ir84Wt9Spam8
+         unl5qTr1xAOwdK8iL68acESj2oNNKVCQU9h8cTy/aP6l82jxv0eMgXD9W9WFDJh8FXG3
+         6lwsdBHXw5QcWv+w7Q8l2Aw1XvYSemugfxrXrf8w0lvox7O+m1/GeuVVcC3fGz09RYEF
+         Z05Z9yOpZ2Uby9xY/zAw8B06QopIv6LXr/8AIuMQVWb8eJUEWduvvhj9M4dT2PVvqjgX
+         Jcyg==
+X-Gm-Message-State: AO0yUKVN2jYCgdmOAsdancO/Z1j5Ee/e1oRbQSZ2+DaOHRTdtgxDkGuz
+        H1kYA0UT5mZbfXGMxxyYhFQpqUNqGQV9tWgyL+aWGA==
+X-Google-Smtp-Source: AK7set9FtsMby2FguByeoNJEQBInZqMAF0hTx+q7tMBEgbEGSz6VyxVYUtlDhjCvaUHueJ7BNK9KTXJ/2uQvQ7QqWB8=
+X-Received: by 2002:a17:906:310d:b0:87b:d50f:6981 with SMTP id
+ 13-20020a170906310d00b0087bd50f6981mr10758001ejx.14.1678392489733; Thu, 09
+ Mar 2023 12:08:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v3 02/28] usb: xhci: Add XHCI APIs to support USB
- offloading
-Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>
-CC:     <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <krzysztof.kozlowski+dt@linaro.org>, <agross@kernel.org>,
-        <Thinh.Nguyen@synopsys.com>, <bgoswami@quicinc.com>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>, <tiwai@suse.com>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <quic_jackp@quicinc.com>,
-        <quic_plai@quicinc.com>
-References: <20230308235751.495-1-quic_wcheng@quicinc.com>
- <20230308235751.495-3-quic_wcheng@quicinc.com> <ZAl+ydxOCoGXIj1Y@kroah.com>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <ZAl+ydxOCoGXIj1Y@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: geECP4ky0IkofcbkGzEuZCV5TJOm-pFx
-X-Proofpoint-ORIG-GUID: geECP4ky0IkofcbkGzEuZCV5TJOm-pFx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-09_10,2023-03-09_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015 bulkscore=0
- mlxlogscore=999 spamscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303090158
+References: <20230209020916.6475-1-steev@kali.org> <20230209020916.6475-5-steev@kali.org>
+ <ZAoWdR7mppnWclFr@hovoldconsulting.com>
+In-Reply-To: <ZAoWdR7mppnWclFr@hovoldconsulting.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Date:   Thu, 9 Mar 2023 14:07:58 -0600
+Message-ID: <CAKXuJqgAbdALaRdcoSV+sXbGzwm6h54hZtG2rBobcGA9vyu50g@mail.gmail.com>
+Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: thinkpad-x13s: Add bluetooth
+To:     Johan Hovold <johan@kernel.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
+On Thu, Mar 9, 2023 at 11:24=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
+te:
+>
+> On Wed, Feb 08, 2023 at 08:09:16PM -0600, Steev Klimaszewski wrote:
+> > The Lenovo Thinkpad X13s has a WCN6855 Bluetooth controller on uart2,
+> > add this.
+> >
+> > Signed-off-by: Steev Klimaszewski <steev@kali.org>
+> > Link: https://lore.kernel.org/r/20230207052829.3996-5-steev@kali.org
+>
+> This link should not be needed.
+>
+> Also, please update the patch Subject to use the following prefix:
+>
+>         arm64: dts: qcom: sc8280xp-x13s: ...
+>
 
-On 3/8/2023 10:38 PM, Greg KH wrote:
-> On Wed, Mar 08, 2023 at 03:57:25PM -0800, Wesley Cheng wrote:
->> Some use cases, such as USB audio offloading, will allow for a DSP to take
->> over issuing USB transfers to the host controller.  In order for the DSP to
->> submit transfers for a particular endpoint, and to handle its events, the
->> client driver will need to query for some parameters allocated by XHCI.
->>
->> - XHCI secondary interrupter event ring address
->> - XHCI transfer ring address (for a particular EP)
->> - Stop endpoint command API
->>
->> Once the resources are handed off to the DSP, the offload begins, and the
->> main processor can enter idle.  When stopped, since there are no URBs
->> submitted from the main processor, the client will just issue a stop
->> endpoint command to halt any pending transfers.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
->>   drivers/usb/host/xhci.c       | 130 ++++++++++++++++++++++++++++++++++
->>   include/linux/usb/xhci-intr.h |   8 +++
->>   2 files changed, 138 insertions(+)
-> 
-> Please use checkpatch.pl on your patches before sending them out :(
-> 
-> Some other minor comments:
-> 
+Yeah, that was me screwing up my  patch, will make those changes for v6
 
-Thanks for taking the time to review these!
+> > ---
+> > Changes since v4:
+> >  * Address Konrad's review comments.
+> >
+> > Changes since v3:
+> >  * Add vreg_s1c
+> >  * Add regulators and not dead code
+> >  * Fix commit message changelog
+> >
+> > Changes since v2:
+> >  * Remove dead code and add TODO comment
+> >  * Make dtbs_check happy with the pin definitions
+> >  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 76 +++++++++++++++++++
+> >  1 file changed, 76 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts=
+ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > index f936b020a71d..ad20cfb3a830 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > @@ -24,6 +24,8 @@ / {
+> >       aliases {
+> >               i2c4 =3D &i2c4;
+> >               i2c21 =3D &i2c21;
+> > +             serial0 =3D &uart17;
+>
+> This is an unrelated change that does not belong in this patch.
+>
+> > +             serial1 =3D &uart2;
+> >       };
+> >
+> >       wcd938x: audio-codec {
+> > @@ -297,6 +299,15 @@ pmc8280c-rpmh-regulators {
+> >               qcom,pmic-id =3D "c";
+> >               vdd-bob-supply =3D <&vreg_vph_pwr>;
+> >
+> > +             vreg_s1c: smps1 {
+> > +                     regulator-name =3D "vreg_s1c";
+> > +                     regulator-min-microvolt =3D <1880000>;
+> > +                     regulator-max-microvolt =3D <1900000>;
+> > +                     regulator-allowed-modes =3D <RPMH_REGULATOR_MODE_=
+AUTO>,
+> > +                                               <RPMH_REGULATOR_MODE_RE=
+T>;
+> > +                     regulator-allow-set-load;
+>
+> Don't you need to specify initial-mode as well?
+>
+> > +             };
+> > +
+> >               vreg_l1c: ldo1 {
+> >                       regulator-name =3D "vreg_l1c";
+> >                       regulator-min-microvolt =3D <1800000>;
+> > @@ -712,6 +723,32 @@ &qup0 {
+> >       status =3D "okay";
+> >  };
+> >
+> > +&uart2 {
+> > +     pinctrl-0 =3D <&uart2_state>;
+> > +     pinctrl-names =3D "default";
+> > +
+> > +     status =3D "okay";
+> > +
+> > +     bluetooth {
+> > +             compatible =3D "qcom,wcn6855-bt";
+> > +
+> > +             vddio-supply =3D <&vreg_s10b>;
+> > +             vddbtcxmx-supply =3D <&vreg_s12b>;
+> > +             vddrfacmn-supply =3D <&vreg_s12b>;
+> > +             vddrfa0p8-supply =3D <&vreg_s12b>;
+> > +             vddrfa1p2-supply =3D <&vreg_s11b>;
+> > +             vddrfa1p7-supply =3D <&vreg_s1c>;
+> > +
+> > +             max-speed =3D <3200000>;
+> > +
+> > +             enable-gpios =3D <&tlmm 133 GPIO_ACTIVE_HIGH>;
+> > +             swctrl-gpios =3D <&tlmm 132 GPIO_ACTIVE_HIGH>;
+> > +
+> > +             pinctrl-0 =3D <&bt_en>;
+> > +             pinctrl-names =3D "default";
+> > +     };
+> > +};
+> > +
+> >  &qup1 {
+> >       status =3D "okay";
+> >  };
+> > @@ -720,6 +757,11 @@ &qup2 {
+> >       status =3D "okay";
+> >  };
+> >
+> > +&uart17 {
+> > +     compatible =3D "qcom,geni-debug-uart";
+> > +     status =3D "okay";
+> > +};
+>
+> This bit does not belong here either. We don't have any means of
+> accessing the debug uart on the X13s so we should probably just leave it
+> disabled.
+>
 
-Hmm, I did run checkpatch, and cleaned up the warnings it did give. 
-However, I think something changed with regards to the tools on my host 
-env.  Will address those and make sure it runs properly next time.
+Will drop it (and the above one as well)
 
-Will fix the minor changes you mentioned, and focus on the general 
-questions you had.
+> > +
+> >  &remoteproc_adsp {
+> >       firmware-name =3D "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
+> >
+> > @@ -980,6 +1022,19 @@ hastings_reg_en: hastings-reg-en-state {
+> >  &tlmm {
+> >       gpio-reserved-ranges =3D <70 2>, <74 6>, <83 4>, <125 2>, <128 2>=
+, <154 7>;
+> >
+> > +     bt_en: bt-en-state {
+>
+> As you are configuring more than one pin, please rename this as:
+>
+>         bt_default: bt-default-state
+>
+> > +             hstp-sw-ctrl-pins {
+> > +                     pins =3D "gpio132";
+> > +                     function =3D "gpio";
+>
+> You should define the bias configuration as well. I guess we need to
+> keep the default pull-down enabled.
+>
+> > +             };
+> > +
+> > +             hstp-bt-en-pins {
+> > +                     pins =3D "gpio133";
+> > +                     function =3D "gpio";
+> > +                     drive-strength =3D <16>;
+>
+> bias-disable?
+>
+> > +             };
+> > +     };
+> > +
+> >       edp_reg_en: edp-reg-en-state {
+> >               pins =3D "gpio25";
+> >               function =3D "gpio";
+> > @@ -1001,6 +1056,27 @@ i2c4_default: i2c4-default-state {
+> >               bias-disable;
+> >       };
+> >
+> > +     uart2_state: uart2-state {
+>
+> Rename this one too:
+>
+>         uart2_default: uart2-default-state
+>
+> > +             cts-pins {
+> > +                     pins =3D "gpio122";
+>
+> This should be gpio121 (gpio122 is rts).
+>
 
->> diff --git a/include/linux/usb/xhci-intr.h b/include/linux/usb/xhci-intr.h
->> index 738b0f0481a6..d42cc9a1e698 100644
->> --- a/include/linux/usb/xhci-intr.h
->> +++ b/include/linux/usb/xhci-intr.h
->> @@ -80,7 +80,15 @@ struct xhci_interrupter {
->>   	u64	s3_erst_dequeue;
->>   };
->>   
->> +/* Secondary interrupter */
->>   struct xhci_interrupter *
->>   xhci_create_secondary_interrupter(struct usb_hcd *hcd, int intr_num);
->>   void xhci_remove_secondary_interrupter(struct usb_hcd *hcd, struct xhci_interrupter *ir);
->> +
->> +/* Offload */
->> +int xhci_stop_endpoint(struct usb_device *udev,
->> +			struct usb_host_endpoint *ep);
->> +phys_addr_t xhci_get_xfer_resource(struct usb_device *udev,
->> +					struct usb_host_endpoint *ep, dma_addr_t *dma);
->> +phys_addr_t xhci_get_ir_resource(struct usb_device *udev, struct xhci_interrupter *ir);
-> 
-> Why are these functions unique to offload?
-> 
+You are right that it should be... however... if I actually set it to
+be 121.... bluetooth doesn't actually come up/work?
 
-Wanted to separate the set of APIs used for creating a secondary 
-interrupter versus offload related ones.  In general, the APIs under the 
-secondary interrupter portion can be used for other things other than 
-offloading.  As Mathias pointed out, they had a use case where they 
-wanted to utilize the secondary interrupter to actually route and 
-receive interrupts on the secondary ring, not to suppress them. (which 
-is opposite of what the offload concept is doing)
+> > +                     function =3D "qup2";
+> > +                     bias-disable;
+>
+> Don't we need a pull-down on this one to avoid a floating input when the
+> module is powered down?
+>
+Maybe?  I don't have access to the schematics or anything so I was
+going with the best guess based on what worked by poking and prodding.
+Will try this.
 
-Now for the offload section, those are specific to that feature, because 
-we need to pass certain memory information about what was allocated by 
-XHCI to the entity that we are offloading the IO operations to.  Hence, 
-why they are APIs which fetch the transfer ring and event ring 
-addresses.  In addition, we do have the stop EP as well, since in the 
-offload case, since the main processor doesn't submit TDs (transfer 
-descriptors) then it isn't aware there are transfers in progress.  When 
-the endpoint is released, then the offload driver needs to be the one 
-that halts the EP.
 
-As you mentioned, I will add documentation to better describe these.
-
-Thanks
-Wesley Cheng
+> > +             };
+> > +
+> > +             rts-tx-pins {
+>
+> Please split this in two nodes.
+>
+> > +                     pins =3D "gpio122", "gpio123";
+> > +                     function =3D "qup2";
+> > +                     drive-strength =3D <2>;
+> > +                     bias-disable;
+> > +             };
+> > +
+> > +             rx-pins {
+> > +                     pins =3D "gpio124";
+> > +                     function =3D "qup2";
+> > +                     bias-pull-up;
+> > +             };
+> > +     };
+> > +
+> >       i2c21_default: i2c21-default-state {
+> >               pins =3D "gpio81", "gpio82";
+> >               function =3D "qup21";
+>
+> Johan
