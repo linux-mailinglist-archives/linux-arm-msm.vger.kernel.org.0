@@ -2,141 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C04966B3103
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 23:41:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C3F336B3137
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 23:44:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231775AbjCIWkC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 17:40:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58120 "EHLO
+        id S231548AbjCIWo1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 17:44:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229989AbjCIWj0 (ORCPT
+        with ESMTP id S231534AbjCIWoI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 17:39:26 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C76B26CC5;
-        Thu,  9 Mar 2023 14:38:20 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id j3so2257134wms.2;
-        Thu, 09 Mar 2023 14:38:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678401497;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hKTAoz/5c2gh8Y+1xcGszVL+VPGe5qIqtDhWxElzHg8=;
-        b=Lz9RBu9CNknt0QOl1Aljn3cwAQU50LY+AV7pSEK2Fj8y3Hddbp4bpOTZi5rdS139F9
-         8ptUcoz9oF26o4TdIU880734mFr6D//0Pup+yhl4sl+qWhzxl1EQsry/0hWIrecGVCYX
-         irkJVeam6BQf1XKfDhMOAItTSlHyiuUnGkQIZ69rZJp9rLO7ToxONC/5gBKjkgcQYWSn
-         aEgSeFeD1BuSXWBATUry4dvmFsB+d+jTHeR+0pf9nT6vw1LcZ1N5nbxeVBRBAl57csCT
-         E61stkETe6G9jYvNriFX3ip8Yen/ibpiuilcO10mTst/5qyra0K1kpwYzwAC22YbidoR
-         1EsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678401497;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hKTAoz/5c2gh8Y+1xcGszVL+VPGe5qIqtDhWxElzHg8=;
-        b=kEcujqqqkijUj054l9C65d3BYTAubaAtZqRFgtOeHs3QyUtz5aqXWNTmkiydFMo2SC
-         CwAbtBQjt8WIpVNvZs6mViXyjFz8bPMkE8YfoIm6NvHek3wU1AD8V/NVGYCLn/UWi7YS
-         J6sEHzkqyK1Vl9qKc1ifxaLgVkc5AGiTnhOw4kFmo9PFjCLT/G/RTr7Z42eSOxrEWExk
-         n8phLQAXr7IEWxX5MLKJ//TM2Pvqv83gN07TkAsloVCi4pISdcO0JU+RnnGRRCyB2b+Y
-         l+VnLkus75FalDRthkJDC0bIGpMw9LowcM8Eu20qj0JoA10Kd2I5jXWdaHIhylLKpF2P
-         MJGg==
-X-Gm-Message-State: AO0yUKW49xoQZ9bEjANu8wxWWFCoOoKX2l44u8mqpJFZ5YqZ5DwS/tbh
-        2CyXWVafnruB4ogXDbm1jYM=
-X-Google-Smtp-Source: AK7set9nJyc40zKBJjx/+yRO/PvBUSMQMAtbQH41bk/GikMpPlZvCnoCom8HjfPdmlaTb9H2ybUlWQ==
-X-Received: by 2002:a05:600c:3c8f:b0:3ea:bc08:b63e with SMTP id bg15-20020a05600c3c8f00b003eabc08b63emr808544wmb.2.1678401496818;
-        Thu, 09 Mar 2023 14:38:16 -0800 (PST)
-Received: from localhost.localdomain (93-34-89-197.ip49.fastwebnet.it. [93.34.89.197])
-        by smtp.googlemail.com with ESMTPSA id g12-20020a05600c310c00b003e209b45f6bsm1183981wmo.29.2023.03.09.14.38.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Mar 2023 14:38:16 -0800 (PST)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
+        Thu, 9 Mar 2023 17:44:08 -0500
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A87365C56;
+        Thu,  9 Mar 2023 14:43:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678401830; x=1709937830;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=fBE1n3VDHKOa0my/fpWQs/hh4OEzhEHXYLpvjY/5Y0Q=;
+  b=dPbm4nXmq99X2ep99J4vzLJ6u1gjzlzgjL0SNI9L55ZHTIy3HkySEhb3
+   WX4gr59wlATQowjxz+91nxZA2kWsXHUiJD5cJUuf8vQFT+2RAZzZL7rAT
+   Cp+DzHCkEmng1aafKzUQsQGpdV1rbQncRFnyvGbUZZpWVoPpf+ozZsjge
+   7P8jkyDNjpXcg3CWyCSgiv+KWPFzf612tFWFXOxYER7q2GgE1t2sTHxa2
+   bm8eCtHMaW2sOp1sN9Zdw+gWW6M/T5QUXKoR+esx8qWYu4DbKwIFXSUFD
+   P4o0UCOUa0EA1SVlShCoPnt+rSM26u1VmUWMcf5IlvDDy57XxCCXlE9KS
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10644"; a="335289373"
+X-IronPort-AV: E=Sophos;i="5.98,247,1673942400"; 
+   d="scan'208";a="335289373"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2023 14:42:49 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10644"; a="654953046"
+X-IronPort-AV: E=Sophos;i="5.98,247,1673942400"; 
+   d="scan'208";a="654953046"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by orsmga006.jf.intel.com with ESMTP; 09 Mar 2023 14:42:42 -0800
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1paOy9-0003H1-2U;
+        Thu, 09 Mar 2023 22:42:41 +0000
+Date:   Fri, 10 Mar 2023 06:42:35 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Danila Tikhonov <danila@jiaxyga.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Lee Jones <lee@kernel.org>,
-        linux-leds@vger.kernel.org
-Subject: [net-next PATCH v2 14/14] arm: mvebu: dt: Add PHY LED support for 370-rd WAN port
-Date:   Thu,  9 Mar 2023 23:35:24 +0100
-Message-Id: <20230309223524.23364-15-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230309223524.23364-1-ansuelsmth@gmail.com>
-References: <20230309223524.23364-1-ansuelsmth@gmail.com>
+        davidwronek@gmail.com, Danila Tikhonov <danila@jiaxyga.com>
+Subject: Re: [PATCH 2/2] phy: qcom-qmp-ufs: Add SM7150 support
+Message-ID: <202303100615.2vRPxq4R-lkp@intel.com>
+References: <20230309185049.170878-3-danila@jiaxyga.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230309185049.170878-3-danila@jiaxyga.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Andrew Lunn <andrew@lunn.ch>
+Hi Danila,
 
-The WAN port of the 370-RD has a Marvell PHY, with one LED on
-the front panel. List this LED in the device tree.
+Thank you for the patch! Yet something to improve:
 
-Set the LED default state to "keep" to not change any blink rule
-set by default.
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on linus/master v6.3-rc1 next-20230309]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- arch/arm/boot/dts/armada-370-rd.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+url:    https://github.com/intel-lab-lkp/linux/commits/Danila-Tikhonov/dt-bindings-phy-Add-QMP-UFS-PHY-comptible-for-SM7150/20230310-025222
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20230309185049.170878-3-danila%40jiaxyga.com
+patch subject: [PATCH 2/2] phy: qcom-qmp-ufs: Add SM7150 support
+config: arm64-randconfig-r023-20230308 (https://download.01.org/0day-ci/archive/20230310/202303100615.2vRPxq4R-lkp@intel.com/config)
+compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project 67409911353323ca5edf2049ef0df54132fa1ca7)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm64 cross compiling tool for clang build
+        # apt-get install binutils-aarch64-linux-gnu
+        # https://github.com/intel-lab-lkp/linux/commit/95e826acacaf3b5ba79c06b481199a17abed44ba
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Danila-Tikhonov/dt-bindings-phy-Add-QMP-UFS-PHY-comptible-for-SM7150/20230310-025222
+        git checkout 95e826acacaf3b5ba79c06b481199a17abed44ba
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/phy/qualcomm/
 
-diff --git a/arch/arm/boot/dts/armada-370-rd.dts b/arch/arm/boot/dts/armada-370-rd.dts
-index be005c9f42ef..ccd4699b219f 100644
---- a/arch/arm/boot/dts/armada-370-rd.dts
-+++ b/arch/arm/boot/dts/armada-370-rd.dts
-@@ -20,6 +20,7 @@
- /dts-v1/;
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/interrupt-controller/irq.h>
-+#include <dt-bindings/leds/common.h>
- #include <dt-bindings/gpio/gpio.h>
- #include "armada-370.dtsi"
- 
-@@ -135,6 +136,19 @@ &mdio {
- 	pinctrl-names = "default";
- 	phy0: ethernet-phy@0 {
- 		reg = <0>;
-+		leds {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			led@0 {
-+				reg = <0>;
-+				label = "WAN";
-+				color = <LED_COLOR_ID_WHITE>;
-+				function = LED_FUNCTION_LAN;
-+				function-enumerator = <1>;
-+				default-state = "keep";
-+			};
-+		};
- 	};
- 
- 	switch: switch@10 {
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202303100615.2vRPxq4R-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:380:3: error: expected identifier or '('
+   };)
+     ^
+>> drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:972:14: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
+                   .serdes         = sm8150_ufsphy_serdes,
+                                     ^
+   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:973:28: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
+                   .serdes_num     = ARRAY_SIZE(sm8150_ufsphy_serdes),
+                                                ^
+   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:973:28: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
+   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:973:28: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
+   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:1004:14: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
+                   .serdes         = sm8150_ufsphy_serdes,
+                                     ^
+   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:1005:28: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
+                   .serdes_num     = ARRAY_SIZE(sm8150_ufsphy_serdes),
+                                                ^
+   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:1005:28: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
+   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:1005:28: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
+   9 errors generated.
+
+
+vim +380 drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+
+   370	
+   371	static const struct qmp_phy_init_tbl sm7150_ufsphy_pcs[] = {
+   372		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_RX_SIGDET_CTRL2, 0x6f),
+   373		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0f),
+   374		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_TX_SMALL_AMP_DRV_LVL, 0x02),
+   375		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_RX_SYM_RESYNC_CTRL, 0x03),
+   376		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
+   377		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_RX_SIGDET_CTRL1, 0x0f),
+   378		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_RX_MIN_HIBERN8_TIME, 0xFF),
+   379		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
+ > 380	};)
+   381	
+
 -- 
-2.39.2
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
