@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A54A06B219E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 11:38:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A6336B21A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 11:38:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231320AbjCIKiH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 05:38:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34528 "EHLO
+        id S231355AbjCIKiM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 05:38:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231221AbjCIKiE (ORCPT
+        with ESMTP id S231293AbjCIKiH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 05:38:04 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9532513D48
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 02:38:03 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id g3so1367147wri.6
+        Thu, 9 Mar 2023 05:38:07 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45852149A1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 02:38:04 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id l1so1340892wry.12
         for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 02:38:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1678358281;
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1678358282;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1XIMBXfDU/R4FYmgYxRTe35TNzbPerUdpZusJBGj0r4=;
-        b=XcvVtUvAXAab+67J6assIe04iklARgy53+JNhGztFB4px7cQUfi03AqeyjoOqDSUnF
-         j02LjX+r8/XlMJp/smV+XJh9ZTbCSV8RqU6LK3AWcqDtgzYSJdbgM/JeRIMaZZbZC5G9
-         iRXc9d79SV8ZnFh7ku9RiBDQo/qaZKJv42m21aAgfT132BN5Fh9xs5GiHxrFYCAEmaRT
-         CAzoTP0fq1qFy3Os2JXF/enSH6XPap7S3tU0OKuppqd3ZbkwUQIu1ntCmjNfnL6HtZdV
-         FOKaZB29gBgDMJwplXgTDFHtYOT91DOCRi0sNgH/0+JkW89WaTfq61ffPOZxsQ+5fKF2
-         81zQ==
+        bh=ZQ7qwaWhTP1sdEt6dec5mYyXeH36jDZTEXpRK58r+Rs=;
+        b=eehEsIMy1Fd2fn+39Zh7PVoMcS9kNOEUOLgBLSv3+ud7BlOYwBP3V3cposi9bUHYAT
+         dOQpqM63HhHzl4Dbin0iISQFaRAAJIy0ky7ckNVaKpKZwQLh4A6Z/iT+woWbY/9fPAuc
+         3opcTDLjd8px4SDKErZJXOmw1JeMHo4yzlVNph7iGZGpL1GbEiU6p/wGjhvbw2Qe3Liy
+         VJdzT/4G8mVCysHHHrqT7/ROZVvPWImvnF5u/6y4V0Q15tiIZkikRbjEwsHeyXjBvK5N
+         dfI4EegGI8MGzPIXL5nW39e/K1FOLt1WpUJdtkxCnQVZqC6jtohge/pXjjGdK5an1Nkc
+         8v/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678358281;
+        d=1e100.net; s=20210112; t=1678358282;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1XIMBXfDU/R4FYmgYxRTe35TNzbPerUdpZusJBGj0r4=;
-        b=ICzZylOUpERRv+HtHn/QpYKhcwulfJ+O5+SKRIKUlqFZhbvsE9eDzofRUW08jwVWl9
-         kD6k3zamfedndLKJKcDwQwWMIlZcy1jF5sU+tUr6cMrcI6W1CWlWSRV/odpX2lg09Ylo
-         3gtwLUy++mbVHs6vkY5/PiILQQk3DSRboh/sSTDlA/aiNapOIS8p4ypnS5ifeIQtWZ/D
-         0/Vvr0auEWmN3POQr/GqO+Qrk5eahpzj59wk6mOqdPCcUNHXHDhxn06oSzLlSTHviV+e
-         9ou9Lr3W3qbZXCSWh7NOK3gjJS8wqMkPvO04KYJDTd5leKFERObSJ7W6D4qTpc8dCFVW
-         7TRg==
-X-Gm-Message-State: AO0yUKVFBYbRCnE2IjRLPdM0Ke2vxl/N76uzCjV0en/vI6x9ILV/w38G
-        qNHd80jtGsUTpne5qJSEccOIRA==
-X-Google-Smtp-Source: AK7set8uWnSnvxULh/ZDR7WHL9V5onQdJgIMIaHOX+yxdQi9syjET3ReP96/tiA8eR0/U5evBo6B2A==
-X-Received: by 2002:adf:fd07:0:b0:2c9:8a3c:9fc5 with SMTP id e7-20020adffd07000000b002c98a3c9fc5mr14347426wrr.41.1678358281742;
-        Thu, 09 Mar 2023 02:38:01 -0800 (PST)
+        bh=ZQ7qwaWhTP1sdEt6dec5mYyXeH36jDZTEXpRK58r+Rs=;
+        b=Ht0sowJhdVgHZ8pEkhX2FYsY1JKtajBjrOpR9KcpD345ukUGIczil8oOqtkDt3jmQD
+         4uzd7CxEFZrMIZ4wnx6b3ApzWdAB+QvYLrq1TAqeroBktxWLIuyLG7JVpGUsi4ORv+Pu
+         dFZmvk3qmcHou/4oZjTI+o2M2G8UTKFqJaXmcXLyHQMb8lF92/JHVcdCiE3X3fDumZQL
+         18dFC5ewEHY90/Lie/PWMUgYYx6ZESffe72etX+Tb+ccf1vSQRxcQceiKIZTpC2cKUvL
+         +vW+8C6Sjwl1HqxQQUBEg9FJRcet5SooJCYc641aFrIjwyVi3GDiir5y0hZR3Ja3oFBF
+         Sntg==
+X-Gm-Message-State: AO0yUKVBrYy/IvkDFkpt8voGLejrgs27I9HfWh/jA+NwVyf16YbhK84i
+        /XVxx0WpzSxKgV4ygKkftTPEJw==
+X-Google-Smtp-Source: AK7set9LwkOrGvDIlXn3flZzfCZgxh0SnIOwxDGxEceTPTD5/DPrQg2K7krZwcmuaWBgoZSA9ENOMA==
+X-Received: by 2002:adf:ce91:0:b0:2c7:1e16:57cf with SMTP id r17-20020adfce91000000b002c71e1657cfmr12732352wrn.67.1678358282638;
+        Thu, 09 Mar 2023 02:38:02 -0800 (PST)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:f14c:2275:50fc:c056])
-        by smtp.gmail.com with ESMTPSA id f2-20020a5d58e2000000b002c56af32e8csm17638119wrd.35.2023.03.09.02.38.00
+        by smtp.gmail.com with ESMTPSA id f2-20020a5d58e2000000b002c56af32e8csm17638119wrd.35.2023.03.09.02.38.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Mar 2023 02:38:01 -0800 (PST)
+        Thu, 09 Mar 2023 02:38:02 -0800 (PST)
 From:   Bartosz Golaszewski <brgl@bgdev.pl>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -59,9 +59,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH v5 6/9] arm64: dts: qcom: sa8775p-ride: enable the SPI node
-Date:   Thu,  9 Mar 2023 11:37:49 +0100
-Message-Id: <20230309103752.173541-7-brgl@bgdev.pl>
+Subject: [PATCH v5 7/9] arm64: dts: qcom: sa8775p: add high-speed UART nodes
+Date:   Thu,  9 Mar 2023 11:37:50 +0100
+Message-Id: <20230309103752.173541-8-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <20230309103752.173541-1-brgl@bgdev.pl>
 References: <20230309103752.173541-1-brgl@bgdev.pl>
@@ -78,52 +78,62 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Enable the SPI interface exposed on the sa8775p-ride development board.
+Add two UART nodes that are known to be used by existing development
+boards with this SoC.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 30 +++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-index 5fdce8279537..d01ca3a9ee37 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-@@ -14,6 +14,7 @@ / {
- 	aliases {
- 		serial0 = &uart10;
- 		i2c18 = &i2c18;
-+		spi16 = &spi16;
- 	};
- 
- 	chosen {
-@@ -40,12 +41,25 @@ &sleep_clk {
- 	clock-frequency = <32764>;
- };
- 
-+&spi16 {
-+	pinctrl-0 = <&qup_spi16_default>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index d1b2a6d30eae..468390edf049 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -490,6 +490,21 @@ &clk_virt SLAVE_QUP_CORE_1 0>,
+ 				operating-points-v2 = <&qup_opp_table_100mhz>;
+ 				status = "disabled";
+ 			};
 +
- &tlmm {
- 	qup_uart10_default: qup-uart10-state {
- 		pins = "gpio46", "gpio47";
- 		function = "qup1_se3";
- 	};
++			uart12: serial@a94000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x00a94000 0x0 0x4000>;
++				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
++				clock-names = "se";
++				interconnects = <&clk_virt MASTER_QUP_CORE_1 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_1 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_1 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core", "qup-config";
++				power-domains = <&rpmhpd SA8775P_CX>;
++				status = "disabled";
++			};
+ 		};
  
-+	qup_spi16_default: qup-spi16-state {
-+		pins = "gpio86", "gpio87", "gpio88", "gpio89";
-+		function = "qup2_se2";
-+		drive-strength = <6>;
-+		bias-disable;
-+	};
+ 		qupv3_id_2: geniqup@8c0000 {
+@@ -525,6 +540,21 @@ &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>,
+ 				status = "disabled";
+ 			};
+ 
++			uart17: serial@88c000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x0088c000 0x0 0x4000>;
++				interrupts = <GIC_SPI 585 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP2_S3_CLK>;
++				clock-names = "se";
++				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core", "qup-config";
++				power-domains = <&rpmhpd SA8775P_CX>;
++				status = "disabled";
++			};
 +
- 	qup_i2c18_default: qup-i2c18-state {
- 		pins = "gpio95", "gpio96";
- 		function = "qup2_se4";
+ 			i2c18: i2c@890000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0x00890000 0x0 0x4000>;
 -- 
 2.37.2
 
