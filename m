@@ -2,174 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8A956B31E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 00:05:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B475B6B3227
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 00:44:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230509AbjCIXFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 18:05:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52216 "EHLO
+        id S230256AbjCIXoL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 18:44:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229917AbjCIXFl (ORCPT
+        with ESMTP id S230116AbjCIXoJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 18:05:41 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0B33F2FAB
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 15:05:39 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id a32so3547475ljq.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 15:05:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678403138;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fImqtEk3Yd/BGvJUs6e3qMPUkkVywiIrFLK2xRO4mHk=;
-        b=SVF1YOWqlHcnG+98KHK6urC9FRxOMKlDBgSLVJgzU4H7ilC0w1HMRNzwiax+5TSVsz
-         qhH9PKA5g+Hvh7Y93QMH0aNLA/FQOSlsX9/Y65lgdV9Ko0k7TXyM5lPI4uukZZ/0Ml2B
-         tE4vBNNh+BWTfJlWcSOX2h2YPYStF2PxcnWAK+pKV1GvGBxX5DoZ8dRID6e/epDEUTO3
-         MC+K1sCUzIqXL1gFqH8c5BeOg7vmut1l3uwNSEAX7myOL3OoaWGOtxwmkj/D8hLSO4BL
-         5mi87l+TMjRcqqcIBaVvyIQA9q2Xw9EglvAfgSO9Bl1/sl/kilN2LcgCINZczoxURDuY
-         hlcA==
+        Thu, 9 Mar 2023 18:44:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A64D67018
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 15:43:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1678405402;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=suVYwY+GLAgBE8RKgc91wO3frwS02s2uzBYIie8ENpk=;
+        b=CIPf7xf3KpKfSq+T+PtQzH7nUFouQJ2G/xD9wb8tqb7vm8IQ6DEiOxUQfjGe/mAKHxHltK
+        C9lOI08FzCJ85nKT6WBP1xoypx99agNWvvfD7YqeLClAtzbvGaHypk8HlxVjQuLO4IDRQj
+        UNHSwO89MRXGwWw3bryJLyS8FxTd4xM=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-59-Podl3TIfP5ufmy5RGuvsmQ-1; Thu, 09 Mar 2023 18:43:20 -0500
+X-MC-Unique: Podl3TIfP5ufmy5RGuvsmQ-1
+Received: by mail-qv1-f69.google.com with SMTP id jy22-20020a0562142b5600b005710b856106so2150987qvb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 15:43:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678403138;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fImqtEk3Yd/BGvJUs6e3qMPUkkVywiIrFLK2xRO4mHk=;
-        b=oNEb2QQU//3JXi+gMyghaVaFUKp/iBkZ9J5QvkyZFyDMU2q5pN5pQBuM7wv+WcvnxE
-         He39JPrMolTEpSC2Rs4gCdK8i98NM9VqZoOvTSWzlYPRnfQC/X3ReYWVrr9P04cX2YaP
-         BVPDYyDyS6DoqvZ51AmJuWND5uIdpV6fJVxM+FFCuDHy256+oiQuJERW5H6ONb6FNIya
-         wbKOxQFcJMDPkEbHtDGd+O8x42yH10VYSuE0HqdQBX5GBhbRQWjzfJIz7WhIj0xXbebo
-         LNNdnHnw9vrjsUUiCgce9jaOPO+Zm3eZ3Yuf/0IWYMGGTikBj0hp1HG7FjM79XZKm8z6
-         F7NA==
-X-Gm-Message-State: AO0yUKUh0J2iIW2KpFqtStJFly11PR7InDs1cR+LpOeWt52msubOiWG+
-        qDz+xJS/Wl3quLt9EaBM7IGYkA==
-X-Google-Smtp-Source: AK7set9AR4JFXKutmZJPBcVPweBBC2MWCPTYwTcbdhPO6Vxn8D1IcwdDLcYkLz7ISFyPNqhxDkfMgQ==
-X-Received: by 2002:a2e:8091:0:b0:293:2ef5:9434 with SMTP id i17-20020a2e8091000000b002932ef59434mr6499836ljg.2.1678403137854;
-        Thu, 09 Mar 2023 15:05:37 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id bi37-20020a05651c232500b00295b1b6e063sm48761ljb.34.2023.03.09.15.05.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Mar 2023 15:05:37 -0800 (PST)
-Message-ID: <e08cad22-09fe-1c65-a329-802b116e7503@linaro.org>
-Date:   Fri, 10 Mar 2023 01:05:36 +0200
+        d=1e100.net; s=20210112; t=1678405399;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=suVYwY+GLAgBE8RKgc91wO3frwS02s2uzBYIie8ENpk=;
+        b=BueDVEvjdgwuGmvJA15zvphgihQuIk92YzMjxBPSPd9Qk8wl7t2rlaxPMNPzyrIkbb
+         B5LcyJeyBpxgA0uFdTIwtWgjPkhxrucWYcvYUTvhO/k+zwZKOs9QtQaN105/ix3yUExl
+         kdoM1w1cXXCSrDqCc0eHil2qXenqxmb1gEEy5ZolEMyFJNUVHxmHQlfiQ/d067RdbG65
+         PmQJs+ArSmp8awRa4XnaxUnWNe45CxHRgxq/BPepf8/R82P2yRbvHc0ADQVwOQRyrWpz
+         gIj05eB4in3TgrjyXri8scaTM3zHAoaH/qcBsZTG7CIuhD71xGMwqdzXju5Zr1YPfR/L
+         0gvg==
+X-Gm-Message-State: AO0yUKUkWYX+FNWsKv9ebY/CiadUaf7HCURqF2WoFE+DtBbwaQsW+AMs
+        byt4EIHFzBPE+z6PUgkkL91hZG7wV7fgYOcKVu5ma4wBtgJE2x5eGL2yBjyyvpCxNBsaoYicKA7
+        yifwz1merBFQxptuiee0M0B/Msg==
+X-Received: by 2002:a05:622a:154:b0:3bd:1728:8886 with SMTP id v20-20020a05622a015400b003bd17288886mr748747qtw.9.1678405399459;
+        Thu, 09 Mar 2023 15:43:19 -0800 (PST)
+X-Google-Smtp-Source: AK7set/uu7J7MQWeYdrYBK1fDWserIzrfXuEWu5uLRWyUvVyFCL7N4gUzEjM3Np1nsOGAGcxkSmh/w==
+X-Received: by 2002:a05:622a:154:b0:3bd:1728:8886 with SMTP id v20-20020a05622a015400b003bd17288886mr748722qtw.9.1678405399228;
+        Thu, 09 Mar 2023 15:43:19 -0800 (PST)
+Received: from localhost (pool-71-184-142-128.bstnma.fios.verizon.net. [71.184.142.128])
+        by smtp.gmail.com with ESMTPSA id c15-20020ac8008f000000b003ba19e53e43sm299396qtg.25.2023.03.09.15.43.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Mar 2023 15:43:18 -0800 (PST)
+From:   Eric Chanudet <echanude@redhat.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Eric Chanudet <echanude@redhat.com>
+Subject: [PATCH] arm64: dts: qcom: sa8775p: add symbols to dtb
+Date:   Thu,  9 Mar 2023 18:39:48 -0500
+Message-Id: <20230309233945.1199358-1-echanude@redhat.com>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] drm/msm: Check for the GPU IOMMU during bind
-To:     Jordan Crouse <jorcrous@amazon.com>,
-        freedreno@lists.freedesktop.org
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Ricardo Ribalda <ribalda@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230309222049.4180579-1-jorcrous@amazon.com>
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230309222049.4180579-1-jorcrous@amazon.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/03/2023 00:20, Jordan Crouse wrote:
-> While booting with amd,imageon on a headless target the GPU probe was
-> failing with -ENOSPC in get_pages() from msm_gem.c.
-> 
-> Investigation showed that the driver was using the default 16MB VRAM
-> carveout because msm_use_mmu() was returning false since headless devices
-> use a dummy parent device. Avoid this by extending the existing is_a2xx
-> priv member to check the GPU IOMMU state on all platforms and use that
-> check in msm_use_mmu().
+ABL uses the __symbols__ section to process the DTB before passing it
+forward. Without it, the bootstrap is interrupted.
 
-I wonder if we can fix this by setting 'dummy_dev'->of_node to adreno's 
-of_node. Did you check that possibility?
+Signed-off-by: Eric Chanudet <echanude@redhat.com>
+---
+Depends on initial sa8775p-ride.dts:
+https://lore.kernel.org/all/20230214092713.211054-3-brgl@bgdev.pl/
 
-> 
-> This works for memory allocations but it doesn't prevent the VRAM carveout
-> from being created because that happens before we have a chance to check
-> the GPU IOMMU state in adreno_bind.
-> 
-> There are a number of possible options to resolve this but none of them are
-> very clean. The easiest way is to likely specify vram=0 as module parameter
-> on headless devices so that the memory doesn't get wasted.
-> 
-> Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
-> ---
-> 
->   drivers/gpu/drm/msm/adreno/adreno_device.c | 6 +++++-
->   drivers/gpu/drm/msm/msm_drv.c              | 7 +++----
->   drivers/gpu/drm/msm/msm_drv.h              | 2 +-
->   3 files changed, 9 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> index 36f062c7582f..4f19da28f80f 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -539,7 +539,11 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
->   	DBG("Found GPU: %u.%u.%u.%u", config.rev.core, config.rev.major,
->   		config.rev.minor, config.rev.patchid);
->   
-> -	priv->is_a2xx = config.rev.core == 2;
-> +	/*
-> +	 * A2xx has a built in IOMMU and all other IOMMU enabled targets will
-> +	 * have an ARM IOMMU attached
-> +	 */
-> +	priv->has_gpu_iommu = config.rev.core == 2 || device_iommu_mapped(dev);
->   	priv->has_cached_coherent = config.rev.core >= 6;
->   
->   	gpu = info->init(drm);
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index aca48c868c14..a125a351ec90 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -318,11 +318,10 @@ bool msm_use_mmu(struct drm_device *dev)
->   	struct msm_drm_private *priv = dev->dev_private;
->   
->   	/*
-> -	 * a2xx comes with its own MMU
-> -	 * On other platforms IOMMU can be declared specified either for the
-> -	 * MDP/DPU device or for its parent, MDSS device.
-> +	 * Return true if the GPU or the MDP/DPU or parent MDSS device has an
-> +	 * IOMMU
->   	 */
-> -	return priv->is_a2xx ||
-> +	return priv->has_gpu_iommu ||
->   		device_iommu_mapped(dev->dev) ||
->   		device_iommu_mapped(dev->dev->parent);
+ arch/arm64/boot/dts/qcom/Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-It is not a problem of you patch, of course, but this check now looks 
-strange to me. We mix the GPU check and MDP/DPU checks. Consider msm8x60 
-(a220, mdp4) and, for example, no system level MMU.
-
->   }
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 9f0c184b02a0..f33f94acd1b9 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -126,7 +126,7 @@ struct msm_drm_private {
->   	struct msm_gpu *gpu;
->   
->   	/* gpu is only set on open(), but we need this info earlier */
-> -	bool is_a2xx;
-> +	bool has_gpu_iommu;
->   	bool has_cached_coherent;
->   
->   	struct drm_fb_helper *fbdev;
-
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index b63cd1861e68..72e85ab31d74 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -1,4 +1,8 @@
+ # SPDX-License-Identifier: GPL-2.0
++
++# Enable support for device-tree overlays required on sa8775p-ride.
++DTC_FLAGS_sa8775p-ride := -@
++
+ dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
 -- 
-With best wishes
-Dmitry
+2.39.1
 
