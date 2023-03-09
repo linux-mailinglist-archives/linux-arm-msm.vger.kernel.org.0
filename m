@@ -2,448 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FB9C6B2EA9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 21:25:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE5326B2EC4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 21:34:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231140AbjCIUZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 15:25:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52458 "EHLO
+        id S230032AbjCIUec (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 15:34:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230446AbjCIUZO (ORCPT
+        with ESMTP id S229453AbjCIUeb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 15:25:14 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24D32F6003
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 12:25:10 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id o12so11921377edb.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 12:25:10 -0800 (PST)
+        Thu, 9 Mar 2023 15:34:31 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E9A2E388E;
+        Thu,  9 Mar 2023 12:34:29 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id e13so3118062wro.10;
+        Thu, 09 Mar 2023 12:34:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1678393508;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G+BklEzWVltOR1hJvkNkXfkrfxPiDjF0+O+EA7XHv/4=;
-        b=TpjTcTG89eVAWMsGE1cmuq97VbZqB66knbilw8sax5Cv+BzMBUv7Y0z3XYJnKUd2gA
-         73u8YU3OJxPBN9UgE3Edk/K1fBICUyIFRwv7xHy2JqtLRVV9gusQKnMCREzxVQHUisYb
-         RskiwQG/+LF3/fI4AaS4agkY6XcBoEQwr+Xn4iETmLTex/JWpeyvnJeIBfItukuillRz
-         pk+hyW7BHiz3tVQ1uxfXDiDj/8Rp4Ao+ThtHiV6OAhYyO041NZeENtqyHJBz9Ndi/0Wg
-         bO8Ks0u9ZBMr+DayjzQf/p3MdEBwM3kVWqWybjHi3rlz6zKqhegW98CDBfPJmHp/MCAg
-         Cazw==
+        d=gmail.com; s=20210112; t=1678394068;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7VHKM1TZh/tpZ43OaDrF8rGSweyNHxW44fC7EAr49fo=;
+        b=WAVzbaZbnD3x4HuwSI9TrmKRgwe7QVY8gXLTbm6xVVf56nymD2XpBzn1XFD3vo/BWG
+         gt3ukYKdL85ATHA8iaFqyl2Heey+2Rk+FZTe1VtAg64rtwUKp2aZb0DS5tixa9EA3rpR
+         rIugBIOBKrla+wQkGFDGrrfwl0n94u58IkLCQ/5XCY28ElgzNpybIyJvDaCeH+G5P5rL
+         /VZ9zz2xAu/tqpVGqU7cobsOlW+9s8oGKZkGoLvRll5lr/5pnWN5csvHw420DF28mDun
+         ABi/NyXaGH7CaA3LLzGuKk/TG7Zg0C99147WVcreH3l4tIYWqiicKa0uWvQpQpjx0swQ
+         DYGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678393508;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=G+BklEzWVltOR1hJvkNkXfkrfxPiDjF0+O+EA7XHv/4=;
-        b=sph+V11dLgj3GV9LMcX2k+QzPDbJynIvFx/9tjftKE0n5BSCcYFo6MdYHhrYQeG5hA
-         16vb6aJuS4HKIPmo5ZqJPX1jp+7INz5tNIDLGiR1xYywk9WkK8qhUH2WnjZdnJ58qV/X
-         ejkPoWIn0d6kkDu0ir+5dlkvoRJhr/APFF6U/HX9G1vSiljLWzz7fAnmFs12ABBK4UYq
-         vjFZ8gARYQXbRr9rebsVRPR7vcVD8Eka5PirjAaupusxG9uiu5g0gyUPKU2/+tP/9j4e
-         kJYtCdeK7eGWKimL/odhFx4Uzp3u49XnXVBqnJntROoDJoRto/vgCSdCjWNqzPHIASdb
-         Zssg==
-X-Gm-Message-State: AO0yUKUU+Kar/sJQgcIemv8VMfz/M3msSa4FOEHtmprzr80PPXvkqo+O
-        tBLPacAO/5rx2iQDM2fsZQ3E/9gSQcTk5PVJC/nJZg==
-X-Google-Smtp-Source: AK7set9EN3dy7vGdMfeh3rglPNG/kYWEw6r8ijSWoyhGmr7zPcrla0Uj/AALoQlb/9C1PliGkSkkSJWouA4rgr00T24=
-X-Received: by 2002:a17:906:4997:b0:8ee:babc:d3f8 with SMTP id
- p23-20020a170906499700b008eebabcd3f8mr11823640eju.3.1678393508590; Thu, 09
- Mar 2023 12:25:08 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678394068;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7VHKM1TZh/tpZ43OaDrF8rGSweyNHxW44fC7EAr49fo=;
+        b=TULt1wNYAEhFkAsftlEqgYyH/MMwkxafWzNSgAqrNIzWcSUBlH9a4oNizShxG7f8+m
+         /N3EntP1J0vk07X5bgrg3/m8ZWWhjf2glDZpJtiKxi23S3HVGXXkTgoXqRP6TFY/2YqH
+         NA47eB/8f9fpVIAzmQVeJhgaSgFWv0+oQzav/H0zWNYNy1Xrp3B3YLc7uA2cxqVZbKs+
+         ZwfqcW7xPgqcbz/WZrrfn1XPyLffJXG/g1IwmG5Me7SqYk+/+JpWEyGnt/naQxCkqfI0
+         GdivfTVFl5SpV/vvC3odu39kKVb4gkWPSYOSG+i9p32QFIL/FDeqjuXrKiDmOKrt9UzK
+         olPQ==
+X-Gm-Message-State: AO0yUKXlKVOld84XCP+pLL42vvrPTT/Pxb7ZAxYlCHnxY1g33ClW90NP
+        3XwqlCkGab2zDGSi2E19tsM=
+X-Google-Smtp-Source: AK7set+dQIZVtc0jXwLDVyZYQ1ZzOrtWt5RnkRmTPOM2tIXe3JOOw/0SFV7LQaziZLFrP7BzsnxKKw==
+X-Received: by 2002:a5d:4c52:0:b0:2c9:5675:7def with SMTP id n18-20020a5d4c52000000b002c956757defmr14949964wrt.2.1678394067753;
+        Thu, 09 Mar 2023 12:34:27 -0800 (PST)
+Received: from [10.23.0.3] ([194.126.177.54])
+        by smtp.gmail.com with ESMTPSA id b10-20020adff24a000000b002c559405a1csm312023wrp.20.2023.03.09.12.34.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Mar 2023 12:34:27 -0800 (PST)
+Message-ID: <e20e489b-c033-7a38-9750-24b9abb22a0c@gmail.com>
+Date:   Thu, 9 Mar 2023 21:34:17 +0100
 MIME-Version: 1.0
-References: <20230209020916.6475-1-steev@kali.org> <20230209020916.6475-3-steev@kali.org>
- <ZAoS1T9m1lI21Cvn@hovoldconsulting.com>
-In-Reply-To: <ZAoS1T9m1lI21Cvn@hovoldconsulting.com>
-From:   Steev Klimaszewski <steev@kali.org>
-Date:   Thu, 9 Mar 2023 14:24:57 -0600
-Message-ID: <CAKXuJqhEKB7cuVhEzObbFyYHyKj87M8iWVaoz7gkhS2OQ9tTBA@mail.gmail.com>
-Subject: Re: [PATCH v5 2/4] Bluetooth: hci_qca: Add support for QTI Bluetooth
- chip wcn6855
-To:     Johan Hovold <johan@kernel.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3 3/4] dt-bindings: firmware: Add Qualcomm QSEECOM
+ interface
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>,
-        Tim Jiang <quic_tjiang@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Ard Biesheuvel <ardb@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Johan Hovold <johan@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Sumit Garg <sumit.garg@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230305022119.1331495-1-luzmaximilian@gmail.com>
+ <20230305022119.1331495-4-luzmaximilian@gmail.com>
+ <20230308221657.GA3935330-robh@kernel.org>
+ <93657561-d545-7ead-7f6c-dd2c62aab319@gmail.com>
+ <c92a44fe-7057-2d81-41fc-2e84ae60f881@linaro.org>
+ <951c717b-d094-4190-a04b-3ce9007d1554@gmail.com>
+ <57b436d2-79f9-a7c1-ab97-0b555beb6468@linaro.org>
+Content-Language: en-US
+From:   Maximilian Luz <luzmaximilian@gmail.com>
+In-Reply-To: <57b436d2-79f9-a7c1-ab97-0b555beb6468@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 9, 2023 at 11:08=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
-te:
->
-> On Wed, Feb 08, 2023 at 08:09:14PM -0600, Steev Klimaszewski wrote:
-> > Added regulators,GPIOs and changes required to power on/off wcn6855.
-> > Added support for firmware download for wcn6855.
-> >
-> > Signed-off-by: Steev Klimaszewski <steev@kali.org>
-> > ---
-> > Changes since v4:
-> >  * Remove unused firmware check because we don't have mbn firmware.
-> >  * Set qcadev->init_speed if it hasn't been set.
-> >
-> > Changes since v3:
-> >  * drop unused regulators
-> >
-> > Changes since v2:
-> >  * drop unnecessary commit info
-> >
-> > Changes since v1:
-> >  * None
-> >
-> >  drivers/bluetooth/btqca.c   |  9 ++++++-
-> >  drivers/bluetooth/btqca.h   | 10 ++++++++
-> >  drivers/bluetooth/hci_qca.c | 50 ++++++++++++++++++++++++++++---------
-> >  3 files changed, 56 insertions(+), 13 deletions(-)
-> >
-> > diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> > index c9064d34d830..2f9d8bd27c38 100644
-> > --- a/drivers/bluetooth/btqca.c
-> > +++ b/drivers/bluetooth/btqca.c
-> > @@ -614,6 +614,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t ba=
-udrate,
-> >               config.type =3D ELF_TYPE_PATCH;
-> >               snprintf(config.fwname, sizeof(config.fwname),
-> >                        "qca/msbtfw%02x.mbn", rom_ver);
-> > +     } else if (soc_type =3D=3D QCA_WCN6855) {
-> > +             snprintf(config.fwname, sizeof(config.fwname),
-> > +                      "qca/hpbtfw%02x.tlv", rom_ver);
-> >       } else {
-> >               snprintf(config.fwname, sizeof(config.fwname),
-> >                        "qca/rampatch_%08x.bin", soc_ver);
-> > @@ -648,6 +651,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t ba=
-udrate,
-> >       else if (soc_type =3D=3D QCA_WCN6750)
-> >               snprintf(config.fwname, sizeof(config.fwname),
-> >                        "qca/msnv%02x.bin", rom_ver);
-> > +     else if (soc_type =3D=3D QCA_WCN6855)
-> > +             snprintf(config.fwname, sizeof(config.fwname),
-> > +                      "qca/hpnv%02x.bin", rom_ver);
-> >       else
-> >               snprintf(config.fwname, sizeof(config.fwname),
-> >                        "qca/nvm_%08x.bin", soc_ver);
-> > @@ -672,6 +678,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t ba=
-udrate,
-> >       case QCA_WCN3991:
-> >       case QCA_WCN3998:
-> >       case QCA_WCN6750:
-> > +     case QCA_WCN6855:
->
-> Did you actually verify the microsoft extensions need this, or you are
-> assuming it works as 6750?
->
-It was 100% an assumption that since the 6750 does it, the 6855 does
-too.  I should know better than to assume since I used to work at a
-device manufacturer but high hopes things have changed a bit in the
-past 12 years ;)
+On 3/9/23 09:19, Dmitry Baryshkov wrote:
+> On 09/03/2023 04:27, Maximilian Luz wrote:
+>> On 3/9/23 02:33, Dmitry Baryshkov wrote:
+>>> On 09/03/2023 00:44, Maximilian Luz wrote:
+>>>> On 3/8/23 23:16, Rob Herring wrote:
+>>>>> On Sun, Mar 05, 2023 at 03:21:18AM +0100, Maximilian Luz wrote:
+>>>>>> Add bindings for the Qualcomm Secure Execution Environment interface
+>>>>>> (QSEECOM).
+>>>>>
+>>>>> Pretty sure I already asked, but no answer in the commit message. Why do
+>>>>> we need this? You've already declared the platform supports SCM calls
+>>>>> with "qcom,scm". Why can't you probe whether you have QSEECOM or not? DT
+>>>>> is for non-discoverable h/w we are stuck with.
+>>>>
+>>>> Yes, you've asked this before but I can only repeat what I've written in
+>>>> my last response to your question: I am not aware of any way to properly
+>>>> discover the interface at runtime from software.
+>>>>
+>>>> If it makes you happy, I can put this in the commit message as well...
+>>>>
+>>>>> Why is software made non-discoverable too?
+>>>>
+>>>> Please direct that question at the Qualcomm guys who actually designed
+>>>> that interface. I can't give you an answer to that, and I'm not all that
+>>>> happy about this either.
+>>>>
+>>>> To reiterate: I've reverse engineered this based on the Windows driver.
+>>>> The Windows driver loads on an ACPI HID and it doesn't use any function
+>>>> to check/verify whether the interface is actually present. Adding a DT
+>>>> entry is the straight-forward adaption to having a HID in ACPI.
+>>>>
+>>>>> Nodes with only a compatible string are usually just an abuse of DT to
+>>>>> instantiate some driver.
+>>>>
+>>>> If you or anyone here has any idea on how to discover the presence of
+>>>> this, please feel free to let me know and I'd be happy to implement
+>>>> that. Until then, I unfortunately don't see any other way of dealing
+>>>> with this.
+>>>
+>>> You can probably try requesting QSEECOM version. According to msm-3.18:
+>>>
+>>>          uint32_t feature = 10;
+>>>
+>>>          rc = qseecom_scm_call(6, 3, &feature, sizeof(feature),
+>>>                  &resp, sizeof(resp));
+>>>          pr_info("qseecom.qsee_version = 0x%x\n", resp.result);
+>>>          if (rc) {
+>>>                  pr_err("Failed to get QSEE version info %d\n", rc);
+>>>                  goto exit_del_cdev;
+>>>          }
+>>>
+>>
+>> Thanks! I'll give that a try.
+>>
+>> As I can't test this on a device that doesn't have qseecom, it would
+>> probably be a good idea if someone could test this on a device that has
+>> qcom_scm but no qseecom (if those even exist) to make sure this doesn't
+>> misbehave.
+> 
+> I could not find a vendor dts which doesn't have the qseecom device (checked the source trees from 3.4 to the latest revisions).
+> 
 
-> >               hci_set_msft_opcode(hdev, 0xFD70);
-> >               break;
-> >       default:
-> > @@ -685,7 +692,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t ba=
-udrate,
-> >               return err;
-> >       }
-> >
-> > -     if (soc_type =3D=3D QCA_WCN3991 || soc_type =3D=3D QCA_WCN6750) {
-> > +     if (soc_type =3D=3D QCA_WCN3991 || soc_type =3D=3D QCA_WCN6750 ||=
- soc_type =3D=3D QCA_WCN6855) {
->
-> Line is now over 80 columns which is still the preferred limit.
->
-> Perhaps this should now be a switch statement instead?
->
-switch statement might work, I'll give it a shot here.
+Thanks for checking!
 
-> >               /* get fw build info */
-> >               err =3D qca_read_fw_build_info(hdev);
-> >               if (err < 0)
-> > diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-> > index 61e9a50e66ae..b884095bcd9d 100644
-> > --- a/drivers/bluetooth/btqca.h
-> > +++ b/drivers/bluetooth/btqca.h
-> > @@ -147,6 +147,7 @@ enum qca_btsoc_type {
-> >       QCA_WCN3991,
-> >       QCA_QCA6390,
-> >       QCA_WCN6750,
-> > +     QCA_WCN6855,
-> >  };
-> >
-> >  #if IS_ENABLED(CONFIG_BT_QCA)
-> > @@ -168,6 +169,10 @@ static inline bool qca_is_wcn6750(enum qca_btsoc_t=
-ype soc_type)
-> >  {
-> >       return soc_type =3D=3D QCA_WCN6750;
-> >  }
-> > +static inline bool qca_is_wcn6855(enum qca_btsoc_type soc_type)
-> > +{
-> > +     return soc_type =3D=3D QCA_WCN6855;
-> > +}
-> >
-> >  #else
-> >
-> > @@ -206,6 +211,11 @@ static inline bool qca_is_wcn6750(enum qca_btsoc_t=
-ype soc_type)
-> >       return false;
-> >  }
-> >
-> > +static inline bool qca_is_wcn6855(enum qca_btsoc_type soc_type)
-> > +{
-> > +     return false;
-> > +}
-> > +
-> >  static inline int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
-> >  {
-> >       return -EOPNOTSUPP;
-> > diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> > index 3df8c3606e93..efc1c0306b4e 100644
-> > --- a/drivers/bluetooth/hci_qca.c
-> > +++ b/drivers/bluetooth/hci_qca.c
-> > @@ -605,8 +605,7 @@ static int qca_open(struct hci_uart *hu)
-> >       if (hu->serdev) {
-> >               qcadev =3D serdev_device_get_drvdata(hu->serdev);
-> >
-> > -             if (qca_is_wcn399x(qcadev->btsoc_type) ||
-> > -                 qca_is_wcn6750(qcadev->btsoc_type))
-> > +             if (!(qcadev->init_speed))
-> >                       hu->init_speed =3D qcadev->init_speed;
->
-> This change makes no sense.
->
-> In fact, it seems the driver never sets init_speed anywhere.
->
-> Either way, it should not be needed for wcn6855.
->
+So that only leaves one potential issue: The re-entrant/blocking calls
+not being handled at the moment. If we detect qseecom based on the
+version and then try to query the app ID, we could get some devices that
+use those.
 
-So, that was a request from an earlier review, but if it's not needed
-for 6855, I'll just drop it, and then I don't need to do any of those
-changes :D
+I'm not sure what the consequences there are, i.e. if we're potentially
+blocking something else if one of those calls blocks on such devices. Is
+there any way we can detect this beforehand?
 
-> >
-> >               if (qcadev->oper_speed)
-> > @@ -1317,7 +1316,8 @@ static int qca_set_baudrate(struct hci_dev *hdev,=
- uint8_t baudrate)
-> >
-> >       /* Give the controller time to process the request */
-> >       if (qca_is_wcn399x(qca_soc_type(hu)) ||
-> > -         qca_is_wcn6750(qca_soc_type(hu)))
-> > +         qca_is_wcn6750(qca_soc_type(hu)) ||
-> > +         qca_is_wcn6855(qca_soc_type(hu)))
-> >               usleep_range(1000, 10000);
-> >       else
-> >               msleep(300);
-> > @@ -1394,7 +1394,8 @@ static unsigned int qca_get_speed(struct hci_uart=
- *hu,
-> >  static int qca_check_speeds(struct hci_uart *hu)
-> >  {
-> >       if (qca_is_wcn399x(qca_soc_type(hu)) ||
-> > -         qca_is_wcn6750(qca_soc_type(hu))) {
-> > +         qca_is_wcn6750(qca_soc_type(hu)) ||
-> > +         qca_is_wcn6855(qca_soc_type(hu))) {
-> >               if (!qca_get_speed(hu, QCA_INIT_SPEED) &&
-> >                   !qca_get_speed(hu, QCA_OPER_SPEED))
-> >                       return -EINVAL;
-> > @@ -1682,7 +1683,8 @@ static int qca_power_on(struct hci_dev *hdev)
-> >               return 0;
-> >
-> >       if (qca_is_wcn399x(soc_type) ||
-> > -         qca_is_wcn6750(soc_type)) {
-> > +         qca_is_wcn6750(soc_type) ||
-> > +         qca_is_wcn6855(soc_type)) {
-> >               ret =3D qca_regulator_init(hu);
-> >       } else {
-> >               qcadev =3D serdev_device_get_drvdata(hu->serdev);
-> > @@ -1723,7 +1725,8 @@ static int qca_setup(struct hci_uart *hu)
-> >
-> >       bt_dev_info(hdev, "setting up %s",
-> >               qca_is_wcn399x(soc_type) ? "wcn399x" :
-> > -             (soc_type =3D=3D QCA_WCN6750) ? "wcn6750" : "ROME/QCA6390=
-");
-> > +             (soc_type =3D=3D QCA_WCN6750) ? "wcn6750" :
-> > +             (soc_type =3D=3D QCA_WCN6855) ? "wcn6855" : "ROME/QCA6390=
-");
->
-> This is hideous, but not your fault...
->
-It is, and, I'm not entirely sure we need it? I mean, it's nice to
-show that it's now starting to set up, but it isn't particularly
-helpful for end users or making sure things are working?
+The current proposal isn't very good at handling that either as it
+assumes that this depends on the SoC generation (which it probably
+doesn't). So I guess one possibility is to make the list of app-names to
+be checked SoC specific as well. That at least limits the scope
+somewhat. Maybe you have some other ideas?
 
-> >
-> >       qca->memdump_state =3D QCA_MEMDUMP_IDLE;
-> >
-> > @@ -1735,7 +1738,8 @@ static int qca_setup(struct hci_uart *hu)
-> >       clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
-> >
-> >       if (qca_is_wcn399x(soc_type) ||
-> > -         qca_is_wcn6750(soc_type)) {
-> > +         qca_is_wcn6750(soc_type) ||
-> > +         qca_is_wcn6855(soc_type)) {
-> >               set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
-> >               hci_set_aosp_capable(hdev);
-> >
-> > @@ -1757,7 +1761,8 @@ static int qca_setup(struct hci_uart *hu)
-> >       }
-> >
-> >       if (!(qca_is_wcn399x(soc_type) ||
-> > -          qca_is_wcn6750(soc_type))) {
-> > +          qca_is_wcn6750(soc_type) ||
-> > +          qca_is_wcn6855(soc_type))) {
->
-> Perhaps you can add a leading space while changing this so that the
-> open-parenthesis alignment makes sense.
->
-> >               /* Get QCA version information */
-> >               ret =3D qca_read_soc_version(hdev, &ver, soc_type);
-> >               if (ret)
-> > @@ -1883,6 +1888,20 @@ static const struct qca_device_data qca_soc_data=
-_wcn6750 =3D {
-> >       .capabilities =3D QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STAT=
-ES,
-> >  };
-> >
-> > +static const struct qca_device_data qca_soc_data_wcn6855 =3D {
-> > +     .soc_type =3D QCA_WCN6855,
-> > +     .vregs =3D (struct qca_vreg []) {
-> > +             { "vddio", 5000 },
-> > +             { "vddbtcxmx", 126000 },
-> > +             { "vddrfacmn", 12500 },
-> > +             { "vddrfa0p8", 102000 },
-> > +             { "vddrfa1p7", 302000 },
-> > +             { "vddrfa1p2", 257000 },
->
-> Hmm. More random regulator load values. I really think we should get rid
-> of this but that's a separate discussion.
->
-Bjorn specifically requested that he wanted me to leave them in.  I'm
-not married to them, and don't care one way or the other, I just
-wanted working bluetooth since audio wasn't quite ready yet :)
-
-> > +     },
-> > +     .num_vregs =3D 6,
-> > +     .capabilities =3D QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STAT=
-ES,
-> > +};
-> > +
-> >  static void qca_power_shutdown(struct hci_uart *hu)
-> >  {
-> >       struct qca_serdev *qcadev;
->
-> As I mentioned elsewhere, you need to update also this function so that
-> wcn6855 can be powered down.
-
-Sorry, I do have that locally, I just haven't pushed a v6 as I was
-looking at Tim's v2 of the qca2066 and was wondering if I should or
-shouldn't continue working on my version of the driver?
-
->
-> > @@ -2047,7 +2066,8 @@ static int qca_serdev_probe(struct serdev_device =
-*serdev)
-> >
-> >       if (data &&
-> >           (qca_is_wcn399x(data->soc_type) ||
-> > -         qca_is_wcn6750(data->soc_type))) {
-> > +         qca_is_wcn6750(data->soc_type) ||
-> > +         qca_is_wcn6855(data->soc_type))) {
->
-> Perhaps you fix the alignment here too.
->
-> >               qcadev->btsoc_type =3D data->soc_type;
-> >               qcadev->bt_power =3D devm_kzalloc(&serdev->dev,
-> >                                               sizeof(struct qca_power),
-> > @@ -2067,14 +2087,18 @@ static int qca_serdev_probe(struct serdev_devic=
-e *serdev)
-> >
-> >               qcadev->bt_en =3D devm_gpiod_get_optional(&serdev->dev, "=
-enable",
-> >                                              GPIOD_OUT_LOW);
-> > -             if (IS_ERR_OR_NULL(qcadev->bt_en) && data->soc_type =3D=
-=3D QCA_WCN6750) {
-> > +             if (IS_ERR_OR_NULL(qcadev->bt_en)
-> > +                 && (data->soc_type =3D=3D QCA_WCN6750 ||
->
-> && operator should go on the previous line before the line break.
->
-> > +                     data->soc_type =3D=3D QCA_WCN6855)) {
-> >                       dev_err(&serdev->dev, "failed to acquire BT_EN gp=
-io\n");
-> >                       power_ctrl_enabled =3D false;
-> >               }
-> >
-> >               qcadev->sw_ctrl =3D devm_gpiod_get_optional(&serdev->dev,=
- "swctrl",
-> >                                              GPIOD_IN);
-> > -             if (IS_ERR_OR_NULL(qcadev->sw_ctrl) && data->soc_type =3D=
-=3D QCA_WCN6750)
-> > +             if (IS_ERR_OR_NULL(qcadev->sw_ctrl)
-> > +                 && (data->soc_type =3D=3D QCA_WCN6750 ||
->
-> Same here.
->
-> > +                     data->soc_type =3D=3D QCA_WCN6855))
-> >                       dev_warn(&serdev->dev, "failed to acquire SW_CTRL=
- gpio\n");
-> >
-> >               qcadev->susclk =3D devm_clk_get_optional(&serdev->dev, NU=
-LL);
-> > @@ -2150,7 +2174,8 @@ static void qca_serdev_remove(struct serdev_devic=
-e *serdev)
-> >       struct qca_power *power =3D qcadev->bt_power;
-> >
-> >       if ((qca_is_wcn399x(qcadev->btsoc_type) ||
-> > -          qca_is_wcn6750(qcadev->btsoc_type)) &&
-> > +          qca_is_wcn6750(qcadev->btsoc_type) ||
-> > +          qca_is_wcn6855(qcadev->btsoc_type)) &&
-> >            power->vregs_on)
-> >               qca_power_shutdown(&qcadev->serdev_hu);
-> >       else if (qcadev->susclk)
-> > @@ -2335,6 +2360,7 @@ static const struct of_device_id qca_bluetooth_of=
-_match[] =3D {
-> >       { .compatible =3D "qcom,wcn3991-bt", .data =3D &qca_soc_data_wcn3=
-991},
-> >       { .compatible =3D "qcom,wcn3998-bt", .data =3D &qca_soc_data_wcn3=
-998},
-> >       { .compatible =3D "qcom,wcn6750-bt", .data =3D &qca_soc_data_wcn6=
-750},
-> > +     { .compatible =3D "qcom,wcn6855-bt", .data =3D &qca_soc_data_wcn6=
-855},
-> >       { /* sentinel */ }
-> >  };
-> >  MODULE_DEVICE_TABLE(of, qca_bluetooth_of_match);
->
-> With power-off handling fixed, this seems to work as quite well on my
-> X13s with 6.3-rc1. Nice job!
->
-> Btw, apart from the frame reassembly error, I'm also seeing:
->
->         Bluetooth: Received HCI_IBS_WAKE_ACK in tx state 0
->
-> during probe.
->
-I'm still not sure where the frame reassembly error comes from, and I
-don't know how to get more info to figure it out either, if anyone
-happens to have any guidance for that, I would love some.
-Additionally, it doesn't always happen.  It seems to happen on the
-first load of the module, however, running modprobe -r && modprobe in
-a loop (with the powerdown properly modified so the log isn't full of
-splats),  it doesn't seem to occur every time. Likewise for the
-WAKE_ACK.
-
-> Johan
+Regards,
+Max
