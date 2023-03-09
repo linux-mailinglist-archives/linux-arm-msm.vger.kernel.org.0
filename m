@@ -2,121 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3D766B204B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 10:40:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DB126B2141
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 11:21:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230224AbjCIJkX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 04:40:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57148 "EHLO
+        id S229989AbjCIKVx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 05:21:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230209AbjCIJkW (ORCPT
+        with ESMTP id S231325AbjCIKVd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 04:40:22 -0500
-Received: from mail.3ffe.de (0001.3ffe.de [IPv6:2a01:4f8:c0c:9d57::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 478FFE8240;
-        Thu,  9 Mar 2023 01:40:20 -0800 (PST)
-Received: from mwalle01.kontron.local. (unknown [213.135.10.150])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mail.3ffe.de (Postfix) with ESMTPSA id 0EF2A127D;
-        Thu,  9 Mar 2023 10:40:16 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=walle.cc; s=mail2022082101;
-        t=1678354816;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=j6A1cqIav5oN+sJ0Pm8CyKz7tSgwht+condPuImcVwY=;
-        b=zsMPy9kNOSpYIQk2v92UlAChhQ1RPWvR19mptAEqIVjK7y7MtNDhCwb2WjCLD1XqQrz1Lw
-        q8s4RCfCX8HShn15fWBvySjzhsBHUFHE1ZVKHu5VkB4RcwxibgapaU57G1lZ9MaCbGS+ZB
-        d8zZihUMbqMqbCgfK1NPj8qFc6HdOzqsvmbsDviuS3ZwcHJ6DMQw2zRg/+2Ht3+IwL13B9
-        3XbUFM/uL/TIFiDCwAouAEb4qEnSGJF/f7NhSKUHWODVLEtFviq2WFQVuobulTjGODAOt4
-        qJx7Hf6BNV7PeSGwCgjwgSvM/epAZE1St3F3Qp7iV4+07CGebjwrTQ4MPMgtqQ==
-From:   Michael Walle <michael@walle.cc>
-To:     zajec5@gmail.com
-Cc:     a.zummo@towertech.it, agross@kernel.org,
-        alexandre.belloni@bootlin.com, alexandre.torgue@foss.st.com,
-        alyssa@rosenzweig.io, andersson@kernel.org,
-        angelogioacchino.delregno@collabora.com, asahi@lists.linux.dev,
-        baolin.wang@linux.alibaba.com, claudiu.beznea@microchip.com,
-        festevam@gmail.com, hayashi.kunihiko@socionext.com,
-        heiko@sntech.de, jbrunet@baylibre.com, jernej.skrabec@gmail.com,
-        kernel@pengutronix.de, khilman@baylibre.com,
-        konrad.dybcio@linaro.org, linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-imx@nxp.com,
-        linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-mtd@lists.infradead.org, linux-rockchip@lists.infradead.org,
-        linux-rtc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, marcan@marcan.st,
-        martin.blumenstingl@googlemail.com, matthias.bgg@gmail.com,
-        mcoquelin.stm32@gmail.com, mhiramat@kernel.org,
-        michal.simek@xilinx.com, miquel.raynal@bootlin.com,
-        neil.armstrong@linaro.org, orsonzhai@gmail.com, rafal@milecki.pl,
-        richard@nod.at, s.hauer@pengutronix.de, samuel@sholland.org,
-        shawnguo@kernel.org, srinivas.kandagatla@linaro.org,
-        sven@svenpeter.dev, vigneshr@ti.com, vincent.sunplus@gmail.com,
-        wens@csie.org, zbr@ioremap.net, zhang.lyra@gmail.com,
-        Michael Walle <michael@walle.cc>
-Subject: Re: [PATCH V2] nvmem: add explicit config option to read OF fixed cells
-Date:   Thu,  9 Mar 2023 10:40:10 +0100
-Message-Id: <20230309094010.1051573-1-michael@walle.cc>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20230224072903.20945-1-zajec5@gmail.com>
-References: <20230224072903.20945-1-zajec5@gmail.com>
+        Thu, 9 Mar 2023 05:21:33 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9A9C1C7FF;
+        Thu,  9 Mar 2023 02:21:24 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id t11so1634513lfr.1;
+        Thu, 09 Mar 2023 02:21:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678357283;
+        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=KprGKYQ8KgwaGWUbn17Xz5NYf5KpExwL2NMCF7dMdgM=;
+        b=TRXqe8TQv4yfm7qG2xhZaoah92igaQMjG0ELmUtzdt7kOaZwrOkfWMsKMhXAsa9hWr
+         IL0zq8+qpdODRl4JxxUzTaLAhEWPwUZZ6Mhbqbt02z9+OjT3pKdWZgpfIPX1EucbWd7J
+         ZqmAIYlYVO7LhfBF3UcgAdoMoWTDMA31Wi2xJlHuATDyncXQ8Pfi9djMDqLohAWgD75d
+         mZFUk/mP5ZFsiSO08rhOZx5yv5XPUBSj0kg1POAZkFpeR90Su3vccPXA4pGFNY7nWAvL
+         VzrWe4tUvpwQXG9XL5JNCiaMy1X9pmDW9fxUDAValpicdBYX1P2nMJ3EUImUJlArelB6
+         U0qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678357283;
+        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KprGKYQ8KgwaGWUbn17Xz5NYf5KpExwL2NMCF7dMdgM=;
+        b=jGkE77wlWiKwb4RNXKUATCKRDZUjGzI2erySO9AF10At5y+SUz7CZHXS9HmnOMFvGa
+         /Hx1JMeCzdkKk64kArZl/nyudZllfDbYcTaZYEO+sDb9mmGVoMd3JSZkuA3KuXcAhbxJ
+         qUeyjNNzHqqvTvJ/IZAmK5oIm4G2BhfsqcxOUJppFoEWQV6JLDzZiaHAfbp4+tK7Dhvv
+         i4OGNahFkNpP/SZvTNW7vwAphI3Y6g7xi6ucSTaI7F55rusAklgFq5481ioe8ZjXiWxT
+         UMFNj3h/tNm0tLGJqIoHZAcD0RtRIuLKh2+QobdjOov6I4oLA/+kknzY4wW0hOfVSvYh
+         +Blg==
+X-Gm-Message-State: AO0yUKXcmGtEb0cOPBINzmjfuMcV7LOPsjbJqo/isUXMcN7FkqFsmU1/
+        pimXnZ+Uomy7vKRDwnoR1cU=
+X-Google-Smtp-Source: AK7set8//lzFNi6UQdT0Qz69/iAT27g06pbsZrFtDMb8VzTxl8+gMl6jx74dZt+KkxkgfpPWfGRocg==
+X-Received: by 2002:ac2:4949:0:b0:4d5:831e:3154 with SMTP id o9-20020ac24949000000b004d5831e3154mr6109888lfi.45.1678357282880;
+        Thu, 09 Mar 2023 02:21:22 -0800 (PST)
+Received: from eldfell ([194.136.85.206])
+        by smtp.gmail.com with ESMTPSA id u23-20020ac24c37000000b004aac23e0dd6sm2605330lfq.29.2023.03.09.02.21.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Mar 2023 02:21:22 -0800 (PST)
+Date:   Thu, 9 Mar 2023 12:21:18 +0200
+From:   Pekka Paalanen <ppaalanen@gmail.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org,
+        Luben Tuikov <luben.tuikov@amd.com>,
+        Christian =?UTF-8?B?S8O2bmln?= <ckoenig.leichtzumerken@gmail.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Matt Turner <mattst88@gmail.com>,
+        Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Gustavo Padovan <gustavo@padovan.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING 
+        FRAMEWORK),
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-doc@vger.kernel.org (open list:DOCUMENTATION),
+        linux-kernel@vger.kernel.org (open list),
+        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK),
+        Liu Shixin <liushixin2@huawei.com>,
+        Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>
+Subject: Re: [PATCH v10 00/15] dma-fence: Deadline awareness
+Message-ID: <20230309122118.661e85b4@eldfell>
+In-Reply-To: <20230308155322.344664-1-robdclark@gmail.com>
+References: <20230308155322.344664-1-robdclark@gmail.com>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam: Yes
+Content-Type: multipart/signed; boundary="Sig_/YsnEA9P_sNO1q.G4g.HWGt3";
+ protocol="application/pgp-signature"; micalg=pgp-sha256
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[as this mentions  nvmem layouts it would have been nice to include me]
+--Sig_/YsnEA9P_sNO1q.G4g.HWGt3
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-> NVMEM subsystem looks for fixed NVMEM cells (specified in DT) by
-> default. This behaviour made sense in early days before adding support
-> for dynamic cells.
+On Wed,  8 Mar 2023 07:52:51 -0800
+Rob Clark <robdclark@gmail.com> wrote:
 
-Why is that? It still makes sense, doesn't it?
+> From: Rob Clark <robdclark@chromium.org>
+>=20
+> This series adds a deadline hint to fences, so realtime deadlines
+> such as vblank can be communicated to the fence signaller for power/
+> frequency management decisions.
+>=20
+> This is partially inspired by a trick i915 does, but implemented
+> via dma-fence for a couple of reasons:
+>=20
+> 1) To continue to be able to use the atomic helpers
+> 2) To support cases where display and gpu are different drivers
+>=20
+> This iteration adds a dma-fence ioctl to set a deadline (both to
+> support igt-tests, and compositors which delay decisions about which
+> client buffer to display), and a sw_sync ioctl to read back the
+> deadline.  IGT tests utilizing these can be found at:
+>=20
+>   https://gitlab.freedesktop.org/robclark/igt-gpu-tools/-/commits/fence-d=
+eadline
+>=20
+>=20
+> v1: https://patchwork.freedesktop.org/series/93035/
+> v2: Move filtering out of later deadlines to fence implementation
+>     to avoid increasing the size of dma_fence
+> v3: Add support in fence-array and fence-chain; Add some uabi to
+>     support igt tests and userspace compositors.
+> v4: Rebase, address various comments, and add syncobj deadline
+>     support, and sync_file EPOLLPRI based on experience with perf/
+>     freq issues with clvk compute workloads on i915 (anv)
+> v5: Clarify that this is a hint as opposed to a more hard deadline
+>     guarantee, switch to using u64 ns values in UABI (still absolute
+>     CLOCK_MONOTONIC values), drop syncobj related cap and driver
+>     feature flag in favor of allowing count_handles=3D=3D0 for probing
+>     kernel support.
+> v6: Re-work vblank helper to calculate time of _start_ of vblank,
+>     and work correctly if the last vblank event was more than a
+>     frame ago.  Add (mostly unrelated) drm/msm patch which also
+>     uses the vblank helper.  Use dma_fence_chain_contained().  More
+>     verbose syncobj UABI comments.  Drop DMA_FENCE_FLAG_HAS_DEADLINE_BIT.
+> v7: Fix kbuild complaints about vblank helper.  Add more docs.
+> v8: Add patch to surface sync_file UAPI, and more docs updates.
+> v9: Drop (E)POLLPRI support.. I still like it, but not essential and
+>     it can always be revived later.  Fix doc build warning.
+> v10: Update 11/15 to handle multiple CRTCs
 
-> With every new supported NVMEM device with dynamic cells current
-> behaviour becomes non-optimal. It results in unneeded iterating over DT
-> nodes and may result in false discovery of cells (depending on used DT
-> properties).
+Hi Rob,
 
-What false discoveries?
+it is very nice to keep revision numbers and list the changes in each
+patch. If I looked at series v8 last, and I now see series v10, and I
+look at a patch that lists changes done in v7, how do I know if that
+change was made between series v8 and v10 or earlier?
 
-> This behaviour has actually caused a problem already with the MTD
-> subsystem. MTD subpartitions were incorrectly treated as NVMEM cells.
+At least in some previous revision, series might have been v8 and a
+patch have new changes listed as v5 (because it was the 5th time that
+one patch was changed) instead of v8.
 
-But this is solved, correct?
+Am I expected to keep track of vN of each individual patch
+independently?
 
-> Also with upcoming support for NVMEM layouts no new binding or driver
-> should support fixed cells defined in device node.
 
-How would you support older device trees with newer kernels or the
-other way around? I'm not sure I get your motivation to drop handling
-the fixed cells.
+Thanks,
+pq
 
-> Solve this by modifying drivers for bindings that support specifying
-> fixed NVMEM cells in DT. Make them explicitly tell NVMEM subsystem to
-> read cells from DT.
+--Sig_/YsnEA9P_sNO1q.G4g.HWGt3
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
-How can a driver know when there are fixed cells and when not? IOW.
-only new ones can be affected.
+-----BEGIN PGP SIGNATURE-----
 
-If you want to get rid of the schema for *new* drivers then what
-about having a new child node, something like "nvmem-fixed-cells",
-similar to "nvmem-layout".
+iQIzBAEBCAAdFiEEJQjwWQChkWOYOIONI1/ltBGqqqcFAmQJsx4ACgkQI1/ltBGq
+qqeCVQ/7Bzoz7uNe1NEopzqqHKfxESL0GuvB+Ky+giA53z+1ZulhFzT1AAiKInp7
+QOwxDpDiKSJigTT68UUtK7LRc42z41SLnPXF9023LhNJYUw7lC0L7oAmQLqUaeyw
+lPuPxOWgY5XPkZWdzJoZVyky4lBS2uGnF8I0+Ek2FTWRVlpGToUiXcHW5xHxH1Vi
+aQzqiH/s7EIWSuR8dZtzSTH0uA641e3dt+9AKOGYZQlwCLOdcngZ69vu0bft5pPG
+aKrWz6zfX7iLIbwWBJvKzBb4jvKC7gV/7a0p7kwyBPTnJ+TbDS0tWgcwDJ59vTPo
+L1Lfysi8uFdx6gSW0P864n+wbh96sPaJE+ZlBc174RTW5XzN0wu9V+phPUoBM7/T
+F2G5B8sYKwTMdxA//7PVjviDGDTZ4YHn1MLLRjwhUGF6HfvU0aLrHY5iKOHtUWVc
+XAL1exaXtkOMyd5EoezO7zSIQ9umGAQGGffMg15sD7mL+4wIhKY85WehBySfXLUK
+PVlTV62a4vdO58ZcWn0U299HPi0ehjQXvHRkFe4D2827dnZNsLd+BEJHzgDmI/l3
+x0lGGauKT+X0cexJetComQh7AszbkRrdP4SJGfRxJBrfkiKN4JsTEQ5s6ZoGWBjm
+vXZD3smbWhE69Bc3HDJe/HQA/uGYskkrLTL8oV+aYiy+pj21+W4=
+=ZIGt
+-----END PGP SIGNATURE-----
 
-And then you'd tell the new drivers to use the new-style dt binding. But
-there are no new drivers yet. So I'm still not sure I get your motivation.
-
--michael
+--Sig_/YsnEA9P_sNO1q.G4g.HWGt3--
