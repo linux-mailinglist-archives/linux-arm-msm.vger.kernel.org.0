@@ -2,68 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA0AD6B2BF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 18:24:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B77A36B2C2C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 18:38:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230153AbjCIRYY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 12:24:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45186 "EHLO
+        id S230450AbjCIRiu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 12:38:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230034AbjCIRYX (ORCPT
+        with ESMTP id S230434AbjCIRiq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 12:24:23 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B575F2FA8;
-        Thu,  9 Mar 2023 09:24:22 -0800 (PST)
+        Thu, 9 Mar 2023 12:38:46 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9EA9F31FB;
+        Thu,  9 Mar 2023 09:38:38 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 03670B8203D;
-        Thu,  9 Mar 2023 17:24:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5CA5C433EF;
-        Thu,  9 Mar 2023 17:24:19 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 88B0361CA5;
+        Thu,  9 Mar 2023 17:38:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A326BC433EF;
+        Thu,  9 Mar 2023 17:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678382659;
-        bh=VWtqIlKHObw1KkATVYaWAZcY7al17UIGC/BCtmz1hxA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lieMofFvyKBoYw8d8lO2KtuYkSfx7Rr9SRbhEsIJ8srQf96dcMCecIm35P9dzVj8U
-         SmisPpcjdnahi3DIACxSBuaF+3zMbnoxBTOI9agrQGxCSJikKbEKacHrdUkr3fis1x
-         BP53n/2l8sQflCpU3Ri2Vwku8re/4KMm4swsysxemwSr3PByGHVU5ZkJB6vwcOpHIg
-         SKED2Cj4VN/cKSc0pG5TtvLW/4hSlNK5f8YiTq6UI/wJXUaf3PWgiVbOlAForWc/9B
-         9VSSy6KLQCOX1oV0+T6mN/JrA2o/oNDG0BBJsg2i3KypcCjYdZ8todriC3sOoTuNyj
-         IkZX4lb2dqEJg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1paK0r-0002h6-7V; Thu, 09 Mar 2023 18:25:09 +0100
-Date:   Thu, 9 Mar 2023 18:25:09 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>
-Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: thinkpad-x13s: Add bluetooth
-Message-ID: <ZAoWdR7mppnWclFr@hovoldconsulting.com>
-References: <20230209020916.6475-1-steev@kali.org>
- <20230209020916.6475-5-steev@kali.org>
+        s=k20201202; t=1678383518;
+        bh=iajjPMk40xiWGEaEZlqlsOqiEOpuHw6FDCZfmoz0Cv8=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=pDuWk9tubZCqcPaxKqF6b8uZ97kOMw/Lj7YS0Mz468atWYwDN+pVQ21mFE7UyRH7q
+         0xMwnZjji/6LfjYtrMqLMiIEKt4iuyOkXZMBEChyzSzCU3FTxgKUPOHY4vGXUJML/P
+         0zxalYawcdsV9Bn+ekkIVTjJQ7Ih8jZxNPso87vm3sTnCivcQAoL+NUXRAd1hGbOSa
+         4k80nczkm8imqt0nP0BK6sLV9wTMx99xcGi/EwsjoAUp+4I0X8AYQ0aeC8mdGfKSU4
+         4E4xOpQ/ppbwIw6FY/gUyMzyB3jGOG9vxMJ5t85CDqNARtS5yEs3Q4M3VbEa8Gggtf
+         5hiJrJKwdV/HA==
+Date:   Thu, 9 Mar 2023 11:38:36 -0600
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: PCI: Add quirk for platforms running Windows
+Message-ID: <20230309173836.GA1148798@bhelgaas>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230209020916.6475-5-steev@kali.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <20230309025212.GB18319@T480>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,193 +59,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 08, 2023 at 08:09:16PM -0600, Steev Klimaszewski wrote:
-> The Lenovo Thinkpad X13s has a WCN6855 Bluetooth controller on uart2,
-> add this.
+On Thu, Mar 09, 2023 at 10:52:13AM +0800, Shawn Guo wrote:
+> + linux-arm-msm and MSM maintainer Bjorn
 > 
-> Signed-off-by: Steev Klimaszewski <steev@kali.org>
-> Link: https://lore.kernel.org/r/20230207052829.3996-5-steev@kali.org
-
-This link should not be needed.
-
-Also, please update the patch Subject to use the following prefix:
-
-	arm64: dts: qcom: sc8280xp-x13s: ...
-
-> ---
-> Changes since v4:
->  * Address Konrad's review comments.
+> On Wed, Mar 08, 2023 at 12:53:10PM -0600, Bjorn Helgaas wrote:
+> > On Mon, Feb 27, 2023 at 10:12:21AM +0800, Shawn Guo wrote:
+> > > Commit 8fd4391ee717 ("arm64: PCI: Exclude ACPI "consumer" resources from
+> > > host bridge windows") introduced a check to remove host bridge register
+> > > resources for all arm64 platforms, with the assumption that the PNP0A03
+> > > _CRS resources would always be host bridge registers and never as windows
+> > > on arm64.
+> > > 
+> > > The assumption stands true until Qualcomm Snapdragon Windows laptops
+> > > emerge.  These laptops describe host bridge windows in PNP0A03 _CRS
+> > > resources instead.  For example, the Microsoft Surface Pro X has host
+> > > bridges defined as
+> > > 
+> > >     Name (_HID, EisaId ("PNP0A08") /* PCI Express Bus */)  // _HID: Hardware ID
+> > >     Name (_CID, EisaId ("PNP0A03") /* PCI Bus */)  // _CID: Compatible ID
+> > > 
+> > >     Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+> > >     {
+> > >         Name (RBUF, ResourceTemplate ()
+> > >         {
+> > >             Memory32Fixed (ReadWrite,
+> > >                 0x60200000,         // Address Base
+> > >                 0x01DF0000,         // Address Length
+> > >                 )
+> > >             WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+> > >                 0x0000,             // Granularity
+> > >                 0x0000,             // Range Minimum
+> > >                 0x0001,             // Range Maximum
+> > >                 0x0000,             // Translation Offset
+> > >                 0x0002,             // Length
+> > >                 ,, )
+> > >         })
+> > >         Return (RBUF) /* \_SB_.PCI0._CRS.RBUF */
+> > >     }
+> > > 
+> > > The Memory32Fixed holds a host bridge window, but it's not properly
+> > > defined as a "producer" resource.  Consequently the resource gets
+> > > removed by kernel, and the BAR allocation fails later on:
+> > > 
+> > >     [ 0.150731] pci 0002:00:00.0: BAR 14: no space for [mem size 0x00100000]
+> > >     [ 0.150744] pci 0002:00:00.0: BAR 14: failed to assign [mem size 0x00100000]
+> > >     [ 0.150758] pci 0002:01:00.0: BAR 0: no space for [mem size 0x00004000 64bit]
+> > >     [ 0.150769] pci 0002:01:00.0: BAR 0: failed to assign [mem size 0x00004000 64bit]
+> > > 
+> > > This eventually prevents the PCIe NVME drive from being accessible.
+> > > 
+> > > Add a quirk for these platforms to avoid the resource being removed.
+> > > 
+> > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > > ---
+> > > We are running into the issue on more devices than just Surface Pro X
+> > > now, so trying to sort it out with a quirk as suggested by Lorenzo [1].
+> > 
+> > One thing I don't like about this application of quirks is that the
+> > list of affected platforms is likely to grow, which is an ongoing
+> > burden for users and developers.
 > 
-> Changes since v3:
->  * Add vreg_s1c
->  * Add regulators and not dead code
->  * Fix commit message changelog
+> It's a very reasonable concern.  I really hope that Qualcomm will start
+> thinking about Linux support on these machines in the future not too far
+> away, so that the list will not grow too long.
 > 
-> Changes since v2:
->  * Remove dead code and add TODO comment
->  * Make dtbs_check happy with the pin definitions
->  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 76 +++++++++++++++++++
->  1 file changed, 76 insertions(+)
+> > Can we have a conversation with Qualcomm about how they *intend* this
+> > to work?  Linux is probably doing something wrong (interpreting
+> > something differently than Windows does), and if we could fix that, we
+> > have a better chance of future platforms working without quirks.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> index f936b020a71d..ad20cfb3a830 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> @@ -24,6 +24,8 @@ / {
->  	aliases {
->  		i2c4 = &i2c4;
->  		i2c21 = &i2c21;
-> +		serial0 = &uart17;
+> Today Qualcomm only ships and cares about Windows on these machines, but
+> I believe it will change sooner or later.
 
-This is an unrelated change that does not belong in this patch.
+I don't maintain arch/arm64/kernel/pci.c, but my opinion is that we
+should not pursue quirks like this until we've tried really hard to
+figure out a generic approach.
 
-> +		serial1 = &uart2;
->  	};
->  
->  	wcd938x: audio-codec {
-> @@ -297,6 +299,15 @@ pmc8280c-rpmh-regulators {
->  		qcom,pmic-id = "c";
->  		vdd-bob-supply = <&vreg_vph_pwr>;
->  
-> +		vreg_s1c: smps1 {
-> +			regulator-name = "vreg_s1c";
-> +			regulator-min-microvolt = <1880000>;
-> +			regulator-max-microvolt = <1900000>;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_AUTO>,
-> +						  <RPMH_REGULATOR_MODE_RET>;
-> +			regulator-allow-set-load;
-
-Don't you need to specify initial-mode as well?
-
-> +		};
-> +
->  		vreg_l1c: ldo1 {
->  			regulator-name = "vreg_l1c";
->  			regulator-min-microvolt = <1800000>;
-> @@ -712,6 +723,32 @@ &qup0 {
->  	status = "okay";
->  };
->  
-> +&uart2 {
-> +	pinctrl-0 = <&uart2_state>;
-> +	pinctrl-names = "default";
-> +
-> +	status = "okay";
-> +
-> +	bluetooth {
-> +		compatible = "qcom,wcn6855-bt";
-> +
-> +		vddio-supply = <&vreg_s10b>;
-> +		vddbtcxmx-supply = <&vreg_s12b>;
-> +		vddrfacmn-supply = <&vreg_s12b>;
-> +		vddrfa0p8-supply = <&vreg_s12b>;
-> +		vddrfa1p2-supply = <&vreg_s11b>;
-> +		vddrfa1p7-supply = <&vreg_s1c>;
-> +
-> +		max-speed = <3200000>;
-> +
-> +		enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-> +		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
-> +
-> +		pinctrl-0 = <&bt_en>;
-> +		pinctrl-names = "default";
-> +	};
-> +};
-> +
->  &qup1 {
->  	status = "okay";
->  };
-> @@ -720,6 +757,11 @@ &qup2 {
->  	status = "okay";
->  };
->  
-> +&uart17 {
-> +	compatible = "qcom,geni-debug-uart";
-> +	status = "okay";
-> +};
-
-This bit does not belong here either. We don't have any means of
-accessing the debug uart on the X13s so we should probably just leave it
-disabled.
-
-> +
->  &remoteproc_adsp {
->  	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
->  
-> @@ -980,6 +1022,19 @@ hastings_reg_en: hastings-reg-en-state {
->  &tlmm {
->  	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
->  
-> +	bt_en: bt-en-state {
-
-As you are configuring more than one pin, please rename this as:
-
-	bt_default: bt-default-state
-
-> +		hstp-sw-ctrl-pins {
-> +			pins = "gpio132";
-> +			function = "gpio";
-
-You should define the bias configuration as well. I guess we need to
-keep the default pull-down enabled.
-
-> +		};
-> +
-> +		hstp-bt-en-pins {
-> +			pins = "gpio133";
-> +			function = "gpio";
-> +			drive-strength = <16>;
-
-bias-disable?
-
-> +		};
-> +	};
-> +
->  	edp_reg_en: edp-reg-en-state {
->  		pins = "gpio25";
->  		function = "gpio";
-> @@ -1001,6 +1056,27 @@ i2c4_default: i2c4-default-state {
->  		bias-disable;
->  	};
->  
-> +	uart2_state: uart2-state {
-
-Rename this one too:
-
-	uart2_default: uart2-default-state
-
-> +		cts-pins {
-> +			pins = "gpio122";
-
-This should be gpio121 (gpio122 is rts).
-
-> +			function = "qup2";
-> +			bias-disable;
-
-Don't we need a pull-down on this one to avoid a floating input when the
-module is powered down?
-
-> +		};
-> +
-> +		rts-tx-pins {
-
-Please split this in two nodes.
-
-> +			pins = "gpio122", "gpio123";
-> +			function = "qup2";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +
-> +		rx-pins {
-> +			pins = "gpio124";
-> +			function = "qup2";
-> +			bias-pull-up;
-> +		};
-> +	};
-> +
->  	i2c21_default: i2c21-default-state {
->  		pins = "gpio81", "gpio82";
->  		function = "qup21";
-
-Johan
+Bjorn
