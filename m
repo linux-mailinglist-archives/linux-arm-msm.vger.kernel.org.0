@@ -2,144 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47D416B2322
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 12:35:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85D236B236E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 12:51:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231597AbjCILfk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 06:35:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54576 "EHLO
+        id S231670AbjCILvG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 06:51:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231564AbjCILfa (ORCPT
+        with ESMTP id S231684AbjCILu7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 06:35:30 -0500
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::225])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0EDC7E7A5;
-        Thu,  9 Mar 2023 03:35:22 -0800 (PST)
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id 0D53E1C000A;
-        Thu,  9 Mar 2023 11:35:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1678361721;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=YkCJYe4xTl1nq4LBH2Nzf6GB3+OQQsqPo2Fge4ocTUs=;
-        b=hiIMPBEnM9/0A6RUHYRZqxFHogmol9ukA6pSF9yyH7WStCrXbZROuFrMCgPWYlCuvRnkhD
-        gSVPsluMhNKX56RZrjnI61iTpBTA4waKAQ6JqeRqsvyo/IWOPAl/QL51nSDgAxSyu94yKy
-        PIn9wIRH2IZFlmKfSzqKCR71LaKiGkrD/HSgaRQb245/oFmYH13le2EXgsHsrIH75UqLz3
-        Z11W3tJOxR+vBh6gHjbD5FbyG6FnNCzR4oHH8uG2wNHJnoqWJ9ZmEH7DlYcnZLCUcl1gLD
-        mNnKh0EMvdHeQcM3phRrh+OldNLWfiXLDIRmHeLX33lUlMygrtc3mKklFPVC1A==
-Date:   Thu, 9 Mar 2023 12:35:13 +0100
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Evgeniy Polyakov <zbr@ioremap.net>,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rtc@vger.kernel.org,
-        Michael Walle <michael@walle.cc>,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
-Subject: Re: [PATCH V3] nvmem: add explicit config option to read OF fixed
- cells
-Message-ID: <20230309123513.43b7134f@xps-13>
-In-Reply-To: <20230309112028.19215-1-zajec5@gmail.com>
-References: <20230309112028.19215-1-zajec5@gmail.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+        Thu, 9 Mar 2023 06:50:59 -0500
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C943E6D8C
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 03:50:52 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id b10so1560437ljr.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 03:50:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678362651;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0p4GJeTW3q1Bm2/iH91/9m5M3HxUnLVVr8JEVsqlujU=;
+        b=uAZSDpCmSBwNzHJsUgDMCykjDJ1+2EhsM3/sNOoqDYXq/5IoNNAZHXLRQpZD/iQ2mO
+         DfO3Vd5oKvloFhnYdYxwf7fx03eusaNTzTHu/5kxR3x9g0Cfb0/YVrzDSX+4ZDOK895C
+         AHZk3GcyQT/gIUQNz6INSDejCZWbIHQrJHbCIC4aZGzy7iCd0pDgjwFs/rsPzVKT/4li
+         FpFH+I546qrIOkmnXGNP007f37EO6FLk11hWjo4AOPRPu1EGIr7T9AfZC7vZgWvO20fd
+         jWSj7JnjEPymzcU3/1s4Vnu0Ek0DzFR09UKXps49HrcGzyIuxRYlgSAnAa3d58RoWijR
+         JR/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678362651;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0p4GJeTW3q1Bm2/iH91/9m5M3HxUnLVVr8JEVsqlujU=;
+        b=azzWoHaU6PerIP8QIgpnCqNeJ2fo3ZS6SIVvgBkYwkYoMWUAUlnjZceuuKfoF1U5gP
+         z5P1aG5QRNKT44/wFLVnm6nv2uYaij+iDqvwwPkOdrwlTnKgmzTuTkyk2EZRG486OT2X
+         xhJUSr8aLNpXFDkzWVzqkGNPmSlShK13u0g6bElZgl7QrAejKxjBOUmBvIAOsQN80UW8
+         2c8kR1QjjS+Qq5KuZTiPv/geoW2KaedQLjRPXzF6VqHGpuhu1stOgsfrV3Z/R4CzGTTv
+         sPVdozgVTVo680r3tAA8UVpMwMq3bdec9wrwnr8IxjMRUlN/FHriZkwwXC+rQ4XOIWKh
+         KcEQ==
+X-Gm-Message-State: AO0yUKWbT8/GqmJ0gofZhDv1+6m0lhG+zCjC+NsQwqFdeFoBnKgfLcOt
+        k2XtLQt7l1Yn+wu2xlrryGlHZLrunYaO6GVVhQ0=
+X-Google-Smtp-Source: AK7set8qaEPB+6IvkHMO2wAKbTPPW2DKT1KREG6IcHAlmzSU24LD0/9ZZbHq/qvLBERUYYPsKzm2CA==
+X-Received: by 2002:a2e:b5b7:0:b0:293:45dc:8b0f with SMTP id f23-20020a2eb5b7000000b0029345dc8b0fmr5553203ljn.26.1678362650788;
+        Thu, 09 Mar 2023 03:50:50 -0800 (PST)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id i186-20020a2e22c3000000b002946be8475esm2905584lji.135.2023.03.09.03.50.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Mar 2023 03:50:49 -0800 (PST)
+Message-ID: <fb9392b2-429c-2dd4-baa9-953f2a2f6dd7@linaro.org>
+Date:   Thu, 9 Mar 2023 12:50:47 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] firmware: qcom: scm: fix bogus irq error at probe
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+References: <20230309111209.31606-1-johan+linaro@kernel.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230309111209.31606-1-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rafa=C5=82,
 
-> diff --git a/include/linux/nvmem-provider.h b/include/linux/nvmem-provide=
-r.h
-> index 0262b86194eb..b3c14ce87a65 100644
-> --- a/include/linux/nvmem-provider.h
-> +++ b/include/linux/nvmem-provider.h
-> @@ -73,6 +73,7 @@ struct nvmem_cell_info {
->   * @owner:	Pointer to exporter module. Used for refcounting.
->   * @cells:	Optional array of pre-defined NVMEM cells.
->   * @ncells:	Number of elements in cells.
-> + * @use_fixed_of_cells:	Read fixed NVMEM cells from OF.
 
-I'm still unhappy with the naming, especially since you explained in
-more details the whole plan which involves using a container to put
-these fixed cells from now on. In both cases you extract cells from
-fixed OF nodes but this boolean needs to be set to true in one
-case, and false in the other, which would not make sense.
+On 9.03.2023 12:12, Johan Hovold wrote:
+> A recent commit added support for an optional interrupt which is only
+> available on some platforms.
+> 
+> Stop spamming the logs with bogus error messages on platforms that do
+> not use this new optional resource:
+> 
+> 	qcom_scm firmware:scm: error -ENXIO: IRQ index 0 not found
+> 
+> Fixes: 6bf325992236 ("firmware: qcom: scm: Add wait-queue handling logic")
+> Cc: Guru Das Srinagesh <quic_gurus@quicinc.com>
+> Cc: Sibi Sankar <quic_sibis@quicinc.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Also, regarding the bindings changes, I'm fairly happy with the idea,
-but if we go this way I would prefer a full series instead of
-individual changes with:
-
-- the boolean you introduce here (renamed, at the very least)
-- the new bindings
-- the update of the current provider bindings to take the new bindings
-  into account and deprecate the old ones officially
-- support for the new bindings in the core
-
->   * @keepout:	Optional array of keepout ranges (sorted ascending by start=
-).
->   * @nkeepout:	Number of elements in the keepout array.
->   * @type:	Type of the nvmem storage
-> @@ -103,6 +104,7 @@ struct nvmem_config {
->  	struct module		*owner;
->  	const struct nvmem_cell_info	*cells;
->  	int			ncells;
-> +	bool			use_fixed_of_cells;
->  	const struct nvmem_keepout *keepout;
->  	unsigned int		nkeepout;
->  	enum nvmem_type		type;
-
-Thanks,
-Miqu=C3=A8l
+Konrad
+>  drivers/firmware/qcom_scm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 468d4d5ab550..b1e11f85b805 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -1479,7 +1479,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>  
+>  	init_completion(&__scm->waitq_comp);
+>  
+> -	irq = platform_get_irq(pdev, 0);
+> +	irq = platform_get_irq_optional(pdev, 0);
+>  	if (irq < 0) {
+>  		if (irq != -ENXIO)
+>  			return irq;
