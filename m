@@ -2,152 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3F226B3071
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 23:22:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 534396B30DA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 23:38:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230511AbjCIWWV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 17:22:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34254 "EHLO
+        id S230510AbjCIWiB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 17:38:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbjCIWWU (ORCPT
+        with ESMTP id S229956AbjCIWiA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 17:22:20 -0500
-Received: from smtp-fw-80007.amazon.com (smtp-fw-80007.amazon.com [99.78.197.218])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E69F1009F6;
-        Thu,  9 Mar 2023 14:21:56 -0800 (PST)
+        Thu, 9 Mar 2023 17:38:00 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F49CEFA5;
+        Thu,  9 Mar 2023 14:37:58 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id r19-20020a05600c459300b003eb3e2a5e7bso2295603wmo.0;
+        Thu, 09 Mar 2023 14:37:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1678400517; x=1709936517;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=yVuCSofNXc4xFq2MIhmOj+IftFzTz6jbp1BPLOvSYTc=;
-  b=bSj1u7ulRJ3rgD3z35BHM9dYZuW5gYvPHxFMDBWyE5fmsJEof2360M7L
-   lPj2fMlLes5VqvO7Ap8VvUsykvhXWnXDoIHJCtI4iBNFgfOnDpOhjby8q
-   pEE5G7WetMGmVRKF1ZJbObUoEHOnbAoo4aHnJuJHq1GIc40+0HEYoS/bd
-   I=;
-X-IronPort-AV: E=Sophos;i="5.98,247,1673913600"; 
-   d="scan'208";a="191702044"
-Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO email-inbound-relay-iad-1a-m6i4x-47cc8a4c.us-east-1.amazon.com) ([10.25.36.214])
-  by smtp-border-fw-80007.pdx80.corp.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2023 22:21:11 +0000
-Received: from EX13MTAUWB002.ant.amazon.com (iad12-ws-svc-p26-lb9-vlan2.iad.amazon.com [10.40.163.34])
-        by email-inbound-relay-iad-1a-m6i4x-47cc8a4c.us-east-1.amazon.com (Postfix) with ESMTPS id 01C01160DA9;
-        Thu,  9 Mar 2023 22:21:06 +0000 (UTC)
-Received: from EX19D047UWB002.ant.amazon.com (10.13.138.34) by
- EX13MTAUWB002.ant.amazon.com (10.43.161.202) with Microsoft SMTP Server (TLS)
- id 15.0.1497.45; Thu, 9 Mar 2023 22:21:05 +0000
-Received: from u0d599d08243c5b.ant.amazon.com (10.187.171.27) by
- EX19D047UWB002.ant.amazon.com (10.13.138.34) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.24; Thu, 9 Mar 2023 22:21:04 +0000
-From:   Jordan Crouse <jorcrous@amazon.com>
-To:     <freedreno@lists.freedesktop.org>
-CC:     Jordan Crouse <jorcrous@amazon.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Ricardo Ribalda <ribalda@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH] drm/msm: Check for the GPU IOMMU during bind
-Date:   Thu, 9 Mar 2023 15:20:49 -0700
-Message-ID: <20230309222049.4180579-1-jorcrous@amazon.com>
-X-Mailer: git-send-email 2.34.1
+        d=gmail.com; s=20210112; t=1678401477;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+YkCkrjJHa9Smmj/wJYS+f+10gt8i1v3+K2/QxqxGnI=;
+        b=eJfOsBUED3fscQrc9JaP5TBDOF3Y46ECD0kikqu0swWAEZDbr/7Q1xoNQQMrD9lNx9
+         W+PeULXJXFWvpKlIHkG8G1N4+dq2abOGvUilkFgqkJOkbqJQgihsrWMgxhWD1h+lv7nY
+         6dyS/Dy9jmBtxRcRRPGb/kpgImyrlsqpUj9okXYvbTl7hh401KTNC4ttUfg+dmHGUvdY
+         UWhybAzDCdqeU7gQNTHDu2ECQe685H3mSGscYauLFebmU0XgvwRQvKXCM5iOZG95pFWE
+         2PWBrASaBvLFoXO4HQK8q934x5quNX3HR7E41wTrSvpekIAt7WqBt5nr3Z1/lyPGG+9N
+         +dcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678401477;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+YkCkrjJHa9Smmj/wJYS+f+10gt8i1v3+K2/QxqxGnI=;
+        b=EccjTut2iYLcXA2ng8HW/cpBX8JrkOiPm6j3wpGMq6k0Oqlw+t05IhedOljE1Ol93t
+         vmxd+Q6wuh0iP5K5aQ6JT/601RGiMM4cfqmKtGfo0q1VbaXWbfo8/57uWySJ5EIXhpEk
+         cNQ14SYyhaA5P4AmszNAFioOmzjGDTA+3XHUZJCvv9p3WsoxIYRgnTDE2KAgA6A2CtnW
+         g+Nx6jPoOzVEgQS+1tc8F9L/NZUOWZPE1UsdPzbaq85+rgcYVaT8iRwzBtiq4uXegz1A
+         Iy6Nj1AW6xmDHL5PMFrW5wTcTwk17NyH+WbBTcOH7prBuegYCCpX9sjggDeDeiVnGRPK
+         ex+w==
+X-Gm-Message-State: AO0yUKXQh0yS85w340zxrw94hEvlIvEXoo14vVYqMSaSuvl+E9GPHhf3
+        OVZGQ/4qnEe8lPO0KWE9B8M=
+X-Google-Smtp-Source: AK7set8NHhpkF76F1n+vl6zWoM3i7+IYLzBdgq5tR6J3qDrVLnoQ2La7K2evFiIWcHcaTNKePGLOxQ==
+X-Received: by 2002:a05:600c:1e1f:b0:3eb:fc6:79cf with SMTP id ay31-20020a05600c1e1f00b003eb0fc679cfmr780797wmb.6.1678401476689;
+        Thu, 09 Mar 2023 14:37:56 -0800 (PST)
+Received: from localhost.localdomain (93-34-89-197.ip49.fastwebnet.it. [93.34.89.197])
+        by smtp.googlemail.com with ESMTPSA id g12-20020a05600c310c00b003e209b45f6bsm1183981wmo.29.2023.03.09.14.37.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Mar 2023 14:37:56 -0800 (PST)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Andrew Lunn <andrew@lunn.ch>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, Lee Jones <lee@kernel.org>,
+        linux-leds@vger.kernel.org
+Subject: [net-next PATCH v2 00/14] net: Add basic LED support for switch/phy
+Date:   Thu,  9 Mar 2023 23:35:10 +0100
+Message-Id: <20230309223524.23364-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.187.171.27]
-X-ClientProxiedBy: EX19D046UWB003.ant.amazon.com (10.13.139.174) To
- EX19D047UWB002.ant.amazon.com (10.13.138.34)
-X-Spam-Status: No, score=-11.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_SPF_WL
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While booting with amd,imageon on a headless target the GPU probe was
-failing with -ENOSPC in get_pages() from msm_gem.c.
+This is a continue of [1]. It was decided to take a more gradual
+approach to implement LEDs support for switch and phy starting with
+basic support and then implementing the hw control part when we have all
+the prereq done.
 
-Investigation showed that the driver was using the default 16MB VRAM
-carveout because msm_use_mmu() was returning false since headless devices
-use a dummy parent device. Avoid this by extending the existing is_a2xx
-priv member to check the GPU IOMMU state on all platforms and use that
-check in msm_use_mmu().
+This series implements only the brightness_set() and blink_set() ops.
+An example of switch implementation is done with qca8k.
 
-This works for memory allocations but it doesn't prevent the VRAM carveout
-from being created because that happens before we have a chance to check
-the GPU IOMMU state in adreno_bind.
+For PHY a more generic approach is used with implementing the LED
+support in PHY core and with the user (in this case marvell) adding all
+the required functions.
 
-There are a number of possible options to resolve this but none of them are
-very clean. The easiest way is to likely specify vram=0 as module parameter
-on headless devices so that the memory doesn't get wasted.
+Currently we set the default-state as "keep" to not change the default
+configuration of the declared LEDs since almost every switch have a
+default configuration.
 
-Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
----
+[1] https://lore.kernel.org/lkml/20230216013230.22978-1-ansuelsmth@gmail.com/
 
- drivers/gpu/drm/msm/adreno/adreno_device.c | 6 +++++-
- drivers/gpu/drm/msm/msm_drv.c              | 7 +++----
- drivers/gpu/drm/msm/msm_drv.h              | 2 +-
- 3 files changed, 9 insertions(+), 6 deletions(-)
+Changes in new series v2:
+- Add LEDs node for rb3011
+- Fix rb3011 switch node unevaluated properties while running 
+  make dtbs_check
+- Fix a copypaste error in qca8k-leds.c for port 4 required shift
+- Drop phy-handle usage for qca8k and use qca8k_port_to_phy()
+- Add review tag from Andrew
+- Add Christian Marangi SOB in each Andrew patch
+- Add extra description for dsa-port stressing that PHY have no access
+  and LED are controlled by the related MAC
+- Add missing additionalProperties for dsa-port.yaml and ethernet-phy.yaml
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 36f062c7582f..4f19da28f80f 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -539,7 +539,11 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
- 	DBG("Found GPU: %u.%u.%u.%u", config.rev.core, config.rev.major,
- 		config.rev.minor, config.rev.patchid);
- 
--	priv->is_a2xx = config.rev.core == 2;
-+	/*
-+	 * A2xx has a built in IOMMU and all other IOMMU enabled targets will
-+	 * have an ARM IOMMU attached
-+	 */
-+	priv->has_gpu_iommu = config.rev.core == 2 || device_iommu_mapped(dev);
- 	priv->has_cached_coherent = config.rev.core >= 6;
- 
- 	gpu = info->init(drm);
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index aca48c868c14..a125a351ec90 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -318,11 +318,10 @@ bool msm_use_mmu(struct drm_device *dev)
- 	struct msm_drm_private *priv = dev->dev_private;
- 
- 	/*
--	 * a2xx comes with its own MMU
--	 * On other platforms IOMMU can be declared specified either for the
--	 * MDP/DPU device or for its parent, MDSS device.
-+	 * Return true if the GPU or the MDP/DPU or parent MDSS device has an
-+	 * IOMMU
- 	 */
--	return priv->is_a2xx ||
-+	return priv->has_gpu_iommu ||
- 		device_iommu_mapped(dev->dev) ||
- 		device_iommu_mapped(dev->dev->parent);
- }
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 9f0c184b02a0..f33f94acd1b9 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -126,7 +126,7 @@ struct msm_drm_private {
- 	struct msm_gpu *gpu;
- 
- 	/* gpu is only set on open(), but we need this info earlier */
--	bool is_a2xx;
-+	bool has_gpu_iommu;
- 	bool has_cached_coherent;
- 
- 	struct drm_fb_helper *fbdev;
+Changes from the old v8 series:
+- Drop linux,default-trigger set to netdev.
+- Dropped every hw control related patch and implement only
+  blink_set and brightness_set
+- Add default-state to "keep" for each LED node example
+
+Andrew Lunn (6):
+  net: phy: Add a binding for PHY LEDs
+  net: phy: phy_device: Call into the PHY driver to set LED brightness.
+  net: phy: marvell: Add software control of the LEDs
+  net: phy: phy_device: Call into the PHY driver to set LED blinking.
+  net: phy: marvell: Implement led_blink_set()
+  arm: mvebu: dt: Add PHY LED support for 370-rd WAN port
+
+Christian Marangi (8):
+  net: dsa: qca8k: move qca8k_port_to_phy() to header
+  net: dsa: qca8k: add LEDs basic support
+  net: dsa: qca8k: add LEDs blink_set() support
+  dt-bindings: net: dsa: dsa-port: Document support for LEDs node
+  dt-bindings: net: dsa: qca8k: add LEDs definition example
+  arm: qcom: dt: Drop unevaluated properties in switch nodes for rb3011
+  arm: qcom: dt: Add Switch LED for each port for rb3011
+  dt-bindings: net: phy: Document support for LEDs node
+
+ .../devicetree/bindings/net/dsa/dsa-port.yaml |  21 ++
+ .../devicetree/bindings/net/dsa/qca8k.yaml    |  24 ++
+ .../devicetree/bindings/net/ethernet-phy.yaml |  31 +++
+ arch/arm/boot/dts/armada-370-rd.dts           |  14 ++
+ arch/arm/boot/dts/qcom-ipq8064-rb3011.dts     | 124 ++++++++-
+ drivers/net/dsa/qca/Kconfig                   |   7 +
+ drivers/net/dsa/qca/Makefile                  |   1 +
+ drivers/net/dsa/qca/qca8k-8xxx.c              |  19 +-
+ drivers/net/dsa/qca/qca8k-leds.c              | 236 ++++++++++++++++++
+ drivers/net/dsa/qca/qca8k.h                   |  83 ++++++
+ drivers/net/phy/marvell.c                     |  81 +++++-
+ drivers/net/phy/phy_device.c                  | 115 +++++++++
+ include/linux/phy.h                           |  33 +++
+ 13 files changed, 765 insertions(+), 24 deletions(-)
+ create mode 100644 drivers/net/dsa/qca/qca8k-leds.c
+
 -- 
-2.34.1
+2.39.2
 
