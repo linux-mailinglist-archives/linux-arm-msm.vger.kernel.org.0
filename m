@@ -2,185 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DB126B2141
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 11:21:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2926A6B2153
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 11:25:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229989AbjCIKVx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 05:21:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38418 "EHLO
+        id S229532AbjCIKZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 05:25:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231325AbjCIKVd (ORCPT
+        with ESMTP id S229952AbjCIKZW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 05:21:33 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9A9C1C7FF;
-        Thu,  9 Mar 2023 02:21:24 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id t11so1634513lfr.1;
-        Thu, 09 Mar 2023 02:21:24 -0800 (PST)
+        Thu, 9 Mar 2023 05:25:22 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE1C460400
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 02:25:19 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id j11so4971669edq.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 02:25:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678357283;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KprGKYQ8KgwaGWUbn17Xz5NYf5KpExwL2NMCF7dMdgM=;
-        b=TRXqe8TQv4yfm7qG2xhZaoah92igaQMjG0ELmUtzdt7kOaZwrOkfWMsKMhXAsa9hWr
-         IL0zq8+qpdODRl4JxxUzTaLAhEWPwUZZ6Mhbqbt02z9+OjT3pKdWZgpfIPX1EucbWd7J
-         ZqmAIYlYVO7LhfBF3UcgAdoMoWTDMA31Wi2xJlHuATDyncXQ8Pfi9djMDqLohAWgD75d
-         mZFUk/mP5ZFsiSO08rhOZx5yv5XPUBSj0kg1POAZkFpeR90Su3vccPXA4pGFNY7nWAvL
-         VzrWe4tUvpwQXG9XL5JNCiaMy1X9pmDW9fxUDAValpicdBYX1P2nMJ3EUImUJlArelB6
-         U0qw==
+        d=linaro.org; s=google; t=1678357518;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=f29pOc0OlEjB2aN049aESwB0+Wn2Q9ambfIlPJGk7zs=;
+        b=SbTPgGcrbEdbPszGqq/zi10sHZQXTQqcG+ClKw7WU4IbfZjkneUyWgfDPLt5xBj5J3
+         CU5kDHn7gerky8OEON/4iKKq8AHuIa+tANju7NpcUZY4EQSyjaDngypKTHPSnOuSHn6q
+         drVI395AC9G+AdugQuLnYnLcTnZa2dZrKi72CLjgLVH+S7tfK3G8tzDiUm1cHI1A+n6W
+         0irecpUGucGlhLHmiQizIB1Vb4b7zAycNtsAbs8Pl5GrvFEdXzpDn/WLSkzsHWQmoiYH
+         fblOjN2o2VkidyihNb3YQw7mNnDTrTZxw371UhvG2ICPchyenI2lgY8Yi35fFXXt4hrY
+         2WPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678357283;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KprGKYQ8KgwaGWUbn17Xz5NYf5KpExwL2NMCF7dMdgM=;
-        b=jGkE77wlWiKwb4RNXKUATCKRDZUjGzI2erySO9AF10At5y+SUz7CZHXS9HmnOMFvGa
-         /Hx1JMeCzdkKk64kArZl/nyudZllfDbYcTaZYEO+sDb9mmGVoMd3JSZkuA3KuXcAhbxJ
-         qUeyjNNzHqqvTvJ/IZAmK5oIm4G2BhfsqcxOUJppFoEWQV6JLDzZiaHAfbp4+tK7Dhvv
-         i4OGNahFkNpP/SZvTNW7vwAphI3Y6g7xi6ucSTaI7F55rusAklgFq5481ioe8ZjXiWxT
-         UMFNj3h/tNm0tLGJqIoHZAcD0RtRIuLKh2+QobdjOov6I4oLA/+kknzY4wW0hOfVSvYh
-         +Blg==
-X-Gm-Message-State: AO0yUKXcmGtEb0cOPBINzmjfuMcV7LOPsjbJqo/isUXMcN7FkqFsmU1/
-        pimXnZ+Uomy7vKRDwnoR1cU=
-X-Google-Smtp-Source: AK7set8//lzFNi6UQdT0Qz69/iAT27g06pbsZrFtDMb8VzTxl8+gMl6jx74dZt+KkxkgfpPWfGRocg==
-X-Received: by 2002:ac2:4949:0:b0:4d5:831e:3154 with SMTP id o9-20020ac24949000000b004d5831e3154mr6109888lfi.45.1678357282880;
-        Thu, 09 Mar 2023 02:21:22 -0800 (PST)
-Received: from eldfell ([194.136.85.206])
-        by smtp.gmail.com with ESMTPSA id u23-20020ac24c37000000b004aac23e0dd6sm2605330lfq.29.2023.03.09.02.21.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Mar 2023 02:21:22 -0800 (PST)
-Date:   Thu, 9 Mar 2023 12:21:18 +0200
-From:   Pekka Paalanen <ppaalanen@gmail.com>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        Christian =?UTF-8?B?S8O2bmln?= <ckoenig.leichtzumerken@gmail.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Matt Turner <mattst88@gmail.com>,
-        Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Gustavo Padovan <gustavo@padovan.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING 
-        FRAMEWORK),
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-doc@vger.kernel.org (open list:DOCUMENTATION),
-        linux-kernel@vger.kernel.org (open list),
-        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK),
-        Liu Shixin <liushixin2@huawei.com>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>
-Subject: Re: [PATCH v10 00/15] dma-fence: Deadline awareness
-Message-ID: <20230309122118.661e85b4@eldfell>
-In-Reply-To: <20230308155322.344664-1-robdclark@gmail.com>
-References: <20230308155322.344664-1-robdclark@gmail.com>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+        d=1e100.net; s=20210112; t=1678357518;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=f29pOc0OlEjB2aN049aESwB0+Wn2Q9ambfIlPJGk7zs=;
+        b=n3zVKH0GzcWjubx9Sla+FzalzHTq4dwFXHiBEzWYgEfB1Vh3duJYW/p67/xmbei3Kf
+         DEYqjnBVpOKtahAqZEYESwDm8eEAcnJNfCdPe3JreNd6TjiTj3ughK5D1BYECX6oWcH8
+         kUSxxWa/q7oZWnImnBaccENLUoHYdxMo+OqTQi/NS0YiX4B0onHCI1g0+rJO6bQTu3Ci
+         Ka6mD2Nws3k4/kG+wM7kcYCdm71xffl0CIStYMQ0cw/EaoWVsAxLAyhzRJ/nadb5h3dx
+         +lQCPZa85bYWun1IgKgDwlSDShubcmGVQJ6L2b8v7HJo743R8RGkhI4Z7MsTmo4OGtcO
+         QOng==
+X-Gm-Message-State: AO0yUKUauagrh0zVJfM3q/f5q6r3WohKplocyTKicfsyG8tC8euXbP45
+        fQ+Y8Kve2T90rnA6tw2pxioFRQ==
+X-Google-Smtp-Source: AK7set/3JwqwCep6Y6Cmt2nJXIoH3xw9e1mH3GOvuZj/ADtxV26fHn+UNk53xWREry/gIRBcphk0tA==
+X-Received: by 2002:a17:906:858c:b0:88c:3502:56d4 with SMTP id v12-20020a170906858c00b0088c350256d4mr21037241ejx.46.1678357518370;
+        Thu, 09 Mar 2023 02:25:18 -0800 (PST)
+Received: from ?IPV6:2a02:810d:15c0:828:7ee2:e73e:802e:45c1? ([2a02:810d:15c0:828:7ee2:e73e:802e:45c1])
+        by smtp.gmail.com with ESMTPSA id ia27-20020a170907a07b00b008b1fc59a22esm8690065ejc.65.2023.03.09.02.25.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Mar 2023 02:25:17 -0800 (PST)
+Message-ID: <b85c414d-6970-f1a1-a847-bd49f18edc22@linaro.org>
+Date:   Thu, 9 Mar 2023 11:25:16 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/YsnEA9P_sNO1q.G4g.HWGt3";
- protocol="application/pgp-signature"; micalg=pgp-sha256
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [RFC PATCH v2 1/7] dt-bindings: soc: qcom: Add schema for Inline
+ Crypto Engine
+Content-Language: en-US
+To:     Abel Vesa <abel.vesa@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>
+Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org
+References: <20230308155838.1094920-1-abel.vesa@linaro.org>
+ <20230308155838.1094920-2-abel.vesa@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230308155838.1094920-2-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---Sig_/YsnEA9P_sNO1q.G4g.HWGt3
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On 08/03/2023 16:58, Abel Vesa wrote:
+> Add schema file for new Qualcomm Inline Crypto Engine driver.
 
-On Wed,  8 Mar 2023 07:52:51 -0800
-Rob Clark <robdclark@gmail.com> wrote:
+Subject: drop second/last, redundant "schema for". The "dt-bindings"
+prefix is already stating that these are bindings.
 
-> From: Rob Clark <robdclark@chromium.org>
->=20
-> This series adds a deadline hint to fences, so realtime deadlines
-> such as vblank can be communicated to the fence signaller for power/
-> frequency management decisions.
->=20
-> This is partially inspired by a trick i915 does, but implemented
-> via dma-fence for a couple of reasons:
->=20
-> 1) To continue to be able to use the atomic helpers
-> 2) To support cases where display and gpu are different drivers
->=20
-> This iteration adds a dma-fence ioctl to set a deadline (both to
-> support igt-tests, and compositors which delay decisions about which
-> client buffer to display), and a sw_sync ioctl to read back the
-> deadline.  IGT tests utilizing these can be found at:
->=20
->   https://gitlab.freedesktop.org/robclark/igt-gpu-tools/-/commits/fence-d=
-eadline
->=20
->=20
-> v1: https://patchwork.freedesktop.org/series/93035/
-> v2: Move filtering out of later deadlines to fence implementation
->     to avoid increasing the size of dma_fence
-> v3: Add support in fence-array and fence-chain; Add some uabi to
->     support igt tests and userspace compositors.
-> v4: Rebase, address various comments, and add syncobj deadline
->     support, and sync_file EPOLLPRI based on experience with perf/
->     freq issues with clvk compute workloads on i915 (anv)
-> v5: Clarify that this is a hint as opposed to a more hard deadline
->     guarantee, switch to using u64 ns values in UABI (still absolute
->     CLOCK_MONOTONIC values), drop syncobj related cap and driver
->     feature flag in favor of allowing count_handles=3D=3D0 for probing
->     kernel support.
-> v6: Re-work vblank helper to calculate time of _start_ of vblank,
->     and work correctly if the last vblank event was more than a
->     frame ago.  Add (mostly unrelated) drm/msm patch which also
->     uses the vblank helper.  Use dma_fence_chain_contained().  More
->     verbose syncobj UABI comments.  Drop DMA_FENCE_FLAG_HAS_DEADLINE_BIT.
-> v7: Fix kbuild complaints about vblank helper.  Add more docs.
-> v8: Add patch to surface sync_file UAPI, and more docs updates.
-> v9: Drop (E)POLLPRI support.. I still like it, but not essential and
->     it can always be revived later.  Fix doc build warning.
-> v10: Update 11/15 to handle multiple CRTCs
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+> 
+> This patch was not part of the v1.
+> 
+>  .../soc/qcom/qcom,inline-crypto-engine.yaml   | 42 +++++++++++++++++++
+>  1 file changed, 42 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,inline-crypto-engine.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,inline-crypto-engine.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,inline-crypto-engine.yaml
+> new file mode 100644
+> index 000000000000..359f80dd97cb
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,inline-crypto-engine.yaml
 
-Hi Rob,
+soc should not be placeholder for everything. Put it in crypto/
 
-it is very nice to keep revision numbers and list the changes in each
-patch. If I looked at series v8 last, and I now see series v10, and I
-look at a patch that lists changes done in v7, how do I know if that
-change was made between series v8 and v10 or earlier?
+> @@ -0,0 +1,42 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/soc/qcom/qcom,inline-crypto-engine.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. (QTI) Inline Crypto Engine
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +
+> +description:
+> +  Inline Crypto Engine
 
-At least in some previous revision, series might have been v8 and a
-patch have new changes listed as v5 (because it was the 5th time that
-one patch was changed) instead of v8.
+Please add useful description or drop.
 
-Am I expected to keep track of vN of each individual patch
-independently?
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,inline-crypto-engine
 
+You need SoC specific compatible(s).
 
-Thanks,
-pq
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-sm8450.h>
+> +
+> +    ice: inline-crypto-engine@1d88000 {
 
---Sig_/YsnEA9P_sNO1q.G4g.HWGt3
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+Just: crypto
 
------BEGIN PGP SIGNATURE-----
+Also drop the label
 
-iQIzBAEBCAAdFiEEJQjwWQChkWOYOIONI1/ltBGqqqcFAmQJsx4ACgkQI1/ltBGq
-qqeCVQ/7Bzoz7uNe1NEopzqqHKfxESL0GuvB+Ky+giA53z+1ZulhFzT1AAiKInp7
-QOwxDpDiKSJigTT68UUtK7LRc42z41SLnPXF9023LhNJYUw7lC0L7oAmQLqUaeyw
-lPuPxOWgY5XPkZWdzJoZVyky4lBS2uGnF8I0+Ek2FTWRVlpGToUiXcHW5xHxH1Vi
-aQzqiH/s7EIWSuR8dZtzSTH0uA641e3dt+9AKOGYZQlwCLOdcngZ69vu0bft5pPG
-aKrWz6zfX7iLIbwWBJvKzBb4jvKC7gV/7a0p7kwyBPTnJ+TbDS0tWgcwDJ59vTPo
-L1Lfysi8uFdx6gSW0P864n+wbh96sPaJE+ZlBc174RTW5XzN0wu9V+phPUoBM7/T
-F2G5B8sYKwTMdxA//7PVjviDGDTZ4YHn1MLLRjwhUGF6HfvU0aLrHY5iKOHtUWVc
-XAL1exaXtkOMyd5EoezO7zSIQ9umGAQGGffMg15sD7mL+4wIhKY85WehBySfXLUK
-PVlTV62a4vdO58ZcWn0U299HPi0ehjQXvHRkFe4D2827dnZNsLd+BEJHzgDmI/l3
-x0lGGauKT+X0cexJetComQh7AszbkRrdP4SJGfRxJBrfkiKN4JsTEQ5s6ZoGWBjm
-vXZD3smbWhE69Bc3HDJe/HQA/uGYskkrLTL8oV+aYiy+pj21+W4=
-=ZIGt
------END PGP SIGNATURE-----
+Best regards,
+Krzysztof
 
---Sig_/YsnEA9P_sNO1q.G4g.HWGt3--
