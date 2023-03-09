@@ -2,277 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 267856B1BDA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 07:56:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ACBED6B1D52
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 09:07:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229935AbjCIG4R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 01:56:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33738 "EHLO
+        id S229873AbjCIIHV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 03:07:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230165AbjCIG4N (ORCPT
+        with ESMTP id S229922AbjCIIHT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 01:56:13 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0AFC898DB;
-        Wed,  8 Mar 2023 22:56:11 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id n2so995713lfb.12;
-        Wed, 08 Mar 2023 22:56:11 -0800 (PST)
+        Thu, 9 Mar 2023 03:07:19 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DA7A61AA8
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 00:07:17 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id f18so1230030lfa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 00:07:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678344970;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=psX2Kl9N0nkGxZU5txR5SzAm+jatIaIM8bmLNX2QD0U=;
-        b=bIZ+WlW5/obmlMjDv3V6TEooL709jm9SJcRnOUjBOC4K5c9PeWZSuin/LLZjq54D5T
-         wt4F6LIpGPf59PxgoJMemlUnFdRFlzXlgl+wSpqDhh7A+Mjqe7YEBUsXhplsJyOMC3/5
-         1AjsR1X5x7J8bGnfNzfMC9rdrquNr5HhkEU753gawWh+RwohCCRJd3fk72MKq3sbrn5n
-         0kojqphG234D3KDsCD4EQkfBbefqNXhNDOUhCek8sflcv45abOyOyGOhQqAtoF0Ogd4k
-         8VW3DJlzKGZqq44dblxAo02/Hp8Sl6sgKvThnvJXIL/4IN7XF++t9PXqycKyH98STasW
-         RXQg==
+        d=linaro.org; s=google; t=1678349235;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TJjf5SXhDUnOVKgTWO2udYlDtkJmP/p6P7yAfKPKoiY=;
+        b=s0WK+tFPTi01w8LgIeHC/7DNEOmp7gK1a7D+zcdN4Ie04XfqnOqZI5BaKj+Su79mBA
+         1XrFeJ8dVmUtluPN5KHDhP99lTF0PXVk7X1+kXSMe7XICupWwXZwfT4PoItbzTm8OMEh
+         4EPZbHG/4t11ddd1OB1DRmeDB9kiFglPqFtXvBR+CRqnDv9VfNDX7B5oDG6CYXbOm1+1
+         kkvhoQKNS0rhKAcfN/JU7GACRls8d5r3+VdyNIWGtrXnF5yRWL5IIPtdbVkz/X4Ooiiq
+         bUevg9+CN6H2ji4i+SzFc8/e/w+rWH0QSLlcuK/1v2RpX6g07pGtRuaWL3wldi7t92qj
+         NDhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678344970;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=psX2Kl9N0nkGxZU5txR5SzAm+jatIaIM8bmLNX2QD0U=;
-        b=1tyUMF4rsCkaHxCVcqF77ie38U+WYGmee8iHsqiuOB+siz3flVxhfUEBEuZpRYakc5
-         yHR8JANBuIwqEgitE7UeH8GbD2mzakXN4JLtya8tuAw02yxxGQHIy9rFd6StuE1+79Xa
-         rhcNb24y2WCksqVgQNnO7hatgiRAdOxBd+z0qExF3J7emhbnBki0nxbX5//HV9jNzQUb
-         BzDhhxc0pBKdZjZyp51xZiE9K7XuuvJKYHAmsVuufDAdfcQ8bGZvlylNwr3s3U8gijj8
-         mj7ZCXx4t12+HvQeM8DOGTN/eSGHu5tyZfahy59eOWEFB/k+hVMYn/9FnHunr5YQ+1Dj
-         0H2A==
-X-Gm-Message-State: AO0yUKVh1MgfKiYIeii7W4blkSH4pSfCquNW4ZMbAIK1mvEe9SX42BX9
-        hMA7rgBrfCRk23t0PFbIIS8=
-X-Google-Smtp-Source: AK7set/1DASv6OgvWXWuj4ETN403kCbuKcvZ6CSfypbSgTKmVi+9rh0TXtBlOZRSUCf7NSlLDgA6Uw==
-X-Received: by 2002:ac2:5dd9:0:b0:4cd:7fe0:24 with SMTP id x25-20020ac25dd9000000b004cd7fe00024mr5000383lfq.27.1678344969717;
-        Wed, 08 Mar 2023 22:56:09 -0800 (PST)
-Received: from [192.168.26.149] (ip-194-187-74-233.konfederacka.maverick.com.pl. [194.187.74.233])
-        by smtp.googlemail.com with ESMTPSA id j15-20020a19f50f000000b004e7fa99f2b5sm2065557lfb.186.2023.03.08.22.56.07
+        d=1e100.net; s=20210112; t=1678349235;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TJjf5SXhDUnOVKgTWO2udYlDtkJmP/p6P7yAfKPKoiY=;
+        b=DuHAqYdSdbmxtpkyGdMiMmI7twYb0rwXUN51k+6YTg8u8qsD6dINy+WL5dczO+QuQ+
+         BkAlZlcmgba2NqrnGX5JUaDlEaa5k4EiqzchFqMKdtpGO1f0XkOPO9Hm3zf0z7utKxRR
+         4UW5pZSPsyPsSfdUnKGytFScXWpKnjv3ZjcjR21ZRAnk/M8EPCCVmPHRvUBuJKXQKEdA
+         UubxKQfEHzaWk/jAns8kg1yIc/Vv2yGGcJJmTaiWZbcPBpygpy2CvGTxv1c3W/iGN4WT
+         QW+3SuzRU7LDSuCp1Lg27sezay/jeCg0CQLIWuVHE7szVTT9hQ4uwSBsVdtX2jYKzqE1
+         Bbcg==
+X-Gm-Message-State: AO0yUKUPA9JhU1A1QZtyoDN+xzI53uRgwHwho6g2khUwXvFOYadTBsw9
+        rID5lXqR6zAKMxV3qLTqU+NcUA==
+X-Google-Smtp-Source: AK7set9Vzw2UU4JXxOsa6OuHp0wRluytlOXjOJE27OSTzyhNvfv+VBtYRPowAgff48osf6ywGWSsqw==
+X-Received: by 2002:ac2:55a9:0:b0:4dd:9f4d:7459 with SMTP id y9-20020ac255a9000000b004dd9f4d7459mr5936893lfg.67.1678349235345;
+        Thu, 09 Mar 2023 00:07:15 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id b23-20020ac25637000000b004d5ae3f5e9bsm2552203lff.130.2023.03.09.00.07.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 22:56:09 -0800 (PST)
-Message-ID: <930f3549-440d-adac-ae9d-1aa6ef07c44b@gmail.com>
-Date:   Thu, 9 Mar 2023 07:56:05 +0100
+        Thu, 09 Mar 2023 00:07:14 -0800 (PST)
+Message-ID: <7ddda680-b169-5105-a3cb-20790f0868ee@linaro.org>
+Date:   Thu, 9 Mar 2023 10:07:13 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:96.0) Gecko/20100101
- Thunderbird/96.0
-Subject: Re: [PATCH V2] nvmem: add explicit config option to read OF fixed
- cells
-To:     Miquel Raynal <miquel.raynal@bootlin.com>,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3 2/4] firmware: Add support for Qualcomm Secure
+ Execution Environment SCM interface
+Content-Language: en-GB
+To:     Maximilian Luz <luzmaximilian@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Evgeniy Polyakov <zbr@ioremap.net>,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rtc@vger.kernel.org
-References: <20230224072903.20945-1-zajec5@gmail.com>
- <20230308173256.3837b87b@xps-13>
- <91ff425b4c901648b1faf34c784f20ad@milecki.pl>
- <20230308190636.7fabab9c@xps-13>
- <5974d28426057975e701c4a8454b5a13@milecki.pl>
- <20230308193121.7f5b3d02@xps-13>
-From:   =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
-In-Reply-To: <20230308193121.7f5b3d02@xps-13>
+        Ard Biesheuvel <ardb@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Johan Hovold <johan@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Sumit Garg <sumit.garg@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230305022119.1331495-1-luzmaximilian@gmail.com>
+ <20230305022119.1331495-3-luzmaximilian@gmail.com>
+ <6ddeba6f-9816-730e-28ce-0f1efbc11367@linaro.org>
+ <157cf27f-e890-1e46-f320-8e6bf8f3be4b@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <157cf27f-e890-1e46-f320-8e6bf8f3be4b@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8.03.2023 19:31, Miquel Raynal wrote:
-> Hi Rafał,
-> 
-> rafal@milecki.pl wrote on Wed, 08 Mar 2023 19:12:32 +0100:
-> 
->> On 2023-03-08 19:06, Miquel Raynal wrote:
->>> Hi Rafał,
+On 08/03/2023 16:06, Maximilian Luz wrote:
+> On 3/7/23 16:36, Dmitry Baryshkov wrote:
+>> On 05/03/2023 04:21, Maximilian Luz wrote:
+>>> Add support for SCM calls to Secure OS and the Secure Execution
+>>> Environment (SEE) residing in the TrustZone (TZ) via the QSEECOM
+>>> interface. This allows communication with Secure/TZ applications, for
+>>> example 'uefisecapp' managing access to UEFI variables.
 >>>
->>> rafal@milecki.pl wrote on Wed, 08 Mar 2023 17:55:46 +0100:
->>>    
->>>> On 2023-03-08 17:34, Miquel Raynal wrote:
->>>>> Hi Rafał,
->>>>>
->>>>> zajec5@gmail.com wrote on Fri, 24 Feb 2023 08:29:03 +0100:
->>>>>   
->>>>>> From: Rafał Miłecki <rafal@milecki.pl>
->>>>>>>> NVMEM subsystem looks for fixed NVMEM cells (specified in DT) by
->>>>>> default. This behaviour made sense in early days before adding support
->>>>>> for dynamic cells.
->>>>>>>> With every new supported NVMEM device with dynamic cells current
->>>>>> behaviour becomes non-optimal. It results in unneeded iterating over >> DT
->>>>>> nodes and may result in false discovery of cells (depending on used DT
->>>>>> properties).
->>>>>>>> This behaviour has actually caused a problem already with the MTD
->>>>>> subsystem. MTD subpartitions were incorrectly treated as NVMEM cells.
->>>>>
->>>>> That's true, but I expect this to be really MTD specific.
->>>>>
->>>>> A concrete proposal below.
->>>>>   
->>>>>> Also with upcoming support for NVMEM layouts no new binding or driver
->>>>>> should support fixed cells defined in device node.
->>>>>
->>>>> I'm not sure I agree with this statement. We are not preventing new
->>>>> binding/driver to use fixed cells, or...? We offer a new way to expose
->>>>> nvmem cells with another way than "fixed-offset" and "fixed-size" OF
->>>>> nodes.
->>>>>>   From what I understood all new NVMEM bindings should have cells >> defined
->>>> in the nvmem-layout { } node. That's what I mean by saying they should
->>>> not be defined in device node (but its "nvmem-layout" instead).
+>>> The interface is managed by a platform device to ensure correct lifetime
+>>> and establish a device link to the Qualcomm SCM device.
 >>>
->>> Layouts are just another possibility, either you user the nvmem-cells
->>> compatible and produce nvmem cells with fixed OF nodes, or you use the
->>> nvmem-layout container. I don't think all new bindings should have
->>> cells in layouts. It depends if the content is static or not.
->>>    
->>>>>> Solve this by modifying drivers for bindings that support specifying
->>>>>> fixed NVMEM cells in DT. Make them explicitly tell NVMEM subsystem to
->>>>>> read cells from DT.
->>>>>>>> It wasn't clear (to me) if rtc and w1 code actually uses fixed cells. >> I
->>>>>> enabled them to don't risk any breakage.
->>>>>>>> Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
->>>>>> [for drivers/nvmem/meson-{efuse,mx-efuse}.c]
->>>>>> Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
->>>>>> ---
->>>>>> V2: Fix stm32-romem.c typo breaking its compilation
->>>>>>      Pick Martin's Acked-by
->>>>>>      Add paragraph about layouts deprecating use_fixed_of_cells
->>>>>> ---
->>>>>>   drivers/mtd/mtdcore.c          | 2 ++
->>>>>>   drivers/nvmem/apple-efuses.c   | 1 +
->>>>>>   drivers/nvmem/core.c           | 8 +++++---
->>>>>>   drivers/nvmem/imx-ocotp-scu.c  | 1 +
->>>>>>   drivers/nvmem/imx-ocotp.c      | 1 +
->>>>>>   drivers/nvmem/meson-efuse.c    | 1 +
->>>>>>   drivers/nvmem/meson-mx-efuse.c | 1 +
->>>>>>   drivers/nvmem/microchip-otpc.c | 1 +
->>>>>>   drivers/nvmem/mtk-efuse.c      | 1 +
->>>>>>   drivers/nvmem/qcom-spmi-sdam.c | 1 +
->>>>>>   drivers/nvmem/qfprom.c         | 1 +
->>>>>>   drivers/nvmem/rave-sp-eeprom.c | 1 +
->>>>>>   drivers/nvmem/rockchip-efuse.c | 1 +
->>>>>>   drivers/nvmem/sc27xx-efuse.c   | 1 +
->>>>>>   drivers/nvmem/sprd-efuse.c     | 1 +
->>>>>>   drivers/nvmem/stm32-romem.c    | 1 +
->>>>>>   drivers/nvmem/sunplus-ocotp.c  | 1 +
->>>>>>   drivers/nvmem/sunxi_sid.c      | 1 +
->>>>>>   drivers/nvmem/uniphier-efuse.c | 1 +
->>>>>>   drivers/nvmem/zynqmp_nvmem.c   | 1 +
->>>>>>   drivers/rtc/nvmem.c            | 1 +
->>>>>>   drivers/w1/slaves/w1_ds250x.c  | 1 +
->>>>>>   include/linux/nvmem-provider.h | 2 ++
->>>>>>   23 files changed, 29 insertions(+), 3 deletions(-)
->>>>>>>> diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
->>>>>> index 0feacb9fbdac..1bb479c0f758 100644
->>>>>> --- a/drivers/mtd/mtdcore.c
->>>>>> +++ b/drivers/mtd/mtdcore.c
->>>>>> @@ -523,6 +523,7 @@ static int mtd_nvmem_add(struct mtd_info *mtd)
->>>>>>   	config.dev = &mtd->dev;
->>>>>>   	config.name = dev_name(&mtd->dev);
->>>>>>   	config.owner = THIS_MODULE;
->>>>>> +	config.use_fixed_of_cells = of_device_is_compatible(node, >> "nvmem-cells");
->>>>>
->>>>> I am wondering how mtd specific this is? For me all OF nodes containing
->>>>> the nvmem-cells compatible should be treated as cells providers and
->>>>> populate nvmem cells as for each children.
->>>>>
->>>>> Why don't we just check for this compatible to be present? in
->>>>> nvmem_add_cells_from_of() ? And if not we just skip the operation.
->>>>>
->>>>> This way we still follow the bindings (even though using nvmem-cells in
->>>>> the compatible property to require cells population was a mistake in
->>>>> the first place, as discussed in the devlink thread recently) but there
->>>>> is no need for a per-driver config option?
->>>>>> This isn't mtd specific. Please check this patch for all occurrences >> of
->>>> the:
->>>> use_fixed_of_cells = true
->>>>>> The very first one: drivers/nvmem/apple-efuses.c driver for the
->>>> "apple,efuses" binding. That binding supports fixed OF cells, see:
->>>> Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
+>>> While this patch introduces only a very basic interface without the more
+>>> advanced features (such as re-entrant and blocking SCM calls and
+>>> listeners/callbacks), this is enough to talk to the aforementioned
+>>> 'uefisecapp'.
 >>>
->>> I'm saying: based on what has been enforced so far, I would expect all
->>> fixed cell providers to come with nvmem-cells as compatible, no?
+>>> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+>>> ---
 >>>
->>> If that's the case we could use that as a common denominator?
+>>> Changes in v3:
+>>>   - Rebase ontop of latest qcom_scm changes (qcom_scm.h moved).
+>>>   - Move qcom_qseecom.h in accordance with qcom_scm.
+>>>
+>>> Changes in v2:
+>>>   - Bind the interface to a device.
+>>>   - Establish a device link to the SCM device to ensure proper ordering.
+>>>   - Register client apps as child devices instead of requiring them 
+>>> to be
+>>>     specified in the device tree.
+>>>   - Rename (qctree -> qseecom) to allow differentiation between old
+>>>     (qseecom) and new (smcinvoke) interfaces to the trusted execution
+>>>     environment.
+>>>
+>>> ---
+>>>   MAINTAINERS                                |   7 +
+>>>   drivers/firmware/Kconfig                   |  15 +
+>>>   drivers/firmware/Makefile                  |   1 +
+>>>   drivers/firmware/qcom_qseecom.c            | 314 +++++++++++++++++++++
+>>>   include/linux/firmware/qcom/qcom_qseecom.h | 190 +++++++++++++
+>>>   5 files changed, 527 insertions(+)
+>>>   create mode 100644 drivers/firmware/qcom_qseecom.c
+>>>   create mode 100644 include/linux/firmware/qcom/qcom_qseecom.h
+>>>
+>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>> index 9201967d198d..1545914a592c 100644
+>>> --- a/MAINTAINERS
+>>> +++ b/MAINTAINERS
+>>> @@ -17380,6 +17380,13 @@ F:    
+>>> Documentation/networking/device_drivers/cellular/qualcomm/rmnet.rst
+>>>   F:    drivers/net/ethernet/qualcomm/rmnet/
+>>>   F:    include/linux/if_rmnet.h
+>>> +QUALCOMM SECURE EXECUTION ENVIRONMENT COMMUNICATION DRIVER
+>>> +M:    Maximilian Luz <luzmaximilian@gmail.com>
+>>> +L:    linux-arm-msm@vger.kernel.org
+>>> +S:    Maintained
+>>> +F:    drivers/firmware/qcom_qseecom.c
+>>> +F:    include/linux/firmware/qcom/qcom_qseecom.h
+>>> +
+>>>   QUALCOMM TSENS THERMAL DRIVER
+>>>   M:    Amit Kucheria <amitk@kernel.org>
+>>>   M:    Thara Gopinath <thara.gopinath@gmail.com>
 >>
->> Sorry, I don't get it. Have you checked
->> Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
->> ?
 >>
->> It's a NVMEM provied binding with fixed cells that doesn't use
->> nvmem-cells as compatible. There are many more.
+>>
+>>> +
+>>> +
+>>> +/* -- Platform specific data. 
+>>> ----------------------------------------------- */
+>>> +
+>>> +struct qseecom_data {
+>>> +    const struct mfd_cell *cells;
+>>
+>> The child qseecom devices are not platform devices, so MFD should not 
+>> be used here. Please use aux devices instead.
 > 
-> Oh yeah you're right, I'm mixing things. Well I guess you're right
-> then, it's such a mess, we have to tell the core the parsing method.
+> Okay, makes sense. Would this still work with your suggestion in patch 4
+> regarding a custom (?) bus or can the aux bus be used to implement that? 
+> From a
+> quick look, I believe we could use aux bus for this but I haven't worked 
+> with
+> that before, so I don't know if I'm missing something.
+
+Initially I thought that a custom bus might be required, to provide 
+custom probe function. After giving it a thought, I think you can get 
+away with using aux bus. So, embed the struct auxiliary_device into 
+qseecom_app_device.
+
 > 
-> So maybe another question: do we have other situations than mtd which
-> sometimes expect the nvmem core to parse the OF nodes to populate cells,
-> and sometimes not?
+>>> +    int num_cells;
+>>> +};
+>>> +
+>>> +static const struct of_device_id qseecom_dt_match[] = {
+>>> +    { .compatible = "qcom,qseecom-sc8280xp", },
+>>
+>> Forgot to mention, while doign review. There is no need for this 
+>> compat until you provide the actual data. Please move it to the patch 4.
+> 
+> Sure, will do that.
+> 
+>>> +    { .compatible = "qcom,qseecom", },
+>>> +    { }
+>>> +};
+>>> +MODULE_DEVICE_TABLE(of, qseecom_dt_match);
+>>
+>>
+> 
+> Regards,
+> Max
 
-I'm not aware of that. Please also check my patch. The only case I set
-"use_fixed_of_cells" conditionally is mtd code. In other cases it's
-hardcoded to "true".
+-- 
+With best wishes
+Dmitry
 
-
-> Also, what about "of_children_are_cells" ? Because actually in most
-> cases it's a "fixed of cell", so I don't find the current naming
-> descriptive enough for something so touchy.
-
-That would be just incorrect because this new config property
-("use_fixed_of_cells") is only about FIXED cells.
-
-There are cases of OF children being cells but NOT being fixed cells.
-They should NOT be parsed by the nvmem_add_cells_from_of().
-
-Example:
-a607a850ba1f ("dt-bindings: nvmem: u-boot,env: add basic NVMEM cells")
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a607a850ba1fa966cbb035544c1588e24a6307df
-
-So that would result in U-Boot env:
-1. Having OF children nodes being cells
-2. Setting "of_children_are_cells" to false (counter-intuitive) to avoid nvmem_add_cells_from_of()
