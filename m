@@ -2,73 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D8FA6B1E0E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 09:29:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A47286B1E11
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 09:29:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230130AbjCII3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 03:29:07 -0500
+        id S230104AbjCII3k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 03:29:40 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229952AbjCII2u (ORCPT
+        with ESMTP id S230094AbjCII3X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 03:28:50 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F734EB89B
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 00:26:41 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id o12so3758082edb.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 00:26:41 -0800 (PST)
+        Thu, 9 Mar 2023 03:29:23 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99F11E487C
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 00:27:27 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id a25so3982342edb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 00:27:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678350395;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1678350445;
+        h=content-transfer-encoding:in-reply-to:from:cc:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Wu8DwsqsqfKPKGEkJB9iRAr5gDSdJd+ozW53J8HXH2k=;
-        b=mjXLqCtz5Wx9vHDpCtORqHRtbK7NBTn8AF25cuWdHPh6ZSUioLBtES4qfnst0aHZam
-         xAzcwxm2JlmhdPZ+oTY8Bsj2CzJh+j3WeIjQ9lP7I8fNNA30V0WFIYt/o9LWOJtftFn/
-         rpBptk46k8qfjNKhT81s/BMsqUVZy6jgNxClSgb8fXAVGsczXkyCSpU9TF0OtVHY32BJ
-         DBpwZ6ZEFi4fX8rY4k4/5uv/jxXhgr7CV+Rb5BDqKOnn8lH+ndPXaSph88C1bDQ4sq4l
-         6wRzbTxAWF0LTjEAReNvHSmq3tlzRl/b84prTms5fOCSw06U2TsiSd+eS3kXNiOP6sWu
-         V4Aw==
+        bh=YYduG/Bcmu9NPPmwSKTMuZPf8YDgxXGdRWgnP+qoWu8=;
+        b=rkmkI5jIk3QDSxiUKCdxvPJQEePjs3LY0yNfoBgsvBatlCgroAG+UJ4n8jlWm1z+zf
+         4H1usWjTSumuMp1VzkFlTZnivzb8i13sivLkMtfNTW8Xt57xZK1P5vkxXu7x7BzMSRmo
+         NQnyeBNU/R+NYKURr3PmwgSIjP/Wlh66PgD+bPuUaeS17TgivgWfHGi1b9ZPttv7ivfp
+         yRisWYwTTP2iiihu4LydgdJ0lmF6q20rC2yRulLRexozjHBmwGDI56doy6C9olIlzxaY
+         iK1kLyH0eW5yoTNwK0B18/skQ7VvLF84Rt0Mekw06Ci3MSL8hfBN2fX0rzSoXDbF47sc
+         Q2Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678350395;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20210112; t=1678350445;
+        h=content-transfer-encoding:in-reply-to:from:cc:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wu8DwsqsqfKPKGEkJB9iRAr5gDSdJd+ozW53J8HXH2k=;
-        b=a4yXiufVYpsgDPR4mP+aPlqAT8Vd1r8jCabE5l5XluRDrcG3RQ2/+pesKS4Cf/oSYI
-         7bVLeK3o9TfjtZh3fA7hWtvhuhzMCUUP7zD7gSAug7RuRJ7lm7CAHIohfgg9nryvue0q
-         m7dSu1g2lBDpYriZLiI8Sr27MePkSjyYGqpoHkHTLmbyomq07oA7GMhE1748DQgq9MrT
-         gviZftwIBMthFjZhQ7GsEv5KyIFmaHP4H9zVOaqt2ukLRrXoakVRa23Y0nnUSag9iNAz
-         lkKp/K6xsH+o/LFzHrDA101E0pZNmzDWOkfVfGjsM5gNROpCzaC7eMRwZHZ0IabJeGps
-         BWzA==
-X-Gm-Message-State: AO0yUKUVaJWeaEU7x6yit6FPz6KTteO8bw3cginGaF/0rX/ZkbsEgMLA
-        7VGKMqrNc6Iqw6AdZ5bfJtrE7Q==
-X-Google-Smtp-Source: AK7set/JVbDVD2QiBnl1Ztxd5l85KNjzT5jJF+Dn+W2fce5O8vrQOWLCaKJi9mG1tcKxWTsQY6REyw==
-X-Received: by 2002:a17:907:2ce1:b0:8b1:32dd:3af with SMTP id hz1-20020a1709072ce100b008b132dd03afmr28905926ejc.28.1678350394825;
-        Thu, 09 Mar 2023 00:26:34 -0800 (PST)
+        bh=YYduG/Bcmu9NPPmwSKTMuZPf8YDgxXGdRWgnP+qoWu8=;
+        b=Cvrrin/5ZKKfTuaN+vuXKQR7LhjxyTiw2xnALqXO6IkURkyFprQ5IV2gZGxY2IrztH
+         KoaDRhd8ZCofb8UtpBhrNkmJV9evXnqo85fcfZAjK41dTvo5Ue3+ssNr15LxXfCBJ9EE
+         D6n5iiMEZMKtY+GROY91hW5vam3fMB9JNq+hvFwPvddzb/vYb4YntY4eHJpCK8fQ8zlV
+         aDoSq0zNhmmfTkzbtk0pfQrsiv7D9KNi/r0fNV/LEoYGqvvv25mnKCU52tP+w/m8i7PS
+         8FMIO6eXrfkh6t7ELaO3HDNVfiFpog6yxVYAf6vZL+x8ZKM0DrLt2+iHXIUVdGWB3gIh
+         /KuQ==
+X-Gm-Message-State: AO0yUKVi+iys7YkxUJsFqRsrnp9lwWDq/uAAfPn80gIkg9pMqFwtNieH
+        P9oK2l+/2teu1n+WOOLCN6/o3w==
+X-Google-Smtp-Source: AK7set/hGQYMclII6drCi+1VpLYiPnyopU8ViBSDK48kAcF5QPIQpFX3tD0Q3oPoOgezzIW+XkG8qg==
+X-Received: by 2002:aa7:d84a:0:b0:4ad:316:b4e6 with SMTP id f10-20020aa7d84a000000b004ad0316b4e6mr20325419eds.42.1678350445264;
+        Thu, 09 Mar 2023 00:27:25 -0800 (PST)
 Received: from ?IPV6:2a02:810d:15c0:828:7ee2:e73e:802e:45c1? ([2a02:810d:15c0:828:7ee2:e73e:802e:45c1])
-        by smtp.gmail.com with ESMTPSA id ca5-20020a170906a3c500b008bc2c2134c5sm8528879ejb.216.2023.03.09.00.26.33
+        by smtp.gmail.com with ESMTPSA id w22-20020a17090633d600b008b907006d5dsm8665494eja.173.2023.03.09.00.27.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Mar 2023 00:26:34 -0800 (PST)
-Message-ID: <7cbd882d-c71c-ad92-6dbe-0f178043fdfd@linaro.org>
-Date:   Thu, 9 Mar 2023 09:26:32 +0100
+        Thu, 09 Mar 2023 00:27:24 -0800 (PST)
+Message-ID: <4b115ff2-a137-dd12-472c-f2248ce6350a@linaro.org>
+Date:   Thu, 9 Mar 2023 09:27:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 2/2] dt-bindings: remoteproc: qcom: Add sm6115 pas yaml
- file
+Subject: Re: [PATCH 2/3] dt-bindings: remoteproc: qcom,sm6115-pas: correct
+ memory-region constraints
 Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     mani@kernel.org, mathieu.poirier@linaro.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-References: <20230128053504.2099620-1-bhupesh.sharma@linaro.org>
- <20230128053504.2099620-2-bhupesh.sharma@linaro.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+References: <20230309082446.37362-1-krzysztof.kozlowski@linaro.org>
+ <20230309082446.37362-2-krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230128053504.2099620-2-bhupesh.sharma@linaro.org>
+In-Reply-To: <20230309082446.37362-2-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,74 +86,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/01/2023 06:35, Bhupesh Sharma wrote:
-> This documents the aDSP, cDSP and MPSS DSPs present
-> on the SM6115 SoC.
+On 09/03/2023 09:24, Krzysztof Kozlowski wrote:
+> Qualcomm PAS devices expect exactly one memory region, not many.  Also,
+> the memory-region is now defined in device specific binding, not in
+> qcom,pas-common.yaml, thus also require it in the same place.
 > 
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  .../bindings/remoteproc/qcom,sm6115-pas.yaml  | 143 ++++++++++++++++++
->  1 file changed, 143 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml
-> new file mode 100644
-> index 000000000000..f5d1fa9f45f1
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml
-> @@ -0,0 +1,143 @@
-> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/remoteproc/qcom,sm6115-pas.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm SM6115 Peripheral Authentication Service
-> +
-> +maintainers:
-> +  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> +
-> +description:
-> +  Qualcomm SM6115 SoC Peripheral Authentication Service loads and boots
-> +  firmware on the Qualcomm DSP Hexagon cores.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sm6115-adsp-pas
-> +      - qcom,sm6115-cdsp-pas
-> +      - qcom,sm6115-mpss-pas
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    items:
-> +      - description: XO clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: xo
-> +
-> +  memory-region:
-> +    minItems: 1
+> Fixes: 838c558bb8bc ("dt-bindings: remoteproc: qcom: Add sm6115 pas yaml file")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-maxItems instead
-
-> +    description: Reference to the reserved-memory for the Hexagon core
-> +
-> +  smd-edge: false
-> +
-> +  firmware-name:
-> +    $ref: /schemas/types.yaml#/definitions/string
-> +    description: Firmware name for the Hexagon core
-> +
-> +required:
-> +  - compatible
-> +  - reg
-
-also memory-region
-
+I think the sm6115 was not yet merged, thus maybe this patch is not
+needed. If it wasn't merged, please squash it with original submission
+and send new viersion.
 
 Best regards,
 Krzysztof
