@@ -2,149 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4319C6B21A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 11:38:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C9656B21CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 11:47:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231339AbjCIKiZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 05:38:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34972 "EHLO
+        id S229611AbjCIKrB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 05:47:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231346AbjCIKiL (ORCPT
+        with ESMTP id S230173AbjCIKqy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 05:38:11 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A89E20A06
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 02:38:06 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id h14so1371996wru.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 02:38:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1678358284;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=h4J+1GJ0DTm4BTyDlgRz+lJ76XEQHv+rIcqt4lsLOI0=;
-        b=Pi6/etCxC3M1Ec9xrJa0vEZxTvl5yADqVtsEQHDYZWWvKfJzwnrQPBJQnHF5fBfeuL
-         9SKKb/iKogiJJDyM4zbTE8X9KLBHpywwY5NFV0Jnieweud9+zuKNbLslGBN9zejgoEss
-         k1RuoGjkmb9aen9dz2fP+OV9LeWDI9E0F9WX4f4nW+GGaHt3ICRsdKVXufYDMfcAm8/k
-         n0NIauOJKLWRVIiLjoz70Ziw07ZUkU1qxyrdV8PMjJZTGvGy+pEQQCwajwEXshtQJ7Ph
-         rcPyBbnfNg458Oyi2EEHp01RiebEAkjGiq9xWw5TxQWOGm2mQ83KxPW2Ubtyp7u46EmM
-         V6Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678358284;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=h4J+1GJ0DTm4BTyDlgRz+lJ76XEQHv+rIcqt4lsLOI0=;
-        b=KstdKCTk1l891duI/GfXkVcvlbV5mdmHH2iwphWjPJ5LknRNX1BBVx1Eo6lT0WdogO
-         U0R/njDwKtz4PYa0wT/XADrrZrHH4dwgtweVNl/n4Kcfndwx3veTiO/ydQo+Om3n7mz/
-         2eYsa8uceqV2dnCe5Grp+20hR5CGWD44Xlh7piF1lYrVnlnFr08NoE22ff8U7KcrpRkj
-         uGLVjb2jD5K6DB+l92gXs31DQBKtPN7JbODAJk6+hJzoW5UDE3AsWDvOJeN08JpIBQds
-         npqjRRopTOLumXD69C2QZjr9qvxowTjRu03ha+JzEvC6wATn8qj2pUwfUUUJL2B9wGkv
-         B4AQ==
-X-Gm-Message-State: AO0yUKWjgCl2BC+RDutPj6iNFwlLXYMP0Vlq9RTZPIUcu5c6vf6AdGOE
-        OGbcrPP/JoTZ8ZDJro7MCStDIQ==
-X-Google-Smtp-Source: AK7set/9cdU3wUGQmsIJBGi7HwZ8gdCGSZJhatqDvxbLAN3B+K+bRg3ptteM/per8kvHfDpk7tGoew==
-X-Received: by 2002:adf:e681:0:b0:2c7:faf:af28 with SMTP id r1-20020adfe681000000b002c70fafaf28mr13879476wrm.43.1678358284462;
-        Thu, 09 Mar 2023 02:38:04 -0800 (PST)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:f14c:2275:50fc:c056])
-        by smtp.gmail.com with ESMTPSA id f2-20020a5d58e2000000b002c56af32e8csm17638119wrd.35.2023.03.09.02.38.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Mar 2023 02:38:04 -0800 (PST)
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH v5 9/9] arm64: dts: qcom: sa8775p-ride: enable the BT UART port
-Date:   Thu,  9 Mar 2023 11:37:52 +0100
-Message-Id: <20230309103752.173541-10-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <20230309103752.173541-1-brgl@bgdev.pl>
-References: <20230309103752.173541-1-brgl@bgdev.pl>
+        Thu, 9 Mar 2023 05:46:54 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E41720A1F;
+        Thu,  9 Mar 2023 02:46:47 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3D26EB81ED3;
+        Thu,  9 Mar 2023 10:46:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56B6C433D2;
+        Thu,  9 Mar 2023 10:46:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678358804;
+        bh=Kx8JrIEBCDpyV5UPrP+4xnSL/3UnrQPCBmZ7NBusVHo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ituxghn+9yrt3mfPxAZTut59s4ozydCG8VFCWXXmvFX7p87kxZXX+hDP/k3zgW91D
+         hqpfXEKENysSemVs0CkHB+24lJQ/B338Wodty7aGyzHFIiAmiehnLynmb+FzT2Ja4v
+         PnDNL8fZLDzNkPznqeg1GXyIlk+MNCPEhXVBJtcKMHZcnBJf0xRhvDkyOdxmXZ9owe
+         TQ5GvaSpB/ebEtsCIx8nKfRJzpWD4t/D2QHGs5b9lfmH8P8OcGvHIxUpYBQnpjyx3y
+         2eYDpnA60cvSEB4Pq9bu8c+ElKYPYAjntrvna0swLA7ZqkBrhhNV9mHQkhxXtCeuOm
+         edenWjnr9TjKQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1paDo4-0005L9-Nt; Thu, 09 Mar 2023 11:47:33 +0100
+Date:   Thu, 9 Mar 2023 11:47:32 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_krichai@quicinc.com, johan+linaro@kernel.org, steev@kali.org,
+        mka@chromium.org, Dhruva Gole <d-gole@ti.com>
+Subject: Re: [PATCH v2 1/1] PCI: qcom: Add support for system suspend and
+ resume
+Message-ID: <ZAm5RPdn5PmaJzVO@hovoldconsulting.com>
+References: <20230302083625.188482-1-manivannan.sadhasivam@linaro.org>
+ <20230302083625.188482-2-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230302083625.188482-2-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Thu, Mar 02, 2023 at 02:06:25PM +0530, Manivannan Sadhasivam wrote:
+> During the system suspend, vote for minimal interconnect bandwidth and
+> also turn OFF the resources like clock and PHY if there are no active
+> devices connected to the controller. For the controllers with active
+> devices, the resources are kept ON as removing the resources will
+> trigger access violation during the late end of suspend cycle as kernel
+> tries to access the config space of PCIe devices to mask the MSIs.
+> 
+> Also, it is not desirable to put the link into L2/L3 state as that
+> implies VDD supply will be removed and the devices may go into powerdown
+> state. This will affect the lifetime of storage devices like NVMe.
+> 
+> And finally, during resume, turn ON the resources if the controller was
+> truly suspended (resources OFF) and update the interconnect bandwidth
+> based on PCIe Gen speed.
+> 
+> Suggested-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Acked-by: Dhruva Gole <d-gole@ti.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 53 ++++++++++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index a232b04af048..7147f0103026 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -227,6 +227,7 @@ struct qcom_pcie {
+>  	struct gpio_desc *reset;
+>  	struct icc_path *icc_mem;
+>  	const struct qcom_pcie_cfg *cfg;
+> +	bool suspended;
+>  };
+>  
+>  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+> @@ -1820,6 +1821,53 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	return ret;
+>  }
+>  
+> +static int qcom_pcie_suspend_noirq(struct device *dev)
+> +{
+> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> +	int ret;
+> +
+> +	/* Set minimum bandwidth required to keep data path functional during suspend */
+> +	ret = icc_set_bw(pcie->icc_mem, 0, MBps_to_icc(250));
 
-Enable the high-speed UART port connected to the Bluetooth controller on
-the sa8775p-adp development board.
+I can again confirm that this now passes basic smoke testing on my CRD
+(unlike v1 which set bw to 0) and X13s.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 33 +++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+> +	if (ret) {
+> +		dev_err(pcie->pci->dev, "Failed to set interconnect bandwidth: %d\n", ret);
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-index cba7c8116141..1020dfd21da2 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-@@ -14,6 +14,7 @@ / {
- 	aliases {
- 		serial0 = &uart10;
- 		serial1 = &uart12;
-+		serial2 = &uart17;
- 		i2c18 = &i2c18;
- 		spi16 = &spi16;
- 	};
-@@ -93,6 +94,32 @@ qup_uart12_rx: qup-uart12-rx-pins {
- 			bias-pull-down;
- 		};
- 	};
-+
-+	qup_uart17_default: qup-uart17-state {
-+		qup_uart17_cts: qup-uart17-cts-pins {
-+			pins = "gpio91";
-+			function = "qup2_se3";
-+			bias-disable;
-+		};
-+
-+		qup_uart17_rts: qup0-uart17-rts-pins {
-+			pins = "gpio92";
-+			function = "qup2_se3";
-+			bias-pull-down;
-+		};
-+
-+		qup_uart17_tx: qup0-uart17-tx-pins {
-+			pins = "gpio93";
-+			function = "qup2_se3";
-+			bias-pull-up;
-+		};
-+
-+		qup_uart17_rx: qup0-uart17-rx-pins {
-+			pins = "gpio94";
-+			function = "qup2_se3";
-+			bias-pull-down;
-+		};
-+	};
- };
- 
- &uart10 {
-@@ -108,6 +135,12 @@ &uart12 {
- 	status = "okay";
- };
- 
-+&uart17 {
-+	pinctrl-0 = <&qup_uart17_default>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
- &xo_board_clk {
- 	clock-frequency = <38400000>;
- };
--- 
-2.37.2
+You already have a pointer to dev.
 
+> +		return ret;
+> +	}
+
+And please try to stay within 80 columns width unless breaking it
+improves readability (generally does not apply comments).
+
+> +
+> +	/*
+> +	 * Turn OFF the resources only for controllers without active PCIe devices. For controllers
+> +	 * with active devices, the resources are kept ON and the link is expected to be in L0/L1
+> +	 * (sub)states.
+> +	 *
+> +	 * Turning OFF the resources for controllers with active PCIe devices will trigger access
+> +	 * violation during the end of the suspend cycle, as kernel tries to access the PCIe devices
+> +	 * config space for masking MSIs.
+> +	 *
+> +	 * Also, it is not desirable to put the link into L2/L3 state as that implies VDD supply
+> +	 * will be removed and the devices may go into powerdown state. This will affect the
+> +	 * lifetime of the storage devices like NVMe.
+> +	 */
+
+Same here.
+
+> +	if (!dw_pcie_link_up(pcie->pci)) {
+> +		qcom_pcie_host_deinit(&pcie->pci->pp);
+> +		pcie->suspended = true;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int qcom_pcie_resume_noirq(struct device *dev)
+> +{
+> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> +
+> +	if (pcie->suspended) {
+> +		qcom_pcie_host_init(&pcie->pci->pp);
+
+Looks like error handling is missing here.
+
+> +		pcie->suspended = false;
+> +	}
+> +
+> +	qcom_pcie_icc_update(pcie);
+> +
+> +	return 0;
+> +}
+> +
+>  static const struct of_device_id qcom_pcie_match[] = {
+>  	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
+>  	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
+> @@ -1856,12 +1904,17 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
+>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
+>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
+>  
+> +static const struct dev_pm_ops qcom_pcie_pm_ops = {
+> +	NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_suspend_noirq, qcom_pcie_resume_noirq)
+> +};
+> +
+>  static struct platform_driver qcom_pcie_driver = {
+>  	.probe = qcom_pcie_probe,
+>  	.driver = {
+>  		.name = "qcom-pcie",
+>  		.suppress_bind_attrs = true,
+>  		.of_match_table = qcom_pcie_match,
+> +		.pm = &qcom_pcie_pm_ops,
+>  	},
+>  };
+>  builtin_platform_driver(qcom_pcie_driver);
+
+Johan
