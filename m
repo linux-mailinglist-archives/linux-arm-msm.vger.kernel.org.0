@@ -2,146 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3F336B3137
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 23:44:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C8A956B31E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 00:05:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231548AbjCIWo1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 17:44:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33830 "EHLO
+        id S230509AbjCIXFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 18:05:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231534AbjCIWoI (ORCPT
+        with ESMTP id S229917AbjCIXFl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 17:44:08 -0500
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A87365C56;
-        Thu,  9 Mar 2023 14:43:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678401830; x=1709937830;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=fBE1n3VDHKOa0my/fpWQs/hh4OEzhEHXYLpvjY/5Y0Q=;
-  b=dPbm4nXmq99X2ep99J4vzLJ6u1gjzlzgjL0SNI9L55ZHTIy3HkySEhb3
-   WX4gr59wlATQowjxz+91nxZA2kWsXHUiJD5cJUuf8vQFT+2RAZzZL7rAT
-   Cp+DzHCkEmng1aafKzUQsQGpdV1rbQncRFnyvGbUZZpWVoPpf+ozZsjge
-   7P8jkyDNjpXcg3CWyCSgiv+KWPFzf612tFWFXOxYER7q2GgE1t2sTHxa2
-   bm8eCtHMaW2sOp1sN9Zdw+gWW6M/T5QUXKoR+esx8qWYu4DbKwIFXSUFD
-   P4o0UCOUa0EA1SVlShCoPnt+rSM26u1VmUWMcf5IlvDDy57XxCCXlE9KS
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10644"; a="335289373"
-X-IronPort-AV: E=Sophos;i="5.98,247,1673942400"; 
-   d="scan'208";a="335289373"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2023 14:42:49 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10644"; a="654953046"
-X-IronPort-AV: E=Sophos;i="5.98,247,1673942400"; 
-   d="scan'208";a="654953046"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by orsmga006.jf.intel.com with ESMTP; 09 Mar 2023 14:42:42 -0800
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1paOy9-0003H1-2U;
-        Thu, 09 Mar 2023 22:42:41 +0000
-Date:   Fri, 10 Mar 2023 06:42:35 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Danila Tikhonov <danila@jiaxyga.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        davidwronek@gmail.com, Danila Tikhonov <danila@jiaxyga.com>
-Subject: Re: [PATCH 2/2] phy: qcom-qmp-ufs: Add SM7150 support
-Message-ID: <202303100615.2vRPxq4R-lkp@intel.com>
-References: <20230309185049.170878-3-danila@jiaxyga.com>
+        Thu, 9 Mar 2023 18:05:41 -0500
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0B33F2FAB
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 15:05:39 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id a32so3547475ljq.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 15:05:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678403138;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fImqtEk3Yd/BGvJUs6e3qMPUkkVywiIrFLK2xRO4mHk=;
+        b=SVF1YOWqlHcnG+98KHK6urC9FRxOMKlDBgSLVJgzU4H7ilC0w1HMRNzwiax+5TSVsz
+         qhH9PKA5g+Hvh7Y93QMH0aNLA/FQOSlsX9/Y65lgdV9Ko0k7TXyM5lPI4uukZZ/0Ml2B
+         tE4vBNNh+BWTfJlWcSOX2h2YPYStF2PxcnWAK+pKV1GvGBxX5DoZ8dRID6e/epDEUTO3
+         MC+K1sCUzIqXL1gFqH8c5BeOg7vmut1l3uwNSEAX7myOL3OoaWGOtxwmkj/D8hLSO4BL
+         5mi87l+TMjRcqqcIBaVvyIQA9q2Xw9EglvAfgSO9Bl1/sl/kilN2LcgCINZczoxURDuY
+         hlcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678403138;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fImqtEk3Yd/BGvJUs6e3qMPUkkVywiIrFLK2xRO4mHk=;
+        b=oNEb2QQU//3JXi+gMyghaVaFUKp/iBkZ9J5QvkyZFyDMU2q5pN5pQBuM7wv+WcvnxE
+         He39JPrMolTEpSC2Rs4gCdK8i98NM9VqZoOvTSWzlYPRnfQC/X3ReYWVrr9P04cX2YaP
+         BVPDYyDyS6DoqvZ51AmJuWND5uIdpV6fJVxM+FFCuDHy256+oiQuJERW5H6ONb6FNIya
+         wbKOxQFcJMDPkEbHtDGd+O8x42yH10VYSuE0HqdQBX5GBhbRQWjzfJIz7WhIj0xXbebo
+         LNNdnHnw9vrjsUUiCgce9jaOPO+Zm3eZ3Yuf/0IWYMGGTikBj0hp1HG7FjM79XZKm8z6
+         F7NA==
+X-Gm-Message-State: AO0yUKUh0J2iIW2KpFqtStJFly11PR7InDs1cR+LpOeWt52msubOiWG+
+        qDz+xJS/Wl3quLt9EaBM7IGYkA==
+X-Google-Smtp-Source: AK7set9AR4JFXKutmZJPBcVPweBBC2MWCPTYwTcbdhPO6Vxn8D1IcwdDLcYkLz7ISFyPNqhxDkfMgQ==
+X-Received: by 2002:a2e:8091:0:b0:293:2ef5:9434 with SMTP id i17-20020a2e8091000000b002932ef59434mr6499836ljg.2.1678403137854;
+        Thu, 09 Mar 2023 15:05:37 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id bi37-20020a05651c232500b00295b1b6e063sm48761ljb.34.2023.03.09.15.05.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Mar 2023 15:05:37 -0800 (PST)
+Message-ID: <e08cad22-09fe-1c65-a329-802b116e7503@linaro.org>
+Date:   Fri, 10 Mar 2023 01:05:36 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230309185049.170878-3-danila@jiaxyga.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] drm/msm: Check for the GPU IOMMU during bind
+To:     Jordan Crouse <jorcrous@amazon.com>,
+        freedreno@lists.freedesktop.org
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Ricardo Ribalda <ribalda@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230309222049.4180579-1-jorcrous@amazon.com>
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230309222049.4180579-1-jorcrous@amazon.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Danila,
+On 10/03/2023 00:20, Jordan Crouse wrote:
+> While booting with amd,imageon on a headless target the GPU probe was
+> failing with -ENOSPC in get_pages() from msm_gem.c.
+> 
+> Investigation showed that the driver was using the default 16MB VRAM
+> carveout because msm_use_mmu() was returning false since headless devices
+> use a dummy parent device. Avoid this by extending the existing is_a2xx
+> priv member to check the GPU IOMMU state on all platforms and use that
+> check in msm_use_mmu().
 
-Thank you for the patch! Yet something to improve:
+I wonder if we can fix this by setting 'dummy_dev'->of_node to adreno's 
+of_node. Did you check that possibility?
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v6.3-rc1 next-20230309]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> 
+> This works for memory allocations but it doesn't prevent the VRAM carveout
+> from being created because that happens before we have a chance to check
+> the GPU IOMMU state in adreno_bind.
+> 
+> There are a number of possible options to resolve this but none of them are
+> very clean. The easiest way is to likely specify vram=0 as module parameter
+> on headless devices so that the memory doesn't get wasted.
+> 
+> Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
+> ---
+> 
+>   drivers/gpu/drm/msm/adreno/adreno_device.c | 6 +++++-
+>   drivers/gpu/drm/msm/msm_drv.c              | 7 +++----
+>   drivers/gpu/drm/msm/msm_drv.h              | 2 +-
+>   3 files changed, 9 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index 36f062c7582f..4f19da28f80f 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -539,7 +539,11 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
+>   	DBG("Found GPU: %u.%u.%u.%u", config.rev.core, config.rev.major,
+>   		config.rev.minor, config.rev.patchid);
+>   
+> -	priv->is_a2xx = config.rev.core == 2;
+> +	/*
+> +	 * A2xx has a built in IOMMU and all other IOMMU enabled targets will
+> +	 * have an ARM IOMMU attached
+> +	 */
+> +	priv->has_gpu_iommu = config.rev.core == 2 || device_iommu_mapped(dev);
+>   	priv->has_cached_coherent = config.rev.core >= 6;
+>   
+>   	gpu = info->init(drm);
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index aca48c868c14..a125a351ec90 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -318,11 +318,10 @@ bool msm_use_mmu(struct drm_device *dev)
+>   	struct msm_drm_private *priv = dev->dev_private;
+>   
+>   	/*
+> -	 * a2xx comes with its own MMU
+> -	 * On other platforms IOMMU can be declared specified either for the
+> -	 * MDP/DPU device or for its parent, MDSS device.
+> +	 * Return true if the GPU or the MDP/DPU or parent MDSS device has an
+> +	 * IOMMU
+>   	 */
+> -	return priv->is_a2xx ||
+> +	return priv->has_gpu_iommu ||
+>   		device_iommu_mapped(dev->dev) ||
+>   		device_iommu_mapped(dev->dev->parent);
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Danila-Tikhonov/dt-bindings-phy-Add-QMP-UFS-PHY-comptible-for-SM7150/20230310-025222
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20230309185049.170878-3-danila%40jiaxyga.com
-patch subject: [PATCH 2/2] phy: qcom-qmp-ufs: Add SM7150 support
-config: arm64-randconfig-r023-20230308 (https://download.01.org/0day-ci/archive/20230310/202303100615.2vRPxq4R-lkp@intel.com/config)
-compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project 67409911353323ca5edf2049ef0df54132fa1ca7)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install arm64 cross compiling tool for clang build
-        # apt-get install binutils-aarch64-linux-gnu
-        # https://github.com/intel-lab-lkp/linux/commit/95e826acacaf3b5ba79c06b481199a17abed44ba
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Danila-Tikhonov/dt-bindings-phy-Add-QMP-UFS-PHY-comptible-for-SM7150/20230310-025222
-        git checkout 95e826acacaf3b5ba79c06b481199a17abed44ba
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/phy/qualcomm/
+It is not a problem of you patch, of course, but this check now looks 
+strange to me. We mix the GPU check and MDP/DPU checks. Consider msm8x60 
+(a220, mdp4) and, for example, no system level MMU.
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303100615.2vRPxq4R-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:380:3: error: expected identifier or '('
-   };)
-     ^
->> drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:972:14: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
-                   .serdes         = sm8150_ufsphy_serdes,
-                                     ^
-   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:973:28: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
-                   .serdes_num     = ARRAY_SIZE(sm8150_ufsphy_serdes),
-                                                ^
-   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:973:28: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
-   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:973:28: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
-   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:1004:14: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
-                   .serdes         = sm8150_ufsphy_serdes,
-                                     ^
-   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:1005:28: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
-                   .serdes_num     = ARRAY_SIZE(sm8150_ufsphy_serdes),
-                                                ^
-   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:1005:28: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
-   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c:1005:28: error: use of undeclared identifier 'sm8150_ufsphy_serdes'
-   9 errors generated.
-
-
-vim +380 drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-
-   370	
-   371	static const struct qmp_phy_init_tbl sm7150_ufsphy_pcs[] = {
-   372		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_RX_SIGDET_CTRL2, 0x6f),
-   373		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0f),
-   374		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_TX_SMALL_AMP_DRV_LVL, 0x02),
-   375		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_RX_SYM_RESYNC_CTRL, 0x03),
-   376		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
-   377		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_RX_SIGDET_CTRL1, 0x0f),
-   378		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_RX_MIN_HIBERN8_TIME, 0xFF),
-   379		QMP_PHY_INIT_CFG(QPHY_V3_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
- > 380	};)
-   381	
+>   }
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 9f0c184b02a0..f33f94acd1b9 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -126,7 +126,7 @@ struct msm_drm_private {
+>   	struct msm_gpu *gpu;
+>   
+>   	/* gpu is only set on open(), but we need this info earlier */
+> -	bool is_a2xx;
+> +	bool has_gpu_iommu;
+>   	bool has_cached_coherent;
+>   
+>   	struct drm_fb_helper *fbdev;
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+With best wishes
+Dmitry
+
