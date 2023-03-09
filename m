@@ -2,154 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C8236B199D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 03:52:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ABEA6B1A7C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 05:48:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229894AbjCICws (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 21:52:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57698 "EHLO
+        id S229605AbjCIEsA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 23:48:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229823AbjCICwd (ORCPT
+        with ESMTP id S229453AbjCIEr5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 21:52:33 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2D92984F8
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 18:52:23 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id h11-20020a17090a2ecb00b00237c740335cso791265pjs.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 18:52:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678330343;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=b5Th4ezi2JLIwi7eXgKdUNLkPeZJxmBPYFrzOKORyYI=;
-        b=zshNKuLrllaWY+2TQVkDsSi6bkHt2ZAnqw5shYeTatNjWSWHQFxu/6ctZJ/P1BDPNE
-         8OdvScnv9ovgnQpjMxPfHN7bGd86ZU/XTVlBM2bDJCJogsXWYnzC54rfGZrTidh1Zjwd
-         SBPp0MpO+G9BbchFcJfcU/zb7MNWQWbB7EHOlMUVijztPdTeRGj2EZNckhtEuLx+mC6W
-         z/OCfK24jblkBtS5kRjYzhqpQEzTUskI/1toc1RoXg89GvC0CQaSVV9AQoIrmujIzi02
-         JLhl1bOW8Bj64YA4RJMHvsqJaRF0wSxD8hHH+EWHGaDc3UmvtzEJ5L5FJOOt+F4XxtVe
-         baAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678330343;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=b5Th4ezi2JLIwi7eXgKdUNLkPeZJxmBPYFrzOKORyYI=;
-        b=fnQ12kg/FDiSu8z4Dl6onKLEDIMU9dSwAJbX9L2jXruuRnbiol9m6dlK5Tq86bnOGQ
-         Bv/uoZiNT8qQMHTk4VuUjAtJv8O+pXTRWSIZDiyV5CP/JUovu1Fi2MC4p/QyAIecjvNI
-         7JJk9mue9SWIUsUTF++Eud3vGyej+Yx3Dy6sJxoSnI1xfAan7wZWZp3eH2hzj1tb8MEH
-         cRSUfZ5PR8xqeyWoZ3ljL4xtYBw6QHkigR5+TG2ppLMkRDClkB9cMKt3Q4QatrAjs0p5
-         +zQJ0D6gMrUEhaUewRS103cM8NjpXtUf5d8wQ/5TwuJDW7mLKiqwZ/ChnL39oAtGP89B
-         oXpg==
-X-Gm-Message-State: AO0yUKV5iMBP+WWLTiTWQOPI6VBty5Ug/hMEzaAzybxqlsxpJqxVzPd3
-        6fwgoCkaBDLfos7ZHIZh1b34WA==
-X-Google-Smtp-Source: AK7set/506rAh498pfYZpAHNlgO/8W9KnvcLLm96NcVxAazQSKNg9B8FzpR+Y9lB+gbmoIWJZCqb6Q==
-X-Received: by 2002:a17:903:441:b0:19e:7d51:3a41 with SMTP id iw1-20020a170903044100b0019e7d513a41mr18047647plb.69.1678330343429;
-        Wed, 08 Mar 2023 18:52:23 -0800 (PST)
-Received: from T480 (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id f2-20020a170902ab8200b0019e60c645b1sm10395624plr.305.2023.03.08.18.52.18
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 Mar 2023 18:52:22 -0800 (PST)
-Date:   Thu, 9 Mar 2023 10:52:13 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: PCI: Add quirk for platforms running Windows
-Message-ID: <20230309025212.GB18319@T480>
-References: <20230227021221.17980-1-shawn.guo@linaro.org>
- <20230308185310.GA1030878@bhelgaas>
+        Wed, 8 Mar 2023 23:47:57 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19CCD1FC6;
+        Wed,  8 Mar 2023 20:47:54 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 328NttiG018268;
+        Thu, 9 Mar 2023 04:47:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=2iD4qKrKVuTY9r+EQEmj3UNps1cWE5eVskoKOcWH9VI=;
+ b=Fq//dHoOyTJfoFZMUpjJN+Im6A4d8i8533j94YAhpcXmsY7inzogwGZ5l+jdeAoy1Qul
+ MyJFiRDppTjVJiFIXxv6vN3I4+shxKTsBqUM5fqS/cJQY4VAgCyqcqcy+TPi+GsZiGWq
+ MTz/bpla7x+A/wcW7K7mXoiIJshY6+2MlIGgyt/d8ptuNm6HP5r+ITwfmrPOk5PXnod+
+ o1sSuzMuNdV6iQRLSJCRvEV9H1ABOXnPRJHRbQgzkiSsNtrgInaMdxK+2rChLsJAAIdm
+ R/I43aD4juPoPTjJbC26pfG39t7hmfBv3YP0Chdt5KcDNKbzx+s/VmRPwrX+Ut9tu/83 Qg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p72qarsgf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 09 Mar 2023 04:47:29 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3294lRLA032394
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 9 Mar 2023 04:47:27 GMT
+Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 8 Mar 2023
+ 20:47:21 -0800
+Message-ID: <bc2680cb-e81f-4afb-5a8c-ac0f5a9aed78@quicinc.com>
+Date:   Thu, 9 Mar 2023 10:17:17 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230308185310.GA1030878@bhelgaas>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V6 7/9] dt-bindings: firmware: qcom,scm: document IPQ5332
+ SCM
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <catalin.marinas@arm.com>, <will@kernel.org>,
+        <arnd@arndb.de>, <dmitry.baryshkov@linaro.org>,
+        <geert+renesas@glider.be>, <nfraprado@collabora.com>,
+        <broonie@kernel.org>, <rafal@milecki.pl>, <robimarko@gmail.com>,
+        <quic_gurus@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
+References: <20230307062232.4889-1-quic_kathirav@quicinc.com>
+ <20230307062232.4889-8-quic_kathirav@quicinc.com>
+ <754a2d38-dd7b-48b6-80e5-683ca193e0b1@linaro.org>
+ <ab803e21-76bf-308c-9df0-8b7b45b472b2@quicinc.com>
+ <2d1661fe-92bd-a117-27a5-cf1803ce363f@linaro.org>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <2d1661fe-92bd-a117-27a5-cf1803ce363f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: aDjSsLTmGoKWbN1wCRgxawY3sQscZdUM
+X-Proofpoint-ORIG-GUID: aDjSsLTmGoKWbN1wCRgxawY3sQscZdUM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-09_01,2023-03-08_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015 bulkscore=0
+ mlxlogscore=912 spamscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303090036
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ linux-arm-msm and MSM maintainer Bjorn
 
-On Wed, Mar 08, 2023 at 12:53:10PM -0600, Bjorn Helgaas wrote:
-> On Mon, Feb 27, 2023 at 10:12:21AM +0800, Shawn Guo wrote:
-> > Commit 8fd4391ee717 ("arm64: PCI: Exclude ACPI "consumer" resources from
-> > host bridge windows") introduced a check to remove host bridge register
-> > resources for all arm64 platforms, with the assumption that the PNP0A03
-> > _CRS resources would always be host bridge registers and never as windows
-> > on arm64.
-> > 
-> > The assumption stands true until Qualcomm Snapdragon Windows laptops
-> > emerge.  These laptops describe host bridge windows in PNP0A03 _CRS
-> > resources instead.  For example, the Microsoft Surface Pro X has host
-> > bridges defined as
-> > 
-> >     Name (_HID, EisaId ("PNP0A08") /* PCI Express Bus */)  // _HID: Hardware ID
-> >     Name (_CID, EisaId ("PNP0A03") /* PCI Bus */)  // _CID: Compatible ID
-> > 
-> >     Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
-> >     {
-> >         Name (RBUF, ResourceTemplate ()
-> >         {
-> >             Memory32Fixed (ReadWrite,
-> >                 0x60200000,         // Address Base
-> >                 0x01DF0000,         // Address Length
-> >                 )
-> >             WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
-> >                 0x0000,             // Granularity
-> >                 0x0000,             // Range Minimum
-> >                 0x0001,             // Range Maximum
-> >                 0x0000,             // Translation Offset
-> >                 0x0002,             // Length
-> >                 ,, )
-> >         })
-> >         Return (RBUF) /* \_SB_.PCI0._CRS.RBUF */
-> >     }
-> > 
-> > The Memory32Fixed holds a host bridge window, but it's not properly
-> > defined as a "producer" resource.  Consequently the resource gets
-> > removed by kernel, and the BAR allocation fails later on:
-> > 
-> >     [ 0.150731] pci 0002:00:00.0: BAR 14: no space for [mem size 0x00100000]
-> >     [ 0.150744] pci 0002:00:00.0: BAR 14: failed to assign [mem size 0x00100000]
-> >     [ 0.150758] pci 0002:01:00.0: BAR 0: no space for [mem size 0x00004000 64bit]
-> >     [ 0.150769] pci 0002:01:00.0: BAR 0: failed to assign [mem size 0x00004000 64bit]
-> > 
-> > This eventually prevents the PCIe NVME drive from being accessible.
-> > 
-> > Add a quirk for these platforms to avoid the resource being removed.
-> > 
-> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> > ---
-> > We are running into the issue on more devices than just Surface Pro X
-> > now, so trying to sort it out with a quirk as suggested by Lorenzo [1].
-> 
-> One thing I don't like about this application of quirks is that the
-> list of affected platforms is likely to grow, which is an ongoing
-> burden for users and developers.
+On 3/8/2023 9:14 PM, Konrad Dybcio wrote:
+>
+> On 8.03.2023 16:39, Kathiravan T wrote:
+>> On 3/8/2023 4:31 PM, Konrad Dybcio wrote:
+>>> On 7.03.2023 07:22, Kathiravan T wrote:
+>>>> Document the compatible for IPQ5332 SCM.
+>>>>
+>>>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+>>>> ---
+>>> Does this board not have a crypto engine / CE1 clock exposed via
+>>> RPMCC? It will be enabled by default, but Linux should be aware
+>>> of it, so that we don't gate it by accident.
+>>
+>> IPQ5332 doesn't have the crypto engine and also it doesn't have RPMCC. Sorry, could you please help to explain how it is related to SCM?
+> SCM usually requires certain clocks to be up and that often includes
+> the CE1 clock on fairly recent designs.
 
-It's a very reasonable concern.  I really hope that Qualcomm will start
-thinking about Linux support on these machines in the future not too far
-away, so that the list will not grow too long.
 
-> Can we have a conversation with Qualcomm about how they *intend* this
-> to work?  Linux is probably doing something wrong (interpreting
-> something differently than Windows does), and if we could fix that, we
-> have a better chance of future platforms working without quirks.
+Thanks for the explanation. I don't see such requirements for this SoC.
 
-Today Qualcomm only ships and cares about Windows on these machines, but
-I believe it will change sooner or later.
 
-Shawn
+> Konrad
+>> Thanks, Kathiravan T.
