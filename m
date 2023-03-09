@@ -2,152 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 48C496B192D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 03:27:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C8236B199D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Mar 2023 03:52:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229757AbjCIC1J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Mar 2023 21:27:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52682 "EHLO
+        id S229894AbjCICws (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Mar 2023 21:52:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjCIC1I (ORCPT
+        with ESMTP id S229823AbjCICwd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Mar 2023 21:27:08 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A0EAC8885;
-        Wed,  8 Mar 2023 18:27:06 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id t25-20020a1c7719000000b003eb052cc5ccso2582363wmi.4;
-        Wed, 08 Mar 2023 18:27:06 -0800 (PST)
+        Wed, 8 Mar 2023 21:52:33 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2D92984F8
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Mar 2023 18:52:23 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id h11-20020a17090a2ecb00b00237c740335cso791265pjs.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Mar 2023 18:52:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678328824;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NiBJc+JA9BKwOEqfoxTFrlQveSSWtgQVq5rv1cxE6S4=;
-        b=jmTnArVt2CUNEJWbqY5aGHoO/zcrbhPWCt+BHWLqKa3otOMhWwKCxB7a1kj2l+DPbj
-         foLZdk8OJeEuYIT6VuqptchkigK9eAt1ANz5uLBu07JBCdF4MITdrOAF2BR6yY/Hh4/x
-         UWQ+NnpmvU/B2D334kJdv7u02NA/JU65KHt8rJjRmZ9ka2gMP0GZgkHkLuf927T2ltCQ
-         1gU6sk7cTGOrGEWfHJE2CtqWEP8A0/2w/1lVxGx0oF3LbbIgaqRryILSt9HTrrui8PJr
-         eJtp9v7HRcV/c3C4d+DfIomWZeRXNcVxkYJT/QGyj82vcJdUIgKqKQaIzxAoAdb2Tbw2
-         CcrQ==
+        d=linaro.org; s=google; t=1678330343;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=b5Th4ezi2JLIwi7eXgKdUNLkPeZJxmBPYFrzOKORyYI=;
+        b=zshNKuLrllaWY+2TQVkDsSi6bkHt2ZAnqw5shYeTatNjWSWHQFxu/6ctZJ/P1BDPNE
+         8OdvScnv9ovgnQpjMxPfHN7bGd86ZU/XTVlBM2bDJCJogsXWYnzC54rfGZrTidh1Zjwd
+         SBPp0MpO+G9BbchFcJfcU/zb7MNWQWbB7EHOlMUVijztPdTeRGj2EZNckhtEuLx+mC6W
+         z/OCfK24jblkBtS5kRjYzhqpQEzTUskI/1toc1RoXg89GvC0CQaSVV9AQoIrmujIzi02
+         JLhl1bOW8Bj64YA4RJMHvsqJaRF0wSxD8hHH+EWHGaDc3UmvtzEJ5L5FJOOt+F4XxtVe
+         baAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678328824;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NiBJc+JA9BKwOEqfoxTFrlQveSSWtgQVq5rv1cxE6S4=;
-        b=VHoQuXYYbIXhbQ/Gl9lXJfI4iOyZBbY63Hjpvdg6f5Z4j3SAndXJPJ+hCFKPX3lnM2
-         AOl8S9OEeD1F1ih7lH58axrKf6WACwCOmKRRUWNxZWT0PE7C2CyjJSKN/Efsn8pUQ+WX
-         IY4qbqIwwvGesGxTwKhvv6EsPcgUt6lj9TuiuMD3pUVhYoeTSLFJbYi6RZOtt5ow8/2U
-         kQl1pqw2urDxPR0k9w8SVCagqa8tUYelomV/2rONFptC5z04Wxzp6ZpJV52wjk4WWMC9
-         lMqXMp+j6e09ulNfp5EiJn5xom0GQg6NAVZu7xjyqxK7kb2qjz8fSyuXbmGEckhMuu3u
-         Nabw==
-X-Gm-Message-State: AO0yUKVfggsikYZ1ep8Km69YOzc0WupZdHqTyRLcDW7Q/C7zDlBGTY2O
-        plQeM+RbcQUyXibzFKOPSLY=
-X-Google-Smtp-Source: AK7set+yUg/5eATw94eWwrMFRUJvnUFMf0SEtj7rRaP0O+/wCpy+h9jGcW8TDAlbtDi10DiEOcmGjw==
-X-Received: by 2002:a05:600c:5123:b0:3ea:ecc2:daab with SMTP id o35-20020a05600c512300b003eaecc2daabmr19370990wms.3.1678328824452;
-        Wed, 08 Mar 2023 18:27:04 -0800 (PST)
-Received: from [192.168.2.202] (pd9ea3a5b.dip0.t-ipconnect.de. [217.234.58.91])
-        by smtp.gmail.com with ESMTPSA id s18-20020a05600c45d200b003e8dcc67bdesm1100136wmo.30.2023.03.08.18.27.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 18:27:03 -0800 (PST)
-Message-ID: <951c717b-d094-4190-a04b-3ce9007d1554@gmail.com>
-Date:   Thu, 9 Mar 2023 03:27:01 +0100
+        d=1e100.net; s=20210112; t=1678330343;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=b5Th4ezi2JLIwi7eXgKdUNLkPeZJxmBPYFrzOKORyYI=;
+        b=fnQ12kg/FDiSu8z4Dl6onKLEDIMU9dSwAJbX9L2jXruuRnbiol9m6dlK5Tq86bnOGQ
+         Bv/uoZiNT8qQMHTk4VuUjAtJv8O+pXTRWSIZDiyV5CP/JUovu1Fi2MC4p/QyAIecjvNI
+         7JJk9mue9SWIUsUTF++Eud3vGyej+Yx3Dy6sJxoSnI1xfAan7wZWZp3eH2hzj1tb8MEH
+         cRSUfZ5PR8xqeyWoZ3ljL4xtYBw6QHkigR5+TG2ppLMkRDClkB9cMKt3Q4QatrAjs0p5
+         +zQJ0D6gMrUEhaUewRS103cM8NjpXtUf5d8wQ/5TwuJDW7mLKiqwZ/ChnL39oAtGP89B
+         oXpg==
+X-Gm-Message-State: AO0yUKV5iMBP+WWLTiTWQOPI6VBty5Ug/hMEzaAzybxqlsxpJqxVzPd3
+        6fwgoCkaBDLfos7ZHIZh1b34WA==
+X-Google-Smtp-Source: AK7set/506rAh498pfYZpAHNlgO/8W9KnvcLLm96NcVxAazQSKNg9B8FzpR+Y9lB+gbmoIWJZCqb6Q==
+X-Received: by 2002:a17:903:441:b0:19e:7d51:3a41 with SMTP id iw1-20020a170903044100b0019e7d513a41mr18047647plb.69.1678330343429;
+        Wed, 08 Mar 2023 18:52:23 -0800 (PST)
+Received: from T480 (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id f2-20020a170902ab8200b0019e60c645b1sm10395624plr.305.2023.03.08.18.52.18
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 08 Mar 2023 18:52:22 -0800 (PST)
+Date:   Thu, 9 Mar 2023 10:52:13 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: PCI: Add quirk for platforms running Windows
+Message-ID: <20230309025212.GB18319@T480>
+References: <20230227021221.17980-1-shawn.guo@linaro.org>
+ <20230308185310.GA1030878@bhelgaas>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3 3/4] dt-bindings: firmware: Add Qualcomm QSEECOM
- interface
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Johan Hovold <johan@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sumit Garg <sumit.garg@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230305022119.1331495-1-luzmaximilian@gmail.com>
- <20230305022119.1331495-4-luzmaximilian@gmail.com>
- <20230308221657.GA3935330-robh@kernel.org>
- <93657561-d545-7ead-7f6c-dd2c62aab319@gmail.com>
- <c92a44fe-7057-2d81-41fc-2e84ae60f881@linaro.org>
-Content-Language: en-US
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <c92a44fe-7057-2d81-41fc-2e84ae60f881@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230308185310.GA1030878@bhelgaas>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/9/23 02:33, Dmitry Baryshkov wrote:
-> On 09/03/2023 00:44, Maximilian Luz wrote:
->> On 3/8/23 23:16, Rob Herring wrote:
->>> On Sun, Mar 05, 2023 at 03:21:18AM +0100, Maximilian Luz wrote:
->>>> Add bindings for the Qualcomm Secure Execution Environment interface
->>>> (QSEECOM).
->>>
->>> Pretty sure I already asked, but no answer in the commit message. Why do
->>> we need this? You've already declared the platform supports SCM calls
->>> with "qcom,scm". Why can't you probe whether you have QSEECOM or not? DT
->>> is for non-discoverable h/w we are stuck with.
->>
->> Yes, you've asked this before but I can only repeat what I've written in
->> my last response to your question: I am not aware of any way to properly
->> discover the interface at runtime from software.
->>
->> If it makes you happy, I can put this in the commit message as well...
->>
->>> Why is software made non-discoverable too?
->>
->> Please direct that question at the Qualcomm guys who actually designed
->> that interface. I can't give you an answer to that, and I'm not all that
->> happy about this either.
->>
->> To reiterate: I've reverse engineered this based on the Windows driver.
->> The Windows driver loads on an ACPI HID and it doesn't use any function
->> to check/verify whether the interface is actually present. Adding a DT
->> entry is the straight-forward adaption to having a HID in ACPI.
->>
->>> Nodes with only a compatible string are usually just an abuse of DT to
->>> instantiate some driver.
->>
->> If you or anyone here has any idea on how to discover the presence of
->> this, please feel free to let me know and I'd be happy to implement
->> that. Until then, I unfortunately don't see any other way of dealing
->> with this.
-> 
-> You can probably try requesting QSEECOM version. According to msm-3.18:
-> 
->          uint32_t feature = 10;
-> 
->          rc = qseecom_scm_call(6, 3, &feature, sizeof(feature),
->                  &resp, sizeof(resp));
->          pr_info("qseecom.qsee_version = 0x%x\n", resp.result);
->          if (rc) {
->                  pr_err("Failed to get QSEE version info %d\n", rc);
->                  goto exit_del_cdev;
->          }
-> 
++ linux-arm-msm and MSM maintainer Bjorn
 
-Thanks! I'll give that a try.
+On Wed, Mar 08, 2023 at 12:53:10PM -0600, Bjorn Helgaas wrote:
+> On Mon, Feb 27, 2023 at 10:12:21AM +0800, Shawn Guo wrote:
+> > Commit 8fd4391ee717 ("arm64: PCI: Exclude ACPI "consumer" resources from
+> > host bridge windows") introduced a check to remove host bridge register
+> > resources for all arm64 platforms, with the assumption that the PNP0A03
+> > _CRS resources would always be host bridge registers and never as windows
+> > on arm64.
+> > 
+> > The assumption stands true until Qualcomm Snapdragon Windows laptops
+> > emerge.  These laptops describe host bridge windows in PNP0A03 _CRS
+> > resources instead.  For example, the Microsoft Surface Pro X has host
+> > bridges defined as
+> > 
+> >     Name (_HID, EisaId ("PNP0A08") /* PCI Express Bus */)  // _HID: Hardware ID
+> >     Name (_CID, EisaId ("PNP0A03") /* PCI Bus */)  // _CID: Compatible ID
+> > 
+> >     Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+> >     {
+> >         Name (RBUF, ResourceTemplate ()
+> >         {
+> >             Memory32Fixed (ReadWrite,
+> >                 0x60200000,         // Address Base
+> >                 0x01DF0000,         // Address Length
+> >                 )
+> >             WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+> >                 0x0000,             // Granularity
+> >                 0x0000,             // Range Minimum
+> >                 0x0001,             // Range Maximum
+> >                 0x0000,             // Translation Offset
+> >                 0x0002,             // Length
+> >                 ,, )
+> >         })
+> >         Return (RBUF) /* \_SB_.PCI0._CRS.RBUF */
+> >     }
+> > 
+> > The Memory32Fixed holds a host bridge window, but it's not properly
+> > defined as a "producer" resource.  Consequently the resource gets
+> > removed by kernel, and the BAR allocation fails later on:
+> > 
+> >     [ 0.150731] pci 0002:00:00.0: BAR 14: no space for [mem size 0x00100000]
+> >     [ 0.150744] pci 0002:00:00.0: BAR 14: failed to assign [mem size 0x00100000]
+> >     [ 0.150758] pci 0002:01:00.0: BAR 0: no space for [mem size 0x00004000 64bit]
+> >     [ 0.150769] pci 0002:01:00.0: BAR 0: failed to assign [mem size 0x00004000 64bit]
+> > 
+> > This eventually prevents the PCIe NVME drive from being accessible.
+> > 
+> > Add a quirk for these platforms to avoid the resource being removed.
+> > 
+> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > ---
+> > We are running into the issue on more devices than just Surface Pro X
+> > now, so trying to sort it out with a quirk as suggested by Lorenzo [1].
+> 
+> One thing I don't like about this application of quirks is that the
+> list of affected platforms is likely to grow, which is an ongoing
+> burden for users and developers.
 
-As I can't test this on a device that doesn't have qseecom, it would
-probably be a good idea if someone could test this on a device that has
-qcom_scm but no qseecom (if those even exist) to make sure this doesn't
-misbehave.
+It's a very reasonable concern.  I really hope that Qualcomm will start
+thinking about Linux support on these machines in the future not too far
+away, so that the list will not grow too long.
 
-Regards,
-Max
+> Can we have a conversation with Qualcomm about how they *intend* this
+> to work?  Linux is probably doing something wrong (interpreting
+> something differently than Windows does), and if we could fix that, we
+> have a better chance of future platforms working without quirks.
+
+Today Qualcomm only ships and cares about Windows on these machines, but
+I believe it will change sooner or later.
+
+Shawn
