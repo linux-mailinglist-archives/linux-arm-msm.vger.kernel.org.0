@@ -2,131 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 047CC6B44DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 15:29:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 25B8B6B4641
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 15:41:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232460AbjCJO32 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 09:29:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53096 "EHLO
+        id S232776AbjCJOld (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 09:41:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232365AbjCJO3H (ORCPT
+        with ESMTP id S232777AbjCJOlc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 09:29:07 -0500
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F8EB11D087
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 06:27:17 -0800 (PST)
-Received: by mail-lj1-x22d.google.com with SMTP id by8so5457913ljb.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 06:27:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678458435;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JsV0Gbi3hH0/L9MS5rWIc0K18letEMd3yLRh1mvfzak=;
-        b=XN3WHynKo4hUaUzsfYWIYY30MDe805y50G8WB/PFSjPwfwtg31R7Vii2GjEvvGiYTd
-         dbSTqyx0Jc+jGgHbh+SpH4mVyJZMQTWK5BpjTItw5OHmGmazPPKtkZN77T8klOVHgwlj
-         BGSKvyt5l+ztHiIrIUXn04dOy/sFOz+DwawLsVZ/dW2kakKwlBP1pP5jRh9m0WF089Iu
-         gkVhBfwk4HpQilpn0GoA5nv3CJqraBEhyy1gXzgE5199L6Kiq8gHq76ZkPgdc4Va5tz3
-         hlDYc7MsDp7k2Ruhxkh6wAHtCtflqwrUbiMI8UqQtYno9beia9I/TPQiDuVG8esDzmkI
-         b6UA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678458435;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JsV0Gbi3hH0/L9MS5rWIc0K18letEMd3yLRh1mvfzak=;
-        b=pVuKcXPd0gXJRVq6mSoTZ8UXePxU5C+2rzDhg82d9IJHd3mjaJUfCffXelHLsS4FcP
-         nWqUvRUEeELSSxfcUN0COzMntpk4wfsnsZUg3Wx8km5Q51e+WSy+lg4N+uFQR2Pez0jr
-         t6pk6an0ihkGMFNMb/We7F6BFWK7bdhI/d9yxJHQ9UvJqzr/dnZTjfXFI6sjWD0odFe7
-         3XIR+x1EZPJSe3w8VtnCJdIWUMr7THpdfb8LyArclgZuSyE4tmXv4JodbcKxMqsCkA3d
-         umNwhSLD34PXbfYKeYDuGf5EhNzJ06lxUZZf68LSiMi0lw7yIeVRH1D6J/QThB6T/ngF
-         Kb8A==
-X-Gm-Message-State: AO0yUKUxP50q7Gm9D3D4AUcdeOaxCaZy0/VA/n6OQayP9HXGiSTFvmin
-        fEyRMFPXbDZ1/AQTfEY7oaLulg==
-X-Google-Smtp-Source: AK7set9lxH6/PbMSlHI3/Xj1zSeTgyrFqDwLAkdtZ9Wm/3ENkW4eYm3dUmfPKJZl9u0iGTt993gxtg==
-X-Received: by 2002:a2e:9b4f:0:b0:293:2e81:45d3 with SMTP id o15-20020a2e9b4f000000b002932e8145d3mr7817308ljj.5.1678458435734;
-        Fri, 10 Mar 2023 06:27:15 -0800 (PST)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id w2-20020a2e9982000000b0029347612e94sm22367lji.123.2023.03.10.06.27.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Mar 2023 06:27:15 -0800 (PST)
-Message-ID: <5be0f6e1-8c96-2a24-e1aa-8b9975988e2a@linaro.org>
-Date:   Fri, 10 Mar 2023 15:27:14 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v7 9/9] interconnect: qcom: msm8996: Promote to
- core_initcall
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Fri, 10 Mar 2023 09:41:32 -0500
+Received: from out203-205-221-239.mail.qq.com (out203-205-221-239.mail.qq.com [203.205.221.239])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4EC011F611;
+        Fri, 10 Mar 2023 06:41:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1678459283;
+        bh=soCWwAGQ9Hj6gEjz8DtblP8KJXV25YB7LOn17SHTfY0=;
+        h=From:To:Cc:Subject:Date;
+        b=w5fAD03aToUBdQ+mSx7HC7cdpkDJZ/DQg+VfDyLLt0mw7dHB5UyosCwZf+AA0Kqep
+         lDb5rtg/I2RYndKUscO/QG+yEsbBHE7Fbc1syctNF0xxxDpFqKRh5WjVVuixLnyohN
+         X9O9IOPvV9QF626t3MG78HApZay+oqK7NQRJXPhQ=
+Received: from DESKTOP-ZMX.localdomain ([115.156.143.0])
+        by newxmesmtplogicsvrsza10-0.qq.com (NewEsmtp) with SMTP
+        id 8A61225E; Fri, 10 Mar 2023 22:34:38 +0800
+X-QQ-mid: xmsmtpt1678458878ti79xj3r5
+Message-ID: <tencent_BCFFDEDC763443B8582D3BBA01F0867B1406@qq.com>
+X-QQ-XMAILINFO: MmpliBmRb3iCHKrUiuMBKXhk8DIR+AcjF3g4Y/USHl5yuSV7N5X4j0N+Pyg6Bc
+         OBX2tZHYc/PKuF2AU1OlwvLZzmQBofQT8As3Yo8Y7f+SOrIZqqwAFv8KZGM+1aFAleOq40/rl88l
+         BXKzUvflwm6nfPhwaNmMPGilwBdE/2LArJPdCWAORvfHPNslbYmkUWUPQAWmM6vhXreodK0iMG4o
+         jAl7JvEnWvl6Rl028XIYIXBsM4FOAEhH6ffhkYCxygtaGOMXIyonpVL5NGpml9K67BtkD8i1+S0t
+         V9unwNrVXd/YA9RuHX0sJs7CL8itSXPWKDPfDJ0YMncmzPgpNcvN2PtoOIHyAxwavAwOnMYT+zMf
+         eCGi/OE21F7HLqaLQM3pthTieqgXg1yAxOVdK4HRTbr+YYaBI2es/OZ4MMuKdfiRvY8F+7NUvOaH
+         VD71zX71+CtvztXWNeU4SBbW4Vdh326lTvxgekgqbZSIpQlAZTHPXSUHIBIljATjMWzIZTsYwt2z
+         A7Riv2nuqlA8kyypdAIZA8naC8iD/zSh4Gy4uaL4+BDqG0hG9ZwU152i1phIEu3wnPRbfZrmxPra
+         yyzJTeAuGrxcNveY2p6z43HdAjMsS3H4iblBl34ZcHMMH98JuenfkdT5pb1HkOcDl7pAMLCZOEjM
+         tdZtTeif97kAphOQXS4UqE7Fnf9QbUSCnHcCFfh9yJGaKuiN5P7mkRpCfp4yzjPVCC6fBc1NnTWC
+         o3lMw1b2g94umhUxqeY5UbyOPBbnBRlWPA3iilw290jplb3kknVKRGQVILAQbZ6dnfdCMqnKTqPa
+         f4zOpyt7bCPyA+Cskd9/jA9bredfS1Tm0JTb/Pp8+i9aKu+VLezRBICL+LaWBZ3z+geN01CBETG8
+         2pdBkxxPnbTjNvfRhW9/leK2yGm7Mn3N+AZcfW0Wr984qbgOJk8uWEH4jB2/mdsncNNFw7jQL3hO
+         HZ12JJ8D957WwhdKGe+ESUiPe7jKlgZ6WfZtmqWILhA/fKpzujWw==
+From:   Yang Xiwen <forbidden405@foxmail.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230228-topic-qos-v7-0-815606092fff@linaro.org>
- <20230228-topic-qos-v7-9-815606092fff@linaro.org>
- <937279a0-2e62-7061-3752-dfb94ee6d1f6@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <937279a0-2e62-7061-3752-dfb94ee6d1f6@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>,
+        Yang Xiwen <forbidden405@foxmail.com>
+Subject: [PATCH 0/3] arm64: dts: qcom: Add device tree for LTE dongle UZ801 v3.0
+Date:   Fri, 10 Mar 2023 22:33:27 +0800
+X-OQ-MSGID: <20230310143330.9485-1-forbidden405@foxmail.com>
+X-Mailer: git-send-email 2.39.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RDNS_DYNAMIC,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This is another model of msm8916-based LTE dongles made by Henan Yiming
+Technology Co., Ltd..
 
+Yang Xiwen (3):
+  dt-bindings: vendor-prefixes: Add Henan Yiming Technology Co., Ltd.
+  dt-bindings: arm: qcom: Add Yiming LTE dongle uz801-v3.0
+    (yiming-uz801v3)
+  arm64: dts: qcom: msm8916-yiming-uz801v3: Add initial device tree
 
-On 10.03.2023 15:23, Bryan O'Donoghue wrote:
-> On 08/03/2023 21:40, Konrad Dybcio wrote:
->> The interconnect driver is (or soon will be) vital to many other
->> devices, as it's not a given that the bootloader will set up enough
->> bandwidth for us or that the values we come into are reasonable.
->>
->> Promote the driver to core_initcall to ensure the consumers (i.e.
->> most "meaningful" parts of the SoC) can probe without deferrals.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/interconnect/qcom/msm8996.c | 12 +++++++++++-
->>   1 file changed, 11 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
->> index 347fe59ec293..1eb51ed18b0b 100644
->> --- a/drivers/interconnect/qcom/msm8996.c
->> +++ b/drivers/interconnect/qcom/msm8996.c
->> @@ -2109,7 +2109,17 @@ static struct platform_driver qnoc_driver = {
->>           .sync_state = icc_sync_state,
->>       }
->>   };
->> -module_platform_driver(qnoc_driver);
->> +static int __init qnoc_driver_init(void)
->> +{
->> +    return platform_driver_register(&qnoc_driver);
->> +}
->> +core_initcall(qnoc_driver_init);
->> +
->> +static void __exit qnoc_driver_exit(void)
->> +{
->> +    platform_driver_unregister(&qnoc_driver);
->> +}
->> +module_exit(qnoc_driver_exit);
->>     MODULE_AUTHOR("Yassine Oudjana <y.oudjana@protonmail.com>");
->>   MODULE_DESCRIPTION("Qualcomm MSM8996 NoC driver");
->>
-> 
-> Its probably the right-thing-to-do to have interconnects probe earlier but, then, why restrict that to 8996 only ?
-To be honest with you, this one caught my attention and it was the
-one I tested things on.. But yeah, they should all be probing ASAP.
+ .../devicetree/bindings/arm/qcom.yaml         |  1 +
+ .../devicetree/bindings/vendor-prefixes.yaml  |  2 ++
+ arch/arm64/boot/dts/qcom/Makefile             |  1 +
+ .../boot/dts/qcom/msm8916-yiming-uz801v3.dts  | 35 +++++++++++++++++++
+ 4 files changed, 39 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-yiming-uz801v3.dts
 
-Konrad
-> 
-> ---
-> bod
+-- 
+2.39.1
+
