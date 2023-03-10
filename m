@@ -2,70 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A08CB6B411A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 14:49:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DDA466B444D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 15:22:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230410AbjCJNth (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 08:49:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51172 "EHLO
+        id S232289AbjCJOWy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 09:22:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230388AbjCJNtc (ORCPT
+        with ESMTP id S232075AbjCJOW1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 08:49:32 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8AEC8569F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 05:49:30 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id x3so20599329edb.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 05:49:30 -0800 (PST)
+        Fri, 10 Mar 2023 09:22:27 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C657611AB9B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 06:21:48 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id l25so5204639wrb.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 06:21:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678456169;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=i48EsZfNCkG2lMhpLBNlt/dxwRuRTfVAXVflKAyyUt4=;
-        b=wJb8IWtKvwgm2k2Em5crFpq2Snp5iWs4/EiipxOY+1UAtENo5vN5fqBGgTV+PihMCm
-         psOdR5FbLIX85LTDgOE98zB0Egm0bh45DfdaaHhAPfMK9AjuJHeSWSYfXIqFKKDkNnDM
-         WjwJO4luG/WGA6Umx1TtKosasCKJ81yuTRoTlRYsrrzmFv5+wCCElZzpDXJZJ1e132Ye
-         7sarLW9UXXN/6V1V0kW0mk8PsZvTCY6Tzs/rvHVntauctmy6M52fyhk3P8XzvdF6njCh
-         1LItts69z+U+gYK6BsT2RU1n6jkgFDZyP9LNKS2zjRbnVr43qW8SK0c7UH8a0KURSW8F
-         hzjA==
+        d=linaro.org; s=google; t=1678458107;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KnRzMrvsiCN+4PreSm66b1oVlQhYcJdd5dzfTf21GJw=;
+        b=FpTRpRxxdmd7NmTN1udMGEDDCfpZtnbL0H/+uDyDYPowHANrGP30ffv/oPRT4ehBfS
+         0dkw4qO3WFaU2ZKdAt/MiUHAd0RqsCapGGaySGthKYE3zrRDEHtnpTEgmPgAp7xSlyW5
+         95PKhIjTUxEWGJ5rQYZ8iEYWMsJFGumXatHRGaNuv08Of815RFzGe2pEuIHQfHWtJkEw
+         lOYGFhBiUrO/XwtoaZkzJXFmfgKgDsvEHzFoJMiJo0cZ5LPQ2fKFYoH/54vwOxf6Rra6
+         LL51xGpfxOF69IDH4bS0fcxPkR8+mNSnAYUDKmpuCUGa8LzIfWTUk/fjMMmgEEKNVar1
+         JH6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678456169;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i48EsZfNCkG2lMhpLBNlt/dxwRuRTfVAXVflKAyyUt4=;
-        b=otaZy78LFRaPEgz+oK7c+Ns2Sa9xkj7Nz7gCpkL2ZlqbYjZ6cruRrd0d09/7vNuaAO
-         zPnrdiPpqhN5bt2QycAgqKIVY4lETqAX+Naj+j4OxnzGgKe3s0U2cmqV8vUg67VWyvGa
-         /9NoF8dhHpMsbiWm/KPKLm8I5dlu4wQuT+bFFNZxtyp1aHh51No9yMELioghtAfU9P6V
-         CAfHn0cIYC69ER9/d8DP/N1TqkBm7ICYSrsbLb6o3nCz56/ga1TqLIIrP4exV1xH/2Xv
-         fVh+KUasMc5Kkiyo0cOiSPPqFi2YGXPSIdpC0ee3OOMLZcUX+Io7HFeDm4AW/ch2Dg3l
-         U7/A==
-X-Gm-Message-State: AO0yUKUnZgWKt2w3MzVTt5CZrk+DmrLaeRSTygaxSjmsSPNHaIB5DrKC
-        EdlsAFjc6xJDo8tQKRHzNo680g==
-X-Google-Smtp-Source: AK7set9TnctFi6bxE3cG3ITrVh+xkLUQ/v3uSSQiGjLvETyn1LH3ptjVRmExalqGLbFlxnLZypfYPw==
-X-Received: by 2002:a17:907:6eab:b0:7c0:efb9:bc0e with SMTP id sh43-20020a1709076eab00b007c0efb9bc0emr33729042ejc.62.1678456169326;
-        Fri, 10 Mar 2023 05:49:29 -0800 (PST)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:45c4:46be:ec71:4a51])
-        by smtp.gmail.com with ESMTPSA id m27-20020a170906259b00b008e68d2c11d8sm966629ejb.218.2023.03.10.05.49.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Mar 2023 05:49:28 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: sm8550: add ADSP audio codec macros
-Date:   Fri, 10 Mar 2023 14:49:25 +0100
-Message-Id: <20230310134925.514125-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20210112; t=1678458107;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KnRzMrvsiCN+4PreSm66b1oVlQhYcJdd5dzfTf21GJw=;
+        b=eCIEqcTmjqtQnti7tAq9BSa4gZzfSqEOzvV8UW+9WEEMUsvlUXSPQo3JqnzfCUwNCT
+         jL+w0CaupCW5LzNhBewyacnwqZuov6np3VDsxHv7dC2cV6iXQFR5wx1z/aKtegYdM9Ga
+         2FYzkHmBjMOVRHUjx72MRB1bVUWL1XxhIWQnYXreuFhpEY6KoZqSfd8aGn7OTPObeED5
+         q/EcnEDtWyBzh0BsyiqFuUjcg70EsgGc26kZPVeAmHof/xkbtfEwlMyLAvXTzpsPwXk0
+         CIrNkgJq0FXbC839NCbFTos5ZKPmgm4/g8aiQw9Y9CE/upDYwvosE8UDKuW7IX6wP86g
+         POFg==
+X-Gm-Message-State: AO0yUKUXb9zdMK4/euJqfBooH8lwDK+HgKgxq/7wieW3O4nFPB2m/0RI
+        8X8Tr/Z7U1rAc3tvktETZipQLQ==
+X-Google-Smtp-Source: AK7set/eNcAwO1mnLgjW8RS6PmO4LQ4XOfhdlPJVGO0ZQrpeq9Ekr0ixT8d/3DvXKJPBmNzgjDJW6Q==
+X-Received: by 2002:adf:e98c:0:b0:2cc:459b:8bc8 with SMTP id h12-20020adfe98c000000b002cc459b8bc8mr16776159wrm.6.1678458107275;
+        Fri, 10 Mar 2023 06:21:47 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id d16-20020adffbd0000000b002c55521903bsm2297526wrs.51.2023.03.10.06.21.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Mar 2023 06:21:46 -0800 (PST)
+Message-ID: <50f03895-816f-be8d-d956-d237fb13f5a0@linaro.org>
+Date:   Fri, 10 Mar 2023 14:21:45 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v7 6/9] interconnect: qcom: rpm: Handle interface clocks
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230228-topic-qos-v7-0-815606092fff@linaro.org>
+ <20230228-topic-qos-v7-6-815606092fff@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230228-topic-qos-v7-6-815606092fff@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,233 +80,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the Low Power Audio SubSystem (LPASS) / ADSP audio codec macros on
-Qualcomm SM8550.  The nodes are very similar to SM8450, except missing
-NPL clock which is not exposed on SM8550 and should not be touched.
+On 08/03/2023 21:40, Konrad Dybcio wrote:
+> Some (but not all) providers (or their specific nodes) require
+> specific clocks to be turned on before they can be accessed. Failure
+> to ensure that results in a seemingly random system crash (which
+> would usually happen at boot with the interconnect driver built-in),
+> resulting in the platform not booting up properly.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Can you give an example of which clocks on which SoC's ?
+
+Is the intention of this patch to subsequently go through *.dts *.dtsi 
+and start to remove assigned-clocks ?
+
+Are we saying that currently there ought to be assigned-clocks for some 
+of these NoC declarations ?
 
 ---
-
-Bindings and driver changes are here:
-https://lore.kernel.org/linux-arm-msm/20230310132201.322148-1-krzysztof.kozlowski@linaro.org/T/#t
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 195 +++++++++++++++++++++++++++
- 1 file changed, 195 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 24aa724c12ea..fa5cd7c941e6 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1994,6 +1994,97 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 			};
- 		};
- 
-+		lpass_wsa2macro: codec@6aa0000 {
-+			compatible = "qcom,sm8550-lpass-wsa-macro";
-+			reg = <0 0x06aa0000 0 0x1000>;
-+			clocks = <&q6prmcc LPASS_CLK_ID_WSA2_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&lpass_vamacro>;
-+			clock-names = "mclk", "macro", "dcodec", "fsgen";
-+			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA2_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+			assigned-clock-rates = <19200000>;
-+
-+			#clock-cells = <0>;
-+			clock-output-names = "wsa2-mclk";
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&wsa2_swr_active>;
-+			#sound-dai-cells = <1>;
-+		};
-+
-+		lpass_rxmacro: codec@6ac0000 {
-+			compatible = "qcom,sm8550-lpass-rx-macro";
-+			reg = <0 0x06ac0000 0 0x1000>;
-+			clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&lpass_vamacro>;
-+			clock-names = "mclk", "macro", "dcodec", "fsgen";
-+
-+			assigned-clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+			assigned-clock-rates = <19200000>;
-+
-+			#clock-cells = <0>;
-+			clock-output-names = "mclk";
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&rx_swr_active>;
-+			#sound-dai-cells = <1>;
-+		};
-+
-+		lpass_txmacro: codec@6ae0000 {
-+			compatible = "qcom,sm8550-lpass-tx-macro";
-+			reg = <0 0x06ae0000 0 0x1000>;
-+			clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&lpass_vamacro>;
-+			clock-names = "mclk", "macro", "dcodec", "fsgen";
-+			assigned-clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+
-+			assigned-clock-rates = <19200000>;
-+
-+			#clock-cells = <0>;
-+			clock-output-names = "mclk";
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&tx_swr_active>;
-+			#sound-dai-cells = <1>;
-+		};
-+
-+		lpass_wsamacro: codec@6b00000 {
-+			compatible = "qcom,sm8550-lpass-wsa-macro";
-+			reg = <0 0x06b00000 0 0x1000>;
-+			clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&lpass_vamacro>;
-+			clock-names = "mclk", "macro", "dcodec", "fsgen";
-+
-+			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+			assigned-clock-rates = <19200000>;
-+
-+			#clock-cells = <0>;
-+			clock-output-names = "mclk";
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&wsa_swr_active>;
-+			#sound-dai-cells = <1>;
-+		};
-+
-+		lpass_vamacro: codec@6d44000 {
-+			compatible = "qcom,sm8550-lpass-va-macro";
-+			reg = <0 0x06d44000 0 0x1000>;
-+			clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+			clock-names = "mclk", "macro", "dcodec";
-+
-+			assigned-clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+			assigned-clock-rates = <19200000>;
-+
-+			#clock-cells = <0>;
-+			clock-output-names = "fsgen";
-+			#sound-dai-cells = <1>;
-+		};
-+
- 		lpass_tlmm: pinctrl@6e80000 {
- 			compatible = "qcom,sm8550-lpass-lpi-pinctrl";
- 			reg = <0 0x06e80000 0 0x20000>,
-@@ -2005,6 +2096,110 @@ lpass_tlmm: pinctrl@6e80000 {
- 			clocks = <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
- 				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
- 			clock-names = "core", "audio";
-+
-+			tx_swr_active: tx-swr-active-state {
-+				clk-pins {
-+					pins = "gpio0";
-+					function = "swr_tx_clk";
-+					drive-strength = <2>;
-+					slew-rate = <1>;
-+					bias-disable;
-+				};
-+
-+				data-pins {
-+					pins = "gpio1", "gpio2", "gpio14";
-+					function = "swr_tx_data";
-+					drive-strength = <2>;
-+					slew-rate = <1>;
-+					bias-bus-hold;
-+				};
-+			};
-+
-+			rx_swr_active: rx-swr-active-state {
-+				clk-pins {
-+					pins = "gpio3";
-+					function = "swr_rx_clk";
-+					drive-strength = <2>;
-+					slew-rate = <1>;
-+					bias-disable;
-+				};
-+
-+				data-pins {
-+					pins = "gpio4", "gpio5";
-+					function = "swr_rx_data";
-+					drive-strength = <2>;
-+					slew-rate = <1>;
-+					bias-bus-hold;
-+				};
-+			};
-+
-+			dmic01_default: dmic01-default-state {
-+				clk-pins {
-+					pins = "gpio6";
-+					function = "dmic1_clk";
-+					drive-strength = <8>;
-+					output-high;
-+				};
-+
-+				data-pins {
-+					pins = "gpio7";
-+					function = "dmic1_data";
-+					drive-strength = <8>;
-+					input-enable;
-+				};
-+			};
-+
-+			dmic02_default: dmic02-default-state {
-+				clk-pins {
-+					pins = "gpio8";
-+					function = "dmic2_clk";
-+					drive-strength = <8>;
-+					output-high;
-+				};
-+
-+				data-pins {
-+					pins = "gpio9";
-+					function = "dmic2_data";
-+					drive-strength = <8>;
-+					input-enable;
-+				};
-+			};
-+
-+			wsa_swr_active: wsa-swr-active-state {
-+				clk-pins {
-+					pins = "gpio10";
-+					function = "wsa_swr_clk";
-+					drive-strength = <2>;
-+					slew-rate = <1>;
-+					bias-disable;
-+				};
-+
-+				data-pins {
-+					pins = "gpio11";
-+					function = "wsa_swr_data";
-+					drive-strength = <2>;
-+					slew-rate = <1>;
-+					bias-bus-hold;
-+				};
-+			};
-+
-+			wsa2_swr_active: wsa2-swr-active-state {
-+				clk-pins {
-+					pins = "gpio15";
-+					function = "wsa2_swr_clk";
-+					drive-strength = <2>;
-+					slew-rate = <1>;
-+					bias-disable;
-+				};
-+
-+				data-pins {
-+					pins = "gpio16";
-+					function = "wsa2_swr_data";
-+					drive-strength = <2>;
-+					slew-rate = <1>;
-+					bias-bus-hold;
-+				};
-+			};
- 		};
- 
- 		lpass_lpiaon_noc: interconnect@7400000 {
--- 
-2.34.1
-
+bod
