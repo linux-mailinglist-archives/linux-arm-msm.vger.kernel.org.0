@@ -2,206 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8E6F6B3DBE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 12:29:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 224FC6B3E94
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 13:02:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231208AbjCJL3U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 06:29:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46088 "EHLO
+        id S230092AbjCJMC1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 07:02:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230050AbjCJL2t (ORCPT
+        with ESMTP id S230075AbjCJMCT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 06:28:49 -0500
-Received: from 167-179-156-38.a7b39c.syd.nbn.aussiebb.net (167-179-156-38.a7b39c.syd.nbn.aussiebb.net [167.179.156.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44837149A2;
-        Fri, 10 Mar 2023 03:28:47 -0800 (PST)
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-        by formenos.hmeau.com with smtp (Exim 4.94.2 #2 (Debian))
-        id 1paavL-002Xzn-96; Fri, 10 Mar 2023 19:28:36 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Fri, 10 Mar 2023 19:28:35 +0800
-Date:   Fri, 10 Mar 2023 19:28:35 +0800
-From:   Herbert Xu <herbert@gondor.apana.org.au>
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org
-Subject: Re: [PATCH v11 00/10] crypto: qcom-qce: Add YAML bindings and
- support for newer SoCs
-Message-ID: <ZAsUY8m+TvlXciXb@gondor.apana.org.au>
-References: <20230222172240.3235972-1-vladimir.zapolskiy@linaro.org>
+        Fri, 10 Mar 2023 07:02:19 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FC98E7754;
+        Fri, 10 Mar 2023 04:02:16 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2C56461376;
+        Fri, 10 Mar 2023 12:02:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A34C433D2;
+        Fri, 10 Mar 2023 12:02:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678449735;
+        bh=8DW/LYgCUONCctCnDq4qvjU4rdTwW+KdDdND0ium5HI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fZl6N5bDfdbh6CPz85FEB6qbTu6Q7lOXXLptgxaiNH3G7i6a4gZn4rcr+WUJ8zzfv
+         UfSAtEW1lb3I/cC6fZ68b65Krs6uBQW360w6uYLRJwbl82vn/rd5nejjzTMOSivJBw
+         A1sPZA2Qb5ale9462b3nypNpkAInDPOl9mfl5X88V5QPgiFVIqHE6ELYz8lBoNSaZ/
+         /u+h2V3UC0pAYYX+Ak8cwnTrxLE4ufIgTnnVHQvEeIpfp90cFTQrqLZSBOjr/nf61C
+         CYsWgvfrOak/DoO6G2tozKa1/K54PUqfueD7SEC9W7JgnIzysZ0u08Nf1iLcpmKKs3
+         ETURGC2UF2wAQ==
+Date:   Fri, 10 Mar 2023 17:32:09 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Fabio Porcedda <fabio.porcedda@gmail.com>
+Cc:     Slark Xiao <slark_xiao@163.com>, loic.poulain@linaro.org,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: host: pci_generic: Revert "Add a secondary AT
+ port to Telit FN990"
+Message-ID: <20230310120209.GB6838@thinkpad>
+References: <20230310101715.69209-1-slark_xiao@163.com>
+ <20230310103126.GA6838@thinkpad>
+ <CAHkwnC_S_qPOfkoJ-uZ7GNW4J26AXik=33f2=uMfw72yFOFXLg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230222172240.3235972-1-vladimir.zapolskiy@linaro.org>
-X-Spam-Status: No, score=2.7 required=5.0 tests=BAYES_00,HELO_DYNAMIC_IPADDR2,
-        PDS_RDNS_DYNAMIC_FP,RDNS_DYNAMIC,SPF_HELO_NONE,SPF_PASS,TVD_RCVD_IP,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: **
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHkwnC_S_qPOfkoJ-uZ7GNW4J26AXik=33f2=uMfw72yFOFXLg@mail.gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 22, 2023 at 07:22:30PM +0200, Vladimir Zapolskiy wrote:
-> The series contains Qualcomm Crypto Engine DT bindings documentation and
-> driver changes, which modify a set of accepted compatible property values,
-> which is needed to provide a unified and fine-grained support of the driver
-> on old and new platforms. In addition due to QCE IP changes on new Qualcomm
-> platforms, it is reflected in updates to valid device tree properties,
-> namely added iommu, interconnects and optional clocks.
+On Fri, Mar 10, 2023 at 11:33:56AM +0100, Fabio Porcedda wrote:
+> Il giorno ven 10 mar 2023 alle ore 11:31 Manivannan Sadhasivam
+> <mani@kernel.org> ha scritto:
+> >
+> > On Fri, Mar 10, 2023 at 06:17:15PM +0800, Slark Xiao wrote:
+> > > This reverts commit 2d5253a096c6057bbf7caa5520856dcdf7eca8bb.
+> > > There are 2 commits with commit message "Add a secondary AT
+> > > port to Telit FN990". But the last one 2d5253a096 was added
+> >
+> > Btw, we usually refer the commit SHA by 12 digits. Like, 2d5253a096c6.
+> > I can fix it up while applying.
+> >
+> > > on Foxconn devices. Actually the second AT port of Foxconn
+> > > devices doesn't work in PCIe mode. And the commit message
+> > > mismatch with the changes. So we need to remove it.
+> > >
+> >
+> > Sigh... the subject itself was wrong :( thanks for catching.
+> >
+> > > Signed-off-by: Slark Xiao <slark_xiao@163.com>
+> >
+> > For future Foxconn patches, please help with the review to catch issues like
+> > this. Unfortunately, I do not own any Foxconn modems :/
+> >
+> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 > 
-> Qualcomm crypto engine (QCE) is available on several Snapdragon SoCs.
-> The QCE block supports hardware accelerated algorithms for encryption
-> and authentication. It also provides support for aes, des, 3des
-> encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
-> authentication algorithms.
+> Reviewed-by: Fabio Porcedda <fabio.porcedda@gmail.com>
 > 
-> Changes since v10:
-> =================
-> - v10 can be found here: https://lore.kernel.org/all/20230216131430.3107308-1-vladimir.zapolskiy@linaro.org/
-> - Fixed 05/10 commit message per request from Krzysztof and added his
->   reviewed-by tag.
-> - Rebased the series on top of the linux-next.
+> Just to clarify, the original patch change just the Telit FN990:
+> https://lore.kernel.org/netdev/CAMZdPi8gGrbkKnDR+WLadF92shJbwH-ksQY+dbpgfZ21iAp9ug@mail.gmail.com/
 > 
-> Changes since v9:
-> =================
-> - v9 can be found here: https://lore.kernel.org/linux-crypto/20230208183755.2907771-1-vladimir.zapolskiy@linaro.org/
-> - Added a new generic 'qcom,qce' compatible name, since IP is runtime
->   discoverable, however two new SoC name based compatibles are left
->   due to necessity to differentiate various lists of required properties.
-> - Updated documentation according to review comments by Krzysztof.
-> - Removed platform specific changes in dtsi files, only one bisectable
->   change in sm8550.dtsi is left in the series.
-> - Added some commit tags, however a few given tags by Krzysztof are not
->   added, since the previous tagged changes were noticeably reworked.
+> The problem is caused by the fact that it was merged two times and the
+> second time was merged wrongly.
+> The correct one is commit 479aa3b0ec2e000ac99dd0661936d9685d6cac64 and
+> the wrong one is 2d5253a096c6057bbf7caa5520856dcdf7eca8bb.
 > 
-> Changes since v8:
-> =================
-> - v8 can be found here: https://lore.kernel.org/all/20230202135036.2635376-1-vladimir.zapolskiy@linaro.org/
-> - Rebased the series on top of linux-next, sm8550 qce support is already
->   found in the tree.
-> - Reduced the list of QCE IP compatibles in the driver, added one more
->   compatible for backward DTB ABI compatibility.
-> - Replaced a documentation change from Neil Armstrong by a more advanced
->   version of it per review comments from Krzysztof Kozlowski about clock
->   and clock-names properties.
-> - Added changes to all relevant Qualcomm platform dtsi files according to
->   the changes in the scheme file.
-> - Added QCE support on SM8250 platform.
+
+Ah, so the patch was merged into netdev first and then through MHI, then git
+ended up with a resolution :(
+
+Thanks,
+Mani 
+
+> BR
+> Fabio
 > 
-> Changes since v7:
-> =================
-> - v7 can be found here: https://lore.kernel.org/linux-arm-msm/20220920114051.1116441-1-bhupesh.sharma@linaro.org
-> - Added a change by Neil Armstrong to document clocks and clock-names
->   properties as optional,
->   - At the moment do not add Bhupesh as a new QCE driver maintainer,
->   - Minor updates to device tree binding documentation and qce driver,
->     in particular added more compatibles and fixed lesser issues.
+> > Thanks,
+> > Mani
+> >
+> > > ---
+> > >  drivers/bus/mhi/host/pci_generic.c | 2 --
+> > >  1 file changed, 2 deletions(-)
+> > >
+> > > diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> > > index 6e13c43a84d1..91d02f84ba21 100644
+> > > --- a/drivers/bus/mhi/host/pci_generic.c
+> > > +++ b/drivers/bus/mhi/host/pci_generic.c
+> > > @@ -343,8 +343,6 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+> > >       MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
+> > >       MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
+> > >       MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
+> > > -     MHI_CHANNEL_CONFIG_UL(92, "DUN2", 32, 1),
+> > > -     MHI_CHANNEL_CONFIG_DL(93, "DUN2", 32, 1),
+> > >       MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
+> > >       MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+> > >  };
+> > > --
+> > > 2.34.1
+> > >
+> >
+> > --
+> > மணிவண்ணன் சதாசிவம்
 > 
-> Changes since v6:
-> =================
-> - v6 can be seen here: https://lore.kernel.org/linux-arm-msm/30756e6f-952f-ccf2-b493-e515ba4f0a64@linaro.org/
-> - As per Krzysztof's suggestion on v6, clubbed the crypto driver and
->   dt-bindings changes together. Now the overall v5 patchset into 3
->   separate patchsets, one each for the following areas to allow easier
->   review and handling from the maintainer: arm-msm, crypto and dma
 > 
-> Changes since v5:
-> =================
-> - v5 can be seen here: https://lore.kernel.org/lkml/20211110105922.217895-1-bhupesh.sharma@linaro.org/
-> - As per Bjorn's suggestion on irc, broke down the patchset into 4
->   separate patchsets, one each for the following areas to allow easier
->   review and handling from the maintainer: arm-msm, crypto, dma and devicetree
-> - Addressed Rob's, Vladimir's and Bjorn's review comments received on v5.
-> - Added Tested-by from Jordan received on the v5.
-> 
-> Changes since v4:
-> =================
-> - v4 for sm8250 can be seen here: https://lore.kernel.org/linux-arm-msm/20211013105541.68045-1-bhupesh.sharma@linaro.org/
-> - v1 for sm8150 qce enablement can be seen here: https://lore.kernel.org/linux-arm-msm/20211013165823.88123-1-bhupesh.sharma@linaro.org/
-> - Merged the sm8150 and sm8250 enablement patches in the same patchset,
->   as per suggestions from Bjorn.
-> - Dropped a couple of patches from v4, as these have been picked by
->   Bjorn already via his tree.
-> - Addressed review comments from Vladimir, Thara and Rob.
-> - Collect Reviewed-by from Rob and Thara on some of the patches from the
->   v4 patchset.
-> 
-> Changes since v3:
-> =================
-> - v3 can be seen here: https://lore.kernel.org/linux-arm-msm/20210519143700.27392-1-bhupesh.sharma@linaro.org/
-> - Dropped a couple of patches from v3, on basis of the review comments:
->   ~ [PATCH 13/17] crypto: qce: core: Make clocks optional
->     ~ [PATCH 15/17] crypto: qce: Convert the device found dev_dbg() to dev_info()
-> - Addressed review comments from Thara, Rob and Stephan Gerhold.
-> - Collect Reviewed-by from Rob and Thara on some of the patches from the
->   v3 patchset.
-> 
-> Changes since v2:
-> =================
-> - v2 can be seen here: https://lore.kernel.org/dmaengine/20210505213731.538612-1-bhupesh.sharma@linaro.org/
-> - Drop a couple of patches from v1, which tried to address the defered
->   probing of qce driver in case bam dma driver is not yet probed.
->   Replace it instead with a single (simpler) patch [PATCH 16/17].
-> - Convert bam dma and qce crypto dt-bindings to YAML.
-> - Addressed review comments from Thara, Bjorn, Vinod and Rob.
-> 
-> Changes since v1:
-> =================
-> - v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20210310052503.3618486-1-bhupesh.sharma@linaro.org/
-> - v1 did not work well as reported earlier by Dmitry, so v2 contains the following
->   changes/fixes:
->   ~ Enable the interconnect path b/w BAM DMA and main memory first
->     before trying to access the BAM DMA registers.
->   ~ Enable the interconnect path b/w qce crytpo and main memory first
->     before trying to access the qce crypto registers.
->   ~ Make sure to document the required and optional properties for both
->     BAM DMA and qce crypto drivers.
->   ~ Add a few debug related print messages in case the qce crypto driver
->     passes or fails to probe.
->   ~ Convert the qce crypto driver probe to a defered one in case the BAM DMA
->     or the interconnect driver(s) (needed on specific Qualcomm parts) are not
->     yet probed.
-> 
-> Bhupesh Sharma (4):
->   dt-bindings: qcom-qce: Convert bindings to yaml
->   MAINTAINERS: Add qcom-qce dt-binding file to QUALCOMM CRYPTO DRIVERS section
->   dt-bindings: qcom-qce: Add 'interconnects' and 'interconnect-names'
->   dt-bindings: qcom-qce: Add 'iommus' to optional properties
-> 
-> Thara Gopinath (2):
->   crypto: qce: core: Add support to initialize interconnect path
->   crypto: qce: core: Make clocks optional
-> 
-> Vladimir Zapolskiy (4):
->   dt-bindings: qcom-qce: Add new SoC compatible strings for Qualcomm QCE IP
->   dt-bindings: qcom-qce: document optional clocks and clock-names properties
->   arm64: dts: qcom: sm8550: add QCE IP family compatible values
->   crypto: qce: core: Add a QCE IP family compatible 'qcom,qce'
-> 
->  .../devicetree/bindings/crypto/qcom-qce.txt   |  25 ----
->  .../devicetree/bindings/crypto/qcom-qce.yaml  | 123 ++++++++++++++++++
->  MAINTAINERS                                   |   1 +
->  arch/arm64/boot/dts/qcom/sm8550.dtsi          |   2 +-
->  drivers/crypto/qce/core.c                     |  23 +++-
->  drivers/crypto/qce/core.h                     |   1 +
->  6 files changed, 145 insertions(+), 30 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.txt
->  create mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.yaml
 > 
 > -- 
-> 2.33.0
+> Fabio Porcedda
 
-All applied.  Thanks.
 -- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+மணிவண்ணன் சதாசிவம்
