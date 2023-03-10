@@ -2,121 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 005696B52C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 22:26:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B7A606B531E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 22:45:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231795AbjCJV0D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 16:26:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58166 "EHLO
+        id S231997AbjCJVp2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 16:45:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231614AbjCJVZy (ORCPT
+        with ESMTP id S232095AbjCJVoz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 16:25:54 -0500
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 215A31FE9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 13:25:41 -0800 (PST)
-Received: by mail-il1-x12d.google.com with SMTP id l9so622365iln.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 13:25:41 -0800 (PST)
+        Fri, 10 Mar 2023 16:44:55 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DF0612B3EE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 13:43:54 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id o12so26066317edb.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 13:43:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678483540;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lysTcPW0XVZ+IeRM4GcO6JyKJb8asSqs6h2ziKdVdMA=;
-        b=Ib5+WiokdF4Wg6nmSNkoKrFmIfTRRN52sgdHf/J9pf53SOVZo6k9AEpxF0l9pEwlzP
-         mOUdvT1brKB2+WtDE1wOcW0SKlXKaNVXg0j5NE6PbcwuS+e4QhwgsQHG6zh4bgz+hdTd
-         OYACwE/cJdGrwhvpfeO6FVZC+CLuJ6i0RC2ojlyBUvFtY4vDkcGDJooZd3Omf/l3oNvK
-         GrT3Sl0G8oNfKtd7B0ZC1MaLKTRyVeUkIoUdqCwiyX0A0rMdR9via28equAC5F1hLGug
-         6Uu91Y9USxQfeRaocWpttTe+C+kPe0LPL0XcaYoN3STUJIrOdYVJOza93SWOC4+eiV1N
-         0S8g==
+        d=linaro.org; s=google; t=1678484617;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VtdBZBHjdNz7Y46m59SHrmzEAnff5o2OBs5iW9CHcGo=;
+        b=xF4Q47yj1z4o8N1c5ExKygycmKfV4vmuKm+QjVP/qyjMK83nq9YYLNODjBSgjhQDnT
+         8jl1aMJl9sVn2DNo3QAlFGrjA0JOdHD8a8YmarriE5TTSSXjX29YNSyGeXM9CyOOMJ8L
+         jjnuUjg747DVx5xycOXofQb0yyr9CiK5X9tAKnVtlR/dgGTWYXXrHCzbEshp1Ri5UNFD
+         YUK9jzV0DVFPBQ64gFCPtBv1ErLLbjlry8lj9VOeLdFjcLXBqwdSyXjo7oHf6khjujln
+         uJv1oX152EL4Vo/07Sf6Qp1Eisvmtlu0fxrtuetUoiJprcXLqSQgvTwuiKWPCP8nW9AV
+         gy9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678483540;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lysTcPW0XVZ+IeRM4GcO6JyKJb8asSqs6h2ziKdVdMA=;
-        b=My8Qzn1pfCrvpE9WTdYPSMyYdl2hIAgi2J83V/x06rMs2HMrzNjFdelgMC1Eq3SDUr
-         DXzQ/8rFyN96tv3qDRRdC/P34B+RxrBQBozBrDNuZioDgZxYujldGtYaNTuuKBiOw6wk
-         YsOf0Bhgdm7vvFNxdN4WGeS1M5+RrptxEueB0oTQAfDzVn8X2fpPoaGPoQtnvT7PiZIB
-         TJn9zlalzBjsNbwaBTk3/8OBlqLyPWTPwUBADR4JSh7NL4NzVRioTmplLFTjp6x8fFnn
-         Zc5lX/eG/AMeQEYUtnGQgWF2EmHuQuZMkvBdWyE1/pHQG/SS62xi5YjtII9SKVPLD4aS
-         JxOg==
-X-Gm-Message-State: AO0yUKXdlNKU0HRKzANj8wHrKtBLumgaJUbJF0Ne3lBLQQxaJrjqveGb
-        Pgy25XcqILrpuSsKpV5vEmPB4A==
-X-Google-Smtp-Source: AK7set+A2RqEnUDfe1tmfLOzGw/NX61oogxnL4AQW62P5+sZCs92EtU9+B6paRANwZs9OJtgTM6IOg==
-X-Received: by 2002:a05:6e02:1010:b0:316:fcbe:628f with SMTP id n16-20020a056e02101000b00316fcbe628fmr17209813ilj.26.1678483540237;
-        Fri, 10 Mar 2023 13:25:40 -0800 (PST)
-Received: from [172.22.22.4] ([98.61.227.136])
-        by smtp.googlemail.com with ESMTPSA id z1-20020a92d6c1000000b003155ebba955sm287643ilp.68.2023.03.10.13.25.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Mar 2023 13:25:39 -0800 (PST)
-Message-ID: <4e9a29b1-bcaa-8f14-3f2e-9ed40fd8e3ef@linaro.org>
-Date:   Fri, 10 Mar 2023 15:25:38 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [RFC PATCH] arm64: dts: qcom: sm8350-hdk: enable IPA
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20210112; t=1678484617;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VtdBZBHjdNz7Y46m59SHrmzEAnff5o2OBs5iW9CHcGo=;
+        b=AytYqJMBBiinDtKZMm++uqS2Oc3XAEiNvzAp2uTXe3iL4CCHpAPOYW72TFgrU5o+cF
+         BDzNMln7n/zR7AuI0EQAZEYwPj3T7ZG33Eg866qx3jq/PmOSMsXraRvmpdSlrUmpuhk9
+         KKKdSrdYGuC5b/8az7RAIq1odzVN1682y9YWzD4+umdiJf394A2mNCtCiWzD6aIZeYPg
+         RRqGl+jN9RZRb1iFM9U+oXLZfVWiWSr1x2rhu+UGkpYmpCWiqdpqYOay9xI3sYzPiDP1
+         Dap9Ph846VF+MstM9HZVC9trdzzNrV2jiT+c3Ai+G9K//s0QQp1yaQCD73srV/37VZEg
+         sv+A==
+X-Gm-Message-State: AO0yUKW0RHf4u7KPUpC6iCurU/Qye+hpzOhp5MPhZfO3LIyDZFUAyj/d
+        s3XMIAtsAznqBQ5M7HXZLNTMvQ==
+X-Google-Smtp-Source: AK7set9ZnrYfuf8zWlLeHJSEk4HSH1D3c437QABGG/RfrwJXmg4A4Gxrs81DwgbcSe7Z36QyBFQkyg==
+X-Received: by 2002:a17:907:8686:b0:8f7:5038:9896 with SMTP id qa6-20020a170907868600b008f750389896mr34069311ejc.70.1678484617366;
+        Fri, 10 Mar 2023 13:43:37 -0800 (PST)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:34:52e3:a77e:cac5])
+        by smtp.gmail.com with ESMTPSA id f2-20020a1709064dc200b008dcf89a72d7sm327228ejw.147.2023.03.10.13.43.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Mar 2023 13:43:36 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230310203438.1585701-1-dmitry.baryshkov@linaro.org>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <20230310203438.1585701-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Sebastian Reichel <sre@kernel.org>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        =?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+        Oder Chiou <oder_chiou@realtek.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH 1/9] ASoC: qcom: lpass-sc7280: Drop of_match_ptr for ID table
+Date:   Fri, 10 Mar 2023 22:43:24 +0100
+Message-Id: <20230310214333.274903-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/10/23 2:34 PM, Dmitry Baryshkov wrote:
-> Although the HDK has no radio, the IPA part is still perfectly usable
-> (altough it doesn't register any real networking devices). Enable it to
-> make it possible to test IPA on this platform.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+The driver is specific to ARCH_QCOM which depends on OF thus the driver
+is OF-only.  Its of_device_id table is built unconditionally, thus
+of_match_ptr() for ID table does not make sense.
 
-I like that you've captured this, but I'm not sure I
-like the idea of enabling this if the modem is never
-expected to function as, you know, a modem.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ sound/soc/qcom/lpass-sc7280.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-At a minimum I'd want to be sure we could exercise
-IPA in loopback mode before considering this seriously.
-I could work with you to experiment with doing that
-next week if you want.
-
-This isn't an outright "no" though; let's see if anyone
-else feels strongly one way or the other.
-
-					-Alex
-
-> ---
->   arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> index 09baf6959c71..60fbb2f49720 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> @@ -746,3 +746,10 @@ irq-pins {
->   		};
->   	};
->   };
-> +
-> +&ipa {
-> +	qcom,gsi-loader = "self";
-> +	memory-region = <&pil_ipa_fw_mem>;
-> +	status = "okay";
-> +	firmware-name = "qcom/sm8350/ipa_fws.mbn";
-> +};
+diff --git a/sound/soc/qcom/lpass-sc7280.c b/sound/soc/qcom/lpass-sc7280.c
+index d43f480cbae3..956b974e322e 100644
+--- a/sound/soc/qcom/lpass-sc7280.c
++++ b/sound/soc/qcom/lpass-sc7280.c
+@@ -443,7 +443,7 @@ MODULE_DEVICE_TABLE(of, sc7280_lpass_cpu_device_id);
+ static struct platform_driver sc7280_lpass_cpu_platform_driver = {
+ 	.driver = {
+ 		.name = "sc7280-lpass-cpu",
+-		.of_match_table = of_match_ptr(sc7280_lpass_cpu_device_id),
++		.of_match_table = sc7280_lpass_cpu_device_id,
+ 		.pm = &sc7280_lpass_pm_ops,
+ 	},
+ 	.probe = asoc_qcom_lpass_cpu_platform_probe,
+-- 
+2.34.1
 
