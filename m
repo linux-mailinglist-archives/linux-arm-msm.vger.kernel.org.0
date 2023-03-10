@@ -2,127 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 083276B3360
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 01:58:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 93F9A6B341B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 03:15:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229928AbjCJA6Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 19:58:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60054 "EHLO
+        id S229940AbjCJCPf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 21:15:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229550AbjCJA6W (ORCPT
+        with ESMTP id S229943AbjCJCPd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 19:58:22 -0500
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 817DC27D5A;
-        Thu,  9 Mar 2023 16:58:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-        bh=vjW6QtxHv/QHaq/NXjZ9ZAchd2L2TcgKdY+7ifJRM3o=; b=3jinkUGJMgNUX/yYpsH83fW+B8
-        ltXGet1yysa3E0N5nzid+/80PNSR/J8Dp59mC0596V1lKD0sW7hj2IWonzUq4B7bF+N/7LVbaBns3
-        bvRP2gpMwcsa4NG6vWVCfZwN1WQ1mKvO4KVKGsG1dHMge4QL1dJ8y7xzuARPhC6b5qBU=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-        (envelope-from <andrew@lunn.ch>)
-        id 1paR5F-006viw-J1; Fri, 10 Mar 2023 01:58:09 +0100
-Date:   Fri, 10 Mar 2023 01:58:09 +0100
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Lee Jones <lee@kernel.org>,
-        linux-leds@vger.kernel.org
-Subject: Re: [net-next PATCH v2 02/14] net: dsa: qca8k: add LEDs basic support
-Message-ID: <98054351-b124-467c-9be6-d8a7c357c268@lunn.ch>
-References: <20230309223524.23364-1-ansuelsmth@gmail.com>
- <20230309223524.23364-3-ansuelsmth@gmail.com>
- <a8c60aa6-2a89-4b2e-b773-224c6a5b03c0@lunn.ch>
- <640a7775.5d0a0220.110eb.3e41@mx.google.com>
+        Thu, 9 Mar 2023 21:15:33 -0500
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14E0E104627;
+        Thu,  9 Mar 2023 18:15:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678414524; x=1709950524;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=FAurejgzZDgiq4zpMgWd/d8Gh7qfzGeEBH4Wzs2K1W8=;
+  b=eJjR95LNPBMxBXEfBKYwEUaAflaO1eSPkVAxOABh8eK6djOSxDBgKnXI
+   ey6+f5LlYvZi21oIwbTEMvCg3EQX3KLCIn6TEQBNVxMZtO4qXzHNPc8pi
+   MFBpYCkdsJr4PdzNX4J1Mh5/U9nHx+8xk1e69SD94XUMAlAYMiC+13yAM
+   Oupp3zVcuiEHWTVV2wZZc5WrjoxIqulvv/KkoMVwESMbZ6U5oKyo2BL8D
+   nn/ItkSGs990+AkvmpamoMuTH4fd8CPo6vfhQqoOra1/OL758WLwOa4YA
+   vJ8qlRwOjvrd/ebrqg2P10vPrWkzGSIFCzPZfewAWy7BEo6ms3W5Nc0BW
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10644"; a="338988955"
+X-IronPort-AV: E=Sophos;i="5.98,248,1673942400"; 
+   d="scan'208";a="338988955"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2023 18:15:23 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10644"; a="670935165"
+X-IronPort-AV: E=Sophos;i="5.98,248,1673942400"; 
+   d="scan'208";a="670935165"
+Received: from hamannjo-mobl1.amr.corp.intel.com (HELO [10.255.34.234]) ([10.255.34.234])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2023 18:15:21 -0800
+Message-ID: <a211f26d-a045-0729-871f-248d5fce3f3f@linux.intel.com>
+Date:   Thu, 9 Mar 2023 18:37:57 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <640a7775.5d0a0220.110eb.3e41@mx.google.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.7.1
+Subject: Re: [PATCH v3 00/28] Introduce QC USB SND audio offloading support
+Content-Language: en-US
+To:     Wesley Cheng <quic_wcheng@quicinc.com>,
+        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com,
+        andersson@kernel.org, robh+dt@kernel.org,
+        gregkh@linuxfoundation.org, tiwai@suse.com
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+References: <20230308235751.495-1-quic_wcheng@quicinc.com>
+ <4f8a66c0-398f-5655-3aa7-a59bc9ba56cc@linux.intel.com>
+ <8b2f3ce7-3e0c-bdf0-8d9f-9aeabba09a15@quicinc.com>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <8b2f3ce7-3e0c-bdf0-8d9f-9aeabba09a15@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> > > +static enum led_brightness
-> > > +qca8k_led_brightness_get(struct qca8k_led *led)
-> > > +{
-> > > +	struct qca8k_led_pattern_en reg_info;
-> > > +	struct qca8k_priv *priv = led->priv;
-> > > +	u32 val;
-> > > +	int ret;
-> > > +
-> > > +	qca8k_get_enable_led_reg(led->port_num, led->led_num, &reg_info);
-> > > +
-> > > +	ret = regmap_read(priv->regmap, reg_info.reg, &val);
-> > > +	if (ret)
-> > > +		return 0;
-> > > +
-> > > +	val >>= reg_info.shift;
-> > > +
-> > > +	if (led->port_num == 0 || led->port_num == 4) {
-> > > +		val &= QCA8K_LED_PATTERN_EN_MASK;
-> > > +		val >>= QCA8K_LED_PATTERN_EN_SHIFT;
-> > > +	} else {
-> > > +		val &= QCA8K_LED_PHY123_PATTERN_EN_MASK;
-> > > +	}
-> > > +
-> > > +	return val > 0 ? 1 : 0;
-> > > +}
-> > 
-> > What will this return when in the future you add hardware offload, and
-> > the LED is actually blinking because of frames being sent etc?
-> > 
-> > Is it better to not implement _get() when it is unclear what it should
-> > return when offload is in operation?
-> > 
+
+>>> Create vendor ops for the USB SND driver:
+>>> qc_audio_offload: This particular driver has several components
+>>> associated
+>>> with it:
+>>> - QMI stream request handler
+>>> - XHCI interrupter and resource management
+>>> - audio DSP memory management
+>>
+>> so how does this 'qc_audio_offload' interface with 'q6usb' described
+>> above? how are the roles different or complementary?
+>>
+> So in general you can think that the qc_audio_offload is a complement to
+> the USB SND USB class driver, while q6usb is to ASoC.  Since the ASoC
+
+Humm, that is far from clear. I don't get how a something that interacts
+with the USB class driver can also be in charge of the audio DSP memory
+management.
+
+> framework doesn't have any communication with USB SND, the ASoC DPCM USB
+> backend (q6usb) will have to be the entity that maintains what is going
+> on in USB SND.  That way, sessions initiated through the ASoC managed
+> sound card can evaluate what is available based on information reported
+> by q6usb.
 > 
-> My idea was that anything that is not 'always off' will have brightness
-> 1. So also in accelerated blink brightness should be 1.
+> qc_audio_offload and q6usb will have some interaction between each
+> other.  The majority of communication between qc_audio_offload and q6usb
+> is reporting the device connection events.
+
+It's already complicated to figure out how the DSP and USB class driver
+might interact and probe/timing dependencies, but with two additional
+drivers in the mix it's really hard to understand.
+
+Maybe ascii-art would help describe the concepts and types of
+information exchanged. Maintaining a consistent state across multiple
+drivers is not an easy task.
+
 > 
-> My idea of get was that it should reflect if the led is active or always
-> off. Is it wrong?
- 
-brigntness_get seems to be used in two situations:
+>>> When the audio DSP wants to enable a playback stream, the request is
+>>> first
+>>> received by the ASoC platform sound card.  Depending on the selected
+>>> route,
+>>> ASoC will bring up the individual DAIs in the path.  The Q6USB
+>>> backend DAI
+>>> will send an AFE port start command (with enabling the USB playback
+>>> path), and
+>>> the audio DSP will handle the request accordingly.
+>>>
+>>> Part of the AFE USB port start handling will have an exchange of control
+>>> messages using the QMI protocol.  The qc_audio_offload driver will
+>>> populate the
+>>> buffer information:
+>>> - Event ring base address
+>>> - EP transfer ring base address
+>>>
+>>> and pass it along to the audio DSP.  All endpoint management will now
+>>> be handed
+>>> over to the DSP, and the main processor is not involved in transfers.
+>>>
+>>> Overall, implementing this feature will still expose separate sound
+>>> card and PCM
+>>> devices for both the platorm card and USB audio device:
+>>>   0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
+>>>                        SM8250-MTP-WCD9380-WSA8810-VA-DMIC
+>>>   1 [Audio          ]: USB-Audio - USB Audio
+>>>                        Generic USB Audio at usb-xhci-hcd.1.auto-1.4,
+>>> high speed
+>>>
+>>> This is to ensure that userspace ALSA entities can decide which route
+>>> to take
+>>> when executing the audio playback.  In the above, if card#1 is
+>>> selected, then
+>>> USB audio data will take the legacy path over the USB PCM drivers,
+>>> etc...
+>>
+>> I already voiced my concerns about exposing two cards, each with their
+>> own set of volume controls with the same device. It would be much better
+>> to have an additional offloaded PCM device for card0...
+>>
+>> But if the consensus is to have two cards, it's still not clear how the
+>> routing would be selected. In the case where there are two USB audio
+>> devices attached, the offloaded path would only support one of the two.
+>> How would userspace know which of the two is selected?
+>>
+> 
+> With patch#24:
+> https://lore.kernel.org/linux-usb/20230308235751.495-25-quic_wcheng@quicinc.com/T/#u
+> 
+> Now, userspace can at least choose which device it wants to offload.
+> Part of doing that would mean userspace knows what USB SND card devices
+> are available, so it is aware of which devices are shared (between the
+> offload and USB SND path)
+> 
+>> And how would userspace know the difference anyways between two physical
+>> devices attached to the platform with no offload, and one physical
+>> device with one additional offload path? The names you selected can't be
+>> used to identify that card1 is the optimized version of card0.
+>>
+> 
+> Is userspace currently able to differentiate between cards that are
+> created by USB SND versus ASoC?  How complex can the userspace card
+> discovery be?  Can it query kcontrols at this point in time?  If so,
+> maybe we can change the names of the newly added ones to reflect that it
+> is an offload device?
+> 
+> SND kcontrol names are currently:
+> Q6USB offload status
+> Q6USB offload SND device select
 
-When the LED is first registered, it can be called to get the current
-state of the LED. This then initialized cdev->brightness.
+I must admit I've never seen kcontrols being used to identify what the
+card is, and in this case it's a pretend-card that's just an improved
+version of another. It might be easier to use something else, such as
+the component strings.
+> 
+>> Before we review low-level kernel plumbing, it would be good to give a
+>> better overview of how userspace applications are supposed to interact
+>> with the cards and identify the offloaded path. Testing with
+>> tinyplay/tinymix is fine, but that's a developer-level or CI unit test.
+>> we've got to see the broader picture of how a sound server would use
+>> this USB offload capability.
+> 
+> Sure, I think that is fine.  I was hoping that at least adding some of
+> the new kcontrols would help userspace make use of this path in general,
+> but we can add more information if required.
 
-When the brightness sysfs file is read, there is first a call to
-brightness_get to allow it to update the value in cdev->brightness
-before returning the value in the read.
+Can I ask if this solution has been used with a complete userspace stack
+already? I could see how this might be used with a relatively fixed
+Android HAL, where the platform and routing are relatively controlled. I
+don't see how a more generic audio server would deal with the discovery
+and routing.
 
-I think always returning 1 could be confusing. Take the example that
-the LED is indicating link, there is no link, so it is off. Yet a read
-of the brightness sysfs file will return 1?
-
-I would say, it either needs to return the instantaneous brightness,
-or it should not be implemented at all. When we come to implement
-offloading, we might want to consider hiding the brightness sysfs
-file. But we can solve that later.
-
-      Andrew
