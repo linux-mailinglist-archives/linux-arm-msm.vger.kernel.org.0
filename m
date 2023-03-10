@@ -2,217 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 080B36B3C96
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 11:43:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8E6F6B3DBE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 12:29:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229929AbjCJKnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 05:43:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55362 "EHLO
+        id S231208AbjCJL3U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 06:29:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229758AbjCJKno (ORCPT
+        with ESMTP id S230050AbjCJL2t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 05:43:44 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 462B964231;
-        Fri, 10 Mar 2023 02:43:39 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id g18so4856871ljl.3;
-        Fri, 10 Mar 2023 02:43:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678445017;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6D8DgvSllDpIpjkRMtHsbcOPCoCHnTYInoVGhS4b+QA=;
-        b=nCHfG0VG+xIVMI3Uz30+lCPQjHMFNzvzKvLr/uxFUsFQf3sK0QzWXC1lkMYIpnb+yo
-         kTfC3hUaq8cgGe9xMk6AcbdnaIcg7HQQTQy9FYUYrxXA8lGpEBgL1Dmir6Vjlq8dfPLs
-         C7qPdt6AmXMhTO+LAlZFKkmu7qpBvf+EAlj48MXE+EFWNTkHYnE9PYxJfTlLY0JQzVRe
-         AVPRBJUNvn2rznC1jaKvMtoRuQcxNZy6ZCXkCfDrMOAox6Fj/UPpj2Qw3RPLR5Sm6Qw0
-         QLFfzrkeRntLiy2SEYLW90oHWj4Bztsxrd9uCIC8aMvEDbCJnw1v2hI9WbY/GoLyvewF
-         cJRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678445017;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=6D8DgvSllDpIpjkRMtHsbcOPCoCHnTYInoVGhS4b+QA=;
-        b=T3B3OLizAuJI0Zg6TbluSw3X7J2Kf5nIm7E23CJ3+tvn2G4BIY5U1Dwv+xl9CGwVU0
-         aTLRnjnnMmyx+AvRWEPO/3Q+2BtnDBeLqo+grUMK5ZnfpE42lFLYRlVy24d9WLdR9Ynm
-         xJVFmMrB5hDS275p9jx71m7vZuF7gbAjYuoScGCwGrmUFww/6MuiwuWdoOBmCU3MOUGl
-         V+7XtKIu2IDGB9bQ7wczNHi5BbKaZ8GgsEtvbkJ8MHf7vsX/p8uhaR/K8CYwGIYEwBSe
-         tHsec0dx+uLiNYrprAPpc51Wa9r2R2WFRjYRJPW8BTG/J7n5s1wt92ze60bzALcFe79+
-         6fRA==
-X-Gm-Message-State: AO0yUKUmmgs5MLZUblh+re//oD8zomdm1agcGi9/SSLbfdNppxr1KOmL
-        +pinZyGNX5BSc9upAAF/szM=
-X-Google-Smtp-Source: AK7set+p71/bzHEgwcLpPLO/Pz2JDQS28ccp+iIU3K53kTB52otuWjNtgd3ESU/TF0IRcMCTp5ShaA==
-X-Received: by 2002:a2e:4619:0:b0:290:8289:8cba with SMTP id t25-20020a2e4619000000b0029082898cbamr310434lja.8.1678445017151;
-        Fri, 10 Mar 2023 02:43:37 -0800 (PST)
-Received: from [192.168.26.149] (ip-194-187-74-233.konfederacka.maverick.com.pl. [194.187.74.233])
-        by smtp.googlemail.com with ESMTPSA id l20-20020a2e9094000000b00297dad1a2b0sm187498ljg.103.2023.03.10.02.43.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Mar 2023 02:43:36 -0800 (PST)
-Message-ID: <453c9298-d64a-aa77-28ba-ac986dfdd722@gmail.com>
-Date:   Fri, 10 Mar 2023 11:43:32 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:96.0) Gecko/20100101
- Thunderbird/96.0
-Subject: Re: [PATCH V3] nvmem: add explicit config option to read OF fixed
- cells
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
+        Fri, 10 Mar 2023 06:28:49 -0500
+Received: from 167-179-156-38.a7b39c.syd.nbn.aussiebb.net (167-179-156-38.a7b39c.syd.nbn.aussiebb.net [167.179.156.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44837149A2;
+        Fri, 10 Mar 2023 03:28:47 -0800 (PST)
+Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
+        by formenos.hmeau.com with smtp (Exim 4.94.2 #2 (Debian))
+        id 1paavL-002Xzn-96; Fri, 10 Mar 2023 19:28:36 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Fri, 10 Mar 2023 19:28:35 +0800
+Date:   Fri, 10 Mar 2023 19:28:35 +0800
+From:   Herbert Xu <herbert@gondor.apana.org.au>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Evgeniy Polyakov <zbr@ioremap.net>,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rtc@vger.kernel.org,
-        Michael Walle <michael@walle.cc>,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
-References: <20230309112028.19215-1-zajec5@gmail.com>
- <ac94f04b-4b25-81e4-386f-55b0a2c7c85f@linaro.org>
-From:   =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
-In-Reply-To: <ac94f04b-4b25-81e4-386f-55b0a2c7c85f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org
+Subject: Re: [PATCH v11 00/10] crypto: qcom-qce: Add YAML bindings and
+ support for newer SoCs
+Message-ID: <ZAsUY8m+TvlXciXb@gondor.apana.org.au>
+References: <20230222172240.3235972-1-vladimir.zapolskiy@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230222172240.3235972-1-vladimir.zapolskiy@linaro.org>
+X-Spam-Status: No, score=2.7 required=5.0 tests=BAYES_00,HELO_DYNAMIC_IPADDR2,
+        PDS_RDNS_DYNAMIC_FP,RDNS_DYNAMIC,SPF_HELO_NONE,SPF_PASS,TVD_RCVD_IP,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10.03.2023 10:22, Srinivas Kandagatla wrote:
+On Wed, Feb 22, 2023 at 07:22:30PM +0200, Vladimir Zapolskiy wrote:
+> The series contains Qualcomm Crypto Engine DT bindings documentation and
+> driver changes, which modify a set of accepted compatible property values,
+> which is needed to provide a unified and fine-grained support of the driver
+> on old and new platforms. In addition due to QCE IP changes on new Qualcomm
+> platforms, it is reflected in updates to valid device tree properties,
+> namely added iommu, interconnects and optional clocks.
 > 
-> On 09/03/2023 11:20, Rafał Miłecki wrote:
->> From: Rafał Miłecki <rafal@milecki.pl>
->>
->> NVMEM subsystem looks for fixed NVMEM cells (specified in DT) by
->> default. This behaviour was totally safe in early days before adding
->> support for dynamic cells and with simple DT syntax.
->>
->> With every new supported NVMEM device with dynamic cells the current
->> behaviour becomes non-optimal:
->> 1. It results in unneeded iterating over DT nodes
->> 2. It may result in false discovery of cells (in case DT subnodes
->>     contain "reg" property)
->>
+> Qualcomm crypto engine (QCE) is available on several Snapdragon SoCs.
+> The QCE block supports hardware accelerated algorithms for encryption
+> and authentication. It also provides support for aes, des, 3des
+> encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
+> authentication algorithms.
 > 
-> Am really not sure what is going on here,
-> I did raise some issues with this overall approch to start with at [1] none of which are discussed and now I see v3 :-)
+> Changes since v10:
+> =================
+> - v10 can be found here: https://lore.kernel.org/all/20230216131430.3107308-1-vladimir.zapolskiy@linaro.org/
+> - Fixed 05/10 commit message per request from Krzysztof and added his
+>   reviewed-by tag.
+> - Rebased the series on top of the linux-next.
 > 
-> [1] https://lore.kernel.org/lkml/20230309094010.1051573-1-michael@walle.cc/T/#m7706b640979aabf251436e017b8189413661a53a
+> Changes since v9:
+> =================
+> - v9 can be found here: https://lore.kernel.org/linux-crypto/20230208183755.2907771-1-vladimir.zapolskiy@linaro.org/
+> - Added a new generic 'qcom,qce' compatible name, since IP is runtime
+>   discoverable, however two new SoC name based compatibles are left
+>   due to necessity to differentiate various lists of required properties.
+> - Updated documentation according to review comments by Krzysztof.
+> - Removed platform specific changes in dtsi files, only one bisectable
+>   change in sm8550.dtsi is left in the series.
+> - Added some commit tags, however a few given tags by Krzysztof are not
+>   added, since the previous tagged changes were noticeably reworked.
+> 
+> Changes since v8:
+> =================
+> - v8 can be found here: https://lore.kernel.org/all/20230202135036.2635376-1-vladimir.zapolskiy@linaro.org/
+> - Rebased the series on top of linux-next, sm8550 qce support is already
+>   found in the tree.
+> - Reduced the list of QCE IP compatibles in the driver, added one more
+>   compatible for backward DTB ABI compatibility.
+> - Replaced a documentation change from Neil Armstrong by a more advanced
+>   version of it per review comments from Krzysztof Kozlowski about clock
+>   and clock-names properties.
+> - Added changes to all relevant Qualcomm platform dtsi files according to
+>   the changes in the scheme file.
+> - Added QCE support on SM8250 platform.
+> 
+> Changes since v7:
+> =================
+> - v7 can be found here: https://lore.kernel.org/linux-arm-msm/20220920114051.1116441-1-bhupesh.sharma@linaro.org
+> - Added a change by Neil Armstrong to document clocks and clock-names
+>   properties as optional,
+>   - At the moment do not add Bhupesh as a new QCE driver maintainer,
+>   - Minor updates to device tree binding documentation and qce driver,
+>     in particular added more compatibles and fixed lesser issues.
+> 
+> Changes since v6:
+> =================
+> - v6 can be seen here: https://lore.kernel.org/linux-arm-msm/30756e6f-952f-ccf2-b493-e515ba4f0a64@linaro.org/
+> - As per Krzysztof's suggestion on v6, clubbed the crypto driver and
+>   dt-bindings changes together. Now the overall v5 patchset into 3
+>   separate patchsets, one each for the following areas to allow easier
+>   review and handling from the maintainer: arm-msm, crypto and dma
+> 
+> Changes since v5:
+> =================
+> - v5 can be seen here: https://lore.kernel.org/lkml/20211110105922.217895-1-bhupesh.sharma@linaro.org/
+> - As per Bjorn's suggestion on irc, broke down the patchset into 4
+>   separate patchsets, one each for the following areas to allow easier
+>   review and handling from the maintainer: arm-msm, crypto, dma and devicetree
+> - Addressed Rob's, Vladimir's and Bjorn's review comments received on v5.
+> - Added Tested-by from Jordan received on the v5.
+> 
+> Changes since v4:
+> =================
+> - v4 for sm8250 can be seen here: https://lore.kernel.org/linux-arm-msm/20211013105541.68045-1-bhupesh.sharma@linaro.org/
+> - v1 for sm8150 qce enablement can be seen here: https://lore.kernel.org/linux-arm-msm/20211013165823.88123-1-bhupesh.sharma@linaro.org/
+> - Merged the sm8150 and sm8250 enablement patches in the same patchset,
+>   as per suggestions from Bjorn.
+> - Dropped a couple of patches from v4, as these have been picked by
+>   Bjorn already via his tree.
+> - Addressed review comments from Vladimir, Thara and Rob.
+> - Collect Reviewed-by from Rob and Thara on some of the patches from the
+>   v4 patchset.
+> 
+> Changes since v3:
+> =================
+> - v3 can be seen here: https://lore.kernel.org/linux-arm-msm/20210519143700.27392-1-bhupesh.sharma@linaro.org/
+> - Dropped a couple of patches from v3, on basis of the review comments:
+>   ~ [PATCH 13/17] crypto: qce: core: Make clocks optional
+>     ~ [PATCH 15/17] crypto: qce: Convert the device found dev_dbg() to dev_info()
+> - Addressed review comments from Thara, Rob and Stephan Gerhold.
+> - Collect Reviewed-by from Rob and Thara on some of the patches from the
+>   v3 patchset.
+> 
+> Changes since v2:
+> =================
+> - v2 can be seen here: https://lore.kernel.org/dmaengine/20210505213731.538612-1-bhupesh.sharma@linaro.org/
+> - Drop a couple of patches from v1, which tried to address the defered
+>   probing of qce driver in case bam dma driver is not yet probed.
+>   Replace it instead with a single (simpler) patch [PATCH 16/17].
+> - Convert bam dma and qce crypto dt-bindings to YAML.
+> - Addressed review comments from Thara, Bjorn, Vinod and Rob.
+> 
+> Changes since v1:
+> =================
+> - v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20210310052503.3618486-1-bhupesh.sharma@linaro.org/
+> - v1 did not work well as reported earlier by Dmitry, so v2 contains the following
+>   changes/fixes:
+>   ~ Enable the interconnect path b/w BAM DMA and main memory first
+>     before trying to access the BAM DMA registers.
+>   ~ Enable the interconnect path b/w qce crytpo and main memory first
+>     before trying to access the qce crypto registers.
+>   ~ Make sure to document the required and optional properties for both
+>     BAM DMA and qce crypto drivers.
+>   ~ Add a few debug related print messages in case the qce crypto driver
+>     passes or fails to probe.
+>   ~ Convert the qce crypto driver probe to a defered one in case the BAM DMA
+>     or the interconnect driver(s) (needed on specific Qualcomm parts) are not
+>     yet probed.
+> 
+> Bhupesh Sharma (4):
+>   dt-bindings: qcom-qce: Convert bindings to yaml
+>   MAINTAINERS: Add qcom-qce dt-binding file to QUALCOMM CRYPTO DRIVERS section
+>   dt-bindings: qcom-qce: Add 'interconnects' and 'interconnect-names'
+>   dt-bindings: qcom-qce: Add 'iommus' to optional properties
+> 
+> Thara Gopinath (2):
+>   crypto: qce: core: Add support to initialize interconnect path
+>   crypto: qce: core: Make clocks optional
+> 
+> Vladimir Zapolskiy (4):
+>   dt-bindings: qcom-qce: Add new SoC compatible strings for Qualcomm QCE IP
+>   dt-bindings: qcom-qce: document optional clocks and clock-names properties
+>   arm64: dts: qcom: sm8550: add QCE IP family compatible values
+>   crypto: qce: core: Add a QCE IP family compatible 'qcom,qce'
+> 
+>  .../devicetree/bindings/crypto/qcom-qce.txt   |  25 ----
+>  .../devicetree/bindings/crypto/qcom-qce.yaml  | 123 ++++++++++++++++++
+>  MAINTAINERS                                   |   1 +
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi          |   2 +-
+>  drivers/crypto/qce/core.c                     |  23 +++-
+>  drivers/crypto/qce/core.h                     |   1 +
+>  6 files changed, 145 insertions(+), 30 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.txt
+>  create mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> 
+> -- 
+> 2.33.0
 
-I updated commit message to address your concerns. I thought I made it
-clear. I don't know how to emphasize it better.
-
-I'll try to answer nevertheless, please see below.
-
-
-On 9.03.2023 10:37, Srinivas Kandagatla wrote:
- > On 24/02/2023 07:29, Rafał Miłecki wrote:
- >> From: Rafał Miłecki <rafal@milecki.pl>
- >>
- >> NVMEM subsystem looks for fixed NVMEM cells (specified in DT) by
- >> default. This behaviour made sense in early days before adding support
- >> for dynamic cells.
- >>
- >> With every new supported NVMEM device with dynamic cells current
- >> behaviour becomes non-optimal. It results in unneeded iterating over DT
- >> nodes and may result in false discovery of cells (depending on used DT
- >> properties).
- >
- >>
- >> This behaviour has actually caused a problem already with the MTD
- >> subsystem. MTD subpartitions were incorrectly treated as NVMEM cells.
- >>
- >> Also with upcoming support for NVMEM layouts no new binding or driver
- >> should support fixed cells defined in device node.
- >
- > This is not very clear, are you saying that we should not support fixed cells? If that is the case then you are proabably taking this in wrong direction. nvmem was built based on the fact that drivers can read from a fixed offsets. Dynamic cells is something very new, that does not mean that we should ditch fixed cells support in dt.
-
-I DON'T deprecate or drop support for fixed layouts (fixed NVMEM cells).
-Period.
-I WON'T drop support for old binding. We stay backward compatible.
-Period.
-
-In this patch's body I wrote:
-"with the support for NVMEM layouts we may & should have *new* bindings allow fixed NVMEM cells only in the "nvmem-layout" subnode"
-that clearly means I still want to ALLOW fixed NVMEM cells - just in the *nvmem-layout* node.
-
-I want to KEEP support for fixed NVMEM cells.
-I just want them to be preferably defined in the "nvmem-layout" node.
-
-
- >> Solve this by modifying drivers for bindings that support specifying
- >> fixed NVMEM cells in DT. Make them explicitly tell NVMEM subsystem to
- >> read cells from DT.
- >
- > Shouldn't this be opposite, let the new providers tell that cells are created at runtime?
- >
- > or even better if there is a way to detect if we can set this flag dynamically based on layout/post-processing configuration.
- >
- > that should be much cleaner approch.
-
-I tried to address this concert in the following part of commit body:
-
- > The best approach seems to be making NVMEM core looking for fixed DT
- > cells in **device** node an opt-in feature. It's a feature that over
- > time should get deprecated in a favor of using "nvmem-layouts" also for
- > fixed NVMEM cells.
-
-New NVMEM provider bindings and drivers will get developed. I would
-want all new bindings to use "nvmem-layout" for describing NVMEM cells
-(no matter if fixed or dynamic).
-
-That means all new drivers WILL NOT need to set "use_fixed_of_cells".
-
-So over time "use_fixed_of_cells" will become a minority. It'w would be
-pitty to have every new driver to request NVMEM code to skip looking for
-NVMEM cells in **device** node.
-
-So my answer is: no. I don't believe it should be opposite. Looking for
-fixed NVMEM cells in **device** DT node should be an opt-in.
-
-If by some miracle I manage to get my patches through then you'll forget
-about "use_fixed_of_cells" next month. Noone will need it for any new
-stuff. It'll stay for backward compatibility only.
+All applied.  Thanks.
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
