@@ -2,84 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4976F6B3495
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 04:14:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 05C9E6B351D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 05:04:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230061AbjCJDOr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 22:14:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39094 "EHLO
+        id S229737AbjCJEEh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 23:04:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230009AbjCJDOk (ORCPT
+        with ESMTP id S229550AbjCJEEf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 22:14:40 -0500
+        Thu, 9 Mar 2023 23:04:35 -0500
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EFB1F28A9;
-        Thu,  9 Mar 2023 19:14:39 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32A14npV001842;
-        Fri, 10 Mar 2023 03:14:34 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3F3EE501E;
+        Thu,  9 Mar 2023 20:04:33 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32A16TZ4002304;
+        Fri, 10 Mar 2023 04:04:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=xQWrPAxRSV+EGW99i7tiOci4rzdoO4Igctk2XbVM/Ho=;
- b=IEv5PD8y6p3id78kUUNoaq36Xc25fLOn///gHbrztdpopP48fAbJDgviRvK5eK7iMwxz
- B8ag3+aiVg7CxCDFAwh72/yelZAKEwJUYQJjD9MVEqD75e31NI67lS9y4RFg7gRdo/tp
- O026C/sYT6Do/Y0oV/QpUm4HHaNKCd0WJGTpcjvriJ/oMsySKveki8KVgTmhW7xs1liG
- NdvIuZoNzkr6sVf6TsUY80CdJYfyH9XIsJhr+scjVmqxG6JWfGx5BtutUcXsmKuvl7fQ
- KooYX6DLrN2MIvJJsMNbE6uMEncpF/6Wmd4DC0Oy00KJFhnheQypY8c5c8YYI+O2taqi cg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p7q0y0s5d-1
+ bh=Qy1PUzn19VptN8IfOjaioaDlFAVD7aWdoVwO37RW/Ko=;
+ b=GUtsNN75D+5nCv7YyGv4381CVWdZniukmtlgVzuxvR6l2QsH3JG6EEg7Z1Cti5lSKdr4
+ 0Xv6ELqm9ai6/gXk9C4qP471zFMIbbWzOCH01/C57dj0xwPkYLEaRLOIbR/zejlar9kK
+ Gzvw8myX0Ay5ZVDluFBugtkAq+mx2Mn3yxeKuhWdDrFVdoH7G+vVQKoNMo3wp4AQRosr
+ c/GEIURZUeL94Tjbt46O3YuAsR7iuJSLOmfYJ3ak7Ph73s/39QxET8AUdMpJvG8c+hcz
+ Q8iR9xpgB4tkSoTRACXAP0wz26KiPg2IWDvxLupRO8atYf629Fy7eYR/vxVRj3DQ6jg4 rQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p758cuufh-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 10 Mar 2023 03:14:34 +0000
+        Fri, 10 Mar 2023 04:04:26 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32A3EXY9002855
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32A44P7l002890
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 10 Mar 2023 03:14:33 GMT
+        Fri, 10 Mar 2023 04:04:25 GMT
 Received: from [10.79.43.91] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 9 Mar 2023
- 19:14:27 -0800
-Message-ID: <139384c3-5ebc-84b6-9109-b98e4690ca68@quicinc.com>
-Date:   Fri, 10 Mar 2023 08:44:23 +0530
+ 20:04:14 -0800
+Message-ID: <affcec97-6cc2-aa0a-103d-efa8ad3b68bf@quicinc.com>
+Date:   Fri, 10 Mar 2023 09:34:10 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
-Subject: Re: [PATCH 09/15] arm64: dts: qcom: sm6375: Add CPUCP L3 node
+Subject: Re: [PATCH v1 1/1] remoteproc: qcom: pas: Coredump elf class to elf64
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230303-topic-sm6375_features0_dts-v1-0-8c8d94fba6f0@linaro.org>
- <20230303-topic-sm6375_features0_dts-v1-9-8c8d94fba6f0@linaro.org>
+To:     Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        "Elliot Berman" <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>
+References: <20230309001035.24024-1-quic_gokukris@quicinc.com>
 From:   Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <20230303-topic-sm6375_features0_dts-v1-9-8c8d94fba6f0@linaro.org>
+In-Reply-To: <20230309001035.24024-1-quic_gokukris@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: N5LoSnEg8LgJ9YUzq6wC_c2TlhTQEy_t
-X-Proofpoint-ORIG-GUID: N5LoSnEg8LgJ9YUzq6wC_c2TlhTQEy_t
+X-Proofpoint-ORIG-GUID: 8useoCWDgeErQAEsQYb-NErQBF6ghjH6
+X-Proofpoint-GUID: 8useoCWDgeErQAEsQYb-NErQBF6ghjH6
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-03-09_14,2023-03-09_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- impostorscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1011 mlxscore=0
- mlxlogscore=999 suspectscore=0 bulkscore=0 priorityscore=1501 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2303100022
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 spamscore=0 clxscore=1011
+ impostorscore=0 mlxscore=0 mlxlogscore=999 phishscore=0 lowpriorityscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303100029
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
@@ -89,44 +87,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Konrad,
+Hey Gokul,
 
 Thanks for the patch.
 
-On 3/4/23 03:28, Konrad Dybcio wrote:
-> Enable the CPUCP block responsible for scaling the L3 cache.
-
-FWIW, the patch just enables the l3 provider, the CPUCP block would
-already be up at this point. You would also want to include the
-expansion for CPUCP at least once in your patch.
-
+On 3/9/23 05:40, Gokul krishna Krishnakumar wrote:
+> This change adds a new initialization param which modifies the elf
+> class accordingly. Some of the subsystem dump analysis tools need
+> the elf class to be elf64.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
+https://lore.kernel.org/lkml/8dea333d-544d-7c07-d560-a1a9c3a38ddc@quicinc.com/
 
+This patch was already sent upstream a while back ^^. IIRC the firmware
+certainly aren't 64 bit elfs and dump analysis tools don't really care 
+as long the coredump contains section headers.
+
+- Sibi
+
+> Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
 > ---
->   arch/arm64/boot/dts/qcom/sm6375.dtsi | 9 +++++++++
->   1 file changed, 9 insertions(+)
+>   drivers/remoteproc/qcom_q6v5_pas.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-> index 90f18754a63b..59d7ed25aa36 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-> @@ -1505,6 +1505,15 @@ frame@f42d000 {
->   			};
->   		};
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 0871108fb4dc..17ce3177be7b 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -39,6 +39,7 @@ struct adsp_data {
+>   	int pas_id;
+>   	int dtb_pas_id;
+>   	unsigned int minidump_id;
+> +	bool uses_elf64;
+>   	bool auto_boot;
+>   	bool decrypt_shutdown;
 >   
-> +		cpucp_l3: interconnect@fd90000 {
-> +			compatible = "qcom,sm6375-cpucp-l3", "qcom,epss-l3";
-> +			reg = <0 0x0fd90000 0 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>, <&gcc GPLL0>;
-> +			clock-names = "xo", "alternate";
-> +			#interconnect-cells = <1>;
-> +		};
-> +
->   		cpufreq_hw: cpufreq@fd91000 {
->   			compatible = "qcom,sm6375-cpufreq-epss", "qcom,cpufreq-epss";
->   			reg = <0 0x0fd91000 0 0x1000>, <0 0x0fd92000 0 0x1000>;
-> 
+> @@ -681,7 +682,10 @@ static int adsp_probe(struct platform_device *pdev)
+>   	}
+>   
+>   	rproc->auto_boot = desc->auto_boot;
+> -	rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
+> +	if (desc->uses_elf64)
+> +		rproc_coredump_set_elf_info(rproc, ELFCLASS64, EM_NONE);
+> +	else
+> +		rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
+>   
+>   	adsp = (struct qcom_adsp *)rproc->priv;
+>   	adsp->dev = &pdev->dev;
+> @@ -1126,6 +1130,7 @@ static const struct adsp_data sm8550_adsp_resource = {
+>   	.pas_id = 1,
+>   	.dtb_pas_id = 0x24,
+>   	.minidump_id = 5,
+> +	.uses_elf64 = true,
+>   	.auto_boot = true,
+>   	.proxy_pd_names = (char*[]){
+>   		"lcx",
+> @@ -1145,6 +1150,7 @@ static const struct adsp_data sm8550_cdsp_resource = {
+>   	.pas_id = 18,
+>   	.dtb_pas_id = 0x25,
+>   	.minidump_id = 7,
+> +	.uses_elf64 = true,
+>   	.auto_boot = true,
+>   	.proxy_pd_names = (char*[]){
+>   		"cx",
+> @@ -1165,6 +1171,7 @@ static const struct adsp_data sm8550_mpss_resource = {
+>   	.pas_id = 4,
+>   	.dtb_pas_id = 0x26,
+>   	.minidump_id = 3,
+> +	.uses_elf64 = true,
+>   	.auto_boot = false,
+>   	.decrypt_shutdown = true,
+>   	.proxy_pd_names = (char*[]){
