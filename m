@@ -2,227 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23A796B3748
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 08:27:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 467FA6B37E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 08:57:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230028AbjCJH1N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 02:27:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39718 "EHLO
+        id S230057AbjCJH46 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 02:56:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229614AbjCJH1L (ORCPT
+        with ESMTP id S229929AbjCJH45 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 02:27:11 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DFF3107D65;
-        Thu,  9 Mar 2023 23:27:10 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id D1487CE26C7;
-        Fri, 10 Mar 2023 07:27:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38DA8C433EF;
-        Fri, 10 Mar 2023 07:27:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678433226;
-        bh=EObO0GfPUqc7ltHIHmh0Y8AYbHGRqd53SM8I+etahGs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=QxBJZgOR8AgQHVEpqjww/B1p0OEp9XJ4oxivJuy2Q8khNR7rg9Sy23IUYzUf1idd0
-         IAxRsYiaIHCl+qK+NISI1Pja2JbhZRIV1/Vx8PrGrsVo6dQJRdFazcYA8HohU/dOin
-         zS7H5A5vAOyy2Vhzwn8S1m8c4/G1ilAfWWVByqkyC6QSzJbb7DtANEE4e92Eds5cIm
-         ihdyI3X5GI4JtqRYYJlZoA2mp//SRt65DGpZt0OkgjWEr7OFn7+g1yjBRO7No2QcOs
-         uY7Yg5aODv2W5iI5xLQ2RWcPq6QoP7jen0UEx0k/wmNDWFHSclWpOF52fvInV1/kO3
-         xeFMU/SdG6TVw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1paXAT-0007rL-HG; Fri, 10 Mar 2023 08:27:57 +0100
-Date:   Fri, 10 Mar 2023 08:27:57 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Fri, 10 Mar 2023 02:56:57 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C02FDDF28
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 23:56:53 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id x3so16943349edb.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 23:56:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678435011;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Na4vhlLIT8h87R1c4saJtnoc0rpStTN6SAaJv5Ui0DU=;
+        b=f/cdum7O6TN5gJ9ROGgx6QjE0oljMSgdfelOxJDv/A44aZ7Mm1unTj43LMrAl8qXD3
+         sHI50PXnWoUWOCaGf+Lw7NcDVU4NiPijijYupEKrMb/i7yVzAFSIs2Sdxro3W9NWDoHv
+         l0FZKC3iXGb6IU9h1xEP+L1xj0TStwEsdmZgH7BeJN1yxjzdFSB6oJFobXTUS45dVs0M
+         ULQH07khMas1d0aBIt/OjZLOHVTDe9lhbsnUreYNdh+WszcP/mDLVMMeWmaL4KFGK0LG
+         +5HnCCB4hC8JohJPmZdM8SSKIi+lKSrrSUXogyHzjsDGs1U97Mara0hXF/7LevUFdWY9
+         OvCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678435011;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Na4vhlLIT8h87R1c4saJtnoc0rpStTN6SAaJv5Ui0DU=;
+        b=tlnn/jZBxOfwEhybDQmdoOi19s7kesXV+QJ19ZF+5BmuLHt8Zkk27+LMZf4ZwZaBYO
+         zBIOZ79o6UrTJCYpTzCbnkD+LfmH3sBXx+KpZTxIHDLSG9YU1eb/i4Q3JgEigm50qo/T
+         1Qwgjf9LZBatJfYE7UXgQDN5QOy3mf6lOJ4cPPI7C8/++8hNO/5JK5SV14PHmeqjr9qN
+         letfeEM/geFjePkjEGzQIqybDfncuBNxn99H2mmixva94+FeHnMWy5BaJqN0E+HY6bX9
+         /pFLBD92D1lLAMKRqWQ5qLZ4lYPpJxomb3niRGKg0XSxTYxiA+EhgZZntPZsoQmETw6x
+         FXew==
+X-Gm-Message-State: AO0yUKXOLB3uuCtqIN9mqmEs24j3unDQCt90yzo/JpT3sSMuVUm0L+Y9
+        Vnc0gLBhx0Ct6uG1MpYwNcESmw==
+X-Google-Smtp-Source: AK7set83ouw7MBm0jqo5iH57IkMFwoOVUzIry7zQggJ4hxcJBeN03UC69xrHLWNGpiqGw+nvqtrohA==
+X-Received: by 2002:a17:906:eecc:b0:90b:167e:3050 with SMTP id wu12-20020a170906eecc00b0090b167e3050mr30865633ejb.36.1678435011591;
+        Thu, 09 Mar 2023 23:56:51 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id ox11-20020a170907100b00b008cf6f8798e1sm641097ejb.54.2023.03.09.23.56.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Mar 2023 23:56:50 -0800 (PST)
+Message-ID: <6108c68b-e38b-3060-f6fa-53be79a795d7@linaro.org>
+Date:   Fri, 10 Mar 2023 07:56:49 +0000
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v1 01/15] dt-bindings: add pwrseq device tree bindings
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
         Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>,
         Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>,
-        Tim Jiang <quic_tjiang@quicinc.com>
-Subject: Re: [PATCH v5 2/4] Bluetooth: hci_qca: Add support for QTI Bluetooth
- chip wcn6855
-Message-ID: <ZArb/ZQEmfGDjYyc@hovoldconsulting.com>
-References: <20230209020916.6475-1-steev@kali.org>
- <20230209020916.6475-3-steev@kali.org>
- <ZAoS1T9m1lI21Cvn@hovoldconsulting.com>
- <CAKXuJqhEKB7cuVhEzObbFyYHyKj87M8iWVaoz7gkhS2OQ9tTBA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKXuJqhEKB7cuVhEzObbFyYHyKj87M8iWVaoz7gkhS2OQ9tTBA@mail.gmail.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Kalle Valo <kvalo@codeaurora.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-mmc <linux-mmc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "open list:BLUETOOTH DRIVERS" <linux-bluetooth@vger.kernel.org>,
+        ath10k@lists.infradead.org,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        netdev <netdev@vger.kernel.org>, Abel Vesa <abel.vesa@linaro.org>
+References: <20211006035407.1147909-1-dmitry.baryshkov@linaro.org>
+ <20211006035407.1147909-2-dmitry.baryshkov@linaro.org>
+ <YXf6TbV2IpPbB/0Y@robh.at.kernel.org>
+ <37b26090-945f-1e17-f6ab-52552a4b6d89@linaro.org>
+ <CAL_JsqLAnJqZ95_bf6_fFmPJFMjuy43UfP2UxzEmFMNnG_t-Ug@mail.gmail.com>
+ <31792ef1-20b0-b801-23b7-29f303b91def@linaro.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <31792ef1-20b0-b801-23b7-29f303b91def@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 09, 2023 at 02:24:57PM -0600, Steev Klimaszewski wrote:
-> On Thu, Mar 9, 2023 at 11:08 AM Johan Hovold <johan@kernel.org> wrote:
-> > On Wed, Feb 08, 2023 at 08:09:14PM -0600, Steev Klimaszewski wrote:
 
-> > > @@ -672,6 +678,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
-> > >       case QCA_WCN3991:
-> > >       case QCA_WCN3998:
-> > >       case QCA_WCN6750:
-> > > +     case QCA_WCN6855:
-> >
-> > Did you actually verify the microsoft extensions need this, or you are
-> > assuming it works as 6750?
-> >
-> It was 100% an assumption that since the 6750 does it, the 6855 does
-> too.  I should know better than to assume since I used to work at a
-> device manufacturer but high hopes things have changed a bit in the
-> past 12 years ;)
 
-Heh. Thanks for confirming. :)
+On 02/11/2021 15:26, Dmitry Baryshkov wrote:
+> On 28/10/2021 00:53, Rob Herring wrote:
+>> On Tue, Oct 26, 2021 at 9:42 AM Dmitry Baryshkov
+>> <dmitry.baryshkov@linaro.org> wrote:
+>>>
+>>> On 26/10/2021 15:53, Rob Herring wrote:
+>>>> On Wed, Oct 06, 2021 at 06:53:53AM +0300, Dmitry Baryshkov wrote:
+>>>>> Add device tree bindings for the new power sequencer subsystem.
+>>>>> Consumers would reference pwrseq nodes using "foo-pwrseq" properties.
+>>>>> Providers would use '#pwrseq-cells' property to declare the amount of
+>>>>> cells in the pwrseq specifier.
+>>>>
+>>>> Please use get_maintainers.pl.
+>>>>
+>>>> This is not a pattern I want to encourage, so NAK on a common binding.
+>>>
+>>>
+>>> Could you please spend a few more words, describing what is not
+>>> encouraged? The whole foo-subsys/#subsys-cells structure?
+>>
+>> No, that's generally how common provider/consumer style bindings work.
+>>
+>>> Or just specifying the common binding?
+>>
+>> If we could do it again, I would not have mmc pwrseq binding. The
+>> properties belong in the device's node. So don't generalize the mmc
+>> pwrseq binding.
+>>
+>> It's a kernel problem if the firmware says there's a device on a
+>> 'discoverable' bus and the kernel can't discover it. I know you have
+>> the added complication of a device with 2 interfaces, but please,
+>> let's solve one problem at a time.
 
-> > >               hci_set_msft_opcode(hdev, 0xFD70);
-> > >               break;
-> > >       default:
+Just to keep this topic updated with some pointers [1] to changes done 
+to solve same problem in USB Hub. These patches 
+(drivers/usb/misc/onboard_usb_hub*) have been merged since last year July.
 
-> > > diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> > > index 3df8c3606e93..efc1c0306b4e 100644
-> > > --- a/drivers/bluetooth/hci_qca.c
-> > > +++ b/drivers/bluetooth/hci_qca.c
-> > > @@ -605,8 +605,7 @@ static int qca_open(struct hci_uart *hu)
-> > >       if (hu->serdev) {
-> > >               qcadev = serdev_device_get_drvdata(hu->serdev);
-> > >
-> > > -             if (qca_is_wcn399x(qcadev->btsoc_type) ||
-> > > -                 qca_is_wcn6750(qcadev->btsoc_type))
-> > > +             if (!(qcadev->init_speed))
-> > >                       hu->init_speed = qcadev->init_speed;
-> >
-> > This change makes no sense.
-> >
-> > In fact, it seems the driver never sets init_speed anywhere.
-> >
-> > Either way, it should not be needed for wcn6855.
+It looks like we can take some inspiration from this to address PCIE Bus 
+issue aswell.
+
+Thanks to Neil to point this.
+
+[1] 
+https://lore.kernel.org/lkml/20220630193530.2608178-1-mka@chromium.org/T/
+
+
+--srini
 > 
-> So, that was a request from an earlier review, but if it's not needed
-> for 6855, I'll just drop it, and then I don't need to do any of those
-> changes :D
-
-Note that with the above, init_speed is only is set if qcadev->init_speed
-is *not* set, so if this was needed the test would need to be negated.
-
-But as I mentioned above, this also looks broken as qcadev->init_speed
-is never set anywhere.
-
-You could investigate and clean up this code before or after adding
-support for wcn6855, but the above really doesn't look right and would
-at least need to go in a separate patch with a proper explanation.
-
-> > >
-> > >               if (qcadev->oper_speed)
-
-> > > @@ -1723,7 +1725,8 @@ static int qca_setup(struct hci_uart *hu)
-> > >
-> > >       bt_dev_info(hdev, "setting up %s",
-> > >               qca_is_wcn399x(soc_type) ? "wcn399x" :
-> > > -             (soc_type == QCA_WCN6750) ? "wcn6750" : "ROME/QCA6390");
-> > > +             (soc_type == QCA_WCN6750) ? "wcn6750" :
-> > > +             (soc_type == QCA_WCN6855) ? "wcn6855" : "ROME/QCA6390");
-> >
-> > This is hideous, but not your fault...
-> >
-> It is, and, I'm not entirely sure we need it? I mean, it's nice to
-> show that it's now starting to set up, but it isn't particularly
-> helpful for end users or making sure things are working?
-
-This is driver is already spamming the logs, while generally we should
-only be logging when things go wrong. Those info messages can probably
-be changed to dev_dbg(), but that's a separate issue and not something
-that's needed to add support for wcn6855.
-
-And same here, you can keep the above as is, but it seems like someone
-will soon need to clean up the type handling as all these conditionals
-are getting a bit unwieldy.
-
-> > > @@ -1883,6 +1888,20 @@ static const struct qca_device_data qca_soc_data_wcn6750 = {
-> > >       .capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES,
-> > >  };
-> > >
-> > > +static const struct qca_device_data qca_soc_data_wcn6855 = {
-> > > +     .soc_type = QCA_WCN6855,
-> > > +     .vregs = (struct qca_vreg []) {
-> > > +             { "vddio", 5000 },
-> > > +             { "vddbtcxmx", 126000 },
-> > > +             { "vddrfacmn", 12500 },
-> > > +             { "vddrfa0p8", 102000 },
-> > > +             { "vddrfa1p7", 302000 },
-> > > +             { "vddrfa1p2", 257000 },
-> >
-> > Hmm. More random regulator load values. I really think we should get rid
-> > of this but that's a separate discussion.
-> >
-> Bjorn specifically requested that he wanted me to leave them in.  I'm
-> not married to them, and don't care one way or the other, I just
-> wanted working bluetooth since audio wasn't quite ready yet :)
-
-You can them in for now, but we had a discussion last fall about whether
-these made up numbers really belong in the kernel.
-
-> > > +     },
-> > > +     .num_vregs = 6,
-> > > +     .capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES,
-> > > +};
-> > > +
-> > >  static void qca_power_shutdown(struct hci_uart *hu)
-> > >  {
-> > >       struct qca_serdev *qcadev;
-> >
-> > As I mentioned elsewhere, you need to update also this function so that
-> > wcn6855 can be powered down.
+> The PCI bus handling is a separate topic for now (as you have seen from 
+> the clearly WIP patches targeting just testing of qca6390's wifi part).
 > 
-> Sorry, I do have that locally, I just haven't pushed a v6 as I was
-> looking at Tim's v2 of the qca2066 and was wondering if I should or
-> shouldn't continue working on my version of the driver?
-
-I only skimmed that patch a while ago, but that ones not strictly needed
-for wcn6855, right? Things seems to work well here with just this series
-applied.
-
-> > With power-off handling fixed, this seems to work as quite well on my
-> > X13s with 6.3-rc1. Nice job!
-> >
-> > Btw, apart from the frame reassembly error, I'm also seeing:
-> >
-> >         Bluetooth: Received HCI_IBS_WAKE_ACK in tx state 0
-> >
-> > during probe.
-> >
-> I'm still not sure where the frame reassembly error comes from, and I
-> don't know how to get more info to figure it out either, if anyone
-> happens to have any guidance for that, I would love some.
-> Additionally, it doesn't always happen.  It seems to happen on the
-> first load of the module, however, running modprobe -r && modprobe in
-> a loop (with the powerdown properly modified so the log isn't full of
-> splats),  it doesn't seem to occur every time. Likewise for the
-> WAKE_ACK.
-
-Ok. Looks like the Chromium team tried to suppress these errors when
-switching line speed by toggling rts, but the frame-assembly error I get
-appears to happen before that.
-
-Johan
+> For me there are three parts of the device:
+> - power regulator / device embedded power domain.
+> - WiFi
+> - Bluetooth
+> 
+> With the power regulator being a complex and a bit nasty beast. It has 
+> several regulators beneath, which have to be powered up in a proper way.
+> Next platforms might bring additional requirements common to both WiFi 
+> and BT parts (like having additional clocks, etc). It is externally 
+> controlled (after providing power to it you have to tell, which part of 
+> the chip is required by pulling up the WiFi and/or BT enable GPIOs.
+> 
+> Having to duplicate this information in BT and WiFi cases results in 
+> non-aligned bindings (with WiFi and BT parts using different set of 
+> properties and different property names) and non-algined drivers (so the 
+> result of the powerup would depend on the order of drivers probing).
+> 
+> So far I still suppose that having a single separate entity controlling 
+> the powerup of such chips is the right thing to do.
+> 
+> I'd prefer to use the power-domain bindings (as the idea seems to be 
+> aligned here), but as the power-domain is used for the in-chip power 
+> domains, we had to invent the pwrseq name.
+> 
