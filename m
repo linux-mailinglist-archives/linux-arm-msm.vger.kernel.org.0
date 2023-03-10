@@ -2,114 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A28C96B3402
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 03:08:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AE996B3470
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 03:59:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229637AbjCJCIz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 21:08:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38784 "EHLO
+        id S229549AbjCJC72 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 21:59:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbjCJCIx (ORCPT
+        with ESMTP id S229459AbjCJC71 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 21:08:53 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DB1EFAD66
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 18:08:52 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id k14so4765798lfj.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 18:08:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678414130;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GNebAFc/OVjCS4NYNisA6Hl/ajEXWUl72HEvVLWLC7Y=;
-        b=VT/rVOK5YHM/n9rhLxP2gV6vMw9yltQDUDDeZoWWjWqwrPSfYA1q8Tqr8ITEKl94Qm
-         F10M2Pr2tTWwWMNUHRAwBocEh3vtx0bZn6JFWiQ8q7I9f0dGiYW2aAR2TXYWcYRKctzB
-         NXcAswjT7BEUbdB87oxx5Z1jkZM7A8hdDFGUsOexyyG8/ZdtMXehfMS8pluemssI2y4Y
-         nOawnYNfC35DziEXFmfN8xsjxszmFCW4vRN0uHIRzzLNfVjOy99SvFuV+p5WszV6AeoV
-         xEOJYIlKHrdlP4jjWsJ/3XsF2M1rLmes93ZA68MmzK/YX+M25tbue7Aacj7mlgpTWHdx
-         lDRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678414130;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GNebAFc/OVjCS4NYNisA6Hl/ajEXWUl72HEvVLWLC7Y=;
-        b=IOzdCjAqCbOy7nlzW4AXzCNju/cJ5I9EuLzdfG33V4hIdlUZrKbUBK2j7B8GVeAS5Z
-         6wXuwB0u7I6vWTSJoOHOTxno6L3Qf1nvQizrQ+tBy0tqpIUbbuSvazszLli0KL3TucRB
-         oJ189yAStYSZSMEz+H0yeyP9ZOg1aTTeLBNYeBvTnxqbb7DI9VnYDhbFaxrBy38+TGD1
-         XgcuXDSMsuhwuclNaw7apLOik+qj4Bkf/p6gnS08MtMrnWPryR/ATK5kB7F3eQO0kFvr
-         J78EIe2YDOeAY3dV3bui9UIywxxH+uGUNvubj9Kik7Lk3hKmyelSp9NN7onP10R//2gM
-         c1KQ==
-X-Gm-Message-State: AO0yUKUt7LjrKXfCNusEfb0RjGdTB2jIipm9JO5PNhOpydLitdJ8jkdJ
-        dAfTM/tLfmf5AYypWC/j8eclrw==
-X-Google-Smtp-Source: AK7set9YbQOYtZLPwJfvJodS4BJF9I9OC8HAsPOy1rlNikBThFm6bv5J02yx0u+u3eDbPP0sar9Xtg==
-X-Received: by 2002:a05:6512:902:b0:4b6:fddc:1fcd with SMTP id e2-20020a056512090200b004b6fddc1fcdmr196031lft.23.1678414130580;
-        Thu, 09 Mar 2023 18:08:50 -0800 (PST)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id z10-20020ac25dea000000b004db297957e8sm87347lfq.305.2023.03.09.18.08.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Mar 2023 18:08:50 -0800 (PST)
-Message-ID: <7e50790e-5b2d-4c5f-7a31-de71fa6cc967@linaro.org>
-Date:   Fri, 10 Mar 2023 03:08:48 +0100
+        Thu, 9 Mar 2023 21:59:27 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1475199C4;
+        Thu,  9 Mar 2023 18:59:26 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32A144ig017880;
+        Fri, 10 Mar 2023 02:59:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=PQNfu/X6r67zDWRiVTp+9AqtoRJYT0YRdJwDIpafouM=;
+ b=YhJRlgE+UATD4KmgyRCijgrk+02SEW4yB6bRR5TXBvPHgxwAsJvQnedMGXCp2moedcne
+ jSXXuKvk0CVreF5i/CzE+7e75hhhak+6hVYsLw8inEyUzAU9KxLnZDmxbgym5aCaLbZm
+ iM0pu+Ayg+d1O43Gq9OcSon+W5dqjCVrE5Yyj5C4mCac/cmF/MxdEFylIKXEW1xCL5pZ
+ lfyz2lJoxwqnz/fqjcmYK4p8xY2O8NW6tof8L2nC7WlwjMx+G/2qLMKWPhVHxs4lfoA3
+ k1NQPAvm/XBgwdgt5MNA61iIjs9JpcMdKwdX71njJTD2fuPR6BW0mTtcLyXY2Q/aZOqC Yg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p7nh2h0dr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 10 Mar 2023 02:59:23 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32A2xM8t025015
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 10 Mar 2023 02:59:22 GMT
+Received: from [10.79.43.91] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 9 Mar 2023
+ 18:59:10 -0800
+Message-ID: <c862a6ee-241a-0ff8-62a5-668ed6599ad9@quicinc.com>
+Date:   Fri, 10 Mar 2023 08:28:43 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 2/4] pinctrl: qcom: lpass-lpi: use consistent name for
- "group" variable
+ Thunderbird/102.2.2
+Subject: Re: [PATCH] firmware: qcom: scm: fix bogus irq error at probe
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230309154949.658380-1-krzysztof.kozlowski@linaro.org>
- <20230309154949.658380-2-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230309154949.658380-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Guru Das Srinagesh" <quic_gurus@quicinc.com>
+References: <20230309111209.31606-1-johan+linaro@kernel.org>
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <20230309111209.31606-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: LqWgyw-lRUHacweRThMVx-HXHzVv-JPF
+X-Proofpoint-GUID: LqWgyw-lRUHacweRThMVx-HXHzVv-JPF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-09_14,2023-03-09_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ priorityscore=1501 phishscore=0 malwarescore=0 clxscore=1011
+ impostorscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303100020
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hey Johan,
 
+Thanks for the fix.
 
-On 9.03.2023 16:49, Krzysztof Kozlowski wrote:
-> The set_mux callback in SoC TLMM driver (pinctrl-msm.c) uses "group",
-> not "group_num" for the number of the pin group.  Other places of
-> lpass-lpi also use "group", so let's be consistent for code readability.
+On 3/9/23 16:42, Johan Hovold wrote:
+> A recent commit added support for an optional interrupt which is only
+> available on some platforms.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Stop spamming the logs with bogus error messages on platforms that do
+> not use this new optional resource:
+> 
+> 	qcom_scm firmware:scm: error -ENXIO: IRQ index 0 not found
+> 
+> Fixes: 6bf325992236 ("firmware: qcom: scm: Add wait-queue handling logic")
+> Cc: Guru Das Srinagesh <quic_gurus@quicinc.com>
+> Cc: Sibi Sankar <quic_sibis@quicinc.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+
+Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
+
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>   drivers/firmware/qcom_scm.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> index 27fc8b671954..bd32556d75a5 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> @@ -84,10 +84,10 @@ static int lpi_gpio_get_function_groups(struct pinctrl_dev *pctldev,
->  }
->  
->  static int lpi_gpio_set_mux(struct pinctrl_dev *pctldev, unsigned int function,
-> -			    unsigned int group_num)
-> +			    unsigned int group)
->  {
->  	struct lpi_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
-> -	const struct lpi_pingroup *g = &pctrl->data->groups[group_num];
-> +	const struct lpi_pingroup *g = &pctrl->data->groups[group];
->  	u32 val;
->  	int i, pin = g->pin;
->  
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 468d4d5ab550..b1e11f85b805 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -1479,7 +1479,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>   
+>   	init_completion(&__scm->waitq_comp);
+>   
+> -	irq = platform_get_irq(pdev, 0);
+> +	irq = platform_get_irq_optional(pdev, 0);
+>   	if (irq < 0) {
+>   		if (irq != -ENXIO)
+>   			return irq;
