@@ -2,136 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8CDB6B49C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 16:15:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 814E66B4B60
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 16:43:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234024AbjCJPPa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 10:15:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54910 "EHLO
+        id S234433AbjCJPnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 10:43:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234146AbjCJPO6 (ORCPT
+        with ESMTP id S233009AbjCJPms (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 10:14:58 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 468AE132BCF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 07:06:21 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id kb15so5580679pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 07:06:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=semihalf.com; s=google; t=1678460724;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mI9SynFLOYtOEHXFt34hbbK+yCygpvgICPPgvO9gfV8=;
-        b=VJ1dnBmXbkWcmPGgaIqe8y1AjzPkpkCDA30L72GW1BCNILg9Ux93MdjuFClsREO7vk
-         lPuzSZIDtThvsRkSsKGr3zO9rAsKWjoosj6IS8v322FG/klrkxUO4FIp6lMfqPuj4TxI
-         7iye1Ahz/4AiFFf6VAwHflCsxCwez6c0dgsKDphb107iKdmAqMvuRIOUZ+bfwhCgORMs
-         iHbeIn5DKK69O/9p0RZAo34CKsm8KqzEPsCeBsRVrQgTElcQ7BdUZWM4zM+YwjZmMWwf
-         jpTB1yeDWY83Dl59FnSeE0Klte9uU8zLnIN4Ka4GVeK62dZ/tM49vJHupbAcFDxR1gnt
-         LTqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678460724;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mI9SynFLOYtOEHXFt34hbbK+yCygpvgICPPgvO9gfV8=;
-        b=tQ4Q+/GAFOyTD4yktVWhklCKAMaXu4I6if0Ca98ug2bytoEoHLyWbMVjdxb9LYToLj
-         +X9lS8s1CFoPIyqqvI/ORUoLSjZLDsw93sOxrmhvQW30ufqpHs/z3vzk98fmxWD+1EeE
-         jHZ76/Jaupj93ocKEW0DYPUT96OcYM2Atv+EqcmYtcG9kLF+LFrI89256T4FLwy+5rG2
-         uXnULgGNl8RyZaJyZebEe75Df3qk4FiOnUnUq+ACVM0KhdZu6y+pTXys8p9pXTwYfrPc
-         tI9aq8VhhpNim8dTA3skKg1RWne/DazsGJMvDsV386sL0915jL/FFgPeKcHrFCUhsAjZ
-         TsIA==
-X-Gm-Message-State: AO0yUKX2KgfUOSrJzrLnnTEvG4CLO3i4pMjc5RfqOb2Cx+XvDb0IT6qx
-        E6aIUqZ5okqn8b/IH6h62NvzXIPtPiOynARbiMlsrQ==
-X-Google-Smtp-Source: AK7set8IWRb0c5QRI0mCvofn+53toeLUf0QAqBXeiHkxJiCHSENVWUwl0Cn9xhaO9TH0b6aLOo+bYIjEMz5NYxW8+6s=
-X-Received: by 2002:a17:902:7e09:b0:199:6fd:ecf6 with SMTP id
- b9-20020a1709027e0900b0019906fdecf6mr9641502plm.9.1678460723997; Fri, 10 Mar
- 2023 07:05:23 -0800 (PST)
+        Fri, 10 Mar 2023 10:42:48 -0500
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDE067431D;
+        Fri, 10 Mar 2023 07:29:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678462172; x=1709998172;
+  h=message-id:date:mime-version:to:cc:references:from:
+   subject:in-reply-to:content-transfer-encoding;
+  bh=uRO3ncPTAeH91sp2hvb+p3FEDisPorSl78+BYWZMFcs=;
+  b=f1a072YVVWTiY6veYABibib8mEgIWTPohQCguoeqRq07xTt39mNLzQtu
+   cSytQZtdfgpGLzoT/LKBd4sfUFDlF+eaUCoa48sgRb+NNsP5CToccQAW6
+   10xMQftSQkIZA93b/FemIijKq8/VP/Ss64Tkgma5rOXYq2ynJHSnpUxma
+   wAlJ+4kFIWXSPvWLutQXqT7xx0dIyXV35ZoLetLq1E98ZCsOonh0RUBbf
+   e+i/8NtqL9sepWm446o2DqZYZ7dl3/mFqhV1/LpQoFTZCqW24srSiuJt0
+   hFkmR8o3AeO+27glcjgDxwJIaekWFXt/OJ5lwMED40xtKUZo/Im+nyDIZ
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10645"; a="399342959"
+X-IronPort-AV: E=Sophos;i="5.98,250,1673942400"; 
+   d="scan'208";a="399342959"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2023 07:06:24 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10645"; a="655216793"
+X-IronPort-AV: E=Sophos;i="5.98,250,1673942400"; 
+   d="scan'208";a="655216793"
+Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
+  by orsmga006.jf.intel.com with ESMTP; 10 Mar 2023 07:06:19 -0800
+Message-ID: <a45ff335-0563-85c7-3b31-d6ca23a54a3f@linux.intel.com>
+Date:   Fri, 10 Mar 2023 17:07:35 +0200
 MIME-Version: 1.0
-References: <20230130105423.1338554-1-mk@semmihalf.com> <20230130135418.1604455-1-mk@semmihalf.com>
- <CAJMMOfNJV+eOqTgUoLLWKQe2MJ=6fXL3aaP6d=YrSBQvfhOXiA@mail.gmail.com>
- <DM8PR02MB8169B2AC8918F8E31628F61AF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <CAJMMOfN-6fgN0VohA5ViwVXmNWtA13ycfZFoO4ys9_CLes0feA@mail.gmail.com> <CAJMMOfM41dfqx0NoiHGE=8X5hoRHo1=qPEp4KXLP1kygestEJQ@mail.gmail.com>
-In-Reply-To: <CAJMMOfM41dfqx0NoiHGE=8X5hoRHo1=qPEp4KXLP1kygestEJQ@mail.gmail.com>
-From:   =?UTF-8?Q?Micha=C5=82_Krawczyk?= <mk@semihalf.com>
-Date:   Fri, 10 Mar 2023 16:05:12 +0100
-Message-ID: <CAJMMOfN6tUzGZOkP6ZXbKCr-vszqf3nnRM-dhXfpOUSiHr2EHA@mail.gmail.com>
-Subject: Re: [PATCH v2] media: venus: dec: Fix handling of the start cmd
-To:     Vikash Garodia <vgarodia@qti.qualcomm.com>
-Cc:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "mw@semihalf.com" <mw@semihalf.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.7.1
+To:     Wesley Cheng <quic_wcheng@quicinc.com>,
+        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com,
+        andersson@kernel.org, robh+dt@kernel.org,
+        gregkh@linuxfoundation.org, tiwai@suse.com
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+References: <20230308235751.495-1-quic_wcheng@quicinc.com>
+ <20230308235751.495-2-quic_wcheng@quicinc.com>
+Content-Language: en-US
+From:   Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: Re: [PATCH v3 01/28] xhci: Add support to allocate several
+ interrupters
+In-Reply-To: <20230308235751.495-2-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 9.3.2023 1.57, Wesley Cheng wrote:
+> From: Mathias Nyman <mathias.nyman@linux.intel.com>
+> 
+> Introduce xHCI APIs to allow for clients to allocate and free
+> interrupters.  This allocates an array of interrupters, which is based on
+> the max_interrupters parameter.  The primary interrupter is set as the
+> first entry in the array, and secondary interrupters following after.
+> 
 
-Any update on this patch? It would be great if we could make some
-progress there (and, hopefully, finally merge it :))
+I'm thinking about changing this offloading xHCI API
+xhci should be aware and keep track of which devices and endpoints that
+are offloaded to avoid device getting offloaded twice, avoid xhci driver
+from queuing anything itself for these, and act properly if the offloaded
+device or entire host is removed.
 
-Thanks,
-Micha=C5=82
+So first thing audio side would need to do do is register/create an
+offload entry for the device using the API:
 
-pt., 10 lut 2023 o 16:18 Micha=C5=82 Krawczyk <mk@semihalf.com> napisa=C5=
-=82(a):
->
-> Hi,
->
-> I'm wondering if there are any more comments for this patch? I would
-> be happy to clarify anything that's unclear or improve the code if
-> needed.
->
-> I know it's pretty late, but it would be really great if this fix
-> could land before v6.2 is released, so I'd appreciate your help and
-> review.
->
-> Thank you,
-> Micha=C5=82
->
-> wt., 7 lut 2023 o 12:15 Micha=C5=82 Krawczyk <mk@semihalf.com> napisa=C5=
-=82(a):
-> >
-> > wt., 7 lut 2023 o 10:54 Vikash Garodia <vgarodia@qti.qualcomm.com> napi=
-sa=C5=82(a):
-> > > I have reviewed the patch, and the drain sequence handling looks good=
- to me.
-> > > Could you share some details on the test client which you are using t=
-o catch this issue ?
-> >
-> > Hi Vikash,
-> >
-> > Thank you for looking at the code!
-> >
-> > I've been testing it using the Chromium implementation of the V4L2
-> > codec [1]. Meanwhile, we were running a test suite which changes the
-> > encryption method in the middle of the video decoding. This triggers
-> > the flush behavior and the Chromium sends the stop/start cmd to the
-> > V4L2 kernel component, and the test expects the video to continue the
-> > playback normally. Unfortunately, it was causing a stall of the video
-> > at the same time.
-> >
-> > [1] https://source.chromium.org/chromium/chromium/src/+/main:media/gpu/=
-v4l2/
-> >
-> > >
-> > > > Thank you,
-> > > > Micha=C5=82
-> > >
-> > > Thanks,
-> > > Vikash
+struct xhci_sideband *xhci_sideband_register(struct usb_device *udev)
+
+(xHCI specs calls offload sideband)
+Then endpoints and interrupters can be added and removed from this
+offload entry
+
+I have some early thoughts written as non-compiling code in:
+
+git://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git feature_interrupters
+https://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git/log/?h=feature_interrupters
+
+Let me know what you think about this.
+
+> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+
+My Signed-off-by tag is being misused here.
+
+I wrote a chunk of the code in this patch as PoC that I shared in a separate topic branch.
+It was incomplete and not intended for upstream yet. (lacked locking, several fixme parts, etc..)
+The rest of the code in this patch is completely new to me.
+
+Thanks
+-Mathias
+
