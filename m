@@ -2,362 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2DC96B5103
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 20:37:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3911C6B5147
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 21:00:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230052AbjCJThR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 14:37:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60060 "EHLO
+        id S231175AbjCJUAw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 15:00:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229983AbjCJThP (ORCPT
+        with ESMTP id S231211AbjCJUAn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 14:37:15 -0500
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6EE61386BA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 11:37:13 -0800 (PST)
-Received: by mail-il1-x12a.google.com with SMTP id 4so3558611ilz.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 11:37:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678477033;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kkQNZSVw4zaUCq2kXc+Mhax587+Y+BrA04ZpcIG6rQ8=;
-        b=HzF+Qsmo+dptbO7HKZ+r7jv16Sgh8w7wUx8SbU5zPGakKhdKBKvpD9ubnc3ZRejLqN
-         ie1Zbuose3sW8cQ1gvR2QQkc+IOOQN2PfS+KvNM3T3ipvsCOMTf+W4JNsDocOWXteLpx
-         npJSWmWlYFuV7Aio86eY06LmUwo1ULjY3VnrXtDoMh1WbYukYeYunkH1tqaB/8OET9Y2
-         xIxSnP4Cs8Z7xwIsAm+6rK729TcT+6eMcUDz3CSE6fxNVen4ARm5iGL2yxQyoebMTvPa
-         4tyMXz82flRKF7PJw0nNopq2/dDqEBprUVtvcgL88+5BwbqFCI8RK5vy2V/eAMFEDziZ
-         5aVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678477033;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kkQNZSVw4zaUCq2kXc+Mhax587+Y+BrA04ZpcIG6rQ8=;
-        b=p+kJ4W/ZTE3cxB6aabhC639ut66SVt8dy7kuSU5wsIFpDVph/YyEE8TFtZCWzG8PNO
-         8UmNG+O4FCP/0S4hxsbEAHy/7FW30UvKpXq4gm2ma26hyeLSUQxaexZ2BCyRcw5XQtrE
-         84TOcBvxBv/s/J5fH7TdiYrPn16Yk/j4UIPgfMkCcV2RJpep7UuRlJQmdKG8VhCnxGFc
-         03d7blTLwQtoSswpUhHUrGNsXeGYVrzOIIcND5LFQ9e5RIRe7CndzmtQC0C0D5/c3KHJ
-         vEbC6YblIE/zhMy0LODtFU4mclLpleOeAsijayVUrSMQ5SBkdkVOwlYuXm0V1iUkfGhL
-         oZ4Q==
-X-Gm-Message-State: AO0yUKVs/0sZMqcVSlRedwylrYQyul+YBadGny42B0++jL6dNwKgYHtw
-        YvUnfO8X4BBNg5BVUCXiFQQJjw==
-X-Google-Smtp-Source: AK7set/QHFffJOgeie30HMbd1yx9a/blJ9mvDsqKiBlnsU3sP5BnhIIV73dJdbxHmlzZgR4GhOZAjQ==
-X-Received: by 2002:a05:6e02:1010:b0:316:fcbe:628f with SMTP id n16-20020a056e02101000b00316fcbe628fmr17077839ilj.26.1678477032715;
-        Fri, 10 Mar 2023 11:37:12 -0800 (PST)
-Received: from localhost.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id k15-20020a02cb4f000000b00374bf3b62a0sm208209jap.99.2023.03.10.11.37.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Mar 2023 11:37:12 -0800 (PST)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     luca.weiss@fairphone.com, dmitry.baryshkov@linaro.org,
-        caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
-        andersson@kernel.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH net] net: ipa: fix a surprising number of bad offsets
-Date:   Fri, 10 Mar 2023 13:37:09 -0600
-Message-Id: <20230310193709.1477102-1-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Fri, 10 Mar 2023 15:00:43 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97F5D125DB7;
+        Fri, 10 Mar 2023 12:00:40 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id F390CCE2ACF;
+        Fri, 10 Mar 2023 20:00:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F32C43443;
+        Fri, 10 Mar 2023 20:00:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678478437;
+        bh=/fNZAyKGwRLBd4PU5trzXlh+Td7YBsFNDekGxZ2EodI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BZ54yihbW2XA0g9yhGySSywEaRLXnE0j6iKQm9DpwkqlRyG776EmdaiK+v39XYRQU
+         3jRgLbmYp0Xb0IMureYNbBi2MdgVWUajXfhvrJ7Izae3Vm1R4HTyQumlFQZzQtJrp0
+         3yMVfPXTNTlzlCk/42gN9R1e1UHKpuOeZW23IyjRIYalQmq8KGkD6sjFYQ2suVe8t1
+         CiAIXQxsVSfI+UWsrei3A6hMpaqNZGZ+WN4Umfp4XWvQ6H/ZfYyPdfFWwAJ4l5faQO
+         LpH2u8gXFYw+gHDhgKtK4UhCRfFdrOzw6zJNcNgxRiw0Vnpzz4/qPe5w5Z09sX6zMB
+         /FJwNvLNXuEuA==
+Date:   Fri, 10 Mar 2023 12:00:34 -0800
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Abel Vesa <abel.vesa@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org
+Subject: Re: [RFC PATCH v2 7/7] arm64: dts: qcom: Add the Inline Crypto
+ Engine nodes
+Message-ID: <ZAuMYsH4l2XTsEZ9@sol.localdomain>
+References: <20230308155838.1094920-1-abel.vesa@linaro.org>
+ <20230308155838.1094920-8-abel.vesa@linaro.org>
+ <4eab53fc-2d26-dc93-3ae6-c0b2546ad3e0@linaro.org>
+ <ZAol5o5a6HZYgRaG@sol.localdomain>
+ <b5c9aa6e-69d1-165a-4ff9-b5a9f33688e6@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b5c9aa6e-69d1-165a-4ff9-b5a9f33688e6@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A recent commit eliminated a hack that adjusted the offset used for
-many GSI registers.  It became possible because we now specify all
-GSI register offsets explicitly for every version of IPA.
+On Fri, Mar 10, 2023 at 09:13:29AM +0100, Krzysztof Kozlowski wrote:
+> > FWIW, I tested this patchset on SDA845, and ICE continues to work fine.
+> 
+> Really?
 
-Unfortunately, a large number of register offsets were *not* updated
-as they should have been in that commit.  For IPA v4.5+, the offset
-for every GSI register *except* the two inter-EE interrupt masking
-registers were supposed to have been reduced by 0xd000.
+Yes.
 
-Tested-by: Luca Weiss <luca.weiss@fairphone.com>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # SM8350-HDK
-Fixes: 59b12b1d27f3f ("net: ipa: kill gsi->virt_raw")
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/reg/gsi_reg-v4.5.c | 56 +++++++++++++++---------------
- drivers/net/ipa/reg/gsi_reg-v4.9.c | 44 +++++++++++------------
- 2 files changed, 50 insertions(+), 50 deletions(-)
+> I clearly see of_find_device_by_node -> "return NULL" and all old code gone,
+> so ABI is broken. Are you sure you applied patch 1-6 and ICE was working?
 
-diff --git a/drivers/net/ipa/reg/gsi_reg-v4.5.c b/drivers/net/ipa/reg/gsi_reg-v4.5.c
-index 648b51b88d4e8..2900e5c3ff888 100644
---- a/drivers/net/ipa/reg/gsi_reg-v4.5.c
-+++ b/drivers/net/ipa/reg/gsi_reg-v4.5.c
-@@ -137,17 +137,17 @@ REG_STRIDE(EV_CH_E_SCRATCH_1, ev_ch_e_scratch_1,
- 	   0x0001004c + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(CH_C_DOORBELL_0, ch_c_doorbell_0,
--	   0x0001e000 + 0x4000 * GSI_EE_AP, 0x08);
-+	   0x00011000 + 0x4000 * GSI_EE_AP, 0x08);
- 
- REG_STRIDE(EV_CH_E_DOORBELL_0, ev_ch_e_doorbell_0,
--	   0x0001e100 + 0x4000 * GSI_EE_AP, 0x08);
-+	   0x00011100 + 0x4000 * GSI_EE_AP, 0x08);
- 
- static const u32 reg_gsi_status_fmask[] = {
- 	[ENABLED]					= BIT(0),
- 						/* Bits 1-31 reserved */
- };
- 
--REG_FIELDS(GSI_STATUS, gsi_status, 0x0001f000 + 0x4000 * GSI_EE_AP);
-+REG_FIELDS(GSI_STATUS, gsi_status, 0x00012000 + 0x4000 * GSI_EE_AP);
- 
- static const u32 reg_ch_cmd_fmask[] = {
- 	[CH_CHID]					= GENMASK(7, 0),
-@@ -155,7 +155,7 @@ static const u32 reg_ch_cmd_fmask[] = {
- 	[CH_OPCODE]					= GENMASK(31, 24),
- };
- 
--REG_FIELDS(CH_CMD, ch_cmd, 0x0001f008 + 0x4000 * GSI_EE_AP);
-+REG_FIELDS(CH_CMD, ch_cmd, 0x00012008 + 0x4000 * GSI_EE_AP);
- 
- static const u32 reg_ev_ch_cmd_fmask[] = {
- 	[EV_CHID]					= GENMASK(7, 0),
-@@ -163,7 +163,7 @@ static const u32 reg_ev_ch_cmd_fmask[] = {
- 	[EV_OPCODE]					= GENMASK(31, 24),
- };
- 
--REG_FIELDS(EV_CH_CMD, ev_ch_cmd, 0x0001f010 + 0x4000 * GSI_EE_AP);
-+REG_FIELDS(EV_CH_CMD, ev_ch_cmd, 0x00012010 + 0x4000 * GSI_EE_AP);
- 
- static const u32 reg_generic_cmd_fmask[] = {
- 	[GENERIC_OPCODE]				= GENMASK(4, 0),
-@@ -172,7 +172,7 @@ static const u32 reg_generic_cmd_fmask[] = {
- 						/* Bits 14-31 reserved */
- };
- 
--REG_FIELDS(GENERIC_CMD, generic_cmd, 0x0001f018 + 0x4000 * GSI_EE_AP);
-+REG_FIELDS(GENERIC_CMD, generic_cmd, 0x00012018 + 0x4000 * GSI_EE_AP);
- 
- static const u32 reg_hw_param_2_fmask[] = {
- 	[IRAM_SIZE]					= GENMASK(2, 0),
-@@ -188,58 +188,58 @@ static const u32 reg_hw_param_2_fmask[] = {
- 	[GSI_USE_INTER_EE]				= BIT(31),
- };
- 
--REG_FIELDS(HW_PARAM_2, hw_param_2, 0x0001f040 + 0x4000 * GSI_EE_AP);
-+REG_FIELDS(HW_PARAM_2, hw_param_2, 0x00012040 + 0x4000 * GSI_EE_AP);
- 
--REG(CNTXT_TYPE_IRQ, cntxt_type_irq, 0x0001f080 + 0x4000 * GSI_EE_AP);
-+REG(CNTXT_TYPE_IRQ, cntxt_type_irq, 0x00012080 + 0x4000 * GSI_EE_AP);
- 
--REG(CNTXT_TYPE_IRQ_MSK, cntxt_type_irq_msk, 0x0001f088 + 0x4000 * GSI_EE_AP);
-+REG(CNTXT_TYPE_IRQ_MSK, cntxt_type_irq_msk, 0x00012088 + 0x4000 * GSI_EE_AP);
- 
--REG(CNTXT_SRC_CH_IRQ, cntxt_src_ch_irq, 0x0001f090 + 0x4000 * GSI_EE_AP);
-+REG(CNTXT_SRC_CH_IRQ, cntxt_src_ch_irq, 0x00012090 + 0x4000 * GSI_EE_AP);
- 
--REG(CNTXT_SRC_EV_CH_IRQ, cntxt_src_ev_ch_irq, 0x0001f094 + 0x4000 * GSI_EE_AP);
-+REG(CNTXT_SRC_EV_CH_IRQ, cntxt_src_ev_ch_irq, 0x00012094 + 0x4000 * GSI_EE_AP);
- 
- REG(CNTXT_SRC_CH_IRQ_MSK, cntxt_src_ch_irq_msk,
--    0x0001f098 + 0x4000 * GSI_EE_AP);
-+    0x00012098 + 0x4000 * GSI_EE_AP);
- 
- REG(CNTXT_SRC_EV_CH_IRQ_MSK, cntxt_src_ev_ch_irq_msk,
--    0x0001f09c + 0x4000 * GSI_EE_AP);
-+    0x0001209c + 0x4000 * GSI_EE_AP);
- 
- REG(CNTXT_SRC_CH_IRQ_CLR, cntxt_src_ch_irq_clr,
--    0x0001f0a0 + 0x4000 * GSI_EE_AP);
-+    0x000120a0 + 0x4000 * GSI_EE_AP);
- 
- REG(CNTXT_SRC_EV_CH_IRQ_CLR, cntxt_src_ev_ch_irq_clr,
--    0x0001f0a4 + 0x4000 * GSI_EE_AP);
-+    0x000120a4 + 0x4000 * GSI_EE_AP);
- 
--REG(CNTXT_SRC_IEOB_IRQ, cntxt_src_ieob_irq, 0x0001f0b0 + 0x4000 * GSI_EE_AP);
-+REG(CNTXT_SRC_IEOB_IRQ, cntxt_src_ieob_irq, 0x000120b0 + 0x4000 * GSI_EE_AP);
- 
- REG(CNTXT_SRC_IEOB_IRQ_MSK, cntxt_src_ieob_irq_msk,
--    0x0001f0b8 + 0x4000 * GSI_EE_AP);
-+    0x000120b8 + 0x4000 * GSI_EE_AP);
- 
- REG(CNTXT_SRC_IEOB_IRQ_CLR, cntxt_src_ieob_irq_clr,
--    0x0001f0c0 + 0x4000 * GSI_EE_AP);
-+    0x000120c0 + 0x4000 * GSI_EE_AP);
- 
--REG(CNTXT_GLOB_IRQ_STTS, cntxt_glob_irq_stts, 0x0001f100 + 0x4000 * GSI_EE_AP);
-+REG(CNTXT_GLOB_IRQ_STTS, cntxt_glob_irq_stts, 0x00012100 + 0x4000 * GSI_EE_AP);
- 
--REG(CNTXT_GLOB_IRQ_EN, cntxt_glob_irq_en, 0x0001f108 + 0x4000 * GSI_EE_AP);
-+REG(CNTXT_GLOB_IRQ_EN, cntxt_glob_irq_en, 0x00012108 + 0x4000 * GSI_EE_AP);
- 
--REG(CNTXT_GLOB_IRQ_CLR, cntxt_glob_irq_clr, 0x0001f110 + 0x4000 * GSI_EE_AP);
-+REG(CNTXT_GLOB_IRQ_CLR, cntxt_glob_irq_clr, 0x00012110 + 0x4000 * GSI_EE_AP);
- 
--REG(CNTXT_GSI_IRQ_STTS, cntxt_gsi_irq_stts, 0x0001f118 + 0x4000 * GSI_EE_AP);
-+REG(CNTXT_GSI_IRQ_STTS, cntxt_gsi_irq_stts, 0x00012118 + 0x4000 * GSI_EE_AP);
- 
--REG(CNTXT_GSI_IRQ_EN, cntxt_gsi_irq_en, 0x0001f120 + 0x4000 * GSI_EE_AP);
-+REG(CNTXT_GSI_IRQ_EN, cntxt_gsi_irq_en, 0x00012120 + 0x4000 * GSI_EE_AP);
- 
--REG(CNTXT_GSI_IRQ_CLR, cntxt_gsi_irq_clr, 0x0001f128 + 0x4000 * GSI_EE_AP);
-+REG(CNTXT_GSI_IRQ_CLR, cntxt_gsi_irq_clr, 0x00012128 + 0x4000 * GSI_EE_AP);
- 
- static const u32 reg_cntxt_intset_fmask[] = {
- 	[INTYPE]					= BIT(0)
- 						/* Bits 1-31 reserved */
- };
- 
--REG_FIELDS(CNTXT_INTSET, cntxt_intset, 0x0001f180 + 0x4000 * GSI_EE_AP);
-+REG_FIELDS(CNTXT_INTSET, cntxt_intset, 0x00012180 + 0x4000 * GSI_EE_AP);
- 
--REG_FIELDS(ERROR_LOG, error_log, 0x0001f200 + 0x4000 * GSI_EE_AP);
-+REG_FIELDS(ERROR_LOG, error_log, 0x00012200 + 0x4000 * GSI_EE_AP);
- 
--REG(ERROR_LOG_CLR, error_log_clr, 0x0001f210 + 0x4000 * GSI_EE_AP);
-+REG(ERROR_LOG_CLR, error_log_clr, 0x00012210 + 0x4000 * GSI_EE_AP);
- 
- static const u32 reg_cntxt_scratch_0_fmask[] = {
- 	[INTER_EE_RESULT]				= GENMASK(2, 0),
-@@ -248,7 +248,7 @@ static const u32 reg_cntxt_scratch_0_fmask[] = {
- 						/* Bits 8-31 reserved */
- };
- 
--REG_FIELDS(CNTXT_SCRATCH_0, cntxt_scratch_0, 0x0001f400 + 0x4000 * GSI_EE_AP);
-+REG_FIELDS(CNTXT_SCRATCH_0, cntxt_scratch_0, 0x00012400 + 0x4000 * GSI_EE_AP);
- 
- static const struct reg *reg_array[] = {
- 	[INTER_EE_SRC_CH_IRQ_MSK]	= &reg_inter_ee_src_ch_irq_msk,
-diff --git a/drivers/net/ipa/reg/gsi_reg-v4.9.c b/drivers/net/ipa/reg/gsi_reg-v4.9.c
-index 4bf45d264d6b9..8b5d95425a766 100644
---- a/drivers/net/ipa/reg/gsi_reg-v4.9.c
-+++ b/drivers/net/ipa/reg/gsi_reg-v4.9.c
-@@ -27,7 +27,7 @@ static const u32 reg_ch_c_cntxt_0_fmask[] = {
- };
- 
- REG_STRIDE_FIELDS(CH_C_CNTXT_0, ch_c_cntxt_0,
--		  0x0001c000 + 0x4000 * GSI_EE_AP, 0x80);
-+		  0x0000f000 + 0x4000 * GSI_EE_AP, 0x80);
- 
- static const u32 reg_ch_c_cntxt_1_fmask[] = {
- 	[CH_R_LENGTH]					= GENMASK(19, 0),
-@@ -35,11 +35,11 @@ static const u32 reg_ch_c_cntxt_1_fmask[] = {
- };
- 
- REG_STRIDE_FIELDS(CH_C_CNTXT_1, ch_c_cntxt_1,
--		  0x0001c004 + 0x4000 * GSI_EE_AP, 0x80);
-+		  0x0000f004 + 0x4000 * GSI_EE_AP, 0x80);
- 
--REG_STRIDE(CH_C_CNTXT_2, ch_c_cntxt_2, 0x0001c008 + 0x4000 * GSI_EE_AP, 0x80);
-+REG_STRIDE(CH_C_CNTXT_2, ch_c_cntxt_2, 0x0000f008 + 0x4000 * GSI_EE_AP, 0x80);
- 
--REG_STRIDE(CH_C_CNTXT_3, ch_c_cntxt_3, 0x0001c00c + 0x4000 * GSI_EE_AP, 0x80);
-+REG_STRIDE(CH_C_CNTXT_3, ch_c_cntxt_3, 0x0000f00c + 0x4000 * GSI_EE_AP, 0x80);
- 
- static const u32 reg_ch_c_qos_fmask[] = {
- 	[WRR_WEIGHT]					= GENMASK(3, 0),
-@@ -53,7 +53,7 @@ static const u32 reg_ch_c_qos_fmask[] = {
- 						/* Bits 25-31 reserved */
- };
- 
--REG_STRIDE_FIELDS(CH_C_QOS, ch_c_qos, 0x0001c05c + 0x4000 * GSI_EE_AP, 0x80);
-+REG_STRIDE_FIELDS(CH_C_QOS, ch_c_qos, 0x0000f05c + 0x4000 * GSI_EE_AP, 0x80);
- 
- static const u32 reg_error_log_fmask[] = {
- 	[ERR_ARG3]					= GENMASK(3, 0),
-@@ -67,16 +67,16 @@ static const u32 reg_error_log_fmask[] = {
- };
- 
- REG_STRIDE(CH_C_SCRATCH_0, ch_c_scratch_0,
--	   0x0001c060 + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x0000f060 + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(CH_C_SCRATCH_1, ch_c_scratch_1,
--	   0x0001c064 + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x0000f064 + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(CH_C_SCRATCH_2, ch_c_scratch_2,
--	   0x0001c068 + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x0000f068 + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(CH_C_SCRATCH_3, ch_c_scratch_3,
--	   0x0001c06c + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x0000f06c + 0x4000 * GSI_EE_AP, 0x80);
- 
- static const u32 reg_ev_ch_e_cntxt_0_fmask[] = {
- 	[EV_CHTYPE]					= GENMASK(3, 0),
-@@ -89,23 +89,23 @@ static const u32 reg_ev_ch_e_cntxt_0_fmask[] = {
- };
- 
- REG_STRIDE_FIELDS(EV_CH_E_CNTXT_0, ev_ch_e_cntxt_0,
--		  0x0001d000 + 0x4000 * GSI_EE_AP, 0x80);
-+		  0x00010000 + 0x4000 * GSI_EE_AP, 0x80);
- 
- static const u32 reg_ev_ch_e_cntxt_1_fmask[] = {
- 	[R_LENGTH]					= GENMASK(15, 0),
- };
- 
- REG_STRIDE_FIELDS(EV_CH_E_CNTXT_1, ev_ch_e_cntxt_1,
--		  0x0001d004 + 0x4000 * GSI_EE_AP, 0x80);
-+		  0x00010004 + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(EV_CH_E_CNTXT_2, ev_ch_e_cntxt_2,
--	   0x0001d008 + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x00010008 + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(EV_CH_E_CNTXT_3, ev_ch_e_cntxt_3,
--	   0x0001d00c + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x0001000c + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(EV_CH_E_CNTXT_4, ev_ch_e_cntxt_4,
--	   0x0001d010 + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x00010010 + 0x4000 * GSI_EE_AP, 0x80);
- 
- static const u32 reg_ev_ch_e_cntxt_8_fmask[] = {
- 	[EV_MODT]					= GENMASK(15, 0),
-@@ -114,28 +114,28 @@ static const u32 reg_ev_ch_e_cntxt_8_fmask[] = {
- };
- 
- REG_STRIDE_FIELDS(EV_CH_E_CNTXT_8, ev_ch_e_cntxt_8,
--		  0x0001d020 + 0x4000 * GSI_EE_AP, 0x80);
-+		  0x00010020 + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(EV_CH_E_CNTXT_9, ev_ch_e_cntxt_9,
--	   0x0001d024 + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x00010024 + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(EV_CH_E_CNTXT_10, ev_ch_e_cntxt_10,
--	   0x0001d028 + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x00010028 + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(EV_CH_E_CNTXT_11, ev_ch_e_cntxt_11,
--	   0x0001d02c + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x0001002c + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(EV_CH_E_CNTXT_12, ev_ch_e_cntxt_12,
--	   0x0001d030 + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x00010030 + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(EV_CH_E_CNTXT_13, ev_ch_e_cntxt_13,
--	   0x0001d034 + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x00010034 + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(EV_CH_E_SCRATCH_0, ev_ch_e_scratch_0,
--	   0x0001d048 + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x00010048 + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(EV_CH_E_SCRATCH_1, ev_ch_e_scratch_1,
--	   0x0001d04c + 0x4000 * GSI_EE_AP, 0x80);
-+	   0x0001004c + 0x4000 * GSI_EE_AP, 0x80);
- 
- REG_STRIDE(CH_C_DOORBELL_0, ch_c_doorbell_0,
- 	   0x00011000 + 0x4000 * GSI_EE_AP, 0x08);
--- 
-2.34.1
+Yes.
 
+But I applied the whole series.  It sounds like you are talking about the case
+where *only* patches 1-6 are applied?  I did not test that, sorry.
+
+> > (Though if I understand the patchset correctly, the ICE clock is no longer
+> > turned off when the UFS host controller is suspended.  That isn't ideal as it
+> > wastes power.  I would like that to be fixed.)
+> > 
+> > Anyway, when you say "break the ICE", do you really mean "make an incompatible
+> > change to the device-tree bindings"?
+> 
+> It breaks existing users of DTS and kernel.
+> 
+> > 
+> > I'd think there would be no problem with that as long as everything is updated
+> > at once, which this patchset does.
+> 
+> Which is obviously not possible. DTS always goes separate branch,
+> always. It cannot be combined with code into the same branch! So how do
+> you even imagine this?
+
+It is not obvious.  DTS and drivers are both in the kernel source tree.
+It's natural to think they can be updated together as per
+Documentation/process/stable-api-nonsense.rst.
+
+I'm *not* saying they can be -- you're the expert here, and it sounds like DTS
+are considered a stable UAPI.  I'm merely saying that it's not obvious...
+especially when my personal experience is that reviewers explicitly preferred a
+patch breaking DTS compatibility to a patch not breaking DTS compatibility
+(https://lore.kernel.org/linux-scsi/20200710072013.177481-1-ebiggers@kernel.org/T/#u)
+
+Anyway, based on the follow-up replies, it sounds like Abel has a plan to keep
+compatibility with old DTS, so hopefully that works and isn't too much trouble.
+
+- Eric
