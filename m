@@ -2,72 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93F9A6B341B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 03:15:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 74A106B33FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 03:08:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229940AbjCJCPf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 21:15:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48148 "EHLO
+        id S229623AbjCJCIR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 21:08:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229943AbjCJCPd (ORCPT
+        with ESMTP id S229737AbjCJCIP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 21:15:33 -0500
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14E0E104627;
-        Thu,  9 Mar 2023 18:15:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678414524; x=1709950524;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=FAurejgzZDgiq4zpMgWd/d8Gh7qfzGeEBH4Wzs2K1W8=;
-  b=eJjR95LNPBMxBXEfBKYwEUaAflaO1eSPkVAxOABh8eK6djOSxDBgKnXI
-   ey6+f5LlYvZi21oIwbTEMvCg3EQX3KLCIn6TEQBNVxMZtO4qXzHNPc8pi
-   MFBpYCkdsJr4PdzNX4J1Mh5/U9nHx+8xk1e69SD94XUMAlAYMiC+13yAM
-   Oupp3zVcuiEHWTVV2wZZc5WrjoxIqulvv/KkoMVwESMbZ6U5oKyo2BL8D
-   nn/ItkSGs990+AkvmpamoMuTH4fd8CPo6vfhQqoOra1/OL758WLwOa4YA
-   vJ8qlRwOjvrd/ebrqg2P10vPrWkzGSIFCzPZfewAWy7BEo6ms3W5Nc0BW
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10644"; a="338988955"
-X-IronPort-AV: E=Sophos;i="5.98,248,1673942400"; 
-   d="scan'208";a="338988955"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2023 18:15:23 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10644"; a="670935165"
-X-IronPort-AV: E=Sophos;i="5.98,248,1673942400"; 
-   d="scan'208";a="670935165"
-Received: from hamannjo-mobl1.amr.corp.intel.com (HELO [10.255.34.234]) ([10.255.34.234])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2023 18:15:21 -0800
-Message-ID: <a211f26d-a045-0729-871f-248d5fce3f3f@linux.intel.com>
-Date:   Thu, 9 Mar 2023 18:37:57 -0600
+        Thu, 9 Mar 2023 21:08:15 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9D171EFD0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 18:08:12 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id s20so4759074lfb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 18:08:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678414091;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+5SNm4lOHHU7wShff2ch965COCwpdhcw8gwXQ/+p/Ko=;
+        b=C0Ji1rsS/E3jgtCk6insuFs5fYpP6b+hYbsAlz+SMRLtgPsiKjLFqrJp/uePbNYZ/4
+         2qx9bm4AcB9MZRNkdPllO0/bJpRDRDAdlwF2V1p1aPTl30hXkzyWa8eTycUNWS3lq2Ul
+         C0V6XfMkxSmcL/PgCpO1GzL4a/Ldx0Vq0imtRES8D0aQd2z7rhB+JYTWnJ5bt5eacChv
+         qtrNasOoXSnZj68uLm0dkNLY0Oth+ENftWZuWikkYeyPFSFqmAMM0yr8HCybs+Bo+8aV
+         cE8aE0A/buImW4nRRIRjMHA+K8Envqysp65/wWUzPj5Hj932fwi9HvNZcMWpSn7/Rz57
+         C2Bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678414091;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+5SNm4lOHHU7wShff2ch965COCwpdhcw8gwXQ/+p/Ko=;
+        b=xNkpkBMQ2YdOi1/Z/7FyaWgzTiZfvl9UcKjhkQv/HUGt2EE9eqWhvNN328paiHlRI4
+         Wecmo9smnFlaR6i7g8xai0t5JiLK77kPWlnoFcR6iaFWtuzKTZwGibyUss63J/gWmV8g
+         CbqXoXei6GNxOGC/kDL8hrJsSUF4NZRvruwrPFpJ9S9NboIDaPP3ozQqgWug+12Rcd9f
+         Gl2iQ45n6B9aA8zzk8MDw1miD97UuwK9j0/xQ/yTyOyOlXN+KR8CG9eOZrBUtuhAvcno
+         3wIsUfHWluawIm9sEFDuIAQpB8f/swb24ScfJi4E2lPvsWUPTf6CcIf1EHqqxjEEylPo
+         bOqA==
+X-Gm-Message-State: AO0yUKWJ03sngV+IFWWMWNW6piyuuI4PolDs8OQPfuD2qj+9gH8yq+6B
+        ffKS3CzHMLVmeUlvvotwTHy1Uw==
+X-Google-Smtp-Source: AK7set9yl2SsmuKBBFb/VWC7gdEdVqofHMmy7RFNyAoY3Mt9PXE5cIJWAyxNDDABR93PXHxwguNx9A==
+X-Received: by 2002:ac2:4315:0:b0:4cf:e904:bba5 with SMTP id l21-20020ac24315000000b004cfe904bba5mr6131386lfh.29.1678414091049;
+        Thu, 09 Mar 2023 18:08:11 -0800 (PST)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id d8-20020a05651221c800b004dc4e3f02aasm90331lft.53.2023.03.09.18.08.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Mar 2023 18:08:10 -0800 (PST)
+Message-ID: <bd829dcb-0b06-9edb-65f9-35ad240c5f17@linaro.org>
+Date:   Fri, 10 Mar 2023 03:08:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.7.1
-Subject: Re: [PATCH v3 00/28] Introduce QC USB SND audio offloading support
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 1/4] pinctrl: qcom: lpass-lpi: set output value before
+ enabling output
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     stable@vger.kernel.org
+References: <20230309154949.658380-1-krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-To:     Wesley Cheng <quic_wcheng@quicinc.com>,
-        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
-        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
-        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com,
-        andersson@kernel.org, robh+dt@kernel.org,
-        gregkh@linuxfoundation.org, tiwai@suse.com
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
-        quic_plai@quicinc.com
-References: <20230308235751.495-1-quic_wcheng@quicinc.com>
- <4f8a66c0-398f-5655-3aa7-a59bc9ba56cc@linux.intel.com>
- <8b2f3ce7-3e0c-bdf0-8d9f-9aeabba09a15@quicinc.com>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <8b2f3ce7-3e0c-bdf0-8d9f-9aeabba09a15@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230309154949.658380-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -75,133 +82,51 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
->>> Create vendor ops for the USB SND driver:
->>> qc_audio_offload: This particular driver has several components
->>> associated
->>> with it:
->>> - QMI stream request handler
->>> - XHCI interrupter and resource management
->>> - audio DSP memory management
->>
->> so how does this 'qc_audio_offload' interface with 'q6usb' described
->> above? how are the roles different or complementary?
->>
-> So in general you can think that the qc_audio_offload is a complement to
-> the USB SND USB class driver, while q6usb is to ASoC.  Since the ASoC
 
-Humm, that is far from clear. I don't get how a something that interacts
-with the USB class driver can also be in charge of the audio DSP memory
-management.
+On 9.03.2023 16:49, Krzysztof Kozlowski wrote:
+> As per Hardware Programming Guide, when configuring pin as output,
+> set the pin value before setting output-enable (OE).  Similar approach
+> is in main SoC TLMM pin controller.
+> 
+> Cc: <stable@vger.kernel.org>
+> Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-> framework doesn't have any communication with USB SND, the ASoC DPCM USB
-> backend (q6usb) will have to be the entity that maintains what is going
-> on in USB SND.  That way, sessions initiated through the ASoC managed
-> sound card can evaluate what is available based on information reported
-> by q6usb.
+Konrad
+>  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 14 +++++++++-----
+>  1 file changed, 9 insertions(+), 5 deletions(-)
 > 
-> qc_audio_offload and q6usb will have some interaction between each
-> other.  The majority of communication between qc_audio_offload and q6usb
-> is reporting the device connection events.
-
-It's already complicated to figure out how the DSP and USB class driver
-might interact and probe/timing dependencies, but with two additional
-drivers in the mix it's really hard to understand.
-
-Maybe ascii-art would help describe the concepts and types of
-information exchanged. Maintaining a consistent state across multiple
-drivers is not an easy task.
-
-> 
->>> When the audio DSP wants to enable a playback stream, the request is
->>> first
->>> received by the ASoC platform sound card.  Depending on the selected
->>> route,
->>> ASoC will bring up the individual DAIs in the path.  The Q6USB
->>> backend DAI
->>> will send an AFE port start command (with enabling the USB playback
->>> path), and
->>> the audio DSP will handle the request accordingly.
->>>
->>> Part of the AFE USB port start handling will have an exchange of control
->>> messages using the QMI protocol.  The qc_audio_offload driver will
->>> populate the
->>> buffer information:
->>> - Event ring base address
->>> - EP transfer ring base address
->>>
->>> and pass it along to the audio DSP.  All endpoint management will now
->>> be handed
->>> over to the DSP, and the main processor is not involved in transfers.
->>>
->>> Overall, implementing this feature will still expose separate sound
->>> card and PCM
->>> devices for both the platorm card and USB audio device:
->>>   0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
->>>                        SM8250-MTP-WCD9380-WSA8810-VA-DMIC
->>>   1 [Audio          ]: USB-Audio - USB Audio
->>>                        Generic USB Audio at usb-xhci-hcd.1.auto-1.4,
->>> high speed
->>>
->>> This is to ensure that userspace ALSA entities can decide which route
->>> to take
->>> when executing the audio playback.  In the above, if card#1 is
->>> selected, then
->>> USB audio data will take the legacy path over the USB PCM drivers,
->>> etc...
->>
->> I already voiced my concerns about exposing two cards, each with their
->> own set of volume controls with the same device. It would be much better
->> to have an additional offloaded PCM device for card0...
->>
->> But if the consensus is to have two cards, it's still not clear how the
->> routing would be selected. In the case where there are two USB audio
->> devices attached, the offloaded path would only support one of the two.
->> How would userspace know which of the two is selected?
->>
-> 
-> With patch#24:
-> https://lore.kernel.org/linux-usb/20230308235751.495-25-quic_wcheng@quicinc.com/T/#u
-> 
-> Now, userspace can at least choose which device it wants to offload.
-> Part of doing that would mean userspace knows what USB SND card devices
-> are available, so it is aware of which devices are shared (between the
-> offload and USB SND path)
-> 
->> And how would userspace know the difference anyways between two physical
->> devices attached to the platform with no offload, and one physical
->> device with one additional offload path? The names you selected can't be
->> used to identify that card1 is the optimized version of card0.
->>
-> 
-> Is userspace currently able to differentiate between cards that are
-> created by USB SND versus ASoC?  How complex can the userspace card
-> discovery be?  Can it query kcontrols at this point in time?  If so,
-> maybe we can change the names of the newly added ones to reflect that it
-> is an offload device?
-> 
-> SND kcontrol names are currently:
-> Q6USB offload status
-> Q6USB offload SND device select
-
-I must admit I've never seen kcontrols being used to identify what the
-card is, and in this case it's a pretend-card that's just an improved
-version of another. It might be easier to use something else, such as
-the component strings.
-> 
->> Before we review low-level kernel plumbing, it would be good to give a
->> better overview of how userspace applications are supposed to interact
->> with the cards and identify the offloaded path. Testing with
->> tinyplay/tinymix is fine, but that's a developer-level or CI unit test.
->> we've got to see the broader picture of how a sound server would use
->> this USB offload capability.
-> 
-> Sure, I think that is fine.  I was hoping that at least adding some of
-> the new kcontrols would help userspace make use of this path in general,
-> but we can add more information if required.
-
-Can I ask if this solution has been used with a complete userspace stack
-already? I could see how this might be used with a relatively fixed
-Android HAL, where the platform and routing are relatively controlled. I
-don't see how a more generic audio server would deal with the discovery
-and routing.
-
+> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+> index 87920257bb73..27fc8b671954 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+> @@ -221,6 +221,15 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
+>  		}
+>  	}
+>  
+> +	/*
+> +	 * As per Hardware Programming Guide, when configuring pin as output,
+> +	 * set the pin value before setting output-enable (OE).
+> +	 */
+> +	if (output_enabled) {
+> +		val = u32_encode_bits(value ? 1 : 0, LPI_GPIO_VALUE_OUT_MASK);
+> +		lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG, val);
+> +	}
+> +
+>  	val = lpi_gpio_read(pctrl, group, LPI_GPIO_CFG_REG);
+>  
+>  	u32p_replace_bits(&val, pullup, LPI_GPIO_PULL_MASK);
+> @@ -230,11 +239,6 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
+>  
+>  	lpi_gpio_write(pctrl, group, LPI_GPIO_CFG_REG, val);
+>  
+> -	if (output_enabled) {
+> -		val = u32_encode_bits(value ? 1 : 0, LPI_GPIO_VALUE_OUT_MASK);
+> -		lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG, val);
+> -	}
+> -
+>  	return 0;
+>  }
+>  
