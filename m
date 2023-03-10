@@ -2,147 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 436A86B32AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 01:19:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2DDE6B32B4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 01:20:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231419AbjCJATG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Mar 2023 19:19:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38486 "EHLO
+        id S231444AbjCJAUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Mar 2023 19:20:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229876AbjCJATF (ORCPT
+        with ESMTP id S229876AbjCJAUW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 19:19:05 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DD80ED690;
-        Thu,  9 Mar 2023 16:19:03 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id j2so3546552wrh.9;
-        Thu, 09 Mar 2023 16:19:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678407542;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=c7dl0alc83k3Pp3Xko6c+R33xqt0UW862N4ynk36/DU=;
-        b=GrrwBmz4rV3JXTc5sfXhimJtJsl5GW01u3aqSpSblxPNu7ki6TJAiOtM4nXo/efYhg
-         7KEq3FcW1+7yoEZT+NlhqDV26TRUiPBnanF2Pfg1SgP7Sdrly2ASppWGXNtokJsSJBCB
-         brjzGx9dxVn7wG/QSJTEsUm8XhPyhdFdWYza06JRHmBTfRm2t56gqSVW6u3uwKUPbudR
-         8lEZP3sD4rq8+r+dbh1EHMn4WGhp8XwAYS+HubzxqlpZ1LtRBMORPPQMJWg9HwXhwrdC
-         lacrbP+Iginx2qsnhqg6iggnDlyfebFzuYE2Q71HoZxSJ0Q9ujcyjh8AcYLkNBsVslJl
-         GC/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678407542;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c7dl0alc83k3Pp3Xko6c+R33xqt0UW862N4ynk36/DU=;
-        b=wBGvDbpKQFANNAVAsIsDpYLOjNybOxpyeAlyWmo0RbiQvbt2mLA9RdJnEE5j8ho6ZT
-         4wYnKl3VGzg5kxCDaF21x2U1ZyzC74gxUGhYedXIk3dYXopLY2xypOL99EJdFTZ4eJvT
-         Lovr6G7g+Ng+6Z7E0QqaTSh8j9DPN0d9HkPFjbwT8Zbs0rwLVBfWbvubGnE33LMV0swv
-         k94wvNK0XuGT2KXrCNjrW9bbYnSiZ1K8csZAsFGEPTj2/6GBuof1YQfAZCOzYClSgWOz
-         ked5CRzrUsjsIUKhlRrNICrSp4ZmzrFu/qrvuwPc1KKu4qMOgyZwFsKjDMDB9CMQkdaw
-         DSCg==
-X-Gm-Message-State: AO0yUKUTjyhYYUOQUL3o7fOHCd3LGDpW920vRYiWVe9GO3TzEfT4s3Bz
-        C87+jjrKckAEAlg6LdZMWFw=
-X-Google-Smtp-Source: AK7set85ENtFtGvDeF+Y/oq3nXZWYElGoArcMrJ/c0/syf+xVDTOZCV+GRwVevQcpjXsxRravVokag==
-X-Received: by 2002:adf:eec2:0:b0:2c5:8d06:75c2 with SMTP id a2-20020adfeec2000000b002c58d0675c2mr17947826wrp.35.1678407541846;
-        Thu, 09 Mar 2023 16:19:01 -0800 (PST)
-Received: from Ansuel-xps. (93-34-89-197.ip49.fastwebnet.it. [93.34.89.197])
-        by smtp.gmail.com with ESMTPSA id x15-20020a5d490f000000b002c553e061fdsm596633wrq.112.2023.03.09.16.19.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Mar 2023 16:19:01 -0800 (PST)
-Message-ID: <640a7775.5d0a0220.110eb.3e41@mx.google.com>
-X-Google-Original-Message-ID: <ZAp3aL+DpvM6aPFQ@Ansuel-xps.>
-Date:   Fri, 10 Mar 2023 01:18:48 +0100
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Andrew Lunn <andrew@lunn.ch>
-Cc:     Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Lee Jones <lee@kernel.org>,
-        linux-leds@vger.kernel.org
-Subject: Re: [net-next PATCH v2 02/14] net: dsa: qca8k: add LEDs basic support
-References: <20230309223524.23364-1-ansuelsmth@gmail.com>
- <20230309223524.23364-3-ansuelsmth@gmail.com>
- <a8c60aa6-2a89-4b2e-b773-224c6a5b03c0@lunn.ch>
+        Thu, 9 Mar 2023 19:20:22 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D53CAF4D93;
+        Thu,  9 Mar 2023 16:20:20 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 7ED7BB8214D;
+        Fri, 10 Mar 2023 00:20:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0E7A8C4339E;
+        Fri, 10 Mar 2023 00:20:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678407618;
+        bh=29AmesE7AXdHqjf2NOMeUWHAZIhTTbKWYLKdnfX/+Lc=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=LBwsAx2GKM9dh9Nd0UNGal5z7ZdmpvkCMdCWwHCrIA3ILNiI/DbtsjAWEC7uu2nJy
+         rkhsDlCToQVvW3RqCO90nudzSEPQK0QRKRgaHXKA9Mv243j0AF1UOo/D9TQ/Owk4uM
+         czZrnM3yqpwZeq21KX7LYWpal/cSGybemVZNddSKUoUgUqmI3+GNNAnAt03becoJ7B
+         sqqGYZ26uKIDMtUp8WP8wBrbDPSJMwIolyj207Ti2tVBf84tmpcmlsbctx6IaCUzqL
+         /961u1oplueRzELsqntOGtBC14xm2WA8tqLIA2M7TZXU276k07MAEIuen79wkS7oz6
+         KoAvWtvSb8yIw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E7C84E55F00;
+        Fri, 10 Mar 2023 00:20:17 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a8c60aa6-2a89-4b2e-b773-224c6a5b03c0@lunn.ch>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 RESEND] Bluetooth: btqcomsmd: Fix command timeout after
+ setting BD address
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <167840761794.25154.15476663413483482390.git-patchwork-notify@kernel.org>
+Date:   Fri, 10 Mar 2023 00:20:17 +0000
+References: <20230308133155.165537-1-stephan.gerhold@kernkonzept.com>
+In-Reply-To: <20230308133155.165537-1-stephan.gerhold@kernkonzept.com>
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Cc:     luiz.dentz@gmail.com, marcel@holtmann.org, johan.hedberg@gmail.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        stephan@gerhold.net, pmenzel@molgen.mpg.de
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 10, 2023 at 01:12:03AM +0100, Andrew Lunn wrote:
-> > +config NET_DSA_QCA8K_LEDS_SUPPORT
-> > +	tristate "Qualcomm Atheros QCA8K Ethernet switch family LEDs support"
-> 
-> Is tristate correct here? That means the code can either be built in,
-> a module, or not built at all. Is that what you want?
-> 
-> It seems more normal to use a bool, not a tristate.
->
+Hello:
 
-Think you are right, can't really be a module.
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-> > +static enum led_brightness
-> > +qca8k_led_brightness_get(struct qca8k_led *led)
-> > +{
-> > +	struct qca8k_led_pattern_en reg_info;
-> > +	struct qca8k_priv *priv = led->priv;
-> > +	u32 val;
-> > +	int ret;
-> > +
-> > +	qca8k_get_enable_led_reg(led->port_num, led->led_num, &reg_info);
-> > +
-> > +	ret = regmap_read(priv->regmap, reg_info.reg, &val);
-> > +	if (ret)
-> > +		return 0;
-> > +
-> > +	val >>= reg_info.shift;
-> > +
-> > +	if (led->port_num == 0 || led->port_num == 4) {
-> > +		val &= QCA8K_LED_PATTERN_EN_MASK;
-> > +		val >>= QCA8K_LED_PATTERN_EN_SHIFT;
-> > +	} else {
-> > +		val &= QCA8K_LED_PHY123_PATTERN_EN_MASK;
-> > +	}
-> > +
-> > +	return val > 0 ? 1 : 0;
-> > +}
+On Wed,  8 Mar 2023 14:31:55 +0100 you wrote:
+> On most devices using the btqcomsmd driver (e.g. the DragonBoard 410c
+> and other devices based on the Qualcomm MSM8916/MSM8909/... SoCs)
+> the Bluetooth firmware seems to become unresponsive for a while after
+> setting the BD address. On recent kernel versions (at least 5.17+)
+> this often causes timeouts for subsequent commands, e.g. the HCI reset
+> sent by the Bluetooth core during initialization:
 > 
-> What will this return when in the future you add hardware offload, and
-> the LED is actually blinking because of frames being sent etc?
-> 
-> Is it better to not implement _get() when it is unclear what it should
-> return when offload is in operation?
-> 
->        Andrew
+> [...]
 
-My idea was that anything that is not 'always off' will have brightness
-1. So also in accelerated blink brightness should be 1.
+Here is the summary with links:
+  - [v2,RESEND] Bluetooth: btqcomsmd: Fix command timeout after setting BD address
+    https://git.kernel.org/bluetooth/bluetooth-next/c/048379740637
 
-My idea of get was that it should reflect if the led is active or always
-off. Is it wrong?
-
+You are awesome, thank you!
 -- 
-	Ansuel
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
