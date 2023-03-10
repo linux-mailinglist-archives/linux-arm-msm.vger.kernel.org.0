@@ -2,264 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E6A06B4F2C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 18:42:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 125276B4FBD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 19:05:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231574AbjCJRmH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 12:42:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58412 "EHLO
+        id S231522AbjCJSFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 13:05:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231567AbjCJRlp (ORCPT
+        with ESMTP id S230197AbjCJSFc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 12:41:45 -0500
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2054.outbound.protection.outlook.com [40.107.243.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55EB512D411;
-        Fri, 10 Mar 2023 09:40:59 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=VvOCvcU1esDFNcdTp9fMTiP9YrJ27WtckgNuuQ/M0J4iK2Q4ijcgzDqYIYSSe165HTS2tNZ2tjYj4aM7kQ0UzA1irErWBB9Dnho707qv5nrGxysvCTC/AQW+yjED8xHWA4JUFunWqNwzFEtfN7znPjemgJAA7dyRJAvUzn550ciyaJZj3O74w+N+xP9EqFlKBcq6Mh+PqpBB8ftWDodVwZiUF+kM43dqXB7sXlV4iDvq8p9djZta/QikpwSomc98+TN61iSeuh3ifW1GmR5Obe7EpjnLlKbetSp9x1H2DNWv+qxf29ljOnl2RtnTRjTA+tQ02uxJozFCjbkujhAIcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KaUhyoeEK1tG4Jq20ydCTjifKBTSA159AvAfZW0MjkQ=;
- b=HTuF/IcpRCGVLCnYF04aGY9I6AvwqUop50bUv2x44FWfCPyqI9NjEIJpuKXJb0RHG8LQCGV1Qi59cW/FnWqj0bXnK6W6kAYA4+WJQMB/WYJC32MlfHc7/BbR5hPdYSMM/NwqkRFTeNtZUDNrJhCwjM0phRE3FWhiDaFwbu2gZCYA0JCjoB/Z7Bx0b7JO8xNeRJ7+aP6bVNN00OOS+ZZOY/Ixb6sB3ZsRp4FNxE/G1KJn9uRbJHhDsP775z49wJTk6rGHg9JNJq7CHCOAkPhNrKiaKrhULHQzFh36IkBH6XK6PQLWS5HVeQWseg/eXEJSkO9vtusEAsi9TQXJRoX5lg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KaUhyoeEK1tG4Jq20ydCTjifKBTSA159AvAfZW0MjkQ=;
- b=OdrPcG0RPVLwrF5qKa+S3KNhS0bIJuUtmwjwgs6V1QBAN6Z+xN8kTmhfGO1HGcKpOUTkXCT6rdQGvj/lnh9GUEJcPwzVtwps0DAkHLR7KoLy/K7wVgughFMbxCS9QdM/ZvcljsOGRgmwUNTXysNVbkfzFAe8pgof1SCzoiXE6sQ=
-Received: from MW4PR04CA0200.namprd04.prod.outlook.com (2603:10b6:303:86::25)
- by BN9PR12MB5338.namprd12.prod.outlook.com (2603:10b6:408:103::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.20; Fri, 10 Mar
- 2023 17:40:10 +0000
-Received: from CO1NAM11FT074.eop-nam11.prod.protection.outlook.com
- (2603:10b6:303:86:cafe::52) by MW4PR04CA0200.outlook.office365.com
- (2603:10b6:303:86::25) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6156.29 via Frontend
- Transport; Fri, 10 Mar 2023 17:40:10 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CO1NAM11FT074.mail.protection.outlook.com (10.13.174.254) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.6178.19 via Frontend Transport; Fri, 10 Mar 2023 17:40:10 +0000
-Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Fri, 10 Mar
- 2023 11:40:03 -0600
-Received: from xhdsneeli40.xilinx.com (10.180.168.240) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server id 15.1.2375.34 via Frontend
- Transport; Fri, 10 Mar 2023 11:39:36 -0600
-From:   Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
-To:     <broonie@kernel.org>, <miquel.raynal@bootlin.com>,
-        <richard@nod.at>, <vigneshr@ti.com>, <jic23@kernel.org>,
-        <tudor.ambarus@microchip.com>, <pratyush@kernel.org>,
-        <Sanju.Mehta@amd.com>, <chin-ting_kuo@aspeedtech.com>,
-        <clg@kaod.org>, <kdasu.kdev@gmail.com>, <f.fainelli@gmail.com>,
-        <rjui@broadcom.com>, <sbranden@broadcom.com>,
-        <eajames@linux.ibm.com>, <olteanv@gmail.com>, <han.xu@nxp.com>,
-        <john.garry@huawei.com>, <shawnguo@kernel.org>,
-        <s.hauer@pengutronix.de>, <narmstrong@baylibre.com>,
-        <khilman@baylibre.com>, <matthias.bgg@gmail.com>,
-        <haibo.chen@nxp.com>, <linus.walleij@linaro.org>,
-        <daniel@zonque.org>, <haojian.zhuang@gmail.com>,
-        <robert.jarzmik@free.fr>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <heiko@sntech.de>,
-        <krzysztof.kozlowski@linaro.org>, <andi@etezian.org>,
-        <mcoquelin.stm32@gmail.com>, <alexandre.torgue@foss.st.com>,
-        <wens@csie.org>, <jernej.skrabec@gmail.com>, <samuel@sholland.org>,
-        <masahisa.kojima@linaro.org>, <jaswinder.singh@linaro.org>,
-        <rostedt@goodmis.org>, <mingo@redhat.com>,
-        <l.stelmach@samsung.com>, <davem@davemloft.net>,
-        <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>,
-        <alex.aring@gmail.com>, <stefan@datenfreihafen.org>,
-        <kvalo@kernel.org>, <james.schulman@cirrus.com>,
-        <david.rhodes@cirrus.com>, <tanureal@opensource.cirrus.com>,
-        <rf@opensource.cirrus.com>, <perex@perex.cz>, <tiwai@suse.com>,
-        <npiggin@gmail.com>, <christophe.leroy@csgroup.eu>,
-        <mpe@ellerman.id.au>, <oss@buserror.net>, <windhl@126.com>,
-        <yangyingliang@huawei.com>, <william.zhang@broadcom.com>,
-        <kursad.oney@broadcom.com>, <jonas.gorski@gmail.com>,
-        <anand.gore@broadcom.com>, <rafal@milecki.pl>
-CC:     <git@amd.com>, <linux-spi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <joel@jms.id.au>,
-        <andrew@aj.id.au>, <radu_nicolae.pirea@upb.ro>,
-        <nicolas.ferre@microchip.com>, <alexandre.belloni@bootlin.com>,
-        <claudiu.beznea@microchip.com>,
-        <bcm-kernel-feedback-list@broadcom.com>, <fancer.lancer@gmail.com>,
-        <kernel@pengutronix.de>, <festevam@gmail.com>, <linux-imx@nxp.com>,
-        <jbrunet@baylibre.com>, <martin.blumenstingl@googlemail.com>,
-        <avifishman70@gmail.com>, <tmaimon77@gmail.com>,
-        <tali.perry1@gmail.com>, <venture@google.com>, <yuenn@google.com>,
-        <benjaminfair@google.com>, <yogeshgaur.83@gmail.com>,
-        <konrad.dybcio@somainline.org>, <alim.akhtar@samsung.com>,
-        <ldewangan@nvidia.com>, <thierry.reding@gmail.com>,
-        <jonathanh@nvidia.com>, <michal.simek@amd.com>,
-        <linux-aspeed@lists.ozlabs.org>, <openbmc@lists.ozlabs.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-rpi-kernel@lists.infradead.org>,
-        <linux-amlogic@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-rockchip@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-sunxi@lists.linux.dev>, <linux-tegra@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <linux-wpan@vger.kernel.org>,
-        <libertas-dev@lists.infradead.org>,
-        <linux-wireless@vger.kernel.org>, <linux-mtd@lists.infradead.org>,
-        <lars@metafoo.de>, <Michael.Hennerich@analog.com>,
-        <linux-iio@vger.kernel.org>, <michael@walle.cc>,
-        <palmer@dabbelt.com>, <linux-riscv@lists.infradead.org>,
-        <alsa-devel@alsa-project.org>, <patches@opensource.cirrus.com>,
-        <linuxppc-dev@lists.ozlabs.org>, <amitrkcian2002@gmail.com>,
-        <amit.kumar-mahapatra@amd.com>
-Subject: [PATCH V6 15/15] spi: spi-zynqmp-gqspi: Add parallel memories support in GQSPI driver
-Date:   Fri, 10 Mar 2023 23:02:17 +0530
-Message-ID: <20230310173217.3429788-16-amit.kumar-mahapatra@amd.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230310173217.3429788-1-amit.kumar-mahapatra@amd.com>
-References: <20230310173217.3429788-1-amit.kumar-mahapatra@amd.com>
+        Fri, 10 Mar 2023 13:05:32 -0500
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31C1E1308E5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 10:05:29 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id a32so6173197ljr.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 10:05:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678471527;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rBjBAbRPm56BQ/eTKboqTkN6AUznZBRmPA9kqc4XcyQ=;
+        b=cntpW1qI/KsIzpeM76IKOGuCeB73EAc3rug0E3ELKWVQSDgrYXJlSaskG8e1qZG866
+         bxHNWvSZFGYfKZ4X/onCRPBdQTpUH7Fpx+BV+be7ZugqTpDO388N4EU7wyvY3vL/7rxj
+         kkJzV8JIla7e8mHlL0EAAUi6e0ZaBmOSH/4fvImOyuVsf6JFxCyxppFbcsRGDD44JTx7
+         Lu0OwSFfMVUmCt8vJRlNRpaCVZvFspYA+/FgGkaomcFrbXaldVUZFbKDrHbsYYNYXE28
+         Krp1qliABahK1U0bMRfZA09803nEVXFiwaEvl68PF+hsD/ygzxPLYsjX993D6MYIiHHl
+         BvfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678471527;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rBjBAbRPm56BQ/eTKboqTkN6AUznZBRmPA9kqc4XcyQ=;
+        b=rMBILSoaf7s0GmLM+oC6uYsaW7dc1J12T7ZS5lF5yedVnKRRf+N5ZNRtwulyIFiJaL
+         KC+u4dwWkMIp+haF3BUiT6aXN6IBtPTPFThZx4xfMbYloVQRu4XRHDdSHvOvNZxoWOaX
+         ouReTwtPOJ+M1Vd6JzZka4sK2+TB73ixQEJXrwGZ9LGsfOtyc0SHDsvj5RCHL++oIjv0
+         sOY5oRc9ODJDy5FgHlGAqdJcxIhExQHqPud6PH8Dm1rokHgACL7B+H0soqaOtTx2wNZC
+         XXCwZWLiWtgrL/QuAgit6rRMeujuXKx14gWV2Obh2p273iyQ4h2zA5o6ndMTbows56Li
+         1zJA==
+X-Gm-Message-State: AO0yUKV+q6k7dCqP77rUwux+4DaIXfVjiGTB1U4G9nkfznCiAtlF+bbv
+        HWUwN2i45YVuHS1jnPvXCMWQKA==
+X-Google-Smtp-Source: AK7set+LStnbYuO7wMtSj1sLy7WPF1lvNmLMrshaGf4g4TvXPrrrGTtU2l1r6N3cibjsBRx7qigUPQ==
+X-Received: by 2002:a2e:9555:0:b0:28b:6d76:e9ce with SMTP id t21-20020a2e9555000000b0028b6d76e9cemr7702361ljh.23.1678471527328;
+        Fri, 10 Mar 2023 10:05:27 -0800 (PST)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id f13-20020a05651c03cd00b00295a8d1ecc7sm84447ljp.18.2023.03.10.10.05.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Mar 2023 10:05:21 -0800 (PST)
+Message-ID: <858a8925-f11b-652d-3f02-f5ceea7d11fa@linaro.org>
+Date:   Fri, 10 Mar 2023 19:05:16 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v7 6/9] interconnect: qcom: rpm: Handle interface clocks
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230228-topic-qos-v7-0-815606092fff@linaro.org>
+ <20230228-topic-qos-v7-6-815606092fff@linaro.org>
+ <50f03895-816f-be8d-d956-d237fb13f5a0@linaro.org>
+ <6d10906e-08cd-0380-5f5d-3ac0eec60276@linaro.org>
+ <67590cd3-5543-59ed-6158-b272103ebd05@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <67590cd3-5543-59ed-6158-b272103ebd05@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1NAM11FT074:EE_|BN9PR12MB5338:EE_
-X-MS-Office365-Filtering-Correlation-Id: 82a898d3-01dc-46cf-1621-08db218e7f22
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Xt7TUEmhxJkG3uhUkGG89AnqA6rHXB2b1oBhbxumHhtWcnd2jUGpN0Q0HWHBfycuejtZ6LXt1TqMJvuYAsrKGP1+WuWryVzQtzdfFYCpEMfAcC0MV5BwoBUD6h4KSv/BDw2UeH/1mb5K2zfHk81eqUKAnb0+ZESBftRz7hxRZNVrze+8TgKYBj16bkdtEPgnf5CuakBOWoScoxkhtWbbEQb3I67slwNJLGIBFzmkdq/lxolX8/CHR3lbR+C32LP6ET5jxOB7c73GCv7YUoERmKCQCx6EUgnLm9ar7tTpfPDQak1vlkLYqPNJT/L9DSaJVnjCpLZUB1joIVtelqkV3FyOjSz+8+ZL+nj/QvH5mbzzWIEzKPC78N43lcgWLogk5OnKPd81ZllRwfOEkmpjsUSo/TU6ZK4zwbC22jfOdPKxmfsfjZMSMzl5BwbqyEkzfkHoG/okqPORgpb/p82BswKWG9hjg/rx87+0mhuVUxUOC7p+iWG8p5T7zXhqD+AoNqQJymlvwK6qONtCbFxqVLrFMGEmP5F0ElvEBvVvYl17GvgekYXP7edQ/+OUXiLug0ZN92dvILCd+OJjq5xWBeALWCHLQBdboneaQj6UzMwJvyjeR70tP1rSOAgb9dRrb/62Rz7hnB5bExgMeQJhvrfj6hCHcF1MBkDm6U08A9j9nVRxw6RRT9Zdbrb6f5hsDcplt4WFgtXxNTa3puNv2gkMhNn4G/f7o7eRv6MFOg6onDbuRNSlKnLucDWdeXca5fpwtyKOE6meHTurpmIGWDHEcSZbYnLIhRoPkXXiQFj/0fCmkRhAsKgxz3TPNsDO1/Yq3idIzNTxcbtQbrZieRm2cQwXMjIsBk0QM6qZkMs=
-X-Forefront-Antispam-Report: CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230025)(4636009)(136003)(376002)(346002)(396003)(39860400002)(451199018)(46966006)(40470700004)(36840700001)(6666004)(83380400001)(82740400003)(1191002)(81166007)(478600001)(54906003)(110136005)(82310400005)(36860700001)(8936002)(40480700001)(186003)(5660300002)(40460700003)(316002)(1076003)(26005)(36756003)(7336002)(7416002)(7276002)(7366002)(7406005)(426003)(8676002)(921005)(356005)(47076005)(336012)(70206006)(70586007)(41300700001)(86362001)(2616005)(4326008)(2906002)(41080700001)(84006005)(83996005)(36900700001)(2101003);DIR:OUT;SFP:1101;
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2023 17:40:10.3038
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 82a898d3-01dc-46cf-1621-08db218e7f22
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT074.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR12MB5338
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-During GQSPI driver probe set ctlr->multi-cs-cap for enabling multi CS
-capability of the controller. In parallel mode the controller can either
-split the data between both the flash or can send the same data to both the
-flashes, this is determined by the STRIPE bit. While sending commands to
-the flashes the GQSPI driver send the same command to both the flashes by
-resetting the STRIPE bit, but while writing/reading data to & from the
-flash the GQSPI driver splits the data evenly between both the flashes by
-setting the STRIPE bit.
 
-Signed-off-by: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
----
- drivers/spi/spi-zynqmp-gqspi.c | 39 +++++++++++++++++++++++++++++++++-
- 1 file changed, 38 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
-index 3d2b92a88e8a..d795d17d2541 100644
---- a/drivers/spi/spi-zynqmp-gqspi.c
-+++ b/drivers/spi/spi-zynqmp-gqspi.c
-@@ -23,6 +23,7 @@
- #include <linux/spinlock.h>
- #include <linux/workqueue.h>
- #include <linux/spi/spi-mem.h>
-+#include <linux/mtd/spi-nor.h>
- 
- /* Generic QSPI register offsets */
- #define GQSPI_CONFIG_OFST		0x00000100
-@@ -192,6 +193,7 @@ struct qspi_platform_data {
-  * @op_lock:		Operational lock
-  * @speed_hz:          Current SPI bus clock speed in hz
-  * @has_tapdelay:	Used for tapdelay register available in qspi
-+ * @is_parallel:		Used for multi CS support
-  */
- struct zynqmp_qspi {
- 	struct spi_controller *ctlr;
-@@ -214,8 +216,33 @@ struct zynqmp_qspi {
- 	struct mutex op_lock;
- 	u32 speed_hz;
- 	bool has_tapdelay;
-+	bool is_parallel;
- };
- 
-+/**
-+ * zynqmp_gqspi_update_stripe - For GQSPI controller data stripe capabilities
-+ * @op:	Pointer to mem ops
-+ * Return:      Status of the data stripe
-+ *
-+ * Returns true if data stripe need to be enabled, else returns false
-+ */
-+bool zynqmp_gqspi_update_stripe(const struct spi_mem_op *op)
-+{
-+	if (op->cmd.opcode ==  SPINOR_OP_BE_4K ||
-+	    op->cmd.opcode ==  SPINOR_OP_BE_32K ||
-+	    op->cmd.opcode ==  SPINOR_OP_CHIP_ERASE ||
-+	    op->cmd.opcode ==  SPINOR_OP_SE ||
-+	    op->cmd.opcode ==  SPINOR_OP_BE_32K_4B ||
-+	    op->cmd.opcode ==  SPINOR_OP_SE_4B ||
-+	    op->cmd.opcode == SPINOR_OP_BE_4K_4B ||
-+	    op->cmd.opcode ==  SPINOR_OP_WRSR ||
-+	    op->cmd.opcode ==  SPINOR_OP_BRWR ||
-+	    (op->cmd.opcode ==  SPINOR_OP_WRSR2 && !op->addr.nbytes))
-+		return false;
-+
-+	return true;
-+}
-+
- /**
-  * zynqmp_gqspi_read - For GQSPI controller read operation
-  * @xqspi:	Pointer to the zynqmp_qspi structure
-@@ -470,7 +497,14 @@ static void zynqmp_qspi_chipselect(struct spi_device *qspi, bool is_high)
- 
- 	genfifoentry |= GQSPI_GENFIFO_MODE_SPI;
- 
--	if (qspi->cs_index_mask & GQSPI_SELECT_UPPER_CS) {
-+	if ((qspi->cs_index_mask & GQSPI_SELECT_LOWER_CS) &&
-+	    (qspi->cs_index_mask & GQSPI_SELECT_UPPER_CS)) {
-+		zynqmp_gqspi_selectslave(xqspi,
-+					 GQSPI_SELECT_FLASH_CS_BOTH,
-+					 GQSPI_SELECT_FLASH_BUS_BOTH);
-+		if (!xqspi->is_parallel)
-+			xqspi->is_parallel = true;
-+	} else if (qspi->cs_index_mask & GQSPI_SELECT_UPPER_CS) {
- 		zynqmp_gqspi_selectslave(xqspi,
- 					 GQSPI_SELECT_FLASH_CS_UPPER,
- 					 GQSPI_SELECT_FLASH_BUS_LOWER);
-@@ -1139,6 +1173,8 @@ static int zynqmp_qspi_exec_op(struct spi_mem *mem,
- 	}
- 
- 	if (op->data.nbytes) {
-+		if (xqspi->is_parallel && zynqmp_gqspi_update_stripe(op))
-+			genfifoentry |= GQSPI_GENFIFO_STRIPE;
- 		reinit_completion(&xqspi->data_completion);
- 		if (op->data.dir == SPI_MEM_DATA_OUT) {
- 			xqspi->txbuf = (u8 *)op->data.buf.out;
-@@ -1334,6 +1370,7 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
- 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
- 	ctlr->dev.of_node = np;
- 	ctlr->auto_runtime_pm = true;
-+	ctlr->multi_cs_cap = true;
- 
- 	ret = devm_spi_register_controller(&pdev->dev, ctlr);
- 	if (ret) {
--- 
-2.25.1
+On 10.03.2023 17:47, Bryan O'Donoghue wrote:
+> On 10/03/2023 14:26, Konrad Dybcio wrote:
+>>
+>>
+>> On 10.03.2023 15:21, Bryan O'Donoghue wrote:
+>>> On 08/03/2023 21:40, Konrad Dybcio wrote:
+>>>> Some (but not all) providers (or their specific nodes) require
+>>>> specific clocks to be turned on before they can be accessed. Failure
+>>>> to ensure that results in a seemingly random system crash (which
+>>>> would usually happen at boot with the interconnect driver built-in),
+>>>> resulting in the platform not booting up properly.
+>>>
+>>> Can you give an example of which clocks on which SoC's ?
+>> See for example 67fb53745e0b
+>>
+>> This was a clock documented downstream under the node-qos clocks here:
+>>
+>> https://github.com/sonyxperiadev/kernel/blob/aosp/LA.UM.5.7.r1/arch/arm/boot/dts/qcom/msm8996-bus.dtsi#L102-L109
+>>
+>> but there are occasions where such clocks are undocumented and downstream
+>> skips them because it relies on them being on by miracle, such as the case
+>> of MASTER_IPA and the IPA rpmcc clock on msm8998. Downstream has no
+>> sync_state, so they would only set the QoS registers when the relevant
+>> hardware was online, so the clocks were on already.
+> 
+> What switched the clocks on ? Presumably LK.
+> 
+> Is this a symptom of using a bootloader other than LK ? If you use the same bootloader, then why hasn't the bootloader/LK already set it up on your platform ?
+XBL* in this case (qcom fully switched to UEFI with 8998, I'm not
+using anything other to what came on the device)
 
+Setting up these dependencies happens all throughout the boot
+chain: after the SoC starts up, BIMC/PNoC/CNoC/SNoC(/AnNoC) are
+set up by some early firmware so that DDR, USB, UFS/eMMC, crypto
+engines etc. can be reachable. It's *that* level of deep..
+
+Then, they are not shut down at all, leaving USB etc. accessible
+by default.
+
+> 
+>>>
+>>> Is the intention of this patch to subsequently go through *.dts *.dtsi and start to remove assigned-clocks ?
+>>>
+>>> Are we saying that currently there ought to be assigned-clocks for some of these NoC declarations ?
+>> Not really, assigned-clocks are used for static ratesetting, see
+>> for example dwc3 nodes where we need it to be fast enough for
+>> HS/SS operation at all times (though that should have prooobably
+>> been handled in the driver but it's a separate topic), I don't
+>> think any of them were used to combat what this commit tries to.
+> 
+> I think you could use assigned-clocks for that ..
+> 
+> So its not part of your series but then presumably you have a follow-on patch for the 8998 dts that points your ->intf_clks at these then ?
+> 
+> clocks = <&clock_gcc clk_aggre2_noc_clk>,
+>          <&clock_gcc clk_gcc_ufs_axi_clk>,
+>          <&clock_gcc clk_gcc_aggre2_ufs_axi_clk>;
+> 
+> It seems like the right thing to do..
+Why so? We're passing all clock references to clocks=<> and we handle
+them separately. This is akin to treating the "core" clock differently
+to the "iface" clock on some IP block, except on a wider scale.
+
+> 
+> Still not clear why these clocks are off.. your bootchain ?
+Generally the issue is that icc sync_states goes over *all the possible
+interconnect paths on the entire SoC*. For QoS register access, you need
+to be able to interface them. Some of the hardware blocks live on a
+separate sort of "island". That' part of why clocks such as
+GCC_CFG_NOC_USB3_PRIM_AXI_CLK exist. They're responsible for clocking
+the CNoC<->USB connection, which in the bigger picture looks more or less
+like:
+
+
+    1     2-3            2-3    3-4            3-4    4-5
+USB<->CNoC<->CNoC_to_SNoC<->SNoC<->SNoC_to_BIMC<->BIMC<->APSS
+
+where:
+
+1 = GCC_CFG_NOC_USB3_PRIM_AXI_CLK
+2 = RPM CNOC CLK
+3 = RPM SNOC CLK
+4 = RPM BIMC CLK
+5 = (usually internally managed) HMSS / GNOC CLK
+
+or something along these lines, the *NoC names may be in the wrong order
+but this is the general picture.
+
+On msm-4.x there is no such thing as sync_state. The votes are only
+cast from within the IP-block drivers themselves, using data gathered from
+qcom,msmbus-blahblah and msmbus calls from within the driver. That way,
+downstream ensures there's never unclocked QoS register access.
+
+After writing this entire email, I got an idea that we could consider not
+accessing these QoS registers from within sync_state (e.g. use sth like
+if(is_sync_state_done))..
+
+That would lead to this patch being mostly
+irrelevant (IF AND ONLY IF all the necessary clocks were handled by the
+end device drivers AND clk/icc voting was done in correct order - which
+as we can tell from the sad 8996 example, is not always the case).
+
+Not guaranteeing it (like this patch does) would make it worse from the
+standpoint of representing the hardware needs properly, but it could
+surely save some headaches. To an extent.
+
+Konrad
+> 
+> ---
+> bod
