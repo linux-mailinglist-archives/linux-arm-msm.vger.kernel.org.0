@@ -2,93 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30CF06B5000
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 19:21:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2DC96B5103
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 20:37:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230098AbjCJSV4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 13:21:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44076 "EHLO
+        id S230052AbjCJThR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 14:37:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231826AbjCJSVj (ORCPT
+        with ESMTP id S229983AbjCJThP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 13:21:39 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D3C71386A2;
-        Fri, 10 Mar 2023 10:20:42 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32ADovRc022695;
-        Fri, 10 Mar 2023 18:20:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=DgFVAoLAXA+pGzs1RTiR1tB9IOrskv07iltnwai5cWo=;
- b=WQU/imcXQkFIa9aussINsXMJYxmLwIk1g2n+l+bB0lFdprVqz2D5b6EnYW+pYKFsNAO5
- NVW1l3jG+SO7x8S2KOZjYA+HA7rzoLRKemHlziOqFDa82nFrZCoKE67GXxRWw2M7qIbw
- 7JF2UyqQLjmMb6H5n77Unkw/3qhomWfyMuzVt1+5APFIPaTR02uD4Myli3UGlGhuaZnE
- W5EumhdOClxEuiAljdjI7cU+BE53UhjserXNj6BpV5MGht7N9oAjVP3YJn8uGL0/1kXY
- 0fTOOS5cAoC60G5i0qyI8vNYPSMtTC2wUHT2rqq3NdB2d6xt9dd6bMYG1i+zulS55nrG Mg== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p7egym7p0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 10 Mar 2023 18:20:17 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32AIKGD4013258
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 10 Mar 2023 18:20:16 GMT
-Received: from [10.110.35.240] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 10 Mar
- 2023 10:20:15 -0800
-Message-ID: <c4b39b28-1f18-c436-e3c5-b015600ca3a2@quicinc.com>
-Date:   Fri, 10 Mar 2023 10:20:14 -0800
+        Fri, 10 Mar 2023 14:37:15 -0500
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6EE61386BA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 11:37:13 -0800 (PST)
+Received: by mail-il1-x12a.google.com with SMTP id 4so3558611ilz.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 11:37:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678477033;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kkQNZSVw4zaUCq2kXc+Mhax587+Y+BrA04ZpcIG6rQ8=;
+        b=HzF+Qsmo+dptbO7HKZ+r7jv16Sgh8w7wUx8SbU5zPGakKhdKBKvpD9ubnc3ZRejLqN
+         ie1Zbuose3sW8cQ1gvR2QQkc+IOOQN2PfS+KvNM3T3ipvsCOMTf+W4JNsDocOWXteLpx
+         npJSWmWlYFuV7Aio86eY06LmUwo1ULjY3VnrXtDoMh1WbYukYeYunkH1tqaB/8OET9Y2
+         xIxSnP4Cs8Z7xwIsAm+6rK729TcT+6eMcUDz3CSE6fxNVen4ARm5iGL2yxQyoebMTvPa
+         4tyMXz82flRKF7PJw0nNopq2/dDqEBprUVtvcgL88+5BwbqFCI8RK5vy2V/eAMFEDziZ
+         5aVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678477033;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kkQNZSVw4zaUCq2kXc+Mhax587+Y+BrA04ZpcIG6rQ8=;
+        b=p+kJ4W/ZTE3cxB6aabhC639ut66SVt8dy7kuSU5wsIFpDVph/YyEE8TFtZCWzG8PNO
+         8UmNG+O4FCP/0S4hxsbEAHy/7FW30UvKpXq4gm2ma26hyeLSUQxaexZ2BCyRcw5XQtrE
+         84TOcBvxBv/s/J5fH7TdiYrPn16Yk/j4UIPgfMkCcV2RJpep7UuRlJQmdKG8VhCnxGFc
+         03d7blTLwQtoSswpUhHUrGNsXeGYVrzOIIcND5LFQ9e5RIRe7CndzmtQC0C0D5/c3KHJ
+         vEbC6YblIE/zhMy0LODtFU4mclLpleOeAsijayVUrSMQ5SBkdkVOwlYuXm0V1iUkfGhL
+         oZ4Q==
+X-Gm-Message-State: AO0yUKVs/0sZMqcVSlRedwylrYQyul+YBadGny42B0++jL6dNwKgYHtw
+        YvUnfO8X4BBNg5BVUCXiFQQJjw==
+X-Google-Smtp-Source: AK7set/QHFffJOgeie30HMbd1yx9a/blJ9mvDsqKiBlnsU3sP5BnhIIV73dJdbxHmlzZgR4GhOZAjQ==
+X-Received: by 2002:a05:6e02:1010:b0:316:fcbe:628f with SMTP id n16-20020a056e02101000b00316fcbe628fmr17077839ilj.26.1678477032715;
+        Fri, 10 Mar 2023 11:37:12 -0800 (PST)
+Received: from localhost.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id k15-20020a02cb4f000000b00374bf3b62a0sm208209jap.99.2023.03.10.11.37.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Mar 2023 11:37:12 -0800 (PST)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     luca.weiss@fairphone.com, dmitry.baryshkov@linaro.org,
+        caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
+        andersson@kernel.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH net] net: ipa: fix a surprising number of bad offsets
+Date:   Fri, 10 Mar 2023 13:37:09 -0600
+Message-Id: <20230310193709.1477102-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2 0/2] Validating UAPI backwards compatibility
-Content-Language: en-US
-To:     Christoph Hellwig <hch@infradead.org>,
-        John Moon <quic_johmoo@quicinc.com>
-CC:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        "Nicolas Schier" <nicolas@fjasle.eu>,
-        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        "Arnd Bergmann" <arnd@arndb.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Todd Kjos <tkjos@google.com>,
-        Matthias Maennich <maennich@google.com>,
-        Giuliano Procida <gprocida@google.com>,
-        <kernel-team@android.com>, <libabigail@sourceware.org>,
-        Jordan Crouse <jorcrous@amazon.com>,
-        "Satya Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>
-References: <20230301075402.4578-1-quic_johmoo@quicinc.com>
- <ZArlx5wrw+ZQWUg4@infradead.org>
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <ZArlx5wrw+ZQWUg4@infradead.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: j8nBrDEWwr0u__8SclYtBFl6Esys8tp0
-X-Proofpoint-ORIG-GUID: j8nBrDEWwr0u__8SclYtBFl6Esys8tp0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-10_09,2023-03-10_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 spamscore=0 phishscore=0 impostorscore=0 suspectscore=0
- priorityscore=1501 malwarescore=0 mlxscore=0 clxscore=1011 mlxlogscore=854
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303100146
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -97,25 +75,289 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/10/2023 12:09 AM, Christoph Hellwig wrote:
-> On Tue, Feb 28, 2023 at 11:54:00PM -0800, John Moon wrote:
->> Our goal is to add tooling for vendor driver developers because the
->> upstream model of expert maintainer code review can be difficult to
->> replicate in-house. Tools may help developers catch simple UAPI
->> incompatibilities that could be easily overlooked by in-house review.
-> 
-> Why would this matter in any way for the kernel?  If you tool is useful
-> for in-kernel usage it should be added to the tree and documented as
-> such, but ouf of tree crap simply does not matter.
+A recent commit eliminated a hack that adjusted the offset used for
+many GSI registers.  It became possible because we now specify all
+GSI register offsets explicitly for every version of IPA.
 
-This tool will be helpful for the kernel maintainers and reviewers as 
-well if it can detect potential UAPI backward compatibilities. Even for 
-the developers while changing UAPI interfaces at kernel.org before 
-submission.
+Unfortunately, a large number of register offsets were *not* updated
+as they should have been in that commit.  For IPA v4.5+, the offset
+for every GSI register *except* the two inter-EE interrupt masking
+registers were supposed to have been reduced by 0xd000.
 
-John is trying to highlight also that this tool can be useful for 
-downstream users who want to keep the UAPI backward compatibility like 
-we do at upstream. We can remove the above text, since we would like to 
-mainline it at kernel.org.
+Tested-by: Luca Weiss <luca.weiss@fairphone.com>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # SM8350-HDK
+Fixes: 59b12b1d27f3f ("net: ipa: kill gsi->virt_raw")
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+ drivers/net/ipa/reg/gsi_reg-v4.5.c | 56 +++++++++++++++---------------
+ drivers/net/ipa/reg/gsi_reg-v4.9.c | 44 +++++++++++------------
+ 2 files changed, 50 insertions(+), 50 deletions(-)
 
----Trilok Soni
+diff --git a/drivers/net/ipa/reg/gsi_reg-v4.5.c b/drivers/net/ipa/reg/gsi_reg-v4.5.c
+index 648b51b88d4e8..2900e5c3ff888 100644
+--- a/drivers/net/ipa/reg/gsi_reg-v4.5.c
++++ b/drivers/net/ipa/reg/gsi_reg-v4.5.c
+@@ -137,17 +137,17 @@ REG_STRIDE(EV_CH_E_SCRATCH_1, ev_ch_e_scratch_1,
+ 	   0x0001004c + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(CH_C_DOORBELL_0, ch_c_doorbell_0,
+-	   0x0001e000 + 0x4000 * GSI_EE_AP, 0x08);
++	   0x00011000 + 0x4000 * GSI_EE_AP, 0x08);
+ 
+ REG_STRIDE(EV_CH_E_DOORBELL_0, ev_ch_e_doorbell_0,
+-	   0x0001e100 + 0x4000 * GSI_EE_AP, 0x08);
++	   0x00011100 + 0x4000 * GSI_EE_AP, 0x08);
+ 
+ static const u32 reg_gsi_status_fmask[] = {
+ 	[ENABLED]					= BIT(0),
+ 						/* Bits 1-31 reserved */
+ };
+ 
+-REG_FIELDS(GSI_STATUS, gsi_status, 0x0001f000 + 0x4000 * GSI_EE_AP);
++REG_FIELDS(GSI_STATUS, gsi_status, 0x00012000 + 0x4000 * GSI_EE_AP);
+ 
+ static const u32 reg_ch_cmd_fmask[] = {
+ 	[CH_CHID]					= GENMASK(7, 0),
+@@ -155,7 +155,7 @@ static const u32 reg_ch_cmd_fmask[] = {
+ 	[CH_OPCODE]					= GENMASK(31, 24),
+ };
+ 
+-REG_FIELDS(CH_CMD, ch_cmd, 0x0001f008 + 0x4000 * GSI_EE_AP);
++REG_FIELDS(CH_CMD, ch_cmd, 0x00012008 + 0x4000 * GSI_EE_AP);
+ 
+ static const u32 reg_ev_ch_cmd_fmask[] = {
+ 	[EV_CHID]					= GENMASK(7, 0),
+@@ -163,7 +163,7 @@ static const u32 reg_ev_ch_cmd_fmask[] = {
+ 	[EV_OPCODE]					= GENMASK(31, 24),
+ };
+ 
+-REG_FIELDS(EV_CH_CMD, ev_ch_cmd, 0x0001f010 + 0x4000 * GSI_EE_AP);
++REG_FIELDS(EV_CH_CMD, ev_ch_cmd, 0x00012010 + 0x4000 * GSI_EE_AP);
+ 
+ static const u32 reg_generic_cmd_fmask[] = {
+ 	[GENERIC_OPCODE]				= GENMASK(4, 0),
+@@ -172,7 +172,7 @@ static const u32 reg_generic_cmd_fmask[] = {
+ 						/* Bits 14-31 reserved */
+ };
+ 
+-REG_FIELDS(GENERIC_CMD, generic_cmd, 0x0001f018 + 0x4000 * GSI_EE_AP);
++REG_FIELDS(GENERIC_CMD, generic_cmd, 0x00012018 + 0x4000 * GSI_EE_AP);
+ 
+ static const u32 reg_hw_param_2_fmask[] = {
+ 	[IRAM_SIZE]					= GENMASK(2, 0),
+@@ -188,58 +188,58 @@ static const u32 reg_hw_param_2_fmask[] = {
+ 	[GSI_USE_INTER_EE]				= BIT(31),
+ };
+ 
+-REG_FIELDS(HW_PARAM_2, hw_param_2, 0x0001f040 + 0x4000 * GSI_EE_AP);
++REG_FIELDS(HW_PARAM_2, hw_param_2, 0x00012040 + 0x4000 * GSI_EE_AP);
+ 
+-REG(CNTXT_TYPE_IRQ, cntxt_type_irq, 0x0001f080 + 0x4000 * GSI_EE_AP);
++REG(CNTXT_TYPE_IRQ, cntxt_type_irq, 0x00012080 + 0x4000 * GSI_EE_AP);
+ 
+-REG(CNTXT_TYPE_IRQ_MSK, cntxt_type_irq_msk, 0x0001f088 + 0x4000 * GSI_EE_AP);
++REG(CNTXT_TYPE_IRQ_MSK, cntxt_type_irq_msk, 0x00012088 + 0x4000 * GSI_EE_AP);
+ 
+-REG(CNTXT_SRC_CH_IRQ, cntxt_src_ch_irq, 0x0001f090 + 0x4000 * GSI_EE_AP);
++REG(CNTXT_SRC_CH_IRQ, cntxt_src_ch_irq, 0x00012090 + 0x4000 * GSI_EE_AP);
+ 
+-REG(CNTXT_SRC_EV_CH_IRQ, cntxt_src_ev_ch_irq, 0x0001f094 + 0x4000 * GSI_EE_AP);
++REG(CNTXT_SRC_EV_CH_IRQ, cntxt_src_ev_ch_irq, 0x00012094 + 0x4000 * GSI_EE_AP);
+ 
+ REG(CNTXT_SRC_CH_IRQ_MSK, cntxt_src_ch_irq_msk,
+-    0x0001f098 + 0x4000 * GSI_EE_AP);
++    0x00012098 + 0x4000 * GSI_EE_AP);
+ 
+ REG(CNTXT_SRC_EV_CH_IRQ_MSK, cntxt_src_ev_ch_irq_msk,
+-    0x0001f09c + 0x4000 * GSI_EE_AP);
++    0x0001209c + 0x4000 * GSI_EE_AP);
+ 
+ REG(CNTXT_SRC_CH_IRQ_CLR, cntxt_src_ch_irq_clr,
+-    0x0001f0a0 + 0x4000 * GSI_EE_AP);
++    0x000120a0 + 0x4000 * GSI_EE_AP);
+ 
+ REG(CNTXT_SRC_EV_CH_IRQ_CLR, cntxt_src_ev_ch_irq_clr,
+-    0x0001f0a4 + 0x4000 * GSI_EE_AP);
++    0x000120a4 + 0x4000 * GSI_EE_AP);
+ 
+-REG(CNTXT_SRC_IEOB_IRQ, cntxt_src_ieob_irq, 0x0001f0b0 + 0x4000 * GSI_EE_AP);
++REG(CNTXT_SRC_IEOB_IRQ, cntxt_src_ieob_irq, 0x000120b0 + 0x4000 * GSI_EE_AP);
+ 
+ REG(CNTXT_SRC_IEOB_IRQ_MSK, cntxt_src_ieob_irq_msk,
+-    0x0001f0b8 + 0x4000 * GSI_EE_AP);
++    0x000120b8 + 0x4000 * GSI_EE_AP);
+ 
+ REG(CNTXT_SRC_IEOB_IRQ_CLR, cntxt_src_ieob_irq_clr,
+-    0x0001f0c0 + 0x4000 * GSI_EE_AP);
++    0x000120c0 + 0x4000 * GSI_EE_AP);
+ 
+-REG(CNTXT_GLOB_IRQ_STTS, cntxt_glob_irq_stts, 0x0001f100 + 0x4000 * GSI_EE_AP);
++REG(CNTXT_GLOB_IRQ_STTS, cntxt_glob_irq_stts, 0x00012100 + 0x4000 * GSI_EE_AP);
+ 
+-REG(CNTXT_GLOB_IRQ_EN, cntxt_glob_irq_en, 0x0001f108 + 0x4000 * GSI_EE_AP);
++REG(CNTXT_GLOB_IRQ_EN, cntxt_glob_irq_en, 0x00012108 + 0x4000 * GSI_EE_AP);
+ 
+-REG(CNTXT_GLOB_IRQ_CLR, cntxt_glob_irq_clr, 0x0001f110 + 0x4000 * GSI_EE_AP);
++REG(CNTXT_GLOB_IRQ_CLR, cntxt_glob_irq_clr, 0x00012110 + 0x4000 * GSI_EE_AP);
+ 
+-REG(CNTXT_GSI_IRQ_STTS, cntxt_gsi_irq_stts, 0x0001f118 + 0x4000 * GSI_EE_AP);
++REG(CNTXT_GSI_IRQ_STTS, cntxt_gsi_irq_stts, 0x00012118 + 0x4000 * GSI_EE_AP);
+ 
+-REG(CNTXT_GSI_IRQ_EN, cntxt_gsi_irq_en, 0x0001f120 + 0x4000 * GSI_EE_AP);
++REG(CNTXT_GSI_IRQ_EN, cntxt_gsi_irq_en, 0x00012120 + 0x4000 * GSI_EE_AP);
+ 
+-REG(CNTXT_GSI_IRQ_CLR, cntxt_gsi_irq_clr, 0x0001f128 + 0x4000 * GSI_EE_AP);
++REG(CNTXT_GSI_IRQ_CLR, cntxt_gsi_irq_clr, 0x00012128 + 0x4000 * GSI_EE_AP);
+ 
+ static const u32 reg_cntxt_intset_fmask[] = {
+ 	[INTYPE]					= BIT(0)
+ 						/* Bits 1-31 reserved */
+ };
+ 
+-REG_FIELDS(CNTXT_INTSET, cntxt_intset, 0x0001f180 + 0x4000 * GSI_EE_AP);
++REG_FIELDS(CNTXT_INTSET, cntxt_intset, 0x00012180 + 0x4000 * GSI_EE_AP);
+ 
+-REG_FIELDS(ERROR_LOG, error_log, 0x0001f200 + 0x4000 * GSI_EE_AP);
++REG_FIELDS(ERROR_LOG, error_log, 0x00012200 + 0x4000 * GSI_EE_AP);
+ 
+-REG(ERROR_LOG_CLR, error_log_clr, 0x0001f210 + 0x4000 * GSI_EE_AP);
++REG(ERROR_LOG_CLR, error_log_clr, 0x00012210 + 0x4000 * GSI_EE_AP);
+ 
+ static const u32 reg_cntxt_scratch_0_fmask[] = {
+ 	[INTER_EE_RESULT]				= GENMASK(2, 0),
+@@ -248,7 +248,7 @@ static const u32 reg_cntxt_scratch_0_fmask[] = {
+ 						/* Bits 8-31 reserved */
+ };
+ 
+-REG_FIELDS(CNTXT_SCRATCH_0, cntxt_scratch_0, 0x0001f400 + 0x4000 * GSI_EE_AP);
++REG_FIELDS(CNTXT_SCRATCH_0, cntxt_scratch_0, 0x00012400 + 0x4000 * GSI_EE_AP);
+ 
+ static const struct reg *reg_array[] = {
+ 	[INTER_EE_SRC_CH_IRQ_MSK]	= &reg_inter_ee_src_ch_irq_msk,
+diff --git a/drivers/net/ipa/reg/gsi_reg-v4.9.c b/drivers/net/ipa/reg/gsi_reg-v4.9.c
+index 4bf45d264d6b9..8b5d95425a766 100644
+--- a/drivers/net/ipa/reg/gsi_reg-v4.9.c
++++ b/drivers/net/ipa/reg/gsi_reg-v4.9.c
+@@ -27,7 +27,7 @@ static const u32 reg_ch_c_cntxt_0_fmask[] = {
+ };
+ 
+ REG_STRIDE_FIELDS(CH_C_CNTXT_0, ch_c_cntxt_0,
+-		  0x0001c000 + 0x4000 * GSI_EE_AP, 0x80);
++		  0x0000f000 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ static const u32 reg_ch_c_cntxt_1_fmask[] = {
+ 	[CH_R_LENGTH]					= GENMASK(19, 0),
+@@ -35,11 +35,11 @@ static const u32 reg_ch_c_cntxt_1_fmask[] = {
+ };
+ 
+ REG_STRIDE_FIELDS(CH_C_CNTXT_1, ch_c_cntxt_1,
+-		  0x0001c004 + 0x4000 * GSI_EE_AP, 0x80);
++		  0x0000f004 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+-REG_STRIDE(CH_C_CNTXT_2, ch_c_cntxt_2, 0x0001c008 + 0x4000 * GSI_EE_AP, 0x80);
++REG_STRIDE(CH_C_CNTXT_2, ch_c_cntxt_2, 0x0000f008 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+-REG_STRIDE(CH_C_CNTXT_3, ch_c_cntxt_3, 0x0001c00c + 0x4000 * GSI_EE_AP, 0x80);
++REG_STRIDE(CH_C_CNTXT_3, ch_c_cntxt_3, 0x0000f00c + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ static const u32 reg_ch_c_qos_fmask[] = {
+ 	[WRR_WEIGHT]					= GENMASK(3, 0),
+@@ -53,7 +53,7 @@ static const u32 reg_ch_c_qos_fmask[] = {
+ 						/* Bits 25-31 reserved */
+ };
+ 
+-REG_STRIDE_FIELDS(CH_C_QOS, ch_c_qos, 0x0001c05c + 0x4000 * GSI_EE_AP, 0x80);
++REG_STRIDE_FIELDS(CH_C_QOS, ch_c_qos, 0x0000f05c + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ static const u32 reg_error_log_fmask[] = {
+ 	[ERR_ARG3]					= GENMASK(3, 0),
+@@ -67,16 +67,16 @@ static const u32 reg_error_log_fmask[] = {
+ };
+ 
+ REG_STRIDE(CH_C_SCRATCH_0, ch_c_scratch_0,
+-	   0x0001c060 + 0x4000 * GSI_EE_AP, 0x80);
++	   0x0000f060 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(CH_C_SCRATCH_1, ch_c_scratch_1,
+-	   0x0001c064 + 0x4000 * GSI_EE_AP, 0x80);
++	   0x0000f064 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(CH_C_SCRATCH_2, ch_c_scratch_2,
+-	   0x0001c068 + 0x4000 * GSI_EE_AP, 0x80);
++	   0x0000f068 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(CH_C_SCRATCH_3, ch_c_scratch_3,
+-	   0x0001c06c + 0x4000 * GSI_EE_AP, 0x80);
++	   0x0000f06c + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ static const u32 reg_ev_ch_e_cntxt_0_fmask[] = {
+ 	[EV_CHTYPE]					= GENMASK(3, 0),
+@@ -89,23 +89,23 @@ static const u32 reg_ev_ch_e_cntxt_0_fmask[] = {
+ };
+ 
+ REG_STRIDE_FIELDS(EV_CH_E_CNTXT_0, ev_ch_e_cntxt_0,
+-		  0x0001d000 + 0x4000 * GSI_EE_AP, 0x80);
++		  0x00010000 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ static const u32 reg_ev_ch_e_cntxt_1_fmask[] = {
+ 	[R_LENGTH]					= GENMASK(15, 0),
+ };
+ 
+ REG_STRIDE_FIELDS(EV_CH_E_CNTXT_1, ev_ch_e_cntxt_1,
+-		  0x0001d004 + 0x4000 * GSI_EE_AP, 0x80);
++		  0x00010004 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(EV_CH_E_CNTXT_2, ev_ch_e_cntxt_2,
+-	   0x0001d008 + 0x4000 * GSI_EE_AP, 0x80);
++	   0x00010008 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(EV_CH_E_CNTXT_3, ev_ch_e_cntxt_3,
+-	   0x0001d00c + 0x4000 * GSI_EE_AP, 0x80);
++	   0x0001000c + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(EV_CH_E_CNTXT_4, ev_ch_e_cntxt_4,
+-	   0x0001d010 + 0x4000 * GSI_EE_AP, 0x80);
++	   0x00010010 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ static const u32 reg_ev_ch_e_cntxt_8_fmask[] = {
+ 	[EV_MODT]					= GENMASK(15, 0),
+@@ -114,28 +114,28 @@ static const u32 reg_ev_ch_e_cntxt_8_fmask[] = {
+ };
+ 
+ REG_STRIDE_FIELDS(EV_CH_E_CNTXT_8, ev_ch_e_cntxt_8,
+-		  0x0001d020 + 0x4000 * GSI_EE_AP, 0x80);
++		  0x00010020 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(EV_CH_E_CNTXT_9, ev_ch_e_cntxt_9,
+-	   0x0001d024 + 0x4000 * GSI_EE_AP, 0x80);
++	   0x00010024 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(EV_CH_E_CNTXT_10, ev_ch_e_cntxt_10,
+-	   0x0001d028 + 0x4000 * GSI_EE_AP, 0x80);
++	   0x00010028 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(EV_CH_E_CNTXT_11, ev_ch_e_cntxt_11,
+-	   0x0001d02c + 0x4000 * GSI_EE_AP, 0x80);
++	   0x0001002c + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(EV_CH_E_CNTXT_12, ev_ch_e_cntxt_12,
+-	   0x0001d030 + 0x4000 * GSI_EE_AP, 0x80);
++	   0x00010030 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(EV_CH_E_CNTXT_13, ev_ch_e_cntxt_13,
+-	   0x0001d034 + 0x4000 * GSI_EE_AP, 0x80);
++	   0x00010034 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(EV_CH_E_SCRATCH_0, ev_ch_e_scratch_0,
+-	   0x0001d048 + 0x4000 * GSI_EE_AP, 0x80);
++	   0x00010048 + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(EV_CH_E_SCRATCH_1, ev_ch_e_scratch_1,
+-	   0x0001d04c + 0x4000 * GSI_EE_AP, 0x80);
++	   0x0001004c + 0x4000 * GSI_EE_AP, 0x80);
+ 
+ REG_STRIDE(CH_C_DOORBELL_0, ch_c_doorbell_0,
+ 	   0x00011000 + 0x4000 * GSI_EE_AP, 0x08);
+-- 
+2.34.1
+
