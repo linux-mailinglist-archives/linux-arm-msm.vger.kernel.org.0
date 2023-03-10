@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8E696B3333
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 01:57:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D0A9A6B3334
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 01:57:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229523AbjCJA5x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S229923AbjCJA5x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 9 Mar 2023 19:57:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58276 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229959AbjCJA5g (ORCPT
+        with ESMTP id S229928AbjCJA5h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Mar 2023 19:57:36 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E73D104F6D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 16:57:34 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id i9so4610348lfc.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 16:57:33 -0800 (PST)
+        Thu, 9 Mar 2023 19:57:37 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CF7FFC7D9
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Mar 2023 16:57:36 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id g17so4630302lfv.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Mar 2023 16:57:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678409853;
+        d=linaro.org; s=google; t=1678409854;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DtctQiWrw8CF1uE+qEucLKjdvnucdXX1kHffuJTXWDs=;
-        b=ivbbPNo+0F41iY5fOEQhvhupl9Zhw9V/A7fEtKvS1Gn/ZZPKzYhfsYZPDZBv3j9n27
-         wn/DUinRiAGnh393jsm3Y0K5XQYVLo3ol8f7rwm64mUsjhdSACn41ovi9QY3RzOUxdqO
-         G7YTtJBX1MARIkAK06yLQuB89Soa5M7KceP2X+gpAT8v4YXByomtv4f8Kcz3WFhC0hvl
-         7ZzXXnDWWZH1G+P36z9luFXlHIjydgvzNuVwwzPF3/X+C3Mmqswxh2IecT5qjPGkn9K2
-         UygLsjuMofP5kNSiPbM9k9coV335DnWphbabSbULu/eOC0tvi+CndmyPJFeJGmCALlVy
-         Y6fQ==
+        bh=P6BY9HsPY8/kGeF9ZLFAFWkTdVEP4yW0Z/JovlQqkQ8=;
+        b=ZgLJP61Fr0rOXd9KsnAHRXL+4vIgTKSJ11FZ5xuksw6eUXVIxJHO0Y4YzAR1GDn2oB
+         /qhx7twkU5POEXobhuW4WfflkoxSeRu2KU7sHh3eKu4ZcMTflefKZ65x0SgVH+E4o1/F
+         Hte6Q0A8VzLzcUo9nqXNM6B3gkSYB87wEJYZADytknxyPOZLnNP42dySrdYxsOgO4Ixv
+         WbpFBV2aQmUVzbJ56fVacQd+cAoE/S8NTgLbvryUlswpjQK7km2xuECgZuMh/jMzerbA
+         bpwkMXqtmxerxvVF4q3RI+0GvjO96bndPOSKHmVgIuP44spM/TgOL5nQHqfAOsjSTrkb
+         hkSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678409853;
+        d=1e100.net; s=20210112; t=1678409854;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DtctQiWrw8CF1uE+qEucLKjdvnucdXX1kHffuJTXWDs=;
-        b=ozwnN0pWRQcqYb0pw+5/wbov6sGrBG+Mfikb9GlUha10gTTzi6HEPC6KXu+Xnu9PQH
-         2jiZP7r3gmWlQdW0Nh9JHI5yvwIIgoOt9Taz2ydDwayf8H63ZCv3gIhxJLxziOzApbs+
-         xeDHKKfm8AT9rimvURK9aj02F+Uu7GofZ8OislO6j+ZScPFRkk5ZyWrL8o5qeO57N6Fr
-         dXKE+EnntnJ5Mn2X1f8O6MEQl2PnYZ7I+CLwuMdQBR+XzA+hzSAk5GGsamR3HrqmSz4w
-         sBrrMTqHphIaUsLo6RJVPeEVvQnFaI0oymxo/dbhYevpFEjMe7ctSwJ0IxgSuDdwKKx4
-         ZoaA==
-X-Gm-Message-State: AO0yUKUQl8/Ph/tOY3f784rG+ssETwiAZWjkSmA6kif0XLIqt8pwxE3N
-        aUtr3wu6qfqc49Gyf10sWlPjxg==
-X-Google-Smtp-Source: AK7set9ms7ls8e1csmugiFJ2afVXO0bUtPWycKEbfjyxli7nqXJ5JEGGfReHnEwDVuityeIrrmzMRw==
-X-Received: by 2002:ac2:46c9:0:b0:4cc:9736:3551 with SMTP id p9-20020ac246c9000000b004cc97363551mr7590619lfo.31.1678409853615;
-        Thu, 09 Mar 2023 16:57:33 -0800 (PST)
+        bh=P6BY9HsPY8/kGeF9ZLFAFWkTdVEP4yW0Z/JovlQqkQ8=;
+        b=tl6IOROlVRAxNjpOv4a9zw2TpofWEkdVFYs0vV4LrycCydJglKpYWRslD5ijrkoPCu
+         kFIEWtZixVIt8Z3DfaRwQB3eRFDy9g92RyiprsAFK1BuQetXvKmLhY4bNKkaiqbyT3RQ
+         9q6tB2wGR+9/nF2rSG+Eu/iCzPT0idobPFAxim5dGpUbB1nr8ngvi4RoMrNaZWbZWlnI
+         8yaBIA+yj5ek5UzYKYVfe1+lENGgIREdhdel4eQHUl1/NCcQJ2d1ovSQoEXFcG4xtnN7
+         BR9Kx6mWG5i0O791RoTvDscRBQ/GKHZSaELUvL9r0+HcqE/YJrch6UadL1c0kjtM/38n
+         890g==
+X-Gm-Message-State: AO0yUKUs1dpFdu+sBV22QSTwQNjso73YqaN7P8pjYqEEXI5mdsb2Gun1
+        k3K+whwgDtR9lHs6V6MdR5uP/Q==
+X-Google-Smtp-Source: AK7set/yKy1s9sdVuOeHfgS12ixjzKTsk+ZZzMsqbe5Z/yliiqiXVrjsnsSf3DxWFPsQ4gItJrvhow==
+X-Received: by 2002:ac2:5e99:0:b0:4d8:5de4:e3b4 with SMTP id b25-20020ac25e99000000b004d85de4e3b4mr186481lfq.1.1678409854514;
+        Thu, 09 Mar 2023 16:57:34 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id m13-20020ac2428d000000b004d8540b947asm75280lfh.56.2023.03.09.16.57.32
+        by smtp.gmail.com with ESMTPSA id m13-20020ac2428d000000b004d8540b947asm75280lfh.56.2023.03.09.16.57.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 09 Mar 2023 16:57:33 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -59,9 +59,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v5 31/32] drm/msm/dpu: log the multirect_index in _dpu_crtc_blend_setup_pipe
-Date:   Fri, 10 Mar 2023 02:57:03 +0200
-Message-Id: <20230310005704.1332368-32-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v5 32/32] drm/msm/dpu: remove unused dpu_plane_validate_multirect_v2 function
+Date:   Fri, 10 Mar 2023 02:57:04 +0200
+Message-Id: <20230310005704.1332368-33-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230310005704.1332368-1-dmitry.baryshkov@linaro.org>
 References: <20230310005704.1332368-1-dmitry.baryshkov@linaro.org>
@@ -79,34 +79,155 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-Lets print the multirect_index as well in _dpu_crtc_blend_setup_pipe()
-as it will give the complete information of the sw_pipe as well.
+After cleaning up the older multirect support the function
+dpu_plane_validate_multirect_v2() is unused. Lets remove it.
 
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 111 ----------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |   7 --
+ 2 files changed, 118 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index b748c4f17c90..96ffea069120 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -425,12 +425,13 @@ static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
- 				   format->base.pixel_format,
- 				   modifier);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 9a03d1cad0ee..bafa1dd1748b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -707,117 +707,6 @@ static void _dpu_plane_color_fill(struct dpu_plane *pdpu,
+ 					   fill_color, fmt);
+ }
  
--	DRM_DEBUG_ATOMIC("crtc %d stage:%d - plane %d sspp %d fb %d\n",
-+	DRM_DEBUG_ATOMIC("crtc %d stage:%d - plane %d sspp %d fb %d multirect_idx %d\n",
- 			 crtc->base.id,
- 			 stage,
- 			 plane->base.id,
- 			 sspp_idx - SSPP_NONE,
--			 state->fb ? state->fb->base.id : -1);
-+			 state->fb ? state->fb->base.id : -1,
-+			 pipe->multirect_index);
+-int dpu_plane_validate_multirect_v2(struct dpu_multirect_plane_states *plane)
+-{
+-	struct dpu_plane_state *pstate[R_MAX];
+-	const struct drm_plane_state *drm_state[R_MAX];
+-	struct drm_rect src[R_MAX], dst[R_MAX];
+-	struct dpu_plane *dpu_plane[R_MAX];
+-	const struct dpu_format *fmt[R_MAX];
+-	int i, buffer_lines;
+-	unsigned int max_tile_height = 1;
+-	bool parallel_fetch_qualified = true;
+-	bool has_tiled_rect = false;
+-
+-	for (i = 0; i < R_MAX; i++) {
+-		const struct msm_format *msm_fmt;
+-
+-		drm_state[i] = i ? plane->r1 : plane->r0;
+-		msm_fmt = msm_framebuffer_format(drm_state[i]->fb);
+-		fmt[i] = to_dpu_format(msm_fmt);
+-
+-		if (DPU_FORMAT_IS_UBWC(fmt[i])) {
+-			has_tiled_rect = true;
+-			if (fmt[i]->tile_height > max_tile_height)
+-				max_tile_height = fmt[i]->tile_height;
+-		}
+-	}
+-
+-	for (i = 0; i < R_MAX; i++) {
+-		int width_threshold;
+-
+-		pstate[i] = to_dpu_plane_state(drm_state[i]);
+-		dpu_plane[i] = to_dpu_plane(drm_state[i]->plane);
+-
+-		if (pstate[i] == NULL) {
+-			DPU_ERROR("DPU plane state of plane id %d is NULL\n",
+-				drm_state[i]->plane->base.id);
+-			return -EINVAL;
+-		}
+-
+-		src[i].x1 = drm_state[i]->src_x >> 16;
+-		src[i].y1 = drm_state[i]->src_y >> 16;
+-		src[i].x2 = src[i].x1 + (drm_state[i]->src_w >> 16);
+-		src[i].y2 = src[i].y1 + (drm_state[i]->src_h >> 16);
+-
+-		dst[i] = drm_plane_state_dest(drm_state[i]);
+-
+-		if (drm_rect_calc_hscale(&src[i], &dst[i], 1, 1) != 1 ||
+-		    drm_rect_calc_vscale(&src[i], &dst[i], 1, 1) != 1) {
+-			DPU_ERROR_PLANE(dpu_plane[i],
+-				"scaling is not supported in multirect mode\n");
+-			return -EINVAL;
+-		}
+-
+-		if (DPU_FORMAT_IS_YUV(fmt[i])) {
+-			DPU_ERROR_PLANE(dpu_plane[i],
+-				"Unsupported format for multirect mode\n");
+-			return -EINVAL;
+-		}
+-
+-		/**
+-		 * SSPP PD_MEM is split half - one for each RECT.
+-		 * Tiled formats need 5 lines of buffering while fetching
+-		 * whereas linear formats need only 2 lines.
+-		 * So we cannot support more than half of the supported SSPP
+-		 * width for tiled formats.
+-		 */
+-		width_threshold = dpu_plane[i]->catalog->caps->max_linewidth;
+-		if (has_tiled_rect)
+-			width_threshold /= 2;
+-
+-		if (parallel_fetch_qualified &&
+-		    drm_rect_width(&src[i]) > width_threshold)
+-			parallel_fetch_qualified = false;
+-
+-	}
+-
+-	/* Validate RECT's and set the mode */
+-
+-	/* Prefer PARALLEL FETCH Mode over TIME_MX Mode */
+-	if (parallel_fetch_qualified) {
+-		pstate[R0]->pipe.multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+-		pstate[R1]->pipe.multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+-
+-		goto done;
+-	}
+-
+-	/* TIME_MX Mode */
+-	buffer_lines = 2 * max_tile_height;
+-
+-	if (dst[R1].y1 >= dst[R0].y2 + buffer_lines ||
+-	    dst[R0].y1 >= dst[R1].y2 + buffer_lines) {
+-		pstate[R0]->pipe.multirect_mode = DPU_SSPP_MULTIRECT_TIME_MX;
+-		pstate[R1]->pipe.multirect_mode = DPU_SSPP_MULTIRECT_TIME_MX;
+-	} else {
+-		DPU_ERROR(
+-			"No multirect mode possible for the planes (%d - %d)\n",
+-			drm_state[R0]->plane->base.id,
+-			drm_state[R1]->plane->base.id);
+-		return -EINVAL;
+-	}
+-
+-done:
+-	pstate[R0]->pipe.multirect_index = DPU_SSPP_RECT_0;
+-	pstate[R1]->pipe.multirect_index = DPU_SSPP_RECT_1;
+-
+-	DPU_DEBUG_PLANE(dpu_plane[R0], "R0: %d - %d\n",
+-		pstate[R0]->pipe.multirect_mode, pstate[R0]->pipe.multirect_index);
+-	DPU_DEBUG_PLANE(dpu_plane[R1], "R1: %d - %d\n",
+-		pstate[R1]->pipe.multirect_mode, pstate[R1]->pipe.multirect_index);
+-	return 0;
+-}
+-
+ static int dpu_plane_prepare_fb(struct drm_plane *plane,
+ 		struct drm_plane_state *new_state)
+ {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+index 7490ffd94d03..2784f8841260 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+@@ -87,13 +87,6 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+ 		uint32_t pipe, enum drm_plane_type type,
+ 		unsigned long possible_crtcs);
  
- 	stage_cfg->stage[stage][stage_idx] = sspp_idx;
- 	stage_cfg->multirect_index[stage][stage_idx] = pipe->multirect_index;
+-/**
+- * dpu_plane_validate_multirecti_v2 - validate the multirect planes
+- *				      against hw limitations
+- * @plane: drm plate states of the multirect pair
+- */
+-int dpu_plane_validate_multirect_v2(struct dpu_multirect_plane_states *plane);
+-
+ /**
+  * dpu_plane_color_fill - enables color fill on plane
+  * @plane:  Pointer to DRM plane object
 -- 
 2.39.2
 
