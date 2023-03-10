@@ -2,107 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C619B6B4D66
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 17:44:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 990616B4D9B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 17:51:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230059AbjCJQoX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 11:44:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45230 "EHLO
+        id S231216AbjCJQvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 11:51:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231530AbjCJQnp (ORCPT
+        with ESMTP id S231208AbjCJQue (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 11:43:45 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7952114E8B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 08:41:17 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id o12so22846123edb.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 08:41:17 -0800 (PST)
+        Fri, 10 Mar 2023 11:50:34 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1724B521C4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 08:47:49 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id r18so5647322wrx.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 08:47:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678466476;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1678466867;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RTjjYJQtbu4TtuvWxLt2QQIjJTJIq35VbyX1+8b+uCw=;
-        b=soP8PDWLOUDH1yqQMxQKnu/zTM82LGhO8rwxccKALtKR+Q2hx5dyDFDHndPuJFY9vn
-         cz9R6dwbuVZ+v8GCNLQaGsV8xIBa+TldE3RfhTT4M8hldH1SP5chrOT3U3qIPT8JOt2Y
-         38APNLHfdd3dVnfTj/uP3DUa3TNYcaCtxAczVzz/pFfvW1pB8vqUxIfEWDHN0JG3X4Rq
-         WbcG12zjR5BfFJm24b7UiYkIEXbCM4C0FDNDP8wyUNHLTi9P/TrMdJqbkKfR9wnesNsB
-         ZOOAEF7DTE5y/t57brboGt7KyB5Z3qS/vEx0MNRDo9IZ04EfvOzifFmWI/AN0YNz/KHh
-         wxsw==
+        bh=U/LKz9Z+i8/pfBTy65hMgjCrFZDTBJvWaBtbp+nH9F8=;
+        b=Ji9AJDYh+Ic/SOQplTPaZS0E8a+2hkIiyiOZciKrF1mm7az08TYfoeW0TwPpQYfvf9
+         CrHM1x8rQpN9EzLHIWTNNd74wgiFHW8AtTzMhzBbuYEpkiER6QRzG40iytckNsSL+IRV
+         Q7hZ3p4XsHi5cDlmf7QLzoXB8jl/wkS2aC0KOGDhhxRzReIssBN28Kee22LW8rulsO6Y
+         2/U8T5IAG867JiWk2SYJRVSBJFLqLxZcqp8yvo09KsTGmTn3Ry4EBBRPxkYQvh7lNDev
+         d9oYV3P50cqyyskRBbDgi5u4VpJoni3NEVDce3s8W49rxNaw4sGxoKc+3orJ9eIH4pfK
+         7TUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678466476;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1678466867;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RTjjYJQtbu4TtuvWxLt2QQIjJTJIq35VbyX1+8b+uCw=;
-        b=1ELh4ZvEQyXloptkUqd6E76IuJ6BG2EBMsef2sk/gL4WRmQmCa7/CP2fIWrMwMZEoY
-         22utYRzJd3lhpPTvKPTveGE9QjLsjiKnYB7ociYURs9xZtjpGNajN0CLHS+21Rc0cHw6
-         gqEetzvo4iXym6c4nWWQP4yhCd4/XggiqY9SSUHnKEh6QymVfdRqBGs/xNr+1HvfdVsJ
-         Fto3EyXW1qqRzfP+QMQGuQ5eA2j3kDtsYZMPpssldUiqxV82z8KoPIUhVkJ3uawPtsI0
-         XBBD8F77LhGj3u7R2bVb7bP9acax5NM7uxYJV5bV01BqYmmgmSNjV4X5v6u8AWwVP8l0
-         rnjw==
-X-Gm-Message-State: AO0yUKWAsC3pHl9lT82F9kn5cotZQGBE45nA9XD0AAAnuPTxquiAlCjn
-        Otzzj+ZinYa/sc67RWsjASWyMQ==
-X-Google-Smtp-Source: AK7set888BEg24lAWjN3aZipydv14+liiArcckxVOwzKEM2NvVkgzLFtRmdho+bddx+EWo9ytKM/VQ==
-X-Received: by 2002:aa7:d80f:0:b0:4ce:bb5c:158e with SMTP id v15-20020aa7d80f000000b004cebb5c158emr24879919edq.19.1678466475879;
-        Fri, 10 Mar 2023 08:41:15 -0800 (PST)
-Received: from ?IPV6:2a02:810d:15c0:828:45c4:46be:ec71:4a51? ([2a02:810d:15c0:828:45c4:46be:ec71:4a51])
-        by smtp.gmail.com with ESMTPSA id g28-20020a50d5dc000000b004acc61206cfsm225200edj.33.2023.03.10.08.41.14
+        bh=U/LKz9Z+i8/pfBTy65hMgjCrFZDTBJvWaBtbp+nH9F8=;
+        b=c/KDShWEwOcAFKh+BZRWTNwYQivfRxhHzZHV4Vc0+9ySsEtaNw9aokIndmVQZ4U3jG
+         m3/MT4z6WMG4onFtU+IojFmL1peR8AGnWD38/JvIBraDVLg3Hg4ceZjrCTELbMjJxrIh
+         75nhMlbmxAeBTh0aLOCwTdPVdeF1zjdOqv39PEQAe7QBpoXEQKMDhnyAgnFu1ZLQjCMR
+         SArSh49DTzVeRlUkThDtfyAwErYXxzsNkwGwh0dBrgpNO7+BYhsJW9AgpPXW8/pVWbus
+         bXtd+G3awW5LDI5rNqoIPJk82SAwa0DZoPyoE0LsO+fH2jFTfeI3QZUai8iiLEoY49Tw
+         XwUA==
+X-Gm-Message-State: AO0yUKUPNhBqvusrGFDTIKq1/MpshqPKmOHI+X0yCwnn/PLNza1PvONr
+        ztcRMpVJ35Z6SCRDvx0YDxVFQa8US/x3cbvg6Zk=
+X-Google-Smtp-Source: AK7set/oodN4OVmnyHcGHYwIoEfj4k6WxmAE3DKgRrwUzmL51ZJ0tqbollXaa3GQ+O3mki2sBL4lLw==
+X-Received: by 2002:a5d:4b46:0:b0:2cb:72c2:3d12 with SMTP id w6-20020a5d4b46000000b002cb72c23d12mr15591639wrs.68.1678466867480;
+        Fri, 10 Mar 2023 08:47:47 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id x4-20020a5d60c4000000b002c6d0462163sm205297wrt.100.2023.03.10.08.47.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Mar 2023 08:41:15 -0800 (PST)
-Message-ID: <ade5b126-9506-5e0d-3071-d26c97ecfc9a@linaro.org>
-Date:   Fri, 10 Mar 2023 17:41:14 +0100
+        Fri, 10 Mar 2023 08:47:47 -0800 (PST)
+Message-ID: <67590cd3-5543-59ed-6158-b272103ebd05@linaro.org>
+Date:   Fri, 10 Mar 2023 16:47:46 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 1/8] dt-bindings: usb: Add bindings for multiport
- properties on DWC3 controller
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
+Subject: Re: [PATCH v7 6/9] interconnect: qcom: rpm: Handle interface clocks
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>
-Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_wcheng@quicinc.com, quic_jackp@quicinc.com,
-        quic_harshq@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-References: <20230310163420.7582-1-quic_kriskura@quicinc.com>
- <20230310163420.7582-2-quic_kriskura@quicinc.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230310163420.7582-2-quic_kriskura@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+        Georgi Djakov <djakov@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230228-topic-qos-v7-0-815606092fff@linaro.org>
+ <20230228-topic-qos-v7-6-815606092fff@linaro.org>
+ <50f03895-816f-be8d-d956-d237fb13f5a0@linaro.org>
+ <6d10906e-08cd-0380-5f5d-3ac0eec60276@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <6d10906e-08cd-0380-5f5d-3ac0eec60276@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/03/2023 17:34, Krishna Kurapati wrote:
-> Add bindings to indicate properties required to support multiport
-> on Snps Dwc3 controller.
+On 10/03/2023 14:26, Konrad Dybcio wrote:
 > 
-> Suggested-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> 
+> On 10.03.2023 15:21, Bryan O'Donoghue wrote:
+>> On 08/03/2023 21:40, Konrad Dybcio wrote:
+>>> Some (but not all) providers (or their specific nodes) require
+>>> specific clocks to be turned on before they can be accessed. Failure
+>>> to ensure that results in a seemingly random system crash (which
+>>> would usually happen at boot with the interconnect driver built-in),
+>>> resulting in the platform not booting up properly.
+>>
+>> Can you give an example of which clocks on which SoC's ?
+> See for example 67fb53745e0b
+> 
+> This was a clock documented downstream under the node-qos clocks here:
+> 
+> https://github.com/sonyxperiadev/kernel/blob/aosp/LA.UM.5.7.r1/arch/arm/boot/dts/qcom/msm8996-bus.dtsi#L102-L109
+> 
+> but there are occasions where such clocks are undocumented and downstream
+> skips them because it relies on them being on by miracle, such as the case
+> of MASTER_IPA and the IPA rpmcc clock on msm8998. Downstream has no
+> sync_state, so they would only set the QoS registers when the relevant
+> hardware was online, so the clocks were on already.
 
-What happened with entire previous changelog? This is not v1 but v5 or
-more? At least v4 was here:
+What switched the clocks on ? Presumably LK.
 
-https://lore.kernel.org/all/20230115114146.12628-2-quic_kriskura@quicinc.com/
+Is this a symptom of using a bootloader other than LK ? If you use the 
+same bootloader, then why hasn't the bootloader/LK already set it up on 
+your platform ?
 
-Best regards,
-Krzysztof
+>>
+>> Is the intention of this patch to subsequently go through *.dts *.dtsi and start to remove assigned-clocks ?
+>>
+>> Are we saying that currently there ought to be assigned-clocks for some of these NoC declarations ?
+> Not really, assigned-clocks are used for static ratesetting, see
+> for example dwc3 nodes where we need it to be fast enough for
+> HS/SS operation at all times (though that should have prooobably
+> been handled in the driver but it's a separate topic), I don't
+> think any of them were used to combat what this commit tries to.
 
+I think you could use assigned-clocks for that ..
+
+So its not part of your series but then presumably you have a follow-on 
+patch for the 8998 dts that points your ->intf_clks at these then ?
+
+clocks = <&clock_gcc clk_aggre2_noc_clk>,
+          <&clock_gcc clk_gcc_ufs_axi_clk>,
+          <&clock_gcc clk_gcc_aggre2_ufs_axi_clk>;
+
+It seems like the right thing to do..
+
+Still not clear why these clocks are off.. your bootchain ?
+
+---
+bod
