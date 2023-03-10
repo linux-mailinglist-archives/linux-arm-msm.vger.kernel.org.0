@@ -2,54 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8C186B47D3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 15:54:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02ACB6B4860
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 16:01:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233562AbjCJOye (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 09:54:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58152 "EHLO
+        id S233824AbjCJPB4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 10:01:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233560AbjCJOyF (ORCPT
+        with ESMTP id S233671AbjCJPB2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 09:54:05 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A39C12B97E;
-        Fri, 10 Mar 2023 06:49:54 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id p13-20020a9d744d000000b0069438f0db7eso3047994otk.3;
-        Fri, 10 Mar 2023 06:49:54 -0800 (PST)
+        Fri, 10 Mar 2023 10:01:28 -0500
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F41D12C436;
+        Fri, 10 Mar 2023 06:54:58 -0800 (PST)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-176261d7f45so6038506fac.11;
+        Fri, 10 Mar 2023 06:54:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678459684;
+        d=1e100.net; s=20210112; t=1678459714;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cJLH54G0xZR2QPR83pgINzDI6/oeVXhYquad/wYfr3w=;
-        b=wL0l0FiE4TaD7pRGKSbWlTTl6eYAog52NKdlfQhJuzBZX09v9A+7lnPtGHsqXBqcH+
-         Vw2QxzhOmgJSZD6LqumX0M1pUi1BhEkchKFjxqWrr74ZeDaPCIGg4CLnBZO1kAuBybWU
-         jSDebb0SaicyYRLCtuRM+XyRsUwEuiiAQ2XtskWdTUfhmYl6LGJEKlwzjafQO8VYy4of
-         BeFfxMB9998au/o6VZQ644p1l81SCK3olawOSq1D766BsN4cMKGy8duu0P2js4X2pxJJ
-         m9PPwd8jnUOztT25ZOV4jY7UW06fj7QCWLgDN8UrNZnD+JBmGpKXz/wPTj+0818RVZRl
-         MqVQ==
-X-Gm-Message-State: AO0yUKX/lJBHhvqg8VwLLQHgIgMtcQr8ebinW6HwP8Gc7170NerrQk1M
-        6V9lCn+mmTj1xynizxaBP8sdm40Q8w==
-X-Google-Smtp-Source: AK7set8P94LdlHKjvd3L1aYb9KPxDTwPY3mkWNaqUX9P15sUo6JhvjleX1N3LSOHL7bRva2A7nLYBQ==
-X-Received: by 2002:a9d:3e14:0:b0:68d:972c:478d with SMTP id a20-20020a9d3e14000000b0068d972c478dmr10205744otd.16.1678459684055;
-        Fri, 10 Mar 2023 06:48:04 -0800 (PST)
+        bh=uImUbNaV7wiBHen0L703XZwJA1EUSBWF5TLrsQa3YcU=;
+        b=4ZbjPo5LB7eZ280GPReYYHpcpZX4wf2SRfP627EQE2CAywOKVOWNuy1KRHgZ53mv8L
+         bm7Cqy95JhNuD+SVEk4q5RctBBH/sK5Z6dtM5E/xHnHpm2f/SRPyQiY6F/TXcYSds4m8
+         s2QUiZ4BJ0vvdQe2j5M/kf0Lh3KGwBOvT5vKhUZXomIXkHxFYCwlCozxy5dF5q5/7rlE
+         +nP5QM1YT64RkSMChhHP6fQX5ttajWhQu9YpFBLb+f2nMk6cWLozNusaD/z26+QPA2BW
+         HBJFvcZjTnCjXO2iwKkyYui9ZqRuA/ITYbf+bq0r8N5c8LMjVTRQ79N4kKLlWsWdLGuv
+         4MWQ==
+X-Gm-Message-State: AO0yUKWqgUIvE4wditpcDNDtB6LaBEljIac2+fbSeIQY16TFxQYHiezL
+        C93nJREdq40ZfzPhDoHa6A==
+X-Google-Smtp-Source: AK7set+mUxeO0Q6zckV3Wzj+6l9vR087TJSeGxvZsKMOFQZVU9d3N3/5VVxhw7OKw38MOpvafeMSpw==
+X-Received: by 2002:a05:6870:9107:b0:16e:18a:7e08 with SMTP id o7-20020a056870910700b0016e018a7e08mr15840947oae.39.1678459713975;
+        Fri, 10 Mar 2023 06:48:33 -0800 (PST)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id e6-20020a9d4906000000b006884c42a38asm118555otf.41.2023.03.10.06.48.02
+        by smtp.gmail.com with ESMTPSA id k6-20020a056870d38600b001764f55398bsm113643oag.20.2023.03.10.06.48.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Mar 2023 06:48:03 -0800 (PST)
-Received: (nullmailer pid 1543952 invoked by uid 1000);
-        Fri, 10 Mar 2023 14:47:15 -0000
+        Fri, 10 Mar 2023 06:48:33 -0800 (PST)
+Received: (nullmailer pid 1545179 invoked by uid 1000);
+        Fri, 10 Mar 2023 14:47:24 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>
-Cc:     devicetree@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] mtd: nand: qcom: Use of_property_present() for testing DT property presence
-Date:   Fri, 10 Mar 2023 08:47:15 -0600
-Message-Id: <20230310144715.1543926-1-robh@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] soc: qcom: Use of_property_present() for testing DT property presence
+Date:   Fri, 10 Mar 2023 08:47:24 -0600
+Message-Id: <20230310144724.1545153-1-robh@kernel.org>
 X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -72,22 +71,50 @@ for presence of a property and nothing more.
 
 Signed-off-by: Rob Herring <robh@kernel.org>
 ---
- drivers/mtd/nand/raw/qcom_nandc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/qcom/qcom_aoss.c | 2 +-
+ drivers/soc/qcom/smem.c      | 2 +-
+ drivers/soc/qcom/smsm.c      | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index 198a44794d2d..6b52ed8c6178 100644
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -3054,7 +3054,7 @@ static int qcom_nand_host_parse_boot_partitions(struct qcom_nand_controller *nan
- 	struct device *dev = nandc->dev;
- 	int partitions_count, i, j, ret;
+diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+index 18c856056475..e376c32cc16e 100644
+--- a/drivers/soc/qcom/qcom_aoss.c
++++ b/drivers/soc/qcom/qcom_aoss.c
+@@ -395,7 +395,7 @@ static int qmp_cooling_devices_register(struct qmp *qmp)
+ 		return -ENOMEM;
  
--	if (!of_find_property(dn, "qcom,boot-partitions", NULL))
-+	if (!of_property_present(dn, "qcom,boot-partitions"))
- 		return 0;
+ 	for_each_available_child_of_node(np, child) {
+-		if (!of_find_property(child, "#cooling-cells", NULL))
++		if (!of_property_present(child, "#cooling-cells"))
+ 			continue;
+ 		ret = qmp_cooling_device_add(qmp, &qmp->cooling_devs[count++],
+ 					     child);
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index 4f163d62942c..25f5925a8d51 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -1045,7 +1045,7 @@ static int qcom_smem_probe(struct platform_device *pdev)
+ 	int i;
  
- 	partitions_count = of_property_count_u32_elems(dn, "qcom,boot-partitions");
+ 	num_regions = 1;
+-	if (of_find_property(pdev->dev.of_node, "qcom,rpm-msg-ram", NULL))
++	if (of_property_present(pdev->dev.of_node, "qcom,rpm-msg-ram"))
+ 		num_regions++;
+ 
+ 	array_size = num_regions * sizeof(struct smem_region);
+diff --git a/drivers/soc/qcom/smsm.c b/drivers/soc/qcom/smsm.c
+index 3e8994d6110e..8c137dff7dac 100644
+--- a/drivers/soc/qcom/smsm.c
++++ b/drivers/soc/qcom/smsm.c
+@@ -510,7 +510,7 @@ static int qcom_smsm_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 
+ 	for_each_child_of_node(pdev->dev.of_node, local_node) {
+-		if (of_find_property(local_node, "#qcom,smem-state-cells", NULL))
++		if (of_property_present(local_node, "#qcom,smem-state-cells"))
+ 			break;
+ 	}
+ 	if (!local_node) {
 -- 
 2.39.2
 
