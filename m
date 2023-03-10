@@ -2,138 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 990616B4D9B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 17:51:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2462E6B4DB8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 17:57:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231216AbjCJQvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 11:51:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32846 "EHLO
+        id S231476AbjCJQ5W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 11:57:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231208AbjCJQue (ORCPT
+        with ESMTP id S230124AbjCJQ46 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 11:50:34 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1724B521C4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 08:47:49 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id r18so5647322wrx.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 08:47:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678466867;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=U/LKz9Z+i8/pfBTy65hMgjCrFZDTBJvWaBtbp+nH9F8=;
-        b=Ji9AJDYh+Ic/SOQplTPaZS0E8a+2hkIiyiOZciKrF1mm7az08TYfoeW0TwPpQYfvf9
-         CrHM1x8rQpN9EzLHIWTNNd74wgiFHW8AtTzMhzBbuYEpkiER6QRzG40iytckNsSL+IRV
-         Q7hZ3p4XsHi5cDlmf7QLzoXB8jl/wkS2aC0KOGDhhxRzReIssBN28Kee22LW8rulsO6Y
-         2/U8T5IAG867JiWk2SYJRVSBJFLqLxZcqp8yvo09KsTGmTn3Ry4EBBRPxkYQvh7lNDev
-         d9oYV3P50cqyyskRBbDgi5u4VpJoni3NEVDce3s8W49rxNaw4sGxoKc+3orJ9eIH4pfK
-         7TUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678466867;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U/LKz9Z+i8/pfBTy65hMgjCrFZDTBJvWaBtbp+nH9F8=;
-        b=c/KDShWEwOcAFKh+BZRWTNwYQivfRxhHzZHV4Vc0+9ySsEtaNw9aokIndmVQZ4U3jG
-         m3/MT4z6WMG4onFtU+IojFmL1peR8AGnWD38/JvIBraDVLg3Hg4ceZjrCTELbMjJxrIh
-         75nhMlbmxAeBTh0aLOCwTdPVdeF1zjdOqv39PEQAe7QBpoXEQKMDhnyAgnFu1ZLQjCMR
-         SArSh49DTzVeRlUkThDtfyAwErYXxzsNkwGwh0dBrgpNO7+BYhsJW9AgpPXW8/pVWbus
-         bXtd+G3awW5LDI5rNqoIPJk82SAwa0DZoPyoE0LsO+fH2jFTfeI3QZUai8iiLEoY49Tw
-         XwUA==
-X-Gm-Message-State: AO0yUKUPNhBqvusrGFDTIKq1/MpshqPKmOHI+X0yCwnn/PLNza1PvONr
-        ztcRMpVJ35Z6SCRDvx0YDxVFQa8US/x3cbvg6Zk=
-X-Google-Smtp-Source: AK7set/oodN4OVmnyHcGHYwIoEfj4k6WxmAE3DKgRrwUzmL51ZJ0tqbollXaa3GQ+O3mki2sBL4lLw==
-X-Received: by 2002:a5d:4b46:0:b0:2cb:72c2:3d12 with SMTP id w6-20020a5d4b46000000b002cb72c23d12mr15591639wrs.68.1678466867480;
-        Fri, 10 Mar 2023 08:47:47 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id x4-20020a5d60c4000000b002c6d0462163sm205297wrt.100.2023.03.10.08.47.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Mar 2023 08:47:47 -0800 (PST)
-Message-ID: <67590cd3-5543-59ed-6158-b272103ebd05@linaro.org>
-Date:   Fri, 10 Mar 2023 16:47:46 +0000
+        Fri, 10 Mar 2023 11:56:58 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA98913594D;
+        Fri, 10 Mar 2023 08:54:43 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32ACPYqc032149;
+        Fri, 10 Mar 2023 16:54:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=WywzoVOPk1XQW/04XS0vfAgwyDP6SUtf1p8b26kcZ8U=;
+ b=N1Y4aPyMIts8hVlfdJYzTuhc+apxGXSAEJj3vXDeVtBbIoKEbOa5iDX6vu3bRwK3WSSJ
+ MraTd4bjTWti7hHxqrXwWzz45sGxE476+uSlrEZ7NU5E5FJ6DLDj+FyYqZHMII1KVtvf
+ baFegNWWE5mFp7MqwQETEhd1jAe4Lg+lfctOmwM8fU5nmNe9XeX1/+000UDDXWurz3MJ
+ 7eUBagLlP42OsxpAyPwJkv2s/9XrT1u+mpq3v9yP/0aUJbNoEnIokPcMoSyVdnkr49T5
+ DpMdxVDPueCwruXbR5vqck9fEQfYPpswfK0r9FYdRRj6AztFQRPFTn5058wQgBUFKYeN Tw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p7sj7t4qt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 10 Mar 2023 16:54:29 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32AGsSBb016600
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 10 Mar 2023 16:54:28 GMT
+Received: from [10.216.55.163] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 10 Mar
+ 2023 08:54:21 -0800
+Message-ID: <8aadbea6-29c0-713f-ced3-263307ad0051@quicinc.com>
+Date:   Fri, 10 Mar 2023 22:24:18 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v7 6/9] interconnect: qcom: rpm: Handle interface clocks
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 1/8] dt-bindings: usb: Add bindings for multiport
+ properties on DWC3 controller
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230228-topic-qos-v7-0-815606092fff@linaro.org>
- <20230228-topic-qos-v7-6-815606092fff@linaro.org>
- <50f03895-816f-be8d-d956-d237fb13f5a0@linaro.org>
- <6d10906e-08cd-0380-5f5d-3ac0eec60276@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <6d10906e-08cd-0380-5f5d-3ac0eec60276@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>
+CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_wcheng@quicinc.com>, <quic_jackp@quicinc.com>,
+        <quic_harshq@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+References: <20230310163420.7582-1-quic_kriskura@quicinc.com>
+ <20230310163420.7582-2-quic_kriskura@quicinc.com>
+ <ade5b126-9506-5e0d-3071-d26c97ecfc9a@linaro.org>
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ade5b126-9506-5e0d-3071-d26c97ecfc9a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Xxycwd_jZulj4EyrcYQy571dZb8zrAok
+X-Proofpoint-ORIG-GUID: Xxycwd_jZulj4EyrcYQy571dZb8zrAok
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-10_08,2023-03-10_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ adultscore=0 impostorscore=0 malwarescore=0 clxscore=1011 spamscore=0
+ suspectscore=0 mlxlogscore=597 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303100133
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/03/2023 14:26, Konrad Dybcio wrote:
-> 
-> 
-> On 10.03.2023 15:21, Bryan O'Donoghue wrote:
->> On 08/03/2023 21:40, Konrad Dybcio wrote:
->>> Some (but not all) providers (or their specific nodes) require
->>> specific clocks to be turned on before they can be accessed. Failure
->>> to ensure that results in a seemingly random system crash (which
->>> would usually happen at boot with the interconnect driver built-in),
->>> resulting in the platform not booting up properly.
+
+
+On 3/10/2023 10:11 PM, Krzysztof Kozlowski wrote:
+> On 10/03/2023 17:34, Krishna Kurapati wrote:
+>> Add bindings to indicate properties required to support multiport
+>> on Snps Dwc3 controller.
 >>
->> Can you give an example of which clocks on which SoC's ?
-> See for example 67fb53745e0b
+>> Suggested-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 > 
-> This was a clock documented downstream under the node-qos clocks here:
+> What happened with entire previous changelog? This is not v1 but v5 or
+> more? At least v4 was here:
 > 
-> https://github.com/sonyxperiadev/kernel/blob/aosp/LA.UM.5.7.r1/arch/arm/boot/dts/qcom/msm8996-bus.dtsi#L102-L109
+> https://lore.kernel.org/all/20230115114146.12628-2-quic_kriskura@quicinc.com/
 > 
-> but there are occasions where such clocks are undocumented and downstream
-> skips them because it relies on them being on by miracle, such as the case
-> of MASTER_IPA and the IPA rpmcc clock on msm8998. Downstream has no
-> sync_state, so they would only set the QoS registers when the relevant
-> hardware was online, so the clocks were on already.
+> Best regards,
+> Krzysztof
+> 
+Hi Krzysztof,
 
-What switched the clocks on ? Presumably LK.
+   Since I pushed a formal patch series, I mentioned PATCH in header 
+instead of "Patch v5". If the RFC v4 is to be followed by Patch-v5, I 
+can re-push the changes again with a proper header and fix my mistake.
 
-Is this a symptom of using a bootloader other than LK ? If you use the 
-same bootloader, then why hasn't the bootloader/LK already set it up on 
-your platform ?
+The previous change log is mentioned in cover letter.
 
->>
->> Is the intention of this patch to subsequently go through *.dts *.dtsi and start to remove assigned-clocks ?
->>
->> Are we saying that currently there ought to be assigned-clocks for some of these NoC declarations ?
-> Not really, assigned-clocks are used for static ratesetting, see
-> for example dwc3 nodes where we need it to be fast enough for
-> HS/SS operation at all times (though that should have prooobably
-> been handled in the driver but it's a separate topic), I don't
-> think any of them were used to combat what this commit tries to.
+https://lore.kernel.org/all/20230310163420.7582-1-quic_kriskura@quicinc.com/
 
-I think you could use assigned-clocks for that ..
-
-So its not part of your series but then presumably you have a follow-on 
-patch for the 8998 dts that points your ->intf_clks at these then ?
-
-clocks = <&clock_gcc clk_aggre2_noc_clk>,
-          <&clock_gcc clk_gcc_ufs_axi_clk>,
-          <&clock_gcc clk_gcc_aggre2_ufs_axi_clk>;
-
-It seems like the right thing to do..
-
-Still not clear why these clocks are off.. your bootchain ?
-
----
-bod
+Regards,
+Krishna,
