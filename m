@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AFD06B5322
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 22:45:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FC8C6B532A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Mar 2023 22:45:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232057AbjCJVpf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 16:45:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58422 "EHLO
+        id S232120AbjCJVpk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 16:45:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232128AbjCJVo7 (ORCPT
+        with ESMTP id S232148AbjCJVpC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 16:44:59 -0500
+        Fri, 10 Mar 2023 16:45:02 -0500
 Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F496130C3E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 13:43:59 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id cw28so26106973edb.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 13:43:59 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C3013595A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 13:44:01 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id j11so26086100edq.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 13:44:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678484619;
+        d=linaro.org; s=google; t=1678484620;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=YIfiMP3YESLd/oa/N7VLY54fnA1n1mTobvMyaeAJG5I=;
-        b=SUNi2TaXheAbWPG/KVUefcPFHvQs9X6TNeLNLxse1maLOXEGTl4/TyuaVqStDczSnd
-         EXs4WAYhkL8UPIiQcgLk+EfoS5XdVMurMYigvZ7oXcwdz/+XJL5xAF2ZzCqv/grclfFN
-         RTRK4GXBvCHkvg6cvw8Yl7A94AoQfHauKem9e6r5R16eKeWor5pGclrxLxrAFIpu9QCF
-         UiMfeAcMguDx4E6r4e1owv2+G/n4mxUqwoQ+YgGVJUWc9EPIhP2fdRu6QzXKiZmMU5Ud
-         fxlvZMnRkhKd2qyFmWHHaxT88WgodGOk76u1I3ZLhOHFUb42R6f7EEuxRIajZqkBHwlH
-         gbRQ==
+        bh=OodZcTc1W904hklpN17tVTAGqTvpntmH7F34q8bSVFI=;
+        b=haEy2ydI/93VirwC68PAqDgHfgBgaRW9fuhmEo4FHbTnT+yd+hfaTXZ2DQO8024uiN
+         rWA8Kvp/QQWUQxqwnmRVNVUdVkBNsBNm/R3F42PX6N9xTLFBfkFcbLFc3Em7FI4JCVzE
+         IZY0NLK/6Kk4QOBWVs3bAZXdaDhlKocwUO8buNpplD1R4rZd6ad55XRrs8jj2zxs+Efh
+         Ih/R245AA36qMuC8DCIH67+2qCrbLHkdtgKjvnW+33k0uPRavZhwdPjZPk0z4zc7FHVj
+         PKJRfSAEVssfGirw5H7phcxVZ1zj8McSSjuzfSpJfU3lZmO1O0s8OECUceYiEISEONiN
+         SF1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678484619;
+        d=1e100.net; s=20210112; t=1678484620;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YIfiMP3YESLd/oa/N7VLY54fnA1n1mTobvMyaeAJG5I=;
-        b=wH9Jz1prZByLzIl2gWwREnRSJiW10G/KOFkb03UG2Dzg+jLhjOWQ8WcCx5g/H6+srV
-         SxOw9MzFmph8U42nRzkK6Ss2r83w+cJAC1NR1sYoa5xwlNb+kdvD5eQ0CIbrGTfc0Y1n
-         5o9Yi22xFWExWcmB5edrMF+BybI/jDv6MUq9CA7t0qg6vZ7sDChXNjnSv4m88Ab8KbsX
-         bZsd2eKFQxZLWnWtsnUPPQx9GL8wH+8WXbQfS8k1QU9NiKf17JoD8DCgmk7OdgEn8J1X
-         wX/7GQCDJ81KOZhIOWsZlKqsKSeh/XQBGjJmAI3ZmKyVS7d/MB0xEpgyynD78cC9utjJ
-         gzMg==
-X-Gm-Message-State: AO0yUKWFosOCJ8lSbpNbc0bh3sOlc3nJIUBSM0TZho5nNf4rFqsD/YDr
-        vYYyFegMVH32Ly1hWWB6Zb8x0Q==
-X-Google-Smtp-Source: AK7set+6+KrtBdSfaV0uxoCP+fEPUyNxImT6xVJWnAKpCnDbvKIKZNH0aQlabNfXa7pbDKxh5ul0BA==
-X-Received: by 2002:a17:906:fe41:b0:8f1:949f:37b5 with SMTP id wz1-20020a170906fe4100b008f1949f37b5mr32934345ejb.32.1678484618989;
-        Fri, 10 Mar 2023 13:43:38 -0800 (PST)
+        bh=OodZcTc1W904hklpN17tVTAGqTvpntmH7F34q8bSVFI=;
+        b=AHGHFg53gOT7yZZsKLsDzUj0WTxjWmeFkLZVUXuJ2fjdXZJPS4nOeFECN5cxt6rNjh
+         xrdjRMa6swSWg/U3+z/ww0fU6qPD8qbc833PcMZwjDK94QgTEMB+B0GSEAfHNR5YMSDR
+         mVBzlnGmOTtSTZIwZGwXJxxQLKgIGYUZg2hp1dCNKa0dUmbpwwVutoWPyu/x44veK8xO
+         vzld6sBt/ZIpTsIoE4JuFHbba1MAg/AymWkkkXP3H71b0AC+yqkn+ntmUPLftTbd90/Q
+         oVGn4D2d2+govGm+I2mN8+SqzY3fdkS/U01S2CdSJ6gCh50B8iz15ZwZ16mqAHOS4GHf
+         PZ6Q==
+X-Gm-Message-State: AO0yUKX4jiyIqNHu1TLhCPAW35+ztkmFX3uO00mPqlYR5Kb6WmF90IFX
+        FltzjoYRI9/WrgfLjrVtT8XGBw==
+X-Google-Smtp-Source: AK7set8rdSwuJIZjVXbyv0eXXG6ZQ8Z4Y3OpjtXysYZ6r1dQ5W/2Lf4cBRGLcMFVT5dX8XLJ864avA==
+X-Received: by 2002:a17:907:9b03:b0:8f0:9566:c1ff with SMTP id kn3-20020a1709079b0300b008f09566c1ffmr28443272ejc.69.1678484620243;
+        Fri, 10 Mar 2023 13:43:40 -0800 (PST)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:34:52e3:a77e:cac5])
-        by smtp.gmail.com with ESMTPSA id f2-20020a1709064dc200b008dcf89a72d7sm327228ejw.147.2023.03.10.13.43.37
+        by smtp.gmail.com with ESMTPSA id f2-20020a1709064dc200b008dcf89a72d7sm327228ejw.147.2023.03.10.13.43.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Mar 2023 13:43:38 -0800 (PST)
+        Fri, 10 Mar 2023 13:43:39 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -72,13 +72,14 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH] power: reset: qcom-pon: drop of_match_ptr for ID table
-Date:   Fri, 10 Mar 2023 22:43:25 +0100
-Message-Id: <20230310214333.274903-2-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 2/9] ASoC: atmel: sam9x5_wm8731: Drop of_match_ptr for ID table
+Date:   Fri, 10 Mar 2023 22:43:26 +0100
+Message-Id: <20230310214333.274903-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230310214333.274903-1-krzysztof.kozlowski@linaro.org>
 References: <20230310214333.274903-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -90,28 +91,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Qualcomm SoC power-on driver is specific to ARCH_QCOM which depends
-on OF thus the driver is OF-only.  It's of_device_id table is built
-unconditionally, thus of_match_ptr() for ID table does not make sense.
+The driver can match only via the DT table so the table should be always
+used and the of_match_ptr does not have any sense (this also allows ACPI
+matching via PRP0001, even though it is not relevant here).
+
+  sound/soc/atmel/sam9x5_wm8731.c:189:34: error: ‘sam9x5_wm8731_of_match’ defined but not used [-Werror=unused-const-variable=]
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/power/reset/qcom-pon.c | 2 +-
+ sound/soc/atmel/sam9x5_wm8731.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
-index 16bc01738be9..ebdcfb28c4a0 100644
---- a/drivers/power/reset/qcom-pon.c
-+++ b/drivers/power/reset/qcom-pon.c
-@@ -91,7 +91,7 @@ static struct platform_driver pm8916_pon_driver = {
- 	.probe = pm8916_pon_probe,
+diff --git a/sound/soc/atmel/sam9x5_wm8731.c b/sound/soc/atmel/sam9x5_wm8731.c
+index 99310e40e7a6..2bc622e86376 100644
+--- a/sound/soc/atmel/sam9x5_wm8731.c
++++ b/sound/soc/atmel/sam9x5_wm8731.c
+@@ -195,7 +195,7 @@ MODULE_DEVICE_TABLE(of, sam9x5_wm8731_of_match);
+ static struct platform_driver sam9x5_wm8731_driver = {
  	.driver = {
- 		.name = "pm8916-pon",
--		.of_match_table = of_match_ptr(pm8916_pon_id_table),
-+		.of_match_table = pm8916_pon_id_table,
+ 		.name = DRV_NAME,
+-		.of_match_table = of_match_ptr(sam9x5_wm8731_of_match),
++		.of_match_table = sam9x5_wm8731_of_match,
  	},
- };
- module_platform_driver(pm8916_pon_driver);
+ 	.probe = sam9x5_wm8731_driver_probe,
+ 	.remove = sam9x5_wm8731_driver_remove,
 -- 
 2.34.1
 
