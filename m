@@ -2,162 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8B906B60EC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 22:17:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DC016B60FA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 22:21:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229613AbjCKVRU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Mar 2023 16:17:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40218 "EHLO
+        id S229772AbjCKVVZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Mar 2023 16:21:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbjCKVRT (ORCPT
+        with ESMTP id S229613AbjCKVVX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Mar 2023 16:17:19 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7BBD72B23;
-        Sat, 11 Mar 2023 13:17:14 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9FF83B80735;
-        Sat, 11 Mar 2023 21:17:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B025C433A8;
-        Sat, 11 Mar 2023 21:16:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678569432;
-        bh=nxjIZb2lDBuKK2G4lNzbnKP45y5UoeG95pRVo5INiRE=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=bvzKGPqJVg2bAaBl8LvuSNq4FE4F8OHaj0dxY1RmvBRvrUteeh49EnCBFgpLpsimi
-         X9QjmQX5ru5ARgvQanZf4uxwTdtbSXJBvWNRv/d86I7owOd9TPANApjMIEt8UOom/V
-         rlpKM3DSWdmGVC5sTOOGKI7C35EJY3xqnU9SQBlbwRy+sPkyfeO2xcIoXPdhr3KG5S
-         maSO5XBX1iOLzTj27xMUWw1Z5Arz1xysQ8bAZkDXGqorBZ3q1BRVnKovYh/ImB0NqZ
-         5jPOxe6cAx/K/KlowItsOB1tQgOaqn0wX00B/jAga6Qsnzqoh25kwlapaLa6EQAQNP
-         eT/NzyqjKOROw==
-From:   Mark Brown <broonie@kernel.org>
-To:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        jic23@kernel.org, pratyush@kernel.org, Sanju.Mehta@amd.com,
-        chin-ting_kuo@aspeedtech.com, clg@kaod.org, kdasu.kdev@gmail.com,
-        f.fainelli@gmail.com, rjui@broadcom.com, sbranden@broadcom.com,
-        eajames@linux.ibm.com, olteanv@gmail.com, han.xu@nxp.com,
-        john.garry@huawei.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        khilman@baylibre.com, matthias.bgg@gmail.com, haibo.chen@nxp.com,
-        linus.walleij@linaro.org, daniel@zonque.org,
-        haojian.zhuang@gmail.com, robert.jarzmik@free.fr,
-        agross@kernel.org, heiko@sntech.de, krzysztof.kozlowski@linaro.org,
-        andi@etezian.org, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@foss.st.com, wens@csie.org,
-        jernej.skrabec@gmail.com, samuel@sholland.org,
-        masahisa.kojima@linaro.org, jaswinder.singh@linaro.org,
-        rostedt@goodmis.org, mingo@redhat.com, l.stelmach@samsung.com,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, alex.aring@gmail.com, stefan@datenfreihafen.org,
-        kvalo@kernel.org, james.schulman@cirrus.com,
-        david.rhodes@cirrus.com, tanureal@opensource.cirrus.com,
-        rf@opensource.cirrus.com, perex@perex.cz, tiwai@suse.com,
-        npiggin@gmail.com, christophe.leroy@csgroup.eu, mpe@ellerman.id.au,
-        oss@buserror.net, windhl@126.com, yangyingliang@huawei.com,
-        william.zhang@broadcom.com, kursad.oney@broadcom.com,
-        jonas.gorski@gmail.com, anand.gore@broadcom.com, rafal@milecki.pl,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
-Cc:     git@amd.com, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, joel@jms.id.au, andrew@aj.id.au,
-        radu_nicolae.pirea@upb.ro, nicolas.ferre@microchip.com,
-        alexandre.belloni@bootlin.com, claudiu.beznea@microchip.com,
-        bcm-kernel-feedback-list@broadcom.com, fancer.lancer@gmail.com,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        jbrunet@baylibre.com, martin.blumenstingl@googlemail.com,
-        avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
-        venture@google.com, yuenn@google.com, benjaminfair@google.com,
-        yogeshgaur.83@gmail.com, konrad.dybcio@somainline.org,
-        alim.akhtar@samsung.com, ldewangan@nvidia.com,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        michal.simek@amd.com, linux-aspeed@lists.ozlabs.org,
-        openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        netdev@vger.kernel.org, linux-wpan@vger.kernel.org,
-        libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org,
-        linux-mtd@lists.infradead.org, lars@metafoo.de,
-        Michael.Hennerich@analog.com, linux-iio@vger.kernel.org,
-        michael@walle.cc, palmer@dabbelt.com,
-        linux-riscv@lists.infradead.org, alsa-devel@alsa-project.org,
-        patches@opensource.cirrus.com, linuxppc-dev@lists.ozlabs.org,
-        amitrkcian2002@gmail.com
-In-Reply-To: <20230310173217.3429788-1-amit.kumar-mahapatra@amd.com>
-References: <20230310173217.3429788-1-amit.kumar-mahapatra@amd.com>
-Subject: Re: (subset) [PATCH V6 00/15] Add support for stacked/parallel
- memories
-Message-Id: <167856940280.964268.10660159170818600511.b4-ty@kernel.org>
-Date:   Sat, 11 Mar 2023 21:16:42 +0000
+        Sat, 11 Mar 2023 16:21:23 -0500
+Received: from smtp17.i.mail.ru (smtp17.i.mail.ru [95.163.41.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B347D7430B;
+        Sat, 11 Mar 2023 13:21:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
+        h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=RH2ZrndtpAYlZt0XycEmkXYRfNT/qKRc9JqVYCSJTUQ=;
+        t=1678569681;x=1678659681; 
+        b=MkFp4iGUUSHk+pMT2w47Ik5qNzo5pfkw8ERHOJXnu1ucjZtSbwfzMH7Tgqzp1vNztsh/1Y/40TIdAMAxFq7gnJJJe2aFkBusrX0Zs1JZb062xpiEwbtaoVbhsp3hMFYkoQoi/aShEeIEMEJeIXrhmLhp6iQoetfkUyj/2gHr+i4=;
+Received: by smtp17.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
+        id 1pb6eT-001tiu-AL; Sun, 12 Mar 2023 00:21:17 +0300
+From:   Danila Tikhonov <danila@jiaxyga.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linus.walleij@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        danila@jiaxyga.com
+Subject: [PATCH 0/2] pinctrl: qcom: Add support for SM7150
+Date:   Sun, 12 Mar 2023 00:21:12 +0300
+Message-Id: <20230311212114.108870-1-danila@jiaxyga.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-2eb1a
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp17.i.mail.ru; auth=pass smtp.auth=danila@jiaxyga.com smtp.mailfrom=danila@jiaxyga.com
+X-Mailru-Src: smtp
+X-7564579A: EEAE043A70213CC8
+X-77F55803: 4F1203BC0FB41BD9CCC71FA9F690445032EB9CAF2580409F12317AC7DC600120182A05F5380850404C228DA9ACA6FE27BC11337B7CFB0E93850810F903E8D49F580641BA815A1E00DF4C30378CE86032
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7466896EF24E80F12EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006371E8C7BD479B346ED8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8B9D9450D9BD1B3FCD644E96FA14E544B117882F4460429724CE54428C33FAD305F5C1EE8F4F765FC3EAA04613575FAEBA471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F4460429728776938767073520C65AC60A1F0286FEC26CFBAC0749D213D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE7B96B19DC40933219735652A29929C6C4AD6D5ED66289B52698AB9A7B718F8C46E0066C2D8992A16725E5C173C3A84C3887A4342A344B6ED76E601842F6C81A1F004C906525384303E02D724532EE2C3F43C7A68FF6260569E8FC8737B5C2249D082881546D93491E827F84554CEF50127C277FBC8AE2E8BA83251EDC214901ED5E8D9A59859A8B6DEFAA5D9F874865875ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
+X-C1DE0DAB: 0D63561A33F958A536676E4ADB2DEC315B2740467A99574386A7892DA55F802A4EAF44D9B582CE87C8A4C02DF684249CC203C45FEA855C8F
+X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D34EA882B598A209811FA4C9C23909F5F7FDB385C2DCEB02F60EB897EAD937FC36747A44B40590DECAA1D7E09C32AA3244CFBE7331D465B2B90EECC38A1E5201E3F24AF4FAF06DA24FDC2E5D8217768D59A
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojEg2t1XEOuWENpWA3g2QmiQ==
+X-DA7885C5: 2A16630153B13E2C60EF68CCB0BD4FE8EE63864363672CCC0B08A3B4C955722CD8288D6B1992AB67EF2421ABFA55128D02E9C42E3A59EA20
+X-Mailru-Sender: 9EB879F2C80682A09F26F806C739498116D2F3E63D051AB54E80588AE51AC0CA8E1A1FDBE0F94EC1643683D8C0F3ED1CA3C71A376745D86BBE86167304C7680C3980CE5AAA35C7CD60F22E8815EDE5EAEAB4BC95F72C04283CDA0F3B3F5B9367
+X-Mras: Ok
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 10 Mar 2023 23:02:02 +0530, Amit Kumar Mahapatra wrote:
-> This patch is in the continuation to the discussions which happened on
-> 'commit f89504300e94 ("spi: Stacked/parallel memories bindings")' for
-> adding dt-binding support for stacked/parallel memories.
-> 
-> This patch series updated the spi-nor, spi core and the spi drivers
-> to add stacked and parallel memories support.
-> 
-> [...]
+This series adds pinctrl support for Qualcomm SM7150 SoC.
 
-Applied to
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Linus Walleij <linus.walleij@linaro.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-gpio@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 
-   broonie/spi.git for-next
+Danila Tikhonov (2):
+  dt-bindings: pinctrl: qcom: Add SM7150 pinctrl binding
+  pinctrl: qcom: Add SM7150 pinctrl driver
 
-Thanks!
+ .../bindings/pinctrl/qcom,sm7150-tlmm.yaml    |  162 +++
+ drivers/pinctrl/qcom/Kconfig                  |   10 +
+ drivers/pinctrl/qcom/Makefile                 |    1 +
+ drivers/pinctrl/qcom/pinctrl-sm7150.c         | 1280 +++++++++++++++++
+ 4 files changed, 1453 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm7150-tlmm.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sm7150.c
 
-[01/15] spi: Replace all spi->chip_select and spi->cs_gpiod references with function call
-        commit: 9e264f3f85a56cc109cc2d6010a48aa89d5c1ff1
-[02/15] net: Replace all spi->chip_select and spi->cs_gpiod references with function call
-        commit: 25fd0550d9b9c92288a17fb7d605cdcdb4a65a64
-[03/15] iio: imu: Replace all spi->chip_select and spi->cs_gpiod references with function call
-        commit: 0183f81fce154ae1d4df2bb28d22ad6612317148
-[04/15] mtd: devices: Replace all spi->chip_select and spi->cs_gpiod references with function call
-        commit: 0817bcef53e4e3df23c023eddaa2b35b7288400e
-[05/15] staging: Replace all spi->chip_select and spi->cs_gpiod references with function call
-        commit: caa9d3475b1c5566f0272273c147cc9b72f2be28
-[06/15] platform/x86: serial-multi-instantiate: Replace all spi->chip_select and spi->cs_gpiod references with function call
-        commit: e20451f44ca33ec40422e9868775e117ef2da935
-[07/15] powerpc/83xx/mpc832x_rdb: Replace all spi->chip_select references with function call
-        commit: 3aba06a9fee04f6fefa9df71d3ee27dd4c464ad5
-[08/15] ALSA: hda: cs35l41: Replace all spi->chip_select references with function call
-        commit: 06b5e53c8b2b016e06a53ab6f01006ca7bbfa5df
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+2.39.2
 
