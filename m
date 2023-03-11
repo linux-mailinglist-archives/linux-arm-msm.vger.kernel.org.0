@@ -2,67 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A39446B5B2E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 12:30:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C80E6B5B31
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 12:30:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229515AbjCKLaE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Mar 2023 06:30:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44190 "EHLO
+        id S231197AbjCKLaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Mar 2023 06:30:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230501AbjCKL3Y (ORCPT
+        with ESMTP id S229983AbjCKLa3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Mar 2023 06:29:24 -0500
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A14EC145B2D
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Mar 2023 03:25:33 -0800 (PST)
-Received: by mail-yb1-xb2a.google.com with SMTP id g27so3886358ybe.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Mar 2023 03:25:33 -0800 (PST)
+        Sat, 11 Mar 2023 06:30:29 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 598892332A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Mar 2023 03:27:48 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id cn21so609241edb.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Mar 2023 03:27:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678533902;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=oupM3FbXF/iCg1aEcxZp6wJrRDfY9yPwtUGKDurVIrI=;
-        b=DFfTlk2KS10J/XXwp9GFgjJsXpXSw5gbX63TFUOCuTePC/Bs0ac2jkUEK9z1Bszljy
-         kGhx9z9xyOHXY4UynWoU5yZsuMvD8sCUs98gv6k09eiLpm/3ggXywL2nZgxe5L7xOFgT
-         WoOE2POC/pnkFz1+3nTH+TVWGLY2uTjS92gC2442hQqinLFCCzU8Ak1u3tLVm2G9RdYc
-         jJ7ptdkygUFumVCEO1ApI/kB7SiEz9vQvs8BtR1mSJccIL78FZfOb4fCQg3mAO+ilR4c
-         tvJCfM7ihrE/QStxXurk+dXcuwNGIbCKhvp5y3a35fgTUgkBU/RROUQt3EjATngmnl+Q
-         IeLQ==
+        d=linaro.org; s=google; t=1678534067;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hY4Hys0PLC8Fp+eaQDoxQKvTBpvuzKMcoEiAcnO+9IQ=;
+        b=I348AZRCBFTgkoW/CNUunkv7UCLakm2Bf1pXeEFjdvQ6h882ENx+16YGDts+6eGvM8
+         vaK2oLBSiqsj4BXp4GhdLC1+YLubqK+6fPa46us2MuVojQ5xMt8ATGhhW5IIf9OobDvn
+         0+ePJ1NR90iNwliuMs4aRvM/o86YztlUOoFlI28brOT69Lp4UpMIM6S5hC7odSlNwzvs
+         Gu15oxUgNl/9lDfl5D1bM0Ep2M3YcAAyN3nVP00QBI+B/kpoXKN76wyIS9mGDaMm7Luo
+         hqrTmCDbRWXxxE2hwzJTUtmUHRURkAFOim8qGpLaovdrAKByEHAGBD8oqTpcleln6OLf
+         hCWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678533902;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oupM3FbXF/iCg1aEcxZp6wJrRDfY9yPwtUGKDurVIrI=;
-        b=seSEBTWzr2iEwlCYlL4l2o4Tp7ygDkk31Pq6C5UN3ix2uBM3EDtNdMaVpEvbA619jQ
-         acKl9VrMX1Qe1HmQ1nO9+mPa/maAfwOowV+t+NXT56toF4S9umxJg3jfbgjR+cqU+Hxz
-         6s2ik3+F6E0CroykmbahWHtx2QL9XJoFk9IsI2ia6kzbrc1brM3FxhS3FFLXK/Gq/ORl
-         HVr6H3He/Cne8HOQs1Jihiuwr4GKfFa50a5Rv2SOryrgP3lsNZxm/TEWF9dI4hBwIrge
-         DqEKl7iW2mWYnAV9HXXfivoO60Sw3WNcS5/oUFuTbunchbbeNFJrDIzy4WGDqzhMTaJb
-         7fWw==
-X-Gm-Message-State: AO0yUKXkAhDoThrvKEDQF7gUjxifY8nyr9rlnRy4eKSPjxS+Iz+SUKy8
-        Gx2d18HwqRpn0KHe/kvLlqu+yxkxjQ28RCENYDhMWmYvcL817XUp
-X-Google-Smtp-Source: AK7set/MKTulbmCEGNNfv33vK7lCCxyVFsLbUvSdOBQ0SicSU2eFyVo33DkzquF9d8mZ+glo25w2sz0hsLy3XFYEpOk=
-X-Received: by 2002:a25:b98c:0:b0:b27:70e1:4649 with SMTP id
- r12-20020a25b98c000000b00b2770e14649mr3347150ybg.6.1678533902297; Sat, 11 Mar
- 2023 03:25:02 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678534067;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hY4Hys0PLC8Fp+eaQDoxQKvTBpvuzKMcoEiAcnO+9IQ=;
+        b=NhjDLgN2xHRk3ttGtCkCYRlE+IVdfQxGVhuPWs6phbqPhZXKIoxlHcROqj+pO8veI3
+         yeE5yxt8+iD4I0Ug4wJiM95bdESZdKqv9BEi34mlTmsOjvvECbGqkW3hzKgtmMgX+IG2
+         bwR8LqrDhQVgD4gHFe2CNkiYeEY2aXU3hl7s13QEe7EvZ2LR8aTgLRknTHL6IVrhEOoB
+         w/NeEEZBw3A29BlmMPhuMdIbGQDowJGhRh+9M97iQNRFig07/5LrY9Oqk6Tdt/9djIoh
+         vwEhZvuWAfx0G3+rWahnSbxo1YO9pCfro7Dv3rZo3Sp0C7AIJTdZmkNBU576wUEoxR/S
+         56Cg==
+X-Gm-Message-State: AO0yUKWI3FKv9aZCrR20J2tekipPSpwkURBnYqok+dlj+euCKq77qGPM
+        /Q+JrB7jACLUoLf8x1mue4VUcA==
+X-Google-Smtp-Source: AK7set/F7WYIVByuwghQfqPBvx4tXtULvRSGgJK2/C0DnWI6fyepiXqKt7MqE3bfLYO3WpN4g5BY4A==
+X-Received: by 2002:a05:6402:1608:b0:4c6:9132:65 with SMTP id f8-20020a056402160800b004c691320065mr25977211edv.20.1678534066887;
+        Sat, 11 Mar 2023 03:27:46 -0800 (PST)
+Received: from ?IPV6:2a02:810d:15c0:828:fa97:2d7c:bdd7:e1b? ([2a02:810d:15c0:828:fa97:2d7c:bdd7:e1b])
+        by smtp.gmail.com with ESMTPSA id s7-20020a508d07000000b004af6c5f1805sm1073615eds.52.2023.03.11.03.27.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 11 Mar 2023 03:27:46 -0800 (PST)
+Message-ID: <1f88b410-e48f-969a-8bdb-9cdb304ecd6c@linaro.org>
+Date:   Sat, 11 Mar 2023 12:27:45 +0100
 MIME-Version: 1.0
-References: <20230311-topic-msg_ram-v1-0-e9c2094daf09@linaro.org>
-In-Reply-To: <20230311-topic-msg_ram-v1-0-e9c2094daf09@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 11 Mar 2023 13:24:51 +0200
-Message-ID: <CAA8EJpqm6F6pvBR81xA=ZFyTPXpz+e+Ja+X4qF4ZD-3W5T2jJA@mail.gmail.com>
-Subject: Re: [PATCH RFC 00/15] Convert Qualcomm RPM message RAM to a simple-mfd
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 3/9] ASoC: codecs: lpass-rx-macro: add support for SM8550
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230310132201.322148-1-krzysztof.kozlowski@linaro.org>
+ <20230310132201.322148-4-krzysztof.kozlowski@linaro.org>
+ <5b923d49-c151-0ed7-3db1-a7caf85109f3@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <5b923d49-c151-0ed7-3db1-a7caf85109f3@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,49 +87,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 11 Mar 2023 at 03:21, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> The Qualcomm RPM message RAM is a part of the RPM low-power processor's
-> actual RAM that's exposed to the Application Processors as a MMIO-mapped
-> region. It contains a couple of things, most notably the RPM master stats,
-> detailing per-master (read: per-subsystem) sleep/wake statistics and an
-> interrupt controller that's crucial to achieving full SoC clock and/or
-> power collapse states (the MPM). This series tries to prepare the MSG
-> RAM node to be a host for such devices.
->
-> Depends on https://lore.kernel.org/linux-arm-msm/20230308011705.291337-1-konrad.dybcio@linaro.org/
->
-> to solve a warning in the example.
->
-> The DTS commits don't add -cells or -ranges, as without children they're
-> not of very much use. They'll be introduced along with subnodes.
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Konrad Dybcio (15):
->       dt-bindings: mfd: Split out Qcom RPM MSG RAM
->       arm64: dts: qcom: msm8916: Add simple-mfd to rpm_msg_ram
->       arm64: dts: qcom: msm8953: Add simple-mfd to rpm_msg_ram
->       arm64: dts: qcom: msm8976: Add simple-mfd to rpm_msg_ram
->       arm64: dts: qcom: msm8994: Add simple-mfd to rpm_msg_ram
->       arm64: dts: qcom: msm8996: Add simple-mfd to rpm_msg_ram
->       arm64: dts: qcom: msm8998: Add simple-mfd to rpm_msg_ram
->       arm64: dts: qcom: qcs404: Add simple-mfd to rpm_msg_ram
->       arm64: dts: qcom: sdm630: Add simple-mfd to rpm_msg_ram
->       arm64: dts: qcom: sm6115: Add simple-mfd to rpm_msg_ram
->       arm64: dts: qcom: sm6125: Add simple-mfd to rpm_msg_ram
->       arm64: dts: qcom: sm6375: Add simple-mfd to rpm_msg_ram
->       ARM: dts: qcom-apq8084: Add simple-mfd to rpm_msg_ram
->       ARM: dts: qcom-msm8226: Add simple-mfd to rpm_msg_ram
->       ARM: dts: qcom-msm8974: Add simple-mfd to rpm_msg_ram
+On 11/03/2023 12:23, Srinivas Kandagatla wrote:
+> Thanks Krzysztof for adding this support.
+> Few minor nits,
+> 
+> On 10/03/2023 13:21, Krzysztof Kozlowski wrote:
+>> Add support for the RX macro codec on Qualcomm SM8550.  SM8550 does not
+>> use NPL clock, thus add flags allowing to skip it.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>   sound/soc/codecs/lpass-rx-macro.c | 39 ++++++++++++++++++++++++-------
+>>   1 file changed, 31 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
+>> index a73a7d7a1c0a..e322d918db36 100644
+>> --- a/sound/soc/codecs/lpass-rx-macro.c
+>> +++ b/sound/soc/codecs/lpass-rx-macro.c
+>> @@ -395,6 +395,9 @@
+>>   #define COMP_MAX_COEFF 25
+>>   #define RX_NUM_CLKS_MAX	5
+>>   
+>> +/* NPL clock is expected */
+>> +#define RX_MACRO_FLAG_HAS_NPL_CLOCK		BIT(0)
+> 
+> We could probably rename it and move it to 
+> sound/soc/codecs/lpass-macro-common.h as this equally applies to all the 
+> codec macros.
+> 
+> 
+> Once done,
+> 
+> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-These commits do not demonstrate the need for simple-mfd (other than
-qcom,mpm being mentioned in bindings). I'd suggest limiting the RFC to
-a single platform populated with rpm_msg_ram child devices. This way
-we can better understand the needs and the requirements for these
-patches.
+Sure, I'll move it there.
 
+Best regards,
+Krzysztof
 
--- 
-With best wishes
-Dmitry
