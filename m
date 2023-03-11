@@ -2,113 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 638D46B5C40
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 14:32:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 950406B5C4D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 14:40:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229764AbjCKNcT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Mar 2023 08:32:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48020 "EHLO
+        id S229984AbjCKNkZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Mar 2023 08:40:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229541AbjCKNcS (ORCPT
+        with ESMTP id S229515AbjCKNkY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Mar 2023 08:32:18 -0500
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D2102E0F9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Mar 2023 05:32:17 -0800 (PST)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-536af432ee5so154158167b3.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Mar 2023 05:32:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678541536;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=JROGcEBcLkwWjsFbL29UK7bVFuHFrwh+heAFvT0sBUc=;
-        b=y8M8LIyCYjgptBoJ7w1GsZrnQB8ex02EXdkVW0q4iX+ZYIo5qaJgM52z+EAzOhdpI7
-         U0m/s6UG1WEXitNCHizAT7u7UEn36f7JBvvLcHcHz6KTdEEVlsiLf6GU4D4hqzEhT7N7
-         fp3D/A4LrGRotn/4HUEpB748FEN6Eh3dladYyZApbrnfhsXN42YHny3lW4+AnRzCjTK8
-         BfGSayUI0ZxsddGbVjymkThUwsRHF5qoCuNs6KoLHbvx779xEkimrvhl7OQASqaU9dxz
-         UUKtrkPwgcLQzVbHsSEgmJgjYh11m8hG885pM1zAGPyoMhewZUsWalV+oBZiOGEFNHzF
-         5WWw==
+        Sat, 11 Mar 2023 08:40:24 -0500
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35360120E83;
+        Sat, 11 Mar 2023 05:40:12 -0800 (PST)
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-17671fb717cso9016076fac.8;
+        Sat, 11 Mar 2023 05:40:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678541536;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JROGcEBcLkwWjsFbL29UK7bVFuHFrwh+heAFvT0sBUc=;
-        b=lk91MItq2XvjbSayhC48xgkyvsDl90MxnQVDExstxV7DcAkyQvEZyCrVchM1CH6qT2
-         CdKjEWwW7Zv1s7rz3/Mq+FhW1B1Zev1NRD15bZV62Ap1DX02lktQ6PYT8NbENzlGJ0w1
-         G8KuE1MCNk4Kze/CTKnsNa1deCMAV3TlfkyzjxzA9a1/lxmOeCOviUTH2G+grvTDChG6
-         gQx+GLyYGlDTu5jZR58w0wDgbQn2DA7f5IfK16dq07CXaRxCvDVIVi2JMAkJc8DTyIMR
-         cutDZ7rlNtTTSBhK6aU4myFE4SbT53AocyeSRxXnpTQyG0PoUi9t15+PnqnLAIJBHsaF
-         7Pew==
-X-Gm-Message-State: AO0yUKVetLrZ1yWVriIRfGs80CL+qkPdvVx8uj3+8UjVG4XRezv0BKP2
-        fepvbcLugpXeXe8pGf08RyAS5PT5IU7pc/FwLHr7JA==
-X-Google-Smtp-Source: AK7set/7HiHYL5eW78ZBNSZ38mIUB1aBNYtIXyUpaYdA5rIb/ax8pB0saCrGLSs60FsOsiJMqZI7dRGrbLExw+I5shQ=
-X-Received: by 2002:a81:ae66:0:b0:541:7266:3fd7 with SMTP id
- g38-20020a81ae66000000b0054172663fd7mr656589ywk.3.1678541536631; Sat, 11 Mar
- 2023 05:32:16 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678542011;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Vl8BZOtinMndJA6yo9kH7m4T56Q9iqXbatouPywOBOI=;
+        b=gmIsmjYkjtdeAnlT1G53m2vJ8Yho59WtJBtb5NO9Z2qUEsu57opquqZ6NEF4WnkVPD
+         ZtKgn9wBVL5sRmUEQCltMQ+RXz/x0NwWWwf+70UVCo74B7f+ltxLPaDLdtjQ4IymtzKM
+         194+wjDZLj1dW/pTXkOuClwZxxQ3k8x9xSJ0cKzYcDjZkf0MHNneRlgfSXSBiBFGNATt
+         TvGOTqG2blOV7q0sJeOzSOaHxvWa+wdxWA0obB4jGZ0SIbI4FDT74++2Bwa6uKNbDY2X
+         m+3OMk4l2gEfB9MGYa4EDha7OaZ6AbGvcG6etHx5DNUImE+HgXngajB4OrUg7BRJwZfX
+         yCYQ==
+X-Gm-Message-State: AO0yUKVUmjtgm8sA82S+ujBQM+oOpeQBOj4P0xztdtFuNKrGU8DOFiil
+        13+ndy/DBQmSrJiXWceXHSJteBhV4A==
+X-Google-Smtp-Source: AK7set+0bP5QJ7JRrLq0ugfI9tM7uV4Py+NmxD1n437OiRnbpitOV2Eigxgvk7FPXOw8cnZiagylnA==
+X-Received: by 2002:a05:6870:1f85:b0:16e:ac1:c644 with SMTP id go5-20020a0568701f8500b0016e0ac1c644mr2725591oac.21.1678542011376;
+        Sat, 11 Mar 2023 05:40:11 -0800 (PST)
+Received: from robh_at_kernel.org ([2605:ef80:80f8:ec2:d840:96d4:1bbf:55f])
+        by smtp.gmail.com with ESMTPSA id k8-20020acaba08000000b0037d7f4eb7e8sm1086404oif.31.2023.03.11.05.40.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 11 Mar 2023 05:40:10 -0800 (PST)
+Received: (nullmailer pid 23618 invoked by uid 1000);
+        Sat, 11 Mar 2023 13:40:08 -0000
+Date:   Sat, 11 Mar 2023 07:40:08 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com,
+        andersson@kernel.org, gregkh@linuxfoundation.org, tiwai@suse.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+Subject: Re: [PATCH v3 11/28] dt-bindings: usb: dwc3: Add
+ snps,num-hc-interrupters definition
+Message-ID: <20230311134008.GA20831-robh@kernel.org>
+References: <20230308235751.495-1-quic_wcheng@quicinc.com>
+ <20230308235751.495-12-quic_wcheng@quicinc.com>
 MIME-Version: 1.0
-References: <20230228-topic-qos-v7-0-815606092fff@linaro.org>
- <20230228-topic-qos-v7-6-815606092fff@linaro.org> <50f03895-816f-be8d-d956-d237fb13f5a0@linaro.org>
- <6d10906e-08cd-0380-5f5d-3ac0eec60276@linaro.org> <67590cd3-5543-59ed-6158-b272103ebd05@linaro.org>
- <858a8925-f11b-652d-3f02-f5ceea7d11fa@linaro.org> <74c0c724-b6a9-3755-7f56-9f421cece1a3@linaro.org>
- <500c7924-c43c-4233-1688-f8b6fbbad66f@linaro.org> <544e6f22-f2f4-2c7c-1978-a96c9763e2ab@linaro.org>
-In-Reply-To: <544e6f22-f2f4-2c7c-1978-a96c9763e2ab@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 11 Mar 2023 15:32:05 +0200
-Message-ID: <CAA8EJpr_zrk0cikiE52xvxBFTfj4Bq93UdOxVyThvkRoJayDKw@mail.gmail.com>
-Subject: Re: [PATCH v7 6/9] interconnect: qcom: rpm: Handle interface clocks
-To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230308235751.495-12-quic_wcheng@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 11 Mar 2023 at 14:11, Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
->
-> On 11/03/2023 00:54, Konrad Dybcio wrote:
-> >> - Update the commit log and potentially the structure comments
-> > I'm probably just very biased because I authored these commits, but I can't
-> > see which part is not clear.. Could I (and this is not passive-aggressive or
-> > anything) ask for a pointer there?
-> >
->
-> I mean to say "non scaling clocks" isn't an indicator IMO of the fact
-> that these are QoS node specific clocks.
->
-> Right now the interconnect model is predicated on bus and bus_a but,
-> you've found that on some SoCs we have node-specific clocks too.
->
-> :g/non\ scaling/s//non-scaling\ node-specific/g
->
-> would do or "QoS node-specific" the fact the clocks don't scale is
-> incidental the dependency though is that IMO at least these are
-> additional node-specific clocks we need to enable.
-
-This looks somewhat close to what we have observed in the patches for
-ipq9574 platform. It doesn't have a scaling interconnect (in other
-words, no bus clocks), but some devices have clocks driving the NIU
-(Network Interface Units) which connect the device to NoC.
-
->
+On Wed, Mar 08, 2023 at 03:57:34PM -0800, Wesley Cheng wrote:
+> Add a new definition for specifying how many XHCI secondary interrupters
+> can be allocated.  XHCI in general can potentially support up to 1024
+> interrupters, which some uses may want to limit depending on how many
+> users utilize the interrupters.
+> 
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
 > ---
-> bod
+>  .../devicetree/bindings/usb/snps,dwc3.yaml          | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
+> index be36956af53b..4e2417191f93 100644
+> --- a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
+> +++ b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
+> @@ -359,6 +359,19 @@ properties:
+>      items:
+>        enum: [1, 4, 8, 16, 32, 64, 128, 256]
+>  
+> +  snps,num-hc-interrupters:
+> +    description:
+> +      Defines the maximum number of XHCI host controller interrupters that can
+> +      be supported.  The XHCI host controller has support to allocate multiple
+> +      event rings, which can be assigned to different clients/users.  The DWC3
+> +      controller has a maximum of 8 interrupters.  If this is not defined then
+> +      the value will be defaulted to 1.  This parameter is used only when
+> +      operating in host mode.
 
+Is this an XHCI or DWC3 feature? The former should be added to the XHCI 
+binding.
 
-
-
---
-With best wishes
-Dmitry
+> +    $ref: /schemas/types.yaml#/definitions/uint8
+> +    minimum: 1
+> +    maximum: 8
+> +    default: 1
+> +
+>    port:
+>      $ref: /schemas/graph.yaml#/properties/port
+>      description:
