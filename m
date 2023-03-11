@@ -2,112 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 950406B5C4D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 14:40:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF0916B5C6C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 14:51:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229984AbjCKNkZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Mar 2023 08:40:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33504 "EHLO
+        id S229478AbjCKNvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Mar 2023 08:51:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbjCKNkY (ORCPT
+        with ESMTP id S229806AbjCKNvJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Mar 2023 08:40:24 -0500
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35360120E83;
-        Sat, 11 Mar 2023 05:40:12 -0800 (PST)
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-17671fb717cso9016076fac.8;
-        Sat, 11 Mar 2023 05:40:12 -0800 (PST)
+        Sat, 11 Mar 2023 08:51:09 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9914B11940F
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Mar 2023 05:51:07 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id f18so10246749lfa.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Mar 2023 05:51:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678542666;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GIwch7Miap3ZpzUTENBikKrtQkwLURN+uydaKxcQtAE=;
+        b=Ck/A/9TXTOrkq4anf9TQfZ2MhVvXOHvmRcfq6QhsRwKmeiE4QqJhb9hjlPaBDUPjKr
+         1LqIQkeLRR36GbkjoMF8PomEA3sji7r8dRTfLt6XH7F0w9DsSM+UwOo6VxaThq5wqgpt
+         3Ala6jXdvRIC6sHkpYJ6lWXhOJhwQoxzLW1Z1yr/AQfiTbpudj69C5sTrEB5Lqjnc3ao
+         87jBxS4vHU8SrjnTmh/SfsnKBMbIwOWNwLFe/clhKlFb4xUzkyF73ra/LKMM1mS50TaP
+         9YB2uBd3wK7OZQZb3kvku8vVHjytgMV0Leq1nAPip2ZpsAxebvLDHpe105B4qCDm38Z7
+         AgMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678542011;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Vl8BZOtinMndJA6yo9kH7m4T56Q9iqXbatouPywOBOI=;
-        b=gmIsmjYkjtdeAnlT1G53m2vJ8Yho59WtJBtb5NO9Z2qUEsu57opquqZ6NEF4WnkVPD
-         ZtKgn9wBVL5sRmUEQCltMQ+RXz/x0NwWWwf+70UVCo74B7f+ltxLPaDLdtjQ4IymtzKM
-         194+wjDZLj1dW/pTXkOuClwZxxQ3k8x9xSJ0cKzYcDjZkf0MHNneRlgfSXSBiBFGNATt
-         TvGOTqG2blOV7q0sJeOzSOaHxvWa+wdxWA0obB4jGZ0SIbI4FDT74++2Bwa6uKNbDY2X
-         m+3OMk4l2gEfB9MGYa4EDha7OaZ6AbGvcG6etHx5DNUImE+HgXngajB4OrUg7BRJwZfX
-         yCYQ==
-X-Gm-Message-State: AO0yUKVUmjtgm8sA82S+ujBQM+oOpeQBOj4P0xztdtFuNKrGU8DOFiil
-        13+ndy/DBQmSrJiXWceXHSJteBhV4A==
-X-Google-Smtp-Source: AK7set+0bP5QJ7JRrLq0ugfI9tM7uV4Py+NmxD1n437OiRnbpitOV2Eigxgvk7FPXOw8cnZiagylnA==
-X-Received: by 2002:a05:6870:1f85:b0:16e:ac1:c644 with SMTP id go5-20020a0568701f8500b0016e0ac1c644mr2725591oac.21.1678542011376;
-        Sat, 11 Mar 2023 05:40:11 -0800 (PST)
-Received: from robh_at_kernel.org ([2605:ef80:80f8:ec2:d840:96d4:1bbf:55f])
-        by smtp.gmail.com with ESMTPSA id k8-20020acaba08000000b0037d7f4eb7e8sm1086404oif.31.2023.03.11.05.40.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Mar 2023 05:40:10 -0800 (PST)
-Received: (nullmailer pid 23618 invoked by uid 1000);
-        Sat, 11 Mar 2023 13:40:08 -0000
-Date:   Sat, 11 Mar 2023 07:40:08 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
-        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
-        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com,
-        andersson@kernel.org, gregkh@linuxfoundation.org, tiwai@suse.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
-        quic_plai@quicinc.com
-Subject: Re: [PATCH v3 11/28] dt-bindings: usb: dwc3: Add
- snps,num-hc-interrupters definition
-Message-ID: <20230311134008.GA20831-robh@kernel.org>
-References: <20230308235751.495-1-quic_wcheng@quicinc.com>
- <20230308235751.495-12-quic_wcheng@quicinc.com>
+        d=1e100.net; s=20210112; t=1678542666;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GIwch7Miap3ZpzUTENBikKrtQkwLURN+uydaKxcQtAE=;
+        b=gMqlvb4735pIzo7UYpe8kwvDWocM6BL7hHz7pVmDVBa2FV2qAd8OWElNwG6GdQ3IMQ
+         YC4jV8HGtjBm7ajzI3MojlGjLwjNRuzufT7BIYSZ8X8z91QELLsWh5y0MHl4874zQUzc
+         3fwQGGigI4pqYivaMmRpD68pMZkTTbro48aWqJuUrvVdul/nvGmf1ptdzdSGwiTS1WZT
+         1gTfM6gRgMPPQb19zmdy1OQQfVMkfEGerSnxCHE8rR/CNXWEc2o/5QKqOGM/cPXxNvZX
+         BIGOz2E6QC0bxKeNW77+UeSWY3X/c3a9blVwWZKUFLvEUZE7qzV150J6tDsOyLMYxue/
+         722A==
+X-Gm-Message-State: AO0yUKUaeR+6R05/m08FZKo6KXn248/nQYuD5lZyYYKFN3wNk6T7nxB6
+        Yyq5yQ7kSEQZ6PeZHciZrgt2DQ==
+X-Google-Smtp-Source: AK7set9gHSZZob01NbbxcHnRnuK4XtOwbzm9Re1k9uemBs2OIo+U4lCb8DW/iVl2p87cnISK9jDTqQ==
+X-Received: by 2002:a19:a403:0:b0:4dd:98bd:411a with SMTP id q3-20020a19a403000000b004dd98bd411amr8197662lfc.51.1678542665803;
+        Sat, 11 Mar 2023 05:51:05 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id b24-20020ac24118000000b004db250355a2sm326241lfi.103.2023.03.11.05.51.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 11 Mar 2023 05:51:05 -0800 (PST)
+Message-ID: <0992b315-2e52-46f4-01c4-b8e458cfe7f6@linaro.org>
+Date:   Sat, 11 Mar 2023 15:51:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230308235751.495-12-quic_wcheng@quicinc.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 4/6] ARM: dts: qcom: sdx65: Add support for PCIe EP
+Content-Language: en-GB
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, lee@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        mani@kernel.org, lpieralisi@kernel.org, kw@linux.com,
+        bhelgaas@google.com, manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
+References: <1678277993-18836-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1678277993-18836-5-git-send-email-quic_rohiagar@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1678277993-18836-5-git-send-email-quic_rohiagar@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 08, 2023 at 03:57:34PM -0800, Wesley Cheng wrote:
-> Add a new definition for specifying how many XHCI secondary interrupters
-> can be allocated.  XHCI in general can potentially support up to 1024
-> interrupters, which some uses may want to limit depending on how many
-> users utilize the interrupters.
+On 08/03/2023 14:19, Rohit Agarwal wrote:
+> Add support for PCIe Endpoint controller on the
+> Qualcomm SDX65 platform.
 > 
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
 > ---
->  .../devicetree/bindings/usb/snps,dwc3.yaml          | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
+>   arch/arm/boot/dts/qcom-sdx65.dtsi | 59 +++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 59 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-> index be36956af53b..4e2417191f93 100644
-> --- a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-> +++ b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-> @@ -359,6 +359,19 @@ properties:
->      items:
->        enum: [1, 4, 8, 16, 32, 64, 128, 256]
->  
-> +  snps,num-hc-interrupters:
-> +    description:
-> +      Defines the maximum number of XHCI host controller interrupters that can
-> +      be supported.  The XHCI host controller has support to allocate multiple
-> +      event rings, which can be assigned to different clients/users.  The DWC3
-> +      controller has a maximum of 8 interrupters.  If this is not defined then
-> +      the value will be defaulted to 1.  This parameter is used only when
-> +      operating in host mode.
-
-Is this an XHCI or DWC3 feature? The former should be added to the XHCI 
-binding.
-
-> +    $ref: /schemas/types.yaml#/definitions/uint8
-> +    minimum: 1
-> +    maximum: 8
-> +    default: 1
+> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
+> index df9d428..5ea6a5a 100644
+> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
+> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
+> @@ -11,6 +11,7 @@
+>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>   #include <dt-bindings/power/qcom-rpmpd.h>
+>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> +#include <dt-bindings/gpio/gpio.h>
+>   
+>   / {
+>   	#address-cells = <1>;
+> @@ -293,6 +294,59 @@
+>   			status = "disabled";
+>   		};
+>   
+> +		pcie_ep: pcie-ep@1c00000 {
+> +			compatible = "qcom,sdx65-pcie-ep", "qcom,sdx55-pcie-ep";
+> +			reg = <0x01c00000 0x3000>,
+> +			      <0x40000000 0xf1d>,
+> +			      <0x40000f20 0xa8>,
+> +			      <0x40001000 0x1000>,
+> +			      <0x40200000 0x100000>,
+> +			      <0x01c03000 0x3000>;
+> +			reg-names = "parf",
+> +				    "dbi",
+> +				    "elbi",
+> +				    "atu",
+> +				    "addr_space",
+> +				    "mmio";
 > +
->    port:
->      $ref: /schemas/graph.yaml#/properties/port
->      description:
+> +			qcom,perst-regs = <&tcsr 0xb258 0xb270>;
+> +
+> +			clocks = <&gcc GCC_PCIE_AUX_CLK>,
+> +				 <&gcc GCC_PCIE_CFG_AHB_CLK>,
+> +				 <&gcc GCC_PCIE_MSTR_AXI_CLK>,
+> +				 <&gcc GCC_PCIE_SLV_AXI_CLK>,
+> +				 <&gcc GCC_PCIE_SLV_Q2A_AXI_CLK>,
+> +				 <&gcc GCC_PCIE_SLEEP_CLK>,
+> +				 <&gcc GCC_PCIE_0_CLKREF_EN>;
+> +			clock-names = "aux",
+> +				      "cfg",
+> +				      "bus_master",
+> +				      "bus_slave",
+> +				      "slave_q2a",
+> +				      "sleep",
+> +				      "ref";
+> +
+> +			interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "global", "doorbell";
+> +
+> +			reset-gpios = <&tlmm 57 GPIO_ACTIVE_LOW>;
+> +			wake-gpios = <&tlmm 53 GPIO_ACTIVE_LOW>;
+
+-gpios should go to the board file too.
+
+> +
+> +			resets = <&gcc GCC_PCIE_BCR>;
+> +			reset-names = "core";
+> +
+> +			power-domains = <&gcc PCIE_GDSC>;
+> +
+> +			phys = <&pcie_phy>;
+> +			phy-names = "pcie-phy";
+> +
+> +			max-link-speed = <3>;
+> +			num-lanes = <2>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+>   		pcie_phy: phy@1c06000 {
+>   			compatible = "qcom,sdx65-qmp-gen4x2-pcie-phy";
+>   			reg = <0x01c06000 0x2000>;
+> @@ -332,6 +386,11 @@
+>   			#hwlock-cells = <1>;
+>   		};
+>   
+> +		tcsr: syscon@1fcb000 {
+> +			compatible = "qcom,sdx65-tcsr", "syscon";
+> +			reg = <0x01fc0000 0x1000>;
+> +		};
+> +
+>   		remoteproc_mpss: remoteproc@4080000 {
+>   			compatible = "qcom,sdx55-mpss-pas";
+>   			reg = <0x04080000 0x4040>;
+
+-- 
+With best wishes
+Dmitry
+
