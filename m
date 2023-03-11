@@ -2,81 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25CB56B5727
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 01:56:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 330D36B5752
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 02:21:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231276AbjCKA4a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 19:56:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50708 "EHLO
+        id S229885AbjCKBVq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 20:21:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232089AbjCKAz5 (ORCPT
+        with ESMTP id S229614AbjCKBVp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 19:55:57 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EF7D28E90
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 16:54:51 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id r27so8861110lfe.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 16:54:51 -0800 (PST)
+        Fri, 10 Mar 2023 20:21:45 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D16FD12EAE0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 17:21:43 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id k14so8927228lfj.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 17:21:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678496089;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cYtXohR9kO8JKnBbb5S/LlpBpqOKA0WNr1Wqy/ElIdk=;
-        b=F1V5/Wn9kgt2mO44rUdEkcx+uQIEouJWL1htc+7dh8YElL6NoOJ5b1M3WOtrj2pDXe
-         dlXyL8RlQ0oSRDCtaKQBIazDzfoLgMR2yeHlraR+QjAGdEhhzTrxcDziU5FU2H/9CE/l
-         0Z3oD4pVKG7lBSAy/iV9xPUsOaQAIxkn42fCkjfsv03Wfkb/utaDFbLu4Orkn/0eJdbX
-         cpQYCXI5QnzZKqAEhrIBhGMU5sIH10t3sGVXRvMFRDFF0GgV+dLuMuW83FVTkUNj8Zo1
-         D8YuXtNpdEde9Ma9tVDkOw8DSypOK0uxs0oF+4FVErPGvI8wCc38gIAQtIV96t65/LR8
-         12JA==
+        d=linaro.org; s=google; t=1678497702;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ztXjjbd60BFQ9adlzKKMOkVzBvcLHCXoH/i70TyV+Ec=;
+        b=q3WAVHm/AWREWNKGKDVHoh5g6T69Rh1ARhMh1X5XnJw8mfKwtmKHouNbpSaPtQvaIl
+         1NRejU3M+iSFtroCCO2SZX0QpOIiDjGYtTmvYn6TCn1o0gMFidOTFavEw/49Mh4jgORD
+         euBD4QbyU/i22X6YuTcYm0oYVjhjid6epJMyKBnPqcZ9kaNZSJd+pXL9x0iKbeFYR+7I
+         AlsYoMxWEFRRO0S4twgVVT4KeoljXxKbx8REPOcFl5VqYl0lhk5BHEZR1P18Mh5rL+2G
+         iImnNjNVylZwx2rqA0X2U7+FB5ZwV5VlbL+5zi2gA7/YxKaVvmbr16aM2UOuSveN1tQq
+         jlvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678496089;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cYtXohR9kO8JKnBbb5S/LlpBpqOKA0WNr1Wqy/ElIdk=;
-        b=ap+ypsdFWlBifktwRAz72J2rB7O0vLnUO+bLe02noRZbwbluhoptokO6ZyhVc6lhIA
-         r3Wu69OyLpX92REnJh9HQmw+EDUvol/mFFZ5AsZJK8NPxwAwcL9LeFdhcS8BKXYj8HDR
-         0oatuPMvcil0C4ftiRE24zV2tPfSVhEX0g1sj4UXp1st4Al0am4f2wVDIzq9CtqEwSGA
-         R6jB0a+fOMMWH5xXgdlz4dlibxv6roUXNFHYw7IDUsYvLbDhI1HyJp2Do9azLyN7yTSB
-         cfaLAJ+PYtZPyNqdxB6GmFNDEsMjepgL89+2BrZmW2z4kToFCMIOzMo6NqzhsIidNZEA
-         hvRQ==
-X-Gm-Message-State: AO0yUKU7JL3S2AiB3DBqp/NvP/AmKn1pLC2E5akVav6PpU2Wo1FvK5NY
-        5qJEpcTAfqIhwHVElZnvDhkJlQ==
-X-Google-Smtp-Source: AK7set8ChGMwcjyrukIDMtT2ReuMkcAts+DBJM7qrjAjILtZEJFX2hGb3qxq/1p7aWMLfnWUMGpA1g==
-X-Received: by 2002:a19:7406:0:b0:4d8:4fd6:418a with SMTP id v6-20020a197406000000b004d84fd6418amr8045484lfe.6.1678496089221;
-        Fri, 10 Mar 2023 16:54:49 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678497702;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ztXjjbd60BFQ9adlzKKMOkVzBvcLHCXoH/i70TyV+Ec=;
+        b=MSOTUrHaHPBXX2CvEhbkXYNX+Vzrw18w55lZgKrTyMvsYElg88ZMmiCN++7F6JvIi5
+         yPqRM5y64bGoeYcgSH7NiGWrafJU+GTphUGMfm2jVZkyIckqlMJjE0kdCQshcph6NazF
+         xZLnmKnBI0Lgloqm4Q1TQ6UVUIXb+ACNrd5EFtKmM1hSTkAQ8NyUpOhBSTZS9Z6FtjmY
+         BhNKCXKbIhVaWI3dWgE1xI06jazS2gdkwt5UCp8GdMNba7/x3IC3Csj9lLgnyn4pddyk
+         XkvNviUO3CNlNso2iFdz7g3oP/Pmv3Z8kBR25WQArYZzIaeeN2HZKvdCVOuuwELoEDr5
+         gZIQ==
+X-Gm-Message-State: AO0yUKU/BXRCi8IZVFg83hSD+wAIYCoh/UcSNZ6NPV1sWjPOdMzv7RfL
+        3TIqHyjvKiXz4txhPWk7v8Hibw==
+X-Google-Smtp-Source: AK7set+kjIujOB59hkOZ2XREZRD/YuX0C6q2jBdyoCGaw+W/5jFjPUh95DisAyV0tPeSFB7BFxP9Yg==
+X-Received: by 2002:ac2:5332:0:b0:4dd:a7ab:b148 with SMTP id f18-20020ac25332000000b004dda7abb148mr7933914lfh.49.1678497702108;
+        Fri, 10 Mar 2023 17:21:42 -0800 (PST)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id l30-20020ac24a9e000000b004dc83d04840sm136374lfp.79.2023.03.10.16.54.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Mar 2023 16:54:48 -0800 (PST)
-Message-ID: <500c7924-c43c-4233-1688-f8b6fbbad66f@linaro.org>
-Date:   Sat, 11 Mar 2023 01:54:47 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v7 6/9] interconnect: qcom: rpm: Handle interface clocks
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230228-topic-qos-v7-0-815606092fff@linaro.org>
- <20230228-topic-qos-v7-6-815606092fff@linaro.org>
- <50f03895-816f-be8d-d956-d237fb13f5a0@linaro.org>
- <6d10906e-08cd-0380-5f5d-3ac0eec60276@linaro.org>
- <67590cd3-5543-59ed-6158-b272103ebd05@linaro.org>
- <858a8925-f11b-652d-3f02-f5ceea7d11fa@linaro.org>
- <74c0c724-b6a9-3755-7f56-9f421cece1a3@linaro.org>
+        by smtp.gmail.com with ESMTPSA id y26-20020ac2447a000000b004db25f2c103sm142318lfl.86.2023.03.10.17.21.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Mar 2023 17:21:41 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <74c0c724-b6a9-3755-7f56-9f421cece1a3@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: [PATCH RFC 00/15] Convert Qualcomm RPM message RAM to a simple-mfd
+Date:   Sat, 11 Mar 2023 02:21:30 +0100
+Message-Id: <20230311-topic-msg_ram-v1-0-e9c2094daf09@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJrXC2QC/x2NQQrCQAwAv1JyNtDdBSleBR/gVYpkY2wD7bZkV
+ YTSvxs8zsAwG1QxlQqnZgOTj1ZdikM4NMAjlUFQH84Q25jaFAK+llUZ5zrcjWY85i4xdSGyMHi
+ TqQpmo8KjV+U9TS5Xk6d+/5MbXC9n6Pf9B75+E8J5AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1678497700; l=3004;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=Uq6nFpabusoC58q8pSGW5x4YCbTHeNtUHKsbt6Eq17E=;
+ b=BvVDj6jzdTLhxkxpn2Qw6SXaLcpuQC36eScnwOAh1u/tAjXrFl2KZPXQ+iUkD72ChfuTPos9+b6P
+ LTjZRDtLD4JnnS0Imb5BKWm3nPB8UKtT0PYysBlSs1GY/RcWLVcP
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
         URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,150 +84,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The Qualcomm RPM message RAM is a part of the RPM low-power processor's
+actual RAM that's exposed to the Application Processors as a MMIO-mapped
+region. It contains a couple of things, most notably the RPM master stats,
+detailing per-master (read: per-subsystem) sleep/wake statistics and an
+interrupt controller that's crucial to achieving full SoC clock and/or
+power collapse states (the MPM). This series tries to prepare the MSG
+RAM node to be a host for such devices.
 
+Depends on https://lore.kernel.org/linux-arm-msm/20230308011705.291337-1-konrad.dybcio@linaro.org/
 
-On 11.03.2023 01:16, Bryan O'Donoghue wrote:
-> On 10/03/2023 18:05, Konrad Dybcio wrote:
->>> I think you could use assigned-clocks for that ..
->>>
->>> So its not part of your series but then presumably you have a follow-on patch for the 8998 dts that points your ->intf_clks at these then ?
->>>
->>> clocks = <&clock_gcc clk_aggre2_noc_clk>,
->>>           <&clock_gcc clk_gcc_ufs_axi_clk>,
->>>           <&clock_gcc clk_gcc_aggre2_ufs_axi_clk>;
->>>
->>> It seems like the right thing to do..
->> Why so? We're passing all clock references to clocks=<> and we handle
->> them separately. This is akin to treating the "core" clock differently
->> to the "iface" clock on some IP block, except on a wider scale.
-> 
-> Eh, that was a question, not a statement. I mean to ask if your intf_clks are intended to be populated with some/all of the above additional gcc references ?
-Argh sorry, I'm not great at reading lately..
+to solve a warning in the example.
 
-Yes that would be the plan. All of these ones from downstream plus more
-that we discover as we go (if we choose to go this route)
+The DTS commits don't add -cells or -ranges, as without children they're
+not of very much use. They'll be introduced along with subnodes.
 
-And the discovery process looks like:
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (15):
+      dt-bindings: mfd: Split out Qcom RPM MSG RAM
+      arm64: dts: qcom: msm8916: Add simple-mfd to rpm_msg_ram
+      arm64: dts: qcom: msm8953: Add simple-mfd to rpm_msg_ram
+      arm64: dts: qcom: msm8976: Add simple-mfd to rpm_msg_ram
+      arm64: dts: qcom: msm8994: Add simple-mfd to rpm_msg_ram
+      arm64: dts: qcom: msm8996: Add simple-mfd to rpm_msg_ram
+      arm64: dts: qcom: msm8998: Add simple-mfd to rpm_msg_ram
+      arm64: dts: qcom: qcs404: Add simple-mfd to rpm_msg_ram
+      arm64: dts: qcom: sdm630: Add simple-mfd to rpm_msg_ram
+      arm64: dts: qcom: sm6115: Add simple-mfd to rpm_msg_ram
+      arm64: dts: qcom: sm6125: Add simple-mfd to rpm_msg_ram
+      arm64: dts: qcom: sm6375: Add simple-mfd to rpm_msg_ram
+      ARM: dts: qcom-apq8084: Add simple-mfd to rpm_msg_ram
+      ARM: dts: qcom-msm8226: Add simple-mfd to rpm_msg_ram
+      ARM: dts: qcom-msm8974: Add simple-mfd to rpm_msg_ram
 
-1. boot with "disabling clk %s" debug prints added
-2. do something that triggers a crash (e.g. wait for an IP block
-   to enter its suspend routine)
-3. crash horribly
-4. try to recover the last disabled clock's name or analyze WCGW
-5. try resolving the clock dependency
-6. goto 1 until you don't crash anymore
+ .../devicetree/bindings/mfd/qcom,rpm-msg-ram.yaml  | 82 ++++++++++++++++++++++
+ Documentation/devicetree/bindings/sram/sram.yaml   |  2 -
+ arch/arm/boot/dts/qcom-apq8084.dtsi                |  2 +-
+ arch/arm/boot/dts/qcom-msm8226.dtsi                |  2 +-
+ arch/arm/boot/dts/qcom-msm8974.dtsi                |  2 +-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi              |  2 +-
+ arch/arm64/boot/dts/qcom/msm8953.dtsi              |  2 +-
+ arch/arm64/boot/dts/qcom/msm8976.dtsi              |  2 +-
+ arch/arm64/boot/dts/qcom/msm8994.dtsi              |  2 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi              |  2 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi              |  2 +-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi               |  2 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi               |  2 +-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi               |  2 +-
+ arch/arm64/boot/dts/qcom/sm6125.dtsi               |  2 +-
+ arch/arm64/boot/dts/qcom/sm6375.dtsi               |  2 +-
+ 16 files changed, 96 insertions(+), 16 deletions(-)
+---
+base-commit: 24469a0e5052ba01a35a15f104717a82b7a4798b
+change-id: 20230311-topic-msg_ram-6b83ca812cec
 
-> 
->>> Still not clear why these clocks are off.. your bootchain ?
->> Generally the issue is that icc sync_states goes over *all the possible
->> interconnect paths on the entire SoC*. For QoS register access, you need
->> to be able to interface them. Some of the hardware blocks live on a
->> separate sort of "island". That' part of why clocks such as
->> GCC_CFG_NOC_USB3_PRIM_AXI_CLK exist. They're responsible for clocking
->> the CNoC<->USB connection, which in the bigger picture looks more or less
->> like:
->>
->>
->>      1     2-3            2-3    3-4            3-4    4-5
->> USB<->CNoC<->CNoC_to_SNoC<->SNoC<->SNoC_to_BIMC<->BIMC<->APSS
->>
->> where:
->>
->> 1 = GCC_CFG_NOC_USB3_PRIM_AXI_CLK
->> 2 = RPM CNOC CLK
->> 3 = RPM SNOC CLK
->> 4 = RPM BIMC CLK
->> 5 = (usually internally managed) HMSS / GNOC CLK
->>
->> or something along these lines, the *NoC names may be in the wrong order
->> but this is the general picture.
->>
->> On msm-4.x there is no such thing as sync_state. The votes are only
->> cast from within the IP-block drivers themselves, using data gathered from
->> qcom,msmbus-blahblah and msmbus calls from within the driver. That way,
->> downstream ensures there's never unclocked QoS register access.
->>
->> After writing this entire email, I got an idea that we could consider not
->> accessing these QoS registers from within sync_state (e.g. use sth like
->> if(is_sync_state_done))..
->>
->> That would lead to this patch being mostly
->> irrelevant (IF AND ONLY IF all the necessary clocks were handled by the
->> end device drivers AND clk/icc voting was done in correct order - which
->> as we can tell from the sad 8996 example, is not always the case).
->>
->> Not guaranteeing it (like this patch does) would make it worse from the
->> standpoint of representing the hardware needs properly, but it could
->> surely save some headaches. To an extent.
-> 
-> Hmm.
-> 
-> If I have understood you correctly above, then for some of the NoC QoS entries we basically need additional clocks, which is separate to the clocks the controller bus and bus_a clocks.
-Yes.
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
-(Technically we need them for all of the nodes, but for example we're not
-going to poke at DDR registers when the DDR is shut off)
-
-> 
-> We don't see the problem all the time because of sync_state,
-No, actually it's sync_state (+ improper sequencing of turning on clocks
-and regulators/power domains vs setting ICC BW in device drivers) that
-causes this. Downstream piggybacks off of the devices being already
-set up and ready to go before setting BW (and by extension QoS).
-
-so your question is should we push the clocks to the devices.
-Yes, it's either this patch and blindly finding the required clocks
-
-or skipping QoS on sync_state (I haven't tested whether it'd enough
-yet, FWIW) with this patch and less finding required clocks (as we
-could partially piggyback off of the clocks being enabled before we
-cast ICC votes as part of resume/init sequence of a driver)
-
-or being like downstream and (almost) only relying on the client devices
-
-Based on the dtsi you gave as an example, my €0.02 would say no, those are clearly additional clock dependencies for NoC.
-Yes, definitely. The question is how should be go about handling them
-that would:
-
-- scale for all the IP blocks and nodes
-- not be overly complex
-- preferably doesn't just rely on trial-and-error and educated guesses
-- be hard to mess up on the programmer's side
-
-> 
-> Going by the name, you'd expect the UFS controller could own these two clocks
-> 
-> "clk-gcc-ufs-axi-clk",
-> "clk-aggre2-ufs-axi-clk-no-rate"
-> 
-> but even then by the same logic the NoC should own "clk-aggre2-noc-clk-no-rate" I wouldn't much fancy splitting them apart.
-Yeah, it seems to be a common pattern: whichever on-die block is mentioned
-first in the name (or first after the clock controller's prefix), actually
-"owns" the clock
-
-> 
-> So - I'd say the commit log doesn't really explain to me what we have discussed here.
-> 
-> Suggest rewording it a little bit "non-scaling clock" is accurate but for me on the first read doesn't really tell me that these are node-specific clock dependencies or that there is an expectation that the intf_clks should be tied to node-specific clocks.
-> 
-> So two asks
-> 
-> - Update the commit log and potentially the structure comments
-I'm probably just very biased because I authored these commits, but I can't
-see which part is not clear.. Could I (and this is not passive-aggressive or
-anything) ask for a pointer there?
-
-> - Can you split the devm_kzalloc() into a seperate patch ?
->   I don't see why this needs to be done but if it does need to be
->   done it could as far as I read it be done before this patch
-bus_clks[] is no longer a trailing empty array (a.k.a "struct hack"),
-so we shouldn't be using struct_size anymore. This sort of needs to
-be done together, as e.g. 8996 (without this commit) expects >2 bus
-clocks which are in reality these "interface clocks", or "node access
-dependencies", so splitting that out would introduce unnecessary churn
-or break bisecting.
-
-Konrad
-> 
-> ---
-> bod
