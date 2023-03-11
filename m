@@ -2,64 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A4166B601C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 20:18:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBF106B60E1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 22:16:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229989AbjCKTSB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Mar 2023 14:18:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34914 "EHLO
+        id S229790AbjCKVQq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Mar 2023 16:16:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbjCKTSA (ORCPT
+        with ESMTP id S229437AbjCKVQp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Mar 2023 14:18:00 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A29B5E392;
-        Sat, 11 Mar 2023 11:17:58 -0800 (PST)
+        Sat, 11 Mar 2023 16:16:45 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DDCD7203C;
+        Sat, 11 Mar 2023 13:16:44 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2ADB360DE3;
-        Sat, 11 Mar 2023 19:17:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4395C4339B;
-        Sat, 11 Mar 2023 19:17:53 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3D13460DF7;
+        Sat, 11 Mar 2023 21:16:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74CADC433EF;
+        Sat, 11 Mar 2023 21:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678562277;
-        bh=O7mOjm53l6IyjLyVpYPf+gqdpzVKUjs+J3yfYurbqOo=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=hPyqMTdWr8NUbpA/5AWQp9Ohif6D8ZhxQtfopKr8OilDh3hgkLt08mtzocCCtSSPe
-         Ljh0RFNxKOIWwdfu6nAwE35zDiJydv+snQR9sHXKB1Z3c7+1tjcAlyZQnEo/pBqZ6i
-         tHy16izCAj7CP35rWCV2d93kbTof3P1UOgRSsKG+1ZBF1MeTwcTrKRQpG1KI5naqBL
-         p8Fr1EBFgh3tt1raEsC1hXPlVXLw2XVqpiCwOImcdwaeKMClU19Bg+0OVkMljeGuZj
-         5UIg4xzHun8jAc3NxvK9zVcz00laGF4Swq1f/NWf3HJuH8KFJ365QHypPa5QAIMwCa
-         t8bnm4D7bRdQA==
-Date:   Sat, 11 Mar 2023 19:18:00 +0000
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     James Clark <james.clark@arm.com>
-Cc:     linux-kernel@vger.kernel.org, linux@roeck-us.net,
-        michal.simek@amd.com, Jonathan Corbet <corbet@lwn.net>,
-        Jean Delvare <jdelvare@suse.com>,
-        Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Andy Gross <agross@kernel.org>,
+        s=k20201202; t=1678569403;
+        bh=+DzB7/8CoWnkO/XRI1leyDdvUnpN9ch8MSd2GNMDJTM=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=MtiLuqbg+ewNrORM7gYuVWtDY1WITP8fnDMohaMDfvWiK44HvE3TXPL+xscranYBF
+         yf1cemIotmGqM2ROCJKFIbsDGJT3UhZqQwDXgx6UPzbcJrejJnMC8imhMQDvh/3otz
+         wQ6QvUFpmKZqwcQ0FlnWNou2FH119vYfI+6XYOoc4Eq2rGIbp0vxaPq+RgishnR9ku
+         DRAHcvNCbawn8KZYF6NlW5WDU1hyJ4TX6kHb4jQ03jf2xQJXjTCRrFF2p/607748IQ
+         RgZSHqHtQF0djp0rR09WieyymQvaZ306PNgk7wdUdd9UxHPOis6usgGrTDI1JSrbQM
+         TV9gW7JLoVEeg==
+From:   Mark Brown <broonie@kernel.org>
+To:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+        jic23@kernel.org, pratyush@kernel.org, sanju.mehta@amd.com,
+        chin-ting_kuo@aspeedtech.com, clg@kaod.org, kdasu.kdev@gmail.com,
+        f.fainelli@gmail.com, rjui@broadcom.com, sbranden@broadcom.com,
+        eajames@linux.ibm.com, olteanv@gmail.com, han.xu@nxp.com,
+        john.garry@huawei.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
+        khilman@baylibre.com, matthias.bgg@gmail.com, haibo.chen@nxp.com,
+        linus.walleij@linaro.org, daniel@zonque.org,
+        haojian.zhuang@gmail.com, robert.jarzmik@free.fr,
+        agross@kernel.org, heiko@sntech.de, krzysztof.kozlowski@linaro.org,
+        andi@etezian.org, mcoquelin.stm32@gmail.com,
+        alexandre.torgue@foss.st.com, wens@csie.org,
+        jernej.skrabec@gmail.com, samuel@sholland.org,
+        masahisa.kojima@linaro.org, jaswinder.singh@linaro.org,
+        rostedt@goodmis.org, mingo@redhat.com, l.stelmach@samsung.com,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, alex.aring@gmail.com, stefan@datenfreihafen.org,
+        kvalo@kernel.org, james.schulman@cirrus.com,
+        david.rhodes@cirrus.com, tanureal@opensource.cirrus.com,
+        rf@opensource.cirrus.com, perex@perex.cz, tiwai@suse.com,
+        npiggin@gmail.com, christophe.leroy@csgroup.eu, mpe@ellerman.id.au,
+        oss@buserror.net, windhl@126.com, yangyingliang@huawei.com,
+        Tudor Ambarus <tudor.ambarus@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>, linux-doc@vger.kernel.org,
-        linux-hwmon@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] serial: qcom_geni: Use devm_krealloc_array
-Message-ID: <20230311191800.74ec2b84@jic23-huawei>
-In-Reply-To: <20230309150334.216760-5-james.clark@arm.com>
-References: <20230309150334.216760-1-james.clark@arm.com>
-        <20230309150334.216760-5-james.clark@arm.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
+        Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
+Cc:     git@amd.com, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, joel@jms.id.au, andrew@aj.id.au,
+        radu_nicolae.pirea@upb.ro, nicolas.ferre@microchip.com,
+        alexandre.belloni@bootlin.com, claudiu.beznea@microchip.com,
+        bcm-kernel-feedback-list@broadcom.com, fancer.lancer@gmail.com,
+        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
+        jbrunet@baylibre.com, martin.blumenstingl@googlemail.com,
+        avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
+        venture@google.com, yuenn@google.com, benjaminfair@google.com,
+        yogeshgaur.83@gmail.com, konrad.dybcio@somainline.org,
+        alim.akhtar@samsung.com, ldewangan@nvidia.com,
+        thierry.reding@gmail.com, jonathanh@nvidia.com,
+        michal.simek@amd.com, linux-aspeed@lists.ozlabs.org,
+        openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        netdev@vger.kernel.org, linux-wpan@vger.kernel.org,
+        libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org,
+        linux-mtd@lists.infradead.org, lars@metafoo.de,
+        Michael.Hennerich@analog.com, linux-iio@vger.kernel.org,
+        michael@walle.cc, palmer@dabbelt.com,
+        linux-riscv@lists.infradead.org, alsa-devel@alsa-project.org,
+        patches@opensource.cirrus.com, linuxppc-dev@lists.ozlabs.org,
+        amitrkcian2002@gmail.com
+In-Reply-To: <20230210193647.4159467-1-amit.kumar-mahapatra@amd.com>
+References: <20230210193647.4159467-1-amit.kumar-mahapatra@amd.com>
+Subject: Re: (subset) [PATCH v4 00/15] spi: Add support for
+ stacked/parallel memories
+Message-Id: <167856937606.964268.6047676283886463336.b4-ty@kernel.org>
+Date:   Sat, 11 Mar 2023 21:16:16 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+X-Mailer: b4 0.13-dev-2eb1a
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,44 +107,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu,  9 Mar 2023 15:03:33 +0000
-James Clark <james.clark@arm.com> wrote:
-
-> Now that it exists, use it instead of doing the multiplication manually.
+On Sat, 11 Feb 2023 01:06:31 +0530, Amit Kumar Mahapatra wrote:
+> This patch is in the continuation to the discussions which happened on
+> 'commit f89504300e94 ("spi: Stacked/parallel memories bindings")' for
+> adding dt-binding support for stacked/parallel memories.
 > 
-> Signed-off-by: James Clark <james.clark@arm.com>
-
-Hmm. I've stared at the users of this for a bit, and it's not actually obvious
-that it's being used as an array of u32.  The only typed user of this is as
-the 2nd parameter of  
-tty_insert_flip_string() which is an unsigned char *
-
-I wonder if that sizeof(u32) isn't a 'correct' description of where the 4 is coming
-from even if it has the right value?  Perhaps the fifo depth is just a multiple of 4?
-
-Jonathan
-
-
-
-> ---
->  drivers/tty/serial/qcom_geni_serial.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+> This patch series updated the spi-nor, spi core and the spi drivers
+> to add stacked and parallel memories support.
 > 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index d69592e5e2ec..23fc33d182ac 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -1056,9 +1056,9 @@ static int setup_fifos(struct qcom_geni_serial_port *port)
->  		(port->tx_fifo_depth * port->tx_fifo_width) / BITS_PER_BYTE;
->  
->  	if (port->rx_buf && (old_rx_fifo_depth != port->rx_fifo_depth) && port->rx_fifo_depth) {
-> -		port->rx_buf = devm_krealloc(uport->dev, port->rx_buf,
-> -					     port->rx_fifo_depth * sizeof(u32),
-> -					     GFP_KERNEL);
-> +		port->rx_buf = devm_krealloc_array(uport->dev, port->rx_buf,
-> +						   port->rx_fifo_depth, sizeof(u32),
-> +						   GFP_KERNEL);
->  		if (!port->rx_buf)
->  			return -ENOMEM;
->  	}
+> [...]
+
+Applied to
+
+   broonie/spi.git for-next
+
+Thanks!
+
+[01/15] spi: Replace all spi->chip_select and spi->cs_gpiod references with function call
+        commit: 9e264f3f85a56cc109cc2d6010a48aa89d5c1ff1
+[02/15] net: Replace all spi->chip_select and spi->cs_gpiod references with function call
+        commit: 25fd0550d9b9c92288a17fb7d605cdcdb4a65a64
+[03/15] iio: imu: Replace all spi->chip_select and spi->cs_gpiod references with function call
+        commit: 0183f81fce154ae1d4df2bb28d22ad6612317148
+[04/15] mtd: devices: Replace all spi->chip_select and spi->cs_gpiod references with function call
+        commit: 0817bcef53e4e3df23c023eddaa2b35b7288400e
+[05/15] staging: Replace all spi->chip_select and spi->cs_gpiod references with function call
+        commit: caa9d3475b1c5566f0272273c147cc9b72f2be28
+[06/15] platform/x86: serial-multi-instantiate: Replace all spi->chip_select and spi->cs_gpiod references with function call
+        commit: e20451f44ca33ec40422e9868775e117ef2da935
+[07/15] powerpc/83xx/mpc832x_rdb: Replace all spi->chip_select references with function call
+        commit: 3aba06a9fee04f6fefa9df71d3ee27dd4c464ad5
+[08/15] ALSA: hda: cs35l41: Replace all spi->chip_select references with function call
+        commit: 06b5e53c8b2b016e06a53ab6f01006ca7bbfa5df
+[09/15] spi: Add stacked and parallel memories support in SPI core
+        (no commit info)
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
