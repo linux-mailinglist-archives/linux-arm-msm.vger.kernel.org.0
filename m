@@ -2,71 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6376C6B5623
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 01:05:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38A646B5628
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 01:06:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229887AbjCKAFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Mar 2023 19:05:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44476 "EHLO
+        id S230022AbjCKAG0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Mar 2023 19:06:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229817AbjCKAFp (ORCPT
+        with ESMTP id S230193AbjCKAGW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Mar 2023 19:05:45 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E590B12FD2C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 16:05:42 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id s20so8769175lfb.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 16:05:42 -0800 (PST)
+        Fri, 10 Mar 2023 19:06:22 -0500
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ADB813E507
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 16:06:07 -0800 (PST)
+Received: by mail-lj1-x22a.google.com with SMTP id by8so7043630ljb.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Mar 2023 16:06:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678493141;
-        h=content-transfer-encoding:in-reply-to:references:to:from
+        d=linaro.org; s=google; t=1678493165;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=T17C6AbEDanaE3OC9jdvhLuitHG1FgTsryu1IqeVsX0=;
-        b=xRzDE0GHqxVuGmVNO9r5OlwPRKhvm7KRve8tWzEXn7DSUgBQfqVs6PjrYcEbGgn+eP
-         lxY/rHmUbVbp2bE0/rPwQhbYviEo9qcwK0F6NRdudSe+XvRDNTH2lNou9bakygUd9xXY
-         +i7jaf97J7VKCv8aofkpNphOeKWUyZ9MHW7942WbVgD+3RZB6pmE19hu05IIF/LCf8kI
-         aOBY49mbv5C7b38GhxxwxvOmvJAZOhgnz8JhtSthzT5kfJYNNdIqtidsxjSMu7Qb/EjT
-         uwSuQABVWfQjzzi1spc0APb5KDVvJNyJq9cTPOVsamyaJG/ZdujWML/s7lLUqo1m1OWG
-         0JDA==
+        bh=nvWd6RnRtPsl4syozMKjmZ8lJWkYg+/DrGeZ1RVg3jg=;
+        b=m9oP/nOWxDKYfkbYYH6incjMnwiXyGPjUkjfMHEQS36/WFVBYT5Hnbr47iAQ/Jhn78
+         mkZil2n4ckEpjDFr8OaCad28O332YGrB7MWsbnIAe2fJCMBkiwhwJ6uGXtywhdM7piMv
+         eqSDzVnPm79KE0scs6ON3AO/sJ26Lsan5neIp+OCG7Ynu8fDeBx1imbLSc2sIVvhTHvU
+         NyCeAgUtOwpJnE/mT9lYD4y2TvkOpTfPAZRBf0VS7hDADGzIu86KEwXr1huV8eVOR3Au
+         E1SljP/x16mk2BE/2B8b88BQXwdOICJ7/pYyNJmy6qQUVK5ZQ3ykCObPbTYCsCtRE0Or
+         Mrgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678493141;
-        h=content-transfer-encoding:in-reply-to:references:to:from
+        d=1e100.net; s=20210112; t=1678493165;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=T17C6AbEDanaE3OC9jdvhLuitHG1FgTsryu1IqeVsX0=;
-        b=OVpYkg1Km23Za9CjSAmdBnYCSIkhFs2VKMbhYvLk1LVmqBX8+hXVD7Rh0r3Begy34J
-         F0OY3z7pUEG0voa2NdEJOgbJLdBIOUkCHnb0zD0jNk/RJiPxQHqrvLp/BLuPJVrzCSVA
-         sJIc11ZajFmDNaijyJG1y8LESo9UDHw20Y/3Ct2kakUB7eyH59zr/Ju9cFlwbp06RIfv
-         8TNRaZoB7KxbRPS1SxxfEAK2mZb4mCbZh+5xE0sWNj3Qi/S92K7MO6mN06QOMdjKU7+j
-         bOzV6NVWX3iXB/RidZMf9gbIu+/ba9ozxK7zVYhg0WhA913QA8YDfiNw5GmIWtE+uLxZ
-         sEBQ==
-X-Gm-Message-State: AO0yUKXEk8BmTvX8w3nhMHd6oxTuwHO9YCAvNxxrYLq7DZ98qbsUxnX4
-        XkQC+9d9YyyNxM/yY0kD5/NQbg==
-X-Google-Smtp-Source: AK7set8tg0bj5lBzuTDSjBLrOIrpFkJZZ8PzZptoC7RHpuh5Ow8EmZMntmqHajGCODMyuB4GKuQB3A==
-X-Received: by 2002:ac2:51b3:0:b0:4dd:a445:e69d with SMTP id f19-20020ac251b3000000b004dda445e69dmr7605410lfk.26.1678493141329;
-        Fri, 10 Mar 2023 16:05:41 -0800 (PST)
+        bh=nvWd6RnRtPsl4syozMKjmZ8lJWkYg+/DrGeZ1RVg3jg=;
+        b=OPKvLvujq2zMn+Szm1XfCVz0NKsHG6XN+b22Brqt3lR+hpQyfeNJnBAgrLhYBxPPHL
+         ML8o6uQYfCYhcwDFgag29hb4Iv8PnsNT+0jRYD9f0Z/Br5zN4XAcclB7KuPqqNUSGg6e
+         NpR0fTBGUSaV7My5UcmT6x4f23e5KXjEhuLM+YD9g2J2INDeMZ8H6uLDqmZsiJoG724t
+         Fnws6GRBVJVZi585S7Vb0iXh85y8nwmrVq7e12E0tgv0jLmwT7meC3VMHELv3QCg5GSV
+         YWPVLQWPRjjif6mEaR/sRdu8VW0//1IO38ZuwvsqdSW9Tld/IvFCh9bkba1xhMAjfS2l
+         7Pqw==
+X-Gm-Message-State: AO0yUKVIA5YQu24XuMA5pic/jpWlErOecJqjRtxjl/T6Ifnd4AjqBDjz
+        Jp0JJNb5sPih5mq7HHcrPTcwgg==
+X-Google-Smtp-Source: AK7set9/2QfL4loiubmYv5vdmt0lQ9s1Km9YMcKFQl/SUMpIYys4kYlQEHTjc8qKGK4W2556vpzckA==
+X-Received: by 2002:a2e:b173:0:b0:295:b054:6809 with SMTP id a19-20020a2eb173000000b00295b0546809mr8729234ljm.8.1678493165492;
+        Fri, 10 Mar 2023 16:06:05 -0800 (PST)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id w25-20020ac25999000000b004e811e3554dsm128199lfn.185.2023.03.10.16.05.40
+        by smtp.gmail.com with ESMTPSA id y20-20020a2e5454000000b00295a33eda65sm155824ljd.137.2023.03.10.16.06.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Mar 2023 16:05:40 -0800 (PST)
-Message-ID: <3ea91330-d49a-6b6a-f213-6f49a69b9d9b@linaro.org>
-Date:   Sat, 11 Mar 2023 01:05:39 +0100
+        Fri, 10 Mar 2023 16:06:05 -0800 (PST)
+Message-ID: <128a4831-a094-3e5a-282b-8e40b2cfd960@linaro.org>
+Date:   Sat, 11 Mar 2023 01:06:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH] soc: qcom: gsbi: mark OF related data as maybe unused
+Subject: Re: [PATCH 1/3] ufs: qcom: add __maybe_unused to OF ID table
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230310214413.275054-1-krzysztof.kozlowski@linaro.org>
- <a5f943d0-1653-3269-32c1-d879bc333ded@linaro.org>
-In-Reply-To: <a5f943d0-1653-3269-32c1-d879bc333ded@linaro.org>
+        linux-scsi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230310214435.275127-1-krzysztof.kozlowski@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230310214435.275127-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
@@ -79,36 +84,28 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 11.03.2023 01:04, Konrad Dybcio wrote:
+On 10.03.2023 22:44, Krzysztof Kozlowski wrote:
+> The driver can be built on ACPI and its .of_match_table uses
+> of_match_ptr(), thus annotate the actual table as maybe unused.
 > 
-> 
-> On 10.03.2023 22:44, Krzysztof Kozlowski wrote:
->> The driver can be compile tested with !CONFIG_OF making certain data
->> unused:
->>
->>   drivers/soc/qcom/qcom_gsbi.c:117:34: error: ‘tcsr_dt_match’ defined but not used [-Werror=unused-const-variable=]
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
-> Shouldn't this driver depend on OF?
-> 
-Nevermind, can't read.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
-> Konrad
->>  drivers/soc/qcom/qcom_gsbi.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/soc/qcom/qcom_gsbi.c b/drivers/soc/qcom/qcom_gsbi.c
->> index 290bdefbf28a..f1742e5bddb9 100644
->> --- a/drivers/soc/qcom/qcom_gsbi.c
->> +++ b/drivers/soc/qcom/qcom_gsbi.c
->> @@ -114,7 +114,7 @@ struct gsbi_info {
->>  	struct regmap *tcsr;
->>  };
->>  
->> -static const struct of_device_id tcsr_dt_match[] = {
->> +static const struct of_device_id tcsr_dt_match[] __maybe_unused = {
->>  	{ .compatible = "qcom,tcsr-ipq8064", .data = &config_ipq8064},
->>  	{ .compatible = "qcom,tcsr-apq8064", .data = &config_apq8064},
->>  	{ .compatible = "qcom,tcsr-msm8960", .data = &config_msm8960},
+>  drivers/ufs/host/ufs-qcom.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index a02cd866e2f8..82d02e7f3b4f 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1693,7 +1693,7 @@ static int ufs_qcom_remove(struct platform_device *pdev)
+>  	return 0;
+>  }
+>  
+> -static const struct of_device_id ufs_qcom_of_match[] = {
+> +static const struct of_device_id ufs_qcom_of_match[] __maybe_unused = {
+>  	{ .compatible = "qcom,ufshc"},
+>  	{},
+>  };
