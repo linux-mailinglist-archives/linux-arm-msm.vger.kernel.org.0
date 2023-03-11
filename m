@@ -2,120 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B42116B5FBD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 19:25:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 341236B5FF3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Mar 2023 20:02:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229514AbjCKSZ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Mar 2023 13:25:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43596 "EHLO
+        id S229924AbjCKTCL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Mar 2023 14:02:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjCKSZ1 (ORCPT
+        with ESMTP id S229885AbjCKTCI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Mar 2023 13:25:27 -0500
-X-Greylist: delayed 450 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 11 Mar 2023 10:25:26 PST
-Received: from smtp.smtpout.orange.fr (smtp-11.smtpout.orange.fr [80.12.242.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B4E2936455
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Mar 2023 10:25:26 -0800 (PST)
-Received: from [192.168.1.18] ([86.243.2.178])
-        by smtp.orange.fr with ESMTPA
-        id b3mwpUM6K9PB3b3mwp6Jgv; Sat, 11 Mar 2023 19:17:54 +0100
-X-ME-Helo: [192.168.1.18]
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Sat, 11 Mar 2023 19:17:54 +0100
-X-ME-IP: 86.243.2.178
-Message-ID: <641d04a3-9236-fe76-a20f-11466a01460e@wanadoo.fr>
-Date:   Sat, 11 Mar 2023 19:17:50 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 07/23] interconnect: qcom: rpm: fix probe PM domain error
- handling
-To:     johan+linaro@kernel.org
-Cc:     a.swigon@samsung.com, agross@kernel.org, alim.akhtar@samsung.com,
-        andersson@kernel.org, djakov@kernel.org, festevam@gmail.com,
-        jonathanh@nvidia.com, kernel@pengutronix.de,
-        konrad.dybcio@linaro.org, krzysztof.kozlowski@linaro.org,
+        Sat, 11 Mar 2023 14:02:08 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6955E64B2D;
+        Sat, 11 Mar 2023 11:02:06 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 07DD160DD8;
+        Sat, 11 Mar 2023 19:02:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0275CC433D2;
+        Sat, 11 Mar 2023 19:02:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678561325;
+        bh=aRIPsVzahV4VaJZIFCg+vIsGtMpis+9um6e1rA2rVAc=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=C+j+kZCat2117EEqGxts5x3SZZDixNF9zpT2XnUIqEHZlQp95CM5+y+uSy1rZnrE1
+         Z/5gClmxlQofaa+n3mg9HcR4EZkWWPqoZSw/O/554J+0IgZHlDPN/oiL5/NASKz+1R
+         MFXulOEzEx/yj6yNox+iX7rbqnBDm5bX8hv2I3ehoJGRUymVe/JnuxTL9IFraOjjHe
+         erWoFcsMZ8kYZgesrgeUpJn6cQkp5KEJBI3NYirUQ4TPh/bLhgersK/6HE6XT3gkvz
+         MokA7pKp+QEam/lKA3eAkmGzlSfdOKf0cw3bIoVKw7uuF1I1miQdoOI4J1eN3iBazj
+         U6LBsN4CXyI5Q==
+Date:   Sat, 11 Mar 2023 19:02:08 +0000
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     James Clark <james.clark@arm.com>
+Cc:     linux-kernel@vger.kernel.org, linux@roeck-us.net,
+        michal.simek@amd.com, Jonathan Corbet <corbet@lwn.net>,
+        Jean Delvare <jdelvare@suse.com>,
+        Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>, linux-doc@vger.kernel.org,
+        linux-hwmon@vger.kernel.org, linux-iio@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-imx@nxp.com,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        s.hauer@pengutronix.de, s.nawrocki@samsung.com,
-        shawnguo@kernel.org, stable@vger.kernel.org,
-        thierry.reding@gmail.com, y.oudjana@protonmail.com
-References: <20230201101559.15529-1-johan+linaro@kernel.org>
- <20230201101559.15529-8-johan+linaro@kernel.org>
-Content-Language: fr, en-US
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-In-Reply-To: <20230201101559.15529-8-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] devres: Provide krealloc_array
+Message-ID: <20230311190208.7eca8c12@jic23-huawei>
+In-Reply-To: <20230309150334.216760-2-james.clark@arm.com>
+References: <20230309150334.216760-1-james.clark@arm.com>
+        <20230309150334.216760-2-james.clark@arm.com>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le 01/02/2023 à 11:15, Johan Hovold a écrit :
-> Make sure to disable clocks also in case attaching the power domain
-> fails.
+On Thu,  9 Mar 2023 15:03:30 +0000
+James Clark <james.clark@arm.com> wrote:
+
+> There is no krealloc_array equivalent in devres. Users would have to
+> do their own multiplication overflow check so provide one.
 > 
-> Fixes: 7de109c0abe9 ("interconnect: icc-rpm: Add support for bus power domain")
-> Cc: stable-u79uwXL29TY76Z2rM5mHXA@public.gmane.org      # 5.17
-> Cc: Yassine Oudjana <y.oudjana-g/b1ySJe57IN+BqQ9rBEUg@public.gmane.org>
-> Signed-off-by: Johan Hovold <johan+linaro-DgEjT+Ai2ygdnm+yROfE0A@public.gmane.org>
+> Signed-off-by: James Clark <james.clark@arm.com>
+
+Trivial comment inline, but otherwise seems reasonable to me.
+
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
 > ---
->   drivers/interconnect/qcom/icc-rpm.c | 9 ++++-----
->   1 file changed, 4 insertions(+), 5 deletions(-)
+>  Documentation/driver-api/driver-model/devres.rst |  1 +
+>  include/linux/device.h                           | 10 ++++++++++
+>  2 files changed, 11 insertions(+)
 > 
-> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-> index 91778cfcbc65..da595059cafd 100644
-> --- a/drivers/interconnect/qcom/icc-rpm.c
-> +++ b/drivers/interconnect/qcom/icc-rpm.c
-> @@ -498,8 +498,7 @@ int qnoc_probe(struct platform_device *pdev)
->   
->   	if (desc->has_bus_pd) {
->   		ret = dev_pm_domain_attach(dev, true);
-> -		if (ret)
-> -			return ret;
-> +		goto err_disable_clks;
+> diff --git a/Documentation/driver-api/driver-model/devres.rst b/Documentation/driver-api/driver-model/devres.rst
+> index 4249eb4239e0..8be086b3f829 100644
+> --- a/Documentation/driver-api/driver-model/devres.rst
+> +++ b/Documentation/driver-api/driver-model/devres.rst
+> @@ -364,6 +364,7 @@ MEM
+>    devm_kmalloc_array()
+>    devm_kmemdup()
+>    devm_krealloc()
+> +  devm_krealloc_array()
+>    devm_kstrdup()
+>    devm_kstrdup_const()
+>    devm_kvasprintf()
+> diff --git a/include/linux/device.h b/include/linux/device.h
+> index 1508e637bb26..0dd5956c8516 100644
+> --- a/include/linux/device.h
+> +++ b/include/linux/device.h
+> @@ -223,6 +223,16 @@ static inline void *devm_kcalloc(struct device *dev,
+>  {
+>  	return devm_kmalloc_array(dev, n, size, flags | __GFP_ZERO);
+>  }
+> +static inline __realloc_size(3, 4) void * __must_check
+> +devm_krealloc_array(struct device *dev, void *p, size_t new_n, size_t new_size, gfp_t flags)
+> +{
+> +	size_t bytes;
+> +
+> +	if (unlikely(check_mul_overflow(new_n, new_size, &bytes)))
+> +		return NULL;
 
-Hi,
-this change looks strange because we now skip the rest of the function.
+For consistency with krealloc_array and other stuff in device.h that is
+of similar 'shape' add a blank line here.
 
-Is it really intended?
-
-
-Also, should dev_pm_domain_detach() be called somewhere in the error 
-handling path and remove function ?
-
-CJ
-
-
->   	}
->   
->   	provider = &qp->provider;
-> @@ -514,8 +513,7 @@ int qnoc_probe(struct platform_device *pdev)
->   	ret = icc_provider_add(provider);
->   	if (ret) {
->   		dev_err(dev, "error adding interconnect provider: %d\n", ret);
-> -		clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
-> -		return ret;
-> +		goto err_disable_clks;
->   	}
->   
->   	for (i = 0; i < num_nodes; i++) {
-> @@ -550,8 +548,9 @@ int qnoc_probe(struct platform_device *pdev)
->   	return 0;
->   err:
->   	icc_nodes_remove(provider);
-> -	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
->   	icc_provider_del(provider);
-> +err_disable_clks:
-> +	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
->   
->   	return ret;
->   }
+> +	return devm_krealloc(dev, p, bytes, flags);
+> +}
+> +
+>  void devm_kfree(struct device *dev, const void *p);
+>  char *devm_kstrdup(struct device *dev, const char *s, gfp_t gfp) __malloc;
+>  const char *devm_kstrdup_const(struct device *dev, const char *s, gfp_t gfp);
 
