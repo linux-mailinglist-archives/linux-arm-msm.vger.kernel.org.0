@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A1096B6A41
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Mar 2023 19:39:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ECBBD6B6A33
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Mar 2023 19:38:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231176AbjCLSiK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Mar 2023 14:38:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60666 "EHLO
+        id S231307AbjCLSiG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Mar 2023 14:38:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231169AbjCLSiF (ORCPT
+        with ESMTP id S230497AbjCLSiD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Mar 2023 14:38:05 -0400
+        Sun, 12 Mar 2023 14:38:03 -0400
 Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E066940DD
-        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Mar 2023 11:37:29 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id da10so40352757edb.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Mar 2023 11:37:29 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86388211A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Mar 2023 11:37:25 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id r15so13068917edq.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Mar 2023 11:37:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678646188;
+        d=linaro.org; s=google; t=1678646189;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZWTPQ02vuBT1r5z+H1cMz9z3i2niGER+DvQv2eqXzik=;
-        b=efgLkO/QN0WP5+9+ACLqF+Xkmx1MNhEuJwyUpR6Bp6Cx9l4hl/3U0u0hbixN4IaEUB
-         o/I/Hy+58at1+okQ06LYaQLBdKX++NRW9B5oTF6YegKdWCji1zPI+OinNTCLgoKJLR6e
-         2BoAjgWg077RZru16Lff9KHEXFwt5Z03Vzu7MBCNo4oapBpIM40ifKFpDhu8fb2shcEl
-         5jSYZ1ql4EagmTDouigaSU9ZHQi5YBtZX0QZmuuf0WNP61EnilrtkdbnE7fyVxFu/+cg
-         9GEBYJ2UkILOaqP9qfV9rTqVtS7Zd33Sa0dwVz/2PTWfF0G04uxTHjbti6UWwXz+NH40
-         AIfg==
+        bh=rTqyBeC+GZ8uw4WwDSFI+iV/rvPQQcy5WBfVxYcXc7E=;
+        b=OpTC8Q5T09t1iGZiX0pMkyqfrXQaWE+X15nT2Z5rDXDFuTPpn9s6hbUDrLrm4Ux6xT
+         cwiqHHTjZnbGZnQtFB4DD6OB2OAfnwclqbHzMWjyTSSrV4HCo0S1p47FXJN7IgZkIoU3
+         jydT/DBSTxtYUGW8RDvxtGP7jghIDEaH7k7SvRas6C7Wz1jiMJ7QP1B8RwzxxCJfNrhX
+         tv7HftJpEtyVkLvXZliWHYBgrSZbG+QxFg3kdeK3lFDzXSLhpMY3P2GKawmarkQjVEy7
+         8IDaQKWu0hX6OAettMkDpa1xPj9mkEafZxZNRiOjVopNdFnJVFqKn2esfugtwk0rEjDx
+         J7Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678646188;
+        d=1e100.net; s=20210112; t=1678646189;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZWTPQ02vuBT1r5z+H1cMz9z3i2niGER+DvQv2eqXzik=;
-        b=lDDM+1/fxdJC2rDkGDdFkfkVM6XYdXr9HpsaA7fC6l5WQG7pdL4FRyfbuy2qe3GQZG
-         CDa/IpuhWBqRdaCmP2Tt4Rgh6HeC3FNiYhSYkxF+UlDiqAFpQ7YTSed/OSTYIHSDnKSJ
-         jibtqIsmsGoMFvOWP/K15MDveKFPeVSirIK0q1G33MP9Ss9rH7d5WpmqSJq5quTg7Hm2
-         klA266XbGUA75rUm8ma9KUJ6rL0xaYJ82dMQCpzrFZuKcppKGTc+PO+jKx0Stl0/VgKK
-         iBFo5it3EbHZiEBDqUYs/MXGqZx0P9auDhcqJiUkYNhRb58KUJ/F2alvIjWf3s/LVXEd
-         Dm2g==
-X-Gm-Message-State: AO0yUKUcle/FMg2xC3BMY9EY+PtCS5I2tMiMCsBB4/WYHSmcgdfn2QSf
-        vfiT2ThazILSFC2OnPgHzM5cTw==
-X-Google-Smtp-Source: AK7set/WGNPq8Sahke70gY475lQztFWZITyEmeH7usMJmano13yLx1Bx8xzuLEBG6kc7fqhzkIcaMQ==
-X-Received: by 2002:a17:906:a882:b0:8aa:a802:adcd with SMTP id ha2-20020a170906a88200b008aaa802adcdmr28388691ejb.30.1678646187904;
-        Sun, 12 Mar 2023 11:36:27 -0700 (PDT)
+        bh=rTqyBeC+GZ8uw4WwDSFI+iV/rvPQQcy5WBfVxYcXc7E=;
+        b=71GnqaEVdn45AA+sgtmMktGFb/ZC/4jJRlS88eZGLo2VCL3fMGiuv1JZJQc9XnjxG4
+         yQKN/NguSXqQ5yugNZOsF9HCladPvJMGQ4iKmyemkdOwe7ePKdU3NuuD81atP6H+mw4H
+         l5xOXn2Cf2ZsKdgvSX0CMyZfpvt468kaKVME9RlxqA9moEr/ID8l6DxJcL3f1hgw54bd
+         Q/7AYnq5tHijIPDZSeKXe5e5mr0FwcDXhfcFa+V/poJ+vIkiEO19rnKsKVNJNR62zb57
+         D5EsBNpdyIAZgWIciX8/NYCHRGg5scDoYvQbhnTdWt8N0kUurHB1Dd5UZv3+xk4bOYCU
+         tlTg==
+X-Gm-Message-State: AO0yUKUSkvfmHIbusyBTzm7ekn7YlDz861JuG2KtjRg0gMePvhRpo/nZ
+        DR94UJWrIKpoeTbZMGr1HYI31Q==
+X-Google-Smtp-Source: AK7set+3B0F1QNQ9KpgMtEOHtW9jO9YxKCqDv1YhcX7/BUWwA3kiKqDOSKyZ/nh20FGFcYHXbLh5yA==
+X-Received: by 2002:a17:906:3e52:b0:91e:fcea:f25f with SMTP id t18-20020a1709063e5200b0091efceaf25fmr6891687eji.32.1678646188958;
+        Sun, 12 Mar 2023 11:36:28 -0700 (PDT)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:d9f6:3e61:beeb:295a])
-        by smtp.gmail.com with ESMTPSA id p14-20020a1709060dce00b0092669fb4ba1sm893806eji.130.2023.03.12.11.36.26
+        by smtp.gmail.com with ESMTPSA id p14-20020a1709060dce00b0092669fb4ba1sm893806eji.130.2023.03.12.11.36.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Mar 2023 11:36:27 -0700 (PDT)
+        Sun, 12 Mar 2023 11:36:28 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -66,9 +66,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/8] arm64: dts: qcom: sc7280-herobrine-villager: correct trackpad supply
-Date:   Sun, 12 Mar 2023 19:36:16 +0100
-Message-Id: <20230312183622.460488-2-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 3/8] arm64: dts: qcom: sc7180-trogdor-lazor: correct trackpad supply
+Date:   Sun, 12 Mar 2023 19:36:17 +0100
+Message-Id: <20230312183622.460488-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230312183622.460488-1-krzysztof.kozlowski@linaro.org>
 References: <20230312183622.460488-1-krzysztof.kozlowski@linaro.org>
@@ -85,29 +85,29 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 The hid-over-i2c takes VDD, not VCC supply.  Fix copy-pasta from other
-Herobrine boards which use elan,ekth3000 with valid VCC:
+boards which use elan,ekth3000 with valid VCC:
 
-  sc7280-herobrine-villager-r1-lte.dtb: trackpad@2c: 'vcc-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
+  sc7180-trogdor-lazor-limozeen-nots-r4.dtb: trackpad@2c: 'vcc-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
 
-Fixes: ee2a62116015 ("arm64: dts: qcom: sc7280: Add device tree for herobrine villager")
+Fixes: 2c26adb8dbab ("arm64: dts: qcom: Add sc7180-lazor-limozeen skus")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280-herobrine-villager.dtsi | 2 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts     | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager.dtsi
-index 818d4046d2c7..38c8a3679fcb 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager.dtsi
-@@ -33,7 +33,7 @@ trackpad: trackpad@2c {
- 		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
+index 850776c5323d..70d5a7aa8873 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
+@@ -26,7 +26,7 @@ trackpad: trackpad@2c {
+ 		interrupt-parent = <&tlmm>;
+ 		interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
  
+-		vcc-supply = <&pp3300_fp_tp>;
++		vdd-supply = <&pp3300_fp_tp>;
  		hid-descr-addr = <0x20>;
--		vcc-supply = <&pp3300_z1>;
-+		vdd-supply = <&pp3300_z1>;
  
  		wakeup-source;
- 	};
 -- 
 2.34.1
 
