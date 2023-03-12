@@ -2,115 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19AA36B6B64
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Mar 2023 21:44:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E01416B6B6A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Mar 2023 21:47:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231542AbjCLUoB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Mar 2023 16:44:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53548 "EHLO
+        id S231276AbjCLUry (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Mar 2023 16:47:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231544AbjCLUn0 (ORCPT
+        with ESMTP id S231300AbjCLUrw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Mar 2023 16:43:26 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A3023866F;
-        Sun, 12 Mar 2023 13:42:52 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id nn12so10024226pjb.5;
-        Sun, 12 Mar 2023 13:42:52 -0700 (PDT)
+        Sun, 12 Mar 2023 16:47:52 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 972D33B214
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Mar 2023 13:47:50 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id x3so40932277edb.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Mar 2023 13:47:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678653771;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZTj6lDaB879i6vS4ZDrKb4b2c9OODf1NGI0zVIt2OIQ=;
-        b=KC3a1z9EFBAXvyyxFRBFqNe8y53x3UcUyQeZSEkxdXoFUAJoXRMW5x12S3KgDohLCq
-         HgPllXDe0L7d4jpa0swkH8xEUPkFw+qkPtFiETd3slsVUSiYo1BMGyXc78dOVy4xIsa/
-         iQz7mHAZKXq1dPOkNL0Budytd+6487+pbd6M9552NaGPYaDjcY0OoL/Kg3JCLgUOfw1j
-         VKsL6McmgvXWpcQP5dDkT0F/Lf8ekwYWTnQmW8G5vhEJFBvpzPwqbXsO+AWYZohCOO6R
-         EWELqpscPHrGPQKL7eMTq4bDp1G+IKNbckzIV0LI00pT4l33/MvugcwF0S7AKAFr/dJ+
-         +U6w==
+        d=linaro.org; s=google; t=1678654069;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=u22alB8uF/MS8UPXdbSnd7ZPrfnLaMOLZCtjFbg2V6Y=;
+        b=HssqLwEOKEbMThaJsnLwmZ38Xjw3cPvbBlEXDnao9b3AHt2O9/5VhkKSX694LtP4NQ
+         fccQek58uhkR5UEc+Wr60VUOKhiFH+kRwm0lN1aOC6BzfGTLi86KAaUbdza97j68fdMu
+         MRderlNFhI8KHoWnEiknCoIbuk4DBKW5/cKEcTU0U9wbOCRQfuHOpoFPTGnO6MPgakcJ
+         bkdglZqZ+crTRuq81O+XgufzkJ8SXLB4D1lGSpyo0j2Wc7Mdw3ptcDiTIidM0E3vJJgP
+         vFrvtVAIB5JT0WD5YX9DHYPKtiqD2uaUayOgVRwDQcy/IjmZjr7XlU18SshqkOaazdyW
+         2mCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678653771;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZTj6lDaB879i6vS4ZDrKb4b2c9OODf1NGI0zVIt2OIQ=;
-        b=zZf/mf/mNjE69j0uXSMEK66hVgPFXs/s+ykB22M6Z/dzjee8zhc2Twzv/axebtC+zI
-         1cvZZTaN42XcgnAsJmTw0y6elsh1BEiHeOYFER8fNW4TEFjPMeXNeKWkf/CkQ0sw51Pa
-         BN7OWqrelLILq5ZE+zOIRieNW6klHX8JxCmM4oiuYhmUKW0CZLHrtJt+gHUTqMQtIqH3
-         ms4+REdr3slhKkEfvq6u3sxgPWIdV6JWxM8XQ6veChqgWh07K1VoVcNDevyYHyNQu8/5
-         XlUesKlBSyMk25ORN7PSbBnh8Sl34LA9BfkVFzkJG2lw98orG6CX6cSF6A5xyZbk7sqP
-         a6+Q==
-X-Gm-Message-State: AO0yUKV5FG81HYqh4K2eGcN2hh5mecTXxIv5A9RXOXb9jx2os2lFw1YQ
-        RmlaW9Lf91urwfvbZ4L8hJ8=
-X-Google-Smtp-Source: AK7set8LS5r2Un4ozPG4+s7BFDawLVgaX+1P9ahu9XWoxUwBD1fydMV+4TYjTw5igtEd4Yq+x4LEeg==
-X-Received: by 2002:a17:90b:368c:b0:23c:8ee2:bc14 with SMTP id mj12-20020a17090b368c00b0023c8ee2bc14mr2702243pjb.24.1678653771444;
-        Sun, 12 Mar 2023 13:42:51 -0700 (PDT)
-Received: from localhost ([2601:1c0:5080:d9fa:9b45:95de:f47d:f85e])
-        by smtp.gmail.com with ESMTPSA id it14-20020a17090afb0e00b0023530b1e4a0sm3158971pjb.2.2023.03.12.13.42.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Mar 2023 13:42:50 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-pm@vger.kernel.org (open list:INTERCONNECT API),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 13/13] interconnect: Teach lockdep about icc_bw_lock order
-Date:   Sun, 12 Mar 2023 13:41:41 -0700
-Message-Id: <20230312204150.1353517-14-robdclark@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230312204150.1353517-1-robdclark@gmail.com>
-References: <20230312204150.1353517-1-robdclark@gmail.com>
+        d=1e100.net; s=20210112; t=1678654069;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=u22alB8uF/MS8UPXdbSnd7ZPrfnLaMOLZCtjFbg2V6Y=;
+        b=XgN7gDMgcTkA/kc0SKIPDSyo6tPTSSG45zRA2/AfOwPOwtSP1MStHD4WD8EYQpppQU
+         LyKGvNJz8rFZgLTbjdszBq68eo+8cfklzyUtPXLimWlAiSiwryzj+Oz0aKiV6X30KMVA
+         V2d9ThdCL7VrAMBqxDYXILelocyZQnnpK+eWQBOg/agLRFxnbIvd8KCH2LdQnJXUoMVA
+         QTzSp/+yShRYf2Aku+okrcTyMq6ZV186+jLam6UbSZFXII4eb0dGC39nimqDE2BCwC6I
+         h8jL5aU5QCwXrnF+IbEEX/bYrQq3sRowb2R6wGxjEDpBqtVkPYlVN5DzOV1UCm9kl5Ff
+         Qrtg==
+X-Gm-Message-State: AO0yUKWWyBKbEOX3Asm7iSaQ6+f8naQ/dcTDyt2NS783O9ZEPRSR+Hjm
+        COJsZSJD+tilUZPCWsXxQkuDqg==
+X-Google-Smtp-Source: AK7set8j1GEtvMUfsPHK5nbXb7L5QDMpQx68DJ00oQ5FfD5O29my4p27eLzJWkD4zete2mFObe6uSg==
+X-Received: by 2002:a17:906:5284:b0:915:fbba:2e0b with SMTP id c4-20020a170906528400b00915fbba2e0bmr19770139ejm.58.1678654068729;
+        Sun, 12 Mar 2023 13:47:48 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:d9f6:3e61:beeb:295a? ([2a02:810d:15c0:828:d9f6:3e61:beeb:295a])
+        by smtp.gmail.com with ESMTPSA id g8-20020a1709065d0800b008def483cf79sm2548293ejt.168.2023.03.12.13.47.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 12 Mar 2023 13:47:48 -0700 (PDT)
+Message-ID: <c9db83e8-f87d-b94d-0c23-8114adb312e1@linaro.org>
+Date:   Sun, 12 Mar 2023 21:47:47 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 1/5] dt-bindings: input: touchscreen: add bindings for
+ focaltech,fts
+Content-Language: en-US
+To:     Joel Selvaraj <joelselvaraj.oss@gmail.com>,
+        Caleb Connolly <caleb@connolly.tech>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Henrik Rydberg <rydberg@bitmath.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
+        Jeff LaBundy <jeff@labundy.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Markuss Broks <markuss.broks@gmail.com>,
+        Jean Delvare <jdelvare@suse.de>,
+        Max Krummenacher <max.krummenacher@toradex.com>,
+        Job Noorman <job@noorman.info>,
+        Alistair Francis <alistair@alistair23.me>,
+        Chris Morgan <macromorgan@hotmail.com>
+Cc:     linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230312093249.1846993-1-joelselvaraj.oss@gmail.com>
+ <20230312093249.1846993-2-joelselvaraj.oss@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230312093249.1846993-2-joelselvaraj.oss@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 12/03/2023 10:32, Joel Selvaraj wrote:
+> Add devicetree bindings for the Focaltech FTS touchscreen drivers.
+> 
+> Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
+> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> ---
+>  .../input/touchscreen/focaltech,fts.yaml      | 81 +++++++++++++++++++
+>  1 file changed, 81 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/input/touchscreen/focaltech,fts.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/input/touchscreen/focaltech,fts.yaml b/Documentation/devicetree/bindings/input/touchscreen/focaltech,fts.yaml
+> new file mode 100644
+> index 000000000000..07fe595cc9ed
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/input/touchscreen/focaltech,fts.yaml
 
-Teach lockdep that icc_bw_lock is needed in code paths that could
-deadlock if they trigger reclaim.
+I have doubts you will cover here all possible FTS controllers, so
+filename should be more specific, e.g. choose the oldest device compatible.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/interconnect/core.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+> @@ -0,0 +1,81 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/input/touchscreen/focaltech,fts.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Focaltech FTS I2C Touchscreen Controller
+> +
+> +maintainers:
+> +  - Joel Selvaraj <joelselvaraj.oss@gmail.com>
+> +  - Caleb Connolly <caleb@connolly.tech>
+> +
+> +allOf:
+> +  - $ref: touchscreen.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - focaltech,fts5452
+> +      - focaltech,fts8719
 
-diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index f7251784765f..5619963ee85c 100644
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -1127,13 +1127,21 @@ void icc_sync_state(struct device *dev)
- 			}
- 		}
- 	}
-+	mutex_unlock(&icc_bw_lock);
- 	mutex_unlock(&icc_lock);
- }
- EXPORT_SYMBOL_GPL(icc_sync_state);
- 
- static int __init icc_init(void)
- {
--	struct device_node *root = of_find_node_by_path("/");
-+	struct device_node *root;
-+
-+	/* Teach lockdep about lock ordering wrt. shrinker: */
-+	fs_reclaim_acquire(GFP_KERNEL);
-+	might_lock(&icc_bw_lock);
-+	fs_reclaim_release(GFP_KERNEL);
-+
-+	root = of_find_node_by_path("/");
- 
- 	providers_count = of_count_icc_providers(root);
- 	of_node_put(root);
--- 
-2.39.2
+Missing blank line
+
+> +  reg:
+> +    const: 0x38
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  reset-gpios:
+> +    maxItems: 1
+> +
+> +  avdd-supply:
+> +    description: a phandle for the regulator supplying analog power (2.6V to 3.3V).
+
+Drop "a phandle for the"
+
+> +
+> +  vddio-supply:
+> +    description: a phandle for the regulator supplying IO power (1.8V).
+
+Ditto
+
+> +
+> +  focaltech,max-touch-number:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description: max number of fingers supported
+
+Why this is not implied from compatible? IOW, why this differs between
+boards?
+
+If this property stays, then anyway "focaltech,max-touch", not number.
+There is no such unit suffix as number.
+
+> +    minimum: 2
+> +    maximum: 10
+> +
+> +  touchscreen-size-x: true
+> +  touchscreen-size-y: true
+
+Drop these two
+
+> +
+> +additionalProperties: false
+
+and then use unevaluatedProperties: false
+so all properties from common schema apply. Unless these are not really
+valid for the *device*?
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reset-gpios
+> +  - focaltech,max-touch-number
+> +  - touchscreen-size-x
+> +  - touchscreen-size-y
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/gpio/gpio.h>
+> +    &i2c5 {
+
+i2c
+
+> +      status="okay";
+
+Drop status
+
+Anyway this should pop warnings... Please run `make dt_binding_check`
+(see Documentation/devicetree/bindings/writing-schema.rst for instructions).
+
+> +
+> +      touchscreen: focaltech@38 {
+
+Node names should be generic.
+https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+
+Also, drop label touchscreen.
+
+> +        compatible = "focaltech,fts8719";
+> +        reg = <0x38>;
+> +        interrupt-parent = <&tlmm>;
+> +        interrupts = <31 IRQ_TYPE_EDGE_RISING>;
+> +
+
+
+Best regards,
+Krzysztof
 
