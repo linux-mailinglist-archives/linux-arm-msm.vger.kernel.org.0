@@ -2,124 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2B506B63CE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Mar 2023 09:07:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 600936B641A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Mar 2023 10:32:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229550AbjCLIHW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Mar 2023 04:07:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42508 "EHLO
+        id S229585AbjCLJcJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Mar 2023 05:32:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbjCLIHV (ORCPT
+        with ESMTP id S229473AbjCLJcI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Mar 2023 04:07:21 -0400
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F4785552A;
-        Sun, 12 Mar 2023 00:07:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678608439; x=1710144439;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=YmPy1TGrnZZKXeOcBlADYDdV8fSPWUUk6Ex8sYrXxqI=;
-  b=JNPg1OyKhUZ8Rb20FG9EEvlHjlCSlKaeoW+/P0+m5lt1jnO02OE8fNQJ
-   jVAF7hiDOOSnAUfUToDqTyeA+LxY3/WYYtMupl6ZdTsifNGi8bNxAnwYD
-   ewMfpx4JkbCPOiEifzcSx6Difko2P2YZLDNfamjKF3HAXw1moSBFIFyye
-   zwD3g+knCRsGn8NpavShc3FWQY3HDKKUzeJNwISg24OgHgHD+B09cUplw
-   JfGe4sJHbkHp/mq5nUsKp9MLiC+/o3iiHCnCrJZlPeUeEN97d3K+JTGrY
-   rZoE9ysoVbDIzokHPH8vgmh7DZ/FLKzQyYTwz0ClH4/C2Fs+Od1f2hi5k
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10646"; a="364628158"
-X-IronPort-AV: E=Sophos;i="5.98,254,1673942400"; 
-   d="scan'208";a="364628158"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2023 00:07:19 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10646"; a="628285419"
-X-IronPort-AV: E=Sophos;i="5.98,254,1673942400"; 
-   d="scan'208";a="628285419"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by orsmga003.jf.intel.com with ESMTP; 12 Mar 2023 00:07:17 -0800
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pbGjc-00057l-1E;
-        Sun, 12 Mar 2023 08:07:16 +0000
-Date:   Sun, 12 Mar 2023 16:06:45 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        lpieralisi@kernel.org, kw@linux.com
-Cc:     oe-kbuild-all@lists.linux.dev, kishon@kernel.org,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v2 1/7] PCI: endpoint: Pass EPF device ID to the probe
- function
-Message-ID: <202303121526.qVIG9eBb-lkp@intel.com>
-References: <20230307151416.176595-2-manivannan.sadhasivam@linaro.org>
+        Sun, 12 Mar 2023 05:32:08 -0400
+Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4425636FC0;
+        Sun, 12 Mar 2023 01:32:05 -0800 (PST)
+Received: from [192.168.1.103] (178.176.72.227) by msexch01.omp.ru
+ (10.188.4.12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.986.14; Sun, 12 Mar
+ 2023 12:31:54 +0300
+Subject: Re: [PATCH 7/8] arm64: dts: qcom: sa8295p: Enable teritiary
+ controller and its 4 USB ports
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>
+CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_wcheng@quicinc.com>, <quic_jackp@quicinc.com>,
+        <quic_harshq@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>
+References: <20230310163420.7582-1-quic_kriskura@quicinc.com>
+ <20230310163420.7582-8-quic_kriskura@quicinc.com>
+From:   Sergey Shtylyov <s.shtylyov@omp.ru>
+Organization: Open Mobile Platform
+Message-ID: <0cf9c721-6933-3c9c-0f81-f3fc6ad93edc@omp.ru>
+Date:   Sun, 12 Mar 2023 12:31:54 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230307151416.176595-2-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230310163420.7582-8-quic_kriskura@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [178.176.72.227]
+X-ClientProxiedBy: msexch01.omp.ru (10.188.4.12) To msexch01.omp.ru
+ (10.188.4.12)
+X-KSE-ServerInfo: msexch01.omp.ru, 9
+X-KSE-AntiSpam-Interceptor-Info: scan successful
+X-KSE-AntiSpam-Version: 5.9.59, Database issued on: 03/12/2023 09:13:06
+X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
+X-KSE-AntiSpam-Method: none
+X-KSE-AntiSpam-Rate: 59
+X-KSE-AntiSpam-Info: Lua profiles 176024 [Mar 12 2023]
+X-KSE-AntiSpam-Info: Version: 5.9.59.0
+X-KSE-AntiSpam-Info: Envelope from: s.shtylyov@omp.ru
+X-KSE-AntiSpam-Info: LuaCore: 507 507 08d345461d9bcca7095738422a5279ab257bb65a
+X-KSE-AntiSpam-Info: {rep_avail}
+X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
+X-KSE-AntiSpam-Info: {relay has no DNS name}
+X-KSE-AntiSpam-Info: {SMTP from is not routable}
+X-KSE-AntiSpam-Info: {Found in DNSBL: 178.176.72.227 in (user)
+ b.barracudacentral.org}
+X-KSE-AntiSpam-Info: {Found in DNSBL: 178.176.72.227 in (user)
+ dbl.spamhaus.org}
+X-KSE-AntiSpam-Info: 127.0.0.199:7.1.2;omp.ru:7.1.1;178.176.72.227:7.1.2,7.7.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1
+X-KSE-AntiSpam-Info: ApMailHostAddress: 178.176.72.227
+X-KSE-AntiSpam-Info: {DNS response errors}
+X-KSE-AntiSpam-Info: Rate: 59
+X-KSE-AntiSpam-Info: Status: not_detected
+X-KSE-AntiSpam-Info: Method: none
+X-KSE-AntiSpam-Info: Auth:dmarc=temperror header.from=omp.ru;spf=temperror
+ smtp.mailfrom=omp.ru;dkim=none
+X-KSE-Antiphishing-Info: Clean
+X-KSE-Antiphishing-ScanningType: Heuristic
+X-KSE-Antiphishing-Method: None
+X-KSE-Antiphishing-Bases: 03/12/2023 09:15:00
+X-KSE-AttachmentFiltering-Interceptor-Info: protection disabled
+X-KSE-Antivirus-Interceptor-Info: scan successful
+X-KSE-Antivirus-Info: Clean, bases: 3/12/2023 3:39:00 AM
+X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Manivannan,
+Hello!
 
-I love your patch! Yet something to improve:
+On 3/10/23 7:34 PM, Krishna Kurapati wrote:
 
-[auto build test ERROR on pci/next]
-[also build test ERROR on pci/for-linus jonmason-ntb/ntb-next linus/master v6.3-rc1 next-20230310]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> Enable teritiary controller for SA8295P (based on SC8280XP).
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam/PCI-endpoint-Pass-EPF-device-ID-to-the-probe-function/20230307-232050
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-patch link:    https://lore.kernel.org/r/20230307151416.176595-2-manivannan.sadhasivam%40linaro.org
-patch subject: [PATCH v2 1/7] PCI: endpoint: Pass EPF device ID to the probe function
-config: x86_64-randconfig-a016-20220905 (https://download.01.org/0day-ci/archive/20230312/202303121526.qVIG9eBb-lkp@intel.com/config)
-compiler: gcc-11 (Debian 11.3.0-8) 11.3.0
-reproduce (this is a W=1 build):
-        # https://github.com/intel-lab-lkp/linux/commit/26f2c0c8a0b85aceb28bc5688851fab125a55ac6
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Manivannan-Sadhasivam/PCI-endpoint-Pass-EPF-device-ID-to-the-probe-function/20230307-232050
-        git checkout 26f2c0c8a0b85aceb28bc5688851fab125a55ac6
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        make W=1 O=build_dir ARCH=x86_64 olddefconfig
-        make W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash
+   Tertiary?
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303121526.qVIG9eBb-lkp@intel.com/
+> Add pinctrl support for usb ports to provide VBUS to connected peripherals.
+> 
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+[...]
 
-All errors (new ones prefixed by >>):
-
->> drivers/pci/endpoint/functions/pci-epf-vntb.c:1433:27: error: initialization of 'int (*)(struct pci_epf *, const struct pci_epf_device_id *)' from incompatible pointer type 'int (*)(struct pci_epf *)' [-Werror=incompatible-pointer-types]
-    1433 |         .probe          = epf_ntb_probe,
-         |                           ^~~~~~~~~~~~~
-   drivers/pci/endpoint/functions/pci-epf-vntb.c:1433:27: note: (near initialization for 'epf_ntb_driver.probe')
-   cc1: some warnings being treated as errors
-
-
-vim +1433 drivers/pci/endpoint/functions/pci-epf-vntb.c
-
-e35f56bb03304a Frank Li 2022-02-22  1430  
-e35f56bb03304a Frank Li 2022-02-22  1431  static struct pci_epf_driver epf_ntb_driver = {
-e35f56bb03304a Frank Li 2022-02-22  1432  	.driver.name    = "pci_epf_vntb",
-e35f56bb03304a Frank Li 2022-02-22 @1433  	.probe          = epf_ntb_probe,
-e35f56bb03304a Frank Li 2022-02-22  1434  	.id_table       = epf_ntb_ids,
-e35f56bb03304a Frank Li 2022-02-22  1435  	.ops            = &epf_ntb_ops,
-e35f56bb03304a Frank Li 2022-02-22  1436  	.owner          = THIS_MODULE,
-e35f56bb03304a Frank Li 2022-02-22  1437  };
-e35f56bb03304a Frank Li 2022-02-22  1438  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+MBR, Sergey
