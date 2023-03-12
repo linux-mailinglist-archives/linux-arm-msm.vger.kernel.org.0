@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35AD76B6A40
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Mar 2023 19:39:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DFDB46B6A3F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Mar 2023 19:38:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231544AbjCLSiQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Mar 2023 14:38:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60566 "EHLO
+        id S231511AbjCLSiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Mar 2023 14:38:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231124AbjCLSiI (ORCPT
+        with ESMTP id S231339AbjCLSiI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 12 Mar 2023 14:38:08 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1448BA278
-        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Mar 2023 11:37:33 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id j11so40269437edq.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Mar 2023 11:37:33 -0700 (PDT)
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 242EB9ED0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Mar 2023 11:37:32 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id da10so40353126edb.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Mar 2023 11:37:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678646191;
+        d=linaro.org; s=google; t=1678646192;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SuPzeXIkkvxZlmBGwuF8BA+hbLGZlSob+2JT6Oo/EEM=;
-        b=HOy1+bQPa4p0NPb0+dDp2X9KViwR9fYIHAhZ8QfG2PdTYYULkJ2tKcmssHjeYG2oyt
-         LUaj124iD2LEeKvnx94x7Bo8QxUudW87q5xc0RXZzrnFtJv/RLrWLE6jQrKS7pWdv/O7
-         EDxDbSTpKpWbGgUq6/yjuBJ4IfKBX/qJBYbtIXaXfT9v1MECLnPD14jLLNZBLlbuJOfq
-         jUOE+M6I51ch40pJOZLBF/wGTOludsewVAQbDzYEN7Bjae8fFj3Ytd5TuJ+eyh532e4+
-         0ewj4a7+zqTD6J9TUeQqrKEsdLiPWLaUbjIXkNfve2GOptPcoQ1oNfvp7T/6AkPC6C53
-         0/rw==
+        bh=94ec/3Lck7xux4vrbUrW03zCIaDqbzydjt56XL/nSks=;
+        b=lf0gwxeU6DY+IZY4GVK57xUVeE7XF73dJkJqqO78Pv8iAbHs9ZfLZggElH7CZu2s7r
+         h9FqxkacVflCkgmxcBjX9xz2hCYbiVk7I1brPZYiXAK5Gc+ZPPiXHnFBQqxu5/Ch9P3M
+         wSNcl8KKuGTszZgv6oNIfwm2yVBLoXAj13olpU2RwMli6fLDYWoRQlmw1nPGN0T6JIsB
+         9PrmpQJfDN9TDYzcvtNHLFn2C2/PDry8OapiPf41EaT1PCaADkX4tPJeKNSvHqkM7GZJ
+         bWTsZzUrBpJGcH1Wde8MhGawMvciopWwYbMTa+YOwR5SNuoLBvhRShJOQ9gWXhPYzypX
+         JeOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678646191;
+        d=1e100.net; s=20210112; t=1678646192;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SuPzeXIkkvxZlmBGwuF8BA+hbLGZlSob+2JT6Oo/EEM=;
-        b=2+jdjMyWLP+289caFBg1uhFxRNScG9FTNJogZmd4zXqwlpWG9XPaOTOSAu5uw8CXnU
-         upVpjw+KE/qucHPBfVcPUl2V5kSrlj7V+SnzLJoz7VsjAHia8vxs6jV1dBKhdFC+De2z
-         RPI/lRjYskebpqO3LCI/BUlTf8yVsxcXDiZF4CdE9JrRec7koOYVe43van1tmka8vC0S
-         vy7Y6L8xftKKVjZobLKB+D0ym58BD5kTqt25Sy/3Ov/daaDgxCiINut836wQ6d1Z3594
-         uywbajSbPZMB/MalwzII3jCR2duQ/CCZIF0nkOe/GHBhgHOWGcpklTTw8gYqj4PEs77T
-         2lsQ==
-X-Gm-Message-State: AO0yUKVKRYhhGFfWOeOlrY42JPuwkX42yVSrTFqLGkO9EfbO3AnQHfKX
-        ks0wcgIzY2yss7+pWN79BtXBfw==
-X-Google-Smtp-Source: AK7set9HLozRBqMdyTjPD5NrdfwGCNQCb5xIU53D6EMe2N5ul7aBJKW0Au2hRZrT9E/qZjW6ys77HQ==
-X-Received: by 2002:a17:907:7f0b:b0:907:9470:b7ab with SMTP id qf11-20020a1709077f0b00b009079470b7abmr35591538ejc.71.1678646191153;
-        Sun, 12 Mar 2023 11:36:31 -0700 (PDT)
+        bh=94ec/3Lck7xux4vrbUrW03zCIaDqbzydjt56XL/nSks=;
+        b=k0pfWGGiSbEgq0SYZw1GdMxUKMzVhvpiJv3joB4IeyvKHIA2j/bIfTVa6nXWcqglMr
+         3DJztZ7f+K1zXtX6x6oTSw8vznmRKAn6O6XbRSDI3p7lqCY5IYDOPbAZzIz1p5RjkxLx
+         xxBmrY8ERWGkV/ELRhDFfmESsk1o7dOB4pHPA45pE63+oTKHK5BlCOvbZyDLuXykcS74
+         igsrgp+HPmJaVbDpHNcuoUIhf+eOpJo1NXZU3VjsRc9eK5qk5dgoDkkl3fhgDKYP02VX
+         +dP3hMhJo/ZBFwlq6n1rPdVnoo3VRxrxz2jTexL24l6Lo9Vxl2PYtliNa3+GXcHB4+wT
+         zpjQ==
+X-Gm-Message-State: AO0yUKWss5vQJ8Q9bbuwpnRoY9wqEyze565Y7tp2Ls3cresLKOdReZCZ
+        xslSqohXaTBU52Eqo/0H89MI/w==
+X-Google-Smtp-Source: AK7set8rjzGhg/wmOHsAOLvNcuIFzbRYRuf+zxKpPVlz2pE+Pbd3q8VJefCPwGmYY12b1zIouuJA+g==
+X-Received: by 2002:a17:907:2122:b0:926:2363:a276 with SMTP id qo2-20020a170907212200b009262363a276mr2346930ejb.39.1678646192238;
+        Sun, 12 Mar 2023 11:36:32 -0700 (PDT)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:d9f6:3e61:beeb:295a])
-        by smtp.gmail.com with ESMTPSA id p14-20020a1709060dce00b0092669fb4ba1sm893806eji.130.2023.03.12.11.36.30
+        by smtp.gmail.com with ESMTPSA id p14-20020a1709060dce00b0092669fb4ba1sm893806eji.130.2023.03.12.11.36.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Mar 2023 11:36:30 -0700 (PDT)
+        Sun, 12 Mar 2023 11:36:31 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -66,9 +66,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5/8] arm64: dts: qcom: msm8998-oneplus-cheeseburger: revert "fix backlight pin function"
-Date:   Sun, 12 Mar 2023 19:36:19 +0100
-Message-Id: <20230312183622.460488-5-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6/8] arm64: dts: qcom: msm8994-kitakami: drop unit address from PMI8994 regulator
+Date:   Sun, 12 Mar 2023 19:36:20 +0100
+Message-Id: <20230312183622.460488-6-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230312183622.460488-1-krzysztof.kozlowski@linaro.org>
 References: <20230312183622.460488-1-krzysztof.kozlowski@linaro.org>
@@ -83,38 +83,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This reverts commit 46546f28825cf3a5ef6873b9cf947cd85c8a7258 because it
-mistakenly took PMIC pinctrl/GPIO as TLMM.  The TLMM pinctrl uses "gpio"
-function, but PMIC uses "normal", so original code was correct:
+The PMIC regulators are not supposed to have unit addresses.
 
-  msm8998-oneplus-cheeseburger.dtb: pmic@2: gpio@c000:button-backlight-state: 'oneOf' conditional failed, one must be fixed:
-    'gpio' is not one of ['normal', 'paired', 'func1', 'func2', 'dtest1', 'dtest2', 'dtest3', 'dtest4', 'func3', 'func4']
-
-Fixes: 46546f28825c ("arm64: dts: qcom: msm8998-oneplus-cheeseburger: fix backlight pin function")
+Fixes: e9783584c9b7 ("arm64: dts: qcom: msm8994-kitakami: Add VDD_GFX regulator")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
 ---
+ arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Eh, embarrassing. I would say to myself - use dtbs_check on patches, but
-I think that time there were too many errors coming from Qualcomm
-pinctrl bindings.
----
- arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts b/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts
-index d36b36af49d0..fac8b3510cd3 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts
-@@ -34,7 +34,7 @@ led-keypad-backlight {
- &pmi8998_gpios {
- 	button_backlight_default: button-backlight-state {
- 		pins = "gpio5";
--		function = "gpio";
-+		function = "normal";
- 		bias-pull-down;
- 		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
+index 3ceb86b06209..26059f861250 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
+@@ -173,8 +173,7 @@ &pmi8994_spmi_regulators {
+ 	 * power domain.. which still isn't enough and forces us to bind
+ 	 * OXILI_CX and OXILI_GX together!
+ 	 */
+-	vdd_gfx: s2@1700 {
+-		reg = <0x1700 0x100>;
++	vdd_gfx: s2 {
+ 		regulator-name = "VDD_GFX";
+ 		regulator-min-microvolt = <980000>;
+ 		regulator-max-microvolt = <980000>;
 -- 
 2.34.1
 
