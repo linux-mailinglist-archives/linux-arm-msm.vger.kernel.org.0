@@ -2,161 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AD2A6B81E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 20:54:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C196F6B81EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 20:57:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229707AbjCMTyS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 15:54:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42688 "EHLO
+        id S229573AbjCMT5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 15:57:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230028AbjCMTyS (ORCPT
+        with ESMTP id S229494AbjCMT5s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 15:54:18 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 407833CE15
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 12:54:15 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id ja10so4567916plb.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 12:54:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678737254;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IIRpccnj6QdWaP+7djIK0B82m70OeUvp6oiDbiM2NyY=;
-        b=sBpLJ+pwrdjzadrhoAhhR92IWQPiGL8BV/PZ+8Yv21zLaf0IlPFpjg5aKxThafUlyK
-         cTdd++/jVmnM5xndiaYa1R/iRFObBdqC8qf27vTmeAEJj9iIpmpAtU0blv9EKRVMOJMu
-         kurZdmTYaA1C0GXvQmHSUr59C6Wm5SS+HdXGSi2CWie1vO/zo20fucspo505nB53SFz9
-         yRd+aPqintpYobBQckGgfXFKpa1v6XvnOY6FnSdHubc6OUMVIsVMAEMSjHvOkJJCSWC2
-         51cv12vClcj7koN8DtPEa/ZE9J5VdDXDzAeKEzwAHPejalFzcXTX3yG40gdw4/WQGW8x
-         y/2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678737254;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IIRpccnj6QdWaP+7djIK0B82m70OeUvp6oiDbiM2NyY=;
-        b=N0lskNiao178RgM0VvSpn4JumYaM0VUj3aUzyi6p2WifF7F+pZ0TinAfa/v72D2Xvs
-         sU2yExTuc7aLwalwXeBZW9fyYlrWap0oJJmDUB7igPJxbsEybqKMQnMVwjIGqtNhml/E
-         0iaJMDUczOxtXVUfdfB/AUzf5J/07Wpbh7bvCapInFBPNqeFSVq2X+fLMYU8HB3ujumx
-         B+1dB5xxFHWBhuTsTIhBmBd/FPhv55LxHMcwOQJqdC4vXTH/Gn35fWLpcJTV1Y/IeJLB
-         LH59jfBgbWfcS3JkvdXA1sx2rN8ZwXRSZXmzV4es9KfQbVpFMpFd9pGkRhth1V9fkc+x
-         F43A==
-X-Gm-Message-State: AO0yUKWbc8bR8qy+CInlpn50MSXBnd3AsFgJ5rfP00U08jmGorQ8cjvh
-        Qp7GpRd6KezgTZfyXSGKgGnJ3A==
-X-Google-Smtp-Source: AK7set+BggVToSySWpaN9jUkKsW5DIa7uiTKL/TI0z17kIwb6FoN7xVsApFGpvy6dzvv/SAvv7uEaQ==
-X-Received: by 2002:a05:6a20:8e07:b0:cd:d13:8a6e with SMTP id y7-20020a056a208e0700b000cd0d138a6emr40737807pzj.21.1678737254616;
-        Mon, 13 Mar 2023 12:54:14 -0700 (PDT)
-Received: from ?IPV6:2401:4900:1c5e:4a3e:15d0:d540:3861:ef0e? ([2401:4900:1c5e:4a3e:15d0:d540:3861:ef0e])
-        by smtp.gmail.com with ESMTPSA id s14-20020a65644e000000b0050362744b63sm99565pgv.90.2023.03.13.12.54.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Mar 2023 12:54:14 -0700 (PDT)
-Message-ID: <99b7f8c2-38d5-9912-06aa-65beb723cfcf@linaro.org>
-Date:   Tue, 14 Mar 2023 01:24:08 +0530
+        Mon, 13 Mar 2023 15:57:48 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 722CC84F4E;
+        Mon, 13 Mar 2023 12:57:47 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id DB088CE1177;
+        Mon, 13 Mar 2023 19:57:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6F3C433D2;
+        Mon, 13 Mar 2023 19:57:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678737464;
+        bh=SE/kLlvb22yM3HfdWJ2vyvNY7QKQkNPUOvGqbw17aZk=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=R+RaCeTb5li4mVAuenrk+Tgs7Z1IVYD7n11bWd/A5GFp+KgVkY1LqnlDRvstVkRLc
+         zTsAkn07STHJUvihJM151923lNIgqb9i3+YPmcx/9zIsnU5ipQEDIppp/HM9kSxoSt
+         vFgTPwG+ZQRYnYzhwawFV9qBVUZLkfu9wLU7PqzRcI1iSF1omykb9zRL4i2JhrTem7
+         PgExx1og2dyfubRBa8UI5aJIpE/sTHCqroypDNogjgOW1HUPi7rHNZI3TiXISAo35A
+         d0cqrmycr28KTMXDkFT6WM2Bj6OEJ//fckOk7pgb7TSt21sNHdq0d65UwK0ljXUPAD
+         NZQGUd35WQ5Ng==
+Message-ID: <3995e6b4-b222-6152-0292-29ed3704de02@kernel.org>
+Date:   Mon, 13 Mar 2023 21:57:37 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH 2/2] dt-bindings: remoteproc: qcom: Add sm6115 pas yaml
- file
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     mani@kernel.org, mathieu.poirier@linaro.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-References: <20230128053504.2099620-1-bhupesh.sharma@linaro.org>
- <20230128053504.2099620-2-bhupesh.sharma@linaro.org>
- <7cbd882d-c71c-ad92-6dbe-0f178043fdfd@linaro.org>
+Subject: Re: [PATCH 0/2] interconnect: qcom: rpm: fix msm8996 interconnect
+ registration
 Content-Language: en-US
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <7cbd882d-c71c-ad92-6dbe-0f178043fdfd@linaro.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230313084953.24088-1-johan+linaro@kernel.org>
+From:   Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <20230313084953.24088-1-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+Hi Johan,
 
-On 3/9/23 1:56 PM, Krzysztof Kozlowski wrote:
-> On 28/01/2023 06:35, Bhupesh Sharma wrote:
->> This documents the aDSP, cDSP and MPSS DSPs present
->> on the SM6115 SoC.
->>
->> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->> ---
->>   .../bindings/remoteproc/qcom,sm6115-pas.yaml  | 143 ++++++++++++++++++
->>   1 file changed, 143 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml
->> new file mode 100644
->> index 000000000000..f5d1fa9f45f1
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml
->> @@ -0,0 +1,143 @@
->> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/remoteproc/qcom,sm6115-pas.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm SM6115 Peripheral Authentication Service
->> +
->> +maintainers:
->> +  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
->> +
->> +description:
->> +  Qualcomm SM6115 SoC Peripheral Authentication Service loads and boots
->> +  firmware on the Qualcomm DSP Hexagon cores.
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,sm6115-adsp-pas
->> +      - qcom,sm6115-cdsp-pas
->> +      - qcom,sm6115-mpss-pas
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  clocks:
->> +    items:
->> +      - description: XO clock
->> +
->> +  clock-names:
->> +    items:
->> +      - const: xo
->> +
->> +  memory-region:
->> +    minItems: 1
+Thank you for all the fixes!
+
+On 13.03.23 10:49, Johan Hovold wrote:
+> Christophe noticed that a recent patch adding a missing clock disable to
+> one of the Qualcomm rpm driver error paths was broken. This would lead
+> to the provider not being registered on msm8996 which is the only
+> platform using this code path.
+
+Thanks Christophe for catching this!
+
+> Turns out, however, that the power domain attach during probe is bogus
+> and would always succeed as any power domain would already have been
+> attached by the platform bus code.
+
+Thanks Konrad for testing and confirming!
+
+> Georgi, the offending commit is currently in your icc-next (and local
+> icc-fixes) branch. Perhaps you can fold in the fixup unless you prefer
+> applying it on top.
 > 
-> maxItems instead
+> The bogus PM domain lookup is redundant and confusing but should
+> otherwise be benign so the removal could be applied to either branch.
+
+Maybe then I'll just drop this:
+	interconnect: qcom: rpm: fix probe PM domain error handling
+and apply this one instead:
+	interconnect: qcom: rpm: drop bogus pm domain attach
+
+BR,
+Georgi
+
 > 
->> +    description: Reference to the reserved-memory for the Hexagon core
->> +
->> +  smd-edge: false
->> +
->> +  firmware-name:
->> +    $ref: /schemas/types.yaml#/definitions/string
->> +    description: Firmware name for the Hexagon core
->> +
->> +required:
->> +  - compatible
->> +  - reg
+> Johan
 > 
-> also memory-region
-
-
-Since this patch was already picked up by Bjorn, I will send a fix as 
-per your suggestion as a separate patch shortly.
-
-Thanks,
-Bhupesh
+> 
+> Johan Hovold (2):
+>    interconnect: qcom: rpm: fix msm8996 interconnect registration
+>    interconnect: qcom: rpm: drop bogus pm domain attach
+> 
+>   drivers/interconnect/qcom/icc-rpm.c | 5 -----
+>   drivers/interconnect/qcom/icc-rpm.h | 1 -
+>   drivers/interconnect/qcom/msm8996.c | 1 -
+>   3 files changed, 7 deletions(-)
+> 
 
