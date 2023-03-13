@@ -2,177 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 142AA6B8027
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 19:14:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 927236B8082
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 19:29:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229528AbjCMSOw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 14:14:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58532 "EHLO
+        id S229769AbjCMS33 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 14:29:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbjCMSOs (ORCPT
+        with ESMTP id S229712AbjCMS32 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 14:14:48 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 958275CEDE;
-        Mon, 13 Mar 2023 11:14:46 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (unknown [89.244.118.114])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 5D6B16FA;
-        Mon, 13 Mar 2023 19:14:44 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1678731284;
-        bh=ECiuzkN+DQNQmLQ9FTJM9eiXiAf3Dhfgrx4QRUBTQag=;
+        Mon, 13 Mar 2023 14:29:28 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F37B882A92;
+        Mon, 13 Mar 2023 11:28:47 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3D13661468;
+        Mon, 13 Mar 2023 18:27:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01344C433D2;
+        Mon, 13 Mar 2023 18:27:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678732060;
+        bh=/UptELta1fbfIVlSU3lW1JfbEsBBjNSMIYGDMc0a6Bc=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Hp3tT8MEY1rg0ePG1lryXVLvQL0nDEttkrDEwbh9XQRRhQxYs/wPJoW700jfDUeCF
-         qFrwMfZYGqpNq3oN/L5IQrZVh0/Sm2OnHOfg3vg1xaZFkPfRu9dY9YGq3jw/XRu87T
-         J57mJg9x30wvyFq0EAMz4gQknKoQlaikH07FFnXs=
-Date:   Mon, 13 Mar 2023 20:14:48 +0200
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc:     tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
-        ming.qian@nxp.com, shijie.qin@nxp.com, eagle.zhou@nxp.com,
-        bin.liu@mediatek.com, matthias.bgg@gmail.com,
-        angelogioacchino.delregno@collabora.com, tiffany.lin@mediatek.com,
-        andrew-ct.chen@mediatek.com, yunfei.dong@mediatek.com,
-        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
-        daniel.almeida@collabora.com, hverkuil-cisco@xs4all.nl,
-        jerbel@kernel.org, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, kernel@collabora.com
-Subject: Re: [RFC 3/4] media: videobuf2: Use bitmap to manage vb2 index
-Message-ID: <20230313181448.GD22646@pendragon.ideasonboard.com>
-References: <20230313135916.862852-1-benjamin.gaignard@collabora.com>
- <20230313135916.862852-4-benjamin.gaignard@collabora.com>
+        b=VvvKyry0IHRmRY/4zqVRDhYa1hlwWP5XO8DPtmSV86lG3jJNM7uxAeqCM3/hMjEnS
+         /4fGZINOj3BbOFj7VtuSn5/zADgew9/AhucSrWiCDWCAvWqK46vpsQ6ipb+6neCHzX
+         D26bSYYK00ZZp7wS/PyFzdSBom5Fc1YvU4I2sz/4csGzme6PYNmreJ9TJMdSLn2pJ3
+         cgxXHKzmvZ0aDqUoSafiMpZKQIjdbzRSu92/wVYzEbmBwzFm5rb1KpTZ9Ix5kcdW8E
+         IH7F21aKBHvZjZ0vyXFvDpM4UNcMSFajBrFy3LzzWeznIYwqpqWY/2y3YL9Y5Kytyi
+         kj7t2/qKpgCbw==
+Date:   Mon, 13 Mar 2023 11:27:38 -0700
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: Re: [RFC PATCH v3 2/7] dt-bindings: mmc: sdhci-msm: Add ICE phandle
+ and drop core clock
+Message-ID: <ZA9rGihWeLhUYMdA@sol.localdomain>
+References: <20230313115202.3960700-1-abel.vesa@linaro.org>
+ <20230313115202.3960700-3-abel.vesa@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230313135916.862852-4-benjamin.gaignard@collabora.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230313115202.3960700-3-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Benjamin,
+On Mon, Mar 13, 2023 at 01:51:57PM +0200, Abel Vesa wrote:
+> Subject: Re: [RFC PATCH v3 2/7] dt-bindings: mmc: sdhci-msm: Add ICE phandle
+> and drop core clock
 
-Thank you for the patch.
+"and drop core clock" should be removed from the subject now, right?  Same for
+patch 3.
 
-On Mon, Mar 13, 2023 at 02:59:15PM +0100, Benjamin Gaignard wrote:
-> Using a bitmap to get vb2 index will allow to avoid holes
-> in the indexes when introducing DELETE_BUF ioctl.
-> 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> ---
->  .../media/common/videobuf2/videobuf2-core.c   | 22 ++++++++++++++++++-
->  include/media/videobuf2-core.h                |  6 +++++
->  2 files changed, 27 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-> index 96597d339a07..3554811ec06a 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-core.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> @@ -397,6 +397,22 @@ static void init_buffer_cache_hints(struct vb2_queue *q, struct vb2_buffer *vb)
->  		vb->skip_cache_sync_on_finish = 1;
->  }
->  
-> +/*
-> + * __vb2_get_index() - find a free index in the queue for vb2 buffer.
-> + *
-> + * Returns an index for vb2 buffer.
-> + */
-> +static int __vb2_get_index(struct vb2_queue *q)
-> +{
-> +	unsigned long index;
-> +
-> +	index = bitmap_find_next_zero_area(q->bmap, q->idx_max, 0, 1, 0);
-> +	if (index > q->idx_max)
-> +		dprintk(q, 1, "no index available for buffer\n");
-
-Ignoring the error is scary. If we limited the total number of buffers
-as proposed in the review of 2/4, the error wouldn't occur.
-
-I'm also wondering if it wouldn't be better to use the IDA API to
-allocate IDs, and possibly the IDR API as well to replace the list.
-
-> +
-> +	return index;
-> +}
-> +
->  /*
->   * __vb2_queue_alloc() - allocate vb2 buffer structures and (for MMAP type)
->   * video buffer memory for all buffers/planes on the queue and initializes the
-> @@ -423,7 +439,7 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
->  		vb->state = VB2_BUF_STATE_DEQUEUED;
->  		vb->vb2_queue = q;
->  		vb->num_planes = num_planes;
-> -		vb->index = q->num_buffers + buffer;
-> +		vb->index = __vb2_get_index(q);
->  		vb->type = q->type;
->  		vb->memory = memory;
->  		init_buffer_cache_hints(q, vb);
-> @@ -2438,6 +2454,9 @@ int vb2_core_queue_init(struct vb2_queue *q)
->  	mutex_init(&q->mmap_lock);
->  	init_waitqueue_head(&q->done_wq);
->  
-> +	q->idx_max = ALIGN(256, BITS_PER_LONG);
-> +	q->bmap = bitmap_zalloc(q->idx_max, GFP_KERNEL);
-> +
->  	q->memory = VB2_MEMORY_UNKNOWN;
->  
->  	if (q->buf_struct_size == 0)
-> @@ -2465,6 +2484,7 @@ void vb2_core_queue_release(struct vb2_queue *q)
->  	mutex_lock(&q->mmap_lock);
->  	__vb2_queue_free(q, q->num_buffers);
->  	mutex_unlock(&q->mmap_lock);
-> +	bitmap_free(q->bmap);
->  }
->  EXPORT_SYMBOL_GPL(vb2_core_queue_release);
->  
-> diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-core.h
-> index 47f1f35eb9cb..4fddc6ae9f20 100644
-> --- a/include/media/videobuf2-core.h
-> +++ b/include/media/videobuf2-core.h
-> @@ -561,6 +561,8 @@ struct vb2_buf_ops {
->   * @dma_dir:	DMA mapping direction.
->   * @allocated_bufs: list of buffer allocated for the queue.
->   * @num_buffers: number of allocated/used buffers
-> + * @bmap: Bitmap of buffers index
-> + * @idx_max: number of bits in bmap
->   * @queued_list: list of buffers currently queued from userspace
->   * @queued_count: number of buffers queued and ready for streaming.
->   * @owned_by_drv_count: number of buffers owned by the driver
-> @@ -624,6 +626,8 @@ struct vb2_queue {
->  	enum dma_data_direction		dma_dir;
->  	struct list_head		allocated_bufs;
->  	unsigned int			num_buffers;
-> +	unsigned long			*bmap;
-> +	int				idx_max;
->  
->  	struct list_head		queued_list;
->  	unsigned int			queued_count;
-> @@ -1259,6 +1263,7 @@ static inline struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q,
->  static inline void vb2_set_buffer(struct vb2_queue *q, struct vb2_buffer *vb)
->  {
->  	list_add_tail(&vb->allocated_entry, &q->allocated_bufs);
-> +	__set_bit(vb->index, q->bmap);
->  }
->  
->  /**
-> @@ -1268,6 +1273,7 @@ static inline void vb2_set_buffer(struct vb2_queue *q, struct vb2_buffer *vb)
->   */
->  static inline void vb2_del_buffer(struct vb2_queue *q, struct vb2_buffer *vb)
->  {
-> +	__clear_bit(vb->index, q->bmap);
->  	list_del(&vb->allocated_entry);
->  }
->  
-
--- 
-Regards,
-
-Laurent Pinchart
+- Eric
