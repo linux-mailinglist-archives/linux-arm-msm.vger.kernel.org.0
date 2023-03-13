@@ -2,67 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 791596B8101
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 19:46:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BA7C6B8160
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 20:07:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231387AbjCMSqF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 14:46:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40504 "EHLO
+        id S230308AbjCMTHx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 15:07:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231147AbjCMSqA (ORCPT
+        with ESMTP id S229516AbjCMTHw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 14:46:00 -0400
+        Mon, 13 Mar 2023 15:07:52 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68C6128D34;
-        Mon, 13 Mar 2023 11:45:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BFF6746E3;
+        Mon, 13 Mar 2023 12:07:51 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E81E061477;
-        Mon, 13 Mar 2023 18:44:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B84FC433D2;
-        Mon, 13 Mar 2023 18:44:39 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8151E61469;
+        Mon, 13 Mar 2023 19:07:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23CAC4339C;
+        Mon, 13 Mar 2023 19:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678733080;
-        bh=dSwjc6VrZyuKRs3FcaS0zc1QaXTsOptD0AFwcVyG0TE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=QUAVNamWky1dVxT9NHY5JfDqMATEh4vR38zN2/zYgXqZq16+e1apMBeGMi6OasDKA
-         Tl3R5o90cdFuLE7UsxczfCVUYGRXK/zoJ6G5MJAqKXffWY/4U0dpOAPvIEmh8aw87A
-         LJnaOExIMOgSdLbZzHxEe1ztgvZ1Vlsiyr0rB2br2S5KBQhheIPI5/ZpF39XENlwwq
-         6DkIzAXK1WW5i7BiWi+y3bPwK1AQRxZPjWjdW2PvuiKmMJF3FelN7yntJ+ac9QRwra
-         TDFstxdo3jwFyx9A2V/9jO5xDBmFpxvn7DH00kBnukVhJhavQ2rGWf16fbh2dy9E2U
-         6iepRZj96D/lg==
-Date:   Mon, 13 Mar 2023 11:44:37 -0700
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        s=k20201202; t=1678734469;
+        bh=mixkviXkrTQKP4glJUkMivKz0/es3ZvvcLqTmvgYhWQ=;
+        h=From:To:In-Reply-To:References:Subject:Date:From;
+        b=gMPEuJOWVffTQXdCaxYCQVCoYfBtXQ+/emqhw9/rBwO340K0nrNHThlQ+JuSc7JO1
+         o1RaJ5azj9+AIAmhoHqRamzIA1F+D3cRWGeG47J533OnytjJ2xYEItFr6s95t46qwr
+         zoSp3ejYiUUGbvkDgD5ahMgeBF5+yiowztsNutT345Oi/Q2+cqZjaYU1HLNoUacAEp
+         nh7NkZ4y1jD95dJl+veq4EzY0RBJqHcptAYFLQC5BwhbvPIxYDWqcmG16YBp/TVhyY
+         8Qa2oD4/lTIB19Y/uHQIf2eia3vlbfeFfgwS4ytVu6y1KZiXbNdSSzQ0nMBZa0Ct/l
+         oC3/Db4klimqA==
+From:   Mark Brown <broonie@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-Subject: Re: [RFC PATCH v3 4/7] soc: qcom: Make the Qualcomm UFS/SDCC ICE a
- dedicated driver
-Message-ID: <ZA9vFcjLMoifqcsE@sol.localdomain>
-References: <20230313115202.3960700-1-abel.vesa@linaro.org>
- <20230313115202.3960700-5-abel.vesa@linaro.org>
+        Sebastian Reichel <sre@kernel.org>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
+        Oder Chiou <oder_chiou@realtek.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-arm-kernel@lists.infradead.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230310214333.274903-1-krzysztof.kozlowski@linaro.org>
+References: <20230310214333.274903-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: (subset) [PATCH 1/9] ASoC: qcom: lpass-sc7280: Drop
+ of_match_ptr for ID table
+Message-Id: <167873446544.106067.10586777003172589901.b4-ty@kernel.org>
+Date:   Mon, 13 Mar 2023 19:07:45 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230313115202.3960700-5-abel.vesa@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-bd1bf
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -72,180 +72,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 13, 2023 at 01:51:59PM +0200, Abel Vesa wrote:
-> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-> new file mode 100644
-> index 000000000000..d664dd598791
-> --- /dev/null
-> +++ b/drivers/soc/qcom/ice.c
-> @@ -0,0 +1,347 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Qualcomm ICE (Inline Crypto Engine) support.
-> + *
-> + * Copyright (c) 2013-2019, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2019, Google LLC
-> + * Copyright (c) 2023, Linaro Limited
-> + */
-> +
-> +#include <linux/bitfield.h>
-> +#include <linux/clk.h>
-> +#include <linux/delay.h>
-> +#include <linux/iopoll.h>
-> +#include <linux/of_platform.h>
-> +
-> +#include <linux/firmware/qcom/qcom_scm.h>
-> +
-> +#include <soc/qcom/ice.h>
-> +
-> +#define AES_256_XTS_KEY_SIZE			64
-> +
-> +/* QCOM ICE registers */
-> +#define QCOM_ICE_REG_VERSION			0x0008
-> +#define QCOM_ICE_REG_FUSE_SETTING		0x0010
-> +
-> +/* QCOM ICE v2.X only */
-> +
-> +#define QCOM_ICE_REG_BIST_STATUS		0x0070
-> +#define QCOM_ICE_REG_ADVANCED_CONTROL		0x1000
+On Fri, 10 Mar 2023 22:43:24 +0100, Krzysztof Kozlowski wrote:
+> The driver is specific to ARCH_QCOM which depends on OF thus the driver
+> is OF-only.  Its of_device_id table is built unconditionally, thus
+> of_match_ptr() for ID table does not make sense.
+> 
+> 
 
-The "/* QCOM ICE v2.X only */" comment should be removed, as it's misleading.
-This driver only supports v3.  I think this comment also originally described
-registers that have now been removed from the file.
+Applied to
 
-> +/* BIST ("built-in self-test"?) status flags */
-> +#define QCOM_ICE_BIST_STATUS_MASK		GENMASK(31, 28)
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-I think we're confident enough in what "BIST" stands for now that the question
-mark can be removed.
+Thanks!
 
-> +/* Only one ICE instance is currently supported by HW */
-> +static bool qcom_ice_check_supported(struct qcom_ice *ice)
+[5/9] ASoC: codecs: adau1977-spi: Mark OF related data as maybe unused
+      commit: a9048d64fb9605eb68c9912724e4a1346db8ba1a
+[6/9] ASoC: codecs: pcm179x-spi: Mark OF related data as maybe unused
+      commit: 413beba1a336e6068119f31a4441c51a7aeb1b55
+[7/9] ASoC: codecs: rt1019: Mark OF related data as maybe unused
+      commit: 0e8599a35823f05e90513918ff1201f8d210e315
+[8/9] ASoC: codecs: src4xxx-i2c: Mark OF related data as maybe unused
+      commit: 075a430db402eed0907b80493f1432d47a5120a7
+[9/9] ASoC: codecs: zl38060: Mark OF related data as maybe unused
+      commit: da1f22825b4fec7e25431fa5238252452f3dce46
 
-I don't see how the comment relates to the function it documents.
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-> +static int __qcom_ice_enable(struct qcom_ice *ice, bool enable)
-> +{
-> +	struct device *dev = ice->dev;
-> +	int err;
-> +
-> +	err = clk_prepare_enable(ice->core_clk);
-> +	if (err) {
-> +		dev_err(dev, "failed to enable core clock (%d)\n",
-> +			err);
-> +		return err;
-> +	}
-> +
-> +	if (enable) {
-> +		qcom_ice_low_power_mode_enable(ice);
-> +		qcom_ice_optimization_enable(ice);
-> +	}
-> +
-> +	err = qcom_ice_wait_bist_status(ice);
-> +	if (err) {
-> +		dev_err(dev, "BIST status error (%d)\n", err);
-> +		return err;
-> +	}
-> +
-> +	return 0;
-> +}
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-The 'enable' parameter is confusing.  Maybe call it 'enable_optimizations'?
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-> +
-> +int qcom_ice_program_key(struct qcom_ice *ice, u8 crypto_cap_idx,
-> +			 u8 algorithm_id, u8 key_size,
-> +			 const u8 crypto_key[], u8 data_unit_size,
-> +			 int slot)
-> +{
-> +	struct device *dev;
-> +	union {
-> +		u8 bytes[AES_256_XTS_KEY_SIZE];
-> +		u32 words[AES_256_XTS_KEY_SIZE / sizeof(u32)];
-> +	} key;
-> +	int i;
-> +	int err;
-> +
-> +	dev = ice->dev;
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
-Nit: declare and initialize 'dev' on the same line.
+Thanks,
+Mark
 
-> +static struct qcom_ice *qcom_ice_create(struct platform_device *pdev, void __iomem *base)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct device_node *np = dev->of_node;
-> +	struct qcom_ice *engine;
-> +
-> +	if (!qcom_scm_is_available())
-> +		return ERR_PTR(-EPROBE_DEFER);
-> +
-> +	if (!qcom_scm_ice_available()) {
-> +		dev_warn(dev, "ICE SCM interface not found\n");
-> +		return NULL;
-> +	}
-> +
-> +	engine = devm_kzalloc(dev, sizeof(*engine), GFP_KERNEL);
-> +	if (!engine)
-> +		return ERR_PTR(-ENOMEM);
-> +
-> +	engine->dev = &pdev->dev;
-> +	engine->np = np;
-> +	engine->base = base;
-> +
-> +	engine->core_clk = devm_clk_get(dev, NULL);
-> +	if (IS_ERR(engine->core_clk))
-> +		return ERR_CAST(engine->core_clk);
-> +
-> +	if (!qcom_ice_check_supported(engine))
-> +		return ERR_PTR(-EOPNOTSUPP);
-> +
-> +	dev_info(dev, "Registered Qualcomm Inline Crypto Engine\n");
-> +
-> +	return engine;
-
-Shouldn't the !qcom_scm_is_available() and !qcom_ice_check_supported() cases
-have the same return value?  Both mean not supported, right?
-
-And shouldn't it be NULL, not ERR_PTR(-EOPNOTSUPP), so that the caller doesn't
-fail to probe the host controller just because ICE is not supported?
-
-> diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
-> new file mode 100644
-> index 000000000000..d4644c9f1bcd
-> --- /dev/null
-> +++ b/include/soc/qcom/ice.h
-> @@ -0,0 +1,39 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (c) 2023, Linaro Limited
-> + */
-> +
-> +#ifndef __QCOM_ICE_H__
-> +#define __QCOM_ICE_H__
-> +
-> +#include <linux/err.h>
-
-<linux/types.h> would be more appropriate here, I think.
-
-> +
-> +#if IS_ENABLED(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)
-
-This #if does not appear to be necessary.
-
-> +int qcom_ice_enable(struct qcom_ice *ice);
-> +int qcom_ice_resume(struct qcom_ice *ice);
-> +int qcom_ice_suspend(struct qcom_ice *ice);
-> +struct qcom_ice *of_qcom_ice_get(struct device *dev);
-> +int qcom_ice_program_key(struct qcom_ice *ice, u8 crypto_cap_idx,
-> +			 u8 algorithm_id, u8 key_size,
-> +			 const u8 crypto_key[], u8 data_unit_size,
-> +			 int slot);
-
-The crypto_cap_idx parameter is unused and should be removed.
-
-> +int qcom_ice_evict_key(struct qcom_ice *ice, int slot);
-
-Nit: these declarations are in a slightly different order from the definitions
-in the .c file.
-
-- Eric
