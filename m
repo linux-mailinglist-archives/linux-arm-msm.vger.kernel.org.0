@@ -2,263 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61DC26B7023
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 08:32:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92CB26B7093
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 08:57:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229623AbjCMHcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 03:32:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51168 "EHLO
+        id S229700AbjCMH5T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 03:57:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbjCMHcM (ORCPT
+        with ESMTP id S230225AbjCMH4d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 03:32:12 -0400
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2041.outbound.protection.outlook.com [40.107.92.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84A972CC75;
-        Mon, 13 Mar 2023 00:32:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Jaiyn75hogGqGlHsL0IkUs7/YUKsavasdTRH3JiHXNWuBydn9UEtxx1XUnoYshv31m4hxay0tFlgdkIfgkdQeB1PdeNQRPm5Ze9UyqnXKlPvGyUQbGopOSHuq6E0Au+r8N4RaMx9giq//+ZDpLCaW3mPL5kpK/qo3bcw/gK2Le5j+JvGBzsRSihVWx9F9htU/LbatenomNrDi1NYrF3I6LWIrkiIdIwE4sTrhpH0YL3acrT3a/IwN0oeHCgwm24K5h4QjsUHNJAfiEZ72qRVE8551taJadQyZXLN+6svsKNxASxnLo/FkNgVABJBGeU/OwOIMGCya8RcMpaOtWc9kA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZGHUjEy0wmGU2VY7Ceit4780S2UuQsCTuoctvjhPQIA=;
- b=HBv9w2+OENsJTANkJaZjOp+kQyJZjRpimV4JYv9VNRf/WkWPw6hiREgExbsCIQsWo7lf8TlaWacoQou3x5WUnFFkTNiJUuOJS4RNairiL8QjX754KSOSy95t9pZ3XnLjBHX2i+SOPFwVf0rBOUxZfVC95T1Ufh57HrbnwNxp21mZwqRuCewQjB+VCRmexxwey8UFKNbm9GkGUk0yLxf3R+i2EXLlHae2pEEjAQ5AG59vb1RYRk3rcYe6KHKlrY6C1PwUjYl/4oAxf0bjz5g0Ysw/JCwBPEya8mDigJXw9SZSEFghrBi+JfkpKAM9NHMnVG5OfanRtTmFdIc82mWWTg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZGHUjEy0wmGU2VY7Ceit4780S2UuQsCTuoctvjhPQIA=;
- b=0JW5bSkJoLEnQllKfmRQYctZdkZw61ocm1SrEyzJGAy8M7GwaEHyHYHL3OebEFnaobof9hXGEvj5Uw9MK3UzRvV+8MyLoHL44cAhKSFiKnpi6uiu/DkiLF8w6QguYp8DmlXNW5nKWLcIfPlMnxtlQs+93oE7ILIMkE4x7bP/IN4=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
- by PH7PR12MB7236.namprd12.prod.outlook.com (2603:10b6:510:207::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.24; Mon, 13 Mar
- 2023 07:32:07 +0000
-Received: from BN8PR12MB3587.namprd12.prod.outlook.com
- ([fe80::d23f:bb1:df95:3918]) by BN8PR12MB3587.namprd12.prod.outlook.com
- ([fe80::d23f:bb1:df95:3918%4]) with mapi id 15.20.6178.024; Mon, 13 Mar 2023
- 07:32:07 +0000
-Message-ID: <2c0cb611-dd9f-13f5-1e55-7b7ee2db468d@amd.com>
-Date:   Mon, 13 Mar 2023 08:31:57 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 1/2] dma-buf/dma-fence: Add dma_fence_init_noref()
-Content-Language: en-US
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Gustavo Padovan <gustavo@padovan.org>,
-        "open list:SYNC FILE FRAMEWORK" <linux-media@vger.kernel.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20230311173513.1080397-1-robdclark@gmail.com>
- <20230311173513.1080397-2-robdclark@gmail.com>
- <1e3d4830-4797-8cc2-5882-02de44424ec7@amd.com>
-In-Reply-To: <1e3d4830-4797-8cc2-5882-02de44424ec7@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR3P281CA0122.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:94::6) To BN8PR12MB3587.namprd12.prod.outlook.com
- (2603:10b6:408:43::13)
+        Mon, 13 Mar 2023 03:56:33 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D86C7EDB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 00:54:55 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id fd5so11028785edb.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 00:54:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678694091;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BbnW+HQXXMov2YCkKGIA3Ip1jgaMjvv36rVivoZ/sxY=;
+        b=PZJTlA13gQWFQFIrQIYA9l4hTDVIPGJzn7hnQUc6ArNl6Jh85UndmLYxMGd06xQnKC
+         Dl/vQKHIjeTJc9i3UAV661s6QUgZ2dtyH0KjxxxOEpAbKaK0vlpJpfmxqCFxFUjaO0cl
+         tKZoSkW4jcECGIRosDo9sc5bjUqXy4/Ou/vcYd7dRbLOrrf+ljTR42qxbPTWxOrVs3Nx
+         +AWqyiWKadxq1taPKevOKDueaps4JoYjLCg46IWa9ZQxN455HqIKgp5eqlOrFunrGA/B
+         UuFnS1/jBxO9hzW+uPmxt2d5spffpWoWCLM2wFt7taAdDsT4VzdXeGzriQZLM0malsm9
+         566w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678694091;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BbnW+HQXXMov2YCkKGIA3Ip1jgaMjvv36rVivoZ/sxY=;
+        b=ppp2ymt1Qp7zuKEtQSGfHaWJzU4gCiHRX3762fU4y388xPZMc9CSaLjnaVRD8DGtKw
+         CAcCnA+yp7YRhdisNJy6zuuuFPMA7iiUSUvnzZM4DE0S48wpxPmlKcXkeot18K9zEKL9
+         ix76Vjhouzibk+WCBfbKYz+8hfmlyAq/b3RHfJ8KnfPKAysTcg+deuHfe7Uh9SmbsbEJ
+         0CFReBz03F1NCD+xr0Zp9x1RZ1IE+Qatt176kdYYlRYRI2Agvcgq+7vKxp6Ckq7oo47z
+         8iwzGLWNJ09OZKd6nUkgaCJoCbwoJBqRaVwCJGyBeknXE9Oymk0qeLrrx2Un0UwPqqKK
+         OyKg==
+X-Gm-Message-State: AO0yUKVGvLVdbbLePl3w0SjmMnbBHwgi6/3XSaPZW3M76CiDooqVtxhp
+        5X+PB+W9oAVNWdWSO5wfCw/Nkg==
+X-Google-Smtp-Source: AK7set+XOjPCtML5HmxF40axQsuv+8HUsC4sRrOwjJpKSU+H/Ylhp1qLJyift7RrPLPstpEjzVTcUg==
+X-Received: by 2002:a17:907:1c1f:b0:884:930:b014 with SMTP id nc31-20020a1709071c1f00b008840930b014mr42208755ejc.6.1678694091073;
+        Mon, 13 Mar 2023 00:54:51 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:f052:f15:3f90:fcb3])
+        by smtp.gmail.com with ESMTPSA id g7-20020a1709061c8700b008b980c3e013sm3146943ejh.179.2023.03.13.00.54.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Mar 2023 00:54:50 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 1/9] ASoC: dt-bindings: qcom,lpass-rx-macro: narrow clocks per variants
+Date:   Mon, 13 Mar 2023 08:54:37 +0100
+Message-Id: <20230313075445.17160-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN8PR12MB3587:EE_|PH7PR12MB7236:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9b0a3293-7207-4a2d-e608-08db23950c8a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: GeZXRb9SGsjI8LoeeOL1POHsyCZRTe4Bhb3UZFm8l+CRTqOsFfIW1cQYcEatgxlimXiuHTwVDP3R3cVAaDcfrJjEXBnYTfaZZLoIj5C0eqCZdmdRU/KOejSlN55E+XrB4C3q4xYgHShpeGDX8i/v/8glk0Am5bsvONM59AZ3r7dl7tLFtm+eMqh2FdaqKX+18+SBtoNOfBJwciQV5oChlpHOyDYjWv59aR3VjD0AQ7wMAsgmMYEkbgWIFAzWSMyyoOVkMEpxjIC/Q1ho/D/CA6uZ8wNiw5pvRGkSarehpoi91SPW0cJ2Wb7RVmsKuy+CMT4ygufPAeJqI0Q2OHl32NBkvn1eyw3li9RSJyJ8c8F4p12RHJWWkKB+KZiok58divqMLWAK7eEg6bnHDd2FIzD3YQrEU/j65vg7uXNPVJqrX5wQV1sMMgwVhfmWfjoLq9vDJ3KxMzF0NfSobeSD+9goMCbt/K+djNjMVVftdz2gKRO4FJB3T1zNS97zN7O7dWq7Y7StlLWUf07R9DEgb7Cj72fa6oqIHPR8fBEdycKTXyJLIvjvNEm/Hj81QSn6WFCjL+B1zM7InykZWfGZBnrnQ4MnUO2TI8JBa37XjyzoheO3oLUu85/mIaDcVyyJLK+lyvMyQvZqoUQXFCz5GthMRMZYmSbA6EcHtKluVxMg7LwhehIJmi38c4mBYMsu39M0T2UBci2NXtm/aOxuunDuwWGee7h/DWy8Kslihvk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(346002)(376002)(396003)(39860400002)(136003)(366004)(451199018)(36756003)(86362001)(31696002)(41300700001)(186003)(26005)(6506007)(6512007)(5660300002)(7416002)(4326008)(2616005)(8936002)(316002)(54906003)(478600001)(8676002)(66476007)(6666004)(66556008)(66946007)(6486002)(38100700002)(2906002)(83380400001)(66574015)(31686004)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RDJLNGdHVDJHaEt5cTFSYzV0aUtKWmlleFNOUmpUVEdaUnI2ckdvYjdRTXZn?=
- =?utf-8?B?WXo1RGdlQlZwdWw4cEtzbXlGUThQa0ZhZy9HN1dTeHJJT0NkQnlXTFRRaldy?=
- =?utf-8?B?MjUwZVEzVG5KN25SQzZzcDlLS1REcEtzV0d6U2VNdTBVcHpFemxiSzlUeldo?=
- =?utf-8?B?TDZWdERtemcxb3lMUXBTZW9tOEkwY3VvWXV0ZVBWY3N5cjVLTnlPT0JSQ2tO?=
- =?utf-8?B?L3p0OHBIZXYwQURTQ0VmZWJJNm1HbDNQaVI1QVdPQjZNT3JWUE5YemlDQ1Fv?=
- =?utf-8?B?OXloNWxYaHhFZ2N0RzNZWHE5WGZKM0tDekVaTGtNUkdRUVRPdWZKakowVDUr?=
- =?utf-8?B?clFHRDBJcFRQM2xHaUtDckh2OTViNXN6cmZvMnFHT0JUWSsxVi83bDdrZkhH?=
- =?utf-8?B?SjJJbGZ4Y1VkQVpEZVNuZXorQUZOa1NNUVRiMmxsbGZJWHRIcit6bVowRktn?=
- =?utf-8?B?QlAzaCtXSzluNmdIWnp1YjhYVnZKeTMzdFlKTE5pRUZJMnhBSTNLVC9qUzVa?=
- =?utf-8?B?RDJCVnZid0x3M29EVWliODQrdmVHK3NQS3B4Y3dPSm1tb0krdVJudFpWQW9S?=
- =?utf-8?B?NE1oTGpZeVdKeTFub2RBd1I2VFZxYVBYcm1PZ3FWUnZxbklyRjNhb09pdVFB?=
- =?utf-8?B?em9Pbkt3c1lDckQ0d1dXdDRFLzZ5VEk0NHptbkpldWd2QWxCalZkakYvT1d6?=
- =?utf-8?B?T0JzaEpFZjVuOEhPdHBXeHUvVVRVL0tKOWFON1dkMWQwbks3em1BY2QrbXY5?=
- =?utf-8?B?NHlvNkpxWWh0ZTl5eFNPeFI4ZjJ1dTBHbUhsT09Hc1JtbG11blpJaythMUMw?=
- =?utf-8?B?WFJLYUNvUU0waStaNGJsbjluSUpDVDVMOTJLRFhONUUrTmJOTGd4NnNLcXp6?=
- =?utf-8?B?a3ZKOFg5L1hvTzJPVVJUNXVidUZwODlIWUFBZjdLTkJUaFdFb3ZRU3RuU0Vw?=
- =?utf-8?B?N2JhY3FzbnZQa0oyRTNOa2dZYjhvTlpINDBKd0dpa2I5ZmxycDNaOHMyenB4?=
- =?utf-8?B?bkg5dFpiY3RldG4xZ29ia3RoendkWVl4LzdTa0sxbzh3TkcvQlhkbnJhNk9x?=
- =?utf-8?B?NnRyOEdjK0Z3YjAwYnVicVFxamxBczA2VnhRelZLSmcxVmhIbjlKM3JmMkoy?=
- =?utf-8?B?N3JEUjNzZ3Jza21HT1l5NVpHSnVGUlFxeU52ekVxNmVUWFBMQTlhUDZtL2hI?=
- =?utf-8?B?VnM4ZkhMVW5zdUFXakgyZEh0RTZtMUxRZ3dRZDFEYWdsWlRJWnR5RWI5UkhH?=
- =?utf-8?B?S1A0ZzdDWUlWUHlUdVE0Q2xwRmkwbjBRcFlFaTBCdnZlUmR6bmhQaEpGSmJK?=
- =?utf-8?B?SXlLcjZNdmErRlV1ZXVHNmhkR3V0UUlEWjlmYkxEdkdCTElZUG1adERMN012?=
- =?utf-8?B?L2VHdk9nSzJLMFNGemxScHRvaGszZDRoaFJWZGhrOEZ0TFpnSkFwTmpYVGI0?=
- =?utf-8?B?b2FRdjgyYTYwRUxtVjNEU3FxZVhwSUhydXlkalNmbzc4Mml6ZlNidWVNYkF3?=
- =?utf-8?B?S0VWaU9ieWR6dnJ5L0FPOExIQ2hHbzM3TGl2Y3kyY2JOTkFNN0VmdTlIMzFX?=
- =?utf-8?B?T0RXWTlsWnZoVnFFMEJaREFFeXdGMlI3Wlp5Y29ZZzBTL1Q5S25ZVHFUT0Fh?=
- =?utf-8?B?QmZmOHhiTUhKTEFIbm1YbzFJeCtvcU1hUGFNUWx2cjFTbHNTOXRuYXJ6c282?=
- =?utf-8?B?M0VPelA4N1pKZGVTMHBVQVR4R2VHSzVBL0ZWWlNnYlZ5U3pYMkJEOVVpa2o4?=
- =?utf-8?B?dFZESUtzRjZ0c3ZjQ1VYZmVJTkNOQjRCTkxzTjNJZ3h3ODc3ZThLSkJ2S0s1?=
- =?utf-8?B?Z0JJQkZKK1BxNmhNWFc4OW5ReGVJTjNGRDJkd1FnR29Qa0dWNFM2K2JVc3pt?=
- =?utf-8?B?ZUMvcFBhS1pETVF4amJxVW8xeUtZWmdNMDg1NmN1MGNvV2JPMXVkNFRQeVh3?=
- =?utf-8?B?UlovZTdoN0NtU0ZUeE9ndFpNZTR3Q1pCYUtFSjVOVU4xak1GcWVUQWFablE3?=
- =?utf-8?B?N21iM3dzYVJXZFVueVJTV3VMVCtQMG5lUU94MU9HN0dOUi9JWjlRdmtQQVQw?=
- =?utf-8?B?ajNsYlliOE44UnlNcjgyby92MXhOODJyeDM2UDd3RlIvek04TSt3UnRzTWty?=
- =?utf-8?Q?WiOtHIiF2OZGQ28hEetgAOYSo?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9b0a3293-7207-4a2d-e608-08db23950c8a
-X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Mar 2023 07:32:07.1679
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YS+EMulaVy255QvjJSME4hLozmODoRc7MtHkgonAFvDqgcp9ptbQt5r808Qtxrax
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7236
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 13.03.23 um 08:13 schrieb Christian König:
-> Am 11.03.23 um 18:35 schrieb Rob Clark:
->> From: Rob Clark <robdclark@chromium.org>
->>
->> Add a way to initialize a fence without touching the refcount. This is
->> useful, for example, if the fence is embedded in a drm_sched_job.  In
->> this case the refcount will be initialized before the job is queued.
->> But the seqno of the hw_fence is not known until job_run().
->>
->> Signed-off-by: Rob Clark <robdclark@chromium.org>
->
-> Well that approach won't work. The fence can only be initialized in 
-> the job_run() callback because only then the sequence number can be 
-> determined.
+Currently the Qualcomm RX macro codec binding allows two different clock
+setups - with (for ADSP) and without macro/dcodec entries (for ADSP
+bypassed).  With more devices coming soon, this will keep growing, thus
+rework the clocks/clock-names to be specific for each binding.
 
-Ah, wait a second! After reading the msm code I realized you are going 
-to use this exactly the other way around that I think you use it.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../bindings/sound/qcom,lpass-rx-macro.yaml   | 58 ++++++++++++++-----
+ 1 file changed, 44 insertions(+), 14 deletions(-)
 
-In this case it would work, but that really needs better documentation. 
-And I'm pretty sure it's not a good idea for msm, but let's discuss that 
-on the other patch.
-
-Regards,
-Christian.
-
->
-> Regards,
-> Christian.
->
->> ---
->>   drivers/dma-buf/dma-fence.c | 43 ++++++++++++++++++++++++++++---------
->>   include/linux/dma-fence.h   |  2 ++
->>   2 files changed, 35 insertions(+), 10 deletions(-)
->>
->> diff --git a/drivers/dma-buf/dma-fence.c b/drivers/dma-buf/dma-fence.c
->> index 74e36f6d05b0..97c05a465cb4 100644
->> --- a/drivers/dma-buf/dma-fence.c
->> +++ b/drivers/dma-buf/dma-fence.c
->> @@ -989,28 +989,27 @@ void dma_fence_describe(struct dma_fence 
->> *fence, struct seq_file *seq)
->>   EXPORT_SYMBOL(dma_fence_describe);
->>     /**
->> - * dma_fence_init - Initialize a custom fence.
->> + * dma_fence_init_noref - Initialize a custom fence without 
->> initializing refcount.
->>    * @fence: the fence to initialize
->>    * @ops: the dma_fence_ops for operations on this fence
->>    * @lock: the irqsafe spinlock to use for locking this fence
->>    * @context: the execution context this fence is run on
->>    * @seqno: a linear increasing sequence number for this context
->>    *
->> - * Initializes an allocated fence, the caller doesn't have to keep its
->> - * refcount after committing with this fence, but it will need to 
->> hold a
->> - * refcount again if &dma_fence_ops.enable_signaling gets called.
->> - *
->> - * context and seqno are used for easy comparison between fences, 
->> allowing
->> - * to check which fence is later by simply using dma_fence_later().
->> + * Like &dma_fence_init but does not initialize the refcount.  Suitable
->> + * for cases where the fence is embedded in another struct which has 
->> it's
->> + * refcount initialized before the fence is initialized.  Such as 
->> embedding
->> + * in a &drm_sched_job, where the job is created before knowing the 
->> seqno
->> + * of the hw_fence.
->>    */
->>   void
->> -dma_fence_init(struct dma_fence *fence, const struct dma_fence_ops 
->> *ops,
->> -           spinlock_t *lock, u64 context, u64 seqno)
->> +dma_fence_init_noref(struct dma_fence *fence, const struct 
->> dma_fence_ops *ops,
->> +             spinlock_t *lock, u64 context, u64 seqno)
->>   {
->>       BUG_ON(!lock);
->>       BUG_ON(!ops || !ops->get_driver_name || !ops->get_timeline_name);
->> +    BUG_ON(!kref_read(&fence->refcount));
->>   -    kref_init(&fence->refcount);
->>       fence->ops = ops;
->>       INIT_LIST_HEAD(&fence->cb_list);
->>       fence->lock = lock;
->> @@ -1021,4 +1020,28 @@ dma_fence_init(struct dma_fence *fence, const 
->> struct dma_fence_ops *ops,
->>         trace_dma_fence_init(fence);
->>   }
->> +EXPORT_SYMBOL(dma_fence_init_noref);
->> +
->> +/**
->> + * dma_fence_init - Initialize a custom fence.
->> + * @fence: the fence to initialize
->> + * @ops: the dma_fence_ops for operations on this fence
->> + * @lock: the irqsafe spinlock to use for locking this fence
->> + * @context: the execution context this fence is run on
->> + * @seqno: a linear increasing sequence number for this context
->> + *
->> + * Initializes an allocated fence, the caller doesn't have to keep its
->> + * refcount after committing with this fence, but it will need to 
->> hold a
->> + * refcount again if &dma_fence_ops.enable_signaling gets called.
->> + *
->> + * context and seqno are used for easy comparison between fences, 
->> allowing
->> + * to check which fence is later by simply using dma_fence_later().
->> + */
->> +void
->> +dma_fence_init(struct dma_fence *fence, const struct dma_fence_ops 
->> *ops,
->> +           spinlock_t *lock, u64 context, u64 seqno)
->> +{
->> +    kref_init(&fence->refcount);
->> +    dma_fence_init_noref(fence, ops, lock, context, seqno);
->> +}
->>   EXPORT_SYMBOL(dma_fence_init);
->> diff --git a/include/linux/dma-fence.h b/include/linux/dma-fence.h
->> index d54b595a0fe0..f617c78a2e0a 100644
->> --- a/include/linux/dma-fence.h
->> +++ b/include/linux/dma-fence.h
->> @@ -279,6 +279,8 @@ struct dma_fence_ops {
->>       void (*set_deadline)(struct dma_fence *fence, ktime_t deadline);
->>   };
->>   +void dma_fence_init_noref(struct dma_fence *fence, const struct 
->> dma_fence_ops *ops,
->> +              spinlock_t *lock, u64 context, u64 seqno);
->>   void dma_fence_init(struct dma_fence *fence, const struct 
->> dma_fence_ops *ops,
->>               spinlock_t *lock, u64 context, u64 seqno);
->
+diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
+index b0b95689d78b..8b3d617a9578 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
+@@ -9,9 +9,6 @@ title: LPASS(Low Power Audio Subsystem) RX Macro audio codec
+ maintainers:
+   - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+ 
+-allOf:
+-  - $ref: dai-common.yaml#
+-
+ properties:
+   compatible:
+     enum:
+@@ -34,17 +31,8 @@ properties:
+     maxItems: 5
+ 
+   clock-names:
+-    oneOf:
+-      - items:   #for ADSP based platforms
+-          - const: mclk
+-          - const: npl
+-          - const: macro
+-          - const: dcodec
+-          - const: fsgen
+-      - items:   #for ADSP bypass based platforms
+-          - const: mclk
+-          - const: npl
+-          - const: fsgen
++    minItems: 3
++    maxItems: 5
+ 
+   clock-output-names:
+     maxItems: 1
+@@ -62,6 +50,48 @@ required:
+   - reg
+   - "#sound-dai-cells"
+ 
++allOf:
++  - $ref: dai-common.yaml#
++  - if:
++      properties:
++        compatible:
++          enum:
++            - qcom,sc7280-lpass-rx-macro
++    then:
++      properties:
++        clock-names:
++          oneOf:
++            - items:   #for ADSP based platforms
++                - const: mclk
++                - const: npl
++                - const: macro
++                - const: dcodec
++                - const: fsgen
++            - items:   #for ADSP bypass based platforms
++                - const: mclk
++                - const: npl
++                - const: fsgen
++
++  - if:
++      properties:
++        compatible:
++          enum:
++            - qcom,sc8280xp-lpass-rx-macro
++            - qcom,sm8250-lpass-rx-macro
++            - qcom,sm8450-lpass-rx-macro
++    then:
++      properties:
++        clocks:
++          minItems: 5
++          maxItems: 5
++        clock-names:
++          items:
++            - const: mclk
++            - const: npl
++            - const: macro
++            - const: dcodec
++            - const: fsgen
++
+ unevaluatedProperties: false
+ 
+ examples:
+-- 
+2.34.1
 
