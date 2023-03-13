@@ -2,138 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97FA26B76DE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 12:53:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8EC36B773C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 13:13:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230119AbjCMLxx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 07:53:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45874 "EHLO
+        id S229578AbjCMMNE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 08:13:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231449AbjCMLw4 (ORCPT
+        with ESMTP id S229682AbjCMMNC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 07:52:56 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D28628225
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 04:52:25 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id d41-20020a05600c4c2900b003e9e066550fso7628341wmp.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 04:52:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678708340;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GOM0wU6k8YL6zyefl9B75iw3o3Fd7bxtMEc8BcltPP0=;
-        b=Yo1hi2naG0TMf+Cn9+92jHE5y5ZQeGL2G+B5oUkfpmybCcARGI/7I1AXzrsFQjcWiV
-         8AVEXZfwN4N2infnF2YabGPFC6jZgqHR6KaSHDTnN2J9G7qlq1z4GJUGWILm4ND9cEmS
-         i5GOo7xxBxsRM5Vxd6FIrU3YSoFTjHRGDlE27R5p5iRPAoB8HYfjvIPE+Aeolt+QTUgm
-         kULNFWKJPUWPph19SJfjPntRxFYdOUuopzvkEVaH93E2WcphTJGOWDCX8Is5Cx558V/a
-         haVkS8SWk6LJSshrTPtyaLryB3HegkrM/YwRTJtl3cwOAIyQWLT8oNOVg+HE2gR+Cafc
-         tn+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678708340;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GOM0wU6k8YL6zyefl9B75iw3o3Fd7bxtMEc8BcltPP0=;
-        b=qiodu0AxU3wiXfEeVVuBhBi6/5rmTucyKVQT50Mz4s+WFz+xNPLJ4EnYdLXitI9v+a
-         0HutTrvB0p9WNp216C0+aybYtZbhknjgII8CE324hjnQNe0l9pmrCMOK8G0VTVBg1JZq
-         mD7ZJt/NHX0iJbqE46S0/yzCW8Xt4whDxPpOuKV/DV46iIaKJMalV6QudVmikiSCW4N7
-         KhT9i0re+m8kH4sDiOdLTNntFGf11sOw/MvNxEAmnwY/KLBoLCzYZVKLGjExP/N7YfWw
-         +PfDCYWy5qZcSzd+e+Q+qep2VGE9PBabpaVExeHqSw1Lter2hIYv4EH9wPTJRUGby3YF
-         Rq3g==
-X-Gm-Message-State: AO0yUKUCrWv7bBKs9Vg7WRj/BSOlbIpzsEzBr9Osf3gdS7TtCdr269p8
-        FuVxA2ciFtpzR+nhUSLznlu05w==
-X-Google-Smtp-Source: AK7set/Kw84B38cC6AtJ9OlHXUgfEIZvrnDse4SJG4dI+SPVu9lcD061f0fGRffAQAAHmggiK8UiRg==
-X-Received: by 2002:a05:600c:3b04:b0:3df:d431:cf64 with SMTP id m4-20020a05600c3b0400b003dfd431cf64mr10835575wms.39.1678708340264;
-        Mon, 13 Mar 2023 04:52:20 -0700 (PDT)
-Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id u15-20020a05600c440f00b003e21dcccf9fsm8801090wmn.16.2023.03.13.04.52.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Mar 2023 04:52:19 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mon, 13 Mar 2023 08:13:02 -0400
+Received: from wnew4-smtp.messagingengine.com (wnew4-smtp.messagingengine.com [64.147.123.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B33F63C01;
+        Mon, 13 Mar 2023 05:12:57 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailnew.west.internal (Postfix) with ESMTP id 23BFD2B065EF;
+        Mon, 13 Mar 2023 08:12:51 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Mon, 13 Mar 2023 08:12:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+        1678709570; x=1678716770; bh=9ui9bmvE5i4u3m/ARdGTj1kwQVPleXj0Y6d
+        rKORRRdE=; b=WUMIR8yT/f22HAwm5Aovj8/OD54RFZFtg8maPs6wmZCp79zQwk2
+        KXXos4GzGqFt9BvscL4OqD1szAu52+4XSWc70eThQIbOjMYwZktDXpc6sewkt1Kt
+        IQuP4iYISi11UCu5EGR4vK5yWqNX2bodRIrhiIzD8dN8e71kC3/T2BSIfwW08q6w
+        sOm3bg2DJDrZhG+CaHwhggasxpIKKspowN8iOVbGD4wmr4U7d7yXFVs0egsFMhvn
+        UsjuDboWzqQ2sXYU5zIgUDAHiJdHRUHwGuGMtE45ml6QdWmA9inGrWaPjlIGdGG0
+        U0zNusFrFDr6WwzqNo4fbbk7d4LWnEmsQdw==
+X-ME-Sender: <xms:QBMPZAGuXJ6KHpEM2zLBqBMUhtupMv-AYvRIxQsCT9c2WXj_KrL9yw>
+    <xme:QBMPZJUYrUCR9v9niZxHAtNQXDXMuRJOeUTfDrNQL5AMpWp5_gRyUgARVG6AJt5MB
+    8V-REv7A00LtEU>
+X-ME-Received: <xmr:QBMPZKKtheRiAdEM52XhXs5g2XlATNLs-UmEZDpDXOxzcEYr2b_RExlVS0qy>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvddvgedgfeeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttddunecuhfhrohhmpefkugho
+    ucfutghhihhmmhgvlhcuoehiughoshgthhesihguohhstghhrdhorhhgqeenucggtffrrg
+    htthgvrhhnpeegheekuddvueejvddtvdfgtddvgfevudektddtteevuddvkeetveeftdev
+    ueejveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hiughoshgthhesihguohhstghhrdhorhhg
+X-ME-Proxy: <xmx:QBMPZCHmJTlQSPmNn5mFwF98VfTp58Lr3edQLA0SKWtFi27UqxeHjg>
+    <xmx:QBMPZGVmlGLnYUi0bAWfEBuENurj0LmBoTEnwljNdphwsJYoJ_5spg>
+    <xmx:QBMPZFPzMMmiZLpPDr-Ymi2cASyz9VcV8XLgDOWfjhFRevVEG5aPmw>
+    <xmx:QhMPZBQ3z4tvEYR1IPnmOsVCvIChQHU9DB0qKJv1fRScLdvuwmt2Jm_iXJ0>
+Feedback-ID: i494840e7:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Mar 2023 08:12:47 -0400 (EDT)
+Date:   Mon, 13 Mar 2023 14:12:44 +0200
+From:   Ido Schimmel <idosch@idosch.org>
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     rafael@kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, rui.zhang@intel.com,
+        Raju Rangoju <rajur@chelsio.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Peter Kaestle <peter@piie.net>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Mark Gross <markgross@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Broadcom Kernel Team <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Niklas =?iso-8859-1?Q?S=F6derlund?= 
+        <niklas.soderlund@ragnatech.se>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Biggers <ebiggers@kernel.org>
-Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-Subject: [RFC PATCH v3 7/7] arm64: dts: qcom: sm8550: Add the Inline Crypto Engine node
-Date:   Mon, 13 Mar 2023 13:52:02 +0200
-Message-Id: <20230313115202.3960700-8-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230313115202.3960700-1-abel.vesa@linaro.org>
-References: <20230313115202.3960700-1-abel.vesa@linaro.org>
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Keerthy <j-keerthy@ti.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Antoine Tenart <atenart@kernel.org>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>, netdev@vger.kernel.org,
+        platform-driver-x86@vger.kernel.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-omap@vger.kernel.org,
+        "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+        danieller@nvidia.com, vadimp@nvidia.com, petrm@nvidia.com
+Subject: Re: [PATCH v8 01/29] thermal/core: Add a generic
+ thermal_zone_get_trip() function
+Message-ID: <ZA8TPDpEVanOpjEp@shredder>
+References: <20221003092602.1323944-1-daniel.lezcano@linaro.org>
+ <20221003092602.1323944-2-daniel.lezcano@linaro.org>
+ <ZA3CFNhU4AbtsP4G@shredder>
+ <f78e6b70-a963-c0ca-a4b2-0d4c6aeef1fb@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <f78e6b70-a963-c0ca-a4b2-0d4c6aeef1fb@linaro.org>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for UFS ICE by adding the qcom,ice property and the
-ICE dedicated devicetree node. While at it, add the reg-name property
-to the UFS HC node to be in line with older platforms.
+On Mon, Mar 13, 2023 at 11:45:41AM +0100, Daniel Lezcano wrote:
+> Thanks for reporting this, I think the fix you are proposing is correct
+> regarding the previous behavior.
+> 
+> However, I disagree with the commit 81ad4276b505, because it defines the
+> zero as an invalid trip point. But some platforms have warming devices, when
+> the temperature is too cold, eg 0°C, we enable the warming device in order
+> to stay in the functioning temperature range.
+> 
+> Other devices can do the same with negative temperature values.
+> 
+> This feature is not yet upstream and the rework of the trip point should
+> allow proper handling of cold trip points.
+> 
+> If you can send the change to fix the regression that would be great.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
+Thanks for the reply. Will send you the fix later this week. I want to
+test it across all of our systems.
 
-Changes since v2:
- * dropped all changes for the older platforms
- * added the suppor for ICE with the new approach to the SM8550
+> 
+> But keep in mind, the driver is assuming an internal thermal framework
+> behavior. The trips_disabled is only to overcome a trip point description
+> bug and you should not rely on it as well as not changing the trip points on
+> the fly after they are registered.
+> 
+> Actually, the mlxsw driver should just build a valid array of trip points
+> without 0°C trip point and pass it to
+> thermal_zone_device_register_with_trips(). That would be a proper change
+> without relying on a side effect of the thermal trip bug 0°C workaround.
 
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index ec45f13e55c9..ac7bf1e1a2ab 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1882,6 +1882,7 @@ ufs_mem_hc: ufs@1d84000 {
- 			compatible = "qcom,sm8550-ufshc", "qcom,ufshc",
- 				     "jedec,ufs-2.0";
- 			reg = <0x0 0x01d84000 0x0 0x3000>;
-+			reg-names = "std";
- 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
- 			phys = <&ufs_mem_phy>;
- 			phy-names = "ufsphy";
-@@ -1924,9 +1925,18 @@ ufs_mem_hc: ufs@1d84000 {
- 				<0 0>,
- 				<0 0>,
- 				<0 0>;
-+			qcom,ice = <&ice>;
-+
- 			status = "disabled";
- 		};
- 
-+		ice: crypto@1d88000 {
-+			compatible = "qcom,sm8550-inline-crypto-engine",
-+				     "qcom,inline-crypto-engine";
-+			reg = <0 0x01d88000 0 0x8000>;
-+			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+		};
-+
- 		tcsr_mutex: hwlock@1f40000 {
- 			compatible = "qcom,tcsr-mutex";
- 			reg = <0 0x01f40000 0 0x20000>;
--- 
-2.34.1
-
+Understood. Will check with Vadim what we can do in order not to rely on
+this behavior.
