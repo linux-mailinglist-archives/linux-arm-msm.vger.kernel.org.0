@@ -2,202 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2204A6B820B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 21:00:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2E0C6B8264
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 21:12:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229449AbjCMUAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 16:00:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51854 "EHLO
+        id S229755AbjCMUMS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 16:12:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230101AbjCMUAT (ORCPT
+        with ESMTP id S229593AbjCMUMP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 16:00:19 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C332B84F53
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 13:00:17 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id x17so1075466lfu.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 13:00:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678737617;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pPJGmyWSQOR8Kw09B8Mt5WVgya5iFa+bc4j8CO+ggz0=;
-        b=mvShdL4yBYq3XhrQ/GdtbIB+BcS1zqacbkjifgw2EkH2AFU22aywn6htkZqlw9UwGN
-         ufIAkuvRXx3Jj2gC77V+imQ3c7RIYzOYMHGJaF4Y/DATt/T2+LPTNsPHSNo3nUH8P4Yr
-         MacCYhvmwetNm2ok8IpSA8kyBDL2gzfSsFq1Ok/C31y871Waj58qoDpXuS4Sz1+ovhv6
-         Ns/D92cZK3EcHwXXTj5kg+dAZ3312r6+K7AkZ+eej7+w3Q41qIcZ9+JqfvuA4CrFDqEY
-         YFFJ36O4axm0tJEMbYn8iOQCtx5LefMMQYPvrvJknb7FzUiqJIszpMDEHu4sn19BHkxf
-         bI0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678737617;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pPJGmyWSQOR8Kw09B8Mt5WVgya5iFa+bc4j8CO+ggz0=;
-        b=2o0vPiPJ6GT7NbkBPNEQNsUCnvz4f2c9rY1iGRTy1lWK/mpcNJUsUfBgD1Wh6qmRsz
-         wEj/3NvAeYM9f0RzMQM40x5EqOPYK7XXu0E/FyzKFnho8KlhxB6M5ukvZumeKjsQxptY
-         OUeGBPAEE+FnCBlONGTD35f4XagGyYN13LfhnUJ/kNY46mD5ZxNqw64OV2VC+0FulLiG
-         hJwIqaIb4xT0EwY7hNXa3khmVPu0nzAC0OVKK2vl1vBT8w5jCkUlP78C//AaxD8dM6Nq
-         AM5ByyPwhMwyvc4B7bBMqN5XZuXQOGCrnVXQUkXjI5V1tHkn9nfNm2sxsV5rEu+uqPbX
-         uhcw==
-X-Gm-Message-State: AO0yUKXrSjMjUkyuz092VpzvLkd8Sm5R+u/EuClU8i3x05m/jCNtUIsm
-        jX+FBQr8XT7gr/mPOzk1KA/QP7kMRoiVfUNXSeo=
-X-Google-Smtp-Source: AK7set8VLIGQmRJ6bzAhX79qPSYOmRtGAHzXCIFZA+GKP1EESmU41oQxnJC2V3ep+cxHbfMRTgjPqg==
-X-Received: by 2002:a19:7516:0:b0:4dc:8215:5531 with SMTP id y22-20020a197516000000b004dc82155531mr10488291lfe.6.1678737617071;
-        Mon, 13 Mar 2023 13:00:17 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id w3-20020ac254a3000000b004cc800b1f2csm75431lfk.238.2023.03.13.13.00.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Mar 2023 13:00:16 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 13 Mar 2023 21:00:08 +0100
-Subject: [PATCH v3 10/10] soc: qcom: rpmpd: Remove useless comments
+        Mon, 13 Mar 2023 16:12:15 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EAAA87A1A;
+        Mon, 13 Mar 2023 13:11:53 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32DGaXwg011798;
+        Mon, 13 Mar 2023 20:08:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=KwnIdWoiVAJBwcmcN8HpxRc9ZCasr2KvHIlvHAI8gXg=;
+ b=ON5fCxDH4yEO3kIK7jweHPgWTQTR2Nc5gH1GXJL9wtM/0mznKSKf7x8/lujxEWqhGgOo
+ YLFIH/3XnpL/0K+GamfQttfKh7f05nSU1hQTYOevJnz88MHfNP/qC6B8dXVDCyDxm2Xu
+ hp6nOBZiS8ld2iAIZXhP0w4T9eMLpim/PLG8SKP/DB2nSQI5fMWP8zkkWsFM2+ydEl4I
+ xqQdowKL/zklP0AhiIqpSYxSlhBEZZd2TNitlQcl1vtsxgcY5q8gVey0Nd4CDewDyo3O
+ vKBbGkxz7+4VR3QT05c2jbwAWvTZst2Rdf6kGgzeVrpFkEdeifpjCvWilFTIUolAPUY1 rQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pa6n30kn0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Mar 2023 20:08:55 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32DK8sO4014513
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Mar 2023 20:08:54 GMT
+Received: from [10.110.94.159] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 13 Mar
+ 2023 13:08:53 -0700
+Message-ID: <6024f762-6085-10cd-e73a-9031722b2334@quicinc.com>
+Date:   Mon, 13 Mar 2023 13:08:47 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230313-topic-rpmpd-v3-10-06a4f448ff90@linaro.org>
-References: <20230313-topic-rpmpd-v3-0-06a4f448ff90@linaro.org>
-In-Reply-To: <20230313-topic-rpmpd-v3-0-06a4f448ff90@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1678737603; l=3977;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=bOHyvIQlgUtTwAbq7sTRhqnwQEdIyL2gK1RO1F45Xro=;
- b=W4lHZVIWj64yHXpeNN4lxidb0hTaZz7y23XGHt7ll/VMQk+KxQB8/RcsngW0CcjspDzIe2auTizT
- d4Eai3dRD5tWVpBbN8RDD6J96WLtiOHy71Xw70wl/G8ihk4ds/F2
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v3 01/28] xhci: Add support to allocate several
+ interrupters
+Content-Language: en-US
+To:     Mathias Nyman <mathias.nyman@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
+        <krzysztof.kozlowski+dt@linaro.org>, <agross@kernel.org>,
+        <Thinh.Nguyen@synopsys.com>, <bgoswami@quicinc.com>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <gregkh@linuxfoundation.org>, <tiwai@suse.com>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <quic_jackp@quicinc.com>,
+        <quic_plai@quicinc.com>
+References: <20230308235751.495-1-quic_wcheng@quicinc.com>
+ <20230308235751.495-2-quic_wcheng@quicinc.com>
+ <a45ff335-0563-85c7-3b31-d6ca23a54a3f@linux.intel.com>
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <a45ff335-0563-85c7-3b31-d6ca23a54a3f@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 3_oXSt_A1iE145gYnGnDroRcA8q41vMD
+X-Proofpoint-GUID: 3_oXSt_A1iE145gYnGnDroRcA8q41vMD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-13_09,2023-03-13_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
+ bulkscore=0 mlxlogscore=994 impostorscore=0 priorityscore=1501
+ adultscore=0 phishscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303130158
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It goes without saying that socname_rpmpds[] is the array of the RPM
-power domains associated with socname. Remove these comments.
+Hi Mathias,
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/soc/qcom/rpmpd.c | 13 -------------
- 1 file changed, 13 deletions(-)
+On 3/10/2023 7:07 AM, Mathias Nyman wrote:
+> On 9.3.2023 1.57, Wesley Cheng wrote:
+>> From: Mathias Nyman <mathias.nyman@linux.intel.com>
+>>
+>> Introduce xHCI APIs to allow for clients to allocate and free
+>> interrupters.  This allocates an array of interrupters, which is based on
+>> the max_interrupters parameter.  The primary interrupter is set as the
+>> first entry in the array, and secondary interrupters following after.
+>>
+> 
+> I'm thinking about changing this offloading xHCI API
+> xhci should be aware and keep track of which devices and endpoints that
+> are offloaded to avoid device getting offloaded twice, avoid xhci driver
+> from queuing anything itself for these, and act properly if the offloaded
+> device or entire host is removed.
+> 
+> So first thing audio side would need to do do is register/create an
+> offload entry for the device using the API:
+> 
+> struct xhci_sideband *xhci_sideband_register(struct usb_device *udev)
+> 
+> (xHCI specs calls offload sideband)
+> Then endpoints and interrupters can be added and removed from this
+> offload entry
+> 
+> I have some early thoughts written as non-compiling code in:
+> 
+> git://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git 
+> feature_interrupters
+> https://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git/log/?h=feature_interrupters 
+> 
+> 
+> Let me know what you think about this.
+> 
 
-diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
-index 84283719853c..f8397dcb146c 100644
---- a/drivers/soc/qcom/rpmpd.c
-+++ b/drivers/soc/qcom/rpmpd.c
-@@ -514,7 +514,6 @@ static struct rpmpd ssc_mx_rwsm0_vfl = {
- 	.key = KEY_FLOOR_LEVEL,
- };
- 
--/* mdm9607 RPM Power Domains */
- static struct rpmpd *mdm9607_rpmpds[] = {
- 	[MDM9607_VDDCX] =	&cx_s3a_lvl,
- 	[MDM9607_VDDCX_AO] =	&cx_s3a_lvl_ao,
-@@ -530,7 +529,6 @@ static const struct rpmpd_desc mdm9607_desc = {
- 	.max_state = RPM_SMD_LEVEL_TURBO,
- };
- 
--/* msm8226 RPM Power Domains */
- static struct rpmpd *msm8226_rpmpds[] = {
- 	[MSM8226_VDDCX] =	&cx_s1a_corner,
- 	[MSM8226_VDDCX_AO] =	&cx_s1a_corner_ao,
-@@ -543,7 +541,6 @@ static const struct rpmpd_desc msm8226_desc = {
- 	.max_state = MAX_CORNER_RPMPD_STATE,
- };
- 
--/* msm8939 RPM Power Domains */
- static struct rpmpd *msm8939_rpmpds[] = {
- 	[MSM8939_VDDMDCX] =	&md_s1a_corner,
- 	[MSM8939_VDDMDCX_AO] =	&md_s1a_corner_ao,
-@@ -561,7 +558,6 @@ static const struct rpmpd_desc msm8939_desc = {
- 	.max_state = MAX_CORNER_RPMPD_STATE,
- };
- 
--/* msm8916 RPM Power Domains */
- static struct rpmpd *msm8916_rpmpds[] = {
- 	[MSM8916_VDDCX] =	&cx_s1a_corner,
- 	[MSM8916_VDDCX_AO] =	&cx_s1a_corner_ao,
-@@ -576,7 +572,6 @@ static const struct rpmpd_desc msm8916_desc = {
- 	.max_state = MAX_CORNER_RPMPD_STATE,
- };
- 
--/* msm8953 RPM Power Domains */
- static struct rpmpd *msm8953_rpmpds[] = {
- 	[MSM8953_VDDMD] =	&md_s1a_lvl,
- 	[MSM8953_VDDMD_AO] =	&md_s1a_lvl_ao,
-@@ -593,7 +588,6 @@ static const struct rpmpd_desc msm8953_desc = {
- 	.max_state = RPM_SMD_LEVEL_TURBO,
- };
- 
--/* msm8976 RPM Power Domains */
- static struct rpmpd *msm8976_rpmpds[] = {
- 	[MSM8976_VDDCX] =	&cx_s2a_lvl,
- 	[MSM8976_VDDCX_AO] =	&cx_s2a_lvl_ao,
-@@ -609,7 +603,6 @@ static const struct rpmpd_desc msm8976_desc = {
- 	.max_state = RPM_SMD_LEVEL_TURBO_HIGH,
- };
- 
--/* msm8994 RPM Power domains */
- static struct rpmpd *msm8994_rpmpds[] = {
- 	[MSM8994_VDDCX] =	&cx_s1a_corner,
- 	[MSM8994_VDDCX_AO] =	&cx_s1a_corner_ao,
-@@ -628,7 +621,6 @@ static const struct rpmpd_desc msm8994_desc = {
- 	.max_state = MAX_CORNER_RPMPD_STATE,
- };
- 
--/* msm8996 RPM Power domains */
- static struct rpmpd *msm8996_rpmpds[] = {
- 	[MSM8996_VDDCX] =	&cx_s1a_corner,
- 	[MSM8996_VDDCX_AO] =	&cx_s1a_corner_ao,
-@@ -645,7 +637,6 @@ static const struct rpmpd_desc msm8996_desc = {
- 	.max_state = MAX_CORNER_RPMPD_STATE,
- };
- 
--/* msm8998 RPM Power domains */
- static struct rpmpd *msm8998_rpmpds[] = {
- 	[MSM8998_VDDCX] =	&cx_rwcx0_lvl,
- 	[MSM8998_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
-@@ -665,7 +656,6 @@ static const struct rpmpd_desc msm8998_desc = {
- 	.max_state = RPM_SMD_LEVEL_BINNING,
- };
- 
--/* qcs404 RPM Power domains */
- static struct rpmpd *qcs404_rpmpds[] = {
- 	[QCS404_VDDMX] =	&mx_rwmx0_lvl,
- 	[QCS404_VDDMX_AO] =	&mx_rwmx0_lvl_ao,
-@@ -682,7 +672,6 @@ static const struct rpmpd_desc qcs404_desc = {
- 	.max_state = RPM_SMD_LEVEL_BINNING,
- };
- 
--/* sdm660 RPM Power domains */
- static struct rpmpd *sdm660_rpmpds[] = {
- 	[SDM660_VDDCX] =	&cx_rwcx0_lvl,
- 	[SDM660_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
-@@ -702,7 +691,6 @@ static const struct rpmpd_desc sdm660_desc = {
- 	.max_state = RPM_SMD_LEVEL_TURBO,
- };
- 
--/* sm4250/6115 RPM Power domains */
- static struct rpmpd *sm6115_rpmpds[] = {
- 	[SM6115_VDDCX] =	&cx_rwcx0_lvl,
- 	[SM6115_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
-@@ -720,7 +708,6 @@ static const struct rpmpd_desc sm6115_desc = {
- 	.max_state = RPM_SMD_LEVEL_TURBO_NO_CPR,
- };
- 
--/* sm6125 RPM Power domains */
- static struct rpmpd *sm6125_rpmpds[] = {
- 	[SM6125_VDDCX] =	&cx_rwcx0_lvl,
- 	[SM6125_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
+The concept/framework you built looks good to me.  Makes sense to have 
+XHCI better maintain the offloading users.  One thing I would request is 
+to move xhci-sideband.h to the include directory since the class driver 
+levels would need to be able to reference the structure and APIs you've 
+exposed.
 
--- 
-2.39.2
+I have yet to try it with our implementation, but I'll work on plugging 
+it in and fix any issues I see along the way.
 
+Thanks
+Wesley Cheng
