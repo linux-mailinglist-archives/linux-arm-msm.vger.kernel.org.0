@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC2F16B7E63
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 17:59:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FC386B7E80
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 18:01:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231363AbjCMQ7c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 12:59:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56242 "EHLO
+        id S231714AbjCMRAJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 13:00:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231248AbjCMQ7W (ORCPT
+        with ESMTP id S231387AbjCMQ7e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 12:59:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCCA0C173
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 09:58:05 -0700 (PDT)
+        Mon, 13 Mar 2023 12:59:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F965303DE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 09:58:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1678726660;
+        s=mimecast20190719; t=1678726672;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=E28u3AC299JmAvjZr4iCran+GZMgF1vAVhXdcyHNMWs=;
-        b=ZAUC9A0WZ8QkaZ3Epnw/gAOs9Dk6D0DlHr5ma9bmlkNExUQBo5mVhJJGxxFhg3i6bG7FuV
-        id22kca6cNjpafiYPSNv0zPAkj6yFHkzNXO/6W7HbX6/ngYEr7V7T7MYx7nn2SssApOY/q
-        OIXK+bts1F0WDIPKYukjcqEdrzIkS2A=
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=FkVDFtAQ2HQaEyizSIOrTNSjW2E/XPvrw+UQkBvQei4=;
+        b=dCSf83YMDsmHRo5UqiohzZZzStcs3ENGfqxRTa6shsL2oyt7WVI113EZj5BghOnsoRT7tB
+        JZ1GRU8oxJ0So4F7iBhf9THURTYq001FvkCci8jzQJICVenpgCRKIwLH9mDjHsXVMsz31Q
+        SMnKy6ltZXhNllhEFdeWaPmyfGZ4Qmk=
+Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
+ [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-552-_iSX9VJgPBuvSxCohyTZ1w-1; Mon, 13 Mar 2023 12:57:38 -0400
-X-MC-Unique: _iSX9VJgPBuvSxCohyTZ1w-1
-Received: by mail-oi1-f199.google.com with SMTP id u42-20020a056808152a00b003845d35bfb6so5657495oiw.22
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 09:57:38 -0700 (PDT)
+ us-mta-111-ohP7AJuHMZ-j8vCU8nYRng-1; Mon, 13 Mar 2023 12:57:43 -0400
+X-MC-Unique: ohP7AJuHMZ-j8vCU8nYRng-1
+Received: by mail-oo1-f72.google.com with SMTP id y29-20020a4a651d000000b00525101290e7so3481911ooc.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 09:57:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678726658;
+        d=1e100.net; s=20210112; t=1678726662;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=E28u3AC299JmAvjZr4iCran+GZMgF1vAVhXdcyHNMWs=;
-        b=FpYg+HbhLgXSvggINqpZrXj4witRH03l2PZuwjaMiMgUWea7yZHK+xbDn576X3eWlD
-         eXkx23CGI+MnhmzjB4URGv4MB6ocyhOgAobST8qHI2MQkzO2KZg1MdIwGJECy0qSgk9w
-         bD9O+QI7IYtCglg8TjfEH8rWKEGGpPzHO4lhHcKh3Xv17yS/KIgZ2Fjeg2YwV04o6dee
-         LDwtzIzn6LBoUdGx7c5KFExfH9uYV6ceDFLc+mqOd2rfv+YKeq9sMBg2gNfw7/KFKowm
-         p+v8VEbau/cFJ3Ccja7cfYOpwwXSYUsmQ1d0SPMU357REbulqhveXLdL1PwM7300Z/CG
-         3SeQ==
-X-Gm-Message-State: AO0yUKXgFbUN4XeNY9XXTNrb7k6oTatTsx2eFy6GGFCEqUpkuQPq1s0n
-        mJ6Jvjm/CbOigvbzToOdC4m7+fj1TrFmsQZyNAv4hDFCRE8vgqRU3HrVM2wAp6wh2QEWoZPPjjx
-        N6ydqDtrX+nyII/d0Uu4Wz5OR3Q==
-X-Received: by 2002:a54:4486:0:b0:384:704:9b5c with SMTP id v6-20020a544486000000b0038407049b5cmr15120522oiv.32.1678726658075;
-        Mon, 13 Mar 2023 09:57:38 -0700 (PDT)
-X-Google-Smtp-Source: AK7set86f0/F8S5PouGiQEFyz9bxsIyQVNlLEzYRDmqmHJ8dbjOt3VXvUOdMwGwjDGA6EL6dvlxIJg==
-X-Received: by 2002:a54:4486:0:b0:384:704:9b5c with SMTP id v6-20020a544486000000b0038407049b5cmr15120491oiv.32.1678726657851;
-        Mon, 13 Mar 2023 09:57:37 -0700 (PDT)
+        bh=FkVDFtAQ2HQaEyizSIOrTNSjW2E/XPvrw+UQkBvQei4=;
+        b=CcFsBGvNzPbPiLidk7FvIu/gVXiJ1w0U1CIdXa/dlLTnz5I00WwsnHjtK2ZQb6cLt9
+         rpDARf8Ua8lzLjBFDoi1oTiXv+1tMPD0fBgE8Hazs7v2GCFKB9ilDq7oFDS/7NWfth/K
+         TT49aj2xeQ+PlGr3sSqx4o4FCJSxAvvaBwyuK8dsS2oKn//oq1kY7SZbBYUrP4Ctvtl7
+         IZafbxLXlUgbEaiRKng44FC+xGkn5I4n/ttY814TTnEF/kMm3XunF/3yu3kf4dVypVBJ
+         E4ww1wYUKJYFc+sFvy9iwbB4y7wMbhQ0j7m+7l4AjS7RUaf7VOUkqBnU/VxJyjWLojRF
+         DOCQ==
+X-Gm-Message-State: AO0yUKVEZ9Q9J3VBH/sz+0QlRwVZMZtYw5OEh9FQXf8qoI9DkIpK53Mi
+        kpOVoX4hqpgUCmLEnjuqUhAc1vXMn2ag/oAmERrrN8HK5a++iXitqomU80goqHDYFZdVkSzVLGI
+        LSiYfbiM2mqRkOiOxvlTp/UbJnw==
+X-Received: by 2002:aca:130d:0:b0:378:7c77:6021 with SMTP id e13-20020aca130d000000b003787c776021mr13373609oii.8.1678726662721;
+        Mon, 13 Mar 2023 09:57:42 -0700 (PDT)
+X-Google-Smtp-Source: AK7set9zI+gra3VQW7qNd6jbtiTXOZJk4ZtO+IfaDcE9o1iUhzMPehPEW5A3iOw3mlYvk5kuKPNxoA==
+X-Received: by 2002:aca:130d:0:b0:378:7c77:6021 with SMTP id e13-20020aca130d000000b003787c776021mr13373580oii.8.1678726662434;
+        Mon, 13 Mar 2023 09:57:42 -0700 (PDT)
 Received: from halaney-x13s.attlocal.net ([2600:1700:1ff0:d0e0::21])
-        by smtp.gmail.com with ESMTPSA id o2-20020acad702000000b00384d3003fa3sm3365273oig.26.2023.03.13.09.57.35
+        by smtp.gmail.com with ESMTPSA id o2-20020acad702000000b00384d3003fa3sm3365273oig.26.2023.03.13.09.57.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Mar 2023 09:57:37 -0700 (PDT)
+        Mon, 13 Mar 2023 09:57:42 -0700 (PDT)
 From:   Andrew Halaney <ahalaney@redhat.com>
 To:     linux-kernel@vger.kernel.org
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -76,9 +76,9 @@ Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
         jsuraj@qti.qualcomm.com, hisunil@quicinc.com,
         Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH net-next 04/11] dt-bindings: net: qcom,ethqos: Add Qualcomm sc8280xp compatibles
-Date:   Mon, 13 Mar 2023 11:56:13 -0500
-Message-Id: <20230313165620.128463-5-ahalaney@redhat.com>
+Subject: [PATCH net-next 05/11] clk: qcom: gcc-sc8280xp: Add EMAC GDSCs
+Date:   Mon, 13 Mar 2023 11:56:14 -0500
+Message-Id: <20230313165620.128463-6-ahalaney@redhat.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230313165620.128463-1-ahalaney@redhat.com>
 References: <20230313165620.128463-1-ahalaney@redhat.com>
@@ -87,7 +87,7 @@ Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -95,55 +95,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The sc8280xp has a new version of the ETHQOS hardware in it, EMAC v3.
-Add a compatible for this.
+Add the EMAC GDSCs to allow the EMAC hardware to be enabled.
 
 Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 ---
- Documentation/devicetree/bindings/net/qcom,ethqos.yaml | 1 +
- Documentation/devicetree/bindings/net/snps,dwmac.yaml  | 3 +++
- 2 files changed, 4 insertions(+)
+ drivers/clk/qcom/gcc-sc8280xp.c               | 18 ++++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sc8280xp.h |  2 ++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-index 68ef43fb283d..89c17ed0442f 100644
---- a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-+++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-@@ -24,6 +24,7 @@ properties:
-     enum:
-       - qcom,qcs404-ethqos
-       - qcom,sm8150-ethqos
-+      - qcom,sc8280xp-ethqos
+diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+index b3198784e1c3..04a99dbaa57e 100644
+--- a/drivers/clk/qcom/gcc-sc8280xp.c
++++ b/drivers/clk/qcom/gcc-sc8280xp.c
+@@ -6873,6 +6873,22 @@ static struct gdsc usb30_sec_gdsc = {
+ 	.pwrsts = PWRSTS_RET_ON,
+ };
  
-   reg:
-     maxItems: 2
-diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-index 3ca1239da448..f981a89ab2a5 100644
---- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-+++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-@@ -67,6 +67,7 @@ properties:
-         - loongson,ls7a-dwmac
-         - qcom,qcs404-ethqos
-         - qcom,sm8150-ethqos
-+        - qcom,sc8280xp-ethqos
-         - renesas,r9a06g032-gmac
-         - renesas,rzn1-gmac
-         - rockchip,px30-gmac
-@@ -574,6 +575,7 @@ allOf:
-               - ingenic,x1600-mac
-               - ingenic,x1830-mac
-               - ingenic,x2000-mac
-+              - qcom,sc8280xp-ethqos
-               - snps,dwmac-3.50a
-               - snps,dwmac-4.10a
-               - snps,dwmac-4.20a
-@@ -629,6 +631,7 @@ allOf:
-               - ingenic,x2000-mac
-               - qcom,qcs404-ethqos
-               - qcom,sm8150-ethqos
-+              - qcom,sc8280xp-ethqos
-               - snps,dwmac-4.00
-               - snps,dwmac-4.10a
-               - snps,dwmac-4.20a
++static struct gdsc emac_0_gdsc = {
++	.gdscr = 0xaa004,
++	.pd = {
++		.name = "emac_0_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++};
++
++static struct gdsc emac_1_gdsc = {
++	.gdscr = 0xba004,
++	.pd = {
++		.name = "emac_1_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++};
++
+ static struct clk_regmap *gcc_sc8280xp_clocks[] = {
+ 	[GCC_AGGRE_NOC_PCIE0_TUNNEL_AXI_CLK] = &gcc_aggre_noc_pcie0_tunnel_axi_clk.clkr,
+ 	[GCC_AGGRE_NOC_PCIE1_TUNNEL_AXI_CLK] = &gcc_aggre_noc_pcie1_tunnel_axi_clk.clkr,
+@@ -7351,6 +7367,8 @@ static struct gdsc *gcc_sc8280xp_gdscs[] = {
+ 	[USB30_MP_GDSC] = &usb30_mp_gdsc,
+ 	[USB30_PRIM_GDSC] = &usb30_prim_gdsc,
+ 	[USB30_SEC_GDSC] = &usb30_sec_gdsc,
++	[EMAC_0_GDSC] = &emac_0_gdsc,
++	[EMAC_1_GDSC] = &emac_1_gdsc,
+ };
+ 
+ static const struct clk_rcg_dfs_data gcc_dfs_clocks[] = {
+diff --git a/include/dt-bindings/clock/qcom,gcc-sc8280xp.h b/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
+index cb2fb638825c..721105ea4fad 100644
+--- a/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
++++ b/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
+@@ -492,5 +492,7 @@
+ #define USB30_MP_GDSC					9
+ #define USB30_PRIM_GDSC					10
+ #define USB30_SEC_GDSC					11
++#define EMAC_0_GDSC					12
++#define EMAC_1_GDSC					13
+ 
+ #endif
 -- 
 2.39.2
 
