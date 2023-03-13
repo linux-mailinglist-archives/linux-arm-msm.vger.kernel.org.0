@@ -2,80 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1608F6B6FFB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 08:18:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96DBE6B7004
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 08:19:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229552AbjCMHSK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 03:18:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60868 "EHLO
+        id S229734AbjCMHTo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 03:19:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbjCMHSJ (ORCPT
+        with ESMTP id S230018AbjCMHTm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 03:18:09 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 281ADA27B;
-        Mon, 13 Mar 2023 00:18:08 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32D2xMwQ027854;
-        Mon, 13 Mar 2023 07:18:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding;
- s=qcppdkim1; bh=nArh0NQh1TsaLTW8jIsifogT51yJv/pml3b0qmRRGAU=;
- b=j1MCt1nMjlIqciSZ+KV5MWF+L/HUaDmuKsQUIcbZWgm14S5PHYP8AE+fcGkOAKQMTXlE
- j2Frw6yE/oQWtVGcIoCoxkqAWDzoRAxAbUYNdPbas4fynxUwx86aUnHmEiT7rfKYaUWJ
- ncldFQJ7q70qB2FTjLqpL/ONvaWhvxxwr8zfi9/X/k+yfU+M+cKyfa0UjyYA2Jd2Nd/h
- u6H96Y6pjMsdoRUO3dV3c8qP+vbyZDg7B8TXOw0lbrXedqGZV6hix09HirarkIRSdnDc
- DoDxkyBQ2ywqzwy+9kriMZF/SqsnqjsbY7Qt/w/lDm+r4E4jAXse6EEGZBtHqXOvmybr iw== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p8gysuyvj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 13 Mar 2023 07:18:04 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 32D7I1WF016606;
-        Mon, 13 Mar 2023 07:18:01 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3p8jqkeyw9-1;
-        Mon, 13 Mar 2023 07:18:01 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 32D7I0Df016599;
-        Mon, 13 Mar 2023 07:18:00 GMT
-Received: from kbajaj-linux.qualcomm.com (kbajaj-linux.qualcomm.com [10.214.66.129])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 32D7I08Z016598;
-        Mon, 13 Mar 2023 07:18:00 +0000
-Received: from kbajaj-linux.qualcomm.com (localhost [127.0.0.1])
-        by kbajaj-linux.qualcomm.com (Postfix) with ESMTP id E2257252;
-        Mon, 13 Mar 2023 12:47:59 +0530 (IST)
-From:   Komal Bajaj <quic_kbajaj@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Komal Bajaj <quic_kbajaj@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: qdu1000: Add LLCC/system-cache-controller node
-Date:   Mon, 13 Mar 2023 12:47:57 +0530
-Message-Id: <20230313071757.31533-1-quic_kbajaj@quicinc.com>
-X-Mailer: git-send-email 2.39.1
+        Mon, 13 Mar 2023 03:19:42 -0400
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2048.outbound.protection.outlook.com [40.107.212.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 464AF1B557;
+        Mon, 13 Mar 2023 00:19:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=XZvJMeSKWw/HPWETsLMZ8NIpvbdfRFHo+IHn1rv7+yIWlJvq1GGnyzwh1c/uoLee+Wgu07fu18hNx2zQuIVMWsnJDn2wOvykI2Q9J80TnTx/KNFL3Lny9GDG/cFrZu2fHSvVNWf5zSjaUG1712UA7cj/xjwQefQNoMUXx7U1AyioObT60YImGqAO9hKo0DujLCcuGcGtiRPU0Pwha6YU05ayk7Y0YJwUGHFB8FS3uqGWEXsbDswFmFFZtVv3KW7rWL8ekV6y5e/MlTFzDFsOkblk/fW51pWGBRXPRZ1GlbggEkztvioLLbf+GBuU9MP59kFOUJVveNmqSL+UjqvQZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bqwZcyhsA4gaoTTKxeKX//rLEC8WLF8RGyStnX3KsXc=;
+ b=n08OMcb3hx7OcX1O3dyujco+1HVc/XA+aPbEIIK6zaGQ3IuAyVtzUCJlZXHrufFwf97q2Ab5p/ggUeQJvSRWDuyfkllUGDUM5Noy6EWo3Zmb86R8tNGvUQy38NATfG7XzWaLkLhzFu9JcG/4QvdjkkfxeZbkfKEM7kM+a9T5tm0bb6min4cWAbfZ/VkJKCevyZOWsCiU9Mf8vSghffm3YQ2R5z2p6n3XwHGWsSxAXojqBwJFSHstx+QSCMFeMri4/mwoa5voyIF32Wdgip3w+BMKYiLwWbKBT2MBHtqlw2aLt1rpmcD2KrCtDtHoKtNB2v+0VTd+SKulRnDQtbXR0A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bqwZcyhsA4gaoTTKxeKX//rLEC8WLF8RGyStnX3KsXc=;
+ b=jl2pyBtGPMp/llM09ugH2jzkZ0X+SwOVb1SPtm7sOj59R4zJoV8MOrHlrMaXgmw1FyBfwJKzMFJONX8oH0e86EAoByun538MF2RNTzoXXjxC9lXtubVrrt6xLtrWHnKy7qsdISVzEmPOdYC1WWe/R3YvlAr0p3iGRFkwiY2wiXA=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
+ by SJ2PR12MB8845.namprd12.prod.outlook.com (2603:10b6:a03:538::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.24; Mon, 13 Mar
+ 2023 07:19:33 +0000
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::d23f:bb1:df95:3918]) by BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::d23f:bb1:df95:3918%4]) with mapi id 15.20.6178.024; Mon, 13 Mar 2023
+ 07:19:33 +0000
+Message-ID: <b846101c-e6ef-2d3e-9db9-077003b72e57@amd.com>
+Date:   Mon, 13 Mar 2023 08:19:27 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 2/2] drm/msm: Embed the hw_fence in msm_gem_submit
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
+        "Tuikov, Luben" <Luben.Tuikov@amd.com>
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DMA BUFFER SHARING FRAMEWORK" 
+        <linux-media@vger.kernel.org>,
+        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
+        <linaro-mm-sig@lists.linaro.org>
+References: <20230311173513.1080397-1-robdclark@gmail.com>
+ <20230311173513.1080397-3-robdclark@gmail.com>
+From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
+In-Reply-To: <20230311173513.1080397-3-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR0P281CA0069.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:49::22) To BN8PR12MB3587.namprd12.prod.outlook.com
+ (2603:10b6:408:43::13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9dyy_A4dA22nUz8yYlasHGnG-qw15OPC
-X-Proofpoint-ORIG-GUID: 9dyy_A4dA22nUz8yYlasHGnG-qw15OPC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-12_10,2023-03-10_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- impostorscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
- suspectscore=0 adultscore=0 phishscore=0 priorityscore=1501 clxscore=1015
- mlxlogscore=769 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303130058
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8PR12MB3587:EE_|SJ2PR12MB8845:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8c0b3085-30ea-4867-b11b-08db23934b59
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 3bBCjCyBK6516qkqvggqR+Ljft5QWzBIg+lctTGiurguLoJGUUQN6VJArxAHgn5Jx9qbz9B6l6nVRn6hX0BeehCduB+FGECt5r0Tp24+YnAFJ04pQL1mhASqRLnuUjjK0q0gfWeDdRgf0RZp5YeyFodDvRw2tYeLPWD2QFQm/LvSlpwi9PBfVFPaaKRA6djiT9CQqpMHYnf/37yVHL7svV8NZ5uTV/5lns+iUMGA8nzbbbYDktBJIttQGs/UoaFChqtugY0TXgVvLs3VPMopNH1NOb4gfq5CBcwdvRsN3kbg00wEcDOZ/OhHeQkFvO/9MSqptJFZVmgWScrSnif7JFHmI7t1O7fhU/2ZkRaDid0HcIgRC28NNs3AIKMm6AETXJZN5sqogsxoLsQXxZQFlVZaPcITuIsUS3IY0OfJfGrU9MWyP3FvcyoOXwhFKHojCrV/uQjUpMM9z1hr8l8IdmZMRaKCQzG2i5bIA4QdGYZm0J1IvIqP0IPJhun65E5IH6gM73A8RA/dM8+IuRMFc2YjL1EoiT+V30PBKqAqKgHQTmBcCusJ9rJo5oA08YPy/08BD7dwRJk7hgisv80JQAXruBWKwQEq0DrV+ERlG4rF/Iy9u+dJBzcvynyqApwmnbgiIbKC1Nq3PeN7fssFgP68s+Azb+0j7txWQKt+JXA7aBLrOM6UmKRschu1hEV0
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(39860400002)(396003)(346002)(376002)(366004)(136003)(451199018)(31696002)(86362001)(36756003)(38100700002)(4326008)(66476007)(8676002)(66946007)(66556008)(41300700001)(8936002)(54906003)(6636002)(110136005)(478600001)(316002)(6512007)(7416002)(5660300002)(2906002)(2616005)(83380400001)(6486002)(966005)(186003)(6666004)(6506007)(26005)(66899018)(31686004)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WkdBTTVPV2pnenhVQmRoSHRVYk1LWXU5OXFlUjhJSW9TcHptNWFxa1d5Tmh1?=
+ =?utf-8?B?RDZ2czM3ZU9CM0pkZVFJdmtRM1lMc1VscXMzN0VQT0J4bmxKbVNndGV0STRF?=
+ =?utf-8?B?bzgwUDRON29SdEhrZjdyWWFXRDkxM3cvMDhjbWo5alRwOVpnZ0h5TGc3Q2hN?=
+ =?utf-8?B?Z1hCa1dTakFuQnVhanA4WXZzTWRjUG5zdE5sUFhjaTdSc1ptQ0ZCSzJQNFR3?=
+ =?utf-8?B?SURScXZSa09xSU05YWJ3MlcyYnlTdmtaRG8wbTY4Tm9UK2IyY1VERnVseCtY?=
+ =?utf-8?B?a2ZtWm9BWlkyenJDZWhPNXIvQ2JOdWZleitMSldqVTdXSGtkSi9GZkZpU1pD?=
+ =?utf-8?B?NjRLZ0hid2NVdC9DZTlnSTJZei9XSjlkbVVhNjd3ZHRDZEZhUFFpVmloeG8y?=
+ =?utf-8?B?S0VRZmhyRWNEZnFqMHd1alFFVEhyYk9YK2VVd1Z6SVJCYTlqVTY0cHdvUUJO?=
+ =?utf-8?B?Vk9IbVhDUW41ejJMNHdGLzA3b3NvdXJBOHdYRjJ5dDhqMEdWQTVmbzMySWo0?=
+ =?utf-8?B?TW9NK0svaUQyOWx5eE9raWhZZWZRMlU0VDllaSsyU1FsbFYzcUpldjRjaHRE?=
+ =?utf-8?B?MWJKTHdTcGJ2ZWo4M0R3ZUNLeWlRdXY1YVNtWk80RTc4WHRYNko1WjBkNXRU?=
+ =?utf-8?B?V215eDRlNTV6UXI5ZmNmL09xYWE4ZFprZEQ4UDZ5Y1pJeFlHRnduaWQyRmpI?=
+ =?utf-8?B?aEhQVmVBNzlVWG01ZHpIN2FvZkxNNDBqU3IvQU9lcE5wbUZmVnl2dmx1NW9z?=
+ =?utf-8?B?NXcrQTNleU1qV2NQVlhuekljZHhMTFZGZm5xYkRkSHRBL1dYNUhaZHFzNXYw?=
+ =?utf-8?B?UFdpTms0S044MWErVythaTlmYU1TczVxMlFyZGtvL0ZrbTV0OWNBRENIVTZa?=
+ =?utf-8?B?NnE5SWJXeU9uYk1oUm9ONUx3djFHMkc5ektFb2tLUEVMUHBFbnNZMkw2a2Nu?=
+ =?utf-8?B?WXU4VkdEK00zTXNoV0ZyRzljZUdLUGFGTUNaMG1HMS9RQm5WL21zcmVTZ1JD?=
+ =?utf-8?B?S2NQZDZmemsxL2NSZDEvN0t4RmVHWjB1MmRTR2dxeW13QlJ3NnBMMFlYODdW?=
+ =?utf-8?B?YnlOZEQyTTdzOG5xcVgrdkRPMFhCZ1VLakswQjhwdlNRdDFOU2VjeUhRWkFG?=
+ =?utf-8?B?LzNGVUlPTDczQW4xRnk1aGZYaVhRSk5ZK2wyaTVsekRIWFBsUmlZR2VHbDRR?=
+ =?utf-8?B?azF0SE9tcnhVTmJMWVdZcENNRFZiQzIzZWkvczVLNUR6dktUNzZUTEVXTTh6?=
+ =?utf-8?B?eHpURE1xUkdnb3F0QTJZakIyRzc5UHRmWWIzOWFyR080c2UwOG5kcG5zQlBz?=
+ =?utf-8?B?WEJocGdaelN6WjA0cVRXdFNtR2UvRHFVZEJUTHFNRkROTTlzcEJ1eFZXeEp4?=
+ =?utf-8?B?ZUdLZ1loQ3loRGdidkNuKzc4ZVJTN243M2JLVno2K0pBRkN0ZjdmTWRjUmow?=
+ =?utf-8?B?cWlZRmJoemRDdGdpbGN1WUFBcjRNSlpLbTJvekFybUlFdG9yajFjeHFkQjVT?=
+ =?utf-8?B?Q1N1Umx5Y01qVFR2TVZRTTBXSjArT05xWnFZOXVZWWttcHEzcllCRnlrazlk?=
+ =?utf-8?B?ejhZTWNQWFBHT2xqL2ZhWVN0U1g0Q09ldGppK1VtSmVHZHcybXRUWjYvRFhM?=
+ =?utf-8?B?MUFCS3VpU0FyQ0ZLblFvWUVVMW5tTHExOGlGK0FKMUN0bFRvVmpPVE5Zd2tH?=
+ =?utf-8?B?ODEzc1Mrcks4WkJuNGwvQmM1Q0hGRkNlQXBISW4vdHVkUGRrNDVzZ2hib2k1?=
+ =?utf-8?B?VU9SMElqU05tbDBJK2w3MFo3Y3N2cEpMMnFIRm1wVzdMYUkvOFZWc0p5R2hy?=
+ =?utf-8?B?WEpVb3VCU2dQRWdKZnFnM29vcC9Mczl0WjJJaDF4WWZTa0JnYlFOcEVmakMz?=
+ =?utf-8?B?bFQ4eW5VdVZOYklwUnFuQ3pVRE94R1ozOWpNUXNyM3BCZmFkVkZlRmd4aVY5?=
+ =?utf-8?B?bVc4U0dSb1l2eWhkZ1NPODQ5TTEvNk9oS01qS3EvYzlIRkpOMXFncEkwY0wv?=
+ =?utf-8?B?dnV6TTdhSkQxVExJaEEzYXdYUTBnMVAybnVIcHZLdkRwSU1ackNSVTdLcGt4?=
+ =?utf-8?B?WU9tRGVBSi9oZC9hcFZST1VMU3NKZS85OXRFUHF0d0xGQkRPcEtxa00zQlBi?=
+ =?utf-8?Q?gIftAYX6P1y+ZbaE1BUKXLx7w?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8c0b3085-30ea-4867-b11b-08db23934b59
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Mar 2023 07:19:33.6734
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: PaqSw8BrjmThl9aTObYckNPwvc8DK+0KNtBS/CWFX8MQEafOS0koW+D7xhoLhhN2
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8845
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,36 +136,261 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a DT node for Last level cache (aka. system cache) controller
-which provides control over the last level cache present on QDU1000
-and QRU1000 SoCs.
+Am 11.03.23 um 18:35 schrieb Rob Clark:
+> From: Rob Clark <robdclark@chromium.org>
+>
+> Avoid allocating memory in job_run() by embedding the fence in the
+> submit object.  Since msm gpu fences are always 1:1 with msm_gem_submit
+> we can just use the fence's refcnt to track the submit.  And since we
+> can get the fence ctx from the submit we can just drop the msm_fence
+> struct altogether.  This uses the new dma_fence_init_noref() to deal
+> with the fact that the fence's refcnt is initialized when the submit is
+> created, long before job_run().
 
-Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qdu1000.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Well this is a very very bad idea, we made the same mistake with amdgpu 
+as well.
 
-diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-index 801f090335a3..a4816a862344 100644
---- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-@@ -1321,6 +1321,16 @@ gem_noc: interconnect@19100000 {
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 			#interconnect-cells = <2>;
- 		};
-+
-+		system-cache-controller@19200000 {
-+			compatible = "qcom,qdu1000-llcc";
-+			reg = <0 0x19200000 0 0xd80000>,
-+			      <0 0x1a200000 0 0x80000>,
-+			      <0 0x221c8128 0 0x4>;
-+			reg-names = "llcc_base", "llcc_broadcast_base", "multi_channel_register";
-+			multi-ch-bit-off = <24 2>;
-+			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
-+		};
- 	};
- 
- 	arch_timer: timer {
--- 
-2.39.1
+It's true that you should not have any memory allocation in your run_job 
+callback, but you could also just allocate the hw fence during job 
+creation and initializing it later on.
+
+I've suggested to embed the fence into the job for amdgpu because some 
+people insisted of re-submitting jobs during timeout and GPU reset. This 
+turned into a nightmare with tons of bug fixes on top of bug fixes on 
+top of bug fixes because it messes up the job and fence lifetime as 
+defined by the DRM scheduler and DMA-buf framework.
+
+Luben is currently working on cleaning all this up.
+
+Regards,
+Christian.
+
+>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+> Note that this applies on top of https://patchwork.freedesktop.org/series/93035/
+> out of convenience for myself, but I can re-work it to go before
+> depending on the order that things land.
+>
+>   drivers/gpu/drm/msm/msm_fence.c      | 45 +++++++++++-----------------
+>   drivers/gpu/drm/msm/msm_fence.h      |  2 +-
+>   drivers/gpu/drm/msm/msm_gem.h        | 10 +++----
+>   drivers/gpu/drm/msm/msm_gem_submit.c |  8 ++---
+>   drivers/gpu/drm/msm/msm_gpu.c        |  4 +--
+>   drivers/gpu/drm/msm/msm_ringbuffer.c |  4 +--
+>   6 files changed, 31 insertions(+), 42 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_fence.c
+> index 51b461f32103..51f9f1f0cb66 100644
+> --- a/drivers/gpu/drm/msm/msm_fence.c
+> +++ b/drivers/gpu/drm/msm/msm_fence.c
+> @@ -103,14 +103,9 @@ void msm_update_fence(struct msm_fence_context *fctx, uint32_t fence)
+>   	spin_unlock_irqrestore(&fctx->spinlock, flags);
+>   }
+>   
+> -struct msm_fence {
+> -	struct dma_fence base;
+> -	struct msm_fence_context *fctx;
+> -};
+> -
+> -static inline struct msm_fence *to_msm_fence(struct dma_fence *fence)
+> +static inline struct msm_gem_submit *fence_to_submit(struct dma_fence *fence)
+>   {
+> -	return container_of(fence, struct msm_fence, base);
+> +	return container_of(fence, struct msm_gem_submit, hw_fence);
+>   }
+>   
+>   static const char *msm_fence_get_driver_name(struct dma_fence *fence)
+> @@ -120,20 +115,20 @@ static const char *msm_fence_get_driver_name(struct dma_fence *fence)
+>   
+>   static const char *msm_fence_get_timeline_name(struct dma_fence *fence)
+>   {
+> -	struct msm_fence *f = to_msm_fence(fence);
+> -	return f->fctx->name;
+> +	struct msm_gem_submit *submit = fence_to_submit(fence);
+> +	return submit->ring->fctx->name;
+>   }
+>   
+>   static bool msm_fence_signaled(struct dma_fence *fence)
+>   {
+> -	struct msm_fence *f = to_msm_fence(fence);
+> -	return msm_fence_completed(f->fctx, f->base.seqno);
+> +	struct msm_gem_submit *submit = fence_to_submit(fence);
+> +	return msm_fence_completed(submit->ring->fctx, fence->seqno);
+>   }
+>   
+>   static void msm_fence_set_deadline(struct dma_fence *fence, ktime_t deadline)
+>   {
+> -	struct msm_fence *f = to_msm_fence(fence);
+> -	struct msm_fence_context *fctx = f->fctx;
+> +	struct msm_gem_submit *submit = fence_to_submit(fence);
+> +	struct msm_fence_context *fctx = submit->ring->fctx;
+>   	unsigned long flags;
+>   	ktime_t now;
+>   
+> @@ -165,26 +160,22 @@ static void msm_fence_set_deadline(struct dma_fence *fence, ktime_t deadline)
+>   	spin_unlock_irqrestore(&fctx->spinlock, flags);
+>   }
+>   
+> +static void msm_fence_release(struct dma_fence *fence)
+> +{
+> +	__msm_gem_submit_destroy(fence_to_submit(fence));
+> +}
+> +
+>   static const struct dma_fence_ops msm_fence_ops = {
+>   	.get_driver_name = msm_fence_get_driver_name,
+>   	.get_timeline_name = msm_fence_get_timeline_name,
+>   	.signaled = msm_fence_signaled,
+>   	.set_deadline = msm_fence_set_deadline,
+> +	.release = msm_fence_release,
+>   };
+>   
+> -struct dma_fence *
+> -msm_fence_alloc(struct msm_fence_context *fctx)
+> +void
+> +msm_fence_init(struct msm_fence_context *fctx, struct dma_fence *f)
+>   {
+> -	struct msm_fence *f;
+> -
+> -	f = kzalloc(sizeof(*f), GFP_KERNEL);
+> -	if (!f)
+> -		return ERR_PTR(-ENOMEM);
+> -
+> -	f->fctx = fctx;
+> -
+> -	dma_fence_init(&f->base, &msm_fence_ops, &fctx->spinlock,
+> -		       fctx->context, ++fctx->last_fence);
+> -
+> -	return &f->base;
+> +	dma_fence_init_noref(f, &msm_fence_ops, &fctx->spinlock,
+> +			     fctx->context, ++fctx->last_fence);
+>   }
+> diff --git a/drivers/gpu/drm/msm/msm_fence.h b/drivers/gpu/drm/msm/msm_fence.h
+> index cdaebfb94f5c..8fca37e9773b 100644
+> --- a/drivers/gpu/drm/msm/msm_fence.h
+> +++ b/drivers/gpu/drm/msm/msm_fence.h
+> @@ -81,7 +81,7 @@ void msm_fence_context_free(struct msm_fence_context *fctx);
+>   bool msm_fence_completed(struct msm_fence_context *fctx, uint32_t fence);
+>   void msm_update_fence(struct msm_fence_context *fctx, uint32_t fence);
+>   
+> -struct dma_fence * msm_fence_alloc(struct msm_fence_context *fctx);
+> +void msm_fence_init(struct msm_fence_context *fctx, struct dma_fence *f);
+>   
+>   static inline bool
+>   fence_before(uint32_t a, uint32_t b)
+> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+> index c4844cf3a585..e06afed99d5b 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.h
+> +++ b/drivers/gpu/drm/msm/msm_gem.h
+> @@ -259,10 +259,10 @@ struct msm_gem_submit {
+>   	struct ww_acquire_ctx ticket;
+>   	uint32_t seqno;		/* Sequence number of the submit on the ring */
+>   
+> -	/* Hw fence, which is created when the scheduler executes the job, and
+> +	/* Hw fence, which is initialized when the scheduler executes the job, and
+>   	 * is signaled when the hw finishes (via seqno write from cmdstream)
+>   	 */
+> -	struct dma_fence *hw_fence;
+> +	struct dma_fence hw_fence;
+>   
+>   	/* Userspace visible fence, which is signaled by the scheduler after
+>   	 * the hw_fence is signaled.
+> @@ -309,16 +309,16 @@ static inline struct msm_gem_submit *to_msm_submit(struct drm_sched_job *job)
+>   	return container_of(job, struct msm_gem_submit, base);
+>   }
+>   
+> -void __msm_gem_submit_destroy(struct kref *kref);
+> +void __msm_gem_submit_destroy(struct msm_gem_submit *submit);
+>   
+>   static inline void msm_gem_submit_get(struct msm_gem_submit *submit)
+>   {
+> -	kref_get(&submit->ref);
+> +	dma_fence_get(&submit->hw_fence);
+>   }
+>   
+>   static inline void msm_gem_submit_put(struct msm_gem_submit *submit)
+>   {
+> -	kref_put(&submit->ref, __msm_gem_submit_destroy);
+> +	dma_fence_put(&submit->hw_fence);
+>   }
+>   
+>   void msm_submit_retire(struct msm_gem_submit *submit);
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> index be4bf77103cd..522c8c82e827 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -47,7 +47,7 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
+>   		return ERR_PTR(ret);
+>   	}
+>   
+> -	kref_init(&submit->ref);
+> +	kref_init(&submit->hw_fence.refcount);
+>   	submit->dev = dev;
+>   	submit->aspace = queue->ctx->aspace;
+>   	submit->gpu = gpu;
+> @@ -65,10 +65,9 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
+>   	return submit;
+>   }
+>   
+> -void __msm_gem_submit_destroy(struct kref *kref)
+> +/* Called when the hw_fence is destroyed: */
+> +void __msm_gem_submit_destroy(struct msm_gem_submit *submit)
+>   {
+> -	struct msm_gem_submit *submit =
+> -			container_of(kref, struct msm_gem_submit, ref);
+>   	unsigned i;
+>   
+>   	if (submit->fence_id) {
+> @@ -78,7 +77,6 @@ void __msm_gem_submit_destroy(struct kref *kref)
+>   	}
+>   
+>   	dma_fence_put(submit->user_fence);
+> -	dma_fence_put(submit->hw_fence);
+>   
+>   	put_pid(submit->pid);
+>   	msm_submitqueue_put(submit->queue);
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 380249500325..a82d11dd5fcf 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -716,7 +716,7 @@ static void retire_submits(struct msm_gpu *gpu)
+>   			 * been signalled, then later submits are not signalled
+>   			 * either, so we are also done.
+>   			 */
+> -			if (submit && dma_fence_is_signaled(submit->hw_fence)) {
+> +			if (submit && dma_fence_is_signaled(&submit->hw_fence)) {
+>   				retire_submit(gpu, ring, submit);
+>   			} else {
+>   				break;
+> @@ -760,7 +760,7 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   
+>   	msm_gpu_hw_init(gpu);
+>   
+> -	submit->seqno = submit->hw_fence->seqno;
+> +	submit->seqno = submit->hw_fence.seqno;
+>   
+>   	msm_rd_dump_submit(priv->rd, submit, NULL);
+>   
+> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
+> index 57a8e9564540..5c54befa2427 100644
+> --- a/drivers/gpu/drm/msm/msm_ringbuffer.c
+> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
+> @@ -18,7 +18,7 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
+>   	struct msm_gpu *gpu = submit->gpu;
+>   	int i;
+>   
+> -	submit->hw_fence = msm_fence_alloc(fctx);
+> +	msm_fence_init(fctx, &submit->hw_fence);
+>   
+>   	for (i = 0; i < submit->nr_bos; i++) {
+>   		struct drm_gem_object *obj = &submit->bos[i].obj->base;
+> @@ -37,7 +37,7 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
+>   
+>   	mutex_unlock(&gpu->lock);
+>   
+> -	return dma_fence_get(submit->hw_fence);
+> +	return dma_fence_get(&submit->hw_fence);
+>   }
+>   
+>   static void msm_job_free(struct drm_sched_job *job)
 
