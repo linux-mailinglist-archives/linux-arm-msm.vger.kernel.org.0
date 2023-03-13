@@ -2,172 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 593726B7250
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 10:16:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16DB16B72E4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 10:43:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230174AbjCMJQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 05:16:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53384 "EHLO
+        id S229669AbjCMJnp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 05:43:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230005AbjCMJQ4 (ORCPT
+        with ESMTP id S229837AbjCMJnf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 05:16:56 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id BD757B746;
-        Mon, 13 Mar 2023 02:16:54 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 252892F4;
-        Mon, 13 Mar 2023 02:17:38 -0700 (PDT)
-Received: from [10.57.91.187] (unknown [10.57.91.187])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 735143F71A;
-        Mon, 13 Mar 2023 02:16:52 -0700 (PDT)
-Message-ID: <619818ad-71cb-6c07-bcae-ea9398f08878@arm.com>
-Date:   Mon, 13 Mar 2023 09:16:50 +0000
+        Mon, 13 Mar 2023 05:43:35 -0400
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1DF51B33B;
+        Mon, 13 Mar 2023 02:43:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678700612; x=1710236612;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=f2jaxRyW4/AFQnjCX1PeRlWlFVAQ0ExRiYHZWktn/p0=;
+  b=S0Qh0J8S0tX1pkQB9TETuX8Ry3obFVctBY+3UjbxO7YqM32Vqi0csWEZ
+   KLldNionn4wq5MhqmAHFi1/lXd7cWhoAVC7CQIQzmVxFIsku7B9L3XmRT
+   uALwDDI21N389cugbSSoK82hvMX706B7lxpUnAe7U+vNw8jx6J8yBZNT9
+   qVMIasmxwY/xPhbgRRJ32keR36JwMFM6koUz2+ggIFMULfK7IcJnN5b1z
+   hrA3yLsnvpXrsk7MlaZBkZSkkP+6HmImSHcsPKsTS1FU4OWt5IzjGx8gA
+   VVUeIW6PYHdBRtw+Gzmk1Lb4dAb9hrt5miN7YyOYf7C6bQIqPtS/6AoDS
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10647"; a="338654236"
+X-IronPort-AV: E=Sophos;i="5.98,256,1673942400"; 
+   d="scan'208";a="338654236"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2023 02:43:31 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10647"; a="821884735"
+X-IronPort-AV: E=Sophos;i="5.98,256,1673942400"; 
+   d="scan'208";a="821884735"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmsmga001.fm.intel.com with SMTP; 13 Mar 2023 02:43:26 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 13 Mar 2023 11:43:26 +0200
+Date:   Mon, 13 Mar 2023 11:43:26 +0200
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v3 01/12] usb: typec: ucsi: add PMIC Glink UCSI driver
+Message-ID: <ZA7wPtttsWlQRpAR@kuha.fi.intel.com>
+References: <20230130-topic-sm8450-upstream-pmic-glink-v3-0-4c860d265d28@linaro.org>
+ <20230130-topic-sm8450-upstream-pmic-glink-v3-1-4c860d265d28@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.7.2
-Subject: Re: [PATCH] coresight: core: Add coresight name support
-To:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Rob Herring <robh@kernel.org>
-Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>
-References: <20230208110716.18321-1-quic_jinlmao@quicinc.com>
- <3c105c79-f523-653e-5154-7ba641e51a96@arm.com>
- <180a66b1-6996-c705-5d8a-0a69ce0353d7@quicinc.com>
- <b7abee2a-99ca-26d6-5850-60ee19d9c0e9@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <b7abee2a-99ca-26d6-5850-60ee19d9c0e9@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230130-topic-sm8450-upstream-pmic-glink-v3-1-4c860d265d28@linaro.org>
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Cc: Rob
+Hi,
 
-On 01/03/2023 15:11, Jinlong Mao wrote:
-> Hi Suzuki,
-> 
-> On 2/9/2023 10:16 AM, Jinlong Mao wrote:
->>
->> On 2/8/2023 10:26 PM, Suzuki K Poulose wrote:
->>> On 08/02/2023 11:07, Mao Jinlong wrote:
->>>> Apart from STM and ETM sources, there will be more sources added to
->>>> coresight components. For example, there are over 10 TPDM sources.
->>>> Add coresight name support for custom names which will be
->>>> easy to identify the source.
->>>>
->>>
->>> As we have previously discussed, please don't make this a generic
->>> code change. If your device has a "specifici" name, use that for
->>> allocating in the driver and leave the core code alone.
->>>
->>> Suzuki
->>>
->> Hi Suzuki,
->>
->> Not only for TPDMs. There could be dozens of CTI devices.
->> It is hard for user to know which CTI device it is with current names.
->>
->> Thanks
->> Jinlong Mao
-> 
-> The coresight name support is applicable to CTI and TPDM devices.
-> This is a generic change for the source which has dozens of devices.
+On Thu, Mar 09, 2023 at 02:27:52PM +0100, Neil Armstrong wrote:
+> +static void pmic_glink_ucsi_register(struct work_struct *work)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = container_of(work, struct pmic_glink_ucsi, register_work);
+> +
+> +	ucsi_register(ucsi->ucsi);
+> +}
+> +
+> +static void pmic_glink_ucsi_callback(const void *data, size_t len, void *priv)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = priv;
+> +	const struct pmic_glink_hdr *hdr = data;
+> +
+> +	switch (hdr->opcode) {
+> +	case UC_UCSI_READ_BUF_REQ:
+> +		pmic_glink_ucsi_read_ack(ucsi, data, len);
+> +		break;
+> +	case UC_UCSI_WRITE_BUF_REQ:
+> +		pmic_glink_ucsi_write_ack(ucsi, data, len);
+> +		break;
+> +	case UC_UCSI_USBC_NOTIFY_IND:
+> +		schedule_work(&ucsi->notify_work);
+> +		break;
+> +	};
+> +}
+> +
+> +static void pmic_glink_ucsi_pdr_notify(void *priv, int state)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = priv;
+> +
+> +	if (state == SERVREG_SERVICE_STATE_UP)
+> +		schedule_work(&ucsi->register_work);
+> +	else if (state == SERVREG_SERVICE_STATE_DOWN)
+> +		ucsi_unregister(ucsi->ucsi);
+> +}
+> +
+> +static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
+> +				 const struct auxiliary_device_id *id)
+> +{
+> +	struct pmic_glink_ucsi *ucsi;
+> +	struct device *dev = &adev->dev;
+> +
+> +	ucsi = devm_kzalloc(dev, sizeof(*ucsi), GFP_KERNEL);
+> +	if (!ucsi)
+> +		return -ENOMEM;
+> +
+> +	ucsi->dev = dev;
+> +	dev_set_drvdata(dev, ucsi);
+> +
+> +	INIT_WORK(&ucsi->notify_work, pmic_glink_ucsi_notify);
+> +	INIT_WORK(&ucsi->register_work, pmic_glink_ucsi_register);
+> +	init_completion(&ucsi->read_ack);
+> +	init_completion(&ucsi->write_ack);
+> +	init_completion(&ucsi->sync_ack);
+> +	mutex_init(&ucsi->lock);
+> +
+> +	ucsi->ucsi = ucsi_create(dev, &pmic_glink_ucsi_ops);
+> +	if (IS_ERR(ucsi->ucsi))
+> +		return PTR_ERR(ucsi->ucsi);
+> +
+> +	ucsi_set_drvdata(ucsi->ucsi, ucsi);
+> +
+> +	ucsi->client = devm_pmic_glink_register_client(dev,
+> +						       PMIC_GLINK_OWNER_USBC,
+> +						       pmic_glink_ucsi_callback,
+> +						       pmic_glink_ucsi_pdr_notify,
+> +						       ucsi);
+> +	return PTR_ERR_OR_ZERO(ucsi->client);
+> +}
+> +
+> +static const struct auxiliary_device_id pmic_glink_ucsi_id_table[] = {
+> +	{ .name = "pmic_glink.ucsi", },
+> +	{},
+> +};
+> +MODULE_DEVICE_TABLE(auxiliary, pmic_glink_ucsi_id_table);
+> +
+> +static struct auxiliary_driver pmic_glink_ucsi_driver = {
+> +	.name = "pmic_glink_ucsi",
+> +	.probe = pmic_glink_ucsi_probe,
+> +	.id_table = pmic_glink_ucsi_id_table,
+> +};
 
-I took a look at the CTI situation and I agree that the situation
-is a bit tricky. The CTI could be connected to multiple devices,
-some of them may not be even CoreSight devices. Given there could
-be numerous of them, we need some way to make the "devices" naming
-a bit more intuitive.
+What happens if you remove the module - I think you need to implement
+the remove callback, no?
 
-Before we go ahead and add something specific to coresight, I would
-like to see if there is a generic property. Ideally, the "labels"
-in the DTS sources would have been an ideal choice, but can't
-see how that is available in the FDT.
+thanks,
 
-Suzuki
-
-
-> 
-> Thanks
-> Jinlong Mao
-> 
->>>
->>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>>> ---
->>>>   drivers/hwtracing/coresight/coresight-core.c | 34 
->>>> +++++++++++---------
->>>>   1 file changed, 19 insertions(+), 15 deletions(-)
->>>>
->>>> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
->>>> b/drivers/hwtracing/coresight/coresight-core.c
->>>> index d3bf82c0de1d..5e95d9c7f256 100644
->>>> --- a/drivers/hwtracing/coresight/coresight-core.c
->>>> +++ b/drivers/hwtracing/coresight/coresight-core.c
->>>> @@ -1733,28 +1733,32 @@ char *coresight_alloc_device_name(struct 
->>>> coresight_dev_list *dict,
->>>>   {
->>>>       int idx;
->>>>       char *name = NULL;
->>>> +    const char *coresight_name = NULL;
->>>>       struct fwnode_handle **list;
->>>> +    struct device_node *node = dev->of_node;
->>>>         mutex_lock(&coresight_mutex);
->>>>   -    idx = coresight_search_device_idx(dict, dev_fwnode(dev));
->>>> -    if (idx < 0) {
->>>> -        /* Make space for the new entry */
->>>> -        idx = dict->nr_idx;
->>>> -        list = krealloc_array(dict->fwnode_list,
->>>> -                      idx + 1, sizeof(*dict->fwnode_list),
->>>> -                      GFP_KERNEL);
->>>> -        if (ZERO_OR_NULL_PTR(list)) {
->>>> -            idx = -ENOMEM;
->>>> -            goto done;
->>>> +    if (!of_property_read_string(node, "coresight-name", 
->>>> &coresight_name))
->>>> +        name = devm_kasprintf(dev, GFP_KERNEL, "%s", coresight_name);
->>>> +    else {
->>>> +        idx = coresight_search_device_idx(dict, dev_fwnode(dev));
->>>> +        if (idx < 0) {
->>>> +            /* Make space for the new entry */
->>>> +            idx = dict->nr_idx;
->>>> +            list = krealloc_array(dict->fwnode_list,
->>>> +                          idx + 1, sizeof(*dict->fwnode_list),
->>>> +                          GFP_KERNEL);
->>>> +            if (ZERO_OR_NULL_PTR(list))
->>>> +                goto done;
->>>> +
->>>> +            list[idx] = dev_fwnode(dev);
->>>> +            dict->fwnode_list = list;
->>>> +            dict->nr_idx = idx + 1;
->>>>           }
->>>>   -        list[idx] = dev_fwnode(dev);
->>>> -        dict->fwnode_list = list;
->>>> -        dict->nr_idx = idx + 1;
->>>> +        name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, 
->>>> idx);
->>>>       }
->>>> -
->>>> -    name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, idx);
->>>>   done:
->>>>       mutex_unlock(&coresight_mutex);
->>>>       return name;
->>>
->> _______________________________________________
->> CoreSight mailing list -- coresight@lists.linaro.org
->> To unsubscribe send an email to coresight-leave@lists.linaro.org
-
+-- 
+heikki
