@@ -2,72 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A7026B6E8E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 05:55:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CCD036B6F57
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 07:02:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229961AbjCMEzq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 00:55:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36224 "EHLO
+        id S229505AbjCMGCV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 02:02:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229609AbjCMEzp (ORCPT
+        with ESMTP id S229531AbjCMGCU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 00:55:45 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C9F835265;
-        Sun, 12 Mar 2023 21:55:44 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id q6so4546427iot.2;
-        Sun, 12 Mar 2023 21:55:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678683343;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gpq6X/4WS7nrx/ihZzLk1eGxqJisJrm0b1Z3C7/sHiY=;
-        b=VVJP0l+6wl3D4HQv8BZkNIroI5pwpa4btEYlyh1dWdwJrRgSzBwymmZ0eYHTIsT0uC
-         1wXM9lAu6tdWZg95ImZJYtWcZXqIOpvrARhycSSc0qHfBVHo85z3Vags9SU+B84+UvjI
-         VIVtZhqdUtgWUVsCvR9JxXMdrDN19b6LWqFqYNPhwSPQNguFeTZk8gSDdpzypnvsY4j2
-         g5BH3sCifCfWtulQ1X3O/a/2Rnh1BluOpnXcIOy9EQllsGS/HEpp0xKM8V79MFTST5+v
-         wMuc6hr47oyGpPqhYZ2z8XFAU/zYkarF71TgwhkXbR41G3ipAmERaqnaScWDFnvFNUDE
-         HVdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678683343;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Gpq6X/4WS7nrx/ihZzLk1eGxqJisJrm0b1Z3C7/sHiY=;
-        b=oJFEKQgDB1CmWkkf2NFXa19+YS5+bzsWx4hylM/TPK3b5UN3vpGHc9EAAxVgDnziM/
-         4dJwsPWklSmer+3hK7VDrbNvE11lkitoUq2NkGT4WP87L3QlLNnh4mtsS/BfsA4zNuVZ
-         +/H8Zfc2A6krPNATFX9tw+0VfWMVqJ5EcX794mS0lg9YdvxmV4Rp1Mh2Cn6Apg2hvFzG
-         0tnj3rVZDfp98W0blUBoOItvuBps5jznBUmIxlaFwoT2kH4xL67you4vq0QdNFLtYx/8
-         YaXJxLB2ReNcNSh3MDrjWHwLB1PVVLEt6njEiOcM61735wyO3gLArjkuDcV6uBG+u+f7
-         EULA==
-X-Gm-Message-State: AO0yUKUANOwLQwRisidOxUky2Nlk+MrMlwmblLdjW01hWaTSZJp8mz5l
-        J7iDRAQa74bPI+lDRmgRX6g=
-X-Google-Smtp-Source: AK7set/vaKhV5BybX29gbzgA7KfHXdksLjbCadOAxjzAmtTlZgN6liZnpTLpc/44YL0k3TVPX3dPVg==
-X-Received: by 2002:a6b:b7c3:0:b0:746:190a:138f with SMTP id h186-20020a6bb7c3000000b00746190a138fmr6388871iof.2.1678683343597;
-        Sun, 12 Mar 2023 21:55:43 -0700 (PDT)
-Received: from JOEL-DESKTOP.. ([2604:2d80:4d87:cd00:9f51:32d7:1177:67d])
-        by smtp.gmail.com with ESMTPSA id p19-20020a0566380e9300b003eac69029e5sm2175085jas.79.2023.03.12.21.55.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Mar 2023 21:55:43 -0700 (PDT)
-From:   Joel Selvaraj <joelselvaraj.oss@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Joel Selvaraj <joelselvaraj.oss@gmail.com>
-Subject: [PATCH] arch: arm64: qcom: sdm845-xiaomi-beryllium: add notification LED
-Date:   Sun, 12 Mar 2023 23:55:39 -0500
-Message-Id: <20230313045539.47538-1-joelselvaraj.oss@gmail.com>
-X-Mailer: git-send-email 2.39.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        Mon, 13 Mar 2023 02:02:20 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC3D13E091;
+        Sun, 12 Mar 2023 23:02:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 66B66B80DDF;
+        Mon, 13 Mar 2023 06:02:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B67C433D2;
+        Mon, 13 Mar 2023 06:02:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678687337;
+        bh=QvN99wbsfsOdgiEtkZdCtrzsvmSned3arXSblYeg4zI=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=H4KB6v35P8uu5YE65R89Dha0tfPZtAIzs51PpXyyYrW/eb9Yf+ggajypFgbHyehmL
+         Lz+Tn1SyWjGkhLeSK4HBvVh+mjpsefFljRgFDVmoqwADRzOvLoEj8zdJC4ckuecmk6
+         z2FifxjJrVbOFPbqWp5c0idaZipEkqPQS8b9EfLoLfWg8AFPA8kqj0fZrSA6PYpHjL
+         EIltdF5CTPbFVfUczzm4jSuDD9uuld0rgclCmEWnq+J4gvu9cArnlpxXbzsPNoXMqB
+         s5kNVl5zZibmasjNxfDqQqxvqYVgZflg8LtTUqABVeyHUtEPiMz+UMikyJk+MK0Jiy
+         86e7bzto4wchw==
+Date:   Mon, 13 Mar 2023 15:02:12 +0900
+From:   Masami Hiramatsu (Google) <mhiramat@kernel.org>
+To:     Heinz Wiesinger <pprkut@slackware.com>
+Cc:     quic_schowdhu@quicinc.com, andersson@kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mhiramat@kernel.org, quic_rjendra@quicinc.com,
+        quic_saipraka@quicinc.com, quic_sibis@quicinc.com
+Subject: Re: [PATCH V1] bootconfig: Increase max nodes of bootconfig from
+ 1024 to 8192 for DCC support
+Message-Id: <20230313150212.4ff2bc19f36469b9f9304605@kernel.org>
+In-Reply-To: <2463802.XAFRqVoOGU@amaterasu.liwjatan.org>
+References: <1674536682-18404-1-git-send-email-quic_schowdhu@quicinc.com>
+        <2463802.XAFRqVoOGU@amaterasu.liwjatan.org>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,43 +60,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the Qualcomm Light Pulse Generator (LPG) driver based
-notification LED.
+On Sun, 12 Mar 2023 12:49:44 +0100
+Heinz Wiesinger <pprkut@slackware.com> wrote:
 
-Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
----
- .../boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+> Hi everyone,
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-index e0fda4d754fe..9d11502e5e0e 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-@@ -2,6 +2,7 @@
- 
- /dts-v1/;
- 
-+#include <dt-bindings/leds/common.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include <dt-bindings/sound/qcom,q6afe.h>
-@@ -322,6 +323,16 @@ vol_up_pin_a: vol-up-active-state {
- 	};
- };
- 
-+&pmi8998_lpg {
-+	status = "okay";
-+
-+	led@5 {
-+		reg = <5>;
-+		color = <LED_COLOR_ID_WHITE>;
-+		function = LED_FUNCTION_STATUS;
-+	};
-+};
-+
- &pmi8998_wled {
- 	status = "okay";
- 	qcom,current-boost-limit = <970>;
+Oops, thanks for pointing it out. I have to run the test in the test environment...
+
+
+> 
+> It looks like this broke the bootconfig tests (tools/bootconfig/test-
+> bootconfig.sh), tested on 6.1.18:
+> 
+> Max node number check
+> test case 12 (./bootconfig -a ./temp-HCfT.bconf ./initrd-NGHv)...
+> Apply ./temp-HCfT.bconf to ./initrd-NGHv
+>         Number of nodes: 1024
+>         Size: 8110 bytes
+>         Checksum: 599485
+> \t\t[OK]
+> test case 13 (./bootconfig -a ./temp-HCfT.bconf ./initrd-NGHv)...
+> Apply ./temp-HCfT.bconf to ./initrd-NGHv
+>         Number of nodes: 1025
+>         Size: 8118 bytes
+>         Checksum: 600212
+> \t\t[NG]
+
+Yes, it needs to test with 8192 and 8193 nodes. Those are
+boundary checker.
+
+Thanks!
+
+> 
+> When I adjust the max node number for the tests to 8192, test case 13 passes, 
+> but test case 12 then fails:
+> 
+> Max node number check
+> test case 12 (./bootconfig -a ./temp-qZHF.bconf ./initrd-0v99)...
+> Error: Config data is too big.
+> \t\t[NG]
+> test case 13 (./bootconfig -a ./temp-qZHF.bconf ./initrd-0v99)...
+> Error: Config data is too big.
+> \t\t[OK]
+
+Ah, it hits the size limitation. :D
+
+Each node consumes "node%d\n" = 6-11 bytes, and 11 bytes*8k = 88k bytes > 32K bytes.
+So, for making 8k nodes (including delimiter), we need to use 3 random alphabets for
+node name. (26^3 = 17576)
+
+Let me fix that and thanks for report!
+
+
+
+> 
+> Grs,
+> Heinz
+
+
 -- 
-2.39.2
-
+Masami Hiramatsu (Google) <mhiramat@kernel.org>
