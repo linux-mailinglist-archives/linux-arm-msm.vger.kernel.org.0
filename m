@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 710436B7FF9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 19:10:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BAF106B7FFE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 19:10:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229889AbjCMSKI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 14:10:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49582 "EHLO
+        id S230152AbjCMSKY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 14:10:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230493AbjCMSKD (ORCPT
+        with ESMTP id S230199AbjCMSKO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 14:10:03 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BDFC769E2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 11:09:44 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id t11so16846268lfr.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 11:09:44 -0700 (PDT)
+        Mon, 13 Mar 2023 14:10:14 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8423476F61
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 11:10:13 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id s22so16824036lfi.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 11:10:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1678730982;
+        d=chromium.org; s=google; t=1678731012;
         h=to:subject:message-id:date:user-agent:from:references:in-reply-to
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=AC1AaHI/M3K6sSup8LnZmTH6kmxrZ+Dj4Rlm4AMPhpQ=;
-        b=COTEfSvudapDX7lS8HupLQXZEZLP2QFVLPLnooMKIJYpUI8l6Riqv3JH1vfGDRcx+p
-         /4qcMRnz6I1AGrsL4x7vHaQ/6raLD55AYFpE9vJXNv8y0Fxj1HaCdiIs7ReHXiOg1Yzw
-         76H5T46WIk3SUsj8jT3hXTtucESIqTcIlXEgY=
+        bh=/UmHmPBg3/KI8KvoUSeeIp1LmuluBX0Sv6TgjKs3d9E=;
+        b=mxXEcHfqp01IK15NmgnwBXXKUc4nQvrXWX21tuzlRrDbwI3AahzL2snAI3dkTc47Hb
+         1isieLtMMUSc6VccPO4Xej39klM4R700IdP2q1ECUf2NqBX7Bu9C2cCilW3xo6MX+NHF
+         gC8cxqBYzc9D2c0RoQ0rBoKPV3ZKfQ9joxva8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678730982;
+        d=1e100.net; s=20210112; t=1678731012;
         h=to:subject:message-id:date:user-agent:from:references:in-reply-to
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=AC1AaHI/M3K6sSup8LnZmTH6kmxrZ+Dj4Rlm4AMPhpQ=;
-        b=Wi6Jel8zVGh/EbZ+o0gozYywTdp6YQO50j7dbRJDUBqlCypkZ3lVknnmdJVEchAnZY
-         ifzbTZsGo6ZGsTehfMk0Xgym5u1EO33WRBb3EALpSIXJz2CQwcsxwJTZWRjhN/3cXqKa
-         jscIKpIs2Twl5fpCRBPVnuzkLmGWKr5JMYMHFV4kIxBQ9si9hO5AH3lx6YHxcirJlksY
-         QCeOEeRbAAhohQlSwUS6DDBiqyRorc/Fe5Qprmypla2VJAkOK8GLm9Ohz5PBCgpqFJC6
-         1gD3fu3EPZ0qQyrC9yvih+u+SxJogpYhMMH4So3VlIbbs4JWyz8O/C1H399smF83G2IC
-         4pbQ==
-X-Gm-Message-State: AO0yUKVL/GPjr0Z7F0IemUfZqIErPabVZbPayz5X2+h/H5aH/kAG0CjL
-        DcTu7FaWrgSSbP5yOI8ubmPqIVVoAq8k0Nqie4/esw==
-X-Google-Smtp-Source: AK7set+tW6ZQlyVt2YCXoAN0jN9I43kwUHgLrWKfXdHTQeIr91lw69FgDzrH/nObkKwGiKfQvYqIrrW6ZNRdogR7vEY=
-X-Received: by 2002:a19:f606:0:b0:4e7:ed3c:68ee with SMTP id
- x6-20020a19f606000000b004e7ed3c68eemr10188143lfe.4.1678730982538; Mon, 13 Mar
- 2023 11:09:42 -0700 (PDT)
+        bh=/UmHmPBg3/KI8KvoUSeeIp1LmuluBX0Sv6TgjKs3d9E=;
+        b=tLZ6IHVCS9ZHK5QHvm/tEKRLQMjNWKGS9LQNTlhbZtvFqJMS3qcfekYTfrjxCa7bXg
+         NWwKDhlUM27zjd0WnPzpWGIDTeAmSYT4JnfTuRI+WmQmSu32JitHQf/Z4325fkrX4S/Z
+         8ZUOU0+gGoUm+MXRpKON7P1xNYR/tbZ3oqoCCyTpQ2Pdjn3LU7I9idxBu6HSgFPPaEyo
+         a1j0UtKgr4wkkVpw+y1nNGaIH7HilZRkxKUvIqcys5wqRIiFG3SCWRao1ZepbjVwmQY0
+         m39Kr/Fpcdps7Aaesry/3AvpNeit1IDKXKj2WSkSCWrI82pTwrPwc9jGbTlEoAAe12aA
+         t59Q==
+X-Gm-Message-State: AO0yUKX/vuCLBIusPDMQI9/UHNb+r2sNqzQeNAGcFisjl1phvO2UqMyA
+        HmDgfR1HW2wZDQJuiPaC+doVUariNb5/JYx3kfMFwg==
+X-Google-Smtp-Source: AK7set+f6kjqU/JYMNhvXXZiogIza/ykidaSJZkuSbt2NvCqe/3opxyPqZXqakkXk/QAvNMFkDSKtY+k9GQb21x6vvA=
+X-Received: by 2002:ac2:5312:0:b0:4e1:dbbb:493b with SMTP id
+ c18-20020ac25312000000b004e1dbbb493bmr11186617lfh.4.1678731011790; Mon, 13
+ Mar 2023 11:10:11 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 13 Mar 2023 11:09:42 -0700
+ HTTPREST; Mon, 13 Mar 2023 11:10:11 -0700
 MIME-Version: 1.0
-In-Reply-To: <20230312183622.460488-3-krzysztof.kozlowski@linaro.org>
-References: <20230312183622.460488-1-krzysztof.kozlowski@linaro.org> <20230312183622.460488-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230312183622.460488-4-krzysztof.kozlowski@linaro.org>
+References: <20230312183622.460488-1-krzysztof.kozlowski@linaro.org> <20230312183622.460488-4-krzysztof.kozlowski@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Mon, 13 Mar 2023 11:09:42 -0700
-Message-ID: <CAE-0n50eJaw=ENqR71_5-L1kArey79snkoz_GQq4ufG1ZWu_Pg@mail.gmail.com>
-Subject: Re: [PATCH 3/8] arm64: dts: qcom: sc7180-trogdor-lazor: correct
+Date:   Mon, 13 Mar 2023 11:10:11 -0700
+Message-ID: <CAE-0n50=pjP4Quu0grdb12wbetm-gRdxJq_CVEn8Ky=exNYKKw@mail.gmail.com>
+Subject: Re: [PATCH 4/8] arm64: dts: qcom: sc7180-trogdor-pazquel: correct
  trackpad supply
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -70,21 +70,20 @@ To:     Andy Gross <agross@kernel.org>,
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krzysztof Kozlowski (2023-03-12 11:36:17)
+Quoting Krzysztof Kozlowski (2023-03-12 11:36:18)
 > The hid-over-i2c takes VDD, not VCC supply.  Fix copy-pasta from other
 > boards which use elan,ekth3000 with valid VCC:
 >
->   sc7180-trogdor-lazor-limozeen-nots-r4.dtb: trackpad@2c: 'vcc-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
+>   sc7180-trogdor-pazquel360-lte.dtb: trackpad@15: 'vcc-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
 >
-> Fixes: 2c26adb8dbab ("arm64: dts: qcom: Add sc7180-lazor-limozeen skus")
+> Fixes: fb69f6adaf88 ("arm64: dts: qcom: sc7180: Add pazquel dts files")
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
 
