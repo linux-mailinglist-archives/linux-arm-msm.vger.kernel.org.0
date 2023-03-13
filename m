@@ -2,54 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E034C6B77EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 13:46:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4C6B6B781E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 13:56:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229845AbjCMMqT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 08:46:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55978 "EHLO
+        id S230231AbjCMM42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 08:56:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229888AbjCMMqT (ORCPT
+        with ESMTP id S230230AbjCMM4Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 08:46:19 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CF256EBB;
-        Mon, 13 Mar 2023 05:46:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D4C0F61277;
-        Mon, 13 Mar 2023 12:45:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDBDC433D2;
-        Mon, 13 Mar 2023 12:45:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678711559;
-        bh=qVkmwXonH8hmMSSCuPxE/fYZDjtdar66MDKlKu02CYg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YviOT9U7ELoxrS3EwLG3X7qlriMbweVhj5Kek/YLMV+E/QrriI1BSExdG/pcc46GW
-         At6bYmXyqHEyOkXbVoMlRLvmSIW65zg13KX53Pi1ISApLImH7x0GnXvHeMaJsF1W1Y
-         g4x6tflym2Dd7Dy4wBUC5yVKPUoMvaKMmvCx4K/d/eey/y+OBgLFkaoIqK2hfpN5Q4
-         Xnut8+nuUTm0IluESvj37VI29Cn/JjQ5dAb2EvHzvui4XbN2hJmhKqEDUOph/rscT5
-         zWRKTs3ogfflZDFof8WeDwgLcTuY9Dim9u7/wP8tRkeBlrFivCA5L6wK194SuSmRy0
-         XJ299IuuVz45Q==
-Date:   Mon, 13 Mar 2023 05:49:23 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Eric Chanudet <echanude@redhat.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: add symbols to dtb
-Message-ID: <20230313124923.iwaknvrnitqal3wa@ripper>
-References: <20230309233945.1199358-1-echanude@redhat.com>
+        Mon, 13 Mar 2023 08:56:25 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD5A7664C7;
+        Mon, 13 Mar 2023 05:56:23 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32DBBCGZ019475;
+        Mon, 13 Mar 2023 12:56:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=uGlf6UJeXzxaum40kVyYfLhOaD7KSGqofEz/PO0SxI4=;
+ b=QJirBTkY3Y9knKdrsIFxhaHxrqWM/IblLR3cWG+k8pfoIqaVZPwXOEoJTclGnH9CUbgy
+ MHdxfPsK7cHEr/JBS2JomM/N8CjQDqsrRjdhRHnkDhTiQa6s7OHBoipncV4qGa4SzENP
+ iet4BefXftpjlaI/a2h3USmrSA547xrEzxZdvhZlr6BcGAI19S0dkkVaXqQUfbR5sMMG
+ 9FcAWuS7SANllRMOBobMQsIp8Yo/sqWmvkcZq3AbBNpcsLPnUVkr0LXdR1GxEoLqzPdR
+ flB6qU7qskp/HEOCgeE2MWaO4+LZKidUGONJgcwrO3tdKJ/ylly/O6l0rn6kz7JLInYB qw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p8jtwvv2x-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Mar 2023 12:56:18 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32DCuHc1028773
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Mar 2023 12:56:17 GMT
+Received: from [10.216.8.170] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 13 Mar
+ 2023 05:56:15 -0700
+Message-ID: <185de2d5-8d5d-4991-1157-f30799b5f963@quicinc.com>
+Date:   Mon, 13 Mar 2023 18:26:11 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230309233945.1199358-1-echanude@redhat.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH] arm64: dts: qcom: qdu1000: Add
+ LLCC/system-cache-controller node
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230313071757.31533-1-quic_kbajaj@quicinc.com>
+ <5441450e-be39-1033-b3d5-c3eb10950d34@linaro.org>
+From:   Komal Bajaj <quic_kbajaj@quicinc.com>
+In-Reply-To: <5441450e-be39-1033-b3d5-c3eb10950d34@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: almB87FFgTgc6KuU97HdPvtUR-6AI8OQ
+X-Proofpoint-GUID: almB87FFgTgc6KuU97HdPvtUR-6AI8OQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-13_05,2023-03-13_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ phishscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ malwarescore=0 mlxscore=0 adultscore=0 lowpriorityscore=0 mlxlogscore=999
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303130105
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,42 +84,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 09, 2023 at 06:39:48PM -0500, Eric Chanudet wrote:
-> ABL uses the __symbols__ section to process the DTB before passing it
-> forward. Without it, the bootstrap is interrupted.
-> 
-> Signed-off-by: Eric Chanudet <echanude@redhat.com>
 
-@Rob, @Krzysztof, it seems useful to be able to use the upstream
-generated DTBs with overlays.
 
-Do you suggest that we enable this on a per-board basis when it's being
-requested, across all devices, or tell the users that they have to
-re-generate the dtbs themselves?
+On 3/13/2023 2:02 PM, Konrad Dybcio wrote:
+>
+> On 13.03.2023 08:17, Komal Bajaj wrote:
+>> Add a DT node for Last level cache (aka. system cache) controller
+>> which provides control over the last level cache present on QDU1000
+>> and QRU1000 SoCs.
+>>
+>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qdu1000.dtsi | 10 ++++++++++
+>>   1 file changed, 10 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>> index 801f090335a3..a4816a862344 100644
+>> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>> @@ -1321,6 +1321,16 @@ gem_noc: interconnect@19100000 {
+>>   			qcom,bcm-voters = <&apps_bcm_voter>;
+>>   			#interconnect-cells = <2>;
+>>   		};
+>> +
+>> +		system-cache-controller@19200000 {
+>> +			compatible = "qcom,qdu1000-llcc";
+>> +			reg = <0 0x19200000 0 0xd80000>,
+>> +			      <0 0x1a200000 0 0x80000>,
+>> +			      <0 0x221c8128 0 0x4>;
+>> +			reg-names = "llcc_base", "llcc_broadcast_base", "multi_channel_register";
+> Please turn this into a vertical list, like you did with reg
+>
+>> +			multi-ch-bit-off = <24 2>;
+> driver-specific properties generally go after the generic ones,
+> so swap this one with interrupts
+>
+> Konrad
+
+Thanks for your comments, will address these in the next version.
 
 Thanks,
-Bjorn
+Komal
 
-> ---
-> Depends on initial sa8775p-ride.dts:
-> https://lore.kernel.org/all/20230214092713.211054-3-brgl@bgdev.pl/
-> 
->  arch/arm64/boot/dts/qcom/Makefile | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index b63cd1861e68..72e85ab31d74 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -1,4 +1,8 @@
->  # SPDX-License-Identifier: GPL-2.0
-> +
-> +# Enable support for device-tree overlays required on sa8775p-ride.
-> +DTC_FLAGS_sa8775p-ride := -@
-> +
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
-> -- 
-> 2.39.1
-> 
+>> +			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
+>> +		};
+>>   	};
+>>   
+>>   	arch_timer: timer {
+
