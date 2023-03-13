@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A08F76B7E93
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 18:01:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8472F6B7E74
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 18:01:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230092AbjCMRAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 13:00:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57074 "EHLO
+        id S230254AbjCMRAN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 13:00:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229946AbjCMQ7h (ORCPT
+        with ESMTP id S231365AbjCMQ7p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 12:59:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0C562A98E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 09:58:15 -0700 (PDT)
+        Mon, 13 Mar 2023 12:59:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DF3536FCD
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 09:58:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1678726669;
+        s=mimecast20190719; t=1678726675;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=yTmnd9hxPpCOOutU5STf4RtQkxrVi6PXtGHNfI7VNJw=;
-        b=DEaL0+fNPUYXgw5OhGyCV7Lp6czBeQLYg4QxQZXIrLrRPVzZlL4TyMakB5vhz52QKCpqB9
-        S7QTQG6boTy8bY110wxsBz66z44RBF1iRkK29LHiDbYHL6LzqilVt7HeA78P7zl2qbD9iB
-        HA7OJ1zXJEoBecKYX6GqnkQ5rCamb7g=
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=EgUyAFiD1XudKGrCgIYV9yECJZPALfejLv+DfT2fuQE=;
+        b=I5p904Cw7qQsFetkWbqcdqf8eiC37aL0jAaGyZw0B8Qm/KganQHDnKQg2RqoSDPFtqjdni
+        8CWYGjU8rA75p/c17tThWQWJbF6USwvnUChxVI6OLHOUBDVNvpPKFTxL/NYLW0O4eClDBi
+        St4gFwimglcjAOj+v9FzbRY8ZBe8fC4=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-451-HURiinNCPD-dPCwAVp2hsQ-1; Mon, 13 Mar 2023 12:57:48 -0400
-X-MC-Unique: HURiinNCPD-dPCwAVp2hsQ-1
-Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-176c16fa9b7so7534806fac.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 09:57:47 -0700 (PDT)
+ us-mta-302-sE_voCXCPLKvDaFj5_JIfQ-1; Mon, 13 Mar 2023 12:57:53 -0400
+X-MC-Unique: sE_voCXCPLKvDaFj5_JIfQ-1
+Received: by mail-oa1-f69.google.com with SMTP id 586e51a60fabf-17a03f26ff8so283160fac.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 09:57:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678726667;
+        d=1e100.net; s=20210112; t=1678726673;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yTmnd9hxPpCOOutU5STf4RtQkxrVi6PXtGHNfI7VNJw=;
-        b=2G+PGznV6reDDpGE+Z2cSUS0jfh/C6LenYPPDKeMNrfsEcF/URlXLF6+BxzjmPtRan
-         BGVpTRFHVhmUSDEfptb4ETQYCweEDe7Tp792ND57yRD1Ug8hMVhPlj8K5YbgutlVxx8w
-         ecv9c7g3QXmvZUehEJKapwvn4IxU9aRj0JbJsWsi7EWyx+faItq8QBvuUQ3H/VAytY2j
-         3uGz0i2DhpsyF2s9LZsq1C7lHjaUuZfmPcEapzCGvbI2Z7v+g4X0hvyGGjyLtWAmU2d8
-         1uW32kd1NBj4lXjI44CROnIGOFvIQ4abL+VoK8DBi0ICAeQZsVxjli41eHO6UyLJnAxc
-         UDhg==
-X-Gm-Message-State: AO0yUKWj10+ntAqwY2F8K14uCEe8Ylv7kdWUNPl6EMQpwBuyEl+2a+9L
-        YaxwNHFrV6PJb7GS4+KuCuhuVJ7vFa3qWl44iq6JtqMVDnNmVddxRzVQ+1Td0Nyyz2Naw3A5CLH
-        y+Yd/1VLgqqiXKfOZk9KmwbdPgA==
-X-Received: by 2002:a05:6870:100f:b0:177:c2bd:3f70 with SMTP id 15-20020a056870100f00b00177c2bd3f70mr1768603oai.54.1678726666844;
-        Mon, 13 Mar 2023 09:57:46 -0700 (PDT)
-X-Google-Smtp-Source: AK7set9LTjJnVi7KbqyM3HxA+UA+0412jb6ywCtvfKt8ocQUFVHxB1G6jo2+/GA0kywQ4LDzFQSvgA==
-X-Received: by 2002:a05:6870:100f:b0:177:c2bd:3f70 with SMTP id 15-20020a056870100f00b00177c2bd3f70mr1768573oai.54.1678726666521;
-        Mon, 13 Mar 2023 09:57:46 -0700 (PDT)
+        bh=EgUyAFiD1XudKGrCgIYV9yECJZPALfejLv+DfT2fuQE=;
+        b=xU/bnn07/46LyBI/3RQDXbAUnDawhC0zNVS4gDkM29baLZO1XorKS0zcBkfZI8I6Gi
+         RBUjyaVK+QcyfedsHFQMndx1noGeWJ/s4VS+bAJxJgJ9PWZxiWnPwGK1/H8m1xwu7ns2
+         eqtm4qv5KfRjK01EYFe87WwqliSrudnvO8L6F1b3xc3B+dwadHO7dLavW0Hn5Q/oluWA
+         IqYsUpvDzzPvaDabYsxKdGMvG5CWtfrKe0xQkMIJ747EPv+y1CI/O2GxESwgW7vt5BHH
+         /d3HtFhBsCyF1Fz4Lvs/I6NZItRt5SIWuVt7N3KmRmyF0Z+a4TMxQ7ln4pu4LFIuhsgh
+         1vwA==
+X-Gm-Message-State: AO0yUKUTEicQS6+PGNcW8Xn1OM6iwM8Vl0eBk+ACoRUwW04NTVTN53wc
+        ZvFjXddii6KWrnTVN+G9D/mkSA6TqnbbYE5IuJQRESZaF1u0ZcFEGMUNu6RX20KRnK+ClRAEpRd
+        r7sBK5coTk1O+cizfgk19y/rpjg==
+X-Received: by 2002:a05:6808:1817:b0:37f:a0a5:bbd7 with SMTP id bh23-20020a056808181700b0037fa0a5bbd7mr5917177oib.19.1678726672870;
+        Mon, 13 Mar 2023 09:57:52 -0700 (PDT)
+X-Google-Smtp-Source: AK7set8IMVgi9dA73YStFP9z7uXb2gOJctItwWnLxwr+RDkpbh1tquQEEvHPC1i2gPialB5T/ZvK2Q==
+X-Received: by 2002:a05:6808:1817:b0:37f:a0a5:bbd7 with SMTP id bh23-20020a056808181700b0037fa0a5bbd7mr5917143oib.19.1678726672584;
+        Mon, 13 Mar 2023 09:57:52 -0700 (PDT)
 Received: from halaney-x13s.attlocal.net ([2600:1700:1ff0:d0e0::21])
-        by smtp.gmail.com with ESMTPSA id o2-20020acad702000000b00384d3003fa3sm3365273oig.26.2023.03.13.09.57.44
+        by smtp.gmail.com with ESMTPSA id o2-20020acad702000000b00384d3003fa3sm3365273oig.26.2023.03.13.09.57.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Mar 2023 09:57:46 -0700 (PDT)
+        Mon, 13 Mar 2023 09:57:52 -0700 (PDT)
 From:   Andrew Halaney <ahalaney@redhat.com>
 To:     linux-kernel@vger.kernel.org
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -76,9 +76,9 @@ Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
         jsuraj@qti.qualcomm.com, hisunil@quicinc.com,
         Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH net-next 06/11] arm64: dts: qcom: sc8280xp: Add ethernet nodes
-Date:   Mon, 13 Mar 2023 11:56:15 -0500
-Message-Id: <20230313165620.128463-7-ahalaney@redhat.com>
+Subject: [PATCH net-next 07/11] arm64: dts: qcom: sa8540p-ride: Add ethernet nodes
+Date:   Mon, 13 Mar 2023 11:56:16 -0500
+Message-Id: <20230313165620.128463-8-ahalaney@redhat.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230313165620.128463-1-ahalaney@redhat.com>
 References: <20230313165620.128463-1-ahalaney@redhat.com>
@@ -95,77 +95,235 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This platform has 2 MACs integrated in it, go ahead and describe them.
+Enable both the MACs found on the board.
+
+ethernet0 and ethernet1 both ultimately go to a series of on board
+switches which aren't managed by this processor.
+
+ethernet0 is connected to a Marvell 88EA1512 phy via RGMII. That goes to
+the series of switches via SGMII on the "media" side of the phy.
+RGMII_SGMII mode is enabled via devicetree register descriptions.
+The switch on the "media" side has auto-negotiation disabled, so
+configuration from userspace similar to:
+
+        ethtool -s eth0 autoneg off speed 1000 duplex full
+
+is necessary to get traffic flowing on that interface.
+
+ethernet1 is in a mac2mac/fixed-link configuration going to the same
+series of switches directly via RGMII.
 
 Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 53 ++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
+ arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 181 ++++++++++++++++++++++
+ 1 file changed, 181 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 0d02599d8867..a63e8e81a8c4 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -761,6 +761,59 @@ soc: soc@0 {
- 		ranges = <0 0 0 0 0x10 0>;
- 		dma-ranges = <0 0 0 0 0x10 0>;
+diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+index 8b7555f22528..b874f3909382 100644
+--- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
++++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+@@ -28,6 +28,65 @@ aliases {
+ 	chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
++
++	mtl_rx_setup: rx-queues-config {
++		snps,rx-queues-to-use = <1>;
++		snps,rx-sched-sp;
++
++		queue0 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x0>;
++			snps,route-up;
++			snps,priority = <0x1>;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x1>;
++			snps,route-ptp;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x2>;
++			snps,route-avcp;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x3>;
++			snps,priority = <0xc>;
++		};
++	};
++
++	mtl_tx_setup: tx-queues-config {
++		snps,tx-queues-to-use = <1>;
++		snps,tx-sched-sp;
++
++		queue0 {
++			snps,dcb-algorithm;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++	};
+ };
  
-+		ethernet0: ethernet@20000 {
-+			compatible = "qcom,sc8280xp-ethqos";
-+			reg = <0x0 0x00020000 0x0 0x10000>,
-+				<0x0 0x00036000 0x0 0x100>;
-+			reg-names = "stmmaceth", "rgmii";
+ &apps_rsc {
+@@ -151,6 +210,68 @@ vreg_l8g: ldo8 {
+ 	};
+ };
+ 
++&ethernet0 {
++	snps,mtl-rx-config = <&mtl_rx_setup>;
++	snps,mtl-tx-config = <&mtl_tx_setup>;
 +
-+			clocks = <&gcc GCC_EMAC0_AXI_CLK>,
-+				<&gcc GCC_EMAC0_SLV_AHB_CLK>,
-+				<&gcc GCC_EMAC0_PTP_CLK>,
-+				<&gcc GCC_EMAC0_RGMII_CLK>;
-+			clock-names = "stmmaceth", "pclk", "ptp_ref", "rgmii";
++	max-speed = <1000>;
++	phy-handle = <&rgmii_phy>;
++	phy-mode = "rgmii-txid";
 +
-+			interrupts = <GIC_SPI 946 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 936 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "macirq", "eth_lpi";
-+			iommus = <&apps_smmu 0x4c0 0xf>;
-+			power-domains = <&gcc EMAC_0_GDSC>;
++	pinctrl-names = "default";
++	pinctrl-0 = <&ethernet0_default>;
 +
-+			snps,tso;
-+			snps,pbl = <32>;
-+			rx-fifo-depth = <4096>;
-+			tx-fifo-depth = <4096>;
++	status = "okay";
 +
-+			status = "disabled";
++	mdio {
++		#address-cells = <0x1>;
++		#size-cells = <0x0>;
++
++		compatible = "snps,dwmac-mdio";
++
++		/* Marvell 88EA1512 */
++		rgmii_phy: phy@8 {
++			reg = <0x8>;
++
++			interrupt-parent = <&tlmm>;
++			interrupts-extended = <&tlmm 127 IRQ_TYPE_EDGE_FALLING>;
++
++			reset-gpios = <&pmm8540c_gpios 1 GPIO_ACTIVE_LOW>;
++			reset-assert-us = <11000>;
++			reset-deassert-us = <70000>;
++
++			device_type = "ethernet-phy";
++
++			/* Set to RGMII_SGMII mode and soft reset. Turn off auto-negotiation
++			 * from userspace to talk to the switch on the SGMII side of things
++			 */
++			marvell,reg-init =
++				/* Set MODE[2:0] to RGMII_SGMII */
++				<0x12 0x14 0xfff8 0x4>,
++				/* Soft reset required after changing MODE[2:0] */
++				<0x12 0x14 0x7fff 0x8000>;
++		};
++	};
++};
++
++&ethernet1 {
++	snps,mtl-rx-config = <&mtl_rx_setup>;
++	snps,mtl-tx-config = <&mtl_tx_setup>;
++
++	max-speed = <1000>;
++	phy-mode = "rgmii-txid";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&ethernet1_default>;
++
++	status = "okay";
++
++	fixed-link {
++		speed = <1000>;
++		full-duplex;
++	};
++};
++
+ &i2c0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&i2c0_default>;
+@@ -316,6 +437,66 @@ &xo_board_clk {
+ /* PINCTRL */
+ 
+ &tlmm {
++	ethernet0_default: ethernet0-default-state {
++		mdc-pins {
++			pins = "gpio175";
++			function = "rgmii_0";
++			drive-strength = <16>;
++			bias-pull-up;
 +		};
 +
-+		ethernet1: ethernet@23000000 {
-+			compatible = "qcom,sc8280xp-ethqos";
-+			reg = <0x0 0x23000000 0x0 0x10000>,
-+				<0x0 0x23016000 0x0 0x100>;
-+			reg-names = "stmmaceth", "rgmii";
-+
-+			clocks = <&gcc GCC_EMAC1_AXI_CLK>,
-+				<&gcc GCC_EMAC1_SLV_AHB_CLK>,
-+				<&gcc GCC_EMAC1_PTP_CLK>,
-+				<&gcc GCC_EMAC1_RGMII_CLK>;
-+			clock-names = "stmmaceth", "pclk", "ptp_ref", "rgmii";
-+
-+			interrupts = <GIC_SPI 929 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 919 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "macirq", "eth_lpi";
-+
-+			iommus = <&apps_smmu 0x40 0xf>;
-+			power-domains = <&gcc EMAC_1_GDSC>;
-+
-+			snps,tso;
-+			snps,pbl = <32>;
-+			rx-fifo-depth = <4096>;
-+			tx-fifo-depth = <4096>;
-+
-+			status = "disabled";
++		mdio-pins {
++			pins = "gpio176";
++			function = "rgmii_0";
++			drive-strength = <16>;
++			bias-pull-up;
 +		};
 +
- 		gcc: clock-controller@100000 {
- 			compatible = "qcom,gcc-sc8280xp";
- 			reg = <0x0 0x00100000 0x0 0x1f0000>;
++		rgmii-tx-pins {
++			pins = "gpio183", "gpio184", "gpio185", "gpio186", "gpio187", "gpio188";
++			function = "rgmii_0";
++			drive-strength = <16>;
++			bias-pull-up;
++		};
++
++		rgmii-rx-pins {
++			pins = "gpio177", "gpio178", "gpio179", "gpio180", "gpio181", "gpio182";
++			function = "rgmii_0";
++			drive-strength = <16>;
++			bias-disable;
++		};
++	};
++
++	ethernet1_default: ethernet1-default-state {
++		mdc-pins {
++			pins = "gpio97";
++			function = "rgmii_1";
++			drive-strength = <16>;
++			bias-pull-up;
++		};
++
++		mdio-pins {
++			pins = "gpio98";
++			function = "rgmii_1";
++			drive-strength = <16>;
++			bias-pull-up;
++		};
++
++		rgmii-tx-pins {
++			pins = "gpio105", "gpio106", "gpio107", "gpio108", "gpio109", "gpio110";
++			function = "rgmii_1";
++			drive-strength = <16>;
++			bias-pull-up;
++		};
++
++		rgmii-rx-pins {
++			pins = "gpio99", "gpio100", "gpio101", "gpio102", "gpio103", "gpio104";
++			function = "rgmii_1";
++			drive-strength = <16>;
++			bias-disable;
++		};
++	};
++
+ 	i2c0_default: i2c0-default-state {
+ 		/* To USB7002T-I/KDXVA0 USB hub (SIP1 only) */
+ 		pins = "gpio135", "gpio136";
 -- 
 2.39.2
 
