@@ -2,93 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CD2A6B7238
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 10:12:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 593726B7250
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 10:16:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230318AbjCMJLx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 05:11:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35182 "EHLO
+        id S230174AbjCMJQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 05:16:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230375AbjCMJL1 (ORCPT
+        with ESMTP id S230005AbjCMJQ4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 05:11:27 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8FF91555E;
-        Mon, 13 Mar 2023 02:11:01 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 28F09B80E52;
-        Mon, 13 Mar 2023 09:11:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5D1C433AA;
-        Mon, 13 Mar 2023 09:10:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678698658;
-        bh=VBkDDQM5rSgPGIGCsJJS3J32Z4IHiP2wnx+jF9BcaLI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=AqTaSppKZLz+fCc2kb2M19WsuUYXXZdcuze8MyzhOc0bWK1wo95XUmg0gRfLz8lbA
-         I/JVfugX2VkGU9br0TPPd6UiX/v9W0Ff8E1Zj13gYLq4pErKr+0d0I3YcCp6H7ltQH
-         H8wp0F2bnVqg1hLZlaGTni4dty2rDAspNxVeMOLXrsaC3mv3rOMPaklXUcpxKvYZPq
-         DMlgMdor8zT51X4mu8JybGzYdUVbxTtPSC81pwSZuqwqboWGdLOMifwm+dK2ZOeoCJ
-         jZ4E6k8I1UG3iJz/QC7vD6R9Koezn6b1RKP+J3mBRJqICR3zQsp34Id2KDcgoT/N58
-         L1JeqBiRU3KmA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pbeDn-0006Wp-4l; Mon, 13 Mar 2023 10:11:59 +0100
-Date:   Mon, 13 Mar 2023 10:11:59 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 1/2] interconnect: qcom: rpm: fix msm8996 interconnect
- registration
-Message-ID: <ZA7o3zTcFQgTYrZ4@hovoldconsulting.com>
-References: <20230313084953.24088-1-johan+linaro@kernel.org>
- <20230313084953.24088-2-johan+linaro@kernel.org>
- <39ada68d-e294-9602-f3f6-506b9a6645d8@linaro.org>
+        Mon, 13 Mar 2023 05:16:56 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id BD757B746;
+        Mon, 13 Mar 2023 02:16:54 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 252892F4;
+        Mon, 13 Mar 2023 02:17:38 -0700 (PDT)
+Received: from [10.57.91.187] (unknown [10.57.91.187])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 735143F71A;
+        Mon, 13 Mar 2023 02:16:52 -0700 (PDT)
+Message-ID: <619818ad-71cb-6c07-bcae-ea9398f08878@arm.com>
+Date:   Mon, 13 Mar 2023 09:16:50 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <39ada68d-e294-9602-f3f6-506b9a6645d8@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.7.2
+Subject: Re: [PATCH] coresight: core: Add coresight name support
+To:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Rob Herring <robh@kernel.org>
+Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+References: <20230208110716.18321-1-quic_jinlmao@quicinc.com>
+ <3c105c79-f523-653e-5154-7ba641e51a96@arm.com>
+ <180a66b1-6996-c705-5d8a-0a69ce0353d7@quicinc.com>
+ <b7abee2a-99ca-26d6-5850-60ee19d9c0e9@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <b7abee2a-99ca-26d6-5850-60ee19d9c0e9@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 13, 2023 at 09:57:46AM +0100, Konrad Dybcio wrote:
-> On 13.03.2023 09:49, Johan Hovold wrote:
-> > A recent commit broke interconnect provider registration for the msm8996
-> > platform by accidentally removing a conditional when adding the missing
-> > clock disable in the power-domain lookup error path.
-> > 
-> > Fixes: b6edcc7570b2 ("interconnect: qcom: rpm: fix probe PM domain error handling")
-> The hash seems to be different:
+Cc: Rob
+
+On 01/03/2023 15:11, Jinlong Mao wrote:
+> Hi Suzuki,
 > 
-> https://git.kernel.org/pub/scm/linux/kernel/git/djakov/icc.git/commit/?h=icc-next&id=9038710161f0f028e36ef383fca59080f48420ee
+> On 2/9/2023 10:16 AM, Jinlong Mao wrote:
+>>
+>> On 2/8/2023 10:26 PM, Suzuki K Poulose wrote:
+>>> On 08/02/2023 11:07, Mao Jinlong wrote:
+>>>> Apart from STM and ETM sources, there will be more sources added to
+>>>> coresight components. For example, there are over 10 TPDM sources.
+>>>> Add coresight name support for custom names which will be
+>>>> easy to identify the source.
+>>>>
+>>>
+>>> As we have previously discussed, please don't make this a generic
+>>> code change. If your device has a "specifici" name, use that for
+>>> allocating in the driver and leave the core code alone.
+>>>
+>>> Suzuki
+>>>
+>> Hi Suzuki,
+>>
+>> Not only for TPDMs. There could be dozens of CTI devices.
+>> It is hard for user to know which CTI device it is with current names.
+>>
+>> Thanks
+>> Jinlong Mao
+> 
+> The coresight name support is applicable to CTI and TPDM devices.
+> This is a generic change for the source which has dozens of devices.
 
-Bah, thanks for catching that.
+I took a look at the CTI situation and I agree that the situation
+is a bit tricky. The CTI could be connected to multiple devices,
+some of them may not be even CoreSight devices. Given there could
+be numerous of them, we need some way to make the "devices" naming
+a bit more intuitive.
 
-Georgi, can you change this to:
+Before we go ahead and add something specific to coresight, I would
+like to see if there is a generic property. Ideally, the "labels"
+in the DTS sources would have been an ideal choice, but can't
+see how that is available in the FDT.
 
-Fixes: a8f1b7ca53c2 ("interconnect: qcom: rpm: fix probe PM domain error handling")
+Suzuki
 
-unless you decide to fold this fixup in?
 
-> > Reported-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-> > Link: https://lore.kernel.org/r/641d04a3-9236-fe76-a20f-11466a01460e@wanadoo.fr
-> > Cc: stable@vger.kernel.org      # 5.17
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+> Thanks
+> Jinlong Mao
+> 
+>>>
+>>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>>>> ---
+>>>>   drivers/hwtracing/coresight/coresight-core.c | 34 
+>>>> +++++++++++---------
+>>>>   1 file changed, 19 insertions(+), 15 deletions(-)
+>>>>
+>>>> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
+>>>> b/drivers/hwtracing/coresight/coresight-core.c
+>>>> index d3bf82c0de1d..5e95d9c7f256 100644
+>>>> --- a/drivers/hwtracing/coresight/coresight-core.c
+>>>> +++ b/drivers/hwtracing/coresight/coresight-core.c
+>>>> @@ -1733,28 +1733,32 @@ char *coresight_alloc_device_name(struct 
+>>>> coresight_dev_list *dict,
+>>>>   {
+>>>>       int idx;
+>>>>       char *name = NULL;
+>>>> +    const char *coresight_name = NULL;
+>>>>       struct fwnode_handle **list;
+>>>> +    struct device_node *node = dev->of_node;
+>>>>         mutex_lock(&coresight_mutex);
+>>>>   -    idx = coresight_search_device_idx(dict, dev_fwnode(dev));
+>>>> -    if (idx < 0) {
+>>>> -        /* Make space for the new entry */
+>>>> -        idx = dict->nr_idx;
+>>>> -        list = krealloc_array(dict->fwnode_list,
+>>>> -                      idx + 1, sizeof(*dict->fwnode_list),
+>>>> -                      GFP_KERNEL);
+>>>> -        if (ZERO_OR_NULL_PTR(list)) {
+>>>> -            idx = -ENOMEM;
+>>>> -            goto done;
+>>>> +    if (!of_property_read_string(node, "coresight-name", 
+>>>> &coresight_name))
+>>>> +        name = devm_kasprintf(dev, GFP_KERNEL, "%s", coresight_name);
+>>>> +    else {
+>>>> +        idx = coresight_search_device_idx(dict, dev_fwnode(dev));
+>>>> +        if (idx < 0) {
+>>>> +            /* Make space for the new entry */
+>>>> +            idx = dict->nr_idx;
+>>>> +            list = krealloc_array(dict->fwnode_list,
+>>>> +                          idx + 1, sizeof(*dict->fwnode_list),
+>>>> +                          GFP_KERNEL);
+>>>> +            if (ZERO_OR_NULL_PTR(list))
+>>>> +                goto done;
+>>>> +
+>>>> +            list[idx] = dev_fwnode(dev);
+>>>> +            dict->fwnode_list = list;
+>>>> +            dict->nr_idx = idx + 1;
+>>>>           }
+>>>>   -        list[idx] = dev_fwnode(dev);
+>>>> -        dict->fwnode_list = list;
+>>>> -        dict->nr_idx = idx + 1;
+>>>> +        name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, 
+>>>> idx);
+>>>>       }
+>>>> -
+>>>> -    name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, idx);
+>>>>   done:
+>>>>       mutex_unlock(&coresight_mutex);
+>>>>       return name;
+>>>
+>> _______________________________________________
+>> CoreSight mailing list -- coresight@lists.linaro.org
+>> To unsubscribe send an email to coresight-leave@lists.linaro.org
 
-Johan
