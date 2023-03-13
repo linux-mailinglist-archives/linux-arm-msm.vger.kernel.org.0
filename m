@@ -2,72 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF5A36B7EDE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 18:07:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D70B66B7EA4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 18:03:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231372AbjCMRHL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 13:07:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42616 "EHLO
+        id S229832AbjCMRD2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 13:03:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231485AbjCMRGm (ORCPT
+        with ESMTP id S229980AbjCMRDN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 13:06:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1BD85293F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 10:05:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1678727044;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type;
-        bh=7EImTiCnhee8229M6laIow5WhfNaqVVWaIpaCS0B1hI=;
-        b=TP67hm2WjcYhk1ZILzdLeijsV0HTy3fVCsfdJkqVTmZQfFKM20/PxpxX6L9KPkTWzp+cRE
-        UUVe2b3jADPYyubsLacGrvRTKOqHOVsKFZuYxXDjbizwJzdCy6YTpliwduoRGYXmN6XpXp
-        +hGXLP1A0v/jiG0C8uJ3xfVoF4yvqw8=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-530-qFJzcLlqOJGKT_TDTPYn-g-1; Mon, 13 Mar 2023 13:04:03 -0400
-X-MC-Unique: qFJzcLlqOJGKT_TDTPYn-g-1
-Received: by mail-io1-f70.google.com with SMTP id a21-20020a5d9595000000b0074c9dc19e16so6549024ioo.15
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 10:04:03 -0700 (PDT)
+        Mon, 13 Mar 2023 13:03:13 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33EFC7E7A6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 10:02:29 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id t14so13336865ljd.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 10:02:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678726880;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=f1RDtAGLj0Ru2Y2XZ1WbfrRwXcKezO5xKtNrT7rLq4M=;
+        b=i1ay3requ062Q/P51oQcvpIxd3HoiBx9BQwoVQO1GtfP+yzxTw8KHfJZBVsDkNdwvF
+         FTT9RMf3tIsG7hgHOu5wxE0BdczImUtinFEPCCYjiDFX0l86vBTNANw4uVm05AgktBki
+         YZaKPwua9xHwGRJx72zFISfXk31qhYvUTweQnMGIV39d8yUslUPKfxCaTNvczoqcM2Rs
+         EfQif4dAfLOImmbBoDpVDKktpcv5ineqKKfuoRL35/EK9A7+oj5KkMljtIrWL8MjaGZa
+         0TmsddaTpYbHDk27jt4kJQp4VvvF4Jy+o7T5Nl/lBR68qgRp2cdxlt0XP73ZjZHK8MDA
+         zpdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678727042;
-        h=user-agent:content-disposition:mime-version:message-id:subject:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7EImTiCnhee8229M6laIow5WhfNaqVVWaIpaCS0B1hI=;
-        b=bdjpT5+h/6Mn0eLZeRQl8u1Hdjc2RfrPCAfuYBSsp2rs1DEa9z4tfqtYOXIa4f9AXD
-         2pK4JY1Nss6iHCDzdlU1YZSkwhDHSrtCYpAyZeeM98c0tczh5OZtTmjp9orCl7Kqfz9E
-         iK0+tNYZeQs8baoJVF4HocDvcEkqGFmVlC7Bq9m2sIfMu70mNUjhA0sudvfMM3j869/Q
-         xmOwY5BejE+TL2F9VR5sY6hlsFk6jj51IZotyfYgyNKywggY9tIvN714BVyvd8fQhkGq
-         zU2828eP1yPdKD+p/GjKjSoYhlG/mRGtQiZCU2cE43Z+nG+pd/0jtCjlXWGLSM9FCP0L
-         nOrg==
-X-Gm-Message-State: AO0yUKW3AOHKR9BT/JNuzpLoRtriK0FTiyhwis1asIS6aSxUDp6Tdewg
-        BHcD2sA4FsKNfaw/AWG0lcpT5czQNijnb5s2137c8kZkcKjPLGnUy1jBejDVVpz0y5oWWRLi0fp
-        jbc87XqnwpMuRedvflllhdgaQ95FfWoDzBoV/8bxdpyeVolyNdOq9n8v2OPbcldyPjIQDtilHUI
-        N3PiBe4ue/
-X-Received: by 2002:a05:6e02:552:b0:322:f272:30d2 with SMTP id i18-20020a056e02055200b00322f27230d2mr385301ils.4.1678727041968;
-        Mon, 13 Mar 2023 10:04:01 -0700 (PDT)
-X-Google-Smtp-Source: AK7set+HAUdW4v1mXRPLJN/2N0g+ISdkIBj4cDvCuPbKuNJCeMA+pdpTW6OW0ofDIYiD9QGWUQogvw==
-X-Received: by 2002:a05:6e02:552:b0:322:f272:30d2 with SMTP id i18-20020a056e02055200b00322f27230d2mr385275ils.4.1678727041636;
-        Mon, 13 Mar 2023 10:04:01 -0700 (PDT)
-Received: from x13s (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id b4-20020a5ea704000000b0074e7960e70dsm71077iod.51.2023.03.13.10.04.00
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Mar 2023 10:04:01 -0700 (PDT)
-Date:   Mon, 13 Mar 2023 09:03:58 -0400
-From:   Brian Masney <bmasney@redhat.com>
-To:     linux-arm-msm@vger.kernel.org
-Subject: sc8280xp: How to get sound working?
-Message-ID: <ZA8fPk1EM2lDKNA/@x13s>
+        d=1e100.net; s=20210112; t=1678726880;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=f1RDtAGLj0Ru2Y2XZ1WbfrRwXcKezO5xKtNrT7rLq4M=;
+        b=GybzErU6an9KjNo77hY1j6KcGiK5sy9OUGWwj7Oi0CzKWJfhEnzBOpAQoi4wyMXA7p
+         WF1aM3V7re8Ng/jl0ncYW6nz7SfXuLfdi+3CgkofT1uyRLkRoce2Eq+h0nXRhdW+dUNN
+         51vQ6UiAqwXc30fk/MYBRuJ6vthkTQTEwtEJq4muUCwKyzm1IopSomtpLjXHf14Z0hhK
+         5gxKZlLB4iVGrpux5xV5oiVPWgdygYEXHgEBv4C4KTz8cR05cQbKMUiw9H2QQdhz1njn
+         tOwXwKThzxosmHd5wJcVPy5VViTojy/rUYOPrudgkoZZNDtp3WkDaYdmEwrqY6SSdpan
+         LcRQ==
+X-Gm-Message-State: AO0yUKV9acQpKTMZK2RgeqBr9EcDWtQQMDnOeAM7qo9aCheovw0TSapt
+        pk53oNuV8TydSeu6T6XKSXwINg==
+X-Google-Smtp-Source: AK7set9ikAiz3Ii8WfPk13mIVyXmlhmTfMzPl5IqSmp1dTqqDaWFactO+pFjYLfz/l/Tyotkzw2nZQ==
+X-Received: by 2002:a2e:99c4:0:b0:293:4d57:7148 with SMTP id l4-20020a2e99c4000000b002934d577148mr10860247ljj.11.1678726880222;
+        Mon, 13 Mar 2023 10:01:20 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id q7-20020a2e8747000000b002959f550084sm63352ljj.100.2023.03.13.10.01.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Mar 2023 10:01:19 -0700 (PDT)
+Message-ID: <a131ffa0-1e9c-d355-16db-19e679ab0380@linaro.org>
+Date:   Mon, 13 Mar 2023 18:01:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/2.2.9 (2022-11-12)
-X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-        DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH RFC v2 2/6] arm64: dts: qcom: sdm845-tama: Add Synaptics
+ Touchscreen
+Content-Language: en-US
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+References: <20230313-topic-tama_disp-v2-0-37ececf43770@linaro.org>
+ <20230313-topic-tama_disp-v2-2-37ececf43770@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230313-topic-tama_disp-v2-2-37ececf43770@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
         autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,48 +81,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I'm trying to get the sound working on my x13s with Fedora 37. I have
-qrtr and pd-mapper running, and I have working battery status.
 
-I downloaded SC8280XP-LENOVO-X13S-tplg.bin from Srini's git repo at [1].
-Everything starts to probe:
 
-[   66.572719] qcom-soundwire 3210000.soundwire-controller: Qualcomm Soundwire controller v1.6.0 Registered
-[   66.579051] qcom-soundwire 3250000.soundwire-controller: Qualcomm Soundwire controller v1.6.0 Registered
-[   66.579886] wcd938x_codec audio-codec: bound sdw:0:0217:010d:00:4 (ops wcd938x_sdw_component_ops [snd_soc_wcd938x_sdw])
-[   66.579907] wcd938x_codec audio-codec: bound sdw:0:0217:010d:00:3 (ops wcd938x_sdw_component_ops [snd_soc_wcd938x_sdw])
-[   66.580466] wsa883x-codec sdw:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
-[   66.581646] qcom-soundwire 3330000.soundwire-controller: Qualcomm Soundwire controller v1.6.0 Registered
-[   66.582913] wsa883x-codec sdw:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
-[   66.585710] wsa883x-codec sdw:0:0217:0202:00:2: WSA883X Version 1_1, Variant: WSA8835_V2
-[   66.598032] snd-sc8280xp sound: ASoC: Parent card not yet available, widget card binding deferred
-[   66.603140] ALSA: Control name 'stream1.vol_ctrl1 MultiMedia1 Playback Volume' truncated to 'stream1.vol_ctrl1 MultiMedia1 Playback Volu'
-[   66.603228] ALSA: Control name 'stream2.vol_ctrl2 MultiMedia2 Playback Volume' truncated to 'stream2.vol_ctrl2 MultiMedia2 Playback Volu'
-[   66.605330] input: SC8280XP-LENOVO-X13S Headset Jack as /devices/platform/sound/sound/card0/input11
+On 13.03.2023 17:32, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@somainline.org>
+> 
+> Add required pins and RMI4 node to the common DT and remove it
+> from Akatsuki, as it uses a different touch.
+> 
+> Since the panels are super high tech proprietary incell, they
+> need to be handled with very precise timings. As such the panel
+> driver sets up the power rails and GPIOs and the touchscreen
+> driver *has to* probe afterwards.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+[...]
 
-And then a bunch of these errors come through:
+>  &i2c5 {
+> -	status = "okay";
+>  	clock-frequency = <400000>;
+> +	status = "okay";
+> +
+> +	touchscreen: touchscreen@2c {
+> +		compatible = "syna,rmi4-i2c";
+> +		reg = <0x2c>;
+> +
+> +		interrupt-parent = <&tlmm>;
+> +		interrupts = <125 IRQ_TYPE_EDGE_FALLING>;
+interrupts-extended
 
-[   66.719630]  MultiMedia1 Playback: ASoC: no backend DAIs enabled for MultiMedia1 Playback
-[   66.719641]  MultiMedia1 Playback: ASoC: error at dpcm_fe_dai_prepare on MultiMedia1 Playback: -22
+> +		vdd-supply = <&vreg_l14a_1p8>;
+> +		/*
+> +		 * This is a blatant abuse of OF, but the panel driver *needs*
+> +		 * to probe first, as the power/gpio switching needs to be precisely
+> +		 * timed in order for both the display and touch panel to function properly.
+> +		 */
+> +		incell-supply = <&panel>;
+> +
+> +		syna,reset-delay-ms = <220>;
+> +		syna,startup-delay-ms = <1000>;
+> +
+> +		pinctrl-names = "default", "sleep";
+> +		pinctrl-0 = <&ts_default>;
+> +		pinctrl-1 = <&ts_sleep>;
+swapped
 
-x13s:~$ aplay -l output 
-**** List of PLAYBACK Hardware Devices ****
-card 0: SC8280XPLENOVOX [SC8280XP-LENOVO-X13S], device 4: MultiMedia1 Playback (*) []
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 0: SC8280XPLENOVOX [SC8280XP-LENOVO-X13S], device 5: MultiMedia2 Playback (*) []
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-
-Any suggestions?
-
-Also if anyone happens to stumble upon this message via a search engine:
-Fedora has all of it's firmware xz compressed. To get this far:
-qcadsp8280.mbn, qccdsp8280.mbn, and *.jsn will need to be decompressed.
-pd-mapper needs to be updated to handle this. I've added this to my todo
-list to fix, but it may be a little while before I get to it.
-
-[1] https://git.linaro.org/people/srinivas.kandagatla/audioreach-topology.git/tree/prebuilt/SC8280XP-LENOVO-X13S-tplg.bin
-
-Brian
+>  
+> -	/* Synaptics touchscreen @ 2c, 3c */
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+Konrad
 
