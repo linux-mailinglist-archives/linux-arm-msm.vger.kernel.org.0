@@ -2,93 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BAFF6B6CC7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 01:22:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 35A4C6B6D54
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 03:10:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229768AbjCMAWG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Mar 2023 20:22:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47800 "EHLO
+        id S229704AbjCMCK4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Mar 2023 22:10:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbjCMAWF (ORCPT
+        with ESMTP id S229660AbjCMCKz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Mar 2023 20:22:05 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5AEA38E91;
-        Sun, 12 Mar 2023 17:21:58 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id w4so6245255ilv.0;
-        Sun, 12 Mar 2023 17:21:58 -0700 (PDT)
+        Sun, 12 Mar 2023 22:10:55 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5580528EBC;
+        Sun, 12 Mar 2023 19:10:54 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id z11so6737098pfh.4;
+        Sun, 12 Mar 2023 19:10:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678666918;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=X6sm0vPVDlzzX7R9q9j+GwtCn9EFllfv7TIz3i1LxV8=;
-        b=G6czlN1zTjIenoOH1hZCtA6NEMrTfhphnXJB5d73Hl2RTaU0jzlODgu3d59Xmyl8lC
-         tRvcd9+QljuIflX7cCFgIKrCdH859SG7q9J7Vak8CEimfTMsifCzRhsPkHWKOhJ1W9Yw
-         yYcaKrEq13Op1zB2gT2DkBunXhLbX7N3waaIB1L3kMVr/V9KgK1PQDDKn7DlnkDUgHdX
-         EiYSiVFDATLcUxlZNDlZ6aXUhfjjQcil2F/Del4pywdcd7qAxwVZ9OJIP4e82PhFR2zr
-         W1EvcM3+mOLtSXAF5y11b7z0vSPDIyQQGX3+DrlGYGwUfx9gPBNHxCHlq8JinvaMJ2zo
-         EaVQ==
+        d=gmail.com; s=20210112; t=1678673454;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Es90dgM/38pbbMOCnBftwhrp+O+7jxbqs7ks6Dr8wdE=;
+        b=VgilPI+yzP4fqqGo4u+F4viBOj5a5exaQ1WcJB6Q2gzG9voQteIwZoVoM70lbBmkaK
+         PdnLkaoubTBDBPpgrSpP7uuBSXSKwMjT47jmSCsna4AoIo+QnrS8PoUQJV7lIE79QzFS
+         k69e+OfA51HfJcpNljb34SmIUVvZ9XtK8CX1HQFhTrYNHIrpgPFcPODsE0BgAT7keHvK
+         rjjVcatWdmaVB8eO2Ewti+MqRpyG8voW6NxmF4DTD5MlsN0nBdm1gcTXkCj3M1ir7XCW
+         lZj1fyS04/US3IfNiuKiC4yLQPCs168pqHAYqcJUy15NJJa9ickIYj2puoQ72qZi2lmo
+         5spw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678666918;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X6sm0vPVDlzzX7R9q9j+GwtCn9EFllfv7TIz3i1LxV8=;
-        b=6/0d1qx24tUH8tIHTFa4lFlWVILsEgmX0kQCp1cO6bguepu6BsS7VgdaNHChflNjoJ
-         HoLQX2JmUuhGPFPSM644qXJkDDlSwf2RYBOjWr/8PZnVDCqIGAGnDTu/qyfRzcj1pwoR
-         Sdg/OzX2CdoH3qyC2G5qo9qA7fhnmtuoxjssqJN51qhEujDh++HejSGl1Msu37EkAHhe
-         sorPUuQV08Y2705iLGSKnnoDVkxz89+/esSA02xgMRvFFWDZxKPZWTDa6RyoJfi4zVIP
-         +ZBDG/T59+hUiXkWbAFHjWIWvwIw8hUI/qylrT96qpQjaf/tFlVRbZQB2lV9O00oa1I5
-         GMHA==
-X-Gm-Message-State: AO0yUKURu+A9HOP9wEv2xJKj2ptDdcS97i0dYX6Yy544utiziP1DkTCm
-        OFYZOhBxfZ75xRcshTQgU28=
-X-Google-Smtp-Source: AK7set9m6XiGAn3V7EaIQiBQlky8tE/G1ty6Ubbe73VObDkMvo/ytLKn289ZZMsQWao0iRUU7sJW0g==
-X-Received: by 2002:a05:6e02:1c86:b0:317:16bc:dc97 with SMTP id w6-20020a056e021c8600b0031716bcdc97mr10545610ill.3.1678666917751;
-        Sun, 12 Mar 2023 17:21:57 -0700 (PDT)
-Received: from ?IPV6:2604:2d80:4d87:cd00:9f51:32d7:1177:67d? ([2604:2d80:4d87:cd00:9f51:32d7:1177:67d])
-        by smtp.gmail.com with ESMTPSA id c5-20020a92cf45000000b00314201bcbdfsm1929864ilr.3.2023.03.12.17.21.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 12 Mar 2023 17:21:57 -0700 (PDT)
-Message-ID: <02012975-8b4c-58ba-b002-d2983c0e1500@gmail.com>
-Date:   Sun, 12 Mar 2023 19:21:55 -0500
+        d=1e100.net; s=20210112; t=1678673454;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Es90dgM/38pbbMOCnBftwhrp+O+7jxbqs7ks6Dr8wdE=;
+        b=4YtjgFkCWEvz9R64/FZMrTa01oCZTEgVz66v0kWDJ4QW9uNlOVk+ia1eJKAeuJ9Xp9
+         tj1kqdetQumrvqquFf5lLuhBZQtXgizcnetfkjI568BwVpqy4KOny+tljJyk8sEfaqvo
+         KBwl5BYgk5rpb65yexBUGRM1oRVMR1WUM1jSetp7St4SMYaA379EjNKwHiKtK2AWXkEx
+         bf/YXnJg5JVHn0AvpnFxBneahpWGawYxlEqAhxr9k0yimL++Jt3a2qHIOiEan2BpqQr5
+         lYIwabfBDqpxb2akneRRJkccbFi0Q35w7OVNB4u7HhOiA6gLwD81FKSB0PjSckxRVhD4
+         Xmpg==
+X-Gm-Message-State: AO0yUKU1HpmcKuP4BD8/es22i9a4b3FuGotYmyD3tS03GcfLinWYjO4w
+        OzbKn+OsaPd7IsRrYC6BPzjkUUanJ1/G8AunnY8=
+X-Google-Smtp-Source: AK7set+/8dQSCJVdJgAdJ+Clg6WwA7GZNKo+t8onyBfkmr7i3E0vhl4O2qwIk5lGYfo/Wm2DdmStpzc5FKf9GmgIjhM=
+X-Received: by 2002:a62:1d96:0:b0:61c:67d2:a332 with SMTP id
+ d144-20020a621d96000000b0061c67d2a332mr2897579pfd.3.1678673453637; Sun, 12
+ Mar 2023 19:10:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH 1/5] dt-bindings: input: touchscreen: add bindings for
- focaltech,fts
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Caleb Connolly <caleb@connolly.tech>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+References: <20230310163420.7582-1-quic_kriskura@quicinc.com> <20230310163420.7582-4-quic_kriskura@quicinc.com>
+In-Reply-To: <20230310163420.7582-4-quic_kriskura@quicinc.com>
+From:   Dongliang Mu <mudongliangabcd@gmail.com>
+Date:   Mon, 13 Mar 2023 10:07:50 +0800
+Message-ID: <CAD-N9QVT7qaiUbmPapZc5+6XXDVTPeXG4HD4p-n8WSi9FK2CbQ@mail.gmail.com>
+Subject: Re: [PATCH 3/8] usb: dwc3: core: Skip setting event buffers for host
+ only controllers
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Henrik Rydberg <rydberg@bitmath.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Jeff LaBundy <jeff@labundy.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Markuss Broks <markuss.broks@gmail.com>,
-        Jean Delvare <jdelvare@suse.de>,
-        Max Krummenacher <max.krummenacher@toradex.com>,
-        Job Noorman <job@noorman.info>,
-        Alistair Francis <alistair@alistair23.me>,
-        Chris Morgan <macromorgan@hotmail.com>
-Cc:     linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20230312093249.1846993-1-joelselvaraj.oss@gmail.com>
- <20230312093249.1846993-2-joelselvaraj.oss@gmail.com>
- <c9db83e8-f87d-b94d-0c23-8114adb312e1@linaro.org>
-Content-Language: en-US
-From:   Joel Selvaraj <joelselvaraj.oss@gmail.com>
-In-Reply-To: <c9db83e8-f87d-b94d-0c23-8114adb312e1@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com, quic_shazhuss@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -97,60 +82,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+On Sat, Mar 11, 2023 at 12:40=E2=80=AFAM Krishna Kurapati
+<quic_kriskura@quicinc.com> wrote:
+>
+> On some SoC's like SA8295P where the teritiary controller is host-only
+> capable, GEVTADDRHI/LO, GEVTSIZ, GEVTCOUNT registers are not accessible.
+> Trying to setup them up during core_init leads to a crash.
+>
+> For DRD/Peripheral supported controllers, event buffer setup is done
+> again in gadget_pullup. Skip setup or cleanup of event buffers if
+> controller is host-only capable.
+>
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  drivers/usb/dwc3/core.c | 20 ++++++++++++++------
+>  1 file changed, 14 insertions(+), 6 deletions(-)
+>
+> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> index 076c0f8a4441..1ca9fa40a66e 100644
+> --- a/drivers/usb/dwc3/core.c
+> +++ b/drivers/usb/dwc3/core.c
+> @@ -840,7 +840,11 @@ static void dwc3_clk_disable(struct dwc3 *dwc)
+>
+>  static void dwc3_core_exit(struct dwc3 *dwc)
+>  {
+> -       dwc3_event_buffers_cleanup(dwc);
+> +       unsigned int    hw_mode;
+> +
+> +       hw_mode =3D DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
+> +       if (hw_mode !=3D DWC3_GHWPARAMS0_MODE_HOST)
+> +               dwc3_event_buffers_cleanup(dwc);
 
-Thanks for the review! I agree with most of your comments and will
-fix them in v2. I have a few doubts as discussed below.
+quick question about dwc3_event_buffers_cleanup, there are other
+similar sites calling this function.
 
-On 12/03/23 15:47, Krzysztof Kozlowski wrote:
-> I have doubts you will cover here all possible FTS controllers, so
-> filename should be more specific, e.g. choose the oldest device compatible.
+C symbol: dwc3_event_buffers_cleanup
 
-The driver is kind of widely used and can actually support 49 touch
-panel variants as per the downstream code [1]. With some slight
-modifications, the other touch panels can be supported too. However, in
-real world, we have only tested the driver against the two panel we have
-access to (FT8719 - Poco F1 Phone and FT5452 - Shiftmq6 Phone).
+  File   Function                   Line
+0 core.h <global>                   1546 void
+dwc3_event_buffers_cleanup(struct dwc3 *dwc);
+1 core.c __dwc3_set_mode             152 dwc3_event_buffers_cleanup(dwc);
+2 core.c dwc3_event_buffers_cleanup  522 void
+dwc3_event_buffers_cleanup(struct dwc3 *dwc)
+3 core.c dwc3_core_exit              842 dwc3_event_buffers_cleanup(dwc);
+4 core.c dwc3_probe                 1936 dwc3_event_buffers_cleanup(dwc);
+5 drd.c  dwc3_otg_update             363 dwc3_event_buffers_cleanup(dwc);
+6 drd.c  dwc3_drd_exit               607 dwc3_event_buffers_cleanup(dwc);
 
-Although its very generic and widely used, I agree we don't know that
-will be the case forever. So I am ok with changing it to more specific
-one. But I don't think the panel chip number denote which is older and
-which newer. Shall I just go with focaltech,fts5452, as that's the
-lowest number panel that we have tested so far and is supported?
+For 1, 5, and 6, any need to take care of this situation?
 
-Or do I just keep it generic as it can potentially support a lot of
-variants?
-
->> +  focaltech,max-touch-number:
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +    description: max number of fingers supported
-> 
-> Why this is not implied from compatible? IOW, why this differs between
-> boards?
-
-Without proper datasheet it is kind of hard to say if this is the
-maximum supported touch points by hardware or just a vendor specified
-one. Because, downstream has it as devicetree property and we only know
-what's set in that from each vendor tree. The FT8719 used in Poco F1
-specifies 10 touch points in downstrean devicetree. But, if I specify it
-as 2, it will still work fine. The FT5452 used in shiftmq6 specifies 5
-touch points in downstream devicetree, but we won't know if that is the
-maximum possible, unless we try to increase it upto 10 and confirm.
-
-So, yeah without the datasheet, we will be just kind of assuming that is
-is the maximum possible number of touch points by the hardware. I am not
-sure if we wanna hard code that in the driver. Is it okay if we let this
-configurable? Boards/Phones can use the max touch number their vendor
-driver points too or if they have a datasheet, they can specify maximum
-supported one too.
-
-Kindly let me know your thoughts on this.
-
-[1]
-https://github.com/LineageOS/android_kernel_xiaomi_sdm845/blob/f1977d9edd01cff3fc9a12e09cd6a5a8052fc8ca/drivers/input/touchscreen/focaltech_touch/focaltech_config.h#L37
-
-> Best regards,
-> Krzysztof
-
-Thanks,
-Joel
+>
+>         usb_phy_set_suspend(dwc->usb2_phy, 1);
+>         usb_phy_set_suspend(dwc->usb3_phy, 1);
+> @@ -1177,10 +1181,12 @@ static int dwc3_core_init(struct dwc3 *dwc)
+>         if (ret < 0)
+>                 goto err3;
+>
+> -       ret =3D dwc3_event_buffers_setup(dwc);
+> -       if (ret) {
+> -               dev_err(dwc->dev, "failed to setup event buffers\n");
+> -               goto err4;
+> +       if (hw_mode !=3D DWC3_GHWPARAMS0_MODE_HOST) {
+> +               ret =3D dwc3_event_buffers_setup(dwc);
+> +               if (ret) {
+> +                       dev_err(dwc->dev, "failed to setup event buffers\=
+n");
+> +                       goto err4;
+> +               }
+>         }
+>
+>         /*
+> @@ -2008,7 +2014,9 @@ static int dwc3_probe(struct platform_device *pdev)
+>
+>  err5:
+>         dwc3_debugfs_exit(dwc);
+> -       dwc3_event_buffers_cleanup(dwc);
+> +
+> +       if (hw_mode !=3D DWC3_GHWPARAMS0_MODE_HOST)
+> +               dwc3_event_buffers_cleanup(dwc);
+>
+>         usb_phy_set_suspend(dwc->usb2_phy, 1);
+>         usb_phy_set_suspend(dwc->usb3_phy, 1);
+> --
+> 2.39.0
+>
