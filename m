@@ -2,158 +2,350 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8EC36B773C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 13:13:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A86BD6B7775
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 13:29:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229578AbjCMMNE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 08:13:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54236 "EHLO
+        id S229664AbjCMM3g convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 08:29:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229682AbjCMMNC (ORCPT
+        with ESMTP id S229593AbjCMM3f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 08:13:02 -0400
-Received: from wnew4-smtp.messagingengine.com (wnew4-smtp.messagingengine.com [64.147.123.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B33F63C01;
-        Mon, 13 Mar 2023 05:12:57 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailnew.west.internal (Postfix) with ESMTP id 23BFD2B065EF;
-        Mon, 13 Mar 2023 08:12:51 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Mon, 13 Mar 2023 08:12:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-        1678709570; x=1678716770; bh=9ui9bmvE5i4u3m/ARdGTj1kwQVPleXj0Y6d
-        rKORRRdE=; b=WUMIR8yT/f22HAwm5Aovj8/OD54RFZFtg8maPs6wmZCp79zQwk2
-        KXXos4GzGqFt9BvscL4OqD1szAu52+4XSWc70eThQIbOjMYwZktDXpc6sewkt1Kt
-        IQuP4iYISi11UCu5EGR4vK5yWqNX2bodRIrhiIzD8dN8e71kC3/T2BSIfwW08q6w
-        sOm3bg2DJDrZhG+CaHwhggasxpIKKspowN8iOVbGD4wmr4U7d7yXFVs0egsFMhvn
-        UsjuDboWzqQ2sXYU5zIgUDAHiJdHRUHwGuGMtE45ml6QdWmA9inGrWaPjlIGdGG0
-        U0zNusFrFDr6WwzqNo4fbbk7d4LWnEmsQdw==
-X-ME-Sender: <xms:QBMPZAGuXJ6KHpEM2zLBqBMUhtupMv-AYvRIxQsCT9c2WXj_KrL9yw>
-    <xme:QBMPZJUYrUCR9v9niZxHAtNQXDXMuRJOeUTfDrNQL5AMpWp5_gRyUgARVG6AJt5MB
-    8V-REv7A00LtEU>
-X-ME-Received: <xmr:QBMPZKKtheRiAdEM52XhXs5g2XlATNLs-UmEZDpDXOxzcEYr2b_RExlVS0qy>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvddvgedgfeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttddunecuhfhrohhmpefkugho
-    ucfutghhihhmmhgvlhcuoehiughoshgthhesihguohhstghhrdhorhhgqeenucggtffrrg
-    htthgvrhhnpeegheekuddvueejvddtvdfgtddvgfevudektddtteevuddvkeetveeftdev
-    ueejveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hiughoshgthhesihguohhstghhrdhorhhg
-X-ME-Proxy: <xmx:QBMPZCHmJTlQSPmNn5mFwF98VfTp58Lr3edQLA0SKWtFi27UqxeHjg>
-    <xmx:QBMPZGVmlGLnYUi0bAWfEBuENurj0LmBoTEnwljNdphwsJYoJ_5spg>
-    <xmx:QBMPZFPzMMmiZLpPDr-Ymi2cASyz9VcV8XLgDOWfjhFRevVEG5aPmw>
-    <xmx:QhMPZBQ3z4tvEYR1IPnmOsVCvIChQHU9DB0qKJv1fRScLdvuwmt2Jm_iXJ0>
-Feedback-ID: i494840e7:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Mar 2023 08:12:47 -0400 (EDT)
-Date:   Mon, 13 Mar 2023 14:12:44 +0200
-From:   Ido Schimmel <idosch@idosch.org>
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     rafael@kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, rui.zhang@intel.com,
-        Raju Rangoju <rajur@chelsio.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Peter Kaestle <peter@piie.net>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <markgross@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        Broadcom Kernel Team <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Lukasz Luba <lukasz.luba@arm.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Niklas =?iso-8859-1?Q?S=F6derlund?= 
-        <niklas.soderlund@ragnatech.se>,
-        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Keerthy <j-keerthy@ti.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Antoine Tenart <atenart@kernel.org>,
-        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>, netdev@vger.kernel.org,
-        platform-driver-x86@vger.kernel.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-omap@vger.kernel.org,
-        "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-        danieller@nvidia.com, vadimp@nvidia.com, petrm@nvidia.com
-Subject: Re: [PATCH v8 01/29] thermal/core: Add a generic
- thermal_zone_get_trip() function
-Message-ID: <ZA8TPDpEVanOpjEp@shredder>
-References: <20221003092602.1323944-1-daniel.lezcano@linaro.org>
- <20221003092602.1323944-2-daniel.lezcano@linaro.org>
- <ZA3CFNhU4AbtsP4G@shredder>
- <f78e6b70-a963-c0ca-a4b2-0d4c6aeef1fb@linaro.org>
+        Mon, 13 Mar 2023 08:29:35 -0400
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE52348E08;
+        Mon, 13 Mar 2023 05:29:33 -0700 (PDT)
+Received: by mail-ed1-f50.google.com with SMTP id cn21so17824227edb.0;
+        Mon, 13 Mar 2023 05:29:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678710572;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ESAp3UfXRxsSAchomKtpcRbG9GtF4ptbUdeeyQFslxk=;
+        b=5e3qpFhXcxckJIfGwpQ3idCxlyEcooVi8tKDXKS180KuGUJsVbio6Hbkyi4bAnxeIT
+         kqlyuzN+JsOlgeNISgmly1H//osx+rRNtitWIgNjxyQ5MpdnHODAywysbAaTSrDcMuQj
+         wzeyUbIy2kq2FU6NVr8cwPN4atSnzmBlf1ukgwoq0xrw4Pn+vuxoLzgegCtCDbMGSNNr
+         iDZ0p55PjC561iELkjc85+ALER71cRwMbCNRSqpyi2nMQ5bLSunzqKUGALuLemsmWpG6
+         IRENgMQ2kf4t85J1lVveegGHpZasIiR3pkFaUfNtNNccDihLMFjl8fvSfKp/GGehzpBb
+         gNYw==
+X-Gm-Message-State: AO0yUKW6HPkn9xnnEdfwZfh5t4LsVUNNcs2TV1H/TfoAJEdN8+vO1JUB
+        xp8GesgNkMxYcjJTs7bnGcz/jTGWYuSwg9cwpBE=
+X-Google-Smtp-Source: AK7set+fobktK3NwY5dh4rmvgAxFeKPXgkIZMTivuEmcFfSghCGw4Ren1fitbeVvYdLVUpydC9R6/23nUytjswZkBYg=
+X-Received: by 2002:a17:906:13c2:b0:8b1:7aec:c8e6 with SMTP id
+ g2-20020a17090613c200b008b17aecc8e6mr17897480ejc.2.1678710572140; Mon, 13 Mar
+ 2023 05:29:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f78e6b70-a963-c0ca-a4b2-0d4c6aeef1fb@linaro.org>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230312204150.1353517-1-robdclark@gmail.com> <20230312204150.1353517-9-robdclark@gmail.com>
+In-Reply-To: <20230312204150.1353517-9-robdclark@gmail.com>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Mon, 13 Mar 2023 13:29:17 +0100
+Message-ID: <CAJZ5v0ijxoLM+bGuW0oksm8a4tbmV-wX=WSFHKutYSBcYTJTuA@mail.gmail.com>
+Subject: Re: [PATCH 08/13] PM / QoS: Fix constraints alloc vs reclaim locking
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "open list:POWER MANAGEMENT CORE" <linux-pm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 13, 2023 at 11:45:41AM +0100, Daniel Lezcano wrote:
-> Thanks for reporting this, I think the fix you are proposing is correct
-> regarding the previous behavior.
-> 
-> However, I disagree with the commit 81ad4276b505, because it defines the
-> zero as an invalid trip point. But some platforms have warming devices, when
-> the temperature is too cold, eg 0°C, we enable the warming device in order
-> to stay in the functioning temperature range.
-> 
-> Other devices can do the same with negative temperature values.
-> 
-> This feature is not yet upstream and the rework of the trip point should
-> allow proper handling of cold trip points.
-> 
-> If you can send the change to fix the regression that would be great.
+On Sun, Mar 12, 2023 at 9:42â€¯PM Rob Clark <robdclark@gmail.com> wrote:
+>
+> From: Rob Clark <robdclark@chromium.org>
+>
+> In the process of adding lockdep annotation for drm GPU scheduler's
+> job_run() to detect potential deadlock against shrinker/reclaim, I hit
+> this lockdep splat:
+>
+>    ======================================================
+>    WARNING: possible circular locking dependency detected
+>    6.2.0-rc8-debug+ #558 Tainted: G        W
+>    ------------------------------------------------------
+>    ring0/125 is trying to acquire lock:
+>    ffffffd6d6ce0f28 (dev_pm_qos_mtx){+.+.}-{3:3}, at: dev_pm_qos_update_request+0x38/0x68
+>
+>    but task is already holding lock:
+>    ffffff8087239208 (&gpu->active_lock){+.+.}-{3:3}, at: msm_gpu_submit+0xec/0x178
+>
+>    which lock already depends on the new lock.
+>
+>    the existing dependency chain (in reverse order) is:
+>
+>    -> #4 (&gpu->active_lock){+.+.}-{3:3}:
+>           __mutex_lock+0xcc/0x3c8
+>           mutex_lock_nested+0x30/0x44
+>           msm_gpu_submit+0xec/0x178
+>           msm_job_run+0x78/0x150
+>           drm_sched_main+0x290/0x370
+>           kthread+0xf0/0x100
+>           ret_from_fork+0x10/0x20
+>
+>    -> #3 (dma_fence_map){++++}-{0:0}:
+>           __dma_fence_might_wait+0x74/0xc0
+>           dma_resv_lockdep+0x1f4/0x2f4
+>           do_one_initcall+0x104/0x2bc
+>           kernel_init_freeable+0x344/0x34c
+>           kernel_init+0x30/0x134
+>           ret_from_fork+0x10/0x20
+>
+>    -> #2 (mmu_notifier_invalidate_range_start){+.+.}-{0:0}:
+>           fs_reclaim_acquire+0x80/0xa8
+>           slab_pre_alloc_hook.constprop.0+0x40/0x25c
+>           __kmem_cache_alloc_node+0x60/0x1cc
+>           __kmalloc+0xd8/0x100
+>           topology_parse_cpu_capacity+0x8c/0x178
+>           get_cpu_for_node+0x88/0xc4
+>           parse_cluster+0x1b0/0x28c
+>           parse_cluster+0x8c/0x28c
+>           init_cpu_topology+0x168/0x188
+>           smp_prepare_cpus+0x24/0xf8
+>           kernel_init_freeable+0x18c/0x34c
+>           kernel_init+0x30/0x134
+>           ret_from_fork+0x10/0x20
+>
+>    -> #1 (fs_reclaim){+.+.}-{0:0}:
+>           __fs_reclaim_acquire+0x3c/0x48
+>           fs_reclaim_acquire+0x54/0xa8
+>           slab_pre_alloc_hook.constprop.0+0x40/0x25c
+>           __kmem_cache_alloc_node+0x60/0x1cc
+>           kmalloc_trace+0x50/0xa8
+>           dev_pm_qos_constraints_allocate+0x38/0x100
+>           __dev_pm_qos_add_request+0xb0/0x1e8
+>           dev_pm_qos_add_request+0x58/0x80
+>           dev_pm_qos_expose_latency_limit+0x60/0x13c
+>           register_cpu+0x12c/0x130
+>           topology_init+0xac/0xbc
+>           do_one_initcall+0x104/0x2bc
+>           kernel_init_freeable+0x344/0x34c
+>           kernel_init+0x30/0x134
+>           ret_from_fork+0x10/0x20
+>
+>    -> #0 (dev_pm_qos_mtx){+.+.}-{3:3}:
+>           __lock_acquire+0xe00/0x1060
+>           lock_acquire+0x1e0/0x2f8
+>           __mutex_lock+0xcc/0x3c8
+>           mutex_lock_nested+0x30/0x44
+>           dev_pm_qos_update_request+0x38/0x68
+>           msm_devfreq_boost+0x40/0x70
+>           msm_devfreq_active+0xc0/0xf0
+>           msm_gpu_submit+0x10c/0x178
+>           msm_job_run+0x78/0x150
+>           drm_sched_main+0x290/0x370
+>           kthread+0xf0/0x100
+>           ret_from_fork+0x10/0x20
+>
+>    other info that might help us debug this:
+>
+>    Chain exists of:
+>      dev_pm_qos_mtx --> dma_fence_map --> &gpu->active_lock
+>
+>     Possible unsafe locking scenario:
+>
+>           CPU0                    CPU1
+>           ----                    ----
+>      lock(&gpu->active_lock);
+>                                   lock(dma_fence_map);
+>                                   lock(&gpu->active_lock);
+>      lock(dev_pm_qos_mtx);
+>
+>     *** DEADLOCK ***
+>
+>    3 locks held by ring0/123:
+>     #0: ffffff8087251170 (&gpu->lock){+.+.}-{3:3}, at: msm_job_run+0x64/0x150
+>     #1: ffffffd00b0e57e8 (dma_fence_map){++++}-{0:0}, at: msm_job_run+0x68/0x150
+>     #2: ffffff8087251208 (&gpu->active_lock){+.+.}-{3:3}, at: msm_gpu_submit+0xec/0x178
+>
+>    stack backtrace:
+>    CPU: 6 PID: 123 Comm: ring0 Not tainted 6.2.0-rc8-debug+ #559
+>    Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
+>    Call trace:
+>     dump_backtrace.part.0+0xb4/0xf8
+>     show_stack+0x20/0x38
+>     dump_stack_lvl+0x9c/0xd0
+>     dump_stack+0x18/0x34
+>     print_circular_bug+0x1b4/0x1f0
+>     check_noncircular+0x78/0xac
+>     __lock_acquire+0xe00/0x1060
+>     lock_acquire+0x1e0/0x2f8
+>     __mutex_lock+0xcc/0x3c8
+>     mutex_lock_nested+0x30/0x44
+>     dev_pm_qos_update_request+0x38/0x68
+>     msm_devfreq_boost+0x40/0x70
+>     msm_devfreq_active+0xc0/0xf0
+>     msm_gpu_submit+0x10c/0x178
+>     msm_job_run+0x78/0x150
+>     drm_sched_main+0x290/0x370
+>     kthread+0xf0/0x100
+>     ret_from_fork+0x10/0x20
+>
+> The issue is that dev_pm_qos_mtx is held in the runpm suspend/resume (or
+> freq change) path, but it is also held across allocations that could
+> recurse into shrinker.
+>
+> Solve this by changing dev_pm_qos_constraints_allocate() into a function
+> that can be called unconditionally before the device qos object is
+> needed and before aquiring dev_pm_qos_mtx.  This way the allocations can
+> be done without holding the mutex.  In the case that we raced with
+> another thread to allocate the qos object, detect this *after* acquiring
+> the dev_pm_qos_mtx and simply free the redundant allocations.
+>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 
-Thanks for the reply. Will send you the fix later this week. I want to
-test it across all of our systems.
+I need to take a deeper look at this and so some time is required.
 
-> 
-> But keep in mind, the driver is assuming an internal thermal framework
-> behavior. The trips_disabled is only to overcome a trip point description
-> bug and you should not rely on it as well as not changing the trip points on
-> the fly after they are registered.
-> 
-> Actually, the mlxsw driver should just build a valid array of trip points
-> without 0°C trip point and pass it to
-> thermal_zone_device_register_with_trips(). That would be a proper change
-> without relying on a side effect of the thermal trip bug 0°C workaround.
-
-Understood. Will check with Vadim what we can do in order not to rely on
-this behavior.
+> ---
+>  drivers/base/power/qos.c | 60 +++++++++++++++++++++++++++-------------
+>  1 file changed, 41 insertions(+), 19 deletions(-)
+>
+> diff --git a/drivers/base/power/qos.c b/drivers/base/power/qos.c
+> index 8e93167f1783..f3e0c6b65635 100644
+> --- a/drivers/base/power/qos.c
+> +++ b/drivers/base/power/qos.c
+> @@ -185,18 +185,24 @@ static int apply_constraint(struct dev_pm_qos_request *req,
+>  }
+>
+>  /*
+> - * dev_pm_qos_constraints_allocate
+> + * dev_pm_qos_constraints_ensure_allocated
+>   * @dev: device to allocate data for
+>   *
+> - * Called at the first call to add_request, for constraint data allocation
+> - * Must be called with the dev_pm_qos_mtx mutex held
+> + * Called to ensure that devices qos is allocated, before acquiring
+> + * dev_pm_qos_mtx.
+>   */
+> -static int dev_pm_qos_constraints_allocate(struct device *dev)
+> +static int dev_pm_qos_constraints_ensure_allocated(struct device *dev)
+>  {
+>         struct dev_pm_qos *qos;
+>         struct pm_qos_constraints *c;
+>         struct blocking_notifier_head *n;
+>
+> +       if (!dev)
+> +               return -ENODEV;
+> +
+> +       if (!IS_ERR_OR_NULL(dev->power.qos))
+> +               return 0;
+> +
+>         qos = kzalloc(sizeof(*qos), GFP_KERNEL);
+>         if (!qos)
+>                 return -ENOMEM;
+> @@ -227,10 +233,26 @@ static int dev_pm_qos_constraints_allocate(struct device *dev)
+>
+>         INIT_LIST_HEAD(&qos->flags.list);
+>
+> +       mutex_lock(&dev_pm_qos_mtx);
+> +
+> +       if (!IS_ERR_OR_NULL(dev->power.qos)) {
+> +               /*
+> +                * We have raced with another task to create the qos.
+> +                * No biggie, just free the resources we've allocated
+> +                * outside of dev_pm_qos_mtx and move on with life.
+> +                */
+> +               kfree(n);
+> +               kfree(qos);
+> +               goto unlock;
+> +       }
+> +
+>         spin_lock_irq(&dev->power.lock);
+>         dev->power.qos = qos;
+>         spin_unlock_irq(&dev->power.lock);
+>
+> +unlock:
+> +       mutex_unlock(&dev_pm_qos_mtx);
+> +
+>         return 0;
+>  }
+>
+> @@ -331,17 +353,15 @@ static int __dev_pm_qos_add_request(struct device *dev,
+>  {
+>         int ret = 0;
+>
+> -       if (!dev || !req || dev_pm_qos_invalid_req_type(dev, type))
+> +       if (!req || dev_pm_qos_invalid_req_type(dev, type))
+>                 return -EINVAL;
+>
+>         if (WARN(dev_pm_qos_request_active(req),
+>                  "%s() called for already added request\n", __func__))
+>                 return -EINVAL;
+>
+> -       if (IS_ERR(dev->power.qos))
+> +       if (IS_ERR_OR_NULL(dev->power.qos))
+>                 ret = -ENODEV;
+> -       else if (!dev->power.qos)
+> -               ret = dev_pm_qos_constraints_allocate(dev);
+>
+>         trace_dev_pm_qos_add_request(dev_name(dev), type, value);
+>         if (ret)
+> @@ -390,6 +410,10 @@ int dev_pm_qos_add_request(struct device *dev, struct dev_pm_qos_request *req,
+>  {
+>         int ret;
+>
+> +       ret = dev_pm_qos_constraints_ensure_allocated(dev);
+> +       if (ret)
+> +               return ret;
+> +
+>         mutex_lock(&dev_pm_qos_mtx);
+>         ret = __dev_pm_qos_add_request(dev, req, type, value);
+>         mutex_unlock(&dev_pm_qos_mtx);
+> @@ -537,15 +561,11 @@ int dev_pm_qos_add_notifier(struct device *dev, struct notifier_block *notifier,
+>  {
+>         int ret = 0;
+>
+> -       mutex_lock(&dev_pm_qos_mtx);
+> -
+> -       if (IS_ERR(dev->power.qos))
+> -               ret = -ENODEV;
+> -       else if (!dev->power.qos)
+> -               ret = dev_pm_qos_constraints_allocate(dev);
+> -
+> +       ret = dev_pm_qos_constraints_ensure_allocated(dev);
+>         if (ret)
+> -               goto unlock;
+> +               return ret;
+> +
+> +       mutex_lock(&dev_pm_qos_mtx);
+>
+>         switch (type) {
+>         case DEV_PM_QOS_RESUME_LATENCY:
+> @@ -565,7 +585,6 @@ int dev_pm_qos_add_notifier(struct device *dev, struct notifier_block *notifier,
+>                 ret = -EINVAL;
+>         }
+>
+> -unlock:
+>         mutex_unlock(&dev_pm_qos_mtx);
+>         return ret;
+>  }
+> @@ -905,10 +924,13 @@ int dev_pm_qos_update_user_latency_tolerance(struct device *dev, s32 val)
+>  {
+>         int ret;
+>
+> +       ret = dev_pm_qos_constraints_ensure_allocated(dev);
+> +       if (ret)
+> +               return ret;
+> +
+>         mutex_lock(&dev_pm_qos_mtx);
+>
+> -       if (IS_ERR_OR_NULL(dev->power.qos)
+> -           || !dev->power.qos->latency_tolerance_req) {
+> +       if (!dev->power.qos->latency_tolerance_req) {
+>                 struct dev_pm_qos_request *req;
+>
+>                 if (val < 0) {
+> --
+> 2.39.2
+>
