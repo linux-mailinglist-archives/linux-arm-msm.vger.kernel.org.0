@@ -2,86 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4341E6B73E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 11:26:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C92916B747A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 11:45:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229694AbjCMK0d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 06:26:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57556 "EHLO
+        id S230092AbjCMKpt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 06:45:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229742AbjCMK0c (ORCPT
+        with ESMTP id S229929AbjCMKps (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 06:26:32 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E12C815CB9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 03:26:30 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id c200so1138685ybf.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 03:26:30 -0700 (PDT)
+        Mon, 13 Mar 2023 06:45:48 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E1C352F70
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 03:45:46 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id k25-20020a7bc419000000b003ed23114fa7so1884529wmi.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 03:45:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678703190;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=VuiQfp6nu8wwMmVIDaOcc9Bq5ccsIajhxnpeTIFBEBE=;
-        b=ZuN5kFXLkH+mpHUEK6Xp/ga5+iJGC4jitcWtwFGkX3Im62Pv201rkxvHNxFp0hhCCg
-         /SdtxwM/AUG7NrMUJwAhDJfOurOtJxT893Wa65Kjun9Sf/s0lD9IcwmD4PrP7YXXZIV+
-         jKsbAAQ4ddLf5aEZnxvdwTjMsv9W4ZRRquq8zP6EYO0v6Jbr208Pz2RSR/8o2aZxep/B
-         uG8SROBObtpEIkv6/9TukDoHPzw1UyFspJg7qVwrTcHuTyNurINXmSa9ctWzWzteQ0zR
-         Rd3yIqZLVnRUMN++5OLPQAbjgeVfvkl3rfqSoLbPaptbCfEKV6fk7bs8cY0B3C2/oC94
-         qdug==
+        d=linaro.org; s=google; t=1678704345;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6YaG0SWzLbweQszAk60kBLdxmB/7i6RyPeQI10oAzV4=;
+        b=LGtukpD/p9tW2HynhY3ArpOnq71vUNWspCHDXcqL9E0H12uUGwCrNnJ8M0RxmdNpeq
+         pAeM7HgE3lC/iWS08/SNNgrlDNCkMeXQqRuX8cwlBg4zRVpNXPW3gDjtnKxALuceF78y
+         NdVTDObibZ8R4EtyBNCPIMcq0OgaTbkZvAM49h3p8hUGXW7fJ7YGuhjTjqQdepEuEkoV
+         cD7UbzHMLuWJXYr4Foe1gbFD2MHYxciKwANocceIkSdzewD4rowtkp2iwkioPH9TaNKp
+         rEBkV5vvEN+FggyOIX39CDWbzc/iJhYRAVxAyxEi2kAEgx37tlorGCa+Sd08jrlENeFY
+         mZeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678703190;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VuiQfp6nu8wwMmVIDaOcc9Bq5ccsIajhxnpeTIFBEBE=;
-        b=KJY3uscyIoYlg+22PZQbKNOD50UK3eMV2dBnbGCGh2IB0QEbO5OkYGVnzp+FmrRzd/
-         n/1H7/szYe1VPVDvpohvtVuO9q12efCWr6qR32XL87c2FuJ9PVwhSPVP52afYpiIPSMd
-         y5WjrmUfHI3n5UMoODgqxJb2DtJz0dKpXiPAq2RpLpvFsAQqlhKdEmNeWyaChnE9RWAe
-         q+JskIs+gp38qmSyPTUK+dm5BLubYw6mxeTJpB0Bc942DXZBAeTAy0uA1DWOWYnzwtv7
-         VAMv2Wc2Fka8Md7wbW4003iLI4JL6ZHfJZxgTJKmNmaizcNG37asNjxCQyQYp9EWs8SG
-         DiOQ==
-X-Gm-Message-State: AO0yUKVhVi8WfHGIoHnjfVaBdfekx6pyOPtctvD0WR6Yx/P4KPr++kbU
-        mvibl+WmNNk29D4YSDY9wQenG+cfz6BU3Q/+4LvMxw==
-X-Google-Smtp-Source: AK7set87p2OVK2UrHNBxtLnxGyLAOtK0ZqeddlMEnDi2scid+vzT38Y8IvbgAl/gP3KhACQs1qCL1GV3lGYaf6YrreQ=
-X-Received: by 2002:a25:e90b:0:b0:9fc:e3d7:d60f with SMTP id
- n11-20020a25e90b000000b009fce3d7d60fmr16203762ybd.5.1678703190121; Mon, 13
- Mar 2023 03:26:30 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1678704345;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6YaG0SWzLbweQszAk60kBLdxmB/7i6RyPeQI10oAzV4=;
+        b=2A+CqOtkLXosPpHGVOqpcAooPZxxabX2rQUcyjQfDEQTp1jJdNn4bHg15aMj/TlJEJ
+         jTaVsiHqYHYN6mdqvAPmVHnOzFPzET4mrvkkrPunfkPUyumF1PeG9SnkK2TnVldH5Ks5
+         WJvhtlijeLVfbiH8Z0CgZFdwxybZEC5EsfCWzcSkLl/BbD9mWqLskkODBV4PeTspnDW0
+         wTwARCG8SgCTkBnd/0KwvSW52xdt+f0+HrMCkq7AHlfbf/j1rhbHYv2hjhUOyagsPZhZ
+         oLBlMK2jWAiN8O/emY693TiYByYMutr8mKmmdzhgjyiXbph+F0bzp4i9jGs7l82E8WTp
+         JajA==
+X-Gm-Message-State: AO0yUKXpsfoDw0bBDcZJYAj6SsJyLxl3DJBqQWSaex1zmCJ/+kAcb4mO
+        DW/3TcCJsXoCOz/h3etqNJ/2Ow==
+X-Google-Smtp-Source: AK7set+0Oc4726DzdphLUKeZrWCln4A5vSwSav6cx8LjV/d2+4mI/5d3Gg6o/COIT9hrcw7T8dFWSQ==
+X-Received: by 2002:a05:600c:3504:b0:3ea:d620:579b with SMTP id h4-20020a05600c350400b003ead620579bmr9852881wmq.0.1678704344899;
+        Mon, 13 Mar 2023 03:45:44 -0700 (PDT)
+Received: from ?IPV6:2a05:6e02:1041:c10:8522:ca6e:1db4:96c6? ([2a05:6e02:1041:c10:8522:ca6e:1db4:96c6])
+        by smtp.googlemail.com with ESMTPSA id l4-20020a05600c4f0400b003dc4a47605fsm9523224wmq.8.2023.03.13.03.45.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Mar 2023 03:45:44 -0700 (PDT)
+Message-ID: <f78e6b70-a963-c0ca-a4b2-0d4c6aeef1fb@linaro.org>
+Date:   Mon, 13 Mar 2023 11:45:41 +0100
 MIME-Version: 1.0
-References: <20230309154949.658380-1-krzysztof.kozlowski@linaro.org> <20230309154949.658380-4-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230309154949.658380-4-krzysztof.kozlowski@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 13 Mar 2023 11:26:19 +0100
-Message-ID: <CACRpkdbxzbrAHtd1mNv9N_ErOpWQ=QD_cokF5LVemU=QdQeKgg@mail.gmail.com>
-Subject: Re: [PATCH 4/4] pinctrl: qcom: sm8550-lpass-lpi: allow GPIO function
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v8 01/29] thermal/core: Add a generic
+ thermal_zone_get_trip() function
+Content-Language: en-US
+To:     Ido Schimmel <idosch@idosch.org>
+Cc:     rafael@kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, rui.zhang@intel.com,
+        Raju Rangoju <rajur@chelsio.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Peter Kaestle <peter@piie.net>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Mark Gross <markgross@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Broadcom Kernel Team <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        =?UTF-8?Q?Niklas_S=c3=b6derlund?= <niklas.soderlund@ragnatech.se>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Keerthy <j-keerthy@ti.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Antoine Tenart <atenart@kernel.org>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>, netdev@vger.kernel.org,
+        platform-driver-x86@vger.kernel.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-omap@vger.kernel.org,
+        "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+        danieller@nvidia.com, vadimp@nvidia.com, petrm@nvidia.com
+References: <20221003092602.1323944-1-daniel.lezcano@linaro.org>
+ <20221003092602.1323944-2-daniel.lezcano@linaro.org>
+ <ZA3CFNhU4AbtsP4G@shredder>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <ZA3CFNhU4AbtsP4G@shredder>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 9, 2023 at 4:50 PM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
 
-> All LPASS pins have basic GPIO function and most of the code is ready
-> for that.  Add missing glue pieces to allow LPASS pins to work as GPIO,
-> which is going to be used on MTP8550 and QRD8550 boards.
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Hi Ido,
 
-These four patches applied as non-urgent fixes. Tell me if they should
-rather be treated as urgent. (for -rcN and/or stable)
+On 12/03/2023 13:14, Ido Schimmel wrote:
+> On Mon, Oct 03, 2022 at 11:25:34AM +0200, Daniel Lezcano wrote:
+>> @@ -1252,9 +1319,10 @@ thermal_zone_device_register_with_trips(const char *type, struct thermal_trip *t
+>>   		goto release_device;
+>>   
+>>   	for (count = 0; count < num_trips; count++) {
+>> -		if (tz->ops->get_trip_type(tz, count, &trip_type) ||
+>> -		    tz->ops->get_trip_temp(tz, count, &trip_temp) ||
+>> -		    !trip_temp)
+>> +		struct thermal_trip trip;
+>> +
+>> +		result = thermal_zone_get_trip(tz, count, &trip);
+>> +		if (result)
+>>   			set_bit(count, &tz->trips_disabled);
+>>   	}
+> 
+> Daniel, this change makes it so that trip points with a temperature of
+> zero are no longer disabled. This behavior was originally added in
+> commit 81ad4276b505 ("Thermal: Ignore invalid trip points"). The mlxsw
+> driver relies on this behavior - see mlxsw_thermal_module_trips_reset()
+> - and with this change I see that the thermal subsystem tries to
+> repeatedly set the state of the associated cooling devices to the
+> maximum state. Other drivers might also be affected by this.
+> 
+> Following patch solves the problem for me:
+> 
+> diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+> index 55679fd86505..b50931f84aaa 100644
+> --- a/drivers/thermal/thermal_core.c
+> +++ b/drivers/thermal/thermal_core.c
+> @@ -1309,7 +1309,7 @@ thermal_zone_device_register_with_trips(const char *type, struct thermal_trip *t
+>                  struct thermal_trip trip;
+>   
+>                  result = thermal_zone_get_trip(tz, count, &trip);
+> -               if (result)
+> +               if (result || !trip.temperature)
+>                          set_bit(count, &tz->trips_disabled);
+>          }
+> 
+> Should I submit it or do you have a better idea?
 
-Yours,
-Linus Walleij
+Thanks for reporting this, I think the fix you are proposing is correct 
+regarding the previous behavior.
+
+However, I disagree with the commit 81ad4276b505, because it defines the 
+zero as an invalid trip point. But some platforms have warming devices, 
+when the temperature is too cold, eg 0°C, we enable the warming device 
+in order to stay in the functioning temperature range.
+
+Other devices can do the same with negative temperature values.
+
+This feature is not yet upstream and the rework of the trip point should 
+allow proper handling of cold trip points.
+
+If you can send the change to fix the regression that would be great.
+
+But keep in mind, the driver is assuming an internal thermal framework 
+behavior. The trips_disabled is only to overcome a trip point 
+description bug and you should not rely on it as well as not changing 
+the trip points on the fly after they are registered.
+
+Actually, the mlxsw driver should just build a valid array of trip 
+points without 0°C trip point and pass it to 
+thermal_zone_device_register_with_trips(). That would be a proper change 
+without relying on a side effect of the thermal trip bug 0°C workaround.
+
+
+
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
+
