@@ -2,50 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12C3C6B863D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 00:44:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CB416B8650
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 00:51:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230146AbjCMXok (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 19:44:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59468 "EHLO
+        id S229528AbjCMXvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 19:51:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229528AbjCMXok (ORCPT
+        with ESMTP id S229573AbjCMXvQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 19:44:40 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C110975F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 16:44:39 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 13 Mar 2023 19:51:16 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AF7F85B12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 16:51:12 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2827B61540
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 23:44:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25619C433D2;
-        Mon, 13 Mar 2023 23:44:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678751078;
-        bh=kkbqSuaI4+vfNHxSrBJqccWZHB+5rPft9289TVpFJYU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=d/RqeOmkx+IuNhvwxQpzbfpNaajMK6hgkyLHlEWU+65oXwzwRDAYPRolK//9Fnmso
-         4iRBPRdE+r9t6MMRIpO0z3x5W9gfd3+9DEwiB8+wyJuyPzT46AUSiyR0dJmrz68wNx
-         ppOO+WiuA42efA94SjZQT27L+ujbStMaD/WhuzOro7MK7a6raNYzjvmVioo3NTUS9t
-         o2xLoNXknkkvWcW/TOCNWUCeAHOjCyZIhdApRaDK0NI9ehMwT/5NfYijsMmTecYiO4
-         I1WdyF5Id+gc1nVkKZmx35nCnZvZlLlgtxiM+W6mxqqpjzi4h0VLR6xWpQJukfrXqA
-         x1lyYYAp7wtkw==
-Date:   Mon, 13 Mar 2023 16:48:02 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id EF0DB202FA;
+        Tue, 14 Mar 2023 00:51:10 +0100 (CET)
+Date:   Tue, 14 Mar 2023 00:51:09 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        krzysztof.kozlowski@linaro.org, marijn.suijten@somainline.org
-Subject: Re: [PATCH v2 0/9] RPMPD cleanup + parent PD
-Message-ID: <20230313234802.w4wnaj43uxvfsmh4@ripper>
-References: <20230213143524.1943754-1-konrad.dybcio@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 03/10] drm/msm/dsi: Fix DSI index detection when
+ version clash occurs
+Message-ID: <20230313235109.u7cpusjr6t2xyxmk@SoMainline.org>
+References: <20230307-topic-dsi_qcm-v3-0-8bd7e1add38a@linaro.org>
+ <20230307-topic-dsi_qcm-v3-3-8bd7e1add38a@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230213143524.1943754-1-konrad.dybcio@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+In-Reply-To: <20230307-topic-dsi_qcm-v3-3-8bd7e1add38a@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -53,51 +55,247 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 13, 2023 at 03:35:15PM +0100, Konrad Dybcio wrote:
-> v1 -> v2:
-> - reorder the cleanup for better reviewability (read: redo the
->   thing from scratch with the only thing being shared is the idea)
-> 
-> - move parent pd patches to the end
-> 
-> - clean up even more duplicates (lpicx vs lpi_cx)
-> 
-> - remove the vdd prefix from pd names
-> 
-> - use a single tab instead of a single space in [6/9]
-> 
-> - only pick up the rb on [8/9], as the rest is essentially new
-> 
-> v1: https://lore.kernel.org/linux-arm-msm/20230125032728.611640-1-konrad.dybcio@linaro.org/
-> 
-> This series provides a big and necessary cleanup for RPMPD..
-> Lots of redefined objects were trimmed as well as some stylistic
-> and maintainability fixes have been made. Also, support for parent
-> PD is added and put to use on SM6375 where VDDMX should be scaled
-> together with VDDGX.
-> 
+On 2023-03-07 14:01:41, Konrad Dybcio wrote:
+> Currently, we allow for MAX_DSI entries in io_start to facilitate for
+> MAX_DSI number of DSI hosts at different addresses. The configuration
+> is matched against the DSI CTRL hardware revision read back from the
+> component. We need a way to resolve situations where multiple SoCs
+> with different register maps may use the same version of DSI CTRL. In
+> preparation to do so, make msm_dsi_config a 2d array where each entry
+> represents a set of configurations adequate for a given SoC.
 
-Series looks good, but first patch fails to apply. Could you please
-updated the patch you pointed out the _ao issue and rebase this on
-v6.3-rc1?
+Note that this code isn't fool-proof against different SoCs sharing the
+same DSI host address but for different indices (for example, the
+address at variant 0 DSI 0 could be the same as variant 1 DSI 1) and the
+matching logic would wrongly return ID 0 instead of 1 for SoC variant 1,
+because that's the first matching address it finds.
 
-Thanks,
-Bjorn
-
-> Konrad Dybcio (9):
->   soc: qcom: rpmpd: Bring all definitions to the top
->   soc: qcom: rpmpd: Unify Low Power Island definitions
->   soc: qcom: rpmpd: Remove vdd* from struct names
->   soc: qcom: rpmpd: Expand struct definition macros
->   soc: qcom: rpmpd: Improve the naming
->   soc: qcom: rpmpd: Make bindings assignments consistent
->   soc: qcom: rpmpd: Add parent PD support
->   soc: qcom: rpmpd: Hook up VDDMX as parent of SM6375 VDDGX
->   soc: qcom: rpmpd: Remove useless comments
+> This is totally fine to do, as the only differentiating factors
+> between same-version-different-SoCs configurations are the number of
+> DSI hosts (1 or 2, at least as of today) and the set of base registers.
+> The regulator setup is the same, because the DSI hardware is the same,
+> regardless of the SoC it was implemented in.
 > 
->  drivers/soc/qcom/rpmpd.c | 800 +++++++++++++++++++++++++++------------
->  1 file changed, 564 insertions(+), 236 deletions(-)
+> In addition to that, update the matching logic such that it will loop
+> over VARIANTS_MAX variants, making sure they are all taken into account.
+
+"in addition to that" makes it sound like you're doing a separate new
+thing in this patch, when the match logic must in fact be updated to
+make it compatible with the change described above (as in, it doesn't
+compile if you don't account for the extra depth in the array).
+
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Regardless of the above, I don't think it's a problem right now and I
+really like the direction this is headed in: miles better than having a
+single distinct SoC with a separate way (compatible) of selecting the
+host DSI CTRL, rather than the hw revision readback.
+
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi_cfg.c  | 52 ++++++++++++++++++++++++++++----------
+>  drivers/gpu/drm/msm/dsi/dsi_cfg.h  |  5 +++-
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 10 ++++----
+>  3 files changed, 48 insertions(+), 19 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> index 4515f52b407a..6c192963c100 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> @@ -21,7 +21,9 @@ static const struct msm_dsi_config apq8064_dsi_cfg = {
+>  	.num_regulators = ARRAY_SIZE(apq8064_dsi_regulators),
+>  	.bus_clk_names = dsi_v2_bus_clk_names,
+>  	.num_bus_clks = ARRAY_SIZE(dsi_v2_bus_clk_names),
+> -	.io_start = { 0x4700000, 0x5800000 },
+> +	.io_start = {
+> +		{ 0x4700000, 0x5800000 },
+> +	},
+>  };
+>  
+>  static const char * const dsi_6g_bus_clk_names[] = {
+> @@ -40,7 +42,9 @@ static const struct msm_dsi_config msm8974_apq8084_dsi_cfg = {
+>  	.num_regulators = ARRAY_SIZE(msm8974_apq8084_regulators),
+>  	.bus_clk_names = dsi_6g_bus_clk_names,
+>  	.num_bus_clks = ARRAY_SIZE(dsi_6g_bus_clk_names),
+> -	.io_start = { 0xfd922800, 0xfd922b00 },
+> +	.io_start = {
+> +		{ 0xfd922800, 0xfd922b00 },
+> +	},
+>  };
+>  
+>  static const char * const dsi_8916_bus_clk_names[] = {
+> @@ -58,7 +62,9 @@ static const struct msm_dsi_config msm8916_dsi_cfg = {
+>  	.num_regulators = ARRAY_SIZE(msm8916_dsi_regulators),
+>  	.bus_clk_names = dsi_8916_bus_clk_names,
+>  	.num_bus_clks = ARRAY_SIZE(dsi_8916_bus_clk_names),
+> -	.io_start = { 0x1a98000 },
+> +	.io_start = {
+> +		{ 0x1a98000 },
+> +	},
+>  };
+>  
+>  static const char * const dsi_8976_bus_clk_names[] = {
+> @@ -76,7 +82,9 @@ static const struct msm_dsi_config msm8976_dsi_cfg = {
+>  	.num_regulators = ARRAY_SIZE(msm8976_dsi_regulators),
+>  	.bus_clk_names = dsi_8976_bus_clk_names,
+>  	.num_bus_clks = ARRAY_SIZE(dsi_8976_bus_clk_names),
+> -	.io_start = { 0x1a94000, 0x1a96000 },
+> +	.io_start = {
+> +		{ 0x1a94000, 0x1a96000 },
+> +	},
+>  };
+>  
+>  static const struct regulator_bulk_data msm8994_dsi_regulators[] = {
+> @@ -94,7 +102,9 @@ static const struct msm_dsi_config msm8994_dsi_cfg = {
+>  	.num_regulators = ARRAY_SIZE(msm8994_dsi_regulators),
+>  	.bus_clk_names = dsi_6g_bus_clk_names,
+>  	.num_bus_clks = ARRAY_SIZE(dsi_6g_bus_clk_names),
+> -	.io_start = { 0xfd998000, 0xfd9a0000 },
+> +	.io_start = {
+> +		{ 0xfd998000, 0xfd9a0000 },
+> +	},
+>  };
+>  
+>  static const char * const dsi_8996_bus_clk_names[] = {
+> @@ -113,7 +123,9 @@ static const struct msm_dsi_config msm8996_dsi_cfg = {
+>  	.num_regulators = ARRAY_SIZE(msm8996_dsi_regulators),
+>  	.bus_clk_names = dsi_8996_bus_clk_names,
+>  	.num_bus_clks = ARRAY_SIZE(dsi_8996_bus_clk_names),
+> -	.io_start = { 0x994000, 0x996000 },
+> +	.io_start = {
+> +		{ 0x994000, 0x996000 },
+> +	},
+>  };
+>  
+>  static const char * const dsi_msm8998_bus_clk_names[] = {
+> @@ -131,7 +143,9 @@ static const struct msm_dsi_config msm8998_dsi_cfg = {
+>  	.num_regulators = ARRAY_SIZE(msm8998_dsi_regulators),
+>  	.bus_clk_names = dsi_msm8998_bus_clk_names,
+>  	.num_bus_clks = ARRAY_SIZE(dsi_msm8998_bus_clk_names),
+> -	.io_start = { 0xc994000, 0xc996000 },
+> +	.io_start = {
+> +		{ 0xc994000, 0xc996000 },
+> +	},
+>  };
+>  
+>  static const char * const dsi_sdm660_bus_clk_names[] = {
+> @@ -148,7 +162,9 @@ static const struct msm_dsi_config sdm660_dsi_cfg = {
+>  	.num_regulators = ARRAY_SIZE(sdm660_dsi_regulators),
+>  	.bus_clk_names = dsi_sdm660_bus_clk_names,
+>  	.num_bus_clks = ARRAY_SIZE(dsi_sdm660_bus_clk_names),
+> -	.io_start = { 0xc994000, 0xc996000 },
+> +	.io_start = {
+> +		{ 0xc994000, 0xc996000 },
+> +	},
+>  };
+>  
+>  static const char * const dsi_sdm845_bus_clk_names[] = {
+> @@ -169,7 +185,9 @@ static const struct msm_dsi_config sdm845_dsi_cfg = {
+>  	.num_regulators = ARRAY_SIZE(sdm845_dsi_regulators),
+>  	.bus_clk_names = dsi_sdm845_bus_clk_names,
+>  	.num_bus_clks = ARRAY_SIZE(dsi_sdm845_bus_clk_names),
+> -	.io_start = { 0xae94000, 0xae96000 },
+> +	.io_start = {
+> +		{ 0xae94000, 0xae96000 },
+> +	},
+>  };
+>  
+>  static const struct regulator_bulk_data sm8550_dsi_regulators[] = {
+> @@ -182,7 +200,9 @@ static const struct msm_dsi_config sm8550_dsi_cfg = {
+>  	.num_regulators = ARRAY_SIZE(sm8550_dsi_regulators),
+>  	.bus_clk_names = dsi_sdm845_bus_clk_names,
+>  	.num_bus_clks = ARRAY_SIZE(dsi_sdm845_bus_clk_names),
+> -	.io_start = { 0xae94000, 0xae96000 },
+> +	.io_start = {
+> +		{ 0xae94000, 0xae96000 },
+> +	},
+>  };
+>  
+>  static const struct regulator_bulk_data sc7180_dsi_regulators[] = {
+> @@ -195,7 +215,9 @@ static const struct msm_dsi_config sc7180_dsi_cfg = {
+>  	.num_regulators = ARRAY_SIZE(sc7180_dsi_regulators),
+>  	.bus_clk_names = dsi_sc7180_bus_clk_names,
+>  	.num_bus_clks = ARRAY_SIZE(dsi_sc7180_bus_clk_names),
+> -	.io_start = { 0xae94000 },
+> +	.io_start = {
+> +		{ 0xae94000 },
+> +	},
+>  };
+>  
+>  static const char * const dsi_sc7280_bus_clk_names[] = {
+> @@ -212,7 +234,9 @@ static const struct msm_dsi_config sc7280_dsi_cfg = {
+>  	.num_regulators = ARRAY_SIZE(sc7280_dsi_regulators),
+>  	.bus_clk_names = dsi_sc7280_bus_clk_names,
+>  	.num_bus_clks = ARRAY_SIZE(dsi_sc7280_bus_clk_names),
+> -	.io_start = { 0xae94000, 0xae96000 },
+> +	.io_start = {
+> +		{ 0xae94000, 0xae96000 },
+> +	},
+>  };
+>  
+>  static const char * const dsi_qcm2290_bus_clk_names[] = {
+> @@ -229,7 +253,9 @@ static const struct msm_dsi_config qcm2290_dsi_cfg = {
+>  	.num_regulators = ARRAY_SIZE(qcm2290_dsi_cfg_regulators),
+>  	.bus_clk_names = dsi_qcm2290_bus_clk_names,
+>  	.num_bus_clks = ARRAY_SIZE(dsi_qcm2290_bus_clk_names),
+> -	.io_start = { 0x5e94000 },
+> +	.io_start = {
+> +		{ 0x5e94000 },
+> +	},
+>  };
+>  
+>  static const struct msm_dsi_host_cfg_ops msm_dsi_v2_host_ops = {
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> index 6b6b16c5fd25..8772a3631ac1 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> @@ -32,13 +32,16 @@
+>  
+>  #define DSI_6G_REG_SHIFT	4
+>  
+> +/* Maximum number of configurations matched against the same hw revision */
+> +#define VARIANTS_MAX			2
+> +
+>  struct msm_dsi_config {
+>  	u32 io_offset;
+>  	const struct regulator_bulk_data *regulator_data;
+>  	int num_regulators;
+>  	const char * const *bus_clk_names;
+>  	const int num_bus_clks;
+> -	const resource_size_t io_start[DSI_MAX];
+> +	const resource_size_t io_start[VARIANTS_MAX][DSI_MAX];
+>  };
+>  
+>  struct msm_dsi_host_cfg_ops {
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 9021f0d65515..9cfb9e91bfea 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -1862,16 +1862,16 @@ static int dsi_host_get_id(struct msm_dsi_host *msm_host)
+>  	struct platform_device *pdev = msm_host->pdev;
+>  	const struct msm_dsi_config *cfg = msm_host->cfg_hnd->cfg;
+>  	struct resource *res;
+> -	int i;
+> +	int i, j;
+>  
+>  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "dsi_ctrl");
+>  	if (!res)
+>  		return -EINVAL;
+>  
+> -	for (i = 0; i < DSI_MAX; i++) {
+> -		if (cfg->io_start[i] == res->start)
+> -			return i;
+> -	}
+> +	for (i = 0; i < VARIANTS_MAX; i++)
+> +		for (j = 0; j < DSI_MAX; j++)
+> +			if (cfg->io_start[i][j] == res->start)
+> +				return j;
+>  
+>  	return -EINVAL;
+>  }
 > 
 > -- 
-> 2.39.1
+> 2.39.2
 > 
