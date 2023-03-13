@@ -2,69 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BA7C6B8160
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 20:07:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 790466B8166
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 20:08:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230308AbjCMTHx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 15:07:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53352 "EHLO
+        id S229969AbjCMTIP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 15:08:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229516AbjCMTHw (ORCPT
+        with ESMTP id S230290AbjCMTIL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 15:07:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BFF6746E3;
-        Mon, 13 Mar 2023 12:07:51 -0700 (PDT)
+        Mon, 13 Mar 2023 15:08:11 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EDFD9740;
+        Mon, 13 Mar 2023 12:08:01 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8151E61469;
-        Mon, 13 Mar 2023 19:07:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23CAC4339C;
-        Mon, 13 Mar 2023 19:07:45 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 898916148F;
+        Mon, 13 Mar 2023 19:08:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4587EC433D2;
+        Mon, 13 Mar 2023 19:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678734469;
-        bh=mixkviXkrTQKP4glJUkMivKz0/es3ZvvcLqTmvgYhWQ=;
+        s=k20201202; t=1678734480;
+        bh=5jfl9/hlfxAkBs3SczAn6QYlPXw9oRLcWoCeAZ5s0Zk=;
         h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=gMPEuJOWVffTQXdCaxYCQVCoYfBtXQ+/emqhw9/rBwO340K0nrNHThlQ+JuSc7JO1
-         o1RaJ5azj9+AIAmhoHqRamzIA1F+D3cRWGeG47J533OnytjJ2xYEItFr6s95t46qwr
-         zoSp3ejYiUUGbvkDgD5ahMgeBF5+yiowztsNutT345Oi/Q2+cqZjaYU1HLNoUacAEp
-         nh7NkZ4y1jD95dJl+veq4EzY0RBJqHcptAYFLQC5BwhbvPIxYDWqcmG16YBp/TVhyY
-         8Qa2oD4/lTIB19Y/uHQIf2eia3vlbfeFfgwS4ytVu6y1KZiXbNdSSzQ0nMBZa0Ct/l
-         oC3/Db4klimqA==
+        b=qy4U8EsWT9qdg/BRniO8wddtjYJExE2O0HT9PPvdGgN9jxC9enNuu0Z2Xtn6G5UV6
+         bC2miBMO0DXSvemVXs/Hszmr1FNrHmFOE7RB+89UH8vKMXUESE5FPnILrYViv7OGND
+         Ujak4aldgjlCMSP3Kxf0WBF7ll03WguZ6QiafKA9bJqTwbXFJst7It72+zJ36tOr7n
+         hA2wnnUlRTAwHVynEBeKhK7Tuze5tkj5aEza8sWAfagHejYDOQsY+FCUOEeFV+sr7h
+         CAeElN01aEgm7N6Dh8pFbIsc3bBpxnphPQlc5Kt83f/PNAjReRabIhaizmmBcarWh7
+         8/KD0VLoPzSAA==
 From:   Mark Brown <broonie@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
+To:     Liam Girdwood <lgirdwood@gmail.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
-        Oder Chiou <oder_chiou@realtek.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230310214333.274903-1-krzysztof.kozlowski@linaro.org>
-References: <20230310214333.274903-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: (subset) [PATCH 1/9] ASoC: qcom: lpass-sc7280: Drop
- of_match_ptr for ID table
-Message-Id: <167873446544.106067.10586777003172589901.b4-ty@kernel.org>
-Date:   Mon, 13 Mar 2023 19:07:45 +0000
+In-Reply-To: <20230310214553.275450-1-krzysztof.kozlowski@linaro.org>
+References: <20230310214553.275450-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: (subset) [PATCH 1/9] regulator: lp872x: Mark OF related data
+ as maybe unused
+Message-Id: <167873447700.106292.3339315429044423313.b4-ty@kernel.org>
+Date:   Mon, 13 Mar 2023 19:07:57 +0000
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Mailer: b4 0.13-dev-bd1bf
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,29 +65,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 10 Mar 2023 22:43:24 +0100, Krzysztof Kozlowski wrote:
-> The driver is specific to ARCH_QCOM which depends on OF thus the driver
-> is OF-only.  Its of_device_id table is built unconditionally, thus
-> of_match_ptr() for ID table does not make sense.
+On Fri, 10 Mar 2023 22:45:45 +0100, Krzysztof Kozlowski wrote:
+> The driver can be compile tested with !CONFIG_OF making certain data
+> unused:
+> 
+>   drivers/regulator/lp872x.c:931:34: error: ‘lp872x_dt_ids’ defined but not used [-Werror=unused-const-variable=]
 > 
 > 
 
 Applied to
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
 Thanks!
 
-[5/9] ASoC: codecs: adau1977-spi: Mark OF related data as maybe unused
-      commit: a9048d64fb9605eb68c9912724e4a1346db8ba1a
-[6/9] ASoC: codecs: pcm179x-spi: Mark OF related data as maybe unused
-      commit: 413beba1a336e6068119f31a4441c51a7aeb1b55
-[7/9] ASoC: codecs: rt1019: Mark OF related data as maybe unused
-      commit: 0e8599a35823f05e90513918ff1201f8d210e315
-[8/9] ASoC: codecs: src4xxx-i2c: Mark OF related data as maybe unused
-      commit: 075a430db402eed0907b80493f1432d47a5120a7
-[9/9] ASoC: codecs: zl38060: Mark OF related data as maybe unused
-      commit: da1f22825b4fec7e25431fa5238252452f3dce46
+[1/9] regulator: lp872x: Mark OF related data as maybe unused
+      commit: 70b26bb55f719e2900404459128d41c8425c8dde
+[2/9] regulator: max20086: Mark OF related data as maybe unused
+      commit: 4a5850865641d0b83caaad81ca0bbd722ac514fb
+[3/9] regulator: mp8859: Mark OF related data as maybe unused
+      commit: 334e6b85a348a79bb018003f09e1cc94accd53a2
+[4/9] regulator: mt6397-regulator: Mark OF related data as maybe unused
+      commit: 38cc873cb1cf27965dacbbc5957a7a8aee89679c
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
