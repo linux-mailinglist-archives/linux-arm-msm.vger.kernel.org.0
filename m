@@ -2,190 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 727076B6DAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 03:57:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E65B6B6DE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 04:19:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229633AbjCMC5R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Mar 2023 22:57:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53624 "EHLO
+        id S229524AbjCMDTI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Mar 2023 23:19:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbjCMC5Q (ORCPT
+        with ESMTP id S229835AbjCMDTE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Mar 2023 22:57:16 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 079FB234DC;
-        Sun, 12 Mar 2023 19:57:14 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32D2FjWv019797;
-        Mon, 13 Mar 2023 02:56:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=lqLYkvu2wxu/IOZBe1fyU2RVWR97f7qTklHjVHNfheU=;
- b=h3Z9O4pECcqrfeZyDBhffwRVIjpEp+rdGtOgykRg/nCaaEpa6hYOaP9JHfsyMtM4R30l
- 74U8HP33VzYzjypTWcmLmY0nTpRlnPKRoErErxZgqFeIPDd6JIjQQXgPAMjtoGhy6Fjl
- lBH76kntA5N5np3o8ohmUK8XAf6WL/me4XbJ3O2ksF9NKvMGD4MNnKAlLNaSFNMPW15S
- UaEJ6BZKHBn8CKNi5PmFQEihCc4QqPogsN8m68WrUEbxyElUOKz4hXHZSShxPsYUrRfH
- 2d6JG2yKx+R7bZJuiABpTKzFOOq+jcbcSpciwffS82p9aEwUm8qwkW7lZWDZAxh/i36A Eg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3p8gysuh1h-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 13 Mar 2023 02:56:56 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32D2utD0028776
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 13 Mar 2023 02:56:55 GMT
-Received: from [10.216.43.170] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Sun, 12 Mar
- 2023 19:56:48 -0700
-Message-ID: <87c3f7c6-f288-3aaf-d7dd-cb28ba5c206c@quicinc.com>
-Date:   Mon, 13 Mar 2023 08:26:45 +0530
+        Sun, 12 Mar 2023 23:19:04 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E436A279AE
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Mar 2023 20:19:01 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id g10so14304220eda.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Mar 2023 20:19:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google; t=1678677540;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=AaTbJOlzDqoyTznkZQew61s0LEM4GBuB+uw2lDWthD4=;
+        b=SreQplaOaiKXW0B6GkZdUz6D9Sa8v+5a40rGEdoJ775vEgiQ7rGzPPoJB2nGkdPgPj
+         MrRQnJrU82a6hHvFFpf8YjH/URrfgV0bOVovjOaGrsudExde0AztAa92HAOCXQNViqP/
+         70pOPj5yn3//8pP7ik8k8O6D36LP6LP71Cx1ezuLAL6B6Tva+t2Yy2yogC3Uqskevt7H
+         LfcBAyBNUUgTv4alNcfEjT3u8gldjn0kYejutF2SuTLxD5whjtZYLSCzsTBFMhRod19Z
+         JSKRelOmYUg2qG+mRrq6BrYlHo7TE/ubAUvDuM/0PqYtFQ9gUS1x0+2HCPBDSDULmXYv
+         wXyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678677540;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AaTbJOlzDqoyTznkZQew61s0LEM4GBuB+uw2lDWthD4=;
+        b=YS6QC8CDcAPUTW+h8D/76yD2LPae/C2gv3CI/uBUmwZnvCnVDTVCKKQIa1/1Qn4tHM
+         n2l1rV3D9fE9BbvXnXLMvswZ58/1U+tJmMLTSIrElpQvgc7ifm9comV0cjqNSbhzJPM9
+         bYVWZS9NCYR9MOoGxfaIb0/WlXUfXouL8FBVqsz/WhiSDxUsCYHgsTn7sHLTXFFpc2gM
+         bLlPOv97lLfy4bLeB+KUQPkycepSVoRj2cWn7sPzLSaUeEVmrP7To/AycMcG4kdJvDF1
+         SLeAOQQZrsImqSMpvQPLqqyDony+H4EiVvmCma1kpUdoes2KMw1c3clwQQpLyKf9OVGM
+         BYLg==
+X-Gm-Message-State: AO0yUKXT5v7iBjthbK6I2RX6dkULOmiOPHLW+nrSkUR2CTUStr4dH9sz
+        bdYmjPqq6LGnEugu1KUTQCk61xogwvupH0KQSSAOGg==
+X-Google-Smtp-Source: AK7set9w8TNcS+IZtR8IG8YLrACA9rb8f2+mU6VRo2IEjowuxVnE18r7Gt3VjLgTfeJg8cMqPLkf4sh/ejlKubZk5g8=
+X-Received: by 2002:a50:9f0b:0:b0:4fb:f19:883 with SMTP id b11-20020a509f0b000000b004fb0f190883mr2233841edf.1.1678677540018;
+ Sun, 12 Mar 2023 20:19:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH 3/8] usb: dwc3: core: Skip setting event buffers for host
- only controllers
-Content-Language: en-US
-To:     Dongliang Mu <mudongliangabcd@gmail.com>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+References: <20230209020916.6475-1-steev@kali.org> <20230209020916.6475-3-steev@kali.org>
+ <ZAoS1T9m1lI21Cvn@hovoldconsulting.com> <CAKXuJqhEKB7cuVhEzObbFyYHyKj87M8iWVaoz7gkhS2OQ9tTBA@mail.gmail.com>
+ <ZArb/ZQEmfGDjYyc@hovoldconsulting.com>
+In-Reply-To: <ZArb/ZQEmfGDjYyc@hovoldconsulting.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Date:   Sun, 12 Mar 2023 22:18:48 -0500
+Message-ID: <CAKXuJqhe3z0XrLCMZ3vc3+Ug-rMjayNuMAvh+ucuUkZQpQdb2A@mail.gmail.com>
+Subject: Re: [PATCH v5 2/4] Bluetooth: hci_qca: Add support for QTI Bluetooth
+ chip wcn6855
+To:     Johan Hovold <johan@kernel.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_wcheng@quicinc.com>,
-        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
-        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>
-References: <20230310163420.7582-1-quic_kriskura@quicinc.com>
- <20230310163420.7582-4-quic_kriskura@quicinc.com>
- <CAD-N9QVT7qaiUbmPapZc5+6XXDVTPeXG4HD4p-n8WSi9FK2CbQ@mail.gmail.com>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <CAD-N9QVT7qaiUbmPapZc5+6XXDVTPeXG4HD4p-n8WSi9FK2CbQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ldITf53Dxyt5EbcJcKYyV3DTbXMyN7Ce
-X-Proofpoint-ORIG-GUID: ldITf53Dxyt5EbcJcKYyV3DTbXMyN7Ce
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-12_10,2023-03-10_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- impostorscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
- suspectscore=0 adultscore=0 phishscore=0 priorityscore=1501 clxscore=1011
- mlxlogscore=764 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303130024
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>,
+        Tim Jiang <quic_tjiang@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Johan,
 
+<SNIP>
+> > > As I mentioned elsewhere, you need to update also this function so that
+> > > wcn6855 can be powered down.
+> >
+> > Sorry, I do have that locally, I just haven't pushed a v6 as I was
+> > looking at Tim's v2 of the qca2066 and was wondering if I should or
+> > shouldn't continue working on my version of the driver?
+>
+> I only skimmed that patch a while ago, but that ones not strictly needed
+> for wcn6855, right? Things seems to work well here with just this series
+> applied.
 
-On 3/13/2023 7:37 AM, Dongliang Mu wrote:
-> On Sat, Mar 11, 2023 at 12:40 AM Krishna Kurapati
-> <quic_kriskura@quicinc.com> wrote:
->>
->> On some SoC's like SA8295P where the teritiary controller is host-only
->> capable, GEVTADDRHI/LO, GEVTSIZ, GEVTCOUNT registers are not accessible.
->> Trying to setup them up during core_init leads to a crash.
->>
->> For DRD/Peripheral supported controllers, event buffer setup is done
->> again in gadget_pullup. Skip setup or cleanup of event buffers if
->> controller is host-only capable.
->>
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->> ---
->>   drivers/usb/dwc3/core.c | 20 ++++++++++++++------
->>   1 file changed, 14 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
->> index 076c0f8a4441..1ca9fa40a66e 100644
->> --- a/drivers/usb/dwc3/core.c
->> +++ b/drivers/usb/dwc3/core.c
->> @@ -840,7 +840,11 @@ static void dwc3_clk_disable(struct dwc3 *dwc)
->>
->>   static void dwc3_core_exit(struct dwc3 *dwc)
->>   {
->> -       dwc3_event_buffers_cleanup(dwc);
->> +       unsigned int    hw_mode;
->> +
->> +       hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
->> +       if (hw_mode != DWC3_GHWPARAMS0_MODE_HOST)
->> +               dwc3_event_buffers_cleanup(dwc);
-> 
-> quick question about dwc3_event_buffers_cleanup, there are other
-> similar sites calling this function.
-> 
-> C symbol: dwc3_event_buffers_cleanup
-> 
->    File   Function                   Line
-> 0 core.h <global>                   1546 void
-> dwc3_event_buffers_cleanup(struct dwc3 *dwc);
-> 1 core.c __dwc3_set_mode             152 dwc3_event_buffers_cleanup(dwc);
-> 2 core.c dwc3_event_buffers_cleanup  522 void
-> dwc3_event_buffers_cleanup(struct dwc3 *dwc)
-> 3 core.c dwc3_core_exit              842 dwc3_event_buffers_cleanup(dwc);
-> 4 core.c dwc3_probe                 1936 dwc3_event_buffers_cleanup(dwc);
-> 5 drd.c  dwc3_otg_update             363 dwc3_event_buffers_cleanup(dwc);
-> 6 drd.c  dwc3_drd_exit               607 dwc3_event_buffers_cleanup(dwc);
-> 
-> For 1, 5, and 6, any need to take care of this situation?
-> 
-Hi Dongliang,
+Works, but, not quite well, and with the nvm bits from Tim's patch, we
+end up getting closer?  I think that is the best way to put it.  With
+what we currently have, we end up loading hpnv21.bin for our nvm patch
+file, however, we actually want (at least on my Thinkpad X13s) the
+.b8c file from the Windows partition for our nvm patch; With the b8c
+file symlinked to .bin with just my patch set, I am able to connect a
+pair of Air Pods Gen1 to the ThinkPad and play back audio, as well as
+use them for input.  With the .bin file that comes from
+linux-firmware, they will still connect, however, they will randomly
+disconnect, as well as the audio output is all garbled.  I think,
+ideally, we get v6+ in, and then we can figure out what to do about
+the bits that Tim's patch adds.  I've tried them locally, but I'm not
+confident enough in my knowledge to address the issues that are
+brought up in the code review there.
 
-   Thanks for the review.
-In the other places mentioned like set_mode otg_update or drd_exit, 
-cleanup is called if we are in device mode and we want to exit that 
-mode. Since for MP, we have a host only controller those paths won't be 
-accessed I believe.
+> > > With power-off handling fixed, this seems to work as quite well on my
+> > > X13s with 6.3-rc1. Nice job!
+> > >
+> > > Btw, apart from the frame reassembly error, I'm also seeing:
+> > >
+> > >         Bluetooth: Received HCI_IBS_WAKE_ACK in tx state 0
+> > >
+> > > during probe.
+> > >
+> > I'm still not sure where the frame reassembly error comes from, and I
+> > don't know how to get more info to figure it out either, if anyone
+> > happens to have any guidance for that, I would love some.
+> > Additionally, it doesn't always happen.  It seems to happen on the
+> > first load of the module, however, running modprobe -r && modprobe in
+> > a loop (with the powerdown properly modified so the log isn't full of
+> > splats),  it doesn't seem to occur every time. Likewise for the
+> > WAKE_ACK.
+>
+> Ok. Looks like the Chromium team tried to suppress these errors when
+> switching line speed by toggling rts, but the frame-assembly error I get
+> appears to happen before that.
 
-Regards,
-Krishna,
->>
->>          usb_phy_set_suspend(dwc->usb2_phy, 1);
->>          usb_phy_set_suspend(dwc->usb3_phy, 1);
->> @@ -1177,10 +1181,12 @@ static int dwc3_core_init(struct dwc3 *dwc)
->>          if (ret < 0)
->>                  goto err3;
->>
->> -       ret = dwc3_event_buffers_setup(dwc);
->> -       if (ret) {
->> -               dev_err(dwc->dev, "failed to setup event buffers\n");
->> -               goto err4;
->> +       if (hw_mode != DWC3_GHWPARAMS0_MODE_HOST) {
->> +               ret = dwc3_event_buffers_setup(dwc);
->> +               if (ret) {
->> +                       dev_err(dwc->dev, "failed to setup event buffers\n");
->> +                       goto err4;
->> +               }
->>          }
->>
->>          /*
->> @@ -2008,7 +2014,9 @@ static int dwc3_probe(struct platform_device *pdev)
->>
->>   err5:
->>          dwc3_debugfs_exit(dwc);
->> -       dwc3_event_buffers_cleanup(dwc);
->> +
->> +       if (hw_mode != DWC3_GHWPARAMS0_MODE_HOST)
->> +               dwc3_event_buffers_cleanup(dwc);
->>
->>          usb_phy_set_suspend(dwc->usb2_phy, 1);
->>          usb_phy_set_suspend(dwc->usb3_phy, 1);
->> --
->> 2.39.0
->>
+I am still trying to figure it out here as well, but I want to get v6 out there.
+
+> Johan
