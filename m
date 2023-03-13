@@ -2,138 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD0136B81F3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 20:58:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1458A6B81F9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 21:00:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229748AbjCMT6d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 15:58:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48638 "EHLO
+        id S229921AbjCMUAL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 16:00:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229689AbjCMT6c (ORCPT
+        with ESMTP id S229889AbjCMUAK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 15:58:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31E9A1BADB;
-        Mon, 13 Mar 2023 12:58:31 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 738A96147B;
-        Mon, 13 Mar 2023 19:58:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97C1C433D2;
-        Mon, 13 Mar 2023 19:58:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678737509;
-        bh=taO+cR3Midqp85ZKRakRgyCYz8B3PQ+tWxSfiz94v3s=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=gnxbu0nXMNf+WK0W8zjA0EhI+9soscZp/Qh3Q97tEhF51KfBpZITbXlJWGV3OZ9Bo
-         hdqeH6VIys5D5KmTKeuEU3+EuSMCKgwYh67MIx0UBvNZOQ071XvpqKRH0fXsRhRHkT
-         9kcMyIVfCyGXVwCMI5vA0jsykp/VU+nDscRWeSKpgRZMkioM4WyYg2P+0fsyiNCcQh
-         R8jcP1vJiTnhzi10w5tsZZbb3nLBWzXWDbAPhabeU3n99BJkwICLz2HAILBGTB4WLK
-         6VT77mJIXaLi+/lg29AHxHJcyC6fgCO+rq9dNbmpcicN2NSmfmVLwm+2alLLpAv4os
-         3mkSMOOfJzfXw==
-Message-ID: <eb633e38-7972-4655-63d1-80399bb3a80b@kernel.org>
-Date:   Mon, 13 Mar 2023 21:58:24 +0200
+        Mon, 13 Mar 2023 16:00:10 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F7EA6BDF7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 13:00:07 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id bp27so6918888lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 13:00:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678737605;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bHnSJ1e/E/f4xbQ+Ey0bVRUJ3n2W/AmMQUXTjmDhfmk=;
+        b=CjJJVUkHZ4/LmfhMExespLnoHTad7lvD7XMvltzogwm46cZVuD8jxH4fVlb654Z0I2
+         kQjimhF6cdq9qvP9pCCxT8JqDW2236P0jqECowlY2NAm5LTCSpA0uFsHTeBHh8zItEop
+         7k3PL18vUSRW60NTdYtq+D7JK43lZ2Ok95j5+QhDZvxFFhpQ0Z1ZWles17pIbPBxMUEk
+         wTAsNuL34fW6WHFqD93O7is4kOx0SwhUHAyUbgBb2NUwcWxuVC1gEXuZHE1ti9rbQvNT
+         uo8nH+wXGu+oUsX7A7vY9WIUVZVKV4aOciCvBtkhKmjI+t5BssnuebMycp6tMs9o48S0
+         fdRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678737605;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bHnSJ1e/E/f4xbQ+Ey0bVRUJ3n2W/AmMQUXTjmDhfmk=;
+        b=DECl525cMQXCHByTnlSLSHTzIFl4Z8SqJSA1CtN82O0AceWhpWywWxGWdp+vnI21rO
+         G5/ofCIZPz4/8CCo40P02JnZtBSNACcInego3a9e+/5kBsccJL6AXuZGm9YCBiHTaSW9
+         tGymxauRnAvwUr4EwFDLO7XuOAVuX164FNTqiihAnl8UQ89wgOVFCZhae5b3qMy9kIdd
+         9iEdntiDuo1S7HGvyrxjF3kHodmTKRmoX/9r7Q5lVq77LZzUoSdo5npN3G0dfvuOnq5J
+         3VZec7JZX8TlpGZ6vGMTOQ6dEkvNUiVSUxZPNa/loh9Ao/p/jOa/bpgcsrtIgQ/rOvCd
+         LRIw==
+X-Gm-Message-State: AO0yUKWvpNctI9VznJdon9gMarW56mIUrJXgqmnPAAv9yBYx/g3LpnKY
+        snvSxUuxmpyETUMHeAt/2NfO7xFavZCQyrEI5tk=
+X-Google-Smtp-Source: AK7set/6NIzv1wkDTpJexVpifIhx+PE3YBEjtG35kLxj6FmyPlKZRDqbi0kj3G5eeqNgCCqxD9PiHQ==
+X-Received: by 2002:a05:6512:6f:b0:4e0:979d:56e8 with SMTP id i15-20020a056512006f00b004e0979d56e8mr10753094lfo.22.1678737604941;
+        Mon, 13 Mar 2023 13:00:04 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id w3-20020ac254a3000000b004cc800b1f2csm75431lfk.238.2023.03.13.13.00.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Mar 2023 13:00:04 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v3 00/10] RPMPD cleanup + parent PD
+Date:   Mon, 13 Mar 2023 20:59:58 +0100
+Message-Id: <20230313-topic-rpmpd-v3-0-06a4f448ff90@linaro.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH 2/2] interconnect: qcom: rpm: drop bogus pm domain attach
-Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230313084953.24088-1-johan+linaro@kernel.org>
- <20230313084953.24088-3-johan+linaro@kernel.org>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20230313084953.24088-3-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAL6AD2QC/x2N0QrCMAwAf2Xk2UC7QBF/RXzI2ugCsyupjsHYv
+ xt8vIPjDuhiKh1uwwEmm3ZdqwNdBsgz15egFmcYw0iBIuFnbZrR2rsVTBKJrymHyAm8mLgLTsY
+ 1z97U77K4bCZP3f+L++M8f2GDhT1yAAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.12.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1678737603; l=1263;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=gDR4PT1bA1uwqlfLZK1b3R+KYlvXlXj6DApjAqWby6I=;
+ b=edhHbIiyPVNN6aiqCf6DwNkQvHmeBZ1CgQJ/PhQsSyyQmhQ/13Zu2kQC6KVkdMtLDzBAFcSbKlme
+ V2GQNphfD5IZMVLltKnbD8ExTv4bCvT8OofLDj6MzXGa9L5RgD6L
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Johan,
+v2 -> v3:
+- Correctly include the missing first patch (this is very embarassing)
+- Fix the _ao parent for SM6375_VDDGX
+- Use b4, hopefully everybody gets all the patches now..
 
-On 13.03.23 10:49, Johan Hovold wrote:
-> Any power domain would already have been attached by the platform bus
-> code so drop the bogus power domain attach which always succeeds from
-> probe.
-> 
-> This effectively reverts commit 7de109c0abe9 ("interconnect: icc-rpm:
-> Add support for bus power domain").
-> 
-> Fixes: 7de109c0abe9 ("interconnect: icc-rpm: Add support for bus power domain")
-> Cc: Yassine Oudjana <y.oudjana@protonmail.com>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->   drivers/interconnect/qcom/icc-rpm.c | 6 ------
->   drivers/interconnect/qcom/icc-rpm.h | 1 -
->   drivers/interconnect/qcom/msm8996.c | 1 -
->   3 files changed, 8 deletions(-)
->  > diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-> index 3b055cd893ea..c303ce22a7cd 100644
-> --- a/drivers/interconnect/qcom/icc-rpm.c
-> +++ b/drivers/interconnect/qcom/icc-rpm.c
-> @@ -496,12 +496,6 @@ int qnoc_probe(struct platform_device *pdev)
->   	if (ret)
->   		return ret;
->   
-> -	if (desc->has_bus_pd) {
-> -		ret = dev_pm_domain_attach(dev, true);
-> -		if (ret)
-> -			goto err_disable_clks;
-> -	}
-> -
->   	provider = &qp->provider;
->   	provider->dev = dev;
->   	provider->set = qcom_icc_set;
-> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
-> index a49af844ab13..02257b0d3d5c 100644
-> --- a/drivers/interconnect/qcom/icc-rpm.h
-> +++ b/drivers/interconnect/qcom/icc-rpm.h
-> @@ -91,7 +91,6 @@ struct qcom_icc_desc {
->   	size_t num_nodes;
->   	const char * const *clocks;
->   	size_t num_clocks;
-> -	bool has_bus_pd;
->   	enum qcom_icc_type type;
->   	const struct regmap_config *regmap_cfg;
->   	unsigned int qos_offset;
-> diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
-> index 25a1a32bc611..14efd2761b7a 100644
-> --- a/drivers/interconnect/qcom/msm8996.c
-> +++ b/drivers/interconnect/qcom/msm8996.c
-> @@ -1823,7 +1823,6 @@ static const struct qcom_icc_desc msm8996_a0noc = {
->   	.num_nodes = ARRAY_SIZE(a0noc_nodes),
->   	.clocks = bus_a0noc_clocks,
->   	.num_clocks = ARRAY_SIZE(bus_a0noc_clocks),
-> -	.has_bus_pd = true,
->   	.regmap_cfg = &msm8996_a0noc_regmap_config
->   };
-> 
-To make it a complete revert, I'll fold this in:
+v2: https://lore.kernel.org/lkml/16950676-fef9-a3a0-0855-e4e6637711dd@linaro.org/T/#m829f7bfcf911f5e16d9f83aefe810e5dedc7453d
 
-diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-index 0badd2c75161..c80819557923 100644
---- a/drivers/interconnect/qcom/icc-rpm.c
-+++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -11,7 +11,6 @@
-  #include <linux/of_device.h>
-  #include <linux/of_platform.h>
-  #include <linux/platform_device.h>
--#include <linux/pm_domain.h>
-  #include <linux/regmap.h>
-  #include <linux/slab.h>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (10):
+      soc: qcom: rpmpd: Remove SoC names from RPMPD definitions
+      soc: qcom: rpmpd: Bring all definitions to the top
+      soc: qcom: rpmpd: Unify Low Power Island definitions
+      soc: qcom: rpmpd: Remove vdd* from struct names
+      soc: qcom: rpmpd: Expand struct definition macros
+      soc: qcom: rpmpd: Improve the naming
+      soc: qcom: rpmpd: Make bindings assignments consistent
+      soc: qcom: rpmpd: Add parent PD support
+      soc: qcom: rpmpd: Hook up VDDMX as parent of SM6375 VDDGX
+      soc: qcom: rpmpd: Remove useless comments
 
-Thanks,
-Georgi
+ drivers/soc/qcom/rpmpd.c | 833 ++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 565 insertions(+), 268 deletions(-)
+---
+base-commit: 24469a0e5052ba01a35a15f104717a82b7a4798b
+change-id: 20230313-topic-rpmpd-6e13a86c01a6
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
