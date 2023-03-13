@@ -2,75 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C26E6B720A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 10:07:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B09F16B722B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 10:10:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229836AbjCMJG7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 05:06:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54906 "EHLO
+        id S229783AbjCMJKv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 05:10:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229830AbjCMJGa (ORCPT
+        with ESMTP id S231239AbjCMJKe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 05:06:30 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF01948E04
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 02:03:49 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id z5so11807346ljc.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 02:03:49 -0700 (PDT)
+        Mon, 13 Mar 2023 05:10:34 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15E16CC13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 02:10:03 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id g17so14765080lfv.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 02:10:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678698227;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Iu174ytUrTrCTEP4Asg2x55uLRT0uwJo4VNezGSxNOg=;
-        b=AAcqzUyag82ddZqSchFoJY+B+X7N+YaZVsCOk3YCjNgercK0HJ6Q5kh6fg0cecFJBP
-         wJuJNYz+bl2ip8B8OwU7ED3BFpNjwWFC6EOiFdHIKX1bVk6jJMxpIksoHl/wz38aQxSe
-         8kpNSVGjZ8AdgxMDjQaGgHTAl5ikhC74jDbD9aRiI8MuhiuA+LkoabRjbunKFmtjgmEI
-         2EtENRfZ2T/JT6wDgiftNFlR9I5tRcB2eXSNmUyvDLNgQU+FaqVjkcMdhseE59ybw1xL
-         EG7D+U5z0FchLN70tm/pX+/U0MLF5KyILBYdkAVUGwIgArBKjFRAGcL2sQ3Q+uyD2gvW
-         C6LQ==
+        d=linaro.org; s=google; t=1678698602;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7aY14zEhDNC6Iw4MnZQWVJ1q/taMZFItzZke1HHu3Zs=;
+        b=DBZQrTFcvPr2zMcgrb0f7wqCJDEzSq7UPSp+DZBgIuYV1MqRAGNsumyGXnDcncpWZi
+         MQz3p3HpysfBlbfCFqdYm1ykeK3t7RHE3eXidqLOy3O3UQXUCHSX2WlrWDxUz3zSIK09
+         pz2Ne1D+gKMl9QYInAieCq4TaNEoBdmwr2WDR5Or5i4ovVwirsiVNr3HGngRj9sboWBf
+         H09J2a3O91KSfdi+NfVoFaeBsqF7nRMbjLuMCaCAxRIT4AXaPnWVH0HfQAoBlsGGx0CD
+         +ztqT+K0s3kpgxJV8jjhAAD03vy8B1AZE1xSCNZsT2k0jp6H3X0TaydR+DVKTkPcfFVs
+         A7CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678698227;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Iu174ytUrTrCTEP4Asg2x55uLRT0uwJo4VNezGSxNOg=;
-        b=GI29EhVelYZMoovqfDvVbs8an16NPxD25hJt8MOwKqcDfwa8KeTd6+cBJbtKzCj0Jn
-         4uapd+lIl1+n9k3ahlHVzLI9xNkuzDgWtV941pIXeuREni8z8gmwrn7qkfXpFkmutVUE
-         Y9R7PKVNI2NMSzSVCcOWG/d7Tp7C2iS+7Ro850PahnFUOvFqgUVgtPkjXDHTqGrA4oIN
-         5b3gP+dgVCM/nsz4+2PUjZG29xfK5t7av7hcpfjnklplOVVYXhsA0Hg5oeR6nRt8EGfw
-         Uto50c558aGgEh+7ek6BHM2SzbbkuXsNdiY2NnV2N0s/9ogO5ZgRarazu5ITSgtZF75K
-         jc2Q==
-X-Gm-Message-State: AO0yUKWXTcgtYAENFM030ea0AhWmgCn5J/vhP1eYYVDDeo6Krwkuuujq
-        5BGORNlp41M4gEj8y/AhfSAFmQGRWr2pv8NfXsk=
-X-Google-Smtp-Source: AK7set8JdgYIMjhUu8MM/2F6YXBVJHA9y6vIZBap4DG76qGnHcXgoTNJrKBzfoyhgYmENoj5sU4NlQ==
-X-Received: by 2002:a2e:544c:0:b0:293:5cce:56eb with SMTP id y12-20020a2e544c000000b002935cce56ebmr9124489ljd.43.1678698227436;
-        Mon, 13 Mar 2023 02:03:47 -0700 (PDT)
-Received: from localhost.localdomain (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id y7-20020a2e7d07000000b00293d7c95df1sm926182ljc.78.2023.03.13.02.03.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Mar 2023 02:03:47 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Qais Yousef <qyousef@layalina.io>,
-        Stephen Hemminger <stephen@networkplumber.org>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Vasily Averin <vasily.averin@linux.dev>,
-        Colin Ian King <colin.i.king@gmail.com>,
-        Kirill Tkhai <tkhai@ya.ru>, linux-kernel@vger.kernel.org
-Subject: [PATCH] mailmap: map Rajendra Nayak's old address to his current one
-Date:   Mon, 13 Mar 2023 10:03:43 +0100
-Message-Id: <20230313090343.2148346-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.2
+        d=1e100.net; s=20210112; t=1678698602;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7aY14zEhDNC6Iw4MnZQWVJ1q/taMZFItzZke1HHu3Zs=;
+        b=xvuWlzXwqTqpNsPYtaPd2j02RFhuflgnrL6z58tWbhWTlYRLarTIJUZA3Cfwa+SrcP
+         fluwv8rGSwo07YrYxNf9GaBlvl1UB5D6Jkyq41Fu+M6Pp65i5ki4PQB1sUwzCqTElrKJ
+         nY2zyxJQFZ2k0t8s4Mic4BK8XzXncP/cy9H5qs8cQotOopG9nTTV8Pczkt5o4PScwve0
+         iAQbZiyeEr4i7ptzu7fWukSR4TViO3xc9M54PCdbeupAKK06/hnnUvovEgcXaVzhpcc5
+         lnMI159zy1QSbxo2Y4/ugOFATp+RN7klpj/67/dau91Ux85qcgr6t/+gqun+wnyMHJOw
+         0dhQ==
+X-Gm-Message-State: AO0yUKVfu0xOyt+QnLInsbD6VA/3zDhUfoQWz1mdUan56bhheUVnZH1y
+        br4Kky7iGavZPzIn8N80w5H3mw==
+X-Google-Smtp-Source: AK7set8CUgmV2ifXQ4GVSQbtuTjAaLfWL+iD1zJeMiMJGAtKnEp0+rnc5ubsAPhwvTknzukJ+//fzw==
+X-Received: by 2002:a19:ac05:0:b0:4b5:5b36:28bd with SMTP id g5-20020a19ac05000000b004b55b3628bdmr3181743lfc.2.1678698602212;
+        Mon, 13 Mar 2023 02:10:02 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id x7-20020ac24887000000b004d5813386fdsm901376lfc.139.2023.03.13.02.10.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Mar 2023 02:10:01 -0700 (PDT)
+Message-ID: <3b0cad53-391e-806d-536b-609dbca9e5d4@linaro.org>
+Date:   Mon, 13 Mar 2023 10:10:00 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 2/2] interconnect: qcom: rpm: drop bogus pm domain attach
+Content-Language: en-US
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230313084953.24088-1-johan+linaro@kernel.org>
+ <20230313084953.24088-3-johan+linaro@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230313084953.24088-3-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
         autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,28 +82,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rajendra's old email is still picked up by the likes of get_maintainer.pl
-and keeps bouncing like all other @codeaurora.org addresses. Map it to
-his current one.
 
-Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- .mailmap | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/.mailmap b/.mailmap
-index 94a4d32ccdf6..a7182bd90879 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -373,6 +373,7 @@ Quentin Monnet <quentin@isovalent.com> <quentin.monnet@netronome.com>
- Quentin Perret <qperret@qperret.net> <quentin.perret@arm.com>
- Rafael J. Wysocki <rjw@rjwysocki.net> <rjw@sisk.pl>
- Rajeev Nandan <quic_rajeevny@quicinc.com> <rajeevny@codeaurora.org>
-+Rajendra Nayak <quic_rjendra@quicinc.com> <rnayak@codeaurora.org>
- Rajesh Shah <rajesh.shah@intel.com>
- Ralf Baechle <ralf@linux-mips.org>
- Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
--- 
-2.39.2
+On 13.03.2023 09:49, Johan Hovold wrote:
+> Any power domain would already have been attached by the platform bus
+> code so drop the bogus power domain attach which always succeeds from
+> probe.
+> 
+> This effectively reverts commit 7de109c0abe9 ("interconnect: icc-rpm:
+> Add support for bus power domain").
+> 
+> Fixes: 7de109c0abe9 ("interconnect: icc-rpm: Add support for bus power domain")
+> Cc: Yassine Oudjana <y.oudjana@protonmail.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+Running Friday's -next (so, without your cleanups):
 
+cat /sys/kernel/debug/pm_genpd/aggre0_noc/current_state
+> on
+
+Removing the pd attach:
+
+cat /sys/kernel/debug/pm_genpd/aggre0_noc/current_state
+> on
+
+Also removing the other consumer of this genpd, the simple-pm-bus
+hosting PCIe:
+
+cat /sys/kernel/debug/pm_genpd/aggre0_noc/current_state
+> on
+
+So it looks like that's the case!
+
+Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # MSM8996 Sony Kagura
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+>  drivers/interconnect/qcom/icc-rpm.c | 6 ------
+>  drivers/interconnect/qcom/icc-rpm.h | 1 -
+>  drivers/interconnect/qcom/msm8996.c | 1 -
+>  3 files changed, 8 deletions(-)
+> 
+> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
+> index 3b055cd893ea..c303ce22a7cd 100644
+> --- a/drivers/interconnect/qcom/icc-rpm.c
+> +++ b/drivers/interconnect/qcom/icc-rpm.c
+> @@ -496,12 +496,6 @@ int qnoc_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+>  
+> -	if (desc->has_bus_pd) {
+> -		ret = dev_pm_domain_attach(dev, true);
+> -		if (ret)
+> -			goto err_disable_clks;
+> -	}
+> -
+>  	provider = &qp->provider;
+>  	provider->dev = dev;
+>  	provider->set = qcom_icc_set;
+> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
+> index a49af844ab13..02257b0d3d5c 100644
+> --- a/drivers/interconnect/qcom/icc-rpm.h
+> +++ b/drivers/interconnect/qcom/icc-rpm.h
+> @@ -91,7 +91,6 @@ struct qcom_icc_desc {
+>  	size_t num_nodes;
+>  	const char * const *clocks;
+>  	size_t num_clocks;
+> -	bool has_bus_pd;
+>  	enum qcom_icc_type type;
+>  	const struct regmap_config *regmap_cfg;
+>  	unsigned int qos_offset;
+> diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
+> index 25a1a32bc611..14efd2761b7a 100644
+> --- a/drivers/interconnect/qcom/msm8996.c
+> +++ b/drivers/interconnect/qcom/msm8996.c
+> @@ -1823,7 +1823,6 @@ static const struct qcom_icc_desc msm8996_a0noc = {
+>  	.num_nodes = ARRAY_SIZE(a0noc_nodes),
+>  	.clocks = bus_a0noc_clocks,
+>  	.num_clocks = ARRAY_SIZE(bus_a0noc_clocks),
+> -	.has_bus_pd = true,
+>  	.regmap_cfg = &msm8996_a0noc_regmap_config
+>  };
+>  
