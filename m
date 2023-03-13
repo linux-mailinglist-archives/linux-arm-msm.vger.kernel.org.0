@@ -2,152 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A97786B7E2F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 17:55:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BCDF96B7E3A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Mar 2023 17:56:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229736AbjCMQzB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 12:55:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48828 "EHLO
+        id S230445AbjCMQ40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 12:56:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbjCMQzA (ORCPT
+        with ESMTP id S230318AbjCMQ4U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 12:55:00 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C3FA1F90F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 09:54:59 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id s22so16547192lfi.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 09:54:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678726497;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=95CYDuHHvTAJVFqvju6CvM9KhyIATAcbysxvdP4sDhM=;
-        b=wBEx51nsMBegO5s4qogT8bwRqa33i8wzg6GbmIXP6YR9I7bd2uJYqWS/SoAkdesKrn
-         Ees4bJeqBinRcVxUrPYBH0feAqpe8vsWzQ0MbtkLz9nYVJYpDuVBjXxTU1KMfcR4hIp0
-         L3NZ3GQpwvtFxJN1QdZoAkKgi9eCqS/ozmItpVPu5zK9zkMJOnaEFMdMD7mIWoKbsOSg
-         kdjnRLAoI20YN6R858Tyej0Rnlh/3cmz5TCXQ4EM6AUi6nvhPb0RVSpHi4areeD/rDnH
-         LZ8dacWB/3AmOe4Mjw5E+7IQ9O3GA8hgB9qV3ToaHENr0yC5T2eATyeRs1NA7RsSoj6K
-         d3Fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678726497;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=95CYDuHHvTAJVFqvju6CvM9KhyIATAcbysxvdP4sDhM=;
-        b=Ly2jZjOw7JdMfNLvPPXcweKJSYoZm2B6X80mm2iou0tZzpl1TCMzdfC/Uz0kHtYxEH
-         JhJS/DhYcMLyfWjv2zGr5kb/oTeKNqWIeIhN3GUtb0PyYfjCqpGdTVRWJSUJHYWMuuqa
-         VSLUj37/j6Lz+KzEZ0bJBVlkywDd7rXOX3erhkioR9V/9gDBJs+YIm+LJzKS0JirnKKm
-         eJoGxKIYhlGJRtyYM8duzr9K4XZPfRvVsf9BBbiS+zqVnYxJAor+EA8x9JE5dOWlDfDH
-         /g0SPzrQ1YuLE/QbkhaUn7NUxGFs5SLyhlFLtHLz6q5D+B4KTTT/PfLzs3WyA4VOpxPT
-         32+Q==
-X-Gm-Message-State: AO0yUKUM6dn4Kd2RVG8QjO1ry1wfPPshrBVEDYMgIg6L8VGv3aiHi3nt
-        Yk5QsW8jiZwJFVGTxq0Zz73ncQ==
-X-Google-Smtp-Source: AK7set8TlLYFmTIqQsaFFyNmY7OCBJjH5uOIca39HAAucj+bcBCxhSYcL5RbfiRlpUG9u+LjMVejaQ==
-X-Received: by 2002:ac2:4306:0:b0:4e8:41fc:b37 with SMTP id l6-20020ac24306000000b004e841fc0b37mr1536039lfh.10.1678726497648;
-        Mon, 13 Mar 2023 09:54:57 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id q27-20020ac2529b000000b004da8168eba2sm18917lfm.237.2023.03.13.09.54.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Mar 2023 09:54:57 -0700 (PDT)
-Message-ID: <8e9fc1c0-f74f-ba82-fade-31212637d6bb@linaro.org>
-Date:   Mon, 13 Mar 2023 17:54:55 +0100
+        Mon, 13 Mar 2023 12:56:20 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6341F5C9C3;
+        Mon, 13 Mar 2023 09:56:19 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32DGYKfW006270;
+        Mon, 13 Mar 2023 16:55:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Ea3Doo7MMt/glMCNgwUg6V8NNYoh53SRC78PplUWhGo=;
+ b=YwxFG+735okyrayn0KTim65KO+RhDjRhlSQ5Cijz3R5tW+NwEM+GElbQi2XCBTER8Fwv
+ CCl+0IyH+A1sIG3ICrTcSd4L9QnWLle4EPYD9lh6J/EFjhdCcVnuXp38OBuV8uEsMHNn
+ vc6Vu8twNckbWNppW4ux0AitWvNVHHurbh7EWQSCpHD9NZmlY4AXgXuyv43p1Mmf+MIS
+ JHwJwbaJfW5LCf+ay1RRMsxcbK9KtsGxk78/r4UPir5tIgi79XsfeqYoyBmMoYB7otuX
+ UbBHpFfwEByd4GCWRiG9pa7YL1FK6lux9YTriW38ZUiZLRROv6ZJjQcU/XDPo17WP4gu GQ== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pa1qgs3vx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Mar 2023 16:55:36 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32DGtZ2i031040
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Mar 2023 16:55:35 GMT
+Received: from [10.110.58.75] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 13 Mar
+ 2023 09:55:33 -0700
+Message-ID: <f3797f6f-c2a3-cbe3-dd18-267803fb4620@quicinc.com>
+Date:   Mon, 13 Mar 2023 09:55:32 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [Freedreno] [PATCH v3 4/7] drm/msm/a2xx: Implement .gpu_busy
-To:     Jonathan Marek <jonathan@marek.ca>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org
-References: <20230223-topic-opp-v3-0-5f22163cd1df@linaro.org>
- <20230223-topic-opp-v3-4-5f22163cd1df@linaro.org>
- <2f2467d1-f5f3-86dd-edba-fc26e60d142f@marek.ca>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [GIT PULL] Qualcomm driver updates for v6.3
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <2f2467d1-f5f3-86dd-edba-fc26e60d142f@marek.ca>
-Content-Type: text/plain; charset=UTF-8
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>
+CC:     Arnd Bergmann <arnd@arndb.de>,
+        Bjorn Andersson <andersson@kernel.org>, arm <arm@kernel.org>,
+        <soc@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Andy Gross <agross@kernel.org>,
+        "Olof Johansson" <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        "Bagas Sanjaya" <bagasdotme@gmail.com>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Dawei Li <set_pte_at@outlook.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Naman Jain <quic_namajain@quicinc.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        "Yang Li" <yang.lee@linux.alibaba.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        <coresight@lists.linaro.org>,
+        "Mathieu Poirier" <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        "Arnaldo Carvalho de Melo" <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Jiri Olsa <jolsa@kernel.org>,
+        Namhyung Kim <namhyung@kernel.org>,
+        <linux-perf-users@vger.kernel.org>,
+        John Garry <john.g.garry@oracle.com>,
+        Will Deacon <will@kernel.org>,
+        James Clark <james.clark@arm.com>
+References: <20230126163008.3676950-1-andersson@kernel.org>
+ <cdcff86c-77fe-4c5d-b8e8-58b815b9e969@app.fastmail.com>
+ <20230130222412.t2tkkhqfep2orxf2@builder.lan>
+ <9b680581-0956-4188-9af9-af06b625c001@app.fastmail.com>
+ <Y/VzRJzxkPm3l0Km@leoy-yangtze.lan>
+ <4704856d-eac6-9088-4523-3739e04d3fcd@quicinc.com>
+ <Y/YHByya0NvoU+If@leoy-yangtze.lan>
+ <4e8effc6-396a-84af-856f-c820f62d8b16@quicinc.com>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <4e8effc6-396a-84af-856f-c820f62d8b16@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: esgV4nM2M4qDuIcpc9A_OzmZPMEQp9d7
+X-Proofpoint-GUID: esgV4nM2M4qDuIcpc9A_OzmZPMEQp9d7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-13_07,2023-03-13_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 mlxscore=0 suspectscore=0 phishscore=0 bulkscore=0
+ priorityscore=1501 mlxlogscore=999 spamscore=0 clxscore=1011
+ lowpriorityscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2303130132
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 24.02.2023 16:04, Jonathan Marek wrote:
-> This won't work because a2xx freedreno userspace expects to own all the perfcounters.
+On 2/27/2023 4:43 AM, Souradeep Chowdhury wrote:
 > 
-> This will break perfcounters for userspace, and when userspace isn't using perfcounters, this won't count correctly because userspace writes 0 to CP_PERFMON_CNTL at the start of every submit.
-
-Rob, would you be willing to take this without the a2xx bits? It
-should still be fine, except without devfreq. Not that we had
-any significant sort of scaling on a2xx before.
-
-Konrad
 > 
-> On 2/23/23 5:52 AM, Konrad Dybcio wrote:
->> Implement gpu_busy based on the downstream msm-3.4 code [1]. This
->> allows us to use devfreq on this old old old hardware!
+> On 2/22/2023 5:43 PM, Leo Yan wrote:
+>> Hi Souradeep,
 >>
->> [1] https://github.com/LineageOS/android_kernel_sony_apq8064/blob/lineage-16.0/drivers/gpu/msm/adreno_a2xx.c#L1975
+>> On Wed, Feb 22, 2023 at 04:46:07PM +0530, Souradeep Chowdhury wrote:
+>>> On 2/22/2023 7:13 AM, Leo Yan wrote:
+>>>> On Wed, Feb 15, 2023 at 04:05:36PM +0100, Arnd Bergmann wrote:
 >>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/adreno/a2xx_gpu.c | 26 ++++++++++++++++++++++++++
->>   1 file changed, 26 insertions(+)
+>> [...]
 >>
->> diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
->> index c67089a7ebc1..104bdf28cdaf 100644
->> --- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
->> @@ -481,6 +481,31 @@ a2xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
->>       return aspace;
->>   }
->>   +/* While the precise size of this field is unknown, it holds at least these three values.. */
->> +static u64 a2xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
->> +{
->> +    u64 busy_cycles;
->> +
->> +    /* Freeze the counter */
->> +    gpu_write(gpu, REG_A2XX_CP_PERFMON_CNTL, PERF_STATE_FREEZE);
->> +
->> +    busy_cycles = gpu_read64(gpu, REG_A2XX_RBBM_PERFCOUNTER1_LO);
->> +
->> +    /* Reset the counter */
->> +    gpu_write(gpu, REG_A2XX_CP_PERFMON_CNTL, PERF_STATE_RESET);
->> +
->> +    /* Re-enable the performance monitors */
->> +    gpu_rmw(gpu, REG_A2XX_RBBM_PM_OVERRIDE2,
->> +        A2XX_RBBM_PM_OVERRIDE2_DEBUG_PERF_SCLK_PM_OVERRIDE,
->> +        A2XX_RBBM_PM_OVERRIDE2_DEBUG_PERF_SCLK_PM_OVERRIDE);
->> +    gpu_write(gpu, REG_A2XX_RBBM_PERFCOUNTER1_SELECT, 1);
->> +    gpu_write(gpu, REG_A2XX_CP_PERFMON_CNTL, PERF_STATE_ENABLE);
->> +
->> +    *out_sample_rate = clk_get_rate(gpu->core_clk);
->> +
->> +    return busy_cycles;
->> +}
->> +
->>   static u32 a2xx_get_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
->>   {
->>       ring->memptrs->rptr = gpu_read(gpu, REG_AXXX_CP_RB_RPTR);
->> @@ -502,6 +527,7 @@ static const struct adreno_gpu_funcs funcs = {
->>   #if defined(CONFIG_DEBUG_FS) || defined(CONFIG_DEV_COREDUMP)
->>           .show = adreno_show,
->>   #endif
->> +        .gpu_busy = a2xx_gpu_busy,
->>           .gpu_state_get = a2xx_gpu_state_get,
->>           .gpu_state_put = adreno_gpu_state_put,
->>           .create_address_space = a2xx_create_address_space,
+>>>>> If the possible use is purely for saving some state across
+>>>>> a reboot, as opposed to other events, I wonder if there is
+>>>>> a good way to integrate it into the fs/pstore/ code, which
+>>>>> already has a way to multiplex various kinds of input (log
+>>>>> buffer, ftrace call chain, userspace strings, ...) into
+>>>>> various kinds of persistent buffers (sram, blockdev, mtd,
+>>>>> efivars, ...) with the purpose of helping analyze the
+>>>>> state after a reboot.
+>>>>
+>>>> Good point!
+>>>>
+>>>> I understand pstore/ramoops is somehow like a sink which routes the
+>>>> tracing data (software tracing data but not hadware tracing data) to
+>>>> persistent memory.  This is why we also can route these software
+>>>> tracing data to STM (hardware sink!).
+>>>>
+>>>> Seems to me, Arnd suggests to connect two sinks between DCC and
+>>>> pstore (to persistent memory).  But I cannot give an example code in
+>>>> kernel for doing this way, sorry if I miss something.
+>>>>
+>>>> Essentially, a good user case is to keep a persistent memory for the
+>>>> tracing data, then after rebooting cycle we can retrieve the tracing
+>>>> data via user space interface (like sysfs node).
+>>>
+>>> Hi Leo/Arnd,
+>>>
+>>> Just wanted to let you know that the justification of not using 
+>>> PStore was
+>>> already given in the version 1 of this patch series as below
+>>>
+>>> https://lore.kernel.org/linux-arm-msm/ab30490c016f906fd9bc5d789198530b@codeaurora.org/#r
+>>>
+>>> PStore/Ramoops only persists across warm-reboots which is present for 
+>>> chrome
+>>> devices but not for android ones.
 >>
+>> Thanks for the info.  Just remind a subtle difference of reboots.
+>>
+>> Besides warm reboot, kernel can reboot system after panic (see kernel
+>> command line option `panic`) and watchdog can reboot the system as well.
+>>
+>> Even though Android doesn't support warm reboot, system still can reboot
+>> on panic or by watchdog (in particular after bus lockup), pstore/ramoops
+>> also can support these cases.
+> 
+> 
+> So for the SoCs that doesn't support warm reboots, the DDR memory is non
+> persistent across panics or watchdog bites in which case the 
+> PStore/Ramoops cannot be of use.
+> 
+> 
+>>
+>>> Also the dcc_sram contents can
+>>> also be collected by going for a software trigger after loading the 
+>>> kernel
+>>> and the dcc_sram is parsed to get the register values with the
+>>> opensource parser as below
+>>>
+>>> https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+>>
+>> To be clear, current driver is fine for me (TBH, I didn't spend much
+>> time to read it but it's very neat after quickly went through it), I
+>> just share some info in case it's helpful for the discussion.
+
+
+What is the conclusion here? Can we pick up the DCC now if we rebase to 
+the latest tree? It seems so far response here is that driver is fine 
+as-is and it can be included without any changes. I want this driver 
+discussion to be concluded since we are trying to submit it for more 
+than 23 months (as Bjorn counted :) ).
+
+---Trilok Soni
+
