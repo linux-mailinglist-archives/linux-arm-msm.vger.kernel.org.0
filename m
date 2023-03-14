@@ -2,116 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B95436BA381
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 00:24:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F6376BA3D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 00:58:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229616AbjCNXYB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 19:24:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37396 "EHLO
+        id S230282AbjCNX56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 19:57:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbjCNXYA (ORCPT
+        with ESMTP id S230250AbjCNX55 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 19:24:00 -0400
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE7CD298D7;
-        Tue, 14 Mar 2023 16:23:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678836238; x=1710372238;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=9JSluFsQgkYA1CSEXZw29hUEPKHlRuKNC1VLjY8g/5I=;
-  b=XPNranuZ1mISccNUwK/M1OIapBhPFta4we665n9K/S9Ju3T6u8ojIPkU
-   pqlJxDRxj2gVcyaFW4/yyHMy+6spSGLO86ccFmjYr41dlBiqYJ1UUbceC
-   4chcB4QkQKoRM+8UNyxGA3gYCT5RtcgVLY8zr7W62faNFzNppj3cOEDPU
-   EajgV7P/YwfMZBrRCkEHEdeGlN2KkvTCIr/OX6A7+qKg7nemiPKtrA9BM
-   N2bVXSDE9aoe9T+OktBj+jKL7a/zMe2Ty8M+pgU3DUGqFyzpJu62jFFAD
-   XByscWU2wrHfl/B0z7NoJKO6kyzFtUJWIXaNLzSQNteq1EcO1vXaEfchJ
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10649"; a="321410900"
-X-IronPort-AV: E=Sophos;i="5.98,261,1673942400"; 
-   d="scan'208";a="321410900"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2023 16:23:57 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10649"; a="789560177"
-X-IronPort-AV: E=Sophos;i="5.98,261,1673942400"; 
-   d="scan'208";a="789560177"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by fmsmga002.fm.intel.com with ESMTP; 14 Mar 2023 16:23:54 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pcDzm-0007GC-0h;
-        Tue, 14 Mar 2023 23:23:54 +0000
-Date:   Wed, 15 Mar 2023 07:23:28 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
-        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        Komal Bajaj <quic_kbajaj@quicinc.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 4/5] soc: qcom: Add LLCC support for multi channel DDR
-Message-ID: <202303150713.cMgW2Qnu-lkp@intel.com>
-References: <20230313124040.9463-5-quic_kbajaj@quicinc.com>
+        Tue, 14 Mar 2023 19:57:57 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ECE95AB4B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 16:57:55 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id r27so22171655lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 16:57:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678838273;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aN4RFzxPl53NEPH6mcAZ76PnFwWs2sCpg6jdulGDfz4=;
+        b=p1kdN9n8iQ66a3wqyEKOARChYxLd6XFWH2SzWccJluze2vB/0Ng8lfv78xIyfylnIZ
+         iKrjwojzdeICtwuyIivQkme62hqmnZWd8MXSTz9xPv0zom/WDvuUcYmc66W5S/XsRWEs
+         FDQtG67SYZxUcslXIMGn9OW0ga+QJV/i+kbzsM92edJxw0zpRxJ7pWlnEEgAvGRGPjhJ
+         R47yn8w/UexDHdWDfnEcx4rRmFlMewF6w19+VljVv03JnR2ORT3z5TD2uk2qUzbJE04r
+         NsZ0v6KiouFi6soYloc+yZ3om7hc5Jfb+hxGPuP5slR84IFoB7P0lzhvZNM23OaPO4Rr
+         rZIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678838273;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aN4RFzxPl53NEPH6mcAZ76PnFwWs2sCpg6jdulGDfz4=;
+        b=64thIbA73x3RXj4v4FXH2WiydgixARMDiLUcnpzSmM204W+r2SxCRbwL3Gt6eB1uSD
+         QVdOYasSPZeaM4JZNrur9HFI6XrD4VkrvjaO5JGpjEJsHynUS8JjLObbYGtzuMCf4PiE
+         WfFMF3rQ9qMdP4DMb4AsZkhhvvGIl7g54ZtigMGbhNUBa1o53Dq9ErY8bg4j6zdUYQMA
+         GWL8U8WiPaQrJ2f6tu7MwZemam8SvjDEfm3/KWR2dr5SIgD+8g4pcoNIf8crjRxvD461
+         hUkz/5KkwLqiGy68VOffGnU/pSjhijMUNect4wNbEsKeXNReTfn3k4/KgVuUZCG5yqY+
+         2/mA==
+X-Gm-Message-State: AO0yUKVmXlSwNo7fVhN9LHeow5YesSTD94Tvg8DanB61Zvz6Vd63Ly5f
+        DfzE+j7hGYEkNX85yo/PmQLsEA==
+X-Google-Smtp-Source: AK7set+puZ2tGimAgVlxw/q4UwXqtRXPDbxxa0kHDBZ0r/f0xE9gPf1dE+rK3zKk05T0XDNH8EwL8w==
+X-Received: by 2002:a05:6512:408:b0:4dc:65c0:c74e with SMTP id u8-20020a056512040800b004dc65c0c74emr1385832lfk.29.1678838273627;
+        Tue, 14 Mar 2023 16:57:53 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id t16-20020ac24c10000000b004d4d7fb0e07sm585254lfq.216.2023.03.14.16.57.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Mar 2023 16:57:53 -0700 (PDT)
+Message-ID: <adb3a64f-2542-6123-4306-3ed6eac928dc@linaro.org>
+Date:   Wed, 15 Mar 2023 00:57:51 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230313124040.9463-5-quic_kbajaj@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
-        SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 12/15] arm64: dts: qcom: sm6375: Introduce MPM support
+To:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230303-topic-sm6375_features0_dts-v1-0-8c8d94fba6f0@linaro.org>
+ <20230303-topic-sm6375_features0_dts-v1-12-8c8d94fba6f0@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230303-topic-sm6375_features0_dts-v1-12-8c8d94fba6f0@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Komal,
 
-Thank you for the patch! Yet something to improve:
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v6.3-rc2 next-20230314]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+On 3.03.2023 22:58, Konrad Dybcio wrote:
+> Add a node for MPM and wire it up on consumers that use it. This also
+> fixes a very bad and sad assumption I made when initially porting this
+> SoC that the downstream MPM-TLMM mappings were 1-1. That apparently
+> changed some time ago, so with this patch the MPM consumers will actually
+> be hooked up to the correct interrupt lines.
+> 
+> Fixes: 59d34ca97f91 ("arm64: dts: qcom: Add initial device tree for SM6375")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+As agreed with Krzysztof offline, this one is a no-go.
+Awaiting resolution on RPM MSG RAM bindings.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Komal-Bajaj/soc-qcom-llcc-Refactor-llcc-driver-to-support-multiple-configuration/20230313-204310
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20230313124040.9463-5-quic_kbajaj%40quicinc.com
-patch subject: [PATCH v2 4/5] soc: qcom: Add LLCC support for multi channel DDR
-config: mips-randconfig-r021-20230312 (https://download.01.org/0day-ci/archive/20230315/202303150713.cMgW2Qnu-lkp@intel.com/config)
-compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project 67409911353323ca5edf2049ef0df54132fa1ca7)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install mips cross compiling tool for clang build
-        # apt-get install binutils-mips-linux-gnu
-        # https://github.com/intel-lab-lkp/linux/commit/fe14182092383680f24bc88d81d199261453fa71
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Komal-Bajaj/soc-qcom-llcc-Refactor-llcc-driver-to-support-multiple-configuration/20230313-204310
-        git checkout fe14182092383680f24bc88d81d199261453fa71
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=mips olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=mips SHELL=/bin/bash
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303150713.cMgW2Qnu-lkp@intel.com/
-
-All errors (new ones prefixed by >>, old ones prefixed by <<):
-
->> ERROR: modpost: "qcom_scm_io_readl" [drivers/soc/qcom/llcc-qcom.ko] undefined!
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+Konrad
+>  arch/arm64/boot/dts/qcom/sm6375.dtsi | 32 ++++++++++++++++++++++++++------
+>  1 file changed, 26 insertions(+), 6 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+> index 94bb373f8d97..ecb654357288 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+> @@ -315,6 +315,7 @@ CPU_PD7: power-domain-cpu7 {
+>  
+>  		CLUSTER_PD: power-domain-cpu-cluster0 {
+>  			#power-domain-cells = <0>;
+> +			power-domains = <&wakegic>;
+>  			domain-idle-states = <&CLUSTER_SLEEP_0>;
+>  		};
+>  	};
+> @@ -633,7 +634,7 @@ tlmm: pinctrl@500000 {
+>  			reg = <0 0x00500000 0 0x800000>;
+>  			interrupts = <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH>;
+>  			gpio-ranges = <&tlmm 0 0 157>;
+> -			/* TODO: Hook up MPM as wakeup-parent when it's there */
+> +			wakeup-parent = <&wakegic>;
+>  			interrupt-controller;
+>  			gpio-controller;
+>  			#interrupt-cells = <2>;
+> @@ -755,7 +756,7 @@ spmi_bus: spmi@1c40000 {
+>  			      <0 0x01c0a000 0 0x26000>;
+>  			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+>  			interrupt-names = "periph_irq";
+> -			interrupts = <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupts-extended = <&wakegic 86 IRQ_TYPE_LEVEL_HIGH>;
+>  			qcom,ee = <0>;
+>  			qcom,channel = <0>;
+>  			#address-cells = <2>;
+> @@ -791,6 +792,25 @@ rpm_msg_ram: sram@45f0000 {
+>  			reg = <0 0x045f0000 0 0x7000>;
+>  		};
+>  
+> +		wakegic: interrupt-controller@45f01b8 {
+> +			compatible = "qcom,mpm";
+> +			reg = <0 0x045f01b8 0 0x1000>;
+> +			interrupts = <GIC_SPI 197 IRQ_TYPE_EDGE_RISING>;
+> +			mboxes = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_SMP2P>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +			#power-domain-cells = <0>;
+> +			interrupt-parent = <&intc>;
+> +			qcom,mpm-pin-count = <96>;
+> +			qcom,mpm-pin-map = <5 296>,  /* Soundwire wake_irq */
+> +					   <12 422>, /* DWC3 ss_phy_irq */
+> +					   <86 183>, /* MPM wake, SPMI */
+> +					   <89 314>, /* TSENS0 0C */
+> +					   <90 315>, /* TSENS1 0C */
+> +					   <93 164>, /* DWC3 dm_hs_phy_irq */
+> +					   <94 165>; /* DWC3 dp_hs_phy_irq */
+> +		};
+> +
+>  		sram@4690000 {
+>  			compatible = "qcom,rpm-stats";
+>  			reg = <0 0x04690000 0 0x400>;
+> @@ -1185,10 +1205,10 @@ usb_1: usb@4ef8800 {
+>  					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+>  			assigned-clock-rates = <19200000>, <133333333>;
+>  
+> -			interrupts = <GIC_SPI 302 IRQ_TYPE_LEVEL_HIGH>,
+> -				     <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>,
+> -				     <GIC_SPI 93 IRQ_TYPE_LEVEL_HIGH>,
+> -				     <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupts-extended = <&intc GIC_SPI 302 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&wakegic 12 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&wakegic 93 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&wakegic 94 IRQ_TYPE_LEVEL_HIGH>;
+>  			interrupt-names = "hs_phy_irq",
+>  					  "ss_phy_irq",
+>  					  "dm_hs_phy_irq",
+> 
