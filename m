@@ -2,141 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EA936B9B23
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 17:19:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B534B6B989C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 16:12:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231253AbjCNQS5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 12:18:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47234 "EHLO
+        id S231547AbjCNPMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 11:12:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231162AbjCNQST (ORCPT
+        with ESMTP id S231308AbjCNPMV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 12:18:19 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC0ECB371D;
-        Tue, 14 Mar 2023 09:17:42 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id r29so6855425wra.13;
-        Tue, 14 Mar 2023 09:17:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678810661;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hKTAoz/5c2gh8Y+1xcGszVL+VPGe5qIqtDhWxElzHg8=;
-        b=A5QGX8g9qQHcZkkrcXMDsdj7A9cZmBMtVmbBwkVTk60r6OctUe5QoRW20dNyop4WVQ
-         YtLS0ZcqTYuR1ABV7ZpJH3/Pdm8IgAfWdFzB/usawxLOF8dtCK0vHHBtjcdDQS1H+NnJ
-         LO/6QnazNKOsKlnOcMIp4O/P23DYUaV6Dk43savUOfuwIcmoRffjGEhxlhgr6hqmT0DQ
-         czXSPywGk5chD6etCr6asQ3uoITHJZo0Dv5mqdkE4eJgp4Y7n1kTInqlr2Ppisek9jAY
-         MNxO3rHz/oqxF7VPoeL0iWi//D5S49ti4Vewd7XA3Xq24ivCGCT6gTnczzNmYiv/ToCo
-         GW5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678810661;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hKTAoz/5c2gh8Y+1xcGszVL+VPGe5qIqtDhWxElzHg8=;
-        b=ixn7F8YHpGDw0ZZWG0i2NlZ014c4rrlI8YOlaY3Ctndw6TFHkIQY1HxJo7FAUWvUpA
-         Sp1NVmCJ1TcsRVTUyIbJ/oXZ5R6WyXsYtf9x6lz/bccKY552CO/z2AStNAXR4PYKyS0A
-         JEBxDQTxpToX5/4XTf1GKFXz8/k43oKHDuDy/MNsawCIZVQH8UvncO6k+abkjWoavAib
-         VRQhJvFP/Ig0ZCeJ8Wb9VnhC8xNSyKNNTMpwfwAyYuW9SP/mMAWgEXiu8eIWU0bgwP9Z
-         TsorZCjjafKlRXaCiXJsAYDkXq7a3uhdSmWlo8pddDjYE82d1no/cJPOU4PqLfBLrH8H
-         fGsg==
-X-Gm-Message-State: AO0yUKWTuAwIvF5Q3nUxUtcxuJ0yXuTbkK5uwVZdK6WEOQ4ALQtJDlWm
-        Et5ezd1XTDw2OH8yPHcxLKs=
-X-Google-Smtp-Source: AK7set+ph3aBjOKKtAXH2OiXBAVPuXd2TznYURmQDMIGFuquVDB5MaS//G76s78xOLPrdTOUHvSofA==
-X-Received: by 2002:adf:fe49:0:b0:2cf:e645:aa60 with SMTP id m9-20020adffe49000000b002cfe645aa60mr3923843wrs.19.1678810661174;
-        Tue, 14 Mar 2023 09:17:41 -0700 (PDT)
-Received: from localhost.localdomain (93-34-89-197.ip49.fastwebnet.it. [93.34.89.197])
-        by smtp.googlemail.com with ESMTPSA id a16-20020a5d4570000000b002c5539171d1sm2426821wrc.41.2023.03.14.09.17.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 09:17:40 -0700 (PDT)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Tue, 14 Mar 2023 11:12:21 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0444685B2A;
+        Tue, 14 Mar 2023 08:12:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3DB65617E0;
+        Tue, 14 Mar 2023 15:12:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C66EC433D2;
+        Tue, 14 Mar 2023 15:12:16 +0000 (UTC)
+Date:   Tue, 14 Mar 2023 11:12:13 -0400
+From:   Steven Rostedt <rostedt@goodmis.org>
+To:     "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc:     linux-trace-kernel@vger.kernel.org,
+        Heinz Wiesinger <pprkut@slackware.com>, andersson@kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Lee Jones <lee@kernel.org>,
-        linux-leds@vger.kernel.org
-Subject: [net-next PATCH v3 14/14] arm: mvebu: dt: Add PHY LED support for 370-rd WAN port
-Date:   Tue, 14 Mar 2023 11:15:16 +0100
-Message-Id: <20230314101516.20427-15-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230314101516.20427-1-ansuelsmth@gmail.com>
-References: <20230314101516.20427-1-ansuelsmth@gmail.com>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_rjendra@quicinc.com, quic_saipraka@quicinc.com,
+        quic_sibis@quicinc.com
+Subject: Re: [PATCH] bootconfig: Fix testcase to increase max node
+Message-ID: <20230314111213.08f33839@gandalf.local.home>
+In-Reply-To: <167871576880.783280.2390717518955954275.stgit@devnote2>
+References: <167871576880.783280.2390717518955954275.stgit@devnote2>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Andrew Lunn <andrew@lunn.ch>
+On Mon, 13 Mar 2023 22:56:09 +0900
+"Masami Hiramatsu (Google)" <mhiramat@kernel.org> wrote:
 
-The WAN port of the 370-RD has a Marvell PHY, with one LED on
-the front panel. List this LED in the device tree.
+> @@ -87,10 +88,16 @@ xfail grep -i "error" $OUTFILE
+>  
+>  echo "Max node number check"
+>  
+> -echo -n > $TEMPCONF
+> -for i in `seq 1 1024` ; do
+> -   echo "node$i" >> $TEMPCONF
 
-Set the LED default state to "keep" to not change any blink rule
-set by default.
+Do you need this extra file?
 
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- arch/arm/boot/dts/armada-370-rd.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+> -done
+> +cat > $AWKFILE << EOF
+> +BEGIN {
+> +  for (i = 0; i < 26; i += 1)
+> +      printf("%c\n", 65 + i % 26)
+> +  for (i = 26; i < 8192; i += 1)
+> +      printf("%c%c%c\n", 65 + i % 26, 65 + (i / 26) % 26, 65 + (i / 26 / 26))
+> +}
+> +EOF
+> +awk -f "$AWKFILE" > $TEMPCONF
 
-diff --git a/arch/arm/boot/dts/armada-370-rd.dts b/arch/arm/boot/dts/armada-370-rd.dts
-index be005c9f42ef..ccd4699b219f 100644
---- a/arch/arm/boot/dts/armada-370-rd.dts
-+++ b/arch/arm/boot/dts/armada-370-rd.dts
-@@ -20,6 +20,7 @@
- /dts-v1/;
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/interrupt-controller/irq.h>
-+#include <dt-bindings/leds/common.h>
- #include <dt-bindings/gpio/gpio.h>
- #include "armada-370.dtsi"
- 
-@@ -135,6 +136,19 @@ &mdio {
- 	pinctrl-names = "default";
- 	phy0: ethernet-phy@0 {
- 		reg = <0>;
-+		leds {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			led@0 {
-+				reg = <0>;
-+				label = "WAN";
-+				color = <LED_COLOR_ID_WHITE>;
-+				function = LED_FUNCTION_LAN;
-+				function-enumerator = <1>;
-+				default-state = "keep";
-+			};
-+		};
- 	};
- 
- 	switch: switch@10 {
--- 
-2.39.2
+Couldn't the above just be:
+
+awk '
+	BEGIN {
+		for (i = 0; i < 26; i += 1)
+			printf("%c\n", 65 + i % 26)
+		for (i = 26; i < 8192; i += 1)
+			printf("%c%c%c\n", 65 + i % 26, 65 + (i / 26) % 26, 65 + (i / 26 / 26))
+	}
+' > $TEMPCONF
+
+and not need the extra file?
+
+-- Steve
+
+
+>  xpass $BOOTCONF -a $TEMPCONF $INITRD
+>  
+>  echo "badnode" >> $TEMPCONF
 
