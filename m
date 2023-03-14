@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E607A6B939B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 13:20:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 944376B93A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 13:21:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231342AbjCNMUw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 08:20:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58758 "EHLO
+        id S231928AbjCNMUz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 08:20:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232141AbjCNMT3 (ORCPT
+        with ESMTP id S232200AbjCNMUA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 08:19:29 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02353A1015
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:15:41 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id x17so3600202lfu.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:15:40 -0700 (PDT)
+        Tue, 14 Mar 2023 08:20:00 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36072A17D9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:15:49 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id r27so19706056lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:15:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678796064;
+        d=linaro.org; s=google; t=1678796066;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1P1pYiyEYMVUL7yAvgwa0bBv+0t1+WV+M8Z/f6qqjH0=;
-        b=Wj48vVXbGkSyiDgbqj/+GLMCeSmwtEdP9xLi1GDEjC0foSiirrqPTM8MmurLYFDOa1
-         8V9y12UczeF8AqE4scC7rXbILCZ5Ag5/dA7USPab4qedLSSF4eq28dm0Ug0Cv3xxtULe
-         heYmPh4yyncyXr5h4fAv9RZQlzbyN1XxBxKQyKVLju0NytI5lZw6ITEUP2Xr71RctWPM
-         hJ2iC9BhILPgpOfdgBuywNPkpSY1MmfbhioRZ4wdnlOXN65nC1adDrwvi+Stj7l0ETFL
-         1pBh0Ys+H5w2eM6x9TW4L4vBGRkzUyJQXtfhUR+iItTz+GLWhcrQwOlZtXxYg9y3Si1H
-         eWkw==
+        bh=yeylFVo7UbFotxXKN5Jk9AW63WMsXe+ARjqLamdFW7w=;
+        b=nlnvdtT0jYFDekSBiKe7kjUgKmeWkEU7n0KtJb+UJLMZg1jzoGWP3xgtTelAmnACbh
+         AA/ExRjWQucoaj8aSZF2s0Csf1EoU2R1WE/e958Uj2/o+Mz4eEucxi8rxcCUljmRLhoZ
+         F1HDrxg7hUqEUYLPhNivl5i1idRb+Qlxeh3HIahd8uQKoKq/Toz+sWV6UuEJxZg3E1nc
+         N9aaFO48cremURTz8R2Fm7ffMf//BthoMS2ObeHCSOy3O8dakc4RXC5mBOP/bkBldHrB
+         crA1RnK7faaSzYwIjcOOcEco4q8JmHmX6ajsWPtbuvh5ku9HjIr3+bkM0nE4MeuLFBEJ
+         DT/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678796064;
+        d=1e100.net; s=20210112; t=1678796066;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1P1pYiyEYMVUL7yAvgwa0bBv+0t1+WV+M8Z/f6qqjH0=;
-        b=3fdEwHf1JDaeR56QC7eUPRe+obj9v6o0S0fupDcfVIiVr7LLIbnaJyUnzroBR1sx1W
-         Jdl6V37ZoIm3mUJ4ZiA7n1uZw/Uo7g3wvZfVq9SJMBP95/CeZsMd+GJTOoYbWHz07UwB
-         iwvvoinw8ZUVhpBJW61IJucrJojKXGGMD5x4WphbZFgKbuwDDtS1xvpnoJsWNkHsjUqB
-         1Gyagrwe5HeuRFxOedCw6n4UgCcRHcZV8yqrdwTEuDEHDkY/YlSGu0WGMtKHPyZVr7vC
-         Bp/Mto3W21tYEnc57p+CyIPiFevBf5rcnnswLgd8mQIwnXVeFSUaSJ8gC4OB5ZUzNTH2
-         uwog==
-X-Gm-Message-State: AO0yUKWX56My6QiPU2Xh5rSTpWZl9Y6NkcAUwei8Ud20cHN2G/XmQhMm
-        jYq3Ks8QtokH2Ef/Ne7mZvazNw==
-X-Google-Smtp-Source: AK7set+I8lQgNzPkz4L9M7HgnX9W/1AiS8lb8kOzmpsng+dz3rICh2GeR0Q7ovbC8CBNyaTNzhVZ5g==
-X-Received: by 2002:ac2:5596:0:b0:4e8:49fa:ec1d with SMTP id v22-20020ac25596000000b004e849faec1dmr755500lfg.66.1678796064168;
-        Tue, 14 Mar 2023 05:14:24 -0700 (PDT)
+        bh=yeylFVo7UbFotxXKN5Jk9AW63WMsXe+ARjqLamdFW7w=;
+        b=g8JwWLMEiX989oMtyNzzJB4Shjt1WScXcrkCar40TUHs3C4I8BWLHDVl2NLUg2QRU7
+         CRBTINqVRbjiFJrlquNkL7vOulUx1a9Ai9qfkOTGJP7qLQLckZYT8FQAfi5Ajg6L3wcS
+         mlas1dIzDv5aZf3xSmK/k27TE7NOKKXvd/Kw5+sQhmxFND1+eBcK9Odgc1yH1CRSaOIv
+         +Kqi29eXK5qxSQv1/O+Aj1jc5TYPlzaD1kPCPsmvB7wqGCaLfYnz1sW/S3FpWrKUzWnI
+         rW6JU9ieI984ruIqsCYpUrt+G52Oo+x8TRNTDdvcbwL7ewF5UkwFeC3f8GlgUptvyrQq
+         Fnew==
+X-Gm-Message-State: AO0yUKWhnnlfKr8XDixyfWaQW9nu+ZiUW5AMrDtM5wE0QhH303/415s1
+        cDqyq5oA/xr/4Tl8Q+VaRsxwDA==
+X-Google-Smtp-Source: AK7set83jGmoRhPfkqMbcEJHHm7krfEcVsYNn3fRI8hjQUMi1nyZZcK+S70SwgroH8ClftZB5Jk5Hg==
+X-Received: by 2002:ac2:446d:0:b0:4e4:b9b4:bf25 with SMTP id y13-20020ac2446d000000b004e4b9b4bf25mr748332lfl.68.1678796066123;
+        Tue, 14 Mar 2023 05:14:26 -0700 (PDT)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id s4-20020a19ad44000000b004dda87ecae3sm379058lfd.246.2023.03.14.05.14.22
+        by smtp.gmail.com with ESMTPSA id s4-20020a19ad44000000b004dda87ecae3sm379058lfd.246.2023.03.14.05.14.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 05:14:23 -0700 (PDT)
+        Tue, 14 Mar 2023 05:14:25 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 14 Mar 2023 13:13:47 +0100
-Subject: [PATCH v4 09/10] dt-bindings: display/msm: dsi-controller-main:
- Add SM6115
+Date:   Tue, 14 Mar 2023 13:13:48 +0100
+Subject: [PATCH v4 10/10] arm64: dts: qcom: sm6115: Use the correct DSI
+ compatible
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230307-topic-dsi_qcm-v4-9-54b4898189cb@linaro.org>
+Message-Id: <20230307-topic-dsi_qcm-v4-10-54b4898189cb@linaro.org>
 References: <20230307-topic-dsi_qcm-v4-0-54b4898189cb@linaro.org>
 In-Reply-To: <20230307-topic-dsi_qcm-v4-0-54b4898189cb@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -77,11 +77,11 @@ Cc:     Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
         Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1678796043; l=2294;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1678796043; l=835;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=SrFjrl3hjjd6jTZmTfeOIcB1iG8ZWHw//K7P30Y1IYE=;
- b=ilkdJdfqSf8IuJJOZxOWUoZY9G+1PFVahC6fWUEls2j/8BN3zw1uAzrxxAWELiTwTmpCpmmv3vqv
- FMBevoo8DD5DaJ+8WB/H2V5y+tC3QOcMI0Y1Qbqetx0EcahBejA4
+ bh=fTDJ/Pk/K83TEsz8nt+gatYoQ7InKrC5bjtKXy4Z9Sw=;
+ b=HhZ4vHeSq1k1zTiLWtKr3SD+hh+THRKo/3SDYCP8seyGUW6Irn5LUOqcX+223SewxioRXEQR3Uzk
+ jQn7R0qWCdG+pjWnvGDWgOMp24G1gVyrZyKTgLB39uI8m2Ev/nR7
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -94,62 +94,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a compatible for the DSI on SM6115.
+Use the non-deprecated, SoC-specific DSI compatible.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- .../devicetree/bindings/display/msm/dsi-controller-main.yaml   |  2 ++
- .../devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml      | 10 ++++++++--
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-index 94f4cdf88c95..d534451c8f7f 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-@@ -25,6 +25,7 @@ properties:
-               - qcom,sc7280-dsi-ctrl
-               - qcom,sdm660-dsi-ctrl
-               - qcom,sdm845-dsi-ctrl
-+              - qcom,sm6115-dsi-ctrl
-               - qcom,sm8150-dsi-ctrl
-               - qcom,sm8250-dsi-ctrl
-               - qcom,sm8350-dsi-ctrl
-@@ -351,6 +352,7 @@ allOf:
-           contains:
-             enum:
-               - qcom,sdm845-dsi-ctrl
-+              - qcom,sm6115-dsi-ctrl
-     then:
-       properties:
-         clocks:
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
-index 2491cb100b33..b9f83088f370 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
-@@ -40,7 +40,13 @@ patternProperties:
-     type: object
-     properties:
-       compatible:
--        const: qcom,dsi-ctrl-6g-qcm2290
-+        oneOf:
-+          - items:
-+              - const: qcom,sm6115-dsi-ctrl
-+              - const: qcom,mdss-dsi-ctrl
-+          - description: Old binding, please don't use
-+            deprecated: true
-+            const: qcom,dsi-ctrl-6g-qcm2290
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index fbd67d2c8d78..18c7eedff300 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -1219,7 +1219,7 @@ opp-384000000 {
+ 			};
  
-   "^phy@[0-9a-f]+$":
-     type: object
-@@ -114,7 +120,7 @@ examples:
-         };
- 
-         dsi@5e94000 {
--            compatible = "qcom,dsi-ctrl-6g-qcm2290";
-+            compatible = "qcom,sm6115-dsi-ctrl", "qcom,mdss-dsi-ctrl";
-             reg = <0x05e94000 0x400>;
-             reg-names = "dsi_ctrl";
+ 			mdss_dsi0: dsi@5e94000 {
+-				compatible = "qcom,dsi-ctrl-6g-qcm2290";
++				compatible = "qcom,sm6115-dsi-ctrl", "qcom,mdss-dsi-ctrl";
+ 				reg = <0x0 0x05e94000 0x0 0x400>;
+ 				reg-names = "dsi_ctrl";
  
 
 -- 
