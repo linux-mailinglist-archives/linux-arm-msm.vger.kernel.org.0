@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8374F6B972B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 15:05:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 73C176B9738
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 15:06:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231669AbjCNOE7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 10:04:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44658 "EHLO
+        id S232017AbjCNOGI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 10:06:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232558AbjCNOEu (ORCPT
+        with ESMTP id S231947AbjCNOF7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 10:04:50 -0400
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FC0199255;
-        Tue, 14 Mar 2023 07:04:21 -0700 (PDT)
+        Tue, 14 Mar 2023 10:05:59 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D557020069
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 07:05:52 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 2088920145;
-        Tue, 14 Mar 2023 15:04:19 +0100 (CET)
-Date:   Tue, 14 Mar 2023 15:04:15 +0100
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id DE01620184;
+        Tue, 14 Mar 2023 15:05:50 +0100 (CET)
+Date:   Tue, 14 Mar 2023 15:05:49 +0100
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Rob Clark <robdclark@gmail.com>,
@@ -38,57 +38,107 @@ Cc:     Rob Clark <robdclark@gmail.com>,
         Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 07/10] drm/msm/dsi: Remove custom DSI config handling
-Message-ID: <20230314140415.4aensrq6ntj3j25w@SoMainline.org>
+Subject: Re: [PATCH v4 06/10] drm/msm/dsi: Switch the QCM2290-specific
+ compatible to index autodetection
+Message-ID: <20230314140549.5fk4wroviqvknvfn@SoMainline.org>
 References: <20230307-topic-dsi_qcm-v4-0-54b4898189cb@linaro.org>
- <20230307-topic-dsi_qcm-v4-7-54b4898189cb@linaro.org>
- <20230314130522.wimbrf7d6lqwdbgz@SoMainline.org>
- <441030fa-afcb-8e5f-ea5a-f467d9d11937@linaro.org>
+ <20230307-topic-dsi_qcm-v4-6-54b4898189cb@linaro.org>
+ <20230314130439.nbarj2wsdf6ishmo@SoMainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <441030fa-afcb-8e5f-ea5a-f467d9d11937@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230314130439.nbarj2wsdf6ishmo@SoMainline.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-03-14 14:44:06, Konrad Dybcio wrote:
-> 
-> 
-> On 14.03.2023 14:05, Marijn Suijten wrote:
-> > On 2023-03-14 13:13:45, Konrad Dybcio wrote:
-> >> Now that the only user is handled by common code, remove the option to
-> >> specify custom handlers through match data.
-> >>
-> >> This is effectively a revert of commit:
-> >> 5ae15e76271 ("drm/msm/dsi: Allow to specify dsi config as pdata")
-> >>
-> >> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >> ---
-> [...]
-> >> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-> >> index 8772a3631ac1..91bdaf50bb1a 100644
-> >> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-> >> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-> >> @@ -65,8 +65,5 @@ struct msm_dsi_cfg_handler {
-> >>  
-> >>  const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor);
-> >>  
-> >> -/* Non autodetect configs */
-> >> -extern const struct msm_dsi_cfg_handler qcm2290_dsi_cfg_handler;
-> >> -
+On 2023-03-14 14:04:41, Marijn Suijten wrote:
+> On 2023-03-14 13:13:44, Konrad Dybcio wrote:
+> > Now that the logic can handle multiple sets of registers, move
+> > the QCM2290 to the common logic and mark it deprecated. This allows us
+> > to remove a couple of structs, saving some memory.
 > > 
-> > Probably the wrong `fixup!` commit: this should have been part of patch
-> > 6 where the struct is removed, not patch 7 (this patch).
-> Yeah, that's most likely what happened.. Does that warrant another resend?
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/dsi/dsi.c     |  5 +++--
+> >  drivers/gpu/drm/msm/dsi/dsi_cfg.c | 20 ++------------------
+> >  2 files changed, 5 insertions(+), 20 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
+> > index 31fdee2052be..f761973e4cba 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi.c
+> > @@ -4,7 +4,6 @@
+> >   */
+> >  
+> >  #include "dsi.h"
+> > -#include "dsi_cfg.h"
+> >  
+> >  bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi)
+> >  {
+> > @@ -174,7 +173,9 @@ static int dsi_dev_remove(struct platform_device *pdev)
+> >  
+> >  static const struct of_device_id dt_match[] = {
+> >  	{ .compatible = "qcom,mdss-dsi-ctrl", .data = NULL /* autodetect cfg */ },
+> > -	{ .compatible = "qcom,dsi-ctrl-6g-qcm2290", .data = &qcm2290_dsi_cfg_handler },
+> > +
+> > +	/* Deprecated, don't use */
+> > +	{ .compatible = "qcom,dsi-ctrl-6g-qcm2290", .data = NULL },
+> >  	{}
+> >  };
+> >  
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> > index 03d98cbcc978..29ccd755cc2e 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> > @@ -169,7 +169,8 @@ static const struct msm_dsi_config sdm845_dsi_cfg = {
+> >  	.bus_clk_names = dsi_v2_4_clk_names,
+> >  	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
+> >  	.io_start = {
+> > -		{ 0xae94000, 0xae96000 }, /* SDM845 / SDM670 / SC7180 */
+> > +		{ 0xae94000, 0xae96000 }, /* SDM845 / SDM670 */
+> > +		{ 0x5e94000 }, /* QCM2290 / SM6115 / SM6125 / SM6375 */
+> >  	},
+> >  };
+> >  
+> > @@ -203,17 +204,6 @@ static const struct msm_dsi_config sc7280_dsi_cfg = {
+> >  	},
+> >  };
+> >  
+> > -static const struct msm_dsi_config qcm2290_dsi_cfg = {
+> > -	.io_offset = DSI_6G_REG_SHIFT,
+> > -	.regulator_data = dsi_v2_4_regulators,
+> > -	.num_regulators = ARRAY_SIZE(dsi_v2_4_regulators),
+> > -	.bus_clk_names = dsi_v2_4_clk_names,
+> > -	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
+> > -	.io_start = {
+> > -		{ 0x5e94000 },
+> > -	},
+> > -};
+> > -
+> >  static const struct msm_dsi_host_cfg_ops msm_dsi_v2_host_ops = {
+> >  	.link_clk_set_rate = dsi_link_clk_set_rate_v2,
+> >  	.link_clk_enable = dsi_link_clk_enable_v2,
+> > @@ -304,9 +294,3 @@ const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor)
+> >  
+> >  	return cfg_hnd;
+> >  }
+> > -
+> > -/*  Non autodetect configs */
+> > -const struct msm_dsi_cfg_handler qcm2290_dsi_cfg_handler = {
+> > -	.cfg = &qcm2290_dsi_cfg,
+> > -	.ops = &msm_dsi_6g_v2_host_ops,
+> > -};
+> 
+> Should be removed from dsi_cfg.h, but you did that in patch 7 instead.
 
-For proper cleanliness it should have been... but maybe Dmitry can patch
-this up while applying?  In that case, at least have my:
+As discussed in patch 7 this could possibly be fixed up when Dmitry
+applies the series, rather than going through yet another resend... So
+have my r-b already just in case:
 
 Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
