@@ -2,144 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 610E76BA125
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 22:07:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AAFA16BA129
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 22:08:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229480AbjCNVHw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 17:07:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41506 "EHLO
+        id S229930AbjCNVI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 17:08:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbjCNVHw (ORCPT
+        with ESMTP id S229464AbjCNVI4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 17:07:52 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31D0243467
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 14:07:49 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32EL0w6Z010774;
-        Tue, 14 Mar 2023 21:07:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=xfs3BomODTH2nNbkDdLehVmjwhkRYstmxYqyNrCZbDE=;
- b=ItyDe77yPf2NIrBL0DRVXn66t+BZKoq3bMW91I50zmCMRXae5NGP10/D1di9N9NURXNM
- jEHQsvPq9be76f+XrBU/onY0l7YnNljdph7WZ+SpMg8IWgxn4+kS9E4bAwG8CAV0xSrd
- /4rTv+7YoMcOk5sX7hXtXKn3+YhvKXmE+zIY/q31yMo047SXcgXZ15n/GoWPArOOWZTh
- aB17oP6GXXsBSM79n4EqMsbu+w2grquS6hh9MM5wcELugTThPJy/8+ATGNycQfgdemjm
- pJ1NUMd/hia/gTh7386vu8wPo+A+updPabiWUihdw42BGUdM8epdT3LbZzDEpHAvkOqE zw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3paef8b48d-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Mar 2023 21:07:42 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32EL7ffY016437
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Mar 2023 21:07:41 GMT
-Received: from [10.110.64.241] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 14 Mar
- 2023 14:07:40 -0700
-Message-ID: <6254bcc7-fc29-d59d-a5da-9e7da47a12b9@quicinc.com>
-Date:   Tue, 14 Mar 2023 14:07:39 -0700
+        Tue, 14 Mar 2023 17:08:56 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F25613DCE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 14:08:53 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id p20so17944043plw.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 14:08:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678828132;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=g9Afvq2rE03umB9jzYmDgfACZhSPVHY7oqjJM7AVeLU=;
+        b=S+aBYA4OaqysHNuxbp1e+O/5hB1Ir4JsfC8eqDtlglOrZXKRdJiHYEQij5Idk/vvfd
+         2mUTOr3qX49+9RaPAV1ffvr45vt81oza/X1gZ6yMhSv5xPit4lZOMQtxmqjHwddx1dyQ
+         HXuxq0FaInqIPv8mtgWiaJl2/bYTZUcXddc6/rLmTtvJG8RzQRAkJUnwwYLlHDC+ueET
+         vz6QkZjW2Qf2hOYnfHSLhLxQbfFl6dnl0GTNJTPUaqRQi05pc4peEjHKVqATGx2snm6n
+         yL1a5QSv3Bm1VkftXh/4QGl7AVQ/BKn/SGKrO3hjw8sqP5GtIelEpmzVBoJWoBsWCBv3
+         yNCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678828132;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=g9Afvq2rE03umB9jzYmDgfACZhSPVHY7oqjJM7AVeLU=;
+        b=ai+79IgCROdEN5A67yddzqrtivbb+UC557LhMuDPFDufGs5skkz9qIn9eiI3tmz2pb
+         CPVDaIgomJkoYk1/lfBDJiojxu1iXjTF0g+rc3Psv0ZPZ5D33F/p0DpKaDCZWFSwKNwV
+         rPYir300muJ/5w8v76zo9eRL9eUDHHCdvfy585pJV/Sl53EE7il24G1bZrqgHunPOObx
+         3Ss8U+tmtxykUPivD1q7KcAgzV1WB0BtA1U1qpwEGa6pHU2FdjCRgqpPB3pGnpJtHagw
+         SENNjqMrPdR1Bf+FqIdpVEFSBNHOUFHoTVRM8m+/00OwVftwidOgdRvn5x54GUbnUfpW
+         VP3Q==
+X-Gm-Message-State: AO0yUKUzzpUa8DAms+JhYP7F/HmG0Cg3Rp9QjHLZj61S1uIk/p88PbOS
+        brCuk/jfsJLrMFhBrq+pEv4HgIi/oKHqdoBd+a0=
+X-Google-Smtp-Source: AK7set+XbqzOtGETP0+NT1OeYvKQO1910yxxR5CvJMUXIhLZ2mzV+RnFksbmOklPccPppPxE0hooUA==
+X-Received: by 2002:a17:902:c948:b0:1a0:7678:5e16 with SMTP id i8-20020a170902c94800b001a076785e16mr358428pla.67.1678828131977;
+        Tue, 14 Mar 2023 14:08:51 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c61:1acb:9af6:bd7f:78e7:7ae6])
+        by smtp.gmail.com with ESMTPSA id kl8-20020a170903074800b0019edc1b421asm2190150plb.163.2023.03.14.14.08.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Mar 2023 14:08:50 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski@linaro.org
+Subject: [PATCH 0/2] arm64: dts: qcom: Add Qualcomm RB2 board dts
+Date:   Wed, 15 Mar 2023 02:38:26 +0530
+Message-Id: <20230314210828.2049720-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v6 27/32] drm/msm/dpu: add support for wide planes
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230314153545.3442879-1-dmitry.baryshkov@linaro.org>
- <20230314153545.3442879-28-dmitry.baryshkov@linaro.org>
- <CAA8EJpqTT1BK5oDNbL=t8BMwVjK_swDdD-L4o2PZ2Zec09qSnQ@mail.gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpqTT1BK5oDNbL=t8BMwVjK_swDdD-L4o2PZ2Zec09qSnQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: cyffcLhICMPPrdY3AzpC4Dh29k6GdUjv
-X-Proofpoint-GUID: cyffcLhICMPPrdY3AzpC4Dh29k6GdUjv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-14_14,2023-03-14_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 adultscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0
- mlxscore=0 impostorscore=0 clxscore=1015 spamscore=0 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303140169
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add an initial device tree for Qualcomm RB2 board (see [1]).
+Currently it enables:
+    - eMMC via SDHC1,
+    - uSD card via SDHC2,
+    - RPM regulators,
+    - Debug UART (via micro USB port).
 
+Subsequent patchset(s) will add more peripherals like USB, etc.
 
-On 3/14/2023 8:41 AM, Dmitry Baryshkov wrote:
-> On Tue, 14 Mar 2023 at 17:36, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> It is possible to use multirect feature and split source to use the SSPP
->> to output two consecutive rectangles. This commit brings in this
->> capability to support wider screen resolutions.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  19 +++-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 127 +++++++++++++++++++---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |   4 +
->>   3 files changed, 133 insertions(+), 17 deletions(-)
->>
-> 
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->> index f52120b05b6e..494c1144075a 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> 
-> [...]
-> 
->> @@ -1016,21 +1026,58 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->>                  return -E2BIG;
->>          }
->>
->> +       fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
->> +
->>          max_linewidth = pdpu->catalog->caps->max_linewidth;
->> +       if (DPU_FORMAT_IS_UBWC(fmt))
->> +               max_linewidth /= 2;
-> 
-> I added this check and only after sending it caught my mind that this
-> check should not be applied in the non-multirec case. Please ignore
-> the series, I will resend it later.
+To get a successful boot run:
+    
+   $ cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/\
+    qrb4210-rb2.dtb > ./Image-adp.gz+dtb
 
-ack, will wait for the next rev
-> 
->>
->> -       /* check decimated source width */
->>          if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
->> -               DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
->> -                               DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
->> -               return -E2BIG;
->> -       }
->> +               if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
->> +                       DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
->> +                                       DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
->> +                       return -E2BIG;
->> +               }
->>
-> 
-> [skipped the rest]
-> 
+   $ mkbootimg --kernel ./Image-adp.gz+dtb \
+     --ramdisk ./some-initramfs-image.rootfs.img \
+     --output ./rb2-boot.img --pagesize 4096 \
+     --base 0x80000000 --cmdline 'SOME_CMDLINE'
+    
+   $ fastboot boot ./rb2-boot.img
+
+[1]. https://www.qualcomm.com/products/internet-of-things/industrial/industrial-automation/qualcomm-robotics-rb2-platform#Overview
+
+Bhupesh Sharma (2):
+  dt-bindings: arm: qcom: Document the  Qualcomm qrb4210-rb2 board
+  arm64: dts: qcom: Add base qrb4210-rb2 board dts
+
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts      | 337 ++++++++++++++++++
+ 3 files changed, 339 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+
+-- 
+2.38.1
+
