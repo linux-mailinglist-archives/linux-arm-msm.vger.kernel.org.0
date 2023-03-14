@@ -2,202 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 830356B8F4A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 11:09:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 35FA86B8F98
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 11:18:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230096AbjCNKJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 06:09:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55880 "EHLO
+        id S230222AbjCNKSN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 06:18:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230023AbjCNKJz (ORCPT
+        with ESMTP id S230372AbjCNKRt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 06:09:55 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C85AF92BC4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 03:09:45 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id s22so19254065lfi.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 03:09:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678788584;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qfP7OisdfBLXKLqUWZNkPQ3fDRBGJKSNwG4JFeeABvc=;
-        b=k5MXVulEA3k+OwHJPPjL9ag/mbJTQznJMLJ4PsbuL2HZ+ty9iU+CgQ/7GH2jKnobkY
-         6mPhvO+ZrrSnogUxkZrSlvos85iXIdoMybhMEpICMLHz62Epqc8bW35zFCKaoQp/F4VE
-         rBGqrdmq/g6ABvhb7ZqGkefzX96O83ON8rUDmYX9QPt+6MIVwWAUPSN3YaKDzzKiargK
-         b+cIjk20Q4xwTy5go6vu3EtKMqtR7aleqxukm5luYrZvRJp53joAZJB+R6AaR1PldyYb
-         7rXDaXtIwl88l3whCVI8kzY/b4T6JnvuS/RPFLtl3biqH4+ynSbkOajE+uBf8Qkv3yrt
-         fkEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678788584;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qfP7OisdfBLXKLqUWZNkPQ3fDRBGJKSNwG4JFeeABvc=;
-        b=F+j38DC/NehAMYmGrNlXX+4QJALx63xXOpcXQNpaOsh4dvegPXH9vjdr5u3MC0WSVG
-         k70P9yWxuolRD00oPAHKFy2fS0Xjko/m56P2olF0YupNFjEQ25NJh8MNOeW3Eo5+C8/R
-         1KN5Yuh2MQijaCYe2+FMUG+OxbO2IeXJ9qwZWJaShMfy61XoBCJfNMWMsAGztgvy43PC
-         QhIckO/PAVZqWGMd+Qt0Fdf7TFGguVu5ebpgWhWHdJSyrqQAd9F2ViBQfnWZ1E5dTYim
-         bTvSn2I1j9n3q5lcFbPctUDaxgBiNn8//6qWN508c2+mKEthWSi0JeQiEN7yub7DSdlx
-         BmIQ==
-X-Gm-Message-State: AO0yUKUFHuBnV6qCLcighw4LX+69JhnfpqXoWY+J84JUrAclDnSI7Tzm
-        VIlr4ww1XPbuC/NstMPpiE3xaQ==
-X-Google-Smtp-Source: AK7set+okIbof1RS3blXA94VZLZjC6cATnGSNNfyOzb9Em4KQWzJofbA8LFNppL6tyvYEUfDUaRiFw==
-X-Received: by 2002:ac2:51dc:0:b0:4dd:ad88:ba65 with SMTP id u28-20020ac251dc000000b004ddad88ba65mr554446lfm.67.1678788583902;
-        Tue, 14 Mar 2023 03:09:43 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id f11-20020ac2508b000000b004db511ccae6sm335695lfm.294.2023.03.14.03.09.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Mar 2023 03:09:43 -0700 (PDT)
-Message-ID: <426ca0fd-5119-7e3c-89ce-27590b11f63f@linaro.org>
-Date:   Tue, 14 Mar 2023 11:09:41 +0100
+        Tue, 14 Mar 2023 06:17:49 -0400
+Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.86.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C0E92F0C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 03:16:58 -0700 (PDT)
+Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
+ relay.mimecast.com with ESMTP with both STARTTLS and AUTH (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ uk-mta-262-n0HSWIblNNm6kDcCCrU-UQ-1; Tue, 14 Mar 2023 10:13:30 +0000
+X-MC-Unique: n0HSWIblNNm6kDcCCrU-UQ-1
+Received: from AcuMS.Aculab.com (10.202.163.6) by AcuMS.aculab.com
+ (10.202.163.6) with Microsoft SMTP Server (TLS) id 15.0.1497.47; Tue, 14 Mar
+ 2023 10:11:07 +0000
+Received: from AcuMS.Aculab.com ([::1]) by AcuMS.aculab.com ([::1]) with mapi
+ id 15.00.1497.047; Tue, 14 Mar 2023 10:11:07 +0000
+From:   David Laight <David.Laight@ACULAB.COM>
+To:     'Hans Verkuil' <hverkuil-cisco@xs4all.nl>,
+        'Laurent Pinchart' <laurent.pinchart@ideasonboard.com>,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>
+CC:     "tfiga@chromium.org" <tfiga@chromium.org>,
+        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
+        "mchehab@kernel.org" <mchehab@kernel.org>,
+        "ming.qian@nxp.com" <ming.qian@nxp.com>,
+        "shijie.qin@nxp.com" <shijie.qin@nxp.com>,
+        "eagle.zhou@nxp.com" <eagle.zhou@nxp.com>,
+        "bin.liu@mediatek.com" <bin.liu@mediatek.com>,
+        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+        "angelogioacchino.delregno@collabora.com" 
+        <angelogioacchino.delregno@collabora.com>,
+        "tiffany.lin@mediatek.com" <tiffany.lin@mediatek.com>,
+        "andrew-ct.chen@mediatek.com" <andrew-ct.chen@mediatek.com>,
+        "yunfei.dong@mediatek.com" <yunfei.dong@mediatek.com>,
+        "stanimir.k.varbanov@gmail.com" <stanimir.k.varbanov@gmail.com>,
+        "quic_vgarodia@quicinc.com" <quic_vgarodia@quicinc.com>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "andersson@kernel.org" <andersson@kernel.org>,
+        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
+        "ezequiel@vanguardiasur.com.ar" <ezequiel@vanguardiasur.com.ar>,
+        "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
+        "daniel.almeida@collabora.com" <daniel.almeida@collabora.com>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-mediatek@lists.infradead.org" 
+        <linux-mediatek@lists.infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-rockchip@lists.infradead.org" 
+        <linux-rockchip@lists.infradead.org>,
+        "kernel@collabora.com" <kernel@collabora.com>
+Subject: RE: [RFC 2/4] media: videobuf2: Replace bufs array by a list
+Thread-Topic: [RFC 2/4] media: videobuf2: Replace bufs array by a list
+Thread-Index: AQHZVddlMXgQQm2s8UOyg8hXE6z+xq75Vx6AgACikACAABQ/MA==
+Date:   Tue, 14 Mar 2023 10:11:07 +0000
+Message-ID: <dc04d48e34ed40e58f43badd001a81d0@AcuMS.aculab.com>
+References: <20230313135916.862852-1-benjamin.gaignard@collabora.com>
+ <20230313135916.862852-3-benjamin.gaignard@collabora.com>
+ <20230313181155.GC22646@pendragon.ideasonboard.com>
+ <86df05244d974416903e919d387a0a0b@AcuMS.aculab.com>
+ <e704b505-86d8-c6f2-8546-adccdab72622@xs4all.nl>
+In-Reply-To: <e704b505-86d8-c6f2-8546-adccdab72622@xs4all.nl>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.202.205.107]
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm6115: Move SDHC node(s)'s
- 'pinctrl' properties to dts
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
 Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org, devicetree@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>
-References: <20230314074001.1873781-1-bhupesh.sharma@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230314074001.1873781-1-bhupesh.sharma@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: base64
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+RnJvbTogSGFucyBWZXJrdWlsDQo+IFNlbnQ6IDE0IE1hcmNoIDIwMjMgMDg6NTUNCi4uLg0KPiBX
+aHkgbm90IHN0YXJ0IHdpdGggYSBkeW5hbWljYWxseSBhbGxvY2F0ZWQgYXJyYXkgb2YgMzIgdmIy
+X2J1ZmZlciBwb2ludGVycz8NCj4gQW5kIGtlZXAgZG91YmxpbmcgdGhlIHNpemUgKHJlYWxsb2Np
+bmcpIHdoZW5ldmVyIG1vcmUgYnVmZmVycyBhcmUgbmVlZGVkLA0KPiB1cCB0byBzb21lIG1heGlt
+dW0gKDEwMjQgd291bGQgYmUgYSBnb29kIGluaXRpYWwgdmFsdWUgZm9yIHRoYXQsIEkgdGhpbmsp
+Lg0KPiBUaGlzIG1heCBjb3VsZCBiZSBldmVuIGEgbW9kdWxlIG9wdGlvbi4NCg0KSSBkb24ndCBr
+bm93IHRoZSB0eXBpY2FsIHVzZXMgKG9yIHRoZSBjb2RlIGF0IGFsbCkuDQpCdXQgaXQgbWlnaHQg
+YmUgd29ydGggaGF2aW5nIGEgc21hbGwgYXJyYXkgaW4gdGhlIHN0cnVjdHVyZSBpdHNlbGYuDQpV
+c2VmdWwgaWYgdGhlcmUgYXJlIHR5cGljYWxseSBhbHdheXMgKHNheSkgbGVzcyB0aGFuIDggYnVm
+ZmVycy4NCkZvciBsYXJnZXIgc2l6ZXMgdXNlIHRoZSAoSUlSQykga21hbGxvY19zaXplKCkgdG8g
+ZmluZCB0aGUgYWN0dWFsDQpzaXplIG9mIHRoZSBzdHJ1Y3R1cmUgdGhhdCB3aWxsIGJlIGFsbG9j
+YXRlIGFuZCBzZXQgdGhlIGFycmF5DQpzaXplIGFwcHJvcHJpYXRlbHkuDQoNCglEYXZpZA0KDQot
+DQpSZWdpc3RlcmVkIEFkZHJlc3MgTGFrZXNpZGUsIEJyYW1sZXkgUm9hZCwgTW91bnQgRmFybSwg
+TWlsdG9uIEtleW5lcywgTUsxIDFQVCwgVUsNClJlZ2lzdHJhdGlvbiBObzogMTM5NzM4NiAoV2Fs
+ZXMpDQo=
 
-
-On 14.03.2023 08:40, Bhupesh Sharma wrote:
-> Normally the 'pinctrl' properties of a SDHC controller and the
-> chip detect pin settings are dependent on the type of the slots
-> (for e.g uSD card slot), regulators and GPIO(s) available on the
-> board(s).
-> 
-> So, move the same from the sm6115 dtsi file to the respective
-> board file(s).
-So, file or files? :D
-
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
-> Changes since v1:
-> - v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20221220113616.1556097-1-bhupesh.sharma@linaro.org/
-> - Colleted the R-B from Marijn.
-> - Rebased on linux-next/master
-> 
->  .../boot/dts/qcom/sm4250-oneplus-billie2.dts  | 10 +++++++++
->  arch/arm64/boot/dts/qcom/sm6115.dtsi          | 22 -------------------
->  2 files changed, 10 insertions(+), 22 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> index a3f1c7c41fd73..329eb496bbc5f 100644
-> --- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> @@ -202,12 +202,22 @@ &sdhc_2 {
->  	vqmmc-supply = <&vreg_l5a>;
->  
->  	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>;
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&sdc2_state_on &sdc2_card_det_n>;
-> +	pinctrl-1 = <&sdc2_state_off &sdc2_card_det_n>;
-This should have been
-
-pinctrl-n
-pinctrl-names
-
-I made a mistake in my lenovo dts if that was your reference..
-
-You should also mention that the implicit removal of sdhci1's
-gpio properties from the lenovo j606f and oneplus billie2 is intentional
-as they both use UFS instead of eMMC.
-
-And one more thing, you missed bringing the CD pin back into pinctrl-0/1
-in the tab dts. I'd really appreciate if you could fix up that ordering
-mess I mentioned above while at it.
-
-Konrad
->  
->  	status = "okay";
->  };
->  
->  &tlmm {
->  	gpio-reserved-ranges = <14 4>;
-> +
-> +	sdc2_card_det_n: sd-card-det-n-state {
-> +		pins = "gpio88";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-up;
-> +	};
->  };
->  
->  &ufs_mem_hc {
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> index fbd67d2c8d781..e8e5f2cafebb9 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> @@ -595,13 +595,6 @@ data-pins {
->  					bias-pull-up;
->  					drive-strength = <10>;
->  				};
-> -
-> -				sd-cd-pins {
-> -					pins = "gpio88";
-> -					function = "gpio";
-> -					bias-pull-up;
-> -					drive-strength = <2>;
-> -				};
->  			};
->  
->  			sdc2_state_off: sdc2-off-state {
-> @@ -622,13 +615,6 @@ data-pins {
->  					bias-pull-up;
->  					drive-strength = <2>;
->  				};
-> -
-> -				sd-cd-pins {
-> -					pins = "gpio88";
-> -					function = "gpio";
-> -					bias-disable;
-> -					drive-strength = <2>;
-> -				};
->  			};
->  		};
->  
-> @@ -731,10 +717,6 @@ sdhc_1: mmc@4744000 {
->  				 <&gcc GCC_SDCC1_ICE_CORE_CLK>;
->  			clock-names = "iface", "core", "xo", "ice";
->  
-> -			pinctrl-0 = <&sdc1_state_on>;
-> -			pinctrl-1 = <&sdc1_state_off>;
-> -			pinctrl-names = "default", "sleep";
-> -
->  			bus-width = <8>;
->  			status = "disabled";
->  		};
-> @@ -753,10 +735,6 @@ sdhc_2: mmc@4784000 {
->  				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
->  			clock-names = "iface", "core", "xo";
->  
-> -			pinctrl-0 = <&sdc2_state_on>;
-> -			pinctrl-1 = <&sdc2_state_off>;
-> -			pinctrl-names = "default", "sleep";
-> -
->  			power-domains = <&rpmpd SM6115_VDDCX>;
->  			operating-points-v2 = <&sdhc2_opp_table>;
->  			iommus = <&apps_smmu 0x00a0 0x0>;
