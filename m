@@ -2,110 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F12026B8F11
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 10:59:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 27DC06B8F15
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 10:59:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229633AbjCNJ7d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 05:59:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38166 "EHLO
+        id S229707AbjCNJ7t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 05:59:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbjCNJ7c (ORCPT
+        with ESMTP id S229722AbjCNJ7s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 05:59:32 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 982EF20078;
-        Tue, 14 Mar 2023 02:59:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678787971; x=1710323971;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=vsj9T9Br4xjmd7W1//zB56r/FVJi0Idwj1ldmitXAZs=;
-  b=TgJowHUKzlMcPoUTM5yBGv50F2mXqUYXebgWRUKJCa+s4zAE2Cj48do0
-   OABjrp8xvZBh/Wn9neqDKo3TY+6GWIuOmOd5cYrPO8nr6uZ5z3ZkKJyGG
-   ieFWOSYQavvTdtgBeIWVJ675AS4gl2F7a8oj4Cc3c5dwyIYgneCqNFInW
-   TyuxV31drpopoHLzGo3ZbhWHyUeEf2VnMPfA9p5EMbGuVFywe7RaTZE6b
-   1rwlmYbhn1OnOy7ZApXQsU21TwN4mhx+n69Gu/oYJrb2DyIm3E8vSG8JT
-   wzz2HKhiYkHcuKb60JmN835vnNr0d6oiORyLmylCZ4tksy7WjWUs5Zf/z
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="336073495"
-X-IronPort-AV: E=Sophos;i="5.98,259,1673942400"; 
-   d="scan'208";a="336073495"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2023 02:59:31 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="747941254"
-X-IronPort-AV: E=Sophos;i="5.98,259,1673942400"; 
-   d="scan'208";a="747941254"
-Received: from jlawryno-mobl.ger.corp.intel.com (HELO [10.237.142.115]) ([10.237.142.115])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2023 02:59:28 -0700
-Message-ID: <5e912413-eee4-5b25-5f6d-00ccc7501b9d@linux.intel.com>
-Date:   Tue, 14 Mar 2023 10:59:26 +0100
+        Tue, 14 Mar 2023 05:59:48 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 683BE2A6C8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 02:59:45 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id m4so6222563lfj.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 02:59:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678787983;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gbQPUzNB3ID6pvgwQJH+wME6Ds92/P9woaOtkl2i5u8=;
+        b=GqKgGJ20kMDb5o3ZhnHFpC4sl0f61CUq2USW5m3TGTowgmFFbRGSV+Gifp9aBt3nQe
+         A490DTAu1kS58JZNJT+zUCcPJCInhpXydDUuim6rOyLmDmt+QgTdtzFTCJpLQCsZ/P9S
+         u4JA/MOpMMrJhCbqIypD5LmoJZgnSDXhgXRR5D1m0nLVp4gNHiOoEzzRib9+pdaTmt3p
+         piyKQtALFE1HmJbCq1MvvHYXOZbaa+SWjNAonr96szUrHYUcgF2TI6PvbhcRZEvCaFNo
+         gb4zE6aGs9Wz/bnE6sg1WuG7FfGcQvdnaIZO27jZ90yf8Tv/EVFXzhR/MfN+8YiGvFx7
+         Pn0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678787983;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gbQPUzNB3ID6pvgwQJH+wME6Ds92/P9woaOtkl2i5u8=;
+        b=WA8sk8hLHiD26KsuvGSeUA/PKq5rZOmXX+PICZEqV6ttnrtqF7HftED5L/MmHDIT5q
+         6ndVo+h7NAG9UNrCDiODuyx5HvdjKjlA1yuLHBonAZe+xMwAavYyGfQyHb7YCJqZhgzC
+         miYdyuFWdj3ySO0LnhZdD+XtCqeXafdeQxR3S/lR2K1YrjZE6RfE1VmdL5tUAO1XI97q
+         ndVpefadYGIH1cYd70P2zf6gZiWEupSuFmpN00TMF4ztJK/iwHQxb4UF47aSCLCjCTH+
+         8xloTz5RD0PynEt5F59PDE+OTrO+Hz7eNHhGK6/cZ0ffkjdUb7Gsde83z5FPedMdnWj5
+         L7Og==
+X-Gm-Message-State: AO0yUKVJ5KvywZPIQ9xFL1kw7SYHj7unxbbkRD/0RmWqV2TgCB8+OoIf
+        gnxgEzOYq/zVPB6H4vWQmN3YVQ==
+X-Google-Smtp-Source: AK7set9J0jfti/lMPhcprp1dbInMOH8UTlXpjIv9GivdjQJIaKApf44OJfQEjPvxSP5uynMa96SaWQ==
+X-Received: by 2002:a19:740a:0:b0:4cb:2aa:9e58 with SMTP id v10-20020a19740a000000b004cb02aa9e58mr569835lfe.13.1678787983651;
+        Tue, 14 Mar 2023 02:59:43 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id l13-20020ac2430d000000b004e83fedf354sm332043lfh.122.2023.03.14.02.59.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Mar 2023 02:59:43 -0700 (PDT)
+Message-ID: <efff0988-869b-7ee8-17ea-4b82f6a5205a@linaro.org>
+Date:   Tue, 14 Mar 2023 10:59:41 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v3 8/8] MAINTAINERS: Add entry for QAIC driver
+Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: add symbols to dtb
+To:     Prasad Sodagudi <quic_psodagud@quicinc.com>,
+        Eric Chanudet <echanude@redhat.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230309233945.1199358-1-echanude@redhat.com>
+ <43c11038-91d5-cbfd-7349-06fcd61a0661@linaro.org>
+ <1bd61fa7-cd0e-e198-9cee-7485eacbe685@quicinc.com>
 Content-Language: en-US
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, dafna@fastmail.com,
-        ogabbay@kernel.org, airlied@gmail.com, daniel@ffwll.ch,
-        stanislaw.gruszka@linux.intel.com, dri-devel@lists.freedesktop.org
-Cc:     linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_ajitpals@quicinc.com, quic_pkanojiy@quicinc.com,
-        quic_carlv@quicinc.com
-References: <1678138443-2760-1-git-send-email-quic_jhugo@quicinc.com>
- <1678138443-2760-9-git-send-email-quic_jhugo@quicinc.com>
-From:   Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Organization: Intel Technology Poland sp. z o.o. - ul. Slowackiego 173, 80-298
- Gdansk - KRS 101882 - NIP 957-07-52-316
-In-Reply-To: <1678138443-2760-9-git-send-email-quic_jhugo@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1bd61fa7-cd0e-e198-9cee-7485eacbe685@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
 
-On 06.03.2023 22:34, Jeffrey Hugo wrote:
-> Add MAINTAINERS entry for the Qualcomm Cloud AI 100 driver.
+
+On 14.03.2023 05:48, Prasad Sodagudi wrote:
 > 
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-> ---
->  MAINTAINERS | 9 +++++++++
->  1 file changed, 9 insertions(+)
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index b0db911..feb2974 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -17253,6 +17253,15 @@ F:	Documentation/devicetree/bindings/clock/qcom,*
->  F:	drivers/clk/qcom/
->  F:	include/dt-bindings/clock/qcom,*
->  
-> +QUALCOMM CLOUD AI (QAIC) DRIVER
-> +M:	Jeffrey Hugo <quic_jhugo@quicinc.com>
-> +L:	linux-arm-msm@vger.kernel.org
-> +L:	dri-devel@lists.freedesktop.org
-> +S:	Supported
-> +F:	Documentation/accel/qaic/
-> +F:	drivers/accel/qaic/
-> +F:	include/uapi/drm/qaic_accel.h
+> On 3/9/2023 3:47 PM, Konrad Dybcio wrote:
+>>
+>>
+>> On 10.03.2023 00:39, Eric Chanudet wrote:
+>>> ABL uses the __symbols__ section to process the DTB before passing it
+>>> forward. Without it, the bootstrap is interrupted.
+>>>
+>>> Signed-off-by: Eric Chanudet <echanude@redhat.com>
+>>> ---
+>> Fix your ABL.
+> Hi Konrad,
+> 
+> Apps boot-loader need __symbols__ for dynamic overlay operation. Qualcomm firmware passes an overlay file to apps boot-loader to overlay some of the nodes based on firmware configuration. Without __symbols__ apps boot-loader is not able to overlay.
+Yes/no. There are a plenty of libfdt functions that let you do that,
+especially if you know something about the node.
 
-Aren't you missing repo link?
-T:	git git://anongit.freedesktop.org/drm/drm-misc
+> 
+> Qualcomm hypervisor/gunyah would like to overlay arch timer node with always-on property, So adding __symbols__ helps boot-loader to overlay.
+For the arch timer, you can simply iterate over the top-level nodes (or
+in the worst case scenario, over all nodes which would not take very
+long on cortex-a / cortex-x cores) and look for the specific timer
+compatible that has been with us for like 10 years at this point and
+use libfdt's fdt_add_property without overlays.
 
-> +
->  QUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER
->  M:	Bjorn Andersson <andersson@kernel.org>
->  M:	Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> I think, commit text is misleading here and I will request Eric to fix the commit text.
+Sort of, but then the design you explained is very error-prone as it's
+dependent on the device tree always satisfying your hypervisor's needs.
 
-Regards,
-Jacek
+Konrad
+> 
+> -Thanks, Prasad
+> 
+>>
+>> Konrad
+>>> Depends on initial sa8775p-ride.dts:
+>>> https://lore.kernel.org/all/20230214092713.211054-3-brgl@bgdev.pl/
+>>>
+>>>   arch/arm64/boot/dts/qcom/Makefile | 4 ++++
+>>>   1 file changed, 4 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>>> index b63cd1861e68..72e85ab31d74 100644
+>>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>>> @@ -1,4 +1,8 @@
+>>>   # SPDX-License-Identifier: GPL-2.0
+>>> +
+>>> +# Enable support for device-tree overlays required on sa8775p-ride.
+>>> +DTC_FLAGS_sa8775p-ride := -@
+>>> +
+>>>   dtb-$(CONFIG_ARCH_QCOM)    += apq8016-sbc.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)    += apq8094-sony-xperia-kitakami-karin_windy.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)    += apq8096-db820c.dtb
+>>
+>>
