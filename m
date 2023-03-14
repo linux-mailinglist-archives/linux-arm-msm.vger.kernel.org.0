@@ -2,106 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EECE6B8D96
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 09:39:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 955606B8DDE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 09:54:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229807AbjCNIjY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 04:39:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45836 "EHLO
+        id S229950AbjCNIyX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 04:54:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229621AbjCNIjX (ORCPT
+        with ESMTP id S229757AbjCNIyW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 04:39:23 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDD6A98EA7;
-        Tue, 14 Mar 2023 01:38:47 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32E4OblT000537;
-        Tue, 14 Mar 2023 08:38:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=UUIGkRvipVGt2jtssCYaB5NikLL1+G8UZU/LbkOU06g=;
- b=jUpxlmCJw7HLqEthKSwSZMoUtJgd3wE8BOg2eq6gRHH6xQ7RFyxvENexMhP0YBGVA0Ko
- azBqIEP+VKyIVmys8OAylp0UuKaV6Nfn79vKZH9m4flCZaY2uV/pYlx6F7OeEH90pyg8
- QOqaq6/D2nFuY08lcTsv/XVfB2ei9CpLzdjTPUY4zt152omI5H6Ft5uFSJIhPXswWXcC
- PFC9tMoVzflO5B1WPx7/TAFrZXTtR9sKJlbG1uC306AFaOPA00fmHkzCDsMEv/ILWFcp
- PS4ArQlx1D4uAROOUgLQ9/eLQVQobmRxxwaTGZc7o1fFyw3MmKQVDcoBUR8gdcHMACMU qA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pa35wb1c1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Mar 2023 08:38:19 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32E8cIle002962
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Mar 2023 08:38:18 GMT
-Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 14 Mar
- 2023 01:38:15 -0700
-Message-ID: <f09bf4df-dbf9-578d-3dd2-a670b708bbfa@quicinc.com>
-Date:   Tue, 14 Mar 2023 14:08:12 +0530
+        Tue, 14 Mar 2023 04:54:22 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FC165C9CB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 01:54:14 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id m18-20020a05600c3b1200b003ed2a3d635eso1808753wms.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 01:54:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678784053;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=v75KTMuw3KcdDlrLuoPJiGsmVBznB/RJnpqv1/ly5lI=;
+        b=aNjUjLrcpaXjwu/4dbQzHaY4b3Dn3tv81YXVqdiqApk5IEp9oECS4JWIDTNUVppAym
+         y9L7MeJazA4s4euFcL/Y5gSA7r/P00+tXhJhCnkoEqXRKOp1+JYNMppKKi863Fpetisj
+         W71QhvISwvBCfbprWr3tOQL7TGpENcbYc20v7IGGwBE9LLp1raxERYAojlFUxC0ESJ+q
+         8aE/QNqBrbCaIRrd47RcCnBRnbJV3YsxWJi0kuiPG2mmyhtYmRGOhTf2Q6ewrdsUk7f+
+         WzMIEOpjdjbEGoM79qboDF8TTvNBGiDqLFAXsqARGz+ZSY8jVTCAqE8iUvj+1xh2U+40
+         s3Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678784053;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=v75KTMuw3KcdDlrLuoPJiGsmVBznB/RJnpqv1/ly5lI=;
+        b=P+zLBYdvY/cddDfKZ9uMh2E/2LfUVMXp9USbfB+h5ncDLe3J87JvunrNS6VFQb8TLV
+         ZixQNZvYbVTHIEJxd+Bg1gf6FEr0+fgsVHI0e+MqPOf3yf9CNKkCDIvaNiIWowlucHf5
+         dbeHUSZqG1BuuriHgpgr4WZ2TM54jOqJNlWzouJVc2/yRvAalq98AAPqpCd3V57ai9et
+         /fGktb/MF2p6pdJK+VLds2vpz02mvwjwaUtMl1IkpHXyW+hXIjNMUzLxaO5edyv1qfOZ
+         4GeGQLWlxSfZODGRVUWxhCUuuesLQ9lj+yC9nkdECH40VLAcGBJGUCW/4IjOXK+vnVSS
+         +uIQ==
+X-Gm-Message-State: AO0yUKXEhg4LnAlg9Sxtleb0YIsKUhxNYugNFCx5jtJKQkYaV32KYqx2
+        9kznx6J2NkmAgTq2zCl+80PGmg==
+X-Google-Smtp-Source: AK7set+WZGtNLvW0dZC4TbyqElBmfwd/9FmjaR6AfzRA4EVNJIBui7DLWbnR0qrXHxzQSr5KwXGxCw==
+X-Received: by 2002:a05:600c:4f08:b0:3e2:20c7:6544 with SMTP id l8-20020a05600c4f0800b003e220c76544mr13392562wmq.19.1678784053087;
+        Tue, 14 Mar 2023 01:54:13 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:11c3:d4e5:ef75:8eb9? ([2a01:e0a:982:cbb0:11c3:d4e5:ef75:8eb9])
+        by smtp.gmail.com with ESMTPSA id u15-20020a05600c440f00b003dfe549da4fsm2142551wmn.18.2023.03.14.01.54.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Mar 2023 01:54:12 -0700 (PDT)
+Message-ID: <d7bd6663-516a-a1f9-506c-5853eaa948e4@linaro.org>
+Date:   Tue, 14 Mar 2023 09:54:11 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH V2 1/3] dt-bindings: mailbox: qcom: use fallback for
- IPQ8074 SoC
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 01/12] usb: typec: ucsi: add PMIC Glink UCSI driver
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <jassisinghbrar@gmail.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20230314050005.10409-1-quic_kathirav@quicinc.com>
- <20230314050005.10409-2-quic_kathirav@quicinc.com>
- <37cff42d-d6a4-8784-c70e-f0184ee84698@linaro.org>
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-In-Reply-To: <37cff42d-d6a4-8784-c70e-f0184ee84698@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20230130-topic-sm8450-upstream-pmic-glink-v3-0-4c860d265d28@linaro.org>
+ <20230130-topic-sm8450-upstream-pmic-glink-v3-1-4c860d265d28@linaro.org>
+ <ZA7wPtttsWlQRpAR@kuha.fi.intel.com>
+Organization: Linaro Developer Services
+In-Reply-To: <ZA7wPtttsWlQRpAR@kuha.fi.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Sg1CZNwritAEpdfRGJ0zwqOwMPio1G4K
-X-Proofpoint-GUID: Sg1CZNwritAEpdfRGJ0zwqOwMPio1G4K
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-14_02,2023-03-14_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- adultscore=0 phishscore=0 impostorscore=0 malwarescore=0 clxscore=1015
- lowpriorityscore=0 bulkscore=0 spamscore=0 priorityscore=1501
- mlxlogscore=531 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303140073
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 13/03/2023 10:43, Heikki Krogerus wrote:
+> Hi,
+> 
+> On Thu, Mar 09, 2023 at 02:27:52PM +0100, Neil Armstrong wrote:
+>> +static void pmic_glink_ucsi_register(struct work_struct *work)
+>> +{
+>> +	struct pmic_glink_ucsi *ucsi = container_of(work, struct pmic_glink_ucsi, register_work);
+>> +
+>> +	ucsi_register(ucsi->ucsi);
+>> +}
+>> +
+>> +static void pmic_glink_ucsi_callback(const void *data, size_t len, void *priv)
+>> +{
+>> +	struct pmic_glink_ucsi *ucsi = priv;
+>> +	const struct pmic_glink_hdr *hdr = data;
+>> +
+>> +	switch (hdr->opcode) {
+>> +	case UC_UCSI_READ_BUF_REQ:
+>> +		pmic_glink_ucsi_read_ack(ucsi, data, len);
+>> +		break;
+>> +	case UC_UCSI_WRITE_BUF_REQ:
+>> +		pmic_glink_ucsi_write_ack(ucsi, data, len);
+>> +		break;
+>> +	case UC_UCSI_USBC_NOTIFY_IND:
+>> +		schedule_work(&ucsi->notify_work);
+>> +		break;
+>> +	};
+>> +}
+>> +
+>> +static void pmic_glink_ucsi_pdr_notify(void *priv, int state)
+>> +{
+>> +	struct pmic_glink_ucsi *ucsi = priv;
+>> +
+>> +	if (state == SERVREG_SERVICE_STATE_UP)
+>> +		schedule_work(&ucsi->register_work);
+>> +	else if (state == SERVREG_SERVICE_STATE_DOWN)
+>> +		ucsi_unregister(ucsi->ucsi);
+>> +}
+>> +
+>> +static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
+>> +				 const struct auxiliary_device_id *id)
+>> +{
+>> +	struct pmic_glink_ucsi *ucsi;
+>> +	struct device *dev = &adev->dev;
+>> +
+>> +	ucsi = devm_kzalloc(dev, sizeof(*ucsi), GFP_KERNEL);
+>> +	if (!ucsi)
+>> +		return -ENOMEM;
+>> +
+>> +	ucsi->dev = dev;
+>> +	dev_set_drvdata(dev, ucsi);
+>> +
+>> +	INIT_WORK(&ucsi->notify_work, pmic_glink_ucsi_notify);
+>> +	INIT_WORK(&ucsi->register_work, pmic_glink_ucsi_register);
+>> +	init_completion(&ucsi->read_ack);
+>> +	init_completion(&ucsi->write_ack);
+>> +	init_completion(&ucsi->sync_ack);
+>> +	mutex_init(&ucsi->lock);
+>> +
+>> +	ucsi->ucsi = ucsi_create(dev, &pmic_glink_ucsi_ops);
+>> +	if (IS_ERR(ucsi->ucsi))
+>> +		return PTR_ERR(ucsi->ucsi);
+>> +
+>> +	ucsi_set_drvdata(ucsi->ucsi, ucsi);
+>> +
+>> +	ucsi->client = devm_pmic_glink_register_client(dev,
+>> +						       PMIC_GLINK_OWNER_USBC,
+>> +						       pmic_glink_ucsi_callback,
+>> +						       pmic_glink_ucsi_pdr_notify,
+>> +						       ucsi);
+>> +	return PTR_ERR_OR_ZERO(ucsi->client);
+>> +}
+>> +
+>> +static const struct auxiliary_device_id pmic_glink_ucsi_id_table[] = {
+>> +	{ .name = "pmic_glink.ucsi", },
+>> +	{},
+>> +};
+>> +MODULE_DEVICE_TABLE(auxiliary, pmic_glink_ucsi_id_table);
+>> +
+>> +static struct auxiliary_driver pmic_glink_ucsi_driver = {
+>> +	.name = "pmic_glink_ucsi",
+>> +	.probe = pmic_glink_ucsi_probe,
+>> +	.id_table = pmic_glink_ucsi_id_table,
+>> +};
+> 
+> What happens if you remove the module - I think you need to implement
+> the remove callback, no?
 
-On 3/14/2023 1:44 PM, Krzysztof Kozlowski wrote:
-> On 14/03/2023 06:00, Kathiravan T wrote:
->> Since the IPQ8074 mailbox is compatible with the IPQ6018, lets create
->> the fallback to ipq6018 compatible, so that we don't bloat the of_device_id
->> table in the driver.
->>
->> Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
->> ---
->> Changes in V2:
->> 	- Fixed the dtbs_check warning for IPQ6018
->>
-> I responded to v1, so for formality: NAK.
+You're right, I thought devm_pmic_glink_register_client would call
+pmic_glink_ucsi_pdr_notify which would unregister ucsi, but no so will add.
 
-Thanks, I should have waited for some more time.. I see the V2 of your 
-series. I'll drop this series.
+Thanks,
+Neil
 
-Thanks, Kathiravan T.
-
+> 
+> thanks,
+> 
 
