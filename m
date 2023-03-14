@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6253E6B99DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 16:38:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 950126B99DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 16:38:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231714AbjCNPh7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 11:37:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44250 "EHLO
+        id S230030AbjCNPiE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 11:38:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231423AbjCNPhf (ORCPT
+        with ESMTP id S231853AbjCNPhg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 11:37:35 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B143B1EDB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 08:36:41 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id z5so16423513ljc.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 08:36:41 -0700 (PDT)
+        Tue, 14 Mar 2023 11:37:36 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32C8EB256B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 08:36:42 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id f16so16425999ljq.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 08:36:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678808162;
+        d=linaro.org; s=google; t=1678808163;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=x8EB9V2/nugBz4PNqz/KJnYFP9kIxTNFEEQ+Jgwdgds=;
-        b=VIuyNcua7zKmnoev7Cp7s1yhp/fZ1aROY7Ws1JV0/rYsvfheFhks/bXs9rLuioarYE
-         W5B/t/idVMeLT1TYvdyVggzWc/d9oo6JfvX8kZLZa7PX8EA4PdsegD9H8JZ0NYSR0/Bb
-         pe2OQkIgFfv1GLtETFFAm1DCEoR3bI1qLlhaJyGtl0rYWUB3K4QqM3kE7n4Vi1iCEV0V
-         IzbYo02PjybO5r3RGzNaVNuiP815l2valazhImxnRod0LPKxql8Wk5USoK5eWDq4fOK7
-         SdIzYF1pcewhRqx/q5UalRyRwIbE4xlh3mCiazL9S+9PjeXqfstpsYsqBFsf6fwiTRjf
-         Y9dA==
+        bh=lxIfbYefb9Y2iW8hJleaq3xbC5BmkoHVZu3h7EioTuY=;
+        b=kdIkSQ0PodeFz67Yz9U5jImHVYdc/V5ji4LirH9BBVtc9PW/mSrdP6X+GITA0afPdS
+         LKdjrl2eRmpbShE8yQ+68aMn2e0zndz6uCpKjBGGI2BF6d+burkMUwMVJIvWKapcDW+k
+         k17S5/0nTL4HnYr8S4VAI8SyrteNRxlRjbmzI6FOoN8aXCJfPes4rWTNsSz7U4AROoK1
+         bJf2iUqNynVvoSwNP7/Opf64oulj8UCvjLbbywQFA1A4YkEavh/uhJCPMEuPcH4KaSbp
+         UGIyUUZmGL8FqpQBPIbK6tS85BUfWsbeXbifSBUJcES3//FSMq72nKoKLK05veyzjfUS
+         reSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678808162;
+        d=1e100.net; s=20210112; t=1678808163;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=x8EB9V2/nugBz4PNqz/KJnYFP9kIxTNFEEQ+Jgwdgds=;
-        b=ncIFH6eVkKt5uu4xWUODQXEtj1X32mKKy6zV1m4JZ/90dKUS3sCBH8CVvPj00QZfqo
-         Uw+8gTS8NjyO6TxSRyTb/4Iwa/gL2tsBSjbQzHGPvw505Nh1DfsRHGDBPlZSby66hCjb
-         Kms8C1WPFbSJHsi/MrQGJ4o3D7TwHUmP39qddWQogl8UKNCrxi6UYMxZggxVuASbyApT
-         koWbqumH9LTg6N6tbs6gifhQZI17lR46udCAfpYc9FO/mkUsgHxF9o8LmDVtH04A/R07
-         pR0e8ZY5T6USPfkflvwgTZi92xZBAkAnGEYdWdQHVzlLkS59Zv5p2D1i2HcP9tcxsXQi
-         5Tjg==
-X-Gm-Message-State: AO0yUKVlkvDI2cP7WNJ49HbY+Sw3OdBCqOAYeo9zQyHLJ01JSG/svJ/Y
-        ejukDefnK9lR01JGifU3Lj5Aqw==
-X-Google-Smtp-Source: AK7set/wa4Kvwi8HukkGM9xaLqaolkfS2S7Lo2BD9M4CkJH7orgNJkqM6O686tqO0YZe4TLxYRZfGQ==
-X-Received: by 2002:a2e:9790:0:b0:295:b432:2062 with SMTP id y16-20020a2e9790000000b00295b4322062mr11936947lji.36.1678808162771;
-        Tue, 14 Mar 2023 08:36:02 -0700 (PDT)
+        bh=lxIfbYefb9Y2iW8hJleaq3xbC5BmkoHVZu3h7EioTuY=;
+        b=OvGmo4Hy5C2dzcyLkmLJN3eragHpS8r243CB7+RLiw6SVbqPa5ODXauFCyRdfbszkZ
+         bzeDa/c4vy4CqiNE3gl5wpRq17nWhwCYPEvuw63O+nDSgjmFC9e6jR8hsiScWGNfRQ0N
+         GC6YBTGALDS+kwdx+PXMiWqaeApfvy9xl6MK9DWwKqELxJ9Y/wclnfZzRYmF524WxhK2
+         p+BpOyXrKbw2Y03D+DbZnpd3bEPqnhQZjaSe8jx/SYYwrLZMSM8Da91EchoovNPncIQy
+         tCOveBY/kBsjpkIBezAH2BBD0D5SXuZTbmJz4U27+EZB8XV6JMDiXX8zOtbxxoJqYs2B
+         aT+A==
+X-Gm-Message-State: AO0yUKXu3koneyfNOqtfYqX6e9kyt/VAWduCjgAMuiQj+FJPC3CtsrKQ
+        ZOHGigS2Gz3M0+jFuew1gNkRqw==
+X-Google-Smtp-Source: AK7set8b3WYX/0dkTpBuzKftSjLG1JVl1YBm5OpCIF2/YhB3TyHXZheT9fb5vbyIogHctq1i/PKXXw==
+X-Received: by 2002:a05:651c:552:b0:298:9c09:1e4b with SMTP id q18-20020a05651c055200b002989c091e4bmr1333215ljp.45.1678808163474;
+        Tue, 14 Mar 2023 08:36:03 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id z8-20020a2eb528000000b0029573844d03sm470854ljm.109.2023.03.14.08.36.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 08:36:02 -0700 (PDT)
+        Tue, 14 Mar 2023 08:36:03 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -59,9 +59,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v6 23/32] drm/msm/dpu: rework dpu_plane_atomic_check()
-Date:   Tue, 14 Mar 2023 18:35:36 +0300
-Message-Id: <20230314153545.3442879-24-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v6 24/32] drm/msm/dpu: rework plane CSC setting
+Date:   Tue, 14 Mar 2023 18:35:37 +0300
+Message-Id: <20230314153545.3442879-25-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20230314153545.3442879-1-dmitry.baryshkov@linaro.org>
 References: <20230314153545.3442879-1-dmitry.baryshkov@linaro.org>
@@ -77,138 +77,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Split pipe-dependent code from dpu_plane_atomic_check() into the
-separate function dpu_plane_atomic_check_pipe(). This is one of
-preparational steps to add r_pipe support.
+Rework the code flushing CSC settings for the plane. Separate out the
+pipe and pipe_cfg as a preparation for r_pipe support.
 
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 91 ++++++++++++++---------
- 1 file changed, 55 insertions(+), 36 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 47 +++++++++++++----------
+ 1 file changed, 27 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index f97ea39423a2..61994d1fff36 100644
+index 61994d1fff36..6031d270992f 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -903,6 +903,53 @@ static int dpu_plane_check_inline_rotation(struct dpu_plane *pdpu,
+@@ -576,29 +576,19 @@ static const struct dpu_csc_cfg dpu_csc10_YUV2RGB_601L = {
+ 	{ 0x00, 0x3ff, 0x00, 0x3ff, 0x00, 0x3ff,},
+ };
+ 
+-static const struct dpu_csc_cfg *_dpu_plane_get_csc(struct dpu_plane *pdpu, const struct dpu_format *fmt)
++static const struct dpu_csc_cfg *_dpu_plane_get_csc(struct dpu_sw_pipe *pipe,
++						    const struct dpu_format *fmt)
+ {
+-	struct dpu_plane_state *pstate = to_dpu_plane_state(pdpu->base.state);
+ 	const struct dpu_csc_cfg *csc_ptr;
+ 
+-	if (!pdpu) {
+-		DPU_ERROR("invalid plane\n");
+-		return NULL;
+-	}
+-
+ 	if (!DPU_FORMAT_IS_YUV(fmt))
+ 		return NULL;
+ 
+-	if (BIT(DPU_SSPP_CSC_10BIT) & pstate->pipe.sspp->cap->features)
++	if (BIT(DPU_SSPP_CSC_10BIT) & pipe->sspp->cap->features)
+ 		csc_ptr = &dpu_csc10_YUV2RGB_601L;
+ 	else
+ 		csc_ptr = &dpu_csc_YUV2RGB_601L;
+ 
+-	DPU_DEBUG_PLANE(pdpu, "using 0x%X 0x%X 0x%X...\n",
+-			csc_ptr->csc_mv[0],
+-			csc_ptr->csc_mv[1],
+-			csc_ptr->csc_mv[2]);
+-
+ 	return csc_ptr;
+ }
+ 
+@@ -1051,6 +1041,28 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
  	return 0;
  }
  
-+static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
-+		struct dpu_sw_pipe *pipe,
-+		struct dpu_sw_pipe_cfg *pipe_cfg,
-+		const struct dpu_format *fmt)
++static void dpu_plane_flush_csc(struct dpu_plane *pdpu, struct dpu_sw_pipe *pipe)
 +{
-+	uint32_t min_src_size;
++	const struct dpu_format *format =
++		to_dpu_format(msm_framebuffer_format(pdpu->base.state->fb));
++	const struct dpu_csc_cfg *csc_ptr;
 +
-+	min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
++	if (!pipe->sspp || !pipe->sspp->ops.setup_csc)
++		return;
 +
-+	if (DPU_FORMAT_IS_YUV(fmt) &&
-+	    (!(pipe->sspp->cap->features & DPU_SSPP_SCALER) ||
-+	     !(pipe->sspp->cap->features & DPU_SSPP_CSC_ANY))) {
-+		DPU_DEBUG_PLANE(pdpu,
-+				"plane doesn't have scaler/csc for yuv\n");
-+		return -EINVAL;
-+	}
++	csc_ptr = _dpu_plane_get_csc(pipe, format);
++	if (!csc_ptr)
++		return;
 +
-+	/* check src bounds */
-+	if (drm_rect_width(&pipe_cfg->src_rect) < min_src_size ||
-+	    drm_rect_height(&pipe_cfg->src_rect) < min_src_size) {
-+		DPU_DEBUG_PLANE(pdpu, "invalid source " DRM_RECT_FMT "\n",
-+				DRM_RECT_ARG(&pipe_cfg->src_rect));
-+		return -E2BIG;
-+	}
++	DPU_DEBUG_PLANE(pdpu, "using 0x%X 0x%X 0x%X...\n",
++			csc_ptr->csc_mv[0],
++			csc_ptr->csc_mv[1],
++			csc_ptr->csc_mv[2]);
 +
-+	/* valid yuv image */
-+	if (DPU_FORMAT_IS_YUV(fmt) &&
-+	    (pipe_cfg->src_rect.x1 & 0x1 ||
-+	     pipe_cfg->src_rect.y1 & 0x1 ||
-+	     drm_rect_width(&pipe_cfg->src_rect) & 0x1 ||
-+	     drm_rect_height(&pipe_cfg->src_rect) & 0x1)) {
-+		DPU_DEBUG_PLANE(pdpu, "invalid yuv source " DRM_RECT_FMT "\n",
-+				DRM_RECT_ARG(&pipe_cfg->src_rect));
-+		return -EINVAL;
-+	}
++	pipe->sspp->ops.setup_csc(pipe->sspp, csc_ptr);
 +
-+	/* min dst support */
-+	if (drm_rect_width(&pipe_cfg->dst_rect) < 0x1 ||
-+	    drm_rect_height(&pipe_cfg->dst_rect) < 0x1) {
-+		DPU_DEBUG_PLANE(pdpu, "invalid dest rect " DRM_RECT_FMT "\n",
-+				DRM_RECT_ARG(&pipe_cfg->dst_rect));
-+		return -EINVAL;
-+	}
-+
-+	return 0;
 +}
 +
- static int dpu_plane_atomic_check(struct drm_plane *plane,
- 				  struct drm_atomic_state *state)
+ void dpu_plane_flush(struct drm_plane *plane)
  {
-@@ -915,7 +962,7 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 	const struct dpu_format *fmt;
- 	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
- 	struct drm_rect fb_rect = { 0 };
--	uint32_t min_src_size, max_linewidth;
-+	uint32_t max_linewidth;
- 	unsigned int rotation;
- 	uint32_t supported_rotations;
- 	const struct dpu_sspp_cfg *pipe_hw_caps = pstate->pipe.sspp->cap;
-@@ -970,47 +1017,19 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 	struct dpu_plane *pdpu;
+@@ -1074,13 +1086,8 @@ void dpu_plane_flush(struct drm_plane *plane)
+ 	else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
+ 		/* force 100% alpha */
+ 		_dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
+-	else if (pstate->pipe.sspp && pstate->pipe.sspp->ops.setup_csc) {
+-		const struct dpu_format *fmt = to_dpu_format(msm_framebuffer_format(plane->state->fb));
+-		const struct dpu_csc_cfg *csc_ptr = _dpu_plane_get_csc(pdpu, fmt);
+-
+-		if (csc_ptr)
+-			pstate->pipe.sspp->ops.setup_csc(pstate->pipe.sspp, csc_ptr);
+-	}
++	else
++		dpu_plane_flush_csc(pdpu, &pstate->pipe);
  
- 	max_linewidth = pdpu->catalog->caps->max_linewidth;
- 
--	fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
--
--	min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
--
--	if (DPU_FORMAT_IS_YUV(fmt) &&
--		(!(pipe_hw_caps->features & DPU_SSPP_SCALER) ||
--		 !(pipe_hw_caps->features & DPU_SSPP_CSC_ANY))) {
--		DPU_DEBUG_PLANE(pdpu,
--				"plane doesn't have scaler/csc for yuv\n");
--		return -EINVAL;
--
--	/* check src bounds */
--	} else if (drm_rect_width(&pipe_cfg->src_rect) < min_src_size ||
--		   drm_rect_height(&pipe_cfg->src_rect) < min_src_size) {
--		DPU_DEBUG_PLANE(pdpu, "invalid source " DRM_RECT_FMT "\n",
--				DRM_RECT_ARG(&pipe_cfg->src_rect));
--		return -E2BIG;
--
--	/* valid yuv image */
--	} else if (DPU_FORMAT_IS_YUV(fmt) &&
--		   (pipe_cfg->src_rect.x1 & 0x1 || pipe_cfg->src_rect.y1 & 0x1 ||
--		    drm_rect_width(&pipe_cfg->src_rect) & 0x1 ||
--		    drm_rect_height(&pipe_cfg->src_rect) & 0x1)) {
--		DPU_DEBUG_PLANE(pdpu, "invalid yuv source " DRM_RECT_FMT "\n",
--				DRM_RECT_ARG(&pipe_cfg->src_rect));
--		return -EINVAL;
--
--	/* min dst support */
--	} else if (drm_rect_width(&pipe_cfg->dst_rect) < 0x1 ||
--		   drm_rect_height(&pipe_cfg->dst_rect) < 0x1) {
--		DPU_DEBUG_PLANE(pdpu, "invalid dest rect " DRM_RECT_FMT "\n",
--				DRM_RECT_ARG(&pipe_cfg->dst_rect));
--		return -EINVAL;
--
- 	/* check decimated source width */
--	} else if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
-+	if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
- 		DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
- 				DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
- 		return -E2BIG;
- 	}
- 
-+	fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
-+
-+	ret = dpu_plane_atomic_check_pipe(pdpu, &pstate->pipe, pipe_cfg, fmt);
-+	if (ret)
-+		return ret;
-+
- 	supported_rotations = DRM_MODE_REFLECT_MASK | DRM_MODE_ROTATE_0;
- 
- 	if (pipe_hw_caps->features & BIT(DPU_SSPP_INLINE_ROTATION))
+ 	/* flag h/w flush complete */
+ 	if (plane->state)
 -- 
 2.30.2
 
