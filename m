@@ -2,71 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8057C6B8F35
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 11:05:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 830356B8F4A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 11:09:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229742AbjCNKFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 06:05:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47366 "EHLO
+        id S230096AbjCNKJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 06:09:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229950AbjCNKFU (ORCPT
+        with ESMTP id S230023AbjCNKJz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 06:05:20 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2127C62FD7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 03:05:18 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id n2so19207932lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 03:05:18 -0700 (PDT)
+        Tue, 14 Mar 2023 06:09:55 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C85AF92BC4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 03:09:45 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id s22so19254065lfi.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 03:09:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678788316;
+        d=linaro.org; s=google; t=1678788584;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=G4RaonSoQjuXRem5niMAEN7QQ5G5pjNC5vMZ5otsYwY=;
-        b=kt0HDj7RMZnnNNQJYgaJugd2clAf+wpBec+QxvFJfyfbEBubCeZsK98/wKSG3LZrOm
-         ecB7DTU+Qt99oMuSomlGn6G1ykfqewfDxQLjRGz/vCqSG+VAv5lXNpZu/hEVGicbEqj2
-         w6zOKR+9dbjN+GBKXFa/z8khg5NvvxdWNVWn2j54/Qq5amJJl7+OaQCRjLs7PhWioZ7w
-         CT4+VbrQr167JKk7b9ikszpEFvfbu3CfYwZziRxfH9YKJuIiEQUvzNM2+CghuT2a6KmD
-         LVlgwqFYYc7YbAOlqLarhvavYalfBfIih8VOWaxZ//I83m2Hu8rp4WzZVYAAD+wCgFD2
-         dGdQ==
+        bh=qfP7OisdfBLXKLqUWZNkPQ3fDRBGJKSNwG4JFeeABvc=;
+        b=k5MXVulEA3k+OwHJPPjL9ag/mbJTQznJMLJ4PsbuL2HZ+ty9iU+CgQ/7GH2jKnobkY
+         6mPhvO+ZrrSnogUxkZrSlvos85iXIdoMybhMEpICMLHz62Epqc8bW35zFCKaoQp/F4VE
+         rBGqrdmq/g6ABvhb7ZqGkefzX96O83ON8rUDmYX9QPt+6MIVwWAUPSN3YaKDzzKiargK
+         b+cIjk20Q4xwTy5go6vu3EtKMqtR7aleqxukm5luYrZvRJp53joAZJB+R6AaR1PldyYb
+         7rXDaXtIwl88l3whCVI8kzY/b4T6JnvuS/RPFLtl3biqH4+ynSbkOajE+uBf8Qkv3yrt
+         fkEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678788316;
+        d=1e100.net; s=20210112; t=1678788584;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=G4RaonSoQjuXRem5niMAEN7QQ5G5pjNC5vMZ5otsYwY=;
-        b=el3buCzQ0r+leOeYdrie90KNWrkQMAwHAUFajgRhp5p6v0CNCmlEDR7doxYrVcMktE
-         6G7Z9Dql3iAQF1ysrVrOmcLv9RmsyN7Mwu1QFqBziKcTPaCPAE08bYZohDHrIAJmmx0e
-         xCDScyb824QhPcDf9LbFKDhC3NkLe/ihv0QPZAqAYOrtfX9xgli7QmobhASHFm0HjZ54
-         ceMniubZD5FF7nfmZn5PmuSFzIOYyhb7bU2dm9xAHYr6ND1HBqyqFKUdLckV2lVUdEZQ
-         BGZjqa6vugTwbVAzEAgzFNjagHxGbicVFHi1e5JQanJN3pC48oOHVWPdKox0BEtkBrfh
-         kyqA==
-X-Gm-Message-State: AO0yUKUIy+7VFSqyydBNjyN8/2k4NFHdR28EeDY1YEDEumfWkC/PO/zl
-        cfXvAzyv2/mEmbIEGTsHFo8jqA==
-X-Google-Smtp-Source: AK7set/aAW9Y474CQ14RsNpM2CIslKypga0EGEwbu8lqCYWnONFxEmKxaaE2KIR8shoXhQnC4N4pJA==
-X-Received: by 2002:a19:ac03:0:b0:4db:387f:a3af with SMTP id g3-20020a19ac03000000b004db387fa3afmr610628lfc.4.1678788316308;
-        Tue, 14 Mar 2023 03:05:16 -0700 (PDT)
+        bh=qfP7OisdfBLXKLqUWZNkPQ3fDRBGJKSNwG4JFeeABvc=;
+        b=F+j38DC/NehAMYmGrNlXX+4QJALx63xXOpcXQNpaOsh4dvegPXH9vjdr5u3MC0WSVG
+         k70P9yWxuolRD00oPAHKFy2fS0Xjko/m56P2olF0YupNFjEQ25NJh8MNOeW3Eo5+C8/R
+         1KN5Yuh2MQijaCYe2+FMUG+OxbO2IeXJ9qwZWJaShMfy61XoBCJfNMWMsAGztgvy43PC
+         QhIckO/PAVZqWGMd+Qt0Fdf7TFGguVu5ebpgWhWHdJSyrqQAd9F2ViBQfnWZ1E5dTYim
+         bTvSn2I1j9n3q5lcFbPctUDaxgBiNn8//6qWN508c2+mKEthWSi0JeQiEN7yub7DSdlx
+         BmIQ==
+X-Gm-Message-State: AO0yUKUFHuBnV6qCLcighw4LX+69JhnfpqXoWY+J84JUrAclDnSI7Tzm
+        VIlr4ww1XPbuC/NstMPpiE3xaQ==
+X-Google-Smtp-Source: AK7set+okIbof1RS3blXA94VZLZjC6cATnGSNNfyOzb9Em4KQWzJofbA8LFNppL6tyvYEUfDUaRiFw==
+X-Received: by 2002:ac2:51dc:0:b0:4dd:ad88:ba65 with SMTP id u28-20020ac251dc000000b004ddad88ba65mr554446lfm.67.1678788583902;
+        Tue, 14 Mar 2023 03:09:43 -0700 (PDT)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id b8-20020ac25e88000000b004e845a08567sm332387lfq.291.2023.03.14.03.05.15
+        by smtp.gmail.com with ESMTPSA id f11-20020ac2508b000000b004db511ccae6sm335695lfm.294.2023.03.14.03.09.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Mar 2023 03:05:15 -0700 (PDT)
-Message-ID: <3ffb4326-ad13-d1c5-51e3-524dfa143930@linaro.org>
-Date:   Tue, 14 Mar 2023 11:05:14 +0100
+        Tue, 14 Mar 2023 03:09:43 -0700 (PDT)
+Message-ID: <426ca0fd-5119-7e3c-89ce-27590b11f63f@linaro.org>
+Date:   Tue, 14 Mar 2023 11:09:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sdm845: add framebuffer reserved
- memory
+Subject: Re: [PATCH v2] arm64: dts: qcom: sm6115: Move SDHC node(s)'s
+ 'pinctrl' properties to dts
 Content-Language: en-US
-To:     Caleb Connolly <caleb.connolly@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20230314045812.3673958-1-caleb.connolly@linaro.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org, devicetree@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>
+References: <20230314074001.1873781-1-bhupesh.sharma@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230314045812.3673958-1-caleb.connolly@linaro.org>
+In-Reply-To: <20230314074001.1873781-1-bhupesh.sharma@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,152 +81,123 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 14.03.2023 05:58, Caleb Connolly wrote:
-> Almost all of the SDM845 devices actually map the same region for the
-> continuous splash / framebuffer. de-dup all the devices that specify it
-> manually and put it in sdm845.dtsi instead.
+On 14.03.2023 08:40, Bhupesh Sharma wrote:
+> Normally the 'pinctrl' properties of a SDHC controller and the
+> chip detect pin settings are dependent on the type of the slots
+> (for e.g uSD card slot), regulators and GPIO(s) available on the
+> board(s).
 > 
-> This now reserves it on the OnePlus 6 where it was not reserved before,
-> this is intentional.
+> So, move the same from the sm6115 dtsi file to the respective
+> board file(s).
+So, file or files? :D
+
 > 
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > ---
-You didn't explain why is not done on 850 (which I assume has to do with
-the windows memory map being different and putting it somewhere else) and
-the reasoning for reserving it at all.
+> Changes since v1:
+> - v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20221220113616.1556097-1-bhupesh.sharma@linaro.org/
+> - Colleted the R-B from Marijn.
+> - Rebased on linux-next/master
+> 
+>  .../boot/dts/qcom/sm4250-oneplus-billie2.dts  | 10 +++++++++
+>  arch/arm64/boot/dts/qcom/sm6115.dtsi          | 22 -------------------
+>  2 files changed, 10 insertions(+), 22 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+> index a3f1c7c41fd73..329eb496bbc5f 100644
+> --- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+> @@ -202,12 +202,22 @@ &sdhc_2 {
+>  	vqmmc-supply = <&vreg_l5a>;
+>  
+>  	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>;
+> +	pinctrl-names = "default", "sleep";
+> +	pinctrl-0 = <&sdc2_state_on &sdc2_card_det_n>;
+> +	pinctrl-1 = <&sdc2_state_off &sdc2_card_det_n>;
+This should have been
 
-If that's the framebuffer handoff issue with smmu faults happening, it may
-be worth looking into solving that properly, i.e. introducing something like
-qcom,framebuffer which would suck up the starting address and figure out the
-required size based on MDP5 VIG pipes' registers and could tickle the
-autorefresh regs if needed. See how lk2nd does it, the hardware underneath
-hasn't changed since msm8974.
+pinctrl-n
+pinctrl-names
 
-Then, on drm handoff it could free the memory and let drm/msm initialize
-its own, new, dynamically-allocated and dynamically-sized region as it wants.
+I made a mistake in my lenovo dts if that was your reference..
 
-Or we can use mdss's never-used memory-region property, but that would
-kill 35 or so megs of ram for everyone, no matter display their resolution.
+You should also mention that the implicit removal of sdhci1's
+gpio properties from the lenovo j606f and oneplus billie2 is intentional
+as they both use UFS instead of eMMC.
+
+And one more thing, you missed bringing the CD pin back into pinctrl-0/1
+in the tab dts. I'd really appreciate if you could fix up that ordering
+mess I mentioned above while at it.
 
 Konrad
->  arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi              | 6 ------
->  arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts     | 5 -----
->  arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts           | 5 -----
->  arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi       | 6 ------
->  .../arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 6 ------
->  arch/arm64/boot/dts/qcom/sdm845.dtsi                        | 5 +++++
->  arch/arm64/boot/dts/qcom/sdm850.dtsi                        | 2 ++
->  7 files changed, 7 insertions(+), 28 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> index f942c5afea9b..6a1c674a015b 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> @@ -93,12 +93,6 @@ spss_mem: memory@99000000 {
->  			no-map;
->  		};
 >  
-> -		/* Framebuffer region */
-> -		memory@9d400000 {
-> -			reg = <0x0 0x9d400000 0x0 0x2400000>;
-> -			no-map;
-> -		};
-> -
->  		/* rmtfs lower guard */
->  		memory@f0800000 {
->  			reg = <0 0xf0800000 0 0x1000>;
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-> index d37a433130b9..7c2457948a32 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-> @@ -55,11 +55,6 @@ vreg_s4a_1p8: pm8998-smps4 {
->  	};
+>  	status = "okay";
+>  };
 >  
->  	reserved-memory {
-> -		memory@9d400000 {
-> -			reg = <0x0 0x9d400000 0x0 0x02400000>;
-> -			no-map;
-> -		};
-> -
->  		memory@a1300000 {
->  			compatible = "ramoops";
->  			reg = <0x0 0xa1300000 0x0 0x100000>;
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> index b54e304abf71..4f6b1053c15b 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> @@ -60,11 +60,6 @@ key-vol-up {
->  	};
->  
->  	reserved-memory {
-> -		framebuffer_region@9d400000 {
-> -			reg = <0x0 0x9d400000 0x0 (1080 * 2160 * 4)>;
-> -			no-map;
-> -		};
-> -
->  		ramoops: ramoops@b0000000 {
->  			compatible = "ramoops";
->  			reg = <0 0xb0000000 0 0x00400000>;
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-> index 4984c7496c31..7e273cc0158d 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-> @@ -79,12 +79,6 @@ vreg_s4a_1p8: pm8998-smps4 {
->  	};
->  
->  	reserved-memory {
-> -		/* SONY was cool and didn't diverge from MTP this time, yay! */
-> -		cont_splash_mem: memory@9d400000 {
-> -			reg = <0x0 0x9d400000 0x0 0x2400000>;
-> -			no-map;
-> -		};
-> -
->  		ramoops@ffc00000 {
->  			compatible = "ramoops";
->  			reg = <0x0 0xffc00000 0x0 0x100000>;
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> index e0fda4d754fe..191c2664f721 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> @@ -98,12 +98,6 @@ spss_mem: memory@97f00000 {
->  			no-map;
->  		};
->  
-> -		/* Cont splash region set up by the bootloader */
-> -		cont_splash_mem: framebuffer@9d400000 {
-> -			reg = <0 0x9d400000 0 0x2400000>;
-> -			no-map;
-> -		};
-> -
->  		rmtfs_mem: memory@f6301000 {
->  			compatible = "qcom,rmtfs-mem";
->  			reg = <0 0xf6301000 0 0x200000>;
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 479859bd8ab3..ecec2ee46683 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -865,6 +865,11 @@ spss_mem: spss@97b00000 {
->  			no-map;
->  		};
->  
-> +		cont_splash_mem: framebuffer@9d400000 {
-> +			reg = <0 0x9d400000 0 0x2400000>;
-> +			no-map;
-> +		};
+>  &tlmm {
+>  	gpio-reserved-ranges = <14 4>;
 > +
->  		mdata_mem: mpss-metadata {
->  			alloc-ranges = <0 0xa0000000 0 0x20000000>;
->  			size = <0 0x4000>;
-> diff --git a/arch/arm64/boot/dts/qcom/sdm850.dtsi b/arch/arm64/boot/dts/qcom/sdm850.dtsi
-> index da9f6fbe32f6..b787575c77a5 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm850.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm850.dtsi
-> @@ -7,6 +7,8 @@
+> +	sdc2_card_det_n: sd-card-det-n-state {
+> +		pins = "gpio88";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-pull-up;
+> +	};
+>  };
 >  
->  #include "sdm845.dtsi"
+>  &ufs_mem_hc {
+> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> index fbd67d2c8d781..e8e5f2cafebb9 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> @@ -595,13 +595,6 @@ data-pins {
+>  					bias-pull-up;
+>  					drive-strength = <10>;
+>  				};
+> -
+> -				sd-cd-pins {
+> -					pins = "gpio88";
+> -					function = "gpio";
+> -					bias-pull-up;
+> -					drive-strength = <2>;
+> -				};
+>  			};
 >  
-> +/delete-node/ &cont_splash_mem;
-> +
->  &cpu4_opp_table {
->  	cpu4_opp33: opp-2841600000 {
->  		opp-hz = /bits/ 64 <2841600000>;
+>  			sdc2_state_off: sdc2-off-state {
+> @@ -622,13 +615,6 @@ data-pins {
+>  					bias-pull-up;
+>  					drive-strength = <2>;
+>  				};
+> -
+> -				sd-cd-pins {
+> -					pins = "gpio88";
+> -					function = "gpio";
+> -					bias-disable;
+> -					drive-strength = <2>;
+> -				};
+>  			};
+>  		};
+>  
+> @@ -731,10 +717,6 @@ sdhc_1: mmc@4744000 {
+>  				 <&gcc GCC_SDCC1_ICE_CORE_CLK>;
+>  			clock-names = "iface", "core", "xo", "ice";
+>  
+> -			pinctrl-0 = <&sdc1_state_on>;
+> -			pinctrl-1 = <&sdc1_state_off>;
+> -			pinctrl-names = "default", "sleep";
+> -
+>  			bus-width = <8>;
+>  			status = "disabled";
+>  		};
+> @@ -753,10 +735,6 @@ sdhc_2: mmc@4784000 {
+>  				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+>  			clock-names = "iface", "core", "xo";
+>  
+> -			pinctrl-0 = <&sdc2_state_on>;
+> -			pinctrl-1 = <&sdc2_state_off>;
+> -			pinctrl-names = "default", "sleep";
+> -
+>  			power-domains = <&rpmpd SM6115_VDDCX>;
+>  			operating-points-v2 = <&sdhc2_opp_table>;
+>  			iommus = <&apps_smmu 0x00a0 0x0>;
