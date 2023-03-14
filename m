@@ -2,123 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AC806BA163
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 22:23:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AA646BA16B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 22:25:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230034AbjCNVXk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 17:23:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36648 "EHLO
+        id S229825AbjCNVZ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 17:25:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229769AbjCNVXj (ORCPT
+        with ESMTP id S229525AbjCNVZ1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 17:23:39 -0400
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 490F250729
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 14:23:38 -0700 (PDT)
-Received: by mail-il1-x12c.google.com with SMTP id i19so9322761ila.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 14:23:38 -0700 (PDT)
+        Tue, 14 Mar 2023 17:25:27 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82CDC4FF26
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 14:25:26 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id y15so12286266lfa.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 14:25:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678829017;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        d=linaro.org; s=google; t=1678829125;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=lxuM4RGN6BlLke1o4GIxUxY3khRpRz3CJd1nnGUC+3c=;
-        b=FQ3JQEtyeqZauYAWSK1zzIDKfI5c6KIdkTPO3eB2R9jABliTfilvQdFVO3RvBjG+vB
-         wOlvWgoUwrgGixBowbFjPQ9TH+gaZkZSs1UXYEdCHYtBDRiQbaVv9GXEq5vPq7I1YBW7
-         kmgQfUmFDDdkZWkIuXcojy/3Tgq/t6zRld/2fgBiOWyF0FyLUmd/kMJKHVX+ax2o/RG/
-         sVTD5lm9LQg0HyoX/+2cTbyUYZIe3C7pqqrRf4LEXW/2Yknxwv9gHwehQThpF8zLIhMs
-         NfNmWpITjxg5aWwj6+sUO3yULhtJMY/bOuGOA6Fglz6Pg7PfWZdwr3CXM36gKTGt2MXF
-         yu6w==
+        bh=50UwLTbKlwNfvKUJ1gsJb9YQw+ZsuESdyjxW59v0kZ8=;
+        b=yJmRxbIOWc+j9la5lSYMbBLbEDJEeW5YsbGyqfRIGyHhQjJocCMXUgWObRmN8YxAI7
+         2jmvxcAdGNiJEA3E0lOJbgxigY+TVDf8CHkfXml5Xkihfg0QvqIFh37M4fxP5keMWfWx
+         OBYElNGqLP+XMaEqIAJa2OmDIvJebgkquLTRloLgcJXloC2PhhpYsoP3RGSVrYDKFarM
+         qESQkXKhInUMS8vJBeiLvsRVwVsGMt1EAIDtETzWq/HPCFcXGffoxFgcXLvISbb3I3K2
+         rsdEffgdIJHLoHYuU+kc/11yf2a5lgInMxLsokOAuQTcobYxnRdnx79lxaa1sCxSF6zV
+         hWUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678829017;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        d=1e100.net; s=20210112; t=1678829125;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lxuM4RGN6BlLke1o4GIxUxY3khRpRz3CJd1nnGUC+3c=;
-        b=nu6UotKG4+7qgzvteDJyUSpTZ9vLtpsuAMjlGFvSU8GOk56lKaWVAdMsc5BO5Orhxz
-         CMuRvpYKJVtksG3nJNnmFQzEFVcrasdpzEG4q0CXlEe5cRoJIQp2Nr/iF6lpivnMwLEM
-         +ngAyMS1VxcAadcKeDOzRZqSCC6zp0AWkaB6/YH5uk60o37oR2WQHg43Lkpf2Mzbk5pc
-         BsNLCF4fW8SNFO5roWWfi2EG99FIUYbsIPmXbWy6sDYVLvcbwfv+CA8/JS9Ewi8RAYpw
-         uROf3qRwYZYFsdvshcT5upyhWYM0qrwzvbJbuwjjjTR+h//tCZR7U+NIIrL1eLDtYcB/
-         40Tg==
-X-Gm-Message-State: AO0yUKV6GOhxIFQG7BerDJC8ap7Q1S1XIqgjC0p1aNC9y1tF4qB2SszQ
-        H6rgx92t79F5yK6IO7OHE1Kjjw==
-X-Google-Smtp-Source: AK7set8iZsqHi6RtunD35UZRzSvRrd+rfXSMR3j/iUIMcRv6g1q8OZiJse+/unht3pdTFOIRHw4woA==
-X-Received: by 2002:a92:d5c5:0:b0:315:7fec:f1f0 with SMTP id d5-20020a92d5c5000000b003157fecf1f0mr2887363ilq.7.1678829017479;
-        Tue, 14 Mar 2023 14:23:37 -0700 (PDT)
-Received: from [172.22.22.4] ([98.61.227.136])
-        by smtp.googlemail.com with ESMTPSA id r13-20020a92ac0d000000b003230b8aa2d6sm1071935ilh.57.2023.03.14.14.23.36
+        bh=50UwLTbKlwNfvKUJ1gsJb9YQw+ZsuESdyjxW59v0kZ8=;
+        b=R8f4Sa1j9DQSZE/2XxbcvDrk0kQL91ABOl16jtkPsHHnqEsjLRVuvsg0uc4n1DzAcV
+         gi2gzsIpchkG9gUTgrnWFi8aUbPKp4pUplOxCMcR+Xh4URR/NnYDO4gLOXG1gvrWm5vF
+         DiPz/SUeHDSfkandTk6Fxh7UWYu0YckgpDfBR0ayvLpLTR84ic6RyQfCoPbotMyD9RHs
+         sjJw5XTB4APqoC1Tb2ZzeRoluUfCENShHqAn95Bn15iZ7mpU8OE4t2jnZXT+mqCPMRaH
+         W11XZhtrM1T419xNQ5v+Rwb1Z54fxV4ixXFS23obKu/tLnf6BK/OF2OMSewoOu9l5KhV
+         kkcw==
+X-Gm-Message-State: AO0yUKV6XTL6NBhEUnMGuV6DRW1+H2cerf4qd3cgEbF2ir8RsiTl1H4v
+        bJjP8eIW5TRd5ub4rl6T6ep2Ew==
+X-Google-Smtp-Source: AK7set8j0nqXk3lBMWjIrrbTX3xKuH/R3B6iXPCyXbuTXWXSoqZJJUhA3Mwkv+qn697EUtptxfObvg==
+X-Received: by 2002:ac2:5a0f:0:b0:4e1:36a:eda5 with SMTP id q15-20020ac25a0f000000b004e1036aeda5mr1363025lfn.30.1678829124814;
+        Tue, 14 Mar 2023 14:25:24 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id w21-20020ac254b5000000b004dc7fae3cfcsm545559lfk.75.2023.03.14.14.25.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Mar 2023 14:23:37 -0700 (PDT)
-Message-ID: <b134781b-f28f-57c0-3ebc-9dba28d51074@linaro.org>
-Date:   Tue, 14 Mar 2023 16:23:35 -0500
+        Tue, 14 Mar 2023 14:25:24 -0700 (PDT)
+Message-ID: <09b49716-fa77-710c-92ec-3c0d7c154bc3@linaro.org>
+Date:   Tue, 14 Mar 2023 22:25:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH net 0/4] net: ipa: minor bug fixes
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add base qrb4210-rb2 board dts
 Content-Language: en-US
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
-        andersson@kernel.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230314203841.1574172-1-elder@linaro.org>
-In-Reply-To: <20230314203841.1574172-1-elder@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org
+References: <20230314210828.2049720-1-bhupesh.sharma@linaro.org>
+ <20230314210828.2049720-3-bhupesh.sharma@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230314210828.2049720-3-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/14/23 3:38 PM, Alex Elder wrote:
-> The four patches in this series fix some errors, though none of them
-> cause any compile or runtime problems.
-> 
-> The first changes the files included by "drivers/net/ipa/reg.h" to
-> ensure everything it requires is included with the file.  It also
-> stops unnecessarily including another file.  The prerequisites are
-> apparently satisfied other ways, currently.
-> 
-> The second adds two struct declarations to "gsi_reg.h", to ensure
-> they're declared before they're used later in the file.  Again, it
-> seems these declarations are currently resolved wherever this file
-> is included.
-> 
-> The third removes register definitions that were added for IPA v5.0
-> that are not needed.  And the last updates some validity checks for
-> IPA v5.0 registers.  No IPA v5.0 platforms are yet supported, so the
-> issues resolved here were never harmful.
-
-Sorry, it seems I used the wrong hashes in some
-of my "Fixes" tags.  I will post v2 of this series
-tomorrow.
-
-					-Alex
 
 
-> 					-Alex
+On 14.03.2023 22:08, Bhupesh Sharma wrote:
+> Add DTS for Qualcomm qrb4210-rb2 board which uses SM4250 SoC.
 > 
-> Alex Elder (4):
->    net: ipa: reg: include <linux/bug.h>
->    net: ipa: add two missing declarations
->    net: ipa: kill FILT_ROUT_CACHE_CFG IPA register
->    net: ipa: fix some register validity checks
+> This adds debug uart, emmc, uSD and tlmm support along with
+> regulators found on this board.
 > 
->   drivers/net/ipa/gsi_reg.c |  9 ++++++++-
->   drivers/net/ipa/gsi_reg.h |  4 ++++
->   drivers/net/ipa/ipa_reg.c | 28 ++++++++++++++++++----------
->   drivers/net/ipa/ipa_reg.h | 21 ++++++---------------
->   drivers/net/ipa/reg.h     |  3 ++-
->   5 files changed, 38 insertions(+), 27 deletions(-)
+> Also defines the 'xo_board' and 'sleep_clk' frequencies for
+> this board.
 > 
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+[...]
 
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+This SoC does not feature RPMh, drop.
+
+> +#include "sm4250.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. QRB4210 RB2";
+> +	compatible = "qcom,qrb4210-rb2", "qcom,sm4250";
+Please add a qcom,qrb4210 between the board-specific and the common SoC
+compatibles so that we can address QRB-specific quirks if such ever arise.
+
+> +
+> +	aliases {
+> +		serial0 = &uart4;
+> +	};
+> +
+[...]
+
+> +&xo_board {
+> +	clock-frequency = <19200000>;
+> +};
+> +
+> +&sleep_clk {
+> +	clock-frequency = <32000>;
+> +};
+Out of alphanumerical order
+
+
+> +
+> +&qupv3_id_0 {
+> +	status = "okay";
+> +};
+> +
+> +&uart4 {
+> +	status = "okay";
+> +};
+> +
+> +&rpm_requests {
+Out of alphanumerical order
+
+> +	regulators-0 {
+Will there be more PMICs under this node? If not, drop the -0.
+
+[...]
+
+> +&tlmm {
+> +	gpio-reserved-ranges = <37 5>, <43 2>, <47 1>,
+> +			       <49 1>, <52 1>, <54 1>,
+> +			       <56 3>, <61 2>, <64 1>,
+> +			       <68 1>, <72 8>, <96 1>;
+> +};
+Are there *really* so many? Does the board refuse to boot if
+you knock off any of these entries? If so, they probably
+don't belong here.
+
+
+> +
+> +&sdhc_1 {
+> +	status = "okay";
+Status should go last
+> +
+> +	vmmc-supply = <&vreg_l24a_2p96>; /* emmc power line */
+> +	vqmmc-supply = <&vreg_l11a_1p8>; /* emmc vddq */
+The comments are not very useful, drop please.
+
+> +	bus-width = <8>;
+This is defined in the SoC dtsi already
+
+> +	no-sdio;
+> +	non-removable;
+> +};
+> +
+> +&sdhc_2 {
+> +	status = "okay";
+> +
+> +	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>; /* card detect gpio */
+> +	vmmc-supply = <&vreg_l22a_2p96>; /* Card power line */
+> +	vqmmc-supply = <&vreg_l5a_2p96>; /* IO line power */
+> +	bus-width = <4>;
+> +	no-sdio;
+> +	no-emmc;
+Ditto
+
+Konrad
+> +};
