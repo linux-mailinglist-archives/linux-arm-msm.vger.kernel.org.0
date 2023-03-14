@@ -2,269 +2,419 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 300246B881B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 03:11:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E4546B8870
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 03:23:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229740AbjCNCLB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 22:11:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54832 "EHLO
+        id S229783AbjCNCXA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 22:23:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbjCNCLA (ORCPT
+        with ESMTP id S229707AbjCNCW6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 22:11:00 -0400
-Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2045.outbound.protection.outlook.com [40.107.21.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91663848E6;
-        Mon, 13 Mar 2023 19:10:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=k59+v/+bNMmmG3bwvSM9TmfcHu4jniDKxfud1cfPlKXRQqdJTIKNFRPb2c2Q8KT3NPYnYfzKnzr7Ak35rYIRDKlxQWdT8xe833uzN93CE5X3N4j6AQCDf8SJCeUwbWNErPXK9MiZq92CnIqqSJKf3rIyJlqKv2L4K3YjisZTB6mRsa7tC2d3pzxjaGNhgtoQnt6JsViQvkxttZ/tHLtqZRS7/gl6R/R4+rJ1qhfgarqBKqVrDf++v/cYSgpo47pzZwb7Uo0WwCNpD2S5N7E8sMbIjvXsw5ExmUQbwlROI221dTAp203CeSeI+8m9UTaK+xb3PmGSpnif2/o9ArX+pg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6hAz4q2J/zFffXDzeroPDlvlgW4EU3rmnxWrVYXWYvU=;
- b=iYC7MjflOz3d5+R52Yxb09Mn38f09hYx0KKkMbkkQSjLePvdh7RBeJgA97wxqyoUpndNiLBaVhqwTSMAigl9b7377v2JyGE5Xo2X0AMxVfTrK2qZQZ7dVOGoG74/KwTxYUZV7qEOpSxP3egT+BbHeGzgm+VMVGw5xgasdQisTy8eq6+uAMH+ORLwFBrPig0ByhnLq96rz5xD/Wms9OhqTMXh/aReZT6RC6Qga8EbRE/zvIz1ZsDL4O9bw7v0Rqu25vsylj6BtKMW9AwG6EGCYSyXyODoZXw7dGvyzvTJvHDvhbnDJLXPO+cH7kTtUK5o3dxIgwu4axvyHwpvje0HkA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6hAz4q2J/zFffXDzeroPDlvlgW4EU3rmnxWrVYXWYvU=;
- b=rhwp4qMU3kJ6ctG9hgS6/pH6pSjVQkzxB0UG1oMqAhVBgEXzsgQipmr2GXc0GZiXap8wxwsuCB9vzEA+MptiMgAtHU2WmzhNEEvcgblY0Bvkt3pVgJfq1Yago+cWsFCCN32mVX0Gx7VwXN/a8OwzRN/zBQNUpPquTOaE2IjKPCw=
-Received: from AM6PR04MB6341.eurprd04.prod.outlook.com (2603:10a6:20b:d8::14)
- by DU0PR04MB9561.eurprd04.prod.outlook.com (2603:10a6:10:312::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.19; Tue, 14 Mar
- 2023 02:10:55 +0000
-Received: from AM6PR04MB6341.eurprd04.prod.outlook.com
- ([fe80::89aa:9204:790d:e46b]) by AM6PR04MB6341.eurprd04.prod.outlook.com
- ([fe80::89aa:9204:790d:e46b%5]) with mapi id 15.20.6178.024; Tue, 14 Mar 2023
- 02:10:55 +0000
-From:   Ming Qian <ming.qian@nxp.com>
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        "tfiga@chromium.org" <tfiga@chromium.org>,
-        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
-        "mchehab@kernel.org" <mchehab@kernel.org>,
-        "shijie.qin@nxp.com" <shijie.qin@nxp.com>,
-        Eagle Zhou <eagle.zhou@nxp.com>,
-        "bin.liu@mediatek.com" <bin.liu@mediatek.com>,
-        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
-        "angelogioacchino.delregno@collabora.com" 
-        <angelogioacchino.delregno@collabora.com>,
-        "tiffany.lin@mediatek.com" <tiffany.lin@mediatek.com>,
-        "andrew-ct.chen@mediatek.com" <andrew-ct.chen@mediatek.com>,
-        "yunfei.dong@mediatek.com" <yunfei.dong@mediatek.com>,
-        "stanimir.k.varbanov@gmail.com" <stanimir.k.varbanov@gmail.com>,
-        "quic_vgarodia@quicinc.com" <quic_vgarodia@quicinc.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "andersson@kernel.org" <andersson@kernel.org>,
-        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
-        "ezequiel@vanguardiasur.com.ar" <ezequiel@vanguardiasur.com.ar>,
-        "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
-        "daniel.almeida@collabora.com" <daniel.almeida@collabora.com>,
-        "hverkuil-cisco@xs4all.nl" <hverkuil-cisco@xs4all.nl>,
-        "laurent.pinchart@ideasonboard.com" 
-        <laurent.pinchart@ideasonboard.com>,
-        "jerbel@kernel.org" <jerbel@kernel.org>
-CC:     "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-mediatek@lists.infradead.org" 
-        <linux-mediatek@lists.infradead.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-rockchip@lists.infradead.org" 
-        <linux-rockchip@lists.infradead.org>,
-        "kernel@collabora.com" <kernel@collabora.com>
-Subject: RE: [EXT] [RFC 3/4] media: videobuf2: Use bitmap to manage vb2 index
-Thread-Topic: [EXT] [RFC 3/4] media: videobuf2: Use bitmap to manage vb2 index
-Thread-Index: AQHZVbQHYvopPzbkcUeiL1IQ3S1A1q75h32Q
-Date:   Tue, 14 Mar 2023 02:10:55 +0000
-Message-ID: <AM6PR04MB634195FDE919FA9462187045E7BE9@AM6PR04MB6341.eurprd04.prod.outlook.com>
-References: <20230313135916.862852-1-benjamin.gaignard@collabora.com>
- <20230313135916.862852-4-benjamin.gaignard@collabora.com>
-In-Reply-To: <20230313135916.862852-4-benjamin.gaignard@collabora.com>
-Accept-Language: zh-CN, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM6PR04MB6341:EE_|DU0PR04MB9561:EE_
-x-ms-office365-filtering-correlation-id: 3b135925-5dce-4ff5-f866-08db24315820
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: OSZOyXMkSSxqHMEdVE1fvHKjw0OhqQKeu54/OnK311ogLBnISNTJRTlmvxTOPDx+7/9gZaI5+rjjN558c6FqkjWYXh4vea3TYLMlezgxM5L6Emficyn5rXQZq1KVC6TB2BEOY5kGOg4cDIVzZMd6hz8mSLHei/H73FRIfYgdQvTEE3ayaze7n9VI6CwLBh2Bop/OeWp2cmGin9p2+V4BGQn8JULmpCITMbVT42XUkCbsCEkQgnQNhP9TnGcDpDA9fsj6uWiQagWXv94+Hng7EaQbqPloHqDkXtehy4QvEKIz8/UbN4GFBEbp47r004s72/VTrZlfnOf2jdNM253S65tyDWb4BXTSHZkrFg1vqKSIviJO19y5JfLc1dlfbHL1YBn0h2/oGHaB/dHMe+xa4ZVDfidsJmzcSdrPluICLFn2yetlKe21N6KhLj1PBXxRR/65WwW19N0rPTYLe6doq/9qinRMID9NO67kT2EpamN5cxmpzz7F7GwxDDl5UXcaCC61doJ163w0FSkr0ubkmlIAtUkr9VAmIsYzr3Vd6sqHdT10ud93G5Q9xvt1L7JnuGNLoDIYZXKHDE/Fy/rRQaBZUyxWaea0ONExEpEqfzfuX1QTPbegAeplN2yhWg77NmZo6Ik6APg1LHrqlHY9IxMruKo8CoWB/7Xu+Pc3XzQds8IY+0B/TeJ+7dy4v1hP4nmmFR7GBv31Jx5ojNkHlqzqXYoVezqQoD8wfNi4trE=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM6PR04MB6341.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(366004)(396003)(136003)(39860400002)(346002)(376002)(451199018)(83380400001)(33656002)(478600001)(54906003)(55016003)(921005)(110136005)(38100700002)(122000001)(38070700005)(316002)(186003)(71200400001)(6506007)(52536014)(64756008)(26005)(7696005)(9686003)(66476007)(66946007)(7416002)(66556008)(44832011)(5660300002)(66446008)(86362001)(4326008)(8936002)(8676002)(76116006)(41300700001)(2906002);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?AOz6nfHUKM2pMlb5d5Ynaynp8Lyy+3R7Wve7R47/k02i1gyRzXKJGL3QPRrn?=
- =?us-ascii?Q?6BWePztDSV5U3sl7v9S7t0Yf9Af05Awvy3nHRvhhQhPlbgIgRsBSSVG/fdDL?=
- =?us-ascii?Q?+4XsByWplG3lEPc6fqSJYHJjuWH4FfnuIMEy0nHc8KebqA1rIV6KbODqVzbF?=
- =?us-ascii?Q?xEHMJZiibwq24+el2twJ+rMyeg+EfwoVENwPgW5Kng596R0vkfVhJVTd/2y6?=
- =?us-ascii?Q?LNQuFo+Eti09gT/cMuK5WK13slsBTtlXvQ9Ql2kXOlcOdxN55jERITYhq0Jj?=
- =?us-ascii?Q?XyrAHbLxFZ/Z6HppgONF9bG+SOXwsBbNQRNpf7qAFuO71fMCbRrDxzQzSAo/?=
- =?us-ascii?Q?i2JrudF+W+vMscSZTRmx+eMfhHarJrWOKDO+DcZl2XR3gRUqmc7Pw/O4q7tm?=
- =?us-ascii?Q?RK6sClx2eRwx2bX1VQTw3XEHRtezOQ7jnHW1YeBfKJgg603FzfAOL1eMvPoa?=
- =?us-ascii?Q?BP5Q2sByWhzSKPioWVtYOPbw7uJGZDwIZ2h8ZRB7jAgTuMRJ1/CdNhhTvCAJ?=
- =?us-ascii?Q?k5I4N0t9G6Dl8txCzaRa/Rbv4nZOnRIH7n2nAHiaFsDruQq9LhpWfoRYRal8?=
- =?us-ascii?Q?X3uk561zR5/lHwaimJ5UsosxBYvU+A00JG8k/SpJW6WXhU5Iz1LUijWTzMAj?=
- =?us-ascii?Q?/qtXGx5JEtfNFtm+8vIdXHkCQ69c38PFUVH05Kh+Gclx6RHC9/nD9oYgWcX3?=
- =?us-ascii?Q?94BBxed8MSJi+q/+h7D2EUvPjpvIuNPldwP63aLoTCVX+nQ6bN2X4fbygrQU?=
- =?us-ascii?Q?2iSRVqXPGC1a++zpEgCryEka70ZJVW8cyNQBFa+4/t5DYkkECx1OELO0pX0/?=
- =?us-ascii?Q?tRfBfcERBGFC0d2Ud9pE0uNDvjUtfumLPtD97H4TT2QRCy1nW7relmox8J3U?=
- =?us-ascii?Q?+ykLcnaNCyJtuRAIUnD5kNdgpwp7FSmeyWTkoAkIeuJUlvn8zkwjST3lh5os?=
- =?us-ascii?Q?F/1erlPE2aDWCM6QjuSn7/SThnGaO+0L+MDBPIIYjE9+YF9fdJsOLDamsHQi?=
- =?us-ascii?Q?/w2j7KC3cbrnveAMalLe5/rC6dzTqOdwyMhJvSkElHNPtzUAFOstJuNcQQU0?=
- =?us-ascii?Q?/BOBBPyeDKVtg3kQayW3sO23NmO2trXyTLn2WTj8RdQVUpi/T2h6o0bV/0lx?=
- =?us-ascii?Q?Rq2GRLZ7+O54sHEBQrHm1yTr5tWQ1iuADlWVF0YQl3sGqIMdhT41K8YUElmr?=
- =?us-ascii?Q?GS8YxQkOlT5v9dpNE2RwSjEZSYQT5buGCvtRp75lOr/7y4btj5RdHcaBSWSL?=
- =?us-ascii?Q?o5QsBuTjUi0TznYZe+j54PEykZAENb3shJ+vIqX3+5g8GWFiRQFn7+6M2To1?=
- =?us-ascii?Q?IIhQE3mXFFY2Da/Yf9HQx/tdIINBdFvmkSlSp8FyJPiOICfbwrSoIchCsdnx?=
- =?us-ascii?Q?kfF7JvAGiBnWojxS/VEB3roP7WNk/UDtXXxNJ6LmEUYkSl2sOoCC6bIFZbQ4?=
- =?us-ascii?Q?/Dcs60LWfiWXlxw1kVZn00KpfQhk3E+7i/eutgrBkoKNMV0AmGOQpxQK4lyf?=
- =?us-ascii?Q?RLxQIsXZ+un/1bon1ocjVRlmkIDh+R3Wggc4w535Htjxw6LJy4MgJq9F4DJn?=
- =?us-ascii?Q?oeeBcGd6RtcwKwuxFaY=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        Mon, 13 Mar 2023 22:22:58 -0400
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01B9994A5E;
+        Mon, 13 Mar 2023 19:22:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678760548; x=1710296548;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=BhSw+DPrxqxDTGt6ATaG/4IOegGNyImcvJQAwCat5z8=;
+  b=MKhqx4lpe0HYoCkk7g/NDIkdoVjYE8hLdPgsNBDALBNDj5/7WxFEom2c
+   dZ1ewmxxGfGjVvIZkC52VlZxIKIck3+7j5Z6lPmoGo/f4+QEc9oRP8SLr
+   W+JG+8uazhLqYQpqidfYtnj08glu1C9ibdunuXBjZqalPmQZ45WKRzdVv
+   pd2w8mUY9hXMMNZ9mDQzuzGGu7EnxtFwY9ENM7qwXLvUGKLdoWtYsQFJt
+   kS+QiVpROLM4MZPVG2K08GoCImppZUzzisqZw5e46GknBWmTs6JeNIjzG
+   zDqsJh82Jq+Zv3XQd0/vAMCn+WWzAWTsud9SmQIoqwfzB0oKYyMiTHDOu
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="325674233"
+X-IronPort-AV: E=Sophos;i="5.98,258,1673942400"; 
+   d="scan'208";a="325674233"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2023 19:22:18 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="747829741"
+X-IronPort-AV: E=Sophos;i="5.98,258,1673942400"; 
+   d="scan'208";a="747829741"
+Received: from mlhayes-mobl1.amr.corp.intel.com (HELO [10.255.39.159]) ([10.255.39.159])
+  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2023 19:22:16 -0700
+Message-ID: <b671e263-5cb8-18e5-dc28-648ab1133c6c@linux.intel.com>
+Date:   Mon, 13 Mar 2023 21:22:15 -0500
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM6PR04MB6341.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3b135925-5dce-4ff5-f866-08db24315820
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Mar 2023 02:10:55.2985
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: btl8Sx43NVVw3lgcg2J98hkw69Y3vkTQSLDMUSeXtGHS7VXVJDi8Gk8/O9l6ek5k4t9HPQvJQmkN2zO3KrB7Ng==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR04MB9561
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.8.0
+Subject: Re: [PATCH v3 00/28] Introduce QC USB SND audio offloading support
+To:     Wesley Cheng <quic_wcheng@quicinc.com>,
+        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com,
+        andersson@kernel.org, robh+dt@kernel.org,
+        gregkh@linuxfoundation.org, tiwai@suse.com
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+References: <20230308235751.495-1-quic_wcheng@quicinc.com>
+ <4f8a66c0-398f-5655-3aa7-a59bc9ba56cc@linux.intel.com>
+ <8b2f3ce7-3e0c-bdf0-8d9f-9aeabba09a15@quicinc.com>
+ <a211f26d-a045-0729-871f-248d5fce3f3f@linux.intel.com>
+ <684daf86-6c3f-7310-eebf-4ebfc3c480ca@quicinc.com>
+ <8a37ccd3-f19e-b30d-d736-04e81b49f3a0@linux.intel.com>
+ <0810f951-f4a6-a51d-97e3-43691b05f702@quicinc.com>
+Content-Language: en-US
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <0810f951-f4a6-a51d-97e3-43691b05f702@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
->Using a bitmap to get vb2 index will allow to avoid holes in the indexes w=
-hen
->introducing DELETE_BUF ioctl.
->
->Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
->---
-> .../media/common/videobuf2/videobuf2-core.c   | 22 ++++++++++++++++++-
-> include/media/videobuf2-core.h                |  6 +++++
-> 2 files changed, 27 insertions(+), 1 deletion(-)
->
->diff --git a/drivers/media/common/videobuf2/videobuf2-core.c
->b/drivers/media/common/videobuf2/videobuf2-core.c
->index 96597d339a07..3554811ec06a 100644
->--- a/drivers/media/common/videobuf2/videobuf2-core.c
->+++ b/drivers/media/common/videobuf2/videobuf2-core.c
->@@ -397,6 +397,22 @@ static void init_buffer_cache_hints(struct vb2_queue
->*q, struct vb2_buffer *vb)
->                vb->skip_cache_sync_on_finish =3D 1;  }
->
->+/*
->+ * __vb2_get_index() - find a free index in the queue for vb2 buffer.
->+ *
->+ * Returns an index for vb2 buffer.
->+ */
->+static int __vb2_get_index(struct vb2_queue *q) {
->+       unsigned long index;
->+
->+       index =3D bitmap_find_next_zero_area(q->bmap, q->idx_max, 0, 1, 0)=
-;
->+       if (index > q->idx_max)
->+               dprintk(q, 1, "no index available for buffer\n");
->+
->+       return index;
->+}
->+
-> /*
->  * __vb2_queue_alloc() - allocate vb2 buffer structures and (for MMAP typ=
-e)
->  * video buffer memory for all buffers/planes on the queue and initialize=
-s the
->@@ -423,7 +439,7 @@ static int __vb2_queue_alloc(struct vb2_queue *q,
->enum vb2_memory memory,
->                vb->state =3D VB2_BUF_STATE_DEQUEUED;
->                vb->vb2_queue =3D q;
->                vb->num_planes =3D num_planes;
->-               vb->index =3D q->num_buffers + buffer;
->+               vb->index =3D __vb2_get_index(q);
->                vb->type =3D q->type;
->                vb->memory =3D memory;
->                init_buffer_cache_hints(q, vb); @@ -2438,6 +2454,9 @@ int
->vb2_core_queue_init(struct vb2_queue *q)
->        mutex_init(&q->mmap_lock);
->        init_waitqueue_head(&q->done_wq);
->
->+       q->idx_max =3D ALIGN(256, BITS_PER_LONG);
->+       q->bmap =3D bitmap_zalloc(q->idx_max, GFP_KERNEL);
->+
 
-Hi Benjamin,
+<snip>
 
-    Does it mean the maximum vb2 buffer count is enlarged to 256?
-    What will happen if user create the 257th buffer?
+>>
+>>>
+>>>       USB                          |            ASoC
+>>> --------------------------------------------------------------------
+>>>                                    |  _________________________
+>>>                                    | |sm8250 platform card     |
+>>>                                    | |_________________________|
+>>>                                    |         |           |
+>>>                                    |      ___V____   ____V____
+>>>                                    |     |Q6USB   | |Q6AFE    |  #5
+>>>                                    |     |"codec" | |"cpu"    |
+>>>                                    |     |________| |_________|
+>>>                                    |         ^
+>>>                                    |         |  #6
+>>>                                    |      ___V____
+>>>                                    |     |SOC-USB |
+>>>    ________   #1  ________         #7    |        |
+>>>   |USB SND |<--->|QC offld|<------------>|________|
+>>>   |(card.c)|     |        |<----------       ^
+>>>   |________|     |________|___ #4  | |       |
+>>>       ^               ^       |    | |    ___V__________________
+>>>       | #2            |  #2   |    | |   |APR/GLINK             |
+>>>    __ V_______________V_____  |    | |   |______________________|
+>>>   |USB SND (endpoint.c)     | |    | |              ^
+>>>   |_________________________| |    | | #8           |
+>>>               ^               |    | |   ___________V___________
+>>>               | #3            |    | |->|audio DSP              |
+>>>    ___________V_____________  |    |    |_______________________|
+>>>   |XHCI HCD                 |<-    |
+>>>   |_________________________|      |
+>>>
+>>>
+>>> #1 - USB SND and QC offload:
+>>> Initialization:
+>>> - Register platform operations, to receive connect/disconnect events
+>>>    from USB SND.
+>>> - QC offload creates a QMI handle, in order to receive QMI requests
+>>>    from the audio DSP.
+>>>
+>>> Runtime:
+>>> - USB SND passes along "struct snd_usb_audio" in order for QC offload
+>>>    to reference USB UAC desc parsing/USB SND helper APIs.
+>>> - USB device disconnection events will result in clearing of the chip
+>>>    entry.
+>>>
+>>> #2 - USB SND and QC offload endpoints:
+>>> Runtime:
+>>> - In the non-offloaded path, USB snd will utilize functions exposed by
+>>>    USB SND endpoint, to help with fetching USB EP references and queuing
+>>>    URBs.
+>>> - In the offload path, qc offload will utilize the functions to fetch
+>>>    USB EP references, so that it can use that information to query the
+>>>    XHCI HCD.
+>>> - Likewise, both will clean up endpoints when audio stream is not in
+>>> use.
+>>>
+>>> #3 - XHCI HCD:
+>>> Initialization:
+>>> - During XHCI probe timing, when the USB HCD is added to the system, it
+>>>    will also initialize the secondary event rings.
+>>>
+>>> Runtime:
+>>> - During USB device plug ins/outs, allocates device slot, assigns eps,
+>>>    and initializes transfer rings.
+>>>
+>>> #4 - QC offload and XHCI:
+>>> Runtime:
+>>> - QC offload needs to reference the transfer ring and secondary event
+>>> ring
+>>>    addresses by executing XHCI offload management APIs.
+>>> - This happens when audio DSP receives a USB QMI stream request.
+>>>
+>>> #5 - ASoC components:
+>>> Initialization:
+>>> - The SM8250 platform sound card driver fetches DT node entries defining
+>>>    the ASoC links. This chain/link has the components involved for a
+>>>    particular Q6AFE path. (not only USB offload)
+>>>      - "cpu" - this is the ASoC CPU DAI that handles interaction with
+>>> the
+>>>                Q6 DSP's audio protocol. (AFE ports)
+>>>      - "codec" - the ASoC codec (backend) DAI defined
+>>> - Registers ASoC platform sound card based on links defined in the DT
+>>> node.
+>>>    - Probes DAI components involved, ie Q6USB and Q6AFE
+>>>
+>>> Runtime:
+>>> - Q6AFE has the bulk of the interaction w/ the audio DSP to start an
+>>> audio
+>>>    session, such as issuing AFE port start commands (part of the
+>>> protocol
+>>>    used to communicate the audio session info)
+>>> - Q6USB will be there to now check for if format requested is
+>>> supported by
+>>>    the device, and maintain offloading status.
+>>>
+>>> #6 - Q6USB and SOC-USB:
+>>> Initialization:
+>>> - Q6USB will query QC offload for USB device connection states. (through
+>>>    soc-usb)
+>>> - Creates a SOC USB entry, that carries information about resources,
+>>>    such as audio DSP memory information and requested XHCI event ring
+>>>    index.
+>>>
+>>> Runtime:
+>>> - SOC-USB will receive connect/disconnect events and propagate to Q6USB.
+>>>    - Q6USB makes devices available for offloading based on these events.
+>>> - Sets Q6AFE port configurations to select the USB SND card# and PCM#.
+>>>
+>>> #7 - SOC-USB and QC offload:
+>>> Initialization:
+>>> - Rediscover USB SND devices when the SOC-USB entry is created (if
+>>> needed)
+>>>      - For situations where the Q6USB DAI hasn't been probed.
+>>>
+>>> Runtime:
+>>> - Propagate connect/disconnect events.
+>>
+>> Is the SOC-USB module or building blocks intended to be generic or
+>> Qualcomm agnostic?
+>>
+> 
+> This should be generic.
 
-Ming
+ok, but then how would it communicate with APR/GLINK described below [1]
+> 
+>> It's not clear to me how it would handle "audio DSP memory information
+>> and requested XHCI event ring index."
+>>
+> 
+> Each soc-usb entry that is created by the ASoC DPCM backend DAI (q6usb)
+> will be able to hold "private data" that, in QC case, is defined as:
+> struct q6usb_offload
+> 
+> This is passed within the snd_soc_usb_add_port() call:
+> snd_soc_usb_add_port(component->dev, &data->priv,
+> q6usb_alsa_connection_cb);
+> 
+> So depending on the user, the private data can contain their own struct
+> with the information they require.
 
->        q->memory =3D VB2_MEMORY_UNKNOWN;
->
->        if (q->buf_struct_size =3D=3D 0)
->@@ -2465,6 +2484,7 @@ void vb2_core_queue_release(struct vb2_queue *q)
->        mutex_lock(&q->mmap_lock);
->        __vb2_queue_free(q, q->num_buffers);
->        mutex_unlock(&q->mmap_lock);
->+       bitmap_free(q->bmap);
-> }
-> EXPORT_SYMBOL_GPL(vb2_core_queue_release);
->
->diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-
->core.h index 47f1f35eb9cb..4fddc6ae9f20 100644
->--- a/include/media/videobuf2-core.h
->+++ b/include/media/videobuf2-core.h
->@@ -561,6 +561,8 @@ struct vb2_buf_ops {
->  * @dma_dir:   DMA mapping direction.
->  * @allocated_bufs: list of buffer allocated for the queue.
->  * @num_buffers: number of allocated/used buffers
->+ * @bmap: Bitmap of buffers index
->+ * @idx_max: number of bits in bmap
->  * @queued_list: list of buffers currently queued from userspace
->  * @queued_count: number of buffers queued and ready for streaming.
->  * @owned_by_drv_count: number of buffers owned by the driver @@ -
->624,6 +626,8 @@ struct vb2_queue {
->        enum dma_data_direction         dma_dir;
->        struct list_head                allocated_bufs;
->        unsigned int                    num_buffers;
->+       unsigned long                   *bmap;
->+       int                             idx_max;
->
->        struct list_head                queued_list;
->        unsigned int                    queued_count;
->@@ -1259,6 +1263,7 @@ static inline struct vb2_buffer
->*vb2_get_buffer(struct vb2_queue *q,  static inline void vb2_set_buffer(st=
-ruct
->vb2_queue *q, struct vb2_buffer *vb)  {
->        list_add_tail(&vb->allocated_entry, &q->allocated_bufs);
->+       __set_bit(vb->index, q->bmap);
-> }
->
-> /**
->@@ -1268,6 +1273,7 @@ static inline void vb2_set_buffer(struct vb2_queue
->*q, struct vb2_buffer *vb)
->  */
-> static inline void vb2_del_buffer(struct vb2_queue *q, struct vb2_buffer =
-*vb)
->{
->+       __clear_bit(vb->index, q->bmap);
->        list_del(&vb->allocated_entry);
-> }
->
->--
->2.34.1
+ok, so "handle private data such as audio DSP memory information
+>> and requested XHCI event ring index" is what you meant. That'd fine.
 
+>> In addition, it seems to be the "bridge" or means of communication
+>> between qc_audio_offload and q6usb, is this not based on custom events
+>> or triggers?
+>>
+> 
+> Ideally, no, it shouldn't be based on custom events.  Intention for the
+> connect_cb() that is defined is just to receive USB device discovery
+> events from USB SND.  From the qc_audio_offload, we call
+> snd_soc_usb_connect() within our platform op that we register to USB SND.
+> 
+> //Platform connect_cb() - called from USB SND probe (device connected)
+> static void qc_usb_audio_offload_probe(struct snd_usb_audio *chip)
+> {
+> ...
+> snd_soc_usb_connect(usb_get_usb_backend(udev), chip->card->number,
+>                 chip->index, chip->pcm_devs);
+> 
+> In the QC situation, we used this to build a list of active devices
+> connected.
+> 
+>> Along the same lines, this SOC-USB entity interfaces with APR/GLINK
+>> which doesn't speak to me so it must be a QCOM interface?>>
+> 
+> Sorry for not labeling those in the diagram, but yes, those are QC
+> specific interfaces.  You can just think of it as a type of IPC transport.
+
+[1] ... something's not clear on how a generic 'soc-usb' component can
+directly talk to a vendor-specific IPC.
+
+Is there a missing layer?
+
+>> I am trying to see if this design could be used for other architectures,
+>> and the QCOM-specific and generic parts are not obvious.
+>>
+>>> #8 - audio DSP and QC offload:
+>>> Runtime:
+>>> - Handle QMI requests coming from audio DSP.  These requests come AFTER
+>>>    the Q6AFE port is opened by the Q6AFE DAI(#6)
+>>> - Returns memory information about resources allocated by XHCI.
+>>> - Enables audio playback when this QMI transaction is completed.
+>>>
+>>>>>
+>>>>>>> When the audio DSP wants to enable a playback stream, the request is
+>>>>>>> first
+>>>>>>> received by the ASoC platform sound card.  Depending on the selected
+>>>>>>> route,
+>>>>>>> ASoC will bring up the individual DAIs in the path.  The Q6USB
+>>>>>>> backend DAI
+>>>>>>> will send an AFE port start command (with enabling the USB playback
+>>>>>>> path), and
+>>>>>>> the audio DSP will handle the request accordingly.
+>>>>>>>
+>>>>>>> Part of the AFE USB port start handling will have an exchange of
+>>>>>>> control
+>>>>>>> messages using the QMI protocol.  The qc_audio_offload driver will
+>>>>>>> populate the
+>>>>>>> buffer information:
+>>>>>>> - Event ring base address
+>>>>>>> - EP transfer ring base address
+>>>>>>>
+>>>>>>> and pass it along to the audio DSP.  All endpoint management will
+>>>>>>> now
+>>>>>>> be handed
+>>>>>>> over to the DSP, and the main processor is not involved in
+>>>>>>> transfers.
+>>>>>>>
+>>>>>>> Overall, implementing this feature will still expose separate sound
+>>>>>>> card and PCM
+>>>>>>> devices for both the platorm card and USB audio device:
+>>>>>>>     0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
+>>>>>>>                          SM8250-MTP-WCD9380-WSA8810-VA-DMIC
+>>>>>>>     1 [Audio          ]: USB-Audio - USB Audio
+>>>>>>>                          Generic USB Audio at
+>>>>>>> usb-xhci-hcd.1.auto-1.4,
+>>>>>>> high speed
+>>>>>>>
+>>>>>>> This is to ensure that userspace ALSA entities can decide which
+>>>>>>> route
+>>>>>>> to take
+>>>>>>> when executing the audio playback.  In the above, if card#1 is
+>>>>>>> selected, then
+>>>>>>> USB audio data will take the legacy path over the USB PCM drivers,
+>>>>>>> etc...
+>>>>>>
+>>>>>> I already voiced my concerns about exposing two cards, each with
+>>>>>> their
+>>>>>> own set of volume controls with the same device. It would be much
+>>>>>> better
+>>>>>> to have an additional offloaded PCM device for card0...
+>>>>>>
+>>>>>> But if the consensus is to have two cards, it's still not clear
+>>>>>> how the
+>>>>>> routing would be selected. In the case where there are two USB audio
+>>>>>> devices attached, the offloaded path would only support one of the
+>>>>>> two.
+>>>>>> How would userspace know which of the two is selected?
+>>>>>>
+>>>>>
+>>>>> With patch#24:
+>>>>> https://lore.kernel.org/linux-usb/20230308235751.495-25-quic_wcheng@quicinc.com/T/#u
+>>>>>
+>>>>> Now, userspace can at least choose which device it wants to offload.
+>>>>> Part of doing that would mean userspace knows what USB SND card
+>>>>> devices
+>>>>> are available, so it is aware of which devices are shared (between the
+>>>>> offload and USB SND path)
+>>>>>
+>>>>>> And how would userspace know the difference anyways between two
+>>>>>> physical
+>>>>>> devices attached to the platform with no offload, and one physical
+>>>>>> device with one additional offload path? The names you selected
+>>>>>> can't be
+>>>>>> used to identify that card1 is the optimized version of card0.
+>>>>>>
+>>>>>
+>>>>> Is userspace currently able to differentiate between cards that are
+>>>>> created by USB SND versus ASoC?  How complex can the userspace card
+>>>>> discovery be?  Can it query kcontrols at this point in time?  If so,
+>>>>> maybe we can change the names of the newly added ones to reflect
+>>>>> that it
+>>>>> is an offload device?
+>>>>>
+>>>>> SND kcontrol names are currently:
+>>>>> Q6USB offload status
+>>>>> Q6USB offload SND device select
+>>>>
+>>>> I must admit I've never seen kcontrols being used to identify what the
+>>>> card is, and in this case it's a pretend-card that's just an improved
+>>>> version of another. It might be easier to use something else, such as
+>>>> the component strings.
+>>>
+>>> Its not exactly a pretend card, right?  This is part of the overall
+>>> platform sound card we have in the system.  At the moment, I'm only
+>>> testing by adding the USB audio routing, but there can be several ASoC
+>>> links defined in the overall platform card.
+>>
+>> Sorry, I misunderstood the proposal. I thought there would be one card
+>> for "generic USB Audio", and another one for "DSP-offloaded USB Audio".
+>> I assumed, probably mistakenly, that all local audio endpoints
+>> (speaker,mics) would be exposed as a separate card.
+>>
+> 
+> Ah got it.  No, that isn't the case here.
+> 
+>> It looks like it's more "generic USB Audio" and "DSP Audio", with the
+>> USB offload being exposed as a PCM device of the latter.
+>>
+>> Did I get this right? In this case, presumably there can be some sort of
+> 
+> Yep that's correct!
+
+ok, that's good.
+
+My initial thought was to add a 'DSP offload' PCM to the USB card, you
+added a "USB offload" PCM to the DSP card. Nice logical swap!
+
+Your proposal might be easier in practice since there's typically a
+vendor-specific configuration file (UCM or custom) file for the DSP,
+where USB information can be added.
+
+It's more problematic to change a generic USB card as we know it today
+and bolt vendor-specific DSP information on top.
+
+The only open I have with your option is that there are still two
+control paths to e.g. set the volume. It would be so much easier for
+userspace if there was a single volume control no matter what path is
+used for data, or make sure the kcontrols are 'mirrored' somehow. If we
+found a way to address this issue that would be ideal.
+
+>> UCM file for the "DSP Audio card" that contains the configuration or
+>> knows which kcontrols to look for. But my point about detection hold.
+>> You could perfectly well have a 'Jack control' that tells userspace when
+>> a device is connected. That way there's no guess work, it's similar to
+>> HDMI for Intel: the device is exposed but only valid when the jack
+>> control is set.
+>>
+> 
+> Hmm, ok.  Let me see if I can switch up some things.  Maybe replace the
+> current snd_soc_dapm_enable_pin() calls in the q6usb connection_cb and
+> replace that with a snd jack report. (the snd jack implementation
+> already takes care of updating the pin if needed)
+
+The jack is useful to let userspace know if a PCM device, i.e. a
+Front-End, can be used. But if you expose a PCM device, nothing prevents
+an application from trying to open and use it, we recently had such an
+issue due to a change in PipeWire that tried to open a non-functional
+HDMI device. So you do need something to bail if the PCM device is
+mistakenly used.
+
+DAPM pin management seems different, it will turn-on/off parts of the
+graph connected to an endpoint. Userpace will typically not know
+anything about pin management, it's an in-kernel concept.
+
+Not sure if you have to choose, those are two different layers, no?
