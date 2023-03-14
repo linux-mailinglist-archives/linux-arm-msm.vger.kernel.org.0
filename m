@@ -2,68 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D21C56B9759
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 15:10:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 078D86B975C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 15:10:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232572AbjCNOKt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 10:10:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56820 "EHLO
+        id S232605AbjCNOKx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 10:10:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232291AbjCNOKi (ORCPT
+        with ESMTP id S231916AbjCNOKp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 10:10:38 -0400
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4B3C85B36;
-        Tue, 14 Mar 2023 07:10:36 -0700 (PDT)
-Received: by mail-io1-f48.google.com with SMTP id g6so6434995iov.13;
-        Tue, 14 Mar 2023 07:10:36 -0700 (PDT)
+        Tue, 14 Mar 2023 10:10:45 -0400
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA0F2746E7;
+        Tue, 14 Mar 2023 07:10:39 -0700 (PDT)
+Received: by mail-il1-f179.google.com with SMTP id h7so8694039ila.5;
+        Tue, 14 Mar 2023 07:10:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678803036;
+        d=1e100.net; s=20210112; t=1678803039;
         h=date:subject:message-id:references:in-reply-to:cc:to:from
          :mime-version:content-transfer-encoding:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=AO9OtxWO9OtOvd5xefZPHLbbBm6bTV85U6hkSkYPrV8=;
-        b=qfvWYoPONo7+N0dih6SL+t5yGhhiHor2VIxLDrfen9Y2vRWigc7dNEdRR5gxnqKZcS
-         FKHZk5hS4EN5I/RNsxMASwN5X4Aq3oVelvTkkqP/uA71yEnIPM/ADVj6IYy6bq/8C+Ca
-         00qonOUza++I6fZDvQhXfeBsc0o14zcb8HvlEM40ihZ01UNMarweWG4PadYBwImplEx+
-         f0lKLq0HpDMZvtHNgKRPYqNZBUxIM8IYUyNDaAhsZFSPrZ56awgA4nrdRrAMohV26kX9
-         O+qrwGI5/7HzlYHIXMiUPL++Gh7S+6G+ZNtEeg6+tskTWeLcAVs2gwk4ZzXIIl7drA4j
-         yzXg==
-X-Gm-Message-State: AO0yUKW+6Ie1l3A+5rOzJrMzzuWjXjKZgreiPDT8/IEkvXj/DOA1vY47
-        LNMe+4U78TMcu0ikXRt3rg==
-X-Google-Smtp-Source: AK7set9d2oLzX+5QU6qtEvSgErDHV3fNQtwQocr4/uY3w5g3N8Pa9Fta1wUTyAO/xYzhNT6Da8a4Uw==
-X-Received: by 2002:a5d:8594:0:b0:74c:b436:4a9e with SMTP id f20-20020a5d8594000000b0074cb4364a9emr24021636ioj.16.1678803035864;
-        Tue, 14 Mar 2023 07:10:35 -0700 (PDT)
+        bh=eS4/esiARLcOTfS3GdLeqZGAcqprgtcpPQrawrBj7eg=;
+        b=Wof+pzJSIpP/hCNcTRLZCf8BALpfc8Kg8hF62PWzeH9cklITZwUr0Py53Y+e66ZCqc
+         XFPMkAzwU2gZSsKszOmd9/2d4XvgjbtCF+hq6I5ijPKqkkIMrWNIT9FEl76XYHKJZap0
+         dyh2U2TNswLOErHc9qH1/BA4HPqm299X0r4MIrssO4oU0K3j6LUGvQ5FklKoApuXMlUi
+         00K1uI1UspuIDru82VkTjWhRKr+czYofEjLV6Mn6dgKc3r36KKC5ABQ4YPodl4mc9M+I
+         zh/GnOVY7hoyHYDdOD/EAy4f8teU6XmLZSMxHBGQdzTqWdG86VZHQrC/5TP+avPCTKmT
+         fX9w==
+X-Gm-Message-State: AO0yUKW15Nh5iSmMcrx6vqxoaExNb/8+Wnfr1TfpF9nIvPMBLj1eZWvt
+        819YceqhI0Z5WwAgXuCvutOnHFCppQ==
+X-Google-Smtp-Source: AK7set9vurV8ePdJ3YUU8JtLsv59fy96jE59gbECky++E2PvPP3k8EJn8p4ZlNE3D5AbxhNRcvvApg==
+X-Received: by 2002:a92:ce12:0:b0:316:e6e5:f0db with SMTP id b18-20020a92ce12000000b00316e6e5f0dbmr2485972ilo.0.1678803038894;
+        Tue, 14 Mar 2023 07:10:38 -0700 (PDT)
 Received: from robh_at_kernel.org ([64.188.179.249])
-        by smtp.gmail.com with ESMTPSA id g21-20020a02bb95000000b004051a7ef7f3sm800531jan.71.2023.03.14.07.10.34
+        by smtp.gmail.com with ESMTPSA id f12-20020a926a0c000000b003231580e8e2sm841024ilc.6.2023.03.14.07.10.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 07:10:35 -0700 (PDT)
-Received: (nullmailer pid 83783 invoked by uid 1000);
+        Tue, 14 Mar 2023 07:10:37 -0700 (PDT)
+Received: (nullmailer pid 83774 invoked by uid 1000);
         Tue, 14 Mar 2023 14:10:19 -0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 From:   Rob Herring <robh@kernel.org>
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc:     Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+To:     Joel Selvaraj <joelselvaraj.oss@gmail.com>
+Cc:     phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
-In-Reply-To: <20230313124040.9463-3-quic_kbajaj@quicinc.com>
-References: <20230313124040.9463-1-quic_kbajaj@quicinc.com>
- <20230313124040.9463-3-quic_kbajaj@quicinc.com>
-Message-Id: <167880254436.25736.2826081458133350078.robh@kernel.org>
-Subject: Re: [PATCH v2 2/5] dt-bindings: arm: msm: Add bindings for multi
- channel DDR in LLCC
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Chris Morgan <macromorgan@hotmail.com>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
+        Max Krummenacher <max.krummenacher@toradex.com>,
+        linux-input@vger.kernel.org, Caleb Connolly <caleb@connolly.tech>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Jeff LaBundy <jeff@labundy.com>, devicetree@vger.kernel.org,
+        Jean Delvare <jdelvare@suse.de>,
+        Job Noorman <job@noorman.info>,
+        Alistair Francis <alistair@alistair23.me>,
+        Markuss Broks <markuss.broks@gmail.com>,
+        Henrik Rydberg <rydberg@bitmath.org>
+In-Reply-To: <20230312093249.1846993-2-joelselvaraj.oss@gmail.com>
+References: <20230312093249.1846993-1-joelselvaraj.oss@gmail.com>
+ <20230312093249.1846993-2-joelselvaraj.oss@gmail.com>
+Message-Id: <167880254230.25342.652645660925907921.robh@kernel.org>
+Subject: Re: [PATCH 1/5] dt-bindings: input: touchscreen: add bindings for
+ focaltech,fts
 Date:   Tue, 14 Mar 2023 09:10:19 -0500
 X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -71,14 +85,15 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 13 Mar 2023 18:10:37 +0530, Komal Bajaj wrote:
-> Add description for additional nodes needed to support
-> mulitple channel DDR configurations in LLCC.
+On Sun, 12 Mar 2023 04:32:45 -0500, Joel Selvaraj wrote:
+> Add devicetree bindings for the Focaltech FTS touchscreen drivers.
 > 
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
+> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
 > ---
->  Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml | 9 +++++++++
->  1 file changed, 9 insertions(+)
+>  .../input/touchscreen/focaltech,fts.yaml      | 81 +++++++++++++++++++
+>  1 file changed, 81 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/input/touchscreen/focaltech,fts.yaml
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -87,14 +102,15 @@ on your patch (DT_CHECKER_FLAGS is new in v5.13):
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/msm/qcom,llcc.example.dtb: system-cache-controller@1100000: reg: [[17825792, 2097152], [19922944, 327680]] is too short
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/msm/qcom,llcc.example.dtb: system-cache-controller@1100000: reg-names: ['llcc_base', 'llcc_broadcast_base'] is too short
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml
+Error: Documentation/devicetree/bindings/input/touchscreen/focaltech,fts.example.dts:23.9-14 syntax error
+FATAL ERROR: Unable to parse input tree
+make[1]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/input/touchscreen/focaltech,fts.example.dtb] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1512: dt_binding_check] Error 2
 
 doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230313124040.9463-3-quic_kbajaj@quicinc.com
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230312093249.1846993-2-joelselvaraj.oss@gmail.com
 
 The base for the series is generally the latest rc1. A different dependency
 should be noted in *this* patch.
