@@ -2,52 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 189086B86CA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 01:19:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 722666B86D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 01:20:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229830AbjCNATx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 20:19:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58888 "EHLO
+        id S230301AbjCNAUn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 20:20:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230337AbjCNATt (ORCPT
+        with ESMTP id S230092AbjCNAUm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 20:19:49 -0400
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B3C54EC0;
-        Mon, 13 Mar 2023 17:19:48 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Mon, 13 Mar 2023 20:20:42 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A949719F06;
+        Mon, 13 Mar 2023 17:20:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 4FEB81F4A5;
-        Tue, 14 Mar 2023 01:19:46 +0100 (CET)
-Date:   Tue, 14 Mar 2023 01:19:45 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 10/10] arm64: dts: qcom: sm6115: Use the correct DSI
- compatible
-Message-ID: <20230314001945.jc3bmfrnhxbtfwkl@SoMainline.org>
-References: <20230307-topic-dsi_qcm-v3-0-8bd7e1add38a@linaro.org>
- <20230307-topic-dsi_qcm-v3-10-8bd7e1add38a@linaro.org>
+        by ams.source.kernel.org (Postfix) with ESMTPS id 72D40B8169D;
+        Tue, 14 Mar 2023 00:20:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2D624C4339B;
+        Tue, 14 Mar 2023 00:20:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678753217;
+        bh=zkFTdFHy/T+MW0RSaJiL3IPJSaWsM37bG5TUq7QsziE=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=UI33xJD9+6CrNJ1L0dqGFcXj/XHzV9mBRAd3n7U1jkOHijdh13+Bz83Gtihr8w14K
+         Vz9c9aYsHSHTleizcwOScqzcUfH9fFYRTRgOIwvBgwHhNjV7gsLhvRI73fh01RAJ+2
+         cuGHn/Fy+KQaw5gfCqW6IzodlZY0MzwqZ3zqSpuTRrUX/S9RkY2F1QPHcmJT1Mzfef
+         14bRb/rm1kM8ERDUYdXoMd/5LgUzpmvbBKBA/+JpnNKXSMEZqxc8gu5YQxcsJw8M9k
+         NY7IpKbofz4JP7l2iuvBya88IeBiYPuNWvW/7mJdrjKUMse9cE+cEBOIZ8B8lKOC+r
+         yuoxgu1w1u8hw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 1043BE66CBA;
+        Tue, 14 Mar 2023 00:20:17 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230307-topic-dsi_qcm-v3-10-8bd7e1add38a@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net] net: ipa: fix a surprising number of bad offsets
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <167875321706.19453.17373640129934893607.git-patchwork-notify@kernel.org>
+Date:   Tue, 14 Mar 2023 00:20:17 +0000
+References: <20230310193709.1477102-1-elder@linaro.org>
+In-Reply-To: <20230310193709.1477102-1-elder@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, luca.weiss@fairphone.com,
+        dmitry.baryshkov@linaro.org, caleb.connolly@linaro.org,
+        mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -55,37 +62,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-03-07 14:01:48, Konrad Dybcio wrote:
-> Use the non-deprecated, SoC-specific DSI compatible.
+Hello:
+
+This patch was applied to netdev/net.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
+
+On Fri, 10 Mar 2023 13:37:09 -0600 you wrote:
+> A recent commit eliminated a hack that adjusted the offset used for
+> many GSI registers.  It became possible because we now specify all
+> GSI register offsets explicitly for every version of IPA.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-> ---
->  arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Unfortunately, a large number of register offsets were *not* updated
+> as they should have been in that commit.  For IPA v4.5+, the offset
+> for every GSI register *except* the two inter-EE interrupt masking
+> registers were supposed to have been reduced by 0xd000.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> index 4d6ec815b78b..26e2c7919961 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> @@ -1218,7 +1218,7 @@ opp-384000000 {
->  			};
->  
->  			mdss_dsi0: dsi@5e94000 {
-> -				compatible = "qcom,dsi-ctrl-6g-qcm2290";
-> +				compatible = "qcom,sm6115-dsi-ctrl", "qcom,mdss-dsi-ctrl";
+> [...]
 
-This is what the example should look like in qcom,sm6115-mdss.yaml, too.
+Here is the summary with links:
+  - [net] net: ipa: fix a surprising number of bad offsets
+    https://git.kernel.org/netdev/net/c/512dd354718b
 
-- Marijn
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
->  				reg = <0x0 0x05e94000 0x0 0x400>;
->  				reg-names = "dsi_ctrl";
->  
-> 
-> -- 
-> 2.39.2
-> 
+
