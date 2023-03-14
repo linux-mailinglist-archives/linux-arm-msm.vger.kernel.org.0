@@ -2,146 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CDBC6B96BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 14:48:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 619EA6B96F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 14:56:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230045AbjCNNsF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 09:48:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35616 "EHLO
+        id S232564AbjCNN4A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 09:56:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230114AbjCNNri (ORCPT
+        with ESMTP id S231231AbjCNNzm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 09:47:38 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67F6A62336
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 06:44:12 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id n2so20048149lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 06:44:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678801449;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jmYDXc1m4ipXRhKVGpFbbcTg2x+quYyEc2SUvpi4ZtI=;
-        b=V0gxCeN0uLEo7r2ZFnoxXs9uCSWWjH4cHQFIC4LOAbBQDPbX5XdqXPmLdPihUYECH1
-         t1ZbUjxOoptLd9c4WxUL3hS755syjxtd9q2LO+Xi8OQe6ZXnkAd2FLr1dP0XAQRJ46Xd
-         rMT0WCY57CUB/yko+paqEn6LJmwq+wHtgwnPHPjpiUokv+n0SbukMJv9DXtCP8tpldDD
-         5v+/dO/Mvln9ahaANsudX+hE6OGLN2lD9rm9i+8aQL8hLwIJRZ0+h3g7QU3IcLjO/FC5
-         i5m+Mc8fnLgE4azgp75Boq/aBoO/FfQHvvEaWCv9e/CTdq8BAf6Q+jELNsTBCoaRNUnS
-         STxQ==
+        Tue, 14 Mar 2023 09:55:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AE7C7A8F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 06:53:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1678801996;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=27KQYZgjkZx3cO9u5MRtjq+WwG0d0GtPOCjo6zjWpFI=;
+        b=T+MkSe9kx3BlrRELLxiAlM2xiVqd/Stk1vTOqYJc2mMGeJtN8uNwtixYULjzRz/3rpH4lb
+        wJwBxfiEN+V83eflgUOzjafrUCoTrvCdBmngJULK7oyMyl4cXkhY9SDUPODO3kW9EId25w
+        LUiiWIl3+bOLDtv71X4cOqUMvabK/QI=
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-41-DMPPS-rpPOSmwp-VAetFBg-1; Tue, 14 Mar 2023 09:53:15 -0400
+X-MC-Unique: DMPPS-rpPOSmwp-VAetFBg-1
+Received: by mail-oi1-f200.google.com with SMTP id q25-20020a056808201900b0037fcc209e73so7010437oiw.21
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 06:53:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678801449;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jmYDXc1m4ipXRhKVGpFbbcTg2x+quYyEc2SUvpi4ZtI=;
-        b=8QVrshPxU7YWsiJIKC6DvrMRQbmx7IZ3WyLDylx11DVsNoXFzfI/76foXNi7/mI51f
-         dc/FtL9GzFSl2tpk17D2iRXYYaGzievWnVpZVh3a6u+FyuTgrjcog76nXmek0x8zFtpg
-         0O86e2B1CeD+k718OqWtsy4en+hJThuZDZCZcMpz6Mmnyb76mkdNxOsWZLHieXrMdJgA
-         +9clB0Z50U4n8LISavLPr1hep30oe3n033ebsGe9/BRL33LzO4CMh6HXBWLZNaby+IOT
-         pJqneQ3D4/tDK4MwnrE55T3sAS1rgxl5UWGb8CEh31s+lS1dXLB6bmswn2ZsX6ah9x2Q
-         1WRg==
-X-Gm-Message-State: AO0yUKUz2FTxnfBIfvCCZVzuoBD4GdGxZxnrcgrJAXLuu1DXMet8/Tzb
-        DlpItEEl+mNPMQ0Hycwtofd2Iw==
-X-Google-Smtp-Source: AK7set+NO6qaZeOqdzmcNO441RgYsVfp5nhWf8D6N1x6R7+Jj7PVVuYDxPH74EcVS5M7ls0+qtz6uA==
-X-Received: by 2002:ac2:50c3:0:b0:4a4:68b7:deab with SMTP id h3-20020ac250c3000000b004a468b7deabmr813430lfm.7.1678801449609;
-        Tue, 14 Mar 2023 06:44:09 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id z9-20020ac24189000000b004d5813386fdsm405637lfh.139.2023.03.14.06.44.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Mar 2023 06:44:09 -0700 (PDT)
-Message-ID: <441030fa-afcb-8e5f-ea5a-f467d9d11937@linaro.org>
-Date:   Tue, 14 Mar 2023 14:44:06 +0100
+        d=1e100.net; s=20210112; t=1678801993;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=27KQYZgjkZx3cO9u5MRtjq+WwG0d0GtPOCjo6zjWpFI=;
+        b=GNS/A0PuCdfBYEJAkgr2BXaiaru9YnjRDl9/H1FN2kEPLAhxyG9ewaGFXKr88wQaJL
+         sJ1evDnuMy2rHn33y75K7ipgGTl0pYSI6HYfdCLGCMe79HF9I3hDaBMQr2K6ACL32tG8
+         CIqjpsxpnbJEgzbPh8KE8YaVfMY+5AWdQhCvCH6lcKHt9jI+QKZuXjBtDPDB6SLDUzBW
+         C/gB733h+dIZfn46s2XgLsrSlfeNGY5Ri91sC46nfBLwKyhVun7FAOwWWCnjwzDfb2ei
+         cS2w8lQQ3h5NfK44QnkfA6RPDPEJzFN6tQ4z5Dzxuqg+4zsTpkwZ9Xyni5V1Zs4zp+gh
+         Ay5A==
+X-Gm-Message-State: AO0yUKVOL7XdmW41Jhf7+NiUBHAYBnHCkHBRsOG68t4yb1QosewPEfOU
+        w1mamTYhAnLFgQwJkS6jxtkaPsC08V4EMTxH5OmLfDKX6SN+oHhpgqMPvGy8xTrApuxxzqzHaak
+        hafqoyrSY5p9a+nxR3guGDqYzCZeUB7xpFgJM
+X-Received: by 2002:a05:6870:40c5:b0:177:9f48:6282 with SMTP id l5-20020a05687040c500b001779f486282mr5967637oal.53.1678801992952;
+        Tue, 14 Mar 2023 06:53:12 -0700 (PDT)
+X-Google-Smtp-Source: AK7set865OV+J0WHIBTC/561ECQlv4RbYP6x5QMO3SK6tB+6M0mPsz58Rsx3evTgj9Holgi7Z6/nvg==
+X-Received: by 2002:a05:6870:40c5:b0:177:9f48:6282 with SMTP id l5-20020a05687040c500b001779f486282mr5967618oal.53.1678801992726;
+        Tue, 14 Mar 2023 06:53:12 -0700 (PDT)
+Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
+        by smtp.gmail.com with ESMTPSA id an36-20020a056871b1a400b00177c314a358sm1088290oac.22.2023.03.14.06.53.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Mar 2023 06:53:12 -0700 (PDT)
+Date:   Tue, 14 Mar 2023 08:53:09 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Stephen Boyd <sboyd@kernel.org>, andersson@kernel.org
+Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        bhupesh.sharma@linaro.org, mturquette@baylibre.com,
+        peppe.cavallaro@st.com, alexandre.torgue@foss.st.com,
+        joabreu@synopsys.com, mcoquelin.stm32@gmail.com,
+        richardcochran@gmail.com, linux@armlinux.org.uk, veekhee@apple.com,
+        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
+        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
+        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
+        jsuraj@qti.qualcomm.com, hisunil@quicinc.com
+Subject: Re: [PATCH net-next 05/11] clk: qcom: gcc-sc8280xp: Add EMAC GDSCs
+Message-ID: <20230314135309.o7y2ofzdvpowu53j@halaney-x13s>
+References: <20230313165620.128463-1-ahalaney@redhat.com>
+ <20230313165620.128463-6-ahalaney@redhat.com>
+ <e5cb46e8874b12dbe438be12ee0cf949.sboyd@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v4 07/10] drm/msm/dsi: Remove custom DSI config handling
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230307-topic-dsi_qcm-v4-0-54b4898189cb@linaro.org>
- <20230307-topic-dsi_qcm-v4-7-54b4898189cb@linaro.org>
- <20230314130522.wimbrf7d6lqwdbgz@SoMainline.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230314130522.wimbrf7d6lqwdbgz@SoMainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e5cb46e8874b12dbe438be12ee0cf949.sboyd@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Bjorn,
 
+On Mon, Mar 13, 2023 at 03:57:27PM -0700, Stephen Boyd wrote:
+> Quoting Andrew Halaney (2023-03-13 09:56:14)
+> > Add the EMAC GDSCs to allow the EMAC hardware to be enabled.
+> > 
+> > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> > ---
+> 
+> Acked-by: Stephen Boyd <sboyd@kernel.org>
+> 
+> I'm not sure if Bjorn Andersson is planning on modifying this file too,
+> so please confirm it can go through netdev tree.
+> 
 
-On 14.03.2023 14:05, Marijn Suijten wrote:
-> On 2023-03-14 13:13:45, Konrad Dybcio wrote:
->> Now that the only user is handled by common code, remove the option to
->> specify custom handlers through match data.
->>
->> This is effectively a revert of commit:
->> 5ae15e76271 ("drm/msm/dsi: Allow to specify dsi config as pdata")
->>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
-[...]
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
->> index 8772a3631ac1..91bdaf50bb1a 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
->> @@ -65,8 +65,5 @@ struct msm_dsi_cfg_handler {
->>  
->>  const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor);
->>  
->> -/* Non autodetect configs */
->> -extern const struct msm_dsi_cfg_handler qcm2290_dsi_cfg_handler;
->> -
-> 
-> Probably the wrong `fixup!` commit: this should have been part of patch
-> 6 where the struct is removed, not patch 7 (this patch).
-Yeah, that's most likely what happened.. Does that warrant another resend?
+Can you please help respond to Stephen's comment above? I admittedly
+don't have much experience sending patch series that span across
+multiple subsystems, so if there's something I should be doing
+differently (to indicate who takes what patches, etc) in submission
+please do not hesitate to be overly verbose in instructing me!
 
-Konrad
-> 
-> - Marijn
-> 
->>  #endif /* __MSM_DSI_CFG_H__ */
->>  
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index 9cfb9e91bfea..961689a255c4 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -214,10 +214,6 @@ static const struct msm_dsi_cfg_handler *dsi_get_config(
->>  	int ret;
->>  	u32 major = 0, minor = 0;
->>  
->> -	cfg_hnd = device_get_match_data(dev);
->> -	if (cfg_hnd)
->> -		return cfg_hnd;
->> -
->>  	ahb_clk = msm_clk_get(msm_host->pdev, "iface");
->>  	if (IS_ERR(ahb_clk)) {
->>  		pr_err("%s: cannot get interface clock\n", __func__);
->>
->> -- 
->> 2.39.2
->>
+Thanks,
+Andrew
+
