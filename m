@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D36F86B8A8B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 06:38:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B22B26B8A8E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 06:38:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230079AbjCNFiJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 01:38:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52984 "EHLO
+        id S230151AbjCNFiV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 01:38:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230077AbjCNFiI (ORCPT
+        with ESMTP id S230120AbjCNFiO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 01:38:08 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 645F082375
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 22:37:55 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id x37so3788041pga.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 22:37:55 -0700 (PDT)
+        Tue, 14 Mar 2023 01:38:14 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0895D1E5CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 22:38:01 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id l9-20020a17090a3f0900b0023d32684e7fso396158pjc.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 22:38:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678772275;
+        d=linaro.org; s=google; t=1678772280;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5/ORW+ZG5QT+TPocYHNFiE88/XBOJZ36UEuAeSGiS3k=;
-        b=KgC3W5IDzN4LUdbRT3iFN7d0cAncrE4n8ln/gf+4ncvZddm2JS9mfUvfgLPL/FXDH0
-         YQpXC5an/SOmxd+w9D63Th+6q0X2rbD8JRL9W8t6Bs8TRsqcZF+UaneG/qXuxKngLkjT
-         0c65N4SjLlCgGEsmbgUOll4b54vbIFmkTjmwJ3ZVkR2NWnspsczsGtkTdjw9Hg/9Yb2O
-         ijJuyLzi7FEoConmYfLnmjSxknrXksP6K2RDG/Yi8SIia2xyTqHx37ppbXvU01sr45Jq
-         +UO6gJgBexQ6SnagtqQp7cKP+6K/KE8UbRktjMinGIsmWmlAz2sEEduIJ+zMu0RuX+7M
-         mYSw==
+        bh=H3jjAvyClxqCSaG5sOi6OveXFyY33UJ9o9fFaRGOIoU=;
+        b=pTopKsVkrmcnJWqtjzZETiBVVfzs36mxPQet1SSc4HmcKIl/9QrxEYG8b3LT4J9hxb
+         S++6m5piyCfxh/s+J3V0YdwSE7c+YYV23iZ0mGgr/YL01LCbOCZMEo0vcy/0O/xlytSc
+         LagXJ0g5iUX9DCWADWV+i3Zk/rk+wLcMSsytrT5KbHQvuHvToADbxLtkT7wJM4EprV58
+         HTOVaBE6y7rMUumLYRa/w/fNNySH2+SlPtDX3hI+f8x5aDoIBVak6k0JWY74QCeore1g
+         2gHtZjtXDBo0bmCMlmh4B2iQnapr2JSJss5eKGyKGfIgjDxJ3I/lxtYx4ZRTXx2zTiFk
+         lVPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678772275;
+        d=1e100.net; s=20210112; t=1678772280;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5/ORW+ZG5QT+TPocYHNFiE88/XBOJZ36UEuAeSGiS3k=;
-        b=OCHudxwq6iFDPTg+8eqiOCemqvUaGTkKPRFMdVS9wRsEAxkUekfnNw3w5G0cCpHZ6Z
-         9woqoeLjDdlQtAbnBuHUPZDSScg9y17esbk+SX8+H1CnFGKH8q2HaceObYEDX/zV+68e
-         yWATsz7GcJaY8ja/grUdIo+rwh+9REJaOSkAjjpI5wSZ/raEm6Cp2v/IS5Eryh68PrPi
-         IywqfU+6+4/JIuguWKx+fc8ZfgQQSnohZq52f5laG82Re4hK/oTTbJ0P5z6jhS0f879u
-         k88SX7YpQ/mhwOTVeILlYu6BkUBi4SXyWhJkXZvZuX+LUJCDsyDl82dDq+WK8pNo/vyL
-         l3lQ==
-X-Gm-Message-State: AO0yUKVh4cPwKqAVZ9wdH0uSN4/kPL2hbFYmOWbKeiyiNdPrPiqdTeEg
-        aSrQi7O5KLEx1vRHD5ZYZ7GM
-X-Google-Smtp-Source: AK7set9Fuyifr5nJGCwVnScD/xsLUCrzuCB4Xh9lAxf7L1n3LAu3JaOKm6JqLiJs2lfcX2ghWLxPDg==
-X-Received: by 2002:a62:3142:0:b0:5dc:ecea:f650 with SMTP id x63-20020a623142000000b005dceceaf650mr27802545pfx.19.1678772274844;
-        Mon, 13 Mar 2023 22:37:54 -0700 (PDT)
+        bh=H3jjAvyClxqCSaG5sOi6OveXFyY33UJ9o9fFaRGOIoU=;
+        b=68nqH+b/GRZWRcz96+JwdgfyScQ04ZzWNXwC2i8zTq+LKAGKSReavc6TFdClBf9Ivx
+         WYGsRJ4BHJsr2p2VT4IbzJbJlR6vXG1gib/G1Je7jnEnI0rqq4yp3pZY4hEdaHKStxlZ
+         H7hd26UcT9SAz1JrtX0PqPBjPOGcozthrMldNl3uLKttl8/jIaXXbrRcPZVaZmSj7FvZ
+         iBtYX0yHZ4Q7AULaGU+kyMsHdpOJK5hrUO/qCd92eH6+mGeRsGR+LE1yCqdKtb0Frn0Q
+         n7AM5YfCLgxc1dY+7HQqpzEynoBRBuQjx3uLIu1QOGK+MlJBaqVgC5BvNdyK4is2XvEy
+         Tuag==
+X-Gm-Message-State: AO0yUKVpYFK04OQKtWT4R67DTy88b0v1VFPfELCX7CbhAG2IjVhudOiy
+        hZi7S/k5pwqbeBGj54iNA9AL
+X-Google-Smtp-Source: AK7set+JWC2Y4o/tgD3y+UbDf7MYlD1NuQyiIJm43pesdd21YA1LiY3m1EAQuGngccI30EH6k6HKbA==
+X-Received: by 2002:a05:6a20:b919:b0:cc:7f86:a804 with SMTP id fe25-20020a056a20b91900b000cc7f86a804mr32705451pzb.6.1678772280120;
+        Mon, 13 Mar 2023 22:38:00 -0700 (PDT)
 Received: from localhost.localdomain ([117.217.177.49])
-        by smtp.gmail.com with ESMTPSA id n126-20020a634084000000b005034a46fbf7sm675093pga.28.2023.03.13.22.37.50
+        by smtp.gmail.com with ESMTPSA id n126-20020a634084000000b005034a46fbf7sm675093pga.28.2023.03.13.22.37.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Mar 2023 22:37:54 -0700 (PDT)
+        Mon, 13 Mar 2023 22:37:59 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     andersson@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
@@ -60,9 +60,9 @@ Cc:     konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
         quic_ppareek@quicinc.com, luca.weiss@fairphone.com,
         ahalaney@redhat.com, steev@kali.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v7 04/13] arm64: dts: qcom: sc7180: Fix the base addresses of LLCC banks
-Date:   Tue, 14 Mar 2023 11:07:16 +0530
-Message-Id: <20230314053725.13623-5-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v7 05/13] arm64: dts: qcom: sc7280: Fix the base addresses of LLCC banks
+Date:   Tue, 14 Mar 2023 11:07:17 +0530
+Message-Id: <20230314053725.13623-6-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230314053725.13623-1-manivannan.sadhasivam@linaro.org>
 References: <20230314053725.13623-1-manivannan.sadhasivam@linaro.org>
@@ -70,8 +70,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,25 +83,28 @@ and holes in between. So it is not a correct approach to cover these
 banks with a single offset/size. Instead, the individual bank's base
 address needs to be specified in devicetree with the exact size.
 
-On SC7180, there is only one LLCC bank available. So let's just pass that
-as "llcc0_base".
+While at it, let's also fix the size of the llcc_broadcast_base to cover
+the whole region.
 
 Reported-by: Parikshit Pareek <quic_ppareek@quicinc.com>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index ebfa21e9ed8a..62cc9eb4882d 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -2760,7 +2760,7 @@ dc_noc: interconnect@9160000 {
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index bdcb74925313..afe74db1f5ae 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -3582,8 +3582,9 @@ gem_noc: interconnect@9100000 {
+ 
  		system-cache-controller@9200000 {
- 			compatible = "qcom,sc7180-llcc";
- 			reg = <0 0x09200000 0 0x50000>, <0 0x09600000 0 0x50000>;
+ 			compatible = "qcom,sc7280-llcc";
+-			reg = <0 0x09200000 0 0xd0000>, <0 0x09600000 0 0x50000>;
 -			reg-names = "llcc_base", "llcc_broadcast_base";
-+			reg-names = "llcc0_base", "llcc_broadcast_base";
++			reg = <0 0x09200000 0 0x58000>, <0 0x09280000 0 0x58000>,
++			      <0 0x09600000 0 0x58000>;
++			reg-names = "llcc0_base", "llcc1_base", "llcc_broadcast_base";
  			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
  		};
  
