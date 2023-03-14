@@ -2,115 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F27936BA172
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 22:29:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1EDB6BA184
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 22:41:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230140AbjCNV27 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 17:28:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43386 "EHLO
+        id S230414AbjCNVlb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 17:41:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229970AbjCNV26 (ORCPT
+        with ESMTP id S230394AbjCNVla (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 17:28:58 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B7301DB95;
-        Tue, 14 Mar 2023 14:28:56 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DA821619BF;
-        Tue, 14 Mar 2023 21:28:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF4FC433EF;
-        Tue, 14 Mar 2023 21:28:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678829335;
-        bh=3Xd2e0C4tHRKY8ttLfie/FTu756NF/DDGLIrwdbnRRI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=CrnDapEVZAWiB+mIBAkjNiEv+UGUzEaAXzuMjTzjjEjS1jbpzhk4J2kgwl2c/1DLv
-         leWLICG1I34rVaMoFzfS6KT+pDfSKjYUqn/qV27H2Izlzusu/PM9ELuMcVuZs5nbXc
-         wiMQ4j/DZZzvknkfWI0XjEcLTr5fvjiRHDqDdIO5S4sbCsFW3ae6cixo9DDsOymiU4
-         xdm60qcKIRC2XZyRwIRkMQXETXv9NIYJCA7kkOswpKDjc6IIqXKiE3zulc8GtuzLRV
-         fDyJUISdqsbDYK0sZx473KQnK7GIf7PFS+sV5De4ORUzdhJqHaLlzq6JpuHDtE5tuF
-         wO2ZHOvbLsEtg==
-Date:   Tue, 14 Mar 2023 22:28:51 +0100
-From:   Andi Shyti <andi.shyti@kernel.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Kasumov Ruslan <xhxgldhlpfy@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, lvc-project@linuxtesting.org,
-        Kasumov Ruslan <s02210418@gse.cs.msu.ru>
-Subject: Re: [PATCH] iio: adc: qcom-pm8xxx-xoadc: Remove useless condition in
- pm8xxx_xoadc_parse_channel()
-Message-ID: <20230314212851.hqbzs5hhed5apcv5@intel.intel>
-References: <20230314193709.15208-1-xhxgldhlpfy@gmail.com>
- <CACRpkdan0Vt_T3aRVAK4rd=hQV=MOARm9Wq7sD8rjoisTW6Dkw@mail.gmail.com>
+        Tue, 14 Mar 2023 17:41:30 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76586210E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 14:41:28 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id x17so5717770lfu.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 14:41:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678830087;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KKHLLfrtsWXe/lqW7YIokdSzSsx0dBn73FbFOSIwxzc=;
+        b=BBsE2tGZnpCOA02VUkzl3RGwxXm1x3FIXK70j80MWpuNeVHbKqhAhVwDhXC98jRx3D
+         aMxoXuRLFXAIisOYdpG21AxBfspc3Qd8AkKMyws+rg2Orfddylr5l0shfqgRiDLL2v8R
+         HbfHYwQQrfP1syrdWD146ijbH+F7eWYzUY+B9xRqLL/lAYWccrhwf6TCWh+OMPFsFzXK
+         mZa+omRPwe5glcq7hEFriHPziCcu/eD2Bz2UeD38hRE3LtujrigNi+Z5mQYq+0pI/yWO
+         2JojZwJSA3K9bSzzj5oKdwZeDOvTrxw08OYqpaYHL1lJSMjat78OJGhk/EzVo9feWY4y
+         bviQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678830087;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KKHLLfrtsWXe/lqW7YIokdSzSsx0dBn73FbFOSIwxzc=;
+        b=OuJoEcTd2D1w8U9jHpQQEZQGBMZ+6226+jlH5kXTV1FDhz03kgc0dydXM6dsm5s55s
+         heAhAWsKcdEri0RLBJ3fzQ6K6jJJazesC2ndInRZyBioHSITHaGj+bcLvFPE1BA7XBHB
+         zbjYRjbRUz6dbwSSFuVui7EqvFHv0hs0hh361vwTsDAsmwNlsfrxQjcMkOPSwntNt/CF
+         YTvwIJGmWr7HtHTk6Uk6LsrwGLe5kbUSpRzWJBC2I1hLTmpEJM7qh6b/1ObJ2zYF6sou
+         NKU+WdATPoIWP07aEQnJAhi3H8PSki+X30dwm/8fFlDkOeKs83PvMVsQ8j0eDe3fj2Xd
+         QZ0A==
+X-Gm-Message-State: AO0yUKU/KiJv7AsPrTKk+SXIkta1gVpeRInsiPFbyBNaUHkIl59bLGTF
+        WLiDHhHb+escxyrmPsncv6w1qQ==
+X-Google-Smtp-Source: AK7set99d2uuQGEHb/BW7sT+lJQk+Z3Ety7McPDqWDqhO7Xj8A+tDLJBduLDOEbKZN6uZ6UzoPGFJA==
+X-Received: by 2002:ac2:491b:0:b0:4e8:49ff:8dfe with SMTP id n27-20020ac2491b000000b004e849ff8dfemr1213369lfi.61.1678830086860;
+        Tue, 14 Mar 2023 14:41:26 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id g20-20020ac25394000000b004e81e9d77c7sm549081lfh.107.2023.03.14.14.41.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Mar 2023 14:41:26 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/2] QCM2290 socinfo
+Date:   Tue, 14 Mar 2023 22:41:14 +0100
+Message-Id: <20230314-topic-scuba_socinfo-v1-0-acd7a7ab9d46@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACRpkdan0Vt_T3aRVAK4rd=hQV=MOARm9Wq7sD8rjoisTW6Dkw@mail.gmail.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPrpEGQC/x2N0QrCMAwAf2Xk2UDXVXD+ioi0aeYCIx3NJsLYv
+ 1t8vIPjDjCuwgb37oDKHzEp2qC/dEBz1Dej5MbgnR/c0AfcyiqERnuKLyskOhUkF8hfcx7HcIN
+ WpmiMqUalubW6L0uTa+VJvv/V43mePxLubGh6AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1678830085; l=564;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=ivtUQQdOkAYNfjgBDX+0HKIg7ItmilYOYvwpR8ESwMM=;
+ b=2gDfxJZFyacU2ZhWO6zgdvJBW+hK7ZI8xuLXjhnMJlTAFWec+E/Sau+3KH1c5gd+EHwaDiVdcmLy
+ H0qInb5EBiRIMmSnPtJZMyfO0YHvAYPdG+ebsQblA9mO7vU5Q0DA
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Add missing SoC IDs for QCM2290 and its robotics variant.
 
-> > The left side of the loop condition never becomes false.
-> > hwchan cannot be NULL, because it points to elements of the
-> > hw_channels array that takes one of 4 predefined values:
-> > pm8018_xoadc_channels, pm8038_xoadc_channels,
-> > pm8058_xoadc_channels, pm8921_xoadc_channels.
-> >
-> > Found by Linux Verification Center (linuxtesting.org) with SVACE.
-> 
-> I am not impressed with that tool. See below:
-> 
-> > Fixes: 63c3ecd946d4 ("iio: adc: add a driver for Qualcomm PM8xxx HK/XOADC")
-> > Signed-off-by: Kasumov Ruslan <s02210418@gse.cs.msu.ru>
-> 
-> (...)
-> >         hwchan = &hw_channels[0];
-> > -       while (hwchan && hwchan->datasheet_name) {
-> > +       while (hwchan->datasheet_name) {
-> >                 if (hwchan->pre_scale_mux == pre_scale_mux &&
-> >                     hwchan->amux_channel == amux_channel)
-> >                         break;
-> 
-> NAK have you tested this on a real system?
-> 
-> Here is the complete loop:
-> 
->         hwchan = &hw_channels[0];
->         while (hwchan && hwchan->datasheet_name) {
->                 if (hwchan->pre_scale_mux == pre_scale_mux &&
->                     hwchan->amux_channel == amux_channel)
->                         break;
->                 hwchan++;
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      dt-bindings: arm: qcom,ids: Add IDs for QCM2290/QRB2210
+      soc: qcom: socinfo: Add IDs for QCM2290/QRB2210
 
-ops, yes, sorry, I overlooked at this... This becomes NULL at
-some point as there is a sentinel in the _variant structures.
+ drivers/soc/qcom/socinfo.c         | 2 ++
+ include/dt-bindings/arm/qcom,ids.h | 2 ++
+ 2 files changed, 4 insertions(+)
+---
+base-commit: ec0fa9a0a6fac454745c930bdb8619d0a354bac9
+change-id: 20230314-topic-scuba_socinfo-c04c25dd9948
 
-Thanks,
-Andi
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
->                 chid++;
->         }
-> 
-> Notice how hwchan is used as iterator in hwchan++.
-> 
-> What you are doing will cause a zero-pointer dereference.
-> 
-> Whoever is developing "SVACE" needs to fix the tool to understand
-> this kind of usage.
-> 
-> Yours,
-> Linus Walleij
