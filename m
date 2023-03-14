@@ -2,82 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E78156B89C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 05:44:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 141626B89C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 05:46:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229486AbjCNEox (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 00:44:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35932 "EHLO
+        id S229548AbjCNEqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 00:46:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbjCNEou (ORCPT
+        with ESMTP id S229472AbjCNEqf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 00:44:50 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAE2037F10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 21:44:49 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32E3WCbn014422;
-        Tue, 14 Mar 2023 04:44:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=OUgKNwk94Apxa8vxq4HoVI/tW3UQ4VXD0YUfnohnyJ4=;
- b=OWSujiNClWZ8h4pMDbgWVskh9p3vdxI5dFEG4YT1wciKPjY5H3s26VIZdJD3EOYcvaDT
- rqGF9Uke/Drq1d5XYBKZ920eA/NW5CxunTGBiSlq38dOwxFGbMIRHK3tNQDFpbph7q0Y
- TXtXjl3Z0p2cuGg864udQNlPe0UhVnTPf8/1ZK37PJsF58KNP3OrQHhGtYaxs5D/hPaa
- s4vTGVeisvtvF/MBBlY+6m+7tvNvbi8JClJ/bRXwqaGETNRiRS4dXtuft1XE4flYLixb
- zS/temctAaeOkb2AVYc3AFGm3h44zw+dtlq2Soyzja9mMlTWcpN0Zbq990Apc6u+ZUQt hw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pa1qgtjfc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Mar 2023 04:44:43 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32E4ig12029376
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Mar 2023 04:44:42 GMT
-Received: from [10.110.64.241] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 13 Mar
- 2023 21:44:41 -0700
-Message-ID: <30019903-cc39-0466-26fc-6491d6a0a91c@quicinc.com>
-Date:   Mon, 13 Mar 2023 21:44:41 -0700
+        Tue, 14 Mar 2023 00:46:35 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6D697EA3D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 21:46:33 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id u3-20020a17090a450300b00239db6d7d47so13903165pjg.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 21:46:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678769193;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UasGxUvD/6g4IwIcOZQz9JmOw1F78bhUJX7l6AUhgEk=;
+        b=ABdMLy0qDOTqhAEOBhgimyuNWzeR/Zq5TUIKYOS3Qg/oz1Q5nV6Cu5vjpZE7o0ErJE
+         VygRD7tCfY+mb/m6T1HY1BV4iLZl17WK7INjQXz1vFJbAwPDgrH9mqIhXJEwovlPh817
+         v4KfnPuyqnKGTBW4VwbI2FAuYqWefezJqTn1wWm4bRXfQ4lmAl886AsC3YPdHUtQIOYD
+         yNXAyIyd+J+NzElYfwRWL+RJSS0FC49fJqpUiGx4tpzBKxgZF35qh5dXw3tLtRwNFxqg
+         t4NwwSppme77as7jki7UhJ4c4MFT3lpfWn688RVhVCHdN+EegQtAzgJ06V01dMBAtUxa
+         E8zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678769193;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UasGxUvD/6g4IwIcOZQz9JmOw1F78bhUJX7l6AUhgEk=;
+        b=Z7BBxUhFL5Xaes9L9mgMHuClSPt3zHnshYJ1s9V8oTw2xj0i2rHkVK1WJg5p1eHKVp
+         DDGzIsH8AlJtQBy1s/l3IyI5j0hHJv54l4CbLp0vTm6KG6cbT12CtmlNxX+MTWoO/paa
+         1r7j87eX+j6QxFHuX3kK3LIgaA0wrM6LSKFW4lQFUjoKs+DfGzOuNla1R5xrj1Jz0t/d
+         KxIptyHssILqpKytJzFrZdnDgt4TNPYytubfhKphLTjgNFFHw07X1r6TEOb7/LZCaS5/
+         QQDJUB/dYmoOcPaACTojAas+CvOSa/nnPG7TbFTV42pgVEFwocsJcQmm2IMPZgo3MN78
+         I6ZQ==
+X-Gm-Message-State: AO0yUKW2z0qymPofwYzZnaIl/+C/t+yAs0b2nAqOUD3r4Zr33HQ8VRnC
+        xqD1+LmnDU5bPKOPFGdHA93M
+X-Google-Smtp-Source: AK7set9w0z5ELRqjpIFXFvbpfdGQuGD93hmPVj3hFDC/IOl8akSJqOB1b6dOFR3oMdAMhNGpOXNm0Q==
+X-Received: by 2002:a17:902:c946:b0:19c:be03:d1ba with SMTP id i6-20020a170902c94600b0019cbe03d1bamr42635675pla.6.1678769193313;
+        Mon, 13 Mar 2023 21:46:33 -0700 (PDT)
+Received: from localhost.localdomain ([117.217.177.49])
+        by smtp.gmail.com with ESMTPSA id lh13-20020a170903290d00b0019c2b1c4ad4sm690125plb.6.2023.03.13.21.46.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Mar 2023 21:46:32 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lpieralisi@kernel.org, kw@linux.com
+Cc:     kishon@kernel.org, bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 0/7] Add support for MHI Endpoint function driver
+Date:   Tue, 14 Mar 2023 10:16:16 +0530
+Message-Id: <20230314044623.10254-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v5 32/32] drm/msm/dpu: remove unused
- dpu_plane_validate_multirect_v2 function
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230310005704.1332368-1-dmitry.baryshkov@linaro.org>
- <20230310005704.1332368-33-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230310005704.1332368-33-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PB2u2q6xqKt1WCmfAevrRBJr3lY2GiFa
-X-Proofpoint-GUID: PB2u2q6xqKt1WCmfAevrRBJr3lY2GiFa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-13_13,2023-03-13_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 mlxscore=0 suspectscore=0 phishscore=0 bulkscore=0
- priorityscore=1501 mlxlogscore=999 spamscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2303140041
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,160 +70,96 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello,
+
+This series adds support for Modem Host Interface (MHI) Endpoint function
+driver and few updates to the PCI endpoint core.
+
+MHI
+===
+
+MHI is the communication protocol used by the host machines to control and
+communicate with the Qualcomm modems/WLAN devices over any high speed physical
+bus like PCIe. In Linux kernel, MHI is modeled as a bus driver [1] and there
+are two instances of MHI used in a typical setup.
+
+1. MHI host - MHI implementation for the host machines like x86/ARM64.
+2. MHI Endpoint - MHI implementation for the endpoint devices like modems.
+
+MHI EPF
+=======
+
+The MHI Endpoint function driver (MHI EPF) is used on the MHI endpoint devices
+like modems. The MHI EPF driver sits in between the PCIe EP and MHI EP bus and
+carries out all of the PCIe related activities like BAR config, PCIe Event
+handling, MMIO read/write etc,... for the MHI EP bus.
+
+Below is the simple representation of the setup:
 
 
-On 3/9/2023 4:57 PM, Dmitry Baryshkov wrote:
-> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> 
-> After cleaning up the older multirect support the function
-> dpu_plane_validate_multirect_v2() is unused. Lets remove it.
-> 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+                 +----------------------------------------------------+
+                 |                  Endpoint CPU                      |                   
+                 |                                                    |
++------------+   |   +------------+   +-----------+   +-----------+   |
+|            |   |   |            |   |           |   |           |   |
+|            |   |   |   MHI EP   |   |           |   |           |   | PCIe Bus
+|  Modem DSP +---+---+    Bus     +---+  MHI EPF  +---+  PCIe EP  +---+---------
+|            |   |   |            |   |           |   |           |   |
+|            |   |   |            |   |           |   |           |   |
++------------+   |   +------------+   +-----------+   +-----------+   |
+                 |                                                    |
+                 |                                                    |
+                 +----------------------------------------------------+
 
-this needs your signed-off too.
+The data packets will be read from the Modem DSP by the MHI stack and will be
+transmitted to the host machine over PCIe bus with the help of MHI EPF driver.
 
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 111 ----------------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |   7 --
->   2 files changed, 118 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 9a03d1cad0ee..bafa1dd1748b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -707,117 +707,6 @@ static void _dpu_plane_color_fill(struct dpu_plane *pdpu,
->   					   fill_color, fmt);
->   }
->   
-> -int dpu_plane_validate_multirect_v2(struct dpu_multirect_plane_states *plane)
-> -{
-> -	struct dpu_plane_state *pstate[R_MAX];
-> -	const struct drm_plane_state *drm_state[R_MAX];
-> -	struct drm_rect src[R_MAX], dst[R_MAX];
-> -	struct dpu_plane *dpu_plane[R_MAX];
-> -	const struct dpu_format *fmt[R_MAX];
-> -	int i, buffer_lines;
-> -	unsigned int max_tile_height = 1;
-> -	bool parallel_fetch_qualified = true;
-> -	bool has_tiled_rect = false;
-> -
-> -	for (i = 0; i < R_MAX; i++) {
-> -		const struct msm_format *msm_fmt;
-> -
-> -		drm_state[i] = i ? plane->r1 : plane->r0;
-> -		msm_fmt = msm_framebuffer_format(drm_state[i]->fb);
-> -		fmt[i] = to_dpu_format(msm_fmt);
-> -
-> -		if (DPU_FORMAT_IS_UBWC(fmt[i])) {
-> -			has_tiled_rect = true;
-> -			if (fmt[i]->tile_height > max_tile_height)
-> -				max_tile_height = fmt[i]->tile_height;
-> -		}
-> -	}
-> -
-> -	for (i = 0; i < R_MAX; i++) {
-> -		int width_threshold;
-> -
-> -		pstate[i] = to_dpu_plane_state(drm_state[i]);
-> -		dpu_plane[i] = to_dpu_plane(drm_state[i]->plane);
-> -
-> -		if (pstate[i] == NULL) {
-> -			DPU_ERROR("DPU plane state of plane id %d is NULL\n",
-> -				drm_state[i]->plane->base.id);
-> -			return -EINVAL;
-> -		}
-> -
-> -		src[i].x1 = drm_state[i]->src_x >> 16;
-> -		src[i].y1 = drm_state[i]->src_y >> 16;
-> -		src[i].x2 = src[i].x1 + (drm_state[i]->src_w >> 16);
-> -		src[i].y2 = src[i].y1 + (drm_state[i]->src_h >> 16);
-> -
-> -		dst[i] = drm_plane_state_dest(drm_state[i]);
-> -
-> -		if (drm_rect_calc_hscale(&src[i], &dst[i], 1, 1) != 1 ||
-> -		    drm_rect_calc_vscale(&src[i], &dst[i], 1, 1) != 1) {
-> -			DPU_ERROR_PLANE(dpu_plane[i],
-> -				"scaling is not supported in multirect mode\n");
-> -			return -EINVAL;
-> -		}
-> -
-> -		if (DPU_FORMAT_IS_YUV(fmt[i])) {
-> -			DPU_ERROR_PLANE(dpu_plane[i],
-> -				"Unsupported format for multirect mode\n");
-> -			return -EINVAL;
-> -		}
-> -
-> -		/**
-> -		 * SSPP PD_MEM is split half - one for each RECT.
-> -		 * Tiled formats need 5 lines of buffering while fetching
-> -		 * whereas linear formats need only 2 lines.
-> -		 * So we cannot support more than half of the supported SSPP
-> -		 * width for tiled formats.
-> -		 */
-> -		width_threshold = dpu_plane[i]->catalog->caps->max_linewidth;
-> -		if (has_tiled_rect)
-> -			width_threshold /= 2;
-> -
-> -		if (parallel_fetch_qualified &&
-> -		    drm_rect_width(&src[i]) > width_threshold)
-> -			parallel_fetch_qualified = false;
-> -
-> -	}
-> -
-> -	/* Validate RECT's and set the mode */
-> -
-> -	/* Prefer PARALLEL FETCH Mode over TIME_MX Mode */
-> -	if (parallel_fetch_qualified) {
-> -		pstate[R0]->pipe.multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
-> -		pstate[R1]->pipe.multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
-> -
-> -		goto done;
-> -	}
-> -
-> -	/* TIME_MX Mode */
-> -	buffer_lines = 2 * max_tile_height;
-> -
-> -	if (dst[R1].y1 >= dst[R0].y2 + buffer_lines ||
-> -	    dst[R0].y1 >= dst[R1].y2 + buffer_lines) {
-> -		pstate[R0]->pipe.multirect_mode = DPU_SSPP_MULTIRECT_TIME_MX;
-> -		pstate[R1]->pipe.multirect_mode = DPU_SSPP_MULTIRECT_TIME_MX;
-> -	} else {
-> -		DPU_ERROR(
-> -			"No multirect mode possible for the planes (%d - %d)\n",
-> -			drm_state[R0]->plane->base.id,
-> -			drm_state[R1]->plane->base.id);
-> -		return -EINVAL;
-> -	}
-> -
-> -done:
-> -	pstate[R0]->pipe.multirect_index = DPU_SSPP_RECT_0;
-> -	pstate[R1]->pipe.multirect_index = DPU_SSPP_RECT_1;
-> -
-> -	DPU_DEBUG_PLANE(dpu_plane[R0], "R0: %d - %d\n",
-> -		pstate[R0]->pipe.multirect_mode, pstate[R0]->pipe.multirect_index);
-> -	DPU_DEBUG_PLANE(dpu_plane[R1], "R1: %d - %d\n",
-> -		pstate[R1]->pipe.multirect_mode, pstate[R1]->pipe.multirect_index);
-> -	return 0;
-> -}
-> -
->   static int dpu_plane_prepare_fb(struct drm_plane *plane,
->   		struct drm_plane_state *new_state)
->   {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> index 7490ffd94d03..2784f8841260 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> @@ -87,13 +87,6 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
->   		uint32_t pipe, enum drm_plane_type type,
->   		unsigned long possible_crtcs);
->   
-> -/**
-> - * dpu_plane_validate_multirecti_v2 - validate the multirect planes
-> - *				      against hw limitations
-> - * @plane: drm plate states of the multirect pair
-> - */
-> -int dpu_plane_validate_multirect_v2(struct dpu_multirect_plane_states *plane);
-> -
->   /**
->    * dpu_plane_color_fill - enables color fill on plane
->    * @plane:  Pointer to DRM plane object
+Test setup
+==========
+
+This series has been tested on Snapdragon X55 modem a.k.a SDX55 connected to
+the ARM64 host machine.
+
+Thanks,
+Mani
+
+[1] https://www.kernel.org/doc/html/latest/mhi/mhi.html
+
+Changes in v3:
+
+* Fixed the probe function of EPF_VNTB driver
+
+Changes in v2:
+
+* Rebased on top of v6.3-rc1
+* Switched to the new callback interface for passing events from EPC to EPF
+* Dropped one patch related to notifier
+
+Manivannan Sadhasivam (7):
+  PCI: endpoint: Pass EPF device ID to the probe function
+  PCI: endpoint: Warn and return if EPC is started/stopped multiple
+    times
+  PCI: endpoint: Add linkdown notifier support
+  PCI: endpoint: Add BME notifier support
+  PCI: qcom-ep: Add support for Link down notification
+  PCI: qcom-ep: Add support for BME notification
+  PCI: endpoint: Add PCI Endpoint function driver for MHI bus
+
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     |   2 +
+ drivers/pci/endpoint/functions/Kconfig        |  10 +
+ drivers/pci/endpoint/functions/Makefile       |   1 +
+ drivers/pci/endpoint/functions/pci-epf-mhi.c  | 454 ++++++++++++++++++
+ drivers/pci/endpoint/functions/pci-epf-ntb.c  |   3 +-
+ drivers/pci/endpoint/functions/pci-epf-test.c |   2 +-
+ drivers/pci/endpoint/functions/pci-epf-vntb.c |   2 +-
+ drivers/pci/endpoint/pci-ep-cfs.c             |   3 +
+ drivers/pci/endpoint/pci-epc-core.c           |  52 ++
+ drivers/pci/endpoint/pci-epf-core.c           |   8 +-
+ include/linux/pci-epc.h                       |   2 +
+ include/linux/pci-epf.h                       |   8 +-
+ 12 files changed, 540 insertions(+), 7 deletions(-)
+ create mode 100644 drivers/pci/endpoint/functions/pci-epf-mhi.c
+
+-- 
+2.25.1
+
