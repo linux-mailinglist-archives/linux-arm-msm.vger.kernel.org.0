@@ -2,155 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D8F76B98BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 16:14:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BD5B6B98C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 16:15:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231816AbjCNPOh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 11:14:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57176 "EHLO
+        id S231597AbjCNPP3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 11:15:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231704AbjCNPOP (ORCPT
+        with ESMTP id S229938AbjCNPPY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 11:14:15 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D0EAAE12A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 08:13:41 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id o8so483167lfo.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 08:13:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678806801;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aWquE/66XhiUdKcAjOZcdT8JwAjOV0jdF3ZReJh+jhU=;
-        b=A70OxIRflPWeFRqLRBN8qDh9Nnpwl6mYudE01YgkwWijNkevncaAafkm4hhBFkYlPY
-         B+r3GEwqp0NgXcsOp5XuGK9r6rRnB/Obx5FjFgTAiep+FKTJN4Wf8YdFdeEt+FGeianQ
-         HKZRv9Gxy6ZXY22rJYBwB5fqIrxLopllTUZDbEXoT8/sDmpetnaCfVfzZjKfHbsVw5Ma
-         sKRrOmFpYtj4/IWOdsY6LEdG6eur/ataMRIvXZhgMnc/+DueCevIubHxa7SwxkyI+bBL
-         soT9s0BQKP1rOM59EGlR7NRgMnjXylMelTjMehReRdJPPj/aP3dV4uNWBeArjdPde47F
-         bsqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678806801;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aWquE/66XhiUdKcAjOZcdT8JwAjOV0jdF3ZReJh+jhU=;
-        b=KuGMgLhUqY5T+6HNlhSiGnjF8FQSeglRIjHli66d7vmf0/kJXSckoWpn82DEfGwsNO
-         TQk+rvO00QR3jBGftdyKDgD52qVE8THZBflwlAmy7nEmfszY3IX9sqJGFEBWNO5vkfPk
-         wyVkzckM6FZfbFrzBSMn7NVxexhCWrC8zI2kFqfFVOW+EbzgmzTZ4NpiWmXhsnk443oD
-         JWh0DlY67XjoyTqOo6jyB6In4UpLcCO9CuQhq1cAxbsGgO2HfL6g38YaH1LmPeSGv31H
-         gOjOfIm6SJYSZDIbg212Nhl5b9qBKS+PO00hhIE6D4iGdA/uxMFQjDp3CzTIgNILa3Ma
-         fRyQ==
-X-Gm-Message-State: AO0yUKUZ+L+5x9HyixZUrbk93kbDh8azmE/iLkIjHHYdYJ3/eWpZZ3Am
-        U+Ri111Y8rgLKVIc1CmQZytOmQ==
-X-Google-Smtp-Source: AK7set+0FwZrp2Kqmgi11czNIWqOTIdgsRQEqlYZ+eN8f1lZ8ifft3X4RqJNjukpilWNLQkafq+Kxg==
-X-Received: by 2002:ac2:43ad:0:b0:4dc:4bda:c26f with SMTP id t13-20020ac243ad000000b004dc4bdac26fmr973810lfl.23.1678806801649;
-        Tue, 14 Mar 2023 08:13:21 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id l7-20020ac24a87000000b004d23763fe96sm431973lfp.72.2023.03.14.08.13.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Mar 2023 08:13:20 -0700 (PDT)
-Message-ID: <3f37eede-6d62-fb92-9cff-b308de333ebd@linaro.org>
-Date:   Tue, 14 Mar 2023 16:13:18 +0100
+        Tue, 14 Mar 2023 11:15:24 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77A729150;
+        Tue, 14 Mar 2023 08:14:56 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3267FB819CD;
+        Tue, 14 Mar 2023 15:14:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31C6C433EF;
+        Tue, 14 Mar 2023 15:14:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678806853;
+        bh=c2TJqS8W+B0g4JRj+rGC5PdEclNbRx9UA+lgQVe2LVA=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=A2UzzvZCQtUJxCwJIxMbgaf9po4rIXL/0aFkJlJaD70B+UREvcQro8eOsmGNsYtxV
+         KxZ9D+PNa2ExtMsXwAxVPDjKGNX8otgwt7yuCOXaljYiyjYx7V3Y5c+Dq4v/cUKuXH
+         7AcPG+7isz0k35q5A11zdLZz5JNSBL/lsKbczvuX91JRWdX0IEIukdC+A3tykwidJD
+         gJQawPOm78rzQgKpzJtM3oFy6slizRk8+xsMsj8Z/FLnVDG7VKqs/xTAk0HTYgwUY2
+         QYkiUvK6y12Xzuxc7SuwzEUshBjaTN3VRv8XNDRD4U9zS+OVnjUnkLQcIFYu6+Tkxx
+         f1jjOc90hQp8w==
+Received: by mail-ua1-f43.google.com with SMTP id 89so3969789uao.0;
+        Tue, 14 Mar 2023 08:14:13 -0700 (PDT)
+X-Gm-Message-State: AO0yUKXSUgKtysrJOZj5VTfIyR9u0/ss+ahOIH8gbD30TgV5bgerfqHc
+        zSps15/CxwxA7dWRec8BwwtVcGbSJJzBeZdJcQ==
+X-Google-Smtp-Source: AK7set/ZmpG1rB36/Z6MCiIR/CeMGhiVMZRwL1tUB2TwTqQhqEnpG0TTpKQTPTVQF6rP/t1ewB4wB2m1c7fBgd9nv5Y=
+X-Received: by 2002:a1f:1d13:0:b0:401:184:339c with SMTP id
+ d19-20020a1f1d13000000b004010184339cmr22537392vkd.3.1678806852681; Tue, 14
+ Mar 2023 08:14:12 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH net-next 05/11] clk: qcom: gcc-sc8280xp: Add EMAC GDSCs
-Content-Language: en-US
-To:     Andrew Halaney <ahalaney@redhat.com>, linux-kernel@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, bhupesh.sharma@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, peppe.cavallaro@st.com,
-        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
-        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
-        linux@armlinux.org.uk, veekhee@apple.com,
-        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
-        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
-        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
-        jsuraj@qti.qualcomm.com, hisunil@quicinc.com
-References: <20230313165620.128463-1-ahalaney@redhat.com>
- <20230313165620.128463-6-ahalaney@redhat.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230313165620.128463-6-ahalaney@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+References: <20230309233945.1199358-1-echanude@redhat.com> <20230313124923.iwaknvrnitqal3wa@ripper>
+In-Reply-To: <20230313124923.iwaknvrnitqal3wa@ripper>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Tue, 14 Mar 2023 10:14:00 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqLCM59bZakpq3sp0oR06Kv7aCN5LSA7tNwO-89Tx7SaQQ@mail.gmail.com>
+Message-ID: <CAL_JsqLCM59bZakpq3sp0oR06Kv7aCN5LSA7tNwO-89Tx7SaQQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: add symbols to dtb
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Eric Chanudet <echanude@redhat.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Mar 13, 2023 at 7:46=E2=80=AFAM Bjorn Andersson <andersson@kernel.o=
+rg> wrote:
+>
+> On Thu, Mar 09, 2023 at 06:39:48PM -0500, Eric Chanudet wrote:
+> > ABL uses the __symbols__ section to process the DTB before passing it
+> > forward. Without it, the bootstrap is interrupted.
 
+No clue what ABL is... Put this in high level terms, "I want to be
+able to apply overlays", not some unknown acronym and low-level detail
+of how overlays work.
 
-On 13.03.2023 17:56, Andrew Halaney wrote:
-> Add the EMAC GDSCs to allow the EMAC hardware to be enabled.
-> 
-> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> ---
-Was it tested to not cause issues on access on "normal" 8280xp?
-AFAICS if there would be any, they would happen at registration
-time, as gdsc_init already accesses its registers
+> >
+> > Signed-off-by: Eric Chanudet <echanude@redhat.com>
+>
+> @Rob, @Krzysztof, it seems useful to be able to use the upstream
+> generated DTBs with overlays.
+>
+> Do you suggest that we enable this on a per-board basis when it's being
+> requested, across all devices, or tell the users that they have to
+> re-generate the dtbs themselves?
 
-Konrad
->  drivers/clk/qcom/gcc-sc8280xp.c               | 18 ++++++++++++++++++
->  include/dt-bindings/clock/qcom,gcc-sc8280xp.h |  2 ++
->  2 files changed, 20 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-> index b3198784e1c3..04a99dbaa57e 100644
-> --- a/drivers/clk/qcom/gcc-sc8280xp.c
-> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
-> @@ -6873,6 +6873,22 @@ static struct gdsc usb30_sec_gdsc = {
->  	.pwrsts = PWRSTS_RET_ON,
->  };
->  
-> +static struct gdsc emac_0_gdsc = {
-> +	.gdscr = 0xaa004,
-> +	.pd = {
-> +		.name = "emac_0_gdsc",
-> +	},
-> +	.pwrsts = PWRSTS_OFF_ON,
-> +};
-> +
-> +static struct gdsc emac_1_gdsc = {
-> +	.gdscr = 0xba004,
-> +	.pd = {
-> +		.name = "emac_1_gdsc",
-> +	},
-> +	.pwrsts = PWRSTS_OFF_ON,
-> +};
-> +
->  static struct clk_regmap *gcc_sc8280xp_clocks[] = {
->  	[GCC_AGGRE_NOC_PCIE0_TUNNEL_AXI_CLK] = &gcc_aggre_noc_pcie0_tunnel_axi_clk.clkr,
->  	[GCC_AGGRE_NOC_PCIE1_TUNNEL_AXI_CLK] = &gcc_aggre_noc_pcie1_tunnel_axi_clk.clkr,
-> @@ -7351,6 +7367,8 @@ static struct gdsc *gcc_sc8280xp_gdscs[] = {
->  	[USB30_MP_GDSC] = &usb30_mp_gdsc,
->  	[USB30_PRIM_GDSC] = &usb30_prim_gdsc,
->  	[USB30_SEC_GDSC] = &usb30_sec_gdsc,
-> +	[EMAC_0_GDSC] = &emac_0_gdsc,
-> +	[EMAC_1_GDSC] = &emac_1_gdsc,
->  };
->  
->  static const struct clk_rcg_dfs_data gcc_dfs_clocks[] = {
-> diff --git a/include/dt-bindings/clock/qcom,gcc-sc8280xp.h b/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
-> index cb2fb638825c..721105ea4fad 100644
-> --- a/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
-> +++ b/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
-> @@ -492,5 +492,7 @@
->  #define USB30_MP_GDSC					9
->  #define USB30_PRIM_GDSC					10
->  #define USB30_SEC_GDSC					11
-> +#define EMAC_0_GDSC					12
-> +#define EMAC_1_GDSC					13
->  
->  #endif
+It's up to you whether you want the bloat in the dtbs or not. Labels
+become an ABI when symbols are enabled.
+
+If it was my platform(s), I'd require the overlays to be upstream too,
+but I'm just paranoid about the modifications people want to make.
+
+Rob
