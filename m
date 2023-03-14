@@ -2,106 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B6656BA0CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 21:33:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5BBD6BA0D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 21:38:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229754AbjCNUd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 16:33:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52792 "EHLO
+        id S229957AbjCNUit (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 16:38:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229722AbjCNUd0 (ORCPT
+        with ESMTP id S229636AbjCNUis (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 16:33:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BF8D51FB2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 13:32:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1678825957;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=Cf1UmW52NoHn8X3sKwbcCJsfKhtTUiAk8pFQZqhtqWY=;
-        b=F68SDOqRWqpLXiydwYWqxYoOYfZCgZ40ZMgMQ8MZ395r3VgbtuyP8lDFQ7jns89GjngiR/
-        piT/7Q3UAzbQSf7pu1DSVhIlTdm/BXx6v34tKGxCIPAIOIoL85Fewk1/XczYyBNOX04GEy
-        xoTBg3w9ejPpMaR5vQj+peFxLEOSLEI=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-385-Dj7fZcbQNaSB0bEVpji-iA-1; Tue, 14 Mar 2023 16:32:35 -0400
-X-MC-Unique: Dj7fZcbQNaSB0bEVpji-iA-1
-Received: by mail-qv1-f71.google.com with SMTP id px10-20020a056214050a00b005ab138d7672so2983413qvb.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 13:32:35 -0700 (PDT)
+        Tue, 14 Mar 2023 16:38:48 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AEC31B56B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 13:38:47 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id m6so4361094qvq.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 13:38:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678826326;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=K+VJT5XjlpwSB3Rr7WCNyE9jbOJcwAZ64R4PwLUCFfo=;
+        b=FT+U50aYfKpkbHSpwNd8+f39NQWRVqBlmGN9Xm5zd6zz1vDQBXMmBOaKfk41DH+7V2
+         PHHfk2+Bm+oXTq+nn+FLNB0aSB6Al65rk+iOpadO8mBSAPmi/m7E2qdeopMluuAXO+WQ
+         57COnRrx9ISl+7nIWSMDUDZJRBxQwL1ahpj9xoixNF1uBSOuJAUx/nOu2opgfptwOqFE
+         Qv0YtuBNPx4GXiNjS7zloaILPcPqkrEzcIhezWx567igyx/50fcqHRZ4Y4nZDoBo3EVO
+         NWm+RwNqrAPffgq+Q3uuhlXcX5tIEgnGhJXk+mcw5g7O5j7WPrkq/JanDZ474XiDZiYG
+         NseA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678825955;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Cf1UmW52NoHn8X3sKwbcCJsfKhtTUiAk8pFQZqhtqWY=;
-        b=UN4jBE8BSs+cz5XAfCwuEKDHWi05waeSDErVRaZjOLZIlMFpMgG5uQxvvAKTl07Y8x
-         YJOrjYKtyVFz2MP+0tIAcNj3qL0CmYZ/3UKIJjydBOHzgfhUxNzRxrHKkdF33rPXQaok
-         fUWP5mZHr2WeQDnHq3IMDOpmDrZ6WY1wny0AuhbJw7Gb6GRcqlfM709HHp2AOEVRZdjC
-         ynp+IxmDVqQRgV0tBTIUc9TpjCUSXxevn/fSD3l1XDEh88BMm9GlalhxAF0M3siMyhLF
-         vI0uK+P6W7S0Mxy5PI39+6yNW62JaUueBBAgo4QuVJ+mVr7/ITdFHWoc3f0+X+VGBwzL
-         KVFQ==
-X-Gm-Message-State: AO0yUKVk9mwa+0L5yALCmbqNVhlqmEMHBKeGCO1ohwDhusk0SNlmrSCo
-        TX8fjflEDYV2kO3sS2B/I13Kh9MtpxyjCIS7FbmpzMq13bXFoHgLihc7mFhGXxdd00BBgbB7qsH
-        IGZfB4PW551OO/VF/LPh3elhR7A==
-X-Received: by 2002:ac8:5acc:0:b0:3bf:dbb4:3bcc with SMTP id d12-20020ac85acc000000b003bfdbb43bccmr67624063qtd.4.1678825955099;
-        Tue, 14 Mar 2023 13:32:35 -0700 (PDT)
-X-Google-Smtp-Source: AK7set8R4DgwPeDaAruB2pqEAMS0/gKRIQCP9kh/wYGXFze+xiVFd4MTcnh222nahDA3ZLMboA61mw==
-X-Received: by 2002:ac8:5acc:0:b0:3bf:dbb4:3bcc with SMTP id d12-20020ac85acc000000b003bfdbb43bccmr67624024qtd.4.1678825954705;
-        Tue, 14 Mar 2023 13:32:34 -0700 (PDT)
-Received: from fedora (modemcable181.5-202-24.mc.videotron.ca. [24.202.5.181])
-        by smtp.gmail.com with ESMTPSA id t21-20020ac85315000000b003b860983973sm2403343qtn.60.2023.03.14.13.32.31
+        d=1e100.net; s=20210112; t=1678826326;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=K+VJT5XjlpwSB3Rr7WCNyE9jbOJcwAZ64R4PwLUCFfo=;
+        b=Qt3cWfl5SAApnzEMQrP6KnJ/LtKajQOGaTGzm1bJaODsVi18suhY0PCRVZ5+gUFs4q
+         HzKY45tFcQozcW9TFVix8Wbcwx2SnKMhFN2yRj1VuzjpG+OV8N7ABmUw3y72ov6JSEvj
+         CXso01vskZYZ8gGdCgeKQmRTQJvy7HdINi0RykkGC1jHmTMQjJyCF8BmjUDBWHAzoTVl
+         zYq6TH5KeLHnuX2xK7tXTR+OX85TYK+4a75aY7r7kBAwUG+cstSBZv7ni2QBcxraTDii
+         trAoJzo9P6qpPB5bBC3w8UHhi3WZREblxFM7efIcf7/7DyNp4YubU11W5ctw2FnuQY+o
+         mokw==
+X-Gm-Message-State: AO0yUKVzfsjBGUmc1mKlHgBBpOFxxfRAbUgxErteupppwV2O3wFaoGIt
+        RTUXTartEXYxegs+/jxsRHGekA==
+X-Google-Smtp-Source: AK7set+4cvV3uB8Us3zIfqydslRFFAGro5l9PRHQNjJgsjwb73t7BLtnRF6N9l+N/F6PcZG6QiawXg==
+X-Received: by 2002:ad4:5aa9:0:b0:5aa:fd43:1fbe with SMTP id u9-20020ad45aa9000000b005aafd431fbemr10644506qvg.46.1678826326252;
+        Tue, 14 Mar 2023 13:38:46 -0700 (PDT)
+Received: from localhost.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id c2-20020a379a02000000b00745ca1c0eb6sm1947828qke.2.2023.03.14.13.38.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 13:32:32 -0700 (PDT)
-Date:   Tue, 14 Mar 2023 16:32:30 -0400
-From:   Adrien Thierry <athierry@redhat.com>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH 0/8] Add multiport support for DWC3 controllers
-Message-ID: <ZBDZ3q6b4+0IBi4s@fedora>
-References: <20230310163420.7582-1-quic_kriskura@quicinc.com>
+        Tue, 14 Mar 2023 13:38:45 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
+        andersson@kernel.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH net 0/4] net: ipa: minor bug fixes
+Date:   Tue, 14 Mar 2023 15:38:37 -0500
+Message-Id: <20230314203841.1574172-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230310163420.7582-1-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
+The four patches in this series fix some errors, though none of them
+cause any compile or runtime problems.
 
-I'm unable to apply your patch series, it looks like patch 2 is malformed.
-'git am' prints the following:
+The first changes the files included by "drivers/net/ipa/reg.h" to
+ensure everything it requires is included with the file.  It also
+stops unnecessarily including another file.  The prerequisites are
+apparently satisfied other ways, currently.
 
-  Applying: dt-bindings: usb: Add bindings for multiport properties on DWC3 controller
-  Applying: usb: dwc3: core: Access XHCI address space temporarily to read port info
-  error: corrupt patch at line 83
-  Patch failed at 0002 usb: dwc3: core: Access XHCI address space temporarily to read port info
+The second adds two struct declarations to "gsi_reg.h", to ensure
+they're declared before they're used later in the file.  Again, it
+seems these declarations are currently resolved wherever this file
+is included.
 
-Are you able to apply the series on your side?
+The third removes register definitions that were added for IPA v5.0
+that are not needed.  And the last updates some validity checks for
+IPA v5.0 registers.  No IPA v5.0 platforms are yet supported, so the
+issues resolved here were never harmful.
 
-Best,
+					-Alex
 
-Adrien
+Alex Elder (4):
+  net: ipa: reg: include <linux/bug.h>
+  net: ipa: add two missing declarations
+  net: ipa: kill FILT_ROUT_CACHE_CFG IPA register
+  net: ipa: fix some register validity checks
+
+ drivers/net/ipa/gsi_reg.c |  9 ++++++++-
+ drivers/net/ipa/gsi_reg.h |  4 ++++
+ drivers/net/ipa/ipa_reg.c | 28 ++++++++++++++++++----------
+ drivers/net/ipa/ipa_reg.h | 21 ++++++---------------
+ drivers/net/ipa/reg.h     |  3 ++-
+ 5 files changed, 38 insertions(+), 27 deletions(-)
+
+-- 
+2.34.1
 
