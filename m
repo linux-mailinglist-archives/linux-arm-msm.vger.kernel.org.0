@@ -2,122 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF8B46BA25C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 23:20:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29AAA6BA271
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 23:27:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231225AbjCNWUO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 18:20:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58654 "EHLO
+        id S230365AbjCNW1R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 18:27:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231545AbjCNWTs (ORCPT
+        with ESMTP id S230011AbjCNW1Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 18:19:48 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 466EFB760;
-        Tue, 14 Mar 2023 15:18:52 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id br6so3774207lfb.11;
-        Tue, 14 Mar 2023 15:18:52 -0700 (PDT)
+        Tue, 14 Mar 2023 18:27:16 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 956892B604
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 15:27:12 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id n2so21931598lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 15:27:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678832307;
+        d=linaro.org; s=google; t=1678832830;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=unv7jkKhSyV7JGv+yIPCmnr6mTwYXd0VFoIWTdDr37E=;
-        b=l29oKArfJSGBXwVSUsqNOVE5S1Zb1OAFW9yIYHA6BfStr7PKGfLDsfMMLA6d/Rim+i
-         vlQa2cyZf2i3GTkS1Bp9hpIL422z8Cbe6bBP/aKeeCCWWfMZB3FtKzg/4naXwkfV5t2G
-         6CWm50VuCCibVX/Zd7cAPubC9x/HXSs3JrBi7O4NphxayguyB5cHAM3Sua5ZF6AqSNCA
-         4skJIVz7qV+q6n6msywUkLZ7lyfIw+ad4oF2wrkdiNWScpJlIaNtF8Pf42XMmZY8I70s
-         cy5m91CfWMyhGWDUHWXuVSX+udh7nNrKtjpNoO4j/M1oaLIRbKKqY7QOVrNDjwpNxKqM
-         4Zaw==
+        bh=Au+ByXF+T/ttwdvk2E5GvB4Cm4Xo7Y50WRAwY8Nd3PI=;
+        b=Q2LCGvyww4ehVH+wC1KTEGhgAoSUFH1ZX0i1aWgkZRmGHiNPGRfhYGDk3RyIeDNpp9
+         HqGKE4iexBIR9tJGgeMLkaGUoyS7JJ50bgQGIiYWfo/CBSovpvVu7V2omFF8f4wXzXMX
+         qWuwutohj4c+p4kY+5ebx5J8oSYxTuAho0cqgR2RWquDkXAZtil+fH4h6K2bme2gm+oy
+         ddo6qCdr5O6fAm5nYoAZwhix/aT7bi080gRirmCrqERirzZ6ix72nm5oJoL0wsKyUXsQ
+         B2aC9tjI3KsOKzVZbmFtZ79sTI7bLHREVQcojPVagmIe+pNSdD+MHMj0f230ySgOCp/0
+         1GHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678832307;
+        d=1e100.net; s=20210112; t=1678832830;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=unv7jkKhSyV7JGv+yIPCmnr6mTwYXd0VFoIWTdDr37E=;
-        b=ssOvbJhvA8LTG1Erui13ytY4PNCUZqjiaLi0tI2LT8iMapiQNcEavNHeN6tUMOiT+X
-         lZOv7Otw4tQ5Mb7C8/15u/ETZqS4+Alzb0TEI5UmC+XYbWwW9kSvpqy2xfTeaIBNCRur
-         +ZIeWfhAKFx1Kt4AP8uFiXnVEM0iJW4PSseoIyNzS+GNNCQWVDx+WBv/s5HJvP2nRtFE
-         Ko0GdrxsxFy/oT+UEpQ57p7YNmUrqQMAqv+Zlm0YO6dTedfjpLgHVZSZcD4rQbemaN23
-         ZpYteluTn1iJndqgvxmqWchMKgIXWBsxWVNQY80iJSjqclRbYBSQr9OdP/wGJP61vUpF
-         H4rA==
-X-Gm-Message-State: AO0yUKXnOxpHPcXeqpk1XoxxDGEIQ8DefkYfXPSUGHxkhRI4q3r2LLYt
-        0LXYsZewtfN7Rx4A83bhdFF1xZ0BUw3NLw==
-X-Google-Smtp-Source: AK7set/rJc+gSrVKA7Qa6wO50JW4WEimCebjK+oKixALe42HEQYmov1TyILND58iArHQtSRdwvObLQ==
-X-Received: by 2002:ac2:4822:0:b0:4db:3e7e:51dc with SMTP id 2-20020ac24822000000b004db3e7e51dcmr1199459lft.55.1678832307446;
-        Tue, 14 Mar 2023 15:18:27 -0700 (PDT)
-Received: from localhost.localdomain (byw237.neoplus.adsl.tpnet.pl. [83.30.42.237])
-        by smtp.gmail.com with ESMTPSA id l7-20020ac24a87000000b004d23763fe96sm554893lfp.72.2023.03.14.15.18.25
+        bh=Au+ByXF+T/ttwdvk2E5GvB4Cm4Xo7Y50WRAwY8Nd3PI=;
+        b=xoqU8JVyxoRhTaYlxmleZt/cW7cRJNHubNu5Ubd6JMN5aHs8iLdee7bldUM0XRKcKv
+         itu4gWoD6mvapPmBDJaCmd1/u3eFDhSxicTUpK8O/jocNeoM14ox0G2Y4Z4T4OYaMFiA
+         33R+SV/bt7LzK9O25Qk8GxDaZjOv3Zz1WWO1TXkt8QfrBxlCVrXYvXzS2rx/5nU+P0nq
+         8YL62Ykcvkbbowi0+f+v5BQFSNEEASajZbslHgdE05Pgij+KvK0LhMyb7BkoADzZ+bmf
+         lfJvFtqX4DCN+SyVlvA/NMbCnoIUyiPssL6UXDFu3Ceani0hX1p15lcVPUR7uxrZpmDD
+         PkeA==
+X-Gm-Message-State: AO0yUKWbqNAfEXgpbOnilN0XeL6ol1qdZ03vAh9QayeOD3K2smwrvC/q
+        WUCP4V0xQ+R8Tfo7VLnSWuPgXIq6Jtfea+vJozE=
+X-Google-Smtp-Source: AK7set8LJmuI7xVqgISQ+Y68vWHmnkx+pjP/kmLyFsI2LuWzQ6PRiDvE6l2DC/c+HAJbShrMgoP7ow==
+X-Received: by 2002:ac2:4a91:0:b0:4cb:4374:cc78 with SMTP id l17-20020ac24a91000000b004cb4374cc78mr1497320lfp.26.1678832830643;
+        Tue, 14 Mar 2023 15:27:10 -0700 (PDT)
+Received: from localhost.localdomain (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id c11-20020a19760b000000b004ab52b0bcf9sm562373lff.207.2023.03.14.15.27.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 15:18:27 -0700 (PDT)
-From:   Adam Skladowski <a39.skl@gmail.com>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm: msm: adreno: Disable preemption on Adreno 510
-Date:   Tue, 14 Mar 2023 23:17:17 +0100
-Message-Id: <20230314221757.13096-1-a39.skl@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        Tue, 14 Mar 2023 15:27:10 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: pinctrl: qcom,qcm2290-tlmm: Allow input-enable
+Date:   Tue, 14 Mar 2023 23:27:05 +0100
+Message-Id: <20230314222705.2940258-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Downstream driver appears to not support preemption on A510 target,
-trying to use one make device slow and fill log with rings related errors.
-Set num_rings to 1 to disable preemption.
+Allow the common input-enable. This was missed with the
+initial submission.
 
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: e20c9284c8f2 ("drm/msm/adreno: Add support for Adreno 510 GPU")
-Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+Fixes: 5147022214db ("dt-bindings: pinctrl: qcom: Add QCM2290 pinctrl bindings")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/pinctrl/qcom,qcm2290-tlmm.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index d09221f97f71..074b4e9a8500 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -1743,6 +1743,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
- 	struct a5xx_gpu *a5xx_gpu = NULL;
- 	struct adreno_gpu *adreno_gpu;
- 	struct msm_gpu *gpu;
-+	unsigned int nr_rings;
- 	int ret;
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,qcm2290-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,qcm2290-tlmm.yaml
+index 6271fd15e0b6..032763649336 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,qcm2290-tlmm.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,qcm2290-tlmm.yaml
+@@ -85,6 +85,7 @@ $defs:
+       bias-pull-up: true
+       bias-disable: true
+       drive-strength: true
++      input-enable: true
+       output-high: true
+       output-low: true
  
- 	if (!pdev) {
-@@ -1763,7 +1764,12 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
- 
- 	check_speed_bin(&pdev->dev);
- 
--	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 4);
-+	nr_rings = 4;
-+
-+	if (adreno_is_a510(adreno_gpu))
-+		nr_rings = 1;
-+
-+	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, nr_rings);
- 	if (ret) {
- 		a5xx_destroy(&(a5xx_gpu->base.base));
- 		return ERR_PTR(ret);
 -- 
-2.25.1
+2.39.2
 
