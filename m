@@ -2,110 +2,244 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 241E16B8A00
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 06:01:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1443B6B8A16
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 06:08:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229881AbjCNFBD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 01:01:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58384 "EHLO
+        id S229853AbjCNFI2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 01:08:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229701AbjCNFA7 (ORCPT
+        with ESMTP id S229800AbjCNFI0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 01:00:59 -0400
+        Tue, 14 Mar 2023 01:08:26 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91B3B6F4A2;
-        Mon, 13 Mar 2023 22:00:58 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32E3WWUB009476;
-        Tue, 14 Mar 2023 05:00:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=mKRX+iIHmTPEdPX50t4nUgumdMOVSC8osdY6GLBRlKE=;
- b=TMz6COVtMZLK+pzJ5uSlojCMmPt82aiXXWId+IFhitbsf8o/ZL57oTv2Ny++qXlU9mEg
- sJ2THzVR2SipOPsMvu3w37cSSehAyaixoNxaAAWDyf0KmW8QaYhfluND02tzaUHx37pF
- awn+5zkIXyukdbHtqdqybPGUChOE+Mb4CLUj4DtbfmPLaC75Y+fakEEftC1zENOsZoY/
- 6a893Z7wmSC/vmRrFvlINHL1+ZixfVRkmQzVGMmBAY0tYdP+0BAGH6ePi6BL8OumXaUt
- vYGGruqkhE8DTTA5rROPskzgHl/DBdecUw1DoHnDILrsRUOyZ2b/briWrPLnImhSnWqa Fg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pa203tj4n-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7549688EF9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Mar 2023 22:08:24 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32E3XKT4029473;
+        Tue, 14 Mar 2023 05:08:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=hMKASWMV2TuYsze+u4jJwfp2+7R568oFMF2LP+P5Q8U=;
+ b=XMWsnAmROAYoQbzCtvQs21V2kaKnlD4dGl/6s9reNzLX5E4MRzn1EPtuOrnDA8DNqkaz
+ dGmoIr3Zoia0woVTgdCqToimIMXtGNWZq2IntxtOrPekoFnhBLORq8bA0WglgUKJwHIW
+ Y5kO6fifgxMUgifW5tIeFNTPraj34/XYrPBX4OZqkTQI2mCHuX+bebkY3aCkiF+vUQsk
+ wwKnAh8CMtiwlRKzi73HFox3ctg1udwGKC0whHRKbU5mjl/6mlvbh1QLL6WLfMp6JsMZ
+ DvRC6GD3mdamGqo0O2r3Pk2zwIlSO0VSy33XIOYUfzmwxC+NlBTbIP0e25PsZgYXD6cS UA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pa9gfh70m-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Mar 2023 05:00:54 +0000
+        Tue, 14 Mar 2023 05:08:18 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32E50Wmu017833
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32E58H8L020868
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Mar 2023 05:00:32 GMT
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Mon, 13 Mar 2023 22:00:28 -0700
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <jassisinghbrar@gmail.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH V2 3/3] arm64: dts: qcom: ipq8074: add compatible fallback to mailbox
-Date:   Tue, 14 Mar 2023 10:30:05 +0530
-Message-ID: <20230314050005.10409-4-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230314050005.10409-1-quic_kathirav@quicinc.com>
-References: <20230314050005.10409-1-quic_kathirav@quicinc.com>
+        Tue, 14 Mar 2023 05:08:17 GMT
+Received: from [10.110.64.241] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 13 Mar
+ 2023 22:08:16 -0700
+Message-ID: <ec51367b-db01-9922-baeb-3233f56f056f@quicinc.com>
+Date:   Mon, 13 Mar 2023 22:08:15 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v5 29/32] drm/msm/dpu: enable SmartDMA for the rest of the
+ platforms
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230310005704.1332368-1-dmitry.baryshkov@linaro.org>
+ <20230310005704.1332368-30-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230310005704.1332368-30-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: i70LnQ-FYJo3py1lKzPfy449gBGVNNqn
-X-Proofpoint-GUID: i70LnQ-FYJo3py1lKzPfy449gBGVNNqn
+X-Proofpoint-GUID: 6603skfV9lC6tfIP50GAOXPDeAh8CG1D
+X-Proofpoint-ORIG-GUID: 6603skfV9lC6tfIP50GAOXPDeAh8CG1D
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-03-13_13,2023-03-13_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=729
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 impostorscore=0
- clxscore=1015 phishscore=0 adultscore=0 priorityscore=1501
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
+ mlxlogscore=999 suspectscore=0 adultscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 spamscore=0 impostorscore=0 priorityscore=1501
  lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2303140044
+ engine=8.12.0-2212070000 definitions=main-2303140045
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-IPQ8074 mailbox is compatible with IPQ6018.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
-Changes in V2:
-	- No changes
+On 3/9/2023 4:57 PM, Dmitry Baryshkov wrote:
+> Enable SmartDMA features for the rest of the platforms where it is
+> supposed to work.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I am so glad we split this. Without visual validation check we wouldnt 
+have caught the issues and would have ended up with a blank half screen 
+on our sc7280 CBs on DP.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 62d05d740646..3fa7a63db74e 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -687,7 +687,8 @@
- 		};
- 
- 		apcs_glb: mailbox@b111000 {
--			compatible = "qcom,ipq8074-apcs-apps-global";
-+			compatible = "qcom,ipq8074-apcs-apps-global",
-+				     "qcom,ipq6018-apcs-apps-global";
- 			reg = <0x0b111000 0x1000>;
- 			clocks = <&a53pll>, <&xo>;
- 			clock-names = "pll", "xo";
--- 
-2.17.1
+For sc7280, I validated the foll cases:
 
+1) Basic Chrome UI comes up
+2) Validated some browser use-cases and played some youtube videos
+3) Validated multiple plug-in/plug-out cases with DP connected
+4) IGT test cases with DP connected:
+	- kms_atomic
+	- kms_atomic_transition
+	- kms_pipe_basic_crc
+
+Some notes:
+
+1) I wanted to test 4k with this too but my monitor only supports 4k@60 
+which is not possible with 24bpp with 2 lanes and due to the HBR3 black 
+screen issue I could not test that so far. But since I have that issue 
+even with 1080P and without these changes, it should have no effect due 
+to this series.
+
+2) I wanted to test some YUV overlay cases but I still cannot find one 
+on chrome. Its always using RGB. Will check with others.
+
+With these two noted, this change and this series has my
+
+Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+Only for sc7280 device.
+
+I still cannot give my R-b on this change till others validate visually 
+and ensure things arent broken for them.
+
+If we don't get enough validation and if only sc7280 remains in this 
+change, please re-post it with only that and I will give my R-b too.
+
+> ---
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 54 ++++++++-----------
+>   1 file changed, 23 insertions(+), 31 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 1fc0dfbebb7e..fc818b0273e7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -21,19 +21,16 @@
+>   	(VIG_MASK | BIT(DPU_SSPP_SCALER_QSEED3))
+>   
+>   #define VIG_SDM845_MASK \
+> -	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3))
+> -
+> -#define VIG_SDM845_MASK_SDMA \
+> -	(VIG_SDM845_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
+> +	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3) |\
+> +	BIT(DPU_SSPP_SMART_DMA_V2))
+>   
+>   #define VIG_SC7180_MASK \
+> -	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED4))
+> +	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED4) |\
+> +	BIT(DPU_SSPP_SMART_DMA_V2))
+>   
+>   #define VIG_SM8250_MASK \
+> -	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3LITE))
+> -
+> -#define VIG_SM8250_MASK_SDMA \
+> -	(VIG_SM8250_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
+> +	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3LITE) |\
+> +	BIT(DPU_SSPP_SMART_DMA_V2))
+>   
+>   #define VIG_QCM2290_MASK (VIG_MASK | BIT(DPU_SSPP_QOS_8LVL))
+>   
+> @@ -48,17 +45,12 @@
+>   #define DMA_SDM845_MASK \
+>   	(BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_QOS_8LVL) |\
+>   	BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_TS_PREFILL_REC1) |\
+> +	BIT(DPU_SSPP_SMART_DMA_V2) |\
+>   	BIT(DPU_SSPP_CDP) | BIT(DPU_SSPP_EXCL_RECT))
+>   
+>   #define DMA_CURSOR_SDM845_MASK \
+>   	(DMA_SDM845_MASK | BIT(DPU_SSPP_CURSOR))
+>   
+> -#define DMA_SDM845_MASK_SDMA \
+> -	(DMA_SDM845_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
+> -
+> -#define DMA_CURSOR_SDM845_MASK_SDMA \
+> -	(DMA_CURSOR_SDM845_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
+> -
+>   #define DMA_CURSOR_MSM8998_MASK \
+>   	(DMA_MSM8998_MASK | BIT(DPU_SSPP_CURSOR))
+>   
+> @@ -1208,21 +1200,21 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
+>   };
+>   
+>   static const struct dpu_sspp_cfg sdm845_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SDM845_MASK_SDMA,
+> +	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SDM845_MASK,
+>   		sdm845_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SDM845_MASK_SDMA,
+> +	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SDM845_MASK,
+>   		sdm845_vig_sblk_1, 4,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+> -	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SDM845_MASK_SDMA,
+> +	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SDM845_MASK,
+>   		sdm845_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+> -	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SDM845_MASK_SDMA,
+> +	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SDM845_MASK,
+>   		sdm845_vig_sblk_3, 12,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK_SDMA,
+> +	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
+>   		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK_SDMA,
+> +	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK,
+>   		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK_SDMA,
+> +	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK,
+>   		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
+> -	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_SDM845_MASK_SDMA,
+> +	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_SDM845_MASK,
+>   		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
+>   };
+>   
+> @@ -1263,21 +1255,21 @@ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_3 =
+>   				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED3LITE);
+>   
+>   static const struct dpu_sspp_cfg sm8250_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SM8250_MASK_SDMA,
+> +	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SM8250_MASK,
+>   		sm8250_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SM8250_MASK_SDMA,
+> +	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SM8250_MASK,
+>   		sm8250_vig_sblk_1, 4,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+> -	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SM8250_MASK_SDMA,
+> +	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SM8250_MASK,
+>   		sm8250_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+> -	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SM8250_MASK_SDMA,
+> +	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SM8250_MASK,
+>   		sm8250_vig_sblk_3, 12,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK_SDMA,
+> +	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
+>   		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK_SDMA,
+> +	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK,
+>   		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK_SDMA,
+> +	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK,
+>   		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
+> -	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_SDM845_MASK_SDMA,
+> +	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_SDM845_MASK,
+>   		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
+>   };
+>   
