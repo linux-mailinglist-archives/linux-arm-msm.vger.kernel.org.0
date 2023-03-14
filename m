@@ -2,76 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 078D86B975C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 15:10:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C76C36B9757
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 15:10:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232605AbjCNOKx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 10:10:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56810 "EHLO
+        id S232394AbjCNOKi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 10:10:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231916AbjCNOKp (ORCPT
+        with ESMTP id S232396AbjCNOKg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 10:10:45 -0400
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA0F2746E7;
-        Tue, 14 Mar 2023 07:10:39 -0700 (PDT)
-Received: by mail-il1-f179.google.com with SMTP id h7so8694039ila.5;
-        Tue, 14 Mar 2023 07:10:39 -0700 (PDT)
+        Tue, 14 Mar 2023 10:10:36 -0400
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5C2774A76;
+        Tue, 14 Mar 2023 07:10:34 -0700 (PDT)
+Received: by mail-il1-f169.google.com with SMTP id y12so4479338ilq.4;
+        Tue, 14 Mar 2023 07:10:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678803039;
+        d=1e100.net; s=20210112; t=1678803034;
         h=date:subject:message-id:references:in-reply-to:cc:to:from
          :mime-version:content-transfer-encoding:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=eS4/esiARLcOTfS3GdLeqZGAcqprgtcpPQrawrBj7eg=;
-        b=Wof+pzJSIpP/hCNcTRLZCf8BALpfc8Kg8hF62PWzeH9cklITZwUr0Py53Y+e66ZCqc
-         XFPMkAzwU2gZSsKszOmd9/2d4XvgjbtCF+hq6I5ijPKqkkIMrWNIT9FEl76XYHKJZap0
-         dyh2U2TNswLOErHc9qH1/BA4HPqm299X0r4MIrssO4oU0K3j6LUGvQ5FklKoApuXMlUi
-         00K1uI1UspuIDru82VkTjWhRKr+czYofEjLV6Mn6dgKc3r36KKC5ABQ4YPodl4mc9M+I
-         zh/GnOVY7hoyHYDdOD/EAy4f8teU6XmLZSMxHBGQdzTqWdG86VZHQrC/5TP+avPCTKmT
-         fX9w==
-X-Gm-Message-State: AO0yUKW15Nh5iSmMcrx6vqxoaExNb/8+Wnfr1TfpF9nIvPMBLj1eZWvt
-        819YceqhI0Z5WwAgXuCvutOnHFCppQ==
-X-Google-Smtp-Source: AK7set9vurV8ePdJ3YUU8JtLsv59fy96jE59gbECky++E2PvPP3k8EJn8p4ZlNE3D5AbxhNRcvvApg==
-X-Received: by 2002:a92:ce12:0:b0:316:e6e5:f0db with SMTP id b18-20020a92ce12000000b00316e6e5f0dbmr2485972ilo.0.1678803038894;
-        Tue, 14 Mar 2023 07:10:38 -0700 (PDT)
+        bh=hNpfc7BgFs/QBGJwy9bFLZmokBPnc2fbGlgGUBh/mSc=;
+        b=BvS337cJ3Pv0esonIvZd0A/1qAfGK00g+k8etS9I52ne9gnBHICrhRpP6purAO4ApS
+         wYPDTT1eH2PjOu4maosoN9TPCUVmzyclEK4Ug4LqQsfl1r7wt7qyKsIj1M4yj2I6mbZm
+         nciNnChZ0INykwcOpNXH/ksBJOA78KOyxXIMoj4Fo2vlfO2758EcxRXsigGrayT1/Auc
+         PpOIF7Bi9WDncUgX6LChrwXXmxkY6JlUgC6FLSKTxkjfjKyCCUfWTgWmypXVa12ThBZ6
+         mkcC/akm8hOQHVV+dO48d1encV8zLbOuJ7kP/sn6IO9qztTT2TySKxi5vSHGibd9GmyY
+         aQGg==
+X-Gm-Message-State: AO0yUKVuhUpbWVuMx4SYQM9XBXJSapcg2yIFTZQv1bW1ECi8XHRxW7tX
+        BXNBXaNz8kXJFTmuBn2NWg==
+X-Google-Smtp-Source: AK7set9LSYW6ANPssoQsKqCg6fbc+vL/1K6HqYJuwjBLyO6XQblN3+7FQuU33PDOnTe1njtyDC1ykQ==
+X-Received: by 2002:a05:6e02:966:b0:311:1168:b9b5 with SMTP id q6-20020a056e02096600b003111168b9b5mr2170694ilt.23.1678803033757;
+        Tue, 14 Mar 2023 07:10:33 -0700 (PDT)
 Received: from robh_at_kernel.org ([64.188.179.249])
-        by smtp.gmail.com with ESMTPSA id f12-20020a926a0c000000b003231580e8e2sm841024ilc.6.2023.03.14.07.10.36
+        by smtp.gmail.com with ESMTPSA id a2-20020a924442000000b0031599ebe3a5sm799799ilm.32.2023.03.14.07.10.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 07:10:37 -0700 (PDT)
-Received: (nullmailer pid 83774 invoked by uid 1000);
+        Tue, 14 Mar 2023 07:10:32 -0700 (PDT)
+Received: (nullmailer pid 83798 invoked by uid 1000);
         Tue, 14 Mar 2023 14:10:19 -0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 From:   Rob Herring <robh@kernel.org>
-To:     Joel Selvaraj <joelselvaraj.oss@gmail.com>
-Cc:     phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@gmail.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
         Andy Gross <agross@kernel.org>,
-        Chris Morgan <macromorgan@hotmail.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Max Krummenacher <max.krummenacher@toradex.com>,
-        linux-input@vger.kernel.org, Caleb Connolly <caleb@connolly.tech>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Jeff LaBundy <jeff@labundy.com>, devicetree@vger.kernel.org,
-        Jean Delvare <jdelvare@suse.de>,
-        Job Noorman <job@noorman.info>,
-        Alistair Francis <alistair@alistair23.me>,
-        Markuss Broks <markuss.broks@gmail.com>,
-        Henrik Rydberg <rydberg@bitmath.org>
-In-Reply-To: <20230312093249.1846993-2-joelselvaraj.oss@gmail.com>
-References: <20230312093249.1846993-1-joelselvaraj.oss@gmail.com>
- <20230312093249.1846993-2-joelselvaraj.oss@gmail.com>
-Message-Id: <167880254230.25342.652645660925907921.robh@kernel.org>
-Subject: Re: [PATCH 1/5] dt-bindings: input: touchscreen: add bindings for
- focaltech,fts
+        dri-devel@lists.freedesktop.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+In-Reply-To: <20230307-topic-dsi_qcm-v4-1-54b4898189cb@linaro.org>
+References: <20230307-topic-dsi_qcm-v4-0-54b4898189cb@linaro.org>
+ <20230307-topic-dsi_qcm-v4-1-54b4898189cb@linaro.org>
+Message-Id: <167880255009.26088.15283601844060717114.robh@kernel.org>
+Subject: Re: [PATCH v4 01/10] dt-bindings: display/msm:
+ dsi-controller-main: Fix deprecated QCM2290 compatible
 Date:   Tue, 14 Mar 2023 09:10:19 -0500
 X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
@@ -85,15 +79,16 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Sun, 12 Mar 2023 04:32:45 -0500, Joel Selvaraj wrote:
-> Add devicetree bindings for the Focaltech FTS touchscreen drivers.
+On Tue, 14 Mar 2023 13:13:39 +0100, Konrad Dybcio wrote:
+> The qcom, prefix was missed previously. Fix it.
 > 
-> Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> Fixes: 0c0f65c6dd44 ("dt-bindings: msm: dsi-controller-main: Add compatible strings for every current SoC")
+> Acked-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  .../input/touchscreen/focaltech,fts.yaml      | 81 +++++++++++++++++++
->  1 file changed, 81 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/input/touchscreen/focaltech,fts.yaml
+>  Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -102,15 +97,22 @@ on your patch (DT_CHECKER_FLAGS is new in v5.13):
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/input/touchscreen/focaltech,fts.example.dts:23.9-14 syntax error
-FATAL ERROR: Unable to parse input tree
-make[1]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/input/touchscreen/focaltech,fts.example.dtb] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1512: dt_binding_check] Error 2
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.example.dtb: dsi@5e94000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,dsi-ctrl-6g-qcm2290'] is too short
+	'qcom,dsi-ctrl-6g-qcm2290' is not one of ['qcom,apq8064-dsi-ctrl', 'qcom,msm8916-dsi-ctrl', 'qcom,msm8953-dsi-ctrl', 'qcom,msm8974-dsi-ctrl', 'qcom,msm8996-dsi-ctrl', 'qcom,msm8998-dsi-ctrl', 'qcom,qcm2290-dsi-ctrl', 'qcom,sc7180-dsi-ctrl', 'qcom,sc7280-dsi-ctrl', 'qcom,sdm660-dsi-ctrl', 'qcom,sdm845-dsi-ctrl', 'qcom,sm8150-dsi-ctrl', 'qcom,sm8250-dsi-ctrl', 'qcom,sm8350-dsi-ctrl', 'qcom,sm8450-dsi-ctrl', 'qcom,sm8550-dsi-ctrl']
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.example.dtb: dsi@5e94000: Unevaluated properties are not allowed ('compatible' was unexpected)
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.example.dtb: dsi@5e94000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,dsi-ctrl-6g-qcm2290'] is too short
+	'qcom,dsi-ctrl-6g-qcm2290' is not one of ['qcom,apq8064-dsi-ctrl', 'qcom,msm8916-dsi-ctrl', 'qcom,msm8953-dsi-ctrl', 'qcom,msm8974-dsi-ctrl', 'qcom,msm8996-dsi-ctrl', 'qcom,msm8998-dsi-ctrl', 'qcom,qcm2290-dsi-ctrl', 'qcom,sc7180-dsi-ctrl', 'qcom,sc7280-dsi-ctrl', 'qcom,sdm660-dsi-ctrl', 'qcom,sdm845-dsi-ctrl', 'qcom,sm8150-dsi-ctrl', 'qcom,sm8250-dsi-ctrl', 'qcom,sm8350-dsi-ctrl', 'qcom,sm8450-dsi-ctrl', 'qcom,sm8550-dsi-ctrl']
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.example.dtb: dsi@5e94000: Unevaluated properties are not allowed ('compatible' was unexpected)
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
 
 doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230312093249.1846993-2-joelselvaraj.oss@gmail.com
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230307-topic-dsi_qcm-v4-1-54b4898189cb@linaro.org
 
 The base for the series is generally the latest rc1. A different dependency
 should be noted in *this* patch.
