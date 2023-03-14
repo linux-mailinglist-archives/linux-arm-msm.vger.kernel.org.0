@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBB676B8CB9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 09:13:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C04936B8CB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 09:13:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229537AbjCNILx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 04:11:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50244 "EHLO
+        id S230461AbjCNIL7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 04:11:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229783AbjCNILG (ORCPT
+        with ESMTP id S229698AbjCNILH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 04:11:06 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BB4B984F3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 01:09:36 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id da10so58560602edb.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 01:09:36 -0700 (PDT)
+        Tue, 14 Mar 2023 04:11:07 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C727B98855
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 01:09:37 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id cy23so58343392edb.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 01:09:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678781369;
+        d=linaro.org; s=google; t=1678781370;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=I1F9tu8q22e7TPnIRSmkbbzCKgmYN1GLyyizNdJqECI=;
-        b=f2Eu63kaeQTRqeKNr+qOrOnkdgvaXs31dPYph5rXRTMv7MzDsdGetwEJQcv/Kaf11Z
-         JbRLBfoYCCjqxx9ni8T1Lce798ZyHgOL1PIct2vGYmJWFr1DB1oBaujPd2gySKnibL3B
-         BFPagEMgf5bMjaMCqnTMAiQU6+/BQSis8iDhqG1xEzes2V8h7ZVzwUKmC9ZfLo1ZGCCv
-         nDdvlkFfHD30ldbA9BxkHfgIZ3FsFLjXsxJ1njXlLBu3CubELjhunv7pPGrlyu5dEE0x
-         2U2k1Sxu86ARKi5/RO1kbcmYg9y1rAcNUUBeD0K3ro/Xml9x4b6OdZ+VOZKk2BPOQWDg
-         vnCg==
+        bh=VaFooc3ZqmiLvzci4fl/GeYapWLW5sp3t92Xl0ir5ig=;
+        b=Yb6sdRjE21qgkIpYWILXnkm1lGY5yV2b+fgqw86+RykRblzHE1b0uF6MW8txOqzlPI
+         SROLIDnX97wLME5XKT9Pp+u+E7mJUDrDBo6ftguehFvVY0kYq2o1tR4eMagsb+kZ4Exw
+         egX4JnfAH3pv+gV6T8iinoTwlQJZyE8YBdimgQag0cj9cnKzWzirgFZQygwOBPlryAhq
+         hOIA+qPlMjJ4LAUpRAyhfLi8IwE5JJVVUjBmBRjnVyQ+CA4h2lKiw9MA8xgFQLfQR+YH
+         uM1X1WmG9rtiDburkS4DtVMyoz2yh0FrtonxnH8NH+LLlntxrQUFkwy5DJY4fYqFMn8n
+         egzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678781369;
+        d=1e100.net; s=20210112; t=1678781370;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=I1F9tu8q22e7TPnIRSmkbbzCKgmYN1GLyyizNdJqECI=;
-        b=fpKKlvfrXiWSJd8dsmjQJ9f8HPsYBl8hNxbQfsVmObNC8+0G/6+TX14i1QubcNuihk
-         zqkT6LYcu+CPHBsr4vB6RHp9CcqxxGO24s4Jj6GzxUzBmS+8gHr9u6wJ8m6+CUNibku2
-         FjhPMy74Z/+2j+hIPZ6ml+HyKB3KKmlpWHAc/UsoHknq/CB+T+mdagFl5hqvnP2epJyj
-         DYgxElmFwVWsXjTvKe6cgJznj3ccofcMefqiRTl938xhUVBjSsP5SJAsBIl145oZl1Jt
-         nhP8nwL6lBA5rkIiu70TjZRRZHxf3jT+oR4NCNe/sbEH4wLPUZkxnlcnSUNJqQPL1MoU
-         7olQ==
-X-Gm-Message-State: AO0yUKUD2VDtPgZ3qwhMQAxtrjRAU6BFtSrZeYY2/ngjEKtzvEiEr001
-        NaYIkSbYhYjMPA8+c45ytGM6bw==
-X-Google-Smtp-Source: AK7set8iH2ppO0q2PrDDxIPXp9g3xP4JPLypCbgj5GShf9YEISBysI0K18ZHycE3J+/yRn8XMnA2yA==
-X-Received: by 2002:a50:ed06:0:b0:4fb:6523:2b38 with SMTP id j6-20020a50ed06000000b004fb65232b38mr8199416eds.27.1678781368954;
-        Tue, 14 Mar 2023 01:09:28 -0700 (PDT)
+        bh=VaFooc3ZqmiLvzci4fl/GeYapWLW5sp3t92Xl0ir5ig=;
+        b=3+oVPCQZwfUibw6AIGe6/LiW6aMZYW5MOzds7teiXPcn/OMNrtI52/UOiHqVN3Wks9
+         Kfl4wLRqBPR/NLUN0HVDzwG+rXoENomCopbc3SdL8FopFFJh+CZfYywA1LN5w/W5wir0
+         Tz8F3t3R2tPJtMPP3h6VQnQxWQ6LwZMrsZ0L31HE1+whUYiBy11t5dbg0tB+QIfKi5CX
+         nmQhN2mHmD5w0UsFIMpJjnP18SPdZQqixaBQydbdQqqY5zfdwEgdp6LMHRUJWrDvpyJR
+         oItBYkev4gN9ObHKu0KLV+K8F6tMP/1JPvoL7FCXgcbZ+7Th9HmTlVAPTTNjP9EFgxFq
+         NIZw==
+X-Gm-Message-State: AO0yUKXABLMVS1x/0aFgA0qf9JlXViLvj4et/u1Jqkw9Q6Le1CpwHjoE
+        zDM6/MsQIznJSkWPFOspjzsFXg==
+X-Google-Smtp-Source: AK7set/APHfoUuZWf2pafjAXejZ5leY1DkdX5DUsjX2PBOWYgQ4UfykW1CWAtP7k2shcSQrXc554aw==
+X-Received: by 2002:a05:6402:12d5:b0:4fe:1b62:4741 with SMTP id k21-20020a05640212d500b004fe1b624741mr762069edx.28.1678781369949;
+        Tue, 14 Mar 2023 01:09:29 -0700 (PDT)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:6932:5570:6254:9edd])
-        by smtp.gmail.com with ESMTPSA id co2-20020a0564020c0200b004fce9ff4830sm584872edb.88.2023.03.14.01.09.28
+        by smtp.gmail.com with ESMTPSA id co2-20020a0564020c0200b004fce9ff4830sm584872edb.88.2023.03.14.01.09.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 01:09:28 -0700 (PDT)
+        Tue, 14 Mar 2023 01:09:29 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 10/13] arm64: dts: qcom: sm6125: add compatible fallback to mailbox
-Date:   Tue, 14 Mar 2023 09:09:14 +0100
-Message-Id: <20230314080917.68246-11-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 11/13] arm64: dts: qcom: qcs404: add compatible fallback to mailbox
+Date:   Tue, 14 Mar 2023 09:09:15 +0100
+Message-Id: <20230314080917.68246-12-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230314080917.68246-1-krzysztof.kozlowski@linaro.org>
 References: <20230314080917.68246-1-krzysztof.kozlowski@linaro.org>
@@ -79,27 +79,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SM6125 mailbox is compatible with MSM8994.
+QCS404 mailbox is compatible with MSM8916.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm6125.dtsi | 3 ++-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index 65033227718a..225c03f4e669 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -1211,7 +1211,8 @@ apps_smmu: iommu@c600000 {
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index bc2ed73afb74..e4fdc40be821 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -1302,7 +1302,8 @@ intc: interrupt-controller@b000000 {
  		};
  
- 		apcs_glb: mailbox@f111000 {
--			compatible = "qcom,sm6125-apcs-hmss-global";
-+			compatible = "qcom,sm6125-apcs-hmss-global",
-+				     "qcom,msm8994-apcs-kpss-global";
- 			reg = <0x0f111000 0x1000>;
- 
+ 		apcs_glb: mailbox@b011000 {
+-			compatible = "qcom,qcs404-apcs-apps-global", "syscon";
++			compatible = "qcom,qcs404-apcs-apps-global",
++				     "qcom,msm8916-apcs-kpss-global", "syscon";
+ 			reg = <0x0b011000 0x1000>;
  			#mbox-cells = <1>;
+ 			clocks = <&apcs_hfpll>, <&gcc GCC_GPLL0_AO_OUT_MAIN>;
 -- 
 2.34.1
 
