@@ -2,154 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68AC76BA1C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 23:04:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1B5F6BA1C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 23:07:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229624AbjCNWEt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 18:04:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33328 "EHLO
+        id S231142AbjCNWHe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 18:07:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230176AbjCNWEp (ORCPT
+        with ESMTP id S230371AbjCNWHd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 18:04:45 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D176824CB6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 15:04:43 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-544787916d9so4662737b3.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 15:04:43 -0700 (PDT)
+        Tue, 14 Mar 2023 18:07:33 -0400
+Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAEE12ED5A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 15:07:31 -0700 (PDT)
+Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5419d4c340aso147210287b3.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 15:07:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678831483;
+        d=linaro.org; s=google; t=1678831651;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=miJsRXoa9DtW30zxnEdso0UfWvRugY2awbgfkixJ034=;
-        b=S9TrsILsmtNBqOKQqZF0Qp/VedPbvyPYPHDbTNNxO90nkgSEdFa/4qmozwSaCu/rQd
-         cjFRamvlqBqQVAWoxYUftHvxCJFgxedKOpad9iCcLHWyyzLGO0lmzTZaLiDqoOTIvdj/
-         aqG/TRyS5TnWSsDDuntf+1czyXrjEiovdRynL+YBH5qgArubIo7onCRcN+ek3pfxT7Vd
-         TARIAceYjIyiPH/EnaxnDuDfh+V8LerDiJP1XJFKZLEbD7ZRzo7X52ettzyQCRXiLSRg
-         77G/HHkijU97K1NOxZO/vlmqwXoCFiWf/awqk0nm1dhtqcARRJSyO2VnRG8ZdYk8T7fW
-         fu/Q==
+        bh=seN/m4lEeGDQgUgw0JlyKwcTrpHbmqXOSGEbkkRLfPQ=;
+        b=wkevcTt64z4Oc3OfJxVvgxIiIv01aEEWL+0Aq4YCtZOhrIQG9nUquO7JV/7kAXHc8E
+         w0ReFTRbFXPFaXwM/5ol+zgPImJ8JWlAgtpy5MdLBSW89UYPaQpxXuBccG3f37Jxc0i6
+         nM1CutxT/kHu7hYxZfK7NJELfvFxz+OpxhwwZGjY80/pCMHx/tF3DgevnYE+o8mpjbU3
+         Na753vkWj8IaQRcEXQayFqoZKfjlBZ7gHxmCbEG2Utvf+M/wlpD8p45nODIXN+XoxaL/
+         7NE4CgrdTv0HeHOj1nnuSLnufH1kFtmVdswboAX6gTscDRbDe8LV8MuvFP66KeNh0jBT
+         sNow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678831483;
+        d=1e100.net; s=20210112; t=1678831651;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=miJsRXoa9DtW30zxnEdso0UfWvRugY2awbgfkixJ034=;
-        b=tdpii4K9aznu+KCdJN1BAi1CWRtXYBfn0DxQFU/2JLxNSx4j6mlo1xn4nQXz4BdRqG
-         RF5pNj/bDxFEMxcDeGlDubySu/ICw4S1hw5PLnRQfu/oXs5oyHB/1uP5eP2DU+cagDlx
-         Ygdg2obeRRMGRjEr1ADqsfXBmgxFo4uAB7+nLebm9dClGqmC1GE7r7VgiQpNePtoGekM
-         yVkyD0scV2ofuxTveETwqd6iPR3uDLlUB+bI/PuVtFG5HurUc153qBvdonTcrIBdIZ2D
-         +Ptek7v4FsSEeSXmZzpHWU0PWDSoGK7hAsjVGXTKNjo/PLHbgmJ3FHqc9t5oksaSFtC1
-         Y3yg==
-X-Gm-Message-State: AO0yUKVv8NOXLiQFFlGPXh5+SUhCljEGLR8EMoRHTBtQK/v3amEJ0Tb9
-        MdSQgL2lRP5Q0SXkyu8Om7cUTq1kil1KEr8EH3D0qw==
-X-Google-Smtp-Source: AK7set9WBnHIldb2qAj0WVjuGFG6x9B8lzgHIOyZI4nF5WwsQAcksLE2/hVXcd7Z2LVhEOoVJlXYAyWwMAQALzoAs5w=
-X-Received: by 2002:a81:b149:0:b0:530:b21f:d604 with SMTP id
- p70-20020a81b149000000b00530b21fd604mr18465664ywh.9.1678831482993; Tue, 14
- Mar 2023 15:04:42 -0700 (PDT)
+        bh=seN/m4lEeGDQgUgw0JlyKwcTrpHbmqXOSGEbkkRLfPQ=;
+        b=qisDupa42rbXq34H0S2LJMTH3CERTpxLonhmMB5bocSyZzOH6k3onknpLjh/3oieMU
+         +FXaEXJAH6G/orKmnkCQHjoA2Hy8nJPur8spwAVtgSZddigILiBmU0oEUxNdy4oC7yto
+         4y+20ZvzMf5QyDUW+tL4noyNMajcrfGuC9HPKqvyuqnZMorGuRjrCNrxoUQYdQ6VkHoW
+         I0eLBM2a8EuczVGeIR3L/xCqgODqH0dTxZ5W1KTkl7c5x5F3X3JVzGGETq7rWgar9O/Z
+         eHbxyPp9tpBf7nBKw+Bs6N4O50B467S+gRq4TW0F5PaQuLekMn0xHbccFDfbyFfpaqTg
+         AXLA==
+X-Gm-Message-State: AO0yUKUprTV7Tnt9ATjs43lY/LL2vJSp/f637Ag2NeHNoVJJIALOYE4i
+        KnxBfAyZfG3l2RR7d9Z449Bazy9LHpZCP3+XfI0o4Q==
+X-Google-Smtp-Source: AK7set+3LwxMUmJlgq5wCvLaFY39LhbBzjLKoJb9io/xFKIxq/Io9XUy9hzwxAY1hl4I8ShxIfY6G/eMd+PlPOz+1+w=
+X-Received: by 2002:a81:b10a:0:b0:53d:2772:65d with SMTP id
+ p10-20020a81b10a000000b0053d2772065dmr20262371ywh.9.1678831650903; Tue, 14
+ Mar 2023 15:07:30 -0700 (PDT)
 MIME-Version: 1.0
 References: <20230314193709.15208-1-xhxgldhlpfy@gmail.com> <CACRpkdan0Vt_T3aRVAK4rd=hQV=MOARm9Wq7sD8rjoisTW6Dkw@mail.gmail.com>
-In-Reply-To: <CACRpkdan0Vt_T3aRVAK4rd=hQV=MOARm9Wq7sD8rjoisTW6Dkw@mail.gmail.com>
+ <20230314212851.hqbzs5hhed5apcv5@intel.intel> <9aec4249-6457-4e3b-13dd-baf02d4fbfad@ispras.ru>
+In-Reply-To: <9aec4249-6457-4e3b-13dd-baf02d4fbfad@ispras.ru>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 14 Mar 2023 23:04:30 +0100
-Message-ID: <CACRpkdaNOf+spm2PDVfnKAOBfdg+C9DdSAWiW3nkNLXd3zyL=A@mail.gmail.com>
-Subject: Re: [PATCH] iio: adc: qcom-pm8xxx-xoadc: Remove useless condition in pm8xxx_xoadc_parse_channel()
-To:     Kasumov Ruslan <xhxgldhlpfy@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
+Date:   Tue, 14 Mar 2023 23:07:19 +0100
+Message-ID: <CACRpkdb2CFckKo=VGb4gkyS0pXmqDrRBtJNeT1PjetctRquBVQ@mail.gmail.com>
+Subject: Re: [lvc-project] [PATCH] iio: adc: qcom-pm8xxx-xoadc: Remove useless
+ condition in pm8xxx_xoadc_parse_channel()
+To:     Alexey Khoroshilov <khoroshilov@ispras.ru>
+Cc:     Andi Shyti <andi.shyti@kernel.org>,
         Lars-Peter Clausen <lars@metafoo.de>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, lvc-project@linuxtesting.org,
-        Kasumov Ruslan <s02210418@gse.cs.msu.ru>
+        lvc-project@linuxtesting.org,
+        Kasumov Ruslan <xhxgldhlpfy@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-iio@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Kasumov Ruslan <s02210418@gse.cs.msu.ru>,
+        Jonathan Cameron <jic23@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 14, 2023 at 10:12=E2=80=AFPM Linus Walleij <linus.walleij@linar=
-o.org> wrote:
-> On Tue, Mar 14, 2023 at 8:37=E2=80=AFPM Kasumov Ruslan <xhxgldhlpfy@gmail=
-.com> wrote:
->
-> > The left side of the loop condition never becomes false.
-> > hwchan cannot be NULL, because it points to elements of the
-> > hw_channels array that takes one of 4 predefined values:
-> > pm8018_xoadc_channels, pm8038_xoadc_channels,
-> > pm8058_xoadc_channels, pm8921_xoadc_channels.
-> >
-> > Found by Linux Verification Center (linuxtesting.org) with SVACE.
->
-> I am not impressed with that tool. See below:
->
-> > Fixes: 63c3ecd946d4 ("iio: adc: add a driver for Qualcomm PM8xxx HK/XOA=
-DC")
-> > Signed-off-by: Kasumov Ruslan <s02210418@gse.cs.msu.ru>
->
-> (...)
-> >         hwchan =3D &hw_channels[0];
-> > -       while (hwchan && hwchan->datasheet_name) {
-> > +       while (hwchan->datasheet_name) {
-> >                 if (hwchan->pre_scale_mux =3D=3D pre_scale_mux &&
-> >                     hwchan->amux_channel =3D=3D amux_channel)
-> >                         break;
->
-> NAK have you tested this on a real system?
->
-> Here is the complete loop:
->
->         hwchan =3D &hw_channels[0];
->         while (hwchan && hwchan->datasheet_name) {
->                 if (hwchan->pre_scale_mux =3D=3D pre_scale_mux &&
->                     hwchan->amux_channel =3D=3D amux_channel)
->                         break;
->                 hwchan++;
->                 chid++;
->         }
->
-> Notice how hwchan is used as iterator in hwchan++.
->
-> What you are doing will cause a zero-pointer dereference.
+On Tue, Mar 14, 2023 at 11:03=E2=80=AFPM Alexey Khoroshilov
+<khoroshilov@ispras.ru> wrote:
 
-Nah the AI is smarter than me this time, I'm wrong, I think :(
+> As far as I can see sentinel is an "empty" element of xoadc_channel in
+> the array, i.e. hwchan->datasheet_name works as a sentinel while hwchan
+> is always non NULL.
 
-hwchan is indeed never NULL here, and the code immediately
-after unconditionally dereferences hwchan->datasheet_name.
-
-Who wrote this convoluted code again:
-63c3ecd946d4a (Linus Walleij    2017-04-04 14:08:19 +0200  759)
- chid =3D 0;
-63c3ecd946d4a (Linus Walleij    2017-04-04 14:08:19 +0200  760)
- hwchan =3D &hw_channels[0];
-63c3ecd946d4a (Linus Walleij    2017-04-04 14:08:19 +0200  761)
- while (hwchan && hwchan->datasheet_name) {
-63c3ecd946d4a (Linus Walleij    2017-04-04 14:08:19 +0200  762)
-         if (hwchan->pre_scale_mux =3D=3D pre_scale_mux &&
-63c3ecd946d4a (Linus Walleij    2017-04-04 14:08:19 +0200  763)
-             hwchan->amux_channel =3D=3D amux_channel)
-63c3ecd946d4a (Linus Walleij    2017-04-04 14:08:19 +0200  764)
-                 break;
-63c3ecd946d4a (Linus Walleij    2017-04-04 14:08:19 +0200  765)
-         hwchan++;
-63c3ecd946d4a (Linus Walleij    2017-04-04 14:08:19 +0200  766)
-         chid++;
-63c3ecd946d4a (Linus Walleij    2017-04-04 14:08:19 +0200  767)         }
-63c3ecd946d4a (Linus Walleij    2017-04-04 14:08:19 +0200  768)
- /* The sentinel does not have a name assigned */
-63c3ecd946d4a (Linus Walleij    2017-04-04 14:08:19 +0200  769)
- if (!hwchan->datasheet_name) {
-
-Oh that guy ...
-
-I wonder if we can make it look better and less unintuitive.
+You're right, I was unable to understand my own code :(
 
 Yours,
 Linus Walleij
