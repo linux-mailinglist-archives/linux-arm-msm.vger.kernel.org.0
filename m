@@ -2,94 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D3766B9513
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 14:00:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 49E0F6B9524
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 14:02:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230151AbjCNNAL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 09:00:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35686 "EHLO
+        id S232340AbjCNNC0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 09:02:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231904AbjCNM7Z (ORCPT
+        with ESMTP id S232233AbjCNNBw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 08:59:25 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1453C3E63E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:55:14 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id r27so19853017lfe.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:55:13 -0700 (PDT)
+        Tue, 14 Mar 2023 09:01:52 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 496E7AB8AE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:57:35 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id n2so19846692lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:57:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678798401;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ivdd8o1+4h9Hx06ZifsrxjjOXj5S7345Nu84eEYwm+I=;
-        b=GeoZNYfTd7NsNMwuf9jj06xG6JgPgOxSh24Aqc4fHexf2EZFqwn1eX7rj8WouZwBs6
-         rsKFBuT5sLHy6DPmNrzfalBbgpfWWJLsCGDXY6uj+IZCxJPB43Szd7pOoBRv80bBqI1a
-         GnNvexmi/uc2nPhrWCsYGhRESRI2UjseEads8TJOLkIAJrbsuYKxx74cqYpsefxLzIeG
-         4KluVcgS0pAsvJQyzqqNEUJKqAxauIaUUpcp8zRWHZXJPgItnOdbQIzTyh9XC9KrgETi
-         sCNh60+RlGDLwxwc/A74NaunIWdxgRMXYbYXGVDOXLWIGpTuBIqwBCv5hAntQYu3Omc4
-         7lEQ==
+        d=linaro.org; s=google; t=1678798572;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3hMvSC+BwObtW4Q8mntRdXujCz2/mPi6i3Y7x4GRtLU=;
+        b=PiaAt0UyYAO5nF6bBvEvzGBk0bnkTJmi8qbVJvHyAs1DwnTG2XllL+BoysCWsK59a/
+         q0lgTplVbn//IP3Z/2UynB+qlP8BLTqx0o4dwqJOTBuzGjssaL8k9VhfjrghYbAqeGj2
+         53EszeJdxlbXR3srZ1Sa1oYIEW37VqbGj+8Ta+hkO5wJyNpnjvdf+NjBXRlZi51za/Sz
+         G6oX5352BjAfowCZxQZufK28z/B1QT63Azr2ggzRlJmgC2H1i9mVPURF8k5QYJohPCN9
+         FVExYyQsY5NIM1d50yH+QmTZ4bnuydUb3dzpa4DO6JAd7e1JiWVqf+OPiq7UG6/45u3D
+         iCnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678798401;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ivdd8o1+4h9Hx06ZifsrxjjOXj5S7345Nu84eEYwm+I=;
-        b=bKZVpbCbYeIonhSz0TrbL/cb5ZWQV9DUnGBjuTvxnCyyPtLJ+jGD4jZ6oX2gsPXYYS
-         dOtQ/cV+dy0LWaIcFNBpQwbgJ6p/7GZjBZSlM+NJHKnkPXa9ds87iculBA/CJoA375ff
-         Myw7nsYRZ94jtVwyC7LLn8MSUxhYT4Zt2W1TjrBlgzzsAn4CHSYkv7CtqlcL07ttUm8Q
-         NUdX6GCeHgdxtai54o9UEhHSt8GFJ7Sk/GHAWSH1o+2JkGmdnjn7omc46LVenw8oNZSC
-         1kr+PNyE58sD15phKv/cIVpGYRaDvi6dtLQex9gWufbggCVd0ZXbqT2knEYCs8B6Q4kE
-         sdPg==
-X-Gm-Message-State: AO0yUKWhJTwKhp76Z3KUyAF7DU0jxHA2+oemF5zSBJy2+RyCxh6iKXB9
-        RI/FDc6rCKlbKdtCEGhD4x5BJg==
-X-Google-Smtp-Source: AK7set+UcdT/m0UVY8fr52DNOQXx9OavRZSVrz2NLZY7LoiN/Wg81DC/eOMjnEm46lr41vpt6SuHhA==
-X-Received: by 2002:ac2:5930:0:b0:4e8:3dc1:70f1 with SMTP id v16-20020ac25930000000b004e83dc170f1mr646535lfi.0.1678798400861;
-        Tue, 14 Mar 2023 05:53:20 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id s9-20020a19ad49000000b004dda74eccafsm395374lfd.68.2023.03.14.05.53.18
+        d=1e100.net; s=20210112; t=1678798572;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3hMvSC+BwObtW4Q8mntRdXujCz2/mPi6i3Y7x4GRtLU=;
+        b=BvZH0yT4vu6gbKx1gYZmGbOubSavr3IROIUMPrE3mxd6JgwKQw4VKdRK59v/TP8rtc
+         FkrtiSthU3LYZF9Mo+n2Jync6OlKmxK5yvQHdUqEL5Cdyuyv5NvhN9gB8X8NVoRrXpmD
+         cFl8qeJzm6SnH3OACrea1uD5O4MkQIJGBHT20kHSG1OJ3+5DHs6BmIk66MS59KfvPuHP
+         uWGlaQa6ltpsQJSDh0RJJnICWjNLYEHWevPvURzp3j6j4FrPIpGm5qNjisZVo5c06RAP
+         eotBDOl1n1F0gbJOgusb+zWBO2syBiDss6BeW/LEeqIf5RIJezrrqVHIa470oM+n7UXP
+         xRKw==
+X-Gm-Message-State: AO0yUKXcNwf4BS9QZo2feF7C8b90urvvJ+lyLYSarLYZkDv70+tPDPl1
+        8S0gJ0iuzl6yeJFa56k+GthH0+Joi5JUqqIfdPs=
+X-Google-Smtp-Source: AK7set8/DJoCwgP0J+uo3ZeC5Z0xvLjgMcq+y3wtuX2Fh5hnwrqDAasTBg1ziDk3I3Lx1nmwfuB68w==
+X-Received: by 2002:ac2:485c:0:b0:4b3:d6e1:26bb with SMTP id 28-20020ac2485c000000b004b3d6e126bbmr641299lfy.29.1678798572659;
+        Tue, 14 Mar 2023 05:56:12 -0700 (PDT)
+Received: from localhost.localdomain (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id y24-20020ac255b8000000b004e670ce364bsm389031lfg.277.2023.03.14.05.56.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 05:53:20 -0700 (PDT)
+        Tue, 14 Mar 2023 05:56:12 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 14 Mar 2023 13:53:01 +0100
-Subject: [PATCH 6/6] dt-bindings: thermal: tsens: Add QCM2290
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Qais Yousef <qyousef@layalina.io>,
+        Stephen Hemminger <stephen@networkplumber.org>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Tobias Klauser <tklauser@distanz.ch>,
+        Vasily Averin <vasily.averin@linux.dev>,
+        Colin Ian King <colin.i.king@gmail.com>,
+        Kirill Tkhai <tkhai@ya.ru>, linux-kernel@vger.kernel.org
+Subject: [PATCH] mailmap: map Sai Prakash Ranjan's old address to his current one
+Date:   Tue, 14 Mar 2023 13:56:03 +0100
+Message-Id: <20230314125604.2734146-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230314-topic-2290_compats-v1-6-47e26c3c0365@linaro.org>
-References: <20230314-topic-2290_compats-v1-0-47e26c3c0365@linaro.org>
-In-Reply-To: <20230314-topic-2290_compats-v1-0-47e26c3c0365@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-pm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1678798384; l=820;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=/HqJnDrZDWmElYHarn/65QzTOlddvNyANiSR36b9lRk=;
- b=C+BlB3/yPgi2Eyf6wAEQCQcRQeP1r4y32t0AWbyQN1ZLofGrXHb5mOPucjfJP3ZwpbOFf3MRhdp9
- Sg9b/4D6CmS0GoV1u4AB0svIXG9ZSU8F8r2af1tHF8xAqiaf8JWY
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
@@ -100,26 +80,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the TSENS v2.x controller found on QCM2290.
+Sai's old email is still picked up by the likes of get_maintainer.pl
+and keeps bouncing like all other @codeaurora.org addresses. Map it to
+his current one.
 
+Cc: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+ .mailmap | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 926e9c51c93c..1a6ffbf11bcc 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -48,6 +48,7 @@ properties:
-               - qcom,msm8953-tsens
-               - qcom,msm8996-tsens
-               - qcom,msm8998-tsens
-+              - qcom,qcm2290-tsens
-               - qcom,sc7180-tsens
-               - qcom,sc7280-tsens
-               - qcom,sc8180x-tsens
-
+diff --git a/.mailmap b/.mailmap
+index bc213f9eaf6f..3c7f00496072 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -398,6 +398,7 @@ Ross Zwisler <zwisler@kernel.org> <ross.zwisler@linux.intel.com>
+ Rudolf Marek <R.Marek@sh.cvut.cz>
+ Rui Saraiva <rmps@joel.ist.utl.pt>
+ Sachin P Sant <ssant@in.ibm.com>
++Sai Prakash Ranjan <quic_saipraka@quicinc.com> <saiprakash.ranjan@codeaurora.org>
+ Sakari Ailus <sakari.ailus@linux.intel.com> <sakari.ailus@iki.fi>
+ Sam Ravnborg <sam@mars.ravnborg.org>
+ Sankeerth Billakanti <quic_sbillaka@quicinc.com> <sbillaka@codeaurora.org>
 -- 
 2.39.2
 
