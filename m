@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B0246B9287
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 13:02:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB4FB6B92B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 13:07:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231726AbjCNMCp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 08:02:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59614 "EHLO
+        id S231247AbjCNMHZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 08:07:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229868AbjCNMCn (ORCPT
+        with ESMTP id S231434AbjCNMHW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 08:02:43 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7C5B18B27
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:01:59 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id j11so19642218lfg.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:01:59 -0700 (PDT)
+        Tue, 14 Mar 2023 08:07:22 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60FCF9CFE8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:06:47 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id j11so19663626lfg.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:06:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678795291;
+        d=linaro.org; s=google; t=1678795575;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=qxdl5EaWW37f/EaoWMzEiM+MDiQ+bRe3oc7oUW6vU3I=;
-        b=xTaL5bWALtWMcWnGtP773pjTvoRnANAUPQsn4XcYFjc8/zqRJsx6TtUYWqSoqERUHi
-         uoDrJx9M9FCI3B6TuBejWMYKN1AyLGKQv5bT61sswdp68OqbodO+/hZlw7AWeQ3fKiJA
-         UoNjzx1AzJYwL6uTbLgKnRKXyT/tRH+XsarLdRIE1b1zcjru9aVX8m9Ms6JdVhiWHoXT
-         VWjBf/fEdzAZhE0kRCtSDn4JynOBQuL79/bn/1FbR1HnFZXMbAcHuOLzkcvudoRWUJvR
-         XliLM43MDSM3vpQwQ89KIMXqyfUWAs7ZeLbiFH6FZBLb0ROjufDvDza6rZFniWoibbq0
-         AoNQ==
+        bh=e6PMzxNPu0tsz3tjRajBCZnSPtI1e5mB9Su+fsMf3bk=;
+        b=Dkuwu1dFGFoMSVkuxQVa1GD2Nl2OPE0YFBafjm4iaAtc+EQ3/NFUJ+GST24b3ymsk6
+         um+RZQxhy6h4v6XpKGwQxpxPqWHbeAlSvSMmMMY/SS+evvb/aJN7KzCddo/jt0n6ifFk
+         AKIB8DZ+nAbo5tzq8nFdIYGXgfQiBDidop5k9mLq/HcuNnmauJaZjtkceAQilJhSVqzD
+         ynqDM13h6tIfchnN5G+2V2a8vEmaxKx6YmStmk+soihKqtVx/mr4lOgFQJ9CLdKKY5mF
+         qUSxVkozbLLnGjWcffoaHK9E2+Dq301aqJYS1TI5TQ5jcmHLJF+VlULpRU+TE5LVuN+v
+         IXMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678795291;
+        d=1e100.net; s=20210112; t=1678795575;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qxdl5EaWW37f/EaoWMzEiM+MDiQ+bRe3oc7oUW6vU3I=;
-        b=xg7Q5DZl4I2p9KikXLeBgcA9jAY5pi8JAesehs9XIaSuvWO+z77tTm3FporXvWOLNN
-         z/MCo3a6yozQ4mnFy0EI4YVvUUElApUBpRBHmPxN+h6+CjJipQ2kKgbPMiUkPZOjlsz6
-         ssd97T17IpiWo/ADOEQ4INJBlEmaVY3nQ1q1UwyjP1TbYACzWjsOIlBVgSBl+XLjnbTf
-         Z75j01Wuv2J1WlJhRf5DRc+zkZUFArOTPMhFLFOG9nnOwR5XH5Ukh4KFYRHG/gDCNf/o
-         49D9baTM3CGQgiLAmyI82i3RiIfCXcTwg+McCu4C6+4UwmhzICWf+gvKYHkAzhesFBlJ
-         +w0A==
-X-Gm-Message-State: AO0yUKWKM17rM0BhbXFRY0iC60DqOoQpMqZBoKZEwyTj1+qQ85lCrL9V
-        K7QrT0a0nJ7ZXWNmVzqWX/63Dg==
-X-Google-Smtp-Source: AK7set/k/n+CZueG3A0weqw5lpWKf9Y03en5sKrbyHi7IfWC18kdA/dqCvr/rAZCPbuIpQkzDLq4VQ==
-X-Received: by 2002:ac2:55b3:0:b0:4b5:936e:69df with SMTP id y19-20020ac255b3000000b004b5936e69dfmr613091lfg.53.1678795291354;
-        Tue, 14 Mar 2023 05:01:31 -0700 (PDT)
+        bh=e6PMzxNPu0tsz3tjRajBCZnSPtI1e5mB9Su+fsMf3bk=;
+        b=TDoGoL2QVhpHjp47fioCrP5tCT+nS8TWl6Fpn7SvKpY5tv1zUxPwVowjCMUWL8PSqy
+         RYaPEidwQo5Ih2QxuzpeiuOky5BR5uR5VldNEsJVJgpJpRN+eea0vdc7fQnhKOQ9pNCa
+         IoCZ1idPXsGbDOjI7ATWdFPfgDFYGmt5/rdBswiEKZ/zEXd83oHNhL5oH2mkI0dDPm4A
+         xQUqaPM27f26Vx+GInm+suQEGYL4/kY98FBLshuQAELrJSJbDzNZhhSlIvJz54B8B6EJ
+         cu219ALcNIDnZCFB55Kj3ifeQMicWAKcFoyA5jfBtTuGYlXeC5bblSSDH00C7wSE9McK
+         4L4g==
+X-Gm-Message-State: AO0yUKWSQAZnfHrqsP07z9ymJR6e1d9cNmPch3fAkum03ccJQFll6KOp
+        5eVLHdr7minwfsRnD1PLxh6Uww==
+X-Google-Smtp-Source: AK7set8y1S3Ew42r0fNJc7kHIb75SA1cUzze9ztJfgE0b5T6mi+HLLRdUIRz6wmiM+EMjWdU5uLedg==
+X-Received: by 2002:ac2:4189:0:b0:4dd:ad88:ba5c with SMTP id z9-20020ac24189000000b004ddad88ba5cmr712969lfh.4.1678795575616;
+        Tue, 14 Mar 2023 05:06:15 -0700 (PDT)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id r6-20020ac25a46000000b004e849f6836csm376886lfn.167.2023.03.14.05.01.28
+        by smtp.gmail.com with ESMTPSA id f25-20020ac251b9000000b004dab932248fsm378828lfk.180.2023.03.14.05.06.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Mar 2023 05:01:30 -0700 (PDT)
-Message-ID: <6a07da47-fcaa-c7e6-36f8-96c055bee0f0@linaro.org>
-Date:   Tue, 14 Mar 2023 13:01:27 +0100
+        Tue, 14 Mar 2023 05:06:14 -0700 (PDT)
+Message-ID: <20ebe4a3-1352-ae02-a56b-672ff3fcf12d@linaro.org>
+Date:   Tue, 14 Mar 2023 13:06:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v3 04/10] drm/msm/dsi: dsi_cfg: Deduplicate identical
- structs
+Subject: Re: [PATCH v3 06/10] drm/msm/dsi: Switch the QCM2290-specific
+ compatible to index autodetection
 Content-Language: en-US
 To:     Marijn Suijten <marijn.suijten@somainline.org>
 Cc:     Rob Clark <robdclark@gmail.com>,
@@ -74,10 +74,10 @@ Cc:     Rob Clark <robdclark@gmail.com>,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230307-topic-dsi_qcm-v3-0-8bd7e1add38a@linaro.org>
- <20230307-topic-dsi_qcm-v3-4-8bd7e1add38a@linaro.org>
- <20230313235550.zo243m5qn23yadey@SoMainline.org>
+ <20230307-topic-dsi_qcm-v3-6-8bd7e1add38a@linaro.org>
+ <20230314000322.ptxs5d5mx54vdopa@SoMainline.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230313235550.zo243m5qn23yadey@SoMainline.org>
+In-Reply-To: <20230314000322.ptxs5d5mx54vdopa@SoMainline.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -92,190 +92,99 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 14.03.2023 00:55, Marijn Suijten wrote:
-> On 2023-03-07 14:01:42, Konrad Dybcio wrote:
->> Some structs were defined multiple times for no apparent reason.
->> Deduplicate them.
+On 14.03.2023 01:03, Marijn Suijten wrote:
+> On 2023-03-07 14:01:44, Konrad Dybcio wrote:
+>> Now that the logic can handle multiple sets of registers, move
+>> the QCM2290 to the common logic and mark it deprecated. This allows us
+>> to remove a couple of structs, saving some memory.
 >>
 >> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> Seems a bit inconsistent to name some of these with their DSI host
-> revision, and keep some named after the SoC.  Also in the name of
-> msm_dsi_config.  Regardless:
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-I think it's a good indicator of whether it's shared or used
-by just one platform. Truth be told, some of the entries *are*
-actually SoC-specific (think 8996 and its magic MMAGIC additions)
-
-Konrad
-
-> 
 >> ---
->>  drivers/gpu/drm/msm/dsi/dsi_cfg.c | 77 +++++++++++++--------------------------
->>  1 file changed, 26 insertions(+), 51 deletions(-)
+>>  drivers/gpu/drm/msm/dsi/dsi.c     |  4 +++-
+>>  drivers/gpu/drm/msm/dsi/dsi_cfg.c | 28 ++--------------------------
+>>  2 files changed, 5 insertions(+), 27 deletions(-)
 >>
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
+>> index 31fdee2052be..90d43628b22b 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
+>> @@ -174,7 +174,9 @@ static int dsi_dev_remove(struct platform_device *pdev)
+>>  
+>>  static const struct of_device_id dt_match[] = {
+>>  	{ .compatible = "qcom,mdss-dsi-ctrl", .data = NULL /* autodetect cfg */ },
+>> -	{ .compatible = "qcom,dsi-ctrl-6g-qcm2290", .data = &qcm2290_dsi_cfg_handler },
+>> +
+>> +	/* Deprecated, don't use */
+>> +	{ .compatible = "qcom,dsi-ctrl-6g-qcm2290", .data = NULL },
+>>  	{}
+>>  };
+>>  
 >> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
->> index 6c192963c100..d39521850018 100644
+>> index 6d4b2ce4b918..29ccd755cc2e 100644
 >> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
 >> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
->> @@ -47,41 +47,32 @@ static const struct msm_dsi_config msm8974_apq8084_dsi_cfg = {
->>  	},
->>  };
->>  
->> -static const char * const dsi_8916_bus_clk_names[] = {
->> +static const char * const dsi_v1_3_1_clk_names[] = {
->>  	"mdp_core", "iface", "bus",
->>  };
->>  
->> -static const struct regulator_bulk_data msm8916_dsi_regulators[] = {
->> +static const struct regulator_bulk_data dsi_v1_3_1_regulators[] = {
->>  	{ .supply = "vdda", .init_load_uA = 100000 },	/* 1.2 V */
->>  	{ .supply = "vddio", .init_load_uA = 100000 },	/* 1.8 V */
->>  };
->>  
->>  static const struct msm_dsi_config msm8916_dsi_cfg = {
->>  	.io_offset = DSI_6G_REG_SHIFT,
->> -	.regulator_data = msm8916_dsi_regulators,
->> -	.num_regulators = ARRAY_SIZE(msm8916_dsi_regulators),
->> -	.bus_clk_names = dsi_8916_bus_clk_names,
->> -	.num_bus_clks = ARRAY_SIZE(dsi_8916_bus_clk_names),
->> +	.regulator_data = dsi_v1_3_1_regulators,
->> +	.num_regulators = ARRAY_SIZE(dsi_v1_3_1_regulators),
->> +	.bus_clk_names = dsi_v1_3_1_clk_names,
->> +	.num_bus_clks = ARRAY_SIZE(dsi_v1_3_1_clk_names),
+>> @@ -169,7 +169,8 @@ static const struct msm_dsi_config sdm845_dsi_cfg = {
+>>  	.bus_clk_names = dsi_v2_4_clk_names,
+>>  	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
 >>  	.io_start = {
->>  		{ 0x1a98000 },
+>> -		{ 0xae94000, 0xae96000 }, /* SDM845 / SDM670 / SC7180 */
+>> +		{ 0xae94000, 0xae96000 }, /* SDM845 / SDM670 */
+>> +		{ 0x5e94000 }, /* QCM2290 / SM6115 / SM6125 / SM6375 */
 >>  	},
 >>  };
 >>  
->> -static const char * const dsi_8976_bus_clk_names[] = {
->> -	"mdp_core", "iface", "bus",
->> -};
->> -
->> -static const struct regulator_bulk_data msm8976_dsi_regulators[] = {
->> -	{ .supply = "vdda", .init_load_uA = 100000 },	/* 1.2 V */
->> -	{ .supply = "vddio", .init_load_uA = 100000 },	/* 1.8 V */
->> -};
->> -
->>  static const struct msm_dsi_config msm8976_dsi_cfg = {
->>  	.io_offset = DSI_6G_REG_SHIFT,
->> -	.regulator_data = msm8976_dsi_regulators,
->> -	.num_regulators = ARRAY_SIZE(msm8976_dsi_regulators),
->> -	.bus_clk_names = dsi_8976_bus_clk_names,
->> -	.num_bus_clks = ARRAY_SIZE(dsi_8976_bus_clk_names),
->> +	.regulator_data = dsi_v1_3_1_regulators,
->> +	.num_regulators = ARRAY_SIZE(dsi_v1_3_1_regulators),
->> +	.bus_clk_names = dsi_v1_3_1_clk_names,
->> +	.num_bus_clks = ARRAY_SIZE(dsi_v1_3_1_clk_names),
->>  	.io_start = {
->>  		{ 0x1a94000, 0x1a96000 },
->>  	},
->> @@ -107,10 +98,6 @@ static const struct msm_dsi_config msm8994_dsi_cfg = {
+>> @@ -203,25 +204,6 @@ static const struct msm_dsi_config sc7280_dsi_cfg = {
 >>  	},
 >>  };
 >>  
->> -static const char * const dsi_8996_bus_clk_names[] = {
->> -	"mdp_core", "iface", "bus", "core_mmss",
->> -};
->> -
->>  static const struct regulator_bulk_data msm8996_dsi_regulators[] = {
->>  	{ .supply = "vdda", .init_load_uA = 18160 },	/* 1.25 V */
->>  	{ .supply = "vcca", .init_load_uA = 17000 },	/* 0.925 V */
->> @@ -121,8 +108,8 @@ static const struct msm_dsi_config msm8996_dsi_cfg = {
->>  	.io_offset = DSI_6G_REG_SHIFT,
->>  	.regulator_data = msm8996_dsi_regulators,
->>  	.num_regulators = ARRAY_SIZE(msm8996_dsi_regulators),
->> -	.bus_clk_names = dsi_8996_bus_clk_names,
->> -	.num_bus_clks = ARRAY_SIZE(dsi_8996_bus_clk_names),
->> +	.bus_clk_names = dsi_6g_bus_clk_names,
->> +	.num_bus_clks = ARRAY_SIZE(dsi_6g_bus_clk_names),
->>  	.io_start = {
->>  		{ 0x994000, 0x996000 },
->>  	},
->> @@ -167,24 +154,20 @@ static const struct msm_dsi_config sdm660_dsi_cfg = {
->>  	},
->>  };
->>  
->> -static const char * const dsi_sdm845_bus_clk_names[] = {
->> +static const char * const dsi_v2_4_clk_names[] = {
->>  	"iface", "bus",
->>  };
->>  
->> -static const char * const dsi_sc7180_bus_clk_names[] = {
+>> -static const char * const dsi_qcm2290_bus_clk_names[] = {
 >> -	"iface", "bus",
 >> -};
 >> -
->> -static const struct regulator_bulk_data sdm845_dsi_regulators[] = {
->> +static const struct regulator_bulk_data dsi_v2_4_regulators[] = {
->>  	{ .supply = "vdda", .init_load_uA = 21800 },	/* 1.2 V */
->>  };
->>  
->>  static const struct msm_dsi_config sdm845_dsi_cfg = {
->>  	.io_offset = DSI_6G_REG_SHIFT,
->> -	.regulator_data = sdm845_dsi_regulators,
->> -	.num_regulators = ARRAY_SIZE(sdm845_dsi_regulators),
->> -	.bus_clk_names = dsi_sdm845_bus_clk_names,
->> -	.num_bus_clks = ARRAY_SIZE(dsi_sdm845_bus_clk_names),
->> +	.regulator_data = dsi_v2_4_regulators,
->> +	.num_regulators = ARRAY_SIZE(dsi_v2_4_regulators),
->> +	.bus_clk_names = dsi_v2_4_clk_names,
->> +	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
->>  	.io_start = {
->>  		{ 0xae94000, 0xae96000 },
->>  	},
->> @@ -198,32 +181,24 @@ static const struct msm_dsi_config sm8550_dsi_cfg = {
->>  	.io_offset = DSI_6G_REG_SHIFT,
->>  	.regulator_data = sm8550_dsi_regulators,
->>  	.num_regulators = ARRAY_SIZE(sm8550_dsi_regulators),
->> -	.bus_clk_names = dsi_sdm845_bus_clk_names,
->> -	.num_bus_clks = ARRAY_SIZE(dsi_sdm845_bus_clk_names),
->> +	.bus_clk_names = dsi_v2_4_clk_names,
->> +	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
->>  	.io_start = {
->>  		{ 0xae94000, 0xae96000 },
->>  	},
->>  };
->>  
->> -static const struct regulator_bulk_data sc7180_dsi_regulators[] = {
+>> -static const struct regulator_bulk_data qcm2290_dsi_cfg_regulators[] = {
 >> -	{ .supply = "vdda", .init_load_uA = 21800 },	/* 1.2 V */
 >> -};
->> -
->>  static const struct msm_dsi_config sc7180_dsi_cfg = {
->>  	.io_offset = DSI_6G_REG_SHIFT,
->> -	.regulator_data = sc7180_dsi_regulators,
->> -	.num_regulators = ARRAY_SIZE(sc7180_dsi_regulators),
->> -	.bus_clk_names = dsi_sc7180_bus_clk_names,
->> -	.num_bus_clks = ARRAY_SIZE(dsi_sc7180_bus_clk_names),
->> +	.regulator_data = dsi_v2_4_regulators,
->> +	.num_regulators = ARRAY_SIZE(dsi_v2_4_regulators),
->> +	.bus_clk_names = dsi_v2_4_clk_names,
->> +	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
->>  	.io_start = {
->>  		{ 0xae94000 },
->>  	},
->>  };
->>  
->> -static const char * const dsi_sc7280_bus_clk_names[] = {
->> -	"iface", "bus",
+> 
+> These two consts should really have already been deleted as part of
+> 04/10: drm/msm/dsi: dsi_cfg: Deduplicate identical structs.
+Right, will fix
+
+> 
+>> -static const struct msm_dsi_config qcm2290_dsi_cfg = {
+>> -	.io_offset = DSI_6G_REG_SHIFT,
+>> -	.regulator_data = qcm2290_dsi_cfg_regulators,
+>> -	.num_regulators = ARRAY_SIZE(qcm2290_dsi_cfg_regulators),
+>> -	.bus_clk_names = dsi_qcm2290_bus_clk_names,
+>> -	.num_bus_clks = ARRAY_SIZE(dsi_qcm2290_bus_clk_names),
+>> -	.io_start = {
+>> -		{ 0x5e94000 },
+>> -	},
 >> -};
 >> -
->>  static const struct regulator_bulk_data sc7280_dsi_regulators[] = {
->>  	{ .supply = "vdda", .init_load_uA = 8350 },	/* 1.2 V */
->>  };
->> @@ -232,8 +207,8 @@ static const struct msm_dsi_config sc7280_dsi_cfg = {
->>  	.io_offset = DSI_6G_REG_SHIFT,
->>  	.regulator_data = sc7280_dsi_regulators,
->>  	.num_regulators = ARRAY_SIZE(sc7280_dsi_regulators),
->> -	.bus_clk_names = dsi_sc7280_bus_clk_names,
->> -	.num_bus_clks = ARRAY_SIZE(dsi_sc7280_bus_clk_names),
->> +	.bus_clk_names = dsi_v2_4_clk_names,
->> +	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
->>  	.io_start = {
->>  		{ 0xae94000, 0xae96000 },
->>  	},
->>
->> -- 
->> 2.39.2
->>
+>>  static const struct msm_dsi_host_cfg_ops msm_dsi_v2_host_ops = {
+>>  	.link_clk_set_rate = dsi_link_clk_set_rate_v2,
+>>  	.link_clk_enable = dsi_link_clk_enable_v2,
+>> @@ -312,9 +294,3 @@ const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor)
+>>  
+>>  	return cfg_hnd;
+>>  }
+>> -
+>> -/*  Non autodetect configs */
+>> -const struct msm_dsi_cfg_handler qcm2290_dsi_cfg_handler = {
+>> -	.cfg = &qcm2290_dsi_cfg,
+>> -	.ops = &msm_dsi_6g_v2_host_ops,
+>> -};
+> 
+> And how do you think dsi.c is able to reference this... don't forget to
+> remove it from dsi_cfg.h in v4.  In fact, if you look at how this was
+> implemented you should also be able to remove #include "dsi_cfg.h" from
+> dsi.c.  A clean revert of that patch would be nice, or just use it as
+> reference to find the remnants:
+> 
+> https://lore.kernel.org/all/1644853060-12222-2-git-send-email-loic.poulain@linaro.org/
+Ack
+
+Konrad
+> 
+> - Marijn
