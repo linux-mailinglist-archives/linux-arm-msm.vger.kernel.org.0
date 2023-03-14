@@ -2,100 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29AAA6BA271
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 23:27:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 570F96BA2A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 23:42:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230365AbjCNW1R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 18:27:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43162 "EHLO
+        id S231334AbjCNWmA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 18:42:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230011AbjCNW1Q (ORCPT
+        with ESMTP id S231256AbjCNWl7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 18:27:16 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 956892B604
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 15:27:12 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id n2so21931598lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 15:27:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678832830;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Au+ByXF+T/ttwdvk2E5GvB4Cm4Xo7Y50WRAwY8Nd3PI=;
-        b=Q2LCGvyww4ehVH+wC1KTEGhgAoSUFH1ZX0i1aWgkZRmGHiNPGRfhYGDk3RyIeDNpp9
-         HqGKE4iexBIR9tJGgeMLkaGUoyS7JJ50bgQGIiYWfo/CBSovpvVu7V2omFF8f4wXzXMX
-         qWuwutohj4c+p4kY+5ebx5J8oSYxTuAho0cqgR2RWquDkXAZtil+fH4h6K2bme2gm+oy
-         ddo6qCdr5O6fAm5nYoAZwhix/aT7bi080gRirmCrqERirzZ6ix72nm5oJoL0wsKyUXsQ
-         B2aC9tjI3KsOKzVZbmFtZ79sTI7bLHREVQcojPVagmIe+pNSdD+MHMj0f230ySgOCp/0
-         1GHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678832830;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Au+ByXF+T/ttwdvk2E5GvB4Cm4Xo7Y50WRAwY8Nd3PI=;
-        b=xoqU8JVyxoRhTaYlxmleZt/cW7cRJNHubNu5Ubd6JMN5aHs8iLdee7bldUM0XRKcKv
-         itu4gWoD6mvapPmBDJaCmd1/u3eFDhSxicTUpK8O/jocNeoM14ox0G2Y4Z4T4OYaMFiA
-         33R+SV/bt7LzK9O25Qk8GxDaZjOv3Zz1WWO1TXkt8QfrBxlCVrXYvXzS2rx/5nU+P0nq
-         8YL62Ykcvkbbowi0+f+v5BQFSNEEASajZbslHgdE05Pgij+KvK0LhMyb7BkoADzZ+bmf
-         lfJvFtqX4DCN+SyVlvA/NMbCnoIUyiPssL6UXDFu3Ceani0hX1p15lcVPUR7uxrZpmDD
-         PkeA==
-X-Gm-Message-State: AO0yUKWbqNAfEXgpbOnilN0XeL6ol1qdZ03vAh9QayeOD3K2smwrvC/q
-        WUCP4V0xQ+R8Tfo7VLnSWuPgXIq6Jtfea+vJozE=
-X-Google-Smtp-Source: AK7set8LJmuI7xVqgISQ+Y68vWHmnkx+pjP/kmLyFsI2LuWzQ6PRiDvE6l2DC/c+HAJbShrMgoP7ow==
-X-Received: by 2002:ac2:4a91:0:b0:4cb:4374:cc78 with SMTP id l17-20020ac24a91000000b004cb4374cc78mr1497320lfp.26.1678832830643;
-        Tue, 14 Mar 2023 15:27:10 -0700 (PDT)
-Received: from localhost.localdomain (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id c11-20020a19760b000000b004ab52b0bcf9sm562373lff.207.2023.03.14.15.27.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 15:27:10 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org,
+        Tue, 14 Mar 2023 18:41:59 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6B1C37541;
+        Tue, 14 Mar 2023 15:41:58 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 318CF61A47;
+        Tue, 14 Mar 2023 22:41:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A4DC433D2;
+        Tue, 14 Mar 2023 22:41:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678833717;
+        bh=s6IlrideidXiP2FRDZyepR6OUAPx5CL/GzNBpxy/lyA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=KjWPkr1+9gglz/7YFCYrvIRAAcuskx48dxq6RXDQROZhnIya6h3HhSKYhE0nTSf5t
+         OrXC260lip8lFK8+4Pm9XfjUAdmK58eimPvgXFXtDAkozgninx/vF7g2EusBBcikjH
+         gPoES119tn804hA+3fXCBA3MZ7PDH92TbGrG28RmHkALJ9da/Qso8bLY1q1iRNxpXh
+         IH/XHB5mZKXHqu+G+uCpIQTtHpZls1IF2YzARdSxW7ixG9Y1xj9Qxn/E3+TSCqI0W6
+         a2RR35RzpZYeUWYjoOMaKOT/Ou0AioOTdSbonL+DM6YBjPaE87mt/2iF0NU79daUxN
+         DylGDWdztvrbw==
+Date:   Tue, 14 Mar 2023 23:41:54 +0100
+From:   Andi Shyti <andi.shyti@kernel.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Alexey Khoroshilov <khoroshilov@ispras.ru>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        lvc-project@linuxtesting.org,
+        Kasumov Ruslan <xhxgldhlpfy@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: pinctrl: qcom,qcm2290-tlmm: Allow input-enable
-Date:   Tue, 14 Mar 2023 23:27:05 +0100
-Message-Id: <20230314222705.2940258-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.2
+        linux-iio@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Kasumov Ruslan <s02210418@gse.cs.msu.ru>,
+        Jonathan Cameron <jic23@kernel.org>
+Subject: Re: [lvc-project] [PATCH] iio: adc: qcom-pm8xxx-xoadc: Remove
+ useless condition in pm8xxx_xoadc_parse_channel()
+Message-ID: <20230314224154.7gctfkt2mlaz3geg@intel.intel>
+References: <20230314193709.15208-1-xhxgldhlpfy@gmail.com>
+ <CACRpkdan0Vt_T3aRVAK4rd=hQV=MOARm9Wq7sD8rjoisTW6Dkw@mail.gmail.com>
+ <20230314212851.hqbzs5hhed5apcv5@intel.intel>
+ <9aec4249-6457-4e3b-13dd-baf02d4fbfad@ispras.ru>
+ <CACRpkdb2CFckKo=VGb4gkyS0pXmqDrRBtJNeT1PjetctRquBVQ@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <CACRpkdb2CFckKo=VGb4gkyS0pXmqDrRBtJNeT1PjetctRquBVQ@mail.gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow the common input-enable. This was missed with the
-initial submission.
+Hi Alexey and Ruslan,
 
-Fixes: 5147022214db ("dt-bindings: pinctrl: qcom: Add QCM2290 pinctrl bindings")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- Documentation/devicetree/bindings/pinctrl/qcom,qcm2290-tlmm.yaml | 1 +
- 1 file changed, 1 insertion(+)
+On Tue, Mar 14, 2023 at 11:07:19PM +0100, Linus Walleij wrote:
+> On Tue, Mar 14, 2023 at 11:03 PM Alexey Khoroshilov
+> <khoroshilov@ispras.ru> wrote:
+> 
+> > As far as I can see sentinel is an "empty" element of xoadc_channel in
+> > the array, i.e. hwchan->datasheet_name works as a sentinel while hwchan
+> > is always non NULL.
+> 
+> You're right, I was unable to understand my own code :(
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,qcm2290-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,qcm2290-tlmm.yaml
-index 6271fd15e0b6..032763649336 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,qcm2290-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,qcm2290-tlmm.yaml
-@@ -85,6 +85,7 @@ $defs:
-       bias-pull-up: true
-       bias-disable: true
-       drive-strength: true
-+      input-enable: true
-       output-high: true
-       output-low: true
- 
--- 
-2.39.2
+At this time of the day I got alarmed too. Happens :)
 
+Please ignore my previous comment but still no need for the
+Fixes: tag from the commit log as it's a cleanup and not a bug
+fix.
+
+Thanks,
+Andi
