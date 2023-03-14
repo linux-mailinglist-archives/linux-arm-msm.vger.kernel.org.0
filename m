@@ -2,71 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D24486B8D2E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 09:23:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A84EC6B8D35
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 09:24:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230421AbjCNIWk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 04:22:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33132 "EHLO
+        id S230491AbjCNIXt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 04:23:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229801AbjCNIWR (ORCPT
+        with ESMTP id S230125AbjCNIX3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 04:22:17 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C66E1ABCB;
-        Tue, 14 Mar 2023 01:20:54 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id j2so13446840wrh.9;
-        Tue, 14 Mar 2023 01:20:54 -0700 (PDT)
+        Tue, 14 Mar 2023 04:23:29 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 550D18690
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 01:21:57 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id o12so58561548edb.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 01:21:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678782052;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1NYMBiRuz7vfmt2Wpyeig2UyQ+79mH3kKnB3rm+kmQY=;
-        b=n0GhsvE/3f+lSCHHtQcsmKLzTCo8UCOPV8n4FQL86IpRQzqFX9+9853Jg4KV6qlztJ
-         OginLJoBPA0BpKvlFk+CIpJ/pAGmMMcBizLl+eKSjGrTtPSZ1xm7oYYBZd7M6fRc4+De
-         5+mE6V1nXwSFgagI6IAiY9pYzLWtixvRtqISh7ORqmL9Gjk/LVERrQ6RT8Dm2qjryEyq
-         kCRON/bfHwCYzESFJ7fWgT5Tgjw29o+MD1pNu/OX4WwtLZp8M3y8HSqMfnNdHp9Qv+Os
-         5SxRaHpi2oMMrHwgLEh9YCdEYaHFgarLakuigRqkaHBrvROFteSqgTVoQNSBDiosGtm1
-         HDow==
+        d=linaro.org; s=google; t=1678782114;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/3Pox4XAvLnFNQzaTLmAx4AjLw2hBw8wrTBcLaB41To=;
+        b=ZR/9tsrYEGhcCJThIaIJws7+UnO3wfRjY13AR+L8pTE2iLf/QF/xZDThAuRYQfD+Qr
+         t84kkVrfzgHZLQOSiPzs/zCfAySauI/dsZ1ErxYsyEDRPthrXo57QLEAfQ6kZUCjJ36n
+         drRsxMysV01P38QFssHvXViAXdb0tsNclwCC78SCmKJwiECP1rubYB+GfyhqmrRB5A+v
+         5hfBMe91fHW2gLwIXKGfnzW+NsCnWJRXgTRhKhzmBgy7TABrQddVBusWHXKQTnoqkr/N
+         sub2YvXcga1oolpYAaEzSF32o7lG6LUfXkQhoRxXrg8uTbs3ZO8GfrlF8meSuqXRhfQR
+         bqYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678782052;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1NYMBiRuz7vfmt2Wpyeig2UyQ+79mH3kKnB3rm+kmQY=;
-        b=tAW1foK5xz+CfRH32eTw7fNApZNV0Ka4AIO7KD/QHTy+amJGJkeHkx+ZGoY3x+JqRa
-         8vxqSAxRx6nJ2HQeo+gXjxUeuOjY78G7HFEm2EmpbpTwdK5IuPKjg6XpwOSagXYGqzCx
-         oAuQBm/70kr2vUAZ8j32zB7Gyfe/fGVqwxDcu2k8Wbwnqw9sfdNmW9sYmJee+gTR6Cr7
-         zFo8oEt4B20QqmAx7Zytq9+/EUPhm3Jow95cCeCBe+4HKkPk8qSg+w8KKAZ+E70PA0Wm
-         OEAgbY1FJIjyFJkuqD1e4PUnbeoJSvK7m9fQhnyxy3mQJ9nRhp+tAzmbNuPTGOYAgYn2
-         vtEQ==
-X-Gm-Message-State: AO0yUKVQngIaR9IPo3fygJQEUFDjFWCut8sRM1LytXj/J8YTY3nOK7Hq
-        Pvk/V+nIgf82xIPdjom3AKg=
-X-Google-Smtp-Source: AK7set9PVFdLcKIPrfyDAWsSHFrgTZUfxU2m79g3kogwCE0yFQts0BNhT2cvYR6MhXj0pQOEi14JvA==
-X-Received: by 2002:a5d:4209:0:b0:2c5:519f:307a with SMTP id n9-20020a5d4209000000b002c5519f307amr10246437wrq.30.1678782052616;
-        Tue, 14 Mar 2023 01:20:52 -0700 (PDT)
-Received: from localhost (cpc154979-craw9-2-0-cust193.16-3.cable.virginm.net. [80.193.200.194])
-        by smtp.gmail.com with ESMTPSA id e25-20020a5d5959000000b002c8ed82c56csm1366019wri.116.2023.03.14.01.20.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 01:20:52 -0700 (PDT)
-From:   Colin Ian King <colin.i.king@gmail.com>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH][next] drm/msm/dp: Fix spelling mistake "Capabiity" -> "Capability"
-Date:   Tue, 14 Mar 2023 08:20:50 +0000
-Message-Id: <20230314082050.26331-1-colin.i.king@gmail.com>
-X-Mailer: git-send-email 2.30.2
+        d=1e100.net; s=20210112; t=1678782114;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/3Pox4XAvLnFNQzaTLmAx4AjLw2hBw8wrTBcLaB41To=;
+        b=7EHhsnEH7jGtQrvs4TvhOcWzwV7kRthiwV9Q7fgZ0zMo6Rearp39P9nJX7sGugz6we
+         CCyszv79eysFuvPgErIBvXUDLGWd5OlDq5Udwm7Ws/IF2MY0iki12VLmMf3wSKMUW7x1
+         95nuADcnjPxbb7j/fYCc5YIK4nvQyNaLd++FraKukmXp98FTcdQax0/eI38Zk+A8k6Cp
+         BTNxF3ceurEIYfzeb+dGhHsSCacd8kNtANg9a7BufzyF7yxtAMGc7PYfgxCZOXMu7NH4
+         H38Jo7UMn9jvj3uQWbSnTssOj2QRpYVPEwAwCXqgxND+7EH+arDt2FycKHF74kVb5xux
+         BKYA==
+X-Gm-Message-State: AO0yUKV/bYHJxrFAlCX2KQGkINgaw7BfSwVMQZLzxTiY3LEKd2GJtJOA
+        FyAUUyyVQCqr4NIJ5ukF8ZGkvw==
+X-Google-Smtp-Source: AK7set/RGW1Q0rfcXRKAWSYuVzvGhANcYDc1JFQ2Fy3W1FXxaxJXijT7RNC+s1L1k1sgw9XYkMt+0g==
+X-Received: by 2002:a17:906:3986:b0:91f:32f9:82f0 with SMTP id h6-20020a170906398600b0091f32f982f0mr1308617eje.29.1678782114207;
+        Tue, 14 Mar 2023 01:21:54 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:6932:5570:6254:9edd? ([2a02:810d:15c0:828:6932:5570:6254:9edd])
+        by smtp.gmail.com with ESMTPSA id bg23-20020a170906a05700b008d398a4e687sm780554ejb.158.2023.03.14.01.21.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Mar 2023 01:21:53 -0700 (PDT)
+Message-ID: <92725aab-a540-b35a-6614-2b91039f433c@linaro.org>
+Date:   Tue, 14 Mar 2023 09:21:52 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Acer Aspire 1
+Content-Language: en-US
+To:     Nikita Travkin <nikita@trvn.ru>, agross@kernel.org,
+        andersson@kernel.org
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20230314064322.65429-1-nikita@trvn.ru>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230314064322.65429-1-nikita@trvn.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,26 +78,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is a spelling mistake in a drm_dbg_dp message. Fix it.
+On 14/03/2023 07:43, Nikita Travkin wrote:
+> Acer Aspire 1 is a laptop based on sc7180. Document it's compatible.
+> 
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 1bb24d46e4ee..903a5ea42cf6 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -352,6 +352,11 @@ properties:
+>                - qcom,qru1000-idp
+>            - const: qcom,qru1000
+>  
+> +      - items:
+> +          - enum:
+> +              - acer,aspire1
+> +          - const: qcom,sc7180
+> +
+>        - description: Qualcomm Technologies, Inc. SC7180 IDP
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
----
- drivers/gpu/drm/msm/dp/dp_link.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Please merge with this one and drop the description (or rename it to
+something like SC7180-based boards). The sc7180 entries spread a lot and
+it is not helping to read the file.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index 5a4817ac086f..42427129acea 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -1090,7 +1090,7 @@ int dp_link_process_request(struct dp_link *dp_link)
- 	} else if (dp_link_read_psr_error_status(link)) {
- 		DRM_ERROR("PSR IRQ_HPD received\n");
- 	} else if (dp_link_psr_capability_changed(link)) {
--		drm_dbg_dp(link->drm_dev, "PSR Capabiity changed");
-+		drm_dbg_dp(link->drm_dev, "PSR Capability changed");
- 	} else {
- 		ret = dp_link_process_link_status_update(link);
- 		if (!ret) {
--- 
-2.30.2
+Best regards,
+Krzysztof
 
