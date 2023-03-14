@@ -2,51 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C9A06B8699
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 01:07:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CFC26B8693
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 01:07:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230092AbjCNAHx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Mar 2023 20:07:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37136 "EHLO
+        id S229849AbjCNAHc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Mar 2023 20:07:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230243AbjCNAHw (ORCPT
+        with ESMTP id S229638AbjCNAHb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Mar 2023 20:07:52 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 020D18F71D;
-        Mon, 13 Mar 2023 17:07:47 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Mon, 13 Mar 2023 20:07:31 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AD9E8F536;
+        Mon, 13 Mar 2023 17:07:30 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id C28D620112;
-        Tue, 14 Mar 2023 01:07:45 +0100 (CET)
-Date:   Tue, 14 Mar 2023 01:07:44 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CBE4B6156E;
+        Tue, 14 Mar 2023 00:07:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F64CC433EF;
+        Tue, 14 Mar 2023 00:07:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678752449;
+        bh=h/UVjlSeJJlCHc13eSCIs+dPLaiOpX+QcoENoNGRfQo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=IU4X/iO6jwlcMlsudZJq2upVoVNhUDMH6y/xF+NrCX51oL6aTdP2oWXbDhdWeXx7D
+         8+fiCjBYPsmbickq/mjxEHsajJMpbm7hD/C40wk1FKyPr1NSELmd3eHpnY3uVRI3NP
+         tEEg/ZuVQTI4KtCM/rYTfalQoxg4WLhhGjQJEb8jPPHczskJ1ZFXDn9pfD4xTrFe73
+         NAEo77WIH0Jcdu+IkAJAlHr4YyETwSAp42C3irTdzCN/mK0e6xNkiS8LgVBXf/gc2F
+         c3GQhh1O51nlmulQxTYgi47KRK6RuZJafZHkIC5LSrl23l3kQMkOCsvT6jzVdByN4L
+         KCb1sNSn5SgGw==
+Date:   Mon, 13 Mar 2023 17:10:52 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        krzysztof.kozlowski@linaro.org, marijn.suijten@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 07/10] drm/msm/dsi: Remove custom DSI config handling
-Message-ID: <20230314000744.otbglr33ndizq5pc@SoMainline.org>
-References: <20230307-topic-dsi_qcm-v3-0-8bd7e1add38a@linaro.org>
- <20230307-topic-dsi_qcm-v3-7-8bd7e1add38a@linaro.org>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: Split out SA8155P and use correct
+ RPMh power domains
+Message-ID: <20230314001052.7qvgbwkl73x22oll@ripper>
+References: <20230214095435.2192153-1-konrad.dybcio@linaro.org>
+ <20230214095435.2192153-3-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230307-topic-dsi_qcm-v3-7-8bd7e1add38a@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20230214095435.2192153-3-konrad.dybcio@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -54,60 +58,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-03-07 14:01:45, Konrad Dybcio wrote:
-> Now that the only user is handled by common code, remove the option to
-> specify custom handlers through match data.
+On Tue, Feb 14, 2023 at 10:54:35AM +0100, Konrad Dybcio wrote:
+> The RPMhPD setup on SA8155P is different compared to SM8150. Correct
+> it to ensure the platform will not try accessing forbidden/missing
+> RPMh entries at boot, as a bad vote will hang the machine.
 > 
-> This is effectively a revert of commit:
-> 5ae15e76271 ("drm/msm/dsi: Allow to specify dsi config as pdata")
 
-Would it also be worth to mention something along these lines in the
-previous patch, but for ee1f09678f14 ("drm/msm/dsi: Add support for
-qcm2290 dsi controller")?
+I don't see that this will scale, as soon as someone adds a new device
+in sm8150.dtsi that has the need to scale a power rail this will be
+forgotten and we will have a mix of references to the SM8150 and SA8155P
+value space.
 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+That said, I think it's reasonable to avoid duplicating the entire
+sm8150.dtsi.
+
+How about making the SA8155P_* macros match the SM8150_* macros?
+That way things will fail gracefully if a device node references a
+resource not defined for either platform...
+
+Regards,
+Bjorn
+
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
 > ---
->  drivers/gpu/drm/msm/dsi/dsi.c      | 4 ++--
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 4 ----
->  2 files changed, 2 insertions(+), 6 deletions(-)
+>  arch/arm64/boot/dts/qcom/sa8155p-adp.dts |  2 +-
+>  arch/arm64/boot/dts/qcom/sa8155p.dtsi    | 51 ++++++++++++++++++++++++
+>  2 files changed, 52 insertions(+), 1 deletion(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sa8155p.dtsi
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-> index 90d43628b22b..e0b911af618d 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
-> @@ -173,10 +173,10 @@ static int dsi_dev_remove(struct platform_device *pdev)
->  }
+> diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+> index 459384ec8f23..9454e8e4e517 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+> @@ -7,7 +7,7 @@
 >  
->  static const struct of_device_id dt_match[] = {
-> -	{ .compatible = "qcom,mdss-dsi-ctrl", .data = NULL /* autodetect cfg */ },
-> +	{ .compatible = "qcom,mdss-dsi-ctrl" },
+>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  #include <dt-bindings/gpio/gpio.h>
+> -#include "sm8150.dtsi"
+> +#include "sa8155p.dtsi"
+>  #include "pmm8155au_1.dtsi"
+>  #include "pmm8155au_2.dtsi"
 >  
->  	/* Deprecated, don't use */
-> -	{ .compatible = "qcom,dsi-ctrl-6g-qcm2290", .data = NULL },
-> +	{ .compatible = "qcom,dsi-ctrl-6g-qcm2290" },
->  	{}
->  };
->  
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 9cfb9e91bfea..961689a255c4 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -214,10 +214,6 @@ static const struct msm_dsi_cfg_handler *dsi_get_config(
->  	int ret;
->  	u32 major = 0, minor = 0;
->  
-> -	cfg_hnd = device_get_match_data(dev);
-> -	if (cfg_hnd)
-> -		return cfg_hnd;
-> -
->  	ahb_clk = msm_clk_get(msm_host->pdev, "iface");
->  	if (IS_ERR(ahb_clk)) {
->  		pr_err("%s: cannot get interface clock\n", __func__);
-> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8155p.dtsi b/arch/arm64/boot/dts/qcom/sa8155p.dtsi
+> new file mode 100644
+> index 000000000000..f2fd7c28764e
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sa8155p.dtsi
+> @@ -0,0 +1,51 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2023, Linaro Limited
+> + *
+> + * SA8155P is an automotive variant of SM8150, with some minor changes.
+> + * Most notably, the RPMhPD setup differs: MMCX and LCX/LMX rails are gone.
+> + */
+> +
+> +#include "sm8150.dtsi"
+> +
+> +&dispcc {
+> +	power-domains = <&rpmhpd SA8155P_CX>;
+> +};
+> +
+> +&mdss_mdp {
+> +	power-domains = <&rpmhpd SA8155P_CX>;
+> +};
+> +
+> +&mdss_dsi0 {
+> +	power-domains = <&rpmhpd SA8155P_CX>;
+> +};
+> +
+> +&mdss_dsi1 {
+> +	power-domains = <&rpmhpd SA8155P_CX>;
+> +};
+> +
+> +&remoteproc_adsp {
+> +	power-domains = <&rpmhpd SA8155P_CX>;
+> +};
+> +
+> +&remoteproc_cdsp {
+> +	power-domains = <&rpmhpd SA8155P_CX>;
+> +};
+> +
+> +&remoteproc_mpss {
+> +	power-domains = <&rpmhpd SA8155P_CX>,
+> +			<&rpmhpd SA8155P_MSS>;
+> +};
+> +
+> +&remoteproc_slpi {
+> +	power-domains = <&rpmhpd SA8155P_CX>,
+> +			<&rpmhpd SA8155P_MX>;
+> +};
+> +
+> +&rpmhpd {
+> +	compatible = "qcom,sa8155p-rpmhpd";
+> +};
+> +
+> +&sdhc_2 {
+> +	power-domains = <&rpmhpd SA8155P_CX>;
+> +};
 > -- 
-> 2.39.2
+> 2.39.1
 > 
