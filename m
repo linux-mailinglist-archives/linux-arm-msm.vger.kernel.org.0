@@ -2,731 +2,315 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F8E46B93B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 13:25:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BDF1A6B93DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 13:34:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230378AbjCNMYs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 08:24:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42654 "EHLO
+        id S229866AbjCNMeM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 08:34:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232030AbjCNMY2 (ORCPT
+        with ESMTP id S229956AbjCNMeJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 08:24:28 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A99CA17F4;
-        Tue, 14 Mar 2023 05:20:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678796451; x=1710332451;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=SU/628EAilcQrCm1rWJvSvItC7D0pYLXOncg222SWP4=;
-  b=A+lpz+yPTPRZ8NHezwcHvNyomox5Vdb01S+O1WRl+sIqfrPmAFPXurs+
-   iwS4x7RsjVqyIqkKaUM5QAC+WWbbiLfeV4+I+nbuhDYOFNubN8osOReDY
-   Pf11gU8BX5FT3OrK+FBjn/BD0HxmzyfSNgTzVgf1J8dOtlktppPuuEDt4
-   Va+UipfRreHtSj5FtrzXsmYnBs+yADmCiGMKJVazGaJlGxu9jAI6dnOdw
-   VWJhmi+E/qxj/V40k2xYTr/h7DmtM58g3Nn5Y8JSG/wvOhKDcDxrlDBrH
-   a3YAJ53kPtNGB4VzWYxKssfME6u7qM730tK1v5ycFhd33R0tvkZ1XPniK
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="336098941"
-X-IronPort-AV: E=Sophos;i="5.98,259,1673942400"; 
-   d="scan'208";a="336098941"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2023 05:19:29 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10648"; a="656317191"
-X-IronPort-AV: E=Sophos;i="5.98,259,1673942400"; 
-   d="scan'208";a="656317191"
-Received: from jlawryno-mobl.ger.corp.intel.com (HELO [10.237.142.115]) ([10.237.142.115])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2023 05:19:26 -0700
-Message-ID: <4b84823a-dc4d-a907-bacb-451a2d91d7d8@linux.intel.com>
-Date:   Tue, 14 Mar 2023 13:19:24 +0100
+        Tue, 14 Mar 2023 08:34:09 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A647EFB2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:33:40 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id m35so636128wms.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 05:33:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678797138;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PXXtt6cBjYXyFqk364CYH7jsJAY6Ohu4s/0jhoutyCs=;
+        b=Xjy1LH9ZK6cSlH5tJkld9LsoLsz2P2L8cem2nnmNoAbcS7H5kFuTSG6u3gZ6fOMHX4
+         RH3BaEY2+pdB8LnTt69ltvuXEkHdd+7+8HuUaZgrhhr08HuxVrPpmuG5BSaMEwttMNaw
+         dl+ZD5w5bCERTEODQ4XZWPkpqNOlUVB1cuMrrzm0pliLEAyf/kZwtb5VSqXJI/RewmTu
+         fetPcBDrVEKrHJxksIlIv11X07u5nOeexndZfpAB1NyD++Xu2i5Hxt2osZeCubzuqTlR
+         LiW3kFtiM28EMlw7FRvTnUaQ6+LPxrLVER2SM4Jyxnh7F78ZlkPyKJpoK0Yfaxuz3JUE
+         slXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678797138;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PXXtt6cBjYXyFqk364CYH7jsJAY6Ohu4s/0jhoutyCs=;
+        b=qsmwz+qQExLLmplm5hyst+4jd+b+n41DVXXbs39IHS7b3NarvNv+4coTU+Oa44LEP+
+         vBmRnWgT44mV0FZWoEQgtt5VSRctr1MfyM/BBzR0vzPCE9ijUhLea2IzyJyDje5nsxCD
+         jQKSD/ClHhwisK2jwr9DELcBFU8ZHmK6KDdfSEepNHHhRlXso1JJ7Z7WfT1sYGhN6uIM
+         HDVuohxvv1IjY5KuBiS3lChM/vTESq+IadWsPTr0ksrjFavSFV3OZ3mvbl4diA/i9NaK
+         U8cerxPCgqCFsLQL9mXZiD4xbhLE0vwBD0E8hfxxvc2T0a3soZzq2uLm2YiadWZYVqnt
+         Ourg==
+X-Gm-Message-State: AO0yUKVctBoeuOWzsV/rZcVg2TAodBoB3HGbzt5lLM3vTHgP5Xnr5DLm
+        AqXQvxp9oEvM3fSHe59/3Hy4lQ==
+X-Google-Smtp-Source: AK7set9xAHozvF8v+ln3Dfl6503r1M88Wn5nYxHm+osIiXUyxtoi9bAPX/GNLmL9hEUROu/xixASNQ==
+X-Received: by 2002:a05:600c:468e:b0:3ea:f73e:9d8c with SMTP id p14-20020a05600c468e00b003eaf73e9d8cmr14149107wmo.16.1678797138357;
+        Tue, 14 Mar 2023 05:32:18 -0700 (PDT)
+Received: from [192.168.0.15] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id ja9-20020a05600c556900b003ed29f4e45esm2832964wmb.0.2023.03.14.05.32.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Mar 2023 05:32:17 -0700 (PDT)
+Message-ID: <f97ccfad-2e26-0484-f4c1-f9f192f05602@linaro.org>
+Date:   Tue, 14 Mar 2023 12:32:16 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v3 6/8] accel/qaic: Add mhi_qaic_cntl
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sdm845: add framebuffer reserved
+ memory
 Content-Language: en-US
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, dafna@fastmail.com,
-        ogabbay@kernel.org, airlied@gmail.com, daniel@ffwll.ch,
-        stanislaw.gruszka@linux.intel.com, dri-devel@lists.freedesktop.org
-Cc:     linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_ajitpals@quicinc.com, quic_pkanojiy@quicinc.com,
-        quic_carlv@quicinc.com
-References: <1678138443-2760-1-git-send-email-quic_jhugo@quicinc.com>
- <1678138443-2760-7-git-send-email-quic_jhugo@quicinc.com>
-From:   Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Organization: Intel Technology Poland sp. z o.o. - ul. Slowackiego 173, 80-298
- Gdansk - KRS 101882 - NIP 957-07-52-316
-In-Reply-To: <1678138443-2760-7-git-send-email-quic_jhugo@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20230314045812.3673958-1-caleb.connolly@linaro.org>
+ <3ffb4326-ad13-d1c5-51e3-524dfa143930@linaro.org>
+ <80f04aca-23c2-346f-4744-9ed19d58af3f@linaro.org>
+ <8441a928-77d3-6df1-248f-84cacc6ab801@linaro.org>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <8441a928-77d3-6df1-248f-84cacc6ab801@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On 06.03.2023 22:34, Jeffrey Hugo wrote:
-> From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+
+On 14/03/2023 10:52, Konrad Dybcio wrote:
 > 
-> Some of the MHI channels for an AIC100 device need to be routed to
-> userspace so that userspace can communicate directly with QSM. The MHI
-> bus does not support this, and while the WWAN subsystem does (for the same
-> reasons), AIC100 is not a WWAN device. Also, MHI is not something that
-> other accelerators are expected to share, thus an accel subsystem function
-> that meets this usecase is unlikely.
 > 
-> Create a QAIC specific MHI userspace shim that exposes these channels.
+> On 14.03.2023 11:46, Caleb Connolly wrote:
+>>
+>>
+>> On 14/03/2023 10:05, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 14.03.2023 05:58, Caleb Connolly wrote:
+>>>> Almost all of the SDM845 devices actually map the same region for the
+>>>> continuous splash / framebuffer. de-dup all the devices that specify it
+>>>> manually and put it in sdm845.dtsi instead.
+>>>>
+>>>> This now reserves it on the OnePlus 6 where it was not reserved before,
+>>>> this is intentional.
+>>>>
+>>>> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+>>>> ---
+>>> You didn't explain why is not done on 850 (which I assume has to do with
+>>> the windows memory map being different and putting it somewhere else) and
+>>> the reasoning for reserving it at all.
+>>
+>> Patch 2 reserves it for 850 (not sure I understand you correctly?). The
+>> only difference there is the address.
+> Okay, but you did not say anything about it in this patch even though
+> you made changes to sdm850, perhaps either doing it in one go or
+> explaining it here would have been beneficial.
 > 
-> Start with QAIC_SAHARA which is required to boot AIC100 and is consumed by
-> the kickstart application as documented in aic100.rst
+>>
+>> The reason for reserving it at all has been previously discussed, when
+>> it was added for db845c [1], the conclusion being that a better approach
+>> would be nice but didn't seem to be trivial to implement (Cc'd Dmitry).
+>>
+>> I acknowledge that reserving this region as we do currently may not be
+>> the optimal way of doing so, but I would like to avoid the kernel trying
+>> to map memory here and crash my device - and this does that at least :>
+> Missing Fixes, then?
+
+A backport would need to be sent separately for each device to avoid
+conflicts.
 > 
-> Each AIC100 instance (currently, up to 16) in a system will create a
-> chardev for QAIC_SAHARA. This chardev will be found as
-> /dev/<mhi instance>_QAIC_SAHARA
-> For example - /dev/mhi0_QAIC_SAHARA
+>>
+>> Basically, my thinking:
+>>  * NOT reserving this region is known to cause crashes
+> Missing from the commit message
 > 
-> Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-> Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-> ---
->  drivers/accel/qaic/mhi_qaic_ctrl.c | 581 +++++++++++++++++++++++++++++++++++++
->  drivers/accel/qaic/mhi_qaic_ctrl.h |  11 +
->  2 files changed, 592 insertions(+)
->  create mode 100644 drivers/accel/qaic/mhi_qaic_ctrl.c
->  create mode 100644 drivers/accel/qaic/mhi_qaic_ctrl.h
+>>  * The OnePlus 6 doesn't currently reserve this region, and has some crashes
+> The crashing part is missing from the commit message
 > 
-> diff --git a/drivers/accel/qaic/mhi_qaic_ctrl.c b/drivers/accel/qaic/mhi_qaic_ctrl.c
-> new file mode 100644
-> index 0000000..f97279fd
-> --- /dev/null
-> +++ b/drivers/accel/qaic/mhi_qaic_ctrl.c
-> @@ -0,0 +1,581 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/* Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved. */
-> +
-> +#include <linux/kernel.h>
-> +#include <linux/mhi.h>
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/module.h>
-> +#include <linux/poll.h>
-> +#include <linux/version.h>
-> +#include <linux/xarray.h>
-> +#include <uapi/linux/eventpoll.h>
-> +
-> +#include "mhi_qaic_ctrl.h"
-> +#include "qaic.h"
-> +
-> +#define MHI_QAIC_CTRL_DRIVER_NAME	"mhi_qaic_ctrl"
-> +#define MHI_QAIC_CTRL_MAX_MINORS	128
-> +#define MHI_MAX_MTU			0xffff
-> +static DEFINE_XARRAY_ALLOC(mqc_xa);
-> +static struct class *mqc_dev_class;
-> +static int mqc_dev_major;
-> +
-> +/**
-> + * struct mqc_buf - Buffer structure used to receive data from device
-> + * @data: Address of data to read from
-> + * @odata: Original address returned from *alloc() API. Used to free this buf.
-> + * @len: Length of data in byte
-> + * @node: This buffer will be part of list managed in struct mqc_dev
-> + */
-> +struct mqc_buf {
-> +	void *data;
-> +	void *odata;
-> +	size_t len;
-> +	struct list_head node;
-> +};
-> +
-> +/**
-> + * struct mqc_dev - MHI QAIC Control Device
-> + * @minor: MQC device node minor number
-> + * @mhi_dev: Associated mhi device object
-> + * @mtu: Max TRE buffer length
-> + * @enabled: Flag to track the state of the MQC device
-> + * @lock: Mutex lock to serialize access to open_count
-> + * @read_lock: Mutex lock to serialize readers
-> + * @write_lock: Mutex lock to serialize writers
-> + * @ul_wq: Wait queue for writers
-> + * @dl_wq: Wait queue for readers
-> + * @dl_queue_lock: Spin lock to serialize access to download queue
-> + * @dl_queue: Queue of downloaded buffers
-> + * @open_count: Track open counts
-> + * @ref_count: Reference count for this structure
-> + */
-> +struct mqc_dev {
-> +	uint32_t minor;
-> +	struct mhi_device *mhi_dev;
-> +	size_t mtu;
-> +	bool enabled;
+>>  * All the devices that do, reserve it at the same address
+> Missing from the commit message
+> 
+>>  * Some don't reserve the full size which is WRONG
+> Missing from the commit message
+> 
+>>  * I'll reserve it for the OnePlus 6, de-dup the DT and ensure that the
+>> whole size is reserved for all devices.
+> Missing from the commit message
 
-Is enabled really needed. I would think that mhi_qaic_ctrl_remove() won't be called
-unless all open files are closed.
+If the status quo is anything to go by (and I would generally defend
+that it is) then none of these things are actually relevant to this patch.
 
-> +	struct mutex lock;
-> +	struct mutex read_lock;
-> +	struct mutex write_lock;
-> +	wait_queue_head_t ul_wq;
-> +	wait_queue_head_t dl_wq;
-> +	spinlock_t dl_queue_lock;
-> +	struct list_head dl_queue;
-> +	unsigned int open_count;
-> +	struct kref ref_count;
-> +};
-> +
-> +static void mqc_dev_release(struct kref *ref)
-> +{
-> +	struct mqc_dev *mqcdev = container_of(ref, struct mqc_dev, ref_count);
-> +
-> +	mutex_destroy(&mqcdev->read_lock);
-> +	mutex_destroy(&mqcdev->write_lock);
-> +	mutex_destroy(&mqcdev->lock);
-> +	kfree(mqcdev);
-> +}
-> +
-> +static int mhi_qaic_ctrl_fill_dl_queue(struct mqc_dev *mqcdev)
-> +{
-> +	struct mhi_device *mhi_dev = mqcdev->mhi_dev;
-> +	struct mqc_buf *ctrlbuf;
-> +	int rx_budget;
-> +	int ret = 0;
-> +	void *data;
-> +
-> +	rx_budget = mhi_get_free_desc_count(mhi_dev, DMA_FROM_DEVICE);
-> +	if (rx_budget < 0)
-> +		return -EIO;
-> +
-> +	while (rx_budget--) {
-> +		data = kzalloc(mqcdev->mtu + sizeof(*ctrlbuf), GFP_KERNEL);
-> +		if (!data)
-> +			return -ENOMEM;
-> +
-> +		ctrlbuf = data + mqcdev->mtu;
-> +		ctrlbuf->odata = data;
-> +
-> +		ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, data, mqcdev->mtu, MHI_EOT);
-> +		if (ret) {
-> +			kfree(data);
-> +			dev_err(&mhi_dev->dev, "Failed to queue buffer\n");
-> +			return ret;
-> +		}
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static int mhi_qaic_ctrl_dev_start_chan(struct mqc_dev *mqcdev)
-> +{
-> +	struct device *dev = &mqcdev->mhi_dev->dev;
-> +	int ret = 0;
-> +
-> +	ret = mutex_lock_interruptible(&mqcdev->lock);
-> +	if (ret)
-> +		return ret;
-> +	if (!mqcdev->enabled) {
+This region *should* be reserved ("downstream reserves it"), it already
+is for all devices except the op6. The address and size are the same for
+all sdm845 devices. None of these assertions are in question and they
+suitably justify this patch, so what purpose is there to including extra
+information?
+> 
+>>  * ?
+>>  * Profit
+> Yes
+> 
+>>
+>>>
 
-How "enabled" can be 0 here? It is rather not possible to open the device after
-it was released.
+[snip]
+>>
+>> Apologies if I'm jumping the gun a bit, I'm just trying to avoid
+>> blocking this patch on a tangential discussion.
+> Okay sure, all of that is valid, but you need to explain these changes,
+> or people will just think that you decided to randomly steal RAM from
+> them only to commonize some nodes! I'm not saying the contents of this> patch are very bad, but I am saying that you're not selling it to me
+> well enough.
 
-> +		ret = -ENODEV;
-> +		goto release_dev_lock;
-> +	}
-> +	if (!mqcdev->open_count) {
-> +		ret = mhi_prepare_for_transfer(mqcdev->mhi_dev);
-> +		if (ret) {
-> +			dev_err(dev, "Error starting transfer channels\n");
-> +			goto release_dev_lock;
-> +		}
-> +
-> +		ret = mhi_qaic_ctrl_fill_dl_queue(mqcdev);
-> +		if (ret) {
-> +			dev_err(dev, "Error filling download queue.\n");
-> +			goto mhi_unprepare;
-> +		}
-> +	}
-> +	mqcdev->open_count++;
-> +	mutex_unlock(&mqcdev->lock);
-> +
-> +	return 0;
-> +
-> +mhi_unprepare:
-> +	mhi_unprepare_from_transfer(mqcdev->mhi_dev);
-> +release_dev_lock:
-> +	mutex_unlock(&mqcdev->lock);
-> +	return ret;
-> +}
-> +
-> +static struct mqc_dev *mqc_dev_get_by_minor(unsigned int minor)
-> +{
-> +	struct mqc_dev *mqcdev;
-> +
-> +	xa_lock(&mqc_xa);
-> +	mqcdev = xa_load(&mqc_xa, minor);
-> +	if (mqcdev)
-> +		kref_get(&mqcdev->ref_count);
-> +	xa_unlock(&mqc_xa);
-> +
-> +	return mqcdev;
-> +}
-> +
-> +static int mhi_qaic_ctrl_open(struct inode *inode, struct file *filp)
-> +{
-> +	struct mqc_dev *mqcdev;
-> +	int ret;
-> +
-> +	mqcdev = mqc_dev_get_by_minor(iminor(inode));
-> +	if (!mqcdev) {
-> +		pr_debug("mqc: minor %d not found\n", iminor(inode));
-> +		return -EINVAL;
-> +	}
-> +
-> +	ret = mhi_qaic_ctrl_dev_start_chan(mqcdev);
-> +	if (ret) {
-> +		kref_put(&mqcdev->ref_count, mqc_dev_release);
-> +		return ret;
-> +	}
-> +
-> +	filp->private_data = mqcdev;
-> +
-> +	return 0;
-> +}
-> +
-> +static void mhi_qaic_ctrl_buf_free(struct mqc_buf *ctrlbuf)
-> +{
-> +	list_del(&ctrlbuf->node);
-> +	kfree(ctrlbuf->odata);
-> +}
-> +
-> +static void __mhi_qaic_ctrl_release(struct mqc_dev *mqcdev)
-> +{
-> +	struct mqc_buf *ctrlbuf, *tmp;
-> +
-> +	mhi_unprepare_from_transfer(mqcdev->mhi_dev);
-> +	wake_up_interruptible(&mqcdev->ul_wq);
-> +	wake_up_interruptible(&mqcdev->dl_wq);
-> +	/*
-> +	 * Free the dl_queue. As we have already unprepared mhi transfers, we
-> +	 * do not expect any callback functions that update dl_queue hence no need
-> +	 * to grab dl_queue lock.
-> +	 */
-> +	mutex_lock(&mqcdev->read_lock);
-> +	list_for_each_entry_safe(ctrlbuf, tmp, &mqcdev->dl_queue, node)
-> +		mhi_qaic_ctrl_buf_free(ctrlbuf);
-> +	mutex_unlock(&mqcdev->read_lock);
-> +}
-> +
-> +static int mhi_qaic_ctrl_release(struct inode *inode, struct file *file)
-> +{
-> +	struct mqc_dev *mqcdev = file->private_data;
-> +
-> +	mutex_lock(&mqcdev->lock);
-> +	mqcdev->open_count--;
-> +	if (!mqcdev->open_count && mqcdev->enabled)
-> +		__mhi_qaic_ctrl_release(mqcdev);
-> +	mutex_unlock(&mqcdev->lock);
-> +
-> +	kref_put(&mqcdev->ref_count, mqc_dev_release);
-> +
-> +	return 0;
-> +}
-> +
-> +static __poll_t mhi_qaic_ctrl_poll(struct file *file, poll_table *wait)
-> +{
-> +	struct mqc_dev *mqcdev = file->private_data;
-> +	struct mhi_device *mhi_dev;
-> +	__poll_t mask = 0;
-> +
-> +	mhi_dev = mqcdev->mhi_dev;
-> +
-> +	poll_wait(file, &mqcdev->ul_wq, wait);
-> +	poll_wait(file, &mqcdev->dl_wq, wait);
-> +
-> +	mutex_lock(&mqcdev->lock);
-> +	if (!mqcdev->enabled || !mqcdev->open_count) {
-> +		mutex_unlock(&mqcdev->lock);
-> +		return EPOLLERR;
-> +	}
-> +
-> +	spin_lock_bh(&mqcdev->dl_queue_lock);
-> +	if (!list_empty(&mqcdev->dl_queue))
-> +		mask |= EPOLLIN | EPOLLRDNORM;
-> +	spin_unlock_bh(&mqcdev->dl_queue_lock);
-> +
-> +	if (mutex_lock_interruptible(&mqcdev->write_lock)) {
-> +		mutex_unlock(&mqcdev->lock);
-> +		return EPOLLERR;
-> +	}
-> +	if (mhi_get_free_desc_count(mhi_dev, DMA_TO_DEVICE) > 0)
-> +		mask |= EPOLLOUT | EPOLLWRNORM;
-> +	mutex_unlock(&mqcdev->write_lock);
-> +	mutex_unlock(&mqcdev->lock);
-> +
-> +	dev_dbg(&mhi_dev->dev, "Client attempted to poll, returning mask 0x%x\n", mask);
-> +
-> +	return mask;
-> +}
-> +
-> +static int mhi_qaic_ctrl_tx(struct mqc_dev *mqcdev)
-> +{
-> +	int ret;
-> +
-> +	ret = wait_event_interruptible(mqcdev->ul_wq,
-> +				       (!mqcdev->enabled || !mqcdev->open_count ||
-> +				       mhi_get_free_desc_count(mqcdev->mhi_dev,
-> +							       DMA_TO_DEVICE) > 0));
-> +
-> +	if (!mqcdev->open_count)
-> +		return -EPIPE;
-> +	if (!mqcdev->enabled)
-> +		return -ENODEV;
+Fair enough, thanks for explaining.
 
-I think that both "open_count" and "enabled" will never be 0 here.
-This function is called by read() and read() cannot be called without open
-file descriptor.
+I should have mentioned that the op6 reserves this region in downstream,
+and that reserving anything except the full size is an error. Thanks for
+pointing these out.
 
-> +
-> +	return ret;
-> +}
-> +
-> +static ssize_t mhi_qaic_ctrl_write(struct file *file, const char __user *buf, size_t count,
-> +				   loff_t *offp)
-> +{
-> +	struct mqc_dev *mqcdev = file->private_data;
-> +	struct mhi_device *mhi_dev;
-> +	size_t bytes_xfered = 0;
-> +	struct device *dev;
-> +	int ret, nr_desc;
-> +
-> +	mhi_dev = mqcdev->mhi_dev;
-> +	dev = &mhi_dev->dev;
-> +
-> +	if (!mhi_dev->ul_chan)
-> +		return -EOPNOTSUPP;
-> +
-> +	if (!buf || !count)
-> +		return -EINVAL;
-> +
-> +	dev_dbg(dev, "Request to transfer %zu bytes\n", count);
-> +
-> +	ret = mhi_qaic_ctrl_tx(mqcdev);
-> +	if (ret) {
-> +		dev_err(dev, "Failed to write %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	if (mutex_lock_interruptible(&mqcdev->write_lock))
-> +		return -EINTR;
-> +
-> +	nr_desc = mhi_get_free_desc_count(mhi_dev, DMA_TO_DEVICE);
-> +	if (nr_desc * mqcdev->mtu < count) {
-> +		ret = -EMSGSIZE;
-> +		dev_dbg(dev, "Buffer too big to transfer\n");
-> +		goto unlock_mutex;
-> +	}
-> +
-> +	while (count != bytes_xfered) {
-> +		enum mhi_flags flags;
-> +		size_t to_copy;
-> +		void *kbuf;
-> +
-> +		to_copy = min_t(size_t, count - bytes_xfered, mqcdev->mtu);
-> +		kbuf = kmalloc(to_copy, GFP_KERNEL);
-> +		if (!kbuf) {
-> +			ret = -ENOMEM;
-> +			goto unlock_mutex;
-> +		}
-> +
-> +		ret = copy_from_user(kbuf, buf + bytes_xfered, to_copy);
-> +		if (ret) {
-> +			kfree(kbuf);
-> +			ret = -EFAULT;
-> +			goto unlock_mutex;
-> +		}
-> +
-> +		if (bytes_xfered + to_copy == count)
-> +			flags = MHI_EOT;
-> +		else
-> +			flags = MHI_CHAIN;
-> +
-> +		ret = mhi_queue_buf(mhi_dev, DMA_TO_DEVICE, kbuf, to_copy, flags);
-> +		if (ret) {
-> +			kfree(kbuf);
-> +			dev_err(dev, "Failed to queue buf of size %zu\n", to_copy);
-> +			goto unlock_mutex;
-> +		}
-> +
-> +		bytes_xfered += to_copy;
-> +	}
-> +
-> +	mutex_unlock(&mqcdev->write_lock);
-> +	dev_dbg(dev, "bytes xferred: %zu\n", bytes_xfered);
-> +
-> +	return bytes_xfered;
-> +
-> +unlock_mutex:
-> +	mutex_unlock(&mqcdev->write_lock);
-> +	return ret;
-> +}
-> +
-> +static int mhi_qaic_ctrl_rx(struct mqc_dev *mqcdev)
-> +{
-> +	int ret;
-> +
-> +	ret = wait_event_interruptible(mqcdev->dl_wq, (!mqcdev->enabled || !mqcdev->open_count ||
-> +				       !list_empty(&mqcdev->dl_queue)));
-> +
-> +	if (!mqcdev->open_count)
-> +		return -EPERM;
-> +	if (!mqcdev->enabled)
-> +		return -ENODEV;
-> +
-> +	return ret;
-> +}
-> +
-> +static ssize_t mhi_qaic_ctrl_read(struct file *file, char __user *buf, size_t count, loff_t *ppos)
-> +{
-> +	struct mqc_dev *mqcdev = file->private_data;
-> +	struct mqc_buf *ctrlbuf;
-> +	size_t to_copy;
-> +	int ret;
-> +
-> +	if (!mqcdev->mhi_dev->dl_chan)
-> +		return -EOPNOTSUPP;
-> +
-> +	ret = mhi_qaic_ctrl_rx(mqcdev);
-> +	if (ret) {
-> +		dev_err(&mqcdev->mhi_dev->dev, "Failed to read %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	if (mutex_lock_interruptible(&mqcdev->read_lock))
-> +		return -EINTR;
-> +
-> +	ctrlbuf = list_first_entry_or_null(&mqcdev->dl_queue, struct mqc_buf, node);
-> +	if (!ctrlbuf) {
-> +		mutex_unlock(&mqcdev->read_lock);
-> +		dev_dbg(&mqcdev->mhi_dev->dev, "Device has been released\n");
+I'll spin a v2 with the context you asked for and take the opportunity
+to note the current state of things wrt potentially freeing this region
+up in the future.
+> 
+> Konrad
+>>
+>> [1]:
+>> https://lore.kernel.org/linux-arm-msm/dfcc8baa-c0a3-c554-a8cf-75702a1c4cad@linaro.org/
+>> [2]:
+>> https://lore.kernel.org/linux-arm-msm/2c0a893f-b1c2-a77e-4ad4-409c1c778655@linaro.org/
+>>>
+>>> Konrad
+>>>>  arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi              | 6 ------
+>>>>  arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts     | 5 -----
+>>>>  arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts           | 5 -----
+>>>>  arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi       | 6 ------
+>>>>  .../arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 6 ------
+>>>>  arch/arm64/boot/dts/qcom/sdm845.dtsi                        | 5 +++++
+>>>>  arch/arm64/boot/dts/qcom/sdm850.dtsi                        | 2 ++
+>>>>  7 files changed, 7 insertions(+), 28 deletions(-)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+>>>> index f942c5afea9b..6a1c674a015b 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+>>>> @@ -93,12 +93,6 @@ spss_mem: memory@99000000 {
+>>>>  			no-map;
+>>>>  		};
+>>>>  
+>>>> -		/* Framebuffer region */
+>>>> -		memory@9d400000 {
+>>>> -			reg = <0x0 0x9d400000 0x0 0x2400000>;
+>>>> -			no-map;
+>>>> -		};
+>>>> -
+>>>>  		/* rmtfs lower guard */
+>>>>  		memory@f0800000 {
+>>>>  			reg = <0 0xf0800000 0 0x1000>;
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+>>>> index d37a433130b9..7c2457948a32 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+>>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+>>>> @@ -55,11 +55,6 @@ vreg_s4a_1p8: pm8998-smps4 {
+>>>>  	};
+>>>>  
+>>>>  	reserved-memory {
+>>>> -		memory@9d400000 {
+>>>> -			reg = <0x0 0x9d400000 0x0 0x02400000>;
+>>>> -			no-map;
+>>>> -		};
+>>>> -
+>>>>  		memory@a1300000 {
+>>>>  			compatible = "ramoops";
+>>>>  			reg = <0x0 0xa1300000 0x0 0x100000>;
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+>>>> index b54e304abf71..4f6b1053c15b 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+>>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+>>>> @@ -60,11 +60,6 @@ key-vol-up {
+>>>>  	};
+>>>>  
+>>>>  	reserved-memory {
+>>>> -		framebuffer_region@9d400000 {
+>>>> -			reg = <0x0 0x9d400000 0x0 (1080 * 2160 * 4)>;
+>>>> -			no-map;
+>>>> -		};
+>>>> -
+>>>>  		ramoops: ramoops@b0000000 {
+>>>>  			compatible = "ramoops";
+>>>>  			reg = <0 0xb0000000 0 0x00400000>;
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+>>>> index 4984c7496c31..7e273cc0158d 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+>>>> @@ -79,12 +79,6 @@ vreg_s4a_1p8: pm8998-smps4 {
+>>>>  	};
+>>>>  
+>>>>  	reserved-memory {
+>>>> -		/* SONY was cool and didn't diverge from MTP this time, yay! */
+>>>> -		cont_splash_mem: memory@9d400000 {
+>>>> -			reg = <0x0 0x9d400000 0x0 0x2400000>;
+>>>> -			no-map;
+>>>> -		};
+>>>> -
+>>>>  		ramoops@ffc00000 {
+>>>>  			compatible = "ramoops";
+>>>>  			reg = <0x0 0xffc00000 0x0 0x100000>;
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+>>>> index e0fda4d754fe..191c2664f721 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+>>>> @@ -98,12 +98,6 @@ spss_mem: memory@97f00000 {
+>>>>  			no-map;
+>>>>  		};
+>>>>  
+>>>> -		/* Cont splash region set up by the bootloader */
+>>>> -		cont_splash_mem: framebuffer@9d400000 {
+>>>> -			reg = <0 0x9d400000 0 0x2400000>;
+>>>> -			no-map;
+>>>> -		};
+>>>> -
+>>>>  		rmtfs_mem: memory@f6301000 {
+>>>>  			compatible = "qcom,rmtfs-mem";
+>>>>  			reg = <0 0xf6301000 0 0x200000>;
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>>>> index 479859bd8ab3..ecec2ee46683 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>>>> @@ -865,6 +865,11 @@ spss_mem: spss@97b00000 {
+>>>>  			no-map;
+>>>>  		};
+>>>>  
+>>>> +		cont_splash_mem: framebuffer@9d400000 {
+>>>> +			reg = <0 0x9d400000 0 0x2400000>;
+>>>> +			no-map;
+>>>> +		};
+>>>> +
+>>>>  		mdata_mem: mpss-metadata {
+>>>>  			alloc-ranges = <0 0xa0000000 0 0x20000000>;
+>>>>  			size = <0 0x4000>;
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm850.dtsi b/arch/arm64/boot/dts/qcom/sdm850.dtsi
+>>>> index da9f6fbe32f6..b787575c77a5 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sdm850.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sdm850.dtsi
+>>>> @@ -7,6 +7,8 @@
+>>>>  
+>>>>  #include "sdm845.dtsi"
+>>>>  
+>>>> +/delete-node/ &cont_splash_mem;
+>>>> +
+>>>>  &cpu4_opp_table {
+>>>>  	cpu4_opp33: opp-2841600000 {
+>>>>  		opp-hz = /bits/ 64 <2841600000>;
+>>
 
-I don't believe that the device can be released while in read() syscall.
-This error can only happen if read() from another thread processed the dl_queue first.
-
-> +		ret = -ENODEV;
-> +		goto error_out;
-> +	}
-> +
-> +	to_copy = min_t(size_t, count, ctrlbuf->len);
-> +	if (copy_to_user(buf, ctrlbuf->data, to_copy)) {
-> +		mutex_unlock(&mqcdev->read_lock);
-> +		dev_dbg(&mqcdev->mhi_dev->dev, "Failed to copy data to user buffer\n");
-> +		ret = -EFAULT;
-> +		goto error_out;
-> +	}
-> +
-> +	ctrlbuf->len -= to_copy;
-> +	ctrlbuf->data += to_copy;
-> +
-> +	if (!ctrlbuf->len) {
-> +		spin_lock_bh(&mqcdev->dl_queue_lock);
-> +		mhi_qaic_ctrl_buf_free(ctrlbuf);
-> +		spin_unlock_bh(&mqcdev->dl_queue_lock);
-> +		mhi_qaic_ctrl_fill_dl_queue(mqcdev);
-> +		dev_dbg(&mqcdev->mhi_dev->dev, "Read buf freed\n");
-> +	}
-> +
-> +	mutex_unlock(&mqcdev->read_lock);
-> +	return to_copy;
-> +
-> +error_out:
-> +	mutex_unlock(&mqcdev->read_lock);
-> +	return ret;
-> +}
-> +
-> +static const struct file_operations mhidev_fops = {
-> +	.owner = THIS_MODULE,
-> +	.open = mhi_qaic_ctrl_open,
-> +	.release = mhi_qaic_ctrl_release,
-> +	.read = mhi_qaic_ctrl_read,
-> +	.write = mhi_qaic_ctrl_write,
-> +	.poll = mhi_qaic_ctrl_poll,
-> +};
-> +
-> +static void mhi_qaic_ctrl_ul_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
-> +{
-> +	struct mqc_dev *mqcdev = dev_get_drvdata(&mhi_dev->dev);
-> +
-> +	dev_dbg(&mhi_dev->dev, "%s: status: %d xfer_len: %zu\n", __func__,
-> +		mhi_result->transaction_status, mhi_result->bytes_xferd);
-> +
-> +	kfree(mhi_result->buf_addr);
-> +
-> +	if (!mhi_result->transaction_status)
-> +		wake_up_interruptible(&mqcdev->ul_wq);
-> +}
-> +
-> +static void mhi_qaic_ctrl_dl_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
-> +{
-> +	struct mqc_dev *mqcdev = dev_get_drvdata(&mhi_dev->dev);
-> +	struct mqc_buf *ctrlbuf;
-> +
-> +	dev_dbg(&mhi_dev->dev, "%s: status: %d receive_len: %zu\n", __func__,
-> +		mhi_result->transaction_status, mhi_result->bytes_xferd);
-> +
-> +	if (mhi_result->transaction_status &&
-> +	    mhi_result->transaction_status != -EOVERFLOW) {
-> +		kfree(mhi_result->buf_addr);
-> +		return;
-> +	}
-> +
-> +	ctrlbuf = mhi_result->buf_addr + mqcdev->mtu;
-> +	ctrlbuf->data = mhi_result->buf_addr;
-> +	ctrlbuf->len = mhi_result->bytes_xferd;
-> +	spin_lock_bh(&mqcdev->dl_queue_lock);
-> +	list_add_tail(&ctrlbuf->node, &mqcdev->dl_queue);
-> +	spin_unlock_bh(&mqcdev->dl_queue_lock);
-> +
-> +	wake_up_interruptible(&mqcdev->dl_wq);
-> +}
-> +
-> +static int mhi_qaic_ctrl_probe(struct mhi_device *mhi_dev, const struct mhi_device_id *id)
-> +{
-> +	struct mqc_dev *mqcdev;
-> +	struct device *dev;
-> +	int ret;
-> +
-> +	mqcdev = kzalloc(sizeof(*mqcdev), GFP_KERNEL);
-> +	if (!mqcdev)
-> +		return -ENOMEM;
-> +
-> +	kref_init(&mqcdev->ref_count);
-> +	mutex_init(&mqcdev->lock);
-> +	mqcdev->mhi_dev = mhi_dev;
-> +
-> +	ret = xa_alloc(&mqc_xa, &mqcdev->minor, mqcdev, XA_LIMIT(0, MHI_QAIC_CTRL_MAX_MINORS),
-> +		       GFP_KERNEL);
-> +	if (ret) {
-> +		kfree(mqcdev);
-> +		return ret;
-> +	}
-> +
-> +	init_waitqueue_head(&mqcdev->ul_wq);
-> +	init_waitqueue_head(&mqcdev->dl_wq);
-> +	mutex_init(&mqcdev->read_lock);
-> +	mutex_init(&mqcdev->write_lock);
-> +	spin_lock_init(&mqcdev->dl_queue_lock);
-> +	INIT_LIST_HEAD(&mqcdev->dl_queue);
-> +	mqcdev->mtu = min_t(size_t, id->driver_data, MHI_MAX_MTU);
-> +	mqcdev->enabled = true;
-> +	mqcdev->open_count = 0;
-> +	dev_set_drvdata(&mhi_dev->dev, mqcdev);
-> +
-> +	dev = device_create(mqc_dev_class, &mhi_dev->dev, MKDEV(mqc_dev_major, mqcdev->minor),
-> +			    mqcdev, "%s", dev_name(&mhi_dev->dev));
-> +	if (IS_ERR(dev)) {
-> +		xa_erase(&mqc_xa, mqcdev->minor);
-> +		dev_set_drvdata(&mhi_dev->dev, NULL);
-> +		kfree(mqcdev);
-> +		return PTR_ERR(dev);
-> +	}
-> +
-> +	return 0;
-> +};
-> +
-> +static void mhi_qaic_ctrl_remove(struct mhi_device *mhi_dev)
-> +{
-> +	struct mqc_dev *mqcdev = dev_get_drvdata(&mhi_dev->dev);
-> +
-> +	device_destroy(mqc_dev_class, MKDEV(mqc_dev_major, mqcdev->minor));
-> +
-> +	mutex_lock(&mqcdev->lock);
-> +	mqcdev->enabled = false;
-> +	if (mqcdev->open_count)
-> +		__mhi_qaic_ctrl_release(mqcdev);
-> +	mutex_unlock(&mqcdev->lock);
-> +
-> +	xa_erase(&mqc_xa, mqcdev->minor);
-> +	kref_put(&mqcdev->ref_count, mqc_dev_release);
-> +}
-> +
-> +/* .driver_data stores max mtu */
-> +static const struct mhi_device_id mhi_qaic_ctrl_match_table[] = {
-> +	{ .chan = "QAIC_SAHARA", .driver_data = SZ_32K},
-> +	{},
-> +};
-> +MODULE_DEVICE_TABLE(mhi, mhi_qaic_ctrl_match_table);
-> +
-> +static struct mhi_driver mhi_qaic_ctrl_driver = {
-> +	.id_table = mhi_qaic_ctrl_match_table,
-> +	.remove = mhi_qaic_ctrl_remove,
-> +	.probe = mhi_qaic_ctrl_probe,
-> +	.ul_xfer_cb = mhi_qaic_ctrl_ul_xfer_cb,
-> +	.dl_xfer_cb = mhi_qaic_ctrl_dl_xfer_cb,
-> +	.driver = {
-> +		.name = MHI_QAIC_CTRL_DRIVER_NAME,
-> +	},
-> +};
-> +
-> +int mhi_qaic_ctrl_init(void)
-> +{
-> +	int ret;
-> +
-> +	ret = register_chrdev(0, MHI_QAIC_CTRL_DRIVER_NAME, &mhidev_fops);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	mqc_dev_major = ret;
-> +	mqc_dev_class = class_create(THIS_MODULE, MHI_QAIC_CTRL_DRIVER_NAME);
-> +	if (IS_ERR(mqc_dev_class)) {
-> +		ret = PTR_ERR(mqc_dev_class);
-> +		goto unregister_chrdev;
-> +	}
-> +
-> +	ret = mhi_driver_register(&mhi_qaic_ctrl_driver);
-> +	if (ret)
-> +		goto destroy_class;
-> +
-> +	return 0;
-> +
-> +destroy_class:
-> +	class_destroy(mqc_dev_class);
-> +unregister_chrdev:
-> +	unregister_chrdev(mqc_dev_major, MHI_QAIC_CTRL_DRIVER_NAME);
-> +	return ret;
-> +}
-> +
-> +void mhi_qaic_ctrl_deinit(void)
-> +{
-> +	mhi_driver_unregister(&mhi_qaic_ctrl_driver);
-> +	class_destroy(mqc_dev_class);
-> +	unregister_chrdev(mqc_dev_major, MHI_QAIC_CTRL_DRIVER_NAME);
-> +	xa_destroy(&mqc_xa);
-> +}
-> diff --git a/drivers/accel/qaic/mhi_qaic_ctrl.h b/drivers/accel/qaic/mhi_qaic_ctrl.h
-> new file mode 100644
-> index 0000000..0545540
-> --- /dev/null
-> +++ b/drivers/accel/qaic/mhi_qaic_ctrl.h
-> @@ -0,0 +1,11 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only
-> + *
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef __MHI_QAIC_CTRL_H__
-> +#define __MHI_QAIC_CTRL_H__
-> +
-> +int mhi_qaic_ctrl_init(void);
-> +void mhi_qaic_ctrl_deinit(void);
-
-Please add a new line here.
-
-> +#endif /* __MHI_QAIC_CTRL_H__ */
-
-Regards,
-Jacek
+-- 
+Kind Regards,
+Caleb (they/them)
