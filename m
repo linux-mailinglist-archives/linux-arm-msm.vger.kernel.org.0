@@ -2,338 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3B126BA12F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 22:09:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D94A16BA13C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Mar 2023 22:12:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229436AbjCNVJJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 17:09:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44884 "EHLO
+        id S230111AbjCNVMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Mar 2023 17:12:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230111AbjCNVJF (ORCPT
+        with ESMTP id S229815AbjCNVMV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 17:09:05 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85FE616880
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 14:09:01 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id h11-20020a17090a2ecb00b00237c740335cso16487276pjs.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 14:09:01 -0700 (PDT)
+        Tue, 14 Mar 2023 17:12:21 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C811B4216
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 14:12:20 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id e194so17159524ybf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Mar 2023 14:12:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678828140;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1678828340;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hOEu3t4L9ULqr83vHX2NhmL+oG7KJxneL5TZLVIC1mc=;
-        b=e/M+QikCwdrp85mvAbBkI9ECPq+QgpK/WV4AtcQFTGf9RhW7FgsOunY7gGeb3XZqn9
-         zrZX4dEUbkReJ1PBHAfOqKlQ33OIlOMsEngAIS37aJfscTAEwybr/vo/RQde6SkK/CVf
-         1kMztF4MXGQjuXX2dk2DHp/C2eq8Qmix6C7HYBBgezpi5XhZHCuPxfJy3n7scRIfdtBw
-         vu4vVmAdk2ZHPv0Uf//F8XIeU5B2Lp75Mkbbu4VJMBUlW3J1+TIasnv97mrMgRW5mtwv
-         ovdWI4y5vE4I2zq7PNRabtso7gjhz73dmEiKN8RNEjsb4QEL28bM1+721BvLQTGyf5nk
-         MeSg==
+        bh=Cqr+dkq3tKG1sOKc+R1dR6rEMBcdSL+6uVvzhQ5+DTc=;
+        b=Rf3B/WgrDERHLhDsxraQ9u7MIYRa2UtRzu5Fv/LEeOHwTXrql8M6zu3LlTTtMs/34p
+         5ugfXw/xlY7/K39+nDJ286rb+hsLlmnec4cFy37wBo3gXixzmy0aujVzR7HVIkOe99pV
+         7bgYZt7SdNLgjF/IY9YrEd1cByAJ5J7cHjsgsOBNQ7f+3Qyifz9v6e8uKMiCDs1GbCJW
+         CyuDlKOesBGEen4fiHLNlIe1gpDD5U2mdgU2smQ0GjJrTUE/7pOCX96ddDdOUy5Jzf/z
+         7HxUSenGJ7Xdtrh41LglFsUsgw/lZAS5gz/CS+c8qyeL+mysC+t3Jp8YWn0MGJ8leoHh
+         1G7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678828140;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1678828340;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hOEu3t4L9ULqr83vHX2NhmL+oG7KJxneL5TZLVIC1mc=;
-        b=Y5y/bRexk0i6zbFyVDa02Az39pylW6Mc7MhPakclkwXtBMNN/Yt/JpPKINWitf4Mof
-         4BdV3DM17+H2IsznAaHFUi0yZ0suIvImYEa+mm2coZR5pv2w/uq/1CxtnkSyGEGDezuK
-         ZeeQUoIOiFGH94zhETW+gmetJM4gbO5ZEHz3bSmsvA5Cxh+Dq4C1rSJubXNQhDTNm2AW
-         uj/SRBBH1mtlQyOoDKQBKBOcGyA5IDxqsPu1Sun6AzW/e34vN54XM0456MGO6cPi1sov
-         ns85O77LKTi6XNkojllsG2+NVdwjzGuyacPtAEHjOxsW4DZfI0aEMCNSKETf8LVCEgdO
-         s6SA==
-X-Gm-Message-State: AO0yUKUnYdtuU77cjDYdMIWwj0X3SNSzB0HkBvLYh8RjKmdjtVn45iMT
-        lJ0QY6p7Liro0lLvw1ERA0Rvo0X+IYmyEYvqmjw=
-X-Google-Smtp-Source: AK7set9/psM5x7wx9DEhBdAjDqNq+oNCJZqoVe0nSWBGE0cpdQ0Z74Rih2B54yMDw1Sr0qnFJbPXYQ==
-X-Received: by 2002:a17:902:f68c:b0:19e:5cc3:8289 with SMTP id l12-20020a170902f68c00b0019e5cc38289mr415360plg.34.1678828140397;
-        Tue, 14 Mar 2023 14:09:00 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1c61:1acb:9af6:bd7f:78e7:7ae6])
-        by smtp.gmail.com with ESMTPSA id kl8-20020a170903074800b0019edc1b421asm2190150plb.163.2023.03.14.14.08.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 14:08:59 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org
-Subject: [PATCH 2/2] arm64: dts: qcom: Add base qrb4210-rb2 board dts
-Date:   Wed, 15 Mar 2023 02:38:28 +0530
-Message-Id: <20230314210828.2049720-3-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230314210828.2049720-1-bhupesh.sharma@linaro.org>
-References: <20230314210828.2049720-1-bhupesh.sharma@linaro.org>
+        bh=Cqr+dkq3tKG1sOKc+R1dR6rEMBcdSL+6uVvzhQ5+DTc=;
+        b=upWlLzXILbh3YN7/quf6UBltecQkLTtYewCfmFy92rpuMQCRuYASFPfDhrE27yRJOe
+         1P8sil+FgQyM8rrhFEXurhnTiJOJcHxjxYT8o9t+50ZJh9+Bx5Fw0QFG298ktCVfz1Jk
+         mHgf9XglaWBZtFfOsABeFdANGusJka6z1jT1oQ9fh/RTU8mUJzMWwcBdHr97fqZx+j+G
+         khUI7oEmcZaavnZIrNVAuaVJXXDEgBQfV6/5CYsXX3InG4Ta5N2q2o6CXSe7OQgoqFNB
+         bPyKCqQtYLxGRJ+CuJxHnUR2JTUSQ7OlQtD3tP9lhuh24a2K18v7/+EKECC3DaC9D47y
+         UHZQ==
+X-Gm-Message-State: AO0yUKXl7YrqDpmsgKn48TTpsFoJLtjA8I0rUZ7ZlhIpg3z6O0/upSgs
+        /441tylemYhcks2ugpLl+ykntaPYZAcYHpTopiny/6xOpYfloW/IQ7A=
+X-Google-Smtp-Source: AK7set9D9hI8LpHpVG8zSymZGfcmshk7rrgZk+MQjvT9TpkhjAo/60IP+pUw8JJWZqDzH+1WvgJuAfABTWIovZKVfl8=
+X-Received: by 2002:a5b:6c8:0:b0:b36:32f8:852d with SMTP id
+ r8-20020a5b06c8000000b00b3632f8852dmr2947856ybq.4.1678828340023; Tue, 14 Mar
+ 2023 14:12:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230314193709.15208-1-xhxgldhlpfy@gmail.com>
+In-Reply-To: <20230314193709.15208-1-xhxgldhlpfy@gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 14 Mar 2023 22:12:08 +0100
+Message-ID: <CACRpkdan0Vt_T3aRVAK4rd=hQV=MOARm9Wq7sD8rjoisTW6Dkw@mail.gmail.com>
+Subject: Re: [PATCH] iio: adc: qcom-pm8xxx-xoadc: Remove useless condition in pm8xxx_xoadc_parse_channel()
+To:     Kasumov Ruslan <xhxgldhlpfy@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, lvc-project@linuxtesting.org,
+        Kasumov Ruslan <s02210418@gse.cs.msu.ru>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DTS for Qualcomm qrb4210-rb2 board which uses SM4250 SoC.
+On Tue, Mar 14, 2023 at 8:37=E2=80=AFPM Kasumov Ruslan <xhxgldhlpfy@gmail.c=
+om> wrote:
 
-This adds debug uart, emmc, uSD and tlmm support along with
-regulators found on this board.
+> The left side of the loop condition never becomes false.
+> hwchan cannot be NULL, because it points to elements of the
+> hw_channels array that takes one of 4 predefined values:
+> pm8018_xoadc_channels, pm8038_xoadc_channels,
+> pm8058_xoadc_channels, pm8921_xoadc_channels.
+>
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Also defines the 'xo_board' and 'sleep_clk' frequencies for
-this board.
+I am not impressed with that tool. See below:
 
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile        |   1 +
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 227 +++++++++++++++++++++++
- 2 files changed, 228 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> Fixes: 63c3ecd946d4 ("iio: adc: add a driver for Qualcomm PM8xxx HK/XOADC=
+")
+> Signed-off-by: Kasumov Ruslan <s02210418@gse.cs.msu.ru>
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 31aa54f0428c..23522778b5b9 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -69,6 +69,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-xiaomi-sagit.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= qrb4210-rb2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5-vision-mezzanine.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qru1000-idp.dtb
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-new file mode 100644
-index 000000000000..ed569c3f1c80
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -0,0 +1,227 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2023, Linaro Limited
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include "sm4250.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. QRB4210 RB2";
-+	compatible = "qcom,qrb4210-rb2", "qcom,sm4250";
-+
-+	aliases {
-+		serial0 = &uart4;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+&xo_board {
-+	clock-frequency = <19200000>;
-+};
-+
-+&sleep_clk {
-+	clock-frequency = <32000>;
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&uart4 {
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators-0 {
-+		compatible = "qcom,rpm-pm6125-regulators";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+		vdd-s9-supply = <&vph_pwr>;
-+		vdd-s10-supply = <&vph_pwr>;
-+
-+		vdd-l1-l7-l17-l18-supply = <&vreg_s6a_1p352>;
-+		vdd-l2-l3-l4-supply = <&vreg_s6a_1p352>;
-+		vdd-l5-l15-l19-l20-l21-l22-supply = <&vph_pwr>;
-+		vdd-l6-l8-supply = <&vreg_s5a_0p848>;
-+		vdd-l9-l11-supply = <&vreg_s7a_2p04>;
-+		vdd-l10-l13-l14-supply = <&vreg_s7a_2p04>;
-+		vdd-l12-l16-supply = <&vreg_s7a_2p04>;
-+		vdd-l23-l24-supply = <&vph_pwr>;
-+
-+		vreg_s5a_0p848: s5 {
-+			regulator-min-microvolt = <920000>;
-+			regulator-max-microvolt = <1128000>;
-+		};
-+
-+		vreg_s6a_1p352: s6 {
-+			regulator-min-microvolt = <304000>;
-+			regulator-max-microvolt = <1456000>;
-+		};
-+
-+		vreg_s7a_2p04: s7 {
-+			regulator-min-microvolt = <1280000>;
-+			regulator-max-microvolt = <2080000>;
-+		};
-+
-+		vreg_l1a_1p0: l1 {
-+			regulator-min-microvolt = <952000>;
-+			regulator-max-microvolt = <1152000>;
-+		};
-+
-+		vreg_l4a_0p9: l4 {
-+			regulator-min-microvolt = <488000>;
-+			regulator-max-microvolt = <1000000>;
-+		};
-+
-+		vreg_l5a_2p96: l5 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <3056000>;
-+		};
-+
-+		vreg_l6a_0p6: l6 {
-+			regulator-min-microvolt = <576000>;
-+			regulator-max-microvolt = <656000>;
-+		};
-+
-+		vreg_l7a_1p256: l7 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1304000>;
-+		};
-+
-+		vreg_l8a_0p664: l8 {
-+			regulator-min-microvolt = <400000>;
-+			regulator-max-microvolt = <728000>;
-+		};
-+
-+		vreg_l9a_1p8: l9 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2000000>;
-+		};
-+
-+		vreg_l10a_1p8: l10 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		vreg_l11a_1p8: l11 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1952000>;
-+		};
-+
-+		vreg_l12a_1p8: l12 {
-+			regulator-min-microvolt = <1624000>;
-+			regulator-max-microvolt = <1984000>;
-+		};
-+
-+		vreg_l13a_1p8: l13 {
-+			regulator-min-microvolt = <1504000>;
-+			regulator-max-microvolt = <1952000>;
-+		};
-+
-+		vreg_l14a_1p8: l14 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		vreg_l15a_3p128: l15 {
-+			regulator-min-microvolt = <2920000>;
-+			regulator-max-microvolt = <3232000>;
-+		};
-+
-+		vreg_l16a_1p3: l16 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		vreg_l17a_1p3: l17 {
-+			regulator-min-microvolt = <1152000>;
-+			regulator-max-microvolt = <1384000>;
-+		};
-+
-+		vreg_l18a_1p232: l18 {
-+			regulator-min-microvolt = <1104000>;
-+			regulator-max-microvolt = <1312000>;
-+		};
-+
-+		vreg_l19a_1p8: l19 {
-+			regulator-min-microvolt = <1624000>;
-+			regulator-max-microvolt = <3304000>;
-+		};
-+
-+		vreg_l20a_1p8: l20 {
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2960000>;
-+		};
-+
-+		vreg_l21a_2p704: l21 {
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2960000>;
-+		};
-+
-+		vreg_l22a_2p96: l22 {
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2960000>;
-+		};
-+
-+		vreg_l23a_3p3: l23 {
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2960000>;
-+		};
-+
-+		vreg_l24a_2p96: l24 {
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2960000>;
-+		};
-+	};
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <37 5>, <43 2>, <47 1>,
-+			       <49 1>, <52 1>, <54 1>,
-+			       <56 3>, <61 2>, <64 1>,
-+			       <68 1>, <72 8>, <96 1>;
-+};
-+
-+&sdhc_1 {
-+	status = "okay";
-+
-+	vmmc-supply = <&vreg_l24a_2p96>; /* emmc power line */
-+	vqmmc-supply = <&vreg_l11a_1p8>; /* emmc vddq */
-+	bus-width = <8>;
-+	no-sdio;
-+	non-removable;
-+};
-+
-+&sdhc_2 {
-+	status = "okay";
-+
-+	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>; /* card detect gpio */
-+	vmmc-supply = <&vreg_l22a_2p96>; /* Card power line */
-+	vqmmc-supply = <&vreg_l5a_2p96>; /* IO line power */
-+	bus-width = <4>;
-+	no-sdio;
-+	no-emmc;
-+};
--- 
-2.38.1
+(...)
+>         hwchan =3D &hw_channels[0];
+> -       while (hwchan && hwchan->datasheet_name) {
+> +       while (hwchan->datasheet_name) {
+>                 if (hwchan->pre_scale_mux =3D=3D pre_scale_mux &&
+>                     hwchan->amux_channel =3D=3D amux_channel)
+>                         break;
 
+NAK have you tested this on a real system?
+
+Here is the complete loop:
+
+        hwchan =3D &hw_channels[0];
+        while (hwchan && hwchan->datasheet_name) {
+                if (hwchan->pre_scale_mux =3D=3D pre_scale_mux &&
+                    hwchan->amux_channel =3D=3D amux_channel)
+                        break;
+                hwchan++;
+                chid++;
+        }
+
+Notice how hwchan is used as iterator in hwchan++.
+
+What you are doing will cause a zero-pointer dereference.
+
+Whoever is developing "SVACE" needs to fix the tool to understand
+this kind of usage.
+
+Yours,
+Linus Walleij
