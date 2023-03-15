@@ -2,79 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F49F6BB939
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 17:13:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BC706BB9AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 17:29:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231143AbjCOQNT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 12:13:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50590 "EHLO
+        id S231937AbjCOQ3r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 12:29:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232000AbjCOQND (ORCPT
+        with ESMTP id S230036AbjCOQ3p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 12:13:03 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6274F92732
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 09:12:19 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id t11so24963742lfr.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 09:12:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678896736;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=K0OLhRwBZUXAroD52YnUEKfUVbYdP0JZ4pBXfynEgGw=;
-        b=GUg79Z3dywg0YMkFHwdHHjk22rF34WpmjNSOHiM0HqKQDSDR+Bx3d0isn1pBzRQIBz
-         OorAN6i29P6pudonEGuIHdOtIAji4VMiUr9+bX5ccmSbi8f/hME23bEne/BtVyNy2NO/
-         MnKZo8hBCMCOvG/nlwMEpfL6hOqXe8j+7pxcF1xsHezKnu7CmhwmnxDzxAWetm3P5huR
-         MGzVR5BLB+3oovmOFex9H53oaD73FSSFxZGQtzPBd7GaeLt8YoBha/SldhtWqwa2eB+x
-         z++KTHnS8L4KNQMg6SE4DeYvYTQlFwUCSBbIwcMHchNsI5DIzbrUp6yMHW3qUKT1+X2v
-         oTAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678896736;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K0OLhRwBZUXAroD52YnUEKfUVbYdP0JZ4pBXfynEgGw=;
-        b=F2VmymyQ1MxbWc0bjRYZmNqsOKw3ws4kjDz3VP8Fq9ucdW+gNhU0y23psEuaXUn2LC
-         b2VtDVdqrZybVzC8Ie4RPLeKwjXQskGQZy5/CxOyQa+4XIZdw1iVCAmrI7zhXyvJ8KyM
-         qT040pPtQkhz5UMeoI46r6GEmNDk9beJccE5xIKkKlHMg+l9K6IMp4WLCu/FZMDDDPT8
-         BQc3eTKv7kSp9uldBj9g2QNo39PW1c+paNPxIs2sCWB7YS18HkvnSm+1c9h3mq76zzbw
-         13K7B+yiwL3wE9/fnUeByK7OvEucDCE3VbGKPeIYzrVw+vA0HV1DD4v4+sOwEEbkzczS
-         NeSA==
-X-Gm-Message-State: AO0yUKVkyQDlAqVmygWwjD8NzUcrem9EZrk38nzW4sK61xhXNV8y1qTe
-        aNhjnP/m913AcxMXWaaPDuIghg==
-X-Google-Smtp-Source: AK7set++vhw53JNzMFar/FeOi62TZ0R1feBNM/HCyPK0A9CLOdUbyO71XiTiyZwJdBke+D3BopP1BA==
-X-Received: by 2002:ac2:57db:0:b0:4dc:8215:5531 with SMTP id k27-20020ac257db000000b004dc82155531mr1871126lfo.6.1678896735773;
-        Wed, 15 Mar 2023 09:12:15 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id x14-20020ac25dce000000b004ceb053c3ebsm865200lfq.179.2023.03.15.09.12.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Mar 2023 09:12:14 -0700 (PDT)
-Message-ID: <3557aa94-6a83-d054-a9d9-81751165eb8a@linaro.org>
-Date:   Wed, 15 Mar 2023 17:12:12 +0100
+        Wed, 15 Mar 2023 12:29:45 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA2BD32CFC;
+        Wed, 15 Mar 2023 09:29:44 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 65C4861DFC;
+        Wed, 15 Mar 2023 16:29:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF974C433EF;
+        Wed, 15 Mar 2023 16:29:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678897783;
+        bh=jjn5cdVupJ0A22hzLeqblsWGnn86f9oIpQTR3zJXyMs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SrGZE6Sk04Pizzg1tuzcS8CHPA2fWPGLs4KeZnsayQbgSEQA4cnJK0Pfeq0SJeJBK
+         k3vxt0IAld+aKoIhiC1zd5okC/+vL8oWVyyuI6ZfWamyvj388DwIwIYix0jC3bwxmi
+         DkeIXcnQUWjdJXHT/9ZFLPb9Mobk2cNyIzLuPwIw5rsLql0YKamZVRUoXUYTdyODoV
+         Qvri59v7Ipro4ikDj/8KVduqsAhq0rRHgWmjSR1HC0SJWkOuQY5nxeUuemo7vvLdpn
+         GcuwDkUNsFs3zlki+Ro5SvcGO6afswtXZknOUs/tFssFYs5ilBEfvwFoULnPAv3CIu
+         EL6OIvNSFjCYw==
+Date:   Wed, 15 Mar 2023 16:29:36 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Cc:     Wesley Cheng <quic_wcheng@quicinc.com>,
+        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, lgirdwood@gmail.com,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com,
+        andersson@kernel.org, robh+dt@kernel.org,
+        gregkh@linuxfoundation.org, tiwai@suse.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+Subject: Re: [PATCH v3 00/28] Introduce QC USB SND audio offloading support
+Message-ID: <e270cffa-d27b-40e0-aed5-104514e4ba94@sirena.org.uk>
+References: <20230308235751.495-1-quic_wcheng@quicinc.com>
+ <4f8a66c0-398f-5655-3aa7-a59bc9ba56cc@linux.intel.com>
+ <8b2f3ce7-3e0c-bdf0-8d9f-9aeabba09a15@quicinc.com>
+ <a211f26d-a045-0729-871f-248d5fce3f3f@linux.intel.com>
+ <684daf86-6c3f-7310-eebf-4ebfc3c480ca@quicinc.com>
+ <8a37ccd3-f19e-b30d-d736-04e81b49f3a0@linux.intel.com>
+ <0810f951-f4a6-a51d-97e3-43691b05f702@quicinc.com>
+ <b671e263-5cb8-18e5-dc28-648ab1133c6c@linux.intel.com>
+ <14d726a7-6ffc-705c-b012-0c08d7dd7b9b@quicinc.com>
+ <6b811766-cd2a-54c0-d090-640812686a45@linux.intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3 1/4] arm64: dts: qcom: sc7180: Don't enable lpass
- clocks by default
-Content-Language: en-US
-To:     Nikita Travkin <nikita@trvn.ru>, agross@kernel.org,
-        andersson@kernel.org
-Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Douglas Anderson <dianders@chromium.org>
-References: <20230315154311.37299-1-nikita@trvn.ru>
- <20230315154311.37299-2-nikita@trvn.ru>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230315154311.37299-2-nikita@trvn.ru>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Z0fuEYQGMv0a0e38"
+Content-Disposition: inline
+In-Reply-To: <6b811766-cd2a-54c0-d090-640812686a45@linux.intel.com>
+X-Cookie: "Speed is subsittute fo accurancy."
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,62 +74,38 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--Z0fuEYQGMv0a0e38
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 15.03.2023 16:43, Nikita Travkin wrote:
-> lpass clocks are usually blocked from HLOS by the firmware and
-> instead are managed by the ADSP. Mark them as reserved and explicitly
-> enable in the CrOS boards that have special, cooperative firmware.
-> 
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-> ---
-+CC Doug
+On Wed, Mar 15, 2023 at 09:30:58AM -0500, Pierre-Louis Bossart wrote:
 
-Please confirm whether this also applies to IDP (in which case
-this would have been a bugfix).
+> That's probably ok then, am I getting this right that the the DSP card
+> would not expose any USB-related kcontrols then, i.e. the ONLY path to
+> change volumes, etc.,  would through the regular USB card kcontrols?
 
-Konrad
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 8 ++++++++
->  arch/arm64/boot/dts/qcom/sc7180.dtsi         | 4 ++++
->  2 files changed, 12 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index 423630c4d02c..26def6e12723 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -785,6 +785,14 @@ alc5682: codec@1a {
->  	};
->  };
->  
-> +&lpasscc {
-> +	status = "okay";
-> +};
-> +
-> +&lpass_hm {
-> +	status = "okay";
-> +};
-> +
->  &lpass_cpu {
->  	status = "okay";
->  
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 53f0076f20f6..f0de177981f9 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -3623,6 +3623,8 @@ lpasscc: clock-controller@62d00000 {
->  			power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
->  			#clock-cells = <1>;
->  			#power-domain-cells = <1>;
-> +
-> +			status = "reserved"; /* Controlled by ADSP */
->  		};
->  
->  		lpass_cpu: lpass@62d87000 {
-> @@ -3671,6 +3673,8 @@ lpass_hm: clock-controller@63000000 {
->  
->  			#clock-cells = <1>;
->  			#power-domain-cells = <1>;
-> +
-> +			status = "reserved"; /* Controlled by ADSP */
->  		};
->  	};
->  
+> That would limit the changes in the platform sound card to the addition
+> of a PCM USB device.
+
+I'd guess that there might be some volume control in the DSP as part of
+the generic routing to the port (eg, if all ports have some output
+control) but I'm not sure that's an issue, could even be useful for
+normalising the output of DSP algorithms compared to direct PCM
+playback.
+
+--Z0fuEYQGMv0a0e38
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmQR8m8ACgkQJNaLcl1U
+h9Cp3Af/fp7qmzx3dIqaYfXDA3inZKGAJxlBPLnKX7FXrObh2rhSDh/htyeF/xtx
+6tpnHQ1zB2RqEeffKTwu9lobnS2+x/SYkDG2vw5ONFKl3U7L3L87l76a67mR5Hk8
+d7nCQBAdHetX8yl/6H4iVbQztzwFNbuAfT61GYm+zxd98Psps6JucWS8IXwH8lfd
+XGRC/kENH9CPClFzhOCLGnlc+lMRkIGPDH38CN/IGl1GqHr5GgpWlRf6U5dFxpYC
+gAAATPlnhXUSp3o2+qT0bmqjEDpeWXUbeAQuayhdQ3fS0TzGBgoynfR7OyKEHPyl
+X3poldFU1Joz448CW+mSRjG2W9VTpw==
+=+zSv
+-----END PGP SIGNATURE-----
+
+--Z0fuEYQGMv0a0e38--
