@@ -2,206 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6109A6BAB3C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 09:54:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A0E406BAB65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 10:01:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230205AbjCOIyn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 04:54:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35124 "EHLO
+        id S231648AbjCOJBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 05:01:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjCOIym (ORCPT
+        with ESMTP id S231909AbjCOJBH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 04:54:42 -0400
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF84386A6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 01:54:41 -0700 (PDT)
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com [209.85.208.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 0F42E423CE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 08:54:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1678870480;
-        bh=HiWu2W94YYgRN40iF7FPu1SrLEkU/cI9C2mh8nOQZeA=;
-        h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-         MIME-Version:Content-Type;
-        b=vOrjwafSqdM0RG4tkNFkrfoDmol0983zWXwUvyNNb6dmeiOq5653a5NM78ax/SsPt
-         bp8EADdU3Z/e5b832dJ2uhO/Bahi3gowf5ADdMJhm1uv4sPQcBD2K/LaUFyM7d+gzp
-         guWsTJleCKtjQKEK/Q3qBgsAD/h6voz3V5BQqd1T59EbXgPx+I2rm7dP2YyvOybQ2e
-         BHcwUEQ2kYCReJ4rHmydxXZ4Ohi/1gHkEhjpK4pUkuvhAc0Ut6y9CMX/InLUGhDsJo
-         pHoCYKAaIuS7PMcIUi9XJ2Wl7a8fo1rIu6T6Q6LRSibXmGzTS/MIyOtrGnTBpO8FQp
-         gHHRu6V0+A/Gg==
-Received: by mail-ed1-f70.google.com with SMTP id r9-20020a05640251c900b004d4257341c2so25776396edd.19
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 01:54:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678870479;
-        h=mime-version:organization:references:in-reply-to:message-id:subject
-         :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HiWu2W94YYgRN40iF7FPu1SrLEkU/cI9C2mh8nOQZeA=;
-        b=5q62xh/or/PdMCuZV/aC0TInz9j8ztEzTPCAEl7U1woTgCLpgrf8qzAW0HoGEmGFis
-         WurcScbV08jt+IZF8XcVdl3r7i5gmOjLS/tLQZtxHkaPLbXab0oUgjpGaCvBlFbX3lsK
-         IUQVz5YkujZ8sgPpxPWyYPdiWV2OOJ/OXzJi8JQ/H6zXjQUCaHT8TaIB5ZbFi/BqvCkf
-         puIxF5id3+uAHBg2DiqAi5lOVZUO0fLoll7Ax09p3impAY/uID/yOtzeHCL9h31WIady
-         avfc8NjhoxzuVM3d6BnTLOZYo7QpytwudMpRw4wNOxqa8odaSDJNwP2/ln6PRX7MGV13
-         OW6A==
-X-Gm-Message-State: AO0yUKUeo6WwisP3A9UI/4yvr/PZ6eAsXMTIYzo1HqdH8BHxwbJ1+5lg
-        MK7Q9fNCJ+64W+rYYafpKAuGvQOFnE5nIvERDWcvsdw0fHgdLSNnTWbaJpUQdqwPC3JBEXcrcg1
-        4wJyTnlQWxV2RF9rU1H2ZfRIN8PQii7VOEjTeFzxLJuA=
-X-Received: by 2002:a17:906:2971:b0:881:23a:aba5 with SMTP id x17-20020a170906297100b00881023aaba5mr4890294ejd.11.1678870479811;
-        Wed, 15 Mar 2023 01:54:39 -0700 (PDT)
-X-Google-Smtp-Source: AK7set/qa2HuVSNOw2hf3XmUa+m93olZa39OcmpjpQyaKyLZ0fcVXpPF+zL/J0+fHonODOddvRRVLA==
-X-Received: by 2002:a17:906:2971:b0:881:23a:aba5 with SMTP id x17-20020a170906297100b00881023aaba5mr4890279ejd.11.1678870479505;
-        Wed, 15 Mar 2023 01:54:39 -0700 (PDT)
-Received: from gollum ([194.191.244.86])
-        by smtp.gmail.com with ESMTPSA id m4-20020a509304000000b004fccef39ec9sm2048413eda.70.2023.03.15.01.54.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 01:54:38 -0700 (PDT)
-Date:   Wed, 15 Mar 2023 09:54:37 +0100
-From:   Juerg Haefliger <juerg.haefliger@canonical.com>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <johan@kernel.org>,
-        <mani@kernel.org>
-Subject: Re: [PATCH 1/3] drm/msm/adreno: Add Adreno A690 support
-Message-ID: <20230315095437.187ac10c@gollum>
-In-Reply-To: <20230315095008.7d650ebe@gollum>
-References: <20230208034052.2047681-1-quic_bjorande@quicinc.com>
-        <20230208034052.2047681-2-quic_bjorande@quicinc.com>
-        <20230315095008.7d650ebe@gollum>
-Organization: Canonical Ltd
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+        Wed, 15 Mar 2023 05:01:07 -0400
+Received: from mail.corrib.pl (mail.corrib.pl [185.58.226.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 785226F614
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 02:00:51 -0700 (PDT)
+Received: by mail.corrib.pl (Postfix, from userid 1001)
+        id B3367A3F99; Wed, 15 Mar 2023 09:00:49 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=corrib.pl; s=mail;
+        t=1678870855; bh=X6IEpSISwJiYlJ3uA866lskXve3r+4o2hf4z7VM6m5o=;
+        h=Date:From:To:Subject:From;
+        b=r+ZPfCYxcHNhZCyBcp0OAMtjsSoaiuOk6yC5VZFnnAWZhKbVmB8RL8f0clzYe5rOv
+         auvS8z566gSQ7FyWn8v1mltSZcVhHr22sFRxj1OrfQaLlC9wyMtmol3aeEZ7HweUaU
+         usXggnGF1b33OoSyxzxXOiymJEWB7efC8HezjmWQ7Wf3BwpcexyfowoZi7lZbQgdrX
+         VlC8S1rmCXW9Wmyqd0kifLs9AzbxyMtH8WYnTMrrizzRwCX2yZyPvVV92PtfciSose
+         LdR4HT4lwKDU1z660bPYX4/fEoURnSSV5hGlTW4o5cxUCSrQRXEsxopKNc4AwuQInd
+         tTldUHaeRY5dg==
+Received: by mail.corrib.pl for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 09:00:35 GMT
+Message-ID: <20230315074501-0.1.62.iw8d.0.u7rd0r8c5j@corrib.pl>
+Date:   Wed, 15 Mar 2023 09:00:35 GMT
+From:   =?UTF-8?Q? "Szczepan_Kie=C5=82basa" ?= 
+        <szczepan.kielbasa@corrib.pl>
+To:     <linux-arm-msm@vger.kernel.org>
+Subject: Faktoring
+X-Mailer: mail.corrib.pl
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/GGWg/YjOnTQy0UNl1WNw7rd";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---Sig_/GGWg/YjOnTQy0UNl1WNw7rd
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Dzie=C5=84 dobry,
 
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/d=
-rm/msm/adreno/adreno_device.c
-> > index ca38b837dedb..437515e46e5a 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > @@ -355,6 +355,20 @@ static const struct adreno_info gpulist[] =3D {
-> >  		.init =3D a6xx_gpu_init,
-> >  		.zapfw =3D "a640_zap.mdt",
-> >  		.hwcg =3D a640_hwcg,
-> > +	}, {
-> > +		.rev =3D ADRENO_REV(6, 9, 0, ANY_ID),
-> > +		.revn =3D 690,
-> > +		.name =3D "A690",
-> > +		.fw =3D {
-> > +			[ADRENO_FW_SQE] =3D "a660_sqe.fw",
-> > +			[ADRENO_FW_GMU] =3D "a690_gmu.bin",
-> > +		},
-> > +		.gmem =3D SZ_4M,
-> > +		.inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> > +		.init =3D a6xx_gpu_init,
-> > +		.zapfw =3D "a690_zap.mdt",
-> > +		.hwcg =3D a690_hwcg,
-> > +		.address_space_size =3D SZ_16G,
-> >  	},
-> >  }; =20
->=20
-> This needs
->=20
-> MODULE_FIRMWARE("qcom/a660_sqe.fw");
-> MODULE_FIRMWARE("qcom/a690_gmu.bin");
-> MODULE_FIRMWARE("qcom/a690_zap.mbn");
+rozwa=C5=BCali Pa=C5=84stwo wyb=C3=B3r finansowania, kt=C3=B3re spe=C5=82=
+ni potrzeby firmy, zapewniaj=C4=85c natychmiastowy dost=C4=99p do got=C3=B3=
+wki, bez zb=C4=99dnych przestoj=C3=B3w?=20
+
+Przygotowali=C5=9Bmy rozwi=C4=85zania faktoringowe dopasowane do Pa=C5=84=
+stwa bran=C5=BCy i wielko=C5=9Bci firmy, dzi=C4=99ki kt=C3=B3rym, nie mus=
+z=C4=85 Pa=C5=84stwo martwi=C4=87 si=C4=99 o niewyp=C5=82acalno=C5=9B=C4=87=
+ kontrahent=C3=B3w, poniewa=C5=BC transakcje s=C4=85 zabezpieczone i posi=
+adaj=C4=85 gwarancj=C4=99 sp=C5=82aty.=20
+Chc=C4=85 Pa=C5=84stwo przeanalizowa=C4=87 dost=C4=99pne opcje?
 
 
-Eek. That should be
-
-MODULE_FIRMWARE("qcom/a690_zap.mdt");
-
-
->=20
-> ...Juerg
->=20
->  =20
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/=
-msm/adreno/adreno_gpu.h
-> > index b4f9b1343d63..da29bd392388 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > @@ -55,7 +55,7 @@ struct adreno_reglist {
-> >  	u32 value;
-> >  };
-> > =20
-> > -extern const struct adreno_reglist a615_hwcg[], a630_hwcg[], a640_hwcg=
-[], a650_hwcg[], a660_hwcg[];
-> > +extern const struct adreno_reglist a615_hwcg[], a630_hwcg[], a640_hwcg=
-[], a650_hwcg[], a660_hwcg[], a690_hwcg[];
-> > =20
-> >  struct adreno_info {
-> >  	struct adreno_rev rev;
-> > @@ -272,6 +272,11 @@ static inline int adreno_is_a660(struct adreno_gpu=
- *gpu)
-> >  	return gpu->revn =3D=3D 660;
-> >  }
-> > =20
-> > +static inline int adreno_is_a690(struct adreno_gpu *gpu)
-> > +{
-> > +	return gpu->revn =3D=3D 690;
-> > +};
-> > +
-> >  /* check for a615, a616, a618, a619 or any derivatives */
-> >  static inline int adreno_is_a615_family(struct adreno_gpu *gpu)
-> >  {
-> > @@ -286,7 +291,8 @@ static inline int adreno_is_a660_family(struct adre=
-no_gpu *gpu)
-> >  /* check for a650, a660, or any derivatives */
-> >  static inline int adreno_is_a650_family(struct adreno_gpu *gpu)
-> >  {
-> > -	return gpu->revn =3D=3D 650 || gpu->revn =3D=3D 620 || adreno_is_a660=
-_family(gpu);
-> > +	return gpu->revn =3D=3D 650 || gpu->revn =3D=3D 620  || gpu->revn =3D=
-=3D 690 ||
-> > +	       adreno_is_a660_family(gpu);
-> >  }
-> > =20
-> >  u64 adreno_private_address_space_size(struct msm_gpu *gpu); =20
->=20
-
-
---Sig_/GGWg/YjOnTQy0UNl1WNw7rd
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEhZfU96IuprviLdeLD9OLCQumQrcFAmQRh80ACgkQD9OLCQum
-Qrc2YRAAjOTspDuzpGhFACIBgWLDaVOfk/W1mrvvof8VG9j+tV3MeQPlcP9ynWRL
-QFf2w9eNJPchsd6B0kZOcmA3UnSna4pjYoB4opW777d45QTSowdI9LjH8+XUXQbd
-At9jc+1436AGoz5v3skB+1moSlzBG85y6r0tYG7GJ8jdm3b8iWydDr9j3yKPHvtK
-qgqEB54MasKNBVl9DBo9Ug6zP7t4QLliwMbgLUe1yQXZFMLWQaHRPwCZnJ2M/Vo3
-O/Xay7M/kjBXDzLCHv5HzrA3Cb0q5kS8yvdUrYN9F/mi3wc92ApSN57KTJzybkuS
-gSguyERQclupty7/pBqYoJe2iTdMfYufAROsTan49q7cKFJW9la7PyV3yNOLa2EH
-mavRY+Kl0T9Mr2pXqJ/6c/N3Jb27bjjq2xHejYyXpCI2NkmSMktrSDD47sgOAW4L
-qR98YOrchNgW/XGYEDOFxQT8hGbFOiyZac0PU/qm5/yTXxHM7RWo9v2gux9UXjRt
-p3Ln2/p8OfOFZCdYp3eXS1XDLFFbkxGOqXbUOf2mhnUvSVvMtrLIg00h8Lxqj8jE
-15Hie6b47X6shyTyhm1u2rs6Q8Dw/b88//VOUBQuHHWBaSdYsd7+gH/gK0LG+CQS
-sE99KAtdaT8xN15xO+3r42kRvn5E/Qu3q8qeI0oGWCUyxJ8tjkg=
-=54KF
------END PGP SIGNATURE-----
-
---Sig_/GGWg/YjOnTQy0UNl1WNw7rd--
+Pozdrawiam
+Szczepan Kie=C5=82basa
