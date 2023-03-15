@@ -2,70 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 348776BB5B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 15:15:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC10F6BB5D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 15:22:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233258AbjCOOPD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 10:15:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51244 "EHLO
+        id S232481AbjCOOWk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 10:22:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233050AbjCOOOn (ORCPT
+        with ESMTP id S232105AbjCOOWj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 10:14:43 -0400
+        Wed, 15 Mar 2023 10:22:39 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C4D736FED;
-        Wed, 15 Mar 2023 07:14:00 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6CDE69CEC;
+        Wed, 15 Mar 2023 07:22:38 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B387761D97;
-        Wed, 15 Mar 2023 14:13:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B79EC433EF;
-        Wed, 15 Mar 2023 14:13:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678889630;
-        bh=V2DqD28+RXNNjS2aAghs1Y8A/D9Ogfl49T6VIVzYeCo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=g4JKQ2lArhj5lU24BlQ/yJmiUZWxYbmoHE6CmLB7YIGMFck78npmWTUab94bFWHci
-         fjk6Uabk1XX+GUseY2gTB7acpc1FGpP8g6W8xVw/RFdjOfmS7OwgK3b2yc2tYG41f/
-         VIax0vgTBZImzLMZCankk12+tg2PnksSqJ+Ha+/nZ1jQrurnGceVnP9wJyK0ZrTaFu
-         P7RqlWNLVOWz89OpTiLqWWIENKaHJ8FwjcwWXb1d/bY9M9fGInbsnfdnrUPjbaK6Kp
-         C/GjoGuZqG5rN1nQbO0sfZ4t11FeE8/8r3VmAcyGBJ66jN58dHy7rQKCDuZlpW7LB2
-         2slgZjUvWhDBw==
-Date:   Wed, 15 Mar 2023 19:43:45 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] soundwire: qcom: define hardcoded version magic
- numbers
-Message-ID: <ZBHSmb3TlR0Bv3o7@matsya>
-References: <20230222144412.237832-1-krzysztof.kozlowski@linaro.org>
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 514A961DC1;
+        Wed, 15 Mar 2023 14:22:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBEB2C433EF;
+        Wed, 15 Mar 2023 14:22:36 +0000 (UTC)
+Date:   Wed, 15 Mar 2023 10:22:32 -0400
+From:   Steven Rostedt <rostedt@goodmis.org>
+To:     "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc:     linux-trace-kernel@vger.kernel.org,
+        Heinz Wiesinger <pprkut@slackware.com>, andersson@kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_rjendra@quicinc.com, quic_saipraka@quicinc.com,
+        quic_sibis@quicinc.com
+Subject: Re: [PATCH v2] bootconfig: Fix testcase to increase max node
+Message-ID: <20230315102232.0a67e109@gandalf.local.home>
+In-Reply-To: <167888844790.791176.670805252426835131.stgit@devnote2>
+References: <167888844790.791176.670805252426835131.stgit@devnote2>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230222144412.237832-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.6 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-02-23, 15:44, Krzysztof Kozlowski wrote:
-> Use a define instead of hard-coded register values for Soundwire
-> hardware version number, because it is a bit easier to read and allows
-> to drop explaining comment.
+On Wed, 15 Mar 2023 22:54:08 +0900
+"Masami Hiramatsu (Google)" <mhiramat@kernel.org> wrote:
 
-Applied both, thanks
+> From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+> 
+> Since commit 6c40624930c5 ("bootconfig: Increase max nodes of bootconfig
+> from 1024 to 8192 for DCC support") increased the max number of bootconfig
+> node to 8192, the bootconfig testcase of the max number of nodes fails.
+> To fix this issue, we can not simply increase the number in the test script
+> because the test bootconfig file becomes too big (>32KB). To fix that, we
+> can use a combination of three alphabets (26^3 = 17576). But with that,
+> we can not express the 8193 (just one exceed from the limitation) because
+> it also exceeds the max size of bootconfig. So, the first 26 nodes will just
+> use one alphabet.
+> 
+> With this fix, test-bootconfig.sh passes all tests.
+> 
+> Reported-by: Heinz Wiesinger <pprkut@slackware.com>
+> Link: https://lore.kernel.org/all/2463802.XAFRqVoOGU@amaterasu.liwjatan.org
+> Fixes: 6c40624930c5 ("bootconfig: Increase max nodes of bootconfig from 1024 to 8192 for DCC support")
+> Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
--- 
-~Vinod
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+
+-- Steve
+
+> ---
+>  tools/bootconfig/test-bootconfig.sh |   12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/tools/bootconfig/test-bootconfig.sh b/tools/bootconfig/test-bootconfig.sh
+> index f68e2e9eef8b..a2c484c243f5 100755
+> --- a/tools/bootconfig/test-bootconfig.sh
+> +++ b/tools/bootconfig/test-bootconfig.sh
+> @@ -87,10 +87,14 @@ xfail grep -i "error" $OUTFILE
+>  
+>  echo "Max node number check"
+>  
+> -echo -n > $TEMPCONF
+> -for i in `seq 1 1024` ; do
+> -   echo "node$i" >> $TEMPCONF
+> -done
+> +awk '
+> +BEGIN {
+> +  for (i = 0; i < 26; i += 1)
+> +      printf("%c\n", 65 + i % 26)
+> +  for (i = 26; i < 8192; i += 1)
+> +      printf("%c%c%c\n", 65 + i % 26, 65 + (i / 26) % 26, 65 + (i / 26 / 26))
+> +}
+> +' > $TEMPCONF
+>  xpass $BOOTCONF -a $TEMPCONF $INITRD
+>  
+>  echo "badnode" >> $TEMPCONF
+
