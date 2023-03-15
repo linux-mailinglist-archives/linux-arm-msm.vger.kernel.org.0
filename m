@@ -2,70 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D9A5E6BB8F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 17:02:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F38A6BB929
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 17:10:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232167AbjCOQCz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 12:02:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36468 "EHLO
+        id S232111AbjCOQKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 12:10:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232942AbjCOQCe (ORCPT
+        with ESMTP id S232468AbjCOQJq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 12:02:34 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5250187A0C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 09:02:14 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id j3-20020a17090adc8300b0023d09aea4a6so2328976pjv.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 09:02:14 -0700 (PDT)
+        Wed, 15 Mar 2023 12:09:46 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FCE73A9D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 09:09:15 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id eg48so18335006edb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 09:09:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678896129;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NzfnJ/fl2EOzAuf3MTrOySXsOi45cg44bO61w+XqodU=;
-        b=JCyL/2azMQT8TR2/0Oh7RhfDNYsdJYPC5P5lM+jjQD/1hyZkaOMo59ZOHUVgQ6bUP4
-         zLeCq4Sad/f2NXYv9xctUzJwdRD0CO1UpOAwI6pmi7eNcF+G0aWtdo3574SQlhzm02ZQ
-         d7biN7johrGfUDPh96Mn2Ttj/FmbrZhiHImaKNEUCCDKfMpyGbQkiqQ0bjIgSUcQTvjn
-         4j3P5tv5NklC0/CUO9OiDo6oMGuSXhLIMDdqwn/4+Isfu2fAE8x3I9T97aGXKzYWljOQ
-         2iozRk76Nv9PldAJEdEpMkMLdT5E3+FgKy1/hkyfLTqado3w5bpfFoDPpt7URASHTnpt
-         cTqQ==
+        d=linaro.org; s=google; t=1678896551;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YGlOw94M1bjV558+SSqH2l1uEWI6x6BMDe5Gqn6Ht4o=;
+        b=iELiNFHPcviGR6KfXPNwBddxGNJi5S2lRxo6xkuHqim9zJSyRx1SDoxqzFgt4yr4qb
+         j3mRtXcaJjjUqF54bdk/OfbPw8IfdfvbhIbgd4Sr8+lqtKlIzAX3D276PIOyM8JZ2Y/j
+         5hnN6owOgO0ShEb+rsseYEtfRM1+trw1sBXD/7sXCirhV3ICWu5OhTHFks03veLFGf+/
+         2b9K5PR34t0W52nT9JN73/Wmrrn6gall2fFOC93+bWiUBZkW2lD7nBje9TZHsWuQBhWb
+         8TpJUwU8ehs+3p13Pjb2x6WTbq6BbFRfLqKpPfRAm5a6Ds6N/hDRJ5SIZ6UlayU8aDvO
+         Xf1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678896129;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NzfnJ/fl2EOzAuf3MTrOySXsOi45cg44bO61w+XqodU=;
-        b=0l+qq6cxghRB0QvFprU32gyVIvEDGHbA2E4ceKsnS75lgic0xEpMRN67ZeVtMP2M4z
-         fbQaLdyhs3PHUJpMs79UXmEfTiYjFjn2FRflqflPXo+L4MVJFNbVFXBc2Efz9Nm7f0iQ
-         PagbeHt6V05D9HG07WDHrTHocOpv2Ochtc2c5447xKWzLD9GWoKmQwuGn87hRI8jR16F
-         hwe6PwBFc98JWI0XakfVr76vk3zA2b4lPG1hp1Y/XKJUn1QSJDrxHZnBaHob915QROHu
-         H5clx3bzVy4QWEMmheST6QwNE3Kjsz+49kyfm5C7vuIT99h6l+f1vEEdffBtzM3GaagT
-         hb0Q==
-X-Gm-Message-State: AO0yUKUAZuO9L1IjvPKmiEKmBy6w/Bqc869CViPcQgKnvh+xY+j4NT9Q
-        /KcAt8iq0riRSisESNzvt6JVL6N0IEf71zBRjkc=
-X-Google-Smtp-Source: AK7set+DwWhs0BqEGWSy2aNG4vjhj0iL2tYjxNAji0NOiSYrG7Bh4yq42ZuWovwE0vNH32pgebJ9mw==
-X-Received: by 2002:a05:6a20:7d94:b0:cd:c79:514b with SMTP id v20-20020a056a207d9400b000cd0c79514bmr511744pzj.2.1678896129266;
-        Wed, 15 Mar 2023 09:02:09 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1c61:1acb:9af6:bd7f:78e7:7ae6])
-        by smtp.gmail.com with ESMTPSA id o1-20020a655bc1000000b00502dc899394sm3457170pgr.66.2023.03.15.09.02.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 09:02:08 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org
-Subject: [PATCH 2/2] soc: qcom: socinfo: Add IDs for QRB4210
-Date:   Wed, 15 Mar 2023 21:31:51 +0530
-Message-Id: <20230315160151.2166861-3-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230315160151.2166861-1-bhupesh.sharma@linaro.org>
-References: <20230315160151.2166861-1-bhupesh.sharma@linaro.org>
+        d=1e100.net; s=20210112; t=1678896551;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YGlOw94M1bjV558+SSqH2l1uEWI6x6BMDe5Gqn6Ht4o=;
+        b=V9hv482PKYYpCFA1lVaa43f+oGNf6yEaYrr5yhZutnFdkUMqz7ONcJKrsis1CmQxsn
+         rxSAtJYaN2BeEQ+v5Lk4HB0WbEqMNvWRVJ3+UQF7bEBR39b/yKdKNswnYzrBD1w8Nb0W
+         jus1j3rwvoVil9KoOz0MgKsCJ9y/V8h9akPtSTFLceQseU1vCv1lMIkWfswgPc26rZQn
+         4Ooczg6sfwXVHxQhlSD7CIGWP/qk1LgSOX7YQtviu3YKetu+KOGvyTsanrzzasHOmWaD
+         tMyfLGsSC9AG7NtCC8GRF3vo0YoROV8Zgj+bYgzkuOwVqT5jZXRsjacnv+urhTEtttFY
+         pPTQ==
+X-Gm-Message-State: AO0yUKWPdyhz6D48xI9n5RxG+sWyWRfEDhUdO8nhOZ3lPZ8XaFtWV4c5
+        UD01iTS/HRG3dnK+WBv65RZV8Q==
+X-Google-Smtp-Source: AK7set8LUkWeJloO5KR5GyPPOMoKiiOcGekqj2CyNfvSioiDmDjUmwnMAhyBOqaN6/icF6ds1q4JkA==
+X-Received: by 2002:a17:907:d13:b0:922:8fc9:d235 with SMTP id gn19-20020a1709070d1300b009228fc9d235mr8669194ejc.9.1678896551674;
+        Wed, 15 Mar 2023 09:09:11 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:940e:8615:37dc:c2bd? ([2a02:810d:15c0:828:940e:8615:37dc:c2bd])
+        by smtp.gmail.com with ESMTPSA id rq4-20020a17090788c400b00927341bf69dsm2701737ejc.88.2023.03.15.09.09.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 09:09:11 -0700 (PDT)
+Message-ID: <b8805711-d720-8f91-c198-10b0553417a4@linaro.org>
+Date:   Wed, 15 Mar 2023 17:09:10 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: Add Acer Aspire 1
+Content-Language: en-US
+To:     Nikita Travkin <nikita@trvn.ru>, agross@kernel.org,
+        andersson@kernel.org
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20230315154311.37299-1-nikita@trvn.ru>
+ <20230315154311.37299-5-nikita@trvn.ru>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230315154311.37299-5-nikita@trvn.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,25 +79,81 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the ID for QRB4210 variant.
+On 15/03/2023 16:43, Nikita Travkin wrote:
+> Acer Aspire 1 is a WoA laptop based on Snapdragon 7c gen1 platform.
+> 
+> The laptop design is similar to trogdor in the choice of primary
+> components but the specifics on usage of those differ slightly.
+> 
+> Add the devicetree for the laptop with support for most of the
+> hardware present.
+> 
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> ---
+> Changed in v2:
+>  - Various styling, ordering and node naming issues fixed. (Krzysztof)
+> 
+> Changed in v3:
+>  - Kepp camcc on, wakeup on touchpad, minor style issues. (Konrad)
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/sc7180-acer-aspire1.dts     | 859 ++++++++++++++++++
+>  2 files changed, 860 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 89e23a74bc7f..4bd4b4079b17 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -76,6 +76,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8540p-ride.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8775p-ride.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-acer-aspire1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+> new file mode 100644
+> index 000000000000..b4161f1f21a7
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+> @@ -0,0 +1,859 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +
+> +#include "sc7180.dtsi"
+> +
+> +#include "pm6150.dtsi"
+> +#include "pm6150l.dtsi"
+> +
+> +/delete-node/ &tz_mem;
+> +/delete-node/ &ipa_fw_mem;
+> +
+> +/ {
+> +	model = "Acer Aspire 1";
+> +	compatible = "acer,aspire1", "qcom,sc7180";
+> +	chassis-type = "laptop";
+> +
+> +	aliases {
+> +		bluetooth0 = &bluetooth;
+> +		hsuart0 = &uart3;
+> +		serial0 = &uart8;
+> +		wifi0 = &wifi;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +
+> +	reserved-memory {
 
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- drivers/soc/qcom/socinfo.c | 1 +
- 1 file changed, 1 insertion(+)
+I still don't think it is ordered by name.... "r" is definitely after "a".
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 89081ec34dbac..fcef116ffc25a 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -447,6 +447,7 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(SC7180P) },
- 	{ qcom_board_id(SM6375) },
- 	{ qcom_board_id(SM8550) },
-+	{ qcom_board_id(QRB4210) },
- 	{ qcom_board_id(SA8775P) },
- 	{ qcom_board_id(QRU1000) },
- 	{ qcom_board_id(QDU1000) },
--- 
-2.38.1
+Best regards,
+Krzysztof
 
