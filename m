@@ -2,107 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68D3C6BB61F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 15:34:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 825696BB610
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 15:31:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230212AbjCOOeP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 10:34:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34216 "EHLO
+        id S232682AbjCOObg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 10:31:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231154AbjCOOeO (ORCPT
+        with ESMTP id S231513AbjCOObb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 10:34:14 -0400
-X-Greylist: delayed 402 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 15 Mar 2023 07:34:10 PDT
-Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 898F14347C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 07:34:09 -0700 (PDT)
-Received: (qmail 18003 invoked by uid 990); 15 Mar 2023 14:27:26 -0000
-Authentication-Results: devico.uberspace.de;
-        auth=pass (plain)
-From:   Leonard Lausen <leonard@lausen.nl>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] drm/msm/dpu: Add support for AR30 format
-Date:   Wed, 15 Mar 2023 14:27:06 +0000
-Message-ID: <864jqmw0n9.fsf@lausen.nl>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Bar: ---
-X-Rspamd-Report: BAYES_HAM(-2.999999) MIME_GOOD(-0.1)
-X-Rspamd-Score: -3.099999
-Received: from unknown (HELO unkown) (::1)
-        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Wed, 15 Mar 2023 15:27:26 +0100
+        Wed, 15 Mar 2023 10:31:31 -0400
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F18A11F5EB;
+        Wed, 15 Mar 2023 07:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-        d=lausen.nl; s=uberspace;
-        h=from;
-        bh=j7/a5HItpL7CPAILjLI30SM3Uf3gqQslqNLmr5RYGs8=;
-        b=xBpwCaferJ1Bnx++RPTfcwqkw8FF5QkQpLwpiMaPqe+86OqFJRCEdEjyshHlz6PeyAdycih7hR
-        /iJGhIkpN2gFl+ATdHrL7B3mrc7AgGMDnPjbJKDZamFyw+ouyLQw4HdzMSSsY5ajjjD6zC7m3Qc1
-        p4TMRY4fVEiaWCu1rIzyCbEDxm3tBj+ZVOHftPy9ECHsvy+W7/D6/Bv5lRlq4Jx97qRd4/fXYFDb
-        ByIdkScjYkL4XzLsudcNLmW06PFK9/sCoC1EuX91JmbVZbFvkxIcscwUc6XzXI9+l21eajfyfkBE
-        3i6DjHjLyGej+NSBhHQrkJbiVJf4+PzmMNnvsdtTVz7iGPTzRqVm0wy0kL5nU6ZILBP5Om4mV+hc
-        dgPBJgKI6pdGtwdSZnLwpuQtNeqU1+3jcTixAjz/u6OJgCzQ9OHBCfKK4turlaG3SuV5rx+6iEYO
-        1t67GabxMKmbwVAZxnyVzVgKjjfFBh4fBF8dfQ+y9Z6JT4V/YlFsodKkPJcuzKanDeMuKrgbPw5R
-        I3V3k/6r0aj/vf177cWII9LU1rQzpIMKAPvJw0q1V1ptjdQla0+UAKJqYbusvaQOJe5pdUamn8G1
-        9CxBtSssKB+WwYFJPBwODgEjWC6BZ9uMVw043549xX8jX+kLykMYRbG7EKCrKYI24pbv4dy/6OA8
-        Q=
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1678890672; x=1710426672;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=z2C/BkfaVtAyVUV8tLuReKIAo/iPls0ApsKzq+thVY0=;
+  b=VgdG8qYWeAcG7mZFIZWx/IXWVHZ3c6OzVOxuEOnAgzWjWeFqw63SW4M0
+   iqSVn6HaDRbcgx5n+eUUNY/awnk7BGIcRUcqZQPs2GZcB4Uo4f3CPOO9A
+   /ZMsdCNVR3YFrOyJbn9uMUbaMLeBfV6LBLsHIuqgvNCfr3Oo38DvuLR0J
+   jzKo8FBsJ6pArENgYrbg3SZehwfLZnjjiC7vnTw3MGqgNyT00KWZvsD1A
+   cVlpo1AQAgx1JXeZAO3w5WRs0PwOrnnGtZ+3/UvR+ZTUMn3Y9GAP1XseX
+   yKsPg/9MmSs+g+B5N7UeRCvgJGwvGew6DcdKDuUTK3gbkDzC3WTs/9P8p
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10649"; a="423987752"
+X-IronPort-AV: E=Sophos;i="5.98,262,1673942400"; 
+   d="scan'208";a="423987752"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2023 07:31:01 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10649"; a="748450293"
+X-IronPort-AV: E=Sophos;i="5.98,262,1673942400"; 
+   d="scan'208";a="748450293"
+Received: from rperez12-mobl.amr.corp.intel.com (HELO [10.255.35.81]) ([10.255.35.81])
+  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2023 07:30:59 -0700
+Message-ID: <6b811766-cd2a-54c0-d090-640812686a45@linux.intel.com>
+Date:   Wed, 15 Mar 2023 09:30:58 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.8.0
+Subject: Re: [PATCH v3 00/28] Introduce QC USB SND audio offloading support
+To:     Wesley Cheng <quic_wcheng@quicinc.com>,
+        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com,
+        andersson@kernel.org, robh+dt@kernel.org,
+        gregkh@linuxfoundation.org, tiwai@suse.com
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+References: <20230308235751.495-1-quic_wcheng@quicinc.com>
+ <4f8a66c0-398f-5655-3aa7-a59bc9ba56cc@linux.intel.com>
+ <8b2f3ce7-3e0c-bdf0-8d9f-9aeabba09a15@quicinc.com>
+ <a211f26d-a045-0729-871f-248d5fce3f3f@linux.intel.com>
+ <684daf86-6c3f-7310-eebf-4ebfc3c480ca@quicinc.com>
+ <8a37ccd3-f19e-b30d-d736-04e81b49f3a0@linux.intel.com>
+ <0810f951-f4a6-a51d-97e3-43691b05f702@quicinc.com>
+ <b671e263-5cb8-18e5-dc28-648ab1133c6c@linux.intel.com>
+ <14d726a7-6ffc-705c-b012-0c08d7dd7b9b@quicinc.com>
+Content-Language: en-US
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <14d726a7-6ffc-705c-b012-0c08d7dd7b9b@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit da7716a249b699978fb5 ("drm/msm/dpu: Add support for XR30 format") enabled
-support for the 10-bit XR30 color format but missed enabling support for the
-corresponding per-pixel alpha-blending AR30 color format.
+Hi Wesley,
 
-Declaring only XR30 but not AR30 color format support can trigger bugs in
-userspace. KDE KWin compositor for example always prefers 10-bit color formats,
-rendering a 1cm^2 black box around the cursor if only XR30 but AR30
-support is declared.
+> Sorry made a mistake on the diagram.  There is no connection from
+> SOC-USB to the APR/GLINK.  The Q6USB driver will be the one that is
+> going to configure some of the Q6AFE ports along withe the Q6AFE DAI
+> driver.
+> 
+> |            ASoC
+> ----------------------------------
+> |  _________________________
+> | |sm8250 platform card     |
+> | |_________________________|
+> |         |           |
+> |      ___V____   ____V____
+> |     |Q6USB   | |Q6AFE    |  #5
+> |     |"codec" | |"cpu"    |
+> |     |________| |_________|
+> |         ^  ^        ^
+> |      #6 |  |________|
+> |      ___V____     |
+> |     |SOC-USB |    |
+> #7    |        |    |
+> ----->|________|    |
+> ---                 |
+> | |                 |
+> | |    _____________V________
+> | |   |APR/GLINK             |
+> | |   |______________________|
+> | |              ^
+> | | #8           |
+> | |   ___________V___________
+> | |->|audio DSP              |
+> |    |_______________________|
+> |
+> |
+> 
+>>>
 
-Signed-off-by: Leonard Lausen <leonard@lausen.nl>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 ++
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 1 +
- 2 files changed, 3 insertions(+)
+Makes sense now, thank you for the clarification.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 83f1dd2c22bd..d99ce3919248 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -156,6 +156,7 @@ static const uint32_t plane_formats[] = {
-        DRM_FORMAT_RGBX8888,
-        DRM_FORMAT_BGRX8888,
-        DRM_FORMAT_XBGR8888,
-+       DRM_FORMAT_ARGB2101010,
-        DRM_FORMAT_XRGB2101010,
-        DRM_FORMAT_RGB888,
-        DRM_FORMAT_BGR888,
-@@ -185,6 +186,7 @@ static const uint32_t plane_formats_yuv[] = {
-        DRM_FORMAT_RGBA8888,
-        DRM_FORMAT_BGRX8888,
-        DRM_FORMAT_BGRA8888,
-+       DRM_FORMAT_ARGB2101010,
-        DRM_FORMAT_XRGB2101010,
-        DRM_FORMAT_XRGB8888,
-        DRM_FORMAT_XBGR8888,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index bfd5be89e8b8..0ed6a1a114c7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -69,6 +69,7 @@ static const uint32_t qcom_compressed_supported_formats[] = {
-        DRM_FORMAT_ARGB8888,
-        DRM_FORMAT_XBGR8888,
-        DRM_FORMAT_XRGB8888,
-+       DRM_FORMAT_ARGB2101010,
-        DRM_FORMAT_XRGB2101010,
-        DRM_FORMAT_BGR565,
- 
--- 
-2.30.2
+I'll have to dig more in this 'soc-usb' block, it's clearly a key
+component that will have to maintain a consistent state across two
+different parts of the stack and deal with probe/remove/shutdown.
+
+>> My initial thought was to add a 'DSP offload' PCM to the USB card, you
+>> added a "USB offload" PCM to the DSP card. Nice logical swap!
+>>
+>> Your proposal might be easier in practice since there's typically a
+>> vendor-specific configuration file (UCM or custom) file for the DSP,
+>> where USB information can be added.
+>>
+>> It's more problematic to change a generic USB card as we know it today
+>> and bolt vendor-specific DSP information on top.
+>>
+>> The only open I have with your option is that there are still two
+>> control paths to e.g. set the volume. It would be so much easier for
+>> userspace if there was a single volume control no matter what path is
+>> used for data, or make sure the kcontrols are 'mirrored' somehow. If we
+>> found a way to address this issue that would be ideal.
+>>
+> 
+> Got it.  Let me look to see if that is something we can address/add.  I
+> think the current implementation is that USB SND will expose some mixer
+> controls based on the UAC descriptor parsing.  Then when they want to
+> change the volume (for example) it will result in a USB SETUP transaction.
+> 
+> So USB SND will eventually be the entity controlling these changes.
+
+That's probably ok then, am I getting this right that the the DSP card
+would not expose any USB-related kcontrols then, i.e. the ONLY path to
+change volumes, etc.,  would through the regular USB card kcontrols?
+
+That would limit the changes in the platform sound card to the addition
+of a PCM USB device.
