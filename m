@@ -2,196 +2,262 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC5CB6BACE7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 11:01:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9FD66BAD47
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 11:14:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232060AbjCOKBs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 06:01:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55808 "EHLO
+        id S232360AbjCOKOi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 06:14:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231493AbjCOKBT (ORCPT
+        with ESMTP id S232081AbjCOKOO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 06:01:19 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE43428848
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 03:00:07 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id ja10so9769206plb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 03:00:07 -0700 (PDT)
+        Wed, 15 Mar 2023 06:14:14 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BBFD5FE94
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 03:13:48 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id f16so18845453ljq.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 03:13:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678874407;
+        d=linaro.org; s=google; t=1678875226;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=nfMWt4ixugNsc9AOhW4zh3Qlkp0wA/BUmvjbUtzpDgw=;
-        b=KwquW/B+JdxTYUB3gevchOoNy7S5NSEVjtk2Vw9uyUiuw2KbOX884786SNjAYg2Xwh
-         NthtUeL3MfbALd33VrWYKb2gazlKkCdtOXIJS40/7Ye0emaUHLAMInd1DRjgJRI7mpNn
-         uSQJIdv+VwdpGiTpTdlqrAP145F5m2y/U4sUbB7s67ONPURmLEojAJTkk8BkaMTqSuf/
-         GIIQI+laaERgNWpPSMchyvaqEf0JkludmLgDpfjP40eC14QCgrUQEBkifhtRMk22a7uh
-         2Tt37u0nez39KO9ExcBZoM61U9fQL4KnvSvis8nFHz7QCtLBisrF/8Dha3naiusoqOit
-         0+iQ==
+        bh=wR8RvE7+8ppUn+x9JPThBNI9Mo3SZq3Efy44T2RNfT8=;
+        b=AbYMIMZr+Q83DLfoG17HLcKICZOjbTwqKaOfMuWPrq5yV+UbeqJGCSpHhbjKLB6Lkw
+         DUu/4v9J30yo3Rg5zVCsRpCko2RpgyVPGi6WwbyyGVw3Hf7jpbEWvDb7o5kCgiS8CVYN
+         m4iAteExvoFfdBjy1ESL+YVt4pBmTCHRZM8Z4HA2PRac2aI21e4CeUd5Yj/j+h6cpvri
+         QL8ow8aMDMc0rWz7Fvj5A1nOgtuPIjN5+L8Gsv2YGL7W3is6X/qjOFTofDw3XFbEPdZm
+         Oph/43sNg8z9uu5hJHm469ieXjy74aGBZwFk6OsS/FTsFQS3kP0k9Hzm/X2X/XskTGfD
+         lgZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678874407;
+        d=1e100.net; s=20210112; t=1678875226;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nfMWt4ixugNsc9AOhW4zh3Qlkp0wA/BUmvjbUtzpDgw=;
-        b=COPBF7hvYqcO9753KzaP2Z4pgSU+D6w7Mu2oAv0xQoCqL0aLO0EMlYkFE4Gg2opxw/
-         GFsDOjyCXpBJMQfkycrIeC17ClnM4P4hosiOCHsCnFRUVSM5cwBuXcy70BsaCcTIJdhs
-         DMN0erondDzXEjKZ9oMFZ7PyuHvbhluwoirm8eBSeRBqLdbNH+JoRoEsiA1QxgkAjRxW
-         6SegzPJ1qYI6IU2n5L2jXG35n9N92mACmiBUs2iQnIMneUrcYhKEA6ZD3RnuSXvEMSqk
-         +VAjsgJtBDw7uYgIzwXfuVaQk+2xFGOi872ocFUpvAdI46gCiWItZjYXCJXDrkvDjzFf
-         Nslg==
-X-Gm-Message-State: AO0yUKUNoEClj1ISMsQpeuNyphNgFRqRUsj5SgncJBCAJgF3ZKBFWzo/
-        xYvrBzFIoLGsavHEnFBsFFReA9jpim/xf3bI+KA=
-X-Google-Smtp-Source: AK7set/A2w5RNkUesxs8MRcKHqtR8roh32s/RLeEjhIrH3APMn4IA1gF0sdSaEuCZQhNN7WbTExdtA==
-X-Received: by 2002:a17:902:e844:b0:1a1:7b89:3860 with SMTP id t4-20020a170902e84400b001a17b893860mr1194410plg.6.1678874407080;
-        Wed, 15 Mar 2023 03:00:07 -0700 (PDT)
-Received: from ?IPV6:2401:4900:1c61:1acb:9af6:bd7f:78e7:7ae6? ([2401:4900:1c61:1acb:9af6:bd7f:78e7:7ae6])
-        by smtp.gmail.com with ESMTPSA id x1-20020a1709028ec100b0019aa4c00ff4sm3227744plo.206.2023.03.15.03.00.04
+        bh=wR8RvE7+8ppUn+x9JPThBNI9Mo3SZq3Efy44T2RNfT8=;
+        b=6FG5p/R5lNvzfGSrfdZKIQRsS771I+9Qnt02ABsdxsefwk5jtwENr31KKKe5Bid70B
+         K4kfgVI62VWlqmqBVK0szlVKRJGs6wpPK3qtBWGhfxnXwNptXZ3AVKLqalcU+j/LU1PS
+         jOq4gv8UNZoJS2Ha/c4Z8bSD2SR3D7skpH2RPEMUInfML3nTUc7TE1Domq/8UgiYh106
+         iy7q6pEwmcM+725n6o83rn5Suz4/sbnoN733VJ+jkrCFW3b2r2Mt9vpF8wY0OnpQL2iz
+         HLo0xFWF4xeDbMChellrKHi5FaAYwx5wjdtiy1et4nqLtgUYygtmOji91cnhTrYdl6wJ
+         34oQ==
+X-Gm-Message-State: AO0yUKXaPK3T8isrYRgfQ6s7rc34soyE6JMasAtWczRkixuQF4xMSFuw
+        adz8G/ggBbZnU/nMgX5oPXO5Rw==
+X-Google-Smtp-Source: AK7set/JfsQDKULPg14ddMAfFduRdd5KS+luwvDe6svnh5+Z9TqWZHEtnlAz+cG+AYiaz9l7foqZkA==
+X-Received: by 2002:a2e:a909:0:b0:295:b0aa:978a with SMTP id j9-20020a2ea909000000b00295b0aa978amr549353ljq.6.1678875226526;
+        Wed, 15 Mar 2023 03:13:46 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id a1-20020a2e9801000000b00293534d9760sm790353ljj.127.2023.03.15.03.13.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Mar 2023 03:00:06 -0700 (PDT)
-Message-ID: <3cdf5826-ef8d-2c4f-e7e3-c9ddef68043c@linaro.org>
-Date:   Wed, 15 Mar 2023 15:29:55 +0530
+        Wed, 15 Mar 2023 03:13:46 -0700 (PDT)
+Message-ID: <dc831034-98ec-9d8c-1220-9934c9d5b79e@linaro.org>
+Date:   Wed, 15 Mar 2023 11:13:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add base qrb4210-rb2 board dts
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 2/7] soc: qcom: icc-bwmon: Handle global registers
+ correctly
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org
-References: <20230314210828.2049720-1-bhupesh.sharma@linaro.org>
- <20230314210828.2049720-3-bhupesh.sharma@linaro.org>
- <09b49716-fa77-710c-92ec-3c0d7c154bc3@linaro.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <09b49716-fa77-710c-92ec-3c0d7c154bc3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230304-topic-ddr_bwmon-v2-0-04db989db059@linaro.org>
+ <20230304-topic-ddr_bwmon-v2-2-04db989db059@linaro.org>
+ <7a143671-372a-3af8-7804-fe12f858f853@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <7a143671-372a-3af8-7804-fe12f858f853@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/15/23 2:55 AM, Konrad Dybcio wrote:
-> 
-> 
-> On 14.03.2023 22:08, Bhupesh Sharma wrote:
->> Add DTS for Qualcomm qrb4210-rb2 board which uses SM4250 SoC.
+
+
+On 15.03.2023 08:27, Krzysztof Kozlowski wrote:
+> On 13/03/2023 12:41, Konrad Dybcio wrote:
+>> The BWMON hardware has two sets of registers: one for the monitor itself
+>> and one called "global". It has what seems to be some kind of a head
+>> switch and an interrupt control register. It's usually 0x200 in size.
 >>
->> This adds debug uart, emmc, uSD and tlmm support along with
->> regulators found on this board.
+>> On fairly recent SoCs (with the starting point seemingly being moving
+>> the OSM programming to the firmware) these two register sets are
+>> contiguous and overlapping, like this (on sm8450):
 >>
->> Also defines the 'xo_board' and 'sleep_clk' frequencies for
->> this board.
+>> /* notice how base.start == global_base.start+0x100 */
+>> reg = <0x90b6400 0x300>, <0x90b6300 0x200>;
+>> reg-names = "base", "global_base";
 >>
->> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> Which led to some confusion and the assumption that since the
+>> "interesting" global registers begin right after global_base+0x100,
+>> there's no need to map two separate regions and one can simply subtract
+>> 0x100 from the offsets.
+>>
+>> This is however not the case for anything older than SDM845, as the
+>> global region can appear in seemingly random spots on the register map.
+>>
+>> Handle the case where the global registers are mapped separately to allow
+>> proper functioning of BWMONv4 on MSM8998 and older. Add specific
+>> compatibles for 845, 8280xp, 7280 and 8550 (all of which use the single
+>> reg space scheme) to keep backwards compatibility with old DTs.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >> ---
-> [...]
+>>  drivers/soc/qcom/icc-bwmon.c | 228 +++++++++++++++++++++++++++++++++++++++----
+>>  1 file changed, 208 insertions(+), 20 deletions(-)
+>>
+>> diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
+>> index d07be3700db6..2fe67a3cd2d7 100644
+>> --- a/drivers/soc/qcom/icc-bwmon.c
+>> +++ b/drivers/soc/qcom/icc-bwmon.c
+>> @@ -34,14 +34,27 @@
+>>  /* Internal sampling clock frequency */
+>>  #define HW_TIMER_HZ				19200000
+>>  
+>> -#define BWMON_V4_GLOBAL_IRQ_CLEAR		0x008
+>> -#define BWMON_V4_GLOBAL_IRQ_ENABLE		0x00c
+>> +#define BWMON_V4_GLOBAL_IRQ_CLEAR		0x108
+>> +#define BWMON_V4_GLOBAL_IRQ_ENABLE		0x10c
+>>  /*
+>>   * All values here and further are matching regmap fields, so without absolute
+>>   * register offsets.
+>>   */
+>>  #define BWMON_V4_GLOBAL_IRQ_ENABLE_ENABLE	BIT(0)
+>>  
+>> +/*
+>> + * Starting with SDM845, the BWMON4 register space has changed a bit:
+>> + * the global registers were jammed into the beginning of the monitor region.
+>> + * To keep the proper offsets, one would have to map <GLOBAL_BASE 0x200> and
+>> + * <GLOBAL_BASE+0x100 0x300>, which is straight up wrong.
+>> + * To facilitate for that, while allowing the older, arguably more proper
+>> + * implementations to work, offset the global registers by -0x100 to avoid
+>> + * having to map half of the global registers twice.
+>> + */
+>> +#define BWMON_V4_845_OFFSET			0x100
+>> +#define BWMON_V4_GLOBAL_IRQ_CLEAR_845		(BWMON_V4_GLOBAL_IRQ_CLEAR - BWMON_V4_845_OFFSET)
+>> +#define BWMON_V4_GLOBAL_IRQ_ENABLE_845		(BWMON_V4_GLOBAL_IRQ_ENABLE - BWMON_V4_845_OFFSET)
+>> +
+>>  #define BWMON_V4_IRQ_STATUS			0x100
+>>  #define BWMON_V4_IRQ_CLEAR			0x108
+>>  
+>> @@ -118,8 +131,12 @@
+>>  #define BWMON_NEEDS_FORCE_CLEAR			BIT(1)
+>>  
+>>  enum bwmon_fields {
+>> +	/* Global region fields, keep them at the top */
+>>  	F_GLOBAL_IRQ_CLEAR,
+>>  	F_GLOBAL_IRQ_ENABLE,
+>> +	F_NUM_GLOBAL_FIELDS,
+>> +
+>> +	/* Monitor region fields */
+>>  	F_IRQ_STATUS,
 > 
->> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> This SoC does not feature RPMh, drop.
+> F_IRQ_STATUS = F_NUM_GLOBAL_FIELDS
+> or = 2, so you won't waste one space in the array.
+Good find!
 
-Ok.
-
->> +#include "sm4250.dtsi"
->> +
->> +/ {
->> +	model = "Qualcomm Technologies, Inc. QRB4210 RB2";
->> +	compatible = "qcom,qrb4210-rb2", "qcom,sm4250";
-> Please add a qcom,qrb4210 between the board-specific and the common SoC
-> compatibles so that we can address QRB-specific quirks if such ever arise.
-
-As per the available documentation there are no qrb specific quirks as 
-of now, but let me add a qcom,qrb4210 for future compatibility.
-
->> +
->> +	aliases {
->> +		serial0 = &uart4;
->> +	};
->> +
-> [...]
 > 
->> +&xo_board {
->> +	clock-frequency = <19200000>;
->> +};
+>>  	F_IRQ_CLEAR,
+>>  	F_IRQ_ENABLE,
+>> @@ -157,6 +174,9 @@ struct icc_bwmon_data {
+>>  
+>>  	const struct regmap_config *regmap_cfg;
+>>  	const struct reg_field *regmap_fields;
 >> +
->> +&sleep_clk {
->> +	clock-frequency = <32000>;
->> +};
-> Out of alphanumerical order
-
-Ok.
-
->> +
->> +&qupv3_id_0 {
->> +	status = "okay";
->> +};
->> +
->> +&uart4 {
->> +	status = "okay";
->> +};
->> +
->> +&rpm_requests {
-> Out of alphanumerical order
-
-Ok.
-
->> +	regulators-0 {
-> Will there be more PMICs under this node? If not, drop the -0.
-
-Ok.
-
-> [...]
+>> +	const struct regmap_config *global_regmap_cfg;
+>> +	const struct reg_field *global_regmap_fields;
+>>  };
+>>  
+>>  struct icc_bwmon {
+>> @@ -166,6 +186,7 @@ struct icc_bwmon {
+>>  
+>>  	struct regmap *regmap;
+>>  	struct regmap_field *regs[F_NUM_FIELDS];
+>> +	struct regmap_field *global_regs[F_NUM_FIELDS];
 > 
->> +&tlmm {
->> +	gpio-reserved-ranges = <37 5>, <43 2>, <47 1>,
->> +			       <49 1>, <52 1>, <54 1>,
->> +			       <56 3>, <61 2>, <64 1>,
->> +			       <68 1>, <72 8>, <96 1>;
->> +};
-> Are there *really* so many? Does the board refuse to boot if
-> you knock off any of these entries? If so, they probably
-> don't belong here.
+> F_NUM_GLOBAL_FIELDS?
+Totally.
 
-Yes, these are reserved / not-connected gpios as per latest version of 
-the board schematics.
-
->> +
->> +&sdhc_1 {
->> +	status = "okay";
-> Status should go last
->> +
->> +	vmmc-supply = <&vreg_l24a_2p96>; /* emmc power line */
->> +	vqmmc-supply = <&vreg_l11a_1p8>; /* emmc vddq */
-> The comments are not very useful, drop please.
 > 
->> +	bus-width = <8>;
-> This is defined in the SoC dtsi already
-
-Ok.
-
->> +	no-sdio;
->> +	non-removable;
+>>  
+> 
+> (...)
+> 
+>>  }
+>>  
+>>  static int bwmon_probe(struct platform_device *pdev)
+>> @@ -645,6 +816,21 @@ static const struct icc_bwmon_data msm8998_bwmon_data = {
+>>  	.quirks = BWMON_HAS_GLOBAL_IRQ,
+>>  	.regmap_fields = msm8998_bwmon_reg_fields,
+>>  	.regmap_cfg = &msm8998_bwmon_regmap_cfg,
+>> +	.global_regmap_fields = msm8998_bwmon_global_reg_fields,
+>> +	.global_regmap_cfg = &msm8998_bwmon_global_regmap_cfg,
 >> +};
 >> +
->> +&sdhc_2 {
->> +	status = "okay";
+>> +static const struct icc_bwmon_data sdm845_ddr_bwmon_data = {
+> 
+> The name "ddr" is here (and other places) confusing. This is not the DDR
+> bwmon.
+I suppose cpu_bwmon could make more sense?
+
+Konrad
+> 
+>> +	.sample_ms = 4,
+>> +	.count_unit_kb = 64,
+>> +	.default_highbw_kbps = 4800 * 1024, /* 4.8 GBps */
+>> +	.default_medbw_kbps = 512 * 1024, /* 512 MBps */
+>> +	.default_lowbw_kbps = 0,
+>> +	.zone1_thres_count = 16,
+>> +	.zone3_thres_count = 1,
+>> +	.quirks = BWMON_HAS_GLOBAL_IRQ,
+>> +	.regmap_fields = sdm845_ddr_bwmon_reg_fields,
+>> +	.regmap_cfg = &sdm845_ddr_bwmon_regmap_cfg,
+>>  };
+>>  
+>>  static const struct icc_bwmon_data sdm845_llcc_bwmon_data = {
+>> @@ -673,16 +859,18 @@ static const struct icc_bwmon_data sc7280_llcc_bwmon_data = {
+>>  };
+>>  
+>>  static const struct of_device_id bwmon_of_match[] = {
+>> -	{
+>> -		.compatible = "qcom,msm8998-bwmon",
+>> -		.data = &msm8998_bwmon_data
+>> -	}, {
+>> -		.compatible = "qcom,sdm845-llcc-bwmon",
+>> -		.data = &sdm845_llcc_bwmon_data
+>> -	}, {
+>> -		.compatible = "qcom,sc7280-llcc-bwmon",
+>> -		.data = &sc7280_llcc_bwmon_data
+>> -	},
+>> +	/* BWMONv4, separate monitor and global register spaces */
+>> +	{ .compatible = "qcom,msm8998-bwmon", .data = &msm8998_bwmon_data },
+>> +	/* BWMONv4, unified register space */
+>> +	{ .compatible = "qcom,sdm845-bwmon", .data = &sdm845_ddr_bwmon_data },
+>> +	/* BWMONv5 */
+>> +	{ .compatible = "qcom,sdm845-llcc-bwmon", .data = &sdm845_llcc_bwmon_data },
+>> +	{ .compatible = "qcom,sc7280-llcc-bwmon", .data = &sc7280_llcc_bwmon_data },
 >> +
->> +	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>; /* card detect gpio */
->> +	vmmc-supply = <&vreg_l22a_2p96>; /* Card power line */
->> +	vqmmc-supply = <&vreg_l5a_2p96>; /* IO line power */
->> +	bus-width = <4>;
->> +	no-sdio;
->> +	no-emmc;
-> Ditto
-
-Ok. Will send updated v2 soon.
-
-Thanks.
+>> +	/* Compatibles kept for legacy reasons */
+>> +	{ .compatible = "qcom,sc7280-cpu-bwmon", .data = &sdm845_ddr_bwmon_data },
+>> +	{ .compatible = "qcom,sc8280xp-cpu-bwmon", .data = &sdm845_ddr_bwmon_data },
+>> +	{ .compatible = "qcom,sm8550-cpu-bwmon", .data = &sdm845_ddr_bwmon_data },
+>>  	{}
+>>  };
+>>  MODULE_DEVICE_TABLE(of, bwmon_of_match);
+>>
+> 
+> Best regards,
+> Krzysztof
+> 
