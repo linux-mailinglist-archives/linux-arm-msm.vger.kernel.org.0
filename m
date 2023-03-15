@@ -2,63 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A0E406BAB65
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 10:01:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 296E56BABD3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 10:13:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231648AbjCOJBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 05:01:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45070 "EHLO
+        id S231659AbjCOJN3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 05:13:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231909AbjCOJBH (ORCPT
+        with ESMTP id S231616AbjCOJNK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 05:01:07 -0400
-Received: from mail.corrib.pl (mail.corrib.pl [185.58.226.145])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 785226F614
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 02:00:51 -0700 (PDT)
-Received: by mail.corrib.pl (Postfix, from userid 1001)
-        id B3367A3F99; Wed, 15 Mar 2023 09:00:49 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=corrib.pl; s=mail;
-        t=1678870855; bh=X6IEpSISwJiYlJ3uA866lskXve3r+4o2hf4z7VM6m5o=;
-        h=Date:From:To:Subject:From;
-        b=r+ZPfCYxcHNhZCyBcp0OAMtjsSoaiuOk6yC5VZFnnAWZhKbVmB8RL8f0clzYe5rOv
-         auvS8z566gSQ7FyWn8v1mltSZcVhHr22sFRxj1OrfQaLlC9wyMtmol3aeEZ7HweUaU
-         usXggnGF1b33OoSyxzxXOiymJEWB7efC8HezjmWQ7Wf3BwpcexyfowoZi7lZbQgdrX
-         VlC8S1rmCXW9Wmyqd0kifLs9AzbxyMtH8WYnTMrrizzRwCX2yZyPvVV92PtfciSose
-         LdR4HT4lwKDU1z660bPYX4/fEoURnSSV5hGlTW4o5cxUCSrQRXEsxopKNc4AwuQInd
-         tTldUHaeRY5dg==
-Received: by mail.corrib.pl for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 09:00:35 GMT
-Message-ID: <20230315074501-0.1.62.iw8d.0.u7rd0r8c5j@corrib.pl>
-Date:   Wed, 15 Mar 2023 09:00:35 GMT
-From:   =?UTF-8?Q? "Szczepan_Kie=C5=82basa" ?= 
-        <szczepan.kielbasa@corrib.pl>
-To:     <linux-arm-msm@vger.kernel.org>
-Subject: Faktoring
-X-Mailer: mail.corrib.pl
+        Wed, 15 Mar 2023 05:13:10 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6F7B67004
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 02:12:50 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id r29so8584753wra.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 02:12:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678871569;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :to:content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=8eWJAVwfdAMUCwI3o2WJJsF7HeRR9gB8W1OrllJjb5o=;
+        b=XzSmAIL6WPDc9unS6StGpnGGh/CGMJ8Wy8hZjsWSd8gRTPzMl4yLkyH89Z+NjNNOEE
+         /Zl4VkWXiNeVyyMGC7M7hiIBT32VcDKSLy3AiNF1yo1y17rrs6Q98cNSLWgczakKjRen
+         nr+onVKwv62YRyFi0/Ar2V62oOKd932RzGtYRliH1EwMglxP5NqYCJwxiWMCjhIRnRog
+         2R4k6Q7byMQpvMmJkzinKqrxYlBIs2v9GCUanWcefXQXQ8MJEjRntl+eLd6HQc/jPsgZ
+         n2XpIhHApTZItuwQB5/c5PwtrzQI3mSIHqoIDWaieiCE+5NREvvA69rUWPdAieBmH6G8
+         8Huw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678871569;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :to:content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8eWJAVwfdAMUCwI3o2WJJsF7HeRR9gB8W1OrllJjb5o=;
+        b=XyGO5M5576miz21kwU7O15ThvSmMZ0QWwjjahxZKfoCHzIjbQt6mNOcQHiVTzT8YgG
+         A0neSYqpKjPWizJ7xoj0azlDCO+qLVsIx7zsc/YCKJ7aG0ZKpYxLRan9BYlf1wxxOtPM
+         DzQ5ohPAdGUPnfnWDyRwcAwx/uVza4TPQAgyoyjDYMVNuNapk5MvKtrorqDkBU6Jti8n
+         BYtjI/frkmPTve68lwsj7LCeHAVZjyG4mFGuo0suiKkBg7g/gQLkGlvgIphvxDUNh/+d
+         UViKU/nd/8EgPBD6RfsjJeHtSHU2KNc3DOFV9XVwghEw10JMBqo/56aPod4KTzjfkZd3
+         T1bA==
+X-Gm-Message-State: AO0yUKUoREJF13wPk5xTHTWyxOfsdwRoCxF21Z5YMq/T4KligDY+Hv1Z
+        7saoaqhtCD/rvnVPs/Tg464YPw==
+X-Google-Smtp-Source: AK7set+eEbACpzLETf5+yoKzRbTbJU8SVnRF6TSezwW6SQk2wIN2YnBbU8HXUTnpArYwaQ5lSXadsw==
+X-Received: by 2002:a5d:4c8e:0:b0:2cf:e710:a4b9 with SMTP id z14-20020a5d4c8e000000b002cfe710a4b9mr1357985wrs.32.1678871569378;
+        Wed, 15 Mar 2023 02:12:49 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:5d2d:8427:397b:8fe7? ([2a01:e0a:982:cbb0:5d2d:8427:397b:8fe7])
+        by smtp.gmail.com with ESMTPSA id n4-20020a5d6b84000000b002cfe685bfd6sm4027654wrx.108.2023.03.15.02.12.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 02:12:48 -0700 (PDT)
+Message-ID: <f4801f1d-cd6a-2a3f-155c-e72d3d28da30@linaro.org>
+Date:   Wed, 15 Mar 2023 10:12:47 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 7/9] regulator: rpi-panel-attiny: Drop of_match_ptr for ID
+ table
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230310214553.275450-1-krzysztof.kozlowski@linaro.org>
+ <20230310214553.275450-7-krzysztof.kozlowski@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230310214553.275450-7-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dzie=C5=84 dobry,
+On 10/03/2023 22:45, Krzysztof Kozlowski wrote:
+> The driver can match only via the DT table so the table should be always
+> used and the of_match_ptr does not have any sense (this also allows ACPI
+> matching via PRP0001, even though it is not relevant here).
+> 
+>    drivers/regulator/rpi-panel-attiny-regulator.c:390:34: error: ‘attiny_dt_ids’ defined but not used [-Werror=unused-const-variable=]
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>   drivers/regulator/rpi-panel-attiny-regulator.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/regulator/rpi-panel-attiny-regulator.c b/drivers/regulator/rpi-panel-attiny-regulator.c
+> index 34514976475e..3953fc1f389f 100644
+> --- a/drivers/regulator/rpi-panel-attiny-regulator.c
+> +++ b/drivers/regulator/rpi-panel-attiny-regulator.c
+> @@ -396,7 +396,7 @@ MODULE_DEVICE_TABLE(of, attiny_dt_ids);
+>   static struct i2c_driver attiny_regulator_driver = {
+>   	.driver = {
+>   		.name = "rpi_touchscreen_attiny",
+> -		.of_match_table = of_match_ptr(attiny_dt_ids),
+> +		.of_match_table = attiny_dt_ids,
+>   	},
+>   	.probe_new = attiny_i2c_probe,
+>   	.remove	= attiny_i2c_remove,
 
-rozwa=C5=BCali Pa=C5=84stwo wyb=C3=B3r finansowania, kt=C3=B3re spe=C5=82=
-ni potrzeby firmy, zapewniaj=C4=85c natychmiastowy dost=C4=99p do got=C3=B3=
-wki, bez zb=C4=99dnych przestoj=C3=B3w?=20
 
-Przygotowali=C5=9Bmy rozwi=C4=85zania faktoringowe dopasowane do Pa=C5=84=
-stwa bran=C5=BCy i wielko=C5=9Bci firmy, dzi=C4=99ki kt=C3=B3rym, nie mus=
-z=C4=85 Pa=C5=84stwo martwi=C4=87 si=C4=99 o niewyp=C5=82acalno=C5=9B=C4=87=
- kontrahent=C3=B3w, poniewa=C5=BC transakcje s=C4=85 zabezpieczone i posi=
-adaj=C4=85 gwarancj=C4=99 sp=C5=82aty.=20
-Chc=C4=85 Pa=C5=84stwo przeanalizowa=C4=87 dost=C4=99pne opcje?
-
-
-Pozdrawiam
-Szczepan Kie=C5=82basa
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
