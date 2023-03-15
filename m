@@ -2,102 +2,249 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC1F96BB564
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 14:58:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DF9C6BB584
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 15:08:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232627AbjCON6T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 09:58:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60290 "EHLO
+        id S232447AbjCOOIW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 10:08:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232814AbjCON6M (ORCPT
+        with ESMTP id S232505AbjCOOIU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 09:58:12 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 352747C3EF;
-        Wed, 15 Mar 2023 06:58:06 -0700 (PDT)
-Received: from nicolas-tpx395.localdomain (192-222-136-102.qc.cable.ebox.net [192.222.136.102])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: nicolas)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 6ACC0660304F;
-        Wed, 15 Mar 2023 13:58:01 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1678888684;
-        bh=uJqR7EssC//Fq/VnhmhfKuiFmnGhoDw1Z52cTcjrpVU=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-        b=Ma4KyOxNTTffxcyxbnl1X2J+7Njd+LaQyivOPbIi6i+utwTW50beH5GMWO2sQSOcB
-         maGk7KOVzQf+8PxfTlIcLEvrEu7qH6OJof9IPsgUINsvhrQCO2XCZcNRRHjLrIilpI
-         sAOTs/7Hc6bmwrKlI5yw62hpBlPQ/V3KyuNnNUDdQ9bepJbGuEl0NYoddDzcBVhxvf
-         ij2wB4847oUulw25PblhthMc4tXZH53bjlsDQzsgJq69DBbbLhxYyMHfpfSWd49ERi
-         RFknrqq/TSXIca/wf91CIwIweWGRP5V98MBRZV8AG/2Glgp3z161dtCCnRrSSAQG8q
-         Tj1xEQbRrt7WA==
-Message-ID: <bdade438cd93230daa47ee48eafab60f65cd4224.camel@collabora.com>
-Subject: Re: [RFC 2/4] media: videobuf2: Replace bufs array by a list
-From:   Nicolas Dufresne <nicolas.dufresne@collabora.com>
-To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc:     tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
-        ming.qian@nxp.com, shijie.qin@nxp.com, eagle.zhou@nxp.com,
-        bin.liu@mediatek.com, matthias.bgg@gmail.com,
-        angelogioacchino.delregno@collabora.com, tiffany.lin@mediatek.com,
-        andrew-ct.chen@mediatek.com, yunfei.dong@mediatek.com,
-        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
-        daniel.almeida@collabora.com, hverkuil-cisco@xs4all.nl,
-        jerbel@kernel.org, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, kernel@collabora.com
-Date:   Wed, 15 Mar 2023 09:57:51 -0400
-In-Reply-To: <20230313181155.GC22646@pendragon.ideasonboard.com>
-References: <20230313135916.862852-1-benjamin.gaignard@collabora.com>
-         <20230313135916.862852-3-benjamin.gaignard@collabora.com>
-         <20230313181155.GC22646@pendragon.ideasonboard.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.3 (3.46.3-1.fc37) 
+        Wed, 15 Mar 2023 10:08:20 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB9ADF96C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 07:08:17 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id k18-20020a17090a591200b0023d36e30cb5so1954673pji.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 07:08:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678889297;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=tE9TM9jIe+wBA1tLudHncoReuU8nCE7h9AdsVHA82YI=;
+        b=cO5srOsIzfpsYma6JL9MAPcLaqdXlgxTPNHC2gNW4HMWkJ+b0t7bE8jN7u8It2bREr
+         5yWjZ3MR/7BvNw5A7qgyY5w9fpUqyieQKMk4IlULj6kcQgR9JscMf5jzIQZe0znN2p/1
+         +0opCgVT7c4jGLbne1S9G5eJvsNT1tUHZH8nfbpAJLfZvDdSrqEDGXvDmkrBJnFnyoby
+         sisbOoS61HcXDx+0+XtueMk/ExNOWW72z1Zarmr2RP7o7Dor6HAPfnw2v4nede4K1hUs
+         0SCJy5bqJt3Hnak1Rm0dbyggLxZTdG2vOkB80jgWfVMRrE8FEgT4X4IoIHfyuLUD0B+4
+         DiQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678889297;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tE9TM9jIe+wBA1tLudHncoReuU8nCE7h9AdsVHA82YI=;
+        b=k1kqG5NB1l72vGthu6K/WyeMwSuewDQ6KdJHIcW2dtVrfBCw86xlhEY+x8Ux6qgiWd
+         AyRhR8dWozTNgLaHhONW/w3UGzW69JRjhvKxYVFFhK0CI1wm616OosyfS/X4wxHgrHg8
+         1QFboNlxIRsYuZl6AbW8HNRwlWiufzJOHZGSj2XgbTQjupakbBEs6YU6rQGb/bty6DiV
+         U1HdZekitZA3gTNDJop2o8e4En7m3MXehnvspLXysgPuNZhMQdfr1fTzbPQOYOf+Fp0b
+         M1lx6bfVIV45PomNhyUOwEikzEOT18dm3cVH316jYwdr9DB5Rg9dhKRYcqDe/dmsA/JJ
+         iUFg==
+X-Gm-Message-State: AO0yUKVKuliLwK6FsR7arRdTTsVxbBIq9uu/rop1kDhf6G+SqPDfnzp0
+        lA4PnNyrbKdOWVYpppISIcmE
+X-Google-Smtp-Source: AK7set/ylWfVr/jYohN6EqLAANVvgvAQvjOnGOawVQuQ0mI04OheMkj8yVAvzIAc0yKpQPQIXa44pA==
+X-Received: by 2002:a17:90b:390f:b0:23d:44c6:745a with SMTP id ob15-20020a17090b390f00b0023d44c6745amr35425pjb.2.1678889297231;
+        Wed, 15 Mar 2023 07:08:17 -0700 (PDT)
+Received: from thinkpad ([117.207.30.24])
+        by smtp.gmail.com with ESMTPSA id ch7-20020a17090af40700b0023cd53e7706sm1425037pjb.47.2023.03.15.07.08.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Mar 2023 07:08:16 -0700 (PDT)
+Date:   Wed, 15 Mar 2023 19:38:07 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
+        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 4/5] soc: qcom: Add LLCC support for multi channel DDR
+Message-ID: <20230315140807.GB98488@thinkpad>
+References: <20230313124040.9463-1-quic_kbajaj@quicinc.com>
+ <20230313124040.9463-5-quic_kbajaj@quicinc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230313124040.9463-5-quic_kbajaj@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le lundi 13 mars 2023 =C3=A0 20:11 +0200, Laurent Pinchart a =C3=A9crit=C2=
-=A0:
-> > -	/* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
-> > -	num_buffers =3D min_t(unsigned int, num_buffers,
-> > -			=C2=A0=C2=A0=C2=A0 VB2_MAX_FRAME - q->num_buffers);
-> > -
->=20
-> We can indeed drop this check now, but shouldn't we introduce some kind
-> of resource accounting and limitation ? Otherwise any unpriviledged
-> userspace will be able to starve system memory. This could be
-> implemented on top, as the problem largely exists today already, but I'd
-> like to at least record this in a TODO comment.
+On Mon, Mar 13, 2023 at 06:10:39PM +0530, Komal Bajaj wrote:
+> Add LLCC support for multi channel DDR configurations
+> based off of a feature register.
+> 
 
-The current limit already isn't work for resource accounting and limitation=
- for
-m2m drivers. You can open a device, allocate 32 buffers, and close that dev=
-ice
-keeping the memory around. And redo this process as many times as you want.
+Please elaborate more in the commit message on why this patch is needed and how
+it is implemented.
 
-A TODO is most appropriate, but I would prefer to see this done at a memory
-layer level (rather then v4l2 specific), so that limits and accounting work=
-s
-with containers and other sandboxes.
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> ---
+>  drivers/soc/qcom/llcc-qcom.c       | 56 ++++++++++++++++++++++++++++--
+>  include/linux/soc/qcom/llcc-qcom.h |  2 ++
+>  2 files changed, 55 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 00699a0c047e..f4d3e266c629 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -17,6 +17,7 @@
+>  #include <linux/regmap.h>
+>  #include <linux/sizes.h>
+>  #include <linux/slab.h>
+> +#include <linux/firmware/qcom/qcom_scm.h>
 
->=20
-> I also wonder if we should still limit the number of allocated buffers.
-> The limit could be large, for instance 1024 buffers, and it would be an
-> in-kernel limit that could be increased later if needed. I'm concerned
-> that dropping the limit completely will allow userspace to request
-> UINT_MAX buffers, which may cause integer overflows somewhere. Limiting
-> the number of buffers would avoid extensive review of all the code that
-> deals with counting buffers.
+Sort the includes alphabetically
 
+>  #include <linux/soc/qcom/llcc-qcom.h>
+>  
+>  #define ACTIVATE                      BIT(0)
+> @@ -924,6 +925,40 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev,
+>  	return ret;
+>  }
+>  
+> +static int qcom_llcc_get_cfg_index(struct platform_device *pdev, u32 *cfg_index)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct resource *ch_res = NULL;
+
+No need to initialize the pointer
+
+> +
+
+No need of a newline
+
+> +	u32 ch_reg_sz;
+> +	u32 ch_reg_off;
+> +	u32 val;
+> +	int ret = 0;
+> +
+> +	ch_res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "multi_channel_register");
+> +	if (ch_res) {
+> +		if (of_property_read_u32(dev->of_node, "multi-ch-bit-off", &ch_reg_off)) {
+> +			dev_err(&pdev->dev,
+> +				"Couldn't get offset for multi channel feature register\n");
+> +			return -ENODEV;
+> +		}
+> +		if (of_property_read_u32_index(dev->of_node, "multi-ch-bit-off", 1, &ch_reg_sz)) {
+> +			dev_err(&pdev->dev,
+> +				"Couldn't get size of multi channel feature register\n");
+> +			return -ENODEV;
+> +		}
+> +
+> +		if (qcom_scm_io_readl(ch_res->start, &val)) {
+
+You didn't mention this SCM call in the commit message. Also, for SCM, you need
+to select the driver in Kconfig. 
+
+> +			dev_err(&pdev->dev, "Couldn't access multi channel feature register\n");
+> +			ret = -EINVAL;
+
+Catch the actual error no from qcom_scm_io_readl().
+
+So in the case of failure, you still want to calculate cfg_index?
+
+> +		}
+> +		*cfg_index = (val >> ch_reg_off) & ((1 << ch_reg_sz) - 1);
+> +	} else
+
+Use braces for else condition
+
+> +		*cfg_index = 0;
+> +
+> +	return ret;
+> +}
+> +
+>  static int qcom_llcc_remove(struct platform_device *pdev)
+>  {
+>  	/* Set the global pointer to a error code to avoid referencing it */
+> @@ -956,10 +991,13 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>  	struct device *dev = &pdev->dev;
+>  	int ret, i;
+>  	struct platform_device *llcc_edac;
+> -	const struct qcom_llcc_config *cfg;
+> +	const struct qcom_llcc_config *cfg, *entry;
+>  	const struct llcc_slice_config *llcc_cfg;
+> +
+
+No need of newline
+
+>  	u32 sz;
+> +	u32 cfg_index;
+>  	u32 version;
+> +	u32 no_of_entries = 0;
+
+num_entries?
+
+>  
+>  	drv_data = devm_kzalloc(dev, sizeof(*drv_data), GFP_KERNEL);
+>  	if (!drv_data) {
+> @@ -999,8 +1037,20 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>  	num_banks >>= LLCC_LB_CNT_SHIFT;
+>  	drv_data->num_banks = num_banks;
+>  
+> -	llcc_cfg = cfg[0].sct_data;
+> -	sz = cfg[0].size;
+> +	ret = qcom_llcc_get_cfg_index(pdev, &cfg_index);
+> +	if (ret)
+> +		goto err;
+> +
+> +	for (entry = cfg; entry->sct_data; entry++, no_of_entries++)
+> +		;
+
+Wrap ; in the above line itself
+
+> +	if (cfg_index >= no_of_entries) {
+> +		ret = -EINVAL;
+> +		goto err;
+> +	}
+> +
+> +	drv_data->cfg_index = cfg_index;
+
+Where is this cached value used?
+
+Thanks,
+Mani
+
+> +	llcc_cfg = cfg[cfg_index].sct_data;
+> +	sz = cfg[cfg_index].size;
+>  
+>  	for (i = 0; i < sz; i++)
+>  		if (llcc_cfg[i].slice_id > drv_data->max_slices)
+> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
+> index ad1fd718169d..225891a02f5d 100644
+> --- a/include/linux/soc/qcom/llcc-qcom.h
+> +++ b/include/linux/soc/qcom/llcc-qcom.h
+> @@ -125,6 +125,7 @@ struct llcc_edac_reg_offset {
+>   * @cfg: pointer to the data structure for slice configuration
+>   * @edac_reg_offset: Offset of the LLCC EDAC registers
+>   * @lock: mutex associated with each slice
+> + * @cfg_index: index of config table if multiple configs present for a target
+>   * @cfg_size: size of the config data table
+>   * @max_slices: max slices as read from device tree
+>   * @num_banks: Number of llcc banks
+> @@ -139,6 +140,7 @@ struct llcc_drv_data {
+>  	const struct llcc_slice_config *cfg;
+>  	const struct llcc_edac_reg_offset *edac_reg_offset;
+>  	struct mutex lock;
+> +	u32 cfg_index;
+>  	u32 cfg_size;
+>  	u32 max_slices;
+>  	u32 num_banks;
+> -- 
+> 2.39.1
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
