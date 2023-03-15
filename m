@@ -2,140 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2DFC6BA593
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 04:28:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BAB906BA5E4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 05:08:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230305AbjCOD2y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Mar 2023 23:28:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39820 "EHLO
+        id S230054AbjCOEIB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 00:08:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230282AbjCOD2w (ORCPT
+        with ESMTP id S230006AbjCOEIA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Mar 2023 23:28:52 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 099EEB479;
-        Tue, 14 Mar 2023 20:28:49 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id h17so2079537wrt.8;
-        Tue, 14 Mar 2023 20:28:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678850927;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=uH9GaHvYlPJjSoX0IYviP2OnmjHw1bfzeQs9XHSK3VM=;
-        b=RINQimBKgzmPrCNEqdXPn0gDuSOc4JqLKfQrSSD4Hi/t0sRiZ6L2vvPSeT3nEIjqF0
-         tbDX29vu3RlCUonOpxO6tpHLcjlTn29VGWQ7/0tJ7/DpTL9bTfZKZhsD6YVOCoGj0+Ru
-         0MWoMk8ahU/8pgzCiKmvQxgtFu7pF2kw9SavE4NbJZzPoqT/NWBKKmxVRM4iwt02Du7f
-         TmA6lui7YGsVhjhhGG/PzdeSfxNEO+deUDag4wXj0tw3aAiWSkDNwE1Y6tUPETTai7Sa
-         xdDL+1KYDPHcQi6kh1djWEiPEsfQz9b/8/fbdkpWPKHr/DyOG/mlpN/VuHogNll72Wqm
-         lEbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678850927;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uH9GaHvYlPJjSoX0IYviP2OnmjHw1bfzeQs9XHSK3VM=;
-        b=wYytWJ+mSOabF8V1IrQFd+j4aSRpNaeDYKA3FH4Pbi9HSgiaV1JuJJ7Lg4HJzRtRlq
-         1LcWt7TuMG7JzygGhp3R1rg0HiE5kHaZcoLFBYTEpMCZG7l5La+062fAXSaW46S/tftK
-         XcvG2ans4ilhNrjaVK/lizYvZcn9d5mdnxnHvHDRDkGZXhPY6nXUMVgWxW9WSJK+5EHz
-         djGbyWvG5iS2QNBqaIANcdXB6QuqMohnUK7VxIySKgigWPUj0h1G+Ov293q5ookTl0Q1
-         9eQfm3ps94bDAkuzcwhzUzYxYWYTHeHoU/XH1XVMpUcms2+yrJN3Krgrqf4/tSP8Fawo
-         wVnA==
-X-Gm-Message-State: AO0yUKWBWB7WvRe9BreMMa4hByDvPedtsii0iotVXQ8sdhYPRXB/au+n
-        a781Ja0NjAEcz81xPQY+ves=
-X-Google-Smtp-Source: AK7set8zVTAaU2IcCM2AMRczalXeWzQeAuVESTAFjkQ6ZVVK5LgYsCJx6WIZFrOP6tyWMBDmSikG8g==
-X-Received: by 2002:a5d:65cc:0:b0:2c8:c667:1bb4 with SMTP id e12-20020a5d65cc000000b002c8c6671bb4mr809782wrw.48.1678850927214;
-        Tue, 14 Mar 2023 20:28:47 -0700 (PDT)
-Received: from Ansuel-xps. (93-34-89-197.ip49.fastwebnet.it. [93.34.89.197])
-        by smtp.gmail.com with ESMTPSA id w17-20020adfd4d1000000b002c70ce264bfsm3412850wrk.76.2023.03.14.20.28.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 20:28:46 -0700 (PDT)
-Message-ID: <64113b6e.df0a0220.5405c.6bb4@mx.google.com>
-X-Google-Original-Message-ID: <ZBE7bJmf1jLsq5cn@Ansuel-xps.>
-Date:   Wed, 15 Mar 2023 04:28:44 +0100
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Andrew Lunn <andrew@lunn.ch>
-Cc:     Vladimir Oltean <olteanv@gmail.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
+        Wed, 15 Mar 2023 00:08:00 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B86B171E;
+        Tue, 14 Mar 2023 21:07:58 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2258E61AAD;
+        Wed, 15 Mar 2023 04:07:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27010C433D2;
+        Wed, 15 Mar 2023 04:07:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678853277;
+        bh=KJqyxTArsBbv6ReyKMgsMSt6IK3Nx4mxhE44Z4zwGi8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=KubU8rW5zY1FS0YPdL5x43KMZenlN84ZIrfHq4nxfw3uGXTt6hcvuywqbabSvzZVL
+         t9ugsSaMCjKQL4sEISaKMfzJzqvLLQFQI+bhDCI4+4r+z8KvcDy0y/1XhgCCymNPEX
+         TH1TvXD+2i6NmINmWYqfvfZNk4aYqgj3BG7TM2tSNUy0er6kniiNPIPPOzjaLyjyYV
+         aiY0qexUbqz/90PvCWBRho/NJKGzPW0fyYzJl6trUAPjy829CBGznfbh8DP60K9+8V
+         PZwaC7FNxujAHBVBYef/nty+R6hUmBsdQmsvsULPKq5BVPtwHyZTfYuhfp9S5LlJEk
+         piSSadL8T2tow==
+Date:   Tue, 14 Mar 2023 21:11:19 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Elliot Berman <quic_eberman@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>, Kalle Valo <kvalo@kernel.org>,
         "David S. Miller" <davem@davemloft.net>,
         Eric Dumazet <edumazet@google.com>,
         Jakub Kicinski <kuba@kernel.org>,
         Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Lee Jones <lee@kernel.org>,
-        linux-leds@vger.kernel.org
-Subject: Re: [net-next PATCH v3 09/14] dt-bindings: net: dsa: dsa-port:
- Document support for LEDs node
-References: <20230314101516.20427-1-ansuelsmth@gmail.com>
- <20230314101516.20427-1-ansuelsmth@gmail.com>
- <20230314101516.20427-10-ansuelsmth@gmail.com>
- <20230314101516.20427-10-ansuelsmth@gmail.com>
- <20230315005000.co4in33amy3t3xbx@skbuf>
- <afd1f052-6bb6-4388-9620-1adb02e6d607@lunn.ch>
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH] firmware: qcom_scm: Use fixed width src vm bitmap
+Message-ID: <20230315041119.fp7npwa5bia5hck3@ripper>
+References: <20230213181832.3489174-1-quic_eberman@quicinc.com>
+ <20230213214417.mtcpeultvynyls6s@ripper>
+ <Y+tNRPf0PGdShf5l@kroah.com>
+ <20230214172325.lplxgbprhj3bzvr3@ripper>
+ <bdda82f7-933d-443b-614a-6befad2899b5@quicinc.com>
+ <2ae96b75-82f1-165a-e56d-7446c90bb7af@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <afd1f052-6bb6-4388-9620-1adb02e6d607@lunn.ch>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <2ae96b75-82f1-165a-e56d-7446c90bb7af@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 15, 2023 at 02:58:23AM +0100, Andrew Lunn wrote:
-> On Wed, Mar 15, 2023 at 02:50:00AM +0200, Vladimir Oltean wrote:
-> > On Tue, Mar 14, 2023 at 11:15:11AM +0100, Christian Marangi wrote:
-> > > Document support for LEDs node in dsa port.
-> > > Switch may support different LEDs that can be configured for different
-> > > operation like blinking on traffic event or port link.
-> > > 
-> > > Also add some Documentation to describe the difference of these nodes
-> > > compared to PHY LEDs, since dsa-port LEDs are controllable by the switch
-> > > regs and the possible intergated PHY doesn't have control on them.
-> > > 
-> > > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > > ---
-> > >  .../devicetree/bindings/net/dsa/dsa-port.yaml | 21 +++++++++++++++++++
-> > >  1 file changed, 21 insertions(+)
+On Fri, Mar 03, 2023 at 01:09:08PM -0800, Elliot Berman wrote:
+> 
+> 
+> On 2/14/2023 10:52 AM, Elliot Berman wrote:
 > > 
-> > Of all schemas, why did you choose dsa-port.yaml? Why not either something
-> > hardware specific (qca8k.yaml) or more generic (ethernet-controller.yaml)?
+> > 
+> > On 2/14/2023 9:23 AM, Bjorn Andersson wrote:
+> > > On Tue, Feb 14, 2023 at 09:58:44AM +0100, Greg Kroah-Hartman wrote:
+> > > > On Mon, Feb 13, 2023 at 01:44:17PM -0800, Bjorn Andersson wrote:
+> > > > > On Mon, Feb 13, 2023 at 10:18:29AM -0800, Elliot Berman wrote:
+> > > > > > The maximum VMID for assign_mem is 63. Use a u64 to represent this
+> > > > > > bitmap instead of architecture-dependent "unsigned int"
+> > > > > > which varies in
+> > > > > > size on 32-bit and 64-bit platforms.
+> > > > > > 
+> > > > > > Acked-by: Kalle Valo <kvalo@kernel.org> (ath10k)
+> > > > > > Tested-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+> > > > > > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> > > > > 
+> > > > > Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> > > > > 
+> > > > > @Greg, would you mind taking this through your tree for v6.3, you
+> > > > > already have a related change in fastrpc.c in your tree...
+> > > > 
+> > > > I tried, but it doesn't apply to my char-misc tree at all:
+> > > > 
+> > > > checking file drivers/firmware/qcom_scm.c
+> > > > Hunk #1 succeeded at 898 (offset -7 lines).
+> > > > Hunk #2 succeeded at 915 (offset -7 lines).
+> > > > Hunk #3 succeeded at 930 (offset -7 lines).
+> > > > checking file drivers/misc/fastrpc.c
+> > > > checking file drivers/net/wireless/ath/ath10k/qmi.c
+> > > > checking file drivers/remoteproc/qcom_q6v5_mss.c
+> > > > Hunk #1 succeeded at 227 (offset -8 lines).
+> > > > Hunk #2 succeeded at 404 (offset -10 lines).
+> > > > Hunk #3 succeeded at 939 with fuzz 1 (offset -28 lines).
+> > > > checking file drivers/remoteproc/qcom_q6v5_pas.c
+> > > > Hunk #1 FAILED at 94.
+> > > > 1 out of 1 hunk FAILED
+> > > > checking file drivers/soc/qcom/rmtfs_mem.c
+> > > > Hunk #1 succeeded at 30 (offset -1 lines).
+> > > > can't find file to patch at input line 167
+> > > > Perhaps you used the wrong -p or --strip option?
+> > > > The text leading up to this was:
+> > > > --------------------------
+> > > > |diff --git a/include/linux/firmware/qcom/qcom_scm.h
+> > > > b/include/linux/firmware/qcom/qcom_scm.h
+> > > > |index 1e449a5d7f5c..250ea4efb7cb 100644
+> > > > |--- a/include/linux/firmware/qcom/qcom_scm.h
+> > > > |+++ b/include/linux/firmware/qcom/qcom_scm.h
+> > > > --------------------------
+> > > > 
+> > > > What tree is this patch made against?
+> > > > 
+> > > 
+> > > Sorry about that, I missed the previous changes in qcom_q6v5_pas in the
+> > > remoteproc tree. Elliot said he based it on linux-next, so I expect that
+> > > it will merge fine on top of -rc1, once that arrives.
+> > > 
+> > 
+> > Yes, this patch applies on next-20230213. I guess there are enough
+> > changes were coming from QCOM side (via Bjorn's qcom tree) as well as
+> > the fastrpc change (via Greg's char-misc tree).
+> > 
+> > Let me know if I should do anything once -rc1 arrives. Happy to post
+> > version on the -rc1 if it helps.
+> > 
 > 
-> The binding should be generic. So qca8k.yaml is way to specific. The
-> Marvell switch should re-use it at some point.
-> 
-> Looking at the hierarchy, ethernet-controller.yaml would work since
-> dsa-port includes ethernet-switch-port, which includes
-> ethernet-controller.
-> 
-> These are MAC LEDs, and there is no reason why a standalone MAC in a
-> NIC could not implement such LEDs. So yes,
-> ethernet-controller.yaml.
-> 
-> Is there actually anything above ethernet-controller.yaml? This is
-> about a netdev really, so a wifi MAC, or even a CAN MAC could also use
-> the binding....
->
+> The patch now applies on tip of Linus's tree and on char-misc.
 
-Yes ideally when we manage to do all the things, ath10k would benefits
-from this since it does have leds that blink on tx/rx traffic and are
-specially controlled...
+Greg, I have a couple more patches in the scm driver in my inbox. Would
+you be okay with me pulling this through the Qualcomm tree for v6.4?
 
-Don't think there is something above ethernet-controller tho...
-
--- 
-	Ansuel
+Regards,
+Bjorn
