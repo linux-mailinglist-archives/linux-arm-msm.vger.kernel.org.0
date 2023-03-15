@@ -2,132 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08BCB6BAF14
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 12:20:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 037B26BAF2C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 12:24:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229556AbjCOLUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 07:20:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34780 "EHLO
+        id S229769AbjCOLYy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 07:24:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231532AbjCOLUa (ORCPT
+        with ESMTP id S231807AbjCOLYf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 07:20:30 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F39415143
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 04:20:01 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id p4so10762549wre.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 04:20:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678879194;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V4lIKxT2fGoirRHmch8dzAkOMft+emleSnT/iIO7ryY=;
-        b=qEBZGcIwIGAd2at6H9jZUl/tx9Z9iMV7iFxl8LkThoqL36dWKkoJTyjGu+eVHPxQNz
-         khgUsvvGOHnquG+NoUZUmaSepqq40281Gka6xbC57tvYNXy5ly/LiFF/yJpobRo1ciEx
-         VFCwva1sU4dbHkLGVozJYUMuWPmTlZ5OqGi8ix0UftnEnbxDJ5RRlL2GzvlLoetr7cgd
-         xajJEdOo7TUEYmd3WI2J+w7yO7mhldFqyHqI2yQ7C8H7y0AX+Tsu7y/5zqd8p7wUfyfw
-         f6tpNz1aCJvFffVEucPGr/kllav+4+YABMbHuV6PqZh/Rl6Rajs7ZxBFZjE2AgfZcZJ2
-         f/UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678879194;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=V4lIKxT2fGoirRHmch8dzAkOMft+emleSnT/iIO7ryY=;
-        b=XD+didOg26cX9z679DIvzqf5YVxAstAlUq5pCxCy09w0o4PUtOnkcJXNQra6cSN5Qy
-         o2R4aak2zipjV/UpvSeXnBlI43o3XCsFBlNDubxlqAIzu2xXMiQ2hjPBlE83hPtR5c5m
-         TAk/kux2kgvz5j6ymWaRWjzvnqCsdrc7K9YqI0kTD6wWm5yebMfcWFHRynwLLWkJlJjR
-         pEJErJl1hpZHcYDJrdv8dGTkiJKq71+bVJFWX2GjtGXnRzZ50EWg3jxayY7l/vZhxZiz
-         ifa0BKXbbuC7nKSaGiDsTf6YShJH+qMOsNckAvkrsqUHQQZVYLjzJiLxWYmM2ZtrFYqk
-         3WsQ==
-X-Gm-Message-State: AO0yUKVlt8N5H6ZVEcPrD35TwHHae2IlWq5W0/wsTZW6OFG1IXb9s3EO
-        QR7t4zXWj0iqMbH9iqZbTyZWkw==
-X-Google-Smtp-Source: AK7set/Fc8+nzOWDf/h9rE6Qamjt7uImZWspknxs+LN1Fq/dt9PUbqVcXIy7K5f2TqSZE/rbZ0VQBA==
-X-Received: by 2002:adf:e707:0:b0:2ce:a162:784c with SMTP id c7-20020adfe707000000b002cea162784cmr1530128wrm.65.1678879194571;
-        Wed, 15 Mar 2023 04:19:54 -0700 (PDT)
-Received: from lion.caleb.cas.dev (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
-        by smtp.gmail.com with ESMTPSA id d13-20020adffbcd000000b002c55521903bsm4250015wrs.51.2023.03.15.04.19.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 04:19:54 -0700 (PDT)
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 2/2] arm64: dts: qcom: sdm850: commonise framebuffer memory
-Date:   Wed, 15 Mar 2023 11:19:46 +0000
-Message-Id: <20230315111947.3807083-2-caleb.connolly@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230315111947.3807083-1-caleb.connolly@linaro.org>
-References: <20230315111947.3807083-1-caleb.connolly@linaro.org>
+        Wed, 15 Mar 2023 07:24:35 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4E398EA2F;
+        Wed, 15 Mar 2023 04:23:48 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32FATaYi025361;
+        Wed, 15 Mar 2023 11:23:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=aYH1IAU5lpVLRcwPmpY5z2BHPzzxvgI4uSFyVQBkL+0=;
+ b=WW2+4NRZT0RH/AdK6eiRjHdnalwywc69U4qra2iIg9FjVmMDazDD/2n34A9SD3V4sNt6
+ J0qSlwLkSdDmw2Jo534OkjEWSaVSK2M7k1+LDnPd1hCI1TCJigmjkPqo/ougdYEaDEl5
+ A8NwFb/C362ALK+Wa5GUwg36X67jw4iKv0KFLulNoVYIbSrWzotbjxO3Nt6nl6o0PFLW
+ amOEc6gQu9NUd9lUsc9PfnQvPDSzJ1VzVv6ghS1rGqQYqMpcrJVMwKa6YSdr9DGAen/8
+ Fnm3/qqKpDZlDEr8Vd3wdOw1DV1NFz6P4VqPVTx74ZoLde2dZ2wrrsLWYavNFR5tayrb qQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pb2c99b45-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 15 Mar 2023 11:22:59 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32FBMwwU027486
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 15 Mar 2023 11:22:58 GMT
+Received: from [10.216.13.129] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 15 Mar
+ 2023 04:22:48 -0700
+Message-ID: <e482a189-823f-35b1-b411-4c4db22a86a6@quicinc.com>
+Date:   Wed, 15 Mar 2023 16:52:39 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH V8 4/7] pinctrl: qcom: Add IPQ9574 pinctrl driver
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>
+References: <20230214163116.9924-1-quic_devipriy@quicinc.com>
+ <20230214163116.9924-5-quic_devipriy@quicinc.com>
+ <ZAZ+GeGu8mW1XqpG@surfacebook>
+ <15d270ca-1068-b926-efc9-a14ddfc90a54@quicinc.com>
+ <CAHp75VfMae9M2R0Bw6-sYuHPPberakEzKct65SXV0XEaOFtXTg@mail.gmail.com>
+Content-Language: en-US
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <CAHp75VfMae9M2R0Bw6-sYuHPPberakEzKct65SXV0XEaOFtXTg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: D0mbF0bygG_qOvrQGKZ46Ph7JFlKDuzE
+X-Proofpoint-GUID: D0mbF0bygG_qOvrQGKZ46Ph7JFlKDuzE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-15_05,2023-03-15_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 mlxlogscore=908 clxscore=1015 spamscore=0 mlxscore=0
+ lowpriorityscore=0 malwarescore=0 bulkscore=0 impostorscore=0
+ suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2302240000 definitions=main-2303150097
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This region needs to be reserved as it's mapped by the bootloader and
-the kernel doesn't currently have a way of unmapping it.
 
-Both the Galaxy Book2 and C630 use the same address and size for the
-framebuffer reserved memory region. Move the definition to sdm850.dtsi.
 
-The c630 was missing this region, this patch ensures that it's reserved
-there too.
+On 3/8/2023 6:54 PM, Andy Shevchenko wrote:
+> On Wed, Mar 8, 2023 at 11:52 AM Devi Priya <quic_devipriy@quicinc.com> wrote:
+>> On 3/7/2023 5:28 AM, andy.shevchenko@gmail.com wrote:
+> 
+> ...
+> 
+>>>> +    depends on OF
+>>>
+>>> No compile test on non-OF configurations?
+> 
+>> As per the generic convention followed in other
+>> SoCs, we do not have compile test on non-OF configurations
+> 
+> Why not? So, you have to explain the deliberate narrowing of the test coverageOn adding 'depends on OF || COMPILE_TEST', the driver compiles
+for non-OF configuration as well.
+Will update this in the next spin!
+> 
+>>>> +    depends on ARM64 || COMPILE_TEST
+> 
+> ...
+> 
+>>>> +#define FUNCTION(fname)                                     \
+>>>
+>>> PINCTRL_PINFUNCTION() ?
+>> I see that there are quite a bunch of files that has to
+>> be modified for using the generic data type and
+>> macro for the pin function definition
+>> We shall post a separate series to accommodate the changes
+> 
+> Sure, that's fine. Please do!
+Sure, thanks
+> 
+>>>> +    [msm_mux_##fname] = {                           \
+>>>> +            .name = #fname,                         \
+>>>> +            .groups = fname##_groups,               \
+>>>> +            .ngroups = ARRAY_SIZE(fname##_groups),  \
+>>>> +    }
+> 
+> ...
+> 
+>>>> +#define PINGROUP(id, f1, f2, f3, f4, f5, f6, f7, f8, f9)    \
+>>>> +    {                                               \
+>>>> +            .name = "gpio" #id,                     \
+>>>> +            .pins = gpio##id##_pins,                \
+>>>> +            .npins = (unsigned int)ARRAY_SIZE(gpio##id##_pins),     \
+>>>
+>>> Can you embed struct pingroup?
+>> Will take care of this in a separate series
+> 
+> Ditto. Thanks!
+Sure, thanks
+> 
+>>>> +    }
+> 
+> ...
+> 
+>>>> +};
+>>>
+>>> No MODULE_DEVICE_TABLE()?
+>> The MODULE_DEVICE_TABLE(of, ipq9574_pinctrl_of_match) entry has
+>> been added at the end of the file
+> 
+> So, you know what to do then to address my comment :-)
+Yep, got it!
+> 
 
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts | 6 ------
- arch/arm64/boot/dts/qcom/sdm850.dtsi             | 9 +++++++++
- 2 files changed, 9 insertions(+), 6 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-index 9850140514ba..6e36ad2f2d3e 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-@@ -61,12 +61,6 @@ aliases {
- 
- 	/* Reserved memory changes */
- 	reserved-memory {
--		/* Bootloader display framebuffer region */
--		cont_splash_mem: memory@80400000 {
--			reg = <0x0 0x80400000 0x0 0x960000>;
--			no-map;
--		};
--
- 		qseecom_mem: memory@8b500000 {
- 			reg = <0 0x8b500000 0 0xa00000>;
- 			no-map;
-diff --git a/arch/arm64/boot/dts/qcom/sdm850.dtsi b/arch/arm64/boot/dts/qcom/sdm850.dtsi
-index b787575c77a5..89eda97daa57 100644
---- a/arch/arm64/boot/dts/qcom/sdm850.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm850.dtsi
-@@ -9,6 +9,15 @@
- 
- /delete-node/ &cont_splash_mem;
- 
-+/ {
-+	reserved-memory {
-+		cont_splash_mem: framebuffer@80400000 {
-+			reg = <0x0 0x80400000 0x0 0x960000>;
-+			no-map;
-+		};
-+	};
-+};
-+
- &cpu4_opp_table {
- 	cpu4_opp33: opp-2841600000 {
- 		opp-hz = /bits/ 64 <2841600000>;
--- 
-2.39.2
-
+Best Regards,
+Devi Priya
