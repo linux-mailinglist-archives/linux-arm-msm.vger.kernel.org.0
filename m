@@ -2,61 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7252D6BC17A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 00:35:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9F426BC19E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 00:41:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233237AbjCOXfo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 19:35:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45990 "EHLO
+        id S233126AbjCOXlh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 19:41:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233238AbjCOXfI (ORCPT
+        with ESMTP id S233147AbjCOXlW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 19:35:08 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D599BA17F7;
-        Wed, 15 Mar 2023 16:34:05 -0700 (PDT)
+        Wed, 15 Mar 2023 19:41:22 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FD3CACB9D;
+        Wed, 15 Mar 2023 16:39:42 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DAA3161EB0;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 70B0DB81FB5;
+        Wed, 15 Mar 2023 23:32:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803A3C43325;
         Wed, 15 Mar 2023 23:32:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679E0C433EF;
-        Wed, 15 Mar 2023 23:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678923172;
-        bh=7mM/1jbUaMBx1fplfRcx8nVmkPYBxzHaUaXdFxqx4FQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Rotv1d9fnf362cjtb5vj8HiZKtANcCw1Sf1Fx8d1kXaPzZ4CyHss0KkbNarj/BXwD
-         LBHMlxkJguvoHI195HFOLIdEx/6KN6fiV+FvzmfU7eJlEhEPAFwMvvdNSpCKIhW0iF
-         SCV8GVoQiCkom4c4f6rZNVk/SM1hd6pL1YP6iBJzBq8L6eYnV6FFejDMo+LbxBVpTU
-         3FXISiXvdlUlF+FmjPwfApj5JC/jh32L8e8TBFJNpA/TPN98Ogw8mXYW2ihDIzt6v2
-         q1oMVtsPTL5SwJ5ujfuLIMs+Zj6/zYwYPhnW4Un0FjfpZHrMimjzhTfB7wx3RZJY5t
-         HQF3tN9jlHDWA==
+        s=k20201202; t=1678923173;
+        bh=v2/8J7xGzzoMS4ou1QINsReCB09bsP+fjMnbDKHp+4c=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=Veqdk3XcW4vIj+sOlJIX8TWVFhG2TaQbp+9XCLQXeWKP1YGYYXv+Tz4qkqL922qRM
+         7YaVPwUBeCxGpvmw+i5TGJzeaeB9Ql+RHrkwmX4nZ4Sm0bx/kOiqZ4+b5e/meuWG9k
+         VaI5C1H8sTqwX5c/OhPaNVkOxxBd/fFjrttoZI5+7632Lg8UOqgFdoqo9GNiMn6Bau
+         1ToYdovEixnFJtUPxEfshWeNk+EP2Do+8EuAVzD/F3+QYSzNpTciidPVWZwdTgzISY
+         lkJ8Nb3903ejYMy2viyoEF6raiqg8bQ18vN5J/ow84W09Ea0KWShxnjX9SR/vbxnI+
+         EHjCakwTuywhA==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     broonie@kernel.org, marcel.ziswiler@toradex.com, agross@kernel.org,
-        linux-arm-kernel@lists.infradead.org, catalin.marinas@arm.com,
-        devicetree@vger.kernel.org, will@kernel.org,
-        Poovendhan Selvaraj <quic_poovendh@quicinc.com>,
-        dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
-        robimarko@gmail.com, robh+dt@kernel.org, lee@kernel.org,
-        nfraprado@collabora.com, shawnguo@kernel.org,
-        konrad.dybcio@linaro.org, quic_gurus@quicinc.com, arnd@arndb.de,
-        krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_arajkuma@quicinc.com,
-        quic_devipriy@quicinc.com
-Subject: Re: (subset) [PATCH V5 0/5] Enable crashdump collection support for IPQ9574
-Date:   Wed, 15 Mar 2023 16:35:22 -0700
-Message-Id: <167892332568.4030021.4457316512942679175.b4-ty@kernel.org>
+To:     linux-arm-msm@vger.kernel.org, konrad.dybcio@linaro.org,
+        agross@kernel.org, robh+dt@kernel.org, devicetree@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org,
+        Varadarajan Narayanan <quic_varada@quicinc.com>
+Subject: Re: [PATCH 0/2] socinfo support for IPQ9574 family of SoCs
+Date:   Wed, 15 Mar 2023 16:35:23 -0700
+Message-Id: <167892332567.4030021.2869386250711103647.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230216120012.28357-1-quic_poovendh@quicinc.com>
-References: <20230216120012.28357-1-quic_poovendh@quicinc.com>
+In-Reply-To: <1678774414-14414-1-git-send-email-quic_varada@quicinc.com>
+References: <1678774414-14414-1-git-send-email-quic_varada@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,20 +55,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 16 Feb 2023 17:30:07 +0530, Poovendhan Selvaraj wrote:
-> Crashdump collection is enabled based on the DLOAD bit in the TCSR register.
-> This bit is set during bootup and clearing during shutdown. During crash,
-> dload bit is not cleared, due to which uboot starts crashdump collection.
+On Tue, 14 Mar 2023 11:43:32 +0530, Varadarajan Narayanan wrote:
+> This series adds support for qcom-socinfo for IPQ9574 family of SoCs.
 > 
-> Enable the support for download mode to collect the crashdumps if
-> system crashes, to debug crashes extensively.
+> Functionally this series needs SMEM support added in
+> https://lore.kernel.org/linux-arm-kernel/20230216120012.28357-1-quic_poovendh@quicinc.com/
+> 
+> Varadarajan Narayanan (2):
+>   dt-bindings: arm: qcom,ids: Add IDs for IPQ9574 and its variants
+>   soc: qcom: socinfo: Add IDs for IPQ9574 and its variants
 > 
 > [...]
 
 Applied, thanks!
 
-[1/5] dt-bindings: scm: Add compatible for IPQ9574
-      commit: 81ac39144bf65c5f8ee00e61308fe1f3399b347c
+[1/2] dt-bindings: arm: qcom,ids: Add IDs for IPQ9574 and its variants
+      commit: fd972da1b228974f788c115d37abe209828ca5a9
+[2/2] soc: qcom: socinfo: Add IDs for IPQ9574 and its variants
+      commit: c6653d8f24f4bcc255e3ffb28c629ff5d0e0ba13
 
 Best regards,
 -- 
