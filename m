@@ -2,114 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBC6B6BAC99
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 10:51:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EC5CB6BACE7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 11:01:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232191AbjCOJvh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 05:51:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37502 "EHLO
+        id S232060AbjCOKBs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 06:01:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231775AbjCOJut (ORCPT
+        with ESMTP id S231493AbjCOKBT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 05:50:49 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FA5A80E39
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 02:49:50 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id t14so18794463ljd.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 02:49:49 -0700 (PDT)
+        Wed, 15 Mar 2023 06:01:19 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE43428848
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 03:00:07 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id ja10so9769206plb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 03:00:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678873788;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1678874407;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=i8+OBFMHUqSZ5z1YaHCvkK/kxvR+7HJ17A1AzYgKFRQ=;
-        b=uq9x0jumOYOVgQaT+BS8CFb2Zbt/rPcVSFl30E1PpihJxIT7JAqTr+6dmb/4GpwZQA
-         9Tbwy4xZ56wf/IpS5TyQEjDfJYniIp88ri+YVhGvd+PPS21831TlBFj/t+yYp9VknmQr
-         Lpl1XA5tzX7anr0szpik5JfuBbfbDleXfif4ksZ1tmbdpk1zjZa+c68HDNrTISupBs6z
-         FnaOsxe5UQl4wKAB88la1BKKeaem6VV+Xq3/0AcIfvBVY2JP1kYE0vBA4Uob584gtQD5
-         7+eGxjp6lk7BdakX7Orm27YWs0tA2J1tLzP4TwfJC/MkSZHhMUbhj6ENcrH9DAgGB+TU
-         kghg==
+        bh=nfMWt4ixugNsc9AOhW4zh3Qlkp0wA/BUmvjbUtzpDgw=;
+        b=KwquW/B+JdxTYUB3gevchOoNy7S5NSEVjtk2Vw9uyUiuw2KbOX884786SNjAYg2Xwh
+         NthtUeL3MfbALd33VrWYKb2gazlKkCdtOXIJS40/7Ye0emaUHLAMInd1DRjgJRI7mpNn
+         uSQJIdv+VwdpGiTpTdlqrAP145F5m2y/U4sUbB7s67ONPURmLEojAJTkk8BkaMTqSuf/
+         GIIQI+laaERgNWpPSMchyvaqEf0JkludmLgDpfjP40eC14QCgrUQEBkifhtRMk22a7uh
+         2Tt37u0nez39KO9ExcBZoM61U9fQL4KnvSvis8nFHz7QCtLBisrF/8Dha3naiusoqOit
+         0+iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678873788;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1678874407;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i8+OBFMHUqSZ5z1YaHCvkK/kxvR+7HJ17A1AzYgKFRQ=;
-        b=yMyjwCuOxRdlqCW5/fMTFaldIxBm8B0Xc//9DKYBbUj6Pm0k6yy7+3le4VWMijnSFH
-         b44LGXCwVYvkiNeNrYygBcfR8U4OESbM3V4EfCtCI7EqqyYe9REo8ZcS5oORXHrtyjvb
-         CPqyv+UyW9EgiyEoGXQSc4igFAPVBNijwsuEjknSi8ddq/F4Y/72N+qmhMl65xFkh8aw
-         W5vLqU7oU8CJqb2zaiDEJHVxNChtBTLUmK3jXO6qJWn9bSKGp/OLcsHzM6lcnmroMpkW
-         E+tXIzF/FmMdqe/QHrbBTzo+d4DrRF4XZFvSzFTVQCUMWRkAREkOZM5QUSolJ5vp3u0H
-         HbCw==
-X-Gm-Message-State: AO0yUKWMfSjPZU7DURoPIfd7gUdDdfy8ucInzAD1R77cUqLqeDo3CkJw
-        vrvtuQhgb/3bmg93IOTXdALQWQ==
-X-Google-Smtp-Source: AK7set9YBZAkod0KIa27E7sPHHRoFxRok5uIBVImIJbZw9bS1TMrn/bu1HL00PJTcECy00Pfxdj0dg==
-X-Received: by 2002:a2e:8e7a:0:b0:293:45dc:8b0f with SMTP id t26-20020a2e8e7a000000b0029345dc8b0fmr573112ljk.26.1678873788291;
-        Wed, 15 Mar 2023 02:49:48 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id a1-20020a2e9801000000b00293534d9760sm782175ljj.127.2023.03.15.02.49.45
+        bh=nfMWt4ixugNsc9AOhW4zh3Qlkp0wA/BUmvjbUtzpDgw=;
+        b=COPBF7hvYqcO9753KzaP2Z4pgSU+D6w7Mu2oAv0xQoCqL0aLO0EMlYkFE4Gg2opxw/
+         GFsDOjyCXpBJMQfkycrIeC17ClnM4P4hosiOCHsCnFRUVSM5cwBuXcy70BsaCcTIJdhs
+         DMN0erondDzXEjKZ9oMFZ7PyuHvbhluwoirm8eBSeRBqLdbNH+JoRoEsiA1QxgkAjRxW
+         6SegzPJ1qYI6IU2n5L2jXG35n9N92mACmiBUs2iQnIMneUrcYhKEA6ZD3RnuSXvEMSqk
+         +VAjsgJtBDw7uYgIzwXfuVaQk+2xFGOi872ocFUpvAdI46gCiWItZjYXCJXDrkvDjzFf
+         Nslg==
+X-Gm-Message-State: AO0yUKUNoEClj1ISMsQpeuNyphNgFRqRUsj5SgncJBCAJgF3ZKBFWzo/
+        xYvrBzFIoLGsavHEnFBsFFReA9jpim/xf3bI+KA=
+X-Google-Smtp-Source: AK7set/A2w5RNkUesxs8MRcKHqtR8roh32s/RLeEjhIrH3APMn4IA1gF0sdSaEuCZQhNN7WbTExdtA==
+X-Received: by 2002:a17:902:e844:b0:1a1:7b89:3860 with SMTP id t4-20020a170902e84400b001a17b893860mr1194410plg.6.1678874407080;
+        Wed, 15 Mar 2023 03:00:07 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1c61:1acb:9af6:bd7f:78e7:7ae6? ([2401:4900:1c61:1acb:9af6:bd7f:78e7:7ae6])
+        by smtp.gmail.com with ESMTPSA id x1-20020a1709028ec100b0019aa4c00ff4sm3227744plo.206.2023.03.15.03.00.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Mar 2023 02:49:47 -0700 (PDT)
-Message-ID: <933da956-27fa-f1ca-674f-af049d86e6fb@linaro.org>
-Date:   Wed, 15 Mar 2023 10:49:45 +0100
+        Wed, 15 Mar 2023 03:00:06 -0700 (PDT)
+Message-ID: <3cdf5826-ef8d-2c4f-e7e3-c9ddef68043c@linaro.org>
+Date:   Wed, 15 Mar 2023 15:29:55 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 0/6] QCM2290 compatibles
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20230314-topic-2290_compats-v1-0-47e26c3c0365@linaro.org>
- <33ae98be-480e-8951-88d8-7624a695fcc9@linaro.org>
+ Thunderbird/102.3.1
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add base qrb4210-rb2 board dts
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <33ae98be-480e-8951-88d8-7624a695fcc9@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org
+References: <20230314210828.2049720-1-bhupesh.sharma@linaro.org>
+ <20230314210828.2049720-3-bhupesh.sharma@linaro.org>
+ <09b49716-fa77-710c-92ec-3c0d7c154bc3@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+In-Reply-To: <09b49716-fa77-710c-92ec-3c0d7c154bc3@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 15.03.2023 08:47, Krzysztof Kozlowski wrote:
-> On 14/03/2023 13:52, Konrad Dybcio wrote:
->> Document a couple of compatibles for IPs found on the QCM2290 that don't
->> require any specific driver changes
+On 3/15/23 2:55 AM, Konrad Dybcio wrote:
+> 
+> 
+> On 14.03.2023 22:08, Bhupesh Sharma wrote:
+>> Add DTS for Qualcomm qrb4210-rb2 board which uses SM4250 SoC.
 >>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> This adds debug uart, emmc, uSD and tlmm support along with
+>> regulators found on this board.
+>>
+>> Also defines the 'xo_board' and 'sleep_clk' frequencies for
+>> this board.
+>>
+>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> ---
+> [...]
 > 
-> I assume this is what you talked about that DTS will follow a bit later?
-Yep, right after we resolve the RPM MSG RAM situation!
+>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> This SoC does not feature RPMh, drop.
 
-Konrad
+Ok.
+
+>> +#include "sm4250.dtsi"
+>> +
+>> +/ {
+>> +	model = "Qualcomm Technologies, Inc. QRB4210 RB2";
+>> +	compatible = "qcom,qrb4210-rb2", "qcom,sm4250";
+> Please add a qcom,qrb4210 between the board-specific and the common SoC
+> compatibles so that we can address QRB-specific quirks if such ever arise.
+
+As per the available documentation there are no qrb specific quirks as 
+of now, but let me add a qcom,qrb4210 for future compatibility.
+
+>> +
+>> +	aliases {
+>> +		serial0 = &uart4;
+>> +	};
+>> +
+> [...]
 > 
-> Best regards,
-> Krzysztof
+>> +&xo_board {
+>> +	clock-frequency = <19200000>;
+>> +};
+>> +
+>> +&sleep_clk {
+>> +	clock-frequency = <32000>;
+>> +};
+> Out of alphanumerical order
+
+Ok.
+
+>> +
+>> +&qupv3_id_0 {
+>> +	status = "okay";
+>> +};
+>> +
+>> +&uart4 {
+>> +	status = "okay";
+>> +};
+>> +
+>> +&rpm_requests {
+> Out of alphanumerical order
+
+Ok.
+
+>> +	regulators-0 {
+> Will there be more PMICs under this node? If not, drop the -0.
+
+Ok.
+
+> [...]
 > 
+>> +&tlmm {
+>> +	gpio-reserved-ranges = <37 5>, <43 2>, <47 1>,
+>> +			       <49 1>, <52 1>, <54 1>,
+>> +			       <56 3>, <61 2>, <64 1>,
+>> +			       <68 1>, <72 8>, <96 1>;
+>> +};
+> Are there *really* so many? Does the board refuse to boot if
+> you knock off any of these entries? If so, they probably
+> don't belong here.
+
+Yes, these are reserved / not-connected gpios as per latest version of 
+the board schematics.
+
+>> +
+>> +&sdhc_1 {
+>> +	status = "okay";
+> Status should go last
+>> +
+>> +	vmmc-supply = <&vreg_l24a_2p96>; /* emmc power line */
+>> +	vqmmc-supply = <&vreg_l11a_1p8>; /* emmc vddq */
+> The comments are not very useful, drop please.
+> 
+>> +	bus-width = <8>;
+> This is defined in the SoC dtsi already
+
+Ok.
+
+>> +	no-sdio;
+>> +	non-removable;
+>> +};
+>> +
+>> +&sdhc_2 {
+>> +	status = "okay";
+>> +
+>> +	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>; /* card detect gpio */
+>> +	vmmc-supply = <&vreg_l22a_2p96>; /* Card power line */
+>> +	vqmmc-supply = <&vreg_l5a_2p96>; /* IO line power */
+>> +	bus-width = <4>;
+>> +	no-sdio;
+>> +	no-emmc;
+> Ditto
+
+Ok. Will send updated v2 soon.
+
+Thanks.
