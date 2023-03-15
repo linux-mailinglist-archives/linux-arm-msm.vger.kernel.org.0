@@ -2,157 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 445AE6BAE33
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 11:52:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C4E6E6BAF11
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 12:20:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231700AbjCOKwY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 06:52:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53678 "EHLO
+        id S230445AbjCOLUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 07:20:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230266AbjCOKwS (ORCPT
+        with ESMTP id S231329AbjCOLUZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 06:52:18 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAE4B113C3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 03:52:16 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id bi9so1554388lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 03:52:16 -0700 (PDT)
+        Wed, 15 Mar 2023 07:20:25 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F51D62B60
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 04:19:58 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id m2so4175155wrh.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 04:19:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678877536;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bdl0RlZFPypGKRGyzZFN/ydDgJu/V+/+Pk1xTXyKWrI=;
-        b=bqtJQZOe55DYn/2V+wznVWxy6nZ9Wp3VqQW89I9EWdQ5Sc1pQKJ+55BLPd6qARroYR
-         ok3YTg8gNeR+PQR343hvM3X7i2OTddQDCGH1C1Uantxt/ZN8WRKz/7TdZ4NQorRIbr/U
-         1gMHvIbro+4yOWVSanJaSamYVBgmS7Vzc7idGVgFS6zHs6/iG40DBA8ysfJxoi+kOkzf
-         FluAufnB5w9MFoCpm5dfLoJFLiN0B4Ern587udYVh3n7Ils0oqut/9pIFuidwZQr++L/
-         N/cQfkTsx77WL2xVP83j57rbt959e5uPJ969Ohkdm7hvX9CjChjJs2NnzxZp4Ztx7ZRW
-         E+pg==
+        d=linaro.org; s=google; t=1678879193;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EmJQmSLAdC0WtS3STT0wWc+AeCLwgpzodfCAhTdjfEQ=;
+        b=kZoLoaKq4++Zg0XlEBc+O524i/T3zhsI0XJoOZIepOVnhA+Ce57DzTKsTQk24DJ6VS
+         6LiUXGpYk68nxAfOyjzRYGB4ihlWpyFr4LjQeTYfyIbkP2vHZQAGQ7sG4Kn4BYgy3a5q
+         cfWIqxwScEMmmz+CXeqits+nNSMbwK5V/ajQ+eImxkhvDGMBX8uU25dnqooMQGt/c0S3
+         +QkhBygQcYpG1w4YDqNzXxJlMcH7+XWijb0cfTXRzYLV5zD46wqTZH7seW64IwHtyIgL
+         POVRwVi922EZ+9mzAI5DSRv7+va1XVGy4LqnatrxuimnFdI2ekyfl2Hj2vofb7AnXbZl
+         /G9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678877536;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bdl0RlZFPypGKRGyzZFN/ydDgJu/V+/+Pk1xTXyKWrI=;
-        b=0yvjCRQtJajPY9o2ioYYHqOZDnj1BZo0vbcFPOXoF95b6elvO13boUssDNB8HFAGXn
-         +7B9mIm3BcnHx8sRk6XSPe3z8ySbKQk4GAYvqxMl8mmQQD/J5qmN+dDllyNj06LFvBii
-         3jp+II+nFpcJlbkaLcqBlQQ6LG9o24UH/gCewzN5J7tCF47bWRetwxlrsVpCuUGqyO9X
-         EhFIQrTkOKMvarEhUAwWehN54Nf+YMxjFMbCMHvpDJanjkQ4g5zZnI02IAt7nSX2jG53
-         BHm5JEzfwCE9AnsWj7cKDdOtpsjXJeks169HUIVQ1yEZsiXa3aUtqIg+OeUZrfbC4MSr
-         P5tQ==
-X-Gm-Message-State: AO0yUKUZPfPLGx36hys+Xdu0ZT5d745bazzDuKA/L0xF12T5aoROWyvV
-        2JzA2YkerT+eGeQeW6bx4o+z9g==
-X-Google-Smtp-Source: AK7set+IBx9i/5w+IF1PkXqQMsvGoGIQHXi/vOHvJHD2FU+IheSn2dkE6FAGqhbQ5zS0W7yJdyE2sw==
-X-Received: by 2002:ac2:494b:0:b0:4b5:b06d:4300 with SMTP id o11-20020ac2494b000000b004b5b06d4300mr1435118lfi.29.1678877536315;
-        Wed, 15 Mar 2023 03:52:16 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id q3-20020ac25fc3000000b004d856fe5121sm767791lfg.194.2023.03.15.03.52.14
+        d=1e100.net; s=20210112; t=1678879193;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EmJQmSLAdC0WtS3STT0wWc+AeCLwgpzodfCAhTdjfEQ=;
+        b=pRxEEUYoc6d7eVhL1n+R3K5cdCV6/nKmJi+IZnV0CS7yYm1x/SZhQ7EOW7gA4KEZii
+         D1byIeIjgabLXpQ7m7H+DhB/C+53MTNU9BTlp5CqHKQxZ7o5wA3+Ef/D/KYMHIBq7qLT
+         wrDi9IxwCVa9DMSxjFJr4p0o7XWra5pXF2CIHGTYKtKSfo7mGvwu8DCjhLUkLNBWZmyj
+         RFAeY0P5iBJg1SAHjLNsmKnajCyeXw7SKmzihwJTJOmBYuxbVxJktRlFvLzAI5X8hW8v
+         AUZTNEEyGUk2mGTK/qnbnt/qXsIDrXh7RH48CnVygRmYpgkJO69e3duQnAOF3TNq7zw3
+         FcPA==
+X-Gm-Message-State: AO0yUKVX6JbGHyIECrwdJXhjdGpx26v3X+P2WlHKeamE6/hea5R81eEc
+        qS6tFLCFriBEY8B+5xnUasG6oQ==
+X-Google-Smtp-Source: AK7set/KeTl9OJvQqovTWcjALV01qYRi3aDVbanxxgY1tmvvlwN7HQJUghGt+tDyB9pfRe5G3K5iDQ==
+X-Received: by 2002:adf:f748:0:b0:2cf:efc0:bd95 with SMTP id z8-20020adff748000000b002cfefc0bd95mr1498346wrp.38.1678879193022;
+        Wed, 15 Mar 2023 04:19:53 -0700 (PDT)
+Received: from lion.caleb.cas.dev (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id d13-20020adffbcd000000b002c55521903bsm4250015wrs.51.2023.03.15.04.19.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 03:52:15 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 15 Mar 2023 11:52:09 +0100
-Subject: [PATCH 2/2] arm64: dts: qcom: sm6115: Add GPUCC and Adreno SMMU
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230315-topic-kamorta_adrsmmu-v1-2-d1c0dea90bd9@linaro.org>
-References: <20230315-topic-kamorta_adrsmmu-v1-0-d1c0dea90bd9@linaro.org>
-In-Reply-To: <20230315-topic-kamorta_adrsmmu-v1-0-d1c0dea90bd9@linaro.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Wed, 15 Mar 2023 04:19:52 -0700 (PDT)
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1678877530; l=2214;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=4Yr3jyIzx6Uo9VaD9+bKTUbQOMghksaMqVasI0YJqlQ=;
- b=/y5MREEnqichNpxqBG3CJz98rlDwF4UBmNYM4I8LMIk7z/75bl5dTtaQnNOR+3cO5oLdVtpcbvki
- 1dlAXAJ2AM5G7jWobn1L5qakyP2sN3ftFFqJP9QHLZJD5Jqj7kxA
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 1/2] arm64: dts: qcom: sdm845: add framebuffer reserved memory
+Date:   Wed, 15 Mar 2023 11:19:45 +0000
+Message-Id: <20230315111947.3807083-1-caleb.connolly@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add GPUCC and Adreno SMMU nodes in preparation for adding the GPU
-itself.
+The bootloader configures a framebuffer in memory to display splash
+screens or other information. This configuration is overriden when the
+display pipeline probes, but never unmapped from the SMMU. To prevent
+issues from the kernel trying to allocate in this region and to allow
+using the framebuffer for debugging, many devices already reserve this
+region.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+All devices follow MTP and use the same address for this region, Cheza
+is a likely exception though I'm not able to validate that.
+
+Some devices only reserve the size needed to store the actual
+framebuffer, this is incorrect as on all devices I've checked the full
+0x2400000 bytes are mapped.
+
+This patch moves the framebuffer region to sdm845.dtsi and removes it
+from each individual device. This ensures that the correct size is
+always reserved and prevents having the add the region for each
+individual device.
+
+This patch specifically ensures that this region is now reserved on the
+OnePlus 6, where it wasn't before.
+
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 38 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index c56738633431..c1844abc4d9f 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -5,6 +5,7 @@
- 
- #include <dt-bindings/clock/qcom,gcc-sm6115.h>
- #include <dt-bindings/clock/qcom,sm6115-dispcc.h>
-+#include <dt-bindings/clock/qcom,sm6115-gpucc.h>
- #include <dt-bindings/clock/qcom,rpmcc.h>
- #include <dt-bindings/dma/qcom-gpi.h>
- #include <dt-bindings/gpio/gpio.h>
-@@ -1135,6 +1136,43 @@ usb_1_dwc3: usb@4e00000 {
- 			};
+Changes since v1:
+ * Offer more context and justification for this change
+ * Make sure Cheza doesn't inherit the node.
+---
+ arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi              | 6 ------
+ arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts     | 5 -----
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts           | 5 -----
+ arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi       | 6 ------
+ .../arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 6 ------
+ arch/arm64/boot/dts/qcom/sdm845.dtsi                        | 5 +++++
+ arch/arm64/boot/dts/qcom/sdm850.dtsi                        | 2 ++
+ 7 files changed, 7 insertions(+), 28 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+index f942c5afea9b..6a1c674a015b 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+@@ -93,12 +93,6 @@ spss_mem: memory@99000000 {
+ 			no-map;
  		};
  
-+		gpucc: clock-controller@5990000 {
-+			compatible = "qcom,sm6115-gpucc";
-+			reg = <0x0 0x05990000 0x0 0x9000>;
-+			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
-+				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
-+				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
+-		/* Framebuffer region */
+-		memory@9d400000 {
+-			reg = <0x0 0x9d400000 0x0 0x2400000>;
+-			no-map;
+-		};
+-
+ 		/* rmtfs lower guard */
+ 		memory@f0800000 {
+ 			reg = <0 0xf0800000 0 0x1000>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+index d37a433130b9..7c2457948a32 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+@@ -55,11 +55,6 @@ vreg_s4a_1p8: pm8998-smps4 {
+ 	};
+ 
+ 	reserved-memory {
+-		memory@9d400000 {
+-			reg = <0x0 0x9d400000 0x0 0x02400000>;
+-			no-map;
+-		};
+-
+ 		memory@a1300000 {
+ 			compatible = "ramoops";
+ 			reg = <0x0 0xa1300000 0x0 0x100000>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+index b54e304abf71..4f6b1053c15b 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+@@ -60,11 +60,6 @@ key-vol-up {
+ 	};
+ 
+ 	reserved-memory {
+-		framebuffer_region@9d400000 {
+-			reg = <0x0 0x9d400000 0x0 (1080 * 2160 * 4)>;
+-			no-map;
+-		};
+-
+ 		ramoops: ramoops@b0000000 {
+ 			compatible = "ramoops";
+ 			reg = <0 0xb0000000 0 0x00400000>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+index 4984c7496c31..7e273cc0158d 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+@@ -79,12 +79,6 @@ vreg_s4a_1p8: pm8998-smps4 {
+ 	};
+ 
+ 	reserved-memory {
+-		/* SONY was cool and didn't diverge from MTP this time, yay! */
+-		cont_splash_mem: memory@9d400000 {
+-			reg = <0x0 0x9d400000 0x0 0x2400000>;
+-			no-map;
+-		};
+-
+ 		ramoops@ffc00000 {
+ 			compatible = "ramoops";
+ 			reg = <0x0 0xffc00000 0x0 0x100000>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+index e0fda4d754fe..191c2664f721 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+@@ -98,12 +98,6 @@ spss_mem: memory@97f00000 {
+ 			no-map;
+ 		};
+ 
+-		/* Cont splash region set up by the bootloader */
+-		cont_splash_mem: framebuffer@9d400000 {
+-			reg = <0 0x9d400000 0 0x2400000>;
+-			no-map;
+-		};
+-
+ 		rmtfs_mem: memory@f6301000 {
+ 			compatible = "qcom,rmtfs-mem";
+ 			reg = <0 0xf6301000 0 0x200000>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 479859bd8ab3..ecec2ee46683 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -865,6 +865,11 @@ spss_mem: spss@97b00000 {
+ 			no-map;
+ 		};
+ 
++		cont_splash_mem: framebuffer@9d400000 {
++			reg = <0 0x9d400000 0 0x2400000>;
++			no-map;
 +		};
 +
-+		adreno_smmu: iommu@59a0000 {
-+			compatible = "qcom,sm6115-smmu-500", "qcom,adreno-smmu",
-+				     "qcom,smmu-500", "arm,mmu-500";
-+			reg = <0x0 0x059a0000 0x0 0x10000>;
-+			interrupts = <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 167 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 168 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 169 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 170 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 172 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 173 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+ 		mdata_mem: mpss-metadata {
+ 			alloc-ranges = <0 0xa0000000 0 0x20000000>;
+ 			size = <0 0x4000>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm850.dtsi b/arch/arm64/boot/dts/qcom/sdm850.dtsi
+index da9f6fbe32f6..b787575c77a5 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm850.dtsi
+@@ -7,6 +7,8 @@
+ 
+ #include "sdm845.dtsi"
+ 
++/delete-node/ &cont_splash_mem;
 +
-+			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-+				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
-+				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>;
-+			clock-names = "mem",
-+				      "hlos",
-+				      "iface";
-+			power-domains = <&gpucc GPU_CX_GDSC>;
-+
-+			#global-interrupts = <1>;
-+			#iommu-cells = <2>;
-+		};
-+
- 		mdss: display-subsystem@5e00000 {
- 			compatible = "qcom,sm6115-mdss";
- 			reg = <0x0 0x05e00000 0x0 0x1000>;
-
+ &cpu4_opp_table {
+ 	cpu4_opp33: opp-2841600000 {
+ 		opp-hz = /bits/ 64 <2841600000>;
 -- 
 2.39.2
 
