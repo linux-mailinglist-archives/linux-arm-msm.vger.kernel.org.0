@@ -2,113 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A542C6BC15C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 00:34:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D4A66BC1BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 00:50:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233097AbjCOXe4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 19:34:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46692 "EHLO
+        id S232278AbjCOXu5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 19:50:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231971AbjCOXeg (ORCPT
+        with ESMTP id S232196AbjCOXu4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 19:34:36 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF9B4A225D;
-        Wed, 15 Mar 2023 16:33:24 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1EDAA61EB1;
-        Wed, 15 Mar 2023 23:33:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3EEC433D2;
-        Wed, 15 Mar 2023 23:32:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678923181;
-        bh=ZW0cW6j0eZ3LRxXMTCWZrrkIV3axsHJnqHcZZpwnlco=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=DQEoGlYRaWYHi/3uI8nc0LhUk+/xLW7zzvBumLCc+upwsanoVQoyggJaMNzHIBAah
-         dUqX7NTdlqtNqmVH/DkhNlmdhG2TDo8lVKgqn9b4iqOz8VxYmzIKSA6ocnC0RE5iVF
-         gCDXLOCIQ9m3MCqH92jKnf66VpJfg28tUC4YFJRgv4WmV+H6ZpiS4GYhkT0Ulh7v6k
-         0P0eiOIcdIton2WyhrGiY3/0QMrCKisubp+rlcPe4QhNIGfYkwOLPEua2qEBOr2RK8
-         0lW00iPAGST7rIrGR+59BXC9kt6+CZ3pQcxZeLVFPF7TYXG9jP8MadTZ9rbSwtx0/w
-         ga0o2PgaBXBEA==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Tero Kristo <kristo@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Nishanth Menon <nm@ti.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Peter De Schrijver <pdeschrijver@nvidia.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Prashant Gaikwad <pgaikwad@nvidia.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-tegra@vger.kernel.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-clk@vger.kernel.org,
-        linux-omap@vger.kernel.org,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org
-Subject: Re: (subset) [PATCH 00/30] clk: Convert to platform remove callback returning void
-Date:   Wed, 15 Mar 2023 16:35:30 -0700
-Message-Id: <167892332563.4030021.12717582908504193989.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230312161512.2715500-1-u.kleine-koenig@pengutronix.de>
-References: <20230312161512.2715500-1-u.kleine-koenig@pengutronix.de>
+        Wed, 15 Mar 2023 19:50:56 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE79D1E9D9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 16:50:52 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id t14so21186921ljd.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 16:50:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678924251;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p2+chdbkCkcfVI7TFnoEGlsYgaxLzqaNOF9QoTF6c+I=;
+        b=kemRYaBVdzjOq+qh0tyhmGO7RqAMpnw29HNfxqCH/yddvN6lvgHi8MR/+iaQenx3Hi
+         jfE/SP3tIishMHAabxa0tr8UKJZ6xP2YwqKSZ9eu9xRwYb3yHQplM3gH9fEVsB7QS9EN
+         LHevtJMf+N5FvafiQs33Fb6ZnSJLXBKfTDMHOw8zUnwkv1hpfRSJV6WHJgnuyhccxHY9
+         PQSx2mDeMvmk8SDURaMW/UMEvKX6b9co4A4kAf2Ono9pXcqWLlFpbcrMYTIt0vgR6yK4
+         6KwV4dL87+WNUk7Ea8ejMn4GnK7z70HuBtGIDAhLfl11bgbohRHzIQpJ838EtfDTTO+4
+         T70Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678924251;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p2+chdbkCkcfVI7TFnoEGlsYgaxLzqaNOF9QoTF6c+I=;
+        b=cUQSb2sRhF58WprAGo/8oTDBbUPaPmouW3081I5Ti++GPiEanHLVHWMWYT+yUtA1A5
+         SZgXUCaCxcOODN5l+QSXgoosTL67GOBcVW9w8/yylrhWMzZwh+S+TpZHq+hWv+BFlpPh
+         k7z090bBY2LrmLoiGZRU1OkFSkeevjQHB7m7GTtaG33BeieIoGq9V6qUvbzXoprrsCGN
+         mCE+yoFa5/PMZ/L5JflCMhaAFYXUHq4JBx4JJYokqsRAbHsUZoHqdF7hMvt/WM2RbGae
+         Wwu/X4ljZ9YUgmLvBh91hT77/m2w/HQOSZaSuamBPEqmf9E3xM+hm+RtAkvIVj6RSI0H
+         r7ww==
+X-Gm-Message-State: AO0yUKVrRsDUMeaAVSdFegJMdO6K9N7kOJlSOqVqeWm1yGdViumzvKVD
+        xcJ9QzMXDkq2wWSZBf2V9PLRWA==
+X-Google-Smtp-Source: AK7set8rrRlZyHwlnVDSAf2JsH8d351/YFfJdfIxeI2qB/sXMb0J/ZH+ILqYjiYcad3mfkriUT4T6Q==
+X-Received: by 2002:a2e:740d:0:b0:294:7427:4ec4 with SMTP id p13-20020a2e740d000000b0029474274ec4mr1378919ljc.41.1678924250983;
+        Wed, 15 Mar 2023 16:50:50 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id h9-20020a2e9ec9000000b0029352fc39fbsm1010140ljk.63.2023.03.15.16.50.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 16:50:50 -0700 (PDT)
+Message-ID: <3d3117d2-b3eb-1174-7061-b899cdcdf6ce@linaro.org>
+Date:   Thu, 16 Mar 2023 00:50:49 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: Split out SA8155P and use correct
+ RPMh power domains
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        krzysztof.kozlowski@linaro.org, marijn.suijten@somainline.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230214095435.2192153-1-konrad.dybcio@linaro.org>
+ <20230214095435.2192153-3-konrad.dybcio@linaro.org>
+ <20230314001052.7qvgbwkl73x22oll@ripper>
+ <eaf2ca0d-4d90-b68b-3b36-8bb0148cfb95@linaro.org>
+ <ee1ebac4-bf18-019a-f770-5cb88703d06b@linaro.org>
+ <20230315230024.wxuqthay74i5zgrq@ripper>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230315230024.wxuqthay74i5zgrq@ripper>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 12 Mar 2023 17:14:42 +0100, Uwe Kleine-König wrote:
-> this patch series adapts the platform drivers below drivers/clk
-> to use the .remove_new() callback. Compared to the traditional .remove()
-> callback .remove_new() returns no value. This is a good thing because
-> the driver core doesn't (and cannot) cope for errors during remove. The
-> only effect of a non-zero return value in .remove() is that the driver
-> core emits a warning. The device is removed anyhow and an early return
-> from .remove() usually yields a resource leak.
+
+
+On 16.03.2023 00:00, Bjorn Andersson wrote:
+> On Tue, Mar 14, 2023 at 12:41:45PM +0100, Konrad Dybcio wrote:
+>>
+>>
+>> On 14.03.2023 12:36, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 14.03.2023 01:10, Bjorn Andersson wrote:
+>>>> On Tue, Feb 14, 2023 at 10:54:35AM +0100, Konrad Dybcio wrote:
+>>>>> The RPMhPD setup on SA8155P is different compared to SM8150. Correct
+>>>>> it to ensure the platform will not try accessing forbidden/missing
+>>>>> RPMh entries at boot, as a bad vote will hang the machine.
+>>>>>
+>>>>
+>>>> I don't see that this will scale, as soon as someone adds a new device
+>>>> in sm8150.dtsi that has the need to scale a power rail this will be
+>>>> forgotten and we will have a mix of references to the SM8150 and SA8155P
+>>>> value space.
+>>>>
+>>>> That said, I think it's reasonable to avoid duplicating the entire
+>>>> sm8150.dtsi.
+>>> Yeah, this problem has no obvious good solutions and even though it's
+>>> not very elegant, this seems to be the less bad one..
+>>>
+>>>>
+>>>> How about making the SA8155P_* macros match the SM8150_* macros?
+>>>> That way things will fail gracefully if a device node references a
+>>>> resource not defined for either platform...
+>>> Okay, let's do that
+>> Re-thinking it, it's good that the indices don't match, as this way the
+>> board will (should) refuse to function properly if there's an oversight,
+>> which may have gone unnoticed if they were matching, so this only guards
+>> us against programmer error which is not great :/
+>>
 > 
-> [...]
+> Right, ensuring that the resource indices never collides would be a good
+> way to capture this issue, as well as copy-paste errors etc. My
+> pragmatic proposal is that we make SA8155P_x == SM8150_x where a match
+> exist, and for the ones that doesn't match we pick numbers that doesn't
+> collide between the platforms.
+> 
+> The alternative is to start SA8155P_x at 11, but it's different and
+> forces sa8155p.dtsi to redefine every single power-domains property...
+> 
+> 
+> This does bring back the feeling that it was a mistake to include the
+> platform name in these defines in the first place... Not sure if it's
+> worth mixing generic defines into the picture at this point, given that
+> we I don't see a way to use them on any existing platform.
+TBF we could, think:
 
-Applied, thanks!
+sm1234_rpmpds[] = {
+	[CX] = &foobar1,
+	[CX_AO] = &foobar1_ao,
 
-[22/30] clk: qcom: Convert to platform remove callback returning void
-        commit: c4dc24da5286742f8cc728379f6115c9e886a8a4
+	[...]
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+	/* Legacy DT bindings */
+	[SM1234_CX] = &foobar1,
+	[SM1234_CX_AO] = &foobar1_ao,
+};
+
+WDYT?
+
+Konrad
+> 
+> Regards,
+> Bjorn
+> 
+>> Konrad
+>>>
+>>> Konrad
+>>>>
+>>>> Regards,
+>>>> Bjorn
+>>>>
+>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>>> ---
+>>>>>  arch/arm64/boot/dts/qcom/sa8155p-adp.dts |  2 +-
+>>>>>  arch/arm64/boot/dts/qcom/sa8155p.dtsi    | 51 ++++++++++++++++++++++++
+>>>>>  2 files changed, 52 insertions(+), 1 deletion(-)
+>>>>>  create mode 100644 arch/arm64/boot/dts/qcom/sa8155p.dtsi
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+>>>>> index 459384ec8f23..9454e8e4e517 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+>>>>> @@ -7,7 +7,7 @@
+>>>>>  
+>>>>>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>>>>>  #include <dt-bindings/gpio/gpio.h>
+>>>>> -#include "sm8150.dtsi"
+>>>>> +#include "sa8155p.dtsi"
+>>>>>  #include "pmm8155au_1.dtsi"
+>>>>>  #include "pmm8155au_2.dtsi"
+>>>>>  
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sa8155p.dtsi b/arch/arm64/boot/dts/qcom/sa8155p.dtsi
+>>>>> new file mode 100644
+>>>>> index 000000000000..f2fd7c28764e
+>>>>> --- /dev/null
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sa8155p.dtsi
+>>>>> @@ -0,0 +1,51 @@
+>>>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>>>> +/*
+>>>>> + * Copyright (c) 2023, Linaro Limited
+>>>>> + *
+>>>>> + * SA8155P is an automotive variant of SM8150, with some minor changes.
+>>>>> + * Most notably, the RPMhPD setup differs: MMCX and LCX/LMX rails are gone.
+>>>>> + */
+>>>>> +
+>>>>> +#include "sm8150.dtsi"
+>>>>> +
+>>>>> +&dispcc {
+>>>>> +	power-domains = <&rpmhpd SA8155P_CX>;
+>>>>> +};
+>>>>> +
+>>>>> +&mdss_mdp {
+>>>>> +	power-domains = <&rpmhpd SA8155P_CX>;
+>>>>> +};
+>>>>> +
+>>>>> +&mdss_dsi0 {
+>>>>> +	power-domains = <&rpmhpd SA8155P_CX>;
+>>>>> +};
+>>>>> +
+>>>>> +&mdss_dsi1 {
+>>>>> +	power-domains = <&rpmhpd SA8155P_CX>;
+>>>>> +};
+>>>>> +
+>>>>> +&remoteproc_adsp {
+>>>>> +	power-domains = <&rpmhpd SA8155P_CX>;
+>>>>> +};
+>>>>> +
+>>>>> +&remoteproc_cdsp {
+>>>>> +	power-domains = <&rpmhpd SA8155P_CX>;
+>>>>> +};
+>>>>> +
+>>>>> +&remoteproc_mpss {
+>>>>> +	power-domains = <&rpmhpd SA8155P_CX>,
+>>>>> +			<&rpmhpd SA8155P_MSS>;
+>>>>> +};
+>>>>> +
+>>>>> +&remoteproc_slpi {
+>>>>> +	power-domains = <&rpmhpd SA8155P_CX>,
+>>>>> +			<&rpmhpd SA8155P_MX>;
+>>>>> +};
+>>>>> +
+>>>>> +&rpmhpd {
+>>>>> +	compatible = "qcom,sa8155p-rpmhpd";
+>>>>> +};
+>>>>> +
+>>>>> +&sdhc_2 {
+>>>>> +	power-domains = <&rpmhpd SA8155P_CX>;
+>>>>> +};
+>>>>> -- 
+>>>>> 2.39.1
+>>>>>
