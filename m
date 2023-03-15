@@ -2,137 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AAE566BBED8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 22:19:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BF976BBEE4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 22:20:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232734AbjCOVTR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 17:19:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37592 "EHLO
+        id S231967AbjCOVUM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 17:20:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232502AbjCOVTN (ORCPT
+        with ESMTP id S231664AbjCOVUI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 17:19:13 -0400
-Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63454B740
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 14:18:31 -0700 (PDT)
-Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-177ca271cb8so9950382fac.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 14:18:31 -0700 (PDT)
+        Wed, 15 Mar 2023 17:20:08 -0400
+Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 551117C3E7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 14:19:41 -0700 (PDT)
+Received: by mail-il1-x12c.google.com with SMTP id r4so11107820ila.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 14:19:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678915110;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=bdnBdXjPaPq22bh3GzRy4ABzX+bcEMJKNRNVLLGgBsg=;
-        b=ZuL2udCMxwn5gI+q6+YtLJPvHyiQauuHTEAkzSR37Mf9S/l7ajIqmQYYZluoNVYV+S
-         r7amWms85839VXN9elIXHTNnEMMNzZ9mSnouOURlIUn1OqIBuKDwrVokNg5NZn4MRVad
-         on9OwOrcpEr8EgFzS++1+/nbd734g0uOW0dDjD1WuLoRsoLrBFZfKkGxNHyNSm1KikhZ
-         RGtkIuPeyeG0Yiis8XNXkMsa/nXaUxBH4zwTpWSKJUy8dOB2w6rXrXioQ5tcda+wjtDm
-         407b2/CM+yuUzPwLKZXlqnBsRGbY+hp6Jl1QCSLgxnAB/AH51dnHL06bIRUsoPsRUqBg
-         2Wxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678915110;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+        d=linaro.org; s=google; t=1678915177;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bdnBdXjPaPq22bh3GzRy4ABzX+bcEMJKNRNVLLGgBsg=;
-        b=rkOnNCGhQZjk7WoZ53EIQIMKxBcHt/4FcCZarfI2fayk2hHzoMRxix/KpgdBPccJ6F
-         wdEJWTySJUAedhBFUlZGOOgnU55hidUtlomydfIo/PFFtYuXAc/8EKl0Q2jQCxtTpCVg
-         48WUJ4AxYqeTRIU/U3Pd2E/5gPCsqkciCbURE23CW3bSAbJJRhhxzaR2HGas8wen57Rv
-         YVJBGQpmecPazDFJEyWCLSUlwK/rwDAHGL2LXzAxZ/mQ9MxflaW0gnKiBzDF1lj7TwWM
-         HxyTD/m9BHtQ3fXhJHMQyS7OM66wAwTtpsXAt+osGNRNnvhJfywPzaT1Qaj8QTKg9QyB
-         M7oA==
-X-Gm-Message-State: AO0yUKXMWJrleAqDr1PysgY0kDya5wpJYE1QYuQYA7RELbu59gfYTLva
-        LGPms9UF9ov20U6gYb9YJecA5Py1RcaFuv6fJkshrne8GcQ=
-X-Google-Smtp-Source: AK7set/jIUXiHKsEUbCoIzuLYS6XHPxHBp77q+c5ZikbCCIGYHgBEO0xRM1r9B0hFYKNvoXYN55JfPSCWpuoRnXBB38=
-X-Received: by 2002:a05:6870:11d1:b0:17a:d52e:77de with SMTP id
- 17-20020a05687011d100b0017ad52e77demr891023oav.5.1678915109865; Wed, 15 Mar
- 2023 14:18:29 -0700 (PDT)
+        bh=gEgaBMSBWRa1FO8K+pq3htlZswyE7CJJoK0ovlchw1I=;
+        b=YiIhOeyY02wE3ltLusHCbz2wl5P8AO473XBp+MtFRPXivqiKfkeZzqZ/H1fjbgRraP
+         jW3e+Xsfe4fPQi6EmjNlET7dKGGJNEJLl12vT2makAx1vagr3ZrTvAJzXM7pUEpzuqi7
+         c8rLC7CQwAR7o/OXnSVjM/bQJBvgTQCoesQca0j31GkhuASIwKX6fJW6ixK8uJI/rZLW
+         MyEIwUfn0FYP8emCY2ksTXttu7RpoEZXCFrlLk29zSpfWSBhMgi1nWTLMkUeKHuXix4h
+         FJaMgVh8HCp87XEOGhHfPohCBvDIcVR9UO/EXCRYEU4ewIblG9NXCNd0LJU0edY4DTuH
+         mzTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678915177;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gEgaBMSBWRa1FO8K+pq3htlZswyE7CJJoK0ovlchw1I=;
+        b=ljSHM5XhQEc5olwJ+DwTnzCNmRh6EPlHvhMl/KYWbPZ9QYzH70DpdL2NONfJi9JmxJ
+         Q67gqrjVtxcf3nagd1EOMBdopt4ICGeLZVKlMQw34koHgh/j/5mMPe2SQLjkqIfBb9s1
+         S0E10V6KGGnqtGZeb3W6y3ioaOcgt/VBRKDzxYm5C4xwfih8bwcj49OhQoARi6SrcwKu
+         Ebo/oPe5jjD35fdYqyyhkOA735C7ZWe2tPDmrCpyA8q40ycSd+JjYP/KFQFjfeOjgytE
+         vbLq4QX+AuTN+TPr+asXFWRDib1NLJqYTdBLTUgWDYcZG4Qr+mGISRhwycA14wO9hKrC
+         nceQ==
+X-Gm-Message-State: AO0yUKX7hDCj5TUgMwpjhIlhzg3j0LksNqq5He8PVUPFIShr4c7Z2Rdv
+        vUSi73lHUGO8sB3LMK7uRJYVZg==
+X-Google-Smtp-Source: AK7set+mA5+bm+Q3QV52tP9dqfqAndeYtOlfo1M/58Toaw3iZ2GC6/onU19J8i39HhN2+Rgw4BsTuQ==
+X-Received: by 2002:a05:6e02:1bc3:b0:323:2468:ba20 with SMTP id x3-20020a056e021bc300b003232468ba20mr5145198ilv.10.1678915176745;
+        Wed, 15 Mar 2023 14:19:36 -0700 (PDT)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id a12-20020a92ce4c000000b0032304e1814bsm1881527ilr.40.2023.03.15.14.19.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 14:19:36 -0700 (PDT)
+Message-ID: <6f7fa54c-6743-509b-a5d2-2d70ffb8c0e2@linaro.org>
+Date:   Wed, 15 Mar 2023 16:19:35 -0500
 MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 15 Mar 2023 14:18:18 -0700
-Message-ID: <CAF6AEGurNEeARQjVRH3gVcE+qznnfd_NB2n-1s+Tsozcm0t8oQ@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-next-2023-03-15 for v6.4
-To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH net v2 3/4] net: ipa: kill FILT_ROUT_CACHE_CFG IPA
+ register
+Content-Language: en-US
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
+        andersson@kernel.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230315193552.1646892-1-elder@linaro.org>
+ <20230315193552.1646892-4-elder@linaro.org>
+In-Reply-To: <20230315193552.1646892-4-elder@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave,
+On 3/15/23 2:35 PM, Alex Elder wrote:
+> A recent commit defined a few IPA registers used for IPA v5.0+.
+> One of those was a mistake.  Although the filter and router caches
+> get *flushed* using a single register, they use distinct registers
+> (ENDP_FILTER_CACHE_CFG and ENDP_ROUTER_CACHE_CFG) for configuration.
+> 
+> And although there *exists* a FILT_ROUT_CACHE_CFG register, it is
+> not needed in upstream code.  So get rid of definitions related to
+> FILT_ROUT_CACHE_CFG, because they are not needed.
+> 
+> Fixes: de101ca79f97 ("net: ipa: define IPA v5.0+ registers")'
 
-As discussed, an early msm-next pull req for v6.4 with PSR and related
-core helper bits.
+AGAIN!  This is a bad commit ID.  It should be 8ba59716d16a.
 
-The following changes since commit dbd7a2a941b8cbf9e5f79a777ed9fe0090eebb61:
+I've got a new series ready to go but I'll wait until
+tomorrow to post it.
 
-  PM / devfreq: Fix build issues with devfreq disabled (2023-01-30
-07:37:40 -0800)
+Sorry for the noise.
 
-are available in the Git repository at:
+					-Alex
 
-  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-next-2023-03-15
 
-for you to fetch changes up to 1844e680d56bb0c4e0489138f2b7ba2dc1c988e3:
+> Signed-off-by: Alex Elder <elder@linaro.org>
+> ---
+>   drivers/net/ipa/ipa_reg.c | 4 ++--
+>   drivers/net/ipa/ipa_reg.h | 9 ---------
+>   2 files changed, 2 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/net/ipa/ipa_reg.c b/drivers/net/ipa/ipa_reg.c
+> index 735fa65916097..463a31dfa9f47 100644
+> --- a/drivers/net/ipa/ipa_reg.c
+> +++ b/drivers/net/ipa/ipa_reg.c
+> @@ -39,7 +39,8 @@ static bool ipa_reg_id_valid(struct ipa *ipa, enum ipa_reg_id reg_id)
+>   		return version <= IPA_VERSION_3_1;
+>   
+>   	case ENDP_FILTER_ROUTER_HSH_CFG:
+> -		return version != IPA_VERSION_4_2;
+> +		return version < IPA_VERSION_5_0 &&
+> +			version != IPA_VERSION_4_2;
+>   
+>   	case IRQ_SUSPEND_EN:
+>   	case IRQ_SUSPEND_CLR:
+> @@ -52,7 +53,6 @@ static bool ipa_reg_id_valid(struct ipa *ipa, enum ipa_reg_id reg_id)
+>   	case QSB_MAX_WRITES:
+>   	case QSB_MAX_READS:
+>   	case FILT_ROUT_HASH_EN:
+> -	case FILT_ROUT_CACHE_CFG:
+>   	case FILT_ROUT_HASH_FLUSH:
+>   	case FILT_ROUT_CACHE_FLUSH:
+>   	case STATE_AGGR_ACTIVE:
+> diff --git a/drivers/net/ipa/ipa_reg.h b/drivers/net/ipa/ipa_reg.h
+> index 28aa1351dd488..ff2be8be0f683 100644
+> --- a/drivers/net/ipa/ipa_reg.h
+> +++ b/drivers/net/ipa/ipa_reg.h
+> @@ -61,7 +61,6 @@ enum ipa_reg_id {
+>   	QSB_MAX_WRITES,
+>   	QSB_MAX_READS,
+>   	FILT_ROUT_HASH_EN,				/* Not IPA v5.0+ */
+> -	FILT_ROUT_CACHE_CFG,				/* IPA v5.0+ */
+>   	FILT_ROUT_HASH_FLUSH,				/* Not IPA v5.0+ */
+>   	FILT_ROUT_CACHE_FLUSH,				/* IPA v5.0+ */
+>   	STATE_AGGR_ACTIVE,
+> @@ -206,14 +205,6 @@ enum ipa_reg_qsb_max_reads_field_id {
+>   	GEN_QMB_1_MAX_READS_BEATS,			/* IPA v4.0+ */
+>   };
+>   
+> -/* FILT_ROUT_CACHE_CFG register */
+> -enum ipa_reg_filt_rout_cache_cfg_field_id {
+> -	ROUTER_CACHE_EN,
+> -	FILTER_CACHE_EN,
+> -	LOW_PRI_HASH_HIT_DISABLE,
+> -	LRU_EVICTION_THRESHOLD,
+> -};
+> -
+>   /* FILT_ROUT_HASH_EN and FILT_ROUT_HASH_FLUSH registers */
+>   enum ipa_reg_filt_rout_hash_field_id {
+>   	IPV6_ROUTER_HASH,
 
-  drm/msm/dp: set self refresh aware based on PSR support (2023-03-13
-04:43:50 +0300)
-
-----------------------------------------------------------------
-msm-next for v6.4
-
-Early pull req with PSR and related drm core helpers
-
-----------------------------------------------------------------
-Vinod Polimera (14):
-      drm: add helper functions to retrieve old and new crtc
-      drm/bridge: use atomic enable/disable callbacks for panel bridge
-      drm/bridge: add psr support for panel bridge callbacks
-      drm/msm/disp/dpu: check for crtc enable rather than crtc active
-to release shared resources
-      drm/msm/disp/dpu: get timing engine status from intf status register
-      drm/msm/disp/dpu: wait for extra vsync till timing engine status
-is disabled
-      drm/msm/disp/dpu: reset the datapath after timing engine disable
-      drm/msm/dp: use atomic callbacks for DP bridge ops
-      drm/msm/dp: Add basic PSR support for eDP
-      drm/msm/dp: use the eDP bridge ops to validate eDP modes
-      drm/msm/disp/dpu: use atomic enable/disable callbacks for
-encoder functions
-      drm/msm/disp/dpu: add PSR support for eDP interface in dpu driver
-      drm/msm/disp/dpu: update dpu_enc crtc state on crtc
-enable/disable during self refresh
-      drm/msm/dp: set self refresh aware based on PSR support
-
- drivers/gpu/drm/bridge/panel.c                     |  68 +++++++-
- drivers/gpu/drm/drm_atomic.c                       |  60 +++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |  40 ++++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  26 +++-
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |  22 +++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   3 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  12 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |   8 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   2 +-
- drivers/gpu/drm/msm/dp/dp_catalog.c                |  80 ++++++++++
- drivers/gpu/drm/msm/dp/dp_catalog.h                |   4 +
- drivers/gpu/drm/msm/dp/dp_ctrl.c                   |  80 ++++++++++
- drivers/gpu/drm/msm/dp/dp_ctrl.h                   |   3 +
- drivers/gpu/drm/msm/dp/dp_display.c                |  36 +++--
- drivers/gpu/drm/msm/dp/dp_display.h                |   2 +
- drivers/gpu/drm/msm/dp/dp_drm.c                    | 173 ++++++++++++++++++++-
- drivers/gpu/drm/msm/dp/dp_drm.h                    |   9 +-
- drivers/gpu/drm/msm/dp/dp_link.c                   |  36 +++++
- drivers/gpu/drm/msm/dp/dp_panel.c                  |  22 +++
- drivers/gpu/drm/msm/dp/dp_panel.h                  |   6 +
- drivers/gpu/drm/msm/dp/dp_reg.h                    |  27 ++++
- include/drm/drm_atomic.h                           |   7 +
- 22 files changed, 683 insertions(+), 43 deletions(-)
