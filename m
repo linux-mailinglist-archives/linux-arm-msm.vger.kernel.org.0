@@ -2,249 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DF9C6BB584
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 15:08:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE23C6BB589
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 15:11:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232447AbjCOOIW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 10:08:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46436 "EHLO
+        id S232590AbjCOOLb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 10:11:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232505AbjCOOIU (ORCPT
+        with ESMTP id S232382AbjCOOL2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 10:08:20 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB9ADF96C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 07:08:17 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id k18-20020a17090a591200b0023d36e30cb5so1954673pji.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 07:08:17 -0700 (PDT)
+        Wed, 15 Mar 2023 10:11:28 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C259565134
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 07:11:25 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id j11so24450084lfg.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 07:11:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678889297;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=tE9TM9jIe+wBA1tLudHncoReuU8nCE7h9AdsVHA82YI=;
-        b=cO5srOsIzfpsYma6JL9MAPcLaqdXlgxTPNHC2gNW4HMWkJ+b0t7bE8jN7u8It2bREr
-         5yWjZ3MR/7BvNw5A7qgyY5w9fpUqyieQKMk4IlULj6kcQgR9JscMf5jzIQZe0znN2p/1
-         +0opCgVT7c4jGLbne1S9G5eJvsNT1tUHZH8nfbpAJLfZvDdSrqEDGXvDmkrBJnFnyoby
-         sisbOoS61HcXDx+0+XtueMk/ExNOWW72z1Zarmr2RP7o7Dor6HAPfnw2v4nede4K1hUs
-         0SCJy5bqJt3Hnak1Rm0dbyggLxZTdG2vOkB80jgWfVMRrE8FEgT4X4IoIHfyuLUD0B+4
-         DiQQ==
+        d=linaro.org; s=google; t=1678889484;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gO6ONgIrBdOAK3CDxsNhHEwowo3Jgb99AQwPcV025f0=;
+        b=Y3bduW3boH9SzR/V4dovmyAs2MA3ckNYKgli86J+7+Zgjvrv0vqxzykJTC45EeSwqD
+         CRBMJBmEHtfzqWJkGBRGLkZCmYNzbOmn10qW4v3epz1pXdQ+f8JptWPVI1zMYRzpneyZ
+         8zoR73fhrHTwrGAq6/54nqHaNkAiFnJMmO4dnfN8/0D5daQTA5y33PtSVeRhW3rb9qY3
+         WvBrXqIEiaM1pLu8UgD639FmWfeOsoKDjvsxOnIJp3GRmtRY94qkNAVO+WrT8fgiwWvM
+         gF9lf87H3xNmH0aCSPRwHa70ZsKWz2AVo3mQ34OhZswhw5vJs+8r5WERc7fJr91ltEcE
+         8ftQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678889297;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tE9TM9jIe+wBA1tLudHncoReuU8nCE7h9AdsVHA82YI=;
-        b=k1kqG5NB1l72vGthu6K/WyeMwSuewDQ6KdJHIcW2dtVrfBCw86xlhEY+x8Ux6qgiWd
-         AyRhR8dWozTNgLaHhONW/w3UGzW69JRjhvKxYVFFhK0CI1wm616OosyfS/X4wxHgrHg8
-         1QFboNlxIRsYuZl6AbW8HNRwlWiufzJOHZGSj2XgbTQjupakbBEs6YU6rQGb/bty6DiV
-         U1HdZekitZA3gTNDJop2o8e4En7m3MXehnvspLXysgPuNZhMQdfr1fTzbPQOYOf+Fp0b
-         M1lx6bfVIV45PomNhyUOwEikzEOT18dm3cVH316jYwdr9DB5Rg9dhKRYcqDe/dmsA/JJ
-         iUFg==
-X-Gm-Message-State: AO0yUKVKuliLwK6FsR7arRdTTsVxbBIq9uu/rop1kDhf6G+SqPDfnzp0
-        lA4PnNyrbKdOWVYpppISIcmE
-X-Google-Smtp-Source: AK7set/ylWfVr/jYohN6EqLAANVvgvAQvjOnGOawVQuQ0mI04OheMkj8yVAvzIAc0yKpQPQIXa44pA==
-X-Received: by 2002:a17:90b:390f:b0:23d:44c6:745a with SMTP id ob15-20020a17090b390f00b0023d44c6745amr35425pjb.2.1678889297231;
-        Wed, 15 Mar 2023 07:08:17 -0700 (PDT)
-Received: from thinkpad ([117.207.30.24])
-        by smtp.gmail.com with ESMTPSA id ch7-20020a17090af40700b0023cd53e7706sm1425037pjb.47.2023.03.15.07.08.12
+        d=1e100.net; s=20210112; t=1678889484;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gO6ONgIrBdOAK3CDxsNhHEwowo3Jgb99AQwPcV025f0=;
+        b=v6fq5dVQCopm+YPxXO4BITjYXUzb7NowagoDWD7SoBiGTqBiCHf/VEWzx2ZuTU4ZrA
+         S4fi6o619xLfPbvpkDmcaWN0wOzKhD0548E+Q4wf3IA/XUxo/jTk9siMdZmFyTma0XFs
+         4qNhRcOkxkoaV0cyVgKQeUFVzfyN6P8ko/ZIYalbHI5gFp14eySIs1/h+GkN5r0ly2oK
+         MWZq5RRyA+qfmmd41GHpKbgmAaoaEIuin/+9ko9ScahwbyvPI847aZSC8/rIn3XfkdKE
+         adSAfzzIFImazhHQQg1ZX6digtk5pzckB6y45sXUjTk4Ffp0JxehQpvBPD+jAo0TR5AX
+         qvMA==
+X-Gm-Message-State: AO0yUKW6gIjEd0rEl92BTCU9q8p1euqQ3HKbJUJxyLAfgH/514Y3G5ly
+        aoB0k/EQ5X1AWyVz/8kjXSZOag==
+X-Google-Smtp-Source: AK7set/m/1iHF7CmFAbkUW3HNz5L9f09fw7Ur0wz9Oa6IZY5DqypNTD7VHzkDNDt5b4ceuHhFpRq0Q==
+X-Received: by 2002:ac2:53a1:0:b0:4b5:3505:d7f9 with SMTP id j1-20020ac253a1000000b004b53505d7f9mr1802683lfh.35.1678889483923;
+        Wed, 15 Mar 2023 07:11:23 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id b8-20020ac25e88000000b004e845a08567sm824678lfq.291.2023.03.15.07.11.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 07:08:16 -0700 (PDT)
-Date:   Wed, 15 Mar 2023 19:38:07 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
-        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 4/5] soc: qcom: Add LLCC support for multi channel DDR
-Message-ID: <20230315140807.GB98488@thinkpad>
-References: <20230313124040.9463-1-quic_kbajaj@quicinc.com>
- <20230313124040.9463-5-quic_kbajaj@quicinc.com>
+        Wed, 15 Mar 2023 07:11:22 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v3 0/7] Fix BWMONv4 for <SDM845
+Date:   Wed, 15 Mar 2023 15:11:18 +0100
+Message-Id: <20230304-topic-ddr_bwmon-v3-0-77a050c2fbda@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230313124040.9463-5-quic_kbajaj@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAbSEWQC/4WNywrCMBQFf0WyNnKbNH248j9EJC/bCzUpSY1K6
+ b+bdudCXM6BMzOTaAPaSI67mQSbMKJ3Gfh+R3QvXWcpmsyEAePAoaSTH1FTY8JVPe/e0QpaYEw
+ bYbkg+aVktFQF6XSff+4xDHkcg73ha8ucL5l7jJMP762ainX9HUgFBWpFxRteG12b4jSgk8Eff
+ OjIKkvsj4BlAZRGtU1rFIj2S7Asywd5/7gkBQEAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+X-Mailer: b4 0.12.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1678889480; l=4225;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=5a2gTnVJHInN9xxdIxmrs7yt7ArHpi5O35VOWBjCFEY=;
+ b=ezzKac7bBxFqaUZFr4Aie16BW3XwT9ZGqOhZPvlTuQ3uUhVvPIbVF67niLv+giqf4ZU+YqWqXRqL
+ 0pgZg/tOA4E2rX0B8Dl4Dx+Nz0SkvLk5oCJBTjTpdY9Z+2MpXNEy
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 13, 2023 at 06:10:39PM +0530, Komal Bajaj wrote:
-> Add LLCC support for multi channel DDR configurations
-> based off of a feature register.
-> 
+v2 -> v3:
+- Rename: "DDR BWMON" -> "CPU BWMON" [2, 6/7]
+- Set F_IRQ_STATUS = F_NUM_GLOBAL_FIELDS in enum bwmon_fields to save
+  one space in the enum
+- Correct the struct icc_bwmon->global_regs array size
+- Reorder the "Remove unused struct member" patch to come before the big
+  one
 
-Please elaborate more in the commit message on why this patch is needed and how
-it is implemented.
+v2: https://lore.kernel.org/r/20230304-topic-ddr_bwmon-v2-0-04db989db059@linaro.org
 
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> ---
->  drivers/soc/qcom/llcc-qcom.c       | 56 ++++++++++++++++++++++++++++--
->  include/linux/soc/qcom/llcc-qcom.h |  2 ++
->  2 files changed, 55 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 00699a0c047e..f4d3e266c629 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -17,6 +17,7 @@
->  #include <linux/regmap.h>
->  #include <linux/sizes.h>
->  #include <linux/slab.h>
-> +#include <linux/firmware/qcom/qcom_scm.h>
+v1 -> v2:
+- Un-mess-up the example in bindings
+- Correctly limit reg/-names in bindings
+- Introduce "qcom,sdm845-cpu-bwmon"
+- Fix incorrect register assignment in msm8998_bwmon_reg_noread_ranges
+- Clean up the code around setting global registers on <=8998
+  - Don't add a separate enum for global registers
+  - Don't use _GLOBAL vs _GLB
+  - Add of match entries for targets that abused qcom,msm8998-bwmon before
+    to keep old DTs working
+  - Add comments near of match entries to make things clearer
+  - Instead of if (...) { write to x } else { write to y } make the global
+    register variable to keep the code more readable
+- Add dts patches to stop improperly using the 8998 compatible
+- (grumpily) drop Fixes from [2/7]
+- Pick up rb on [3/7]
+- Re-test on MSM8998 and SM6375 (OOT, uses 845-style BWMONv4)
 
-Sort the includes alphabetically
+v1: https://lore.kernel.org/r/20230304-topic-ddr_bwmon-v1-0-e563837dc7d1@linaro.org
 
->  #include <linux/soc/qcom/llcc-qcom.h>
->  
->  #define ACTIVATE                      BIT(0)
-> @@ -924,6 +925,40 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev,
->  	return ret;
->  }
->  
-> +static int qcom_llcc_get_cfg_index(struct platform_device *pdev, u32 *cfg_index)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct resource *ch_res = NULL;
+BWMONv4 (the one used for DDR scaling on all SoCs from msm8998 to sm8550)
+features two register regions: "monitor" and "global" with the first one
+containing registers specific to the throughput monitor itself and the
+second one containing some sort of a head switch.
 
-No need to initialize the pointer
+The register layout on all BWMON versions an implementations up to that
+looked like this:
 
-> +
+|..........[GLOBAL].........[MONITOR]........|
 
-No need of a newline
+however with SDM845 somebody thought it would be a good idea to turn it
+into this:
 
-> +	u32 ch_reg_sz;
-> +	u32 ch_reg_off;
-> +	u32 val;
-> +	int ret = 0;
-> +
-> +	ch_res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "multi_channel_register");
-> +	if (ch_res) {
-> +		if (of_property_read_u32(dev->of_node, "multi-ch-bit-off", &ch_reg_off)) {
-> +			dev_err(&pdev->dev,
-> +				"Couldn't get offset for multi channel feature register\n");
-> +			return -ENODEV;
-> +		}
-> +		if (of_property_read_u32_index(dev->of_node, "multi-ch-bit-off", 1, &ch_reg_sz)) {
-> +			dev_err(&pdev->dev,
-> +				"Couldn't get size of multi channel feature register\n");
-> +			return -ENODEV;
-> +		}
-> +
-> +		if (qcom_scm_io_readl(ch_res->start, &val)) {
+|................[GLOBAL]....................|
+|....................[MONITOR]...............|
 
-You didn't mention this SCM call in the commit message. Also, for SCM, you need
-to select the driver in Kconfig. 
+Sadly, the existing upstream driver was architected with SDM845 in mind,
+which means it doesn't support the global registers being somewhere else
+than near the beginning of the monitor space. This series tries to address
+that in the hopefully least painful way. Tested on msm8998 (the count unit
+seems to be wrong, should probably be 1MiB and not 64 KiB but the point is
+that this series makes it work at all, as without it the headswitch is
+never turned on) and SM6375 (with the "combined" layout introduced in
+SDM845). Equally sadly, everybody uses the qcom,msm8998-bwmon compatible
+(which frankly should have been just qcom,bwmon-v4) that never actually
+worked on MSM8998 , which prevents us from handling it in a simpler way..
 
-> +			dev_err(&pdev->dev, "Couldn't access multi channel feature register\n");
-> +			ret = -EINVAL;
+While at it, an unused struct member is removed.
 
-Catch the actual error no from qcom_scm_io_readl().
+One suboptimal feature of this patchset is that it introduces an "invalid
+resource" print from within devres. This could be solved with an
+introduction of devm_ioremap_resource_optional or by dropping devres
+functions in place of manual handling, which also doesn't sound great..
+I'll leave it up to the reviewers to decide.
 
-So in the case of failure, you still want to calculate cfg_index?
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (7):
+      dt-bindings: interconnect: qcom,msm8998-bwmon: Resolve MSM8998 support
+      soc: qcom: icc-bwmon: Remove unused struct member
+      soc: qcom: icc-bwmon: Handle global registers correctly
+      arm64: dts: qcom: sc7280: Use the correct BWMON fallback compatible
+      arm64: dts: qcom: sc8280xp: Use the correct BWMON fallback compatible
+      arm64: dts: qcom: sdm845: Use the correct BWMON compatible
+      arm64: dts: qcom: sm8550: Use the correct BWMON fallback compatible
 
-> +		}
-> +		*cfg_index = (val >> ch_reg_off) & ((1 << ch_reg_sz) - 1);
-> +	} else
+ .../bindings/interconnect/qcom,msm8998-bwmon.yaml  |  41 +++-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |   2 +-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi             |   2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |   2 +-
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               |   2 +-
+ drivers/soc/qcom/icc-bwmon.c                       | 231 +++++++++++++++++++--
+ 6 files changed, 247 insertions(+), 33 deletions(-)
+---
+base-commit: 24469a0e5052ba01a35a15f104717a82b7a4798b
+change-id: 20230304-topic-ddr_bwmon-609022cd5e35
 
-Use braces for else condition
-
-> +		*cfg_index = 0;
-> +
-> +	return ret;
-> +}
-> +
->  static int qcom_llcc_remove(struct platform_device *pdev)
->  {
->  	/* Set the global pointer to a error code to avoid referencing it */
-> @@ -956,10 +991,13 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->  	struct device *dev = &pdev->dev;
->  	int ret, i;
->  	struct platform_device *llcc_edac;
-> -	const struct qcom_llcc_config *cfg;
-> +	const struct qcom_llcc_config *cfg, *entry;
->  	const struct llcc_slice_config *llcc_cfg;
-> +
-
-No need of newline
-
->  	u32 sz;
-> +	u32 cfg_index;
->  	u32 version;
-> +	u32 no_of_entries = 0;
-
-num_entries?
-
->  
->  	drv_data = devm_kzalloc(dev, sizeof(*drv_data), GFP_KERNEL);
->  	if (!drv_data) {
-> @@ -999,8 +1037,20 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->  	num_banks >>= LLCC_LB_CNT_SHIFT;
->  	drv_data->num_banks = num_banks;
->  
-> -	llcc_cfg = cfg[0].sct_data;
-> -	sz = cfg[0].size;
-> +	ret = qcom_llcc_get_cfg_index(pdev, &cfg_index);
-> +	if (ret)
-> +		goto err;
-> +
-> +	for (entry = cfg; entry->sct_data; entry++, no_of_entries++)
-> +		;
-
-Wrap ; in the above line itself
-
-> +	if (cfg_index >= no_of_entries) {
-> +		ret = -EINVAL;
-> +		goto err;
-> +	}
-> +
-> +	drv_data->cfg_index = cfg_index;
-
-Where is this cached value used?
-
-Thanks,
-Mani
-
-> +	llcc_cfg = cfg[cfg_index].sct_data;
-> +	sz = cfg[cfg_index].size;
->  
->  	for (i = 0; i < sz; i++)
->  		if (llcc_cfg[i].slice_id > drv_data->max_slices)
-> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-> index ad1fd718169d..225891a02f5d 100644
-> --- a/include/linux/soc/qcom/llcc-qcom.h
-> +++ b/include/linux/soc/qcom/llcc-qcom.h
-> @@ -125,6 +125,7 @@ struct llcc_edac_reg_offset {
->   * @cfg: pointer to the data structure for slice configuration
->   * @edac_reg_offset: Offset of the LLCC EDAC registers
->   * @lock: mutex associated with each slice
-> + * @cfg_index: index of config table if multiple configs present for a target
->   * @cfg_size: size of the config data table
->   * @max_slices: max slices as read from device tree
->   * @num_banks: Number of llcc banks
-> @@ -139,6 +140,7 @@ struct llcc_drv_data {
->  	const struct llcc_slice_config *cfg;
->  	const struct llcc_edac_reg_offset *edac_reg_offset;
->  	struct mutex lock;
-> +	u32 cfg_index;
->  	u32 cfg_size;
->  	u32 max_slices;
->  	u32 num_banks;
-> -- 
-> 2.39.1
-> 
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
