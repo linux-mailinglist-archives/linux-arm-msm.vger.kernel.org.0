@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D8DB6BB473
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 14:23:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 450B86BB479
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 14:23:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231770AbjCONXi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 09:23:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50278 "EHLO
+        id S230283AbjCONXl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 09:23:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230356AbjCONXh (ORCPT
+        with ESMTP id S231859AbjCONXj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 09:23:37 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ED5A10E2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 06:23:35 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id cy23so75362059edb.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 06:23:35 -0700 (PDT)
+        Wed, 15 Mar 2023 09:23:39 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74579525B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 06:23:37 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id z21so10156960edb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 06:23:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678886614;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dtiqQT9nTV40DMGtvhdCFZjllJ6LweZkSNTJ7S06oqQ=;
-        b=ZrKz8ly+NS7Hqwl2lWmXNnT17/vsi92/+UUxZsVJqbbf5pXvdJqoqvuH55yItOQTfO
-         8PO9IFt4aphG5Y8rL0Oe0MsvCpnecI8RdNDhUiJFKeBtKZ6kBFegrfEFTDvnNuqyBPv/
-         R5H4DiBQxzjMgK9tfhF2hjQOEOLjryilpbw6tpPrHuSdek9KUKRhlbbR+7VZfK6EKSGo
-         bMjkhBBaKtzkzS1ZEvnhj6P4HtBJo9xqVqmDnvyNuz2kYIixlNY4OdWRIJ1B6xYv2MCM
-         6z9hP89/khEk8ollehcKOu8F8Po2sBqTI1zr3cWokrgewQPK17YsHyel9oZLTFL+g7Gq
-         J8gw==
+        d=linaro.org; s=google; t=1678886616;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HLRj53L/DjbMBhi79PBbCLq4uHXoSyceNvFogThLTB0=;
+        b=O83NQyj//J7bmfedXnmbIqeW8+JZ+xkH6PdT0B1LHXQwigwDA4kKO9qois1oqflooO
+         2qN3SbCw7sMLxHiCBH7UUzaSlQI4tGkIPl7tWzRhqwe4cPeQHepWNoSWdv1JkeiUSAqn
+         6SzVrAsKaY8+/+6upW+K0/kX1dagOxqA+52IjhgReVcifbfVHPco3q1/sknGmtHVlrny
+         zCmslTLInyjOgsClAVV/udywSh2Gcem+dLJEEkkoouFM6o1cNve15fCMg3e293FtrHTG
+         hgnBZQ8zlkCCYlgZaw+6j17I9qlldEHXyzFQlTMNuVVtaAODnnJm+KQvCRdBVtEzX7Il
+         8rzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678886614;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dtiqQT9nTV40DMGtvhdCFZjllJ6LweZkSNTJ7S06oqQ=;
-        b=F2EqkhnqrlScqSpTCF4AjWeBIuu2UNBUBVbeByavizkFliMYfMSnYb0/rBZrkYIFiR
-         h6ITzmx0BaYN6WcSjJPgP+VZO6MWTXiAkQV4O8Vm0UFw/dJ0ppfZajJdbZ2Si9gZd5BK
-         2Gcpkee0f+G9WcAUfvLXJR3SCQcg1Hlv15cJDfUCHpws85kMBXiXPZxsWJcc2geRIIyW
-         35o6Cs0CHUGsRPTgXbsGm45erYN6pNE5ljNRGQ4T3RxrwtQTvOEOiPiGycsiL3chng0N
-         mSfPGFXvC1tKF3WJV9GwSS/YWl8+h1i4uUaaMZVYSJ4AN7RxjI6G5eHBOQ2tKepiZ5ot
-         6PCg==
-X-Gm-Message-State: AO0yUKUUMOJZid6V8O397Z8wS/SjBVGXrLSjBD9tmc4AKOYZB7FXRMbQ
-        f0HdYkmRcrIYLKmBSfncqpgp6A==
-X-Google-Smtp-Source: AK7set+i/cYxKNr8y2dFpzx+Hv9vji6LJl3S0j9kXazbXdf5x3x3d25QEsG9uaexDUYc9GUTa+q21A==
-X-Received: by 2002:a17:906:8489:b0:878:4a5e:3a56 with SMTP id m9-20020a170906848900b008784a5e3a56mr5991339ejx.15.1678886614047;
-        Wed, 15 Mar 2023 06:23:34 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1678886616;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HLRj53L/DjbMBhi79PBbCLq4uHXoSyceNvFogThLTB0=;
+        b=6CiYHo5HVJxdcABIlk8hwxI6n9u1djzZwzbRDPR/yHUuhGwzvR8J40cAAYBe134eV4
+         K141Ct+cxsiUIZX6x/+urm5zMXBMQa5b6aYtv2ilRjmvi/e15MDm7XuqlCC8XTD04Ecs
+         sKgZICsZIZ1lP6bFjDJYTsbHBQksyks/h26VbDWoFF95sW3HogyAUAIJIz2xb9v3r6Dd
+         fjABdbJzbRJ9gDCWKILHfVWBdI0YmZSk5YXGUW//w7FtJuH18a0W6JOBPKzFCCNCOKdN
+         MSOBfk2jFhzERtyKVlj+zYWpimbuRBjV/9j0oK0o/J87tUQ0QnTVlwopZUofxtTjbU99
+         gqJg==
+X-Gm-Message-State: AO0yUKXPhjzsczT10VWewTZLg2yNrPPTaqnqRIzqob8moSYEo8Z2UAOx
+        D8BjRypAg3en6+jgaY7WKh5bfA==
+X-Google-Smtp-Source: AK7set9pBrz1LS8rrkjEkjlBWW/QTLUzc6ajPIuUyelYl6UYlSSo60YiGfHokLYhvw8Y59YDahM3DQ==
+X-Received: by 2002:a17:906:c2c3:b0:870:b950:18d4 with SMTP id ch3-20020a170906c2c300b00870b95018d4mr5975836ejb.5.1678886615800;
+        Wed, 15 Mar 2023 06:23:35 -0700 (PDT)
 Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id pj18-20020a170906d79200b008b133f9b33dsm2497365ejb.169.2023.03.15.06.23.32
+        by smtp.gmail.com with ESMTPSA id pj18-20020a170906d79200b008b133f9b33dsm2497365ejb.169.2023.03.15.06.23.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 06:23:33 -0700 (PDT)
+        Wed, 15 Mar 2023 06:23:35 -0700 (PDT)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     "Rafael J. Wysocki" <rafael@kernel.org>,
         Kevin Hilman <khilman@kernel.org>,
@@ -66,10 +67,12 @@ Cc:     linux-pm@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         Doug Anderson <dianders@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>
-Subject: [RFC PATCH 0/5] Allow genpd providers to power off domains on sync state
-Date:   Wed, 15 Mar 2023 15:23:25 +0200
-Message-Id: <20230315132330.450877-1-abel.vesa@linaro.org>
+Subject: [RFC PATCH 1/5] PM: domains: Allow power off queuing from providers
+Date:   Wed, 15 Mar 2023 15:23:26 +0200
+Message-Id: <20230315132330.450877-2-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230315132330.450877-1-abel.vesa@linaro.org>
+References: <20230315132330.450877-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,47 +85,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There have been already a couple of tries to make the genpd "disable
-unused" late initcall skip the powering off of domains that might be
-needed until later on (i.e. until some consumer probes). The conclusion
-was that the provider could return -EBUSY from the power_off callback
-until the provider's sync state has been reached. This patch series tries
-to provide a proof-of-concept that is working on Qualcomm platforms.
+In some cases, the providers might choose to refuse powering off some
+domains until all of the consumer have had a chance to probe, that is,
+until sync state callback has been called. Such providers might choose
+to disable such domains on their on, from the sync state callback. So,
+in order to do that, they need a way to queue up a power off request.
+Since the generic genpd already has such API, make that available to
+those providers.
 
-I've been doing extensive testing on SM8450, but I've also spinned this
-on my X13s (SC8280XP). Both patches that add the sync state callback to
-the SC8280XP and SM8450 are here to provide context. Once we agree on
-the form, I intend to add the sync state callback to all gdsc providers.
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ drivers/base/power/domain.c | 3 ++-
+ include/linux/pm_domain.h   | 6 ++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-Currently, some of the gdsc providers might not reach sync state due to
-list of consumers not probing yet (or at all). The sync state can be
-enforced by writing 1 to the state_synced sysfs attribute of the
-provider, thanks to Saravana's commit [1] which has been already merged.
-
-[1] https://lore.kernel.org/r/20230304005355.746421-3-saravanak@google.com
-
-Abel Vesa (5):
-  PM: domains: Allow power off queuing from providers
-  soc: qcom: rpmhpd: Do proper power off when state synced
-  clk: qcom: gdsc: Avoid actual power off until sync state
-  clk: qcom: Add sync state callback to all SC8280XP providers
-  clk: qcom: Add sync state callback to all SM8450 providers
-
- drivers/base/power/domain.c        |  3 ++-
- drivers/clk/qcom/camcc-sm8450.c    |  1 +
- drivers/clk/qcom/common.c          | 13 +++++++++++++
- drivers/clk/qcom/common.h          |  1 +
- drivers/clk/qcom/dispcc-sc8280xp.c |  1 +
- drivers/clk/qcom/dispcc-sm8450.c   |  1 +
- drivers/clk/qcom/gcc-sc8280xp.c    |  1 +
- drivers/clk/qcom/gcc-sm8450.c      |  1 +
- drivers/clk/qcom/gdsc.c            | 26 ++++++++++++++++++++++++++
- drivers/clk/qcom/gdsc.h            |  6 ++++++
- drivers/clk/qcom/gpucc-sc8280xp.c  |  1 +
- drivers/soc/qcom/rpmhpd.c          | 19 +++++++------------
- include/linux/pm_domain.h          |  6 ++++++
- 13 files changed, 67 insertions(+), 13 deletions(-)
-
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index 32084e38b73d..97d4e2f2da91 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -649,10 +649,11 @@ static int _genpd_power_off(struct generic_pm_domain *genpd, bool timed)
+  * Queue up the execution of genpd_power_off() unless it's already been done
+  * before.
+  */
+-static void genpd_queue_power_off_work(struct generic_pm_domain *genpd)
++void genpd_queue_power_off_work(struct generic_pm_domain *genpd)
+ {
+ 	queue_work(pm_wq, &genpd->power_off_work);
+ }
++EXPORT_SYMBOL_GPL(genpd_queue_power_off_work);
+ 
+ /**
+  * genpd_power_off - Remove power from a given PM domain.
+diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+index f776fb93eaa0..c9c0b4916e25 100644
+--- a/include/linux/pm_domain.h
++++ b/include/linux/pm_domain.h
+@@ -231,6 +231,7 @@ int pm_genpd_remove_subdomain(struct generic_pm_domain *genpd,
+ int pm_genpd_init(struct generic_pm_domain *genpd,
+ 		  struct dev_power_governor *gov, bool is_off);
+ int pm_genpd_remove(struct generic_pm_domain *genpd);
++void genpd_queue_power_off_work(struct generic_pm_domain *genpd);
+ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state);
+ int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
+ int dev_pm_genpd_remove_notifier(struct device *dev);
+@@ -278,6 +279,11 @@ static inline int pm_genpd_remove(struct generic_pm_domain *genpd)
+ 	return -EOPNOTSUPP;
+ }
+ 
++void genpd_queue_power_off_work(struct generic_pm_domain *genpd);
++{
++	return -EOPNOTSUPP;
++}
++
+ static inline int dev_pm_genpd_set_performance_state(struct device *dev,
+ 						     unsigned int state)
+ {
 -- 
 2.34.1
 
