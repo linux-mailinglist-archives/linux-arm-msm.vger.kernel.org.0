@@ -2,53 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F7D46BB53C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 14:54:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AEC3C6BB547
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 14:55:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232114AbjCONyV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 09:54:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52076 "EHLO
+        id S232106AbjCONzu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 09:55:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232628AbjCONyQ (ORCPT
+        with ESMTP id S232541AbjCONzs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 09:54:16 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BEC615164;
-        Wed, 15 Mar 2023 06:54:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C6B4961D5F;
-        Wed, 15 Mar 2023 13:54:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABAEC433EF;
-        Wed, 15 Mar 2023 13:54:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678888453;
-        bh=MeUXDq1IdFKnPC0Emxz8eivaGaiRcMqUYA0SAkpvH7M=;
-        h=From:To:Cc:Subject:Date:From;
-        b=kOqVUhOrBsS97XPXEH4mPaXOnze6wk6DENj5/ciEAbQqRH43FTcfX25SKJ1lVt9nE
-         AvepeV56Se7O/Z1Yhq0tG6FVTzYhqrLC50gddTLerWCxOHsFLTmUJy+zU5gS0FBlpo
-         QFjF8PCngkxGMN5grwRPfiFLmBOthskskDJb1UisHOGl/nSXClKcQNhI6ano0AGHOE
-         KncDHxhRgX+HcghinIfdHFLxifvsdPLnCPBKJMgxvkDvcRR6n6ZpgH9DOCE1S8S3pX
-         pc0P+2wmBB7kFSvT7PRWazkmLYwFC0jN/z4F0HfA3QXN/hHc+xsoWPWEDnyX2AIQEy
-         AF5jUAKa8d/3Q==
-From:   "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-To:     linux-trace-kernel@vger.kernel.org
-Cc:     Heinz Wiesinger <pprkut@slackware.com>, andersson@kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mhiramat@kernel.org, quic_rjendra@quicinc.com,
-        quic_saipraka@quicinc.com, quic_sibis@quicinc.com
-Subject: [PATCH v2] bootconfig: Fix testcase to increase max node
-Date:   Wed, 15 Mar 2023 22:54:08 +0900
-Message-Id: <167888844790.791176.670805252426835131.stgit@devnote2>
-X-Mailer: git-send-email 2.25.1
-User-Agent: StGit/0.19
+        Wed, 15 Mar 2023 09:55:48 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A721365040
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 06:55:32 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id eh3so19968247edb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 06:55:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678888530;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FL2PPYlA0uRNBqiWUXPuYQTCMqk2pdi/oLiMTHLvsic=;
+        b=AFOfedjgXSfHm0FNU0hZ/CmUqoER/e89nK2ng2txWLf8ICWj/nGtq3b/d4mfuSpGrW
+         O1HFmqgN3bjP55Fw9LczQKBO9y8ysPn/4E8XIHPMmsTLH1Qj5KfsMERSzXpwkAdcfU0+
+         5U9ovU2dPH8JnPl0IcdTabZ9/22tWBkASeY1GS1lkgwoKk2gacKxD7jUcduxW7/cpSJj
+         Qe3KUT1L/bLAGL+r9ZXuv4kMKRLdDGBmsOjCuHO702yfNuh926onLw1V2+7WWmOAJknY
+         JNoZnJBvuEF4gn4pVRVZnFzYrnj6wEgUb4LD91L/gVfUfTMdgGI7ojADK+oQMceGPboA
+         +7BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678888530;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FL2PPYlA0uRNBqiWUXPuYQTCMqk2pdi/oLiMTHLvsic=;
+        b=kRTcPSZlGbZ7twb9swK67BOHhxQC233XIUKz/xZs9Lm3wAS7e6xpZnduIezUETB1+F
+         l1/WVrwwaubY0ub9kFUE5PkzPMnjpCTqY2Sy9zFGH/2Cub+XZdez4e4sf1sS7uJEBScy
+         riGIrhhhVt0vPYRno1yJXeGoxT7GZstj4aNeMONHTFweU3GqhzXgTJsKb46Uv9OUhSDN
+         DsPvhsz8CsTOqJ6H7DgauEzlpiYktmrmJhio+U56XepmEyLLIuaHjY3T71kEFyO+s4Eo
+         80cyPC+WiZalxWtwMWOMMmlvyK+SvHMQkf2yBjWCl35aR0fBY8pv120iw2qhBILTgh2v
+         9P9Q==
+X-Gm-Message-State: AO0yUKW1CU/hZzNM037y3UsKvnR2PK2vbJNv0AcBpUl5bvRz5OT0lc//
+        JYePVP0RXOvoHEzk5GMwle3BH+SkzIHwrjG7G9k=
+X-Google-Smtp-Source: AK7set9f42lDPAauaA03LEFsdxyf5keK13/YIZ6Me3D3oy6UAB45VczN3jJ7dfbB7drXgjK46lX3aQ==
+X-Received: by 2002:a17:906:3986:b0:91f:32f9:82f0 with SMTP id h6-20020a170906398600b0091f32f982f0mr6253293eje.29.1678888530287;
+        Wed, 15 Mar 2023 06:55:30 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id ot10-20020a170906ccca00b008e51a1fd7bfsm2580448ejb.172.2023.03.15.06.55.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 06:55:29 -0700 (PDT)
+Message-ID: <7de97b6f-1318-5c40-2e42-3cc4774c9905@linaro.org>
+Date:   Wed, 15 Mar 2023 13:55:25 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 1/2] soundwire: qcom: define hardcoded version magic
+ numbers
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org
+References: <20230222144412.237832-1-krzysztof.kozlowski@linaro.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230222144412.237832-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -57,49 +83,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-Since commit 6c40624930c5 ("bootconfig: Increase max nodes of bootconfig
-from 1024 to 8192 for DCC support") increased the max number of bootconfig
-node to 8192, the bootconfig testcase of the max number of nodes fails.
-To fix this issue, we can not simply increase the number in the test script
-because the test bootconfig file becomes too big (>32KB). To fix that, we
-can use a combination of three alphabets (26^3 = 17576). But with that,
-we can not express the 8193 (just one exceed from the limitation) because
-it also exceeds the max size of bootconfig. So, the first 26 nodes will just
-use one alphabet.
 
-With this fix, test-bootconfig.sh passes all tests.
+On 22/02/2023 14:44, Krzysztof Kozlowski wrote:
+> Use a define instead of hard-coded register values for Soundwire
+> hardware version number, because it is a bit easier to read and allows
+> to drop explaining comment.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
 
-Reported-by: Heinz Wiesinger <pprkut@slackware.com>
-Link: https://lore.kernel.org/all/2463802.XAFRqVoOGU@amaterasu.liwjatan.org
-Fixes: 6c40624930c5 ("bootconfig: Increase max nodes of bootconfig from 1024 to 8192 for DCC support")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
----
- tools/bootconfig/test-bootconfig.sh |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+Thanks Krzysztof,
 
-diff --git a/tools/bootconfig/test-bootconfig.sh b/tools/bootconfig/test-bootconfig.sh
-index f68e2e9eef8b..a2c484c243f5 100755
---- a/tools/bootconfig/test-bootconfig.sh
-+++ b/tools/bootconfig/test-bootconfig.sh
-@@ -87,10 +87,14 @@ xfail grep -i "error" $OUTFILE
- 
- echo "Max node number check"
- 
--echo -n > $TEMPCONF
--for i in `seq 1 1024` ; do
--   echo "node$i" >> $TEMPCONF
--done
-+awk '
-+BEGIN {
-+  for (i = 0; i < 26; i += 1)
-+      printf("%c\n", 65 + i % 26)
-+  for (i = 26; i < 8192; i += 1)
-+      printf("%c%c%c\n", 65 + i % 26, 65 + (i / 26) % 26, 65 + (i / 26 / 26))
-+}
-+' > $TEMPCONF
- xpass $BOOTCONF -a $TEMPCONF $INITRD
- 
- echo "badnode" >> $TEMPCONF
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
+
+--srini
+
+>   drivers/soundwire/qcom.c | 17 +++++++++--------
+>   1 file changed, 9 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+> index ba502129150d..79bebcecde6d 100644
+> --- a/drivers/soundwire/qcom.c
+> +++ b/drivers/soundwire/qcom.c
+> @@ -28,6 +28,9 @@
+>   #define SWRM_LINK_MANAGER_EE					0x018
+>   #define SWRM_EE_CPU						1
+>   #define SWRM_FRM_GEN_ENABLED					BIT(0)
+> +#define SWRM_VERSION_1_3_0					0x01030000
+> +#define SWRM_VERSION_1_5_1					0x01050001
+> +#define SWRM_VERSION_1_7_0					0x01070000
+>   #define SWRM_COMP_HW_VERSION					0x00
+>   #define SWRM_COMP_CFG_ADDR					0x04
+>   #define SWRM_COMP_CFG_IRQ_LEVEL_OR_PULSE_MSK			BIT(1)
+> @@ -351,8 +354,7 @@ static int qcom_swrm_cmd_fifo_wr_cmd(struct qcom_swrm_ctrl *swrm, u8 cmd_data,
+>   	/* Its assumed that write is okay as we do not get any status back */
+>   	swrm->reg_write(swrm, SWRM_CMD_FIFO_WR_CMD, val);
+>   
+> -	/* version 1.3 or less */
+> -	if (swrm->version <= 0x01030000)
+> +	if (swrm->version <= SWRM_VERSION_1_3_0)
+>   		usleep_range(150, 155);
+>   
+>   	if (cmd_id == SWR_BROADCAST_CMD_ID) {
+> @@ -695,7 +697,7 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
+>   	u32p_replace_bits(&val, SWRM_DEF_CMD_NO_PINGS, SWRM_MCP_CFG_MAX_NUM_OF_CMD_NO_PINGS_BMSK);
+>   	ctrl->reg_write(ctrl, SWRM_MCP_CFG_ADDR, val);
+>   
+> -	if (ctrl->version >= 0x01070000) {
+> +	if (ctrl->version >= SWRM_VERSION_1_7_0) {
+>   		ctrl->reg_write(ctrl, SWRM_LINK_MANAGER_EE, SWRM_EE_CPU);
+>   		ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL,
+>   				SWRM_MCP_BUS_CLK_START << SWRM_EE_CPU);
+> @@ -704,8 +706,7 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
+>   	}
+>   
+>   	/* Configure number of retries of a read/write cmd */
+> -	if (ctrl->version >= 0x01050001) {
+> -		/* Only for versions >= 1.5.1 */
+> +	if (ctrl->version >= SWRM_VERSION_1_5_1) {
+>   		ctrl->reg_write(ctrl, SWRM_CMD_FIFO_CFG_ADDR,
+>   				SWRM_RD_WR_CMD_RETRIES |
+>   				SWRM_CONTINUE_EXEC_ON_CMD_IGNORE);
+> @@ -1239,7 +1240,7 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
+>   	ret = of_property_read_u8_array(np, "qcom,ports-block-pack-mode",
+>   					bp_mode, nports);
+>   	if (ret) {
+> -		if (ctrl->version <= 0x01030000)
+> +		if (ctrl->version <= SWRM_VERSION_1_3_0)
+>   			memset(bp_mode, SWR_INVALID_PARAM, QCOM_SDW_MAX_PORTS);
+>   		else
+>   			return ret;
+> @@ -1442,7 +1443,7 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+>   	pm_runtime_enable(dev);
+>   
+>   	/* Clk stop is not supported on WSA Soundwire masters */
+> -	if (ctrl->version <= 0x01030000) {
+> +	if (ctrl->version <= SWRM_VERSION_1_3_0) {
+>   		ctrl->clock_stop_not_supported = true;
+>   	} else {
+>   		ctrl->reg_read(ctrl, SWRM_COMP_MASTER_ID, &val);
+> @@ -1527,7 +1528,7 @@ static int __maybe_unused swrm_runtime_resume(struct device *dev)
+>   	} else {
+>   		reset_control_reset(ctrl->audio_cgcr);
+>   
+> -		if (ctrl->version >= 0x01070000) {
+> +		if (ctrl->version >= SWRM_VERSION_1_7_0) {
+>   			ctrl->reg_write(ctrl, SWRM_LINK_MANAGER_EE, SWRM_EE_CPU);
+>   			ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL,
+>   					SWRM_MCP_BUS_CLK_START << SWRM_EE_CPU);
