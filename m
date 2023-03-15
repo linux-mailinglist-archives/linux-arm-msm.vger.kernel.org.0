@@ -2,70 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F7B76BBDF6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 21:28:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ECEB06BBE6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 22:03:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230457AbjCOU17 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 16:27:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49448 "EHLO
+        id S232803AbjCOVDX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 17:03:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231636AbjCOU16 (ORCPT
+        with ESMTP id S232749AbjCOVDP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 16:27:58 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41DC612CE2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 13:27:55 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id az3-20020a05600c600300b003ed2920d585so1820125wmb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 13:27:55 -0700 (PDT)
+        Wed, 15 Mar 2023 17:03:15 -0400
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE3D2A2F34
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 14:02:49 -0700 (PDT)
+Received: by mail-pl1-x633.google.com with SMTP id ja10so11781638plb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 14:02:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1678912073;
+        d=linaro.org; s=google; t=1678914115;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fr9J0FxGpasTPmc3K9y6UFyT8zV90z0HoVcry+6uE6E=;
-        b=2L9jwWtjQgMw4Wom5XCjvanMAxWUjvJaBTlUTFrZ57EgTRnL5zTrT4kcfGROxAwolc
-         YfP6EQdhUAwSCxkD7HUA405gTuzmsJG4cXKmfwbY6kEEwWsuag/xTNEnGTwybtdCIN6f
-         EQ1/tJ14wEccoNfklaPktvMV1A75wlBjWVumE8yDY9Tv3tJk6OJmcELD2p4jeqoP/eXZ
-         sIRhM9PyO0NCWH7uTO1VtFBze+debapi0IeEEgqH85y/YVKjc7nN7oLzNUt4qrWbls7O
-         TBGVmDtKpH6SFFxQBvR+wmyf7oYgIXwDLWanH5nlX7YikcBlhq7T5twGH0LkLGlWO8A7
-         J7ug==
+        bh=p4kbv6RpEerrJFJTQMRGDEPyboWZ2n0JfoZtVmkoGLs=;
+        b=l7Ioni+zA3bkP3wXEjm1/L1XdG3m9rUUN2ZHFHNkiMI+VB+IQoUp1PmrOJe5W6kE+B
+         BsmeFc+4/kYi3st5Peoa+fUoet6xpsuHNu+M4MCnFqcR7QxYFXUYyRWDuKHk/x9QBxfH
+         tQHXh08aZqIPlULRcpo//W4pOE0ys/Sj435BR4qy8hdFRBuCiGZjhigKKw8w8Y3L2cfb
+         T4ssHlKEhaVi7AocYOXKZEP0MDZ49L07WOpp2b1LxLNIJv+I4tfrtoJyHKAYX+68Fe2y
+         Un12oaKmIYlTETOoedGNcBclndC93IQ+LLPCY7KUs15jWrAc0C91qsr+0clMIv0kHNuY
+         wJIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678912073;
+        d=1e100.net; s=20210112; t=1678914115;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Fr9J0FxGpasTPmc3K9y6UFyT8zV90z0HoVcry+6uE6E=;
-        b=iAWTEgA/9E17KhTtK9UDH52CNdRZKb2EdZ+DTuMDBF/fcJGcB+E3OFwOqCRLPRZ+8t
-         jkzarRuerG3I2s+WZYeIq1lv/jUmkSFeOOPw9e7Wk2XNfuC/tfWl0QXRqieqjXPYrTNs
-         OptHZ/3rScKMAe/tU2rHnDr8HFgvXmJxY1WCfiphLXmyGtcrl8ZVyWGNk9ESAH2FhzaP
-         srSsSDWL65h848pCSRUUDiVTP29p/KlG4XJGqD4Xf4yJ7o3Z11V8zhpS7yjr21tK2q68
-         3IKUF1ejy9x54HNLmjxHrAIsawZiZLQLTvZI3aIRy0HKi4AXuYyeFbeqdIySyiThkzve
-         gHjg==
-X-Gm-Message-State: AO0yUKVmiws+6+YbuSFQTa3NFy8VERVnv6Phuu29dP3zLwx+QQfnSIDC
-        YdXPWVPk3O8hd2m4yANOv4baYQ==
-X-Google-Smtp-Source: AK7set8feVb5qr4tXzszszSx/y6GB+vQiduw8991Xje8cOUTvcJG+PH0bhx+FBWagDu5Bu/l+pWxIw==
-X-Received: by 2002:a05:600c:1c0a:b0:3ed:22b3:6263 with SMTP id j10-20020a05600c1c0a00b003ed22b36263mr13127306wms.12.1678912073633;
-        Wed, 15 Mar 2023 13:27:53 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:dc34:6420:c408:f64e])
-        by smtp.gmail.com with ESMTPSA id n7-20020a05600c294700b003ebf9e36cd6sm2897478wmd.26.2023.03.15.13.27.52
+        bh=p4kbv6RpEerrJFJTQMRGDEPyboWZ2n0JfoZtVmkoGLs=;
+        b=AwkGx99Yo4/rUINjeMQFVQEl2Gtod2zH8PTZITc/sQUQMqsXkGABWiFgdxYQK0DN7m
+         Z7oVm+C505Pp4H7PBPSqXUvMYNVkGYqcgNQ7lJnhGEDHfu1V3lyLXoae+dAbooA4HnyN
+         /wFm1dHB+CdfgcESX+THgOomDZ4hLJq4rq4YSny2u5rCFVgU0XZdUeOfJ2/n7eB0KPma
+         CKhwWe21Ml8Tvrnf0YGQMZvvcRMOIrWjCulvnOD3JqYhEvnLonOawuPdlMItH6JFKlMD
+         56vGjpMgYo5sR2uZoxe4gG3J0tj7QUStIEoFlcQoXscs9cIwnmWjsLwP7Y52vk9zIf4C
+         Vn9A==
+X-Gm-Message-State: AO0yUKW7blaW+KRPcSN4ARB+MfWcxyrosIyVGShEm56bV4dJPD2S5LcA
+        SyFSt2VrcxgLnJ/Xp09oSuB7FLQc2cb2tR8ahQU=
+X-Google-Smtp-Source: AK7set+OX5ULuxn1yScvFAkNgegzq+qv+kJYNSaqEbluXE22k/b9kiV64wIbQDqEzGEAVhfoiqSnwQ==
+X-Received: by 2002:a17:903:3012:b0:19a:96d2:2407 with SMTP id o18-20020a170903301200b0019a96d22407mr774280pla.8.1678914114967;
+        Wed, 15 Mar 2023 14:01:54 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c61:1acb:9af6:bd7f:78e7:7ae6])
+        by smtp.gmail.com with ESMTPSA id 10-20020a170902c14a00b0019a91895cdfsm4066498plj.50.2023.03.15.14.01.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 13:27:53 -0700 (PDT)
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: sm8150: fix the uart9 label
-Date:   Wed, 15 Mar 2023 21:27:51 +0100
-Message-Id: <20230315202751.1518543-1-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.37.2
+        Wed, 15 Mar 2023 14:01:54 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski@linaro.org
+Subject: [PATCH v2 0/2] arm64: dts: qcom: Add Qualcomm RB2 board dts
+Date:   Thu, 16 Mar 2023 02:31:43 +0530
+Message-Id: <20230315210145.2221116-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,29 +71,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-
-There's a typo in the @<address> part of the uart9 label. Fix it.
-
-Fixes: 10d900a834da ("arm64: dts: sm8150: add the QUPv3 high-speed UART node")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 926f40d85603..4e012c8ce10c 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1342,7 +1342,7 @@ spi9: spi@a84000 {
- 				status = "disabled";
- 			};
+Changes since v1:
+-----------------
+- v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230314210828.2049720-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Konrad and fixed the board dts and also
+  added a new 'qcom,qrb4210' compatible.
+- Although Krzysztof provided an Ack for [PATCH 1/2] from the v1 series,
+  since this series introduces the new 'qcom,qrb4210' compatible, so I
+  have dropped the same for now.
  
--			uart9: serial@a8c000 {
-+			uart9: serial@a84000 {
- 				compatible = "qcom,geni-uart";
- 				reg = <0x0 0x00a84000 0x0 0x4000>;
- 				reg-names = "se";
+Add an initial device tree for Qualcomm RB2 board (see [1]).
+It is based on the Robotics version of the Snapdragon SM4250
+Soc, i.e. QRB4210.
+
+Currently it enables:
+    - eMMC via SDHC1,
+    - uSD card via SDHC2,
+    - RPM regulators,
+    - Debug UART (via micro USB port).
+
+Subsequent patchset(s) will add more peripherals like USB, etc.
+
+This patchset is dependent on the QRB4210 SocInfo patchset sent out
+earlier (see [2]).
+
+To get a successful boot run:
+    
+   $ cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/\
+    qrb4210-rb2.dtb > ./Image-adp.gz+dtb
+
+   $ mkbootimg --kernel ./Image-adp.gz+dtb \
+     --ramdisk ./some-initramfs-image.rootfs.img \
+     --output ./rb2-boot.img --pagesize 4096 \
+     --base 0x80000000 --cmdline 'SOME_CMDLINE'
+    
+   $ fastboot boot ./rb2-boot.img
+
+[1]. https://www.qualcomm.com/products/internet-of-things/industrial/industrial-automation/qualcomm-robotics-rb2-platform#Overview
+[2]. https://lore.kernel.org/linux-arm-msm/20230315160151.2166861-1-bhupesh.sharma@linaro.org/
+
+Bhupesh Sharma (2):
+  dt-bindings: arm: qcom: Document the Qualcomm qrb4210-rb2 board
+  arm64: dts: qcom: Add base qrb4210-rb2 board dts
+
+ .../devicetree/bindings/arm/qcom.yaml         |   8 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts      | 224 ++++++++++++++++++
+ 3 files changed, 233 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+
 -- 
-2.37.2
+2.38.1
 
