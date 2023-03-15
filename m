@@ -2,103 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC10F6BB5D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 15:22:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68D3C6BB61F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 15:34:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232481AbjCOOWk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 10:22:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42174 "EHLO
+        id S230212AbjCOOeP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 10:34:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232105AbjCOOWj (ORCPT
+        with ESMTP id S231154AbjCOOeO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 10:22:39 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6CDE69CEC;
-        Wed, 15 Mar 2023 07:22:38 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 514A961DC1;
-        Wed, 15 Mar 2023 14:22:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBEB2C433EF;
-        Wed, 15 Mar 2023 14:22:36 +0000 (UTC)
-Date:   Wed, 15 Mar 2023 10:22:32 -0400
-From:   Steven Rostedt <rostedt@goodmis.org>
-To:     "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Cc:     linux-trace-kernel@vger.kernel.org,
-        Heinz Wiesinger <pprkut@slackware.com>, andersson@kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_rjendra@quicinc.com, quic_saipraka@quicinc.com,
-        quic_sibis@quicinc.com
-Subject: Re: [PATCH v2] bootconfig: Fix testcase to increase max node
-Message-ID: <20230315102232.0a67e109@gandalf.local.home>
-In-Reply-To: <167888844790.791176.670805252426835131.stgit@devnote2>
-References: <167888844790.791176.670805252426835131.stgit@devnote2>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+        Wed, 15 Mar 2023 10:34:14 -0400
+X-Greylist: delayed 402 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 15 Mar 2023 07:34:10 PDT
+Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 898F14347C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 07:34:09 -0700 (PDT)
+Received: (qmail 18003 invoked by uid 990); 15 Mar 2023 14:27:26 -0000
+Authentication-Results: devico.uberspace.de;
+        auth=pass (plain)
+From:   Leonard Lausen <leonard@lausen.nl>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] drm/msm/dpu: Add support for AR30 format
+Date:   Wed, 15 Mar 2023 14:27:06 +0000
+Message-ID: <864jqmw0n9.fsf@lausen.nl>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.6 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Rspamd-Bar: ---
+X-Rspamd-Report: BAYES_HAM(-2.999999) MIME_GOOD(-0.1)
+X-Rspamd-Score: -3.099999
+Received: from unknown (HELO unkown) (::1)
+        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Wed, 15 Mar 2023 15:27:26 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+        d=lausen.nl; s=uberspace;
+        h=from;
+        bh=j7/a5HItpL7CPAILjLI30SM3Uf3gqQslqNLmr5RYGs8=;
+        b=xBpwCaferJ1Bnx++RPTfcwqkw8FF5QkQpLwpiMaPqe+86OqFJRCEdEjyshHlz6PeyAdycih7hR
+        /iJGhIkpN2gFl+ATdHrL7B3mrc7AgGMDnPjbJKDZamFyw+ouyLQw4HdzMSSsY5ajjjD6zC7m3Qc1
+        p4TMRY4fVEiaWCu1rIzyCbEDxm3tBj+ZVOHftPy9ECHsvy+W7/D6/Bv5lRlq4Jx97qRd4/fXYFDb
+        ByIdkScjYkL4XzLsudcNLmW06PFK9/sCoC1EuX91JmbVZbFvkxIcscwUc6XzXI9+l21eajfyfkBE
+        3i6DjHjLyGej+NSBhHQrkJbiVJf4+PzmMNnvsdtTVz7iGPTzRqVm0wy0kL5nU6ZILBP5Om4mV+hc
+        dgPBJgKI6pdGtwdSZnLwpuQtNeqU1+3jcTixAjz/u6OJgCzQ9OHBCfKK4turlaG3SuV5rx+6iEYO
+        1t67GabxMKmbwVAZxnyVzVgKjjfFBh4fBF8dfQ+y9Z6JT4V/YlFsodKkPJcuzKanDeMuKrgbPw5R
+        I3V3k/6r0aj/vf177cWII9LU1rQzpIMKAPvJw0q1V1ptjdQla0+UAKJqYbusvaQOJe5pdUamn8G1
+        9CxBtSssKB+WwYFJPBwODgEjWC6BZ9uMVw043549xX8jX+kLykMYRbG7EKCrKYI24pbv4dy/6OA8
+        Q=
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 15 Mar 2023 22:54:08 +0900
-"Masami Hiramatsu (Google)" <mhiramat@kernel.org> wrote:
+Commit da7716a249b699978fb5 ("drm/msm/dpu: Add support for XR30 format") enabled
+support for the 10-bit XR30 color format but missed enabling support for the
+corresponding per-pixel alpha-blending AR30 color format.
 
-> From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-> 
-> Since commit 6c40624930c5 ("bootconfig: Increase max nodes of bootconfig
-> from 1024 to 8192 for DCC support") increased the max number of bootconfig
-> node to 8192, the bootconfig testcase of the max number of nodes fails.
-> To fix this issue, we can not simply increase the number in the test script
-> because the test bootconfig file becomes too big (>32KB). To fix that, we
-> can use a combination of three alphabets (26^3 = 17576). But with that,
-> we can not express the 8193 (just one exceed from the limitation) because
-> it also exceeds the max size of bootconfig. So, the first 26 nodes will just
-> use one alphabet.
-> 
-> With this fix, test-bootconfig.sh passes all tests.
-> 
-> Reported-by: Heinz Wiesinger <pprkut@slackware.com>
-> Link: https://lore.kernel.org/all/2463802.XAFRqVoOGU@amaterasu.liwjatan.org
-> Fixes: 6c40624930c5 ("bootconfig: Increase max nodes of bootconfig from 1024 to 8192 for DCC support")
-> Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Declaring only XR30 but not AR30 color format support can trigger bugs in
+userspace. KDE KWin compositor for example always prefers 10-bit color formats,
+rendering a 1cm^2 black box around the cursor if only XR30 but AR30
+support is declared.
 
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Leonard Lausen <leonard@lausen.nl>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 1 +
+ 2 files changed, 3 insertions(+)
 
--- Steve
-
-> ---
->  tools/bootconfig/test-bootconfig.sh |   12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
-> 
-> diff --git a/tools/bootconfig/test-bootconfig.sh b/tools/bootconfig/test-bootconfig.sh
-> index f68e2e9eef8b..a2c484c243f5 100755
-> --- a/tools/bootconfig/test-bootconfig.sh
-> +++ b/tools/bootconfig/test-bootconfig.sh
-> @@ -87,10 +87,14 @@ xfail grep -i "error" $OUTFILE
->  
->  echo "Max node number check"
->  
-> -echo -n > $TEMPCONF
-> -for i in `seq 1 1024` ; do
-> -   echo "node$i" >> $TEMPCONF
-> -done
-> +awk '
-> +BEGIN {
-> +  for (i = 0; i < 26; i += 1)
-> +      printf("%c\n", 65 + i % 26)
-> +  for (i = 26; i < 8192; i += 1)
-> +      printf("%c%c%c\n", 65 + i % 26, 65 + (i / 26) % 26, 65 + (i / 26 / 26))
-> +}
-> +' > $TEMPCONF
->  xpass $BOOTCONF -a $TEMPCONF $INITRD
->  
->  echo "badnode" >> $TEMPCONF
-
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 83f1dd2c22bd..d99ce3919248 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -156,6 +156,7 @@ static const uint32_t plane_formats[] = {
+        DRM_FORMAT_RGBX8888,
+        DRM_FORMAT_BGRX8888,
+        DRM_FORMAT_XBGR8888,
++       DRM_FORMAT_ARGB2101010,
+        DRM_FORMAT_XRGB2101010,
+        DRM_FORMAT_RGB888,
+        DRM_FORMAT_BGR888,
+@@ -185,6 +186,7 @@ static const uint32_t plane_formats_yuv[] = {
+        DRM_FORMAT_RGBA8888,
+        DRM_FORMAT_BGRX8888,
+        DRM_FORMAT_BGRA8888,
++       DRM_FORMAT_ARGB2101010,
+        DRM_FORMAT_XRGB2101010,
+        DRM_FORMAT_XRGB8888,
+        DRM_FORMAT_XBGR8888,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index bfd5be89e8b8..0ed6a1a114c7 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -69,6 +69,7 @@ static const uint32_t qcom_compressed_supported_formats[] = {
+        DRM_FORMAT_ARGB8888,
+        DRM_FORMAT_XBGR8888,
+        DRM_FORMAT_XRGB8888,
++       DRM_FORMAT_ARGB2101010,
+        DRM_FORMAT_XRGB2101010,
+        DRM_FORMAT_BGR565,
+ 
+-- 
+2.30.2
