@@ -2,97 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C30DF6BBC69
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 19:39:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AF1D6BBD56
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 20:36:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231127AbjCOSjd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 14:39:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58108 "EHLO
+        id S232764AbjCOTgB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 15:36:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232684AbjCOSjK (ORCPT
+        with ESMTP id S232663AbjCOTgA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 14:39:10 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B1B16FFEF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 11:38:37 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id b13so20443988ljf.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 11:38:37 -0700 (PDT)
+        Wed, 15 Mar 2023 15:36:00 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72BD389F38
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 12:35:58 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id r16so17447170qtx.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 12:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678905504;
+        d=linaro.org; s=google; t=1678908957;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cVubaIqvmyZcVmODQ4m0c66Rfjv3Ax4FAubBWjKvyUI=;
-        b=NbsCYa1ped90PCQfFoECGkBtGykaKc5PmrnpfStkvX1VprhPanvIWZBTfNi629EIxy
-         YDtrJwiS6hNH4l5Axz3ZUCkTGvqAx2kIntIExbPwW4IJaYuULXML/7y8gQCEd5o7UFqs
-         nWRYcFfZ/Xoa7XfcYucXBbTRgN+/Uf/cQ16OiO+7Y/ztTOTewBf8szDUH4VXWML9ncce
-         n/+YV9CFW0h+4g3Om1s5/BvB4yTE0E6JpNNLRtoY7ylYb4x6I8G2I2ZyR3C6asdUSsac
-         JcDHfGzS7tv02fCXxuDY2CHGFX/OQ0DtahpZfF+p/f2V62+qSaTGqq+4QR0hoVZG5p4D
-         l0BQ==
+        bh=rRD8NgEN/2xMDJaIifHiAB1EaiS+DmHgSj8/md0pHg8=;
+        b=CmOpWXQ2K/Z3Cnfqvvaj8KMNOtuU+3KOAomRx76CMAdc9hV3od7Ix3EXd7lt3v1aCg
+         quyBuXk6dlhcKIaU9/YP2DouDib9HFf3A/tyadabjAgEN8xdccth5oiVgvBjIyolNWbM
+         owG4dEmR5Aqo2h1lQZ7lqJGDSsvZtLJuczogXTklZIRnb6/7sLbOJJZJOFsf+NLQb+H5
+         sLlODqcPKoafDN9SznODbLHxSOtPPeLJbL9tRIVio9Gk6qQ25AYP2jcvATo6y7+OpfJo
+         +1O6WQnxFcli7P3pdMI6ILSqO4nU4WoZgLpNFewR4BejrT/BpaRORc14CoipR/8V3rHz
+         BZqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678905505;
+        d=1e100.net; s=20210112; t=1678908957;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cVubaIqvmyZcVmODQ4m0c66Rfjv3Ax4FAubBWjKvyUI=;
-        b=DFHwI0ufq1hYDVl4ZewZyIrN8VkPFBMK6t2vFVre/qgTFzFhpadE/8UumDQO8EujyG
-         q2iaBLUt9eDCdZ3kp6FCE5q58LwltmMiCC94SI9UU04ZcDr/55V9Avwj1J1thMj5LHK9
-         TrbaWwkVq+H3lR0ojGoAeSHnB0CFrLvYSlZoEb31XEGqSpyNivChtpzKmgj1dkFLMZNQ
-         vdlc18zITNj43vprNGGDJJ74a9Ti6Jq7v5yFFMnnA1LHNxsdKLNU1c0kOPut/s9d9o+f
-         dx5WqARREOkkq0NkSgXg6sOsAGDrtb0Y/9ysTnhboqV+9Rdma3slD262TCmgxIDCQm+q
-         WPEA==
-X-Gm-Message-State: AO0yUKWgU4eAxx7vnsnOG5jj8VThvGWfsDUCN3b6cwcGhjvymtMBKmNc
-        UBCBC2EssO0s1WK6qn6FdVI990stiVplNw1YiwY=
-X-Google-Smtp-Source: AK7set84NzHICTZHh+Hel5/BN/OKTrtw1DK3YnyugJrhQvB1cG5i0IemvtS8crWDlETL4lCsusCg3A==
-X-Received: by 2002:a2e:a58e:0:b0:295:a280:45e4 with SMTP id m14-20020a2ea58e000000b00295a28045e4mr1760515ljp.36.1678905504709;
-        Wed, 15 Mar 2023 11:38:24 -0700 (PDT)
-Received: from localhost.localdomain (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id k7-20020a2e2407000000b00298699aad60sm951261ljk.52.2023.03.15.11.38.21
+        bh=rRD8NgEN/2xMDJaIifHiAB1EaiS+DmHgSj8/md0pHg8=;
+        b=F01pglC5bQ1j0UePh2bIgs6XVOFbUqoPsQFIPPGOY5QAW0FofmTJok8ASGc5t0ouNO
+         rKzVanIAv75EPXFEZvI6NdwcARiI9JYVqp/XoVOVUa/K/64SzQ7pd1cIs9+a3rqaZ50g
+         melxOL8P6xxr/8aDAR19sI3eOWTVNnDXPZsC/eWBmBQShEAylI2CcD4QgrzIFhasZEKG
+         bZchpGCF+DSnfcaQAtDrdhSEs+XNKszm8mXWUPgNZ/QPvHkGY2mKdwT9Q73LNypMZFBw
+         x9ogpu4nHAyNQtW56IHbcd+yV1QKw6MnDe7kPl9AzMyn3lGZtCOuHZRlTNzYkFKJYddx
+         tkgg==
+X-Gm-Message-State: AO0yUKU4Yvz7owYFmYuxuFmlJaYQuA9ihLcJmU9N0Yi5A2mfB+z8f3/F
+        Tht5ZCKo1w7w2sUmuG28rE1kgQ==
+X-Google-Smtp-Source: AK7set/im7ReWlbjUTTel/CadvtzywtBv/u+FOd9kH8CWrLzc78P9mWW7EPTdeZgGLZ/JVPe9OI5cw==
+X-Received: by 2002:a05:622a:1309:b0:3bf:d366:50e1 with SMTP id v9-20020a05622a130900b003bfd36650e1mr1659021qtk.45.1678908957392;
+        Wed, 15 Mar 2023 12:35:57 -0700 (PDT)
+Received: from localhost.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id q9-20020a05620a024900b0071eddd3bebbsm4369462qkn.81.2023.03.15.12.35.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 11:38:24 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        Wed, 15 Mar 2023 12:35:56 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
+        andersson@kernel.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: mfd: qcom,spmi-pmic: Add PM2250
-Date:   Wed, 15 Mar 2023 19:38:19 +0100
-Message-Id: <20230315183819.3563704-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.2
+Subject: [PATCH net v2 0/4] net: ipa: minor bug fixes
+Date:   Wed, 15 Mar 2023 14:35:48 -0500
+Message-Id: <20230315193552.1646892-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a compatible for PM2250, commonly found with QCM2290.
+The four patches in this series fix some errors, though none of them
+cause any compile or runtime problems.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 1 +
- 1 file changed, 1 insertion(+)
+The first changes the files included by "drivers/net/ipa/reg.h" to
+ensure everything it requires is included with the file.  It also
+stops unnecessarily including another file.  The prerequisites are
+apparently satisfied other ways, currently.
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-index 8f076bb622b1..975c30aad23c 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-+++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-@@ -33,6 +33,7 @@ properties:
-   compatible:
-     items:
-       - enum:
-+          - qcom,pm2250
-           - qcom,pm6125
-           - qcom,pm6150
-           - qcom,pm6150l
+The second adds two struct declarations to "gsi_reg.h", to ensure
+they're declared before they're used later in the file.  Again, it
+seems these declarations are currently resolved wherever this file
+is included.
+
+The third removes register definitions that were added for IPA v5.0
+that are not needed.  And the last updates some validity checks for
+IPA v5.0 registers.  No IPA v5.0 platforms are yet supported, so the
+issues resolved here were never harmful.
+
+Version 2 of this series changes the "Fixes" tags in the first two
+patches so they supply legitimate commit hashes.
+
+					-Alex
+
+Alex Elder (4):
+  net: ipa: reg: include <linux/bug.h>
+  net: ipa: add two missing declarations
+  net: ipa: kill FILT_ROUT_CACHE_CFG IPA register
+  net: ipa: fix some register validity checks
+
+ drivers/net/ipa/gsi_reg.c |  9 ++++++++-
+ drivers/net/ipa/gsi_reg.h |  4 ++++
+ drivers/net/ipa/ipa_reg.c | 28 ++++++++++++++++++----------
+ drivers/net/ipa/ipa_reg.h | 21 ++++++---------------
+ drivers/net/ipa/reg.h     |  3 ++-
+ 5 files changed, 38 insertions(+), 27 deletions(-)
+
 -- 
-2.39.2
+2.34.1
 
