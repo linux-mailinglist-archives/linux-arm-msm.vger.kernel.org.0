@@ -2,110 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BC706BB9AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 17:29:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B0E796BBA15
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 17:43:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231937AbjCOQ3r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 12:29:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57498 "EHLO
+        id S232597AbjCOQny (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 12:43:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230036AbjCOQ3p (ORCPT
+        with ESMTP id S232412AbjCOQnc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 12:29:45 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA2BD32CFC;
-        Wed, 15 Mar 2023 09:29:44 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Wed, 15 Mar 2023 12:43:32 -0400
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A26382ABB;
+        Wed, 15 Mar 2023 09:42:32 -0700 (PDT)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 65C4861DFC;
-        Wed, 15 Mar 2023 16:29:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF974C433EF;
-        Wed, 15 Mar 2023 16:29:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678897783;
-        bh=jjn5cdVupJ0A22hzLeqblsWGnn86f9oIpQTR3zJXyMs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SrGZE6Sk04Pizzg1tuzcS8CHPA2fWPGLs4KeZnsayQbgSEQA4cnJK0Pfeq0SJeJBK
-         k3vxt0IAld+aKoIhiC1zd5okC/+vL8oWVyyuI6ZfWamyvj388DwIwIYix0jC3bwxmi
-         DkeIXcnQUWjdJXHT/9ZFLPb9Mobk2cNyIzLuPwIw5rsLql0YKamZVRUoXUYTdyODoV
-         Qvri59v7Ipro4ikDj/8KVduqsAhq0rRHgWmjSR1HC0SJWkOuQY5nxeUuemo7vvLdpn
-         GcuwDkUNsFs3zlki+Ro5SvcGO6afswtXZknOUs/tFssFYs5ilBEfvwFoULnPAv3CIu
-         EL6OIvNSFjCYw==
-Date:   Wed, 15 Mar 2023 16:29:36 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Cc:     Wesley Cheng <quic_wcheng@quicinc.com>,
-        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
-        perex@perex.cz, lgirdwood@gmail.com,
-        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com,
-        andersson@kernel.org, robh+dt@kernel.org,
-        gregkh@linuxfoundation.org, tiwai@suse.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
-        quic_plai@quicinc.com
-Subject: Re: [PATCH v3 00/28] Introduce QC USB SND audio offloading support
-Message-ID: <e270cffa-d27b-40e0-aed5-104514e4ba94@sirena.org.uk>
-References: <20230308235751.495-1-quic_wcheng@quicinc.com>
- <4f8a66c0-398f-5655-3aa7-a59bc9ba56cc@linux.intel.com>
- <8b2f3ce7-3e0c-bdf0-8d9f-9aeabba09a15@quicinc.com>
- <a211f26d-a045-0729-871f-248d5fce3f3f@linux.intel.com>
- <684daf86-6c3f-7310-eebf-4ebfc3c480ca@quicinc.com>
- <8a37ccd3-f19e-b30d-d736-04e81b49f3a0@linux.intel.com>
- <0810f951-f4a6-a51d-97e3-43691b05f702@quicinc.com>
- <b671e263-5cb8-18e5-dc28-648ab1133c6c@linux.intel.com>
- <14d726a7-6ffc-705c-b012-0c08d7dd7b9b@quicinc.com>
- <6b811766-cd2a-54c0-d090-640812686a45@linux.intel.com>
+        by box.trvn.ru (Postfix) with ESMTPSA id 4308641853;
+        Wed, 15 Mar 2023 21:41:38 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1678898498; bh=4rN3OclD+DIXhDrK5IXWGA7Kf0vsIK1+LnpasFhlIbU=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=Mn+pvXoA1bVcdM8vUn8Y+TPOFfmmZGesXLCu00LWlgdu4yiDIio2gbmhr/S/Sf/bz
+         0iN5SObu/nZDCkbuhfHmaCmkrx+JMnqYUqJ7xanctm7tVBmkXxpgzojMT//Xvg055d
+         3UUu5ZeTrTV7SB1MiPmbc2SMLwuHyac71UTecn4eGQIOPZNbfS20nYYzNdAdgOksQL
+         HkoU7aHT07QrzVVlPxt5+Mf2qe1Iribi7u53Jg2vgTPTm6nnlfIkjX4N8dAifAl5oY
+         uSTtP5HuLiaZOOh/rqLJPDF/TPCQGCCeK2lizkg++9dls8lXZfYOea6wvT2AMD+d6y
+         L4FTYTVaAlbyg==
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Z0fuEYQGMv0a0e38"
-Content-Disposition: inline
-In-Reply-To: <6b811766-cd2a-54c0-d090-640812686a45@linux.intel.com>
-X-Cookie: "Speed is subsittute fo accurancy."
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Date:   Wed, 15 Mar 2023 21:41:37 +0500
+From:   Nikita Travkin <nikita@trvn.ru>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: Add Acer Aspire 1
+In-Reply-To: <b8805711-d720-8f91-c198-10b0553417a4@linaro.org>
+References: <20230315154311.37299-1-nikita@trvn.ru>
+ <20230315154311.37299-5-nikita@trvn.ru>
+ <b8805711-d720-8f91-c198-10b0553417a4@linaro.org>
+Message-ID: <e901b4f51d258a505b771b1acec6bc64@trvn.ru>
+X-Sender: nikita@trvn.ru
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Krzysztof Kozlowski писал(а) 15.03.2023 21:09:
+> On 15/03/2023 16:43, Nikita Travkin wrote:
+>> Acer Aspire 1 is a WoA laptop based on Snapdragon 7c gen1 platform.
+>>
+>> The laptop design is similar to trogdor in the choice of primary
+>> components but the specifics on usage of those differ slightly.
+>>
+>> Add the devicetree for the laptop with support for most of the
+>> hardware present.
+>>
+>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+>> ---
+>> Changed in v2:
+>>  - Various styling, ordering and node naming issues fixed. (Krzysztof)
+>>
+>> Changed in v3:
+>>  - Kepp camcc on, wakeup on touchpad, minor style issues. (Konrad)
+>> ---
+>>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>>  .../boot/dts/qcom/sc7180-acer-aspire1.dts     | 859 ++++++++++++++++++
+>>  2 files changed, 860 insertions(+)
+>>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>> index 89e23a74bc7f..4bd4b4079b17 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -76,6 +76,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8540p-ride.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8775p-ride.dtb
+>> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-acer-aspire1.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+>> new file mode 100644
+>> index 000000000000..b4161f1f21a7
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+>> @@ -0,0 +1,859 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +
+>> +/dts-v1/;
+>> +
+>> +#include <dt-bindings/gpio/gpio.h>
+>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>> +
+>> +#include "sc7180.dtsi"
+>> +
+>> +#include "pm6150.dtsi"
+>> +#include "pm6150l.dtsi"
+>> +
+>> +/delete-node/ &tz_mem;
+>> +/delete-node/ &ipa_fw_mem;
+>> +
+>> +/ {
+>> +	model = "Acer Aspire 1";
+>> +	compatible = "acer,aspire1", "qcom,sc7180";
+>> +	chassis-type = "laptop";
+>> +
+>> +	aliases {
+>> +		bluetooth0 = &bluetooth;
+>> +		hsuart0 = &uart3;
+>> +		serial0 = &uart8;
+>> +		wifi0 = &wifi;
+>> +	};
+>> +
+>> +	chosen {
+>> +		stdout-path = "serial0:115200n8";
+>> +	};
+>> +
+>> +	reserved-memory {
+> 
+> I still don't think it is ordered by name.... "r" is definitely after "a".
 
---Z0fuEYQGMv0a0e38
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Yes, as I said before, I want to separate the "special" DT spec nodes
+(aliases, chosen, reserved-memory, ... that are defined in the
+chapter 3 of the DT spec) from the other, device nodes.
 
-On Wed, Mar 15, 2023 at 09:30:58AM -0500, Pierre-Louis Bossart wrote:
+I see them on the top on many other boards and I believe this separation
+makes sense since those are not really devices but "more extended"
+properties of the board as a whole.
 
-> That's probably ok then, am I getting this right that the the DSP card
-> would not expose any USB-related kcontrols then, i.e. the ONLY path to
-> change volumes, etc.,  would through the regular USB card kcontrols?
+If you still believe those must be mixed together and sorted, please 
+explicitly let me know that and I will change the order.
 
-> That would limit the changes in the platform sound card to the addition
-> of a PCM USB device.
+Also, if there is any documentation that already enforces the order,
+making clear that my opinion is wrong, I would appreciate you pointing
+me to that.
 
-I'd guess that there might be some volume control in the DSP as part of
-the generic routing to the port (eg, if all ports have some output
-control) but I'm not sure that's an issue, could even be useful for
-normalising the output of DSP algorithms compared to direct PCM
-playback.
+Regards,
+Nikita
 
---Z0fuEYQGMv0a0e38
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmQR8m8ACgkQJNaLcl1U
-h9Cp3Af/fp7qmzx3dIqaYfXDA3inZKGAJxlBPLnKX7FXrObh2rhSDh/htyeF/xtx
-6tpnHQ1zB2RqEeffKTwu9lobnS2+x/SYkDG2vw5ONFKl3U7L3L87l76a67mR5Hk8
-d7nCQBAdHetX8yl/6H4iVbQztzwFNbuAfT61GYm+zxd98Psps6JucWS8IXwH8lfd
-XGRC/kENH9CPClFzhOCLGnlc+lMRkIGPDH38CN/IGl1GqHr5GgpWlRf6U5dFxpYC
-gAAATPlnhXUSp3o2+qT0bmqjEDpeWXUbeAQuayhdQ3fS0TzGBgoynfR7OyKEHPyl
-X3poldFU1Joz448CW+mSRjG2W9VTpw==
-=+zSv
------END PGP SIGNATURE-----
-
---Z0fuEYQGMv0a0e38--
+> 
+> Best regards,
+> Krzysztof
