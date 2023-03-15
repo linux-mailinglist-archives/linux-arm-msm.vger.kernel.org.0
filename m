@@ -2,258 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E44B96BABEE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 10:18:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBC6B6BAC99
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 10:51:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231603AbjCOJSU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 05:18:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45038 "EHLO
+        id S232191AbjCOJvh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 05:51:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230129AbjCOJST (ORCPT
+        with ESMTP id S231775AbjCOJut (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 05:18:19 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 394BB7EE0;
-        Wed, 15 Mar 2023 02:18:16 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BE96A61C4E;
-        Wed, 15 Mar 2023 09:18:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 017D3C433EF;
-        Wed, 15 Mar 2023 09:18:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678871895;
-        bh=+19G3QxqEoOf1ES1QUxNpw3hDUNgR7ZP5PGazby/haA=;
-        h=Date:From:To:Cc:Subject:From;
-        b=PtNxJduEQLGBkb2SGhYOtpDbPezhKAIZKK4AgMp8ykTeXjUpMkRlyUjZQBLnxayr0
-         nluyKdlCfiXd8nfjGZbjdssE05b6Sg2ZKmZ2pFfgsu2M6BizHWdZX5of6QycPXoMjY
-         BUKDkj20YGWVlidC1v08sBwN/Qzu8B21E8UREv3Ix1Lkv6D5b/s8zIcEp2THqSC32C
-         +H8WPhnmT3T5SB15+2/uqg21B4RSHaeCGUDCic3L/xtXdTJqCV3/qxyibE1it1Mq4a
-         5AnIU6wTlDsi9kJoIGjiGQDr2EkyHyIn23Je0xstHrJiIolA1ZDjw9tQ2MufEEIsaM
-         F0TKO/PzhHkzg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pcNI1-0006nT-6N; Wed, 15 Mar 2023 10:19:21 +0100
-Date:   Wed, 15 Mar 2023 10:19:21 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Adreno devfreq lockdep splat with 6.3-rc2
-Message-ID: <ZBGNmXwQoW330Wr8@hovoldconsulting.com>
+        Wed, 15 Mar 2023 05:50:49 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FA5A80E39
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 02:49:50 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id t14so18794463ljd.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 02:49:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678873788;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i8+OBFMHUqSZ5z1YaHCvkK/kxvR+7HJ17A1AzYgKFRQ=;
+        b=uq9x0jumOYOVgQaT+BS8CFb2Zbt/rPcVSFl30E1PpihJxIT7JAqTr+6dmb/4GpwZQA
+         9Tbwy4xZ56wf/IpS5TyQEjDfJYniIp88ri+YVhGvd+PPS21831TlBFj/t+yYp9VknmQr
+         Lpl1XA5tzX7anr0szpik5JfuBbfbDleXfif4ksZ1tmbdpk1zjZa+c68HDNrTISupBs6z
+         FnaOsxe5UQl4wKAB88la1BKKeaem6VV+Xq3/0AcIfvBVY2JP1kYE0vBA4Uob584gtQD5
+         7+eGxjp6lk7BdakX7Orm27YWs0tA2J1tLzP4TwfJC/MkSZHhMUbhj6ENcrH9DAgGB+TU
+         kghg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678873788;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i8+OBFMHUqSZ5z1YaHCvkK/kxvR+7HJ17A1AzYgKFRQ=;
+        b=yMyjwCuOxRdlqCW5/fMTFaldIxBm8B0Xc//9DKYBbUj6Pm0k6yy7+3le4VWMijnSFH
+         b44LGXCwVYvkiNeNrYygBcfR8U4OESbM3V4EfCtCI7EqqyYe9REo8ZcS5oORXHrtyjvb
+         CPqyv+UyW9EgiyEoGXQSc4igFAPVBNijwsuEjknSi8ddq/F4Y/72N+qmhMl65xFkh8aw
+         W5vLqU7oU8CJqb2zaiDEJHVxNChtBTLUmK3jXO6qJWn9bSKGp/OLcsHzM6lcnmroMpkW
+         E+tXIzF/FmMdqe/QHrbBTzo+d4DrRF4XZFvSzFTVQCUMWRkAREkOZM5QUSolJ5vp3u0H
+         HbCw==
+X-Gm-Message-State: AO0yUKWMfSjPZU7DURoPIfd7gUdDdfy8ucInzAD1R77cUqLqeDo3CkJw
+        vrvtuQhgb/3bmg93IOTXdALQWQ==
+X-Google-Smtp-Source: AK7set9YBZAkod0KIa27E7sPHHRoFxRok5uIBVImIJbZw9bS1TMrn/bu1HL00PJTcECy00Pfxdj0dg==
+X-Received: by 2002:a2e:8e7a:0:b0:293:45dc:8b0f with SMTP id t26-20020a2e8e7a000000b0029345dc8b0fmr573112ljk.26.1678873788291;
+        Wed, 15 Mar 2023 02:49:48 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id a1-20020a2e9801000000b00293534d9760sm782175ljj.127.2023.03.15.02.49.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 02:49:47 -0700 (PDT)
+Message-ID: <933da956-27fa-f1ca-674f-af049d86e6fb@linaro.org>
+Date:   Wed, 15 Mar 2023 10:49:45 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 0/6] QCM2290 compatibles
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20230314-topic-2290_compats-v1-0-47e26c3c0365@linaro.org>
+ <33ae98be-480e-8951-88d8-7624a695fcc9@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <33ae98be-480e-8951-88d8-7624a695fcc9@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
-
-Since 6.3-rc2 (or possibly -rc1), I'm now seeing the below
-devfreq-related lockdep splat.
-
-I noticed that you posted a fix for something similar here:
-
-	https://lore.kernel.org/r/20230312204150.1353517-9-robdclark@gmail.com
-
-but that particular patch makes no difference.
-
-From skimming the calltraces below and qos/devfreq related changes in
-6.3-rc1 it seems like this could be related to:
-
-	fadcc3ab1302 ("drm/msm/gpu: Bypass PM QoS constraint for idle clamp")
-
-Johan
 
 
-[   35.389822] ======================================================
-[   35.389824] WARNING: possible circular locking dependency detected
-[   35.389826] 6.3.0-rc2 #208 Not tainted
-[   35.389828] ------------------------------------------------------
-[   35.389829] ring0/348 is trying to acquire lock:
-[   35.389830] ffff43424cfa2078 (&devfreq->lock){+.+.}-{3:3}, at: qos_min_notifier_call+0x28/0x88
-[   35.389845] 
-               but task is already holding lock:
-[   35.389846] ffff4342432b78e8 (&(c->notifiers)->rwsem){++++}-{3:3}, at: blocking_notifier_call_chain+0x34/0xa0
-[   35.389855] 
-               which lock already depends on the new lock.
+On 15.03.2023 08:47, Krzysztof Kozlowski wrote:
+> On 14/03/2023 13:52, Konrad Dybcio wrote:
+>> Document a couple of compatibles for IPs found on the QCM2290 that don't
+>> require any specific driver changes
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> I assume this is what you talked about that DTS will follow a bit later?
+Yep, right after we resolve the RPM MSG RAM situation!
 
-[   35.389856] 
-               the existing dependency chain (in reverse order) is:
-[   35.389857] 
-               -> #4 (&(c->notifiers)->rwsem){++++}-{3:3}:
-[   35.389861]        lock_acquire+0x68/0x84
-[   35.389865]        down_write+0x58/0xfc
-[   35.389869]        blocking_notifier_chain_register+0x30/0x8c
-[   35.389872]        freq_qos_add_notifier+0x68/0x7c
-[   35.389876]        dev_pm_qos_add_notifier+0xe8/0x114
-[   35.389881]        devfreq_add_device.part.0+0x360/0x5a4
-[   35.389884]        devm_devfreq_add_device+0x74/0xe0
-[   35.389886]        msm_devfreq_init+0xa0/0x154 [msm]
-[   35.389915]        msm_gpu_init+0x320/0x5b0 [msm]
-[   35.389933]        adreno_gpu_init+0x164/0x2d8 [msm]
-[   35.389951]        a6xx_gpu_init+0x270/0x608 [msm]
-[   35.389968]        adreno_bind+0x184/0x284 [msm]
-[   35.389983]        component_bind_all+0x124/0x288
-[   35.389989]        msm_drm_bind+0x1d8/0x6a8 [msm]
-[   35.390004]        try_to_bring_up_aggregate_device+0x1ec/0x2f4
-[   35.390007]        __component_add+0xa8/0x194
-[   35.390010]        component_add+0x14/0x20
-[   35.390012]        dp_display_probe+0x2b4/0x474 [msm]
-[   35.390029]        platform_probe+0x68/0xd8
-[   35.390031]        really_probe+0x184/0x3c8
-[   35.390034]        __driver_probe_device+0x7c/0x188
-[   35.390036]        driver_probe_device+0x3c/0x110
-[   35.390039]        __device_attach_driver+0xbc/0x158
-[   35.390041]        bus_for_each_drv+0x84/0xe0
-[   35.390044]        __device_attach+0xa8/0x1d4
-[   35.390046]        device_initial_probe+0x14/0x20
-[   35.390049]        bus_probe_device+0xac/0xb0
-[   35.390051]        deferred_probe_work_func+0xa0/0xf4
-[   35.390053]        process_one_work+0x288/0x6c4
-[   35.390056]        worker_thread+0x74/0x450
-[   35.390058]        kthread+0x118/0x11c
-[   35.390060]        ret_from_fork+0x10/0x20
-[   35.390063] 
-               -> #3 (dev_pm_qos_mtx){+.+.}-{3:3}:
-[   35.390066]        lock_acquire+0x68/0x84
-[   35.390068]        __mutex_lock+0x98/0x428
-[   35.390072]        mutex_lock_nested+0x2c/0x38
-[   35.390074]        dev_pm_qos_remove_notifier+0x34/0x140
-[   35.390077]        genpd_remove_device+0x3c/0x174
-[   35.390081]        genpd_dev_pm_detach+0x78/0x1b4
-[   35.390083]        dev_pm_domain_detach+0x24/0x34
-[   35.390085]        a6xx_gmu_remove+0x64/0xd0 [msm]
-[   35.390101]        a6xx_destroy+0xa8/0x138 [msm]
-[   35.390116]        adreno_unbind+0x40/0x64 [msm]
-[   35.390131]        component_unbind+0x38/0x6c
-[   35.390134]        component_unbind_all+0xc8/0xd4
-[   35.390136]        msm_drm_uninit.isra.0+0x168/0x1dc [msm]
-[   35.390152]        msm_drm_bind+0x2f4/0x6a8 [msm]
-[   35.390167]        try_to_bring_up_aggregate_device+0x1ec/0x2f4
-[   35.390170]        __component_add+0xa8/0x194
-[   35.390172]        component_add+0x14/0x20
-[   35.390175]        dp_display_probe+0x2b4/0x474 [msm]
-[   35.390190]        platform_probe+0x68/0xd8
-[   35.390192]        really_probe+0x184/0x3c8
-[   35.390194]        __driver_probe_device+0x7c/0x188
-[   35.390197]        driver_probe_device+0x3c/0x110
-[   35.390199]        __device_attach_driver+0xbc/0x158
-[   35.390201]        bus_for_each_drv+0x84/0xe0
-[   35.390203]        __device_attach+0xa8/0x1d4
-[   35.390206]        device_initial_probe+0x14/0x20
-[   35.390208]        bus_probe_device+0xac/0xb0
-[   35.390210]        deferred_probe_work_func+0xa0/0xf4
-[   35.390212]        process_one_work+0x288/0x6c4
-[   35.390214]        worker_thread+0x74/0x450
-[   35.390216]        kthread+0x118/0x11c
-[   35.390217]        ret_from_fork+0x10/0x20
-[   35.390219] 
-               -> #2 (&gmu->lock){+.+.}-{3:3}:
-[   35.390222]        lock_acquire+0x68/0x84
-[   35.390224]        __mutex_lock+0x98/0x428
-[   35.390226]        mutex_lock_nested+0x2c/0x38
-[   35.390229]        a6xx_gpu_set_freq+0x30/0x5c [msm]
-[   35.390245]        msm_devfreq_target+0xb4/0x218 [msm]
-[   35.390260]        devfreq_set_target+0x84/0x2f4
-[   35.390262]        devfreq_update_target+0xc4/0xec
-[   35.390263]        devfreq_monitor+0x38/0x1f0
-[   35.390265]        process_one_work+0x288/0x6c4
-[   35.390267]        worker_thread+0x74/0x450
-[   35.390269]        kthread+0x118/0x11c
-[   35.390270]        ret_from_fork+0x10/0x20
-[   35.390272] 
-               -> #1 (&df->lock){+.+.}-{3:3}:
-[   35.390275]        lock_acquire+0x68/0x84
-[   35.390276]        __mutex_lock+0x98/0x428
-[   35.390279]        mutex_lock_nested+0x2c/0x38
-[   35.390281]        msm_devfreq_get_dev_status+0x48/0x134 [msm]
-[   35.390296]        devfreq_simple_ondemand_func+0x3c/0x144
-[   35.390298]        devfreq_update_target+0x4c/0xec
-[   35.390300]        devfreq_monitor+0x38/0x1f0
-[   35.390302]        process_one_work+0x288/0x6c4
-[   35.390304]        worker_thread+0x74/0x450
-[   35.390305]        kthread+0x118/0x11c
-[   35.390307]        ret_from_fork+0x10/0x20
-[   35.390308] 
-               -> #0 (&devfreq->lock){+.+.}-{3:3}:
-[   35.390311]        __lock_acquire+0x1394/0x21fc
-[   35.390313]        lock_acquire.part.0+0xc4/0x1fc
-[   35.390314]        lock_acquire+0x68/0x84
-[   35.390316]        __mutex_lock+0x98/0x428
-[   35.390319]        mutex_lock_nested+0x2c/0x38
-[   35.390321]        qos_min_notifier_call+0x28/0x88
-[   35.390323]        blocking_notifier_call_chain+0x6c/0xa0
-[   35.390325]        pm_qos_update_target+0xdc/0x24c
-[   35.390327]        freq_qos_apply+0x68/0x74
-[   35.390329]        apply_constraint+0x100/0x148
-[   35.390331]        __dev_pm_qos_update_request+0xb8/0x278
-[   35.390333]        dev_pm_qos_update_request+0x3c/0x64
-[   35.390335]        msm_devfreq_active+0xf8/0x194 [msm]
-[   35.390350]        msm_gpu_submit+0x18c/0x1a8 [msm]
-[   35.390365]        msm_job_run+0xbc/0x140 [msm]
-[   35.390380]        drm_sched_main+0x1a0/0x528 [gpu_sched]
-[   35.390387]        kthread+0x118/0x11c
-[   35.390388]        ret_from_fork+0x10/0x20
-[   35.390390] 
-               other info that might help us debug this:
-
-[   35.390391] Chain exists of:
-                 &devfreq->lock --> dev_pm_qos_mtx --> &(c->notifiers)->rwsem
-
-[   35.390395]  Possible unsafe locking scenario:
-
-[   35.390396]        CPU0                    CPU1
-[   35.390397]        ----                    ----
-[   35.390397]   lock(&(c->notifiers)->rwsem);
-[   35.390399]                                lock(dev_pm_qos_mtx);
-[   35.390401]                                lock(&(c->notifiers)->rwsem);
-[   35.390403]   lock(&devfreq->lock);
-[   35.390405] 
-                *** DEADLOCK ***
-
-[   35.390406] 4 locks held by ring0/348:
-[   35.390407]  #0: ffff43424cfa1170 (&gpu->lock){+.+.}-{3:3}, at: msm_job_run+0xb0/0x140 [msm]
-[   35.390426]  #1: ffff43424cfa1208 (&gpu->active_lock){+.+.}-{3:3}, at: msm_gpu_submit+0xdc/0x1a8 [msm]
-[   35.390443]  #2: ffffdbf2a5472718 (dev_pm_qos_mtx){+.+.}-{3:3}, at: dev_pm_qos_update_request+0x30/0x64
-[   35.390448]  #3: ffff4342432b78e8 (&(c->notifiers)->rwsem){++++}-{3:3}, at: blocking_notifier_call_chain+0x34/0xa0
-[   35.390452] 
-               stack backtrace:
-[   35.390454] CPU: 4 PID: 348 Comm: ring0 Not tainted 6.3.0-rc2 #208
-[   35.390456] Hardware name: LENOVO 21BYZ9SRUS/21BYZ9SRUS, BIOS N3HET32D (1.04 ) 03/16/2020
-[   35.390458] Call trace:
-[   35.390460]  dump_backtrace+0xa4/0x128
-[   35.390463]  show_stack+0x18/0x24
-[   35.390465]  dump_stack_lvl+0x60/0xac
-[   35.390469]  dump_stack+0x18/0x24
-[   35.390470]  print_circular_bug+0x24c/0x2f8
-[   35.390472]  check_noncircular+0x134/0x148
-[   35.390473]  __lock_acquire+0x1394/0x21fc
-[   35.390475]  lock_acquire.part.0+0xc4/0x1fc
-[   35.390477]  lock_acquire+0x68/0x84
-[   35.390478]  __mutex_lock+0x98/0x428
-[   35.390481]  mutex_lock_nested+0x2c/0x38
-[   35.390483]  qos_min_notifier_call+0x28/0x88
-[   35.390485]  blocking_notifier_call_chain+0x6c/0xa0
-[   35.390487]  pm_qos_update_target+0xdc/0x24c
-[   35.390489]  freq_qos_apply+0x68/0x74
-[   35.390491]  apply_constraint+0x100/0x148
-[   35.390493]  __dev_pm_qos_update_request+0xb8/0x278
-[   35.390495]  dev_pm_qos_update_request+0x3c/0x64
-[   35.390497]  msm_devfreq_active+0xf8/0x194 [msm]
-[   35.390512]  msm_gpu_submit+0x18c/0x1a8 [msm]
-[   35.390527]  msm_job_run+0xbc/0x140 [msm]
-[   35.390542]  drm_sched_main+0x1a0/0x528 [gpu_sched]
-[   35.390547]  kthread+0x118/0x11c
-[   35.390548]  ret_from_fork+0x10/0x20
+Konrad
+> 
+> Best regards,
+> Krzysztof
+> 
