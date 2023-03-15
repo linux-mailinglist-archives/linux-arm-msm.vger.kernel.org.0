@@ -2,121 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BED56BAA54
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 09:02:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CEFBE6BAA71
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 09:08:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231834AbjCOIB7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 04:01:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43820 "EHLO
+        id S231586AbjCOIIb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 04:08:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231899AbjCOIBv (ORCPT
+        with ESMTP id S231480AbjCOII3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 04:01:51 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 638BB6FFF6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 01:01:44 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id p4so10256589wre.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 01:01:44 -0700 (PDT)
+        Wed, 15 Mar 2023 04:08:29 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69AAF206B5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 01:08:28 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id h12-20020a17090aea8c00b0023d1311fab3so1057282pjz.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 01:08:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678867303;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=5wswi1DyAuYzJFWHWsqSArP17cSfb+M+N1FHnH+AfhA=;
-        b=bXvkz/yX64lIDsHFesL+52hM15LEw2hh1hd9XLiSKXK5vxE8pVYfQHdqOkZ0FMGcXc
-         F4R5ESNK1Tk/rqBaN0eR6oFsui0szxNHXCWqekofsh7DM5r+IptlZ9qE6WEFyLlaf6Hl
-         KyYDpbpee/rxB5EBAcwllKXsRlAQjufynXVfD1GFQI7wSV+pAvgHZ/75PWUPIUueSqqe
-         X8oXiF17AMiftJmvXhVXWltm3IFGEYPlkPuMRzwSea4ejcU7QjVql4IPqo5vAqru7CPX
-         VBlxrDOKNoKvMyfxoC+fMZHuoZV9ch6sgrWqlaARYDZJfBWMuQOEw47ZkZv/mCkjtBDH
-         sFBg==
+        d=linaro.org; s=google; t=1678867708;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zf3SxA1nvFsp+aFJOgDiIaFeqD0uKMLVMNAFYzhVXhY=;
+        b=NddB9feiL1/IHj0GWjT60uDVka3Coer/8QqM++x5QCJ4AUdYzHQ1ZmXgIlgRBFmI8X
+         vj4FdOqUWme3kwggjcL21D4384w100HngzyCxLHJjksA2CATht/g77//QzSpXm+dG3ke
+         XaSwyEfJYikUNUn1MhOj7LZfqQtArIIRl1x0ABE+gZxtlNzkkQY9n3cDaDMAN/m4Lpdq
+         FkK/yQH7Y2jtO9wWz++8rSM9cLdvJZ/2pKlJ4nJbdN191rRpgFbeAF9E02SQn7jHOtv8
+         8f1B6GKwx297IGiqZbB9a8lkEYxk6iG1hnJhjdhWN8mW6niN5hY7kdQGGA7EXf/B9/Ae
+         9CFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678867303;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5wswi1DyAuYzJFWHWsqSArP17cSfb+M+N1FHnH+AfhA=;
-        b=S+qt5ba+QwQ9yWaHdbPOt1gLkCfxA3f6Ny6V7+wQqgy9AblgH+CiTG76RVVHhMcT8g
-         c7BDNBRlxAH9iTDlZWwuxsjUXVRq+96ZGS/tF8j3rY2CqchA6CaTEmVvI2QSV4FxwbFV
-         5h8jn2YgczyX6o0OEqiMmqHCqWLSP8oTjxQkBU5VA2+r3NyoEOjoUSTTyRBz/PElxt1z
-         syt3tu+H0urU5A4Xv+OaXG5PVioTw871X/eThGX3KMW6YLHPUsnQOAB0ZaxguXuZWC5p
-         KWZxtTEML7spmA1P9VpA5lESpX0Sv4E2vfdxbunABMQ5sWlZMQ9LZ+ldkkOpjLNLbyNu
-         UPaA==
-X-Gm-Message-State: AO0yUKVIFK+CinQaq/kLQ+ZaF9uz1Nvw+TPMpx4E9a0JycjuLtMIa0KP
-        1mF/JpQGQPU/EHrxJ5tqPWYETWeWajEPCjaANIy8cA==
-X-Google-Smtp-Source: AK7set/zDwpw5tmgpQkQE93auoU6m0X9eMFuTR84C2UImSDMGqPTyR5wis50nno6pRellvCAciITc3dcaQs8FlsxmTE=
-X-Received: by 2002:a5d:65cc:0:b0:2ce:a3a6:79f6 with SMTP id
- e12-20020a5d65cc000000b002cea3a679f6mr365503wrw.4.1678867300640; Wed, 15 Mar
- 2023 01:01:40 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1678867708;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zf3SxA1nvFsp+aFJOgDiIaFeqD0uKMLVMNAFYzhVXhY=;
+        b=O4c9oJZ1HWvIetabL/AxKKkEd9/ZEgNRyYueBhnbrUfc60XE0ZxbwlpJlsmrxfV0q2
+         lkabrbQC4GwSwQqZn2OR85Na2i7MKTJYXNFUgwvYDC6BdKjQNdSLHmRVl7mkeo2mqDrO
+         +RB6HLfKay3ODBGsBBgbGNbLVZdtKYsFiy/NImVIWO6QAoQx6Rt03tL1fgFKlChv+WFc
+         GgWVjK7LLL9jN9DIx2tP+gLNs0cLdOv9aWEIf38O6geirOm7XFd25QFU6s1IpQDOpSIa
+         vWq6aRl2hrDH+oNV93KOWZ+sbpd0FxgQWB96/NG9osyAFjPI+0wUSXDDhAmoKDy/IY1V
+         YIfg==
+X-Gm-Message-State: AO0yUKW+bGXFp+3b4zhnsMANIdNXmrwnvaYfXpj6tYgj89fhPbwbffYk
+        eS5nN0zVhtI+rAjEOF41QDmClg==
+X-Google-Smtp-Source: AK7set9WhF84SIf5aXDDBaPgWwRatZNX9vVlgGWyHt2WrilP2gD6F91uKuAeYewh/yYjTj8F8aXAgg==
+X-Received: by 2002:a17:903:283:b0:1a0:4341:4cd9 with SMTP id j3-20020a170903028300b001a043414cd9mr2220842plr.31.1678867707615;
+        Wed, 15 Mar 2023 01:08:27 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1c61:1acb:9af6:bd7f:78e7:7ae6? ([2401:4900:1c61:1acb:9af6:bd7f:78e7:7ae6])
+        by smtp.gmail.com with ESMTPSA id p16-20020a170902ebd000b001994e74c094sm2961131plg.275.2023.03.15.01.08.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 01:08:27 -0700 (PDT)
+Message-ID: <6d7f60b6-bdb4-a22d-4396-c72fd9114d84@linaro.org>
+Date:   Wed, 15 Mar 2023 13:38:23 +0530
 MIME-Version: 1.0
-References: <20230314-topic-2290_compats-v1-0-47e26c3c0365@linaro.org>
-In-Reply-To: <20230314-topic-2290_compats-v1-0-47e26c3c0365@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Document the Qualcomm
+ qrb4210-rb2 board
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org
+References: <20230314210828.2049720-1-bhupesh.sharma@linaro.org>
+ <20230314210828.2049720-2-bhupesh.sharma@linaro.org>
+ <3104977d-b93f-3c55-70d0-cb54cb48da81@linaro.org>
+Content-Language: en-US
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Wed, 15 Mar 2023 13:31:29 +0530
-Message-ID: <CAH=2NtxHrk4XnFAzUD82ngqihsEPHKztz_7OJJ36U4X=DA9wGQ@mail.gmail.com>
-Subject: Re: [PATCH 0/6] QCM2290 compatibles
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
-        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <3104977d-b93f-3c55-70d0-cb54cb48da81@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 14 Mar 2023 at 18:23, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> Document a couple of compatibles for IPs found on the QCM2290 that don't
-> require any specific driver changes
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Konrad Dybcio (6):
->       dt-bindings: watchdog: qcom-wdt: add QCM2290
->       dt-bindings: dmaengine: qcom: gpi: Add QCM2290 GPI DMA
->       dt-bindings: nvmem: Add compatible for QCM2290
->       dt-bindings: mmc: sdhci-msm: Document QCM2290 SDHCI
->       dt-bindings: usb: dwc3: Add QCM2290 compatible
->       dt-bindings: thermal: tsens: Add QCM2290
->
->  Documentation/devicetree/bindings/dma/qcom,gpi.yaml       | 1 +
->  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml      | 1 +
->  Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml  | 1 +
->  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
->  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml      | 2 ++
->  Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml  | 1 +
->  6 files changed, 7 insertions(+)
-> ---
-> base-commit: ec0fa9a0a6fac454745c930bdb8619d0a354bac9
-> change-id: 20230314-topic-2290_compats-5bec96afeeb0
->
-> Best regards,
-> --
-> Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Thanks for posting this, for the series (with the assumption that the
-board dts will follow soon):
+On 3/15/23 12:07 PM, Krzysztof Kozlowski wrote:
+> On 14/03/2023 22:08, Bhupesh Sharma wrote:
+>> Document the Qualcomm qrb4210-rb2 board based on SM4250 SoC.
+>>
+>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> ---
+>>   Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+> 
+> Subject: fix double space before "Qualcomm"
 
-Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Sure, I will fix this in v2.
+
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Thanks.
