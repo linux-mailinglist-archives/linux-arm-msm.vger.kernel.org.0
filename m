@@ -2,71 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CF816BBAE5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 18:30:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FAB26BBB56
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Mar 2023 18:50:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230332AbjCORa5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 13:30:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35976 "EHLO
+        id S232503AbjCORts (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 13:49:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229546AbjCORaz (ORCPT
+        with ESMTP id S232106AbjCORtn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 13:30:55 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98E3258B56
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 10:30:53 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id x36so427192ljq.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 10:30:53 -0700 (PDT)
+        Wed, 15 Mar 2023 13:49:43 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FE92126E5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 10:49:35 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id y14so20300382ljq.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 10:49:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678901451;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nyHC0VUkupsiuWX2pHsL/65xztoUDBBkuNkC20AficQ=;
-        b=GJ97q5jYvQR8vrr48icXglGbW7rbJfdUHhHBaxDDPZZlMjuR8MS2JnxvjV8cuStFTt
-         6qPpD4iKSjMNHuHp+i9qJ15VUl4IuKII6uZimndhf9u5uDyL4Hm5n9Day/PRXRZDHNm7
-         C6YHj0adBrFhpy24nz+Q+2EBEK7c82TPHA7gQpzDGb9O4PnGemNXrk0p8sZoZbnVquM5
-         bP54KsuOal0w7AKd8/jnsQM5EirCsBB7/Z2c8C/7YgmrpAn1T9WYh3M28XfSgtHZcyuO
-         quvQKTn1rwmVmXlX2gtJQG1Fk4km3eES/RMbwn+KL9WWgPCiypagIjwr4RjYpzuEZe9e
-         jfJw==
+        d=linaro.org; s=google; t=1678902574;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=v1MViw2h4qxXqTK71HTICpK4bye50r2hsxjELYtaWNs=;
+        b=tQI1fOWqcFwGSpfxs9uQHMcOiYgmD4iP0T1Phx1MUqIcNWjm8DV/sgxGbpugjtlzua
+         sWQm7lkB5fjo2HsROvNKHFv11Ax4G/i6xD4TNQM8/2t3iFfZpDauDDlVbQ1sDo86m7Q8
+         //wqIu9W/mwYwh29hv/kYnmGRoK/x48JEWGwsEfsZiM31M2p3EqSVAmc8IpRIJkSvCOM
+         iNTHatvDH59JW7IF9fu8w8jmXrn0i2ee3Dt3SYKe63not6dlEmkWMGUIy5CmVj3FJB1N
+         RyhQMmj/c7j62zYYJqcY+bNPl/+6BA25Solcj+NpoJ2adWSuEfq1ix7g2rhkqP7aT4oG
+         xUbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678901451;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nyHC0VUkupsiuWX2pHsL/65xztoUDBBkuNkC20AficQ=;
-        b=744YKYVp50yaiWvXgBRSrylLH0SB4529Qd25GQqfXmuyiun3U0ZJlNZbVzqiLvfKMZ
-         E+4UD632GEViuQpnfCkbAqAfuB4NUdZRJUqzPJ53gytfGff4fFaq3NimBrh0ETGuC9Vr
-         zy9m1Av+BOG4LCKAoZbAl/I+BkZh37HOFZBiHXffrSKTp/d2XeqOPPt+h9zY0Qgsfdxn
-         J+Ce2/fL0c+NlfnxrySIW+a18rHvRlv3jpcSAtDkpQb7HBFV58VRnNOUni+cBxf3dPnT
-         Y/nFVjnIRfXg1L942NhhoRHGGAqyzdX3cUXpIxyZoSx4GZD5vrRu+tY7RMnJBewhSi5B
-         c5Uw==
-X-Gm-Message-State: AO0yUKXOwObyyipLqI+Xy06OXvbAqhBKiOO/E5oJK34KBMI0ndm0NAOV
-        Rhx3ZrdZ45I7w3wNZxAGK3ffxu9OeBMIJU5UxFc=
-X-Google-Smtp-Source: AK7set8qdUTG2izjSNf/ErXIPYQfJRIKDjxOhFSDR7Kjx9V/3mxfJTKO2NEma+EDiR6JfZ0/rg41EA==
-X-Received: by 2002:a2e:850d:0:b0:290:8289:8cc8 with SMTP id j13-20020a2e850d000000b0029082898cc8mr993566lji.22.1678901451666;
-        Wed, 15 Mar 2023 10:30:51 -0700 (PDT)
-Received: from localhost.localdomain (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id d28-20020ac244dc000000b004d85a7e8b17sm887561lfm.269.2023.03.15.10.30.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 10:30:51 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Rob Herring <robh@kernel.org>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] clk: qcom: gcc-qcm2290: Fix up gcc_sdcc2_apps_clk_src
-Date:   Wed, 15 Mar 2023 18:30:48 +0100
-Message-Id: <20230315173048.3497655-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.2
+        d=1e100.net; s=20210112; t=1678902574;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=v1MViw2h4qxXqTK71HTICpK4bye50r2hsxjELYtaWNs=;
+        b=eS1Uvw72Go2bp+2+tNlxkPmY6Tn3ba2cmYtXhYO6Oei1qDs2OkYL3f5y27+7yUZeKk
+         LxkcY0tTQ9Cy4gMh0nbnXa14DTPaOmxI47M3QW1KZFheXmo5DkAvWA5u4RN/sacQw1gr
+         bVvaDY6m20uo09HJsIsFgmAJwEEUSz73xzgg7Bj4Vx6HkACo7YpgoAK3bdn+zew+1wjq
+         fLu42dFyGKzYnUjjbGKpQVdh/70btKED+/jjRtZjOT9NbgkOohTjSirXBESHLfO/QuRM
+         7uTVvbUJQiThYJVpHDSBUnTqK6DI8arHQXMfbwxDhp+J5B2rFTGa8alhJMcwcbrnTro7
+         UceA==
+X-Gm-Message-State: AO0yUKV3/Zsie1bqUi60b6rusyl/ixxg5g/tUgzBy0thU1yti+ihQRPR
+        zb0HQ5CtDTS2bATwwQnvZZZzEA==
+X-Google-Smtp-Source: AK7set9PfJS532bfged2jGTd67+ou2GA/ukWmGGPVkBfjq9IcitAFkhioG0xJazEUV61CuRKW4g5Kw==
+X-Received: by 2002:a05:651c:1a09:b0:295:945d:d483 with SMTP id by9-20020a05651c1a0900b00295945dd483mr1512355ljb.44.1678902573808;
+        Wed, 15 Mar 2023 10:49:33 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id v2-20020a2e9242000000b002986854f27dsm934574ljg.23.2023.03.15.10.49.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 10:49:33 -0700 (PDT)
+Message-ID: <30a9f859-b1df-a123-fc43-07029335a47c@linaro.org>
+Date:   Wed, 15 Mar 2023 18:49:31 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: Add Acer Aspire 1
+Content-Language: en-US
+To:     Nikita Travkin <nikita@trvn.ru>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20230315154311.37299-1-nikita@trvn.ru>
+ <20230315154311.37299-5-nikita@trvn.ru>
+ <b8805711-d720-8f91-c198-10b0553417a4@linaro.org>
+ <e901b4f51d258a505b771b1acec6bc64@trvn.ru>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <e901b4f51d258a505b771b1acec6bc64@trvn.ru>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
         URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,29 +81,107 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the PARENT_ENABLE flag to prevent  the clock from getting stuck
-at boot and use floor_ops to avoid SDHCI overclocking.
 
-Fixes: 496d1a13d405 ("clk: qcom: Add Global Clock Controller driver for QCM2290")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/gcc-qcm2290.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-qcm2290.c b/drivers/clk/qcom/gcc-qcm2290.c
-index 7792b8f23704..096deff2ba25 100644
---- a/drivers/clk/qcom/gcc-qcm2290.c
-+++ b/drivers/clk/qcom/gcc-qcm2290.c
-@@ -1243,7 +1243,8 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.name = "gcc_sdcc2_apps_clk_src",
- 		.parent_data = gcc_parents_12,
- 		.num_parents = ARRAY_SIZE(gcc_parents_12),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_floor_ops,
-+		.flags = CLK_OPS_PARENT_ENABLE,
- 	},
- };
- 
--- 
-2.39.2
+On 15.03.2023 17:41, Nikita Travkin wrote:
+> Krzysztof Kozlowski писал(а) 15.03.2023 21:09:
+>> On 15/03/2023 16:43, Nikita Travkin wrote:
+>>> Acer Aspire 1 is a WoA laptop based on Snapdragon 7c gen1 platform.
+>>>
+>>> The laptop design is similar to trogdor in the choice of primary
+>>> components but the specifics on usage of those differ slightly.
+>>>
+>>> Add the devicetree for the laptop with support for most of the
+>>> hardware present.
+>>>
+>>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+>>> ---
+>>> Changed in v2:
+>>>  - Various styling, ordering and node naming issues fixed. (Krzysztof)
+>>>
+>>> Changed in v3:
+>>>  - Kepp camcc on, wakeup on touchpad, minor style issues. (Konrad)
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>>>  .../boot/dts/qcom/sc7180-acer-aspire1.dts     | 859 ++++++++++++++++++
+>>>  2 files changed, 860 insertions(+)
+>>>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>>> index 89e23a74bc7f..4bd4b4079b17 100644
+>>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>>> @@ -76,6 +76,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
+>>>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
+>>>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8540p-ride.dtb
+>>>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8775p-ride.dtb
+>>> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-acer-aspire1.dtb
+>>>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
+>>>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
+>>>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+>>> new file mode 100644
+>>> index 000000000000..b4161f1f21a7
+>>> --- /dev/null
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+>>> @@ -0,0 +1,859 @@
+>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>> +
+>>> +/dts-v1/;
+>>> +
+>>> +#include <dt-bindings/gpio/gpio.h>
+>>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>>> +
+>>> +#include "sc7180.dtsi"
+>>> +
+>>> +#include "pm6150.dtsi"
+>>> +#include "pm6150l.dtsi"
+>>> +
+>>> +/delete-node/ &tz_mem;
+>>> +/delete-node/ &ipa_fw_mem;
+>>> +
+>>> +/ {
+>>> +	model = "Acer Aspire 1";
+>>> +	compatible = "acer,aspire1", "qcom,sc7180";
+>>> +	chassis-type = "laptop";
+>>> +
+>>> +	aliases {
+>>> +		bluetooth0 = &bluetooth;
+>>> +		hsuart0 = &uart3;
+>>> +		serial0 = &uart8;
+>>> +		wifi0 = &wifi;
+>>> +	};
+>>> +
+>>> +	chosen {
+>>> +		stdout-path = "serial0:115200n8";
+>>> +	};
+>>> +
+>>> +	reserved-memory {
+>>
+>> I still don't think it is ordered by name.... "r" is definitely after "a".
+> 
+> Yes, as I said before, I want to separate the "special" DT spec nodes
+> (aliases, chosen, reserved-memory, ... that are defined in the
+> chapter 3 of the DT spec) from the other, device nodes.
+> 
+> I see them on the top on many other boards and I believe this separation
+> makes sense since those are not really devices but "more extended"
+> properties of the board as a whole.
+> 
+> If you still believe those must be mixed together and sorted, please 
+> explicitly let me know that and I will change the order.
+> 
+> Also, if there is any documentation that already enforces the order,
+> making clear that my opinion is wrong, I would appreciate you pointing
+> me to that.
+Not really, things are still developing and won't be sparsely written up
+until there's good tooling to enforce it..
 
+Konrad
+> 
+> Regards,
+> Nikita
+> 
+>>
+>> Best regards,
+>> Krzysztof
