@@ -2,123 +2,237 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E98AE6BC3C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 03:29:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 292296BC3C4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 03:28:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229800AbjCPC3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 22:29:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52580 "EHLO
+        id S229790AbjCPC2n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 22:28:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjCPC3G (ORCPT
+        with ESMTP id S229459AbjCPC2m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 22:29:06 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 414547EFC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 19:28:58 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32G23Xip001845;
-        Thu, 16 Mar 2023 02:28:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=KqirVUV+ADW7V8pbioihgIWgT8y7WP1ARFLsb6y+IMY=;
- b=cvStMLj4+jM6sJ/cBrwQAJwkcWNSOXYHqTTHB8J8yiB9Gk9NFyoy8FE+jHu08lf5uGIP
- WfQzSdBOzNvzZD2E7NKTaPBXbdl7poe8rhkhHWwUqkf9g7iICnLD0tssDjP3hPCIfO1k
- c9pRFFQ9BRoNIPSvWnIzpt5pmJ36xBW0Bg70ymgdlNujVNtrs+cFm/m4S+Hmr/9xCxLz
- NQymSEtZCzCCqLJ3mYg/LUhWrmwsbotKNLETed9TQhpUOSyntG18E/wAJzYInPQb1AMe
- h+OTqfZlBFgt+92Gi4x/YTktuBzdZMpD1tYtuzY/nXc5vpjYCGs+UeNzGiMBF/PUtvOv dA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pbpxsgeet-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Mar 2023 02:28:51 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32G2SoNC010665
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Mar 2023 02:28:50 GMT
-Received: from abhinavk-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Wed, 15 Mar 2023 19:28:50 -0700
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
-CC:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-Subject: Re: (subset) [PATCH v2 00/50] drm/msm/dpu: rework HW catalog
-Date:   Wed, 15 Mar 2023 19:28:38 -0700
-Message-ID: <167893340873.3688.7944874266841520279.b4-ty@quicinc.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230211231259.1308718-1-dmitry.baryshkov@linaro.org>
-References: <20230211231259.1308718-1-dmitry.baryshkov@linaro.org>
+        Wed, 15 Mar 2023 22:28:42 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3352CA1F9;
+        Wed, 15 Mar 2023 19:28:36 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 7920DB81FA5;
+        Thu, 16 Mar 2023 02:28:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8621BC433D2;
+        Thu, 16 Mar 2023 02:28:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678933714;
+        bh=fCHFhdAX7m1VRphIKdIGA13W+APsH2JPvpLNFFV5sgg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=i48dT3Zx8xrYfQE2ooVABgu839aC3czFWHfNJV16L5UiapI8ZRgkWiMzzew0Xrlf6
+         zKefvSHUA1LS5J8AFI6Jq3fZEmMXL6kzeyoWycTc0Euw2SsSBniz8IbNxCY3/JoTtv
+         bx+Gx9jdwVoGH1VM0NpVA/SYW8UGhU2K0myGeGtYMEvpv5l9fZA9oEI2G/V2AQDtyn
+         Iej0kbqVO4q/kCLlj/anfhdGdu2gYcdPGtsQwlzePjhconWh8Vg1l7xjE1YbtCLg4p
+         DGS2X99Jx0EyGdM5fwjv52RTUhIOkeVOHCCBxjBuJaRTDI9Jv13WOeWQJGNlegdmV8
+         KOA97kI0uq1kQ==
+Date:   Wed, 15 Mar 2023 19:31:55 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: Remove "iommus" property from PCIe
+ nodes
+Message-ID: <20230316023155.avkvmqrsrys22lge@ripper>
+References: <20230308075648.134119-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: p_7KTZKZfcqk7lt6qdsc5LoAoDWcvmei
-X-Proofpoint-ORIG-GUID: p_7KTZKZfcqk7lt6qdsc5LoAoDWcvmei
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-16_01,2023-03-15_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 malwarescore=0
- impostorscore=0 mlxscore=0 mlxlogscore=511 suspectscore=0 bulkscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303160020
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230308075648.134119-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Sun, 12 Feb 2023 01:12:09 +0200, Dmitry Baryshkov wrote:
-> This huge series attempts to restructure the DPU HW catalog into a
-> manageable and reviewable data set. In order to ease review and testing
-> I merged all the necessary fixes into this series. Also I cherry-picked
-> & slightly fixed Konrad's patch adding size to the SSPP and INTF macros.
+On Wed, Mar 08, 2023 at 01:26:48PM +0530, Manivannan Sadhasivam wrote:
+> Currently, most of the Qualcomm SoCs specify both "iommus" and "iommu-map"
+> properties for the PCIe nodes. First one passes the SMR mask to the iommu
+> driver and the latter specifies the SID for each PCIe device.
 > 
-> First 12 patches are catalog fixes, which can be probably picked into
-> the msm-fixes.
+> But with "iommus" property, the PCIe controller will be added to the
+> iommu group along with the devices. This makes no sense because the
+> controller will not initiate any DMA transaction on its own. And moreover,
+> it is not strictly required to pass the SMR mask to the iommu driver. If
+> the "iommus" property is not present, then the default mask of "0" would be
+> used which should work for all PCIe devices.
 > 
-> [...]
+> On the other side, if the SMR mask specified doesn't match the one expected
+> by the hypervisor, then all the PCIe transactions will end up triggering
+> "Unidentified Stream Fault" by the SMMU.
+> 
+> So to get rid of these hassles and also prohibit PCIe controllers from
+> adding to the iommu group, let's remove the "iommus" property from PCIe
+> nodes.
+> 
+> Reported-by: Rob Herring <robh@kernel.org>
+> Link: https://lore.kernel.org/linux-arm-msm/20230227195535.GA749409-robh@kernel.org
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Applied, thanks!
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-[03/50] drm/msm/dpu: fix typo in in sm8550's dma_sblk_5
-        https://gitlab.freedesktop.org/drm/msm/-/commit/e301195507fe
-[04/50] drm/msm/dpu: fix len of sc7180 ctl blocks
-        https://gitlab.freedesktop.org/drm/msm/-/commit/ce6bd00abc22
-[05/50] drm/msm/dpu: fix sm6115 and qcm2290 mixer width limits
-        https://gitlab.freedesktop.org/drm/msm/-/commit/da06be8b4fdf
-[06/50] drm/msm/dpu: correct sm8550 scaler
-        https://gitlab.freedesktop.org/drm/msm/-/commit/d113d267c3bf
-[07/50] drm/msm/dpu: correct sc8280xp scaler
-        https://gitlab.freedesktop.org/drm/msm/-/commit/b3587cb64532
-[08/50] drm/msm/dpu: correct sm8450 scaler
-        https://gitlab.freedesktop.org/drm/msm/-/commit/c7da17b67847
-[09/50] drm/msm/dpu: correct sm8250 and sm8350 scaler
-        https://gitlab.freedesktop.org/drm/msm/-/commit/03c0c3cb22a4
-[10/50] drm/msm/dpu: correct sm6115 scaler
-        https://gitlab.freedesktop.org/drm/msm/-/commit/38164e990a42
-[11/50] drm/msm/dpu: drop DPU_DIM_LAYER from MIXER_MSM8998_MASK
-        https://gitlab.freedesktop.org/drm/msm/-/commit/a5045b00a681
-[12/50] drm/msm/dpu: fix clocks settings for msm8998 SSPP blocks
-        https://gitlab.freedesktop.org/drm/msm/-/commit/0abb6a24aabc
-[13/50] drm/msm/dpu: don't use DPU_CLK_CTRL_CURSORn for DMA SSPP clocks
-        https://gitlab.freedesktop.org/drm/msm/-/commit/d6181c18d55c
-
-Best regards,
--- 
-Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 --
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 --
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 --
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 3 ---
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 --
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 --
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 --
+>  7 files changed, 15 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 8f4ab6bd2886..9f7269029a02 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -2133,8 +2133,6 @@ pcie1: pci@1c08000 {
+>  
+>  			dma-coherent;
+>  
+> -			iommus = <&apps_smmu 0x1c80 0x1>;
+> -
+>  			iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
+>  				    <0x100 &apps_smmu 0x1c81 0x1>;
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 479859bd8ab3..5f110b0062d9 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -2319,7 +2319,6 @@ pcie0: pci@1c00000 {
+>  				      "slave_q2a",
+>  				      "tbu";
+>  
+> -			iommus = <&apps_smmu 0x1c10 0xf>;
+>  			iommu-map = <0x0   &apps_smmu 0x1c10 0x1>,
+>  				    <0x100 &apps_smmu 0x1c11 0x1>,
+>  				    <0x200 &apps_smmu 0x1c12 0x1>,
+> @@ -2429,7 +2428,6 @@ pcie1: pci@1c08000 {
+>  			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+>  			assigned-clock-rates = <19200000>;
+>  
+> -			iommus = <&apps_smmu 0x1c00 0xf>;
+>  			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
+>  				    <0x100 &apps_smmu 0x1c01 0x1>,
+>  				    <0x200 &apps_smmu 0x1c02 0x1>,
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index 13e0ce828606..6a383e918329 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -1826,7 +1826,6 @@ pcie0: pci@1c00000 {
+>  				      "slave_q2a",
+>  				      "tbu";
+>  
+> -			iommus = <&apps_smmu 0x1d80 0x3f>;
+>  			iommu-map = <0x0   &apps_smmu 0x1d80 0x1>,
+>  				    <0x100 &apps_smmu 0x1d81 0x1>;
+>  
+> @@ -1925,7 +1924,6 @@ pcie1: pci@1c08000 {
+>  			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+>  			assigned-clock-rates = <19200000>;
+>  
+> -			iommus = <&apps_smmu 0x1e00 0x3f>;
+>  			iommu-map = <0x0   &apps_smmu 0x1e00 0x1>,
+>  				    <0x100 &apps_smmu 0x1e01 0x1>;
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index 2f0e460acccd..c7682fda9d8c 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -1871,7 +1871,6 @@ pcie0: pci@1c00000 {
+>  				      "tbu",
+>  				      "ddrss_sf_tbu";
+>  
+> -			iommus = <&apps_smmu 0x1c00 0x7f>;
+>  			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
+>  				    <0x100 &apps_smmu 0x1c01 0x1>;
+>  
+> @@ -1977,7 +1976,6 @@ pcie1: pci@1c08000 {
+>  			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+>  			assigned-clock-rates = <19200000>;
+>  
+> -			iommus = <&apps_smmu 0x1c80 0x7f>;
+>  			iommu-map = <0x0   &apps_smmu 0x1c80 0x1>,
+>  				    <0x100 &apps_smmu 0x1c81 0x1>;
+>  
+> @@ -2085,7 +2083,6 @@ pcie2: pci@1c10000 {
+>  			assigned-clocks = <&gcc GCC_PCIE_2_AUX_CLK>;
+>  			assigned-clock-rates = <19200000>;
+>  
+> -			iommus = <&apps_smmu 0x1d00 0x7f>;
+>  			iommu-map = <0x0   &apps_smmu 0x1d00 0x1>,
+>  				    <0x100 &apps_smmu 0x1d01 0x1>;
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> index 1c97e28da6ad..365b9d773b5c 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> @@ -1526,7 +1526,6 @@ pcie0: pci@1c00000 {
+>  				      "aggre1",
+>  				      "aggre0";
+>  
+> -			iommus = <&apps_smmu 0x1c00 0x7f>;
+>  			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
+>  				    <0x100 &apps_smmu 0x1c01 0x1>;
+>  
+> @@ -1610,7 +1609,6 @@ pcie1: pci@1c08000 {
+>  				      "ddrss_sf_tbu",
+>  				      "aggre1";
+>  
+> -			iommus = <&apps_smmu 0x1c80 0x7f>;
+>  			iommu-map = <0x0   &apps_smmu 0x1c80 0x1>,
+>  				    <0x100 &apps_smmu 0x1c81 0x1>;
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 1a744a33bcf4..e3201b1b07a5 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -1790,7 +1790,6 @@ pcie0: pci@1c00000 {
+>  				      "aggre0",
+>  				      "aggre1";
+>  
+> -			iommus = <&apps_smmu 0x1c00 0x7f>;
+>  			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
+>  				    <0x100 &apps_smmu 0x1c01 0x1>;
+>  
+> @@ -1904,7 +1903,6 @@ pcie1: pci@1c08000 {
+>  				      "ddrss_sf_tbu",
+>  				      "aggre1";
+>  
+> -			iommus = <&apps_smmu 0x1c80 0x7f>;
+>  			iommu-map = <0x0   &apps_smmu 0x1c80 0x1>,
+>  				    <0x100 &apps_smmu 0x1c81 0x1>;
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index 25f51245fe9b..6edb3acb91ef 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -1692,7 +1692,6 @@ pcie0: pci@1c00000 {
+>  			interconnect-names = "pcie-mem";
+>  			interconnects = <&pcie_noc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>;
+>  
+> -			iommus = <&apps_smmu 0x1400 0x7f>;
+>  			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
+>  				    <0x100 &apps_smmu 0x1401 0x1>;
+>  
+> @@ -1796,7 +1795,6 @@ pcie1: pci@1c08000 {
+>  			interconnect-names = "pcie-mem";
+>  			interconnects = <&pcie_noc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>;
+>  
+> -			iommus = <&apps_smmu 0x1480 0x7f>;
+>  			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
+>  				    <0x100 &apps_smmu 0x1481 0x1>;
+>  
+> -- 
+> 2.25.1
+> 
