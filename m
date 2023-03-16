@@ -2,620 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09DAF6BD804
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 19:17:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F004F6BD83E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 19:37:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230325AbjCPSRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 14:17:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42156 "EHLO
+        id S229754AbjCPShJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 14:37:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230488AbjCPSRP (ORCPT
+        with ESMTP id S230254AbjCPShH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 14:17:15 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDC94E1C87;
-        Thu, 16 Mar 2023 11:17:09 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32G25WYA000452;
-        Thu, 16 Mar 2023 18:16:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=RLht7V2kHs64kFtZ/QakmBEeS7NkeR50EiAkeTB32wM=;
- b=XhrFAF4rgtXIKrvFZtLd0j/GAXKbp6kDz+9pVGJGaNe/1CconuT8dRmMuW6aDUNxq8BS
- q4imHFk3MLsdDjkxvC5QaD9A93UrdzAhKa4sl8Zv0dMVDtmtJbIS96HGMVnu60H34uzj
- ZqMpqOYr0180sABlEOz+u3SPbOGDmSd/ZC60aLAiafMMoR5x5haDBMgqht0clJEdlUUH
- YRGBRSJY0XPldKGw56dgeWkuTsMj7wcK1lUhTiYNBDzG8rL3dzkQSBvCiU/fOfcsuDVS
- FpSUO1KV/7Z/cWLY0JPjEy/BVEvQPo+haYz5vFLgf/0ESTLYoGartafnUb69ptw1NMvN uA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pbpxjttnf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Mar 2023 18:16:29 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32GIGRTj007111
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Mar 2023 18:16:28 GMT
-Received: from hu-johmoo-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Thu, 16 Mar 2023 11:16:27 -0700
-From:   John Moon <quic_johmoo@quicinc.com>
-To:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        "Nicolas Schier" <nicolas@fjasle.eu>
-CC:     John Moon <quic_johmoo@quicinc.com>,
-        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        "Arnd Bergmann" <arnd@arndb.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Todd Kjos <tkjos@google.com>,
-        Matthias Maennich <maennich@google.com>,
-        Giuliano Procida <gprocida@google.com>,
-        <kernel-team@android.com>, <libabigail@sourceware.org>,
-        Jordan Crouse <jorcrous@amazon.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        "Guru Das Srinagesh" <quic_gurus@quicinc.com>
-Subject: [PATCH v3 2/2] docs: dev-tools: Add UAPI checker documentation
-Date:   Thu, 16 Mar 2023 11:15:55 -0700
-Message-ID: <20230316181555.9327-3-quic_johmoo@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230316181555.9327-1-quic_johmoo@quicinc.com>
-References: <20230316181555.9327-1-quic_johmoo@quicinc.com>
+        Thu, 16 Mar 2023 14:37:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B2B2AF6AD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 11:36:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1678991778;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=KyRYif1MrPgavn2zFlvhl2OTR1d8rOcAGT7lsOp4AaU=;
+        b=KrOHD2s/HyEZa/PJ9XNhuXOwxjV2Zwad/YnWdx1NplzEPGIhrejA+7PMGapmvHJfa4ClPf
+        vZq3HOgOE8aMGhklTTR/Rkghpxfce6MwUlkBokT2FHJSg1mmiHrqT9l3BgHRtHE22Xr/Pe
+        R0ITtK91mIs/lLaQbZeRAf03UWCDWl8=
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
+ [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-10-RP4RTBLhMmy-nTFxwQvLig-1; Thu, 16 Mar 2023 14:36:16 -0400
+X-MC-Unique: RP4RTBLhMmy-nTFxwQvLig-1
+Received: by mail-oa1-f71.google.com with SMTP id 586e51a60fabf-172cafd4245so1661361fac.21
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 11:36:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678991776;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KyRYif1MrPgavn2zFlvhl2OTR1d8rOcAGT7lsOp4AaU=;
+        b=JOSb3qYTYX8CZSHWzJVv2AgW3LbEhh/PGlBJnw8iJyTZ97NXuSbdUfFrKusoeCw6xj
+         0IReBPCq/MZiMn3nZ0vIMqEhM6eKwWMbsrixUxo8GWcdjSh9mg2r1joBrS9N9yaaSH+I
+         Vruh3CmY991u5TLvS7aaRBHZoqjDnQ32xF6olJ3e+jmLdYnhHDZQn0sevifX8MYrpjc9
+         1OA47+n3sXvzjQAe+sdElXpzmJXeGF+2cCXG8szKIiz73/wzVi4VkWLfd1pSALfO0Opv
+         M94p1ajIp8SetgC9WO+cHyA/GCrw+JOwunEnrznGHzLkyaYD6/Wb5Y631gCrrZphMLu0
+         /m2w==
+X-Gm-Message-State: AO0yUKXZCHfGHUXOeRDsIbRIcNCT3anu29p6jUYurt8MCxpvZUsdaZ6t
+        hOMYfJ3yxoAFmi7Gfg2+D1YrNdqhxx6wHZjkao7znaHff19mrQ7yVWwjdrM5CPNAraLRHltYYpc
+        EHNXC4J+V/0I/kWNT8esReVMokA==
+X-Received: by 2002:a54:481a:0:b0:383:ee1d:f489 with SMTP id j26-20020a54481a000000b00383ee1df489mr3780318oij.0.1678991776246;
+        Thu, 16 Mar 2023 11:36:16 -0700 (PDT)
+X-Google-Smtp-Source: AK7set+6u2IcSrwCQvmuCLBcaVgSXFJVKayRRTtTKp7bwyaSZEGBvWuzrI2bCwi60By8ACrUJ/gVmQ==
+X-Received: by 2002:a54:481a:0:b0:383:ee1d:f489 with SMTP id j26-20020a54481a000000b00383ee1df489mr3780239oij.0.1678991774493;
+        Thu, 16 Mar 2023 11:36:14 -0700 (PDT)
+Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
+        by smtp.gmail.com with ESMTPSA id x82-20020acae055000000b00369a721732asm24184oig.41.2023.03.16.11.36.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Mar 2023 11:36:13 -0700 (PDT)
+Date:   Thu, 16 Mar 2023 13:36:09 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        vkoul@kernel.org, bhupesh.sharma@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, peppe.cavallaro@st.com,
+        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
+        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
+        linux@armlinux.org.uk, veekhee@apple.com,
+        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
+        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
+        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
+        jsuraj@qti.qualcomm.com, hisunil@quicinc.com
+Subject: Re: [PATCH net-next 08/11] net: stmmac: Add EMAC3 variant of dwmac4
+Message-ID: <20230316183609.a3ymuku2cmhpyrpc@halaney-x13s>
+References: <20230313165620.128463-1-ahalaney@redhat.com>
+ <20230313165620.128463-9-ahalaney@redhat.com>
+ <20230313173904.3d611e83@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5I8CZOaFV21zfQ90meyyJseH5duDutbJ
-X-Proofpoint-ORIG-GUID: 5I8CZOaFV21zfQ90meyyJseH5duDutbJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-16_10,2023-03-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- adultscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015 malwarescore=0
- priorityscore=1501 bulkscore=0 phishscore=0 lowpriorityscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303160141
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230313173904.3d611e83@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add detailed documentation for scripts/check-uapi.sh.
+On Mon, Mar 13, 2023 at 05:39:04PM -0700, Jakub Kicinski wrote:
+> On Mon, 13 Mar 2023 11:56:17 -0500 Andrew Halaney wrote:
+> > EMAC3 is a Qualcomm variant of dwmac4 that functions the same, but has a
+> > different address space layout for MTL and DMA registers. This makes the
+> > patch a bit more complicated than we would like so let's explain why the
+> > current approach was used.
+> 
+> Please drop all the static inlines in C sources, you're wrapping 
+> a single function call, the compiler will do the right thing.
+> 
+> Please no more than 6 function arguments.
+> 
 
-Signed-off-by: John Moon <quic_johmoo@quicinc.com>
----
-    - Updated with new flags/usage
-    - Added example of possible false negatives
-    - Improved formatting
+Thanks for the feedback! With respect to <= 6 function arguments, if I
+counted right the only violation is this:
 
- Documentation/dev-tools/checkuapi.rst | 492 ++++++++++++++++++++++++++
- Documentation/dev-tools/index.rst     |   1 +
- 2 files changed, 493 insertions(+)
- create mode 100644 Documentation/dev-tools/checkuapi.rst
+static void do_config_cbs(struct mac_device_info *hw, u32 send_slope,
+			  u32 idle_slope, u32 high_credit, u32 low_credit,
+			  u32 queue, u32 etsx_ctrl_base_addr,
+			  u32 send_slp_credx_base_addr,
+			  u32 high_credx_base_addr, u32 low_credx_base_addr,
+			  void (*set_mtl_tx_queue_weight)(struct mac_device_info *hw,
+							  u32 weight, u32 queue))
+(...)
+static void emac3_config_cbs(struct mac_device_info *hw, u32 send_slope,
+				    u32 idle_slope, u32 high_credit,
+				    u32 low_credit, u32 queue)
 
-diff --git a/Documentation/dev-tools/checkuapi.rst b/Documentation/dev-tools/checkuapi.rst
-new file mode 100644
-index 000000000000..0e257eff1526
---- /dev/null
-+++ b/Documentation/dev-tools/checkuapi.rst
-@@ -0,0 +1,492 @@
-+.. SPDX-License-Identifier: GPL-2.0-only
-+
-+============
-+UAPI Checker
-+============
-+
-+The UAPI checker (``scripts/check-uapi.sh``) is a shell script which checks
-+UAPI header files for userspace backwards-compatibility across the git tree.
-+
-+The script can produce false positives in some cases, so developers are
-+encouraged to use their best judgement when interpreting the results. Please
-+refer to kernel documentation on the topic of IOCTL stability for more
-+information (Documentation/process/botching-up-ioctls.rst).
-+
-+Options
-+=======
-+
-+This section will describe the options ``check-uapi.sh`` can be run with.
-+
-+Usage::
-+
-+    ./scripts/check-uapi.sh [-b BASE_REF] [-p PAST_REF] [-m] [-j N] [-l ERROR_LOG] [-q] [-v]
-+
-+Available options::
-+
-+    -b BASE_REF    Base git reference to use for comparison. If unspecified or empty,
-+                   will use any dirty changes in tree to UAPI files. If there are no
-+                   dirty changes, HEAD will be used.
-+    -p PAST_REF    Compare BASE_REF to PAST_REF (e.g. -r v6.1). If unspecified or empty,
-+                   will use BASE_REF^1. Must be an ancestor of BASE_REF.
-+    -m             Check only UAPI headers modified between PAST_REF and BASE_REF for
-+                   backwards compatibility.
-+    -j JOBS        Number of checks to run in parallel (default: number of CPU cores).
-+    -l ERROR_LOG   Write error log to file (default: "$KERNEL_SOURCE/abi_error_log.txt").
-+    -q             Quiet operation (suppress all stdout, still print stderr).
-+    -v             Verbose operation (print more information about each header being checked).
-+
-+Environmental args::
-+
-+    ABIDIFF  Custom path to abidiff binary
-+    CC       C compiler (default is "gcc")
-+    ARCH     Target architecture of C compiler (default is host arch)
-+
-+Exit codes::
-+
-+    0) Success
-+    1) ABI difference detected
-+    2) Prerequisite not met
-+    3) Compilation error
-+    4) All modified files were for an architecture other than ARCH
-+    5) General error
-+
-+Examples
-+========
-+
-+Basic Usage
-+-----------
-+
-+First, let's try making a change to a UAPI header file that obviously won't
-+break userspace::
-+
-+    cat << 'EOF' | patch -l -p1
-+    --- a/include/uapi/linux/acct.h
-+    +++ b/include/uapi/linux/acct.h
-+    @@ -21,7 +21,9 @@
-+     #include <asm/param.h>
-+     #include <asm/byteorder.h>
-+
-+    -/*
-+    +#define FOO
-+    +
-+    +/*
-+      *  comp_t is a 16-bit "floating" point number with a 3-bit base 8
-+      *  exponent and a 13-bit fraction.
-+      *  comp2_t is 24-bit with 5-bit base 2 exponent and 20 bit fraction
-+    diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
-+    EOF
-+
-+Now, let's use the script to validate::
-+
-+    % ./scripts/check-uapi.sh
-+    Installing sanitized UAPI headers from dirty tree... OK
-+    Saving current tree state... OK
-+    Installing sanitized UAPI headers from HEAD... OK
-+    Restoring current tree state... OK
-+    Checking changes to UAPI headers between HEAD and dirty tree
-+    All 888 UAPI headers compatible with x86 appear to be backwards compatible
-+    Note: UAPI headers for architectures other than x86 were not checked
-+
-+Let's add another change that *would* break userspace::
-+
-+    cat << 'EOF' | patch -l -p1
-+    --- a/include/uapi/linux/bpf.h  2023-02-28 13:32:36.505591077 -0800
-+    +++ b/include/uapi/linux/bpf.h  2023-02-28 13:32:57.033494020 -0800
-+    @@ -73,7 +73,7 @@
-+            __u8    dst_reg:4;      /* dest register */
-+            __u8    src_reg:4;      /* source register */
-+            __s16   off;            /* signed offset */
-+    -       __s32   imm;            /* signed immediate constant */
-+    +       __u32   imm;            /* unsigned immediate constant */
-+     };
-+
-+     /* Key of an a BPF_MAP_TYPE_LPM_TRIE entry */
-+    EOF
-+
-+The script should catch this incompatibility::
-+
-+    % ./scripts/check-uapi.sh
-+    Installing sanitized UAPI headers from dirty tree... OK
-+    Saving current tree state... OK
-+    Installing sanitized UAPI headers from HEAD... OK
-+    Restoring current tree state... OK
-+    Checking changes to UAPI headers between HEAD and dirty tree
-+    !!! ABI differences detected in include/uapi/linux/bpf.h from HEAD -> dirty tree !!!
-+
-+        [C] 'struct bpf_insn' changed:
-+          type size hasn't changed
-+          1 data member change:
-+            type of '__s32 imm' changed:
-+              typedef name changed from __s32 to __u32 at int-ll64.h:27:1
-+              underlying type 'int' changed:
-+                type name changed from 'int' to 'unsigned int'
-+                type size hasn't changed
-+
-+    Header file diff (after headers_install):
-+    --- HEAD/include/uapi/linux/bpf.h       2023-03-15 16:05:39.601082143 -0700
-+    +++ dirty/include/uapi/linux/bpf.h      2023-03-15 16:05:37.669092565 -0700
-+    @@ -73,7 +73,7 @@
-+            __u8    dst_reg:4;      /* dest register */
-+            __u8    src_reg:4;      /* source register */
-+            __s16   off;            /* signed offset */
-+    -       __s32   imm;            /* signed immediate constant */
-+    +       __u32   imm;            /* unsigned immediate constant */
-+     };
-+
-+     /* Key of an a BPF_MAP_TYPE_LPM_TRIE entry */
-+
-+    error - 1/888 UAPI headers compatible with x86 appear _not_ to be backwards compatible
-+    Note: UAPI headers for architectures other than x86 were not checked
-+    error - UAPI header ABI check failed
-+
-+The script finds the ABI breakage and reports it (along with a diff of the
-+offending file).
-+
-+Let's commit the breaking change, then commit the good change::
-+
-+    % git commit -m 'Breaking UAPI change' include/uapi/linux/bpf.h
-+    [detached HEAD f758e574663a] Breaking UAPI change
-+     1 file changed, 1 insertion(+), 1 deletion(-)
-+    % git commit -m 'Innocuous UAPI change' include/uapi/linux/acct.h
-+    [detached HEAD 2e87df769081] Innocuous UAPI change
-+     1 file changed, 3 insertions(+), 1 deletion(-)
-+
-+Now, let's run the script again with no arguments::
-+
-+    % ./scripts/check-uapi.sh
-+    Saving current tree state... OK
-+    Installing sanitized UAPI headers from HEAD... OK
-+    Installing sanitized UAPI headers from HEAD^1... OK
-+    Restoring current tree state... OK
-+    Checking changes to UAPI headers between HEAD^1 and HEAD
-+    All 888 UAPI headers compatible with x86 appear to be backwards compatible
-+    Note: UAPI headers for architectures other than x86 were not checked
-+
-+It doesn't catch any breaking change because, by default, it only compares
-+``HEAD`` to ``HEAD^1``. The breaking change was committed on ``HEAD~2``. If we
-+wanted the search scope to go back further, we'd have to use the ``-p`` option
-+to pass a different past reference to compare to. In this case, let's pass
-+``-p HEAD~2`` to the script so it checks UAPI changes between ``HEAD~2`` and
-+``HEAD``::
-+
-+    % ./scripts/check-uapi.sh -p HEAD~2
-+    Saving current tree state... OK
-+    Installing sanitized UAPI headers from HEAD... OK
-+    Installing sanitized UAPI headers from HEAD~2... OK
-+    Restoring current tree state... OK
-+    Checking changes to UAPI headers between HEAD~2 and HEAD
-+    !!! ABI differences detected in include/uapi/linux/bpf.h from HEAD~2 -> HEAD !!!
-+
-+        [C] 'struct bpf_insn' changed:
-+          type size hasn't changed
-+          1 data member change:
-+            type of '__s32 imm' changed:
-+              typedef name changed from __s32 to __u32 at int-ll64.h:27:1
-+              underlying type 'int' changed:
-+                type name changed from 'int' to 'unsigned int'
-+                type size hasn't changed
-+
-+    Header file diff (after headers_install):
-+    --- HEAD~2/include/uapi/linux/bpf.h     2023-03-15 16:10:39.495462638 -0700
-+    +++ HEAD/include/uapi/linux/bpf.h       2023-03-15 16:10:38.919465752 -0700
-+    @@ -73,7 +73,7 @@
-+            __u8    dst_reg:4;      /* dest register */
-+            __u8    src_reg:4;      /* source register */
-+            __s16   off;            /* signed offset */
-+    -       __s32   imm;            /* signed immediate constant */
-+    +       __u32   imm;            /* unsigned immediate constant */
-+     };
-+
-+     /* Key of an a BPF_MAP_TYPE_LPM_TRIE entry */
-+
-+    error - 1/888 UAPI headers compatible with x86 appear _not_ to be backwards compatible
-+    Note: UAPI headers for architectures other than x86 were not checked
-+    error - UAPI header ABI check failed
-+
-+Alternatively, you could have also ran with ``-b HEAD~``. This would set the
-+base reference to ``HEAD~`` so then the script would compare it to ``HEAD~^1``.
-+
-+
-+Architecture-specific Headers
-+-----------------------------
-+
-+Consider this change::
-+
-+    cat << 'EOF' | patch -l -p1
-+    --- a/arch/arm64/include/uapi/asm/sigcontext.h
-+    +++ b/arch/arm64/include/uapi/asm/sigcontext.h
-+    @@ -70,6 +70,7 @@ struct sigcontext {
-+     struct _aarch64_ctx {
-+            __u32 magic;
-+            __u32 size;
-+    +       __u32 new_var;
-+     };
-+
-+     #define FPSIMD_MAGIC   0x46508001
-+    EOF
-+
-+This is a change to an arm64-specific UAPI header file. In this example, I'm
-+running the script from an x86 machine with an x86 compiler, so by default,
-+the script only works with x86-compatible UAPI header files::
-+
-+    % ./scripts/check-uapi.sh
-+    Installing sanitized UAPI headers from dirty tree... OK
-+    Saving current tree state... OK
-+    Installing sanitized UAPI headers from HEAD... OK
-+    Restoring current tree state... OK
-+    Checking changes to UAPI headers between HEAD and dirty tree
-+    All 888 UAPI headers compatible with x86 appear to be backwards compatible
-+    Note: UAPI headers for architectures other than x86 were not checked
-+
-+With an x86 compiler, we can't check header files in ``arch/arm64``, so the
-+script doesn't even try. You can pass the ``-m`` to force the script to look at
-+modified files, but in this case, you'll run into an issue::
-+
-+    % ./scripts/check-uapi.sh -m
-+    warning - detected changes to following files, but can't check them with x86 compiler:
-+      - arch/arm64/include/uapi/asm/sigcontext.h
-+
-+    Filtering them out and performing partial check on remaining files...
-+    error - all files were filtered out, there's nothing to check!
-+
-+The script will attempt filtering out files that don't work with ``ARCH``, but
-+if it filters all of the files out, it bails out.
-+
-+If we want to check the header file, we'll have to use an arm64 compiler and
-+set ``ARCH`` accordingly::
-+
-+    % CC=aarch64-linux-gnu-gcc ARCH=arm64 ./scripts/check-uapi.sh
-+    Installing sanitized UAPI headers from dirty tree... OK
-+    Saving current tree state... OK
-+    Installing sanitized UAPI headers from HEAD... OK
-+    Restoring current tree state... OK
-+    Checking changes to UAPI headers between HEAD and dirty tree
-+    !!! ABI differences detected in arch/arm64/include/uapi/asm/sigcontext.h from HEAD -> dirty tree !!!
-+
-+        [C] 'struct _aarch64_ctx' changed:
-+          type size changed from 64 to 96 (in bits)
-+          1 data member insertion:
-+            '__u32 new_var', at offset 64 (in bits) at sigcontext.h:73:1
-+        --- snip ---
-+        [C] 'struct zt_context' changed:
-+          type size changed from 128 to 160 (in bits)
-+          2 data member changes (1 filtered):
-+            '__u16 nregs' offset changed from 64 to 96 (in bits) (by +32 bits)
-+            '__u16 __reserved[3]' offset changed from 80 to 112 (in bits) (by +32 bits)
-+
-+    Header file diff (after headers_install):
-+    --- HEAD/arch/arm64/include/uapi/asm/sigcontext.h       2023-03-15 16:15:46.613800573 -0700
-+    +++ dirty/arch/arm64/include/uapi/asm/sigcontext.h      2023-03-15 16:15:44.765810584 -0700
-+    @@ -70,6 +70,7 @@
-+     struct _aarch64_ctx {
-+            __u32 magic;
-+            __u32 size;
-+    +       __u32 new_var;
-+     };
-+
-+     #define FPSIMD_MAGIC   0x46508001
-+
-+    error - 1/858 UAPI headers compatible with arm64 appear _not_ to be backwards compatible
-+    Note: UAPI headers for architectures other than arm64 were not checked
-+    error - UAPI header ABI check failed
-+
-+We can see with ``ARCH`` and ``CC`` set properly for the file, the ABI change
-+is reported properly.
-+
-+
-+Cross-Dependency Breakages
-+--------------------------
-+
-+Consider this change::
-+
-+    cat << 'EOF' | patch -l -p1
-+    --- a/include/uapi/linux/types.h
-+    +++ b/include/uapi/linux/types.h
-+    @@ -52,7 +52,7 @@ typedef __u32 __bitwise __wsum;
-+     #define __aligned_be64 __be64 __attribute__((aligned(8)))
-+     #define __aligned_le64 __le64 __attribute__((aligned(8)))
-+
-+    -typedef unsigned __bitwise __poll_t;
-+    +typedef unsigned short __bitwise __poll_t;
-+
-+     #endif /*  __ASSEMBLY__ */
-+     #endif /* _UAPI_LINUX_TYPES_H */
-+    EOF
-+
-+Here, we're changing a ``typedef`` in ``types.h``. Now, let's see what we get
-+when we run the script with ``-m`` to only check for modified files::
-+
-+    % ./scripts/check-uapi.sh -m
-+    Installing sanitized UAPI headers from dirty tree... OK
-+    Saving current tree state... OK
-+    Installing sanitized UAPI headers from HEAD... OK
-+    Restoring current tree state... OK
-+    Checking changes to UAPI headers between HEAD and dirty tree
-+    All 1 UAPI headers modified between HEAD and dirty tree appear to be backwards compatible
-+
-+With the ``-m`` flag, the script will only check the ABI compatibility of
-+modified files. It reports back that there aren't any ABI issues with
-+``types.h``. However, other UAPI headers in the tree may be broken by this
-+change!
-+
-+When you run *without* the ``-m`` flag, *all* headers are checked::
-+
-+    % ./scripts/check-uapi.sh
-+    Installing sanitized UAPI headers from dirty tree... OK
-+    Saving current tree state... OK
-+    Installing sanitized UAPI headers from HEAD... OK
-+    Restoring current tree state... OK
-+    Checking changes to UAPI headers between HEAD and dirty tree
-+    !!! ABI differences detected in include/uapi/linux/eventpoll.h from HEAD -> dirty tree !!!
-+
-+        [C] 'struct epoll_event' changed:
-+          type size changed from 96 to 80 (in bits)
-+          2 data member changes:
-+            type of '__poll_t events' changed:
-+              underlying type 'unsigned int' changed:
-+                type name changed from 'unsigned int' to 'unsigned short int'
-+                type size changed from 32 to 16 (in bits)
-+            '__u64 data' offset changed from 32 to 16 (in bits) (by -16 bits)
-+
-+    include/uapi/linux/eventpoll.h did not change between HEAD and dirty tree...
-+    It's possible a change to one of the headers it includes caused this error:
-+    #include <linux/fcntl.h>
-+    #include <linux/types.h>
-+
-+    error - 1/888 UAPI headers compatible with x86 appear _not_ to be backwards compatible
-+    Note: UAPI headers for architectures other than x86 were not checked
-+    error - UAPI header ABI check failed
-+
-+Note that the script noticed the failing header file did not change, so it
-+assumes one of its includes must have caused the breakage. Indeed, we can see
-+``linux/types.h`` is used from ``eventpoll.h``.
-+
-+To make sure issues like this are caught, it's recommended **not** to run with
-+the ``-m`` flag when doing formal validation checks (such as in a continuous
-+integration system).
-+
-+
-+Checking Historic UAPI Compatibility
-+------------------------------------
-+
-+You can use the ``-b`` and ``-p`` options to examine different chunks of your
-+git tree. For example, to check all changed UAPI header files between tags
-+v6.0 and v6.1, you'd run::
-+
-+    % ./scripts/check-uapi.sh -b v6.1 -p v6.0
-+    Saving current tree state... OK
-+    Installing sanitized UAPI headers from v6.1... OK
-+    Installing sanitized UAPI headers from v6.0... OK
-+    Restoring current tree state... OK
-+    Checking changes to UAPI headers between v6.0 and v6.1
-+    --- snip ---
-+    error - 89/888 UAPI headers compatible with x86 appear _not_ to be backwards compatible
-+    Note: UAPI headers for architectures other than x86 were not checked
-+    error - UAPI header ABI check failed
-+
-+You'll notice that the script did detect many UAPI changes that are not
-+backwards compatible. Knowing that kernel UAPIs are supposed to be stable
-+forever, this is an alarming result. This brings us to the next section: false
-+positives.
-+
-+False Positives
-+===============
-+
-+The UAPI checker is very aggressive in detecting ABI changes, so some false
-+positives may appear. For example, if you check all UAPI headers between v6.0
-+and v6.1, many breakages will be flagged. Run the following::
-+
-+    ./scripts/check-uapi.sh -b v6.1 -p v6.0
-+
-+The errors will be logged to ``abi_error_log.txt``. Here, we'll find examples
-+of several types of false positives.
-+
-+Enum Expansion
-+--------------
-+
-+::
-+
-+    !!! ABI differences detected in include/uapi/linux/openvswitch.h from v6.0 -> v6.1 !!!
-+
-+        [C] 'enum ovs_datapath_attr' changed:
-+          type size hasn't changed
-+          1 enumerator insertion:
-+            'ovs_datapath_attr::OVS_DP_ATTR_IFINDEX' value '9'
-+          1 enumerator change:
-+            'ovs_datapath_attr::__OVS_DP_ATTR_MAX' from value '9' to '10' at openvswitch.h.current:85:1
-+
-+In this case, an enum was expanded. Consequently, the "MAX" value was
-+incremented. This is not considered a breaking change because it's assumed
-+userspace programs are using the MAX value in a sane fashion.
-+
-+Expanding Into Reserved/Padding Fields
-+--------------------------------------
-+
-+::
-+
-+    !!! ABI differences detected in include/uapi/linux/perf_event.h from v6.0 -> v6.1 !!!
-+
-+        [C] 'struct perf_branch_entry' changed:
-+          type size hasn't changed
-+          3 data member insertions:
-+            '__u64 spec', at offset 152 (in bits) at perf_event.h.current:1420:1
-+            '__u64 new_type', at offset 154 (in bits) at perf_event.h.current:1421:1
-+            '__u64 priv', at offset 158 (in bits) at perf_event.h.current:1422:1
-+          1 data member change:
-+            '__u64 reserved' offset changed from 152 to 161 (in bits) (by +9 bits)
-+
-+In this case, a reserved field was expanded into. Previously, the reserved
-+field occupied 40 bits in the struct. After the change, three new members
-+were added that took up 9 bits, so the size of the reserved field was
-+reduced to 31.
-+
-+As the size of the struct did not change and none of the fields a userspace
-+program could have been using were removed/changed/relocated, this change is
-+not considered breaking.
-+
-+Removals For Refactoring
-+------------------------
-+
-+There is not an example of this in the v6.0 -> v6.1 span, but try::
-+
-+    % ./scripts/check-uapi.sh -b d759be8953febb6e5b5376c7d9bbf568864c6e2d -m
-+    warning - detected changes to following files, but can't check them with x86 compiler:
-+      - arch/alpha/include/uapi/asm/poll.h
-+      - arch/ia64/include/uapi/asm/poll.h
-+
-+    Filtering them out and performing partial check on remaining files...
-+    Saving current tree state... OK
-+    Installing sanitized UAPI headers from d759be8953febb6e5b5376c7d9bbf568864c6e2d... OK
-+    Installing sanitized UAPI headers from d759be8953febb6e5b5376c7d9bbf568864c6e2d^1... OK
-+    Restoring current tree state... OK
-+    Checking changes to UAPI headers between d759be8953febb6e5b5376c7d9bbf568864c6e2d^1 and d759be8953febb6e5b5376c7d9bbf568864c6e2d
-+    error - UAPI header arch/x86/include/uapi/asm/poll.h was incorrectly removed
-+    error - 1/1 UAPI headers modified between d759be8953febb6e5b5376c7d9bbf568864c6e2d^1 and d759be8953febb6e5b5376c7d9bbf568864c6e2d appear _not_ to be backwards compatible
-+    error - UAPI header ABI check failed
-+
-+In this case, the commit was a cleanup/refactoring change that does not impact
-+UAPIs. Unfortunately, the script is not smart enough to see this and raises the
-+alarm because UAPI headers were removed.
-+
-+Summary
-+-------
-+
-+There may be other examples of false positives that are not listed here.
-+
-+In the future, as tooling improves, we may be able to filter out more of these
-+false positives. There may also be additional examples of false positives not
-+listed here. Use your best judgement, and ideally a unit test in userspace, to
-+test your UAPI changes!
-+
-+False Negatives
-+===============
-+
-+The script can report false negatives when running with ``-m``. This occurs
-+when a change is made to a header file which causes a break in a separate header
-+file that includes it.
-+
-+For this reason, it's recommended not to run with the ``-m`` option unless you
-+know the modified files are not being included elsewhere.
-+
-+For an example of this behavior, please see the Cross-Dependency Breakage
-+example above.
-diff --git a/Documentation/dev-tools/index.rst b/Documentation/dev-tools/index.rst
-index 6b0663075dc0..0876f5a2cf55 100644
---- a/Documentation/dev-tools/index.rst
-+++ b/Documentation/dev-tools/index.rst
-@@ -34,6 +34,7 @@ Documentation/dev-tools/testing-overview.rst
-    kselftest
-    kunit/index
-    ktap
-+   checkuapi
+I agree, that's quite gnarly to read. the emac3_config_cbs is the
+callback, so it's already at 6 arguments, so there's nothing I can
+trim there. I could create some struct for readability, populate that,
+then call the do_config_cbs() func with it from emac3_config_cbs.
+Is that the sort of thing you want to see?
 
-
- .. only::  subproject and html
---
-2.17.1
+Thanks,
+Andrew
 
