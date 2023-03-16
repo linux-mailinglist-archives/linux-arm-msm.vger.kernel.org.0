@@ -2,87 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DFE16BD8E0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 20:20:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04B096BD92C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 20:30:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230174AbjCPTU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 15:20:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42964 "EHLO
+        id S230211AbjCPTaE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 15:30:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230031AbjCPTU4 (ORCPT
+        with ESMTP id S230260AbjCPT3y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 15:20:56 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F04CF77E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 12:20:55 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id cy23so11697567edb.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 12:20:54 -0700 (PDT)
+        Thu, 16 Mar 2023 15:29:54 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F9B77FD44
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 12:29:53 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id fd5so11853817edb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 12:29:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678994453;
+        d=linaro.org; s=google; t=1678994992;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=I6W9kUfmlY3tEraL4nU9eY/Af3MdcpRFdLZzCUy+85U=;
-        b=hVfamywI7Z36xHj6XfceRT3rEYu7wfXqO1XRTmOt0XtuS1PkmzUQX16lsH2KqLEfeV
-         d255f9CAmKEI7EjqrU+c2cWlBUD0/GqyV9J10tpEQV7fjFsPcfLEIB8cu57VtX7rUDek
-         4UanuNT7Ya6abBq+7caHifRqkiFOySFpEFbTnXAGI11fG0/r91wVhtxEmL9DFt2KZ+v9
-         61m93BAFn1HQ/DoFe2qm/JF3HyET+PE7ufKR1sVG3VDpherQkPZwxCxGbZFJj/Mf+ZmD
-         KzSeMCcilkxHvT6YH859eyYaRNj29AaCjaDhv1aCh46FqqymjR95pJOp7h4ME5sShC6V
-         8VDg==
+        bh=5WyU0qfnRULjYvTUDcZG4NUcXj63E3kuf4oqTEgEhWM=;
+        b=QpZ370ktfsNBat3WA/Sytl7eZ2icaf9k5ZVtBvzG+miJw0o3kMpS53pUzaPKYBRzlm
+         3RNMMlqqLCDNSmLyPt7rzFqC+e4fvuBk9STtIJQxJmZutKpTl9qYw6x1POw04z6kzTUC
+         mBhD+sk7VwyoRxOa4/5+XB7moNAKCb5l8reeiMvisr559sTx3FKtB8sRLssnbgn3heLz
+         6DzVS3WrFm01OYQjwtS+uNhqojvO8LfE5Gzve3HvboTn1r02KcYrfAxJ9fynmUczbplt
+         wf8G06BjUJVJsXw3O7H0NMaymAngotahtTTmOiIwcb1oM26a7hULDA9hT2FITUrb5NJB
+         D2/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678994453;
+        d=1e100.net; s=20210112; t=1678994992;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I6W9kUfmlY3tEraL4nU9eY/Af3MdcpRFdLZzCUy+85U=;
-        b=ewJlUCHA+1k76vXfl0n+rX0E38u/tgg/8xaFyky1SvMdkKBSvGibogSMTxMGRZY8Pd
-         FDRAK0NdSq6i0+mjVOxzluRMBgr/UrrpkJiQ/tLZVNs4H7QhDIEu+FcO0KfzkOHgDD8+
-         ut59Xz4jUtdvOVSxyvmZkPkoEKDMmoXxHSRrhbHKirGzjTSX/GInhC1H4TM6JL8KItzo
-         ZUeY1vKmJzMNM9lyAmxQuAS31Zi0b/Yu28nraJX8v6tcegA8PDqYEndM+/cj1DyYF7jD
-         8BcE/Du1TyB2TlT8pJOh66eM6EisZHLc6UWAaP5JF0AnFDRNSs/UqP+DHFFn1SGnwRLl
-         c57A==
-X-Gm-Message-State: AO0yUKVWZrKKSfIKBizl7GnkHuJujyut76SY8cRwVJNowfTvZaNXaH1B
-        8jieBH50jRFQUhE5VhPU9GsBBg==
-X-Google-Smtp-Source: AK7set8t10Jjk9M0yulDUJsBcv70/mUwE18d9PBfWRZHveo8W0esOHyL0XnxuDdXiwksCvF4lp4NSg==
-X-Received: by 2002:aa7:db96:0:b0:4fa:d2b1:9176 with SMTP id u22-20020aa7db96000000b004fad2b19176mr672063edt.22.1678994453564;
-        Thu, 16 Mar 2023 12:20:53 -0700 (PDT)
+        bh=5WyU0qfnRULjYvTUDcZG4NUcXj63E3kuf4oqTEgEhWM=;
+        b=mA9cRgnImjNU9RoPC8Al7/6TOvVSWXoZ/QIwitg3NWr3OOCrB4rgHykCH59K0HROvd
+         ZfYXHl0aEisj+vIv50Mhx7fSqGb2mGW64sWoL9l/D4Vf/yh7S6ei5tmF4s6HD5rqqasG
+         7m8v6hk8G5wobV2tFdm8wBkNKW5pY13gq1XSvfFKynUsE4Y6EPajN2jvNNlufmupv3CB
+         dD/1ya4WBX3hHuDXjwMrbrgnc28tdEqclfxDrLQr1dd02mBM7ArlYCJdBl8KlEqzra1r
+         thF5qssecIAwZqrUAU5c3NMcBv+9rl4rmfNzdARjpZb3jCOybgKtffVvKj5brNI/BRSE
+         JhQw==
+X-Gm-Message-State: AO0yUKWdfwj0763PywYJ2jCSJKm4tNLBvgvwwQZx8lHQH6/oeCQX15Un
+        pluvtZGpMaLMI8eLPk84PEP8Lw==
+X-Google-Smtp-Source: AK7set/rsWHRHF7nlHEmPrEiunpAYhgOMGUC46mRl1vyeV9hyy07MsCnraZ9ocmj2iYUnIVfgEGT5g==
+X-Received: by 2002:a17:907:c304:b0:8ae:e724:ea15 with SMTP id tl4-20020a170907c30400b008aee724ea15mr11491159ejc.76.1678994991923;
+        Thu, 16 Mar 2023 12:29:51 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:9827:5f65:8269:a95f? ([2a02:810d:15c0:828:9827:5f65:8269:a95f])
-        by smtp.gmail.com with ESMTPSA id k12-20020a50ce4c000000b004af70c546dasm143487edj.87.2023.03.16.12.20.51
+        by smtp.gmail.com with ESMTPSA id t1-20020a170906178100b008d1dc5f5692sm17887eje.76.2023.03.16.12.29.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Mar 2023 12:20:53 -0700 (PDT)
-Message-ID: <066ca8a9-783d-de4f-aa49-86748e5ee716@linaro.org>
-Date:   Thu, 16 Mar 2023 20:20:51 +0100
+        Thu, 16 Mar 2023 12:29:51 -0700 (PDT)
+Message-ID: <f09e93e1-235a-ea0a-902d-4f41a8c90ee5@linaro.org>
+Date:   Thu, 16 Mar 2023 20:29:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH net-next 01/11] dt-bindings: net: snps,dwmac: Update
- interrupt-names
+Subject: Re: [PATCH 1/2] dt-bindings: arm-smmu: Document SM61[12]5 GPU SMMU
 Content-Language: en-US
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
-        bhupesh.sharma@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, peppe.cavallaro@st.com,
-        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
-        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
-        linux@armlinux.org.uk, veekhee@apple.com,
-        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
-        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
-        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
-        jsuraj@qti.qualcomm.com, hisunil@quicinc.com
-References: <20230313165620.128463-1-ahalaney@redhat.com>
- <20230313165620.128463-2-ahalaney@redhat.com>
- <d4831176-c6f1-5a9b-3086-23d82f1f05a6@linaro.org>
- <20230316161525.fwzfyj3fhekfwafd@halaney-x13s>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230315-topic-kamorta_adrsmmu-v1-0-d1c0dea90bd9@linaro.org>
+ <20230315-topic-kamorta_adrsmmu-v1-1-d1c0dea90bd9@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230316161525.fwzfyj3fhekfwafd@halaney-x13s>
+In-Reply-To: <20230315-topic-kamorta_adrsmmu-v1-1-d1c0dea90bd9@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -94,70 +84,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/03/2023 17:15, Andrew Halaney wrote:
-> On Thu, Mar 16, 2023 at 08:13:24AM +0100, Krzysztof Kozlowski wrote:
->> On 13/03/2023 17:56, Andrew Halaney wrote:
->>> From: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->>>
->>> As commit fc191af1bb0d ("net: stmmac: platform: Fix misleading
->>> interrupt error msg") noted, not every stmmac based platform
->>> makes use of the 'eth_wake_irq' or 'eth_lpi' interrupts.
->>>
->>> So, update the 'interrupt-names' inside 'snps,dwmac' YAML
->>> bindings to reflect the same.
->>>
->>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->>> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
->>> ---
->>>
->>> I picked this up from:
->>> 		https://lore.kernel.org/netdev/20220929060405.2445745-2-bhupesh.sharma@linaro.org/
->>> No changes other than collecting the Acked-by.
->>>
->>>  Documentation/devicetree/bindings/net/snps,dwmac.yaml | 4 ++--
->>>  1 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
->>> index 16b7d2904696..52ce14a4bea7 100644
->>> --- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
->>> +++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
->>> @@ -105,8 +105,8 @@ properties:
->>>      minItems: 1
->>>      items:
->>>        - const: macirq
->>> -      - const: eth_wake_irq
->>> -      - const: eth_lpi
->>> +      - enum: [eth_wake_irq, eth_lpi]
->>> +      - enum: [eth_wake_irq, eth_lpi]
->>
->> I acked it before but this is not correct. This should be:
->> +      - enum: [eth_wake_irq, eth_lpi]
->> +      - enum: eth_lpi
-> 
-> Would
-> +      - enum: [eth_wake_irq, eth_lpi]
-> +      - const: eth_lpi
-> be more appropriate? With the suggested change above I get the following
-> error, but with the above things seem to work as I expect:
-> 
->     (dtschema) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac|rebase-i] % git diff HEAD~
->     diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
->     index 16b7d2904696..ca199a17f83d 100644
->     --- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
->     +++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
->     @@ -105,8 +105,8 @@ properties:
->          minItems: 1
->          items:
->            - const: macirq
->     -      - const: eth_wake_irq
->     -      - const: eth_lpi
->     +      - enum: [eth_wake_irq, eth_lpi]
->     +      - enum: eth_lpi
+On 15/03/2023 11:52, Konrad Dybcio wrote:
+> Both of these SoCs have a Qualcomm MMU500 implementation of SMMU
+> in front of their GPUs that expect 3 clocks. Both of them also have
+> an APPS SMMU that expects no clocks. Remove qcom,sm61[12]5-smmu-500
+> from the "no clocks" list (intentionally 'breaking' the schema checks
+> of APPS SMMU, as now it *can* accept clocks - with the current
+> structure of this file it would have taken a wastefully-long time to
+> sort this out properly..) and add necessary yaml to describe the
+> clocks required by the GPU SMMUs.
 
-Eh, right, obviously should be here const, so:
 
- - const: eth_lpi
+> +      properties:
+> +        compatible:
+> +          items:
+> +            - enum:
+> +                - qcom,sm6115-smmu-500
+> +                - qcom,sm6125-smmu-500
+> +            - const: qcom,adreno-smmu
+> +            - const: qcom,smmu-500
+> +            - const: arm,mmu-500
+
+If you drop the hunk later (from allOf:if), then what clocks do you
+expect for non-GPU SMMU?
+
+> +    then:
+> +      properties:
+> +        clock-names:
+> +          items:
+> +            - const: mem
+> +            - const: hlos
+> +            - const: iface
+> +
+> +        clocks:
+> +          items:
+> +            - description: GPU memory bus clock
+> +            - description: Voter clock required for HLOS SMMU access
+> +            - description: Interface clock required for register access
+> +
+>    # Disallow clocks for all other platforms with specific compatibles
+>    - if:
+>        properties:
+> @@ -394,8 +420,6 @@ allOf:
+>                - qcom,sdm845-smmu-500
+>                - qcom,sdx55-smmu-500
+>                - qcom,sdx65-smmu-500
+> -              - qcom,sm6115-smmu-500
+> -              - qcom,sm6125-smmu-500
+>                - qcom,sm6350-smmu-500
+>                - qcom,sm6375-smmu-500
+>                - qcom,sm8350-smmu-500
+> 
 
 Best regards,
 Krzysztof
