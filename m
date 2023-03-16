@@ -2,66 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C170C6BCC2D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 11:12:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E3DFD6BCC74
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 11:20:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230310AbjCPKMo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 06:12:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34630 "EHLO
+        id S230281AbjCPKUm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 06:20:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230314AbjCPKM2 (ORCPT
+        with ESMTP id S230290AbjCPKUj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 06:12:28 -0400
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26201B9525
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 03:12:09 -0700 (PDT)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-5416b0ab0ecso21320107b3.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 03:12:09 -0700 (PDT)
+        Thu, 16 Mar 2023 06:20:39 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7337615540
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 03:20:29 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-541a05e4124so22005517b3.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 03:20:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678961528;
+        d=linaro.org; s=google; t=1678962028;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=HUXMtYCJCytkJaYrRDzWMzdMH+FzcGdy44GMw4xZIbw=;
-        b=qrgea51T34DMF4J459mkcIfZM1O5H1D7Blf2NqQVaiHCYu/S0yJheRooxcaRzkLKA8
-         o/qVX9Z5kPl+ZfI2iQMguYLIjfKBVzZ/51FeU9TxUjsn21UWVJRd8bkLeLExN+2r/t9C
-         45dK+4coBBS0nCQo/mOSU3oqeFUNMQfD0NX0r49iCClhHAW/fcHlu/dqbB/fgBjBk390
-         bWnb+0+NO+OPFq5zMlxdFnzT+Ug9A8QfqOeZrVpa+1ikFXFkqKb9IEE3Cl9JP69IlFoN
-         gMlRtPTcKjpVX08WqHkJdp4oZzjNf+lUIWzemFJQ3SKZD40b09+Qkie46tTorxxT0epL
-         5G1A==
+        bh=SAog4H/SRFvoaEO1OZaRPW+vcyrqLcy+mvMuM/gRdEU=;
+        b=c+ZumM3X9admVFx8dYxUtMxlNIuB1aK9CvI3x1Bhk8FAE8iZwfnpyrfVzAVWQKPIfg
+         Jy3AgQ2Wdq6r+PGFBOOR6Ap7ANNwzjk6ANKoPK0arbRr+2b9tlhpm/PLkn4SztdbA/Ag
+         zqTcQcSvnJvPfyJFBkJzA+GqMxcV/Tx9JKmDWASuCW6fQ7Io7PnlTZGUpqttYj2Y1B+S
+         WfNH9NAblKoCa5asYybuJDSgs0y3gu1pThe2rdgI7cUsKxBKJCSNidxQkLdqRDC4IBGW
+         TffJHOKI1ZA13UMP/2eS3wRa7Hr7Ml3VXi7SHlD91iHBRIqkf4XG1sy6fsNtdEi+p7s/
+         cB2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678961528;
+        d=1e100.net; s=20210112; t=1678962028;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HUXMtYCJCytkJaYrRDzWMzdMH+FzcGdy44GMw4xZIbw=;
-        b=v0LqLq2ZhcNnH3waKMIp1iiFokHOaa5Pb86SRxyvMinMW3noWWhOIPIKjiYw/rJJTu
-         k4CraqRyX2/kREJp0ja2amhyJJ39FhMuEtuRpjLuUZmJ1hCHPiRpay5EsnZ0x+Mr7XDO
-         GkKcL61F1syZ8xPj7J62CXXaZdPfQO5GOOR1oh0iA63SprtTR2tpmAdMaFOY4chVn2O1
-         kaYK5rL/ZnjMBViTRSqloNinGp0UD3tel2HUJ98pC1inT+Iop0jq70Dp21gI1Y+/4Fkv
-         UaXCqEaMv2bNOAvUYqVFqiG6I3PVpS+nSnqofiw40TT/rNpPAQwQBeVAfUa1G+/VvKi7
-         lR6Q==
-X-Gm-Message-State: AO0yUKXV9G7zfLktpu0KiI1zeiBWccZyv/BRnwcRvlGjGAwZGFZ7n1ah
-        9A9cOCv2C6sJR5xvE3Tv1fz6dcY9JJK6jF5Qv+X5IA==
-X-Google-Smtp-Source: AK7set/KxCCnM2xscrt5p3IwN8pijGV3hZwQNY4jhHYrQ6X7R+dhtMmXWquofPXgEnNNKJko0qibO1BNsjyewjnx8Xk=
-X-Received: by 2002:a81:d84d:0:b0:543:9065:b225 with SMTP id
- n13-20020a81d84d000000b005439065b225mr1963135ywl.5.1678961528178; Thu, 16 Mar
- 2023 03:12:08 -0700 (PDT)
+        bh=SAog4H/SRFvoaEO1OZaRPW+vcyrqLcy+mvMuM/gRdEU=;
+        b=Vkztzzl5f1636KON9UaH+UE1VingUa3leiAgYt/eLdSrbnPXPt0D7mskWDqoQX7b/9
+         C4c2Lh1KbzYh1NcmfdPxndSpvpfkT/ePITQUsCi0aBg0EsCBXcyoaKYbmkofC6UZkN4k
+         t/XucOVHGSM3FyAJWwjzG1No/q/FaKidLnmLuP3F48A1FNpnvrdgSa9YYdaWZ55lt6+F
+         0EDAxmH3nJkSUotf2WSPZLCqE1VGQEBUdBS0LlKPy1T4kjpCLAmObZxxVE2iWH1M1WyT
+         ssxChorFPYmHD+mwVasYumAmw3+3a/co+s73OvZcnm35OG37gGMWAzQZG8mXitFqblty
+         gbFg==
+X-Gm-Message-State: AO0yUKXn+2okKHxpHiSfomwkZB550kIdAI8mx1RAmsvflSX3yIoobyX+
+        NlwSX0ccPpX+Shx5Muqc9VtXZ+2TO95ucl/ZSaDf4A==
+X-Google-Smtp-Source: AK7set9sa4/oy4Jqwr7KB88J+xmPYRgd44Viltr+Y+ihpUmjD1EzCd/GuXR6lmOjOsG+2r84dXTULPtF66OZHVXeTtw=
+X-Received: by 2002:a81:b3ca:0:b0:541:8a9a:5445 with SMTP id
+ r193-20020a81b3ca000000b005418a9a5445mr1860892ywh.5.1678962028513; Thu, 16
+ Mar 2023 03:20:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230316083049.29979-1-quic_tdas@quicinc.com> <20230316083049.29979-3-quic_tdas@quicinc.com>
-In-Reply-To: <20230316083049.29979-3-quic_tdas@quicinc.com>
+References: <20230202064712.5804-2-quic_vboma@quicinc.com> <20230316081509.12201-1-quic_vboma@quicinc.com>
+ <20230316081509.12201-2-quic_vboma@quicinc.com>
+In-Reply-To: <20230316081509.12201-2-quic_vboma@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 16 Mar 2023 12:11:57 +0200
-Message-ID: <CAA8EJpqxtRyVKoqNsY01FmHaa10WK9LT49ydenztoJ1q0ah0+A@mail.gmail.com>
-Subject: Re: [PATCH 2/3] clk: qcom: videocc-sm8450: Add video clock controller
- driver for SM8450
-To:     Taniya Das <quic_tdas@quicinc.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+Date:   Thu, 16 Mar 2023 12:20:17 +0200
+Message-ID: <CAA8EJpozq1nCgG5npK5JUXc-Y-7LiPe3Y_VP8++Rq70AreCenA@mail.gmail.com>
+Subject: Re: [PATCH] venus: Enable sufficient sequence change support for
+ sc7180 and fix for Decoder STOP command issue.
+To:     quic_vboma@quicinc.com
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_skakitap@quicinc.com, quic_jkona@quicinc.com
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vikash Garodia <vgarodia@qti.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -73,199 +76,164 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 16 Mar 2023 at 10:31, Taniya Das <quic_tdas@quicinc.com> wrote:
+On Thu, 16 Mar 2023 at 10:17, <quic_vboma@quicinc.com> wrote:
 >
-> Add support for the video clock controller driver for peripheral clock
-> clients to be able to request for video cc clocks.
+> From: Viswanath Boma <quic_vboma@quicinc.com>
 >
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> For VP9 bitstreams, there could be a change in resolution at interframe,
+> for driver to get notified of such resolution change,
+> enable the property in video firmware.
+> Also, EOS handling is now made same in video firmware across all V6 SOCs,
+> hence above a certain firmware version, the driver handling is
+> made generic for all V6s
+>
+> Signed-off-by: Vikash Garodia <vgarodia@qti.qualcomm.com>
+> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
+> Tested-by: Nathan Hebert <nhebert@chromium.org>
 > ---
->  drivers/clk/qcom/Kconfig          |   9 +
->  drivers/clk/qcom/Makefile         |   1 +
->  drivers/clk/qcom/videocc-sm8450.c | 464 ++++++++++++++++++++++++++++++
->  3 files changed, 474 insertions(+)
->  create mode 100644 drivers/clk/qcom/videocc-sm8450.c
+
+Which version of the patch is this? Were there any changes compared to
+the previous version? Please include a changelog below the dashed line
+to let other people know what has changed
+
+>  drivers/media/platform/qcom/venus/core.h       | 18 ++++++++++++++++++
+>  drivers/media/platform/qcom/venus/hfi_cmds.c   |  1 +
+>  drivers/media/platform/qcom/venus/hfi_helper.h |  2 ++
+>  drivers/media/platform/qcom/venus/hfi_msgs.c   | 11 +++++++++--
+>  drivers/media/platform/qcom/venus/vdec.c       | 12 +++++++++++-
+>  5 files changed, 41 insertions(+), 3 deletions(-)
 >
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index 5ab4b7dfe3c2..81909e179bc7 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -892,4 +892,13 @@ config CLK_GFM_LPASS_SM8250
->           Support for the Glitch Free Mux (GFM) Low power audio
->            subsystem (LPASS) clocks found on SM8250 SoCs.
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index 32551c2602a9..ee8b70a34656 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -202,6 +202,11 @@ struct venus_core {
+>         unsigned int core0_usage_count;
+>         unsigned int core1_usage_count;
+>         struct dentry *root;
+> +       struct venus_img_version {
+> +               u32 major;
+> +               u32 minor;
+> +               u32 rev;
+> +       } venus_ver;
+>  };
 >
-> +config SM_VIDEOCC_8450
-> +       tristate "SM8450 Video Clock Controller"
-> +       select SM_GCC_8450
-> +       select QCOM_GDSC
-> +       help
-> +         Support for the video clock controller on Qualcomm Technologies, Inc.
-> +         SM8450 devices.
-> +         Say Y if you want to support video devices and functionality such as
-> +         video encode/decode.
->  endif
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index c743805a9cbb..5cbd0eedd6d9 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -119,6 +119,7 @@ obj-$(CONFIG_SM_GPUCC_8350) += gpucc-sm8350.o
->  obj-$(CONFIG_SM_TCSRCC_8550) += tcsrcc-sm8550.o
->  obj-$(CONFIG_SM_VIDEOCC_8150) += videocc-sm8150.o
->  obj-$(CONFIG_SM_VIDEOCC_8250) += videocc-sm8250.o
-> +obj-$(CONFIG_SM_VIDEOCC_8450) += videocc-sm8450.o
->  obj-$(CONFIG_SPMI_PMIC_CLKDIV) += clk-spmi-pmic-div.o
->  obj-$(CONFIG_KPSS_XCC) += kpss-xcc.o
->  obj-$(CONFIG_QCOM_HFPLL) += hfpll.o
-> diff --git a/drivers/clk/qcom/videocc-sm8450.c b/drivers/clk/qcom/videocc-sm8450.c
-> new file mode 100644
-> index 000000000000..ca60f3be587d
-> --- /dev/null
-> +++ b/drivers/clk/qcom/videocc-sm8450.c
-> @@ -0,0 +1,464 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/clk-provider.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/pm_runtime.h>
-> +#include <linux/regmap.h>
-> +
-> +#include <dt-bindings/clock/qcom,videocc-sm8450.h>
-> +
-> +#include "clk-alpha-pll.h"
-> +#include "clk-branch.h"
-> +#include "clk-rcg.h"
-> +#include "clk-regmap.h"
-> +#include "clk-regmap-divider.h"
-> +#include "common.h"
-> +#include "gdsc.h"
-> +#include "reset.h"
-> +
-> +enum {
-> +       P_BI_TCXO,
-> +       P_VIDEO_CC_PLL0_OUT_MAIN,
-> +       P_VIDEO_CC_PLL1_OUT_MAIN,
-> +};
-> +
-> +static const struct pll_vco lucid_evo_vco[] = {
-> +       { 249600000, 2020000000, 0 },
-> +};
-> +
-> +static const struct alpha_pll_config video_cc_pll0_config = {
-> +       .l = 0x1E,
-> +       .alpha = 0x0,
-> +       .config_ctl_val = 0x20485699,
-> +       .config_ctl_hi_val = 0x00182261,
-> +       .config_ctl_hi1_val = 0x32AA299C,
-> +       .user_ctl_val = 0x00000000,
-> +       .user_ctl_hi_val = 0x00000805,
-> +};
-> +
-> +static struct clk_alpha_pll video_cc_pll0 = {
-> +       .offset = 0x0,
-> +       .vco_table = lucid_evo_vco,
-> +       .num_vco = ARRAY_SIZE(lucid_evo_vco),
-> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
-> +       .clkr = {
-> +               .hw.init = &(const struct clk_init_data){
-> +                       .name = "video_cc_pll0",
-> +                       .parent_data = &(const struct clk_parent_data){
-> +                               .fw_name = "bi_tcxo",
-
-Could you please follow the last of recent drivers and use DT indices
-instead of clock-names?
-
-Also, as a syntax nit, could you please add whitespaces between ) and { ?
-
-> +                       },
-> +                       .num_parents = 1,
-> +                       .ops = &clk_alpha_pll_lucid_evo_ops,
-> +               },
-> +       },
-> +};
-> +
-
-[skipped]
-
-
-> +
-> +static void video_cc_sm8450_pm_runtime_disable(void *data)
+>  struct vdec_controls {
+> @@ -500,4 +505,17 @@ venus_caps_by_codec(struct venus_core *core, u32 codec, u32 domain)
+>         return NULL;
+>  }
+>
+> +static inline int
+> +is_fw_rev_or_newer(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
 > +{
-> +       pm_runtime_disable(data);
+> +       return ((core)->venus_ver.major == vmajor && (core)->venus_ver.minor ==
+> +                       vminor && (core)->venus_ver.rev >= vrev);
 > +}
 > +
-> +static int video_cc_sm8450_probe(struct platform_device *pdev)
+> +static inline int
+> +is_fw_rev_or_older(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
 > +{
-> +       struct regmap *regmap;
-> +       int ret;
-> +
-> +       pm_runtime_enable(&pdev->dev);
-> +
-> +       ret = devm_add_action_or_reset(&pdev->dev, video_cc_sm8450_pm_runtime_disable, &pdev->dev);
-> +       if (ret)
-> +               return ret;
+> +       return ((core)->venus_ver.major == vmajor && (core)->venus_ver.minor ==
+> +                       vminor && (core)->venus_ver.rev <= vrev);
+> +}
+>  #endif
+> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> index 930b743f225e..e2539b58340f 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> @@ -521,6 +521,7 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
+>                 pkt->shdr.hdr.size += sizeof(u32) + sizeof(*en);
+>                 break;
+>         }
+> +       case HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT:
+>         case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER: {
+>                 struct hfi_enable *in = pdata;
+>                 struct hfi_enable *en = prop_data;
+> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+> index d2d6719a2ba4..20516b4361d3 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+> @@ -469,6 +469,8 @@
+>  #define HFI_PROPERTY_PARAM_VDEC_PIXEL_BITDEPTH                 0x1003007
+>  #define HFI_PROPERTY_PARAM_VDEC_PIC_STRUCT                     0x1003009
+>  #define HFI_PROPERTY_PARAM_VDEC_COLOUR_SPACE                   0x100300a
+> +#define HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT \
+> +                                                               0x0100300b
+>
+>  /*
+>   * HFI_PROPERTY_CONFIG_VDEC_COMMON_START
+> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
+> index df96db3761a7..07ac0fcd2852 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+> @@ -248,9 +248,10 @@ static void hfi_sys_init_done(struct venus_core *core, struct venus_inst *inst,
+>  }
+>
+>  static void
+> -sys_get_prop_image_version(struct device *dev,
+> +sys_get_prop_image_version(struct venus_core *core,
+>                            struct hfi_msg_sys_property_info_pkt *pkt)
+>  {
+> +       struct device *dev = core->dev;
+>         u8 *smem_tbl_ptr;
+>         u8 *img_ver;
+>         int req_bytes;
+> @@ -263,6 +264,12 @@ sys_get_prop_image_version(struct device *dev,
+>                 return;
+>
+>         img_ver = pkt->data;
+> +       if (IS_V4(core))
+> +               sscanf(img_ver, "14:VIDEO.VE.%u.%u-%u-PROD",
+> +                      &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
+> +       else if (IS_V6(core))
+> +               sscanf(img_ver, "14:VIDEO.VPU.%u.%u-%u-PROD",
+> +                      &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
+>
+>         dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
+>
+> @@ -286,7 +293,7 @@ static void hfi_sys_property_info(struct venus_core *core,
+>
+>         switch (pkt->property) {
+>         case HFI_PROPERTY_SYS_IMAGE_VERSION:
+> -               sys_get_prop_image_version(dev, pkt);
+> +               sys_get_prop_image_version(core, pkt);
+>                 break;
+>         default:
+>                 dev_dbg(dev, VDBGL "unknown property data\n");
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 4ceaba37e2e5..36c88858ea9d 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -545,7 +545,7 @@ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
+>
+>                 fdata.buffer_type = HFI_BUFFER_INPUT;
+>                 fdata.flags |= HFI_BUFFERFLAG_EOS;
+> -               if (IS_V6(inst->core))
+> +               if (IS_V6(inst->core) && is_fw_rev_or_older(inst->core, 1, 0, 87))
+>                         fdata.device_addr = 0;
+>                 else
+>                         fdata.device_addr = 0xdeadb000;
+> @@ -671,6 +671,16 @@ static int vdec_set_properties(struct venus_inst *inst)
+>                         return ret;
+>         }
+>
+> +       /* Enabling sufficient sequence change support for VP9 */
+> +       if (of_device_is_compatible(inst->core->dev->of_node, "qcom,sc7180-venus")) {
 
-Could you please shift to using devm_pm_runtime_enable()?
+Is it really specific just to sc7180 or will it be applicable to any
+other platform using venus-5.4 firmware?
 
-> +
-> +       ret = pm_runtime_resume_and_get(&pdev->dev);
-> +       if (ret)
-> +               return ret;
-> +
-> +       regmap = qcom_cc_map(pdev, &video_cc_sm8450_desc);
-> +       if (IS_ERR(regmap)) {
-> +               pm_runtime_put(&pdev->dev);
-> +               return PTR_ERR(regmap);
+> +               if (is_fw_rev_or_newer(inst->core, 5, 4, 51)) {
+> +                       ptype = HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT;
+> +                       ret = hfi_session_set_property(inst, ptype, &en);
+> +                       if (ret)
+> +                               return ret;
+> +               }
 > +       }
 > +
-> +       clk_lucid_evo_pll_configure(&video_cc_pll0, regmap, &video_cc_pll0_config);
-> +       clk_lucid_evo_pll_configure(&video_cc_pll1, regmap, &video_cc_pll1_config);
-> +
-> +       /*
-> +        * Keep clocks always enabled:
-> +        *      video_cc_ahb_clk
-> +        *      video_cc_sleep_clk
-> +        *      video_cc_xo_clk
-> +        */
-> +       regmap_update_bits(regmap, 0x80e4, BIT(0), BIT(0));
-> +       regmap_update_bits(regmap, 0x8130, BIT(0), BIT(0));
-> +       regmap_update_bits(regmap, 0x8114, BIT(0), BIT(0));
-> +
-> +       ret = qcom_cc_really_probe(pdev, &video_cc_sm8450_desc, regmap);
-> +
-> +       pm_runtime_put(&pdev->dev);
-> +
-> +       return ret;
-> +}
-> +
-> +static struct platform_driver video_cc_sm8450_driver = {
-> +       .probe = video_cc_sm8450_probe,
-> +       .driver = {
-> +               .name = "video_cc-sm8450",
-> +               .of_match_table = video_cc_sm8450_match_table,
-> +       },
-> +};
-> +
-> +static int __init video_cc_sm8450_init(void)
-> +{
-> +       return platform_driver_register(&video_cc_sm8450_driver);
-> +}
-> +subsys_initcall(video_cc_sm8450_init);
-> +
-> +static void __exit video_cc_sm8450_exit(void)
-> +{
-> +       platform_driver_unregister(&video_cc_sm8450_driver);
-> +}
-> +module_exit(video_cc_sm8450_exit);
-> +
-> +MODULE_DESCRIPTION("QTI VIDEO_CC SM8450 Driver");
-> +MODULE_LICENSE("GPL v2");
-
-I think this should be just "GPL" nowaways.
-
+>         ptype = HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR;
+>         conceal = ctr->conceal_color & 0xffff;
+>         conceal |= ((ctr->conceal_color >> 16) & 0xffff) << 10;
 > --
 > 2.17.1
 >
