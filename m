@@ -2,97 +2,248 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C62256BC3B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 03:21:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 010FB6BC3BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 03:24:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229639AbjCPCVj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 22:21:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44282 "EHLO
+        id S229599AbjCPCYX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 22:24:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjCPCVi (ORCPT
+        with ESMTP id S229552AbjCPCYW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 22:21:38 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2B7357093;
-        Wed, 15 Mar 2023 19:21:37 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32G24QnQ009636;
-        Thu, 16 Mar 2023 02:21:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=k0M+jgaRm8fiNJandj3KTGzc2R4sgbklH2+GpVT8zSU=;
- b=H2dEJ6tLYdIN3ralAhBV6nhx0pf+3jdNg1fClxVV0bFxAUXgCNUYay7W5oJREwzv0StC
- 5qqwbcYLUUHjSEkTPhfXMt35qmE5O2M1XKHCvTTcv9o+x88gt3/DAkPMCzYDgl4bFIU1
- 5CTtn7WrgQkasTzCeHTBB6Y4Cnw1cLl//mJAe/3yR5+TLqfCsZnDe8UQGbElchqDij04
- k5S634uRHgAUECYbwrtb5rYYSbIjrLOJFAq5UU+d2gk/ch/zjRohmtHKOZ6GcV+CS06C
- whVlF5rL+mMTyEOXL4CPcuTtOZUOZtrAs+6ukQiF5/bHPK5/2kdO9liCe7BYe645+SER 1Q== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pbst901sn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Mar 2023 02:21:31 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32G2LV0c027895
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Mar 2023 02:21:31 GMT
-Received: from abhinavk-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Wed, 15 Mar 2023 19:21:30 -0700
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        Kalyan Thota <quic_kalyant@quicinc.com>
-CC:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <robdclark@chromium.org>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <quic_vpolimer@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <marijn.suijten@somainline.org>
-Subject: Re: (subset) [PATCH v4 1/4] drm/msm/dpu: clear DSPP reservations in rm release
-Date:   Wed, 15 Mar 2023 19:21:21 -0700
-Message-ID: <167893299308.2831.899170980846361042.b4-ty@quicinc.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <1676286704-818-2-git-send-email-quic_kalyant@quicinc.com>
-References: <1676286704-818-1-git-send-email-quic_kalyant@quicinc.com> <1676286704-818-2-git-send-email-quic_kalyant@quicinc.com>
+        Wed, 15 Mar 2023 22:24:22 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28C01AA71F;
+        Wed, 15 Mar 2023 19:24:21 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AA5B961EE6;
+        Thu, 16 Mar 2023 02:24:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AFFC433D2;
+        Thu, 16 Mar 2023 02:24:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678933460;
+        bh=Dru+k7mXY5CpAC6aY6esr/ftvOW/j2SPoAN8MMrwrXk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Xx0sLu+EE6NGwrA7T1XLyK3xqdnhfUPax0Xde53H3kBa7xYlk5YqYNM/UR9MpEx8N
+         MDHrshUiYQfpdExClIp+Wkobv2rVERnHFdiZ7oZSjfs2Mu+XSorbVuXe9xmmUKoVWI
+         b0rraXBwEkRWibwqrdOCILhxp2RmV22nu2SiPY3p3Su5rrOppAkKvbriU8wDaE0jRl
+         Q8GCA2tiZQAX1hMv7Cp2R/dsNay95+ucp+Irlo37IE940XMtSvaqsdqU1sCtjWcIg7
+         XVnCdqOiaAq36q74y9DqKqB+D33P4ZOtYj7O1eaq0+o79J6GFRSewlUTxW1NOuk/dt
+         ZN41t9SAsroYw==
+Date:   Wed, 15 Mar 2023 19:27:40 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Melody Olvera <quic_molvera@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH v2 6/7] remoteproc: qcom_q6v5_pas: Add support to attach
+ a DSP
+Message-ID: <20230316022740.umavd6jviftktag7@ripper>
+References: <20230306231202.12223-1-quic_molvera@quicinc.com>
+ <20230306231202.12223-7-quic_molvera@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: wad776bkODmBBqORgHWrdmxRuv2jaWEl
-X-Proofpoint-GUID: wad776bkODmBBqORgHWrdmxRuv2jaWEl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-16_01,2023-03-15_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
- spamscore=0 adultscore=0 suspectscore=0 mlxlogscore=676 malwarescore=0
- clxscore=1011 lowpriorityscore=0 impostorscore=0 bulkscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303150002
- definitions=main-2303160019
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230306231202.12223-7-quic_molvera@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Mon, 13 Feb 2023 03:11:41 -0800, Kalyan Thota wrote:
-> Clear DSPP reservations from the global state during
-> rm release
+On Mon, Mar 06, 2023 at 03:12:01PM -0800, Melody Olvera wrote:
+> Some chipsets will have DSPs which will have begun running prior
+> to linux booting, so add support to late attach these DSPs by
+> adding support for:
+> - run-time checking of an offline or running DSP via rmb register
+> - a late attach framework to attach to the running DSP
+> - a handshake mechanism to ensure full and proper booting via rmb
 > 
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+>  drivers/remoteproc/qcom_q6v5_pas.c | 103 ++++++++++++++++++++++++++++-
+>  1 file changed, 102 insertions(+), 1 deletion(-)
 > 
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 0871108fb4dc..e22be6a029a8 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -242,10 +242,89 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
+>  	return ret;
+>  }
+>  
+> +static int adsp_attach(struct rproc *rproc)
+> +{
+> +	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
+> +	int i, ret;
+> +
+> +	ret = qcom_q6v5_prepare(&adsp->q6v5);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = adsp_pds_enable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+> +	if (ret < 0)
+> +		goto disable_irqs;
+> +
+> +	ret = clk_prepare_enable(adsp->xo);
+> +	if (ret)
+> +		goto disable_proxy_pds;
+> +
+> +	ret = clk_prepare_enable(adsp->aggre2_clk);
+> +	if (ret)
+> +		goto disable_xo_clk;
+> +
+> +	if (adsp->cx_supply) {
+> +		ret = regulator_enable(adsp->cx_supply);
+> +		if (ret)
+> +			goto disable_aggre2_clk;
+> +	}
+> +
+> +	if (adsp->px_supply) {
+> +		ret = regulator_enable(adsp->px_supply);
+> +		if (ret)
+> +			goto disable_cx_supply;
+> +	}
+> +
+> +	/* if needed, signal Q6 to continute booting */
+> +	if (adsp->q6v5.rmb_base) {
+> +		for (i = 0; i < RMB_POLL_MAX_TIMES; i++) {
+> +			if (readl_relaxed(adsp->q6v5.rmb_base + RMB_BOOT_WAIT_REG)) {
+> +				writel_relaxed(1, adsp->q6v5.rmb_base + RMB_BOOT_CONT_REG);
+> +				break;
+> +			}
+> +			msleep(20);
+> +		}
+> +
+> +		if (!readl_relaxed(adsp->q6v5.rmb_base + RMB_BOOT_WAIT_REG)) {
+> +			dev_err(adsp->dev, "Didn't get rmb signal from  %s\n", rproc->name);
+> +			goto disable_px_supply;
+> +		}
+> +	}
+> +
+> +	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5000));
+> +	if (ret == -ETIMEDOUT) {
+> +		dev_err(adsp->dev, "start timed out\n");
+> +		qcom_scm_pas_shutdown(adsp->pas_id);
+> +		goto disable_px_supply;
+> +	}
+> +
+> +	return 0;
+> +
+> +disable_px_supply:
+> +	if (adsp->px_supply)
+> +		regulator_disable(adsp->px_supply);
+> +disable_cx_supply:
+> +	if (adsp->cx_supply)
+> +		regulator_disable(adsp->cx_supply);
+> +disable_aggre2_clk:
+> +	clk_disable_unprepare(adsp->aggre2_clk);
+> +disable_xo_clk:
+> +	clk_disable_unprepare(adsp->xo);
+> +disable_proxy_pds:
+> +	adsp_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+> +disable_irqs:
+> +	qcom_q6v5_unprepare(&adsp->q6v5);
+> +
+> +	/* Remove pointer to the loaded firmware, only valid in adsp_load() & adsp_start() */
+> +	adsp->firmware = NULL;
+> +
+> +	return ret;
+> +}
+> +
+>  static int adsp_start(struct rproc *rproc)
+>  {
+>  	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
+> -	int ret;
+> +	int i, ret;
+>  
+>  	ret = qcom_q6v5_prepare(&adsp->q6v5);
+>  	if (ret)
+> @@ -304,6 +383,22 @@ static int adsp_start(struct rproc *rproc)
+>  		goto release_pas_metadata;
+>  	}
+>  
+> +	/* if needed, signal Q6 to continute booting */
 
-Applied, thanks!
+Why does this come before the wait_for_start()? Is the DSP actually up
+and running when you hit attach, or is it just loaded?
 
-[1/4] drm/msm/dpu: clear DSPP reservations in rm release
-      https://gitlab.freedesktop.org/drm/msm/-/commit/5ec498ba8655
+> +	if (adsp->q6v5.rmb_base) {
 
-Best regards,
--- 
-Abhinav Kumar <quic_abhinavk@quicinc.com>
+Afaict this is copy-paste from attach, please move it to a helper
+function.
+
+> +		for (i = 0; i < RMB_POLL_MAX_TIMES; i++) {
+> +			if (readl_relaxed(adsp->q6v5.rmb_base + RMB_BOOT_WAIT_REG)) {
+> +				writel_relaxed(1, adsp->q6v5.rmb_base + RMB_BOOT_CONT_REG);
+> +				break;
+> +			}
+> +			msleep(20);
+> +		}
+> +
+> +		if (!readl_relaxed(adsp->q6v5.rmb_base + RMB_BOOT_WAIT_REG)) {
+
+If you hit the break above, there should be no reason to read this
+register again.
+
+Seems cleaner to write this as:
+
+	ret = readl_poll_timeout();
+	if (ret < 0)
+		goto release;
+
+	writel(1, ...);
+
+Regards,
+Bjorn
+
+> +			dev_err(adsp->dev, "Didn't get rmb signal from  %s\n", rproc->name);
+> +			goto release_pas_metadata;
+> +		}
+> +	}
+> +
+>  	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5000));
+>  	if (ret == -ETIMEDOUT) {
+>  		dev_err(adsp->dev, "start timed out\n");
+> @@ -413,6 +508,7 @@ static unsigned long adsp_panic(struct rproc *rproc)
+>  static const struct rproc_ops adsp_ops = {
+>  	.unprepare = adsp_unprepare,
+>  	.start = adsp_start,
+> +	.attach = adsp_attach,
+>  	.stop = adsp_stop,
+>  	.da_to_va = adsp_da_to_va,
+>  	.parse_fw = qcom_register_dump_segments,
+> @@ -423,6 +519,7 @@ static const struct rproc_ops adsp_ops = {
+>  static const struct rproc_ops adsp_minidump_ops = {
+>  	.unprepare = adsp_unprepare,
+>  	.start = adsp_start,
+> +	.attach = adsp_attach,
+>  	.stop = adsp_stop,
+>  	.da_to_va = adsp_da_to_va,
+>  	.load = adsp_load,
+> @@ -728,6 +825,10 @@ static int adsp_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto detach_proxy_pds;
+>  
+> +	if (adsp->q6v5.rmb_base &&
+> +			readl_relaxed(adsp->q6v5.rmb_base + RMB_Q6_BOOT_STATUS_REG))
+> +		rproc->state = RPROC_DETACHED;
+> +
+>  	qcom_add_glink_subdev(rproc, &adsp->glink_subdev, desc->ssr_name);
+>  	qcom_add_smd_subdev(rproc, &adsp->smd_subdev);
+>  	adsp->sysmon = qcom_add_sysmon_subdev(rproc,
+> -- 
+> 2.25.1
+> 
