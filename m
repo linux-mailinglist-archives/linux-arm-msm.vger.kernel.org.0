@@ -2,55 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2D8B6BCD5B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 11:57:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F1AF6BCD7D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 12:05:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229812AbjCPK5e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 06:57:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51508 "EHLO
+        id S229850AbjCPLFo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 07:05:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229690AbjCPK5e (ORCPT
+        with ESMTP id S230023AbjCPLFn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 06:57:34 -0400
+        Thu, 16 Mar 2023 07:05:43 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7881A14987;
-        Thu, 16 Mar 2023 03:57:33 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA1C76C884;
+        Thu, 16 Mar 2023 04:05:34 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 13FA061FD4;
-        Thu, 16 Mar 2023 10:57:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EDF5C4339C;
-        Thu, 16 Mar 2023 10:57:30 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1A11A61FDB;
+        Thu, 16 Mar 2023 11:05:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8E6C433A0;
+        Thu, 16 Mar 2023 11:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678964250;
-        bh=xjzQr8LKE0yzsI8rxZWZ3vKP5CJ5x4ggIHwEWSA0jIo=;
-        h=From:To:Cc:Subject:Date:From;
-        b=nPXX63MDWCEtPp3v2RGNRhGcMnfuvBsCmGlipNu1WKBZ4Z4c9smgAEslpBJy/MWXl
-         02UXbWmu9BtXovvlB6VExtIfkS5sv9ZDwwoDhJyfwkSiUBBJmedS3Vpkoxpg98VRcF
-         dYEcYM2wIHRDj1Di/vlnxORocUf/08niFbiKHsoMgF0Eyeanze/Rn6gahitMxpdt7U
-         HtJwIPgb/eS+TEeYVpGYLbCnR02dYkWz9Xq2zpDMBCOxVfyFqrLZgn8ZQdlF5T1zlT
-         q1ai/NxkBJh6tUauvFDNy68eCHZVZ2mgRh7+m47K6BddZ4RqnWUD1zQAuq8PfRB3Bx
-         wAnu0JNu+OU3w==
+        s=k20201202; t=1678964733;
+        bh=jwdsqFj42Pawn1NF91CaXMc12zQ2/CQZq6KOHz+TFDk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=AOvS2dgIC9QgqUFLjiIKRrVFOe987AJjXYAqBEzcaczX3b9qM1h505TNB8EK3PpEZ
+         aHI49DbigXKkh+7n+9NBHP4PffBoOZvLHKe6r994l6kwB5gASJpP/K4L6mn1zf8QAo
+         SFl+jX3sqpHD3IMOFrRSbFyTA2xuOsvhosCQ+udQwC1YwEh1815+j0pcEMuEjPhcen
+         th63Onh11g+ZA6l8b2cGUviZgUxJgSi9tapL7TXBRRS5CL0yIcGK9oCZ+bt2EgncEf
+         fO1EnwZgLYy0YQLFzmoriiW0KlGZxVudHk2wui9bf47bIPTE7b0nD2NLZa7Z1yiHxY
+         +hnKqaTAmNmRg==
 Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1pclJf-0004so-Ey; Thu, 16 Mar 2023 11:58:39 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Linus Walleij <linus.walleij@linaro.org>,
+        (envelope-from <johan@kernel.org>)
+        id 1pclRS-0004wx-Gp; Thu, 16 Mar 2023 12:06:42 +0100
+Date:   Thu, 16 Mar 2023 12:06:42 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Steev Klimaszewski <steev@kali.org>,
         Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] dt-bindings: pinctrl: qcom,sc8280xp-tlmm: allow 'bias-bus-hold'
-Date:   Thu, 16 Mar 2023 11:58:00 +0100
-Message-Id: <20230316105800.18751-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.39.2
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>
+Subject: Re: [PATCH v6 4/4] arm64: dts: qcom: sc8280xp-x13s: Add bluetooth
+Message-ID: <ZBL4Qrp9Lr+aOyXr@hovoldconsulting.com>
+References: <20230316034759.73489-1-steev@kali.org>
+ <20230316034759.73489-5-steev@kali.org>
+ <ZBLuxFxFvCY+0XHG@hovoldconsulting.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZBLuxFxFvCY+0XHG@hovoldconsulting.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -60,35 +72,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The controller supports 'bias-bus-hold' so add it to the binding.
+On Thu, Mar 16, 2023 at 11:26:12AM +0100, Johan Hovold wrote:
+> On Wed, Mar 15, 2023 at 10:47:58PM -0500, Steev Klimaszewski wrote:
+> > The Lenovo Thinkpad X13s has a WCN6855 Bluetooth controller on uart2,
+> > add this.
+> > 
+> > Signed-off-by: Steev Klimaszewski <steev@kali.org>
+> > ---
+ 
+> > +		vreg_s1c: smps1 {
+> > +			regulator-name = "vreg_s1c";
+> > +			regulator-min-microvolt = <1880000>;
+> > +			regulator-max-microvolt = <1900000>;
+> > +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> > +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_AUTO>,
+> > +						  <RPMH_REGULATOR_MODE_RET>;
+> > +			regulator-allow-set-load;
+> 
+> So this does not look quite right still as you're specifying an initial
+> mode which is not listed as allowed.
+> 
+> Also there are no other in-tree users of RPMH_REGULATOR_MODE_RET and
+> AUTO is used to switch mode automatically which seems odd to use with
+> allow-set-load.
+> 
+> This regulator is in fact also used by the wifi part of the chip and as
+> that driver does not set any loads so we may end up with a regulator in
+> retention mode while wifi is in use.
+> 
+> Perhaps Bjorn can enlighten us, but my guess is that this should just be
+> "intial-mode = AUTO" (or even HPM, but I have no idea where this came
+> from originally).
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
-
-Linus, this is based on how the current driver (and sc7280) works, but
-without access to documentation I have no way of confirming this.
-
-If Bjorn or anyone else with access to the docs could ack this before
-applying that would be good.
+This one probably also needs to be marked as always-on as we don't
+currently describe the fact that the wifi part also uses s1c.
 
 Johan
-
-
- .../devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml          | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml
-index 97b27d6835e9..4ae39fc7894a 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml
-@@ -104,6 +104,7 @@ $defs:
-                 usb1_phy, usb1_sbrx, usb1_sbtx, usb1_usb4, usb2phy_ac,
-                 vsense_trigger ]
- 
-+      bias-bus-hold: true
-       bias-disable: true
-       bias-pull-down: true
-       bias-pull-up: true
--- 
-2.39.2
-
