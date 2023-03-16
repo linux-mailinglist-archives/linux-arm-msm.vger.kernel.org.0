@@ -2,252 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A7486BC619
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 07:30:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 430CD6BC633
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 07:38:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229599AbjCPGaa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 02:30:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40662 "EHLO
+        id S229726AbjCPGiu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 02:38:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229479AbjCPGa3 (ORCPT
+        with ESMTP id S229638AbjCPGit (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 02:30:29 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA3AB9EF45;
-        Wed, 15 Mar 2023 23:30:27 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32G25Qcr002833;
-        Thu, 16 Mar 2023 06:30:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=qcppdkim1;
- bh=x3CT63H/MNL5C7LmQ01erJeEHAfzFiLYI/OUMyys0Jg=;
- b=orelI1RYHxdLdEPrOi/GtcfOFR2PKkbkzgkY2zm6Mdd0rb0oIELVmWnLx4IMtCd5DKp3
- 0wfU246IzEYOvcFqRkjFXVcI9GAuKLlNaC4SsYYjC7u4mouPWJXvw5bongynKE3DTw4f
- qaCJmUnCjSBFHHZNP9qlRgyBZCmvKJ8nB/J08RITWiDSzw17KpkTm3e5fVFeuDTUT5yu
- 6wl/ut/NP58QzuCVqggpWaqMIEGZTzqTf0r1nrXzbb/tSz4V+fz042an3Rfq57s7Ou2l
- 6AbwCpTZc84+9Bg6/+zwjiAiXGOolaL1/OZznaOQMh/lK7S9eNpbkyad4K1dow92BP6L xg== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pbpy8gwj5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Mar 2023 06:30:18 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32G6UH6J013336
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Mar 2023 06:30:17 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Wed, 15 Mar 2023 23:30:13 -0700
-Date:   Thu, 16 Mar 2023 12:00:09 +0530
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Georgi Djakov <djakov@kernel.org>
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
-Message-ID: <20230316063009.GA29961@varda-linux.qualcomm.com>
-References: <cover.1677749625.git.quic_varada@quicinc.com>
- <6b8d17006d8ee9a1b0c4df803c1cc7caf53ea3ef.1677749625.git.quic_varada@quicinc.com>
- <CAA8EJprbMybV0o1-436yLhVnnEX6qywrj=JmWDCL5usaH0DXiQ@mail.gmail.com>
- <61e8c730-e46d-728d-d770-f1ead4405d12@quicinc.com>
- <83184da4-b183-3271-983f-3a1a62fb9f1a@linaro.org>
- <365f2609-d3b4-df23-5b6e-7a190815a640@quicinc.com>
- <47b591c0-2f68-429d-6d1b-fa8b701785ac@linaro.org>
+        Thu, 16 Mar 2023 02:38:49 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F33D125BD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 23:38:42 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id eh3so3391070edb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 23:38:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678948721;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xL+tQUaguCrAG8l0bkW/PCaQ1TD4pHeaAzMmhUx5yak=;
+        b=GJLu4dtPSlYfjkqUrhni5FdbLbtDMHfFrsLuqMQP7bK8iqMtcFhtlFo05kS62jRI9j
+         qQwzNPlZnFQMuRhwom3D1yqt+GQ+iY4j0w2GPXAjlPc8VNjkecbQnjhNv3hNdmxqm0bV
+         HqB2S4Y2Pq9OhcEma24Mmi3EATBwnsiIaGRl6f3Z/QAyn/lo6HD3N69dwa7h1Z/5Axvt
+         O4XpUNFJrC4UEEsQDaT8ydIoUWTxW9CoNCow26TfdF9+O9wbXz7R6WvAz+qVW1fEzwVu
+         HZ2QnxBKGv+G/vd8GE0Amlk6C1jug/Wv+57dh7aFNEMiNYaO8918T0gJmMeKeI3kc475
+         FrHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678948721;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xL+tQUaguCrAG8l0bkW/PCaQ1TD4pHeaAzMmhUx5yak=;
+        b=liauAreUjpKiLawTWUy5UZOILCKgBlDZO+6PNMc02cKagzf/AEkDl+ppmY1o1ZcaCq
+         m/bbvNl7sGyvNK0dLJmF8VuGGB7HJq93bD5XMUp+wmzM/Bg5hUeBBdD6vfQHAGrM4rqx
+         06vBHDUHS9t9FBOLhcqdnTKH7Qr9cu3/IfpL9krImSZu7BlMPjvJMttCdooeBpCijSK4
+         XIJoxJg9UGe1yZMRh0UQzGVR6b8oXAh7o/8a8Wvd8/XK0+BxQp0X6YaZZ7jwCGzwUuqN
+         z0qY/sNGQrRQIf2dhv1VGtaRV8t4l/9iGvmkper7R2DRKOYYujHZiCTcZVUp4yOtDDZJ
+         6wYw==
+X-Gm-Message-State: AO0yUKUq+aXBWn8IrzBOO0Ddqm1y3gjYXh0uPxVPkdF3ygjjARpj0MdS
+        aiZ8BdwTNK+fA496flDecK6Izw==
+X-Google-Smtp-Source: AK7set94Ab19Zp1BPD8CT8jZdiZ769ZZ4uU4+xoBhiCSndgApyJ4hQhGGlAbgv1hSR6rb6PHkMnN6Q==
+X-Received: by 2002:aa7:d051:0:b0:4af:69b8:52af with SMTP id n17-20020aa7d051000000b004af69b852afmr5211176edo.24.1678948720855;
+        Wed, 15 Mar 2023 23:38:40 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:9827:5f65:8269:a95f? ([2a02:810d:15c0:828:9827:5f65:8269:a95f])
+        by smtp.gmail.com with ESMTPSA id y29-20020a50ce1d000000b004fa99a22c3bsm3349593edi.61.2023.03.15.23.38.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 23:38:40 -0700 (PDT)
+Message-ID: <0f5003b8-588c-2477-2d82-e6cabd77277b@linaro.org>
+Date:   Thu, 16 Mar 2023 07:38:39 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <47b591c0-2f68-429d-6d1b-fa8b701785ac@linaro.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vSM5Xf1dVQIkWupo36QlI3tRGxATnzol
-X-Proofpoint-ORIG-GUID: vSM5Xf1dVQIkWupo36QlI3tRGxATnzol
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-16_04,2023-03-15_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 clxscore=1015 malwarescore=0 mlxlogscore=999 suspectscore=0
- adultscore=0 impostorscore=0 bulkscore=0 phishscore=0 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303160053
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3 3/7] soc: qcom: icc-bwmon: Handle global registers
+ correctly
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>
+References: <20230304-topic-ddr_bwmon-v3-0-77a050c2fbda@linaro.org>
+ <20230304-topic-ddr_bwmon-v3-3-77a050c2fbda@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230304-topic-ddr_bwmon-v3-3-77a050c2fbda@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dmitry,
+On 15/03/2023 15:11, Konrad Dybcio wrote:
+> The BWMON hardware has two sets of registers: one for the monitor itself
+> and one called "global". It has what seems to be some kind of a head
+> switch and an interrupt control register. It's usually 0x200 in size.
+> 
+> On fairly recent SoCs (with the starting point seemingly being moving
+> the OSM programming to the firmware) these two register sets are
+> contiguous and overlapping, like this (on sm8450):
+> 
+> /* notice how base.start == global_base.start+0x100 */
+> reg = <0x90b6400 0x300>, <0x90b6300 0x200>;
+> reg-names = "base", "global_base";
+> 
+> Which led to some confusion and the assumption that since the
+> "interesting" global registers begin right after global_base+0x100,
+> there's no need to map two separate regions and one can simply subtract
+> 0x100 from the offsets.
+> 
+> This is however not the case for anything older than SDM845, as the
+> global region can appear in seemingly random spots on the register map.
+> 
+> Handle the case where the global registers are mapped separately to allow
+> proper functioning of BWMONv4 on MSM8998 and older. Add specific
+> compatibles for 845, 8280xp, 7280 and 8550 (all of which use the single
+> reg space scheme) to keep backwards compatibility with old DTs.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/soc/qcom/icc-bwmon.c | 230 +++++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 209 insertions(+), 21 deletions(-)
+> 
 
-On Tue, Mar 07, 2023 at 01:49:40PM +0200, Dmitry Baryshkov wrote:
-> On 07/03/2023 08:36, Varadarajan Narayanan wrote:
-> >
-> >On 3/6/2023 5:21 PM, Dmitry Baryshkov wrote:
-> >>On 06/03/2023 13:26, Varadarajan Narayanan wrote:
-> >>>Dmitry,
-> >>>
-> >>>On 3/2/2023 9:52 PM, Dmitry Baryshkov wrote:
-> >>>>On Thu, 2 Mar 2023 at 11:57, Varadarajan Narayanan
-> >>>><quic_varada@quicinc.com> wrote:
-> >>>>>Add USB phy and controller related nodes
-> >>>>>
-> >>>>>Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> >>>>>---
-> >>>>>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 92
-> >>>>>+++++++++++++++++++++++++++++++++++
-> >>>>>  1 file changed, 92 insertions(+)
-> >>>>>
-> >>>>>diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> >>>>>b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> >>>>>index 2bb4053..319b5bd 100644
-> >>>>>--- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> >>>>>+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> >>
-> >>[skipped]
-> >>
-> >>
-> >>>>>+               usb3: usb3@8A00000 {
-> >>>>You know the drill. This node is in the wrong place.
-> >>>>
-> >>>>>+                       compatible = "qcom,dwc3";
-> >>>>>+                       reg = <0x8AF8800 0x400>;
-> >>>>>+                       #address-cells = <1>;
-> >>>>>+                       #size-cells = <1>;
-> >>>>>+                       ranges;
-> >>>>>+
-> >>>>>+                       clocks = <&gcc GCC_SNOC_USB_CLK>,
-> >>>>>+                               <&gcc GCC_ANOC_USB_AXI_CLK>,
-> >>>>>+                               <&gcc GCC_USB0_MASTER_CLK>,
-> >>>>>+                               <&gcc GCC_USB0_SLEEP_CLK>,
-> >>>>>+                               <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> >>>>>+
-> >>>>>+                       clock-names = "sys_noc_axi",
-> >>>>>+                               "anoc_axi",
-> >>>>>+                               "master",
-> >>>>>+                               "sleep",
-> >>>>>+                               "mock_utmi";
-> >>>>Please fix the indentation of the lists.
-> >>>>
-> >>>>>+
-> >>>>>+                       assigned-clocks = <&gcc GCC_SNOC_USB_CLK>,
-> >>>>>+                                         <&gcc GCC_ANOC_USB_AXI_CLK>,
-> >>>>Why do you assign clock rates to the NOC clocks? Should they be set
-> >>>>using the interconnect instead?
-> >>>
-> >>>The SNOC and ANOC run at a fixed speed of 350MHz and 342MHz
-> >>>respectively and are not scaled. These clocks are for the interface
-> >>>between the USB block and the SNOC/ANOC. Do we still need to use
-> >>>interconnect?
-> >>
-> >>Maybe I misunderstand something here. If the snoc and anoc speeds are at
-> >>350 MHz and 342 MHz, why do you assign clock-rates of 200 MHz?
-> >>
-> >>Is it enough to call clk_prepare_enable() for these clocks or the rate
-> >>really needs to be set?
-> >
-> >The rate of 200MHz is not being set for the SNOC/ANOC. It is for the
-> >NIU that connects the USB and SNOC/ANOC. The reason for setting the
-> >rate to 200MHz is to configure the RCG parent for these interface
-> >clocks. That said can we configure this RCG standalone in the driver
-> >and enable these clocks?
->
-> We discussed this separately with Georgi Djakov. Let me quote his IRC
-> message: "it sounds like this is for USB port that connects to the NOC. if
-> bandwidth scaling is not needed (or other interconnect configuration), then
-> maybe this can go without interconnect provider driver."
->
-> However as we discover more and more about this platform (e.g. PCIe using
-> the aggre_noc region to setup some magic registers, see [1]), I'm more and
-> more biased towards suggesting implementing the interconnect driver to setup
-> all these tiny little things. With the DT tree being an ABI, it is much
-> preferable to overestimate the needs rather than underestimating them (and
-> having to cope with the backwards compatibility issues).
->
-> Generally I think that PCIe/USB/whatever should not poke into NoC registers
-> or NoC/NIU clocks directly (because this is a very platform-specific item).
-> Rather than that it should tell the icc/opp/whatever subsystem, "please
-> configure the SoC for me to work".
->
-> [1] https://lore.kernel.org/linux-arm-msm/30cf9717-dcca-e984-c506-c71b7f8e32cd@quicinc.com/
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Dmitry,
-Can we remove the interconnect clocks in the next patch
-version (and assume that the boot loader configures them)?
+Best regards,
+Krzysztof
 
-And add these clocks once the interconnect support is available.
-
-Thanks
-Varada
-
->
-> >
-> >Thanks
-> >Varada
-> >
-> >
-> >>
-> >>
-> >>>
-> >>>>>+ <&gcc GCC_USB0_MASTER_CLK>,
-> >>>>>+                                         <&gcc
-> >>>>>GCC_USB0_MOCK_UTMI_CLK>;
-> >>>>>+                       assigned-clock-rates = <200000000>,
-> >>>>>+ <200000000>,
-> >>>>>+ <200000000>,
-> >>>>>+ <24000000>;
-> >>>>>+
-> >>>>>+                       resets = <&gcc GCC_USB_BCR>;
-> >>>>>+                       status = "disabled";
-> >>>>>+
-> >>>>>+                       dwc_0: dwc3@8A00000 {
-> >>>>>+                               compatible = "snps,dwc3";
-> >>>>>+                               reg = <0x8A00000 0xcd00>;
-> >>>>>+                               clock-names = "ref";
-> >>>>>+                               clocks = <&gcc
-> >>>>>GCC_USB0_MOCK_UTMI_CLK>;
-> >>>>clocks before clock-names
-> >>>>
-> >>>>>+ interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
-> >>>>>+                               phys = <&qusb_phy_0>, <&usb0_ssphy>;
-> >>>>>+                               phy-names = "usb2-phy", "usb3-phy";
-> >>>>>+                               tx-fifo-resize;
-> >>>>>+                               snps,dis_ep_cache_eviction;
-> >>>>>+                               snps,is-utmi-l1-suspend;
-> >>>>>+                               snps,hird-threshold = /bits/ 8 <0x0>;
-> >>>>>+                               snps,dis_u2_susphy_quirk;
-> >>>>>+                               snps,dis_u3_susphy_quirk;
-> >>>>>+ snps,quirk-frame-length-adjustment = <0x0A87F0A0>;
-> >>>>>+                               dr_mode = "host";
-> >>>>>+                       };
-> >>>>>+               };
-> >>>>>+
-> >>>>>                 pcie0_phy: phy@84000 {
-> >>>>>                         compatible =
-> >>>>>"qcom,ipq9574-qmp-gen3x1-pcie-phy";
-> >>>>>                         reg = <0x00084000 0x1bc>; /* Serdes PLL */
-> >>>>>--
-> >>>>>2.7.4
-> >>>
-> >>>Will address these and post a new revision.
-> >>>
-> >>>Thanks
-> >>>
-> >>>Varada
-> >>>
-> >>
->
-> --
-> With best wishes
-> Dmitry
->
