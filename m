@@ -2,243 +2,250 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3DFD6BCC74
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 11:20:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DE5B6BCCB2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 11:25:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230281AbjCPKUm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 06:20:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48170 "EHLO
+        id S231253AbjCPKZy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 06:25:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230290AbjCPKUj (ORCPT
+        with ESMTP id S230104AbjCPKZk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 06:20:39 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7337615540
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 03:20:29 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-541a05e4124so22005517b3.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 03:20:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678962028;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=SAog4H/SRFvoaEO1OZaRPW+vcyrqLcy+mvMuM/gRdEU=;
-        b=c+ZumM3X9admVFx8dYxUtMxlNIuB1aK9CvI3x1Bhk8FAE8iZwfnpyrfVzAVWQKPIfg
-         Jy3AgQ2Wdq6r+PGFBOOR6Ap7ANNwzjk6ANKoPK0arbRr+2b9tlhpm/PLkn4SztdbA/Ag
-         zqTcQcSvnJvPfyJFBkJzA+GqMxcV/Tx9JKmDWASuCW6fQ7Io7PnlTZGUpqttYj2Y1B+S
-         WfNH9NAblKoCa5asYybuJDSgs0y3gu1pThe2rdgI7cUsKxBKJCSNidxQkLdqRDC4IBGW
-         TffJHOKI1ZA13UMP/2eS3wRa7Hr7Ml3VXi7SHlD91iHBRIqkf4XG1sy6fsNtdEi+p7s/
-         cB2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678962028;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SAog4H/SRFvoaEO1OZaRPW+vcyrqLcy+mvMuM/gRdEU=;
-        b=Vkztzzl5f1636KON9UaH+UE1VingUa3leiAgYt/eLdSrbnPXPt0D7mskWDqoQX7b/9
-         C4c2Lh1KbzYh1NcmfdPxndSpvpfkT/ePITQUsCi0aBg0EsCBXcyoaKYbmkofC6UZkN4k
-         t/XucOVHGSM3FyAJWwjzG1No/q/FaKidLnmLuP3F48A1FNpnvrdgSa9YYdaWZ55lt6+F
-         0EDAxmH3nJkSUotf2WSPZLCqE1VGQEBUdBS0LlKPy1T4kjpCLAmObZxxVE2iWH1M1WyT
-         ssxChorFPYmHD+mwVasYumAmw3+3a/co+s73OvZcnm35OG37gGMWAzQZG8mXitFqblty
-         gbFg==
-X-Gm-Message-State: AO0yUKXn+2okKHxpHiSfomwkZB550kIdAI8mx1RAmsvflSX3yIoobyX+
-        NlwSX0ccPpX+Shx5Muqc9VtXZ+2TO95ucl/ZSaDf4A==
-X-Google-Smtp-Source: AK7set9sa4/oy4Jqwr7KB88J+xmPYRgd44Viltr+Y+ihpUmjD1EzCd/GuXR6lmOjOsG+2r84dXTULPtF66OZHVXeTtw=
-X-Received: by 2002:a81:b3ca:0:b0:541:8a9a:5445 with SMTP id
- r193-20020a81b3ca000000b005418a9a5445mr1860892ywh.5.1678962028513; Thu, 16
- Mar 2023 03:20:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230202064712.5804-2-quic_vboma@quicinc.com> <20230316081509.12201-1-quic_vboma@quicinc.com>
- <20230316081509.12201-2-quic_vboma@quicinc.com>
-In-Reply-To: <20230316081509.12201-2-quic_vboma@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 16 Mar 2023 12:20:17 +0200
-Message-ID: <CAA8EJpozq1nCgG5npK5JUXc-Y-7LiPe3Y_VP8++Rq70AreCenA@mail.gmail.com>
-Subject: Re: [PATCH] venus: Enable sufficient sequence change support for
- sc7180 and fix for Decoder STOP command issue.
-To:     quic_vboma@quicinc.com
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Thu, 16 Mar 2023 06:25:40 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5F3BBD4DD;
+        Thu, 16 Mar 2023 03:25:08 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id AF393B820C9;
+        Thu, 16 Mar 2023 10:25:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660EDC433D2;
+        Thu, 16 Mar 2023 10:25:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678962303;
+        bh=fbzlKO+X2sefQ2LynJlI2Eu7OSdIGiE5+gSyuITPnq0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=WOqyNA9AaiDMXiTO1+8wCOMJ16PjLN0cv2MzroH6sXthFkAMb/5/XUfg29drHtTp2
+         AEoZ8au5U2kdXnYrOm0/75ATC0gaVbBzeQny7sYMfAMpe5ijjFlz3/kuk0LLF97Up9
+         OFbQ2D281ChNcQWYdqq9FXuDIITnksEa7z1ZuISIWLM2U5eG2XurE0fAm/Zv+yZkdq
+         DnsVqDVFflEIoTG4Ggkbc3qIfDwKSXu4jGILT8wgPlL59uwliZb+px/y/AiV3jEv4I
+         bxqQqOdreV7mEW378oTZvSOog7iLJsup2/YymmUEq19xHtavXNCT4m0rOSI2tJl7pZ
+         bNcnvV4wURjEw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pckoG-0001gb-8T; Thu, 16 Mar 2023 11:26:12 +0100
+Date:   Thu, 16 Mar 2023 11:26:12 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Steev Klimaszewski <steev@kali.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Vikash Garodia <vgarodia@qti.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>
+Subject: Re: [PATCH v6 4/4] arm64: dts: qcom: sc8280xp-x13s: Add bluetooth
+Message-ID: <ZBLuxFxFvCY+0XHG@hovoldconsulting.com>
+References: <20230316034759.73489-1-steev@kali.org>
+ <20230316034759.73489-5-steev@kali.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230316034759.73489-5-steev@kali.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 16 Mar 2023 at 10:17, <quic_vboma@quicinc.com> wrote:
->
-> From: Viswanath Boma <quic_vboma@quicinc.com>
->
-> For VP9 bitstreams, there could be a change in resolution at interframe,
-> for driver to get notified of such resolution change,
-> enable the property in video firmware.
-> Also, EOS handling is now made same in video firmware across all V6 SOCs,
-> hence above a certain firmware version, the driver handling is
-> made generic for all V6s
->
-> Signed-off-by: Vikash Garodia <vgarodia@qti.qualcomm.com>
-> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
-> Tested-by: Nathan Hebert <nhebert@chromium.org>
+On Wed, Mar 15, 2023 at 10:47:58PM -0500, Steev Klimaszewski wrote:
+> The Lenovo Thinkpad X13s has a WCN6855 Bluetooth controller on uart2,
+> add this.
+> 
+> Signed-off-by: Steev Klimaszewski <steev@kali.org>
 > ---
+> Changes since v5:
+>  * Update patch subject
+>  * Specify initial mode (via guess) for vreg_s1c
+>  * Drop uart17 definition
+>  * Rename bt_en to bt_default because configuring more than one pin
+>  * Correct (maybe) bias configurations
+>  * Correct cts gpio
+>  * Split rts-tx into two nodes
+>  * Drop incorrect link in the commit message
+> 
+> Changes since v4:
+>  * Address Konrad's review comments.
+> 
+> Changes since v3:
+>  * Add vreg_s1c
+>  * Add regulators and not dead code
+>  * Fix commit message changelog
+> 
+> Changes since v2:
+>  * Remove dead code and add TODO comment
+>  * Make dtbs_check happy with the pin definitions
+> 
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 80 +++++++++++++++++++
+>  1 file changed, 80 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> index 53ae75fb52ed..b3221c27903a 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> @@ -24,6 +24,7 @@ / {
+>  	aliases {
+>  		i2c4 = &i2c4;
+>  		i2c21 = &i2c21;
+> +		serial1 = &uart2;
+>  	};
+>  
+>  	wcd938x: audio-codec {
+> @@ -431,6 +432,16 @@ regulators-1 {
+>  		qcom,pmic-id = "c";
+>  		vdd-bob-supply = <&vreg_vph_pwr>;
+>  
+> +		vreg_s1c: smps1 {
+> +			regulator-name = "vreg_s1c";
+> +			regulator-min-microvolt = <1880000>;
+> +			regulator-max-microvolt = <1900000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_AUTO>,
+> +						  <RPMH_REGULATOR_MODE_RET>;
+> +			regulator-allow-set-load;
 
-Which version of the patch is this? Were there any changes compared to
-the previous version? Please include a changelog below the dashed line
-to let other people know what has changed
+So this does not look quite right still as you're specifying an initial
+mode which is not listed as allowed.
 
->  drivers/media/platform/qcom/venus/core.h       | 18 ++++++++++++++++++
->  drivers/media/platform/qcom/venus/hfi_cmds.c   |  1 +
->  drivers/media/platform/qcom/venus/hfi_helper.h |  2 ++
->  drivers/media/platform/qcom/venus/hfi_msgs.c   | 11 +++++++++--
->  drivers/media/platform/qcom/venus/vdec.c       | 12 +++++++++++-
->  5 files changed, 41 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 32551c2602a9..ee8b70a34656 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -202,6 +202,11 @@ struct venus_core {
->         unsigned int core0_usage_count;
->         unsigned int core1_usage_count;
->         struct dentry *root;
-> +       struct venus_img_version {
-> +               u32 major;
-> +               u32 minor;
-> +               u32 rev;
-> +       } venus_ver;
+Also there are no other in-tree users of RPMH_REGULATOR_MODE_RET and
+AUTO is used to switch mode automatically which seems odd to use with
+allow-set-load.
+
+This regulator is in fact also used by the wifi part of the chip and as
+that driver does not set any loads so we may end up with a regulator in
+retention mode while wifi is in use.
+
+Perhaps Bjorn can enlighten us, but my guess is that this should just be
+"intial-mode = AUTO" (or even HPM, but I have no idea where this came
+from originally).
+
+> +		};
+> +
+>  		vreg_l1c: ldo1 {
+>  			regulator-name = "vreg_l1c";
+>  			regulator-min-microvolt = <1800000>;
+> @@ -901,6 +912,32 @@ &qup0 {
+>  	status = "okay";
 >  };
->
->  struct vdec_controls {
-> @@ -500,4 +505,17 @@ venus_caps_by_codec(struct venus_core *core, u32 codec, u32 domain)
->         return NULL;
->  }
->
-> +static inline int
-> +is_fw_rev_or_newer(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
-> +{
-> +       return ((core)->venus_ver.major == vmajor && (core)->venus_ver.minor ==
-> +                       vminor && (core)->venus_ver.rev >= vrev);
-> +}
+>  
+> +&uart2 {
+> +	pinctrl-0 = <&uart2_default>;
+> +	pinctrl-names = "default";
 > +
-> +static inline int
-> +is_fw_rev_or_older(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
-> +{
-> +       return ((core)->venus_ver.major == vmajor && (core)->venus_ver.minor ==
-> +                       vminor && (core)->venus_ver.rev <= vrev);
-> +}
->  #endif
-> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> index 930b743f225e..e2539b58340f 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> @@ -521,6 +521,7 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
->                 pkt->shdr.hdr.size += sizeof(u32) + sizeof(*en);
->                 break;
->         }
-> +       case HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT:
->         case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER: {
->                 struct hfi_enable *in = pdata;
->                 struct hfi_enable *en = prop_data;
-> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-> index d2d6719a2ba4..20516b4361d3 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-> @@ -469,6 +469,8 @@
->  #define HFI_PROPERTY_PARAM_VDEC_PIXEL_BITDEPTH                 0x1003007
->  #define HFI_PROPERTY_PARAM_VDEC_PIC_STRUCT                     0x1003009
->  #define HFI_PROPERTY_PARAM_VDEC_COLOUR_SPACE                   0x100300a
-> +#define HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT \
-> +                                                               0x0100300b
->
->  /*
->   * HFI_PROPERTY_CONFIG_VDEC_COMMON_START
-> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> index df96db3761a7..07ac0fcd2852 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> @@ -248,9 +248,10 @@ static void hfi_sys_init_done(struct venus_core *core, struct venus_inst *inst,
->  }
->
->  static void
-> -sys_get_prop_image_version(struct device *dev,
-> +sys_get_prop_image_version(struct venus_core *core,
->                            struct hfi_msg_sys_property_info_pkt *pkt)
->  {
-> +       struct device *dev = core->dev;
->         u8 *smem_tbl_ptr;
->         u8 *img_ver;
->         int req_bytes;
-> @@ -263,6 +264,12 @@ sys_get_prop_image_version(struct device *dev,
->                 return;
->
->         img_ver = pkt->data;
-> +       if (IS_V4(core))
-> +               sscanf(img_ver, "14:VIDEO.VE.%u.%u-%u-PROD",
-> +                      &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
-> +       else if (IS_V6(core))
-> +               sscanf(img_ver, "14:VIDEO.VPU.%u.%u-%u-PROD",
-> +                      &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
->
->         dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
->
-> @@ -286,7 +293,7 @@ static void hfi_sys_property_info(struct venus_core *core,
->
->         switch (pkt->property) {
->         case HFI_PROPERTY_SYS_IMAGE_VERSION:
-> -               sys_get_prop_image_version(dev, pkt);
-> +               sys_get_prop_image_version(core, pkt);
->                 break;
->         default:
->                 dev_dbg(dev, VDBGL "unknown property data\n");
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 4ceaba37e2e5..36c88858ea9d 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -545,7 +545,7 @@ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
->
->                 fdata.buffer_type = HFI_BUFFER_INPUT;
->                 fdata.flags |= HFI_BUFFERFLAG_EOS;
-> -               if (IS_V6(inst->core))
-> +               if (IS_V6(inst->core) && is_fw_rev_or_older(inst->core, 1, 0, 87))
->                         fdata.device_addr = 0;
->                 else
->                         fdata.device_addr = 0xdeadb000;
-> @@ -671,6 +671,16 @@ static int vdec_set_properties(struct venus_inst *inst)
->                         return ret;
->         }
->
-> +       /* Enabling sufficient sequence change support for VP9 */
-> +       if (of_device_is_compatible(inst->core->dev->of_node, "qcom,sc7180-venus")) {
-
-Is it really specific just to sc7180 or will it be applicable to any
-other platform using venus-5.4 firmware?
-
-> +               if (is_fw_rev_or_newer(inst->core, 5, 4, 51)) {
-> +                       ptype = HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT;
-> +                       ret = hfi_session_set_property(inst, ptype, &en);
-> +                       if (ret)
-> +                               return ret;
-> +               }
-> +       }
+> +	status = "okay";
 > +
->         ptype = HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR;
->         conceal = ctr->conceal_color & 0xffff;
->         conceal |= ((ctr->conceal_color >> 16) & 0xffff) << 10;
-> --
-> 2.17.1
->
+> +	bluetooth {
+> +		compatible = "qcom,wcn6855-bt";
+> +
+> +		vddio-supply = <&vreg_s10b>;
+> +		vddbtcxmx-supply = <&vreg_s12b>;
+> +		vddrfacmn-supply = <&vreg_s12b>;
+> +		vddrfa0p8-supply = <&vreg_s12b>;
+> +		vddrfa1p2-supply = <&vreg_s11b>;
+> +		vddrfa1p7-supply = <&vreg_s1c>;
+> +
+> +		max-speed = <3200000>;
+> +
+> +		enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
+> +		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
+> +
+> +		pinctrl-0 = <&bt_default>;
+> +		pinctrl-names = "default";
+> +	};
+> +};
+> +
+>  &qup1 {
+>  	status = "okay";
+>  };
+> @@ -1175,6 +1212,21 @@ hastings_reg_en: hastings-reg-en-state {
+>  &tlmm {
+>  	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
+>  
+> +	bt_default: bt-default-state {
+> +		hstp-sw-ctrl-pins {
+> +			pins = "gpio132";
+> +			function = "gpio";
+> +			bias-pull-down;
+> +		};
+> +
+> +		hstp-bt-en-pins {
+> +			pins = "gpio133";
+> +			function = "gpio";
+> +			drive-strength = <16>;
+> +			bias-disable;
+> +		};
+> +	};
+> +
+>  	edp_reg_en: edp-reg-en-state {
+>  		pins = "gpio25";
+>  		function = "gpio";
+> @@ -1196,6 +1248,34 @@ i2c4_default: i2c4-default-state {
+>  		bias-disable;
+>  	};
+>  
+> +	uart2_default: uart2-default-state {
+> +		cts-pins {
+> +			pins = "gpio121";
+> +			function = "qup2";
+> +			bias-pull-down;
 
+So I believe this should be 'bias-bus-hold' even if the pinctrl binding
+may need to be updated to suppress the corresponding dtb check warning.
 
--- 
-With best wishes
-Dmitry
+I'll send a patch for that.
+
+> +		};
+> +
+> +		rts-pins {
+> +			pins = "gpio122";
+> +			function = "qup2";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +
+> +		tx-pins {
+
+nit: tx should go after rx for alphabetical sorting.
+
+> +			pins = "gpio123";
+> +			function = "qup2";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +
+> +		rx-pins {
+> +			pins = "gpio124";
+> +			function = "qup2";
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+>  	i2c21_default: i2c21-default-state {
+>  		pins = "gpio81", "gpio82";
+>  		function = "qup21";
+
+Johan
