@@ -2,128 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8770B6BD182
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 14:54:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C5446BD1E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 15:13:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230508AbjCPNyA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 09:54:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58090 "EHLO
+        id S231149AbjCPONG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 10:13:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230455AbjCPNxu (ORCPT
+        with ESMTP id S230321AbjCPONE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 09:53:50 -0400
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56FEEB863B;
-        Thu, 16 Mar 2023 06:53:45 -0700 (PDT)
-Received: by mail-io1-f51.google.com with SMTP id q6so816349iot.2;
-        Thu, 16 Mar 2023 06:53:45 -0700 (PDT)
+        Thu, 16 Mar 2023 10:13:04 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AAD94FF14
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 07:13:01 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id x36so1834543ljq.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 07:13:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678975980;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AkFEog4APZRdHeT2q4GaSqDGIc5SgyK33RTmMqwtReY=;
+        b=kFMBNcVnPi6z72HcIvse712jYOKaSucHb0BKbGJfosXlFmHctGwtfcwg+7AnMcdk/S
+         eOaMg1ccm4YROtE89oJsvhbm+5ZALTcfjY6u0No94VX/HGzHIv5XknXvZ/OBKDjBWkii
+         Xy76YkaBWke139YAK4y/ZCZCZTZ+5YcEFEgX4vYpTEJIlq4T3V5FwAN+IPdXtcsJaj9R
+         P4ED9TzLkci6fiFRzFZCLxZPGs2m26fbIl7w4nYyVgNAVqyE+4Nsq8hrZEUAeaawyDU9
+         5NyssS6Wsg2rA1TnJAzr88XFkh9nLDJOG/kxEWgsL4OXYt+AK7SqScnwZAUZ6iD32kz1
+         +84A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678974824;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3NLIIOkA38T8xNi8thzCJbEyjLbfAZFAf+qOplovd1I=;
-        b=AgKBA1mmQ/nOAlYNUVi1QsYArvws0c7T7RBh/e8pEa+KhynPPpOqEo5E/mAAbzYO9/
-         wMCHlU0lA2ZVtblAzyabGL//aEZHABOMKVlkMlnJ0oQdNePY2x/CkfaxQ//Q2RRxjhzn
-         b88hoI5WNVUda3rH9BjTGSSmGRa3wUkTs8SfDG6jLER1KfKhrhkxnbF9mPC/G15W0T3i
-         KXUsJqUvfwpoTQI/02OnSMGYkYFZv10nAOuoWzbebsU2eNaJ5PRUggHii47KG06SLwz5
-         jdAgGoUsmzSUSW8YGnrsS/877kcLC5UziKEzC7GShNyDl5IiUGnL8UJhHVuoR0tZwhLF
-         3Dpw==
-X-Gm-Message-State: AO0yUKUVbmzu5lK5MS/WP3924qIglI34yCgxNDESDh8blX/WhYCjgBNw
-        RXUbjjne3YfBjH3LLTRkiQ==
-X-Google-Smtp-Source: AK7set8f/p7VDlt1VGn8Rrvxnn6ydrU6sfuFHCeMsWbwQmRzOITADPQaBi2wwy29Mr5G8EmDMLIVAA==
-X-Received: by 2002:a5d:84cc:0:b0:74c:a9ab:ce68 with SMTP id z12-20020a5d84cc000000b0074ca9abce68mr28374793ior.12.1678974823861;
-        Thu, 16 Mar 2023 06:53:43 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.249])
-        by smtp.gmail.com with ESMTPSA id f16-20020a056638119000b003a60da2bf58sm2521766jas.39.2023.03.16.06.53.41
+        d=1e100.net; s=20210112; t=1678975980;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AkFEog4APZRdHeT2q4GaSqDGIc5SgyK33RTmMqwtReY=;
+        b=cqcxAtf3q/+bivtvOQdM+jYo0j3Ll4Wgg2QtQsl3psXkSyJXbIQL5mT2kA9QnCyPI1
+         m16yehDq3dy8Aa2fHzQYw8PbmPXOJ9fu5Smrt5ctptFc9o4OxkqgrUudhab2zlnGSqVu
+         NbritQ9cxXm5nYHSSdXpflLPitqcZkgrYGOzmOzuKcXn9NPN6XmBCn9wQGrBk87xZaTk
+         Xy9emUDuusTtv6iRN72Pd9/vMol+chPXtlE8N2m3g7Ebr9EfWKUqyJ/md8IF3Xezr0mf
+         JSU1V4eh7a+2UgkY9jaNAUJ/tENd4REi2xGrb1cdAlJJLoP4Q8wsGUPtFJCEkyuiqUdo
+         Mi0w==
+X-Gm-Message-State: AO0yUKUVVgcV9lgdVKqbcueQaIJv5tNuIEUuJR0ExKDPM4MgesSJ4X58
+        o3flqsUBfQDvXsyOpvj+d4kab8rt9xYAfeSK85E=
+X-Google-Smtp-Source: AK7set+EQ7JhP/5dKR8j1Cl9Eas3CNLuBDSy5ysOErliFuBvLjMMtZcOUp7SKZatRaQkZWKc1Ga+JA==
+X-Received: by 2002:a2e:9402:0:b0:298:97d7:8fc3 with SMTP id i2-20020a2e9402000000b0029897d78fc3mr2205383ljh.4.1678975979734;
+        Thu, 16 Mar 2023 07:12:59 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id a9-20020a2eb549000000b00295735991edsm1261639ljn.38.2023.03.16.07.12.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 06:53:43 -0700 (PDT)
-Received: (nullmailer pid 2744946 invoked by uid 1000);
-        Thu, 16 Mar 2023 13:53:34 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Thu, 16 Mar 2023 07:12:59 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v2 00/14] SM6375 feature enablement (round one)
+Date:   Thu, 16 Mar 2023 15:12:49 +0100
+Message-Id: <20230303-topic-sm6375_features0_dts-v2-0-708b8191f7eb@linaro.org>
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Hao Zhang <quic_hazha@quicinc.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        linux-kernel@vger.kernel.org,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>, linux-doc@vger.kernel.org,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOIjE2QC/42OTQ6CMBCFr2K6tqb8iMWV9zCElHYKk2BLZoBoC
+ He3cgLzVt9bfO9tgoEQWNxPmyBYkTGGBPn5JOxgQg8SXWKRq7xQKXKOE1rJr6q4XVsPZl4IWLV
+ uZqkrVavSF5l2WiRBZxhkRybYISnCMo6pnAg8vo/FZ5N4QJ4jfY4Da/Zr/9paM6mkttrVpe9M5
+ dVjxGAoXiL1otn3/QujVWdE2gAAAA==
+To:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        coresight@lists.linaro.org, Trilok Soni <quic_tsoni@quicinc.com>,
-        Mike Leach <mike.leach@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>, devicetree@vger.kernel.org,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-In-Reply-To: <20230316032005.6509-3-quic_hazha@quicinc.com>
-References: <20230316032005.6509-1-quic_hazha@quicinc.com>
- <20230316032005.6509-3-quic_hazha@quicinc.com>
-Message-Id: <167897435275.2729718.16512739524975963906.robh@kernel.org>
-Subject: Re: [PATCH v1 2/3] dt-bindings: arm: Add Coresight Dummy Trace
- YAML schema
-Date:   Thu, 16 Mar 2023 08:53:34 -0500
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        Georgi Djakov <djakov@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1678975978; l=2737;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=RARjhqs3QRBTIsfJeubTjOqbRYf1ouM92C7DgsRRzD8=;
+ b=yKm4H5uqTeUJhy5/okAPw6qEwM4lVp6yo4kzkK3Z5im1UmNWPD5bAqgfeFLSGDhOxCY7xFCvQly0
+ aRbUzcZXANLqEShRIRatVISSA9vks4PEWnXREpxOHfiMjYtcb9HK
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+v1 -> v2:
+- Reword CPUCP L3 commits to indicate that CPUCP != the L3 scaler within
+- Pick up tags
+- Drop the MPM introduction as we work on resolving RPM MSG RAM bindings
 
-On Thu, 16 Mar 2023 11:20:04 +0800, Hao Zhang wrote:
-> Add new coresight-dummy.yaml file describing the bindings required
-> to define coresight dummy trace in the device trees.
-> 
-> Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
-> ---
->  .../bindings/arm/qcom,coresight-dummy.yaml    | 129 ++++++++++++++++++
->  1 file changed, 129 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
-> 
+v1: https://lore.kernel.org/r/20230303-topic-sm6375_features0_dts-v1-0-8c8d94fba6f0@linaro.org
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Hello
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml:91:5: [warning] wrong indentation: expected 6 but found 4 (indentation)
+This series brings support for a couple of nice things on SM6375, namely:
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml: required:4: {'oneOf': ['qcom,dummy-sink', 'qcom,dummy-source']} is not of type 'string'
-	from schema $id: http://json-schema.org/draft-07/schema#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml: ignoring, error in schema: required: 4
-Documentation/devicetree/bindings/arm/qcom,coresight-dummy.example.dtb: /example-0/dummy_sink: failed to match any schema with compatible: ['qcom,dummy']
-Documentation/devicetree/bindings/arm/qcom,coresight-dummy.example.dtb: /example-1/dummy_source: failed to match any schema with compatible: ['qcom,dummy']
+* 2 TSENS controllers & associated thermal-zones
+* RPM sleep stats
+* IMEM
+* WCN3990 Wi-Fi (Bluetooth doesn't wanna play ball yet)
+* MPSS & RMTFS
+* L3 scaling interconnect (not yet hooked up in this series, but it works,
+  still assessing the best scaling configuration)
+* MPM (big!; also implicitly fixes some interrupt lanes due to my earlier
+  misunderstanding of the downstream MPM<->GIC mapping)
+* Additional CPU sleep state (gated clock, power rail still on)
+* V- key on the Xperia
 
-doc reference errors (make refcheckdocs):
+It does *not* bring support for GPU, MDSS, icc and various other scaling
+parts which are still in progress of being upstreamed.
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230316032005.6509-3-quic_hazha@quicinc.com
+More PDX225-specific patches, along with Wi-Fi enablement will come after
+that. But hey, we already know it works great ;)
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+Tested on the only sm6375 device we support, the Xperia 10 IV (PDX225).
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+Depends on:
+https://lore.kernel.org/lkml/20230109135647.339224-5-konrad.dybcio@linaro.org/
 
-pip3 install dtschema --upgrade
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (14):
+      dt-bindings: thermal: qcom-tsens: Add compatible for SM6375
+      dt-bindings: interconnect: OSM L3: Add SM6375 CPUCP compatible
+      dt-bindings: sram: qcom,imem: document SM6375 IMEM
+      arm64: dts: qcom: sm6375: Add RPM sleep stats
+      arm64: dts: qcom: sm6375: Add IMEM
+      arm64: dts: qcom: sm6375: Add RMTFS
+      arm64: dts: qcom: sm6375: Add wifi node
+      arm64: dts: qcom: sm6375: Add modem nodes
+      arm64: dts: qcom: sm6375: Add CPUCP L3 node
+      arm64: dts: qcom: sm6375: Add TSENS
+      arm64: dts: qcom: sm6375: Configure TSENS thermal zones
+      arm64: dts: qcom: sm6375: Bump CPU rail power collapse index
+      arm64: dts: qcom: sm6375: Introduce C3 power state for both ARM clusters
+      arm64: dts: qcom: sm6375-pdx225: Add volume down GPIO key
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+ .../bindings/interconnect/qcom,osm-l3.yaml         |   1 +
+ .../devicetree/bindings/sram/qcom,imem.yaml        |   1 +
+ .../devicetree/bindings/thermal/qcom-tsens.yaml    |   1 +
+ .../dts/qcom/sm6375-sony-xperia-murray-pdx225.dts  |  27 +
+ arch/arm64/boot/dts/qcom/sm6375.dtsi               | 904 ++++++++++++++++++++-
+ 5 files changed, 926 insertions(+), 8 deletions(-)
+---
+base-commit: 1acf39ef8f1425cd105f630dc2c7c1d8fff27ed1
+change-id: 20230303-topic-sm6375_features0_dts-860904f318d8
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
