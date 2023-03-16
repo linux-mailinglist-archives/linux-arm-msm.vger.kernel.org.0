@@ -2,82 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 991F66BC641
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 07:46:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E9096BC652
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 07:50:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229783AbjCPGqK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 02:46:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33406 "EHLO
+        id S229808AbjCPGuj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 02:50:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229562AbjCPGqJ (ORCPT
+        with ESMTP id S229687AbjCPGui (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 02:46:09 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 906C649C9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 23:46:06 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id fy10-20020a17090b020a00b0023b4bcf0727so635997pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 23:46:06 -0700 (PDT)
+        Thu, 16 Mar 2023 02:50:38 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AA115A6F5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 23:50:36 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id x13so3637894edd.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 23:50:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678949166;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pKRA4Nz16THcP4sOVr9xZNPpLk0Z9Kp3Pw1+X+MGR3Q=;
-        b=ZuSVXVXdO4U3ZAXsrC2uqDYK06EKuhK1k12cghZZQ/MaOZDaKD4Vqj6rbqoYW/yeCZ
-         tgBYihRPS4EFXMaF/xWNc4v7DzAgrWYVpANQvL0viIykfXraVcUNR2kCCaEKkMhgrW3C
-         2T6aHn9Er3ecYLX6xmjGQRPuuEUqDAjgvAWMenjB6sxP+O7B3Cyaq4gE/JS2NJYHBoGV
-         1i0Gz5GTAP27sIGBV3I0lK8vt9eQjyYePIQHp9eJLTKN3wQ9pdJsBKcNMI5DeDSnjICf
-         ijupi8SPC2FtWhstb2glgbTTl/ee/kbTSMJxWFmiXj6MuuSIncoWhyIH4WxCtMbtKTAC
-         lCYw==
+        d=linaro.org; s=google; t=1678949434;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FSmqR42JI8zcqdZRW9LGFpXnT9CY9HrPjFJaVqu4ZgY=;
+        b=LtSG7S1Is6GOySgnfXlDFq9WmlpDcL15eYIvGJGE5wawcnUtwzMePaKmAhMuLgEhUs
+         xTJTs+bkX4okGEn38efRN2rttgtE4dB+4IsT4Ilvtd1XhKAc6NzWUyoWa3WqXvoL7u2T
+         ggWDnwAJN0nv2Blhx7wMVb7yHDJnjqMnbjcCCh46Ezk8oV0RRn56Sk1eQOIxncoCALCT
+         T/AHI0c1h3r4Kgd1Eqtqbds7fp/dpooQMq2CMoxqPxH6aUv8XVPKbT47IrkpLhjEySj2
+         9VIqK63JW8wx7Fc61X7ttVzGNgKM6hkgeC53bC3iIqBQY63I047h4js0OPc8tQoaa5yE
+         A56w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678949166;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20210112; t=1678949434;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pKRA4Nz16THcP4sOVr9xZNPpLk0Z9Kp3Pw1+X+MGR3Q=;
-        b=X9XEIWib+JT7trJw89bvZA/9XkjAxRXdBNI1zU5Egfr1yW3yL0SenQ/oEmXYi29QJa
-         NV7X0uajXL37FUe4Y8uSt6XyTM7y/ynhrtRtyqpIUtBcGHzdf38+Nxf/S1Ev4xNSqJKD
-         CEmTDY0uqkd8UeqH7fD21TWS5gaSQ9o1DD4e943V6ft35Ywa8hZD9GcOhfZX0EiGy4C/
-         9EstFiZ5epk9yIyq0zO2gBE0zlGMoccXpn2aq7DEIBwirPwGjrkSw3FQW+Ff1lqOPDYl
-         A8HcIFlmzMrtNIZN78YGEwIUbWzaZscx0EPJ0M7peMolF1NSMMMJmM0Foc6KmxzipQlU
-         8HHg==
-X-Gm-Message-State: AO0yUKURsR/M24pD4Pf7l05afVu6M7AIN1ebOIMFIJtDD/JaVbXkYFlm
-        0bUVrh6anbcRJ4suYplS8EQ+
-X-Google-Smtp-Source: AK7set8MD9xflVVWo3JfFq3UaAA07K7hytq4ujFV5zacXikVZC/lVO5VJ4TXzZ2jrcMPCq6KgVkd+g==
-X-Received: by 2002:a17:902:ceca:b0:1a1:86c9:e30b with SMTP id d10-20020a170902ceca00b001a186c9e30bmr2455933plg.53.1678949165967;
-        Wed, 15 Mar 2023 23:46:05 -0700 (PDT)
-Received: from thinkpad ([117.207.30.24])
-        by smtp.gmail.com with ESMTPSA id kp8-20020a170903280800b0019ee042602bsm4748980plb.92.2023.03.15.23.46.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 23:46:05 -0700 (PDT)
-Date:   Thu, 16 Mar 2023 12:15:57 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        bh=FSmqR42JI8zcqdZRW9LGFpXnT9CY9HrPjFJaVqu4ZgY=;
+        b=bOjNdQtn0+HKzcjR8Ko6Sa2QzNnsTGElaoMk30SAoWmaszUg9m+nMwL2lT7KY4nFMi
+         sqUHPZUWNNCeQS97Lq6NTiQYmTqcaq5NJPxvSWorKzJyC5Lz/9QoDGb3rTHKZpapHalN
+         YkCAT10e1w6P0JJiANgxxA0WkKV2Crdef/DBULdu3VW/I0kM4aKNl8R/lv3KB05BLXYu
+         7Aet0FBTSOsCtcSEXpHPDZoNDjnXZUesUNS2cEqdrDrBfv62INEZ8/d9CLY8M3kAJLcH
+         z6hqUITNJrkLz8chuMQmEhsfqHlKD9yCEnfX+RK6izwxdRfQKXKKouwPqz8t29y2wXgH
+         +XHQ==
+X-Gm-Message-State: AO0yUKVpOz4du9g6DQ+vDSPuGT9Ids5IQPKrI+mvRQFZ6NmWdhOG2qzO
+        9JzY7qS84ZMTLaU1j22a+5KIJw==
+X-Google-Smtp-Source: AK7set+PiE/udqoIZYh3NUnUhUQW7Ogs6QpL8HNi52GXZ5TS0E9frxcNkNS0kfUthl780jLDuZxS7g==
+X-Received: by 2002:a17:906:c9ce:b0:889:58bd:86f1 with SMTP id hk14-20020a170906c9ce00b0088958bd86f1mr8988609ejb.14.1678949434663;
+        Wed, 15 Mar 2023 23:50:34 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:9827:5f65:8269:a95f? ([2a02:810d:15c0:828:9827:5f65:8269:a95f])
+        by smtp.gmail.com with ESMTPSA id w13-20020a1709060a0d00b0092707833d08sm3388745ejf.70.2023.03.15.23.50.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 23:50:34 -0700 (PDT)
+Message-ID: <1f77b57b-e3dc-b44e-0afb-ac1b7c4cac83@linaro.org>
+Date:   Thu, 16 Mar 2023 07:50:33 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v4 08/10] dt-bindings: display/msm: dsi-controller-main:
+ Fix deprecated compatible
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Georgi Djakov <djakov@kernel.org>
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
-Message-ID: <20230316064557.GB4386@thinkpad>
-References: <cover.1677749625.git.quic_varada@quicinc.com>
- <6b8d17006d8ee9a1b0c4df803c1cc7caf53ea3ef.1677749625.git.quic_varada@quicinc.com>
- <CAA8EJprbMybV0o1-436yLhVnnEX6qywrj=JmWDCL5usaH0DXiQ@mail.gmail.com>
- <61e8c730-e46d-728d-d770-f1ead4405d12@quicinc.com>
- <83184da4-b183-3271-983f-3a1a62fb9f1a@linaro.org>
- <365f2609-d3b4-df23-5b6e-7a190815a640@quicinc.com>
- <47b591c0-2f68-429d-6d1b-fa8b701785ac@linaro.org>
- <20230316063009.GA29961@varda-linux.qualcomm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230316063009.GA29961@varda-linux.qualcomm.com>
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>
+References: <20230307-topic-dsi_qcm-v4-0-54b4898189cb@linaro.org>
+ <20230307-topic-dsi_qcm-v4-8-54b4898189cb@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230307-topic-dsi_qcm-v4-8-54b4898189cb@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,180 +89,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 16, 2023 at 12:00:09PM +0530, Varadarajan Narayanan wrote:
-> Dmitry,
+On 14/03/2023 13:13, Konrad Dybcio wrote:
+> The point of the previous cleanup was to disallow "qcom,mdss-dsi-ctrl"
+> alone. This however didn't quite work out and the property became
+> undocumented instead of deprecated. Fix that.
 > 
-> On Tue, Mar 07, 2023 at 01:49:40PM +0200, Dmitry Baryshkov wrote:
-> > On 07/03/2023 08:36, Varadarajan Narayanan wrote:
-> > >
-> > >On 3/6/2023 5:21 PM, Dmitry Baryshkov wrote:
-> > >>On 06/03/2023 13:26, Varadarajan Narayanan wrote:
-> > >>>Dmitry,
-> > >>>
-> > >>>On 3/2/2023 9:52 PM, Dmitry Baryshkov wrote:
-> > >>>>On Thu, 2 Mar 2023 at 11:57, Varadarajan Narayanan
-> > >>>><quic_varada@quicinc.com> wrote:
-> > >>>>>Add USB phy and controller related nodes
-> > >>>>>
-> > >>>>>Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > >>>>>---
-> > >>>>>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 92
-> > >>>>>+++++++++++++++++++++++++++++++++++
-> > >>>>>  1 file changed, 92 insertions(+)
-> > >>>>>
-> > >>>>>diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> > >>>>>b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> > >>>>>index 2bb4053..319b5bd 100644
-> > >>>>>--- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> > >>>>>+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> > >>
-> > >>[skipped]
-> > >>
-> > >>
-> > >>>>>+               usb3: usb3@8A00000 {
-> > >>>>You know the drill. This node is in the wrong place.
-> > >>>>
-> > >>>>>+                       compatible = "qcom,dwc3";
-> > >>>>>+                       reg = <0x8AF8800 0x400>;
-> > >>>>>+                       #address-cells = <1>;
-> > >>>>>+                       #size-cells = <1>;
-> > >>>>>+                       ranges;
-> > >>>>>+
-> > >>>>>+                       clocks = <&gcc GCC_SNOC_USB_CLK>,
-> > >>>>>+                               <&gcc GCC_ANOC_USB_AXI_CLK>,
-> > >>>>>+                               <&gcc GCC_USB0_MASTER_CLK>,
-> > >>>>>+                               <&gcc GCC_USB0_SLEEP_CLK>,
-> > >>>>>+                               <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> > >>>>>+
-> > >>>>>+                       clock-names = "sys_noc_axi",
-> > >>>>>+                               "anoc_axi",
-> > >>>>>+                               "master",
-> > >>>>>+                               "sleep",
-> > >>>>>+                               "mock_utmi";
-> > >>>>Please fix the indentation of the lists.
-> > >>>>
-> > >>>>>+
-> > >>>>>+                       assigned-clocks = <&gcc GCC_SNOC_USB_CLK>,
-> > >>>>>+                                         <&gcc GCC_ANOC_USB_AXI_CLK>,
-> > >>>>Why do you assign clock rates to the NOC clocks? Should they be set
-> > >>>>using the interconnect instead?
-> > >>>
-> > >>>The SNOC and ANOC run at a fixed speed of 350MHz and 342MHz
-> > >>>respectively and are not scaled. These clocks are for the interface
-> > >>>between the USB block and the SNOC/ANOC. Do we still need to use
-> > >>>interconnect?
-> > >>
-> > >>Maybe I misunderstand something here. If the snoc and anoc speeds are at
-> > >>350 MHz and 342 MHz, why do you assign clock-rates of 200 MHz?
-> > >>
-> > >>Is it enough to call clk_prepare_enable() for these clocks or the rate
-> > >>really needs to be set?
-> > >
-> > >The rate of 200MHz is not being set for the SNOC/ANOC. It is for the
-> > >NIU that connects the USB and SNOC/ANOC. The reason for setting the
-> > >rate to 200MHz is to configure the RCG parent for these interface
-> > >clocks. That said can we configure this RCG standalone in the driver
-> > >and enable these clocks?
-> >
-> > We discussed this separately with Georgi Djakov. Let me quote his IRC
-> > message: "it sounds like this is for USB port that connects to the NOC. if
-> > bandwidth scaling is not needed (or other interconnect configuration), then
-> > maybe this can go without interconnect provider driver."
-> >
-> > However as we discover more and more about this platform (e.g. PCIe using
-> > the aggre_noc region to setup some magic registers, see [1]), I'm more and
-> > more biased towards suggesting implementing the interconnect driver to setup
-> > all these tiny little things. With the DT tree being an ABI, it is much
-> > preferable to overestimate the needs rather than underestimating them (and
-> > having to cope with the backwards compatibility issues).
-> >
-> > Generally I think that PCIe/USB/whatever should not poke into NoC registers
-> > or NoC/NIU clocks directly (because this is a very platform-specific item).
-> > Rather than that it should tell the icc/opp/whatever subsystem, "please
-> > configure the SoC for me to work".
-> >
-> > [1] https://lore.kernel.org/linux-arm-msm/30cf9717-dcca-e984-c506-c71b7f8e32cd@quicinc.com/
+> Fixes: 0c0f65c6dd44 ("dt-bindings: msm: dsi-controller-main: Add compatible strings for every current SoC")
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Dmitry,
-> Can we remove the interconnect clocks in the next patch
-> version (and assume that the boot loader configures them)?
-> 
-> And add these clocks once the interconnect support is available.
-> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> index 2494817c1bd6..94f4cdf88c95 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> @@ -34,7 +34,7 @@ properties:
+>        - items:
 
-Yes, that should work. If you do not care about interconnect scaling, then let
-the bootloader set whatever fixed bandwidth is required for the peripherals.
+This patch should drop the items - you have only one item, so no need
+for list.
 
-Thinking from the usecase perspective of these router chipsets, you won't need
-interconnect provider driver as of now.
+>            - enum:
+>                - qcom,dsi-ctrl-6g-qcm2290
+> -          - const: qcom,mdss-dsi-ctrl
+> +              - qcom,mdss-dsi-ctrl # This should always come with an SoC-specific compatible
+>          deprecated: true
 
-Thanks,
-Mani
 
-> Thanks
-> Varada
-> 
-> >
-> > >
-> > >Thanks
-> > >Varada
-> > >
-> > >
-> > >>
-> > >>
-> > >>>
-> > >>>>>+ <&gcc GCC_USB0_MASTER_CLK>,
-> > >>>>>+                                         <&gcc
-> > >>>>>GCC_USB0_MOCK_UTMI_CLK>;
-> > >>>>>+                       assigned-clock-rates = <200000000>,
-> > >>>>>+ <200000000>,
-> > >>>>>+ <200000000>,
-> > >>>>>+ <24000000>;
-> > >>>>>+
-> > >>>>>+                       resets = <&gcc GCC_USB_BCR>;
-> > >>>>>+                       status = "disabled";
-> > >>>>>+
-> > >>>>>+                       dwc_0: dwc3@8A00000 {
-> > >>>>>+                               compatible = "snps,dwc3";
-> > >>>>>+                               reg = <0x8A00000 0xcd00>;
-> > >>>>>+                               clock-names = "ref";
-> > >>>>>+                               clocks = <&gcc
-> > >>>>>GCC_USB0_MOCK_UTMI_CLK>;
-> > >>>>clocks before clock-names
-> > >>>>
-> > >>>>>+ interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
-> > >>>>>+                               phys = <&qusb_phy_0>, <&usb0_ssphy>;
-> > >>>>>+                               phy-names = "usb2-phy", "usb3-phy";
-> > >>>>>+                               tx-fifo-resize;
-> > >>>>>+                               snps,dis_ep_cache_eviction;
-> > >>>>>+                               snps,is-utmi-l1-suspend;
-> > >>>>>+                               snps,hird-threshold = /bits/ 8 <0x0>;
-> > >>>>>+                               snps,dis_u2_susphy_quirk;
-> > >>>>>+                               snps,dis_u3_susphy_quirk;
-> > >>>>>+ snps,quirk-frame-length-adjustment = <0x0A87F0A0>;
-> > >>>>>+                               dr_mode = "host";
-> > >>>>>+                       };
-> > >>>>>+               };
-> > >>>>>+
-> > >>>>>                 pcie0_phy: phy@84000 {
-> > >>>>>                         compatible =
-> > >>>>>"qcom,ipq9574-qmp-gen3x1-pcie-phy";
-> > >>>>>                         reg = <0x00084000 0x1bc>; /* Serdes PLL */
-> > >>>>>--
-> > >>>>>2.7.4
-> > >>>
-> > >>>Will address these and post a new revision.
-> > >>>
-> > >>>Thanks
-> > >>>
-> > >>>Varada
-> > >>>
-> > >>
-> >
-> > --
-> > With best wishes
-> > Dmitry
-> >
+Best regards,
+Krzysztof
 
--- 
-மணிவண்ணன் சதாசிவம்
