@@ -2,142 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB8246BC3A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 03:14:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C62256BC3B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 03:21:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229539AbjCPCOT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 22:14:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36432 "EHLO
+        id S229639AbjCPCVj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 22:21:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229631AbjCPCOS (ORCPT
+        with ESMTP id S229459AbjCPCVi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 22:14:18 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF16E113E8;
-        Wed, 15 Mar 2023 19:14:16 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 60FD561EE7;
-        Thu, 16 Mar 2023 02:14:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31ACC433EF;
-        Thu, 16 Mar 2023 02:14:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678932855;
-        bh=Wo69fq00Qh9FEc+bDW6Zi5el1L42m3tYk6njxLOZzZo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Av/BYTdx9CmTg8Ne72QlOQ0mjqu4v84hEautrlHNDaRe4Nr5ObHCnDRjeDf7f3Lzp
-         qlATCoAmy+SULrwT29m+KlE1xRG5nAnt7yXZinH5yO6KSQuUgCo6/WTsAVrF4H1FJk
-         MD/mzUaGlktyTzJfOKR6ZV+A5yTV6WVIR9f6f09fvN3Kv/HcZj2DO5/6pMdwWBtuI0
-         bfuuMlDMMpIix6bOaAbt49kkZqPBGeVnM1v46xzC3IY2IjLvC1rZ2jeO20Z8M2jnHE
-         TSURNwiJP1WLd3K9/fqgbbL6J6wS/YcgSlqX0ht23IuKxj1ShV6XSkCCrQw/3E59QC
-         bddZf7FcWfFAQ==
-Date:   Wed, 15 Mar 2023 19:17:36 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Melody Olvera <quic_molvera@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH v2 5/7] remoteproc: qcom: q6v5: Add support for q6 rmb
- registers
-Message-ID: <20230316021736.d53quam5eew5fr6m@ripper>
-References: <20230306231202.12223-1-quic_molvera@quicinc.com>
- <20230306231202.12223-6-quic_molvera@quicinc.com>
+        Wed, 15 Mar 2023 22:21:38 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2B7357093;
+        Wed, 15 Mar 2023 19:21:37 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32G24QnQ009636;
+        Thu, 16 Mar 2023 02:21:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=k0M+jgaRm8fiNJandj3KTGzc2R4sgbklH2+GpVT8zSU=;
+ b=H2dEJ6tLYdIN3ralAhBV6nhx0pf+3jdNg1fClxVV0bFxAUXgCNUYay7W5oJREwzv0StC
+ 5qqwbcYLUUHjSEkTPhfXMt35qmE5O2M1XKHCvTTcv9o+x88gt3/DAkPMCzYDgl4bFIU1
+ 5CTtn7WrgQkasTzCeHTBB6Y4Cnw1cLl//mJAe/3yR5+TLqfCsZnDe8UQGbElchqDij04
+ k5S634uRHgAUECYbwrtb5rYYSbIjrLOJFAq5UU+d2gk/ch/zjRohmtHKOZ6GcV+CS06C
+ whVlF5rL+mMTyEOXL4CPcuTtOZUOZtrAs+6ukQiF5/bHPK5/2kdO9liCe7BYe645+SER 1Q== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pbst901sn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 16 Mar 2023 02:21:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32G2LV0c027895
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 16 Mar 2023 02:21:31 GMT
+Received: from abhinavk-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Wed, 15 Mar 2023 19:21:30 -0700
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>
+CC:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <robdclark@chromium.org>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <quic_vpolimer@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        <marijn.suijten@somainline.org>
+Subject: Re: (subset) [PATCH v4 1/4] drm/msm/dpu: clear DSPP reservations in rm release
+Date:   Wed, 15 Mar 2023 19:21:21 -0700
+Message-ID: <167893299308.2831.899170980846361042.b4-ty@quicinc.com>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <1676286704-818-2-git-send-email-quic_kalyant@quicinc.com>
+References: <1676286704-818-1-git-send-email-quic_kalyant@quicinc.com> <1676286704-818-2-git-send-email-quic_kalyant@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230306231202.12223-6-quic_molvera@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: wad776bkODmBBqORgHWrdmxRuv2jaWEl
+X-Proofpoint-GUID: wad776bkODmBBqORgHWrdmxRuv2jaWEl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-16_01,2023-03-15_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
+ spamscore=0 adultscore=0 suspectscore=0 mlxlogscore=676 malwarescore=0
+ clxscore=1011 lowpriorityscore=0 impostorscore=0 bulkscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303150002
+ definitions=main-2303160019
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 06, 2023 at 03:12:00PM -0800, Melody Olvera wrote:
-> When attaching a running Q6, the remoteproc driver needs a way
-> to communicate with the Q6 using rmb registers, so allow the
-> rmb register to be gotten from the device tree if present.
+
+On Mon, 13 Feb 2023 03:11:41 -0800, Kalyan Thota wrote:
+> Clear DSPP reservations from the global state during
+> rm release
 > 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> ---
->  drivers/remoteproc/qcom_q6v5.c | 9 +++++++++
->  drivers/remoteproc/qcom_q6v5.h | 8 ++++++++
->  2 files changed, 17 insertions(+)
 > 
-> diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
-> index 192c7aa0e39e..e8c6be70ebfd 100644
-> --- a/drivers/remoteproc/qcom_q6v5.c
-> +++ b/drivers/remoteproc/qcom_q6v5.c
-> @@ -254,6 +254,7 @@ int qcom_q6v5_init(struct qcom_q6v5 *q6v5, struct platform_device *pdev,
->  		   void (*handover)(struct qcom_q6v5 *q6v5))
->  {
->  	int ret;
-> +	struct resource *res;
->  
->  	q6v5->rproc = rproc;
->  	q6v5->dev = &pdev->dev;
-> @@ -263,6 +264,14 @@ int qcom_q6v5_init(struct qcom_q6v5 *q6v5, struct platform_device *pdev,
->  	init_completion(&q6v5->start_done);
->  	init_completion(&q6v5->stop_done);
->  
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
 
-In addition to the PAS driver, __func__ is being invoked by the non-PAS
-ADSP and MPSS drivers as well, which both uses reg[1] for other
-purposes. So this won't work.
+Applied, thanks!
 
-Perhaps I'm missing some possibility of reuse, but it seems reasonable
-for this to move to the pas-driver.
+[1/4] drm/msm/dpu: clear DSPP reservations in rm release
+      https://gitlab.freedesktop.org/drm/msm/-/commit/5ec498ba8655
 
-Thanks,
-Bjorn
-
-> +	if (res) {
-> +		q6v5->rmb_base = devm_ioremap_resource(&pdev->dev, res);
-> +		if (IS_ERR(q6v5->rmb_base))
-> +			q6v5->rmb_base = NULL;
-> +	} else
-> +		q6v5->rmb_base = NULL;
-> +
->  	q6v5->wdog_irq = platform_get_irq_byname(pdev, "wdog");
->  	if (q6v5->wdog_irq < 0)
->  		return q6v5->wdog_irq;
-> diff --git a/drivers/remoteproc/qcom_q6v5.h b/drivers/remoteproc/qcom_q6v5.h
-> index 5a859c41896e..95824d5b64ce 100644
-> --- a/drivers/remoteproc/qcom_q6v5.h
-> +++ b/drivers/remoteproc/qcom_q6v5.h
-> @@ -7,6 +7,12 @@
->  #include <linux/completion.h>
->  #include <linux/soc/qcom/qcom_aoss.h>
->  
-> +#define RMB_BOOT_WAIT_REG 0x8
-> +#define RMB_BOOT_CONT_REG 0xC
-> +#define RMB_Q6_BOOT_STATUS_REG 0x10
-> +
-> +#define RMB_POLL_MAX_TIMES 250
-> +
->  struct icc_path;
->  struct rproc;
->  struct qcom_smem_state;
-> @@ -16,6 +22,8 @@ struct qcom_q6v5 {
->  	struct device *dev;
->  	struct rproc *rproc;
->  
-> +	void __iomem *rmb_base;
-> +
->  	struct qcom_smem_state *state;
->  	struct qmp *qmp;
->  
-> -- 
-> 2.25.1
-> 
+Best regards,
+-- 
+Abhinav Kumar <quic_abhinavk@quicinc.com>
