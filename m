@@ -2,80 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FD096BC694
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 08:10:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 081746BC6AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 08:14:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229621AbjCPHK4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 03:10:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36266 "EHLO
+        id S229988AbjCPHN6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 03:13:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229596AbjCPHKz (ORCPT
+        with ESMTP id S230063AbjCPHN5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 03:10:55 -0400
+        Thu, 16 Mar 2023 03:13:57 -0400
 Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 091ECAE11A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 00:10:04 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id fd5so3687814edb.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 00:10:04 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E07545290F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 00:13:30 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id fd5so3714133edb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 00:13:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678950593;
+        d=linaro.org; s=google; t=1678950807;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7DskVPGyg4XTBFcAu4u2wBMvd2V9vUe35DTxUMiqKo0=;
-        b=Oii4tgqhM1+uytgl/uCtxEcAltbCiuY08aN8SwZk4cCYRC1mtyU92yp6QGwJaMR+69
-         r2LeC8f3Pnt7+BBfqEX0Y2mR0KYes6/bpYwuaVes44qLaD3Yoidm5RLYgytOqFqnS54E
-         bbxVDZhcftxAPs9cr3DplBamx/puAjOIABbLZR2V4/pPwyR/ws8N73HBXb0YDIo9mne6
-         twQQ15hw8kjf+UkJZZK4x30B+ItMvq+3k2a31brrxDdHF6Nznf1V++OM0ARYBboE03Nb
-         7whTxyvSJnd9wCfPtHRV2Pp2tv+7/3l7SMhlI9SkFiSclryfcOuK3xxpB9l4zNyg17zw
-         Wvcw==
+        bh=eQqBxhsFpqht9TV3ODi4eqp1h6oGT5RNGJVf78eU7ys=;
+        b=mXgg3KF+U8HsBWs12EmYyC6aiUPvUi7w/0p0EKveStEcm9drVh0Cf6U0LfVL7OqLob
+         kt2FJzKBcNkqUeqU0dHEOF+3i+XSk2uHNpV6wDStGtdCQErJXcR5szdPH6XXhCHH5yRP
+         po2rbgpMC2XZQfDs3eH5ZgBvgNHaeLc1LyRirGHNP0JnNyDRXPhhZMtveGK48JDDGsZi
+         HX6/nHEpiEDYk39mYh57xydK+y/k/rsK+aMCbECpuLTPzJ3NAWbHxnEA0NlkbPA0GRJI
+         Jc9PEGtJTxme5EFHzumoWle8qBBTaPc+kOSroopXECWK0bubelFQK1eDdLNAhM1Kj4GR
+         3F9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678950593;
+        d=1e100.net; s=20210112; t=1678950807;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7DskVPGyg4XTBFcAu4u2wBMvd2V9vUe35DTxUMiqKo0=;
-        b=EtQGk2DqaHcy28hflEctZK57FCbG3eRGQs04DZeOBYj6xs+0nZ2RLNEV+2epmEcO2f
-         RyDdb2NjrfTVwe0iiHKFigKDQCiIG5NVoqc5Lcp1w1IAh1hoF1NZIt7ODpAlmrEfWCQ7
-         MTQ/ghJVCgF6E/H6BDtKH2ZiI1pjGFVGKHbmma2UMXwg2Abobg9xrgN7sg8gLk1nyA65
-         xwTnEAmoVAsMtqa802D5UQ8QufkhEuGVqxI16/QGIYU/bmpSRYF6i8DMMyJO4PZ5KhXa
-         BCY2JuMnF7xHLZlWID/5YdPYehboSX+It71J3Q36QTd2/xo2mPKQGI50oyP3hbnCBabe
-         IMcw==
-X-Gm-Message-State: AO0yUKV4hWuQ+c+K8Cu4rFHmuFbePOaw/rWZcoKFvjx7SHU3wFcWclz1
-        do2BMvhKc7bN+YG9EJ4/JCjSBg==
-X-Google-Smtp-Source: AK7set8+NBsRtQMHynOv/FiocIqAaxXx01Y0YdEP/h944/7U8HpnrYGeH2MUJuKARg20j4XUNIwrZQ==
-X-Received: by 2002:aa7:de82:0:b0:4fd:2b04:6e8b with SMTP id j2-20020aa7de82000000b004fd2b046e8bmr5524719edv.29.1678950593268;
-        Thu, 16 Mar 2023 00:09:53 -0700 (PDT)
+        bh=eQqBxhsFpqht9TV3ODi4eqp1h6oGT5RNGJVf78eU7ys=;
+        b=fTv/vQNv37lTEfVUmxFmDtLZ1GldD7txNLf4nw0akAelbkgGDFnE7pVOkMDXCRoDh6
+         IXbw8tgf3LdBbK2GcPVzG63ylumSHhM9HnZWocPgMN5YAfoLp9iYtver6CnfigtlVMnK
+         mZHdWV491JMui1VZbch//AMbH68mr7udlKMRf2GHM+m2onVtlOfSEYvilkIdg2eTOgvf
+         0wwOrjNbud8WYTMOHJ5Gjiv+R3k4boQhQHbUTpnPOcsP9ppQEsg6762KZZhFWwPDioSN
+         Ri4Vr59XnBDnShRHtLNgzdLDoR+QAbg/F/xx0ilbSL9fvZWSxlwheA1ZJgms8MKT3d4L
+         uvIQ==
+X-Gm-Message-State: AO0yUKVL9zgFiuEqfGYbF2/xGJliresN4Se85JbMmGKDe0pIgXRr8R/l
+        hOChWTjbd+dgIZGvBH8Tzr8cZg==
+X-Google-Smtp-Source: AK7set+9y57Tbht/OlWaMi3QKo2qNZTFOC475LQrmWPsM5KyA5oghAoT+UaS5gVbwxz/UHpbpizsLg==
+X-Received: by 2002:a17:907:20c1:b0:930:604d:5891 with SMTP id qq1-20020a17090720c100b00930604d5891mr1177542ejb.37.1678950807103;
+        Thu, 16 Mar 2023 00:13:27 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:9827:5f65:8269:a95f? ([2a02:810d:15c0:828:9827:5f65:8269:a95f])
-        by smtp.gmail.com with ESMTPSA id e20-20020a50d4d4000000b004fbf6b35a56sm3363840edj.76.2023.03.16.00.09.52
+        by smtp.gmail.com with ESMTPSA id md21-20020a170906ae9500b0092b546b57casm3417008ejb.195.2023.03.16.00.13.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Mar 2023 00:09:52 -0700 (PDT)
-Message-ID: <04f9336b-2a49-ca3f-fd28-1f04db78d2bd@linaro.org>
-Date:   Thu, 16 Mar 2023 08:09:51 +0100
+        Thu, 16 Mar 2023 00:13:26 -0700 (PDT)
+Message-ID: <d4831176-c6f1-5a9b-3086-23d82f1f05a6@linaro.org>
+Date:   Thu, 16 Mar 2023 08:13:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v4 02/14] dt-bindings: display/msm/gmu: Add GMU wrapper
+Subject: Re: [PATCH net-next 01/11] dt-bindings: net: snps,dwmac: Update
+ interrupt-names
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-References: <20230223-topic-gmuwrapper-v4-0-e987eb79d03f@linaro.org>
- <20230223-topic-gmuwrapper-v4-2-e987eb79d03f@linaro.org>
+To:     Andrew Halaney <ahalaney@redhat.com>, linux-kernel@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        bhupesh.sharma@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, peppe.cavallaro@st.com,
+        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
+        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
+        linux@armlinux.org.uk, veekhee@apple.com,
+        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
+        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
+        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
+        jsuraj@qti.qualcomm.com, hisunil@quicinc.com
+References: <20230313165620.128463-1-ahalaney@redhat.com>
+ <20230313165620.128463-2-ahalaney@redhat.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230223-topic-gmuwrapper-v4-2-e987eb79d03f@linaro.org>
+In-Reply-To: <20230313165620.128463-2-ahalaney@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,85 +92,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/03/2023 16:28, Konrad Dybcio wrote:
-> The "GMU Wrapper" is Qualcomm's name for "let's treat the GPU blocks
-> we'd normally assign to the GMU as if they were a part of the GMU, even
-> though they are not". It's a (good) software representation of the GMU_CX
-> and GMU_GX register spaces within the GPUSS that helps us programatically
-> treat these de-facto GMU-less parts in a way that's very similar to their
-> GMU-equipped cousins, massively saving up on code duplication.
+On 13/03/2023 17:56, Andrew Halaney wrote:
+> From: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > 
-> The "wrapper" register space was specifically designed to mimic the layout
-> of a real GMU, though it rather obviously does not have the M3 core et al.
+> As commit fc191af1bb0d ("net: stmmac: platform: Fix misleading
+> interrupt error msg") noted, not every stmmac based platform
+> makes use of the 'eth_wake_irq' or 'eth_lpi' interrupts.
 > 
-> To sum it all up, the GMU wrapper is essentially a register space within
-> the GPU, which Linux sees as a dumbed-down regular GMU: there's no clocks,
-> interrupts, multiple reg spaces, iommus and OPP. Document it.
+> So, update the 'interrupt-names' inside 'snps,dwmac' YAML
+> bindings to reflect the same.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 > ---
->  .../devicetree/bindings/display/msm/gmu.yaml       | 49 ++++++++++++++++------
->  1 file changed, 37 insertions(+), 12 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-> index ab14e81cb050..021373e686e1 100644
-> --- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-> @@ -19,16 +19,18 @@ description: |
->  
->  properties:
->    compatible:
-> -    items:
-> -      - pattern: '^qcom,adreno-gmu-6[0-9][0-9]\.[0-9]$'
-> -      - const: qcom,adreno-gmu
-> +    oneOf:
-> +      - items:
-> +          - pattern: '^qcom,adreno-gmu-6[0-9][0-9]\.[0-9]$'
-> +          - const: qcom,adreno-gmu
-> +      - const: qcom,adreno-gmu-wrapper
->  
->    reg:
-> -    minItems: 3
-> +    minItems: 1
->      maxItems: 4
->  
->    reg-names:
-> -    minItems: 3
-> +    minItems: 1
->      maxItems: 4
->  
->    clocks:
-> @@ -44,7 +46,6 @@ properties:
->        - description: GMU HFI interrupt
->        - description: GMU interrupt
->  
-> -
->    interrupt-names:
+> I picked this up from:
+> 	https://lore.kernel.org/netdev/20220929060405.2445745-2-bhupesh.sharma@linaro.org/
+> No changes other than collecting the Acked-by.
+> 
+>  Documentation/devicetree/bindings/net/snps,dwmac.yaml | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> index 16b7d2904696..52ce14a4bea7 100644
+> --- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> +++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> @@ -105,8 +105,8 @@ properties:
+>      minItems: 1
 >      items:
->        - const: hfi
-> @@ -72,14 +73,8 @@ required:
->    - compatible
->    - reg
->    - reg-names
-> -  - clocks
-> -  - clock-names
-> -  - interrupts
-> -  - interrupt-names
->    - power-domains
->    - power-domain-names
-> -  - iommus
-> -  - operating-points-v2
->  
->  additionalProperties: false
->  
-> @@ -216,6 +211,27 @@ allOf:
->              - const: cxo
->              - const: axi
->              - const: memnoc
+>        - const: macirq
+> -      - const: eth_wake_irq
+> -      - const: eth_lpi
+> +      - enum: [eth_wake_irq, eth_lpi]
+> +      - enum: [eth_wake_irq, eth_lpi]
 
-Blank line (you added such between ifs in previous patch)
+I acked it before but this is not correct. This should be:
++      - enum: [eth_wake_irq, eth_lpi]
++      - enum: eth_lpi
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
