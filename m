@@ -2,179 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6782D6BD4DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 17:14:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C1826BD4FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 17:17:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229544AbjCPQOb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 12:14:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59156 "EHLO
+        id S230040AbjCPQRS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 12:17:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230058AbjCPQOS (ORCPT
+        with ESMTP id S230078AbjCPQRR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 12:14:18 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FFB0E2503;
-        Thu, 16 Mar 2023 09:13:45 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32G9q8B8024057;
-        Thu, 16 Mar 2023 16:13:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=jMxeL/k6UGhziLAYFVISsLgENwPkcTDe0Fm26HsQho4=;
- b=PPvmom4bOYLiEtw22ov0gXrKVfcTJsPAYGE0lyS7wFxnKknnKAP/eWdxrUAbFkmrOYve
- jvY/t3xpkSUbF0SrpzKeS97OwlFmXYI7sCAh6c6QzAheKAP1jpMnMiWGx9w3EnjYyiGz
- CB3lr40J6vk4VDnR+RgUWoj8f3vV5643gN82Xytnz3Lx5lLFvTvx1GPCmH+HxtoCXtbI
- q07jc0XTQa0CEm9JZNAm89L18pJdgFL3WkpD9WsT7J0cJ+mKC04XEU/sO1wFfzmFKggv
- yay1I4AukXeUOJ/qC6CygxwM2O8yorliBpyBiiFwixMtyGlEt8cBs7fGJsgvhzqB71UX wg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pbpy8jgq7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Mar 2023 16:13:32 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32GGDVDe013051
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Mar 2023 16:13:31 GMT
-Received: from [10.110.64.241] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 16 Mar
- 2023 09:13:30 -0700
-Message-ID: <176c6088-4470-5559-e79e-fd5675db0097@quicinc.com>
-Date:   Thu, 16 Mar 2023 09:13:29 -0700
+        Thu, 16 Mar 2023 12:17:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49CDDB1A78
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 09:15:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1678983331;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=mlukPFgMuUiNDYUja4zCoHJNdHul/iInVFC/mNyQV8Q=;
+        b=WeIDxR7eS8wn2u9RAe3uYDIPjTN3fa4/3TeEbrgNYTSA4OJ8lRDo/CcY0j4qAa3S/r8Fqy
+        gBe/su+wJTNYG82KbEpOSbu1QSG6q6LdQAXuO10fQiRi8H76X/6IMfuPWcTWQZ0gwTSPb/
+        c2KGZl4aWeseV6gwMI8XUeq9odNrW3E=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-486-fRcfMmfVMCGvGKg5_ZHGXQ-1; Thu, 16 Mar 2023 12:15:30 -0400
+X-MC-Unique: fRcfMmfVMCGvGKg5_ZHGXQ-1
+Received: by mail-qk1-f199.google.com with SMTP id s21-20020a05620a0bd500b0074234f33f24so1193147qki.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 09:15:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678983329;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mlukPFgMuUiNDYUja4zCoHJNdHul/iInVFC/mNyQV8Q=;
+        b=lsppGZ3yIX7okx1DucroPGs3m2J8DJPDNPGaqu8+BfwS4qwe4zPdLTjQeORB0c1OLK
+         U2FORAfhjpW+3W3CQQIyBNOIYDmLXob8ukhvh794uzfUPdLboug96QpCWv2djWQjVtkb
+         80ZAVdbSjKMOmHjoVNF/245sVlulzgFus2kiVzFSFLaLaA+N6D5+fCUzF8jhGr5wUsCq
+         5qQWXhml2nHgxaCGCSybhJGjwVJCD6u7nESJGp2n0QfstEudYlWkZ350kQmdf4lopZQu
+         xqNBS6QEA8Bsu9YCjUz/CtGPVodBPmli0/de/SKaYv8jszUTTvbAqLyuQ4FCTC04Okaf
+         mavg==
+X-Gm-Message-State: AO0yUKWkoBa708axBPsrImRB/pV92+pv4SVu8AtBY9W1TwoT7APMTMkC
+        kQhBOD+pzRA9hb7moSd5jvZi9GaJy1F7uUKSIfPul1X1p8tORPg4kJS/pX8zsS0D0zvNPilPyAr
+        CRDW5T0PL5qUgJicgftIb79l7Uw==
+X-Received: by 2002:a05:6214:2428:b0:574:8ef8:89d2 with SMTP id gy8-20020a056214242800b005748ef889d2mr39824744qvb.38.1678983329400;
+        Thu, 16 Mar 2023 09:15:29 -0700 (PDT)
+X-Google-Smtp-Source: AK7set+of7na8F1dFKLndAwQGwakPmWiDEiDVwrlTO9yupX5AyjFyMqZe903mbwQxlEn+ZQoYaB20w==
+X-Received: by 2002:a05:6214:2428:b0:574:8ef8:89d2 with SMTP id gy8-20020a056214242800b005748ef889d2mr39824676qvb.38.1678983329027;
+        Thu, 16 Mar 2023 09:15:29 -0700 (PDT)
+Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
+        by smtp.gmail.com with ESMTPSA id q16-20020a05620a025000b00745df9edd7csm4841721qkn.91.2023.03.16.09.15.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Mar 2023 09:15:28 -0700 (PDT)
+Date:   Thu, 16 Mar 2023 11:15:25 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        bhupesh.sharma@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, peppe.cavallaro@st.com,
+        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
+        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
+        linux@armlinux.org.uk, veekhee@apple.com,
+        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
+        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
+        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
+        jsuraj@qti.qualcomm.com, hisunil@quicinc.com
+Subject: Re: [PATCH net-next 01/11] dt-bindings: net: snps,dwmac: Update
+ interrupt-names
+Message-ID: <20230316161525.fwzfyj3fhekfwafd@halaney-x13s>
+References: <20230313165620.128463-1-ahalaney@redhat.com>
+ <20230313165620.128463-2-ahalaney@redhat.com>
+ <d4831176-c6f1-5a9b-3086-23d82f1f05a6@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [Freedreno] [RFC PATCH 1/2] drm/msm/dpu: add dsc helper functions
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-CC:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        <quic_sbillaka@quicinc.com>, <sean@poorly.run>,
-        <andersson@kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <agross@kernel.org>,
-        "Rodrigo Vivi" <rodrigo.vivi@intel.com>,
-        <marijn.suijten@somainline.org>, <swboyd@chromium.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <1677267647-28672-1-git-send-email-quic_khsieh@quicinc.com>
- <1677267647-28672-2-git-send-email-quic_khsieh@quicinc.com>
- <42b3c193-8897-cfe9-1cae-2f9a66f7983a@linaro.org>
- <741be2a3-0208-2f40-eedf-d439c4e6795b@quicinc.com>
- <F8A4FC18-C64E-4011-BC08-18EB3B95A357@linaro.org>
- <d5ee8233-66c8-9b88-417c-6cf9cc5c84fe@quicinc.com>
- <CAA8EJpro5Q-2ZpnDJt40UhFX7Zp9oBhrto=FDOERzCDR2BDPvQ@mail.gmail.com>
- <f0dfba42-4674-3748-bf5d-39f6e1745f67@quicinc.com>
- <f1a6ee82-9502-7ea5-fe48-f296fc7df497@linaro.org>
- <3e114c0f-a042-6801-69bf-67436cb2a448@quicinc.com>
- <113a10b6-6097-c80e-c29c-6f61b2b2896a@linaro.org>
- <c4c0ebf8-275d-500f-4019-e3d7517a884f@quicinc.com>
- <CAA8EJppxX4haZSwdvVbN7bc6kXAyNO1rg6zWZv9wPFdqGrcXuw@mail.gmail.com>
- <c650e746-64c5-ce6b-933d-057349356b78@quicinc.com>
- <58E03B71-20C4-4F81-96C1-6D8CE517F3FB@linaro.org>
- <fd876ad2-3fd0-eaab-3407-dd32d494f662@quicinc.com>
- <a5d1a74f-1b7a-569d-e487-774720dfae22@quicinc.com>
- <CAA8EJpq_mwUt0+1yGYo6hRx8Vz12DumVdpEjJbPk8gGHhGZ2bA@mail.gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpq_mwUt0+1yGYo6hRx8Vz12DumVdpEjJbPk8gGHhGZ2bA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bIKmKeRxdjHbW_I4hIqQDyQlnylC7jeX
-X-Proofpoint-ORIG-GUID: bIKmKeRxdjHbW_I4hIqQDyQlnylC7jeX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-16_10,2023-03-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 clxscore=1011 malwarescore=0 mlxlogscore=999 suspectscore=0
- adultscore=0 impostorscore=0 bulkscore=0 phishscore=0 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303160130
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d4831176-c6f1-5a9b-3086-23d82f1f05a6@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Mar 16, 2023 at 08:13:24AM +0100, Krzysztof Kozlowski wrote:
+> On 13/03/2023 17:56, Andrew Halaney wrote:
+> > From: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> >
+> > As commit fc191af1bb0d ("net: stmmac: platform: Fix misleading
+> > interrupt error msg") noted, not every stmmac based platform
+> > makes use of the 'eth_wake_irq' or 'eth_lpi' interrupts.
+> >
+> > So, update the 'interrupt-names' inside 'snps,dwmac' YAML
+> > bindings to reflect the same.
+> >
+> > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> > ---
+> >
+> > I picked this up from:
+> >		https://lore.kernel.org/netdev/20220929060405.2445745-2-bhupesh.sharma@linaro.org/
+> > No changes other than collecting the Acked-by.
+> >
+> >  Documentation/devicetree/bindings/net/snps,dwmac.yaml | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> > index 16b7d2904696..52ce14a4bea7 100644
+> > --- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> > +++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> > @@ -105,8 +105,8 @@ properties:
+> >      minItems: 1
+> >      items:
+> >        - const: macirq
+> > -      - const: eth_wake_irq
+> > -      - const: eth_lpi
+> > +      - enum: [eth_wake_irq, eth_lpi]
+> > +      - enum: [eth_wake_irq, eth_lpi]
+>
+> I acked it before but this is not correct. This should be:
+> +      - enum: [eth_wake_irq, eth_lpi]
+> +      - enum: eth_lpi
 
+Would
++      - enum: [eth_wake_irq, eth_lpi]
++      - const: eth_lpi
+be more appropriate? With the suggested change above I get the following
+error, but with the above things seem to work as I expect:
 
-On 3/16/2023 9:03 AM, Dmitry Baryshkov wrote:
-> Hi,
-> 
-> [removed previous conversation]
-> 
->>
->> Hi Dmitry and Abhinav,
->>
->> Just wanted to follow up on this thread. I've gone over the MSM-specific
->> DSC params for DP and DSI and have found a few shared calculations and
->> variables between both DSI and DP paths:
->>
->> - (as mentioned earlier in the thread) almost all the calculations in
->> dpu_dsc_populate_dsc_config() match dsi_populate_dsc_params() [1]. The
->> only difference in the math I'm seeing is initial_scale_value.
-> 
-> The value in dsi code is valid for initial_offset = 6144. Please use
-> the formula from the standard (= sde_dsc_populate_dsc_config) and add
-> it to drm_dsc_helper.c
-> 
-> If I remember correctly the last remaining item in
-> dsi_populate_dsc_params() (except mentioned initial_offset) was
-> line_buf_depth, see [3]. I'm not sure about setting it to bpc+1.
-> According to the standard it should come from a DSC decoder spec,
-> which means it should be set by the DSI panel driver or via
-> drm_dp_dsc_sink_line_buf_depth() in the case of DP output.
-> 
->> - dsc_extra_pclk_cycle_cnt and dce_bytes_per_line, which were introduced
->> in Kuogee's v1 DSC series [2], are used for DSI, DP, and the DPU timing
->> engine. dsc_extra_pclk_cycle_cnt is calculated based on pclk_per_line
->> (which is calculated differently between DP and DSI), but
->> dce_bytes_per_line is calculated the same way between DP and DSI.
->>
->> To avoid having to duplicate math in 2 different places, I think it
->> would help to have these calculations in some msm_dsc_helper.c file. Any
->> thoughts on this?
-> 
-> dsc_extra_pclk_cycle_cnt and dce_bytes_per_line are used only in DPU
-> code, so they can stay in DPU driver.
-> 
+    (dtschema) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac|rebase-i] % git diff HEAD~
+    diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+    index 16b7d2904696..ca199a17f83d 100644
+    --- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+    +++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+    @@ -105,8 +105,8 @@ properties:
+         minItems: 1
+         items:
+           - const: macirq
+    -      - const: eth_wake_irq
+    -      - const: eth_lpi
+    +      - enum: [eth_wake_irq, eth_lpi]
+    +      - enum: eth_lpi
 
-They can stay in the dpu driver is fine but where?
+       clocks:
+         minItems: 1
+    (dtschema) ahalaney@halaney-x13s ~/git/redhat/stmmac (git)-[stmmac|rebase-i] % make dt_binding_check DT_SCHEMA_FILES=Documentation/devicetree/bindings/net/snps,dwmac.yaml
+      DTEX    Documentation/devicetree/bindings/net/snps,dwmac.example.dts
+      LINT    Documentation/devicetree/bindings
+      CHKDT   Documentation/devicetree/bindings/processed-schema.json
+    /home/ahalaney/git/redhat/stmmac/Documentation/devicetree/bindings/net/snps,dwmac.yaml: properties:interrupt-names:items: 'anyOf' conditional failed, one must be fixed:
+        [{'const': 'macirq'}, {'enum': ['eth_wake_irq', 'eth_lpi']}, {'enum': 'eth_lpi'}] is not of type 'object', 'boolean'
+        'eth_lpi' is not of type 'array'
+        from schema $id: http://json-schema.org/draft-07/schema#
+    /home/ahalaney/git/redhat/stmmac/Documentation/devicetree/bindings/net/snps,dwmac.yaml: properties:interrupt-names:items: 'oneOf' conditional failed, one must be fixed:
+        [{'const': 'macirq'}, {'enum': ['eth_wake_irq', 'eth_lpi']}, {'enum': 'eth_lpi'}] is not of type 'object'
+        'eth_lpi' is not of type 'array'
+        from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
+    /home/ahalaney/git/redhat/stmmac/Documentation/devicetree/bindings/net/snps,dwmac.yaml: properties:interrupt-names:items: 'oneOf' conditional failed, one must be fixed:
+        [{'const': 'macirq'}, {'enum': ['eth_wake_irq', 'eth_lpi']}, {'enum': 'eth_lpi'}] is not of type 'object'
+        'eth_lpi' is not of type 'array'
+        from schema $id: http://devicetree.org/meta-schemas/string-array.yaml#
+      SCHEMA  Documentation/devicetree/bindings/processed-schema.json
+    /home/ahalaney/git/redhat/stmmac/Documentation/devicetree/bindings/net/snps,dwmac.yaml: ignoring, error in schema: properties: interrupt-names: items
+      DTC_CHK Documentation/devicetree/bindings/net/snps,dwmac.example.dtb
 
-Like Jessica wrote, this is computed and used in 3 places today :
+Thanks,
+Andrew
 
-1) DSI video engine computation
-2) DP controller computation
-3) timing engine programming
-
-So either we have a helper in a common location somewhere so that these 
-3 modules can call that helper and use it OR each module duplicates the 
-computation code.
-
-What should be the common location is the discussion here.
-
-It cannot be dpu_encoder.c as the DSI/DP dont call into the encoder methods.
-
->>
->> Thanks,
->>
->> Jessica Zhang
->>
->> [1]
->> https://elixir.bootlin.com/linux/v6.3-rc2/source/drivers/gpu/drm/msm/dsi/dsi_host.c#L1756
->>
->> [2] https://patchwork.freedesktop.org/patch/519845/?series=113240&rev=1
-> 
-> [3] https://patchwork.freedesktop.org/patch/525441/?series=114472&rev=2
-> 
-> 
-> 
