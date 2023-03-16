@@ -2,90 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FD166BCED1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 12:59:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC5DB6BCF78
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 13:29:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230087AbjCPL7W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 07:59:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36322 "EHLO
+        id S230320AbjCPM3B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 08:29:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230283AbjCPL7V (ORCPT
+        with ESMTP id S230336AbjCPM2y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 07:59:21 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85323BD4F5;
-        Thu, 16 Mar 2023 04:59:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8183061FEE;
-        Thu, 16 Mar 2023 11:59:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C72BC433D2;
-        Thu, 16 Mar 2023 11:59:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1678967952;
-        bh=JTnjYbj66aN40aUIHsnXpnQOvlOwhzGAN41UkEtNOfs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=d5x4qxlnXN/FxScIYVQLl3wY7G+sY6nohkE9R9DKJKUci9iLi5ng3MakWJHStU+OO
-         Rd3z/9l/qUvHUFRQRt1/DEmkpF4TpXq6eU7DuS6bxc3JxWEU/VvyZ/LhiVyZ4QrPmQ
-         yME36sVYK8hNymm5mq5MWaoFzj6DbTXaKYpJY+bo=
-Date:   Thu, 16 Mar 2023 12:59:10 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        linux-serial@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        kgdb-bugreport@lists.sourceforge.net,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] serial: uart_poll_init() should power on the UART
-Message-ID: <ZBMEjp16fBNE33o4@kroah.com>
-References: <20230307073155.1.Iaab0159b8d268060a0e131ebb27125af4750ef99@changeid>
- <20230307073155.2.I106c39498d8094c6f5e7ada42c7db17aa5c64e48@changeid>
- <CAD=FV=XFEYPbC64TFLVUmky=1Y-b_iyqiwrALvjKTM_NWr34Dg@mail.gmail.com>
+        Thu, 16 Mar 2023 08:28:54 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73D61C2D86
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 05:28:24 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id eh3so6860337edb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 05:28:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678969700;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DuzDwg2lxu1rtYjhTSBJYtTkaTQvz0mwPxYBQwYy20g=;
+        b=vxJm/pF8sewwUszKYiDSfHTVUwBSWICc5MH1RuCN+eYfHnhXBErovQZaEhRLWS2t0S
+         oBnoKqECgFj7mYaG6pAolJe3JfDkDB8qgSMH5JXts1MtsUk9viXtPl9+co+SOTeSgADk
+         FCOT+Dh4PTlzam28dIfSNtv0/5uEeIUZgLqeBoHLlcX0cBZ73lwHvyXp/6dx53dwvg3S
+         hNaRx9B+h6dya1kb6FGh7wD4M3nwdX18E3bQlcBVHZyFqZyEzHuTVqp16BbQ+iAXxp20
+         wuPhDagD3QqBtUJXlc7DgijZkhcoazfyQxfNDytWOUe2Wlpdu1zjgW18qED2nc7651ia
+         WXqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678969700;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DuzDwg2lxu1rtYjhTSBJYtTkaTQvz0mwPxYBQwYy20g=;
+        b=sXQTtK7pmeFi8jmxU8NlnagTn66Z8CzVXF3u/GgyWUM7fORIWgcJQO4VI7vHtwDaHY
+         UG59+aysgL5fEcpHlmwcdV7oOCA9oRCr5B3eQDcajhEspa23y3awn4h6wKKfGXwP4Qhb
+         m3qpzQcGIsar2BVcN9NxFZ19vlhU5abcUXDkjV8jVYLZSMSEfPbJHgcj2hkYVBvjEF05
+         HObKBeBloMWjDBlx7WUtdb5UqZNOE/zMjMIYib6B1IWgagDeXZiuYPob36ktHAqbgLPO
+         vZHQ9rxDK7l2iwzqXoKfVLah4lVgrPUNgFu/SxsPOlvSopIWnpVLLKAmtf4zHYc7z4Jc
+         uvww==
+X-Gm-Message-State: AO0yUKV8lBZpYWNpq6iy/I9HsoRePMq+K2RaeN8HGAnj0HAFJTV2w8fP
+        vBe+G6AGCnUzt0e99dFaBVm3Jpx1qj09JKDSacs=
+X-Google-Smtp-Source: AK7set8sb9Pt47A8F5UHMhUTeEFJy8nZDAA2FIy5bTWmk2ssc26ydb1AH4xupqEGnvo0UKQ1P6AZIQ==
+X-Received: by 2002:a17:906:4a09:b0:8b1:7de6:e292 with SMTP id w9-20020a1709064a0900b008b17de6e292mr9717493eju.9.1678969700160;
+        Thu, 16 Mar 2023 05:28:20 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:9827:5f65:8269:a95f? ([2a02:810d:15c0:828:9827:5f65:8269:a95f])
+        by smtp.gmail.com with ESMTPSA id d20-20020a1709063ed400b008d1693c212csm3762281ejj.8.2023.03.16.05.28.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Mar 2023 05:28:19 -0700 (PDT)
+Message-ID: <01d18b05-238f-e938-9ad0-ff1956cb361d@linaro.org>
+Date:   Thu, 16 Mar 2023 13:28:18 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAD=FV=XFEYPbC64TFLVUmky=1Y-b_iyqiwrALvjKTM_NWr34Dg@mail.gmail.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [RFC PATCH] cpufreq: qcom-cpufreq-hw: allow work to be done on
+ other CPU for PREEMPT_RT
+Content-Language: en-US
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Adrien Thierry <athierry@redhat.com>,
+        Brian Masney <bmasney@redhat.com>,
+        linux-rt-users@vger.kernel.org
+References: <20230315164910.302265-1-krzysztof.kozlowski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230315164910.302265-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 13, 2023 at 01:53:02PM -0700, Doug Anderson wrote:
-> Hi,
-> 
-> On Tue, Mar 7, 2023 at 7:32 AM Douglas Anderson <dianders@chromium.org> wrote:
-> >
-> > On Qualcomm devices which use the "geni" serial driver, kdb/kgdb won't
-> > be very happy if you use it but the resources of the port haven't been
-> > powered on. Today kdb/kgdb rely on someone else powering the port
-> > on. This could be the normal kernel console or an agetty running.
-> > Let's fix this to explicitly power things on when setting up a polling
-> > driver.
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> >
-> >  drivers/tty/serial/serial_core.c | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> 
-> Just in case it's not obvious, even though we ended up going with
-> Johan's series [1] instead of patch #1 of my series, patch #2 and #3
-> of my series are still relevant. I can repost the series without patch
-> #1 if it's helpful.
-> 
-> [1] https://lore.kernel.org/r/20230307164405.14218-1-johan+linaro@kernel.org
 
-Ye,s it's not obvious at all.  Please resubmit.
+On 15/03/2023 17:49, Krzysztof Kozlowski wrote:
+> Qualcomm cpufreq driver configures interrupts with affinity to each
+> cluster, e.g.  dcvsh-irq-0, dcvsh-irq-4 and dcvsh-irq-7 on SM8250.
+> Triggered interrupt will schedule delayed work, but, since workqueue
+> prefers local CPUs, it might get executed on a CPU dedicated to realtime
+> tasks causing unexpected latencies in realtime workload.
+> 
+> Use unbound workqueue for such case.  This might come with performance
+> or energy penalty, e.g. because of cache miss or when other CPU is
+> sleeping.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 11 ++++++++++-
 
-thanks,
+Let me also paste impact of this patch - rtla osnoise on entirely idle
+system (cores 2-7 isolated for Realtime):
 
-greg k-h
+BEFORE:
+       osnoise/7-2967    [007] d..h2..  3937.898311: irq_noise: dcvsh-irq-7:179 start 3937.898310871 duration 104 ns
+ irq/179-dcvsh-i-343     [007] d..h2..  3937.898318: irq_noise: IPI:6 start 3937.898317537 duration 104 ns
+ irq/179-dcvsh-i-343     [007] d...3..  3937.898321: thread_noise: irq/179-dcvsh-i:343 start 3937.898316287 duration 4740 ns
+     kworker/7:0-85      [007] d..h2..  3937.898323: irq_noise: IPI:6 start 3937.898322381 duration 104 ns
+     kworker/7:0-85      [007] d...3..  3937.898343: thread_noise: kworker/7:0:85 start 3937.898321339 duration 20990 ns
+       osnoise/7-2967    [007] .......  3937.898343: sample_threshold: start 3937.898308475 duration 34531 ns interference 5
+
+Noise duration: 34 us
+
+AFTER:
+       osnoise/7-2637    [007] d..h2..   530.563819: irq_noise: dcvsh-irq-7:178 start 530.563817139 duration 260 ns
+       osnoise/7-2637    [007] d..h2..   530.563827: irq_noise: IPI:6 start 530.563826670 duration 156 ns
+       osnoise/7-2637    [007] .......   530.563828: sample_threshold: start 530.563814587 duration 12864 ns interference 2
+
+Noise duration: 13 us
+
+Best regards,
+Krzysztof
+
