@@ -2,144 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 31D586BC1C5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 00:52:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F40E6BC21B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 01:06:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233030AbjCOXwU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Mar 2023 19:52:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56596 "EHLO
+        id S232975AbjCPAG5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Mar 2023 20:06:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233057AbjCOXwR (ORCPT
+        with ESMTP id S233147AbjCPAG4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Mar 2023 19:52:17 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C45824BFD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 16:52:13 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id f18so209406lfa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 16:52:13 -0700 (PDT)
+        Wed, 15 Mar 2023 20:06:56 -0400
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E2537B46
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 17:06:20 -0700 (PDT)
+Received: by mail-il1-x12e.google.com with SMTP id 4so111014ilz.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 17:06:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678924332;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BTkT6oATf2mknBlo+CEz3GQDcOlS8+L67bLlAy6zbmY=;
-        b=RWtv1MwFi8oZoOEq/QNzWdgHkzGNSwmQD9Pq4li+wte5asL7TZ06kLryPmxbnaJI+9
-         sex0BOne07tCELRgLvSWi9HnwCRX3oPZUvgdUIYyo/uRwerMqBXLiQH1+JXh23X+EzqQ
-         yzPK4/t6cEo5nym01JzQZ4oXjlAKrZGAl6T8pXWbcZOzzZDneWF4sVlby7dPDvB+qD2u
-         5HVeHEnq0gg6f4okP+wlN9JgSW/hsFu225hvvTcPIR/poaysXw2aSpdWf4VQusNP7whE
-         Gu8jQ9TtJechVWkOwG/OTR8mNtg51otANVHWC72ymWxHPxI9ldrHAMx7gm5yyiaj2Vyn
-         ajug==
+        d=chromium.org; s=google; t=1678925178;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Sli1rB/ZHtGlcd2WlQljXSYJeuPib0g24OqItvg9pys=;
+        b=OdYrKoXMsGu2VaWybwqmZlrf1Vn9I4nqtBSp1WNQQYES9ZZy5docKQXqz4bn7d2l5T
+         0phRQutzbm49ugt7+OdNRMeiguqEMNn0DenxzDVaxGplwCTlK236b72BiqaUVb+73jU5
+         CmZwSVMrOFVBoREeqiI4YIBZzn2XofAnge2qM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678924332;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BTkT6oATf2mknBlo+CEz3GQDcOlS8+L67bLlAy6zbmY=;
-        b=58NFl3i5bjihzU8202KixN3tAQZRl/ttyxkn3/T0RCVhJ6XwY/klZisYYbqxYUvszW
-         tAHCZqDPH9ttF8zLIDt12dCh5C5MGuLTVpwwez9qY9hxmCeagGCLbWFT8wq+mjwz0hMp
-         xapzeTJ2T7cePo8TqiXJbaQ3X+yUbmUlWheDNUUfLyZrqc1DrE5zLaYgNDS2I5RuGibR
-         Tn3rJua25uqxlLUqUWwoZY3uGsMTzedIh8YVdyiNZJUHdh6di4mUc/HJKllxP4luH3bH
-         HmCT4EE9zfYSDR3TYJcEoO5vE0yyFS8qfk10/1HhMZg2aOW2v4nROWdokIcPSkxKrgfp
-         sHHA==
-X-Gm-Message-State: AO0yUKUmfwKSFu355D2fuB8IeoTqZguE11YdzQW5V43Z4DfbUQlypH1O
-        ecyhfrki1jaho/N1QC2Noj23zQ==
-X-Google-Smtp-Source: AK7set/YXODHkQ0JbL6pGCYu1xosbNt66OnbqLBMIJEMqg5lhcgh9tU8bVvelH1qBZvsWCNxp0gTDA==
-X-Received: by 2002:ac2:52ad:0:b0:4e8:3f1f:3646 with SMTP id r13-20020ac252ad000000b004e83f1f3646mr2501910lfm.55.1678924331882;
-        Wed, 15 Mar 2023 16:52:11 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id b17-20020ac25631000000b004cc7026d95asm986461lff.259.2023.03.15.16.52.10
+        d=1e100.net; s=20210112; t=1678925178;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Sli1rB/ZHtGlcd2WlQljXSYJeuPib0g24OqItvg9pys=;
+        b=O/jR3xXfPA2QIO0Qto21H+AzaD0nghBfDwIvxV4JOAcYSNHU1A3/Tk5icSoQI4mQhj
+         TnpVFJsJuje6Stx8oD5ZvmH2iFNaBoVGlMIwxyQix9WYlBTjK9xWRrW8AgCCDsbLh72N
+         SIrH/8vJgYD4OZtcEtxomwmHp2VpZBsHIdk6FVSMewW+90CnyKE0zWXvXSuEMBN3bWd0
+         5p/pZw6rJhyWYPh32FTBoowiA7rsAR6CZcrr1lC/rtXWXFc4m9or5HpIl4kDBdc8aCq7
+         kAYThn0zvJUWAlvQUDCwwIV2E93vI9VlraEk920Qy9QfqpBqsuL6Tn67t4O76VAm9JlG
+         wE3A==
+X-Gm-Message-State: AO0yUKVkY2enSRJrE2VDZ5tS+1JrM3Y9bdEEvzj//NXzkzA0VAHZkoeQ
+        nNOOrlpvV7kZlqbw8l3FG9E56VSyDcp7lNaNU8M=
+X-Google-Smtp-Source: AK7set++AvbviHgBq2iDdsbvmJQUoyJlD6plx+S7prVukiQ/w7p0+CnDuTEVPVHqkbpVcKNUBtx54g==
+X-Received: by 2002:a92:c7d4:0:b0:314:5aa:94b4 with SMTP id g20-20020a92c7d4000000b0031405aa94b4mr5860422ilk.7.1678925178350;
+        Wed, 15 Mar 2023 17:06:18 -0700 (PDT)
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com. [209.85.166.53])
+        by smtp.gmail.com with ESMTPSA id j4-20020a02cc64000000b003e4a3c070adsm2034984jaq.133.2023.03.15.17.06.17
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Mar 2023 16:52:11 -0700 (PDT)
-Message-ID: <79731f2a-83e5-1e35-d450-456492cc5df2@linaro.org>
-Date:   Thu, 16 Mar 2023 00:52:10 +0100
+        Wed, 15 Mar 2023 17:06:17 -0700 (PDT)
+Received: by mail-io1-f53.google.com with SMTP id m22so79770ioy.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Mar 2023 17:06:17 -0700 (PDT)
+X-Received: by 2002:a6b:ed02:0:b0:74c:8243:9291 with SMTP id
+ n2-20020a6bed02000000b0074c82439291mr19175740iog.1.1678925176875; Wed, 15 Mar
+ 2023 17:06:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: Add base qrb4210-rb2 board dts
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org
-References: <20230315210145.2221116-1-bhupesh.sharma@linaro.org>
- <20230315210145.2221116-3-bhupesh.sharma@linaro.org>
- <20230315223604.ofy7vm3bpccf5aul@ripper>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230315223604.ofy7vm3bpccf5aul@ripper>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+References: <20230315154311.37299-1-nikita@trvn.ru> <20230315154311.37299-2-nikita@trvn.ru>
+ <3557aa94-6a83-d054-a9d9-81751165eb8a@linaro.org>
+In-Reply-To: <3557aa94-6a83-d054-a9d9-81751165eb8a@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 15 Mar 2023 17:06:04 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WFXS96V=-Edi1f+9UcTuzOdn4W01WeW_yV1m5FyLk-rQ@mail.gmail.com>
+Message-ID: <CAD=FV=WFXS96V=-Edi1f+9UcTuzOdn4W01WeW_yV1m5FyLk-rQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] arm64: dts: qcom: sc7180: Don't enable lpass
+ clocks by default
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Nikita Travkin <nikita@trvn.ru>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
+
+On Wed, Mar 15, 2023 at 9:12=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
+>
+>
+> On 15.03.2023 16:43, Nikita Travkin wrote:
+> > lpass clocks are usually blocked from HLOS by the firmware and
+> > instead are managed by the ADSP. Mark them as reserved and explicitly
+> > enable in the CrOS boards that have special, cooperative firmware.
+> >
+> > Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> > ---
+> +CC Doug
+>
+> Please confirm whether this also applies to IDP (in which case
+> this would have been a bugfix).
+
+Thanks for the CC! Actually, Judy (and maybe Matthias) might be
+better. The audio stuff makes my head spin a little bit and I know
+they've kept track of it much better than I have. If they don't have
+time, I can dig more into it myself. I also added Srinivasa just in
+case.
+
+In general, though, I think people at Google don't interact with IDP
+very much. It's a reference board from Qualcomm and not the right form
+factor. It also doesn't support most of the tooling that folks at
+Google on the ChromeOS team expect. I don't know if audio was ever
+really supported on IDP. Probably not since there's no "sound" node in
+the IDP device tree file.
 
 
-On 15.03.2023 23:36, Bjorn Andersson wrote:
-> On Thu, Mar 16, 2023 at 02:31:45AM +0530, Bhupesh Sharma wrote:
->> Add DTS for Qualcomm qrb4210-rb2 board which uses SM4250 SoC.
->>
->> This adds debug uart, emmc, uSD and tlmm support along with
->> regulators found on this board.
->>
->> Also defines the 'xo_board' and 'sleep_clk' frequencies for
->> this board.
->>
->> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->> ---
-[...]
-
->> +	vmmc-supply = <&vreg_l24a_2p96>;
-> 
-> Is there any reason why this platform doesn't require the vmmc supply to
-> be driven to HPM? This has traditionally been coming back biting us
-> through some stability issues later.
-Do we even support HPM/LPM on SMD RPM?
-
-Konrad
-> 
-> Regards,
-> Bjorn
-> 
->> +	vqmmc-supply = <&vreg_l11a_1p8>;
->> +	no-sdio;
->> +	non-removable;
->> +};
->> +
->> +&sdhc_2 {
->> +	status = "okay";
->> +
->> +	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>; /* card detect gpio */
->> +	vmmc-supply = <&vreg_l22a_2p96>;
->> +	vqmmc-supply = <&vreg_l5a_2p96>;
->> +	no-sdio;
->> +};
->> +
->> +&sleep_clk {
->> +	clock-frequency = <32000>;
->> +};
->> +
->> +&tlmm {
->> +	gpio-reserved-ranges = <37 5>, <43 2>, <47 1>,
->> +			       <49 1>, <52 1>, <54 1>,
->> +			       <56 3>, <61 2>, <64 1>,
->> +			       <68 1>, <72 8>, <96 1>;
->> +};
->> +
->> +&uart4 {
->> +	status = "okay";
->> +};
->> +
->> +&xo_board {
->> +	clock-frequency = <19200000>;
->> +};
->> -- 
->> 2.38.1
->>
+> Konrad
+> >  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 8 ++++++++
+> >  arch/arm64/boot/dts/qcom/sc7180.dtsi         | 4 ++++
+> >  2 files changed, 12 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/=
+boot/dts/qcom/sc7180-trogdor.dtsi
+> > index 423630c4d02c..26def6e12723 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > @@ -785,6 +785,14 @@ alc5682: codec@1a {
+> >       };
+> >  };
+> >
+> > +&lpasscc {
+> > +     status =3D "okay";
+> > +};
+> > +
+> > +&lpass_hm {
+> > +     status =3D "okay";
+> > +};
+> > +
+> >  &lpass_cpu {
+> >       status =3D "okay";
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts=
+/qcom/sc7180.dtsi
+> > index 53f0076f20f6..f0de177981f9 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > @@ -3623,6 +3623,8 @@ lpasscc: clock-controller@62d00000 {
+> >                       power-domains =3D <&lpass_hm LPASS_CORE_HM_GDSCR>=
+;
+> >                       #clock-cells =3D <1>;
+> >                       #power-domain-cells =3D <1>;
+> > +
+> > +                     status =3D "reserved"; /* Controlled by ADSP */
+> >               };
+> >
+> >               lpass_cpu: lpass@62d87000 {
+> > @@ -3671,6 +3673,8 @@ lpass_hm: clock-controller@63000000 {
+> >
+> >                       #clock-cells =3D <1>;
+> >                       #power-domain-cells =3D <1>;
+> > +
+> > +                     status =3D "reserved"; /* Controlled by ADSP */
+> >               };
+> >       };
+> >
