@@ -2,76 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC5DB6BCF78
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 13:29:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A19FA6BCFA0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 13:38:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230320AbjCPM3B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 08:29:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48844 "EHLO
+        id S229997AbjCPMiC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 08:38:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230336AbjCPM2y (ORCPT
+        with ESMTP id S230035AbjCPMiB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 08:28:54 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73D61C2D86
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 05:28:24 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id eh3so6860337edb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 05:28:24 -0700 (PDT)
+        Thu, 16 Mar 2023 08:38:01 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0D80168BC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 05:37:58 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id b10so972229lfb.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 05:37:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678969700;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1678970277;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=DuzDwg2lxu1rtYjhTSBJYtTkaTQvz0mwPxYBQwYy20g=;
-        b=vxJm/pF8sewwUszKYiDSfHTVUwBSWICc5MH1RuCN+eYfHnhXBErovQZaEhRLWS2t0S
-         oBnoKqECgFj7mYaG6pAolJe3JfDkDB8qgSMH5JXts1MtsUk9viXtPl9+co+SOTeSgADk
-         FCOT+Dh4PTlzam28dIfSNtv0/5uEeIUZgLqeBoHLlcX0cBZ73lwHvyXp/6dx53dwvg3S
-         hNaRx9B+h6dya1kb6FGh7wD4M3nwdX18E3bQlcBVHZyFqZyEzHuTVqp16BbQ+iAXxp20
-         wuPhDagD3QqBtUJXlc7DgijZkhcoazfyQxfNDytWOUe2Wlpdu1zjgW18qED2nc7651ia
-         WXqA==
+        bh=et1TOxaAuO23Dnon/VyidpOKHbPw5JTTXg0EC2DDFBE=;
+        b=XcnGQqD7HsW6KZttIoq+G5EPC61Q6wL/r9yN2cpO4Fi3JO1Sny3UNOeAutADEGpNuV
+         BIlNyi1kh8qEou5WqHSXpSxHMVdpRx2vXmvmaqvuRoXCLrqVk8iyQjC1Gg6XdqSl//nP
+         910A2s4fpV5WI29Pcfpc8L72lPAB9eNpP4K+sSQ4xiKNxb6P74Hus3mYrnWZfnZS9W8v
+         ykpJCQHqF+TXKirt0ljw0gsOqrSjic6YsiXLkF0c38suKiKAoVNFriunfE0BAYcVj9uW
+         x9B2rNYFfYgBun9iZxLUm0v0pDxe0/KZptGG9kfKQPLUeg8eOBZBiCT6v4QGOCmkMUrw
+         LXNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678969700;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20210112; t=1678970277;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DuzDwg2lxu1rtYjhTSBJYtTkaTQvz0mwPxYBQwYy20g=;
-        b=sXQTtK7pmeFi8jmxU8NlnagTn66Z8CzVXF3u/GgyWUM7fORIWgcJQO4VI7vHtwDaHY
-         UG59+aysgL5fEcpHlmwcdV7oOCA9oRCr5B3eQDcajhEspa23y3awn4h6wKKfGXwP4Qhb
-         m3qpzQcGIsar2BVcN9NxFZ19vlhU5abcUXDkjV8jVYLZSMSEfPbJHgcj2hkYVBvjEF05
-         HObKBeBloMWjDBlx7WUtdb5UqZNOE/zMjMIYib6B1IWgagDeXZiuYPob36ktHAqbgLPO
-         vZHQ9rxDK7l2iwzqXoKfVLah4lVgrPUNgFu/SxsPOlvSopIWnpVLLKAmtf4zHYc7z4Jc
-         uvww==
-X-Gm-Message-State: AO0yUKV8lBZpYWNpq6iy/I9HsoRePMq+K2RaeN8HGAnj0HAFJTV2w8fP
-        vBe+G6AGCnUzt0e99dFaBVm3Jpx1qj09JKDSacs=
-X-Google-Smtp-Source: AK7set8sb9Pt47A8F5UHMhUTeEFJy8nZDAA2FIy5bTWmk2ssc26ydb1AH4xupqEGnvo0UKQ1P6AZIQ==
-X-Received: by 2002:a17:906:4a09:b0:8b1:7de6:e292 with SMTP id w9-20020a1709064a0900b008b17de6e292mr9717493eju.9.1678969700160;
-        Thu, 16 Mar 2023 05:28:20 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:9827:5f65:8269:a95f? ([2a02:810d:15c0:828:9827:5f65:8269:a95f])
-        by smtp.gmail.com with ESMTPSA id d20-20020a1709063ed400b008d1693c212csm3762281ejj.8.2023.03.16.05.28.19
+        bh=et1TOxaAuO23Dnon/VyidpOKHbPw5JTTXg0EC2DDFBE=;
+        b=TfFUWy2XUK+BoPCBzTK3do8lKF2LFbRBPx6MCPZ6z7VLfNMn9PfN7+WLWgeMRV9pYM
+         m47YLJV0TodtsFUzBQ1mnFXg4sztZjtqHzQjIwLdQjrtaeTF5s+jfUTnf5HFzOkKh2Li
+         UBZY06sEXbsBNgQt/slFYbZtb2PYFp7yFb/k/fSvLRLZfpw4iIB1gPTKNE3BWLy8DolI
+         bE7rOpYCqbC9E1dP+i+8NyxYirTb78eUfKFK7q4INjJgv1DzK/zsCXE+aBkZ3mVHEf4M
+         s/Pnc1TadTEpuMlxA5s4a1LiuJbgUdcqQFA3KY2ulG5atyeO8YR8hMyFmZW726wpW9OX
+         c1pw==
+X-Gm-Message-State: AO0yUKVAzeYkVVHTDjDYH+aGTZgaTKztOxwFTLO8tdIgpYv1a5X/c2jZ
+        4TmAZmrHo6/dMjBHzLa479yzrw==
+X-Google-Smtp-Source: AK7set8kpJ1Q6vODGrPLPHfwgsqkvFRVBRQO6bHlN9i9oIf/N2IEuBqykwF89ubVVq/wFJJxheFGNQ==
+X-Received: by 2002:a05:6512:988:b0:4db:19fb:6a7 with SMTP id w8-20020a056512098800b004db19fb06a7mr2517982lft.60.1678970277050;
+        Thu, 16 Mar 2023 05:37:57 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id c25-20020ac244b9000000b00498f67cbfa9sm1205423lfm.22.2023.03.16.05.37.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Mar 2023 05:28:19 -0700 (PDT)
-Message-ID: <01d18b05-238f-e938-9ad0-ff1956cb361d@linaro.org>
-Date:   Thu, 16 Mar 2023 13:28:18 +0100
+        Thu, 16 Mar 2023 05:37:56 -0700 (PDT)
+Message-ID: <0a9e9729-aa5b-4ce6-fc68-394949c1b162@linaro.org>
+Date:   Thu, 16 Mar 2023 14:37:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [RFC PATCH] cpufreq: qcom-cpufreq-hw: allow work to be done on
- other CPU for PREEMPT_RT
-Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+ Thunderbird/102.8.0
+Subject: Re: [PATCH V3 0/1] Fix for VP9 DRC and Decoder STOP issue.
+Content-Language: en-GB
+To:     quic_vboma@quicinc.com,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Adrien Thierry <athierry@redhat.com>,
-        Brian Masney <bmasney@redhat.com>,
-        linux-rt-users@vger.kernel.org
-References: <20230315164910.302265-1-krzysztof.kozlowski@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230315164910.302265-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+References: <20230202064712.5804-2-quic_vboma@quicinc.com>
+ <20230316081509.12201-1-quic_vboma@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230316081509.12201-1-quic_vboma@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -83,42 +82,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 15/03/2023 17:49, Krzysztof Kozlowski wrote:
-> Qualcomm cpufreq driver configures interrupts with affinity to each
-> cluster, e.g.  dcvsh-irq-0, dcvsh-irq-4 and dcvsh-irq-7 on SM8250.
-> Triggered interrupt will schedule delayed work, but, since workqueue
-> prefers local CPUs, it might get executed on a CPU dedicated to realtime
-> tasks causing unexpected latencies in realtime workload.
+On 16/03/2023 10:15, quic_vboma@quicinc.com wrote:
+> From: Viswanath Boma <quic_vboma@quicinc.com>
 > 
-> Use unbound workqueue for such case.  This might come with performance
-> or energy penalty, e.g. because of cache miss or when other CPU is
-> sleeping.
+> Fixed indent comments, ensured rebase and checkpatch with --strict.
+> Tested the changes on v5.15 and v5.4 kernels .
+
+Was it tested on top of the recent kernels?
+
+> For testing Chrome Utilities were used .
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  drivers/cpufreq/qcom-cpufreq-hw.c | 11 ++++++++++-
+> Viswanath Boma (1):
+>    venus: Enable sufficient sequence change support for sc7180 and fix
+>      for Decoder STOP command issue.
+> 
+>   drivers/media/platform/qcom/venus/core.h       | 18 ++++++++++++++++++
+>   drivers/media/platform/qcom/venus/hfi_cmds.c   |  1 +
+>   drivers/media/platform/qcom/venus/hfi_helper.h |  2 ++
+>   drivers/media/platform/qcom/venus/hfi_msgs.c   | 11 +++++++++--
+>   drivers/media/platform/qcom/venus/vdec.c       | 12 +++++++++++-
+>   5 files changed, 41 insertions(+), 3 deletions(-)
+> 
 
-Let me also paste impact of this patch - rtla osnoise on entirely idle
-system (cores 2-7 isolated for Realtime):
-
-BEFORE:
-       osnoise/7-2967    [007] d..h2..  3937.898311: irq_noise: dcvsh-irq-7:179 start 3937.898310871 duration 104 ns
- irq/179-dcvsh-i-343     [007] d..h2..  3937.898318: irq_noise: IPI:6 start 3937.898317537 duration 104 ns
- irq/179-dcvsh-i-343     [007] d...3..  3937.898321: thread_noise: irq/179-dcvsh-i:343 start 3937.898316287 duration 4740 ns
-     kworker/7:0-85      [007] d..h2..  3937.898323: irq_noise: IPI:6 start 3937.898322381 duration 104 ns
-     kworker/7:0-85      [007] d...3..  3937.898343: thread_noise: kworker/7:0:85 start 3937.898321339 duration 20990 ns
-       osnoise/7-2967    [007] .......  3937.898343: sample_threshold: start 3937.898308475 duration 34531 ns interference 5
-
-Noise duration: 34 us
-
-AFTER:
-       osnoise/7-2637    [007] d..h2..   530.563819: irq_noise: dcvsh-irq-7:178 start 530.563817139 duration 260 ns
-       osnoise/7-2637    [007] d..h2..   530.563827: irq_noise: IPI:6 start 530.563826670 duration 156 ns
-       osnoise/7-2637    [007] .......   530.563828: sample_threshold: start 530.563814587 duration 12864 ns interference 2
-
-Noise duration: 13 us
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
