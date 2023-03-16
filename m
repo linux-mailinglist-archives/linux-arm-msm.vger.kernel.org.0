@@ -2,70 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 669F56BD17A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 14:53:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8770B6BD182
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 14:54:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230437AbjCPNxu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 09:53:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57732 "EHLO
+        id S230508AbjCPNyA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 09:54:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230346AbjCPNxm (ORCPT
+        with ESMTP id S230455AbjCPNxu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 09:53:42 -0400
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A13A0166D0;
-        Thu, 16 Mar 2023 06:53:39 -0700 (PDT)
-Received: by mail-io1-f43.google.com with SMTP id t129so796685iof.12;
-        Thu, 16 Mar 2023 06:53:39 -0700 (PDT)
+        Thu, 16 Mar 2023 09:53:50 -0400
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56FEEB863B;
+        Thu, 16 Mar 2023 06:53:45 -0700 (PDT)
+Received: by mail-io1-f51.google.com with SMTP id q6so816349iot.2;
+        Thu, 16 Mar 2023 06:53:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678974819;
+        d=1e100.net; s=20210112; t=1678974824;
         h=date:subject:message-id:references:in-reply-to:cc:to:from
          :mime-version:content-transfer-encoding:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=mUdpbi5TGJoaUXHkv97gIa7NonUCQAJZsK/HjadTtxE=;
-        b=44LZq5r8ideSKcJ3Hns8mVcwNb279O0bY/u82qd83ZSk4PlL1Rvyn8o4V/075x66DS
-         4AtyK07RukpMcCTtN0xlCJZ8DTv78IBEjis+tvGRooqY1WSfimCQytvxlCpMOqsYyf7t
-         xZHGZ3q0YaW/FyKEDGypFTKVM1K48SFhHZXsITWr3m9edb4cWLNyHtpScAigtYsDTfg8
-         Gt2D0p5E+cQy87wGFcZ0BfTcM8pkZqQsg+SALr+CmgVBvD8FENUDMDt772sI6x0QvmZA
-         61bTww4DMePyEzd0xsOWch0LLK/1CComU2rb1WMxWy1FxksG3w8GZ8qVqJ1/dEwQG9/N
-         maDw==
-X-Gm-Message-State: AO0yUKWuw9+DF2GQAZ8lZcBj85RwG55UWsHb9KRik1+Ej+W3u10TfXmX
-        pYAKfqhcBaYW7iHOewmaLOq3cSeIEg==
-X-Google-Smtp-Source: AK7set8W8UPFeVE0DXWj4IT3uiG6YG5+JfpqujbxicCe7RzbD9be9VSYYcqSzrSQFSB/MR4qFE0y2w==
-X-Received: by 2002:a5d:9544:0:b0:74c:7db1:47cf with SMTP id a4-20020a5d9544000000b0074c7db147cfmr16981351ios.14.1678974818768;
-        Thu, 16 Mar 2023 06:53:38 -0700 (PDT)
+        bh=3NLIIOkA38T8xNi8thzCJbEyjLbfAZFAf+qOplovd1I=;
+        b=AgKBA1mmQ/nOAlYNUVi1QsYArvws0c7T7RBh/e8pEa+KhynPPpOqEo5E/mAAbzYO9/
+         wMCHlU0lA2ZVtblAzyabGL//aEZHABOMKVlkMlnJ0oQdNePY2x/CkfaxQ//Q2RRxjhzn
+         b88hoI5WNVUda3rH9BjTGSSmGRa3wUkTs8SfDG6jLER1KfKhrhkxnbF9mPC/G15W0T3i
+         KXUsJqUvfwpoTQI/02OnSMGYkYFZv10nAOuoWzbebsU2eNaJ5PRUggHii47KG06SLwz5
+         jdAgGoUsmzSUSW8YGnrsS/877kcLC5UziKEzC7GShNyDl5IiUGnL8UJhHVuoR0tZwhLF
+         3Dpw==
+X-Gm-Message-State: AO0yUKUVbmzu5lK5MS/WP3924qIglI34yCgxNDESDh8blX/WhYCjgBNw
+        RXUbjjne3YfBjH3LLTRkiQ==
+X-Google-Smtp-Source: AK7set8f/p7VDlt1VGn8Rrvxnn6ydrU6sfuFHCeMsWbwQmRzOITADPQaBi2wwy29Mr5G8EmDMLIVAA==
+X-Received: by 2002:a5d:84cc:0:b0:74c:a9ab:ce68 with SMTP id z12-20020a5d84cc000000b0074ca9abce68mr28374793ior.12.1678974823861;
+        Thu, 16 Mar 2023 06:53:43 -0700 (PDT)
 Received: from robh_at_kernel.org ([64.188.179.249])
-        by smtp.gmail.com with ESMTPSA id r23-20020a02c857000000b004061d6abcd2sm1151352jao.146.2023.03.16.06.53.36
+        by smtp.gmail.com with ESMTPSA id f16-20020a056638119000b003a60da2bf58sm2521766jas.39.2023.03.16.06.53.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 06:53:38 -0700 (PDT)
-Received: (nullmailer pid 2744948 invoked by uid 1000);
+        Thu, 16 Mar 2023 06:53:43 -0700 (PDT)
+Received: (nullmailer pid 2744946 invoked by uid 1000);
         Thu, 16 Mar 2023 13:53:34 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
 From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     devicetree@vger.kernel.org, David Airlie <airlied@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+To:     Hao Zhang <quic_hazha@quicinc.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
         linux-kernel@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>, linux-doc@vger.kernel.org,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
+        coresight@lists.linaro.org, Trilok Soni <quic_tsoni@quicinc.com>,
+        Mike Leach <mike.leach@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        dri-devel@lists.freedesktop.org,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        freedreno@lists.freedesktop.org
-In-Reply-To: <20230307-topic-dsi_qcm-v5-1-9d4235b77f4f@linaro.org>
-References: <20230307-topic-dsi_qcm-v5-0-9d4235b77f4f@linaro.org>
- <20230307-topic-dsi_qcm-v5-1-9d4235b77f4f@linaro.org>
-Message-Id: <167897435368.2729763.13155358018368815833.robh@kernel.org>
-Subject: Re: [PATCH v5 01/10] dt-bindings: display/msm:
- dsi-controller-main: Fix deprecated QCM2290 compatible
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>, devicetree@vger.kernel.org,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+In-Reply-To: <20230316032005.6509-3-quic_hazha@quicinc.com>
+References: <20230316032005.6509-1-quic_hazha@quicinc.com>
+ <20230316032005.6509-3-quic_hazha@quicinc.com>
+Message-Id: <167897435275.2729718.16512739524975963906.robh@kernel.org>
+Subject: Re: [PATCH v1 2/3] dt-bindings: arm: Add Coresight Dummy Trace
+ YAML schema
 Date:   Thu, 16 Mar 2023 08:53:34 -0500
 X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
@@ -78,40 +86,33 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Thu, 16 Mar 2023 09:51:07 +0100, Konrad Dybcio wrote:
-> The qcom, prefix was missed previously. Fix it.
+On Thu, 16 Mar 2023 11:20:04 +0800, Hao Zhang wrote:
+> Add new coresight-dummy.yaml file describing the bindings required
+> to define coresight dummy trace in the device trees.
 > 
-> Fixes: 0c0f65c6dd44 ("dt-bindings: msm: dsi-controller-main: Add compatible strings for every current SoC")
-> Acked-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  .../bindings/arm/qcom,coresight-dummy.yaml    | 129 ++++++++++++++++++
+>  1 file changed, 129 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
 on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
 yamllint warnings/errors:
+./Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml:91:5: [warning] wrong indentation: expected 6 but found 4 (indentation)
 
 dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.example.dtb: dsi@5e94000: compatible: 'oneOf' conditional failed, one must be fixed:
-	['qcom,dsi-ctrl-6g-qcm2290'] is too short
-	'qcom,dsi-ctrl-6g-qcm2290' is not one of ['qcom,apq8064-dsi-ctrl', 'qcom,msm8916-dsi-ctrl', 'qcom,msm8953-dsi-ctrl', 'qcom,msm8974-dsi-ctrl', 'qcom,msm8996-dsi-ctrl', 'qcom,msm8998-dsi-ctrl', 'qcom,qcm2290-dsi-ctrl', 'qcom,sc7180-dsi-ctrl', 'qcom,sc7280-dsi-ctrl', 'qcom,sdm660-dsi-ctrl', 'qcom,sdm845-dsi-ctrl', 'qcom,sm8150-dsi-ctrl', 'qcom,sm8250-dsi-ctrl', 'qcom,sm8350-dsi-ctrl', 'qcom,sm8450-dsi-ctrl', 'qcom,sm8550-dsi-ctrl']
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.example.dtb: dsi@5e94000: Unevaluated properties are not allowed ('compatible' was unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.example.dtb: dsi@5e94000: compatible: 'oneOf' conditional failed, one must be fixed:
-	['qcom,dsi-ctrl-6g-qcm2290'] is too short
-	'qcom,dsi-ctrl-6g-qcm2290' is not one of ['qcom,apq8064-dsi-ctrl', 'qcom,msm8916-dsi-ctrl', 'qcom,msm8953-dsi-ctrl', 'qcom,msm8974-dsi-ctrl', 'qcom,msm8996-dsi-ctrl', 'qcom,msm8998-dsi-ctrl', 'qcom,qcm2290-dsi-ctrl', 'qcom,sc7180-dsi-ctrl', 'qcom,sc7280-dsi-ctrl', 'qcom,sdm660-dsi-ctrl', 'qcom,sdm845-dsi-ctrl', 'qcom,sm8150-dsi-ctrl', 'qcom,sm8250-dsi-ctrl', 'qcom,sm8350-dsi-ctrl', 'qcom,sm8450-dsi-ctrl', 'qcom,sm8550-dsi-ctrl']
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.example.dtb: dsi@5e94000: Unevaluated properties are not allowed ('compatible' was unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml: required:4: {'oneOf': ['qcom,dummy-sink', 'qcom,dummy-source']} is not of type 'string'
+	from schema $id: http://json-schema.org/draft-07/schema#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml: ignoring, error in schema: required: 4
+Documentation/devicetree/bindings/arm/qcom,coresight-dummy.example.dtb: /example-0/dummy_sink: failed to match any schema with compatible: ['qcom,dummy']
+Documentation/devicetree/bindings/arm/qcom,coresight-dummy.example.dtb: /example-1/dummy_source: failed to match any schema with compatible: ['qcom,dummy']
 
 doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230307-topic-dsi_qcm-v5-1-9d4235b77f4f@linaro.org
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230316032005.6509-3-quic_hazha@quicinc.com
 
 The base for the series is generally the latest rc1. A different dependency
 should be noted in *this* patch.
