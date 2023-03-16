@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A91436BD535
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 17:17:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C3C06BD53D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 17:17:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230100AbjCPQRu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 12:17:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37842 "EHLO
+        id S230083AbjCPQRx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 12:17:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230214AbjCPQRo (ORCPT
+        with ESMTP id S230168AbjCPQRp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 12:17:44 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA7D8DCA65
+        Thu, 16 Mar 2023 12:17:45 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA9C0DF71F
         for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 09:17:19 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id b13so2254322ljf.6
+Received: by mail-lj1-x22e.google.com with SMTP id z42so2236132ljq.13
         for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 09:17:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678983426;
+        d=linaro.org; s=google; t=1678983427;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=slEOkZMCU/vf9LrYsMSfwgXlLTlW5vbKRx5XnUTwAUw=;
-        b=g7C/PFrp0vFJU4EdY/eu9u85gTZrFky6PghljiHza4vBUYod1up+cXl9ty8WSmDjpG
-         dMzjtbJPTcQR8gU4U2GNfP7rlPixKDmX1v8xBwwpZ8fcfDrg+r/bOHLCDZL+9QzOb/B3
-         nx3OMO38gNLHlsF1sSkIsovW18ha2XXYmNPFVeOBXgDh7NSVvQCWn574pPWPqRLmpbVT
-         kWxMCZyD/43CRMsErNZm7u5Ww3lLkX4qxUuXMZiE0Tx4xFqrlKX6l9lWFmE4JjYxeTfQ
-         4d0P+DUv46DJnJ9HDbpfl93b0ZpaZaCLv1nAqgTmJWyApZ+X2NR/rOH+vEjnWJGURCIw
-         UVwA==
+        bh=DDR6qT6LOZ0CRtI4bzig0Hzaev266ea9PGgQCi63JWg=;
+        b=j7MBqKcjqCBBeYsgT/qPijGf7/kEiDnsk3e5dTRDCWt420l3dh7ffc8G9+e6lLAEPs
+         gnP+D3z2wVopueOojsnRrFiXPy1PvdHg4Kk0JyU+2MypZZzFm81+4QRTDGN6yiIuJk7f
+         w1famH5uH/WKLdWPtRWt++ixg6mR6PoXgQhu2BKaizNpPtpXMo5bHGhcHlxjDAAQo7z6
+         pLtGo90XyI1KdE8+PP0/cxtukeUwCsk8iDOC5JDgUJJyyoYjSlpQWAvtFtrg8OldM0ih
+         L1nZnCsGXSXTiu7nvaoRiDwn+NKsSYCNXd71j1EBFNZmBhve77kRaylOxGYoPs+nW7iI
+         fpUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678983426;
+        d=1e100.net; s=20210112; t=1678983427;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=slEOkZMCU/vf9LrYsMSfwgXlLTlW5vbKRx5XnUTwAUw=;
-        b=MxOttVZrLLYYWC+BoIMQhKLpJsT0WclTZ46hYkgGa61pn7gRrs+NM22PaljNdd5FNt
-         naZEuK9RmM85BUn9XxpgPccqj6Tz7NGhWzjLlZmvnHO7D9DfBFFkJNQyNlZW30m/b+gr
-         VcpHEnOm9zsxFtFRCtd72Oaqi13nd7KVPSlaKZtADM5aSPb7c+2+2PUB+K9rWFoipPWu
-         jsUjIAwJ5AIKD0lXnthSt9FvGozNVM3Bdky+MQofInCNtvkWYYgo+fVf90QVKhJ+a/aj
-         QJzZdTuWIracbnVrunLQrW/TA0WvI9vIYUklJ+LfKYSaMXB97D1iV5wk/uWD376qakHj
-         lJFA==
-X-Gm-Message-State: AO0yUKWjkYv3OyDTmqSO7HDIzsFhSLIoeJPyJQ8TzHlZgZuFgKjCx1wc
-        qcdA6N3rzOydh55kLNrmqG9s8w==
-X-Google-Smtp-Source: AK7set+e0nejx12LEFSLa+hY71g4aFjcIa0lHZJRjVj/DzA1ilt1HIF/q0ilLFzKy+Pz4eL/SI1J7w==
-X-Received: by 2002:a05:651c:b10:b0:295:9659:fba5 with SMTP id b16-20020a05651c0b1000b002959659fba5mr2882260ljr.37.1678983425909;
-        Thu, 16 Mar 2023 09:17:05 -0700 (PDT)
+        bh=DDR6qT6LOZ0CRtI4bzig0Hzaev266ea9PGgQCi63JWg=;
+        b=i3yLRm0JgyKiHOvRK271ZDE6Bed82X5bMqt5pcuxN0MEtZSaY1y+Gm5Y/t1Pq3Ls5O
+         t0T/clSBD9dFsSNVmyV2AOuyq9tf31nquWTy6acuhsRYAAh9sT4y3fWNlMGlSa7Zazqb
+         FUxN1yO75PfIX7adFyl4bYPTJR/dEgycMjBFPmIyb7TRQcvIxoaPzcFt82DeshJYXM6I
+         TlMtUJH/fzfMTNvlAsWtcj+VgiIiz60JMIA6VCvHcu01atv1c4l24TF/a7MqUipUm0C3
+         eY2S6jlLNK6m+FE4GnisNKtfoqgTF4Ww8C9/jqNgKQWCJBqdws5Nm9tRbX3DiOmAZGOu
+         5L6w==
+X-Gm-Message-State: AO0yUKVg6vjArZ45v9ILI5p3l2xDXKi/0ujIrGYRmkuq+Y6QCpopO3QV
+        C7IFXcBvdVRBmo59TqwY4+sjAA==
+X-Google-Smtp-Source: AK7set+Tl+AfBsiRWiE/14MquzvkNrgEsRx3AvWM0wEgGSjLYmZLmPzSK/Du7KPobRkgnFxLufdbGw==
+X-Received: by 2002:a2e:a804:0:b0:298:a840:ec5d with SMTP id l4-20020a2ea804000000b00298a840ec5dmr2241239ljq.7.1678983426910;
+        Thu, 16 Mar 2023 09:17:06 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id l2-20020a2e8342000000b00298b33afe1csm549152ljh.87.2023.03.16.09.17.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 09:17:05 -0700 (PDT)
+        Thu, 16 Mar 2023 09:17:06 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -59,9 +59,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v7 12/32] drm/msm/dpu: remove dpu_hw_fmt_layout from struct dpu_hw_sspp_cfg
-Date:   Thu, 16 Mar 2023 19:16:33 +0300
-Message-Id: <20230316161653.4106395-13-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v7 13/32] drm/msm/dpu: rename dpu_hw_sspp_cfg to dpu_sw_pipe_cfg
+Date:   Thu, 16 Mar 2023 19:16:34 +0300
+Message-Id: <20230316161653.4106395-14-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20230316161653.4106395-1-dmitry.baryshkov@linaro.org>
 References: <20230316161653.4106395-1-dmitry.baryshkov@linaro.org>
@@ -76,168 +76,129 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove dpu_hw_fmt_layout instance from struct dpu_hw_sspp_cfg, leaving
-only src_rect and dst_rect. This way all the pipes used by the plane
-will have a common layout instance (as the framebuffer is shared between
-them), while still keeping a separate src/dst rectangle configuration
-for each pipe.
+As struct dpu_hw_sspp_cfg describes only the source and destination
+rectangles, it is a software pipe configuration now. Rename it
+accordingly.
 
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 32 ++++++++++-----------
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |  6 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 10 +++----
- 3 files changed, 23 insertions(+), 25 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |  6 +++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 16 ++++++++--------
+ 3 files changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-index ab95f2817378..e87c6377f315 100644
+index e87c6377f315..6e5b62f3276f 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-@@ -490,7 +490,7 @@ static void dpu_hw_sspp_setup_rects(struct dpu_sw_pipe *pipe,
- }
- 
- static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
+@@ -447,7 +447,7 @@ static u32 _dpu_hw_sspp_get_scaler3_ver(struct dpu_hw_sspp *ctx)
+  * dpu_hw_sspp_setup_rects()
+  */
+ static void dpu_hw_sspp_setup_rects(struct dpu_sw_pipe *pipe,
 -		struct dpu_hw_sspp_cfg *cfg)
-+		struct dpu_hw_fmt_layout *layout)
++		struct dpu_sw_pipe_cfg *cfg)
  {
  	struct dpu_hw_sspp *ctx = pipe->sspp;
- 	u32 ystride0, ystride1;
-@@ -501,41 +501,41 @@ static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
- 		return;
- 
- 	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
--		for (i = 0; i < ARRAY_SIZE(cfg->layout.plane_addr); i++)
-+		for (i = 0; i < ARRAY_SIZE(layout->plane_addr); i++)
- 			DPU_REG_WRITE(&ctx->hw, SSPP_SRC0_ADDR + idx + i * 0x4,
--					cfg->layout.plane_addr[i]);
-+					layout->plane_addr[i]);
- 	} else if (pipe->multirect_index == DPU_SSPP_RECT_0) {
- 		DPU_REG_WRITE(&ctx->hw, SSPP_SRC0_ADDR + idx,
--				cfg->layout.plane_addr[0]);
-+				layout->plane_addr[0]);
- 		DPU_REG_WRITE(&ctx->hw, SSPP_SRC2_ADDR + idx,
--				cfg->layout.plane_addr[2]);
-+				layout->plane_addr[2]);
- 	} else {
- 		DPU_REG_WRITE(&ctx->hw, SSPP_SRC1_ADDR + idx,
--				cfg->layout.plane_addr[0]);
-+				layout->plane_addr[0]);
- 		DPU_REG_WRITE(&ctx->hw, SSPP_SRC3_ADDR + idx,
--				cfg->layout.plane_addr[2]);
-+				layout->plane_addr[2]);
- 	}
- 
- 	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
--		ystride0 = (cfg->layout.plane_pitch[0]) |
--			(cfg->layout.plane_pitch[1] << 16);
--		ystride1 = (cfg->layout.plane_pitch[2]) |
--			(cfg->layout.plane_pitch[3] << 16);
-+		ystride0 = (layout->plane_pitch[0]) |
-+			(layout->plane_pitch[1] << 16);
-+		ystride1 = (layout->plane_pitch[2]) |
-+			(layout->plane_pitch[3] << 16);
- 	} else {
- 		ystride0 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE0 + idx);
- 		ystride1 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE1 + idx);
- 
- 		if (pipe->multirect_index == DPU_SSPP_RECT_0) {
- 			ystride0 = (ystride0 & 0xFFFF0000) |
--				(cfg->layout.plane_pitch[0] & 0x0000FFFF);
-+				(layout->plane_pitch[0] & 0x0000FFFF);
- 			ystride1 = (ystride1 & 0xFFFF0000)|
--				(cfg->layout.plane_pitch[2] & 0x0000FFFF);
-+				(layout->plane_pitch[2] & 0x0000FFFF);
- 		} else {
- 			ystride0 = (ystride0 & 0x0000FFFF) |
--				((cfg->layout.plane_pitch[0] << 16) &
-+				((layout->plane_pitch[0] << 16) &
- 				 0xFFFF0000);
- 			ystride1 = (ystride1 & 0x0000FFFF) |
--				((cfg->layout.plane_pitch[2] << 16) &
-+				((layout->plane_pitch[2] << 16) &
- 				 0xFFFF0000);
- 		}
- 	}
-@@ -564,7 +564,7 @@ static void dpu_hw_sspp_setup_csc(struct dpu_hw_sspp *ctx,
- static void dpu_hw_sspp_setup_solidfill(struct dpu_sw_pipe *pipe, u32 color)
- {
- 	struct dpu_hw_sspp *ctx = pipe->sspp;
--	struct dpu_hw_sspp_cfg cfg;
-+	struct dpu_hw_fmt_layout cfg;
- 	u32 idx;
- 
- 	if (_sspp_subblk_offset(ctx, DPU_SSPP_SRC, &idx))
+ 	struct dpu_hw_blk_reg_map *c;
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-index 136b8713943f..100d8e06c90d 100644
+index 100d8e06c90d..e73d6ac863ad 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-@@ -154,13 +154,11 @@ struct dpu_hw_pixel_ext {
+@@ -153,12 +153,12 @@ struct dpu_hw_pixel_ext {
+ };
  
  /**
-  * struct dpu_hw_sspp_cfg : SSPP configuration
-- * @layout:    format layout information for programming buffer to hardware
+- * struct dpu_hw_sspp_cfg : SSPP configuration
++ * struct dpu_sw_pipe_cfg : software pipe configuration
   * @src_rect:  src ROI, caller takes into account the different operations
   *             such as decimation, flip etc to program this field
   * @dest_rect: destination ROI.
   */
- struct dpu_hw_sspp_cfg {
--	struct dpu_hw_fmt_layout layout;
+-struct dpu_hw_sspp_cfg {
++struct dpu_sw_pipe_cfg {
  	struct drm_rect src_rect;
  	struct drm_rect dst_rect;
  };
-@@ -243,10 +241,10 @@ struct dpu_hw_sspp_ops {
- 	/**
- 	 * setup_sourceaddress - setup pipe source addresses
- 	 * @pipe: Pointer to software pipe context
--	 * @cfg: Pointer to pipe config structure
-+	 * @layout: format layout information for programming buffer to hardware
+@@ -228,7 +228,7 @@ struct dpu_hw_sspp_ops {
+ 	 * @cfg: Pointer to pipe config structure
  	 */
- 	void (*setup_sourceaddress)(struct dpu_sw_pipe *ctx,
--				    struct dpu_hw_sspp_cfg *cfg);
-+				    struct dpu_hw_fmt_layout *layout);
+ 	void (*setup_rects)(struct dpu_sw_pipe *pipe,
+-			    struct dpu_hw_sspp_cfg *cfg);
++			    struct dpu_sw_pipe_cfg *cfg);
  
  	/**
- 	 * setup_csc - setup color space coversion
+ 	 * setup_pe - setup pipe pixel extension
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 8c98385303ea..4ae70d21c37a 100644
+index 4ae70d21c37a..ce01a602cbc9 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -471,21 +471,21 @@ static void _dpu_plane_set_qos_remap(struct drm_plane *plane)
- 
- static void _dpu_plane_set_scanout(struct drm_plane *plane,
- 		struct dpu_plane_state *pstate,
--		struct dpu_hw_sspp_cfg *pipe_cfg,
- 		struct drm_framebuffer *fb)
+@@ -136,7 +136,7 @@ static struct dpu_kms *_dpu_plane_get_kms(struct drm_plane *plane)
+  */
+ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+ 	struct drm_framebuffer *fb,
+-	struct dpu_hw_sspp_cfg *pipe_cfg)
++	struct dpu_sw_pipe_cfg *pipe_cfg)
+ {
+ 	struct dpu_plane_state *pstate;
+ 	struct drm_display_mode *mode;
+@@ -191,7 +191,7 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+  * Result: Updates calculated clock in the plane state.
+  * Clock equation: dst_w * v_total * fps * (src_h / dst_h)
+  */
+-static void _dpu_plane_calc_clk(struct drm_plane *plane, struct dpu_hw_sspp_cfg *pipe_cfg)
++static void _dpu_plane_calc_clk(struct drm_plane *plane, struct dpu_sw_pipe_cfg *pipe_cfg)
+ {
+ 	struct dpu_plane_state *pstate;
+ 	struct drm_display_mode *mode;
+@@ -275,7 +275,7 @@ static int _dpu_plane_calc_fill_level(struct drm_plane *plane,
+  * @pipe_cfg:		Pointer to pipe configuration
+  */
+ static void _dpu_plane_set_qos_lut(struct drm_plane *plane,
+-		struct drm_framebuffer *fb, struct dpu_hw_sspp_cfg *pipe_cfg)
++		struct drm_framebuffer *fb, struct dpu_sw_pipe_cfg *pipe_cfg)
  {
  	struct dpu_plane *pdpu = to_dpu_plane(plane);
- 	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
- 	struct msm_gem_address_space *aspace = kms->base.aspace;
-+	struct dpu_hw_fmt_layout layout;
- 	int ret;
+ 	struct dpu_plane_state *pstate = to_dpu_plane_state(plane->state);
+@@ -421,7 +421,7 @@ static void _dpu_plane_set_qos_ctrl(struct drm_plane *plane,
+  * @pipe_cfg:		Pointer to pipe configuration
+  */
+ static void _dpu_plane_set_ot_limit(struct drm_plane *plane,
+-		struct drm_crtc *crtc, struct dpu_hw_sspp_cfg *pipe_cfg)
++		struct drm_crtc *crtc, struct dpu_sw_pipe_cfg *pipe_cfg)
+ {
+ 	struct dpu_plane *pdpu = to_dpu_plane(plane);
+ 	struct dpu_plane_state *pstate = to_dpu_plane_state(plane->state);
+@@ -635,7 +635,7 @@ static const struct dpu_csc_cfg *_dpu_plane_get_csc(struct dpu_plane *pdpu, cons
  
--	ret = dpu_format_populate_layout(aspace, fb, &pipe_cfg->layout);
-+	ret = dpu_format_populate_layout(aspace, fb, &layout);
- 	if (ret)
- 		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
- 	else if (pstate->pipe.sspp->ops.setup_sourceaddress) {
- 		trace_dpu_plane_set_scanout(&pstate->pipe,
--					    &pipe_cfg->layout);
--		pstate->pipe.sspp->ops.setup_sourceaddress(&pstate->pipe, pipe_cfg);
-+					    &layout);
-+		pstate->pipe.sspp->ops.setup_sourceaddress(&pstate->pipe, &layout);
- 	}
- }
+ static void _dpu_plane_setup_scaler(struct dpu_sw_pipe *pipe,
+ 		const struct dpu_format *fmt, bool color_fill,
+-		struct dpu_hw_sspp_cfg *pipe_cfg,
++		struct dpu_sw_pipe_cfg *pipe_cfg,
+ 		unsigned int rotation)
+ {
+ 	struct dpu_hw_sspp *pipe_hw = pipe->sspp;
+@@ -694,7 +694,7 @@ static int _dpu_plane_color_fill(struct dpu_plane *pdpu,
+ 	const struct dpu_format *fmt;
+ 	const struct drm_plane *plane = &pdpu->base;
+ 	struct dpu_plane_state *pstate = to_dpu_plane_state(plane->state);
+-	struct dpu_hw_sspp_cfg pipe_cfg;
++	struct dpu_sw_pipe_cfg pipe_cfg;
  
-@@ -1134,7 +1134,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+ 	DPU_DEBUG_PLANE(pdpu, "\n");
  
- 	memset(&pipe_cfg, 0, sizeof(struct dpu_hw_sspp_cfg));
+@@ -1130,9 +1130,9 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+ 	bool is_rt_pipe;
+ 	const struct dpu_format *fmt =
+ 		to_dpu_format(msm_framebuffer_format(fb));
+-	struct dpu_hw_sspp_cfg pipe_cfg;
++	struct dpu_sw_pipe_cfg pipe_cfg;
  
--	_dpu_plane_set_scanout(plane, pstate, &pipe_cfg, fb);
-+	_dpu_plane_set_scanout(plane, pstate, fb);
+-	memset(&pipe_cfg, 0, sizeof(struct dpu_hw_sspp_cfg));
++	memset(&pipe_cfg, 0, sizeof(struct dpu_sw_pipe_cfg));
  
- 	pstate->pending = true;
+ 	_dpu_plane_set_scanout(plane, pstate, fb);
  
 -- 
 2.30.2
