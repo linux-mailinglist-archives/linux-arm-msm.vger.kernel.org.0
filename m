@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3EE16BD203
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 15:13:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A2E36BD205
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 15:13:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231322AbjCPONs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 10:13:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33904 "EHLO
+        id S231273AbjCPONu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 10:13:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231223AbjCPON1 (ORCPT
+        with ESMTP id S230337AbjCPON3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 10:13:27 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93DE2C489D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 07:13:15 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id b13so1833579ljf.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 07:13:15 -0700 (PDT)
+        Thu, 16 Mar 2023 10:13:29 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28B83D7C2E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 07:13:16 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id z42so1812440ljq.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 07:13:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678975995;
+        d=linaro.org; s=google; t=1678975996;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=69Z8vRyvMPD6eeHzgpN4kBWrOzTlmLDOTO1kOklog8w=;
-        b=KVLUT26QGoY7jty33pYML5vRq7aIuxvZwwpygwRRjAQTHSc1qCh6TyV+Hka7LrU3Sh
-         MCA1JvOF9Ac5vRY3Z3FUzsZonI/9mXLvFe6k710SzgHAIjlAhWsLOQAlRhkssdeVZvtl
-         oMjcnb5s1d8NNeojKL5pSRCZKD1w/vd1SQFxPDr7cY7CncIhMMd2O3n4JOTAPzkOOtX5
-         dc99HVbPjHbc16xynm2T8eeIhnQx8PWS7akV4p/LRfsHOWzH1tB5nGD6pHBEl74Xbo09
-         tuh1M0I0WAtShQ3hc1o6Xg/FJO0SiX/1WHkMS/HPobQ/uDdH0jA9yBmquk0T676zmRxj
-         +WXg==
+        bh=fr1OHq/Y0F9EXyjJfE+Cc02kHVOPdqYGSbtmI+oAs6M=;
+        b=rmAjPw9dYkNrX6arOkoSKNjd5H/0Ya+0BKCtPDecJv+RvkwIt/aC2JgtA/lfbcAaDR
+         CeeNm4im8ce9HAll9Jpuoe2g+Sz829sLuL4UVRaWCm5f5K7b1gDt7dst1B8hO1OPOb8O
+         N+rbYTqWe2XSzumOr7Qy+1RdxtRVs8pGkgIYptiuxV40BANKEUkxEYA0mQTCzgbD0M+q
+         UrysLafzXHocnmPyl9QWAS4BXc1qtIFbUg/RUT0knG/YLgV5OnZvvDuKen3tTFtkXqSI
+         ukcqPXFnaw4H908jmFXEHpm0QzXgkh+OuH8Nu3V3eZMh2IKWcKuioaNYUlkL6QT31KDi
+         5Nyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678975995;
+        d=1e100.net; s=20210112; t=1678975996;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=69Z8vRyvMPD6eeHzgpN4kBWrOzTlmLDOTO1kOklog8w=;
-        b=cQpVLeunbUpWNRKc3GodWFaIgPDVdM50TZO8rDS5yy+IWZb3DiiisuE/LplG+9v1yV
-         cJFhxnGSuyXBiorr1XpHF9Nc65yjXFg8sjAG/ofh2+G+2mwTH0PdRyDRVCeY7Yn2bG4A
-         wpBaL3zfeQv0B4mtfM5UwuUiWSOG9rP3CQdC7j1RJEuRJUyZ9HxsAccke3iz1vjEgtx8
-         npw6U8CvmMSMdEKywSgX8wI2uk8svj2BSdb1yUIO2bOPWE8cv9P10giBlM5D1lrD5Xvn
-         sQ8nXy0TD9FVczo1JzDW3Y4LtTYKfuH5sk4uMmlfg/RoVuv2X9Z1C80UKhgYHv8WxZO7
-         gBXQ==
-X-Gm-Message-State: AO0yUKVqcmUc37PmMZnHaP9oDWK/3C400hMOm3fJSfp4ssITgafc+5A1
-        hEDgg7yWaZdGKMsMHsj9Lmz3IQ==
-X-Google-Smtp-Source: AK7set+CwIIe59VR5TnzyBggtxVU8o1LIw34rbQT7WLlUj9xjabjPrA++EbEdyf/fCj8fANH9OQpYA==
-X-Received: by 2002:a05:651c:1986:b0:295:9d2c:c5b5 with SMTP id bx6-20020a05651c198600b002959d2cc5b5mr2302166ljb.12.1678975995043;
-        Thu, 16 Mar 2023 07:13:15 -0700 (PDT)
+        bh=fr1OHq/Y0F9EXyjJfE+Cc02kHVOPdqYGSbtmI+oAs6M=;
+        b=AEM83xmE2I5eH8X5a93vDA1LodGCQEKVW9qbxDtIf9ah7SszywoG1FfKR3XYM/ts1f
+         F1MuU/HZarFHbUfDv4e/ppyXOCMD7WP/JGG66bC5rxg3evaK0NkE/LHBKI8uyRHCE1u3
+         9aVEicZudXKaoxs0TFB2zDZRe6M/Z/226BfnIuCLuPFR/GxxrxqDLACgLPFk7vMtXKHx
+         l9VmNQapThZ2xBh23JVFZpBQLHZefKyUJSO8nJCuXl7eBwSeDVjG1YL+LRy0UFgE+/Dg
+         rC8pO/MmQz/v4nd4waGuMDMu3UoC4/h878pXrwpLWfG602OxZzTpUAKbOdKq8wSZc2Or
+         bxww==
+X-Gm-Message-State: AO0yUKV8q5i5z2dx8PsBVqpNk67HhCumv2vvhWl9gyKX5TFp7tVMbkHY
+        2B07v/bgIfgjUkviaCjKhjqbQw==
+X-Google-Smtp-Source: AK7set8ThKwBkKu2BrUDOGOMqgR1WPAMp7Ne81823lYwufkm8aDqSutp/EvOWtU3807T9HVinO8mCw==
+X-Received: by 2002:a2e:b88f:0:b0:293:4ba3:17be with SMTP id r15-20020a2eb88f000000b002934ba317bemr2862778ljp.11.1678975996476;
+        Thu, 16 Mar 2023 07:13:16 -0700 (PDT)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id a9-20020a2eb549000000b00295735991edsm1261639ljn.38.2023.03.16.07.13.13
+        by smtp.gmail.com with ESMTPSA id a9-20020a2eb549000000b00295735991edsm1261639ljn.38.2023.03.16.07.13.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 07:13:14 -0700 (PDT)
+        Thu, 16 Mar 2023 07:13:16 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 16 Mar 2023 15:12:58 +0100
-Subject: [PATCH v2 09/14] arm64: dts: qcom: sm6375: Add CPUCP L3 node
+Date:   Thu, 16 Mar 2023 15:12:59 +0100
+Subject: [PATCH v2 10/14] arm64: dts: qcom: sm6375: Add TSENS
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230303-topic-sm6375_features0_dts-v2-9-708b8191f7eb@linaro.org>
+Message-Id: <20230303-topic-sm6375_features0_dts-v2-10-708b8191f7eb@linaro.org>
 References: <20230303-topic-sm6375_features0_dts-v2-0-708b8191f7eb@linaro.org>
 In-Reply-To: <20230303-topic-sm6375_features0_dts-v2-0-708b8191f7eb@linaro.org>
 To:     Amit Kucheria <amitk@kernel.org>,
@@ -75,11 +75,11 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1678975978; l=1031;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1678975978; l=1456;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=qJFA3gnp5+qsVvXTr+LuzoDVV2GfdNaVud8C8hVxcw8=;
- b=CEOtCUVU+F/M8OU5WvP/wsLQQcbZu4R5ctBaSEtpjhEkXFNGQRxIAbLXaHDWexBuec8kzWqg61sL
- 3DeLprBOCzTdwE3eoq/GrrqgewOHfGjuBR3A+45KcdCSsoQ4NE1T
+ bh=ykqp5bp58crzGqyySJ//g66g5IA2DYwCTKLczf3b59w=;
+ b=8GcRkKVlQgGRI2QfzqrSgsroa+vRBMeCjg6PCLbWsbDsW4cFAfUFp2dVuA4NWxY3NQicPPNPtaLD
+ Xtx0wfYTDEjXwBShR65VrLUHrSCJdKQ35FzYtpNowdt4JYAduk4p
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -92,35 +92,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Configure the L3 cache DVFS scaler within the CPUCP block to allow
-for dynamic frequency switching.
+Add nodes for the two TSENS v2.8.0 controllers present on the SoC.
 
-Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm6375.dtsi | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/boot/dts/qcom/sm6375.dtsi | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-index 90f18754a63b..59d7ed25aa36 100644
+index 59d7ed25aa36..a88ed6467e68 100644
 --- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-@@ -1505,6 +1505,15 @@ frame@f42d000 {
- 			};
+@@ -764,6 +764,28 @@ spmi_bus: spmi@1c40000 {
+ 			#interrupt-cells = <4>;
  		};
  
-+		cpucp_l3: interconnect@fd90000 {
-+			compatible = "qcom,sm6375-cpucp-l3", "qcom,epss-l3";
-+			reg = <0 0x0fd90000 0 0x1000>;
-+
-+			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>, <&gcc GPLL0>;
-+			clock-names = "xo", "alternate";
-+			#interconnect-cells = <1>;
++		tsens0: thermal-sensor@4411000 {
++			compatible = "qcom,sm6375-tsens", "qcom,tsens-v2";
++			reg = <0 0x04411000 0 0x140>, /* TM */
++			      <0 0x04410000 0 0x20>;  /* SROT */
++			interrupts = <GIC_SPI 275 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++			#qcom,sensors = <15>;
 +		};
 +
- 		cpufreq_hw: cpufreq@fd91000 {
- 			compatible = "qcom,sm6375-cpufreq-epss", "qcom,cpufreq-epss";
- 			reg = <0 0x0fd91000 0 0x1000>, <0 0x0fd92000 0 0x1000>;
++		tsens1: thermal-sensor@4413000 {
++			compatible = "qcom,sm6375-tsens", "qcom,tsens-v2";
++			reg = <0 0x04413000 0 0x140>, /* TM */
++			      <0 0x04412000 0 0x20>;  /* SROT */
++			interrupts = <GIC_SPI 293 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 316 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++			#qcom,sensors = <11>;
++		};
++
+ 		rpm_msg_ram: sram@45f0000 {
+ 			compatible = "qcom,rpm-msg-ram";
+ 			reg = <0 0x045f0000 0 0x7000>;
 
 -- 
 2.39.2
