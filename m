@@ -2,118 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1F6A6BD47F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 16:58:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F6CE6BD49E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 17:03:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231536AbjCPP6u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 11:58:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36426 "EHLO
+        id S229665AbjCPQDv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 12:03:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229629AbjCPP6t (ORCPT
+        with ESMTP id S229706AbjCPQDs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 11:58:49 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C647F193F3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 08:58:47 -0700 (PDT)
-Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <mkl@pengutronix.de>)
-        id 1pcpzT-0001Wg-0O; Thu, 16 Mar 2023 16:58:07 +0100
-Received: from pengutronix.de (unknown [IPv6:2a00:20:3043:e035:5ae3:9609:678c:e1fb])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (Client did not present a certificate)
-        (Authenticated sender: mkl-all@blackshift.org)
-        by smtp.blackshift.org (Postfix) with ESMTPSA id EEF27194E2F;
-        Thu, 16 Mar 2023 15:57:59 +0000 (UTC)
-Date:   Thu, 16 Mar 2023 16:57:58 +0100
-From:   Marc Kleine-Budde <mkl@pengutronix.de>
-To:     David Howells <dhowells@redhat.com>
-Cc:     Matthew Wilcox <willy@infradead.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Al Viro <viro@zeniv.linux.org.uk>,
-        Christoph Hellwig <hch@infradead.org>,
-        Jens Axboe <axboe@kernel.dk>, Jeff Layton <jlayton@kernel.org>,
-        Christian Brauner <brauner@kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        netdev@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        bpf@vger.kernel.org, dccp@vger.kernel.org,
-        linux-afs@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-can@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-hams@vger.kernel.org,
-        linux-rdma@vger.kernel.org, linux-sctp@vger.kernel.org,
-        linux-wpan@vger.kernel.org, linux-x25@vger.kernel.org,
-        mptcp@lists.linux.dev, rds-devel@oss.oracle.com,
-        tipc-discussion@lists.sourceforge.net,
-        virtualization@lists.linux-foundation.org
-Subject: Re: [RFC PATCH 28/28] sock: Remove ->sendpage*() in favour of
- sendmsg(MSG_SPLICE_PAGES)
-Message-ID: <20230316155758.5ylpybqjma7x4lbs@pengutronix.de>
-References: <20230316152618.711970-1-dhowells@redhat.com>
- <20230316152618.711970-29-dhowells@redhat.com>
+        Thu, 16 Mar 2023 12:03:48 -0400
+Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEC524EC5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 09:03:45 -0700 (PDT)
+Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5416698e889so41063747b3.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 09:03:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678982625;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=y4IWQ3qm69V7nWR3kZTl127u4+HwMbKM+fr7ufWkSq4=;
+        b=FHYsepG+obu7nQ3hBQZraJsz/3pb5JM1zNSX5SnPB2+Aka3UWkijGG5NGPTtS5LC4n
+         1MGM1jCwejxLh6tTFoWUgnkkBYsouhHgOERdQgvOwRm56ARvSi42PgqnRgPvIRzFJc6x
+         z+6KQ1um4U0Zz38wCDJqLjtnpyhxbRT23ihiZ40691I759/y7YOBcGqST5vlb78rvbrf
+         ZtV5vkqEMwy7FWxvjsnA+o7Nnx7S9A3MMB6WMr0lr7WefuEyvIT734TQZX6eoi3JcTPU
+         qsgN4nFIjn7wxARSIUD9A0mU3QG+pVKEvIuccQjpM3d0nfrySjVa+SsU3ceBHKbNZ87J
+         s+JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678982625;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y4IWQ3qm69V7nWR3kZTl127u4+HwMbKM+fr7ufWkSq4=;
+        b=mePVymoXy6nt6XJ9+WGJAKFk0iBQeqauX8E87gNl2oITw1FmfzAJIz9/J2Z7Qd8tdh
+         EPtEP1lPOfV2bTLbCUXgiXma0793Z5yOWx02ZMaakRw91AH2HzpvJtDXes6V6jRbfRQO
+         rtuRbSDsWCjiVYYiUSQlnz/pHpVRg+oSmXy0tkXEO/p6l+jzs/9xEZjUY+uYNiCc5Mfq
+         ykN+15ArXDNushqxdaA/TVP0LHVLLJGEaz0PzOK/2aBYSxn2XBUWBVETjgCrqAyQlLkV
+         9uFghcG7eU+bG5m/lbDgNcplt3X1V0IFlvaMSMDqLh2jFP8pCZtdrJZqM+5Bf883n/it
+         pWYw==
+X-Gm-Message-State: AO0yUKWygmC2wFTYmHttHXkbguE0c+vrjZZuMO0W0Xp4bUroF9rsQOvg
+        BF6/pMxU4ps9jWcLFHiwUm2w2CHFmLbkwmQh5IcNcw==
+X-Google-Smtp-Source: AK7set9W4SZAF2xF+bd2nTCNFeQnySUL0JERjAQIpc9fH2qYvBQ6oTmQNhEm0Oac7eVav3YqSLPkJHsGWryzP8RQpDY=
+X-Received: by 2002:a81:a708:0:b0:541:7f69:aa8b with SMTP id
+ e8-20020a81a708000000b005417f69aa8bmr2423344ywh.5.1678982624792; Thu, 16 Mar
+ 2023 09:03:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="km5oeoth2y26yqyc"
-Content-Disposition: inline
-In-Reply-To: <20230316152618.711970-29-dhowells@redhat.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:b01:1d::7b
-X-SA-Exim-Mail-From: mkl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <1677267647-28672-1-git-send-email-quic_khsieh@quicinc.com>
+ <1677267647-28672-2-git-send-email-quic_khsieh@quicinc.com>
+ <42b3c193-8897-cfe9-1cae-2f9a66f7983a@linaro.org> <741be2a3-0208-2f40-eedf-d439c4e6795b@quicinc.com>
+ <F8A4FC18-C64E-4011-BC08-18EB3B95A357@linaro.org> <d5ee8233-66c8-9b88-417c-6cf9cc5c84fe@quicinc.com>
+ <CAA8EJpro5Q-2ZpnDJt40UhFX7Zp9oBhrto=FDOERzCDR2BDPvQ@mail.gmail.com>
+ <f0dfba42-4674-3748-bf5d-39f6e1745f67@quicinc.com> <f1a6ee82-9502-7ea5-fe48-f296fc7df497@linaro.org>
+ <3e114c0f-a042-6801-69bf-67436cb2a448@quicinc.com> <113a10b6-6097-c80e-c29c-6f61b2b2896a@linaro.org>
+ <c4c0ebf8-275d-500f-4019-e3d7517a884f@quicinc.com> <CAA8EJppxX4haZSwdvVbN7bc6kXAyNO1rg6zWZv9wPFdqGrcXuw@mail.gmail.com>
+ <c650e746-64c5-ce6b-933d-057349356b78@quicinc.com> <58E03B71-20C4-4F81-96C1-6D8CE517F3FB@linaro.org>
+ <fd876ad2-3fd0-eaab-3407-dd32d494f662@quicinc.com> <a5d1a74f-1b7a-569d-e487-774720dfae22@quicinc.com>
+In-Reply-To: <a5d1a74f-1b7a-569d-e487-774720dfae22@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 16 Mar 2023 18:03:33 +0200
+Message-ID: <CAA8EJpq_mwUt0+1yGYo6hRx8Vz12DumVdpEjJbPk8gGHhGZ2bA@mail.gmail.com>
+Subject: Re: [Freedreno] [RFC PATCH 1/2] drm/msm/dpu: add dsc helper functions
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        quic_sbillaka@quicinc.com, sean@poorly.run, andersson@kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        dianders@chromium.org, vkoul@kernel.org, agross@kernel.org,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        marijn.suijten@somainline.org, swboyd@chromium.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        freedreno@lists.freedesktop.org,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
---km5oeoth2y26yqyc
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[removed previous conversation]
 
-On 16.03.2023 15:26:18, David Howells wrote:
-> [!] Note: This is a work in progress.  At the moment, some things won't
->     build if this patch is applied.  nvme, kcm, smc, tls.
->=20
-> Remove ->sendpage() and ->sendpage_locked().  sendmsg() with
-> MSG_SPLICE_PAGES should be used instead.  This allows multiple pages and
-> multipage folios to be passed through.
->=20
-> Signed-off-by: David Howells <dhowells@redhat.com>
+>
+> Hi Dmitry and Abhinav,
+>
+> Just wanted to follow up on this thread. I've gone over the MSM-specific
+> DSC params for DP and DSI and have found a few shared calculations and
+> variables between both DSI and DP paths:
+>
+> - (as mentioned earlier in the thread) almost all the calculations in
+> dpu_dsc_populate_dsc_config() match dsi_populate_dsc_params() [1]. The
+> only difference in the math I'm seeing is initial_scale_value.
 
-> cc: linux-can@vger.kernel.org
+The value in dsi code is valid for initial_offset = 6144. Please use
+the formula from the standard (= sde_dsc_populate_dsc_config) and add
+it to drm_dsc_helper.c
 
-Acked-by: Marc Kleine-Budde <mkl@pengutronix.de> # for net/can
+If I remember correctly the last remaining item in
+dsi_populate_dsc_params() (except mentioned initial_offset) was
+line_buf_depth, see [3]. I'm not sure about setting it to bpc+1.
+According to the standard it should come from a DSC decoder spec,
+which means it should be set by the DSI panel driver or via
+drm_dp_dsc_sink_line_buf_depth() in the case of DP output.
 
-Marc
+> - dsc_extra_pclk_cycle_cnt and dce_bytes_per_line, which were introduced
+> in Kuogee's v1 DSC series [2], are used for DSI, DP, and the DPU timing
+> engine. dsc_extra_pclk_cycle_cnt is calculated based on pclk_per_line
+> (which is calculated differently between DP and DSI), but
+> dce_bytes_per_line is calculated the same way between DP and DSI.
+>
+> To avoid having to duplicate math in 2 different places, I think it
+> would help to have these calculations in some msm_dsc_helper.c file. Any
+> thoughts on this?
 
---=20
-Pengutronix e.K.                 | Marc Kleine-Budde           |
-Embedded Linux                   | https://www.pengutronix.de  |
-Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-5555 |
+dsc_extra_pclk_cycle_cnt and dce_bytes_per_line are used only in DPU
+code, so they can stay in DPU driver.
 
---km5oeoth2y26yqyc
-Content-Type: application/pgp-signature; name="signature.asc"
+>
+> Thanks,
+>
+> Jessica Zhang
+>
+> [1]
+> https://elixir.bootlin.com/linux/v6.3-rc2/source/drivers/gpu/drm/msm/dsi/dsi_host.c#L1756
+>
+> [2] https://patchwork.freedesktop.org/patch/519845/?series=113240&rev=1
 
------BEGIN PGP SIGNATURE-----
+[3] https://patchwork.freedesktop.org/patch/525441/?series=114472&rev=2
 
-iQEzBAABCgAdFiEEDs2BvajyNKlf9TJQvlAcSiqKBOgFAmQTPIMACgkQvlAcSiqK
-BOj6JAgAtfBV5yq+uNvtDfdNTDCgUnr0pkrsEqo0Ygt0A84TUlJF1K9QFkFTlvFo
-NEtegJFeDvbE8EmvRgOnpoTRcMQwDClaw5c7O7TquCr3SEAcXECesFYUVLWR7hsf
-Mk3DzSWUNIqMeSUOAEPBPfWNGGQWdjut5IQHdhuIs2/irjgsb5GZJ27rYyV9F/+l
-daE1Ac6RGnKq9zV/UszZ7AbfKA7bI9TVioWBVmIFCQZeWJprHq5rD0LTH6+QjdyQ
-5AdUTjTbZ/YRTjr4KQQkISfoq8oMC/zVENiagYZ89SGTbciIaCeqBpvdgUVKTob6
-2Uoo/o+yUY90Dy8JPw9/gLSsthDGaw==
-=IhKV
------END PGP SIGNATURE-----
 
---km5oeoth2y26yqyc--
+
+-- 
+With best wishes
+Dmitry
