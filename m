@@ -2,77 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 04B096BD92C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 20:30:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DA1F6BD948
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 20:34:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230211AbjCPTaE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 15:30:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57818 "EHLO
+        id S230307AbjCPTeM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 15:34:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230260AbjCPT3y (ORCPT
+        with ESMTP id S230181AbjCPTeK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 15:29:54 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F9B77FD44
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 12:29:53 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id fd5so11853817edb.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 12:29:53 -0700 (PDT)
+        Thu, 16 Mar 2023 15:34:10 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EC9024122
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 12:34:08 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id w9so12016116edc.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 12:34:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678994992;
+        d=linaro.org; s=google; t=1678995247;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5WyU0qfnRULjYvTUDcZG4NUcXj63E3kuf4oqTEgEhWM=;
-        b=QpZ370ktfsNBat3WA/Sytl7eZ2icaf9k5ZVtBvzG+miJw0o3kMpS53pUzaPKYBRzlm
-         3RNMMlqqLCDNSmLyPt7rzFqC+e4fvuBk9STtIJQxJmZutKpTl9qYw6x1POw04z6kzTUC
-         mBhD+sk7VwyoRxOa4/5+XB7moNAKCb5l8reeiMvisr559sTx3FKtB8sRLssnbgn3heLz
-         6DzVS3WrFm01OYQjwtS+uNhqojvO8LfE5Gzve3HvboTn1r02KcYrfAxJ9fynmUczbplt
-         wf8G06BjUJVJsXw3O7H0NMaymAngotahtTTmOiIwcb1oM26a7hULDA9hT2FITUrb5NJB
-         D2/Q==
+        bh=dyciw28w72xcQW9mQh3xwrk42HtEkqAkTnLwxCjUt1I=;
+        b=jDqdnQW7R9aFerJ6wrorsKPfOTU+aKBneRLhQVGtss9S/T+e8qLZ/WtyuHSPazKXlP
+         LCLGXb1WbkdfS45+Npn8Nl0lKy1f84TjB4kQ8fy8EG/c9bwDun7ozcmubXSESQemTOzR
+         h8ULyf3hwJtSIEP97mfo4O9wZyhKn/gZHDHoI73gViztzppizQXDBT5AYu0sxRRhDv2q
+         IdGW3c8psvYjfBnse59HncFk0Bvr7+ObRp+8rLhKCLJvqQ4DEiqoJKstGX1bawSQZWwv
+         1x7GY5SqbwcSUNZLLvaSUufn5E40ozOsYJj5tvPI70FDX6AEWkCBsACJUm/YtG/2Tirl
+         iSIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678994992;
+        d=1e100.net; s=20210112; t=1678995247;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5WyU0qfnRULjYvTUDcZG4NUcXj63E3kuf4oqTEgEhWM=;
-        b=mA9cRgnImjNU9RoPC8Al7/6TOvVSWXoZ/QIwitg3NWr3OOCrB4rgHykCH59K0HROvd
-         ZfYXHl0aEisj+vIv50Mhx7fSqGb2mGW64sWoL9l/D4Vf/yh7S6ei5tmF4s6HD5rqqasG
-         7m8v6hk8G5wobV2tFdm8wBkNKW5pY13gq1XSvfFKynUsE4Y6EPajN2jvNNlufmupv3CB
-         dD/1ya4WBX3hHuDXjwMrbrgnc28tdEqclfxDrLQr1dd02mBM7ArlYCJdBl8KlEqzra1r
-         thF5qssecIAwZqrUAU5c3NMcBv+9rl4rmfNzdARjpZb3jCOybgKtffVvKj5brNI/BRSE
-         JhQw==
-X-Gm-Message-State: AO0yUKWdfwj0763PywYJ2jCSJKm4tNLBvgvwwQZx8lHQH6/oeCQX15Un
-        pluvtZGpMaLMI8eLPk84PEP8Lw==
-X-Google-Smtp-Source: AK7set/rsWHRHF7nlHEmPrEiunpAYhgOMGUC46mRl1vyeV9hyy07MsCnraZ9ocmj2iYUnIVfgEGT5g==
-X-Received: by 2002:a17:907:c304:b0:8ae:e724:ea15 with SMTP id tl4-20020a170907c30400b008aee724ea15mr11491159ejc.76.1678994991923;
-        Thu, 16 Mar 2023 12:29:51 -0700 (PDT)
+        bh=dyciw28w72xcQW9mQh3xwrk42HtEkqAkTnLwxCjUt1I=;
+        b=jU7E6vEqxKHaqHVmBi+DrGwWWs2CVo+PugpksJpBZep7fYeZVF5UCtGhMKqxYGtL7h
+         MSjcegkOR5LkoICpb5nJam1YNRVCizdeR1mano6VjYInBWUhMBYbsXHKD5OhhLPZammu
+         LxCuJKAZF2Nt+3DcCyO8WIXFJQpXmDBxQZ0seG6SpfGnLkBo/NX81BZZLcAJH7/WOGwj
+         AIAvHPFbIKZ2XYJeQczg6Ssca6iJLV9khB66WRpZhuaJX4kx4d0+J2rpnYwpMKN+hh3x
+         oxS7fYv7JBCP95kfNxc2up2yIUtLQidA07OYSyt6I8FB2tndwVzkeTMHSkaqJ2KXdjPM
+         tsqw==
+X-Gm-Message-State: AO0yUKXpUO6wPDX5tqJ1UOj5sXbkfaFQq+2GFiDuwrzuRde2LvbzN/PM
+        oZkL3hUs1Dg83/bqvkgaGHHefQ==
+X-Google-Smtp-Source: AK7set/v1W7Ns5+ZlsqTjhJvhjWCh0bXOH6bccxxSpksf19UNwSeZsMDyZ3fw5BSDUUO2F7XNaAskg==
+X-Received: by 2002:a17:906:cc54:b0:884:37fd:bf4c with SMTP id mm20-20020a170906cc5400b0088437fdbf4cmr11914784ejb.19.1678995246860;
+        Thu, 16 Mar 2023 12:34:06 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:9827:5f65:8269:a95f? ([2a02:810d:15c0:828:9827:5f65:8269:a95f])
-        by smtp.gmail.com with ESMTPSA id t1-20020a170906178100b008d1dc5f5692sm17887eje.76.2023.03.16.12.29.50
+        by smtp.gmail.com with ESMTPSA id r5-20020a1709064d0500b00923f05b2931sm16291eju.118.2023.03.16.12.34.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Mar 2023 12:29:51 -0700 (PDT)
-Message-ID: <f09e93e1-235a-ea0a-902d-4f41a8c90ee5@linaro.org>
-Date:   Thu, 16 Mar 2023 20:29:50 +0100
+        Thu, 16 Mar 2023 12:34:06 -0700 (PDT)
+Message-ID: <7424bab4-6a92-7d71-b110-454819101678@linaro.org>
+Date:   Thu, 16 Mar 2023 20:34:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 1/2] dt-bindings: arm-smmu: Document SM61[12]5 GPU SMMU
+Subject: Re: [PATCH 1/3] dt-bindings: clock: qcom: Add bindings for videocc on
+ SM8450
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
+To:     Taniya Das <quic_tdas@quicinc.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        Andy Gross <agross@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230315-topic-kamorta_adrsmmu-v1-0-d1c0dea90bd9@linaro.org>
- <20230315-topic-kamorta_adrsmmu-v1-1-d1c0dea90bd9@linaro.org>
+        quic_skakitap@quicinc.com, quic_jkona@quicinc.com
+References: <20230316083049.29979-1-quic_tdas@quicinc.com>
+ <20230316083049.29979-2-quic_tdas@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230315-topic-kamorta_adrsmmu-v1-1-d1c0dea90bd9@linaro.org>
+In-Reply-To: <20230316083049.29979-2-quic_tdas@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,57 +82,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/03/2023 11:52, Konrad Dybcio wrote:
-> Both of these SoCs have a Qualcomm MMU500 implementation of SMMU
-> in front of their GPUs that expect 3 clocks. Both of them also have
-> an APPS SMMU that expects no clocks. Remove qcom,sm61[12]5-smmu-500
-> from the "no clocks" list (intentionally 'breaking' the schema checks
-> of APPS SMMU, as now it *can* accept clocks - with the current
-> structure of this file it would have taken a wastefully-long time to
-> sort this out properly..) and add necessary yaml to describe the
-> clocks required by the GPU SMMUs.
+On 16/03/2023 09:30, Taniya Das wrote:
+> Add device tree bindings for the video clock controller on Qualcomm
+> SM8450 platform.
 
+Subject: drop second/last, redundant "bindings for". The "dt-bindings"
+prefix is already stating that these are bindings.
 
-> +      properties:
-> +        compatible:
-> +          items:
-> +            - enum:
-> +                - qcom,sm6115-smmu-500
-> +                - qcom,sm6125-smmu-500
-> +            - const: qcom,adreno-smmu
-> +            - const: qcom,smmu-500
-> +            - const: arm,mmu-500
-
-If you drop the hunk later (from allOf:if), then what clocks do you
-expect for non-GPU SMMU?
-
-> +    then:
-> +      properties:
-> +        clock-names:
-> +          items:
-> +            - const: mem
-> +            - const: hlos
-> +            - const: iface
-> +
-> +        clocks:
-> +          items:
-> +            - description: GPU memory bus clock
-> +            - description: Voter clock required for HLOS SMMU access
-> +            - description: Interface clock required for register access
-> +
->    # Disallow clocks for all other platforms with specific compatibles
->    - if:
->        properties:
-> @@ -394,8 +420,6 @@ allOf:
->                - qcom,sdm845-smmu-500
->                - qcom,sdx55-smmu-500
->                - qcom,sdx65-smmu-500
-> -              - qcom,sm6115-smmu-500
-> -              - qcom,sm6125-smmu-500
->                - qcom,sm6350-smmu-500
->                - qcom,sm6375-smmu-500
->                - qcom,sm8350-smmu-500
 > 
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+>  .../bindings/clock/qcom,sm8450-videocc.yaml   | 84 +++++++++++++++++++
+>  .../dt-bindings/clock/qcom,videocc-sm8450.h   | 38 +++++++++
+>  2 files changed, 122 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,videocc-sm8450.h
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> new file mode 100644
+> index 000000000000..909da704c123
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> @@ -0,0 +1,84 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,sm8450-videocc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Video Clock & Reset Controller on SM8450
+> +
+> +maintainers:
+> +  - Taniya Das <quic_tdas@quicinc.com>
+> +
+> +description: |
+> +  Qualcomm video clock control module provides the clocks, resets and power
+> +  domains on SM8450.
+> +
+> +  See also:: include/dt-bindings/clock/qcom,videocc-sm8450.h
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm8450-videocc
+> +
+> +  clocks:
+> +    items:
+> +      - description: Video AHB clock from GCC
+> +      - description: Board XO source
+> +
+> +  clock-names:
+> +    items:
+> +      - const: iface
+> +      - const: bi_tcxo
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +    description:
+> +      A phandle and PM domain specifier for the MMCX power domain.
+
+Drop "A phandle and PM domain specifier for the"
+
+> +
+> +  required-opps:
+> +    maxItems: 1
+> +    description:
+> +      A phandle to an OPP node describing required MMCX performance point.
+> +
+> +  '#clock-cells':
+> +    const: 1
+> +
+> +  '#reset-cells':
+> +    const: 1
+> +
+> +  '#power-domain-cells':
+> +    const: 1
+> +
+> +  reg:
+> +    maxItems: 1
+
+That's a unusual ordering. Either order elements by name or use some
+custom order... but then reg is always second property.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - power-domains
+> +  - required-opps
+> +  - '#clock-cells'
+> +  - '#reset-cells'
+> +  - '#power-domain-cells'
+
+And keep same order in required.
+
+> +
+> +additionalProperties: false
+
 
 Best regards,
 Krzysztof
