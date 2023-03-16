@@ -2,90 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33F626BD85A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 19:52:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 50FE16BD86A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 19:57:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229644AbjCPSwm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 14:52:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55926 "EHLO
+        id S229754AbjCPS53 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 14:57:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229539AbjCPSwl (ORCPT
+        with ESMTP id S229916AbjCPS5Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 14:52:41 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F059728E59;
-        Thu, 16 Mar 2023 11:52:39 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9ECE6B822BC;
-        Thu, 16 Mar 2023 18:52:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD8AC433EF;
-        Thu, 16 Mar 2023 18:52:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678992757;
-        bh=59kceHKTQ9pP2wUCJX8jKFzLo8hYVTu7itr7dC78eII=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=PGUIcaZp6+rvtdA+AXlsWzUw+mepWVcL6mXTXRgW0sgMF6pYGsV9aGt95mIYsEPPn
-         mzR0GYlsSB8sEZ3LLO5iUqDWrNzh5Nt6HAgUhzT7o6VTkakqrGjq7kTr2cH10BBHCr
-         OCo5l8B4olKfIqW8YTjTcNro8TfwpLnUErrl6QLzMDzn1LuMaECLpL/frKH3ydjtov
-         98a0yAp+TFpFg+L3Qe+M5G46OTDt6AqowmZer9SfOghnhOB35do/BwnWONyOswUr/6
-         /H2Im6x3rgFHDG+u7QfFUyhJiTRD9aUvzjRAv5JfnwbNRHk1pIg+XRHf/yJRir8/BP
-         iv0OYqCiOSLXg==
-Date:   Thu, 16 Mar 2023 11:52:34 -0700
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, bhupesh.sharma@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, peppe.cavallaro@st.com,
-        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
-        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
-        linux@armlinux.org.uk, veekhee@apple.com,
-        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
-        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
-        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
-        jsuraj@qti.qualcomm.com, hisunil@quicinc.com
-Subject: Re: [PATCH net-next 08/11] net: stmmac: Add EMAC3 variant of dwmac4
-Message-ID: <20230316115234.393bca5d@kernel.org>
-In-Reply-To: <20230316183609.a3ymuku2cmhpyrpc@halaney-x13s>
-References: <20230313165620.128463-1-ahalaney@redhat.com>
-        <20230313165620.128463-9-ahalaney@redhat.com>
-        <20230313173904.3d611e83@kernel.org>
-        <20230316183609.a3ymuku2cmhpyrpc@halaney-x13s>
+        Thu, 16 Mar 2023 14:57:16 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C62E5DCF63
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 11:57:11 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id fd5so11511222edb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 11:57:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google; t=1678993030;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ISoDwGmCZfIt1++Qrq4EaM3UW6i2EJ00oUlk42ZAa4k=;
+        b=V34nuHzb1E1n6ArHtHa/MyOWRtt1PmPMxzBmbNZ70ayTY98fyYvgyrBPtlxZTjt10O
+         lcuHVx7snGom/yUxsRx5nKqnb/yl03a4EWJTrGqyjjo68Aqsy/DQRWfmH0L322qjXkGZ
+         YjDrMlA56pufnTtXHbENe3k35Br34XL7XIt6c+nHVpCgUU+HYpwxYx0CnXzmoW4cVZew
+         oKJl3xnnxfcomJvZQc3MUZDsx7bqVXIanxILdL7nKWbL6VJfpIGqwQRmRtHzNy+ayTDD
+         NehCB+jT9oMLIKdvSeqa2/tp5E0ZbFN4UP3ZoIzXLCtYfzk8Cs2RRd3Pi3Fcz52Be0Ry
+         JcpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678993030;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ISoDwGmCZfIt1++Qrq4EaM3UW6i2EJ00oUlk42ZAa4k=;
+        b=D6Pp/evpWGunYuYY4ObGNKlXAM40aiID7SKGwRkipcHMAUj/NSVF9CW1FER7SxQiru
+         97Ieky5EDSaYuf/SVVCtnlvIAF/zBeaT0mk+UvTDGuQ4eMcTlXvMAaOWmERRClBLPCwV
+         HhcV7avjc5saZD4AgSxF+D29g7rRdpeOn8ThB/bUz7kNrfKqCpF+tUPXsOVxXAmDS2FP
+         ASHLoFFr1gIFNqe2b9r3PmtsC6HqLD25O3tE4XtHsKNADddyAEwiKavEMiVaFIekhKvP
+         i00k9LMN0/FRdEai+UuEfrCZKqWuszkMosDOgIArrP2AJeQrI30mAh84L6v/z4WQkT9c
+         Hc+Q==
+X-Gm-Message-State: AO0yUKWHjYOYP3hhgsI6HBZLZztO8pGWcBkClEMEj3tmptIaWJp0+5ud
+        OPTjpJnigcyklApxFw2I6BiavcERpexONYpW0ucMvg==
+X-Google-Smtp-Source: AK7set8R6MPvl1jYDipFYGi3DvPwtseUsQ8EVHZ1VfSLTTmEQjtyKWaAM4IDrmaaOglEDFXN0af7mz8G306mXMeEY84=
+X-Received: by 2002:a50:f683:0:b0:4fc:473d:3308 with SMTP id
+ d3-20020a50f683000000b004fc473d3308mr360427edn.8.1678993030292; Thu, 16 Mar
+ 2023 11:57:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230316034759.73489-1-steev@kali.org> <20230316034759.73489-3-steev@kali.org>
+ <f7be8db9-0bdd-644d-c7a0-4321041c5028@molgen.mpg.de>
+In-Reply-To: <f7be8db9-0bdd-644d-c7a0-4321041c5028@molgen.mpg.de>
+From:   Steev Klimaszewski <steev@kali.org>
+Date:   Thu, 16 Mar 2023 13:56:59 -0500
+Message-ID: <CAKXuJqiPKJ_Jus2gwA94gQAb-7-PBAZL4CSaFcxpx3+UXBYS-A@mail.gmail.com>
+Subject: Re: [PATCH v6 2/4] Bluetooth: hci_qca: Add support for QTI Bluetooth
+ chip wcn6855
+To:     Paul Menzel <pmenzel@molgen.mpg.de>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>,
+        Tim Jiang <quic_tjiang@quicinc.com>,
+        Johan Hovold <johan@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 16 Mar 2023 13:36:09 -0500 Andrew Halaney wrote:
-> static void emac3_config_cbs(struct mac_device_info *hw, u32 send_slope,
-> 				    u32 idle_slope, u32 high_credit,
-> 				    u32 low_credit, u32 queue)
-> 
-> I agree, that's quite gnarly to read. the emac3_config_cbs is the
-> callback, so it's already at 6 arguments, so there's nothing I can
-> trim there. I could create some struct for readability, populate that,
-> then call the do_config_cbs() func with it from emac3_config_cbs.
-> Is that the sort of thing you want to see?
+On Thu, Mar 16, 2023 at 4:58=E2=80=AFAM Paul Menzel <pmenzel@molgen.mpg.de>=
+ wrote:
+>
+> Dear Steev,
+>
+>
+> Thank you for your patch. Some nits.
+>
+> Am 16.03.23 um 04:47 schrieb Steev Klimaszewski:
+> > Added regulators,GPIOs and changes required to power on/off wcn6855.
+>
+> Please add a space after the comma.
+>
+Good catch, sorry about that, will do in v7!
 
-Yes, a structure is much better, because it can be initialized member
-by member,
+> > Added support for firmware download for wcn6855.
+>
+> You might want to use imperative mood (Add =E2=80=A6).
+>
+Bah, I'd seen others mention this, and still did it in mine :/
 
-struct bla my_bla = { .this = 1, .that = 2, .and = 3, another = 4, };
+> How did you test this? What firmware files did you use?
+>
+> Maybe mention, that the assumption is, that it=E2=80=99s identical to WCN=
+6750?
+>
+Are you wanting the firmware used in the commit message?  I think I've
+seen similar in e.g. ath11k patches like:
 
-That's much easier to read. A poor man's version of Python's keyword
-arguments, if you will.
+"Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.1.0.1-00887-QCAMSLSWPLZ-1"
+
+something like that?  The firmware itself is already in
+linux-firmware.  I figured it wasn't imperative to the patch and it's
+in the cover letter but I can definitely throw it in the commit
+message!
+
+
+> > Signed-off-by: Steev Klimaszewski <steev@kali.org>
+> > Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> > Tested-by: Bjorn Andersson <andersson@kernel.org>
+> > ---
+>
+> [=E2=80=A6]
+>
+>
+> Kind regards,
+>
+> Paul
