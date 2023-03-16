@@ -2,100 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0AA26BDBE3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 23:45:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 77F3D6BDBEA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 23:47:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230029AbjCPWo7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 18:44:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44926 "EHLO
+        id S230060AbjCPWrO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 18:47:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229608AbjCPWo6 (ORCPT
+        with ESMTP id S229961AbjCPWrN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 18:44:58 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADE2153738
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 15:44:55 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D2DD2402E6;
-        Thu, 16 Mar 2023 23:44:52 +0100 (CET)
-Date:   Thu, 16 Mar 2023 23:44:50 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc:     Jonathan Cameron <jic23@kernel.org>, Rob Herring <robh@kernel.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        iio@vger.kernel.org, Lars-Peter Clausen <lars@metafoo.de>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Thu, 16 Mar 2023 18:47:13 -0400
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09B5E6C6AE;
+        Thu, 16 Mar 2023 15:47:13 -0700 (PDT)
+Received: by mail-io1-f48.google.com with SMTP id o14so1519172ioa.3;
+        Thu, 16 Mar 2023 15:47:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679006832;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eiqPZg2ZTgKffnR9XFMa4QhSTiutEFWHrj4g4T7n9Lw=;
+        b=IT86h5iVI72ELwxDQTzjK7gOzdCPREeM5LjF3+pRNyeL/ydoSDzNINTZoW6UubzR4q
+         RwsBCVR9fZVcXXUj6sb8nwgOXDcZ/YhrUtsrdTc1JJ7G8l3Q2SMC/kgapp1s857R+1qE
+         ZhdcHU7nD7ZW48pnlyovB3LnnmVvLizS/KivUaa6KSXfQKDHQGY6CeMmOAI7GrIQsVnR
+         u6WX305pKzg6YAiiDZTBfHoJtPsyf1jLpl8FTyelpipco59L8b9Nh7DI2mj2Kx3UwvWB
+         id7dwahrSMaJ3Pt76O88c+ZU0nBUR37m5tF7U+ekXviewdtmZjCSqAuqlbCRvNQWrOBU
+         rYAw==
+X-Gm-Message-State: AO0yUKWoG14CN/ndJ47gRLEAwkXPa8zcYk6mSSzFRxeoNqBNafRJJnyU
+        bxEJdK3hHmIyZ9xOZVhIMw==
+X-Google-Smtp-Source: AK7set9v8zT4EFQnx1vHiQ/UkkNQXNwGxm3TKplHRez+qjRO74ICnrtsQor1FCUTOPSDJBtQseTlfQ==
+X-Received: by 2002:a5d:8612:0:b0:74c:c239:ba57 with SMTP id f18-20020a5d8612000000b0074cc239ba57mr499547iol.1.1679006832245;
+        Thu, 16 Mar 2023 15:47:12 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.249])
+        by smtp.gmail.com with ESMTPSA id z9-20020a6b0a09000000b0074cda4bc4b8sm107074ioi.50.2023.03.16.15.47.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Mar 2023 15:47:11 -0700 (PDT)
+Received: (nullmailer pid 4026428 invoked by uid 1000);
+        Thu, 16 Mar 2023 22:47:10 -0000
+Date:   Thu, 16 Mar 2023 17:47:10 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, marijn.suijten@somainline.org,
         Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] dt-bindings: thermal: qcom-spmi-adc-tm5: Use
- generic ADC node name
-Message-ID: <20230316224450.onx2bldlisfwwp23@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Jonathan Cameron <jic23@kernel.org>, Rob Herring <robh@kernel.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>, iio@vger.kernel.org,
-        Lars-Peter Clausen <lars@metafoo.de>,
+        Thomas Gleixner <tglx@linutronix.de>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-pm@vger.kernel.org
-References: <20230201204447.542385-1-marijn.suijten@somainline.org>
- <20230201204447.542385-3-marijn.suijten@somainline.org>
- <20230203212501.GA908601-robh@kernel.org>
- <20230205150645.549ff062@jic23-huawei>
- <20230316124307.pzuvbacsmjdootfx@SoMainline.org>
- <20230316174428.00003c4c@Huawei.com>
+        Marc Zyngier <maz@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: timer: armv7: Don't sanction
+ address/size-cells values
+Message-ID: <20230316224710.GA4017716-robh@kernel.org>
+References: <20230308012854.294939-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230316174428.00003c4c@Huawei.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20230308012854.294939-1-konrad.dybcio@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-03-16 17:44:28, Jonathan Cameron wrote:
-<snip>
-> > Should it inherit the common binding, or was it omitted for a reason?
+On Wed, Mar 08, 2023 at 02:28:53AM +0100, Konrad Dybcio wrote:
+> The driver itself does not read the -cells values (and frankly, it
+> shouldn't), 
+
+Agreed, because this is standard address translation and only the DT 
+core address functions should read cells props.
+
+> so there's little sense in only allowing [1, 2] x [1].
+
+Why does the timer need 64-bits of address space? It doesn't, so that's 
+the reason for restricting it.
+
+> Allow any values.
 > 
-> Harmless but little point as far as I can see given we don't happen
-> to have any of the generic elements defined in the generic channel
-> binding.
+> Fixes: 4d2bb3e65035 ("dt-bindings: timer: Convert ARM timer bindings to json-schema")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  .../devicetree/bindings/timer/arm,arch_timer_mmio.yaml      | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml b/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml
+> index f6efa48c4256..236e2a05c1ad 100644
+> --- a/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml
+> +++ b/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml
+> @@ -26,11 +26,9 @@ properties:
+>      maxItems: 1
+>      description: The control frame base address
+>  
+> -  '#address-cells':
+> -    enum: [1, 2]
+> +  '#address-cells': true
 
-Supposedly the reg property, and now also the node name.  Up to you to
-say whether I should inherit this (and strip out the common bits) or
-just focus on renaming the node name in the existing binding to channel.
+So 3 address cells is valid?
 
-- Marijn
+Until recently (and not yet in a dtschema release), there was no 
+constraint on #address-cells or #size-cells values other than the 
+#.*-cells constraint of 8. Now it is 3 and 2.
+
+>  
+> -  '#size-cells':
+> -    const: 1
+> +  '#size-cells': true
+>  
+>    ranges: true
+>  
+> -- 
+> 2.39.2
+> 
