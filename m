@@ -2,101 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C75456BCCC5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 11:29:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 717806BCCE9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 11:35:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229844AbjCPK3d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 06:29:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35998 "EHLO
+        id S229682AbjCPKfZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 06:35:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230034AbjCPK3b (ORCPT
+        with ESMTP id S229596AbjCPKfY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 06:29:31 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA71E64846
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 03:29:26 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id g17so1678916lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 03:29:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678962565;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZoXEVHbh4zESyEnp5EA5Zcb4rCYHcLM5oXeCPSUEYhA=;
-        b=hPGRGxF+ke8z3JzOJVv+C09Jmuv4N0i5SYgY2ZnNIKaXxFPKIJ7v7rnm2ULALJDkS3
-         BN+pVAOZSFrQcXJ72EtdmQLp8W7xIabGTpOC1j1pFwBeGr3S2feU1PHVkEeTqdTutiPw
-         aU9vqjmKMMz40gaZ8L2TzgsC/ycD6WoA6uapZvUDjCeahwljPbAPNVSsRefd0Mq9y20n
-         fdX4PKenMaxkUbhjaaU7NYQUZYUJL59wmPbtVVOg7gfHNbtejQlMvxNRmrqa60LdbRxE
-         2y2ayOBGkrD8bvHM/UhTZZ8TxMdjgvxZpe44qY/YBMkbC6Sfiyj2cTlfsM4hD2W2wrYN
-         /TEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678962565;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZoXEVHbh4zESyEnp5EA5Zcb4rCYHcLM5oXeCPSUEYhA=;
-        b=qbEI4uQLAiT1izDXfEOIcdlpvbTtnYwO1tv2hM8+EIIXxph1XQp3PlYBIVjvFaBoOh
-         wPZTAOcBnnXQOVa498cR5a2VnyrFQQ4HSL/f7flyk+lrTYp1g2JuLhELr2dyKAvWBr7w
-         pfOYF4xyh1W3bIzFF6qRNXsmmZJiaTpSnZLHh4N9AKD4ILCl4Jhbg800gPwmz6zX1DO0
-         pdbwe7UUzq6VR4Ekx4fn9MsiOf9Hs0da0d/ePpl6cikGX7kTgf1zk6lEH4JgRi5qGpd/
-         Qb8uxIdXvYK8bdjia1tYaYA/xvjhwm1iqZOpIwigTn7DZMpaoaRLxyphbI0SlTHVEmDH
-         TrIQ==
-X-Gm-Message-State: AO0yUKXTQU9+YpsdX/GjtaVj5kJwaKKTGPaWvfMB2332Mk+PklziP73P
-        Qm3zd6vnm5M2B6lRozOrSXY+8Q==
-X-Google-Smtp-Source: AK7set8RqMAmh9lKg1cILMKHSx8C7wupxbgS49UmQD0f1euyKuqdXR0j+LcLnHCcQgn5HAX+nmRHtQ==
-X-Received: by 2002:ac2:5dd1:0:b0:4e8:4699:d01 with SMTP id x17-20020ac25dd1000000b004e846990d01mr2775148lfq.27.1678962565001;
-        Thu, 16 Mar 2023 03:29:25 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id n7-20020a195507000000b004e84896253asm1169523lfe.251.2023.03.16.03.29.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Mar 2023 03:29:23 -0700 (PDT)
-Message-ID: <5cfc6a2b-5b70-c44c-17d4-9c5dfaa33f54@linaro.org>
-Date:   Thu, 16 Mar 2023 12:29:23 +0200
+        Thu, 16 Mar 2023 06:35:24 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55C7C9E509;
+        Thu, 16 Mar 2023 03:35:15 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32G9SMHq028719;
+        Thu, 16 Mar 2023 10:35:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=W3Tlrftt0yAjUTBVCg7DwbudT+xfc9oUHrxvoR5zQ2w=;
+ b=UB6ahDQjPQZDktFQT1PQ03snbgk5BXlzSbKkCss61cA/J8iO7okE1bbcph0/jLI06QFe
+ VTIS58hEiLpWT8KvPOKbauJuDsgG5Mb25VCgYQrdlEwsldyVW8YeZdWrA7t9XDMT2n62
+ TYndC58G1QbHvAYEp33uDscq1fPupqOPwXjoo1hYsycT6t4hZ3UiDdphIultGKP4qL9F
+ eVtaeUUK7IcrlgZBBxtm2MPxfwG5gR915nxMTXhrbnEq5Ly+tw3SsA7RUyCavpmNvROA
+ u0ucqg4LyOZ9DIytGSbk7PKd1jmE+Qduzl8V1F71N9u5Lci+7InNZ1yWTHeqQXgoS1d0 Sw== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pbpxshh7v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 16 Mar 2023 10:35:08 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32GAZ7QI026155
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 16 Mar 2023 10:35:07 GMT
+Received: from [10.216.13.67] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 16 Mar
+ 2023 03:35:03 -0700
+Message-ID: <2c5f63ac-470e-51fa-4330-c9603eb9efcf@quicinc.com>
+Date:   Thu, 16 Mar 2023 16:04:58 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH] drm: msm: adreno: Disable preemption on Adreno 510
-Content-Language: en-GB
-To:     Adam Skladowski <a39.skl@gmail.com>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230314221757.13096-1-a39.skl@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230314221757.13096-1-a39.skl@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH] remoteproc: qcom_q6v5_mss: remove unnecessary (void*)
+ conversions
+Content-Language: en-US
+To:     Yu Zhe <yuzhe@nfschina.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mathieu.poirier@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel-janitors@vger.kernel.org>, <liqiong@nfschina.com>
+References: <20230316091902.20765-1-yuzhe@nfschina.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20230316091902.20765-1-yuzhe@nfschina.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: KPrmjP2TBcREIWEb-VgZzDwYGavEJur4
+X-Proofpoint-ORIG-GUID: KPrmjP2TBcREIWEb-VgZzDwYGavEJur4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-16_07,2023-03-16_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 adultscore=0 priorityscore=1501 malwarescore=0
+ impostorscore=0 mlxscore=0 mlxlogscore=999 suspectscore=0 bulkscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303150002 definitions=main-2303160089
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/03/2023 00:17, Adam Skladowski wrote:
-> Downstream driver appears to not support preemption on A510 target,
-> trying to use one make device slow and fill log with rings related errors.
-> Set num_rings to 1 to disable preemption.
+
+
+On 3/16/2023 2:49 PM, Yu Zhe wrote:
+> Pointer variables of void * type do not require type cast.
 > 
-> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Fixes: e20c9284c8f2 ("drm/msm/adreno: Add support for Adreno 510 GPU")
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> Signed-off-by: Yu Zhe <yuzhe@nfschina.com>
+> ---
+>   drivers/remoteproc/qcom_q6v5_mss.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index ab053084f7a2..e7a67c8c16a0 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -1562,7 +1562,7 @@ static void qcom_q6v5_dump_segment(struct rproc *rproc,
+>   
+>   static int q6v5_start(struct rproc *rproc)
+>   {
+> -	struct q6v5 *qproc = (struct q6v5 *)rproc->priv;
+> +	struct q6v5 *qproc = rproc->priv;
+>   	int xfermemop_ret;
+>   	int ret;
+>   
+> @@ -1604,7 +1604,7 @@ static int q6v5_start(struct rproc *rproc)
+>   
+>   static int q6v5_stop(struct rproc *rproc)
+>   {
+> -	struct q6v5 *qproc = (struct q6v5 *)rproc->priv;
+> +	struct q6v5 *qproc = rproc->priv;
+>   	int ret;
+>   
+>   	ret = qcom_q6v5_request_stop(&qproc->q6v5, qproc->sysmon);
+> @@ -1662,7 +1662,7 @@ static int qcom_q6v5_register_dump_segments(struct rproc *rproc,
+>   
+>   static unsigned long q6v5_panic(struct rproc *rproc)
+>   {
+> -	struct q6v5 *qproc = (struct q6v5 *)rproc->priv;
+> +	struct q6v5 *qproc = rproc->priv;
+>   
+>   	return qcom_q6v5_panic(&qproc->q6v5);
+>   }
+> @@ -1977,7 +1977,7 @@ static int q6v5_probe(struct platform_device *pdev)
+>   	rproc->auto_boot = false;
+>   	rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
+>   
+> -	qproc = (struct q6v5 *)rproc->priv;
+> +	qproc = rproc->priv;
+>   	qproc->dev = &pdev->dev;
+>   	qproc->rproc = rproc;
+>   	qproc->hexagon_mdt_image = "modem.mdt";
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Well, there is quite a few files under driver/remoteproc/ which has this 
+kind of assignation.
 
--- 
-With best wishes
-Dmitry
+Do you intend to do this for all ?
 
+Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
+
+-- Mukesh
