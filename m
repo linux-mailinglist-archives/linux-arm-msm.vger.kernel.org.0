@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 081746BC6AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 08:14:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C93A96BC6E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 08:19:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229988AbjCPHN6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 03:13:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41540 "EHLO
+        id S230212AbjCPHTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 03:19:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230063AbjCPHN5 (ORCPT
+        with ESMTP id S229562AbjCPHS6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 03:13:57 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E07545290F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 00:13:30 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id fd5so3714133edb.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 00:13:30 -0700 (PDT)
+        Thu, 16 Mar 2023 03:18:58 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E788313D49
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 00:18:47 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id y4so3835149edo.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 00:18:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678950807;
+        d=linaro.org; s=google; t=1678951126;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=eQqBxhsFpqht9TV3ODi4eqp1h6oGT5RNGJVf78eU7ys=;
-        b=mXgg3KF+U8HsBWs12EmYyC6aiUPvUi7w/0p0EKveStEcm9drVh0Cf6U0LfVL7OqLob
-         kt2FJzKBcNkqUeqU0dHEOF+3i+XSk2uHNpV6wDStGtdCQErJXcR5szdPH6XXhCHH5yRP
-         po2rbgpMC2XZQfDs3eH5ZgBvgNHaeLc1LyRirGHNP0JnNyDRXPhhZMtveGK48JDDGsZi
-         HX6/nHEpiEDYk39mYh57xydK+y/k/rsK+aMCbECpuLTPzJ3NAWbHxnEA0NlkbPA0GRJI
-         Jc9PEGtJTxme5EFHzumoWle8qBBTaPc+kOSroopXECWK0bubelFQK1eDdLNAhM1Kj4GR
-         3F9w==
+        bh=NnXgwqMa80GgQcjZaphhuCryiuQqQv6hvEmtAcagRtY=;
+        b=Y6rCA9o2f/NI+S8BIN3TvXbjfq9ybMB1G7Q9KQX3B+K4Cp2J0Ehi5nlbqDi/MjIz3C
+         D7csLNuQSuZRrKjPRxEvZJyJTwlyECGyVgp3ERZx4Xg53boHF8Zy0MNE3q9itV1Vm30Q
+         eXwA2APfJHxQcYMFPjsRyyPusvx5XoIry2qv0gYOEcq1WtP/NtXcLNYG+ve+JO18nxHs
+         nWLnDsFFbh1+shFw70JrGq3+adeq8zrsnxXIwxPDPb7OSV2hgx/JkUj0gc7z/TP4HT0w
+         gJ8wfmgek9zr2TQnF3A0MMqKPjqwvt2Ad1i20sN6cGg2d8MDAXls9pbOnkC/sfmk7SEX
+         Hs6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678950807;
+        d=1e100.net; s=20210112; t=1678951126;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eQqBxhsFpqht9TV3ODi4eqp1h6oGT5RNGJVf78eU7ys=;
-        b=fTv/vQNv37lTEfVUmxFmDtLZ1GldD7txNLf4nw0akAelbkgGDFnE7pVOkMDXCRoDh6
-         IXbw8tgf3LdBbK2GcPVzG63ylumSHhM9HnZWocPgMN5YAfoLp9iYtver6CnfigtlVMnK
-         mZHdWV491JMui1VZbch//AMbH68mr7udlKMRf2GHM+m2onVtlOfSEYvilkIdg2eTOgvf
-         0wwOrjNbud8WYTMOHJ5Gjiv+R3k4boQhQHbUTpnPOcsP9ppQEsg6762KZZhFWwPDioSN
-         Ri4Vr59XnBDnShRHtLNgzdLDoR+QAbg/F/xx0ilbSL9fvZWSxlwheA1ZJgms8MKT3d4L
-         uvIQ==
-X-Gm-Message-State: AO0yUKVL9zgFiuEqfGYbF2/xGJliresN4Se85JbMmGKDe0pIgXRr8R/l
-        hOChWTjbd+dgIZGvBH8Tzr8cZg==
-X-Google-Smtp-Source: AK7set+9y57Tbht/OlWaMi3QKo2qNZTFOC475LQrmWPsM5KyA5oghAoT+UaS5gVbwxz/UHpbpizsLg==
-X-Received: by 2002:a17:907:20c1:b0:930:604d:5891 with SMTP id qq1-20020a17090720c100b00930604d5891mr1177542ejb.37.1678950807103;
-        Thu, 16 Mar 2023 00:13:27 -0700 (PDT)
+        bh=NnXgwqMa80GgQcjZaphhuCryiuQqQv6hvEmtAcagRtY=;
+        b=Tby98r43g3/gPvXlAidza59IaLosMk+rOvHFuB53EpFIXxzLBDyZZ/DIzWwkR34ZCK
+         +9gswWpAXWp3ot2UuRHhL2aCSkkQGm2qJXggkue2UgsKPRxE82yTdbTxaa8eVKFVBPW0
+         pnHzxyAmiEqhIR0Q7eGpvLiNi4pQ1OEnrvOXhCeGsjnCR9D9oOiRxy7EtFhsoVJJxxjy
+         MvuggxI+9OjHSWAD5NpfBJZ38DF2my3LYm58VfuRGnS9JAt8la12X9Coe75JXiFazz1M
+         Bg7EtnQVm+/PwKUMwbJg/Qj9b7P26W4V3MaEo78UOBAu4VG3uLnZFFvA02AxHX2/cFkB
+         Sc1Q==
+X-Gm-Message-State: AO0yUKVe0l6rxDvTDvcKPHgZT0/P5gAON/eYfAP0arCrcF8CotXaTOSm
+        WTsA9QVHFS6PM6vEhXoEgvlHhg==
+X-Google-Smtp-Source: AK7set8KeJ1ASIpRhtbE5CF8uaaqBb8UCVuakG6IHDgYISCsD2RCx+znpN/mu0oRZl2mQ+YHVYN89A==
+X-Received: by 2002:aa7:c04f:0:b0:4fa:b302:84d0 with SMTP id k15-20020aa7c04f000000b004fab30284d0mr5511978edo.15.1678951122577;
+        Thu, 16 Mar 2023 00:18:42 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:9827:5f65:8269:a95f? ([2a02:810d:15c0:828:9827:5f65:8269:a95f])
-        by smtp.gmail.com with ESMTPSA id md21-20020a170906ae9500b0092b546b57casm3417008ejb.195.2023.03.16.00.13.25
+        by smtp.gmail.com with ESMTPSA id v1-20020a50c401000000b004acbda55f6bsm3401675edf.27.2023.03.16.00.18.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Mar 2023 00:13:26 -0700 (PDT)
-Message-ID: <d4831176-c6f1-5a9b-3086-23d82f1f05a6@linaro.org>
-Date:   Thu, 16 Mar 2023 08:13:24 +0100
+        Thu, 16 Mar 2023 00:18:42 -0700 (PDT)
+Message-ID: <d3dd5001-1b97-cc94-0a78-0420dc97614b@linaro.org>
+Date:   Thu, 16 Mar 2023 08:18:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH net-next 01/11] dt-bindings: net: snps,dwmac: Update
- interrupt-names
+Subject: Re: [PATCH net-next 03/11] dt-bindings: net: qcom,ethqos: Convert
+ bindings to yaml
 Content-Language: en-US
 To:     Andrew Halaney <ahalaney@redhat.com>, linux-kernel@vger.kernel.org
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -77,15 +77,14 @@ Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
         jsuraj@qti.qualcomm.com, hisunil@quicinc.com
 References: <20230313165620.128463-1-ahalaney@redhat.com>
- <20230313165620.128463-2-ahalaney@redhat.com>
+ <20230313165620.128463-4-ahalaney@redhat.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230313165620.128463-2-ahalaney@redhat.com>
+In-Reply-To: <20230313165620.128463-4-ahalaney@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -95,41 +94,93 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 13/03/2023 17:56, Andrew Halaney wrote:
 > From: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > 
-> As commit fc191af1bb0d ("net: stmmac: platform: Fix misleading
-> interrupt error msg") noted, not every stmmac based platform
-> makes use of the 'eth_wake_irq' or 'eth_lpi' interrupts.
+> Convert Qualcomm ETHQOS Ethernet devicetree binding to YAML.
 > 
-> So, update the 'interrupt-names' inside 'snps,dwmac' YAML
-> bindings to reflect the same.
-> 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> ---
-> 
-> I picked this up from:
-> 	https://lore.kernel.org/netdev/20220929060405.2445745-2-bhupesh.sharma@linaro.org/
-> No changes other than collecting the Acked-by.
-> 
->  Documentation/devicetree/bindings/net/snps,dwmac.yaml | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-> index 16b7d2904696..52ce14a4bea7 100644
-> --- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-> +++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-> @@ -105,8 +105,8 @@ properties:
->      minItems: 1
->      items:
->        - const: macirq
-> -      - const: eth_wake_irq
-> -      - const: eth_lpi
-> +      - enum: [eth_wake_irq, eth_lpi]
-> +      - enum: [eth_wake_irq, eth_lpi]
 
-I acked it before but this is not correct. This should be:
-+      - enum: [eth_wake_irq, eth_lpi]
-+      - enum: eth_lpi
+(...)
+
+> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+> new file mode 100644
+> index 000000000000..68ef43fb283d
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+> @@ -0,0 +1,112 @@
+> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Ethernet ETHQOS device
+> +
+> +maintainers:
+> +  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> +
+> +description:
+> +  This binding describes the dwmmac based Qualcomm ethernet devices which
+
+Drio "This binding describes", but say what is the hardware here.
+
+> +  support Gigabit ethernet (version v2.3.0 onwards).
+> +
+> +  So, this file documents platform glue layer for dwmmac stmmac based Qualcomm
+> +  ethernet devices.
+> +
+> +allOf:
+> +  - $ref: snps,dwmac.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,qcs404-ethqos
+> +      - qcom,sm8150-ethqos
+> +
+> +  reg:
+> +    maxItems: 2
+> +
+> +  reg-names:
+> +    items:
+> +      - const: stmmaceth
+> +      - const: rgmii
+> +
+> +  interrupts:
+> +    items:
+> +      - description: Combined signal for various interrupt events
+> +      - description: The interrupt that occurs when Rx exits the LPI state
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: macirq
+> +      - const: eth_lpi
+> +
+> +  clocks:
+> +    maxItems: 4
+> +
+> +  clock-names:
+> +    items:
+> +      - const: stmmaceth
+> +      - const: pclk
+> +      - const: ptp_ref
+> +      - const: rgmii
+> +
+> +  iommus:
+> +    maxItems: 1
+
+Isn't this new property? Last time I asked to mention the changes to the
+binding done during conversion. Explain shortly why you are adding new
+properties.
+
+> +
+> +required:
+> +  - compatible
+> +  - clocks
+> +  - clock-names
+
+reg-names
+
+> +
+> +unevaluatedProperties: false
+> +
 
 
 Best regards,
