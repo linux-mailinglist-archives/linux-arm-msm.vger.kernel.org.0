@@ -2,105 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A53A36BCD54
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 11:55:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F2D8B6BCD5B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 11:57:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229797AbjCPKzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 06:55:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49558 "EHLO
+        id S229812AbjCPK5e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 06:57:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229556AbjCPKzg (ORCPT
+        with ESMTP id S229690AbjCPK5e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 06:55:36 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 67BE21515B;
-        Thu, 16 Mar 2023 03:55:33 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9CD7E2F4;
-        Thu, 16 Mar 2023 03:56:16 -0700 (PDT)
-Received: from [10.57.54.186] (unknown [10.57.54.186])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 39F283F885;
-        Thu, 16 Mar 2023 03:55:29 -0700 (PDT)
-Message-ID: <0db33881-7978-41c9-45e3-63dc2ed7be4f@arm.com>
-Date:   Thu, 16 Mar 2023 10:55:27 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.8.0
-Subject: Re: [PATCH v1 0/3] Add support to configure Coresight Dummy subunit
-To:     Hao Zhang <quic_hazha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+        Thu, 16 Mar 2023 06:57:34 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7881A14987;
+        Thu, 16 Mar 2023 03:57:33 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 13FA061FD4;
+        Thu, 16 Mar 2023 10:57:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EDF5C4339C;
+        Thu, 16 Mar 2023 10:57:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678964250;
+        bh=xjzQr8LKE0yzsI8rxZWZ3vKP5CJ5x4ggIHwEWSA0jIo=;
+        h=From:To:Cc:Subject:Date:From;
+        b=nPXX63MDWCEtPp3v2RGNRhGcMnfuvBsCmGlipNu1WKBZ4Z4c9smgAEslpBJy/MWXl
+         02UXbWmu9BtXovvlB6VExtIfkS5sv9ZDwwoDhJyfwkSiUBBJmedS3Vpkoxpg98VRcF
+         dYEcYM2wIHRDj1Di/vlnxORocUf/08niFbiKHsoMgF0Eyeanze/Rn6gahitMxpdt7U
+         HtJwIPgb/eS+TEeYVpGYLbCnR02dYkWz9Xq2zpDMBCOxVfyFqrLZgn8ZQdlF5T1zlT
+         q1ai/NxkBJh6tUauvFDNy68eCHZVZ2mgRh7+m47K6BddZ4RqnWUD1zQAuq8PfRB3Bx
+         wAnu0JNu+OU3w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1pclJf-0004so-Ey; Thu, 16 Mar 2023 11:58:39 +0100
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Linus Walleij <linus.walleij@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Jonathan Corbet <corbet@lwn.net>
-Cc:     Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-doc@vger.kernel.org
-References: <20230316032005.6509-1-quic_hazha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20230316032005.6509-1-quic_hazha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH] dt-bindings: pinctrl: qcom,sc8280xp-tlmm: allow 'bias-bus-hold'
+Date:   Thu, 16 Mar 2023 11:58:00 +0100
+Message-Id: <20230316105800.18751-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/03/2023 03:20, Hao Zhang wrote:
-> Introduction of Coresight Dummy subunit
-> The Coresight Dummy subunit is for Coresight Dummy component, there are some
-> specific Coresight devices that HLOS don't have permission to access. Such as
+The controller supports 'bias-bus-hold' so add it to the binding.
 
-What is HLOS ?
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
 
-> some TPDMs, they would be configured in NON-HLOS side, but it's necessary to
+Linus, this is based on how the current driver (and sc7280) works, but
+without access to documentation I have no way of confirming this.
 
-What is NON-HLOS ?
+If Bjorn or anyone else with access to the docs could ack this before
+applying that would be good.
 
-> build Coresight path for it to debug. So there need driver to register dummy
-> devices as Coresight devices.
+Johan
 
-Build a path for who to debug ? If this is used by some privileged
-software, shouldn't that do all of the work ?
 
-Suzuki
+ .../devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml          | 1 +
+ 1 file changed, 1 insertion(+)
 
-> 
-> Commit link:
-> https://git.codelinaro.org/clo/linux-kernel/coresight/-/tree/coresight-dummy
-> 
-> Hao Zhang (3):
->    Coresight: Add coresight dummy driver
->    dt-bindings: arm: Add Coresight Dummy Trace YAML schema
->    Documentation: trace: Add documentation for Coresight Dummy Trace
-> 
->   .../bindings/arm/qcom,coresight-dummy.yaml    | 129 +++++++++++++
->   .../trace/coresight/coresight-dummy.rst       |  58 ++++++
->   drivers/hwtracing/coresight/Kconfig           |  11 ++
->   drivers/hwtracing/coresight/Makefile          |   1 +
->   drivers/hwtracing/coresight/coresight-dummy.c | 176 ++++++++++++++++++
->   5 files changed, 375 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
->   create mode 100644 Documentation/trace/coresight/coresight-dummy.rst
->   create mode 100644 drivers/hwtracing/coresight/coresight-dummy.c
-> 
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml
+index 97b27d6835e9..4ae39fc7894a 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml
+@@ -104,6 +104,7 @@ $defs:
+                 usb1_phy, usb1_sbrx, usb1_sbtx, usb1_usb4, usb2phy_ac,
+                 vsense_trigger ]
+ 
++      bias-bus-hold: true
+       bias-disable: true
+       bias-pull-down: true
+       bias-pull-up: true
+-- 
+2.39.2
 
