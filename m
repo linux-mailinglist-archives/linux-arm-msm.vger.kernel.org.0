@@ -2,132 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79FA06BCEAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 12:48:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C0B196BCEC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 12:54:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230248AbjCPLsQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 07:48:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47694 "EHLO
+        id S230029AbjCPLyJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 07:54:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230116AbjCPLsP (ORCPT
+        with ESMTP id S229627AbjCPLyJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 07:48:15 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F06FB2545
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 04:48:13 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id t11so1982949lfr.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 04:48:12 -0700 (PDT)
+        Thu, 16 Mar 2023 07:54:09 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CA86B79E2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 04:54:03 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id p23-20020a05600c1d9700b003ead4835046so3351710wms.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 04:54:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678967291;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mTZh2YGOKCD6ObCcKdxtN9WVXxV2EOgpOmxavrmWfT0=;
-        b=zXe1vnI6M/xM41XSqvsnHBqtU+qvIuErQs9OBY9HFblT1K5NSW8wDQx9wXomvwKz8s
-         GuQ8lqsC7EYEbC+J3bP1nyldIObtulzKHvTa84QK/sUUU8439kchpcdc2JoaEJSIruuM
-         hHcLKTYJUAHf+jNwxgbPoYPnZRZW4qn0EYcvV1k3GdpShUMOX3IL+uQRT2+PrOWmCgBN
-         Iqghp1CjJfbw07WtgUt9KQjqQb5kI7QQRnNkXv8R/AQhT+H+fXzufDtnoV5bfQnXpRIO
-         mQiU5VIDUhFU4MxOPh1cMU1gCXpV301ABxLiJShoYQavUlYB5r5BApHil8TLLMArkz6L
-         JeSA==
+        d=linaro.org; s=google; t=1678967642;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0uFoBC91q5VOOAd9taKsYCtd+FrLnQsGWtXFX+JEaiE=;
+        b=jjMDXSIXZzfRTYSnbX9Mr/KdIc0QFnzYdAQ9S8ArgGTUCs1WFd5qLtP9xIQIJcnfRl
+         +kCWYNMbCSGF2Q3Yn04z3qB3Kh1acy0QsQVzpRjxA7uSyWhHrzd2GjknX2UoKf7Jp+Xv
+         vtncFNEY1Kd7l69F25oh5mmfjRdjDEVuvofIOt1izRtW/mMfhbGR80tyegJQWyyv/zmY
+         MmZ/odykKrmClKh9um570beMx6Qp9AgXYik4ASWBadNI17upijzCNLfYokdZbMhO7/Un
+         VSzTHbzGBVRZmOVISJqhGeC1vvaFdJmJxqpGH5p2DcjGOO3ArEe1rQqapmkw1bISeyEO
+         Kiyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678967291;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mTZh2YGOKCD6ObCcKdxtN9WVXxV2EOgpOmxavrmWfT0=;
-        b=sMiQl9TrINEQ05YsDQmeIp1AnL2xkwbEFq/oLjPnXSLsjB07toGdKO/d+INzZu5Qg6
-         Lex55MaKYdduF0GwktuhJuWzsrRmcyUT6U9a5AmXGKM9Rm07ZBIzpyiJ8C3yTyCDoIEl
-         I9ezPBezD2rW7fXLHO/pmr1eIjM+MutGfQ/y9crEY/rSg+Y0+AfRAlSG3EtInkj0Alac
-         DRBiJww+Y2J0l3zMDxtW6eeqUR4C6CVMD18IlOCjotS1/D0i2w/3L31occpKOSeZAk1D
-         E2DvmXeeVtUsxGdJFax9yPhuTTnjdlyr/4vsDQsXTXmlLmXtGg5NrWuCBOHwvQC+kIi7
-         ellg==
-X-Gm-Message-State: AO0yUKVQy2ct/zpFltT7crr1W+Vd3DqQ3A9y4jvcRw38MmHGYiaDBMTh
-        sUhw/QPVMXm0d3q5LxtHji8mhw==
-X-Google-Smtp-Source: AK7set/dfPMrO+INaTGjLTo9Hn0MVYP5+g25TBUty0eN7zLTMKTrEKR4h0PYC90Dog4PmpGHesM0Ow==
-X-Received: by 2002:a05:6512:390a:b0:4cb:d3:3b99 with SMTP id a10-20020a056512390a00b004cb00d33b99mr2753855lfu.36.1678967291271;
-        Thu, 16 Mar 2023 04:48:11 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id a14-20020a056512390e00b004d5a720e689sm1198443lfu.126.2023.03.16.04.48.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 04:48:11 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 16 Mar 2023 12:48:05 +0100
-Subject: [PATCH 2/2] clk: qcom: dispcc-qcm2290: Add MDSS_CORE reset
+        d=1e100.net; s=20210112; t=1678967642;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0uFoBC91q5VOOAd9taKsYCtd+FrLnQsGWtXFX+JEaiE=;
+        b=ZYilJ31FEvuYQNHr0jdFw6L0pnaUSmY9w0d5QNcUTj3VFnQxyxeDRc4eVKGil30NJ7
+         ULuHj/Su5QOHqYkv6x2L+I3tGvn1YKsVMNXPPF9HmfnGvhcdbd+2AFWS8YEkfWtxXlHf
+         9HwRYNuOYX4w30SQbSK1NhMRc5bgH3M0EcPcW6DT5x4wgmiCrU/J0gv7rmPSZlg+YZBg
+         YODFH5umdH/GAlVkrwC5NFHzh8Xbt4IyXRPBP0FO7EiKcDQi83U2pJLLPjFitVA1T/+q
+         VFA2N4ymrlwO26rtrreVnpbByJW6Nd9/nedflsj6jzx3dhMknf9wNQHs3uxE2r3dahaU
+         eKyA==
+X-Gm-Message-State: AO0yUKUf+ah7IeQD+ShFii85XJlZTo/beYS42QpWVnN1xH4vZbNNGP/x
+        43zvZfnL0yvZpZb+qbpFH2Hr5w==
+X-Google-Smtp-Source: AK7set9Hrt5RyoRlxpHSmE6khdeump8dTgY0/+kD7fmRmozJMoSKNdoEVqtZwQHDJhcw0jetX5Hx8A==
+X-Received: by 2002:a1c:c907:0:b0:3ed:4f7d:f6ee with SMTP id f7-20020a1cc907000000b003ed4f7df6eemr1979671wmb.14.1678967642038;
+        Thu, 16 Mar 2023 04:54:02 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id q22-20020a056000137600b002c71d206329sm7006900wrz.55.2023.03.16.04.54.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Mar 2023 04:54:00 -0700 (PDT)
+Message-ID: <e3805411-170a-759b-3608-7f53464641e8@linaro.org>
+Date:   Thu, 16 Mar 2023 11:53:59 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] venus: Enable sufficient sequence change support for
+ sc7180 and fix for Decoder STOP command issue.
+Content-Language: en-US
+To:     quic_vboma@quicinc.com,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Vikash Garodia <vgarodia@qti.qualcomm.com>,
+        Dikshita Agarwal <dikshita@qti.qualcomm.com>
+References: <20230202064712.5804-2-quic_vboma@quicinc.com>
+ <20230316081509.12201-1-quic_vboma@quicinc.com>
+ <20230316081509.12201-2-quic_vboma@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230316081509.12201-2-quic_vboma@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230316-topic-qcm_dispcc_reset-v1-2-dd3708853014@linaro.org>
-References: <20230316-topic-qcm_dispcc_reset-v1-0-dd3708853014@linaro.org>
-In-Reply-To: <20230316-topic-qcm_dispcc_reset-v1-0-dd3708853014@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1678967287; l=1246;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=Onphm3eGwIsdqNCztm3twTm8oxjqL4WoJkseLjfhVRI=;
- b=KefS+jK5dQq+akWaS7mbsJFrPC4cM5qjQ7cFDJJZf+ymqIQZ04xzm2i9pN++v6JNl8t2M4hQ7dhz
- cQj23S0dC0Sf1q+AKAyy+9JMy7ke7zQ07yoAsEUrw9q9cNPKJ3F3
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the MDSS_CORE reset which can be asserted to reset the state of
-the entire MDSS.
+On 16/03/2023 08:15, quic_vboma@quicinc.com wrote:
+> +	if (IS_V4(core))
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Hi Viswanath,
+
+Could you please take in the change to base on on IRIS version and 
+rebase your patch on _that_ much at least, not necessarily all of the 
+changes in the series below. Dikshita should be able help.
+
+https://lore.kernel.org/linux-arm-msm/c9c324aa-6192-f878-9189-635626e76b13@quicinc.com/
+
+IRIS version is more granular/accurate than V4/V6 etc.
+
 ---
- drivers/clk/qcom/dispcc-qcm2290.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/drivers/clk/qcom/dispcc-qcm2290.c b/drivers/clk/qcom/dispcc-qcm2290.c
-index 2ebd9a02b895..cbb5f1ec6a54 100644
---- a/drivers/clk/qcom/dispcc-qcm2290.c
-+++ b/drivers/clk/qcom/dispcc-qcm2290.c
-@@ -20,6 +20,7 @@
- #include "clk-regmap-divider.h"
- #include "common.h"
- #include "gdsc.h"
-+#include "reset.h"
- 
- enum {
- 	P_BI_TCXO,
-@@ -445,6 +446,10 @@ static struct clk_branch disp_cc_sleep_clk = {
- 	},
- };
- 
-+static const struct qcom_reset_map disp_cc_qcm2290_resets[] = {
-+	[DISP_CC_MDSS_CORE_BCR] = { 0x2000 },
-+};
-+
- static struct gdsc mdss_gdsc = {
- 	.gdscr = 0x3000,
- 	.pd = {
-@@ -494,6 +499,8 @@ static const struct qcom_cc_desc disp_cc_qcm2290_desc = {
- 	.num_clks = ARRAY_SIZE(disp_cc_qcm2290_clocks),
- 	.gdscs = disp_cc_qcm2290_gdscs,
- 	.num_gdscs = ARRAY_SIZE(disp_cc_qcm2290_gdscs),
-+	.resets = disp_cc_qcm2290_resets,
-+	.num_resets = ARRAY_SIZE(disp_cc_qcm2290_resets),
- };
- 
- static const struct of_device_id disp_cc_qcm2290_match_table[] = {
-
--- 
-2.39.2
-
+bod
