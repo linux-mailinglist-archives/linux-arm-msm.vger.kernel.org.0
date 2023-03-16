@@ -2,151 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 851EE6BD20F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 15:14:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DC5E6BD2AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 15:48:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231321AbjCPOOL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 10:14:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36094 "EHLO
+        id S230307AbjCPOsk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 10:48:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230394AbjCPONp (ORCPT
+        with ESMTP id S230315AbjCPOsj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 10:13:45 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AA098A391
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 07:13:24 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id b13so1834189ljf.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 07:13:24 -0700 (PDT)
+        Thu, 16 Mar 2023 10:48:39 -0400
+Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A5D01ACE8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 07:48:37 -0700 (PDT)
+Received: by mail-vs1-xe33.google.com with SMTP id o32so1705928vsv.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 07:48:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678976004;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=N1o/g/RY/F8tw5gI99MfNC1MgutCzKG48oc2MA5z/Ao=;
-        b=Qrr803nV2RNxyMhr4k1CujiqeMiu6xeEfZDomigDzlgOJ2+LAoow9y4SpnULqM533W
-         JGYU4zjecXMNVzRMcYjhYBo9bJKzgh9fndduUqthz5eV7m0AegygBhQ+m1SwDg1hCTN/
-         rnHE2vUTqT5qun7CkRIHPNhcCN2biGs4H9UjkIKTUfCCMvjN4tOS2/1osalKAkFcJB+S
-         9GXXMgz+BHuHgPrKWIluWCd1qhoHJ6ZiQCleccrZYMrDoQe116QM7kTG4KQKrlbgq3Q3
-         hlL4xAJbs94Mc1ULnoRauUdmiuxvn0lHeBTU3GqdlA7B+wCkZXGaFUvQPY+eoSYTGGD1
-         b6Bw==
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1678978116;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5D7kiOj4gnK/59hK4rYeGFr7qsbvI5Wb0oej3O0Nx10=;
+        b=1EyCeultkcuFWM8iBsx/m6fvHeqNzOaXvqKmBL725CYN7u0Sc28/bfjV38II7p5wlY
+         V7p/aPVd6MVgWry2SsbS1LKZebBDBhz24OJhIR6N4XH89mHV+13RKj2E7h83CTspv96t
+         mV/3jOnFiq3rB3CfboYKDAyl8z3sFZ7xmwtoYwR+YFsPCtIOixdmRyxmPaNNE1uWwCQK
+         e+0/2ai3IaOrv/9xvM/PYkleaIsDq01k6R9u9wEkjOC4NFSymKS3qJmgpN40cG3qvRw0
+         bAGEW0NWj8qj3wKgmuoUfGmUlQ/rThuq+q2OpgKi0ZjMz+MMAJB+JybtFOjVi8PiGntF
+         USeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678976004;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1678978116;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=N1o/g/RY/F8tw5gI99MfNC1MgutCzKG48oc2MA5z/Ao=;
-        b=YssGjZiMbDr/uAld5IOhiH+3FbURA47exllC5E7XB2hC2ISJqlT0R5Q7Hfa3zqVn/e
-         b8BKm9gIVQBr4q7xTHatfA+4g6ky6ozp3K0FtKABP+XG0JpPdrwXbmNh6FP/hN0CDlfi
-         VNgZPXf7FM2o7Z1NjbtUd6eSZ4eXRVfHMO5CXX2AXKM4Eet+vO9gC5IlDxXSrSXuc1z4
-         fuOz/2GsB/5wUFw2qp/MUdBCHL3hS+lcrl9taaRmX3fC/IYuXN4hgkvln9p4KKFJA4L2
-         ol6CikqwfgrQxj0vtYyEsMCrbUukD+2qN+GaCM0I1ewVSx9H5mvf5+E4rdZ6UdUdQQ6j
-         Dt/w==
-X-Gm-Message-State: AO0yUKXjOijCWiJ009weO2DfVlMCZvDqIP018F1/GGpEFiyY/6uKVNSo
-        oDijGQo671uWKOvlw6UGBS2UxQ==
-X-Google-Smtp-Source: AK7set/UGvfpSQFBo90NawVNe6QbJ7gg6a+/gN9CBL5rHc7OuxYMSwd/oOp6n4BYEocyNvy2n8HwXA==
-X-Received: by 2002:a2e:be12:0:b0:298:a841:4d0f with SMTP id z18-20020a2ebe12000000b00298a8414d0fmr3091124ljq.52.1678976003979;
-        Thu, 16 Mar 2023 07:13:23 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id a9-20020a2eb549000000b00295735991edsm1261639ljn.38.2023.03.16.07.13.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 07:13:23 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 16 Mar 2023 15:13:03 +0100
-Subject: [PATCH v2 14/14] arm64: dts: qcom: sm6375-pdx225: Add volume down
- GPIO key
+        bh=5D7kiOj4gnK/59hK4rYeGFr7qsbvI5Wb0oej3O0Nx10=;
+        b=1VUXia0sapz2XRC31n0SnCDFrjY2KZS4oOZOiCOVEQ6VQRIqipxpHehj5jTo7jXS+9
+         9h0u8hWCBVaLPkhDiZ1xiZJ2fqS7MXs4Ai2AixRlFNB4W4SE7NnSws4QJHQIdFpnx5je
+         NjdqSbsC3t194uBd8swAR6Ah6zKVcnmnjpJHcNC2unaQHE7FWyGD7jebAga66SaUi4CU
+         Og0kWez6fJ3+mUL3T5PiptwaaJCg3FilhZQujbltP9I2zf3SU4K8k/kh8/DIJPvQGObC
+         cddydQ4OP4jiBPSWe74yHjqghB9y98Z3pa66dwpfJFLvwHnEMisF4C6VnPLhtVIp3Ndn
+         q6gA==
+X-Gm-Message-State: AO0yUKUdPOgvv5arPMWH3yrzK19mmyxwUrVQKHf2gjXBOIK0bRAV5gAx
+        lt46ZhdKFnG9x6If0/uRBioPY7ZadEaHGTSN1C7VoA==
+X-Google-Smtp-Source: AK7set9hresCFKa/wvC5SlJJTtVVVZfKzdiouMqI/exLoXPbb3ubYlDT3qxmZdYhYTaa0AUo709sV856uhsqLMC3WEo=
+X-Received: by 2002:a67:e003:0:b0:425:d57c:bbd6 with SMTP id
+ c3-20020a67e003000000b00425d57cbbd6mr1566591vsl.0.1678978115876; Thu, 16 Mar
+ 2023 07:48:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230303-topic-sm6375_features0_dts-v2-14-708b8191f7eb@linaro.org>
-References: <20230303-topic-sm6375_features0_dts-v2-0-708b8191f7eb@linaro.org>
-In-Reply-To: <20230303-topic-sm6375_features0_dts-v2-0-708b8191f7eb@linaro.org>
-To:     Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Rob Herring <robh+dt@kernel.org>,
+References: <20230309103752.173541-1-brgl@bgdev.pl>
+In-Reply-To: <20230309103752.173541-1-brgl@bgdev.pl>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Thu, 16 Mar 2023 15:48:25 +0100
+Message-ID: <CAMRc=Mes7ETY7isa-Kh4VHa1eyJHO3OjvWq6VeJRSnZCkX9_6Q@mail.gmail.com>
+Subject: Re: [PATCH v5 0/9] arm64: dts: qcom: sa8775p-ride: enable relevant
+ QUPv3 IPs
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1678975978; l=1409;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=lUoSxwe6wDxHMv1iTDzFHuYZxKLyt1OMfELUkCo9Rp0=;
- b=6DAUo0XuzRtK0oppQWVoexEKvP1e3HUzo7m6yHp02zNfdQCZy++x2swjD+iPpuCPGEqXhadgLXw1
- vUFy4zVZC4oEvOr9UIOEQQso+Cesl5GsmGvY9LDCbFthxOsz9AIm
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the required nodes to enable the volume down key on the Sony
-Xperia 10 IV.
+On Thu, Mar 9, 2023 at 11:37=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl>=
+ wrote:
+>
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> This enables the QUPv3 interfaces that are exposed on the sa8775p-ride
+> board: I2C, SPI and the Bluetooth and GNSS UART ports.
+>
+> v4 -> v5:
+> - remove board-specific interrupt from UART17 in SoC dtsi
+> - rearrange node properties to have various *-cells properties come right
+>   before status
+> - collect more tags
+>
+> v3 -> v4:
+> - use interconnect constants instead of magic numbers where applicable
+> - pad addresses in reg to 8 digits
+> - group pins under state nodes for UART
+>
+> v2 -> v3:
+> - fix the interrupt number for uart12
+> - replace underscores with hyphens in DT node names (although make dtbs_c=
+heck
+>   does not raise warnings about this)
+> - rearrange the commits so that they're more fine-grained with separate
+>   patches for adding nodes to dtsi and enabling them for the board
+>
+> v1 -> v2:
+> - uart17 is the Bluetooth port, not GNSS
+> - add uart12 for GNSS too in that case
+>
+> Bartosz Golaszewski (9):
+>   arm64: dts: qcom: sa8775p: add the QUPv3 #2 node
+>   arm64: dts: qcom: sa8775p-ride: enable QUPv3 #2
+>   arm64: dts: qcom: sa8775p: add the i2c18 node
+>   arm64: dts: qcom: sa8775p-ride: enable i2c18
+>   arm64: dts: qcom: sa8775p: add the spi16 node
+>   arm64: dts: qcom: sa8775p-ride: enable the SPI node
+>   arm64: dts: qcom: sa8775p: add high-speed UART nodes
+>   arm64: dts: qcom: sa8775p-ride: enable the GNSS UART port
+>   arm64: dts: qcom: sa8775p-ride: enable the BT UART port
+>
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 99 +++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi     | 86 ++++++++++++++++++++
+>  2 files changed, 185 insertions(+)
+>
+> --
+> 2.37.2
+>
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- .../dts/qcom/sm6375-sony-xperia-murray-pdx225.dts  | 27 ++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+Bjorn,
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-index b691c3834b6b..8220e6f44117 100644
---- a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-@@ -46,6 +46,23 @@ framebuffer: framebuffer@85200000 {
- 		};
- 	};
- 
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		label = "gpio-keys";
-+
-+		pinctrl-0 = <&vol_down_n>;
-+		pinctrl-names = "default";
-+
-+		key-volume-down {
-+			label = "Volume Down";
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			gpios = <&pmr735a_gpios 1 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+	};
-+
- 	reserved-memory {
- 		cont_splash_mem: memory@85200000 {
- 			reg = <0 0x85200000 0 0xc00000>;
-@@ -133,6 +150,16 @@ &pmk8350_rtc {
- 	status = "okay";
- };
- 
-+&pmr735a_gpios {
-+	vol_down_n: vol-down-n-state {
-+		pins = "gpio1";
-+		function = "normal";
-+		power-source = <1>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
- &pon_pwrkey {
- 	status = "okay";
- };
+I noticed you're picking up the reviewed patches. :) This series seems
+ready to go into your tree as well.
 
--- 
-2.39.2
-
+Thanks in advance,
+Bartosz
