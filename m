@@ -2,71 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C5C26BC8B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 09:14:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 726EB6BC897
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Mar 2023 09:13:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230200AbjCPIOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 04:14:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58592 "EHLO
+        id S231254AbjCPINZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 04:13:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230267AbjCPIOS (ORCPT
+        with ESMTP id S231209AbjCPIM5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 04:14:18 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38B3EB3E1D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 01:13:23 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id k2so877977pll.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 01:13:23 -0700 (PDT)
+        Thu, 16 Mar 2023 04:12:57 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53744B3729
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 01:12:33 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id fd5so4199480edb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 01:12:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678954377;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2XfRU46h/LdNPZlNmzHa3o2bfWEEqqbeXYLd09w6/jk=;
-        b=Q+p7maJ3CcszEhUPzBF+S8zKel0Cr+MJWS+wEy3YCu/qKWNSHcsPlkQEkjg1WJAJ9R
-         cQs5M89L7wQ4pz4f3ygtSP6tTDl1A6Xbk7lpy0qzBR1K87zqhAT7A4tTSGNBYohMhbWO
-         eKQILOX0e4nvf+AZ7ArmIr5qzFORbee28qcjPhGlGPGx3ICBRjj2+MlnLHPMP1+G2RMC
-         nYS6KscYo+KG1ycHE+WTH3l9bWoZzvolDS7GBxifIk62sQnUnOUR64viEkPZNMTZ08ml
-         RmipQiUmgcIbnsblDftgW0g2J+Uc2s/WKTlgW7cpavTIzCLzcurGkp8UTW2PvYbm/jS+
-         /ocA==
+        d=linaro.org; s=google; t=1678954348;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GCiG6dJpmfG/sbbJg8bGZk+CNQ9dVe/ueslAXrzul14=;
+        b=OLj7QfyYZwreKo0JtHFnAC9gT9S+F9luw8+lvXjQ50SF24oCO0OLe8cVvVnuU5wB04
+         oB0UlPufKyK7rJQ+bOfC9VUz45l00+Nrss4mex2UuaTXBqF5/YBHOBP/wWzn13Kl+hSW
+         ZPsnWWLTuDlaj8LAMUBpDW0i1Vm58EtbA7kHVRe44ng6iFraXn3wjS9rKKDE3lRpd5Le
+         OajO6/IhcUFhm5Pahg9FJAp+Jwe2isbz68z8r5Z6Zd3F/hXbB04VJb2MhI+ljla6cwLh
+         J4dD1bkhFr8PtqJrWsFtUzodV5gMn/+ifbJRmpfxOe/E2McbFgtNql6vuK1g6s9XtfpK
+         tdrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678954377;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2XfRU46h/LdNPZlNmzHa3o2bfWEEqqbeXYLd09w6/jk=;
-        b=YSMKVSV5Pq25J43uDyBuXZBUdV3YdyYEwIXFNOA91cZYeQjR9pp2B5jQjjEpPEcSyV
-         oqzIWRMrdSvo4ee8EDO4+iJti95loN/TzKcag0DYK2gkiWSEgOq7ST2uhqezZRtXdldi
-         DiVi4xjZ1j0RVw+eq4QibdKiCZctMfkhd9ENMyfe4Vg4IotwFjndgDBWE1QSr4ZCMGtj
-         zQRFvVNeioUziQRaXUYqYsM3uD4vUIvOhxQfZXNXbrRHwec479ieBXrq5CcdXTeF60XH
-         KtOfISv5XdNghCZhOWtuxE37bjoTm/XF85Hb79+BuD2R+pS3gGROVTIlpcGwlNQAthVQ
-         O1gQ==
-X-Gm-Message-State: AO0yUKWd6eGfjYY0o0fs0463tRO64GTnt9svHr6axJsJcMtfN99DcZcc
-        Oj1ZG2x1sOeuunNU7tk7k/jbbl8AbBzNbBCixg==
-X-Google-Smtp-Source: AK7set9rShOagr4wGVhZzZQxx1Sv+ZpidxpOkxZ7c5l1ej/2LxvxmqL3DHaomGRW09MsbFQgnefXXQ==
-X-Received: by 2002:a05:6a20:b704:b0:d0:15c9:4e67 with SMTP id fg4-20020a056a20b70400b000d015c94e67mr2528810pzb.19.1678954377430;
-        Thu, 16 Mar 2023 01:12:57 -0700 (PDT)
-Received: from localhost.localdomain ([117.207.30.24])
-        by smtp.gmail.com with ESMTPSA id 13-20020aa7910d000000b005d9984a947bsm4804422pfh.139.2023.03.16.01.12.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 01:12:57 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org, lpieralisi@kernel.org, kw@linux.com,
-        krzysztof.kozlowski+dt@linaro.org, robh@kernel.org
-Cc:     konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_srichara@quicinc.com,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v5 19/19] PCI: qcom: Expose link transition counts via debugfs
-Date:   Thu, 16 Mar 2023 13:41:17 +0530
-Message-Id: <20230316081117.14288-20-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230316081117.14288-1-manivannan.sadhasivam@linaro.org>
-References: <20230316081117.14288-1-manivannan.sadhasivam@linaro.org>
+        d=1e100.net; s=20210112; t=1678954348;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GCiG6dJpmfG/sbbJg8bGZk+CNQ9dVe/ueslAXrzul14=;
+        b=20ylUrH58PLWP7ChGWwHEX2dz9kOmEnpnhlQfl+bGNF33b1zYYtOW1J6lzw4IqN9Hw
+         kwhDLM6qW1nF7sEwSe90T8L/dT0jS48aqYvBTbwXNapazKmJ/PqJl0xNBMzo400hV3E6
+         LSWdjA731PMpabO8IxlL4bfOCIfnPjceUYrCd7A7vE2wI17dx6bmV1WudZi37vyp8shM
+         hDGZgATNxTBSqxch0g0vDMWe5wghjeChlLDqoNwwQdm4XJEkAAkbhfwYu6WbQ4WCD5fu
+         +zkQg19EHrN7JHCvll5RUoBmYsyWVw/F7UwK2RcWWIHdT3chLz1hRT3HQm0RMquI5u0D
+         ANLQ==
+X-Gm-Message-State: AO0yUKV1R1KfNrCI1TQ0m+QcHZpoQQzkrxOOJjtHyxx5ip4xYpQ3NJXR
+        8EVNVOJS8oZ9rEvG7dhR5FatxK0opykOQc/I6p4=
+X-Google-Smtp-Source: AK7set9YahOMys4Z/ysmxCqUAg8miomha6ccdvvx7lfoqZVecUevePrWpO+50TvWbpt/TGyu1U0tkQ==
+X-Received: by 2002:a17:906:3156:b0:8b2:7564:dfd5 with SMTP id e22-20020a170906315600b008b27564dfd5mr9344400eje.60.1678954348377;
+        Thu, 16 Mar 2023 01:12:28 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:9827:5f65:8269:a95f? ([2a02:810d:15c0:828:9827:5f65:8269:a95f])
+        by smtp.gmail.com with ESMTPSA id l26-20020a170906a41a00b009260634e25asm3520485ejz.121.2023.03.16.01.12.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Mar 2023 01:12:28 -0700 (PDT)
+Message-ID: <411d138a-c3a2-3b99-937f-7436142ac813@linaro.org>
+Date:   Thu, 16 Mar 2023 09:12:26 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,qcm2290-tlmm: Allow
+ input-enable
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230314222705.2940258-1-konrad.dybcio@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230314222705.2940258-1-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,143 +82,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm PCIe controllers have debug registers in the MHI region that
-count PCIe link transitions. Expose them over debugfs to userspace to
-help debug the low power issues.
+On 14/03/2023 23:27, Konrad Dybcio wrote:
+> Allow the common input-enable. This was missed with the
+> initial submission.
+> 
+> Fixes: 5147022214db ("dt-bindings: pinctrl: qcom: Add QCM2290 pinctrl bindings")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/pinctrl/qcom,qcm2290-tlmm.yaml | 1 +
 
-Note that even though the registers are prefixed as PARF_, they don't
-live under the "parf" register region. The register naming is following
-the Qualcomm's internal documentation as like other registers.
 
-While at it, let's arrange the local variables in probe function to follow
-reverse XMAS tree order.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 65 +++++++++++++++++++++++++-
- 1 file changed, 63 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 7daff0421b86..f3e606b038c3 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -10,6 +10,7 @@
- 
- #include <linux/clk.h>
- #include <linux/crc8.h>
-+#include <linux/debugfs.h>
- #include <linux/delay.h>
- #include <linux/gpio/consumer.h>
- #include <linux/interconnect.h>
-@@ -62,6 +63,13 @@
- #define AXI_MSTR_RESP_COMP_CTRL1		0x81c
- #define MISC_CONTROL_1_REG			0x8bc
- 
-+/* MHI registers */
-+#define PARF_DEBUG_CNT_PM_LINKST_IN_L2		0xc04
-+#define PARF_DEBUG_CNT_PM_LINKST_IN_L1		0xc0c
-+#define PARF_DEBUG_CNT_PM_LINKST_IN_L0S		0xc10
-+#define PARF_DEBUG_CNT_AUX_CLK_IN_L1SUB_L1	0xc84
-+#define PARF_DEBUG_CNT_AUX_CLK_IN_L1SUB_L2	0xc88
-+
- /* PARF_SYS_CTRL register fields */
- #define MAC_PHY_POWERDOWN_IN_P2_D_MUX_EN	BIT(29)
- #define MST_WAKEUP_EN				BIT(13)
-@@ -229,11 +237,13 @@ struct qcom_pcie {
- 	struct dw_pcie *pci;
- 	void __iomem *parf;			/* DT parf */
- 	void __iomem *elbi;			/* DT elbi */
-+	void __iomem *mhi;
- 	union qcom_pcie_resources res;
- 	struct phy *phy;
- 	struct gpio_desc *reset;
- 	struct icc_path *icc_mem;
- 	const struct qcom_pcie_cfg *cfg;
-+	struct dentry *debugfs;
- };
- 
- #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-@@ -1382,13 +1392,51 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
- 	}
- }
- 
-+static int qcom_pcie_link_transition_count(struct seq_file *s, void *data)
-+{
-+	struct qcom_pcie *pcie = (struct qcom_pcie *)dev_get_drvdata(s->private);
-+
-+	seq_printf(s, "L0s transition count: %u\n",
-+		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_PM_LINKST_IN_L0S));
-+
-+	seq_printf(s, "L1 transition count: %u\n",
-+		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_PM_LINKST_IN_L1));
-+
-+	seq_printf(s, "L1.1 transition count: %u\n",
-+		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_AUX_CLK_IN_L1SUB_L1));
-+
-+	seq_printf(s, "L1.2 transition count: %u\n",
-+		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_AUX_CLK_IN_L1SUB_L2));
-+
-+	seq_printf(s, "L2 transition count: %u\n",
-+		   readl_relaxed(pcie->mhi + PARF_DEBUG_CNT_PM_LINKST_IN_L2));
-+
-+	return 0;
-+}
-+
-+static void qcom_pcie_init_debugfs(struct qcom_pcie *pcie)
-+{
-+	struct dw_pcie *pci = pcie->pci;
-+	struct device *dev = pci->dev;
-+	char *name;
-+
-+	name = devm_kasprintf(dev, GFP_KERNEL, "%pOFP", dev->of_node);
-+	if (!name)
-+		return;
-+
-+	pcie->debugfs = debugfs_create_dir(name, NULL);
-+	debugfs_create_devm_seqfile(dev, "link_transition_count", pcie->debugfs,
-+				    qcom_pcie_link_transition_count);
-+}
-+
- static int qcom_pcie_probe(struct platform_device *pdev)
- {
-+	const struct qcom_pcie_cfg *pcie_cfg;
- 	struct device *dev = &pdev->dev;
-+	struct qcom_pcie *pcie;
- 	struct dw_pcie_rp *pp;
-+	struct resource *res;
- 	struct dw_pcie *pci;
--	struct qcom_pcie *pcie;
--	const struct qcom_pcie_cfg *pcie_cfg;
- 	int ret;
- 
- 	pcie_cfg = of_device_get_match_data(dev);
-@@ -1436,6 +1484,16 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 		goto err_pm_runtime_put;
- 	}
- 
-+	/* MHI region is optional */
-+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mhi");
-+	if (res) {
-+		pcie->mhi = devm_ioremap_resource(dev, res);
-+		if (IS_ERR(pcie->mhi)) {
-+			ret = PTR_ERR(pcie->mhi);
-+			goto err_pm_runtime_put;
-+		}
-+	}
-+
- 	pcie->phy = devm_phy_optional_get(dev, "pciephy");
- 	if (IS_ERR(pcie->phy)) {
- 		ret = PTR_ERR(pcie->phy);
-@@ -1466,6 +1524,9 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 
- 	qcom_pcie_icc_update(pcie);
- 
-+	if (pcie->mhi)
-+		qcom_pcie_init_debugfs(pcie);
-+
- 	return 0;
- 
- err_phy_exit:
--- 
-2.25.1
+Best regards,
+Krzysztof
 
