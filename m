@@ -2,155 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAEAE6BED92
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 17:02:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E4A1B6BEE30
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 17:28:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230194AbjCQQCw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 12:02:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58360 "EHLO
+        id S229648AbjCQQ2r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 12:28:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229879AbjCQQCu (ORCPT
+        with ESMTP id S229542AbjCQQ2q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 12:02:50 -0400
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1271A4741D;
-        Fri, 17 Mar 2023 09:02:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-        bh=8jvxC/cI3fuMCxuOzLp5kkLkPCuNIeHm7MIIEgtYwp0=; b=QhENWArrtirPbhzhLN30jRAefc
-        lz8GpWMl3QuOk6oBP0IsKB5XWyFBxKy09l3Nw0LaoTIA14YELZMINqf23Su8H5fqRgm8TbsZX0pPr
-        SUTaEqmDdOFsWkLazi3MEIkn5UJu/YeAlYXezAUetbFCiStVTv/VFa8efWpFLiFc3bkw=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-        (envelope-from <andrew@lunn.ch>)
-        id 1pdCXL-007cwr-7Z; Fri, 17 Mar 2023 17:02:35 +0100
-Date:   Fri, 17 Mar 2023 17:02:35 +0100
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>
-Cc:     Christian Marangi <ansuelsmth@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Lee Jones <lee@kernel.org>, linux-leds@vger.kernel.org,
-        pavel@ucw.cz, Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH v4 10/14] dt-bindings: net: dsa: qca8k: add LEDs
- definition example
-Message-ID: <c087d270-56f6-4ead-a15b-aa3bfb732ba8@lunn.ch>
-References: <20230317023125.486-1-ansuelsmth@gmail.com>
- <20230317023125.486-11-ansuelsmth@gmail.com>
- <20230317091410.58787646@dellmb>
+        Fri, 17 Mar 2023 12:28:46 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 396884A1DC;
+        Fri, 17 Mar 2023 09:28:28 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32HEoEXK005697;
+        Fri, 17 Mar 2023 16:28:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=AlJK1BbSsS090U1G8HHps6U2JClnT8EAe006kptGfaY=;
+ b=Nwsgu/2A/OA65NGtoMRbci+MV+mJuc0SgHyUcEY13u65dlwoEwiPo7OCs/HNxFczVmd5
+ 8cGMc0RTMhpIm150bycuyqdjPRzp0ISBC8Tsj7pJbwuLUhcqKf/WLDENmQtlGnr5vNY3
+ gFjWr5YZTuuPZDFdXoTKRW7RnKxiTYu2Q1Ef1jU1D8drlFW6NUbkO87yA54tQyQ753Qj
+ RKtTUQqNSaRulPCtJDKMOvj4+22Bz2dWYtskrx7Z1l77GRbFtWkUM4jDXUnmVAmLWUfV
+ prp3zVfz5wBk7WpKMekl2lVVLQh2MPy20gRVc8oNYbCHhROU2UgCn41vPqd+kYvo8bvb /A== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pctap8f1s-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 17 Mar 2023 16:28:24 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32HGSOFL001889
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 17 Mar 2023 16:28:24 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Fri, 17 Mar 2023 09:28:21 -0700
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linus.walleij@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: [PATCH v3 0/5] Refactor to support multiple download mode 
+Date:   Fri, 17 Mar 2023 21:57:57 +0530
+Message-ID: <1679070482-8391-1-git-send-email-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230317091410.58787646@dellmb>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Bobk-3pR82RrRdXpTU6E7gDWSLFXHhEg
+X-Proofpoint-GUID: Bobk-3pR82RrRdXpTU6E7gDWSLFXHhEg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-17_10,2023-03-16_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ clxscore=1011 mlxscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
+ impostorscore=0 suspectscore=0 priorityscore=1501 spamscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303150002
+ definitions=main-2303170110
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> I would like to start a discussion on this and hear about your opinions,
-> because I think that the trigger-sources and function properties were
-> proposed in good faith, but currently the implementation and usage is a
-> mess.
- 
-Hi Marek
+Intention of this series to support multiple download mode and
+only modify the required bits during setting tcsr register.
 
-We are pushing the boundaries of the LED code here, doing things which
-have not been done before, as far as i know. So i expect some
-discussion about this. However, that discussion should not really
-affect this patchset, which is just adding plain boring software
-controlled LEDs.
+Other download modes are minidump, bothdump (full dump + minidump).
 
-A quick recap about ledtrig-netdev.
+Minidump kernel driver patches has been sent here
+https://lore.kernel.org/lkml/1676978713-7394-1-git-send-email-quic_mojha@quicinc.com/
 
-If you have a plain boring LED, you have:
+Changes in v3:
+ - Removed [1] from the series and sent as a separate patch[2], although this series
+   should be applied on top [2].
+  [1] https://lore.kernel.org/lkml/1677664555-30191-2-git-send-email-quic_mojha@quicinc.com/
+  [2] https://lore.kernel.org/lkml/1678979666-551-1-git-send-email-quic_mojha@quicinc.com/
+ - Introduce new exported symbol on suggestion from [srinivas.kandagatla]
+ - Use the symbol from drivers/pinctrl/qcom/pinctrl-msm.c.
+ - Addressed comment given by [dmitry.baryshkov]
+ - Converted non-standard Originally-by to Signed-off-by.
 
-root@370rd:/sys/class/net/eth0/phydev/leds/f1072004.mdio-mii:00:WAN# ls
-brightness  device  max_brightness  power  subsystem  trigger  uevent
+Changes in v2: https://lore.kernel.org/lkml/1677664555-30191-1-git-send-email-quic_mojha@quicinc.com/
+ - Addressed comment made by [bjorn]
+ - Added download mask.
+ - Passed download mode as parameter
+ - Accept human accepatable download mode string.
+ - enable = !!dload_mode
+ - Shifted module param callback to somewhere down in
+   the file so that it no longer need to know the
+   prototype of qcom_scm_set_download_mode()
+ - updated commit text.
 
-You can turn the LED on with
 
-root@370rd:/sys/class/net/eth0/phydev/leds/f1072004.mdio-mii:00:WAN# echo 1 > brightness 
+Mukesh Ojha (5):
+  firmware: qcom_scm: provide a read-modify-write function
+  pinctrl: qcom: Use qcom_scm_io_update_field()
+  firmware: scm: Modify only the download bits in TCSR register
+  firmware: qcom_scm: Refactor code to support multiple download mode
+  firmware: qcom_scm: Add multiple download mode support
 
-and turn it off with:
+ drivers/firmware/Kconfig               | 11 -----
+ drivers/firmware/qcom_scm.c            | 88 ++++++++++++++++++++++++++++++----
+ drivers/pinctrl/qcom/pinctrl-msm.c     | 15 +++---
+ include/linux/firmware/qcom/qcom_scm.h |  2 +
+ 4 files changed, 89 insertions(+), 27 deletions(-)
 
-root@370rd:/sys/class/net/eth0/phydev/leds/f1072004.mdio-mii:00:WAN# echo 0 > brightness 
+-- 
+2.7.4
 
-You select the trigger via the trigger sysfs file:
-
-root@370rd:/sys/class/net/eth0/phydev/leds/f1072004.mdio-mii:00:WAN# cat trigger 
-[none] kbd-scrolllock kbd-numlock kbd-capslock kbd-kanalock kbd-shiftlock kbd-altgrlock kbd-ctrllock kbd-altlock kbd-shiftllock kbd-shiftrlock kbd-ctrlllock kbd-ctrlrlock timer heartbeat netdev mmc0
-
-root@370rd:/sys/class/net/eth0/phydev/leds/f1072004.mdio-mii:00:WAN# echo netdev > trigger
-root@370rd:/sys/class/net/eth0/phydev/leds/f1072004.mdio-mii:00:WAN# ls
-activity	brightness  device_name  half_duplex  link     link_100   max_brightness  rx	     trigger  uevent
-available_mode	device	    full_duplex  interval     link_10  link_1000  power		  subsystem  tx
-
-When you select a trigger, that trigger can add additional sysfs
-files. For the netdev trigger we gain link, link_10, link_100, link_1000, rx & tx.
-
-Nothing special here, if you selected the timer trigger you get
-delay_off delay_on. The oneshot trigger has invert, delay_on,
-delay_off etc.
-
-You then configure the trigger via setting values in the sysfs
-files. If you want the LED to indicate if there is link, you would do:
-
-echo 1 > link
-
-The LED would then light up if the netdev has carrier.
-
-If you want link plus RX packets
-
-echo 1 > link
-echo 1 > rx
-
-The LED will then be on if there is link, and additionally blink if
-the netdev stats indicate received frames.
-
-For the netdev trigger, all the configuration values are boolean. So a
-simple way to represent this in DT would be boolean properties:
-
-	netdev-link = <1>;
-	netdev->rx = <1>;
-
-We probably want these properties name spaced, because we have oneshot
-delay_on and timer delay_on for example. The same sysfs name could
-have different types, bool vs milliseconds, etc.
-
-I would make it, that when the trigger is activated, the values are
-read from DT and used. There is currently no persistent state for
-triggers. If you where to swap to the timer trigger and then return to
-the netdev trigger, all state is lost, so i would re-read DT.
-
-Offloading to hardware should not make an difference here. All we are
-going to do is pass the current configuration to the LED and ask it,
-can you do this? If it says no, we keep blinking in software. If yes,
-we leave the blinking to the hardware.
-
-There is the open question of if DT should be used like this.  It is
-not describing hardware, it is describing configuration of
-hardware. So it could well get rejected. You then need to configure it
-in software.
-
-   Andrew
