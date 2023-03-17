@@ -2,147 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4EA96BE19A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 07:54:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C23D06BE1FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 08:38:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230027AbjCQGyR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 02:54:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45128 "EHLO
+        id S229932AbjCQHiT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 03:38:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229532AbjCQGyQ (ORCPT
+        with ESMTP id S229955AbjCQHiP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 02:54:16 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDB0124731;
-        Thu, 16 Mar 2023 23:54:14 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32H6JYt1023423;
-        Fri, 17 Mar 2023 06:54:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=/9dyV5Xq6V5b8tf5RtQHdkaKqWhyTXZtPVIt4IFiap0=;
- b=BuAYVzcpBhOCyeAqDqpDyNRbq73PTcmVrlIOiXoGWNmdtlgPeAT65dwK7vXYoqq1ehAY
- ZWxym7hNnxoIH4p6waSwOD0z3w09nBWYerKlSuvpYLNxnD7Fd6oKBCTTcUcM63LqI7rZ
- 2q5Vb62hb1L8cAKknB22wTZuCAEashk1BIgEFNhDjybzf/QvVibWAyPGgaW+FLZJYlMy
- 2dkxR6SCQtBqHT2rXZQL+fHGO1OP3A2L19Fpr1iQBrCNgshloz6cwOD8bAElDAWz64G9
- WihhCRDkNWMuGheCfeEajWzCW1Jnko/DWtNxWxMaBxDcuaOJ4h5NkamqLjec0mmfJJiH Lg== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pc624hyx7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 17 Mar 2023 06:54:07 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 32H6s3a0016065;
-        Fri, 17 Mar 2023 06:54:04 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3p8jqmd9dw-1;
-        Fri, 17 Mar 2023 06:54:04 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 32H6s4Zm016111;
-        Fri, 17 Mar 2023 06:54:04 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 32H6s3Rb016108;
-        Fri, 17 Mar 2023 06:54:04 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
-        id 314BC4F42; Fri, 17 Mar 2023 12:24:02 +0530 (+0530)
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        lee@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mani@kernel.org,
-        lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
-        manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>
-Subject: [PATCH v4 5/5] ARM: dts: qcom: sdx65-mtp: Enable PCIe EP
-Date:   Fri, 17 Mar 2023 12:23:59 +0530
-Message-Id: <1679036039-27157-6-git-send-email-quic_rohiagar@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1679036039-27157-1-git-send-email-quic_rohiagar@quicinc.com>
-References: <1679036039-27157-1-git-send-email-quic_rohiagar@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SUnl2wkb7dU-bD46nPMk2220eLTSH9Of
-X-Proofpoint-ORIG-GUID: SUnl2wkb7dU-bD46nPMk2220eLTSH9Of
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-17_02,2023-03-16_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- adultscore=0 mlxlogscore=643 priorityscore=1501 spamscore=0 suspectscore=0
- impostorscore=0 mlxscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303150002
- definitions=main-2303170045
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Fri, 17 Mar 2023 03:38:15 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EC8D1421B;
+        Fri, 17 Mar 2023 00:38:13 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 19AA0CE1F6F;
+        Fri, 17 Mar 2023 07:38:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B2BC4339B;
+        Fri, 17 Mar 2023 07:38:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679038687;
+        bh=iEJpyZ9jXapfaJWky/MC2x1NLyVZPYHtlZserzfH3pU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=EbYKMO9P3WzyjRWnMaMPaCg+JNnCadnKf1C4HvZZP6GzV20QRjd8sP7ElHpEsNYs1
+         WEV8x18+0M8dGcw8KcWf938vhz1OrjNLR4uBBI6uPkmhQHsaRZTVzY6o4ydnPxJ4o1
+         f5q5Ia3JNzNfdJhQp9AJCY+jpmHiexU59/XRaW4P76aRyaehfwZbKETnOsS7uCbMpE
+         8OTdsG4CywWxTMduLKIc0gUsyh1HgNU3ewzKuYJRFDtBmoSA5oEdPz8YkZTk0trdkW
+         QOnY2zVy31sWEW41w4AE75RrznDRWpmD6ER+nojyFmfgN/Wgc0gJxPWCYPCYmWOp7k
+         gL1UQcFeBEaMg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pd4gI-0001DB-3N; Fri, 17 Mar 2023 08:39:18 +0100
+Date:   Fri, 17 Mar 2023 08:39:18 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Steev Klimaszewski <steev@kali.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>
+Subject: Re: [PATCH v6 4/4] arm64: dts: qcom: sc8280xp-x13s: Add bluetooth
+Message-ID: <ZBQZJo4UgMxm82pA@hovoldconsulting.com>
+References: <20230316034759.73489-1-steev@kali.org>
+ <20230316034759.73489-5-steev@kali.org>
+ <ZBLuxFxFvCY+0XHG@hovoldconsulting.com>
+ <ZBL4Qrp9Lr+aOyXr@hovoldconsulting.com>
+ <CAKXuJqh447rZxDZ28aCiRZaL=uj5xDULhyU=HUbFVePYyz7AOw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKXuJqh447rZxDZ28aCiRZaL=uj5xDULhyU=HUbFVePYyz7AOw@mail.gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable PCIe Endpoint controller on the SDX65 MTP board based
-on Qualcomm SDX65 platform.
+On Thu, Mar 16, 2023 at 02:17:38PM -0500, Steev Klimaszewski wrote:
+> On Thu, Mar 16, 2023 at 6:05 AM Johan Hovold <johan@kernel.org> wrote:
+> > On Thu, Mar 16, 2023 at 11:26:12AM +0100, Johan Hovold wrote:
+> > > On Wed, Mar 15, 2023 at 10:47:58PM -0500, Steev Klimaszewski wrote:
 
-Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
----
- arch/arm/boot/dts/qcom-sdx65-mtp.dts | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+> > > > +           vreg_s1c: smps1 {
+> > > > +                   regulator-name = "vreg_s1c";
+> > > > +                   regulator-min-microvolt = <1880000>;
+> > > > +                   regulator-max-microvolt = <1900000>;
+> > > > +                   regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> > > > +                   regulator-allowed-modes = <RPMH_REGULATOR_MODE_AUTO>,
+> > > > +                                             <RPMH_REGULATOR_MODE_RET>;
+> > > > +                   regulator-allow-set-load;
+> > >
+> > > So this does not look quite right still as you're specifying an initial
+> > > mode which is not listed as allowed.
+> > >
+> > > Also there are no other in-tree users of RPMH_REGULATOR_MODE_RET and
+> > > AUTO is used to switch mode automatically which seems odd to use with
+> > > allow-set-load.
+> > >
+> > > This regulator is in fact also used by the wifi part of the chip and as
+> > > that driver does not set any loads so we may end up with a regulator in
+> > > retention mode while wifi is in use.
+> > >
+> > > Perhaps Bjorn can enlighten us, but my guess is that this should just be
+> > > "intial-mode = AUTO" (or even HPM, but I have no idea where this came
+> > > from originally).
+> >
+> > This one probably also needs to be marked as always-on as we don't
+> > currently describe the fact that the wifi part also uses s1c.
 
-diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-index 70720e6..afe970a 100644
---- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-+++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-@@ -245,6 +245,17 @@
- 	status = "okay";
- };
- 
-+&pcie_ep {
-+	pinctrl-0 = <&pcie_ep_clkreq_default &pcie_ep_perst_default
-+			&pcie_ep_wake_default>;
-+	pinctrl-names = "default";
-+
-+	reset-gpios = <&tlmm 57 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 53 GPIO_ACTIVE_LOW>;
-+
-+	status = "okay";
-+};
-+
- &pcie_phy {
- 	vdda-phy-supply = <&vreg_l1b_1p2>;
- 	vdda-pll-supply = <&vreg_l4b_0p88>;
-@@ -277,6 +288,29 @@
- 	status = "okay";
- };
- 
-+&tlmm {
-+	pcie_ep_clkreq_default: pcie-ep-clkreq-default-state {
-+		pins = "gpio56";
-+		function = "pcie_clkreq";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	pcie_ep_perst_default: pcie-ep-perst-default-state {
-+		pins = "gpio57";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	pcie_ep_wake_default: pcie-ep-wake-default-state {
-+		pins = "gpio53";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+};
-+
- &usb {
- 	status = "okay";
- };
--- 
-2.7.4
+> I couldn't remember exactly why I chose HPM, and so I recreated what
+> I'd done.  I looked to see what modes were available by git grepping
+> the kernel sources and since they are in
+> include/dt-bindings/regulator/qcom,rpmh-regulator.h with a comment
+> explaining what each mode is, I picked HPM since it starts it at the
+> full rated current.  As to why I chose the others... it was based on
+> SMPS being mentioned in that comment block.  Since I wasn't sure what
+> PFM is (and admittedly, did not look it up) I skipped it.
+> 
+> And you are right, we probably don't want to yank that regulator out
+> from under the wifi...  will add that in v7, so I guess for v7 we want
+> HPM, LPM, AUTO with AUTO being initial.  I guess I was trying to think
+> that RET would allow as little power usage as possible when bluetooth
+> isn't in use.
 
+No, I think you need to stick with HPM and disallow setting the load
+since doing so could impact other consumers that are not yet described.
+
+Johan
