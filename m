@@ -2,209 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2180C6BEA47
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 14:40:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B4B16BEA82
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 14:55:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbjCQNkD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 09:40:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38138 "EHLO
+        id S229900AbjCQNzY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 09:55:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbjCQNkC (ORCPT
+        with ESMTP id S229540AbjCQNzX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 09:40:02 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 247E229404
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 06:39:35 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id fm20-20020a05600c0c1400b003ead37e6588so5129707wmb.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 06:39:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679060373;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CIfDp3gROtXKGXMIKzWbXAPrNmngywTi0JGEAejv9Ec=;
-        b=KgVZec/idfHRzOWkDUQAv1fxhj6ksP5r2Vz1TcJ3E9/kHQ4hY9GmOivCfmTAPWCRv6
-         NxQnp/PtQ31A8ORadVoraKxFz8MjJL0tQ0Is+q5juZ+bIsTWWnxGfP/auIJXlpEd6Ua1
-         ZLPqmACUjwj5aaBko0Tbbi8EoA57sior9WgFJ377E3jKZEZP+rP647aYk+1CtCyc9TLc
-         ZCJxQ0EPSU5jOjKj9paatgOAxvDm+rcaCHDgD/tls8WHM6HNzGBZ8V9dYBsdvMMegys8
-         77IPAiDNlDM/Yh+cy917WV659x0SW5e67PYX3J7SrWJ8VnJTh/FSGa7UpW8+f0hqiNkP
-         q39w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679060373;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CIfDp3gROtXKGXMIKzWbXAPrNmngywTi0JGEAejv9Ec=;
-        b=xeX0BTxsnKZQ/AqJFdsge0VHL0VYWXrFd8iypsv3hPJaTzoi1ZIWurIWRWCHDVlan6
-         NdWpz/CxW4KGKqEE/lTQC+371vEQD+CuPzYrI/c37O3CYZLaBS8SuQ/fhw0DIIc3e1CB
-         xdMssMyOo89dyUXc6+/FPd2m5EFPl3JUPy3us2zZ+P2Vw6dqItqtQU+LQEj0gqLkZ9Vj
-         UImhtt0C/Drauo3sqGOCCVb4K3479SAW/m+3ouC7bIGQkLpARKalw1qO5W3wNt44SYAj
-         pGYzTpEl5i3oxIZ7BOvIGYwgAw3YaHMT7NJGL64Qer9MjNc13oJm1Gkwc8hRqZAUSWHY
-         Xl/Q==
-X-Gm-Message-State: AO0yUKVvYyNAmes2zvdpaMO3sCynae+F1gppVlDYOQXD19Nkj8VGfSIW
-        HLWCM4xz+3L9/NHIETeb687XqA==
-X-Google-Smtp-Source: AK7set8n4tLd/fOIgy+lUbYezWgQq3v0dockgttAJ/suRbNcRR+7qidJtQKNAjh4p+RY/8tPQDlbbQ==
-X-Received: by 2002:a05:600c:1c1d:b0:3ea:edd7:1f1f with SMTP id j29-20020a05600c1c1d00b003eaedd71f1fmr24279049wms.40.1679060373534;
-        Fri, 17 Mar 2023 06:39:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:9ed5:bad0:e925:7938? ([2a01:e0a:982:cbb0:9ed5:bad0:e925:7938])
-        by smtp.gmail.com with ESMTPSA id c9-20020a5d4cc9000000b002d21379bcabsm1972144wrt.110.2023.03.17.06.39.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Mar 2023 06:39:33 -0700 (PDT)
-Message-ID: <9f7ffda5-8f7e-5b8a-15d9-4db60efdfb72@linaro.org>
-Date:   Fri, 17 Mar 2023 14:39:31 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v5 5/5] arm64: dts: qcom: sm8450: add dp controller
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Fri, 17 Mar 2023 09:55:23 -0400
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14A0FE1A2;
+        Fri, 17 Mar 2023 06:55:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+        s=20171124; h=In-Reply-To:Content-Transfer-Encoding:Content-Disposition:
+        Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:
+        Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Content-Disposition:
+        In-Reply-To:References; bh=eC33ACaQYYAv+vtinocwyhqk7H8NHOdp/sCwnyXAa10=; b=hb
+        E0g7jIY/DnDZ7+E9Xp4KFPWV/I6LZuPmsXY0+f+I9LM7v4LWbjupLhNUIFJGNnMiuYElpwU04pHub
+        0t2dDVDw03GyfcH+NGYLfBoCteGFXFUlgeoKh0JqHyY1yr8Rlh6PHeAWfV1MU7T+ZaJOqZ9N0VNAJ
+        HR+EKHLxI4qYnj0=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+        (envelope-from <andrew@lunn.ch>)
+        id 1pdAY3-007c8f-O2; Fri, 17 Mar 2023 14:55:11 +0100
+Date:   Fri, 17 Mar 2023 14:55:11 +0100
+From:   Andrew Lunn <andrew@lunn.ch>
+To:     Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>
+Cc:     Christian Marangi <ansuelsmth@gmail.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230206-topic-sm8450-upstream-dp-controller-v5-0-a27f1b26ebe8@linaro.org>
- <20230206-topic-sm8450-upstream-dp-controller-v5-5-a27f1b26ebe8@linaro.org>
- <30b349bd-c083-ed17-1e20-c84e4b67d449@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <30b349bd-c083-ed17-1e20-c84e4b67d449@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, Lee Jones <lee@kernel.org>,
+        linux-leds@vger.kernel.org
+Subject: Re: [net-next PATCH v4 04/14] net: phy: Add a binding for PHY LEDs
+Message-ID: <6cf03603-2a8e-4c08-a61b-aef164a0f5d9@lunn.ch>
+References: <20230317023125.486-1-ansuelsmth@gmail.com>
+ <20230317023125.486-5-ansuelsmth@gmail.com>
+ <20230317084519.12d3587a@dellmb>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230317084519.12d3587a@dellmb>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/03/2023 13:19, Dmitry Baryshkov wrote:
-> On 17/03/2023 11:12, Neil Armstrong wrote:
->> Add the Display Port controller subnode to the MDSS node.
->>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 79 ++++++++++++++++++++++++++++++++++++
->>   1 file changed, 79 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> index 0b5a151ce138..41f5015e615b 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> @@ -2751,6 +2751,13 @@ dpu_intf2_out: endpoint {
->>                           };
->>                       };
->> +                    port@2 {
->> +                        reg = <2>;
->> +                        dpu_intf0_out: endpoint {
->> +                            remote-endpoint = <&mdss_dp0_in>;
->> +                        };
->> +                    };
->> +
->>                   };
->>                   mdp_opp_table: opp-table {
->> @@ -2783,6 +2790,78 @@ opp-500000000 {
->>                   };
->>               };
->> +            mdss_dp0: displayport-controller@ae90000 {
->> +                compatible = "qcom,sm8450-dp", "qcom,sm8350-dp";
->> +                reg = <0 0xae90000 0 0x200>,
->> +                      <0 0xae90200 0 0x200>,
->> +                      <0 0xae90400 0 0xc00>,
->> +                      <0 0xae91000 0 0x400>,
->> +                      <0 0xae91400 0 0x400>;
->> +                interrupt-parent = <&mdss>;
->> +                interrupts = <12>;
->> +                clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
->> +                     <&dispcc DISP_CC_MDSS_DPTX0_AUX_CLK>,
->> +                     <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK>,
->> +                     <&dispcc DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
->> +                     <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
->> +                clock-names = "core_iface",
->> +                          "core_aux",
->> +                          "ctrl_link",
->> +                                  "ctrl_link_iface",
->> +                          "stream_pixel";
->> +
->> +                assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
->> +                          <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
->> +                assigned-clock-parents = <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
->> +                             <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
->> +
->> +                phys = <&usb_1_qmpphy QMP_USB43DP_DP_PHY>;
->> +                    phy-names = "dp";
->> +
->> +                    #sound-dai-cells = <0>;
->> +
->> +                operating-points-v2 = <&dp_opp_table>;
->> +                power-domains = <&rpmhpd SM8450_MMCX>;
->> +
->> +                status = "disabled";
->> +
->> +                ports {
->> +                    #address-cells = <1>;
->> +                    #size-cells = <0>;
->> +
->> +                    port@0 {
->> +                        reg = <0>;
->> +                        mdss_dp0_in: endpoint {
->> +                            remote-endpoint = <&dpu_intf0_out>;
->> +                        };
->> +                    };
->> +                };
->> +
->> +                dp_opp_table: opp-table {
->> +                    compatible = "operating-points-v2";
->> +
->> +                    opp-19200000 {
->> +                        opp-hz = /bits/ 64 <19200000>;
->> +                        required-opps = <&rpmhpd_opp_low_svs>;
->> +                    };
+On Fri, Mar 17, 2023 at 08:45:19AM +0100, Marek Beh�n wrote:
+> On Fri, 17 Mar 2023 03:31:15 +0100
+> Christian Marangi <ansuelsmth@gmail.com> wrote:
 > 
-> Yes, the vendor kernel has 19.2 MHz as a frequency for the low_svs. However I don't think we should do it this way, we list DP rates here, so the lowest entry should be RBR, 160000000.
-
-Ok so v4 for ok for both patches 3 & 5
-
-Will send v6 with those reverted
-
-Neil
-
+> > +	cdev->brightness_set_blocking = phy_led_set_brightness;
+> > +	cdev->max_brightness = 1;
+> > +	init_data.devicename = dev_name(&phydev->mdio.dev);
+> > +	init_data.fwnode = of_fwnode_handle(led);
+> > +
+> > +	err = devm_led_classdev_register_ext(dev, cdev, &init_data);
 > 
->> +
->> +                    opp-270000000 {
->> +                        opp-hz = /bits/ 64 <270000000>;
->> +                        required-opps = <&rpmhpd_opp_svs>;
->> +                    };
->> +
->> +                    opp-540000000 {
->> +                        opp-hz = /bits/ 64 <540000000>;
->> +                        required-opps = <&rpmhpd_opp_svs_l1>;
->> +                    };
->> +
->> +                    opp-810000000 {
->> +                        opp-hz = /bits/ 64 <810000000>;
->> +                        required-opps = <&rpmhpd_opp_nom>;
->> +                    };
->> +                };
->> +            };
->> +
->>               mdss_dsi0: dsi@ae94000 {
->>                   compatible = "qcom,sm8450-dsi-ctrl", "qcom,mdss-dsi-ctrl";
->>                   reg = <0 0x0ae94000 0 0x400>;
->>
+> Since init_data.devname_mandatory is false, devicename is ignored.
+> Which is probably good, becuse the device name of a mdio device is
+> often ugly, taken from devicetree or switch drivers, for example:
+>   f1072004.mdio-mii
+>   fixed-0
+>   mv88e6xxx-1
+> So either don't fill devicename or use devname_mandatory (and maybe
+> fill devicename with something less ugly, but I guess if we don't have
+> much choice if we want to keep persistent names).
 > 
+> Without devname_mandatory, the name of the LED classdev will be of the
+> form
+>   color:function[-function-enumerator],
+> i.e.
+>   green:lan
+>   amber:lan-1
+> 
+> With multiple switch ethenret ports all having LAN function, it is
+> worth noting that the function enumerator must be explicitly used in the
+> devicetree, otherwise multiple LEDs will be registered under the same
+> name, and the LED subsystem will add a number at the and of the name
+> (function led_classdev_next_name), resulting in names
+>   green:lan
+>   green:lan_1
+>   green:lan_2
+>   ...
+
+I'm testing on a Marvell RDK, with limited LEDs. It has one LED on the
+front port to represent the WAN port. The DT patch is at the end of
+the series. With that, i end up with:
+
+root@370rd:/sys/class/leds# ls -l
+total 0
+lrwxrwxrwx 1 root root 0 Mar 17 01:10 f1072004.mdio-mii:00:WAN -> ../../devices/platform/soc/soc:interna
+l-regs/f1072004.mdio/mdio_bus/f1072004.mdio-mii/f1072004.mdio-mii:00/leds/f1072004.mdio-mii:00:WAN
+
+I also have:
+
+root@370rd:/sys/class/net/eth0/phydev/leds# ls
+f1072004.mdio-mii:00:WAN
+
+f1072004.mdio-mii:00: is not nice, but it is unique to a netdev. The
+last part then comes from the label property. Since there is only one
+LED, i went with what the port is intended to be used as. If there had
+been more LEDs, i would of probably used labels like "LINK" and
+"ACTIVITY", since that is often what they reset default
+to. Alternatively, you could names the "Left" and "Right", which does
+suggest they can be given any function.
+
+I don't actually think the name is too important, so long as it is
+unique. You are going to find it via /sys/class/net. MAC LEDs should
+be /sys/class/net/eth42/leds, and PHY LEDs will be
+/sys/class/net/phydev/leds.
+
+It has been discussed in the past to either extend ethtool to
+understand this, or write a new little tool to make it easier to
+manipulate these LEDs.
+
+	   Andrew
 
