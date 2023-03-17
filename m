@@ -2,139 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27FA66BE8EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 13:12:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D27796BE8F4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 13:13:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229892AbjCQMMj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 08:12:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56982 "EHLO
+        id S229995AbjCQMNA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 08:13:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229793AbjCQMMi (ORCPT
+        with ESMTP id S229989AbjCQMM7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 08:12:38 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 515BAC5AEE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 05:12:31 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id y15so6208034lfa.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 05:12:31 -0700 (PDT)
+        Fri, 17 Mar 2023 08:12:59 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7919BC642B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 05:12:53 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id k17so2176932iob.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 05:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679055149;
+        d=linaro.org; s=google; t=1679055172;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JZ+vK+6WO1WDejh5ev7ilG9z4FY98vw2pL/2j3yWkWs=;
-        b=fhfp6y8itcvatybT//bpiYJnAU1M+WXrvddBjQGZHSaDmb8QBRVUGYcvkO34NpmvQH
-         qiwrbYjL951RqY6zaSLAOTEc80G0V1SXgLTjc6xYSCJiWlDmm3XLriX8t56w6Dro2LWf
-         GYhU2zmVopE/jMczRVK++pP/BR9BIsQqvY6KQXbViOQ13dnPhiz6vJrlcJBetuhtNJUw
-         rSAx0emdoK9BMlWLuL+psSg+qDeWY8WM9NjMonpMRT0RzT5os1umjdHJvIxZjsAU7RJu
-         ckJFF1kVdLh0QEKsBTe5a+gUFjsu23B/L0Jw13e7wXIhqskImB6jpXvbqA+4ZvBljvbx
-         56JQ==
+        bh=S5Vp2FQz3U7WFWsDAYjqG8dCQgOoYs/lPkS0Jc/IT4w=;
+        b=Y5ML+SVSSgcvQd7eELE3PQH/ldXK7qV3KPnhogyfvcaP33wuONQz//Pn+43/l8s5zc
+         UKNa/DTLf13Ilc8Zc+rslQovTwVLiaLceUp5GevdD1mYJKynLTXxX6EVURJe1g0mjL3p
+         QDW8npCPPeUzzUM6nzF7mBju8Uy9lonkSVphC5kUoU4VwUJalCq1ABsknab0Tn3BNuiT
+         gcOT+z+FqEkwllVngjNefBZmmMqNr6r4Qn+oB5OdviV0jg8PNpPkXkl6qSg7hDpQgH9x
+         abHYFzinPrX59dn3km7o3lUeicG9qZ1wgYJehSVv2Fw1X7kv/2GTrmnbZz3NnE9C7SPY
+         UC/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679055149;
+        d=1e100.net; s=20210112; t=1679055172;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JZ+vK+6WO1WDejh5ev7ilG9z4FY98vw2pL/2j3yWkWs=;
-        b=sX9Ym8bvD+pBN6TdYrRyh5PPHC9NdwX0fmIwDDj5sA9ETyENhvqdx3T6qofB66P8qV
-         NXL7Hanmkk7S07RKw8irtn907HhzzvH00MVxnnmyxGa+rA7IHd9cHdTMEAH5a7yZdTpS
-         Gkg/wGdGhzRofviOg+w3BjZjyTQKM/XlFSzvyn/E2jHdWsKM79ODglTnt7/Tb46Ai1Xl
-         PUSxhVByx3pso2IRkYhNQnnWBVhsPHmNVqpP8OfPNLmDYQCfOLHl4ewfyjLgKLBpqkWv
-         nGo45TjXL0rZpncVtJQ6R9DRPPAufdUdKM+A/pPUJ18N8IOBC3KYbUGOv4P0b6K5ECB9
-         z+0Q==
-X-Gm-Message-State: AO0yUKWXSwjmd66jOftWuAZZZlM0yXFd4LvvrgbrfgwyCxhP+bLy4VXo
-        0ML5cGA9ttmxPmOAuraz7QiU8A==
-X-Google-Smtp-Source: AK7set++/DawecZHkwBeKS86YHeRSjzF2Dwq3PiSStzZRtya7+0OEEjIF4DsMBPGukH/+x4Sp8yp4g==
-X-Received: by 2002:a05:6512:70:b0:4b5:a207:8d70 with SMTP id i16-20020a056512007000b004b5a2078d70mr4187251lfo.5.1679055149357;
-        Fri, 17 Mar 2023 05:12:29 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id d8-20020ac25448000000b004d093d60f50sm343325lfn.215.2023.03.17.05.12.27
+        bh=S5Vp2FQz3U7WFWsDAYjqG8dCQgOoYs/lPkS0Jc/IT4w=;
+        b=qEieGz2ianUX5DNkLc7TPmdIuTNUQiMYNtRIWzLjlRyrHLztLrSLauwn5XmcDRtaIL
+         DygNqMIqWsqXiUchkpkOfhPkU7Jb64fhw4uwKoJ4K6B9KxJfrHV8ljN1jsahpL/KxP5o
+         +gFZog90Q45JPYy9IAELAcvIMBPDkWEX9xHI4gJGJfhsATuCmDoInOWLkMLh9UVB9FpJ
+         LwSsl4Xc2WgVyQPjTMKD7aI3b/YVhKSO7CYD64wKmFkGV9auC6F8762z/BZe7cKXsKvC
+         UnFi+5T+OGDYuLUH4yd6HaPu8Y6s2WMgNDrA+CCZJ9exxuGUuKiIDfr+fTC/LzPZ40yn
+         /o5A==
+X-Gm-Message-State: AO0yUKViXhIvZPWUsTk9EoAgYo0nJCnOdMETyCk+yIqTMwP63DAKec53
+        xp9uyR55BGlojr/1o2aabe71pw==
+X-Google-Smtp-Source: AK7set/teWbNAyM8vn7O11kjIlscOMkZFWggClL+Q8IlWUkkzmd+PZU/1yj9Hy6iAhKO8EYtkeDTCw==
+X-Received: by 2002:a6b:d102:0:b0:74c:91c3:3837 with SMTP id l2-20020a6bd102000000b0074c91c33837mr1362477iob.18.1679055172627;
+        Fri, 17 Mar 2023 05:12:52 -0700 (PDT)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id j195-20020a0263cc000000b00406328003a5sm640137jac.86.2023.03.17.05.12.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Mar 2023 05:12:28 -0700 (PDT)
-Message-ID: <985c5e15-17a0-d54a-bac2-c33a265ca3c9@linaro.org>
-Date:   Fri, 17 Mar 2023 13:12:27 +0100
+        Fri, 17 Mar 2023 05:12:52 -0700 (PDT)
+Message-ID: <b657a2a7-ddf4-d42f-02a9-16f297e9ef07@linaro.org>
+Date:   Fri, 17 Mar 2023 07:12:50 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 3/5] arm64: dts: qcom: sm6350: Add QFPROM node
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v2] dt-bindings: net: qcom,ipa: add SDX65 compatible
 Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+To:     Jakub Kicinski <kuba@kernel.org>, Alex Elder <elder@linaro.org>
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org,
+        devicetree@vger.kernel.org, davem@davemloft.net,
+        edumazet@google.com, pabeni@redhat.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-References: <20230315-topic-lagoon_gpu-v1-0-a74cbec4ecfc@linaro.org>
- <20230315-topic-lagoon_gpu-v1-3-a74cbec4ecfc@linaro.org>
- <CR8J37NBHHRY.2S8LQ5O7IQ9PU@otso>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CR8J37NBHHRY.2S8LQ5O7IQ9PU@otso>
-Content-Type: text/plain; charset=UTF-8
+        Simon Horman <simon.horman@corigine.com>
+References: <20230315194305.1647311-1-elder@linaro.org>
+ <20230316171010.7c51c93c@kernel.org>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <20230316171010.7c51c93c@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 17.03.2023 09:50, Luca Weiss wrote:
-> On Thu Mar 16, 2023 at 12:16 PM CET, Konrad Dybcio wrote:
->> From: Konrad Dybcio <konrad.dybcio@somainline.org>
+On 3/16/23 7:10 PM, Jakub Kicinski wrote:
+> On Wed, 15 Mar 2023 14:43:05 -0500 Alex Elder wrote:
+>> Add support for SDX65, which uses IPA v5.0.
 >>
->> Add a node for the QFPROM NVMEM hw and define the GPU fuse.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> Reviewed-by: Simon Horman <simon.horman@corigine.com>
+>> Signed-off-by: Alex Elder <elder@linaro.org>
 >> ---
->>  arch/arm64/boot/dts/qcom/sm6350.dtsi | 12 ++++++++++++
->>  1 file changed, 12 insertions(+)
+>> v2: Add review tag; base on linux-next/master; drop "net-next" in subject
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
->> index 523c7edfa4b3..60b68d305e53 100644
->> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
->> @@ -637,6 +637,18 @@ ipcc: mailbox@408000 {
->>  			#mbox-cells = <2>;
->>  		};
->>  
->> +		qfprom: qfprom@784000 {
->> +			compatible = "qcom,sm6350-qfprom", "qcom,qfprom";
->> +			reg = <0 0x00784000 0 0x3000>;
->> +			#address-cells = <1>;
->> +			#size-cells = <1>;
->> +
->> +			gpu_speed_bin: gpu_speed_bin@2015 {
+>> It is my intention to have this patch be taken via the Qualcomm
+>> repository (not net-next).
 > 
-> gpu-speed-bin@2015 ?
-Ack
-Konrad
-> 
-> With that fixed:
-> 
-> Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
-> 
->> +				reg = <0x2015 0x1>;
->> +				bits = <0 8>;
->> +			};
->> +		};
->> +
->>  		rng: rng@793000 {
->>  			compatible = "qcom,prng-ee";
->>  			reg = <0 0x00793000 0 0x1000>;
->>
->> -- 
->> 2.39.2
-> 
+> That's a bit unusual, no strong feelings but why is that?
+> Bindings usually go with the code, ipa is a networking thing, right?
+
+I'm sorry, yes, there is no reason the bindings update
+should be taken through the Qualcomm tree.
+
+This is a trivial patch.  This version (2) is based on
+linux-next/master but it can be cleanly cherry-picked
+onto net-next/master.
+
+Please accept this patch via net-next, and if you want
+me to send an updated version, please say so.
+
+I'm very sorry for the confusion here.  For some reason
+this has been a rough week with little patches for me.
+
+					-Alex
