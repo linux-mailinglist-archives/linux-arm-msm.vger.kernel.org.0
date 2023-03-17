@@ -2,77 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A95886BDDAA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 01:31:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D9F2F6BDDAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 01:35:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229878AbjCQAbr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 20:31:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47052 "EHLO
+        id S229599AbjCQAfA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 20:35:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229665AbjCQAbq (ORCPT
+        with ESMTP id S229455AbjCQAe7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 20:31:46 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C62A6BDFA
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 17:31:38 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id g17so4567434lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 17:31:37 -0700 (PDT)
+        Thu, 16 Mar 2023 20:34:59 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 630B91A4A9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 17:34:58 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id bi9so4528804lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 17:34:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679013096;
+        d=linaro.org; s=google; t=1679013296;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JT58Vx7PeBixGFgGe9DPTLlFGWvkVsvJLcnD2XLlTas=;
-        b=SgecCbFxPK56jfty9TriTz/7YJWycJHjOcADzDHC9ViFhnCOF420/LIHaeDBURfzTF
-         VpAj3fdSYEgMSr/hwukAwF+P5Xgjpm1aI6l1LLGg5I7wehyb4Bt7HiwEfdHqwrtVo/I7
-         G2ArgvXeO5pPP1yKqNInCYtr4/w2YL5iNksvrkEyOiUg4K3OlrdKEyeEiTUnc3djdpKp
-         MuGE2yeWZ7wEXVlo1AxKnW1gTCySy7nr0j7lORrpNcbZ+8Q/MFTJi5uGaCUP1L6glMfG
-         2Ah5g/zykXeoWGKkUlUEcgHQSDBZDJW80OIX/xlCHQpouk6dtaP/BHZMW4old2mU/iw2
-         sARA==
+        bh=qcGZyf6/fP2eUFJzU25+SHbHn5xFjGzT+o4MUU1iFIE=;
+        b=BklvjG3TVnUVx560XPiS0+gDhDksm+rRHqIrDIBpJ4Tq1LC6rAwSD7XB34MKCACvga
+         4PZZPufmIkCP0hL1loSFshmjs0Z5Es6XoCBTkoCmAH1g+G5ik/v0CZ32FyXMyF6YW50G
+         sqvNEy1FxbIvw5sZa8/SNfbr1WyDjHxJTif/Cvaiko9slCaSttOHmcuGpmziGbGoF0JS
+         YVlwmpRDsVIeXqzjuvCT5vu7pP3fK6TkWL08P9XADNYPHC5sTMlCqojbnzrqlAmEQC8K
+         /mjlB+A2zAlKzvJvblHUvEv2kt8+Cmte1PjN3k6QQvFD7orLkeIunVHIeDq10ksmRK4+
+         kX3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679013096;
+        d=1e100.net; s=20210112; t=1679013296;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JT58Vx7PeBixGFgGe9DPTLlFGWvkVsvJLcnD2XLlTas=;
-        b=yvr7OJYuwUZFhvvSLuQbYTrhMbNuY/47737P5plO1fR5tHTF3f1ZBuVrdx22ba1IPo
-         TidIrqc3Q0gNZodgwZoZk69/lHJlb75cumdJ6zDwMX+k0EsJ2i9EGBrAmKDI1ZOjMoOC
-         l2kqNCRTu83TADSSadNETLmnmkzbCFk7iDyvDQ3L73UWT6A553uN1VvCIkMVXwFPQcsl
-         ZJD+gXuvTBDOFk6eJqbBdOoAL0thv2c7V9WAb1DhK4FfmnreGHdBoeQ+407ESAX+MR2b
-         GOwTgRWRtUZJ+xv5tqpoiGgDLJ2h1TxUaRAcRbFG7/GwNp/1NlbVrjwcsAQuOF8eAqpz
-         DXDg==
-X-Gm-Message-State: AO0yUKUhU1Ee94tJ7AtFnd41F1n8bNfg1IOkRsuqFjFNvvcvDeg3mDH4
-        X8aa2eFdtCutOMUFddvmeqtz3A==
-X-Google-Smtp-Source: AK7set8IUHEOoYqVErKttc3lllC78z7DRaGMJAaDIAhR3P2OuBSxd1j185k2YIZZCUJBxqISbNLzKA==
-X-Received: by 2002:ac2:532b:0:b0:4b5:b46d:e60 with SMTP id f11-20020ac2532b000000b004b5b46d0e60mr3269390lfh.27.1679013096276;
-        Thu, 16 Mar 2023 17:31:36 -0700 (PDT)
+        bh=qcGZyf6/fP2eUFJzU25+SHbHn5xFjGzT+o4MUU1iFIE=;
+        b=KjiOun3SN+09dTiD5TcpyRS2s0iveopYjpt4SVWuSnyuQ2Yd8A7OVGRDAFXmbbI+3B
+         WiT5P7D87cgo3oFyd6pT+RCBeZBY67dgof7AdH0tm0JV53BesKbu6uwu9MBUYDd+m1wo
+         j49hDDvsQxQnYA9UuGJqOGJK9V6lmfabg0MfvJt+1s7T7w73spYWlz4KPMBX4VdRByA+
+         sQja2NTJG9xCW9Pa1pgoAkcpXAocQPFXopY/pNcS3goXXiTefaXDzNiVZcsYElcE+931
+         qDGsJwLolUu58nFW4pus+N+TFtLK+dHUX6/tbnz1biHe3L6OkS5wQH+iAlNiemyiy3aj
+         Z7RQ==
+X-Gm-Message-State: AO0yUKW/2a4Nd1QvlOhJVXnh8ealjWTwZTqcqsDUY63ygKYTonW9Up5l
+        wqjqGd98H285nCFlk2WbafMZLA==
+X-Google-Smtp-Source: AK7set/U9dXnEda15D3c3H4W6GnNH+mKM+19pEigXH0y4nOPnXk+mOT8rBhmTsIEAYUa7jr38IA55w==
+X-Received: by 2002:ac2:43a8:0:b0:4dc:7ff4:83f9 with SMTP id t8-20020ac243a8000000b004dc7ff483f9mr3431720lfl.16.1679013296615;
+        Thu, 16 Mar 2023 17:34:56 -0700 (PDT)
 Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id y3-20020ac24463000000b004db00b4c671sm124615lfl.7.2023.03.16.17.31.35
+        by smtp.gmail.com with ESMTPSA id f7-20020ac24e47000000b004d85a7e8b17sm103067lfr.269.2023.03.16.17.34.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Mar 2023 17:31:35 -0700 (PDT)
-Message-ID: <62533d5a-f39a-0806-b4d9-932e2af6beef@linaro.org>
-Date:   Fri, 17 Mar 2023 01:31:34 +0100
+        Thu, 16 Mar 2023 17:34:56 -0700 (PDT)
+Message-ID: <af2dbf53-5353-0c35-c333-2798752e01ac@linaro.org>
+Date:   Fri, 17 Mar 2023 01:34:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH RFT v2 01/14] dt-bindings: clock: qcom,rpmcc: Add a way to
- enable unused clock cleanup
+Subject: Re: [PATCH v3 1/6] thermal: qcom: tsens: Drop unused legacy structs
 Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org
-References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
- <20230303-topic-rpmcc_sleep-v2-1-ae80a325fe94@linaro.org>
- <20230316225803.GA4036689-robh@kernel.org>
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
+References: <20230315103950.2679317-1-stephan.gerhold@kernkonzept.com>
+ <20230315103950.2679317-2-stephan.gerhold@kernkonzept.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230316225803.GA4036689-robh@kernel.org>
+In-Reply-To: <20230315103950.2679317-2-stephan.gerhold@kernkonzept.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,67 +88,111 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 16.03.2023 23:58, Rob Herring wrote:
-> On Wed, Mar 08, 2023 at 10:35:17PM +0100, Konrad Dybcio wrote:
->> Disabling RPMCC clocks can be a bit touchy. If we can't guarantee all
->> (or at least most) of the oneline peripherals ask the interconnect
->> framework to keep their buses online and guarantee enough bandwidth,
->> we're relying on bootloader defaults to keep the said buses alive through
->> RPM requests and rate setting on RPM clocks.
->>
->> Without that in place, the RPM clocks are never enabled in the CCF, which
->> qualifies them to be cleaned up, since - as far as Linux is concerned -
->> nobody's using them and they're just wasting power. Doing so will end
->> tragically, as within miliseconds we'll get *some* access attempt on an
->> unlocked bus which will cause a platform crash.
->>
->> On the other hand, if we want to save power and put well-supported
->> platforms to sleep, we should be shutting off at least some of these
->> clocks (this time with a clear distinction of which ones are *actually*
->> not in use, coming from the interconnect driver).
->>
->> To differentiate between these two cases while not breaking older DTs,
->> introduce an opt-in property to correctly mark RPM clocks as enabled
->> after handoff (the initial max freq vote) and hence qualify them for the
->> common unused clock cleanup.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml | 6 ++++++
->>  1 file changed, 6 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
->> index 2a95bf8664f9..386153f61971 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
->> @@ -58,6 +58,12 @@ properties:
->>      minItems: 1
->>      maxItems: 2
->>  
->> +  qcom,clk-disable-unused:
->> +    type: boolean
->> +    description:
->> +      Indicates whether unused RPM clocks can be shut down with the common
->> +      unused clock cleanup. Requires a functional interconnect driver.
+On 15.03.2023 11:39, Stephan Gerhold wrote:
+> The old single-cell parsing code was removed for MSM8939, MDM9607 and
+> MSM8976 but for some reason the structs defining the bit positions etc
+> were kept around (unused). Drop them now.
 > 
-> I don't think this should be QCom specific. Come up with something 
-> common (which will probably have some debate). 
-Generally the opposite (ignoring unused clocks during the cleanup) is
-the thing you need to opt into.
-
-I can however see how (especially with the focus on not breaking things
-for older DTs) somebody else may also decide to only allow them to be
-cleaned up conditionally (by marking the clocks that were enabled earlier
-as enabled in Linux OR not addding clk.flags |= CLK_IGNORE_UNUSED) as we
-do here.
-
-Stephen, Rob, would `clk-disable-unused` be a fitting generic property
-name for that? Should we also think about `clk-ignore-unused` as a
-clock-controller-specific alternative to the CCF-wide clk_ignore_unused
-cmdline?
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Fixes: 51d78b8b1beb ("thermal/drivers/tsens: Drop single-cell code for mdm9607")
+> Fixes: dfadb4599ab0 ("thermal/drivers/tsens: Drop single-cell code for msm8939")
+> Fixes: 3a908971f7cb ("thermal/drivers/tsens: Drop single-cell code for msm8976/msm8956")
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> ---
+> Changes in v3: None
+> Changes in v2: New patch
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
-
-
+>  drivers/thermal/qcom/tsens-v0_1.c | 36 -------------------------------
+>  drivers/thermal/qcom/tsens-v1.c   | 22 -------------------
+>  2 files changed, 58 deletions(-)
 > 
-> Rob
+> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
+> index e89c6f39a3ae..106d26076e3f 100644
+> --- a/drivers/thermal/qcom/tsens-v0_1.c
+> +++ b/drivers/thermal/qcom/tsens-v0_1.c
+> @@ -39,26 +39,6 @@ struct tsens_legacy_calibration_format tsens_8916_nvmem = {
+>  	},
+>  };
+>  
+> -struct tsens_legacy_calibration_format tsens_8939_nvmem = {
+> -	.base_len = 8,
+> -	.base_shift = 2,
+> -	.sp_len = 6,
+> -	.mode = { 12, 0 },
+> -	.invalid = { 12, 2 },
+> -	.base = { { 0, 0 }, { 1, 24 } },
+> -	.sp = {
+> -		{ { 12, 3 },  { 12, 9 } },
+> -		{ { 12, 15 }, { 12, 21 } },
+> -		{ { 12, 27 }, { 13, 1 } },
+> -		{ { 13, 7 },  { 13, 13 } },
+> -		{ { 13, 19 }, { 13, 25 } },
+> -		{ { 0, 8 },   { 0, 14 } },
+> -		{ { 0, 20 },  { 0, 26 } },
+> -		{ { 1, 0 },   { 1, 6 } },
+> -		{ { 1, 12 },  { 1, 18 } },
+> -	},
+> -};
+> -
+>  struct tsens_legacy_calibration_format tsens_8974_nvmem = {
+>  	.base_len = 8,
+>  	.base_shift = 2,
+> @@ -103,22 +83,6 @@ struct tsens_legacy_calibration_format tsens_8974_backup_nvmem = {
+>  	},
+>  };
+>  
+> -struct tsens_legacy_calibration_format tsens_9607_nvmem = {
+> -	.base_len = 8,
+> -	.base_shift = 2,
+> -	.sp_len = 6,
+> -	.mode = { 2, 20 },
+> -	.invalid = { 2, 22 },
+> -	.base = { { 0, 0 }, { 2, 12 } },
+> -	.sp = {
+> -		{ { 0, 8 },  { 0, 14 } },
+> -		{ { 0, 20 }, { 0, 26 } },
+> -		{ { 1, 0 },  { 1, 6 } },
+> -		{ { 1, 12 }, { 1, 18 } },
+> -		{ { 2, 0 },  { 2, 6 } },
+> -	},
+> -};
+> -
+>  static int calibrate_8916(struct tsens_priv *priv)
+>  {
+>  	u32 p1[5], p2[5];
+> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
+> index b822a426066d..51322430f1fe 100644
+> --- a/drivers/thermal/qcom/tsens-v1.c
+> +++ b/drivers/thermal/qcom/tsens-v1.c
+> @@ -42,28 +42,6 @@ struct tsens_legacy_calibration_format tsens_qcs404_nvmem = {
+>  	},
+>  };
+>  
+> -struct tsens_legacy_calibration_format tsens_8976_nvmem = {
+> -	.base_len = 8,
+> -	.base_shift = 2,
+> -	.sp_len = 6,
+> -	.mode = { 4, 0 },
+> -	.invalid = { 4, 2 },
+> -	.base = { { 0, 0 }, { 2, 8 } },
+> -	.sp = {
+> -		{ { 0, 8 },  { 0, 14 } },
+> -		{ { 0, 20 }, { 0, 26 } },
+> -		{ { 1, 0 },  { 1, 6 } },
+> -		{ { 1, 12 }, { 1, 18 } },
+> -		{ { 2, 8 },  { 2, 14 } },
+> -		{ { 2, 20 }, { 2, 26 } },
+> -		{ { 3, 0 },  { 3, 6 } },
+> -		{ { 3, 12 }, { 3, 18 } },
+> -		{ { 4, 2 },  { 4, 9 } },
+> -		{ { 4, 14 }, { 4, 21 } },
+> -		{ { 4, 26 }, { 5, 1 } },
+> -	},
+> -};
+> -
+>  static int calibrate_v1(struct tsens_priv *priv)
+>  {
+>  	u32 p1[10], p2[10];
