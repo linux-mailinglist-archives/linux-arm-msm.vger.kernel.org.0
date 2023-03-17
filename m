@@ -2,73 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03F8A6BF681
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 00:36:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AF996BF68B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 00:37:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230018AbjCQXgv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 19:36:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49484 "EHLO
+        id S231150AbjCQXhS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 19:37:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230294AbjCQXgm (ORCPT
+        with ESMTP id S229502AbjCQXgs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 19:36:42 -0400
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991665BD9E;
-        Fri, 17 Mar 2023 16:36:36 -0700 (PDT)
-Received: by mail-il1-f178.google.com with SMTP id i19so3555331ila.10;
-        Fri, 17 Mar 2023 16:36:36 -0700 (PDT)
+        Fri, 17 Mar 2023 19:36:48 -0400
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 024CF6703F;
+        Fri, 17 Mar 2023 16:36:46 -0700 (PDT)
+Received: by mail-il1-f171.google.com with SMTP id bp11so3566878ilb.3;
+        Fri, 17 Mar 2023 16:36:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679096196;
+        d=1e100.net; s=20210112; t=1679096205;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=oKoy4P5RpcU+zg25GpDCmwXljCst6ANGjCSVJiQJeeE=;
-        b=pOjbm1b3dXRKvh76bluUeB21zN73KeOPiqiMxNi+I0CYzIjPgDlPNp1nlOSfBvSrKy
-         vz/JJ+TUavIAtlvuLiyQC33GBgDRRYvJ+IlBR+H5bsOD7LmkuBCVGrjV3ifoX7e7JhC5
-         PdyZZh28YXv8WMevrUeuJfctxjTGz/cwiXTz5zWi1p3RmSEC3RIBG4LytdzZGlr9Bihq
-         PMYg/TTzjkdI70fcN2fmbqc3WqL438m2SL6k2MgtFzXQGWJwecxzqay8+A5O0aW02ngI
-         0nVUiaZ6+/oTqjRKs9AL/ea1r6DVcx78FAwFyZducJOoQaBbkSMG50fY5fBScWqGFBcZ
-         jfcw==
-X-Gm-Message-State: AO0yUKW3FfsQnqD110A6xt2ZNxIlfPyuM+4cJEc0Ba7IZYHU7MS143se
-        /sP9rrQ5DHC7s6IGxg59Jw==
-X-Google-Smtp-Source: AK7set+CgCl6/tw0+Jm12fkd3AiK2RqCrk65QID25EKCIyxV/RIAtsLK79jYcrRDueMyQG+Q1KmfIA==
-X-Received: by 2002:a92:d7ca:0:b0:316:e6e4:570b with SMTP id g10-20020a92d7ca000000b00316e6e4570bmr282783ilq.11.1679096195774;
-        Fri, 17 Mar 2023 16:36:35 -0700 (PDT)
+        bh=o4XTbDitSJ3rKysE1DLB9E8NyDF7QczD+upv2sRYh/A=;
+        b=MC4YINorqYBhsFbpcR4YtnGpZceDJPpHfc+Ov6YITUw2DWJlajX/9RwreFYlbag1P8
+         ivUwvC43aa2+PwEJxMG03U9lcCA6d2qMA9NBk7XvF10A53/9W5GWTjQSqPW4mpBt/gBu
+         hAJCN4bM3ks9iMQr8ys89E0ffqKmBSUUjRXiN1EmLz7LWj8Am/3rOGSN+4XxGK+5EtZM
+         6gRAkOEfrQn52Bjl2Zkzd1G3XHW0CJ5XSNqWYXrTyM28Ey8MWz7FF2R6xyCKoutRP8lJ
+         mlYLDCL7dnM5C2Na8M7SwwGHAb9VYpwiZzy2r5jtDi2ZClH37yScz65yGbNXR9auqoq/
+         uf6A==
+X-Gm-Message-State: AO0yUKUSq2jDsR8lLeiU+N19z1CcsmdiEBv/crdc2SyL15SCsPtPfmJp
+        yCetmN4CfOijnGPQAgLYHw==
+X-Google-Smtp-Source: AK7set8aHEa/CzpkLLAxRrITL3AbBi24Em4TUycz18OMjy74rr/iSfbAP+RwpGIsk3i1yF/MYXGnsg==
+X-Received: by 2002:a05:6e02:1ca3:b0:323:5d8:57d2 with SMTP id x3-20020a056e021ca300b0032305d857d2mr180521ill.4.1679096205572;
+        Fri, 17 Mar 2023 16:36:45 -0700 (PDT)
 Received: from robh_at_kernel.org ([64.188.179.249])
-        by smtp.gmail.com with ESMTPSA id d2-20020a056e020c0200b00310f9a0f8a7sm938905ile.76.2023.03.17.16.36.33
+        by smtp.gmail.com with ESMTPSA id y19-20020a056e02119300b0031830e2c987sm962469ili.20.2023.03.17.16.36.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Mar 2023 16:36:35 -0700 (PDT)
-Received: (nullmailer pid 3968612 invoked by uid 1000);
-        Fri, 17 Mar 2023 23:36:32 -0000
+        Fri, 17 Mar 2023 16:36:45 -0700 (PDT)
+Received: (nullmailer pid 3968975 invoked by uid 1000);
+        Fri, 17 Mar 2023 23:36:42 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Chen-Yu Tsai <wens@csie.org>,
         Jernej Skrabec <jernej.skrabec@gmail.com>,
         Samuel Holland <samuel@sholland.org>,
-        Naga Sureshkumar Relli <nagasure@xilinx.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Pratyush Yadav <pratyush@kernel.org>,
-        Michael Walle <michael@walle.cc>,
-        Linus Walleij <linus.walleij@linaro.org>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
         Heiko Stuebner <heiko@sntech.de>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
         Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>
-Cc:     linux-mtd@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Vincent Shih <vincent.sunplus@gmail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org,
+        asahi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
         linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com
-Subject: [PATCH] dt-bindings: mtd: Drop unneeded quotes
-Date:   Fri, 17 Mar 2023 18:36:30 -0500
-Message-Id: <20230317233631.3968509-1-robh@kernel.org>
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-mediatek@lists.infradead.org
+Subject: [PATCH] dt-bindings: nvmem: Drop unneeded quotes
+Date:   Fri, 17 Mar 2023 18:36:39 -0500
+Message-Id: <20230317233640.3968821-1-robh@kernel.org>
 X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -76,8 +83,7 @@ Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,282 +95,260 @@ checking for this can be enabled in yamllint.
 
 Signed-off-by: Rob Herring <robh@kernel.org>
 ---
- .../devicetree/bindings/mtd/allwinner,sun4i-a10-nand.yaml     | 2 +-
- .../devicetree/bindings/mtd/arasan,nand-controller.yaml       | 2 +-
- .../devicetree/bindings/mtd/arm,pl353-nand-r2p1.yaml          | 2 +-
- Documentation/devicetree/bindings/mtd/gpmi-nand.yaml          | 2 +-
- Documentation/devicetree/bindings/mtd/intel,lgm-ebunand.yaml  | 2 +-
- Documentation/devicetree/bindings/mtd/jedec,spi-nor.yaml      | 2 +-
- Documentation/devicetree/bindings/mtd/mtd-physmap.yaml        | 2 +-
- Documentation/devicetree/bindings/mtd/mxc-nand.yaml           | 2 +-
- Documentation/devicetree/bindings/mtd/nand-chip.yaml          | 2 +-
- Documentation/devicetree/bindings/mtd/nand-controller.yaml    | 2 +-
- .../bindings/mtd/partitions/brcm,bcm4908-partitions.yaml      | 2 +-
- .../bindings/mtd/partitions/linksys,ns-partitions.yaml        | 2 +-
- Documentation/devicetree/bindings/mtd/qcom,nandc.yaml         | 2 +-
- Documentation/devicetree/bindings/mtd/renesas-nandc.yaml      | 2 +-
- .../devicetree/bindings/mtd/rockchip,nand-controller.yaml     | 2 +-
- Documentation/devicetree/bindings/mtd/spi-nand.yaml           | 2 +-
- Documentation/devicetree/bindings/mtd/st,stm32-fmc2-nand.yaml | 2 +-
- Documentation/devicetree/bindings/mtd/ti,gpmc-nand.yaml       | 4 ++--
- Documentation/devicetree/bindings/mtd/ti,gpmc-onenand.yaml    | 4 ++--
- 19 files changed, 21 insertions(+), 21 deletions(-)
+ .../devicetree/bindings/nvmem/allwinner,sun4i-a10-sid.yaml      | 2 +-
+ Documentation/devicetree/bindings/nvmem/apple,efuses.yaml       | 2 +-
+ Documentation/devicetree/bindings/nvmem/brcm,nvram.yaml         | 2 +-
+ Documentation/devicetree/bindings/nvmem/fsl,layerscape-sfp.yaml | 2 +-
+ Documentation/devicetree/bindings/nvmem/imx-iim.yaml            | 2 +-
+ Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml          | 2 +-
+ .../devicetree/bindings/nvmem/ingenic,jz4780-efuse.yaml         | 2 +-
+ Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml     | 2 +-
+ .../devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml       | 2 +-
+ Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml          | 2 +-
+ Documentation/devicetree/bindings/nvmem/nintendo-otp.yaml       | 2 +-
+ Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml        | 2 +-
+ Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml     | 2 +-
+ Documentation/devicetree/bindings/nvmem/rmem.yaml               | 2 +-
+ Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml     | 2 +-
+ .../devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml     | 2 +-
+ Documentation/devicetree/bindings/nvmem/st,stm32-romem.yaml     | 2 +-
+ .../devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml         | 2 +-
+ 18 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/mtd/allwinner,sun4i-a10-nand.yaml b/Documentation/devicetree/bindings/mtd/allwinner,sun4i-a10-nand.yaml
-index e7ec0c59bca6..9a88870cd865 100644
---- a/Documentation/devicetree/bindings/mtd/allwinner,sun4i-a10-nand.yaml
-+++ b/Documentation/devicetree/bindings/mtd/allwinner,sun4i-a10-nand.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Allwinner A10 NAND Controller
+diff --git a/Documentation/devicetree/bindings/nvmem/allwinner,sun4i-a10-sid.yaml b/Documentation/devicetree/bindings/nvmem/allwinner,sun4i-a10-sid.yaml
+index 14c170c6a86e..296001e7f498 100644
+--- a/Documentation/devicetree/bindings/nvmem/allwinner,sun4i-a10-sid.yaml
++++ b/Documentation/devicetree/bindings/nvmem/allwinner,sun4i-a10-sid.yaml
+@@ -11,7 +11,7 @@ maintainers:
+   - Maxime Ripard <mripard@kernel.org>
  
  allOf:
--  - $ref: "nand-controller.yaml"
-+  - $ref: nand-controller.yaml
- 
- maintainers:
-   - Chen-Yu Tsai <wens@csie.org>
-diff --git a/Documentation/devicetree/bindings/mtd/arasan,nand-controller.yaml b/Documentation/devicetree/bindings/mtd/arasan,nand-controller.yaml
-index d028269cdbaa..2fe53cbfbee0 100644
---- a/Documentation/devicetree/bindings/mtd/arasan,nand-controller.yaml
-+++ b/Documentation/devicetree/bindings/mtd/arasan,nand-controller.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Arasan NAND Flash Controller with ONFI 3.1 support
- 
- allOf:
--  - $ref: "nand-controller.yaml"
-+  - $ref: nand-controller.yaml
- 
- maintainers:
-   - Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>
-diff --git a/Documentation/devicetree/bindings/mtd/arm,pl353-nand-r2p1.yaml b/Documentation/devicetree/bindings/mtd/arm,pl353-nand-r2p1.yaml
-index e552875040e2..f8c0f606f451 100644
---- a/Documentation/devicetree/bindings/mtd/arm,pl353-nand-r2p1.yaml
-+++ b/Documentation/devicetree/bindings/mtd/arm,pl353-nand-r2p1.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: PL353 NAND Controller
- 
- allOf:
--  - $ref: "nand-controller.yaml"
-+  - $ref: nand-controller.yaml
- 
- maintainers:
-   - Miquel Raynal <miquel.raynal@bootlin.com>
-diff --git a/Documentation/devicetree/bindings/mtd/gpmi-nand.yaml b/Documentation/devicetree/bindings/mtd/gpmi-nand.yaml
-index 8487089b6e16..ba086c34626d 100644
---- a/Documentation/devicetree/bindings/mtd/gpmi-nand.yaml
-+++ b/Documentation/devicetree/bindings/mtd/gpmi-nand.yaml
-@@ -93,7 +93,7 @@ required:
- unevaluatedProperties: false
- 
- allOf:
--  - $ref: "nand-controller.yaml"
-+  - $ref: nand-controller.yaml
- 
-   - if:
-       properties:
-diff --git a/Documentation/devicetree/bindings/mtd/intel,lgm-ebunand.yaml b/Documentation/devicetree/bindings/mtd/intel,lgm-ebunand.yaml
-index 8c62c7d3d0cd..cc3def758e00 100644
---- a/Documentation/devicetree/bindings/mtd/intel,lgm-ebunand.yaml
-+++ b/Documentation/devicetree/bindings/mtd/intel,lgm-ebunand.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Intel LGM SoC NAND Controller
- 
- allOf:
--  - $ref: "nand-controller.yaml"
-+  - $ref: nand-controller.yaml
- 
- maintainers:
-   - Ramuthevar Vadivel Murugan <vadivel.muruganx.ramuthevar@linux.intel.com>
-diff --git a/Documentation/devicetree/bindings/mtd/jedec,spi-nor.yaml b/Documentation/devicetree/bindings/mtd/jedec,spi-nor.yaml
-index 3fe981b14e2c..2bece155699f 100644
---- a/Documentation/devicetree/bindings/mtd/jedec,spi-nor.yaml
-+++ b/Documentation/devicetree/bindings/mtd/jedec,spi-nor.yaml
-@@ -10,7 +10,7 @@ maintainers:
-   - Rob Herring <robh@kernel.org>
- 
- allOf:
--  - $ref: "mtd.yaml#"
-+  - $ref: mtd.yaml#
-   - $ref: /schemas/spi/spi-peripheral-props.yaml#
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
  
  properties:
-diff --git a/Documentation/devicetree/bindings/mtd/mtd-physmap.yaml b/Documentation/devicetree/bindings/mtd/mtd-physmap.yaml
-index 44cd4476d1d3..f8c976898a95 100644
---- a/Documentation/devicetree/bindings/mtd/mtd-physmap.yaml
-+++ b/Documentation/devicetree/bindings/mtd/mtd-physmap.yaml
+   compatible:
+diff --git a/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml b/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
+index 5ec8f2bdb3a5..e0860b6b85f3 100644
+--- a/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
++++ b/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
+@@ -15,7 +15,7 @@ maintainers:
+   - Sven Peter <sven@svenpeter.dev>
+ 
+ allOf:
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
+ 
+ properties:
+   compatible:
+diff --git a/Documentation/devicetree/bindings/nvmem/brcm,nvram.yaml b/Documentation/devicetree/bindings/nvmem/brcm,nvram.yaml
+index 25033de3ef6b..36def7128fca 100644
+--- a/Documentation/devicetree/bindings/nvmem/brcm,nvram.yaml
++++ b/Documentation/devicetree/bindings/nvmem/brcm,nvram.yaml
+@@ -20,7 +20,7 @@ maintainers:
+   - Rafał Miłecki <rafal@milecki.pl>
+ 
+ allOf:
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
+ 
+ properties:
+   compatible:
+diff --git a/Documentation/devicetree/bindings/nvmem/fsl,layerscape-sfp.yaml b/Documentation/devicetree/bindings/nvmem/fsl,layerscape-sfp.yaml
+index 3b4e6e94cb81..70fb2ad25103 100644
+--- a/Documentation/devicetree/bindings/nvmem/fsl,layerscape-sfp.yaml
++++ b/Documentation/devicetree/bindings/nvmem/fsl,layerscape-sfp.yaml
 @@ -14,7 +14,7 @@ description: |
-   file systems on embedded devices.
+   unique identifier per part.
  
  allOf:
--  - $ref: "mtd.yaml#"
-+  - $ref: mtd.yaml#
-   - $ref: /schemas/memory-controllers/mc-peripheral-props.yaml#
- 
- properties:
-diff --git a/Documentation/devicetree/bindings/mtd/mxc-nand.yaml b/Documentation/devicetree/bindings/mtd/mxc-nand.yaml
-index 7f6f7c9596c4..cf4198e43d7f 100644
---- a/Documentation/devicetree/bindings/mtd/mxc-nand.yaml
-+++ b/Documentation/devicetree/bindings/mtd/mxc-nand.yaml
-@@ -10,7 +10,7 @@ maintainers:
-   - Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
- 
- allOf:
--  - $ref: "nand-controller.yaml"
-+  - $ref: nand-controller.yaml
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
  
  properties:
    compatible:
-diff --git a/Documentation/devicetree/bindings/mtd/nand-chip.yaml b/Documentation/devicetree/bindings/mtd/nand-chip.yaml
-index 33d079f76c05..609d4a4ddd80 100644
---- a/Documentation/devicetree/bindings/mtd/nand-chip.yaml
-+++ b/Documentation/devicetree/bindings/mtd/nand-chip.yaml
-@@ -10,7 +10,7 @@ maintainers:
-   - Miquel Raynal <miquel.raynal@bootlin.com>
+diff --git a/Documentation/devicetree/bindings/nvmem/imx-iim.yaml b/Documentation/devicetree/bindings/nvmem/imx-iim.yaml
+index 7aac1995cfaf..e9d9d8df4811 100644
+--- a/Documentation/devicetree/bindings/nvmem/imx-iim.yaml
++++ b/Documentation/devicetree/bindings/nvmem/imx-iim.yaml
+@@ -14,7 +14,7 @@ description: |
+   i.MX25, i.MX27, i.MX31, i.MX35, i.MX51 and i.MX53 SoCs.
  
  allOf:
--  - $ref: "mtd.yaml#"
-+  - $ref: mtd.yaml#
- 
- description: |
-   This file covers the generic description of a NAND chip. It implies that the
-diff --git a/Documentation/devicetree/bindings/mtd/nand-controller.yaml b/Documentation/devicetree/bindings/mtd/nand-controller.yaml
-index efcd415f8641..f70a32d2d9d4 100644
---- a/Documentation/devicetree/bindings/mtd/nand-controller.yaml
-+++ b/Documentation/devicetree/bindings/mtd/nand-controller.yaml
-@@ -51,7 +51,7 @@ properties:
- 
- patternProperties:
-   "^nand@[a-f0-9]$":
--    $ref: "nand-chip.yaml#"
-+    $ref: nand-chip.yaml#
- 
-     properties:
-       reg:
-diff --git a/Documentation/devicetree/bindings/mtd/partitions/brcm,bcm4908-partitions.yaml b/Documentation/devicetree/bindings/mtd/partitions/brcm,bcm4908-partitions.yaml
-index 5bbb1c01ddee..94f0742b375c 100644
---- a/Documentation/devicetree/bindings/mtd/partitions/brcm,bcm4908-partitions.yaml
-+++ b/Documentation/devicetree/bindings/mtd/partitions/brcm,bcm4908-partitions.yaml
-@@ -31,7 +31,7 @@ properties:
- 
- patternProperties:
-   "^partition@[0-9a-f]+$":
--    $ref: "partition.yaml#"
-+    $ref: partition.yaml#
-     properties:
-       compatible:
-         const: brcm,bcm4908-firmware
-diff --git a/Documentation/devicetree/bindings/mtd/partitions/linksys,ns-partitions.yaml b/Documentation/devicetree/bindings/mtd/partitions/linksys,ns-partitions.yaml
-index 213858f60375..c5fa78ff7125 100644
---- a/Documentation/devicetree/bindings/mtd/partitions/linksys,ns-partitions.yaml
-+++ b/Documentation/devicetree/bindings/mtd/partitions/linksys,ns-partitions.yaml
-@@ -32,7 +32,7 @@ properties:
- 
- patternProperties:
-   "^partition@[0-9a-f]+$":
--    $ref: "partition.yaml#"
-+    $ref: partition.yaml#
-     properties:
-       compatible:
-         items:
-diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-index 07024ee45951..00c991ffa6c4 100644
---- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-+++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-@@ -46,7 +46,7 @@ patternProperties:
-           - 512
- 
- allOf:
--  - $ref: "nand-controller.yaml#"
-+  - $ref: nand-controller.yaml#
- 
-   - if:
-       properties:
-diff --git a/Documentation/devicetree/bindings/mtd/renesas-nandc.yaml b/Documentation/devicetree/bindings/mtd/renesas-nandc.yaml
-index f0dc78bb0515..cc6b8274e6a2 100644
---- a/Documentation/devicetree/bindings/mtd/renesas-nandc.yaml
-+++ b/Documentation/devicetree/bindings/mtd/renesas-nandc.yaml
-@@ -10,7 +10,7 @@ maintainers:
-   - Miquel Raynal <miquel.raynal@bootlin.com>
- 
- allOf:
--  - $ref: "nand-controller.yaml"
-+  - $ref: nand-controller.yaml
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
  
  properties:
    compatible:
-diff --git a/Documentation/devicetree/bindings/mtd/rockchip,nand-controller.yaml b/Documentation/devicetree/bindings/mtd/rockchip,nand-controller.yaml
-index 566f330851f7..7eb1d0a38565 100644
---- a/Documentation/devicetree/bindings/mtd/rockchip,nand-controller.yaml
-+++ b/Documentation/devicetree/bindings/mtd/rockchip,nand-controller.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Rockchip SoCs NAND FLASH Controller (NFC)
+diff --git a/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml
+index d0a239d7e199..9876243ff1e8 100644
+--- a/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml
++++ b/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml
+@@ -15,7 +15,7 @@ description: |
+   i.MX7D/S, i.MX7ULP, i.MX8MQ, i.MX8MM, i.MX8MN and i.MX8MP SoCs.
  
  allOf:
--  - $ref: "nand-controller.yaml#"
-+  - $ref: nand-controller.yaml#
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
  
- maintainers:
+ properties:
+   compatible:
+diff --git a/Documentation/devicetree/bindings/nvmem/ingenic,jz4780-efuse.yaml b/Documentation/devicetree/bindings/nvmem/ingenic,jz4780-efuse.yaml
+index fe2cd7f1afba..e89fd879c968 100644
+--- a/Documentation/devicetree/bindings/nvmem/ingenic,jz4780-efuse.yaml
++++ b/Documentation/devicetree/bindings/nvmem/ingenic,jz4780-efuse.yaml
+@@ -10,7 +10,7 @@ maintainers:
+   - PrasannaKumar Muralidharan <prasannatsmkumar@gmail.com>
+ 
+ allOf:
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
+ 
+ properties:
+   compatible:
+diff --git a/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml b/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml
+index 75e0a516e59a..d16d42fb98b6 100644
+--- a/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml
++++ b/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml
+@@ -15,7 +15,7 @@ maintainers:
+   - Lala Lin <lala.lin@mediatek.com>
+ 
+ allOf:
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
+ 
+ properties:
+   $nodename:
+diff --git a/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml b/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml
+index c3c96fd0baac..a296d348adb4 100644
+--- a/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml
++++ b/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml
+@@ -15,7 +15,7 @@ description: |
+   settings, chip identifiers) or user specific data could be stored.
+ 
+ allOf:
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
+ 
+ properties:
+   compatible:
+diff --git a/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
+index ff317fd7c15b..8938eec22b52 100644
+--- a/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
++++ b/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
+@@ -10,7 +10,7 @@ maintainers:
+   - Anson Huang <Anson.Huang@nxp.com>
+ 
+ allOf:
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
+ 
+ properties:
+   compatible:
+diff --git a/Documentation/devicetree/bindings/nvmem/nintendo-otp.yaml b/Documentation/devicetree/bindings/nvmem/nintendo-otp.yaml
+index f93bc50c40d7..6c26800f8b79 100644
+--- a/Documentation/devicetree/bindings/nvmem/nintendo-otp.yaml
++++ b/Documentation/devicetree/bindings/nvmem/nintendo-otp.yaml
+@@ -17,7 +17,7 @@ maintainers:
+   - Emmanuel Gil Peyrot <linkmauve@linkmauve.fr>
+ 
+ allOf:
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
+ 
+ properties:
+   compatible:
+diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+index 2173fe82317d..e952907ad1d5 100644
+--- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
++++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+@@ -10,7 +10,7 @@ maintainers:
+   - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+ 
+ allOf:
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
+ 
+ properties:
+   compatible:
+diff --git a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+index e08504ef3b6e..34818683f80c 100644
+--- a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
++++ b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+@@ -15,7 +15,7 @@ description: |
+   to/from the PBUS.
+ 
+ allOf:
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
+ 
+ properties:
+   compatible:
+diff --git a/Documentation/devicetree/bindings/nvmem/rmem.yaml b/Documentation/devicetree/bindings/nvmem/rmem.yaml
+index a4a755dcfc43..38a39c9b8c1c 100644
+--- a/Documentation/devicetree/bindings/nvmem/rmem.yaml
++++ b/Documentation/devicetree/bindings/nvmem/rmem.yaml
+@@ -10,7 +10,7 @@ maintainers:
+   - Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
+ 
+ allOf:
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
+ 
+ properties:
+   compatible:
+diff --git a/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml b/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml
+index febee8129aa9..c5403e149080 100644
+--- a/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml
++++ b/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml
+@@ -10,7 +10,7 @@ maintainers:
    - Heiko Stuebner <heiko@sntech.de>
-diff --git a/Documentation/devicetree/bindings/mtd/spi-nand.yaml b/Documentation/devicetree/bindings/mtd/spi-nand.yaml
-index 4d095e613204..77a8727c7966 100644
---- a/Documentation/devicetree/bindings/mtd/spi-nand.yaml
-+++ b/Documentation/devicetree/bindings/mtd/spi-nand.yaml
-@@ -10,7 +10,7 @@ maintainers:
-   - Miquel Raynal <miquel.raynal@bootlin.com>
  
  allOf:
--  - $ref: "nand-chip.yaml#"
-+  - $ref: nand-chip.yaml#
-   - $ref: /schemas/spi/spi-peripheral-props.yaml#
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
  
  properties:
-diff --git a/Documentation/devicetree/bindings/mtd/st,stm32-fmc2-nand.yaml b/Documentation/devicetree/bindings/mtd/st,stm32-fmc2-nand.yaml
-index 19cf1f18b61c..986e85ccebc7 100644
---- a/Documentation/devicetree/bindings/mtd/st,stm32-fmc2-nand.yaml
-+++ b/Documentation/devicetree/bindings/mtd/st,stm32-fmc2-nand.yaml
-@@ -45,7 +45,7 @@ patternProperties:
-         enum: [1, 4, 8]
+   compatible:
+diff --git a/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml b/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml
+index dc790d2cd9f0..b8bca0599c45 100644
+--- a/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml
++++ b/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml
+@@ -11,7 +11,7 @@ maintainers:
+   - Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
  
  allOf:
--  - $ref: "nand-controller.yaml#"
-+  - $ref: nand-controller.yaml#
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
  
-   - if:
-       properties:
-diff --git a/Documentation/devicetree/bindings/mtd/ti,gpmc-nand.yaml b/Documentation/devicetree/bindings/mtd/ti,gpmc-nand.yaml
-index 4ac198814b7a..115682fa81b7 100644
---- a/Documentation/devicetree/bindings/mtd/ti,gpmc-nand.yaml
-+++ b/Documentation/devicetree/bindings/mtd/ti,gpmc-nand.yaml
-@@ -63,10 +63,10 @@ properties:
- 
- patternProperties:
-   "@[0-9a-f]+$":
--    $ref: "/schemas/mtd/partitions/partition.yaml"
-+    $ref: /schemas/mtd/partitions/partition.yaml
+ properties:
+   "#address-cells": true
+diff --git a/Documentation/devicetree/bindings/nvmem/st,stm32-romem.yaml b/Documentation/devicetree/bindings/nvmem/st,stm32-romem.yaml
+index 172597cc5c63..a69de3e92282 100644
+--- a/Documentation/devicetree/bindings/nvmem/st,stm32-romem.yaml
++++ b/Documentation/devicetree/bindings/nvmem/st,stm32-romem.yaml
+@@ -16,7 +16,7 @@ maintainers:
+   - Fabrice Gasnier <fabrice.gasnier@foss.st.com>
  
  allOf:
--  - $ref: "/schemas/memory-controllers/ti,gpmc-child.yaml"
-+  - $ref: /schemas/memory-controllers/ti,gpmc-child.yaml
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
  
- required:
-   - compatible
-diff --git a/Documentation/devicetree/bindings/mtd/ti,gpmc-onenand.yaml b/Documentation/devicetree/bindings/mtd/ti,gpmc-onenand.yaml
-index 8a79ad300216..7d3ace4f5505 100644
---- a/Documentation/devicetree/bindings/mtd/ti,gpmc-onenand.yaml
-+++ b/Documentation/devicetree/bindings/mtd/ti,gpmc-onenand.yaml
-@@ -36,10 +36,10 @@ properties:
- 
- patternProperties:
-   "@[0-9a-f]+$":
--    $ref: "/schemas/mtd/partitions/partition.yaml"
-+    $ref: /schemas/mtd/partitions/partition.yaml
+ properties:
+   compatible:
+diff --git a/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml
+index a7644ebbc2ca..8877c2283e9e 100644
+--- a/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml
++++ b/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml
+@@ -11,7 +11,7 @@ maintainers:
+   - Vincent Shih <vincent.sunplus@gmail.com>
  
  allOf:
--  - $ref: "/schemas/memory-controllers/ti,gpmc-child.yaml"
-+  - $ref: /schemas/memory-controllers/ti,gpmc-child.yaml
+-  - $ref: "nvmem.yaml#"
++  - $ref: nvmem.yaml#
  
- required:
-   - compatible
+ properties:
+   compatible:
 -- 
 2.39.2
 
