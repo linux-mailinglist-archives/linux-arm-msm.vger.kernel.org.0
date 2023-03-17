@@ -2,170 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 281516BEB34
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 15:29:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76C4F6BEC1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 16:04:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231200AbjCQO3T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 10:29:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49654 "EHLO
+        id S231374AbjCQPEb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 11:04:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230079AbjCQO3S (ORCPT
+        with ESMTP id S230346AbjCQPE3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 10:29:18 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5D747D9C;
-        Fri, 17 Mar 2023 07:29:12 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6B8F66226B;
-        Fri, 17 Mar 2023 14:29:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56996C433EF;
-        Fri, 17 Mar 2023 14:29:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679063351;
-        bh=D3V8W1v72x8mIyG6Ens123mTd1y9kzSOKpYqPHAW7PI=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=q+s8F3AifNO8AjIPQqst3WN0ZV1pQbk/u2d2LqRK7UFa6YE2z1vkD54OjQTS+4ZOI
-         DyuO0zIZp/owksQ8P7mMM3T6NxuA2gXorXMTxGOqcGJxLXc9ngARElCL+kjL8Mikxh
-         I4Fhz96bxyYMzTDzDJSZUym5APnit9NfuQ8NXW8AZWpkMcBHvQ2vkCEP7VHweXa4qx
-         S4zpmyUnKgxiLtwMmwLerzXULgndMvbe3YxP9o613kl1UkTluLEFrGxk9lZN/GdmjU
-         Zeo0Kkasggy+uKf3s1v1/G04wpocS/xU0YoFr8UaSCVpfgzn8hpdcAcEoNo9P0N6bO
-         wxJmhbdiEyRdw==
-Date:   Fri, 17 Mar 2023 15:29:03 +0100
-From:   Marek =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>
-To:     Andrew Lunn <andrew@lunn.ch>
-Cc:     Christian Marangi <ansuelsmth@gmail.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Fri, 17 Mar 2023 11:04:29 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD05910EA8C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 08:04:26 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id l12so4710639wrm.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 08:04:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679065465;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OrNP2U1Bweu+K3EQ1iwfmC2BkNeHceAtfpVaftw7AuE=;
+        b=hvQ9L9xFlFTyzCzkELWRsbNWD+V8o/O/lxqs+ucNSpUnQCUbD4d8r54Yq/mXFbtfVW
+         CVptaCLb5Z6AfEPH/1A9wosw0+a/8kAj/xJtSv2aW310M1fPWI2sRCnzmRKL8nrGmwtL
+         YfBaZ5ssF1eohRIslE/uV7l7pXKDUNpE7QAMPCjCCl+6pvSnSJtQ8+YvND6kXfKv8WFC
+         QxRou1r8QnlE0BezkH1j7GB8Va3IPzCnZl+67tvKgFzyLuPXu5G5osHiuvYSyUTS+DIt
+         CBsX1LalRYayX/7RnNL9fWovxBE0w/k2hyVFEH3YDmAUm2gGRLH0AfRXJrO60YIepm04
+         UoKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679065465;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OrNP2U1Bweu+K3EQ1iwfmC2BkNeHceAtfpVaftw7AuE=;
+        b=KQBxN8w3vdMilGXNe2pAMMWlcCJCRdk5UJde1bPlGjNNE0JiReXvMtqfzz1+v1/kdR
+         7xP11taEFO/K/jduZa8fmpJrerRvUkNi822I1qPVjLPaidwBg6NraM/aaniojMKPIHBG
+         tBI1fMUvTGoAqzN4q06zyHB456wRca4p5ujV8psTlGu/hxH5nYn0QgO25p8J/npET9TL
+         9VghGri4w7oBIskg64jtpo+h9OlAO55iAbMCATeRPcnr1JsvRzEipf8humSjse/9nknN
+         oapLPqO9yJaVx8iTnITYfEC65RE3LMur0ydA7ec6fNKYd/SMAXrsWv58G44WvQ9HtAyY
+         qh5g==
+X-Gm-Message-State: AO0yUKXmUVgjm7+oCajmcIjF+fGxb3Yfa0xU8xkFu7z/xDZL2yg/3l8A
+        QCsHq9qhm2be8dZg5KIstAPz+g==
+X-Google-Smtp-Source: AK7set/6E/+aRE8WDx7crNSpQvDpdkFOTSvxHwHopJFuVaKrIh1NXS6C77sCNGCYq4JQ/tb1btEUEA==
+X-Received: by 2002:adf:f1d1:0:b0:2cf:e8b2:4f76 with SMTP id z17-20020adff1d1000000b002cfe8b24f76mr7305646wro.66.1679065464789;
+        Fri, 17 Mar 2023 08:04:24 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id q14-20020a05600000ce00b002be505ab59asm2133773wrx.97.2023.03.17.08.04.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Mar 2023 08:04:24 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v4 00/12] soc: qcom: add UCSI function to PMIC GLINK
+Date:   Fri, 17 Mar 2023 16:04:16 +0100
+Message-Id: <20230130-topic-sm8450-upstream-pmic-glink-v4-0-38bf0f5d07bd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHCBFGQC/5XOS27DMAwE0KsEWocBLckfZNV7FF3oQ9tCbcmQH
+ KNB4LuHyS7oyssZgG/4EIVyoCKup4fItIUSUuSgzyfhRhMHguA5C4lSYaUQ1rQEB2XudI1wW8q
+ aycywzFwOU4i/oKwyaFvrvFKCGWsKgc0mupGheJsmLpdMffh7737/cB5DWVO+v9/Yqld7YHGrA
+ AEtGtcbzzf0xbXJ6ZLyIF76Jo+KksW26snIutGt7v+J6qioWNSua9DLpvay+xD3fX8C4Wn/nIo
+ BAAA=
+To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Lee Jones <lee@kernel.org>,
-        linux-leds@vger.kernel.org
-Subject: Re: [net-next PATCH v4 04/14] net: phy: Add a binding for PHY LEDs
-Message-ID: <20230317152903.5103f2c4@dellmb>
-In-Reply-To: <6cf03603-2a8e-4c08-a61b-aef164a0f5d9@lunn.ch>
-References: <20230317023125.486-1-ansuelsmth@gmail.com>
-        <20230317023125.486-5-ansuelsmth@gmail.com>
-        <20230317084519.12d3587a@dellmb>
-        <6cf03603-2a8e-4c08-a61b-aef164a0f5d9@lunn.ch>
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.35; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh@kernel.org>
+X-Mailer: b4 0.12.1
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 17 Mar 2023 14:55:11 +0100
-Andrew Lunn <andrew@lunn.ch> wrote:
+The PMIC GLINK interface offers an UCSI endpoint for newer
+SoCs, the UCSI exchange is necessary to configure the USB-C
+port USB role and altmode on the SM8450 HDK and SM8550 MTP
+boards.
+Since the DT description is the same, support for SM8350 HDK
+is also added.
 
-> On Fri, Mar 17, 2023 at 08:45:19AM +0100, Marek Beh=C3=BAn wrote:
-> > On Fri, 17 Mar 2023 03:31:15 +0100
-> > Christian Marangi <ansuelsmth@gmail.com> wrote:
-> >  =20
-> > > +	cdev->brightness_set_blocking =3D phy_led_set_brightness;
-> > > +	cdev->max_brightness =3D 1;
-> > > +	init_data.devicename =3D dev_name(&phydev->mdio.dev);
-> > > +	init_data.fwnode =3D of_fwnode_handle(led);
-> > > +
-> > > +	err =3D devm_led_classdev_register_ext(dev, cdev, &init_data); =20
-> >=20
-> > Since init_data.devname_mandatory is false, devicename is ignored.
-> > Which is probably good, becuse the device name of a mdio device is
-> > often ugly, taken from devicetree or switch drivers, for example:
-> >   f1072004.mdio-mii
-> >   fixed-0
-> >   mv88e6xxx-1
-> > So either don't fill devicename or use devname_mandatory (and maybe
-> > fill devicename with something less ugly, but I guess if we don't have
-> > much choice if we want to keep persistent names).
-> >=20
-> > Without devname_mandatory, the name of the LED classdev will be of the
-> > form
-> >   color:function[-function-enumerator],
-> > i.e.
-> >   green:lan
-> >   amber:lan-1
-> >=20
-> > With multiple switch ethenret ports all having LAN function, it is
-> > worth noting that the function enumerator must be explicitly used in the
-> > devicetree, otherwise multiple LEDs will be registered under the same
-> > name, and the LED subsystem will add a number at the and of the name
-> > (function led_classdev_next_name), resulting in names
-> >   green:lan
-> >   green:lan_1
-> >   green:lan_2
-> >   ... =20
->=20
-> I'm testing on a Marvell RDK, with limited LEDs. It has one LED on the
-> front port to represent the WAN port. The DT patch is at the end of
-> the series. With that, i end up with:
->=20
-> root@370rd:/sys/class/leds# ls -l
-> total 0
-> lrwxrwxrwx 1 root root 0 Mar 17 01:10 f1072004.mdio-mii:00:WAN -> ../../d=
-evices/platform/soc/soc:interna
-> l-regs/f1072004.mdio/mdio_bus/f1072004.mdio-mii/f1072004.mdio-mii:00/leds=
-/f1072004.mdio-mii:00:WAN
->=20
-> I also have:
->=20
-> root@370rd:/sys/class/net/eth0/phydev/leds# ls
-> f1072004.mdio-mii:00:WAN
+This patchset focuses on USB and disables altmode support
+on those 2 SoCs until DP altmode over the combo phy is
+supported.
 
-Hmm, yes I see.  If label is specified, devicename is used even if
-devname_mandatory is false.
+Depends on PMIC Glink patchset at [1].
 
-> f1072004.mdio-mii:00: is not nice, but it is unique to a netdev. The
-> last part then comes from the label property. Since there is only one
-> LED, i went with what the port is intended to be used as. If there had
-> been more LEDs, i would of probably used labels like "LINK" and
-> "ACTIVITY", since that is often what they reset default
-> to. Alternatively, you could names the "Left" and "Right", which does
-> suggest they can be given any function.
->=20
-> I don't actually think the name is too important, so long as it is
-> unique. You are going to find it via /sys/class/net. MAC LEDs should
-> be /sys/class/net/eth42/leds, and PHY LEDs will be
-> /sys/class/net/phydev/leds.
+[1] https://lore.kernel.org/all/20230130042003.577063-1-quic_bjorande@quicinc.com/
 
-Maybe the name may not be that important from the perspective of a user
-who just wants to find the LED for a given phy, yes, but the
-proposal of how LED classdev should be named was done in good faith
-and accepted years ago. The documentation still defines the name format
-and until that part of documenation is changed, I think we should at
-least try to follow it.
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v4:
+- Handle remove for UCSI driver
+- Fixup client mask match data handling
+- Added USB ports bindings review tag
+- Link to v3: https://lore.kernel.org/r/20230130-topic-sm8450-upstream-pmic-glink-v3-0-4c860d265d28@linaro.org
 
-Also, the label DT property has been deprecated for LEDs. IMO it should
-be removed from that last patch of this series.
+Changes in v3:
+- Fixed patch 1 by moving mask to pmic_glink_of_match
+- Fixed patch 8 by adding back hsphy
+- Add bindings change to dwc3 to support separate HS & SS OF graph links
+- Link to v2: https://lore.kernel.org/r/20230130-topic-sm8450-upstream-pmic-glink-v2-0-71fea256474f@linaro.org
 
-> It has been discussed in the past to either extend ethtool to
-> understand this, or write a new little tool to make it easier to
-> manipulate these LEDs.
+Changes in v2:
+- Moved the dwc3 port subnodes to dtsi
+- Added SM8350 HDK support
+- Added help about ucsi module name
+- Added bindings acks
+- Fixed sm8550 pmic glink compatible
+- Added more description in config update patch
+- Link to v1: https://lore.kernel.org/r/20230130-topic-sm8450-upstream-pmic-glink-v1-0-0b0acfad301e@linaro.org
 
-Yes, and this would solve the problem for a user who wants to change
-the behaviour of a LED for a given PHY. But a user who wants to list
-all available LEDs by listing /sys/class/leds can also retrieve a nice
-list of names that make sense, if the documented format is followed.
+---
+Neil Armstrong (12):
+      usb: typec: ucsi: add PMIC Glink UCSI driver
+      dt-bindings: soc: qcom: qcom,pmic-glink: document SM8450 compatible
+      dt-bindings: soc: qcom: qcom,pmic-glink: document SM8550 compatible
+      soc: qcom: pmic_glink: register ucsi aux device
+      dt-bindings: usb: snps,dwc3: document HS & SS OF graph ports
+      arm64: dts: qcom: sm8350: add port subnodes in dwc3 node
+      arm64: dts: qcom: sm8450: add port subnodes in dwc3 node
+      arm64: dts: qcom: sm8550: add port subnodes in dwc3 node
+      arm64: dts: qcom: sm8350-hdk: add pmic glink node
+      arm64: dts: qcom: sm8450-hdk: add pmic glink node
+      arm64: dts: qcom: sm8550-mtp: add pmic glink node
+      arm64: defconfig: add PMIC GLINK modules
 
-Marek
+ .../bindings/soc/qcom/qcom,pmic-glink.yaml         |   2 +
+ .../devicetree/bindings/usb/snps,dwc3.yaml         |  16 +
+ arch/arm64/boot/dts/qcom/sm8350-hdk.dts            |  67 +++-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               |  19 ++
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts            |  45 ++-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               |  19 ++
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts            |  45 ++-
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               |  19 ++
+ arch/arm64/configs/defconfig                       |   4 +
+ drivers/soc/qcom/pmic_glink.c                      |  65 +++-
+ drivers/usb/typec/ucsi/Kconfig                     |  10 +
+ drivers/usb/typec/ucsi/Makefile                    |   1 +
+ drivers/usb/typec/ucsi/ucsi_glink.c                | 345 +++++++++++++++++++++
+ 13 files changed, 642 insertions(+), 15 deletions(-)
+---
+base-commit: 6f72958a49f68553f2b6ff713e8c8e51a34c1e1e
+change-id: 20230130-topic-sm8450-upstream-pmic-glink-3b3a0b7bcd33
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
