@@ -2,106 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2016F6BEAF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 15:17:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 17FF86BEB0A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 15:22:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229966AbjCQORu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 10:17:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33382 "EHLO
+        id S229892AbjCQOWq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 10:22:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231140AbjCQORo (ORCPT
+        with ESMTP id S229533AbjCQOWp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 10:17:44 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ED42AA263;
-        Fri, 17 Mar 2023 07:17:38 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32H7WnvT004884;
-        Fri, 17 Mar 2023 14:17:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=4oTxhazIrrjZa+mYyuKTnui1iY7aod3VMNR9MDbaMQw=;
- b=XLup6JLaDmbM38RyFFyRpIoPTFGP4QOJBf+jSvtOzxvMvG3exBG9akHEFhYGL+lhUbmF
- ZjqpQvtWmdKKUqBqJnFC1ZcSs6zhcM7kx73VBiioE2LMcN3ypPX9PW4WDFE026cpDOiS
- OLVpJ6Ulg67gQM8RweoxiWvva2qXr8aIYg/y7m0IZhe2upDmkTnQenUkt5vpIqF0V77R
- nQRc+u2frrLtGKrSOZHqYIeD5htFrFiTes3iKh1mDjh79JKjkLjaBBYP1I8tHQ5K9o2v
- FgkUb1299YCyLUIV2vWZ31ovkuunpkcjSQC11FDKJwjcHE8QRFQ6/6HjSblHMoLxHfGK bw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pcd5mt9jj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 17 Mar 2023 14:17:24 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32HEHNjx001048
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 17 Mar 2023 14:17:23 GMT
-Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Fri, 17 Mar 2023 07:17:19 -0700
-From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-To:     <swboyd@chromium.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <broonie@kernel.org>, <quic_plai@quicinc.com>,
-        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_visr@quicinc.com>
-CC:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Subject: [PATCH v9 4/4] clk: qcom: lpassaudiocc-sc7280: Modify qcom_cc_probe to qcom_cc_probe_by_index
-Date:   Fri, 17 Mar 2023 19:46:22 +0530
-Message-ID: <20230317141622.1926573-5-quic_mohs@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230317141622.1926573-1-quic_mohs@quicinc.com>
-References: <20230317141622.1926573-1-quic_mohs@quicinc.com>
+        Fri, 17 Mar 2023 10:22:45 -0400
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C607B5A8F;
+        Fri, 17 Mar 2023 07:22:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+        bh=eA+pnD7dYsD9I52QLx0lohm6/RMWYuxO9nL8ghwZbQU=; b=5yZJe6wFcmnnQf7wiiD1qTcOkE
+        8cpX1aXvDuqb9qFXtNWyUz7QqA7P1cW8vtLi8q7/Glf2Prx7eQgIodRC1L4Wk2qUjvxZPeGwNsio9
+        CQmUjNzbdOKKuW9zG9q7Jwo3H+nHrgtVKx4wU+Ibg2TqRgWCOMFufhMjRHk0ixaJaKvE=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+        (envelope-from <andrew@lunn.ch>)
+        id 1pdAyU-007cIm-NV; Fri, 17 Mar 2023 15:22:30 +0100
+Date:   Fri, 17 Mar 2023 15:22:30 +0100
+From:   Andrew Lunn <andrew@lunn.ch>
+To:     Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>
+Cc:     Christian Marangi <ansuelsmth@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Lee Jones <lee@kernel.org>, linux-leds@vger.kernel.org,
+        pavel@ucw.cz, Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [net-next PATCH v4 10/14] dt-bindings: net: dsa: qca8k: add LEDs
+ definition example
+Message-ID: <8825d43d-7340-4984-8c13-25731edbd827@lunn.ch>
+References: <20230317023125.486-1-ansuelsmth@gmail.com>
+ <20230317023125.486-11-ansuelsmth@gmail.com>
+ <20230317091410.58787646@dellmb>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nFUzVPqmCpcuQ36s48fz-3FwG8Rs5NN6
-X-Proofpoint-ORIG-GUID: nFUzVPqmCpcuQ36s48fz-3FwG8Rs5NN6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-17_08,2023-03-16_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
- malwarescore=0 adultscore=0 spamscore=0 mlxscore=0 mlxlogscore=977
- suspectscore=0 bulkscore=0 impostorscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303170098
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230317091410.58787646@dellmb>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Modify AHB clocks explicit registration from qcom_cc_probe to
-qcom_cc_probe_by_index.
+> We could specify in DT something like:
+>   eth0: ethernet-controller {
+>     ...
+>   }
+> 
+>   ethernet-phy {
+>     leds {
+>       led@0 {
+>         reg = <0>;
+>         color = <LED_COLOR_ID_GREEN>;
+>         trigger-sources = <&eth0>;
+>         function = LED_FUNCTION_ ?????? ;
+>       }
+>     }
+>   }
 
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
----
- drivers/clk/qcom/lpassaudiocc-sc7280.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+For generic case, where you just have an LED on some random bus, you
+need to know what netdev it should represent. And in effect, this
+patch series gives you just that.
 
-diff --git a/drivers/clk/qcom/lpassaudiocc-sc7280.c b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-index 134eb1529ede..b7f4688a61f4 100644
---- a/drivers/clk/qcom/lpassaudiocc-sc7280.c
-+++ b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-@@ -830,7 +830,7 @@ static int lpass_aon_cc_sc7280_probe(struct platform_device *pdev)
- 	if (of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode")) {
- 		lpass_audio_cc_sc7280_regmap_config.name = "cc";
- 		desc = &lpass_cc_sc7280_desc;
--		ret = qcom_cc_probe(pdev, desc);
-+		ret = qcom_cc_probe_by_index(pdev, 0, desc);
- 		goto exit;
- 	}
- 
--- 
-2.25.1
+However, when we get to offload, which is the ultimate goal, things
+are different. We cannot expect an LED inside the PHY connected to
+eth42 to offload blinking for eth24. There is a clear hardware
+relationship between the LED and the netdev. And in the more general
+case, there will always be a hardware relationship, be it wifi
+activity, or hard disk activity. phylib knows this relationship, and
+the DSA core also knows this relationship. Probably the SATA core will
+know the relationship. So i have a patchset which adds an op to the
+cdev to ask it, what struct device do you HW blink for?
+trigger-sources then becomes optional. And in fact, if it is used, you
+need to verify if it fits to this relationship, and if not, refuse to
+offload blinking, so software blinking only.
+
+Anyway, that is an aside to your main question. But the Day Job is
+calling. I will address your question later today.
+
+	 Andrew
 
