@@ -2,127 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C23D06BE1FD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 08:38:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 32FD96BE206
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 08:43:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229932AbjCQHiT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 03:38:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37590 "EHLO
+        id S230198AbjCQHnB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 03:43:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229955AbjCQHiP (ORCPT
+        with ESMTP id S229534AbjCQHnA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 03:38:15 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EC8D1421B;
-        Fri, 17 Mar 2023 00:38:13 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 19AA0CE1F6F;
-        Fri, 17 Mar 2023 07:38:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B2BC4339B;
-        Fri, 17 Mar 2023 07:38:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679038687;
-        bh=iEJpyZ9jXapfaJWky/MC2x1NLyVZPYHtlZserzfH3pU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=EbYKMO9P3WzyjRWnMaMPaCg+JNnCadnKf1C4HvZZP6GzV20QRjd8sP7ElHpEsNYs1
-         WEV8x18+0M8dGcw8KcWf938vhz1OrjNLR4uBBI6uPkmhQHsaRZTVzY6o4ydnPxJ4o1
-         f5q5Ia3JNzNfdJhQp9AJCY+jpmHiexU59/XRaW4P76aRyaehfwZbKETnOsS7uCbMpE
-         8OTdsG4CywWxTMduLKIc0gUsyh1HgNU3ewzKuYJRFDtBmoSA5oEdPz8YkZTk0trdkW
-         QOnY2zVy31sWEW41w4AE75RrznDRWpmD6ER+nojyFmfgN/Wgc0gJxPWCYPCYmWOp7k
-         gL1UQcFeBEaMg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pd4gI-0001DB-3N; Fri, 17 Mar 2023 08:39:18 +0100
-Date:   Fri, 17 Mar 2023 08:39:18 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
+        Fri, 17 Mar 2023 03:43:00 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06F7486BC;
+        Fri, 17 Mar 2023 00:42:58 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32H7XuMo019978;
+        Fri, 17 Mar 2023 07:41:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=LcTL+5gjoj2QFyT9gYoPRzMtz6+6VJDaGPUlo8LTWsw=;
+ b=HTqyRbcx4cG/CFvnT66bRbYYdD6oldXS0bOXZhI0xeoIigRsCBuSNRvCYWWcoqN6kFb2
+ dSYVtbJYRqQPJezoWFrxJY0wj5GysWJc9Yr1edkdd2M6+ik3IACnff5IK/00T2OpaqLr
+ v7xuCo21wd43Wc+vf4+Bl10M4hYCjoLo0ek4WmIcfnp9piivrX8BvBDAmh0/IDlyGAOL
+ AVP6pmo1htIAnHBvyqIzdC0aRoNd4FoPdoYtSM+YiEv0F+2ydsTK18pk8lMeCB8JjEIf
+ YqxvaoF1WinyHaPSTeCpRUPS4Baas1QC+G0ltnE48k162nImRaKqJm5CsxsXAtTDiG3Q PQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pcem18t9c-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 17 Mar 2023 07:41:04 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32H7f3W4022509
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 17 Mar 2023 07:41:03 GMT
+Received: from [10.233.17.245] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 17 Mar
+ 2023 00:40:57 -0700
+Message-ID: <4c2ff883-13af-19be-e4e2-35a66f2572fa@quicinc.com>
+Date:   Fri, 17 Mar 2023 15:40:54 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v1 0/3] Add support to configure Coresight Dummy subunit
+Content-Language: en-US
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>
-Subject: Re: [PATCH v6 4/4] arm64: dts: qcom: sc8280xp-x13s: Add bluetooth
-Message-ID: <ZBQZJo4UgMxm82pA@hovoldconsulting.com>
-References: <20230316034759.73489-1-steev@kali.org>
- <20230316034759.73489-5-steev@kali.org>
- <ZBLuxFxFvCY+0XHG@hovoldconsulting.com>
- <ZBL4Qrp9Lr+aOyXr@hovoldconsulting.com>
- <CAKXuJqh447rZxDZ28aCiRZaL=uj5xDULhyU=HUbFVePYyz7AOw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Jonathan Corbet <corbet@lwn.net>
+CC:     Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-doc@vger.kernel.org>
+References: <20230316032005.6509-1-quic_hazha@quicinc.com>
+ <0db33881-7978-41c9-45e3-63dc2ed7be4f@arm.com>
+From:   Hao Zhang <quic_hazha@quicinc.com>
+In-Reply-To: <0db33881-7978-41c9-45e3-63dc2ed7be4f@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKXuJqh447rZxDZ28aCiRZaL=uj5xDULhyU=HUbFVePYyz7AOw@mail.gmail.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: uWCTNsihlvukbU0MvKCCFgtOrOVg0XMn
+X-Proofpoint-ORIG-GUID: uWCTNsihlvukbU0MvKCCFgtOrOVg0XMn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-17_04,2023-03-16_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 phishscore=0 impostorscore=0 suspectscore=0 mlxscore=0
+ lowpriorityscore=0 clxscore=1015 spamscore=0 mlxlogscore=999 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303150002 definitions=main-2303170051
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 16, 2023 at 02:17:38PM -0500, Steev Klimaszewski wrote:
-> On Thu, Mar 16, 2023 at 6:05 AM Johan Hovold <johan@kernel.org> wrote:
-> > On Thu, Mar 16, 2023 at 11:26:12AM +0100, Johan Hovold wrote:
-> > > On Wed, Mar 15, 2023 at 10:47:58PM -0500, Steev Klimaszewski wrote:
+Hi Suzuki,
 
-> > > > +           vreg_s1c: smps1 {
-> > > > +                   regulator-name = "vreg_s1c";
-> > > > +                   regulator-min-microvolt = <1880000>;
-> > > > +                   regulator-max-microvolt = <1900000>;
-> > > > +                   regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> > > > +                   regulator-allowed-modes = <RPMH_REGULATOR_MODE_AUTO>,
-> > > > +                                             <RPMH_REGULATOR_MODE_RET>;
-> > > > +                   regulator-allow-set-load;
-> > >
-> > > So this does not look quite right still as you're specifying an initial
-> > > mode which is not listed as allowed.
-> > >
-> > > Also there are no other in-tree users of RPMH_REGULATOR_MODE_RET and
-> > > AUTO is used to switch mode automatically which seems odd to use with
-> > > allow-set-load.
-> > >
-> > > This regulator is in fact also used by the wifi part of the chip and as
-> > > that driver does not set any loads so we may end up with a regulator in
-> > > retention mode while wifi is in use.
-> > >
-> > > Perhaps Bjorn can enlighten us, but my guess is that this should just be
-> > > "intial-mode = AUTO" (or even HPM, but I have no idea where this came
-> > > from originally).
-> >
-> > This one probably also needs to be marked as always-on as we don't
-> > currently describe the fact that the wifi part also uses s1c.
-
-> I couldn't remember exactly why I chose HPM, and so I recreated what
-> I'd done.  I looked to see what modes were available by git grepping
-> the kernel sources and since they are in
-> include/dt-bindings/regulator/qcom,rpmh-regulator.h with a comment
-> explaining what each mode is, I picked HPM since it starts it at the
-> full rated current.  As to why I chose the others... it was based on
-> SMPS being mentioned in that comment block.  Since I wasn't sure what
-> PFM is (and admittedly, did not look it up) I skipped it.
+On 3/16/2023 6:55 PM, Suzuki K Poulose wrote:
+> On 16/03/2023 03:20, Hao Zhang wrote:
+>> Introduction of Coresight Dummy subunit
+>> The Coresight Dummy subunit is for Coresight Dummy component, there 
+>> are some
+>> specific Coresight devices that HLOS don't have permission to access. 
+>> Such as
 > 
-> And you are right, we probably don't want to yank that regulator out
-> from under the wifi...  will add that in v7, so I guess for v7 we want
-> HPM, LPM, AUTO with AUTO being initial.  I guess I was trying to think
-> that RET would allow as little power usage as possible when bluetooth
-> isn't in use.
+> What is HLOS ?
 
-No, I think you need to stick with HPM and disallow setting the load
-since doing so could impact other consumers that are not yet described.
+The term HLOS stands for High Level OS, it means linux in this case. The 
+HLOS runs on APPS processor.
 
-Johan
+>> some TPDMs, they would be configured in NON-HLOS side, but it's 
+>> necessary to
+> 
+> What is NON-HLOS ?
+
+There are some other sub-processors like modem, adsp etc, they do not 
+have a High Level OS. The OS in these sub-processors is lightweight, 
+less powerful, somewhat real-time, it would be called NON-HLOS.
+
+>> build Coresight path for it to debug. So there need driver to register 
+>> dummy
+>> devices as Coresight devices.
+> 
+> Build a path for who to debug ? If this is used by some privileged
+> software, shouldn't that do all of the work ?
+> 
+> Suzuki
+
+There is coresight source or sink in sub-processor, it would be 
+configured by NON-HLOS, and need HLOS to configure the last coresight 
+components. So we will use dummy source or sink to replace it in HLOS 
+side for building the whole path(from source to sink).
+
+Thanks,
+Hao
+
+>>
+>> Commit link:
+>> https://git.codelinaro.org/clo/linux-kernel/coresight/-/tree/coresight-dummy
+>>
+>> Hao Zhang (3):
+>>    Coresight: Add coresight dummy driver
+>>    dt-bindings: arm: Add Coresight Dummy Trace YAML schema
+>>    Documentation: trace: Add documentation for Coresight Dummy Trace
+>>
+>>   .../bindings/arm/qcom,coresight-dummy.yaml    | 129 +++++++++++++
+>>   .../trace/coresight/coresight-dummy.rst       |  58 ++++++
+>>   drivers/hwtracing/coresight/Kconfig           |  11 ++
+>>   drivers/hwtracing/coresight/Makefile          |   1 +
+>>   drivers/hwtracing/coresight/coresight-dummy.c | 176 ++++++++++++++++++
+>>   5 files changed, 375 insertions(+)
+>>   create mode 100644 
+>> Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
+>>   create mode 100644 Documentation/trace/coresight/coresight-dummy.rst
+>>   create mode 100644 drivers/hwtracing/coresight/coresight-dummy.c
+>>
+> 
