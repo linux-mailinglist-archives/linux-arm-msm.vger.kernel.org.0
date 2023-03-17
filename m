@@ -2,107 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 17FF86BEB0A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 15:22:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F39196BEB16
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 15:25:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229892AbjCQOWq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 10:22:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39434 "EHLO
+        id S229634AbjCQOZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 10:25:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbjCQOWp (ORCPT
+        with ESMTP id S229868AbjCQOZH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 10:22:45 -0400
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C607B5A8F;
-        Fri, 17 Mar 2023 07:22:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-        bh=eA+pnD7dYsD9I52QLx0lohm6/RMWYuxO9nL8ghwZbQU=; b=5yZJe6wFcmnnQf7wiiD1qTcOkE
-        8cpX1aXvDuqb9qFXtNWyUz7QqA7P1cW8vtLi8q7/Glf2Prx7eQgIodRC1L4Wk2qUjvxZPeGwNsio9
-        CQmUjNzbdOKKuW9zG9q7Jwo3H+nHrgtVKx4wU+Ibg2TqRgWCOMFufhMjRHk0ixaJaKvE=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-        (envelope-from <andrew@lunn.ch>)
-        id 1pdAyU-007cIm-NV; Fri, 17 Mar 2023 15:22:30 +0100
-Date:   Fri, 17 Mar 2023 15:22:30 +0100
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>
-Cc:     Christian Marangi <ansuelsmth@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Lee Jones <lee@kernel.org>, linux-leds@vger.kernel.org,
-        pavel@ucw.cz, Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH v4 10/14] dt-bindings: net: dsa: qca8k: add LEDs
- definition example
-Message-ID: <8825d43d-7340-4984-8c13-25731edbd827@lunn.ch>
-References: <20230317023125.486-1-ansuelsmth@gmail.com>
- <20230317023125.486-11-ansuelsmth@gmail.com>
- <20230317091410.58787646@dellmb>
+        Fri, 17 Mar 2023 10:25:07 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C54883344A;
+        Fri, 17 Mar 2023 07:25:04 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CDB5B1763;
+        Fri, 17 Mar 2023 07:25:47 -0700 (PDT)
+Received: from [10.57.53.217] (unknown [10.57.53.217])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C47393F64C;
+        Fri, 17 Mar 2023 07:25:01 -0700 (PDT)
+Message-ID: <f5a1d873-8aa0-ea11-28df-8857fc256862@arm.com>
+Date:   Fri, 17 Mar 2023 14:25:00 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230317091410.58787646@dellmb>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.8.0
+Subject: Re: [PATCH] coresight: core: Add coresight name support
+To:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Rob Herring <robh@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>
+Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+References: <20230208110716.18321-1-quic_jinlmao@quicinc.com>
+ <3c105c79-f523-653e-5154-7ba641e51a96@arm.com>
+ <180a66b1-6996-c705-5d8a-0a69ce0353d7@quicinc.com>
+ <b7abee2a-99ca-26d6-5850-60ee19d9c0e9@quicinc.com>
+ <619818ad-71cb-6c07-bcae-ea9398f08878@arm.com>
+ <6b976d2b-3c78-96e4-bf35-3ef88828a9dd@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <6b976d2b-3c78-96e4-bf35-3ef88828a9dd@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> We could specify in DT something like:
->   eth0: ethernet-controller {
->     ...
->   }
+On 17/03/2023 05:34, Jinlong Mao wrote:
 > 
->   ethernet-phy {
->     leds {
->       led@0 {
->         reg = <0>;
->         color = <LED_COLOR_ID_GREEN>;
->         trigger-sources = <&eth0>;
->         function = LED_FUNCTION_ ?????? ;
->       }
->     }
->   }
+> On 3/13/2023 5:16 PM, Suzuki K Poulose wrote:
+>> Cc: Rob
+>>
+>> On 01/03/2023 15:11, Jinlong Mao wrote:
+>>> Hi Suzuki,
+>>>
+>>> On 2/9/2023 10:16 AM, Jinlong Mao wrote:
+>>>>
+>>>> On 2/8/2023 10:26 PM, Suzuki K Poulose wrote:
+>>>>> On 08/02/2023 11:07, Mao Jinlong wrote:
+>>>>>> Apart from STM and ETM sources, there will be more sources added to
+>>>>>> coresight components. For example, there are over 10 TPDM sources.
+>>>>>> Add coresight name support for custom names which will be
+>>>>>> easy to identify the source.
+>>>>>>
+>>>>>
+>>>>> As we have previously discussed, please don't make this a generic
+>>>>> code change. If your device has a "specifici" name, use that for
+>>>>> allocating in the driver and leave the core code alone.
+>>>>>
+>>>>> Suzuki
+>>>>>
+>>>> Hi Suzuki,
+>>>>
+>>>> Not only for TPDMs. There could be dozens of CTI devices.
+>>>> It is hard for user to know which CTI device it is with current names.
+>>>>
+>>>> Thanks
+>>>> Jinlong Mao
+>>>
+>>> The coresight name support is applicable to CTI and TPDM devices.
+>>> This is a generic change for the source which has dozens of devices.
+>>
+>> I took a look at the CTI situation and I agree that the situation
+>> is a bit tricky. The CTI could be connected to multiple devices,
+>> some of them may not be even CoreSight devices. Given there could
+>> be numerous of them, we need some way to make the "devices" naming
+>> a bit more intuitive.
+>>
+>> Before we go ahead and add something specific to coresight, I would
+>> like to see if there is a generic property. Ideally, the "labels"
+>> in the DTS sources would have been an ideal choice, but can't
+>> see how that is available in the FDT.
+>>
+>> Suzuki
+> Hi Suzuki,
+> 
+> Shall we use the full_name of device_node struct as coresight 
+> component's name ?
+> 
+>    struct device_node {
+>      const char *name;
+>      phandle phandle;
+> *    const char *full_name;
+> 
+> *For component below, the full_name will be "coresight-tpdm-ipcc".
+> *
+> **coresight-tpdm-ipcc* {
 
-For generic case, where you just have an LED on some random bus, you
-need to know what netdev it should represent. And in effect, this
-patch series gives you just that.
+Does that go against the convention of naming the DT nodes ?
+I am not sure. Also, we would need a way to solve this for ACPI too.
 
-However, when we get to offload, which is the ultimate goal, things
-are different. We cannot expect an LED inside the PHY connected to
-eth42 to offload blinking for eth24. There is a clear hardware
-relationship between the LED and the netdev. And in the more general
-case, there will always be a hardware relationship, be it wifi
-activity, or hard disk activity. phylib knows this relationship, and
-the DSA core also knows this relationship. Probably the SATA core will
-know the relationship. So i have a patchset which adds an op to the
-cdev to ask it, what struct device do you HW blink for?
-trigger-sources then becomes optional. And in fact, if it is used, you
-need to verify if it fits to this relationship, and if not, refuse to
-offload blinking, so software blinking only.
+Suzuki
 
-Anyway, that is an aside to your main question. But the Day Job is
-calling. I will address your question later today.
 
-	 Andrew
+>      compatible = "qcom,coresight-tpdm", "arm,primecell";
+>      reg = <0 0x10c29000 0 0x1000>;
+> 
+>      clocks = <&aoss_qmp>;
+>      clock-names = "apb_pclk";
+> 
+>      out-ports {
+>              port {
+>                      tpdm_ipcc_out_tpda_dl_center_27: endpoint {
+>                              remote-endpoint =
+> <&tpda_dl_center_27_in_tpdm_ipcc>;
+>                      };
+>              };
+>      };
+> };*
+> 
+> *Thanks
+> Jinlong Mao
+>>
+>>
+>>>
+>>> Thanks
+>>> Jinlong Mao
+>>>
+>>>>>
+>>>>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>>>>>> ---
+>>>>>>   drivers/hwtracing/coresight/coresight-core.c | 34 
+>>>>>> +++++++++++---------
+>>>>>>   1 file changed, 19 insertions(+), 15 deletions(-)
+>>>>>>
+>>>>>> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
+>>>>>> b/drivers/hwtracing/coresight/coresight-core.c
+>>>>>> index d3bf82c0de1d..5e95d9c7f256 100644
+>>>>>> --- a/drivers/hwtracing/coresight/coresight-core.c
+>>>>>> +++ b/drivers/hwtracing/coresight/coresight-core.c
+>>>>>> @@ -1733,28 +1733,32 @@ char *coresight_alloc_device_name(struct 
+>>>>>> coresight_dev_list *dict,
+>>>>>>   {
+>>>>>>       int idx;
+>>>>>>       char *name = NULL;
+>>>>>> +    const char *coresight_name = NULL;
+>>>>>>       struct fwnode_handle **list;
+>>>>>> +    struct device_node *node = dev->of_node;
+>>>>>>         mutex_lock(&coresight_mutex);
+>>>>>>   -    idx = coresight_search_device_idx(dict, dev_fwnode(dev));
+>>>>>> -    if (idx < 0) {
+>>>>>> -        /* Make space for the new entry */
+>>>>>> -        idx = dict->nr_idx;
+>>>>>> -        list = krealloc_array(dict->fwnode_list,
+>>>>>> -                      idx + 1, sizeof(*dict->fwnode_list),
+>>>>>> -                      GFP_KERNEL);
+>>>>>> -        if (ZERO_OR_NULL_PTR(list)) {
+>>>>>> -            idx = -ENOMEM;
+>>>>>> -            goto done;
+>>>>>> +    if (!of_property_read_string(node, "coresight-name", 
+>>>>>> &coresight_name))
+>>>>>> +        name = devm_kasprintf(dev, GFP_KERNEL, "%s", 
+>>>>>> coresight_name);
+>>>>>> +    else {
+>>>>>> +        idx = coresight_search_device_idx(dict, dev_fwnode(dev));
+>>>>>> +        if (idx < 0) {
+>>>>>> +            /* Make space for the new entry */
+>>>>>> +            idx = dict->nr_idx;
+>>>>>> +            list = krealloc_array(dict->fwnode_list,
+>>>>>> +                          idx + 1, sizeof(*dict->fwnode_list),
+>>>>>> +                          GFP_KERNEL);
+>>>>>> +            if (ZERO_OR_NULL_PTR(list))
+>>>>>> +                goto done;
+>>>>>> +
+>>>>>> +            list[idx] = dev_fwnode(dev);
+>>>>>> +            dict->fwnode_list = list;
+>>>>>> +            dict->nr_idx = idx + 1;
+>>>>>>           }
+>>>>>>   -        list[idx] = dev_fwnode(dev);
+>>>>>> -        dict->fwnode_list = list;
+>>>>>> -        dict->nr_idx = idx + 1;
+>>>>>> +        name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, 
+>>>>>> idx);
+>>>>>>       }
+>>>>>> -
+>>>>>> -    name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, idx);
+>>>>>>   done:
+>>>>>>       mutex_unlock(&coresight_mutex);
+>>>>>>       return name;
+>>>>>
+>>>> _______________________________________________
+>>>> CoreSight mailing list -- coresight@lists.linaro.org
+>>>> To unsubscribe send an email to coresight-leave@lists.linaro.org
+>>
 
