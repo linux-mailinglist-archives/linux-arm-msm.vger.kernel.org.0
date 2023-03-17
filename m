@@ -2,205 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B19736BE914
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 13:20:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C4B416BEA24
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 14:35:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230133AbjCQMT6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 08:19:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38636 "EHLO
+        id S229621AbjCQNfD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 09:35:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230125AbjCQMT4 (ORCPT
+        with ESMTP id S230301AbjCQNfC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 08:19:56 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6C6C199F1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 05:19:53 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id g17so6252792lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 05:19:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679055592;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=621ABpoi5KgPunSWjk55F8jRowzyF4/iYlPhbyE1p3k=;
-        b=Tcz6A375PBqbDYHy74MKAPAIlPZ1jemPuQr4I6n8D2OO3pIV62Z/hGSGxZAt2tem3o
-         PNdlhA0pksXg2VtFM4TOuFuJGf3TuQHMIhA1jhGQ+KfM3LCKL1oFGu4bRigcfll36cMA
-         rGmTIgzNEuz53ZbWOtBwmdIY9q/ZRxrgbzLDwXPlLfi2J9M1Xd+Df26AZLY5cQXJm/Fr
-         i5ApGdtUxPCQbq0PzSXsLLErCEZ2KMJoFempeASZUoz97tvZAPa+JqccFaza9CbjUgEM
-         nT3UKhbxfQeWvlZmXyHDJMUi6MjBaTNSyOgbFgluMct7G//tJ+rCLjQDmlOcLWBRA1YG
-         VkMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679055592;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=621ABpoi5KgPunSWjk55F8jRowzyF4/iYlPhbyE1p3k=;
-        b=TNfKau48LaZwWqY5BBu6FxSxwZUPpQX2dyXOZ/JFbOLWYURUnBi39hcnh6WxcHrJsI
-         j+HuVj3UNaGlP1ckPE+HX+muiEX/BqRNbR23NJmzDiKnMHWeMRiP8BpsEhbWI896pb2I
-         7XEOvnA7Lh5qywISxRv1tP5b7KUJ9dTH0x22adO5dEgrRXTLo/piXlDiIv++4Y4wvE/w
-         6t0LhRhrmhWegWD4/Wbyodj80ebaivlA+U/OmyDJnNB1cKuSJ+nwy0qfs+5k7Q3ter56
-         BdX5I9ziMNygIMWDwvj5BqfnUu+w1IY3u69zFVqyCc3L7b9rhNrJFMCOXQV9qEg4BP/H
-         LC9g==
-X-Gm-Message-State: AO0yUKWv/gVE7liZfHk+MeqEDd11l2R7CGLZYTPqtdY8iSDCQVaCmyzW
-        MD3oWeUykOkWOA0o12rkQK4+qA==
-X-Google-Smtp-Source: AK7set9ad5XRcgl5xT0h9V0R6N2FtgL3FB9Rbklyz6pXbnXEyTKtGoy/nJkE4hVrwMTiEM4xVHG/Aw==
-X-Received: by 2002:a19:ac02:0:b0:4d7:4826:3192 with SMTP id g2-20020a19ac02000000b004d748263192mr882384lfc.5.1679055591940;
-        Fri, 17 Mar 2023 05:19:51 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v2-20020ac25602000000b004a0589786ddsm344236lfd.69.2023.03.17.05.19.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Mar 2023 05:19:51 -0700 (PDT)
-Message-ID: <30b349bd-c083-ed17-1e20-c84e4b67d449@linaro.org>
-Date:   Fri, 17 Mar 2023 14:19:50 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v5 5/5] arm64: dts: qcom: sm8450: add dp controller
-Content-Language: en-GB
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Fri, 17 Mar 2023 09:35:02 -0400
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2255932CF6;
+        Fri, 17 Mar 2023 06:35:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+        bh=sMgPoyPPbmthFsOo4pbmCIyEwyFeSHdtD951iyErX4c=; b=N+Y1sHinP4QOoLsO2qOFjgGPGD
+        jRqmx45xn4xtEWFjeN/F1sNKAbV2b8yySim0h7I3sEDVUc40Afz25wbdGX3CpsTO0jPXXKMGa0AFO
+        P6/YbERXaivsDWH5iiN3L0afOlZAfYU3tYqA6Zntm6CSMgDRnsY4+Ov+7Ej5lr41Owww=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+        (envelope-from <andrew@lunn.ch>)
+        id 1pdAE7-007c37-QO; Fri, 17 Mar 2023 14:34:35 +0100
+Date:   Fri, 17 Mar 2023 14:34:35 +0100
+From:   Andrew Lunn <andrew@lunn.ch>
+To:     Michal Kubiak <michal.kubiak@intel.com>
+Cc:     Christian Marangi <ansuelsmth@gmail.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230206-topic-sm8450-upstream-dp-controller-v5-0-a27f1b26ebe8@linaro.org>
- <20230206-topic-sm8450-upstream-dp-controller-v5-5-a27f1b26ebe8@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230206-topic-sm8450-upstream-dp-controller-v5-5-a27f1b26ebe8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, Lee Jones <lee@kernel.org>,
+        linux-leds@vger.kernel.org
+Subject: Re: [net-next PATCH v4 02/14] net: dsa: qca8k: add LEDs basic support
+Message-ID: <1c84a42a-2691-4ee9-bbe3-dc8e65fc31b1@lunn.ch>
+References: <20230317023125.486-1-ansuelsmth@gmail.com>
+ <20230317023125.486-3-ansuelsmth@gmail.com>
+ <ZBRN563Zw9Z28aET@localhost.localdomain>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZBRN563Zw9Z28aET@localhost.localdomain>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/03/2023 11:12, Neil Armstrong wrote:
-> Add the Display Port controller subnode to the MDSS node.
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8450.dtsi | 79 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 79 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 0b5a151ce138..41f5015e615b 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -2751,6 +2751,13 @@ dpu_intf2_out: endpoint {
->   						};
->   					};
->   
-> +					port@2 {
-> +						reg = <2>;
-> +						dpu_intf0_out: endpoint {
-> +							remote-endpoint = <&mdss_dp0_in>;
-> +						};
-> +					};
-> +
->   				};
->   
->   				mdp_opp_table: opp-table {
-> @@ -2783,6 +2790,78 @@ opp-500000000 {
->   				};
->   			};
->   
-> +			mdss_dp0: displayport-controller@ae90000 {
-> +				compatible = "qcom,sm8450-dp", "qcom,sm8350-dp";
-> +				reg = <0 0xae90000 0 0x200>,
-> +				      <0 0xae90200 0 0x200>,
-> +				      <0 0xae90400 0 0xc00>,
-> +				      <0 0xae91000 0 0x400>,
-> +				      <0 0xae91400 0 0x400>;
-> +				interrupt-parent = <&mdss>;
-> +				interrupts = <12>;
-> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_DPTX0_AUX_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
-> +				clock-names = "core_iface",
-> +					      "core_aux",
-> +					      "ctrl_link",
-> +			                      "ctrl_link_iface",
-> +					      "stream_pixel";
-> +
-> +				assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
-> +						  <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
-> +				assigned-clock-parents = <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
-> +							 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
-> +
-> +				phys = <&usb_1_qmpphy QMP_USB43DP_DP_PHY>;
-> +			        phy-names = "dp";
-> +
-> +			        #sound-dai-cells = <0>;
-> +
-> +				operating-points-v2 = <&dp_opp_table>;
-> +				power-domains = <&rpmhpd SM8450_MMCX>;
-> +
-> +				status = "disabled";
-> +
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					port@0 {
-> +						reg = <0>;
-> +						mdss_dp0_in: endpoint {
-> +							remote-endpoint = <&dpu_intf0_out>;
-> +						};
-> +					};
-> +				};
-> +
-> +				dp_opp_table: opp-table {
-> +					compatible = "operating-points-v2";
-> +
-> +					opp-19200000 {
-> +						opp-hz = /bits/ 64 <19200000>;
-> +						required-opps = <&rpmhpd_opp_low_svs>;
-> +					};
+> (I guess the LED configuration i only makes sense for non-CPU ports? It
+> seems you want to configure up to 15 LEDs in total for 5 ports).
 
-Yes, the vendor kernel has 19.2 MHz as a frequency for the low_svs. 
-However I don't think we should do it this way, we list DP rates here, 
-so the lowest entry should be RBR, 160000000.
+Hi Michal
 
-> +
-> +					opp-270000000 {
-> +						opp-hz = /bits/ 64 <270000000>;
-> +						required-opps = <&rpmhpd_opp_svs>;
-> +					};
-> +
-> +					opp-540000000 {
-> +						opp-hz = /bits/ 64 <540000000>;
-> +						required-opps = <&rpmhpd_opp_svs_l1>;
-> +					};
-> +
-> +					opp-810000000 {
-> +						opp-hz = /bits/ 64 <810000000>;
-> +						required-opps = <&rpmhpd_opp_nom>;
-> +					};
-> +				};
-> +			};
-> +
->   			mdss_dsi0: dsi@ae94000 {
->   				compatible = "qcom,sm8450-dsi-ctrl", "qcom,mdss-dsi-ctrl";
->   				reg = <0 0x0ae94000 0 0x400>;
-> 
+In the general case, there is no reason that i can think that stops
+the CPU port having LEDs. For many switch designs, there is no
+specific CPU port, any can be used. And all ports are likely to have
+an LED controller.
 
--- 
-With best wishes
-Dmitry
+What becomes tricky with Linux is offloading blinking to CPU ports.
+There is no netdev to represent it, hence no netdev based software
+blinking. And without software blinking, you have nothing to offload
+to hardware. But you could still use the LEDs for other things.
 
+Having said all that, i don't think i have ever seen a box with LEDs
+for the CPU port.
+
+    Andrew
