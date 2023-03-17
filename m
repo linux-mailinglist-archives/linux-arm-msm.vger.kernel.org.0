@@ -2,65 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E15566BE8AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 12:56:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C0CD6BE8DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 13:10:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229890AbjCQL4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 07:56:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34954 "EHLO
+        id S229581AbjCQMKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 08:10:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229894AbjCQL4S (ORCPT
+        with ESMTP id S229499AbjCQMKA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 07:56:18 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8192AA9082
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 04:56:14 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-54184571389so89573977b3.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 04:56:14 -0700 (PDT)
+        Fri, 17 Mar 2023 08:10:00 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7DBD196B1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 05:09:58 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id g17so6217715lfv.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 05:09:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679054173;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xb5o9NMW97WH6ZSWEBSm+p2LactDwm89gAf2F/3Y6l0=;
-        b=vv3J8HWXGxNXIOL3WzPjbKwZqvxe4NB/4PAv486r+Z+WVbQ7skCEcqS7BbTtgZ1bVe
-         Vp2Rftz06dO0Ze/MsFeH1Ejvpg6dMUxeaDzbDzKTilV1wwl81zh1UjXkf5DO3wv7/Z2H
-         A986bIiCkIw9lTMoMuLyxvRzIr+OSagLvYEGl5UwOxQ6dABimZWz7yWzEFZP5GqXAI0w
-         Zv0pI8JH8WSCVFy4X5j7ul+GRxoyGhU338vOdK7eKs9YrPX/uB9JJkmdimiTZIR8o85C
-         GAdw/hk87fYZPREG4g5xewXyCFLpZeOhYBjU1vx8vH7ziZsQYOp134ohPf0sPLz0GeZu
-         W+HQ==
+        d=linaro.org; s=google; t=1679054997;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jNiR0NLTuJj+aWp4YB9vTYSgpZApuVfwOdJ5ZUsnGj0=;
+        b=YcGwRdgSUFM5T1XagjtlvRNmVe4Jf7NuzX+OWI7+j3ovglq4UV/JKpah/ATZQasTG6
+         rwkRVwxVIeG5yVHBjuefiW9ETbkBVgDgpZfTRkQh0m5y+wJFjEitN4kLIEqI2CnC3kxz
+         /iuweDgmIkQ7NOR+eVh180t3UrWe4FSPNjUqmafK8JZl6j0pius6GpDc4MS4Dple9BHx
+         EdR1BWZYTdUUvJktXdxJoWYsH8HVEB5yL3J3Glp4NxV4eAvL0A8kjJ6sTAG55u108YPz
+         XJT4J3p/EW3FWugSjA3LOwOlbLyroTbfHa3YGw5ZLCcFAq5THSe3TeKG5FPScqOw88zA
+         2paA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679054173;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Xb5o9NMW97WH6ZSWEBSm+p2LactDwm89gAf2F/3Y6l0=;
-        b=X0X6LXopkrQ/3gE1aKxoOzHEw6GilawnY3gOjKwLC2WvJ7bjb90FP7njwfAVjoIuXd
-         mV0JTejP4sQlBILNJ254pt5dqrzD3UOsePqdEx4VuEJMhLswJTzSa7XdOQz9mVDphym6
-         GqTAduFs6I8Qyu+moxobtX41MU8Y5yEjtvbLwSf5fvVmXVVnDG1mtyfahFa+v7Ul71vI
-         S4PRBXyUNWlJZcMVaWixm0rnem4JvZBV8BWq8Qiyv4Ge3suf8C9s/P++E4MO/Bi5Orbl
-         Se53a9XHJ61OFbKFyVl7ur0o/0C9f5FEKEnoSUPUqP+n63IUXHlUzN/AebFKJYuqxznw
-         OCiw==
-X-Gm-Message-State: AO0yUKUSKoIm4hCUzunXu8EE3c4PDjh/aRxzr9NlMEqF8iAmeyikyPtJ
-        ei0YQNr57D6plqTgeon+UD7ZdPJGnGfu//MhDvQjCOsLgxUzm+iGPgkmhg==
-X-Google-Smtp-Source: AK7set+tGSkTdboyNwnrvxQQd8kS2YmSjSvmZUF6A7AiTYWRbx3oGzg+DuJTelC014W0zlAGiZ7ChE7WRqPYcCKcME4=
-X-Received: by 2002:a81:d84d:0:b0:543:9065:b225 with SMTP id
- n13-20020a81d84d000000b005439065b225mr4618691ywl.5.1679054173616; Fri, 17 Mar
- 2023 04:56:13 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1679054997;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jNiR0NLTuJj+aWp4YB9vTYSgpZApuVfwOdJ5ZUsnGj0=;
+        b=jvrQCoct19caCQ0dpzH8DwOSCBfDbD7JPcsVwp8DVwCi/6MADUo1zxbBfBfVRYqoZ4
+         TpclYhDAaYbUqWBBlQ/XtbT9RLco5HxYQJ60XbsEt3A/NPiyefq2jJX8T3yWxNgOeqEv
+         gn55M64XMqG45u6HgpGKFPXmtb645r8OwY2Cmx98M/SSe6Wq1fTigOI+YaAL2y4FfGG7
+         +FOUh6Ct4fZZBfxS2nZ3gTJwAS7d0lTmFZhLYgGX6rHVL9132TJxAZqlT7GkQRAGOrHs
+         SQL79r+R6APjguW8Y3KfNl2q7sovO3xd1lBp1bzw55Anl+kD2pwh/Utva2Xza4nsZIFu
+         pEjw==
+X-Gm-Message-State: AO0yUKVS5wp+eTfXGKxaBCMyEFpSxw48BkzaFJ3oRbTQAvgsRApxdy84
+        RC7NMF4EnRS3KDfVi7Up0na76A==
+X-Google-Smtp-Source: AK7set/J4wuWg4OytN80EDGFmX2hbBh16ONc9kAfE7OVJZXwNRrc3IJx9b1HCdYwn/r8MRS+n9Q9cQ==
+X-Received: by 2002:a05:6512:406:b0:4e9:59cd:4171 with SMTP id u6-20020a056512040600b004e959cd4171mr1956040lfk.60.1679054996939;
+        Fri, 17 Mar 2023 05:09:56 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id r10-20020a056512102a00b004e7b84c6419sm343432lfr.192.2023.03.17.05.09.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Mar 2023 05:09:56 -0700 (PDT)
+Message-ID: <ab6391c4-ff38-8286-77ff-c781669f5aa0@linaro.org>
+Date:   Fri, 17 Mar 2023 14:09:55 +0200
 MIME-Version: 1.0
-References: <CAA8EJpqrHuTaN-bB6XoB7ZWNvfggNtMts3bBQwqMH8RpO1E3QQ@mail.gmail.com>
- <87o7oriodg.fsf@kernel.org>
-In-Reply-To: <87o7oriodg.fsf@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v5 4/5] arm64: dts: qcom: sm8450: switch to usb3/dp combo
+ phy
+Content-Language: en-GB
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230206-topic-sm8450-upstream-dp-controller-v5-0-a27f1b26ebe8@linaro.org>
+ <20230206-topic-sm8450-upstream-dp-controller-v5-4-a27f1b26ebe8@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 17 Mar 2023 13:56:02 +0200
-Message-ID: <CAA8EJprAsKeQdX=6f-E9=xjfbT_Wf5h6-97Rb5Vcy2jBTVzY0Q@mail.gmail.com>
-Subject: Re: ath10k-firmware: WCN3990: Add board file for the Lenovo Yoga C630 laptop
-To:     Kalle Valo <kvalo@kernel.org>
-Cc:     ath10k@lists.infradead.org,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20230206-topic-sm8450-upstream-dp-controller-v5-4-a27f1b26ebe8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,66 +88,113 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 17 Mar 2023 at 13:55, Kalle Valo <kvalo@kernel.org> wrote:
->
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
->
-> > We'd like to ask for inclusion of the board file for the Lenovo Yoga
-> > C630 laptop. It is
-> > a WfA laptop using the Snapdragon SDM850 SoC.
-> > Following the questions from the ath10k wiki page:
-> >
-> > * description for what hardware this is
-> > - It is an SDM845-based platform (SDM850)
-> > - It uses wcn3990 chip as a WiFi and BT radio
-> > - For the reference: [    8.727834] ath10k_snoc 18800000.wifi: qmi
-> > chip_id 0x30214 chip_family 0x4001 board_id 0xff soc_id 0x40030001
-> >
-> > * origin of the board file
-> >   - They come from the original Windows partition, thus being a part
-> > of Windows drivers.
-> >
-> > * ids to be used with the board file
-> > bus=snoc,qmi-board-id=ff,qmi-chip-id=30214,variant=Lenovo_C630
-> >
-> > Note, the device comes with the board_id not changed from 0xff.
-> > Following the example of Chromebook boards we are adding the
-> > calibration variant.
-> >
-> > * md5sum of each new board file to add
-> >
-> > $ md5sum *
-> > 6cd260ad261193fb8b3ddf5293d0103f
-> > bus=snoc,qmi-board-id=ff,qmi-chip-id=30214,variant=Lenovo_C630.bin
-> >
-> > $ sha256sum *
-> > ff96e5295cc3e3fd86f04049058396cd69cd7f1bc44ef4784f13ffe48ef42a8d
-> > bus=snoc,qmi-board-id=ff,qmi-chip-id=30214,variant=Lenovo_C630.bin
->
-> Thanks, added to WCN3990/hw1.0/board-2.bin:
+On 17/03/2023 11:12, Neil Armstrong wrote:
+> The QMP PHY is a USB3/DP combo phy, switch to the newly
+> documented bindings and register the clocks to the GCC
+> and DISPCC controllers.
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 42 +++++++++++++-----------------------
+>   1 file changed, 15 insertions(+), 27 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 69695eb83897..0b5a151ce138 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -11,6 +11,7 @@
+>   #include <dt-bindings/dma/qcom-gpi.h>
+>   #include <dt-bindings/gpio/gpio.h>
+>   #include <dt-bindings/mailbox/qcom-ipcc.h>
+> +#include <dt-bindings/phy/phy-qcom-qmp.h>
+>   #include <dt-bindings/power/qcom-rpmpd.h>
+>   #include <dt-bindings/interconnect/qcom,sm8450.h>
+>   #include <dt-bindings/soc/qcom,gpr.h>
+> @@ -748,7 +749,7 @@ gcc: clock-controller@100000 {
+>   				 <&ufs_mem_phy_lanes 0>,
+>   				 <&ufs_mem_phy_lanes 1>,
+>   				 <&ufs_mem_phy_lanes 2>,
+> -				 <0>;
+> +				 <&usb_1_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
+>   			clock-names = "bi_tcxo",
+>   				      "sleep_clk",
+>   				      "pcie_0_pipe_clk",
+> @@ -2034,37 +2035,24 @@ usb_1_hsphy: phy@88e3000 {
+>   			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+>   		};
+>   
+> -		usb_1_qmpphy: phy-wrapper@88e9000 {
+> -			compatible = "qcom,sm8450-qmp-usb3-phy";
+> -			reg = <0 0x088e9000 0 0x200>,
+> -			      <0 0x088e8000 0 0x20>;
+> -			status = "disabled";
+> -			#address-cells = <2>;
+> -			#size-cells = <2>;
+> -			ranges;
+> +		usb_1_qmpphy: phy@88e8000 {
+> +			compatible = "qcom,sm8450-qmp-usb3-dp-phy";
+> +			reg = <0 0x088e8000 0 0x4000>;
 
-Thank you!
+This should be 0x3000 too, like 8350
 
->
-> New:
-> bus=snoc,qmi-board-id=ff,qmi-chip-id=30214,variant=Lenovo_C630
->
-> Changed:
->
->
-> Deleted:
->
-> 1 board image(s) added, 0 changed, 0 deleted, 21 in total
->
-> https://github.com/kvalo/ath10k-firmware/commit/8aa55df10c78598c8eef4a6de957474c8802ced8
->
-> --
-> https://patchwork.kernel.org/project/linux-wireless/list/
->
-> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
-
-
+>   
+>   			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
+>   				 <&rpmhcc RPMH_CXO_CLK>,
+> -				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
+> -			clock-names = "aux", "ref_clk_src", "com_aux";
+> +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
+> +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> +			clock-names = "aux", "ref", "com_aux", "usb3_pipe";
+>   
+>   			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
+>   				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
+>   			reset-names = "phy", "common";
+>   
+> -			usb_1_ssphy: phy@88e9200 {
+> -				reg = <0 0x088e9200 0 0x200>,
+> -				      <0 0x088e9400 0 0x200>,
+> -				      <0 0x088e9c00 0 0x400>,
+> -				      <0 0x088e9600 0 0x200>,
+> -				      <0 0x088e9800 0 0x200>,
+> -				      <0 0x088e9a00 0 0x100>;
+> -				#phy-cells = <0>;
+> -				#clock-cells = <0>;
+> -				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> -				clock-names = "pipe0";
+> -				clock-output-names = "usb3_phy_pipe_clk_src";
+> -			};
+> +			#clock-cells = <1>;
+> +			#phy-cells = <1>;
+> +
+> +			status = "disabled";
+>   		};
+>   
+>   		remoteproc_slpi: remoteproc@2400000 {
+> @@ -2972,8 +2960,8 @@ dispcc: clock-controller@af00000 {
+>   				 <&mdss_dsi0_phy 1>,
+>   				 <&mdss_dsi1_phy 0>,
+>   				 <&mdss_dsi1_phy 1>,
+> -				 <0>, /* dp0 */
+> -				 <0>,
+> +				 <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
+> +				 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
+>   				 <0>, /* dp1 */
+>   				 <0>,
+>   				 <0>, /* dp2 */
+> @@ -4168,7 +4156,7 @@ usb_1_dwc3: usb@a600000 {
+>   				iommus = <&apps_smmu 0x0 0x0>;
+>   				snps,dis_u2_susphy_quirk;
+>   				snps,dis_enblslpm_quirk;
+> -				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
+> +				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
+>   				phy-names = "usb2-phy", "usb3-phy";
+>   			};
+>   		};
+> 
 
 -- 
 With best wishes
 Dmitry
+
