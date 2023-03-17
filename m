@@ -2,199 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C0CD6BE8DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 13:10:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16E756BE8E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 13:11:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229581AbjCQMKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 08:10:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52558 "EHLO
+        id S229806AbjCQMLu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 08:11:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229499AbjCQMKA (ORCPT
+        with ESMTP id S229708AbjCQMLt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 08:10:00 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7DBD196B1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 05:09:58 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id g17so6217715lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 05:09:58 -0700 (PDT)
+        Fri, 17 Mar 2023 08:11:49 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7166EBAD04
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 05:11:46 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id x17so6210509lfu.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 05:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679054997;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1679055104;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=jNiR0NLTuJj+aWp4YB9vTYSgpZApuVfwOdJ5ZUsnGj0=;
-        b=YcGwRdgSUFM5T1XagjtlvRNmVe4Jf7NuzX+OWI7+j3ovglq4UV/JKpah/ATZQasTG6
-         rwkRVwxVIeG5yVHBjuefiW9ETbkBVgDgpZfTRkQh0m5y+wJFjEitN4kLIEqI2CnC3kxz
-         /iuweDgmIkQ7NOR+eVh180t3UrWe4FSPNjUqmafK8JZl6j0pius6GpDc4MS4Dple9BHx
-         EdR1BWZYTdUUvJktXdxJoWYsH8HVEB5yL3J3Glp4NxV4eAvL0A8kjJ6sTAG55u108YPz
-         XJT4J3p/EW3FWugSjA3LOwOlbLyroTbfHa3YGw5ZLCcFAq5THSe3TeKG5FPScqOw88zA
-         2paA==
+        bh=1nv1WVingwKQqcczYi8r8VBOd0VikPJkwNV75HJHOc0=;
+        b=n5o7j0lVrENy0i3VuG3fuFH3roBx9qJHhS5QR2EpySWyeFbVL1wpv74Soc9yHgcIYs
+         RZ9NdCvNgMjKMSpdZJnrZGhX7LhefQB7ERV3bAnNmKy/jcryYY1RS28RbvdHcB1pxiNJ
+         TUGQLKkK1AUlLf8RWYd5LD6XCM3wwaMYAaNF/I8+tA72z6DvlSOWhcLP0f4f0TmqTrP2
+         zX9QCaPgZCQDBJlMkO4nB7noNZhYck7Twa+uItXMuVFMVkZHmyFGPN/4ZHpZoHOZKdQ+
+         Q7nKbxm21kH+8vC3S7g8ehS5/Bm9jMMKWcWLEjPH4RXx2HdxnX0DKAIrWf85g/Jpe/cr
+         9Bgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679054997;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1679055104;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jNiR0NLTuJj+aWp4YB9vTYSgpZApuVfwOdJ5ZUsnGj0=;
-        b=jvrQCoct19caCQ0dpzH8DwOSCBfDbD7JPcsVwp8DVwCi/6MADUo1zxbBfBfVRYqoZ4
-         TpclYhDAaYbUqWBBlQ/XtbT9RLco5HxYQJ60XbsEt3A/NPiyefq2jJX8T3yWxNgOeqEv
-         gn55M64XMqG45u6HgpGKFPXmtb645r8OwY2Cmx98M/SSe6Wq1fTigOI+YaAL2y4FfGG7
-         +FOUh6Ct4fZZBfxS2nZ3gTJwAS7d0lTmFZhLYgGX6rHVL9132TJxAZqlT7GkQRAGOrHs
-         SQL79r+R6APjguW8Y3KfNl2q7sovO3xd1lBp1bzw55Anl+kD2pwh/Utva2Xza4nsZIFu
-         pEjw==
-X-Gm-Message-State: AO0yUKVS5wp+eTfXGKxaBCMyEFpSxw48BkzaFJ3oRbTQAvgsRApxdy84
-        RC7NMF4EnRS3KDfVi7Up0na76A==
-X-Google-Smtp-Source: AK7set/J4wuWg4OytN80EDGFmX2hbBh16ONc9kAfE7OVJZXwNRrc3IJx9b1HCdYwn/r8MRS+n9Q9cQ==
-X-Received: by 2002:a05:6512:406:b0:4e9:59cd:4171 with SMTP id u6-20020a056512040600b004e959cd4171mr1956040lfk.60.1679054996939;
-        Fri, 17 Mar 2023 05:09:56 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id r10-20020a056512102a00b004e7b84c6419sm343432lfr.192.2023.03.17.05.09.55
+        bh=1nv1WVingwKQqcczYi8r8VBOd0VikPJkwNV75HJHOc0=;
+        b=ORqRVYDRZiNSsMhX33H+4jQQca9N4W1ZoSRtiQkpkhgMn9Abn7RyZiStebRVf1dmjT
+         2s8koy4eyw3S95tQDg7ANEA+Kanj+fkaQ/gy8PwIRXVO0VHFIgVH9y/+ia0t7Wg528HI
+         zOfbCiFEYEvFz5Fo8mbaJtRdup25cGvmq9aHPJO4Atjm7yI5yrDFm7rK1IwRqEpIZbTh
+         DVb4EdH/2H33oCaKc4Ncg3X1CQasdKwC0Fy97MVN60qEpRrKUEitIVcDvO2CQ8sknS9j
+         83xWIbyORCDLsQw+E8XtKuu60YeNGbq4ssioooxPr+Hd6HqoR6cX81Xn8fRswEELHbcT
+         Ihtg==
+X-Gm-Message-State: AO0yUKWgEtf8OhquSq79dpg0S0rCfuT5sqbA/6vC3av5BFkSFT2DH8dg
+        U9UlQWzGzqm/onIjIzpXCgNEzA==
+X-Google-Smtp-Source: AK7set+SITW6PfVyW0vx/b6QUwTQu4cULmJDZbRF+ch64jkCjg5miyQdWBlyuzqsrmRjQJ3jp+rO+w==
+X-Received: by 2002:a19:ae0c:0:b0:4dd:840d:462 with SMTP id f12-20020a19ae0c000000b004dd840d0462mr940064lfc.21.1679055104657;
+        Fri, 17 Mar 2023 05:11:44 -0700 (PDT)
+Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
+        by smtp.gmail.com with ESMTPSA id w10-20020a19c50a000000b004e84a8c3d86sm363638lfe.42.2023.03.17.05.11.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Mar 2023 05:09:56 -0700 (PDT)
-Message-ID: <ab6391c4-ff38-8286-77ff-c781669f5aa0@linaro.org>
-Date:   Fri, 17 Mar 2023 14:09:55 +0200
+        Fri, 17 Mar 2023 05:11:44 -0700 (PDT)
+Message-ID: <63037930-8ce4-532c-2e1a-0711005bdd77@linaro.org>
+Date:   Fri, 17 Mar 2023 13:11:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v5 4/5] arm64: dts: qcom: sm8450: switch to usb3/dp combo
- phy
-Content-Language: en-GB
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+Subject: Re: [PATCH 1/5] dt-bindings: clock: qcom,gpucc: Fix SM6350 clock
+ names
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230206-topic-sm8450-upstream-dp-controller-v5-0-a27f1b26ebe8@linaro.org>
- <20230206-topic-sm8450-upstream-dp-controller-v5-4-a27f1b26ebe8@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230206-topic-sm8450-upstream-dp-controller-v5-4-a27f1b26ebe8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <20230315-topic-lagoon_gpu-v1-0-a74cbec4ecfc@linaro.org>
+ <20230315-topic-lagoon_gpu-v1-1-a74cbec4ecfc@linaro.org>
+ <1d0c894b-ccd4-348f-0c48-c6a5c89df27d@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1d0c894b-ccd4-348f-0c48-c6a5c89df27d@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/03/2023 11:12, Neil Armstrong wrote:
-> The QMP PHY is a USB3/DP combo phy, switch to the newly
-> documented bindings and register the clocks to the GCC
-> and DISPCC controllers.
+
+
+On 17.03.2023 09:37, Krzysztof Kozlowski wrote:
+> On 16/03/2023 12:16, Konrad Dybcio wrote:
+>> SM6350 GPUCC uses the same clock names as the rest of the gang, except
+>> without a _src suffix. Account for that.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8450.dtsi | 42 +++++++++++++-----------------------
->   1 file changed, 15 insertions(+), 27 deletions(-)
+> Why not fixing the names instead (to use the same)? If the clocks are
+> the same, why using different names for the inputs? To remind - these
+> are not names of clocks in GCC, but names of clock inputs to the device.
+Considering SM6350 is the only used of SM6350_GPUCC and it's not yet
+in next and I don't think any other project using devicetree has
+Adreno up on any platform, let alone this one, I suppose the ABI could
+be broken and the driver could be made to expect the more common set
+of names? Or I could transition it to index-based lookup?
+
+Konrad
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 69695eb83897..0b5a151ce138 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -11,6 +11,7 @@
->   #include <dt-bindings/dma/qcom-gpi.h>
->   #include <dt-bindings/gpio/gpio.h>
->   #include <dt-bindings/mailbox/qcom-ipcc.h>
-> +#include <dt-bindings/phy/phy-qcom-qmp.h>
->   #include <dt-bindings/power/qcom-rpmpd.h>
->   #include <dt-bindings/interconnect/qcom,sm8450.h>
->   #include <dt-bindings/soc/qcom,gpr.h>
-> @@ -748,7 +749,7 @@ gcc: clock-controller@100000 {
->   				 <&ufs_mem_phy_lanes 0>,
->   				 <&ufs_mem_phy_lanes 1>,
->   				 <&ufs_mem_phy_lanes 2>,
-> -				 <0>;
-> +				 <&usb_1_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
->   			clock-names = "bi_tcxo",
->   				      "sleep_clk",
->   				      "pcie_0_pipe_clk",
-> @@ -2034,37 +2035,24 @@ usb_1_hsphy: phy@88e3000 {
->   			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
->   		};
->   
-> -		usb_1_qmpphy: phy-wrapper@88e9000 {
-> -			compatible = "qcom,sm8450-qmp-usb3-phy";
-> -			reg = <0 0x088e9000 0 0x200>,
-> -			      <0 0x088e8000 0 0x20>;
-> -			status = "disabled";
-> -			#address-cells = <2>;
-> -			#size-cells = <2>;
-> -			ranges;
-> +		usb_1_qmpphy: phy@88e8000 {
-> +			compatible = "qcom,sm8450-qmp-usb3-dp-phy";
-> +			reg = <0 0x088e8000 0 0x4000>;
-
-This should be 0x3000 too, like 8350
-
->   
->   			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
->   				 <&rpmhcc RPMH_CXO_CLK>,
-> -				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
-> -			clock-names = "aux", "ref_clk_src", "com_aux";
-> +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-> +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> +			clock-names = "aux", "ref", "com_aux", "usb3_pipe";
->   
->   			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
->   				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
->   			reset-names = "phy", "common";
->   
-> -			usb_1_ssphy: phy@88e9200 {
-> -				reg = <0 0x088e9200 0 0x200>,
-> -				      <0 0x088e9400 0 0x200>,
-> -				      <0 0x088e9c00 0 0x400>,
-> -				      <0 0x088e9600 0 0x200>,
-> -				      <0 0x088e9800 0 0x200>,
-> -				      <0 0x088e9a00 0 0x100>;
-> -				#phy-cells = <0>;
-> -				#clock-cells = <0>;
-> -				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> -				clock-names = "pipe0";
-> -				clock-output-names = "usb3_phy_pipe_clk_src";
-> -			};
-> +			#clock-cells = <1>;
-> +			#phy-cells = <1>;
-> +
-> +			status = "disabled";
->   		};
->   
->   		remoteproc_slpi: remoteproc@2400000 {
-> @@ -2972,8 +2960,8 @@ dispcc: clock-controller@af00000 {
->   				 <&mdss_dsi0_phy 1>,
->   				 <&mdss_dsi1_phy 0>,
->   				 <&mdss_dsi1_phy 1>,
-> -				 <0>, /* dp0 */
-> -				 <0>,
-> +				 <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
-> +				 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
->   				 <0>, /* dp1 */
->   				 <0>,
->   				 <0>, /* dp2 */
-> @@ -4168,7 +4156,7 @@ usb_1_dwc3: usb@a600000 {
->   				iommus = <&apps_smmu 0x0 0x0>;
->   				snps,dis_u2_susphy_quirk;
->   				snps,dis_enblslpm_quirk;
-> -				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
-> +				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
->   				phy-names = "usb2-phy", "usb3-phy";
->   			};
->   		};
+>>
+>> Fixes: 7b91b9d8cc6c ("dt-bindings: clock: add SM6350 QCOM Graphics clock bindings")
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  .../devicetree/bindings/clock/qcom,gpucc.yaml      | 29 +++++++++++++++++++---
+>>  1 file changed, 25 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
+>> index db53eb288995..d209060a619d 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
+>> @@ -43,10 +43,8 @@ properties:
+>>        - description: GPLL0 div branch source
+>>  
+>>    clock-names:
+>> -    items:
+>> -      - const: bi_tcxo
+>> -      - const: gcc_gpu_gpll0_clk_src
+>> -      - const: gcc_gpu_gpll0_div_clk_src
+>> +    minItems: 3
 > 
-
--- 
-With best wishes
-Dmitry
-
+> Drop minItems, not needed as it is implied by maxItems.
+> 
+>> +    maxItems: 3
+>>  
+>>    '#clock-cells':
+>>      const: 1
+>> @@ -71,6 +69,29 @@ required:
+>>  
+>>  additionalProperties: false
+>>
+>>
+> 
+> Best regards,
+> Krzysztof
+> 
