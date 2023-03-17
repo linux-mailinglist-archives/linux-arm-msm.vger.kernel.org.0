@@ -2,164 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B83A86BDDB8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 01:39:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 232BD6BDEA1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 03:33:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbjCQAjb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Mar 2023 20:39:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57202 "EHLO
+        id S229455AbjCQCdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Mar 2023 22:33:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229702AbjCQAja (ORCPT
+        with ESMTP id S229488AbjCQCdY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Mar 2023 20:39:30 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C39D759428
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 17:39:28 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id o8so4624869lfo.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Mar 2023 17:39:28 -0700 (PDT)
+        Thu, 16 Mar 2023 22:33:24 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12EEA2E82F;
+        Thu, 16 Mar 2023 19:33:22 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id r18so3199700wrx.1;
+        Thu, 16 Mar 2023 19:33:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679013567;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=upiehW/yJZLSDpEf4y2yHj38zYrZBw51z7iV6HWK5w0=;
-        b=el9iDT2FL1/oZc4arzlytDjKbPCTshS4fLFg5039eYuml9JbYvXmfE1SCbje5PjUkF
-         cNwTvTRUAoKKpjRKopzkaxW6NhRTGYV/LJkpbBn0tp3TNpd1xVKRi3nxPe37PtkvkKck
-         Xd9Qtak51zUNaI8M14KJeXLW5lEgRDxZ5Wt6n28jL+Xwc+ycVFAOu7bZ+7BivIhui1AR
-         pV0nwz+sZEr6c6J/uNpl5Nh/w4x/CYFXCbZ0YsSheZucqk/ZpebtuPkGoRg9Q8F4jBHO
-         IITRzZNNT212Y7JAJJ7aW8Sby4CKMgquBwTVK1sDEGDazYJwtUO6Bd5bZwTlcN9hE3aq
-         lJZA==
+        d=gmail.com; s=20210112; t=1679020400;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SBufsd7TJN3UMnpjEy1Egh/dFft22er/s7/ID3KVYPo=;
+        b=byEmfTSENjKFFC9uwnfGZlTY9UFaKr3FJKtC5xKcc5WTV1N+/bVfSR13w5C7JxsUDW
+         EHbHd0lpuBuQwl6w9eepnG1RJVIoTqM6jJqjX/TMKYvdITSh9aagGX1pAc0QdCosSwpD
+         Cr4FtyjPSKgnjSZVAIznm8DAehWqDUaRlVBTAY3BoPbKrTxVNs1rYFVBPXHEkbX7H/a1
+         mP9kSAJ+GYk5UbBTDP2AMe5/8fTvmyaYQnYEqLm4ocUK7GNpYVZzk2dv4mf6ToRNpmey
+         witomqFivJFN2wmfc8j8PCq5PAKFZaSW2R51gcWVoBz9UCsa6FtcQLH9oUUA8B5t8O5k
+         sOPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679013567;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=upiehW/yJZLSDpEf4y2yHj38zYrZBw51z7iV6HWK5w0=;
-        b=uBJtr1ZkIPW8xJ+EfwAFKIMeYvnpmxLfe1UewyM7B0UwWZ7rttvU7RG4teImXieAnZ
-         A8DRIeXEPIVD5AzJwJgd+8XELIswksCmT1XehXkC1aOeMDWkYBeYkcY6Gxoiq6aZj2AO
-         AjaLSGYpDkvcV5y7YDc0urvHMRarpKO4fpkg2Ru/cd6f2lu6QGAIAE4IYuGy7jVGK5fT
-         6+mOUMQgAIfbzv+9XHU2KuKOUkp2jwM/ofOPO0LyjH35MaIuemoY8TTbB1YU5QoKeOPo
-         h6fvd+BRCjol9JE6DWfEiWCoAX1oZi64IUlrY4VnVuTMbzOg1QcV0wTKX59DC+nFA+pJ
-         aXRw==
-X-Gm-Message-State: AO0yUKVaMSlurhWut/wp6gGj6jOIkNocNlrYRbtXgKBs7j23G2KISwPD
-        VWjqKepSgdUXh4jQQydKQphVxQ==
-X-Google-Smtp-Source: AK7set9/5sjpev/ZL/osDaH1GWk4W3mmN0oW9qnRUD8kjrs1+643wwtvBj1UevDajcQUv/2O1M4dJg==
-X-Received: by 2002:a05:6512:3092:b0:4db:3902:c709 with SMTP id z18-20020a056512309200b004db3902c709mr322158lfd.32.1679013567039;
-        Thu, 16 Mar 2023 17:39:27 -0700 (PDT)
-Received: from [192.168.1.101] (abyj16.neoplus.adsl.tpnet.pl. [83.9.29.16])
-        by smtp.gmail.com with ESMTPSA id e4-20020a056512090400b004a91df49508sm107764lft.177.2023.03.16.17.39.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Mar 2023 17:39:26 -0700 (PDT)
-Message-ID: <ad64143c-13c0-63e3-561a-620c44f26b9d@linaro.org>
-Date:   Fri, 17 Mar 2023 01:39:25 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3 2/6] thermal: qcom: tsens-v0_1: Fix mdm9607 slope
- values
-Content-Language: en-US
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
+        d=1e100.net; s=20210112; t=1679020400;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SBufsd7TJN3UMnpjEy1Egh/dFft22er/s7/ID3KVYPo=;
+        b=yCHdGvJSxZJnzlWe7NOsq533VbHClHIUw4gGT3Chsxp2QZfIVpv63w7H0EHLvq/uui
+         mSkfZyhFFRIsoiOWRb3F3azgsVzGHUkIKYIxlRU7dJYUxFb7xAN/BTboxf3GQR5Zy38N
+         ZMdpwbpWL5htMAxZyuE3ZM/C6QFUq8X/DPJn4XnMhZyPlNqrqXAvHcf+0qbgb9M0tL1l
+         igmcKQ0lTOhRDc3bRM0KWaRNdqGS7uiQPCVPxFYuin3cQm23Toy9crwHaXNTdBs6P9XS
+         6yoFIO1PkqVMqqZwVcroVM/6v0Id1j5j3/TWRM20By0c7GCZeGEmJgBlpKz/cmNoFKT8
+         ThsQ==
+X-Gm-Message-State: AO0yUKXzsY3PpGqTTH+/9wqZ35DWm8j5hG1YhEVuD75Pk9qaPVMKg/By
+        ZQyKbKhzLuS2iqNYy+Mmw7ePD3HmSf8=
+X-Google-Smtp-Source: AK7set81mRaNdHd1iJzkewnqPyIV7y8Tk9nfpEIfIQFfGbqJ1l6OMKIsl55+jYbv3tdZS4Sz3a4Bwg==
+X-Received: by 2002:adf:f0d0:0:b0:2cf:ea5d:f60a with SMTP id x16-20020adff0d0000000b002cfea5df60amr6634361wro.3.1679020399948;
+        Thu, 16 Mar 2023 19:33:19 -0700 (PDT)
+Received: from localhost.localdomain (93-34-89-197.ip49.fastwebnet.it. [93.34.89.197])
+        by smtp.googlemail.com with ESMTPSA id z15-20020a5d44cf000000b002ce9f0e4a8fsm782313wrr.84.2023.03.16.19.33.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Mar 2023 19:33:19 -0700 (PDT)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Andrew Lunn <andrew@lunn.ch>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
-References: <20230315103950.2679317-1-stephan.gerhold@kernkonzept.com>
- <20230315103950.2679317-3-stephan.gerhold@kernkonzept.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230315103950.2679317-3-stephan.gerhold@kernkonzept.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, Lee Jones <lee@kernel.org>,
+        linux-leds@vger.kernel.org
+Subject: [net-next PATCH v4 00/14] net: Add basic LED support for switch/phy
+Date:   Fri, 17 Mar 2023 03:31:11 +0100
+Message-Id: <20230317023125.486-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This is a continue of [1]. It was decided to take a more gradual
+approach to implement LEDs support for switch and phy starting with
+basic support and then implementing the hw control part when we have all
+the prereq done.
 
+This series implements only the brightness_set() and blink_set() ops.
+An example of switch implementation is done with qca8k.
 
-On 15.03.2023 11:39, Stephan Gerhold wrote:
-> According to the msm-3.18 vendor kernel from Qualcomm [1], mdm9607 uses
-> a non-standard slope value of 3000 (instead of 3200) for all sensors.
-> Fill it properly similar to the 8939 code added recently.
-> 
-> [1]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LE.UM.4.3.2.r1-04200-9x07/arch/arm/boot/dts/qcom/mdm9607.dtsi#L875
-> 
-FWIW there's a 4.9 release for 9607
+For PHY a more generic approach is used with implementing the LED
+support in PHY core and with the user (in this case marvell) adding all
+the required functions.
 
-https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LE.UM.2.3.6.c5-03900-9x07/arch/arm/boot/dts/qcom/mdm9607.dtsi
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Fixes: a2149ab815fc ("thermal/drivers/qcom/tsens-v0_1: Add support for MDM9607")
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Currently we set the default-state as "keep" to not change the default
+configuration of the declared LEDs since almost every switch have a
+default configuration.
 
-Konrad
-> Changes in v3: Drop now unused ops_v0_1 definition
-> Changes in v2: New patch
-> ---
->  drivers/thermal/qcom/tsens-v0_1.c | 24 +++++++++++++++++-------
->  1 file changed, 17 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-> index 106d26076e3f..1b454de3928d 100644
-> --- a/drivers/thermal/qcom/tsens-v0_1.c
-> +++ b/drivers/thermal/qcom/tsens-v0_1.c
-> @@ -222,6 +222,16 @@ static int __init init_8939(struct tsens_priv *priv) {
->  	return init_common(priv);
->  }
->  
-> +static int __init init_9607(struct tsens_priv *priv)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < priv->num_sensors; ++i)
-> +		priv->sensor[i].slope = 3000;
-> +
-> +	return init_common(priv);
-> +}
-> +
->  /* v0.1: 8916, 8939, 8974, 9607 */
->  
->  static struct tsens_features tsens_v0_1_feat = {
-> @@ -271,12 +281,6 @@ static const struct reg_field tsens_v0_1_regfields[MAX_REGFIELDS] = {
->  	[TRDY] = REG_FIELD(TM_TRDY_OFF, 0, 0),
->  };
->  
-> -static const struct tsens_ops ops_v0_1 = {
-> -	.init		= init_common,
-> -	.calibrate	= tsens_calibrate_common,
-> -	.get_temp	= get_temp_common,
-> -};
-> -
->  static const struct tsens_ops ops_8916 = {
->  	.init		= init_common,
->  	.calibrate	= calibrate_8916,
-> @@ -320,9 +324,15 @@ struct tsens_plat_data data_8974 = {
->  	.fields	= tsens_v0_1_regfields,
->  };
->  
-> +static const struct tsens_ops ops_9607 = {
-> +	.init		= init_9607,
-> +	.calibrate	= tsens_calibrate_common,
-> +	.get_temp	= get_temp_common,
-> +};
-> +
->  struct tsens_plat_data data_9607 = {
->  	.num_sensors	= 5,
-> -	.ops		= &ops_v0_1,
-> +	.ops		= &ops_9607,
->  	.feat		= &tsens_v0_1_feat,
->  	.fields	= tsens_v0_1_regfields,
->  };
+[1] https://lore.kernel.org/lkml/20230216013230.22978-1-ansuelsmth@gmail.com/
+
+Changes in new series v4:
+- Changes in Andrew patch:
+  - net: phy: Add a binding for PHY LEDs:
+    - Rename phy_led: led_list to list
+    - Rename phy_device: led_list to leds
+    - Remove phy_leds_remove() since devm_ should do what is needed
+    - Fixup documentation for struct phy_led
+    - Fail probe on LED errors
+  - net: phy: phy_device: Call into the PHY driver to set LED brightness
+    - Moved phy_led::phydev from previous patch to here since it is first
+      used here.
+  - net: phy: marvell: Implement led_blink_set() 
+    - Use int instead of unsigned
+  - net: phy: marvell: Add software control of the LEDs
+    - Use int instead of unsigned
+- Add depends on LED_CLASS for qca8k Kconfig
+- Fix Makefile for qca8k as suggested
+- Move qca8k_setup_led_ctrl to separate header
+- Move Documentation from dsa-port to ethernet-controller
+- Drop trailing . from Andrew patch fro consistency
+Changes in new series v3:
+- Move QCA8K_LEDS Kconfig option from tristate to bool
+- Use new helper led_init_default_state_get for default-state in qca8k
+- Drop cled_qca8k_brightness_get() as there isn't a good way to describe
+  the mode the led is currently in
+- Rework qca8k_led_brightness_get() to return true only when LED is set
+  to always ON
+Changes in new series v2:
+- Add LEDs node for rb3011
+- Fix rb3011 switch node unevaluated properties while running 
+  make dtbs_check
+- Fix a copypaste error in qca8k-leds.c for port 4 required shift
+- Drop phy-handle usage for qca8k and use qca8k_port_to_phy()
+- Add review tag from Andrew
+- Add Christian Marangi SOB in each Andrew patch
+- Add extra description for dsa-port stressing that PHY have no access
+  and LED are controlled by the related MAC
+- Add missing additionalProperties for dsa-port.yaml and ethernet-phy.yaml
+
+Changes from the old v8 series:
+- Drop linux,default-trigger set to netdev.
+- Dropped every hw control related patch and implement only
+  blink_set and brightness_set
+- Add default-state to "keep" for each LED node example
+
+Andrew Lunn (6):
+  net: phy: Add a binding for PHY LEDs
+  net: phy: phy_device: Call into the PHY driver to set LED brightness
+  net: phy: marvell: Add software control of the LEDs
+  net: phy: phy_device: Call into the PHY driver to set LED blinking
+  net: phy: marvell: Implement led_blink_set()
+  arm: mvebu: dt: Add PHY LED support for 370-rd WAN port
+
+Christian Marangi (8):
+  net: dsa: qca8k: move qca8k_port_to_phy() to header
+  net: dsa: qca8k: add LEDs basic support
+  net: dsa: qca8k: add LEDs blink_set() support
+  dt-bindings: net: ethernet-controller: Document support for LEDs node
+  dt-bindings: net: dsa: qca8k: add LEDs definition example
+  arm: qcom: dt: Drop unevaluated properties in switch nodes for rb3011
+  arm: qcom: dt: Add Switch LED for each port for rb3011
+  dt-bindings: net: phy: Document support for LEDs node
+
+ .../devicetree/bindings/net/dsa/qca8k.yaml    |  24 ++
+ .../bindings/net/ethernet-controller.yaml     |  21 ++
+ .../devicetree/bindings/net/ethernet-phy.yaml |  31 +++
+ arch/arm/boot/dts/armada-370-rd.dts           |  14 ++
+ arch/arm/boot/dts/qcom-ipq8064-rb3011.dts     | 124 +++++++++-
+ drivers/net/dsa/qca/Kconfig                   |   8 +
+ drivers/net/dsa/qca/Makefile                  |   3 +
+ drivers/net/dsa/qca/qca8k-8xxx.c              |  20 +-
+ drivers/net/dsa/qca/qca8k-leds.c              | 230 ++++++++++++++++++
+ drivers/net/dsa/qca/qca8k.h                   |  73 ++++++
+ drivers/net/dsa/qca/qca8k_leds.h              |  16 ++
+ drivers/net/phy/Kconfig                       |   1 +
+ drivers/net/phy/marvell.c                     |  81 +++++-
+ drivers/net/phy/phy_device.c                  | 102 ++++++++
+ include/linux/phy.h                           |  35 +++
+ 15 files changed, 759 insertions(+), 24 deletions(-)
+ create mode 100644 drivers/net/dsa/qca/qca8k-leds.c
+ create mode 100644 drivers/net/dsa/qca/qca8k_leds.h
+
+-- 
+2.39.2
+
