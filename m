@@ -2,164 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32FD96BE206
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 08:43:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 972166BE20E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 08:45:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230198AbjCQHnB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 03:43:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44400 "EHLO
+        id S230258AbjCQHpa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 03:45:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbjCQHnA (ORCPT
+        with ESMTP id S229783AbjCQHp3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 03:43:00 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06F7486BC;
-        Fri, 17 Mar 2023 00:42:58 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32H7XuMo019978;
-        Fri, 17 Mar 2023 07:41:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=LcTL+5gjoj2QFyT9gYoPRzMtz6+6VJDaGPUlo8LTWsw=;
- b=HTqyRbcx4cG/CFvnT66bRbYYdD6oldXS0bOXZhI0xeoIigRsCBuSNRvCYWWcoqN6kFb2
- dSYVtbJYRqQPJezoWFrxJY0wj5GysWJc9Yr1edkdd2M6+ik3IACnff5IK/00T2OpaqLr
- v7xuCo21wd43Wc+vf4+Bl10M4hYCjoLo0ek4WmIcfnp9piivrX8BvBDAmh0/IDlyGAOL
- AVP6pmo1htIAnHBvyqIzdC0aRoNd4FoPdoYtSM+YiEv0F+2ydsTK18pk8lMeCB8JjEIf
- YqxvaoF1WinyHaPSTeCpRUPS4Baas1QC+G0ltnE48k162nImRaKqJm5CsxsXAtTDiG3Q PQ== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pcem18t9c-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 17 Mar 2023 07:41:04 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32H7f3W4022509
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 17 Mar 2023 07:41:03 GMT
-Received: from [10.233.17.245] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 17 Mar
- 2023 00:40:57 -0700
-Message-ID: <4c2ff883-13af-19be-e4e2-35a66f2572fa@quicinc.com>
-Date:   Fri, 17 Mar 2023 15:40:54 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v1 0/3] Add support to configure Coresight Dummy subunit
-Content-Language: en-US
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+        Fri, 17 Mar 2023 03:45:29 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58FB3B329B;
+        Fri, 17 Mar 2023 00:45:28 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D2781621DC;
+        Fri, 17 Mar 2023 07:45:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4F0C433EF;
+        Fri, 17 Mar 2023 07:45:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679039127;
+        bh=uMC+mKisSczlSP5vnGYRs4BuFUpa/scNus377rX44J0=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=sR3e/4eBXDoo1W3Jp5JGHJIuY0EK//4Pc6SkXzWsmHNRPPWeWk5A++HMSz+evmAhV
+         uVweUDEqfJ8E0ANk3QGoxnYfzl+Qs5dTXYEjhXGm+4v1r1oxGLry60xFLpEP6P9PhV
+         C2CXnlIU78mjBM0m2zhMIMc1Ir8uVdrNPjtjeo8x3fSO+L1HlQAyIgteuTU2c4MXEJ
+         AAnGDsVgHFIqKbYICDx2wrZhnbjvuARW/F/omqPeO+vBXa+GU+8J7Dp1zGVSaB9URk
+         0+r4L8Bn4nn5bQhY0s9mYHMDybNH5RF6eMA/6smCj1IPkDD8A44PYjFpEthj90xNTe
+         d94fS/VAl+DAA==
+Date:   Fri, 17 Mar 2023 08:45:19 +0100
+From:   Marek =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Andrew Lunn <andrew@lunn.ch>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Jonathan Corbet <corbet@lwn.net>
-CC:     Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-doc@vger.kernel.org>
-References: <20230316032005.6509-1-quic_hazha@quicinc.com>
- <0db33881-7978-41c9-45e3-63dc2ed7be4f@arm.com>
-From:   Hao Zhang <quic_hazha@quicinc.com>
-In-Reply-To: <0db33881-7978-41c9-45e3-63dc2ed7be4f@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uWCTNsihlvukbU0MvKCCFgtOrOVg0XMn
-X-Proofpoint-ORIG-GUID: uWCTNsihlvukbU0MvKCCFgtOrOVg0XMn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-17_04,2023-03-16_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 suspectscore=0 mlxscore=0
- lowpriorityscore=0 clxscore=1015 spamscore=0 mlxlogscore=999 adultscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303170051
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, Lee Jones <lee@kernel.org>,
+        linux-leds@vger.kernel.org
+Subject: Re: [net-next PATCH v4 04/14] net: phy: Add a binding for PHY LEDs
+Message-ID: <20230317084519.12d3587a@dellmb>
+In-Reply-To: <20230317023125.486-5-ansuelsmth@gmail.com>
+References: <20230317023125.486-1-ansuelsmth@gmail.com>
+        <20230317023125.486-5-ansuelsmth@gmail.com>
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.35; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Suzuki,
+On Fri, 17 Mar 2023 03:31:15 +0100
+Christian Marangi <ansuelsmth@gmail.com> wrote:
 
-On 3/16/2023 6:55 PM, Suzuki K Poulose wrote:
-> On 16/03/2023 03:20, Hao Zhang wrote:
->> Introduction of Coresight Dummy subunit
->> The Coresight Dummy subunit is for Coresight Dummy component, there 
->> are some
->> specific Coresight devices that HLOS don't have permission to access. 
->> Such as
-> 
-> What is HLOS ?
+> +	cdev->brightness_set_blocking = phy_led_set_brightness;
+> +	cdev->max_brightness = 1;
+> +	init_data.devicename = dev_name(&phydev->mdio.dev);
+> +	init_data.fwnode = of_fwnode_handle(led);
+> +
+> +	err = devm_led_classdev_register_ext(dev, cdev, &init_data);
 
-The term HLOS stands for High Level OS, it means linux in this case. The 
-HLOS runs on APPS processor.
+Since init_data.devname_mandatory is false, devicename is ignored.
+Which is probably good, becuse the device name of a mdio device is
+often ugly, taken from devicetree or switch drivers, for example:
+  f1072004.mdio-mii
+  fixed-0
+  mv88e6xxx-1
+So either don't fill devicename or use devname_mandatory (and maybe
+fill devicename with something less ugly, but I guess if we don't have
+much choice if we want to keep persistent names).
 
->> some TPDMs, they would be configured in NON-HLOS side, but it's 
->> necessary to
-> 
-> What is NON-HLOS ?
+Without devname_mandatory, the name of the LED classdev will be of the
+form
+  color:function[-function-enumerator],
+i.e.
+  green:lan
+  amber:lan-1
 
-There are some other sub-processors like modem, adsp etc, they do not 
-have a High Level OS. The OS in these sub-processors is lightweight, 
-less powerful, somewhat real-time, it would be called NON-HLOS.
+With multiple switch ethenret ports all having LAN function, it is
+worth noting that the function enumerator must be explicitly used in the
+devicetree, otherwise multiple LEDs will be registered under the same
+name, and the LED subsystem will add a number at the and of the name
+(function led_classdev_next_name), resulting in names
+  green:lan
+  green:lan_1
+  green:lan_2
+  ...
+These names are dependent on the order of classdev registration.
 
->> build Coresight path for it to debug. So there need driver to register 
->> dummy
->> devices as Coresight devices.
-> 
-> Build a path for who to debug ? If this is used by some privileged
-> software, shouldn't that do all of the work ?
-> 
-> Suzuki
-
-There is coresight source or sink in sub-processor, it would be 
-configured by NON-HLOS, and need HLOS to configure the last coresight 
-components. So we will use dummy source or sink to replace it in HLOS 
-side for building the whole path(from source to sink).
-
-Thanks,
-Hao
-
->>
->> Commit link:
->> https://git.codelinaro.org/clo/linux-kernel/coresight/-/tree/coresight-dummy
->>
->> Hao Zhang (3):
->>    Coresight: Add coresight dummy driver
->>    dt-bindings: arm: Add Coresight Dummy Trace YAML schema
->>    Documentation: trace: Add documentation for Coresight Dummy Trace
->>
->>   .../bindings/arm/qcom,coresight-dummy.yaml    | 129 +++++++++++++
->>   .../trace/coresight/coresight-dummy.rst       |  58 ++++++
->>   drivers/hwtracing/coresight/Kconfig           |  11 ++
->>   drivers/hwtracing/coresight/Makefile          |   1 +
->>   drivers/hwtracing/coresight/coresight-dummy.c | 176 ++++++++++++++++++
->>   5 files changed, 375 insertions(+)
->>   create mode 100644 
->> Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
->>   create mode 100644 Documentation/trace/coresight/coresight-dummy.rst
->>   create mode 100644 drivers/hwtracing/coresight/coresight-dummy.c
->>
-> 
+Marek
