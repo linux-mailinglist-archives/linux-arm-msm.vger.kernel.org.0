@@ -2,194 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A884C6BEC7E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 16:08:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C14386BEC92
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 16:11:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231580AbjCQPIh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 11:08:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56394 "EHLO
+        id S231570AbjCQPLw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 11:11:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231508AbjCQPIZ (ORCPT
+        with ESMTP id S231574AbjCQPLt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 11:08:25 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CE08C1BFE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 08:08:00 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id l12so4718063wrm.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 08:07:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679065599;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cq4IfAT4HXdFTs2SGz35CPcumUuW538AvFYEG0nwFE8=;
-        b=wsSlZ+Ghn5Q1V1NGYA8xUjf34NW79AcHF5hFiFfUwUw9ZaAQDvJRhsrJmSQRqD1j05
-         weUAaXjg4DizTvzz5dWPdf9g2a0DbHGEGsrJ1XMd71xmRYV30BVv/LHdzm97mQ7EbfIt
-         QPeQxrppd0F+xpnV+RLWz4sf0dlh5eZgLVhzzC3zxsBoWnkZEmYX213/BAtiJr2t6Uzl
-         62I3mRcXgO0xZQE/tn0VD3VGLyLQTBgvxzm32wHFsGEcAvoQCzXXOI7NIo7dhsnHvACF
-         Or4qnjavnHEFgrORrG+eb39AGvrfTkT15piwSy2kpadP4zmUfHrIZuhsuGkhe3ybH3Ed
-         2jxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679065599;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cq4IfAT4HXdFTs2SGz35CPcumUuW538AvFYEG0nwFE8=;
-        b=k/G9t/aeEcDZhzZZnfhT427bbG//btZCkdBYYTdhnHU44/RbtJPUL8zhH2itbfMT5F
-         tCLUScbTZnwRQxz31JeJXj+fikEXWWONt8uwsc5UEe9Vi8CxDp2dfRVz27NDMMt/g3GS
-         rGgTcmNDkLdBOW00tvRFfcNcwUc22YmE18Z/ZuAqeAyN41lnix/PkX6SFZRRulF/czIh
-         N/fWiHKE+7yK6rpBRab5k0mrAcOX+D82jmG2lklN/2lmpne16H3bTdDGvmhhHt+Nry/7
-         HfFX5Eqo7KTnuaBNjJEBB9PktVtvK71tX25le4S3uPgPHARyv6OGqbdIbn8xi9+wm8ht
-         OeHw==
-X-Gm-Message-State: AO0yUKUk4kej468XKp9wopzlPC9jk05IY85oLixAAvmRSfl5iNh1eOlG
-        yK7xswxbxIdCSE8DZqv96X3x6teHRSEvUxsMWjJXuA==
-X-Google-Smtp-Source: AK7set/i8klMZ4z66oijEnTItWqUwSpoxj/OkAIN+GiwhBbZO2CXjZmA6F85Mx0xaL0FXrLkROhU3g==
-X-Received: by 2002:a5d:4c92:0:b0:2c5:58fb:fa92 with SMTP id z18-20020a5d4c92000000b002c558fbfa92mr7120104wrs.7.1679065599156;
-        Fri, 17 Mar 2023 08:06:39 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id f13-20020a5d58ed000000b002c5493a17efsm2187902wrd.25.2023.03.17.08.06.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Mar 2023 08:06:38 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Fri, 17 Mar 2023 16:06:36 +0100
-Subject: [PATCH v6 5/5] arm64: dts: qcom: sm8450: add dp controller
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230206-topic-sm8450-upstream-dp-controller-v6-5-d78313cbc41d@linaro.org>
-References: <20230206-topic-sm8450-upstream-dp-controller-v6-0-d78313cbc41d@linaro.org>
-In-Reply-To: <20230206-topic-sm8450-upstream-dp-controller-v6-0-d78313cbc41d@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Fri, 17 Mar 2023 11:11:49 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D2E2BF15;
+        Fri, 17 Mar 2023 08:11:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1679065663; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=OCcXsHRmuKa+sLox4/7AGham5SQey/UeFaoYscgjSu6eu5KEgdFVdKwHuS7T8Ej7EY
+    6KYn2wn0Co+QYqODO/bPPxfR5Mbnkw8ccbzqcyDWdFvvGqUwt3RENbnQ/2+k93lPoT0f
+    BOX2ELAJPpWahS/E4/rOWaWz6XzpRhEQjpPdgzUF2VKV7wi++WMqgHKVmDiOeEOTPggm
+    kVWpciGB2RSSvEuDYUnOgw/geMEVwVdJf1lRdoHsU+xw6V43EATYcPsuc5iJpCaXOMDc
+    xsAMK6VwGRpKqzVJHgJkUbXtr/dM11kM49XHFrHzXkkbvnG4ffl22G0JNtDDmVAAjPe0
+    S97A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1679065663;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Bg5tiTHnWuEjrwbVFU8mQBT11uFxh9IrkXhotJWkwPc=;
+    b=SUCqMdI8YXw3fOFvzbWWL3NnLeOA+QN5gVBPNqIZhX92/VWtbxP1W8Q6s0kPItogjk
+    9waSbag0WByRLMGPZ14ygAMBOzcyeSnFkYQq8cJY02gYBez8ZTpGLDdueiRj24dGHKO6
+    CXXMio8UIjQcsa6KFjibABDUNEIg5QJMSyNVt/Q0KqJ3d8adzkJDyra8fulywavR93kg
+    KvV2r36Br5g0LQ8ftqh+TRAgmjhHB4zxKiRrHcDBuvjwIhmbJZ22p/5U96x0mkG9en8j
+    cHzOEbNobPzcGwqhv6svaU3obWT5DdOSeYzZn7jfsPpUNgrrIFfs3UkGaD8q+qpeQoGQ
+    gbDw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1679065663;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Bg5tiTHnWuEjrwbVFU8mQBT11uFxh9IrkXhotJWkwPc=;
+    b=hSscblhuTM1MBH8nTgtq7kHm0NXaS5Rk0U52kVXIQEOdNhs/5IgxSi2+Rg6eBUX3Zl
+    7Md70Z/ZR5k1gEzAjCpHlo0NyCSKX3B788oEIusUChl+JeZkqKOJMjotRGjylnO9o5Lj
+    WJqiHhPNB/Ni4rmZ8G0L/V3wIWdJfiTJPC4szQtOzE1BY+sKHqHjxq2xK1vCcQilmPkf
+    j1uoMCba7q8In49mV9vkVDo0tKFddyknLbdaNKB98QL1WcI1ev6IYjDhg2Lp337Eo2VV
+    BQgu28JbjzAoVxdh8hAkCBUCyDfZCfWrbi0mKVjAR1V4VreQt52V7Snc0NtmBrVp+kAh
+    JTdQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKjXrKpU"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.3.1 AUTH)
+    with ESMTPSA id i40d22z2HF7g6cX
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 17 Mar 2023 16:07:42 +0100 (CET)
+Date:   Fri, 17 Mar 2023 16:07:35 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.1
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 2/6] thermal: qcom: tsens-v0_1: Fix mdm9607 slope
+ values
+Message-ID: <ZBSCN0f8yC/nkGll@gerhold.net>
+References: <20230315103950.2679317-1-stephan.gerhold@kernkonzept.com>
+ <20230315103950.2679317-3-stephan.gerhold@kernkonzept.com>
+ <ad64143c-13c0-63e3-561a-620c44f26b9d@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ad64143c-13c0-63e3-561a-620c44f26b9d@linaro.org>
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_PASS,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the Display Port controller subnode to the MDSS node.
+On Fri, Mar 17, 2023 at 01:39:25AM +0100, Konrad Dybcio wrote:
+> On 15.03.2023 11:39, Stephan Gerhold wrote:
+> > According to the msm-3.18 vendor kernel from Qualcomm [1], mdm9607 uses
+> > a non-standard slope value of 3000 (instead of 3200) for all sensors.
+> > Fill it properly similar to the 8939 code added recently.
+> > 
+> > [1]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LE.UM.4.3.2.r1-04200-9x07/arch/arm/boot/dts/qcom/mdm9607.dtsi#L875
+> > 
+> FWIW there's a 4.9 release for 9607
+> 
+> https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LE.UM.2.3.6.c5-03900-9x07/arch/arm/boot/dts/qcom/mdm9607.dtsi
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 79 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+You seem to have linked 3.18 too?
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 97ce5fe0e9b0..da6d1881ef60 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -2751,6 +2751,13 @@ dpu_intf2_out: endpoint {
- 						};
- 					};
- 
-+					port@2 {
-+						reg = <2>;
-+						dpu_intf0_out: endpoint {
-+							remote-endpoint = <&mdss_dp0_in>;
-+						};
-+					};
-+
- 				};
- 
- 				mdp_opp_table: opp-table {
-@@ -2783,6 +2790,78 @@ opp-500000000 {
- 				};
- 			};
- 
-+			mdss_dp0: displayport-controller@ae90000 {
-+				compatible = "qcom,sm8450-dp", "qcom,sm8350-dp";
-+				reg = <0 0xae90000 0 0x200>,
-+				      <0 0xae90200 0 0x200>,
-+				      <0 0xae90400 0 0xc00>,
-+				      <0 0xae91000 0 0x400>,
-+				      <0 0xae91400 0 0x400>;
-+				interrupt-parent = <&mdss>;
-+				interrupts = <12>;
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DPTX0_AUX_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
-+				clock-names = "core_iface",
-+					      "core_aux",
-+					      "ctrl_link",
-+			                      "ctrl_link_iface",
-+					      "stream_pixel";
-+
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
-+						  <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
-+				assigned-clock-parents = <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
-+							 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
-+
-+				phys = <&usb_1_qmpphy QMP_USB43DP_DP_PHY>;
-+			        phy-names = "dp";
-+
-+			        #sound-dai-cells = <0>;
-+
-+				operating-points-v2 = <&dp_opp_table>;
-+				power-domains = <&rpmhpd SM8450_MMCX>;
-+
-+				status = "disabled";
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						mdss_dp0_in: endpoint {
-+							remote-endpoint = <&dpu_intf0_out>;
-+						};
-+					};
-+				};
-+
-+				dp_opp_table: opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-160000000 {
-+						opp-hz = /bits/ 64 <160000000>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-270000000 {
-+						opp-hz = /bits/ 64 <270000000>;
-+						required-opps = <&rpmhpd_opp_svs>;
-+					};
-+
-+					opp-540000000 {
-+						opp-hz = /bits/ 64 <540000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+
-+					opp-810000000 {
-+						opp-hz = /bits/ 64 <810000000>;
-+						required-opps = <&rpmhpd_opp_nom>;
-+					};
-+				};
-+			};
-+
- 			mdss_dsi0: dsi@ae94000 {
- 				compatible = "qcom,sm8450-dsi-ctrl", "qcom,mdss-dsi-ctrl";
- 				reg = <0 0x0ae94000 0 0x400>;
+I don't see tsens support for mdm9607 in msm-4.9, although maybe I'm
+looking at the wrong branch. :D
 
--- 
-2.34.1
-
+Thanks,
+Stephan
