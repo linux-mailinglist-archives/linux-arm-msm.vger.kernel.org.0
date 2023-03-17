@@ -2,158 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D78F6BE300
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 09:21:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC6886BE3AE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 09:34:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229950AbjCQIVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 04:21:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53898 "EHLO
+        id S231548AbjCQIeH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 04:34:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230044AbjCQIVI (ORCPT
+        with ESMTP id S231365AbjCQIdl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 04:21:08 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE3622CC79;
-        Fri, 17 Mar 2023 01:20:46 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32H7ak6S022063;
-        Fri, 17 Mar 2023 08:19:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Odofb5S5iKcbSwRiPERtF/5jDQN1KT0/kHOd9jsZRgU=;
- b=iYR+q1WYoEz/YDSqifHS0+uJM+A/ikf1sVGG6KF85wZXCX3CjS8WcxwyLonsLqeodyMO
- Vkx0Yenv2N3VkTkdvj6UpfwfvX5uw2XsFFioYBiJD9SHF4UfZDJCMFRXx41Gw7UhOJkz
- rDK7xqOShKaQdQ5sDM/lJuQIiyYBMVbjnnrF0qC22xdTU8q0wLSX4zj09n5mcRRWCrFr
- 4DGh4pj7jRTa9DPad9ralBHrE7Mbs8Sj3FGrefmg3BXq4Rn9rfcNPt913OZCskZ9CnZO
- 8YSmBmR92b4wVKWffQwQ2ygb2FHbF4TDqT2mgqonriIFaGX2Y4Hrpekge7tmdMCrtJR6 /Q== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pcbas9972-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 17 Mar 2023 08:19:39 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32H8JcYl029041
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 17 Mar 2023 08:19:38 GMT
-Received: from [10.233.17.245] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 17 Mar
- 2023 01:19:32 -0700
-Message-ID: <d2ecff94-e608-fcca-f82c-e8e488f4288d@quicinc.com>
-Date:   Fri, 17 Mar 2023 16:19:30 +0800
+        Fri, 17 Mar 2023 04:33:41 -0400
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FBCB30CA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 01:32:33 -0700 (PDT)
+Received: by mail-ed1-f54.google.com with SMTP id y4so17424762edo.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 01:32:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679041952;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oDOcNIcbSN9Lk2htsV80EHwrNf4UOCNV6ZaL1McyWuk=;
+        b=Nb0YDCUjo8OyvolKZu7uS9pixhnVmAjS/JIK0BCtKNVk1/oMea0jrQd3l/lFz6bVCR
+         USIyJRSbW3jZp8FOUyQrA+revcu9mDP2Gj82GWbNeC8+Syck8Y8va4gbH2ni+Y80SYaB
+         wxZC/laPoSIONRF9xS3gye6DieykFm/d/QeR1Cw9Q3qSmG2znVuLWufS7iZlhuoVeqTM
+         xYrRKzIq1JBntBrTw73UYZQ7rSc2HusEYilpAYzIPc8CJjEpkul1g0ctguduBCb144kf
+         QzN71abPTQv/RaiIIdaIK2ySfGwINZfJzFD5FMzCKD/1k7mmENVlYtkB71ke8LSKmAc0
+         2DVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679041952;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oDOcNIcbSN9Lk2htsV80EHwrNf4UOCNV6ZaL1McyWuk=;
+        b=upvn4w5DHR/uY2LL2KGUdiLlqFxzF9m/oqfVQApmn30hOjAsPNKlQA7EeAZkMvuR5y
+         02IZzNmWfwb/tMOG/3sFKP62ZO/vkCUTIXgj+6frbvLx/fuWhBcVyxRvQmoE96Iycq4N
+         HswCU9r3wJDc8lQBW3ph/pSM1LP3s+VUO6XE6kq2UKw7Tev5L3Q34XJnrsetjJLa3cks
+         rBz9U5z1f5e8pRRO7sfMGfD06uAQo8Qylvht5gpcsP5dNLEWwWVjT2H94HuPvcgcU2Qs
+         FyO9retbZWg2FOBEOfHMj6Cslk7ONf3QhN8NkWfMLDMbCpdSi96PER9v4JoFEG3NwiM8
+         oh9w==
+X-Gm-Message-State: AO0yUKWa9pFvnHfP0/M2u9NCQ7cnYMQ+6TNjPnnMVZ7gBxMKVCPzkeWq
+        SaJdkA1hqtqtnbi37S1E8ssahg==
+X-Google-Smtp-Source: AK7set/64No4okniI9+o2EC5df5JYtg/Ur5By37PIJVSfElLEiA0wNITxxOCYNOCOgrpQmgmHOSDJg==
+X-Received: by 2002:a17:907:3fa6:b0:878:7189:a457 with SMTP id hr38-20020a1709073fa600b008787189a457mr16572865ejc.51.1679041952687;
+        Fri, 17 Mar 2023 01:32:32 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:848a:1971:93e0:b465? ([2a02:810d:15c0:828:848a:1971:93e0:b465])
+        by smtp.gmail.com with ESMTPSA id mj4-20020a170906af8400b008ca8b62cda6sm699999ejb.177.2023.03.17.01.32.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Mar 2023 01:32:32 -0700 (PDT)
+Message-ID: <0edf6829-3a23-7a75-a225-d69222ae2788@linaro.org>
+Date:   Fri, 17 Mar 2023 09:32:31 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v1 2/3] dt-bindings: arm: Add Coresight Dummy Trace YAML
- schema
-To:     Rob Herring <robh@kernel.org>
-CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        <linux-kernel@vger.kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>, <linux-doc@vger.kernel.org>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        "Palmer Dabbelt" <palmer@dabbelt.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <coresight@lists.linaro.org>,
-        "Trilok Soni" <quic_tsoni@quicinc.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>, <devicetree@vger.kernel.org>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        "Albert Ou" <aou@eecs.berkeley.edu>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-References: <20230316032005.6509-1-quic_hazha@quicinc.com>
- <20230316032005.6509-3-quic_hazha@quicinc.com>
- <167897435275.2729718.16512739524975963906.robh@kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: arm-smmu: Document SM61[12]5 GPU SMMU
 Content-Language: en-US
-From:   Hao Zhang <quic_hazha@quicinc.com>
-In-Reply-To: <167897435275.2729718.16512739524975963906.robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230315-topic-kamorta_adrsmmu-v1-0-d1c0dea90bd9@linaro.org>
+ <20230315-topic-kamorta_adrsmmu-v1-1-d1c0dea90bd9@linaro.org>
+ <f09e93e1-235a-ea0a-902d-4f41a8c90ee5@linaro.org>
+ <d260b390-f6f2-493a-071c-f88c36582881@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <d260b390-f6f2-493a-071c-f88c36582881@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KT0SzSRxfq3sZW8Zt9NQP-Gm5Hd8OwZ9
-X-Proofpoint-ORIG-GUID: KT0SzSRxfq3sZW8Zt9NQP-Gm5Hd8OwZ9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-17_04,2023-03-16_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- mlxlogscore=777 mlxscore=0 malwarescore=0 bulkscore=0 phishscore=0
- spamscore=0 suspectscore=0 clxscore=1011 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303170056
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 3/16/2023 9:53 PM, Rob Herring wrote:
+On 16/03/2023 22:59, Konrad Dybcio wrote:
 > 
-> On Thu, 16 Mar 2023 11:20:04 +0800, Hao Zhang wrote:
->> Add new coresight-dummy.yaml file describing the bindings required
->> to define coresight dummy trace in the device trees.
+> 
+> On 16.03.2023 20:29, Krzysztof Kozlowski wrote:
+>> On 15/03/2023 11:52, Konrad Dybcio wrote:
+>>> Both of these SoCs have a Qualcomm MMU500 implementation of SMMU
+>>> in front of their GPUs that expect 3 clocks. Both of them also have
+>>> an APPS SMMU that expects no clocks. Remove qcom,sm61[12]5-smmu-500
+>>> from the "no clocks" list (intentionally 'breaking' the schema checks
+>>> of APPS SMMU, as now it *can* accept clocks - with the current
+>>> structure of this file it would have taken a wastefully-long time to
+>>> sort this out properly..) and add necessary yaml to describe the
+>>> clocks required by the GPU SMMUs.
 >>
->> Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
->> ---
->>   .../bindings/arm/qcom,coresight-dummy.yaml    | 129 ++++++++++++++++++
->>   1 file changed, 129 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
 >>
+>>> +      properties:
+>>> +        compatible:
+>>> +          items:
+>>> +            - enum:
+>>> +                - qcom,sm6115-smmu-500
+>>> +                - qcom,sm6125-smmu-500
+>>> +            - const: qcom,adreno-smmu
+>>> +            - const: qcom,smmu-500
+>>> +            - const: arm,mmu-500
+>>
+>> If you drop the hunk later (from allOf:if), then what clocks do you
+>> expect for non-GPU SMMU?
+> Both 6115 and 6125 require no clocks under the APPS (non-GPU) SMMU.
+> However, the list below uses a `contains:` which means I'd have
+> to add a whole another hunk like
 > 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> 	- items:
+>             - enum:
+>                 - qcom,sm6115-smmu-500
+>                 - qcom,sm6125-smmu-500
+>             - const: qcom,smmu-500
+>             - const: arm,mmu-500
 > 
-> yamllint warnings/errors:
-> ./Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml:91:5: [warning] wrong indentation: expected 6 but found 4 (indentation)
+> and add another level of indentation to the previous one
 > 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml: required:4: {'oneOf': ['qcom,dummy-sink', 'qcom,dummy-source']} is not of type 'string'
-> 	from schema $id: http://json-schema.org/draft-07/schema#
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml: ignoring, error in schema: required: 4
-> Documentation/devicetree/bindings/arm/qcom,coresight-dummy.example.dtb: /example-0/dummy_sink: failed to match any schema with compatible: ['qcom,dummy']
-> Documentation/devicetree/bindings/arm/qcom,coresight-dummy.example.dtb: /example-1/dummy_source: failed to match any schema with compatible: ['qcom,dummy']
-> 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230316032005.6509-3-quic_hazha@quicinc.com
-> 
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
-> 
+> I figured skipping that was less messy (I think we discussed this
+> once as well), but if you prefer to keep it strict, I can.
 
-Hi Rob,
+Nah, ok, it's fine.
 
-Thanks for your check.
-I have checked it and didn't see the above errors, will follow your 
-steps and change this in the next version of patch.
+Best regards,
+Krzysztof
 
-Thanks,
-Hao
