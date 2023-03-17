@@ -2,88 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D93B46BE4F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 10:08:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E13166BE505
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Mar 2023 10:10:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230223AbjCQJI1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Mar 2023 05:08:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34230 "EHLO
+        id S230434AbjCQJKi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Mar 2023 05:10:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230196AbjCQJIC (ORCPT
+        with ESMTP id S230369AbjCQJKb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Mar 2023 05:08:02 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D714A7A80
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 02:07:06 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id m35so2850238wms.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Mar 2023 02:07:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679044021;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=FkEW8ZYuZi33cVLz405PPEYTVS02b7guai4VJnc/u0s=;
-        b=Q6GGawkHUaBC3zY4KVyRU2zkTV8I/A3fQwxW7vTpJrTozVht9LImkNfbBCRCosXa0m
-         pd7TBNyANDkYveJ2bhPyAp4KF6gKFGL5nSe71B61hyNABpnJuYVwciehnVTke16XsHkt
-         FsBJJhM40ydNvoYFsecqfm0EzfkcQunE5FgD8M6ukgPmOfmmmPgu/4NlxdQjJpj+hPYJ
-         axfR6dGJrSVb3HtEHlPHaxD2AyWfNzbMa4+JeWw0nvc6HsJ085fcxmt3vgf5tLRbSyby
-         YeUW4PmcBtee2DYPwXFAwToI8SgWqv+LAG8OKBai099FX6K2zS8T9UqV+0L1tZUy9wWV
-         d3Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679044021;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FkEW8ZYuZi33cVLz405PPEYTVS02b7guai4VJnc/u0s=;
-        b=31DYTX9a6EWovHcQh5wiiAnIqmN6bMpEuI5yCZA9QiwT1Xsv5Au/twSmwA04yz44bo
-         CXzynIudNXJ+t7ESDvefeDc2MsXIfAGH5KlMb0U8okx3K9FjjrAkJcu3D/hWUxhchw1p
-         s5v38iRSzepGv92fFQbWR8MtUK0hYx17j0p76Vp9n/xV1vXKuty9zJT3+LAU7iLMnGO3
-         a5SzNtU5TwurxYxG1V4A4ZX7HNt4atmMDOT012eB0S4oly182OsDWlK2E/966+RwTBci
-         yIGQJYCBKXMQQkvwZwmuf4ebgfw+wgUHMeOTAz0r9xlSVOP7Af9gBgUilGF/JdL+G1Ku
-         LQUA==
-X-Gm-Message-State: AO0yUKWGOdkhG03PAB/CikRt9hTXr4x/yDuLqoRbD6LIUGnROuyp8Pxb
-        CyxGGNrpp4YkJBaLooyNSH5Ifg==
-X-Google-Smtp-Source: AK7set+A4ni6dKWDcGtNRjRWaK1QKtVa/vvIX67r+ZAtb/CzWUnqPiOUWmFYG5d7yJ93VdhYmJaZlw==
-X-Received: by 2002:a05:600c:450c:b0:3ea:e7e7:95d9 with SMTP id t12-20020a05600c450c00b003eae7e795d9mr25428831wmo.32.1679044021068;
-        Fri, 17 Mar 2023 02:07:01 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:9ed5:bad0:e925:7938? ([2a01:e0a:982:cbb0:9ed5:bad0:e925:7938])
-        by smtp.gmail.com with ESMTPSA id ay38-20020a05600c1e2600b003df7b40f99fsm7331479wmb.11.2023.03.17.02.06.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Mar 2023 02:07:00 -0700 (PDT)
-Message-ID: <8a6ecd92-ff4f-e72f-457e-4061546dc46f@linaro.org>
-Date:   Fri, 17 Mar 2023 10:06:59 +0100
+        Fri, 17 Mar 2023 05:10:31 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 48EF546BF;
+        Fri, 17 Mar 2023 02:10:12 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0DE051480;
+        Fri, 17 Mar 2023 02:10:56 -0700 (PDT)
+Received: from [10.57.53.217] (unknown [10.57.53.217])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 77A043F64C;
+        Fri, 17 Mar 2023 02:10:10 -0700 (PDT)
+Message-ID: <d304145e-dcc6-60db-fca2-920a0e75ef3e@arm.com>
+Date:   Fri, 17 Mar 2023 09:10:08 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v4 5/5] arm64: dts: qcom: sm8450: add dp controller
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230206-topic-sm8450-upstream-dp-controller-v4-0-dca33f531e0d@linaro.org>
- <20230206-topic-sm8450-upstream-dp-controller-v4-5-dca33f531e0d@linaro.org>
- <c63ecdc2-11e0-79d2-8647-284913f0c0da@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <c63ecdc2-11e0-79d2-8647-284913f0c0da@linaro.org>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.8.0
+Subject: Re: [PATCH] coresight: core: Add sysfs node to reset all sources and
+ sinks
+To:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Mike Leach <mike.leach@linaro.org>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+References: <20230208111630.20132-1-quic_jinlmao@quicinc.com>
+ <CAJ9a7ViBS9K6cKsOi3btw1b5cM9VTSb-q8s6W3WUAgeW3-T2Sg@mail.gmail.com>
+ <CAJ9a7ViA5BsbLjRWMsttmpmcPh1yUXK8J79k-pqYybVZkMQHXQ@mail.gmail.com>
+ <bb6c9df9-af9b-873e-85bd-a29d00bb39d7@arm.com>
+ <1d9b8ee8-c3f2-99bc-cd4e-8c2dd0f04b2b@quicinc.com>
+ <CAJ9a7Vh08A8b7YLF=pYPudB0CZ0XjEpF=4YHrNNd7xo_JQGYaA@mail.gmail.com>
+ <0308d380-bc8b-cb66-55cd-b0934d8f9676@quicinc.com>
+ <6320e079-4fc8-f435-52e5-6d5ad1369d84@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <6320e079-4fc8-f435-52e5-6d5ad1369d84@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,57 +59,122 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/03/2023 23:12, Konrad Dybcio wrote:
+On 17/03/2023 06:18, Jinlong Mao wrote:
 > 
-> 
-> On 9.03.2023 10:19, Neil Armstrong wrote:
->> Add the Display Port controller subnode to the MDSS node.
+> On 3/1/2023 11:04 PM, Jinlong Mao wrote:
+>> Hi Mike & Suzuki,
 >>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
-> [...]
->> +
->> +				dp_opp_table: opp-table {
->> +					compatible = "operating-points-v2";
->> +
->> +					opp-160000000 {
->> +						opp-hz = /bits/ 64 <160000000>;
->> +						required-opps = <&rpmhpd_opp_low_svs>;
->> +					};
-> Downstream seems to use 19200000 here
-
-Ack, will update.
-
-Thx,
-Neil
-
-> 
-> Otherwise,
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> Konrad
-> 
->> +
->> +					opp-270000000 {
->> +						opp-hz = /bits/ 64 <270000000>;
->> +						required-opps = <&rpmhpd_opp_svs>;
->> +					};
->> +
->> +					opp-540000000 {
->> +						opp-hz = /bits/ 64 <540000000>;
->> +						required-opps = <&rpmhpd_opp_svs_l1>;
->> +					};
->> +
->> +					opp-810000000 {
->> +						opp-hz = /bits/ 64 <810000000>;
->> +						required-opps = <&rpmhpd_opp_nom>;
->> +					};
->> +				};
->> +			};
->> +
->>   			mdss_dsi0: dsi@ae94000 {
->>   				compatible = "qcom,sm8450-dsi-ctrl", "qcom,mdss-dsi-ctrl";
->>   				reg = <0 0x0ae94000 0 0x400>;
+>> On 2/9/2023 10:56 PM, Mike Leach wrote:
+>>> Hi,
+>>>
+>>> On Thu, 9 Feb 2023 at 03:02, Jinlong Mao <quic_jinlmao@quicinc.com> 
+>>> wrote:
+>>>>
+>>>> On 2/9/2023 12:36 AM, Suzuki K Poulose wrote:
+>>>>> On 08/02/2023 16:20, Mike Leach wrote:
+>>>>>> Quick correction - you need to look for enable_source  / enable_sink
+>>>>>> files and disable those that are currently '1'
+>>>>>>
+>>>>>> Mike
+>>>>>>
+>>>>>> On Wed, 8 Feb 2023 at 16:16, Mike Leach <mike.leach@linaro.org> 
+>>>>>> wrote:
+>>>>>>> Hi
+>>>>>>>
+>>>>>>> As this is a sysfs only update - would it not be easier to simply 
+>>>>>>> use
+>>>>>>> a shell script to iterate through coresight/devices/ looking for
+>>>>>>> disable_source / disable_sink files and setting those accordingly?
+>>>>>>>
+>>>>>>> See tools/perf/tests/shell/test_arm_coresight.sh for an example of a
+>>>>>>> script that does similar iteration to test coresight in perf
+>>>>>>>
+>>>>> +1
+>>>>>
+>>>>> Suzuki
+>>>> Hi Mike & Suzuki,
+>>>>
+>>>> Sometimes user just want to have some quick test from PC with adb 
+>>>> commands.
+>>>> It is very easy to reset all sources and sinks' status by command 
+>>>> below.
+>>>> echo 1 > /sys/bus/coresight/reset_source_sink
+>>>>
+>>> Users of coresight via sysfs will have to know how to use the
+>>> coresight infrastructure in order to enable the sources and sinks in
+>>> the first place -
+>>> e.g
+>>> echo 1 > /sys/bus/coresight/devices/tmc_etr0/enable_sink
+>>> echo 1 > /sys/bus/coresight/devices/etm0/enable_source
+>>>
+>>> Given that they are aware of which sources and sinks they enabled -
+>>> disabling them should be simple.
+>>>
+>>>
+>>>> Preparing the script for test is not easy for users who are not 
+>>>> familiar
+>>>> with the coresight framework.
+>>>>
+>>> If there is a genuine use case were a user has opened so many sources
+>>> on the command line that they need a simpler way of closing them than
+>>> repeating the enabled commands with an
+>>> echo 0 > ...
+>>> then any script could be shipped as part of kernel/tools/coresight or
+>>> kernel/samples/coresight - they would not have to write it themselves,
+>>> and just run it from the command line - for example :-
+>>> ./kernel/tools/coresight/scripts/sysfs_disable_sources_and_sinks.sh
+>>>
+>>> Realistically users will only try out a couple of devices as the
+>>> usefulness of the sysfs interface is really limited to testing or
+>>> board bring up.
+>>> Any complex use with sysfs - as in the coresight tests I mentioned
+>>> earlier is really going to be done by scripting.
+>>>
+>>>
+>>> Regards
+>>>
+>>> Mike
 >>
+>> There is also requirement that reset all the sources and sinks in an 
+>> user space daemon.
+>> For such requirement, I think it is better to use only once sysfs node 
+>> instead of iterating through coresight/device folder in an user space 
+>> daemon.
+> 
+> Hi Mike & Suzuki,
+> 
+> In our internal build, there is binary executable which can configure 
+> coresight source/sink.
+> Before running the case, it will disable all the sources and sinks by 
+> writing reset_source_sink node to
+> avoid any other source packet's impact.
+
+How does that justify this patch ? Your internal build depending on
+something is your code. It looks like there is more to these patches
+than what you are disclosing. e.g., with the dummy device series.
+
+Please could you paint a complete picture and call out the dependencies
+/ requirements for what you are trying to achieve ?
+
+Kind regards
+Suzuki
+
+> 
+> 
+> Thanks
+> Jinlong Mao
+> 
+>>
+>> Thanks
+>> Jinlong Mao
+>>
+>>>> Thanks
+>>>> Jinlong Mao
+>>>>
+>>>>>
+>>>
+>>>
+>> _______________________________________________
+>> CoreSight mailing list -- coresight@lists.linaro.org
+>> To unsubscribe send an email to coresight-leave@lists.linaro.org
 
