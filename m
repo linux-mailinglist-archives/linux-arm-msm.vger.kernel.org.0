@@ -2,136 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 435846BFB6B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 17:09:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CA2A6BFB9E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 17:43:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229502AbjCRQJm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Mar 2023 12:09:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33352 "EHLO
+        id S229697AbjCRQn4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Mar 2023 12:43:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbjCRQJl (ORCPT
+        with ESMTP id S229599AbjCRQnz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Mar 2023 12:09:41 -0400
-X-Greylist: delayed 182 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 18 Mar 2023 09:09:38 PDT
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B139E22CAD
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 09:09:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1679155591; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=QM+lJSxUzEdwuOZD80fMk+7IUEwl2WOSorvRQ8gzib10or1CojJz8zVC2Ynqy9wefO
-    BM64vxq5uQj+9k6Ib1yhL4HDjifXFw9Px0mJ+v5vZ6au8rK4xoabI0A78o7bWkuAdE7U
-    kCHNAweId0Sau2Z4kho+E/iUiFf6ju8FnXhau0N3K9I9AzbLDz0hyObh2aPWHZfWvdFc
-    jS+nclAaDJ7HNx58+elnj+cePtwch07kGjGY2vBeRmNseFO2VjDsWToVpwMI69pBwKjV
-    C3hLEWG0Ppwgmj0Hc5490QOAIWoOqB4esptALTGODfu8lHjF0XIPCONkn6LZUZtxZp2+
-    oF/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1679155591;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=+1JUVGGqwpyFbnd+/hrUkEmDpeWXDmsdFaI+rJ6DvUA=;
-    b=rgBR5HFSl/IwBHcUYwgrRJHQafbP6jvdAlSEoyHaiBCdODSFHn3bAEEIHBRcy8yp2E
-    ce97fFJZnnuJ6n8sfbziqleifX4Sq3oDlY6QbULu7ZYxkPmUldFTOtsidjzwt5eNXDmW
-    ecfCteykNfhZz+YAThzPYwWliaUJzJVH141PqjsWEEmasnifgz49mqZDRdj0V3m8pabX
-    wvPy1pPNFeGl9xaNNfTFw7xKXyJT12dZPWTDsp6reAngsjGIsqSS6RzHOy1AWVuWXbax
-    FzoejhZ+n+woTsU88kUSwwaX4dfM0TDqMzpXhu1r2Y/GZHefeeZxFJ/E8VN3uxlxO9Hp
-    EAnA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1679155591;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=+1JUVGGqwpyFbnd+/hrUkEmDpeWXDmsdFaI+rJ6DvUA=;
-    b=GtsC5fJPvCMZqy/JLeJahzJtPFg9x2wIcaKxjE0Hv9xynCd7gobtsZX2BLye+jExOG
-    kXefhfDwhaO56mR3MzDUvbisI0lP7HgLDI5COoyypgKk2fEnPf16FJnrzWH13pv6ByuX
-    Esq4dgvVMDiImYGOcrZNJoxh+wHntse/dEDEnet9fPM7CqrM9IYAeQRCv4l5LT9fiURr
-    EZaUa6MC/A83cMaMUQlYEcmm+CFRRx7W1aFrRVEVtd4bh5gjCvuHRv515Td4jpsnh+Kt
-    VkWMmx6tYrYrT9UsP8SZh1prWuCQYspWb8Wu+odLGoZEFUAVb4/PrDW0qOcFXfdIF4xB
-    jj9g==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKjWrKs9lg=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.3.1 AUTH)
-    with ESMTPSA id i40d22z2IG6V81U
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Sat, 18 Mar 2023 17:06:31 +0100 (CET)
-Date:   Sat, 18 Mar 2023 17:06:30 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 3/6] thermal: qcom: tsens-v0_1: Add mdm9607 correction
- offsets
-Message-ID: <ZBXhhpbMHUaWXoWb@gerhold.net>
-References: <20230315103950.2679317-1-stephan.gerhold@kernkonzept.com>
- <20230315103950.2679317-4-stephan.gerhold@kernkonzept.com>
- <30e4ee62-0297-0ffe-23a5-87db096a6154@linaro.org>
+        Sat, 18 Mar 2023 12:43:55 -0400
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2C72172C;
+        Sat, 18 Mar 2023 09:43:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1679157834; x=1710693834;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=N9cVN+VCKJAIk4wgagRUmzJqjpcPtAqI1YYy/7Sm3b0=;
+  b=RJtgMgDTxxCVYe6eQnSgAfrgdg6wUXz8RKeeiwjkcgXMhaUXbEAdGhxz
+   J8Muhgsv7vf9kres/j2SLTTzncVoH7gLqBWsPe+gNu0FfUFMZU337eJh5
+   nJT9AuPEpzLdC+0VgA7KF67GYaDq6PA96JTpjVolC/wP7muroFgjWNRhP
+   ySMC8FtHI7OaP5JPa6r3PfbqVAbmmhLWzsWbK9o0+Fau1tIG9KrQU21f8
+   VvT68/Z2MyerZpELsRBkh1T5sV97bXgNMsgcEfwBrZwvXlkSM+zc2B2up
+   E/sClp41hvj9coxzv6lhIsLNzn/njD10l3A43n5a8BLOFTiuOIb+fWNYR
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10653"; a="318847151"
+X-IronPort-AV: E=Sophos;i="5.98,271,1673942400"; 
+   d="scan'208";a="318847151"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2023 09:43:53 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10653"; a="749614597"
+X-IronPort-AV: E=Sophos;i="5.98,271,1673942400"; 
+   d="scan'208";a="749614597"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by fmsmga004.fm.intel.com with ESMTP; 18 Mar 2023 09:43:49 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pdZen-000AAK-09;
+        Sat, 18 Mar 2023 16:43:49 +0000
+Date:   Sun, 19 Mar 2023 00:42:49 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux@roeck-us.net,
+        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     oe-kbuild-all@lists.linux.dev, wcheng@codeaurora.org,
+        caleb.connolly@linaro.org, bryan.odonoghue@linaro.org,
+        konrad.dybcio@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
+        robertom@qti.qualcomm.com,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v4 13/18] phy: qcom-qmp: Register as a typec switch for
+ orientation detection
+Message-ID: <202303190010.w3QR1CU6-lkp@intel.com>
+References: <20230318121828.739424-14-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <30e4ee62-0297-0ffe-23a5-87db096a6154@linaro.org>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230318121828.739424-14-bryan.odonoghue@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Mar 18, 2023 at 03:02:35PM +0100, Konrad Dybcio wrote:
-> On 15.03.2023 11:39, Stephan Gerhold wrote:
-> > According to the msm-3.18 vendor kernel from Qualcomm, mdm9607 needs
-> > "correction factors" to adjust for additional offsets observed after the
-> > factory calibration values in the fuses [1, 2].
-> > 
-> > The fixed offsets should be applied unless there is a special
-> > calibration mode value that indicates that no offsets are needed [3].
-> > 
-> > Note that the new calibration mode values are called differently in this
-> > patch compared to the vendor kernel:
-> >   - TSENS_TWO_POINT_CALIB_N_WA        -> ONE_PT_CALIB2_NO_OFFSET
-> >   - TSENS_TWO_POINT_CALIB_N_OFFSET_WA -> TWO_PT_CALIB_NO_OFFSET
-> > This is because close inspection of the calibration function [3] reveals
-> > that TSENS_TWO_POINT_CALIB_N_WA is actually a "one point" calibration
-> > because the if statements skip all "point2" related code for it.
-> > 
-> > [1]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/commit/d9d2db1b82bf3f72f5de0803d55e6849eb5b671e
-> > [2]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/commit/d75aef53a760e8ff7bac54049d00c8b2ee1b193e
-> > [3]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LE.UM.4.3.2.r1-04200-9x07/drivers/thermal/msm-tsens.c#L2987-3136
-> > 
-> > Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > Fixes: a2149ab815fc ("thermal/drivers/qcom/tsens-v0_1: Add support for MDM9607")
-> > Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-> > ---
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> BTW, did you notice some crazy readouts or would this have gone
-> unnoticed had you not dug in the code?
-> 
+Hi Bryan,
 
-I'm afraid it would likely have remained unnoticed. I think these
-offsets only make a small difference but it's still good to have them
-for slightly more accurate readings.
+I love your patch! Perhaps something to improve:
 
-In v1 of this series I had the offsets for MSM8909 already (hardcoded
-into the old calibration function with all the bit shifts/masks etc).
-It was more coincidence that I checked MDM9607 for v2 because I had to
-make the code more generic with the new per-sensor nvmem cells. ;)
+[auto build test WARNING on usb/usb-testing]
+[also build test WARNING on usb/usb-next usb/usb-linus robh/for-next broonie-regulator/for-next lee-mfd/for-mfd-next linus/master v6.3-rc2 next-20230317]
+[cannot apply to lee-mfd/for-mfd-fixes]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Thanks,
-Stephan
+url:    https://github.com/intel-lab-lkp/linux/commits/Bryan-O-Donoghue/dt-bindings-regulator-qcom-usb-vbus-regulator-Mark-reg-as-required/20230318-202034
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-testing
+patch link:    https://lore.kernel.org/r/20230318121828.739424-14-bryan.odonoghue%40linaro.org
+patch subject: [PATCH v4 13/18] phy: qcom-qmp: Register as a typec switch for orientation detection
+config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20230319/202303190010.w3QR1CU6-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/76d1e355779b094d3ddb20776b0835215dc3646c
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Bryan-O-Donoghue/dt-bindings-regulator-qcom-usb-vbus-regulator-Mark-reg-as-required/20230318-202034
+        git checkout 76d1e355779b094d3ddb20776b0835215dc3646c
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=m68k olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=m68k SHELL=/bin/bash drivers/phy/qualcomm/
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202303190010.w3QR1CU6-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   drivers/phy/qualcomm/phy-qcom-qmp-combo.c: In function 'qmp_combo_typec_switch_set':
+>> drivers/phy/qualcomm/phy-qcom-qmp-combo.c:3383:13: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
+    3383 |         int ret = 0;
+         |             ^~~
+
+
+vim +/ret +3383 drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+
+  3376	
+  3377	#if IS_ENABLED(CONFIG_PHY_QCOM_QMP_TYPEC)
+  3378	static int qmp_combo_typec_switch_set(struct typec_switch_dev *sw,
+  3379					      enum typec_orientation orientation)
+  3380	{
+  3381		struct qmp_combo *qmp = typec_switch_get_drvdata(sw);
+  3382		struct phy *dp_phy = qmp->dp_phy;
+> 3383		int ret = 0;
+  3384	
+  3385		dev_dbg(qmp->dev, "Toggling orientation current %d requested %d\n",
+  3386			qmp->orientation, orientation);
+  3387	
+  3388		qmp->orientation = orientation;
+  3389	
+  3390		if (orientation == TYPEC_ORIENTATION_NONE) {
+  3391			if (qmp->init_count)
+  3392				ret = qmp_combo_dp_power_off(dp_phy);
+  3393		} else {
+  3394			if (!qmp->init_count)
+  3395				ret = qmp_combo_dp_power_on(dp_phy);
+  3396		}
+  3397	
+  3398		return 0;
+  3399	}
+  3400	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
