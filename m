@@ -2,50 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01FFA6BFC65
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 20:27:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E88106BFC7E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 20:45:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229541AbjCRT1N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Mar 2023 15:27:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39274 "EHLO
+        id S229822AbjCRTpK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Mar 2023 15:45:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjCRT1M (ORCPT
+        with ESMTP id S229488AbjCRTpJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Mar 2023 15:27:12 -0400
+        Sat, 18 Mar 2023 15:45:09 -0400
 Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8C0B1630C
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 12:27:08 -0700 (PDT)
-Received: (qmail 14307 invoked by uid 990); 18 Mar 2023 19:27:06 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 468AD23664
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 12:45:08 -0700 (PDT)
+Received: (qmail 32315 invoked by uid 990); 18 Mar 2023 19:45:06 -0000
 Authentication-Results: devico.uberspace.de;
         auth=pass (login)
 MIME-Version: 1.0
-Date:   Sat, 18 Mar 2023 19:27:06 +0000
+Date:   Sat, 18 Mar 2023 19:45:05 +0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 From:   "Leonard Lausen" <leonard@lausen.nl>
-Message-ID: <ce9e552fe93d90a834d52d7b10d54267ed820405@lausen.nl>
+Message-ID: <ae78354e98b719c1fc9466d5965aea5a45ac29f6@lausen.nl>
 Subject: [PATCH] drm/msm/dpu: Add support for AR30 format
 To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org
+        dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
 X-Rspamd-Bar: ---
 X-Rspamd-Report: BAYES_HAM(-2.999999) MIME_GOOD(-0.1)
 X-Rspamd-Score: -3.099999
 Received: from unknown (HELO unkown) (::1)
-        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Sat, 18 Mar 2023 20:27:06 +0100
+        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Sat, 18 Mar 2023 20:45:06 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
         d=lausen.nl; s=uberspace;
         h=from;
-        bh=nz8jUM1tCsgjW9CQceQGmnDkwMYqg24ScGejMccXFKo=;
-        b=wyZZ3Ow25JBjLiFn/GPKq9FKSk1v2a7pV1cQtCGaZ0TtveRAJNRBgVLwj1QPkZb2TShd7ft3J0
-        XhjO8U5P/y0YVORIr6yFIH0A2EynQ7ckFriE0qt2w51wuGJNE3XNyZleSXyhyxtpmxvEtiXX10lm
-        5v4hPhKR1PKlxmdM3eJ0EpQDfKyF1x/m1wwcGgzPcait9T06aI+zI19kbqLR2OUz9qBqbAovz2xa
-        trwSxDsHopoJ4ClpI9CcNdDe8rZRRlSPWulhYc6Q2KdxiX1PjVKTrkQGssKvMJxO6S3ed8ZqI5qk
-        5WoUPpbJmUT+IeT+rcYe97sRkcsq8JYvVhkbwDDz+r+RJ7UlhON9+Qqht9Eqbc5653l6YdQJ7Rio
-        ebsmd8v9nTh8nIo2nvXs5Rc0qkI4WFmkyCPMgDmDUUBNjbtLHdAsMiZWnNOjj4rk2jv07+ATBOAv
-        RdPS8JAmFqtuDqUcwI0TxScnhPVPusmTFnRydFq4Z2BBrgAqNeYs0a24FKU9zFwwNRXwpGu5RJiI
-        tMQGMkDnjCGNskukZvvrUH7KiDa6XZQStZDaBbpnfzZo2A7e6NcVGt/r93vra64V9OqDNoFTkxm5
-        KZqT/Q2d1FzM88ZPwms6v+T3jbypEtC1W6AE2p7ufSXWs9AI21h+P/hOc8k/Xo7ANAKJYXwYUK6e
-        4=
+        bh=mMAvDOgPzRoHk+xlo6UuvhlBsy65oeD4+ECW73EB0gA=;
+        b=khcb2mcdY+hPWv6mELQTyxizkFo7JHNhniw+Fh+fCRHQeA1DTerPCHUHpqo4pUZk11PHMMj7WN
+        nDbcVoVUkuvi1cpaojPwxdLDaBy0mBlbxuBtQz6FG8x1ysU2yXzK/8zfwQ3cVoPHpHvXh/ultU+r
+        BJH5mKvHa355BwL4MbGN7MIVxs2h7tFosfYMi6GOdkLXV6n7Ci00Efe9/XH0sUUkJssytmMfNV+u
+        XhxvdP8GVI/eXLNSHOM9U1ZQaxBTXA2x/tSwZ2BSGtx1cnGbD5rcvFS76Whx+KjJVXOBIBE0ocsb
+        SpQvT0bDCWeKoCgiqqHZd16348o3YOaYluB+k59DI7Q6Z3kbwVoGVSWvqh0txTBBdEimatdKp7MC
+        gl6EcGhH5n4HPogz7Cb/ou1dJDM69E4em/mI4WydyqnTauTKMu1uWOrsHpTGVIgcsDw51cHMF66m
+        9qUB/RSUv2/GaDuO+HfbhmfTbxsa3bwIgrCuY5rQIIa4quegq6n+r4vcpw3YY2MyCufe0BPkNYAG
+        wyqX9bTw05529RT6PILwvXjXFGerLeRXYqUrju3gMwhORE9hi+L8qgVZ92XcFhGZ15mf+vfyG7jn
+        4W3ivq3ClLt4hgJvRIwDFmneA08d+Z81+IS1fAo1r4A3UzUaYebJuNkwOxzm8FWNmck2r2XhcYRK
+        A=
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
         DKIM_SIGNED,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
@@ -69,7 +70,7 @@ declared.
 Signed-off-by: Leonard Lausen <leonard@lausen.nl>
 ---
  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 ++
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 1 +
  2 files changed, 3 insertions(+)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu=
@@ -78,21 +79,21 @@ index 83f1dd2c22bd..d99ce3919248 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 @@ -156,6 +156,7 @@ static const uint32_t plane_formats[] =3D {
-        DRM_FORMAT_RGBX8888,
-        DRM_FORMAT_BGRX8888,
-        DRM_FORMAT_XBGR8888,
-+       DRM_FORMAT_ARGB2101010,
-        DRM_FORMAT_XRGB2101010,
-        DRM_FORMAT_RGB888,
-        DRM_FORMAT_BGR888,
+ DRM_FORMAT_RGBX8888,
+ DRM_FORMAT_BGRX8888,
+ DRM_FORMAT_XBGR8888,
++ DRM_FORMAT_ARGB2101010,
+ DRM_FORMAT_XRGB2101010,
+ DRM_FORMAT_RGB888,
+ DRM_FORMAT_BGR888,
 @@ -185,6 +186,7 @@ static const uint32_t plane_formats_yuv[] =3D {
-        DRM_FORMAT_RGBA8888,
-        DRM_FORMAT_BGRX8888,
-        DRM_FORMAT_BGRA8888,
-+       DRM_FORMAT_ARGB2101010,
-        DRM_FORMAT_XRGB2101010,
-        DRM_FORMAT_XRGB8888,
-        DRM_FORMAT_XBGR8888,
+ DRM_FORMAT_RGBA8888,
+ DRM_FORMAT_BGRX8888,
+ DRM_FORMAT_BGRA8888,
++ DRM_FORMAT_ARGB2101010,
+ DRM_FORMAT_XRGB2101010,
+ DRM_FORMAT_XRGB8888,
+ DRM_FORMAT_XBGR8888,
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/=
 msm/disp/dpu1/dpu_plane.c
 index bfd5be89e8b8..0ed6a1a114c7 100644
@@ -100,12 +101,12 @@ index bfd5be89e8b8..0ed6a1a114c7 100644
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
 @@ -69,6 +69,7 @@ static const uint32_t qcom_compressed_supported_formats=
 [] =3D {
-        DRM_FORMAT_ARGB8888,
-        DRM_FORMAT_XBGR8888,
-        DRM_FORMAT_XRGB8888,
-+       DRM_FORMAT_ARGB2101010,
-        DRM_FORMAT_XRGB2101010,
-        DRM_FORMAT_BGR565,
+ DRM_FORMAT_ARGB8888,
+ DRM_FORMAT_XBGR8888,
+ DRM_FORMAT_XRGB8888,
++ DRM_FORMAT_ARGB2101010,
+ DRM_FORMAT_XRGB2101010,
+ DRM_FORMAT_BGR565,
 =20
 --=20
 2.30.2
