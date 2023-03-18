@@ -2,507 +2,288 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 733FE6BF8F7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 09:29:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 415716BF9C9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 13:18:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229799AbjCRI33 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Mar 2023 04:29:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33510 "EHLO
+        id S229733AbjCRMSh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Mar 2023 08:18:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjCRI32 (ORCPT
+        with ESMTP id S229488AbjCRMSf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Mar 2023 04:29:28 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A68CDF7;
-        Sat, 18 Mar 2023 01:29:24 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (i6DFAE836.versanet.de [109.250.232.54])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 1FE2DB6C;
-        Sat, 18 Mar 2023 09:29:21 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1679128161;
-        bh=zvyk1O+k/MiKnGzSSMhQAc136ianMKlRnS+QvoVDz8c=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Uh9CVtc0etzdTZAnPqFl4dcKzRQNP1GaQqRk4jwek5vqSIEepTaK01pwt4V1sVQ86
-         g8IlZlPenF7152NjH5cJfK7tkFDOTnVSnDGWMoTopFF1zU15T+sVrHGFwF23dsIqd+
-         +FDtAq8OrCqTXYozLBriyzKFsNODXxCCfqckYqF4=
-Date:   Sat, 18 Mar 2023 10:29:26 +0200
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Robin van der Gracht <robin@protonic.nl>,
-        Miguel Ojeda <ojeda@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jyri Sarha <jyri.sarha@iki.fi>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] dt-bindings: display: Drop unneeded quotes
-Message-ID: <20230318082926.GA10144@pendragon.ideasonboard.com>
-References: <20230317233626.3968358-1-robh@kernel.org>
+        Sat, 18 Mar 2023 08:18:35 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F1435588
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 05:18:33 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id k25-20020a7bc419000000b003ed23114fa7so6516091wmi.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 05:18:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679141912;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lcqSDxRYHcLuhJYWzxu/HppRyPaA6X4IrKVZOnB9svE=;
+        b=Fx4pghFbfTbWA8lHGz6OEpXvk8dRCR1+H1x7TmGfbkIe20+rljerU3WRs7V8FEreuC
+         YA9ggStnwhjhRGZDdpk1B7d5Z4wwD0FGYWk9v3XKCn2exat5bpshe2BNOFesQjfAJj8c
+         DBHuCvOFWboS1q2cv5BjDdr6lOrd4hIduTKxrYxyqbQ3ExWfVWrTvuZI3lgnS6pXUBZh
+         L6KJglzRlp6KKC2E/Ul7SevKYGYhdUF7q0Dl1eTqeDKHQWA6uuIAuaEuxyMOvSV4VM0e
+         I7F4Sd5HzsAZckkqkgPezKsh3+th+xX5T1/xnFC38l2GucUZ7Z/GFVfkUAiJjSw7KWTx
+         NuKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679141912;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lcqSDxRYHcLuhJYWzxu/HppRyPaA6X4IrKVZOnB9svE=;
+        b=WbC7QCn9DVvC7Ex/d3DNF8DA/NM3LueOtw0hKC6F5fhpBKIWKd6W68yN3iCuVki2Dq
+         Qny629zAwd9boPJ8vYqdI9cpJrRqBuJTRe3PexO2GzIyE8l14vjfjJhhd+qsUY8iu5PC
+         EcgnB+xk1eQRX3e6CZbku4PPORNaW1g0fCBiEiLnkPxJplS5I1woHF1xbb5j+zuTVhQ6
+         AIsqKoLprJISZTpTcw23X10wUse2iTZeH8y6h9/6f19yFEQB9djjJa3RtHxR9du8IIkO
+         VTZuNLa+qewyWcwHOiXVoTeqyof+nUZJs4Snj/NJOQdnVmLgfESqfI/rg1uBB+7ywkT6
+         DLMA==
+X-Gm-Message-State: AO0yUKUdxOOmCaEW19FxQ9weFahXHZ6Q4yfePysCpjx7O03RV/DnjSlF
+        QF8EnhYJ38jDkot+YDHtPeWiOA==
+X-Google-Smtp-Source: AK7set+zgnz2k2OH6rR7W9QEwGUXEBwEjCdAcki+V2KbBWLnczgQ5eZN5XvbMkMcqT3qQ34n0R5fzw==
+X-Received: by 2002:a7b:ca54:0:b0:3ed:aa86:58f9 with SMTP id m20-20020a7bca54000000b003edaa8658f9mr1556111wml.41.1679141911742;
+        Sat, 18 Mar 2023 05:18:31 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id az40-20020a05600c602800b003e2096da239sm10814997wmb.7.2023.03.18.05.18.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Mar 2023 05:18:31 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
+        gregkh@linuxfoundation.org, andersson@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     wcheng@codeaurora.org, caleb.connolly@linaro.org,
+        bryan.odonoghue@linaro.org, konrad.dybcio@linaro.org,
+        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
+Subject: [PATCH v4 00/18] Add Qualcomm PMIC TPCM support 
+Date:   Sat, 18 Mar 2023 12:18:10 +0000
+Message-Id: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230317233626.3968358-1-robh@kernel.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+v4:
+- Per Rob's input the pdphy and type-c appear as stadalone blocks
+  inside of the PMIC declaration which is a 1:1 mapping of PMIC hardware.
+  The TCPM virtual device is declared at the top-level.
+  https://lore.kernel.org/all/YY7p7jviA3ZG05gL@robh.at.kernel.org/
 
-Thank you for the patch.
+- Squashes the removal of the old driver with the addition of the new. - Heikki, Gunter
+  https://lore.kernel.org/all/YYVHcHC1Gm92VxEM@kuha.fi.intel.com/
 
-On Fri, Mar 17, 2023 at 06:36:24PM -0500, Rob Herring wrote:
-> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> checking for this can be enabled in yamllint.
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
+- Reworked Dmitry's old patch for the QMP to account for file renames and
+  very minimal code-drift in the interregnum.
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+- New yaml checks drive update of PMIC VBUS yaml
 
-> ---
->  .../bindings/auxdisplay/holtek,ht16k33.yaml    |  2 +-
->  .../bindings/display/bridge/nxp,ptn3460.yaml   |  2 +-
->  .../display/bridge/toshiba,tc358767.yaml       |  2 +-
->  .../bindings/display/dp-aux-bus.yaml           |  2 +-
->  .../display/mediatek/mediatek,hdmi.yaml        |  2 +-
->  .../display/msm/dsi-controller-main.yaml       |  8 ++++----
->  .../bindings/display/msm/dsi-phy-10nm.yaml     |  2 +-
->  .../bindings/display/panel/ronbo,rb070d30.yaml |  2 +-
->  .../bindings/display/renesas,du.yaml           |  4 ++--
->  .../display/tegra/nvidia,tegra114-mipi.yaml    |  2 +-
->  .../display/tegra/nvidia,tegra124-sor.yaml     | 12 ++++++------
->  .../display/tegra/nvidia,tegra186-dc.yaml      |  4 ++--
->  .../tegra/nvidia,tegra186-dsi-padctl.yaml      |  2 +-
->  .../display/tegra/nvidia,tegra20-dsi.yaml      | 12 ++++++------
->  .../display/tegra/nvidia,tegra20-hdmi.yaml     |  6 +++---
->  .../bindings/display/ti/ti,am65x-dss.yaml      |  2 +-
->  .../display/xylon,logicvc-display.yaml         | 18 +++++++++---------
->  17 files changed, 42 insertions(+), 42 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/auxdisplay/holtek,ht16k33.yaml b/Documentation/devicetree/bindings/auxdisplay/holtek,ht16k33.yaml
-> index fc4873deb76f..4f6ffb8182a9 100644
-> --- a/Documentation/devicetree/bindings/auxdisplay/holtek,ht16k33.yaml
-> +++ b/Documentation/devicetree/bindings/auxdisplay/holtek,ht16k33.yaml
-> @@ -10,7 +10,7 @@ maintainers:
->    - Robin van der Gracht <robin@protonic.nl>
->  
->  allOf:
-> -  - $ref: "/schemas/input/matrix-keymap.yaml#"
-> +  - $ref: /schemas/input/matrix-keymap.yaml#
->  
->  properties:
->    compatible:
-> diff --git a/Documentation/devicetree/bindings/display/bridge/nxp,ptn3460.yaml b/Documentation/devicetree/bindings/display/bridge/nxp,ptn3460.yaml
-> index 107dd138e6c6..cdeb67bc05f0 100644
-> --- a/Documentation/devicetree/bindings/display/bridge/nxp,ptn3460.yaml
-> +++ b/Documentation/devicetree/bindings/display/bridge/nxp,ptn3460.yaml
-> @@ -18,7 +18,7 @@ properties:
->      maxItems: 1
->  
->    edid-emulation:
-> -    $ref: "/schemas/types.yaml#/definitions/uint32"
-> +    $ref: /schemas/types.yaml#/definitions/uint32
->      description:
->        The EDID emulation entry to use
->        Value  Resolution  Description
-> diff --git a/Documentation/devicetree/bindings/display/bridge/toshiba,tc358767.yaml b/Documentation/devicetree/bindings/display/bridge/toshiba,tc358767.yaml
-> index 140927884418..e1494b5007cb 100644
-> --- a/Documentation/devicetree/bindings/display/bridge/toshiba,tc358767.yaml
-> +++ b/Documentation/devicetree/bindings/display/bridge/toshiba,tc358767.yaml
-> @@ -23,7 +23,7 @@ properties:
->          i2c address of the bridge, 0x68 or 0x0f, depending on bootstrap pins
->  
->    clock-names:
-> -    const: "ref"
-> +    const: ref
->  
->    clocks:
->      maxItems: 1
-> diff --git a/Documentation/devicetree/bindings/display/dp-aux-bus.yaml b/Documentation/devicetree/bindings/display/dp-aux-bus.yaml
-> index 5e4afe9f98fb..0ece7b01790b 100644
-> --- a/Documentation/devicetree/bindings/display/dp-aux-bus.yaml
-> +++ b/Documentation/devicetree/bindings/display/dp-aux-bus.yaml
-> @@ -26,7 +26,7 @@ description:
->  
->  properties:
->    $nodename:
-> -    const: "aux-bus"
-> +    const: aux-bus
->  
->    panel:
->      $ref: panel/panel-common.yaml#
-> diff --git a/Documentation/devicetree/bindings/display/mediatek/mediatek,hdmi.yaml b/Documentation/devicetree/bindings/display/mediatek/mediatek,hdmi.yaml
-> index 8afdd67d6780..b90b6d18a828 100644
-> --- a/Documentation/devicetree/bindings/display/mediatek/mediatek,hdmi.yaml
-> +++ b/Documentation/devicetree/bindings/display/mediatek/mediatek,hdmi.yaml
-> @@ -50,7 +50,7 @@ properties:
->        - const: hdmi
->  
->    mediatek,syscon-hdmi:
-> -    $ref: '/schemas/types.yaml#/definitions/phandle-array'
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->      items:
->        - items:
->            - description: phandle to system configuration registers
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> index e75a3efe4dac..2188d7c9b0bb 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> @@ -74,7 +74,7 @@ properties:
->  
->    syscon-sfpb:
->      description: A phandle to mmss_sfpb syscon node (only for DSIv2).
-> -    $ref: "/schemas/types.yaml#/definitions/phandle"
-> +    $ref: /schemas/types.yaml#/definitions/phandle
->  
->    qcom,dual-dsi-mode:
->      type: boolean
-> @@ -105,14 +105,14 @@ properties:
->      type: object
->  
->    ports:
-> -    $ref: "/schemas/graph.yaml#/properties/ports"
-> +    $ref: /schemas/graph.yaml#/properties/ports
->      description: |
->        Contains DSI controller input and output ports as children, each
->        containing one endpoint subnode.
->  
->      properties:
->        port@0:
-> -        $ref: "/schemas/graph.yaml#/$defs/port-base"
-> +        $ref: /schemas/graph.yaml#/$defs/port-base
->          unevaluatedProperties: false
->          description: |
->            Input endpoints of the controller.
-> @@ -128,7 +128,7 @@ properties:
->                    enum: [ 0, 1, 2, 3 ]
->  
->        port@1:
-> -        $ref: "/schemas/graph.yaml#/$defs/port-base"
-> +        $ref: /schemas/graph.yaml#/$defs/port-base
->          unevaluatedProperties: false
->          description: |
->            Output endpoints of the controller.
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> index 3ec466c3ab38..e6b00d7387ce 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> @@ -58,7 +58,7 @@ properties:
->        maximum: 31
->  
->    qcom,phy-drive-ldo-level:
-> -    $ref: "/schemas/types.yaml#/definitions/uint32"
-> +    $ref: /schemas/types.yaml#/definitions/uint32
->      description:
->        The PHY LDO has an amplitude tuning feature to adjust the LDO output
->        for the HSTX drive. Use supported levels (mV) to offset the drive level
-> diff --git a/Documentation/devicetree/bindings/display/panel/ronbo,rb070d30.yaml b/Documentation/devicetree/bindings/display/panel/ronbo,rb070d30.yaml
-> index d67617f6f74a..95ce22c6787a 100644
-> --- a/Documentation/devicetree/bindings/display/panel/ronbo,rb070d30.yaml
-> +++ b/Documentation/devicetree/bindings/display/panel/ronbo,rb070d30.yaml
-> @@ -37,7 +37,7 @@ properties:
->  
->    backlight:
->      description: Backlight used by the panel
-> -    $ref: "/schemas/types.yaml#/definitions/phandle"
-> +    $ref: /schemas/types.yaml#/definitions/phandle
->  
->  required:
->    - compatible
-> diff --git a/Documentation/devicetree/bindings/display/renesas,du.yaml b/Documentation/devicetree/bindings/display/renesas,du.yaml
-> index d4830f52c512..c5b9e6812bce 100644
-> --- a/Documentation/devicetree/bindings/display/renesas,du.yaml
-> +++ b/Documentation/devicetree/bindings/display/renesas,du.yaml
-> @@ -76,7 +76,7 @@ properties:
->      unevaluatedProperties: false
->  
->    renesas,cmms:
-> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->      items:
->        maxItems: 1
->      description:
-> @@ -84,7 +84,7 @@ properties:
->        available DU channel.
->  
->    renesas,vsps:
-> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->      items:
->        items:
->          - description: phandle to VSP instance that serves the DU channel
-> diff --git a/Documentation/devicetree/bindings/display/tegra/nvidia,tegra114-mipi.yaml b/Documentation/devicetree/bindings/display/tegra/nvidia,tegra114-mipi.yaml
-> index d5ca8cf86e8e..f448624dd779 100644
-> --- a/Documentation/devicetree/bindings/display/tegra/nvidia,tegra114-mipi.yaml
-> +++ b/Documentation/devicetree/bindings/display/tegra/nvidia,tegra114-mipi.yaml
-> @@ -38,7 +38,7 @@ properties:
->      description: The number of cells in a MIPI calibration specifier.
->        Should be 1. The single cell specifies a bitmask of the pads that
->        need to be calibrated for a given device.
-> -    $ref: "/schemas/types.yaml#/definitions/uint32"
-> +    $ref: /schemas/types.yaml#/definitions/uint32
->      const: 1
->  
->  additionalProperties: false
-> diff --git a/Documentation/devicetree/bindings/display/tegra/nvidia,tegra124-sor.yaml b/Documentation/devicetree/bindings/display/tegra/nvidia,tegra124-sor.yaml
-> index 907fb0baccae..70f0e45c71d6 100644
-> --- a/Documentation/devicetree/bindings/display/tegra/nvidia,tegra124-sor.yaml
-> +++ b/Documentation/devicetree/bindings/display/tegra/nvidia,tegra124-sor.yaml
-> @@ -69,12 +69,12 @@ properties:
->    # Tegra186 and later
->    nvidia,interface:
->      description: index of the SOR interface
-> -    $ref: "/schemas/types.yaml#/definitions/uint32"
-> +    $ref: /schemas/types.yaml#/definitions/uint32
->  
->    nvidia,ddc-i2c-bus:
->      description: phandle of an I2C controller used for DDC EDID
->        probing
-> -    $ref: "/schemas/types.yaml#/definitions/phandle"
-> +    $ref: /schemas/types.yaml#/definitions/phandle
->  
->    nvidia,hpd-gpio:
->      description: specifies a GPIO used for hotplug detection
-> @@ -82,23 +82,23 @@ properties:
->  
->    nvidia,edid:
->      description: supplies a binary EDID blob
-> -    $ref: "/schemas/types.yaml#/definitions/uint8-array"
-> +    $ref: /schemas/types.yaml#/definitions/uint8-array
->  
->    nvidia,panel:
->      description: phandle of a display panel, required for eDP
-> -    $ref: "/schemas/types.yaml#/definitions/phandle"
-> +    $ref: /schemas/types.yaml#/definitions/phandle
->  
->    nvidia,xbar-cfg:
->      description: 5 cells containing the crossbar configuration.
->        Each lane of the SOR, identified by the cell's index, is
->        mapped via the crossbar to the pad specified by the cell's
->        value.
-> -    $ref: "/schemas/types.yaml#/definitions/uint32-array"
-> +    $ref: /schemas/types.yaml#/definitions/uint32-array
->  
->    # optional when driving an eDP output
->    nvidia,dpaux:
->      description: phandle to a DispayPort AUX interface
-> -    $ref: "/schemas/types.yaml#/definitions/phandle"
-> +    $ref: /schemas/types.yaml#/definitions/phandle
->  
->  allOf:
->    - if:
-> diff --git a/Documentation/devicetree/bindings/display/tegra/nvidia,tegra186-dc.yaml b/Documentation/devicetree/bindings/display/tegra/nvidia,tegra186-dc.yaml
-> index 265a60d79d89..ce4589466a18 100644
-> --- a/Documentation/devicetree/bindings/display/tegra/nvidia,tegra186-dc.yaml
-> +++ b/Documentation/devicetree/bindings/display/tegra/nvidia,tegra186-dc.yaml
-> @@ -60,13 +60,13 @@ properties:
->    nvidia,outputs:
->      description: A list of phandles of outputs that this display
->        controller can drive.
-> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->  
->    nvidia,head:
->      description: The number of the display controller head. This
->        is used to setup the various types of output to receive
->        video data from the given head.
-> -    $ref: "/schemas/types.yaml#/definitions/uint32"
-> +    $ref: /schemas/types.yaml#/definitions/uint32
->  
->  additionalProperties: false
->  
-> diff --git a/Documentation/devicetree/bindings/display/tegra/nvidia,tegra186-dsi-padctl.yaml b/Documentation/devicetree/bindings/display/tegra/nvidia,tegra186-dsi-padctl.yaml
-> index e5a6145c8c53..da75b71e8ece 100644
-> --- a/Documentation/devicetree/bindings/display/tegra/nvidia,tegra186-dsi-padctl.yaml
-> +++ b/Documentation/devicetree/bindings/display/tegra/nvidia,tegra186-dsi-padctl.yaml
-> @@ -29,7 +29,7 @@ properties:
->        - const: dsi
->  
->  allOf:
-> -  - $ref: "/schemas/reset/reset.yaml"
-> +  - $ref: /schemas/reset/reset.yaml
->  
->  additionalProperties: false
->  
-> diff --git a/Documentation/devicetree/bindings/display/tegra/nvidia,tegra20-dsi.yaml b/Documentation/devicetree/bindings/display/tegra/nvidia,tegra20-dsi.yaml
-> index 511cbe74e729..59e1dc0813e7 100644
-> --- a/Documentation/devicetree/bindings/display/tegra/nvidia,tegra20-dsi.yaml
-> +++ b/Documentation/devicetree/bindings/display/tegra/nvidia,tegra20-dsi.yaml
-> @@ -59,12 +59,12 @@ properties:
->      description: Should contain a phandle and a specifier specifying
->        which pads are used by this DSI output and need to be
->        calibrated. See nvidia,tegra114-mipi.yaml for details.
-> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->  
->    nvidia,ddc-i2c-bus:
->      description: phandle of an I2C controller used for DDC EDID
->        probing
-> -    $ref: "/schemas/types.yaml#/definitions/phandle"
-> +    $ref: /schemas/types.yaml#/definitions/phandle
->  
->    nvidia,hpd-gpio:
->      description: specifies a GPIO used for hotplug detection
-> @@ -72,19 +72,19 @@ properties:
->  
->    nvidia,edid:
->      description: supplies a binary EDID blob
-> -    $ref: "/schemas/types.yaml#/definitions/uint8-array"
-> +    $ref: /schemas/types.yaml#/definitions/uint8-array
->  
->    nvidia,panel:
->      description: phandle of a display panel
-> -    $ref: "/schemas/types.yaml#/definitions/phandle"
-> +    $ref: /schemas/types.yaml#/definitions/phandle
->  
->    nvidia,ganged-mode:
->      description: contains a phandle to a second DSI controller to
->        gang up with in order to support up to 8 data lanes
-> -    $ref: "/schemas/types.yaml#/definitions/phandle"
-> +    $ref: /schemas/types.yaml#/definitions/phandle
->  
->  allOf:
-> -  - $ref: "../dsi-controller.yaml#"
-> +  - $ref: ../dsi-controller.yaml#
->    - if:
->        properties:
->          compatible:
-> diff --git a/Documentation/devicetree/bindings/display/tegra/nvidia,tegra20-hdmi.yaml b/Documentation/devicetree/bindings/display/tegra/nvidia,tegra20-hdmi.yaml
-> index f65e59cfffa7..f77197e4869f 100644
-> --- a/Documentation/devicetree/bindings/display/tegra/nvidia,tegra20-hdmi.yaml
-> +++ b/Documentation/devicetree/bindings/display/tegra/nvidia,tegra20-hdmi.yaml
-> @@ -68,7 +68,7 @@ properties:
->    nvidia,ddc-i2c-bus:
->      description: phandle of an I2C controller used for DDC EDID
->        probing
-> -    $ref: "/schemas/types.yaml#/definitions/phandle"
-> +    $ref: /schemas/types.yaml#/definitions/phandle
->  
->    nvidia,hpd-gpio:
->      description: specifies a GPIO used for hotplug detection
-> @@ -76,11 +76,11 @@ properties:
->  
->    nvidia,edid:
->      description: supplies a binary EDID blob
-> -    $ref: "/schemas/types.yaml#/definitions/uint8-array"
-> +    $ref: /schemas/types.yaml#/definitions/uint8-array
->  
->    nvidia,panel:
->      description: phandle of a display panel
-> -    $ref: "/schemas/types.yaml#/definitions/phandle"
-> +    $ref: /schemas/types.yaml#/definitions/phandle
->  
->    "#sound-dai-cells":
->      const: 0
-> diff --git a/Documentation/devicetree/bindings/display/ti/ti,am65x-dss.yaml b/Documentation/devicetree/bindings/display/ti/ti,am65x-dss.yaml
-> index 5c7d2cbc4aac..4247280d6c3c 100644
-> --- a/Documentation/devicetree/bindings/display/ti/ti,am65x-dss.yaml
-> +++ b/Documentation/devicetree/bindings/display/ti/ti,am65x-dss.yaml
-> @@ -88,7 +88,7 @@ properties:
->            The DSS DPI output port node from video port 2
->  
->    ti,am65x-oldi-io-ctrl:
-> -    $ref: "/schemas/types.yaml#/definitions/phandle"
-> +    $ref: /schemas/types.yaml#/definitions/phandle
->      description:
->        phandle to syscon device node mapping OLDI IO_CTRL registers.
->        The mapped range should point to OLDI_DAT0_IO_CTRL, map it and
-> diff --git a/Documentation/devicetree/bindings/display/xylon,logicvc-display.yaml b/Documentation/devicetree/bindings/display/xylon,logicvc-display.yaml
-> index fc02c5d50ce4..87404d72ea37 100644
-> --- a/Documentation/devicetree/bindings/display/xylon,logicvc-display.yaml
-> +++ b/Documentation/devicetree/bindings/display/xylon,logicvc-display.yaml
-> @@ -89,25 +89,25 @@ properties:
->      description: Display output colorspace (C_DISPLAY_COLOR_SPACE).
->  
->    xylon,display-depth:
-> -    $ref: "/schemas/types.yaml#/definitions/uint32"
-> +    $ref: /schemas/types.yaml#/definitions/uint32
->      description: Display output depth (C_PIXEL_DATA_WIDTH).
->  
->    xylon,row-stride:
-> -    $ref: "/schemas/types.yaml#/definitions/uint32"
-> +    $ref: /schemas/types.yaml#/definitions/uint32
->      description: Fixed number of pixels in a framebuffer row (C_ROW_STRIDE).
->  
->    xylon,dithering:
-> -    $ref: "/schemas/types.yaml#/definitions/flag"
-> +    $ref: /schemas/types.yaml#/definitions/flag
->      description: Dithering module is enabled (C_XCOLOR)
->  
->    xylon,background-layer:
-> -    $ref: "/schemas/types.yaml#/definitions/flag"
-> +    $ref: /schemas/types.yaml#/definitions/flag
->      description: |
->        The last layer is used to display a black background (C_USE_BACKGROUND).
->        The layer must still be registered.
->  
->    xylon,layers-configurable:
-> -    $ref: "/schemas/types.yaml#/definitions/flag"
-> +    $ref: /schemas/types.yaml#/definitions/flag
->      description: |
->        Configuration of layers' size, position and offset is enabled
->        (C_USE_SIZE_POSITION).
-> @@ -131,7 +131,7 @@ properties:
->              maxItems: 1
->  
->            xylon,layer-depth:
-> -            $ref: "/schemas/types.yaml#/definitions/uint32"
-> +            $ref: /schemas/types.yaml#/definitions/uint32
->              description: Layer depth (C_LAYER_X_DATA_WIDTH).
->  
->            xylon,layer-colorspace:
-> @@ -151,19 +151,19 @@ properties:
->              description: Alpha mode for the layer (C_LAYER_X_ALPHA_MODE).
->  
->            xylon,layer-base-offset:
-> -            $ref: "/schemas/types.yaml#/definitions/uint32"
-> +            $ref: /schemas/types.yaml#/definitions/uint32
->              description: |
->                Offset in number of lines (C_LAYER_X_OFFSET) starting from the
->                video RAM base (C_VMEM_BASEADDR), only for version 3.
->  
->            xylon,layer-buffer-offset:
-> -            $ref: "/schemas/types.yaml#/definitions/uint32"
-> +            $ref: /schemas/types.yaml#/definitions/uint32
->              description: |
->                Offset in number of lines (C_BUFFER_*_OFFSET) starting from the
->                layer base offset for the second buffer used in double-buffering.
->  
->            xylon,layer-primary:
-> -            $ref: "/schemas/types.yaml#/definitions/flag"
-> +            $ref: /schemas/types.yaml#/definitions/flag
->              description: |
->                Layer should be registered as a primary plane (exactly one is
->                required).
+- Some housekeeping on the sc7180 yaml side. sc7180 is not supported yet.
+
+- Expands and fixes the examples being added in the PMIC tcpm examples.
+
+Previous set:
+https://lore.kernel.org/all/20211105033558.1573552-1-bryan.odonoghue@linaro.org/
+
+Bootable:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/commits/linux-next-23-03-18-pm8150b-tcpm-qcom-wrapper-typec-mux
+
+V3:
+Rob Herrings review
+
+- Drops use of remote-endpoint and ports to bind
+  tcpm to pdphy and typec replacing with phandle
+
+- Drops pmic-pdphy-* and pmic-typec-* from interrupt names
+  as suggested
+
+- Passes make dt_binding_check DT_CHECKER_FLAGS=-m
+
+BOD
+- Noticed qcom_pmic_tcpm_pdphy_enable() was missing a
+  regulator_disable in case of an error, added.
+
+- qcom_pmic_tcpm_pdphy_probe()
+  devm_regulator_get() should come before regmap_get()
+  as is the case in qcom_pmic_tcpm_typec_probe()
+
+- Fixes compatible name in qcom,pmic-typec.yaml should
+  have read qcom,pm8150b-typec not qcom,pm8150b-usb-typec
+
+- Makes sure compat for core is "qcom,pm8150b-tcpm" in
+  docs and driver
+
+- Drops redundant return in void qcom_pmic_tcpm_pdphy_reset_off()
+
+Kernel Robot
+- Drops unused variable debounced in qcom_pmic_tcpm_typec_get_cc()
+
+- Drops unsused variable orientation in qcom_pmic_tcpm_typec_set_cc()
+
+Latest bootable series can be found here:
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=usb-next-04-11-21-pm8150b-tcpm-v3
+
+git diff usb-next-27-10-21-pm8150b-tcpm-v2 -- drivers/usb/typec/tcpm/qcom/
+git diff usb-next-27-10-21-pm8150b-tcpm-v2 -- Documentation/devicetree/bindings/usb/qcom,pmic*
+
+Previous set:
+Link: https://lore.kernel.org/linux-usb/20211028164941.831918-1-bryan.odonoghue@linaro.org/T/#t
+
+V2 resend:
+- Adding omitted devicetree mailing list
+
+V2:
+
+Guenter Roeck's review
+- Converts suggested qcom_pmic_tcpm_core.c into one-liners
+
+- Adds comment on how polarity is set in set_polarity()
+
+- Removes optional set_current_limit()
+
+- regmap_read/regmap_write
+  Reviwing other pm8150b/spmi drivers I then added in checks for all
+  reamap_read()/regmap_write() calls.
+
+- Fixes (type == TCPC_TX_CABLE_RESET || TCPC_TX_HARD_RESET)
+  thanks I definitely had the blinkers on there and didn't see that at all
+
+- qcom_pmic_tcpm_pdphy_pd_transmit_payload()
+  Treats regmap_read and read value as separate error paths
+
+- qcom_pmic_tcpm_pdphy_set_pd_rx()
+  Replaces boolean if/else with !on as suggested
+
+- Returns -ENODEV not -EINVAL on dev_get_regmap() error
+
+- qcom_pmic_tcpm_pdphy_pd_receive()
+  Guenter asks: "No error return ?"
+  bod: No we are inside an ISR here if we read data we pass that off to TCPM
+       if somehow we don't read the data - it is "junk" there's no value IMO
+       in pushing an error upwards back to the handler.
+
+Heikki Krogerus' review
+- Includes Makefile I missed adding to my git index
+
+- Removes old Kconfig entry for remove driver
+
+Randy Dunlap's review 
+- Rewords drivers/usb/typec/tcpm/Kconfig
+
+- Drops tautology "aggregates togther"
+
+- Corrects spelling typos
+
+BOD's own review
+- Drops redundant include of regmap.h in qcom_pmic_tcpm_core.c
+
+- Propogates qcom_pmic_tcpm_pdphy_disable() error upwards
+
+- Propogates pmic_pdphy_reset() error upwards
+
+- Drops error prints in qcom_pmic_tcpm_pdphy_pd_transmit_payload()
+  I had these in-place during development and don't recall them being
+  triggered even once, they are redundant, remove.
+ 
+Differences between the two can be seen by
+git diff usb-next-27-10-21-pm8150b-tcpm-v2..usb-next-25-10-21-pm8150b-tcpm -- drivers/usb/typec/tcpm
+
+Latest bootable series can be found here:
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=usb-next-27-10-21-pm8150b-tcpm-v2
+
+Previous set:
+Link: https://lore.kernel.org/all/20211025150906.176686-1-bryan.odonoghue@linaro.org/T/#t
+
+V1:
+This series adds a set of yaml and a driver to bind together the type-c and
+pdphy silicon in qcom's pm8150b block as a Linux type-c port manager.
+
+As part of that we retire the existing qcom-pmic-typec driver and fully
+replicate its functionality inside of the new block with the additional
+pdphy stuff along with it.
+
+An additional series will follow this one for the SoC and RB5 dtsi and dts
+respectively.
+
+A bootable series can be found here
+
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=usb-next-25-10-21-pm8150b-tcpm
+
+
+Bryan O'Donoghue (17):
+  dt-bindings: regulator: qcom,usb-vbus-regulator: Mark reg as required
+  dt-bindings: regulator: qcom,usb-vbus-regulator: Mark
+    regulator-*-microamp required
+  dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy: Add orientation-switch
+    as optional
+  dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy: Add port as an optional
+  dt-bindings: usb: Add qcom,pmic-typec dt-binding header
+  dt-bindings: usb: Add Qualcomm PMIC Type-C controller YAML schema
+  dt-bindings: usb: Add qcom,pmic-pdphy dt-binding header
+  dt-bindings: usb: Add Qualcomm PMIC PDPHY controller YAML schema
+  dt-bindings: usb: Add Qualcomm PMIC TCPM YAML schema
+  dt-bindings: mfd: qcom,spmi-pmic: Add pdphy to SPMI device types
+  dt-bindings: mfd: qcom,spmi-pmic: Add typec to SPMI device types
+  usb: typec: qcom: Add Qualcomm PMIC TCPM support
+  arm64: dts: qcom: pm8150b: Add a TCPM description
+  arm64: dts: qcom: qrb5165-rb5: Switch on Type-C VBUS boost
+  arm64: dts: qcom: qrb5165-rb5: Switch on basic TCPM
+  arm64: dts: qcom: qrb5165-rb5: Switch on TCPM usb-role-switching for
+    usb_1
+  arm64: dts: qcom: qrb5165-rb5: Switch on TCPM orientation-switch for
+    usb_1_qmpphy
+
+Dmitry Baryshkov (1):
+  phy: qcom-qmp: Register as a typec switch for orientation detection
+
+ .../bindings/mfd/qcom,spmi-pmic.yaml          |   8 +
+ .../phy/qcom,sc7180-qmp-usb3-dp-phy.yaml      |  10 +
+ .../regulator/qcom,usb-vbus-regulator.yaml    |  10 +-
+ .../bindings/usb/qcom,pmic-pdphy.yaml         |  89 +++
+ .../bindings/usb/qcom,pmic-typec.yaml         |  88 +++
+ .../bindings/usb/qcom,pmic-virt-tcpm.yaml     |  88 +++
+ MAINTAINERS                                   |  10 +
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi         |  70 ++
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      |  63 +-
+ drivers/phy/qualcomm/Kconfig                  |   8 +
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     |  80 ++-
+ drivers/usb/typec/Kconfig                     |  13 -
+ drivers/usb/typec/Makefile                    |   1 -
+ drivers/usb/typec/qcom-pmic-typec.c           | 261 -------
+ drivers/usb/typec/tcpm/Kconfig                |  11 +
+ drivers/usb/typec/tcpm/Makefile               |   1 +
+ drivers/usb/typec/tcpm/qcom/Makefile          |   6 +
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_pdphy.c | 605 +++++++++++++++++
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_pdphy.h |  85 +++
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 637 ++++++++++++++++++
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.h | 163 +++++
+ .../usb/typec/tcpm/qcom/qcom_pmic_virt_tcpm.c | 326 +++++++++
+ .../dt-bindings/usb/typec/qcom,pmic-pdphy.h   |  18 +
+ .../dt-bindings/usb/typec/qcom,pmic-typec.h   |  18 +
+ 24 files changed, 2388 insertions(+), 281 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-pdphy.yaml
+ create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+ create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-virt-tcpm.yaml
+ delete mode 100644 drivers/usb/typec/qcom-pmic-typec.c
+ create mode 100644 drivers/usb/typec/tcpm/qcom/Makefile
+ create mode 100644 drivers/usb/typec/tcpm/qcom/qcom_pmic_pdphy.c
+ create mode 100644 drivers/usb/typec/tcpm/qcom/qcom_pmic_pdphy.h
+ create mode 100644 drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+ create mode 100644 drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.h
+ create mode 100644 drivers/usb/typec/tcpm/qcom/qcom_pmic_virt_tcpm.c
+ create mode 100644 include/dt-bindings/usb/typec/qcom,pmic-pdphy.h
+ create mode 100644 include/dt-bindings/usb/typec/qcom,pmic-typec.h
 
 -- 
-Regards,
+2.39.2
 
-Laurent Pinchart
