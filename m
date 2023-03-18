@@ -2,94 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06F206BFC02
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 18:47:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 01FFA6BFC65
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 20:27:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229602AbjCRRrb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Mar 2023 13:47:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55766 "EHLO
+        id S229541AbjCRT1N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Mar 2023 15:27:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbjCRRra (ORCPT
+        with ESMTP id S229502AbjCRT1M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Mar 2023 13:47:30 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C86D2BF04
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 10:47:28 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id v25so3502700wra.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 10:47:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679161647;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lAVMze14D3bLTi3r2lL73yYKOfT+PJedJY69Qu4icNU=;
-        b=uhDdOD72uEKuMcHfi5r4/E7221laOeUis6eIXTNzheGO7lkU3PirfmB5foxlqm69G1
-         nN/jqs8M9aNEJN1pkTXt1sD3P8BgCUyYP3G2q6G2woEgEzJrKsSZI/00Aq7fCr6NA1VL
-         y6/SJy6FmNnP409tB2/DnYNKghpLlixx7z2Hw/adcwxxy8j7IrsDDhGEg4wJox8oQBKA
-         OoW+EMSXOQ9MVADqzUG1TJbYVzPiGu2Wn0bQ5AsamJUPlxPiGfd1zQljlsviBYNGQ5W/
-         0V8/tMWGytiggH5C2yikuln6bi5dN4MBZXaXKVvNRup46rIikpiICuACiEu+Et4jPkwC
-         T4qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679161647;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lAVMze14D3bLTi3r2lL73yYKOfT+PJedJY69Qu4icNU=;
-        b=n/hfnqHAiW+LMrVqOsmMZ7z4x9hpFphoq41jhKrKqrSPagggX6ZxzduCUk6wamEKy2
-         f5FfQDWtBhfyVW+7+bHi2ePmSC8FGrkgSmfd6afGyhjY6as8gasUdm/0/psD3cNH7Qs9
-         H6ZFIhAFb6cyyhYRchPmHUJ2f3u/xLzECvfdBkrbPHnH12Wky2D51x98GLfTUVwuV26R
-         ze59tvdfAsTX9dXB9izft2pCEJuGDQou/vQ5YspslonsgjVQ7snF5IudqXNtAZQru88b
-         evyVwQZqGBw4Q1Tzsvt1K8V/VvGZ2EU9uyHGqNvgfI/14ahjGB7/7KmKYETZRzVI9zLi
-         vyBw==
-X-Gm-Message-State: AO0yUKWaRMOCWrqpP+ZNRdui7kdRyDRHNbHBKDMfEIh7JvqDC4YTblqc
-        rMulXJJYCJAviO+D1KYHUa9L8xYI+xxzuh+SzAs=
-X-Google-Smtp-Source: AK7set9/4vjf9YgA05fYJN/QuMd1vMUXuK4u9w6vBtN0XTXbwx1KwqrqImF91HDJ2r5k2G942pd0ow==
-X-Received: by 2002:adf:e74c:0:b0:2ce:a0c1:bcaa with SMTP id c12-20020adfe74c000000b002cea0c1bcaamr5742751wrn.9.1679161646775;
-        Sat, 18 Mar 2023 10:47:26 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id b9-20020a05600010c900b002c7163660a9sm4778336wrx.105.2023.03.18.10.47.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Mar 2023 10:47:26 -0700 (PDT)
-Message-ID: <6f895b66-9e9f-5af3-08ef-cdbed303f2ee@linaro.org>
-Date:   Sat, 18 Mar 2023 17:47:25 +0000
+        Sat, 18 Mar 2023 15:27:12 -0400
+Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8C0B1630C
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 12:27:08 -0700 (PDT)
+Received: (qmail 14307 invoked by uid 990); 18 Mar 2023 19:27:06 -0000
+Authentication-Results: devico.uberspace.de;
+        auth=pass (login)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v4 18/18] arm64: dts: qcom: qrb5165-rb5: Switch on TCPM
- orientation-switch for usb_1_qmpphy
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, linux@roeck-us.net,
-        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     wcheng@codeaurora.org, caleb.connolly@linaro.org,
-        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
-References: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
- <20230318121828.739424-19-bryan.odonoghue@linaro.org>
- <3f223bda-fc1e-4340-ece2-183dca7b2f77@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <3f223bda-fc1e-4340-ece2-183dca7b2f77@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Date:   Sat, 18 Mar 2023 19:27:06 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From:   "Leonard Lausen" <leonard@lausen.nl>
+Message-ID: <ce9e552fe93d90a834d52d7b10d54267ed820405@lausen.nl>
+Subject: [PATCH] drm/msm/dpu: Add support for AR30 format
+To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org
+X-Rspamd-Bar: ---
+X-Rspamd-Report: BAYES_HAM(-2.999999) MIME_GOOD(-0.1)
+X-Rspamd-Score: -3.099999
+Received: from unknown (HELO unkown) (::1)
+        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Sat, 18 Mar 2023 20:27:06 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+        d=lausen.nl; s=uberspace;
+        h=from;
+        bh=nz8jUM1tCsgjW9CQceQGmnDkwMYqg24ScGejMccXFKo=;
+        b=wyZZ3Ow25JBjLiFn/GPKq9FKSk1v2a7pV1cQtCGaZ0TtveRAJNRBgVLwj1QPkZb2TShd7ft3J0
+        XhjO8U5P/y0YVORIr6yFIH0A2EynQ7ckFriE0qt2w51wuGJNE3XNyZleSXyhyxtpmxvEtiXX10lm
+        5v4hPhKR1PKlxmdM3eJ0EpQDfKyF1x/m1wwcGgzPcait9T06aI+zI19kbqLR2OUz9qBqbAovz2xa
+        trwSxDsHopoJ4ClpI9CcNdDe8rZRRlSPWulhYc6Q2KdxiX1PjVKTrkQGssKvMJxO6S3ed8ZqI5qk
+        5WoUPpbJmUT+IeT+rcYe97sRkcsq8JYvVhkbwDDz+r+RJ7UlhON9+Qqht9Eqbc5653l6YdQJ7Rio
+        ebsmd8v9nTh8nIo2nvXs5Rc0qkI4WFmkyCPMgDmDUUBNjbtLHdAsMiZWnNOjj4rk2jv07+ATBOAv
+        RdPS8JAmFqtuDqUcwI0TxScnhPVPusmTFnRydFq4Z2BBrgAqNeYs0a24FKU9zFwwNRXwpGu5RJiI
+        tMQGMkDnjCGNskukZvvrUH7KiDa6XZQStZDaBbpnfzZo2A7e6NcVGt/r93vra64V9OqDNoFTkxm5
+        KZqT/Q2d1FzM88ZPwms6v+T3jbypEtC1W6AE2p7ufSXWs9AI21h+P/hOc8k/Xo7ANAKJYXwYUK6e
+        4=
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/03/2023 13:11, Konrad Dybcio wrote:
->> +	orientation-switch;
-> I think this property could be put in the SoC DTSI, the hardware
-> does support roleswitching
+Commit da7716a249b699978fb5 ("drm/msm/dpu: Add support for XR30 format") =
+enabled
+support for the 10-bit XR30 color format but missed AR30 color format.
 
-Orientation switching, yes.
+This can trigger bugs in userspace. KDE KWin compositor for example alway=
+s
+prefers 10-bit color formats, rendering a 1cm^2 black box around the curs=
+or due
+to missing per-pixel alpha-blending if only XR30 but not AR30 support is
+declared.
 
-It is a PHY not a board property.
-
+Signed-off-by: Leonard Lausen <leonard@lausen.nl>
 ---
-bod
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu=
+/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 83f1dd2c22bd..d99ce3919248 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -156,6 +156,7 @@ static const uint32_t plane_formats[] =3D {
+        DRM_FORMAT_RGBX8888,
+        DRM_FORMAT_BGRX8888,
+        DRM_FORMAT_XBGR8888,
++       DRM_FORMAT_ARGB2101010,
+        DRM_FORMAT_XRGB2101010,
+        DRM_FORMAT_RGB888,
+        DRM_FORMAT_BGR888,
+@@ -185,6 +186,7 @@ static const uint32_t plane_formats_yuv[] =3D {
+        DRM_FORMAT_RGBA8888,
+        DRM_FORMAT_BGRX8888,
+        DRM_FORMAT_BGRA8888,
++       DRM_FORMAT_ARGB2101010,
+        DRM_FORMAT_XRGB2101010,
+        DRM_FORMAT_XRGB8888,
+        DRM_FORMAT_XBGR8888,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/=
+msm/disp/dpu1/dpu_plane.c
+index bfd5be89e8b8..0ed6a1a114c7 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -69,6 +69,7 @@ static const uint32_t qcom_compressed_supported_formats=
+[] =3D {
+        DRM_FORMAT_ARGB8888,
+        DRM_FORMAT_XBGR8888,
+        DRM_FORMAT_XRGB8888,
++       DRM_FORMAT_ARGB2101010,
+        DRM_FORMAT_XRGB2101010,
+        DRM_FORMAT_BGR565,
+=20
+--=20
+2.30.2
