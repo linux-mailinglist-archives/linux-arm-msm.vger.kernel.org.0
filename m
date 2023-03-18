@@ -2,169 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98EB26BF8C6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 08:59:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 713DA6BF8E9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 09:21:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230016AbjCRH75 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Mar 2023 03:59:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49822 "EHLO
+        id S229651AbjCRIVN convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Mar 2023 04:21:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229654AbjCRH7z (ORCPT
+        with ESMTP id S229599AbjCRIVM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Mar 2023 03:59:55 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 697B7EC58;
-        Sat, 18 Mar 2023 00:59:54 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id er8so16869773edb.0;
-        Sat, 18 Mar 2023 00:59:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679126393;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YasiHKbTXqEuhZFRJQqb5T7TuhAHkb8N9LQidXJ7/pY=;
-        b=eM7X7zl7pYcqG2Do9ACqzR9B9rxyb4mcEJXDseHAY4WnkJ5GCMqQIUmFl2inlG5wAW
-         4NJFR3Kl7nbS1rslMMrQA1gKmh1ae2nOBhERqy/dGQFv3nVMG0UWfBDWCjOaoZ/CmewD
-         AmHDFXkGvwKi6ONRVqAOd/n3lEX3AS1Y3Ncu9/HeEAsbiZR1if1gwUVwldFR2dJtzcev
-         Wt+eA1qQs1VSCvLLmFq69BMnGAwMd4cKBF26MpLP3hISH+DKPFk9yBoZpXUMy+BJtWM9
-         XBLFnheRK8YRE+Xo9abb4yb/a6n3whloiYBmlTpgjP6RZCLBPruX9uE9G/oDe57Cbv9M
-         om0w==
+        Sat, 18 Mar 2023 04:21:12 -0400
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 586E833478;
+        Sat, 18 Mar 2023 01:21:09 -0700 (PDT)
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-1755e639b65so8141858fac.3;
+        Sat, 18 Mar 2023 01:21:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679126393;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1679127668;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YasiHKbTXqEuhZFRJQqb5T7TuhAHkb8N9LQidXJ7/pY=;
-        b=QvvyROoSClAFZz+OD7DZ0Z30e8FRCRA7GmUT+Er9GHSvDjbmzEjtwmDLQ1DOPInN15
-         7QwDnlpuk5ixhvhL/dguSvHyzyEF68qbd3Ru/BHAMk+jiqX9TQOK47x45FSTyqyf+LPN
-         H/Py7KucPNeJboCkH/HdboKHATPofiDiAbF8K6JDotE/mbd56ytBk8YMdevyEv9I8vYu
-         UROZrM0nonRyD/rx0d9VEu5ETQUtos2zy3NPUna66XCOs0Bcs80UWOQPIwA2hXbN+csP
-         jCU8NZjyWL3f+a5nnzEbj7FMjdOGC/VZjjQTC2z7/FWw+ZEUwdWlDIP3NF5fH+bDMRVl
-         6eXA==
-X-Gm-Message-State: AO0yUKWPVPP+d1hYrcnG1OKMz8fSB5t/dbT3xg3EdLE2ThSI4/gy9Tr7
-        o5JVydfDxN5yxBNt6A7tSYk=
-X-Google-Smtp-Source: AK7set9Q/KrzGCCOYVSTXlr1ys2EaxAejyGMpp1UqTCP/gqONBsQjGGqTRaVHyr4mLrqyXsedimeNw==
-X-Received: by 2002:a05:6402:5167:b0:4fa:315a:cb55 with SMTP id d7-20020a056402516700b004fa315acb55mr6766776ede.21.1679126392827;
-        Sat, 18 Mar 2023 00:59:52 -0700 (PDT)
-Received: from jernej-laptop.localnet (89-212-118-115.static.t-2.net. [89.212.118.115])
-        by smtp.gmail.com with ESMTPSA id t14-20020a508d4e000000b004d8287c775fsm1997858edt.8.2023.03.18.00.59.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Mar 2023 00:59:52 -0700 (PDT)
-From:   Jernej =?utf-8?B?xaBrcmFiZWM=?= <jernej.skrabec@gmail.com>
-To:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andreas =?ISO-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
+        bh=ok0/fcUUjYf3VJvre1cNZ96FcwH4JhSJwBxsOnlRNhc=;
+        b=qZWEsFhzHRJZkcuJmX2/mdMLFmOrmNggM/JbtW2caq8rLirifAjQLOizUuPGFQAi3Q
+         0l1DcvQYtRWRpRTv7A39853DOvxY5rKF1bHkogPNBWwbG1VACZcZEHsrNPvId0EB0FRQ
+         4BNp/t3d4tQJ44yNVL3n6uo6eV4e4xaZJQM8RZZWHqTxxey5rBbHxI2ZQibDNnsTrWMK
+         LFnfx00JV1H4bCaCE2EF2kzQdqy+sUMLconu+Ao8h74dbl9gPCPVjO+IT5M1Jen7bTv0
+         b9quvZZsjAoX+QrPse3LaQ1fQ8VDqBU/cBv40gKI/beZTsROaAERvY7cYhCrmylD/OjH
+         cdnA==
+X-Gm-Message-State: AO0yUKVdhs9XYGrk8LcEzsc1Xxmt2irptqH2kNU6TsRPqE0M6/o7Asqr
+        wnPjEA1XrjMZj4uULjQycl55Rqjl5d9gvQ==
+X-Google-Smtp-Source: AK7set+Tj5UH+vZLQ6TI99gE10rqmaYCZ9efyRbmglGBxLsFwvaQzAr0kdwHRi0GsUIaFrXo+NX6Lg==
+X-Received: by 2002:a05:6870:8a0d:b0:177:b62d:cc18 with SMTP id p13-20020a0568708a0d00b00177b62dcc18mr876450oaq.25.1679127668316;
+        Sat, 18 Mar 2023 01:21:08 -0700 (PDT)
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com. [209.85.160.46])
+        by smtp.gmail.com with ESMTPSA id v23-20020a056870709700b0017280f7d653sm1596803oae.35.2023.03.18.01.21.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 18 Mar 2023 01:21:07 -0700 (PDT)
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-17997ccf711so8175867fac.0;
+        Sat, 18 Mar 2023 01:21:06 -0700 (PDT)
+X-Received: by 2002:a5b:c47:0:b0:b56:1f24:7e9f with SMTP id
+ d7-20020a5b0c47000000b00b561f247e9fmr897441ybr.12.1679127645593; Sat, 18 Mar
+ 2023 01:20:45 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230317233623.3968172-1-robh@kernel.org>
+In-Reply-To: <20230317233623.3968172-1-robh@kernel.org>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Sat, 18 Mar 2023 09:20:34 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdU8uu=2EZ1dmtY-eGj+ORGdepsKgpNcL7qKfW3FkVJw7g@mail.gmail.com>
+Message-ID: <CAMuHMdU8uu=2EZ1dmtY-eGj+ORGdepsKgpNcL7qKfW3FkVJw7g@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: pinctrl: Drop unneeded quotes
+To:     Rob Herring <robh@kernel.org>
+Cc:     =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
         Manivannan Sadhasivam <mani@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
         Samuel Holland <samuel@sholland.org>,
-        Joel Stanley <joel@jms.id.au>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
         Andrew Jeffery <andrew@aj.id.au>,
-        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Appana Durga Kedareswara rao <appana.durga.rao@xilinx.com>,
-        Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
-        Wolfgang Grandegger <wg@grandegger.com>,
-        Marc Kleine-Budde <mkl@pengutronix.de>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Tobias Waldekranz <tobias@waldekranz.com>,
-        Lars Povlsen <lars.povlsen@microchip.com>,
-        Steen Hegelund <Steen.Hegelund@microchip.com>,
-        Daniel Machon <daniel.machon@microchip.com>,
-        UNGLinuxDriver@microchip.com, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Joel Stanley <joel@jms.id.au>,
+        Damien Le Moal <damien.lemoal@wdc.com>,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Sean Wang <sean.wang@kernel.org>,
         Matthias Brugger <matthias.bgg@gmail.com>,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@collabora.com>,
-        Rob Herring <robh@kernel.org>
-Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Jianlong Huang <jianlong.huang@starfivetech.com>,
+        Dvorkin Dmitry <dvorkin@tibbo.com>,
+        Wells Lu <wellslutw@gmail.com>,
+        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+        Michal Simek <michal.simek@xilinx.com>,
         linux-arm-kernel@lists.infradead.org,
-        linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, linux-aspeed@lists.ozlabs.org,
-        linux-can@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-actions@lists.infradead.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-sunxi@lists.linux.dev, asahi@lists.linux.dev,
+        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+        linux-riscv@lists.infradead.org, patches@opensource.cirrus.com,
+        alsa-devel@alsa-project.org, linux-mediatek@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
         linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH] dt-bindings: net: Drop unneeded quotes
-Date:   Sat, 18 Mar 2023 08:59:49 +0100
-Message-ID: <13224434.uLZWGnKmhe@jernej-laptop>
-In-Reply-To: <20230317233605.3967621-1-robh@kernel.org>
-References: <20230317233605.3967621-1-robh@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dne sobota, 18. marec 2023 ob 00:36:03 CET je Rob Herring napisal(a):
+On Sat, Mar 18, 2023 at 12:37 AM Rob Herring <robh@kernel.org> wrote:
+>
 > Cleanup bindings dropping unneeded quotes. Once all these are fixed,
 > checking for this can be enabled in yamllint.
-> 
+>
 > Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->  .../devicetree/bindings/net/actions,owl-emac.yaml  |  2 +-
->  .../bindings/net/allwinner,sun4i-a10-emac.yaml     |  2 +-
->  .../bindings/net/allwinner,sun4i-a10-mdio.yaml     |  2 +-
 
-For Allwinner:
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+>  .../devicetree/bindings/pinctrl/renesas,pfc.yaml       |  2 +-
+>  .../bindings/pinctrl/renesas,rza1-ports.yaml           |  2 +-
+>  .../bindings/pinctrl/renesas,rza2-pinctrl.yaml         |  2 +-
+>  .../bindings/pinctrl/renesas,rzg2l-pinctrl.yaml        |  2 +-
+>  .../bindings/pinctrl/renesas,rzn1-pinctrl.yaml         |  2 +-
+>  .../bindings/pinctrl/renesas,rzv2m-pinctrl.yaml        |  2 +-
 
-Best regards,
-Jernej
+Acked-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
->  .../devicetree/bindings/net/altr,tse.yaml          |  2 +-
->  .../bindings/net/aspeed,ast2600-mdio.yaml          |  2 +-
->  .../devicetree/bindings/net/brcm,amac.yaml         |  2 +-
->  .../devicetree/bindings/net/brcm,systemport.yaml   |  2 +-
->  .../bindings/net/broadcom-bluetooth.yaml           |  2 +-
->  .../devicetree/bindings/net/can/xilinx,can.yaml    |  6 +++---
->  .../devicetree/bindings/net/dsa/brcm,sf2.yaml      |  2 +-
->  .../devicetree/bindings/net/dsa/qca8k.yaml         |  2 +-
->  .../devicetree/bindings/net/engleder,tsnep.yaml    |  2 +-
->  .../devicetree/bindings/net/ethernet-phy.yaml      |  2 +-
->  .../bindings/net/fsl,qoriq-mc-dpmac.yaml           |  2 +-
->  .../bindings/net/intel,ixp4xx-ethernet.yaml        |  8 ++++----
->  .../devicetree/bindings/net/intel,ixp4xx-hss.yaml  | 14 +++++++-------
->  .../devicetree/bindings/net/marvell,mvusb.yaml     |  2 +-
->  .../devicetree/bindings/net/mdio-gpio.yaml         |  2 +-
->  .../devicetree/bindings/net/mediatek,net.yaml      |  2 +-
->  .../bindings/net/mediatek,star-emac.yaml           |  2 +-
->  .../bindings/net/microchip,lan966x-switch.yaml     |  2 +-
->  .../bindings/net/microchip,sparx5-switch.yaml      |  4 ++--
->  .../devicetree/bindings/net/mscc,miim.yaml         |  2 +-
->  .../devicetree/bindings/net/nfc/marvell,nci.yaml   |  2 +-
->  .../devicetree/bindings/net/nfc/nxp,pn532.yaml     |  2 +-
->  .../bindings/net/pse-pd/podl-pse-regulator.yaml    |  2 +-
->  .../devicetree/bindings/net/qcom,ipq4019-mdio.yaml |  2 +-
->  .../devicetree/bindings/net/qcom,ipq8064-mdio.yaml |  2 +-
->  .../devicetree/bindings/net/rockchip,emac.yaml     |  2 +-
->  .../devicetree/bindings/net/snps,dwmac.yaml        |  2 +-
->  .../devicetree/bindings/net/stm32-dwmac.yaml       |  4 ++--
->  .../devicetree/bindings/net/ti,cpsw-switch.yaml    | 10 +++++-----
->  .../devicetree/bindings/net/ti,davinci-mdio.yaml   |  2 +-
->  .../devicetree/bindings/net/ti,dp83822.yaml        |  2 +-
->  .../devicetree/bindings/net/ti,dp83867.yaml        |  2 +-
->  .../devicetree/bindings/net/ti,dp83869.yaml        |  2 +-
->  36 files changed, 53 insertions(+), 53 deletions(-)
+Gr{oetje,eeting}s,
 
+                        Geert
 
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
