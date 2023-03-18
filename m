@@ -2,187 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40FB96BFAA9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 15:08:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 124326BFAFE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 15:47:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229562AbjCROIp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Mar 2023 10:08:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38412 "EHLO
+        id S229960AbjCROq7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Mar 2023 10:46:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229550AbjCROIo (ORCPT
+        with ESMTP id S229945AbjCROq6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Mar 2023 10:08:44 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 063FB22123
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 07:08:42 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id g18so7844722ljl.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 07:08:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679148520;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HB3cmv6Sv7SdleBzkv5B5PR9GUQ7sHBXprhMZpqwa7M=;
-        b=ukwSAx9A44DJyzN8axz+CRS4ixmUIY02BAL44IvhhXqNGwpBWtYmu0gn4/7z6gEFv0
-         UKBu2DIv9Qq0kKCn8a6z3hsVtzKa4t86T7UbL4HgB5yKb2g8sBX0HyelCVgv4KRO52Ly
-         4FRE+/Fm1qr+LP2gLoHe84WkFZDEAVm9Fp+PJgdNq9IcYSwwW8YheR394nUgbp1L7DJT
-         CPFjSnOzVTKCbiJL8o1fSJ91VINdEmPDgpGZOfWW7o6s8CgazywB4aIOTylYLrmJVT0b
-         lcQhu+9Pa4IIpOTM3O1bDaUchMmOP5sH3vV0mEKAForgsIWQYEu0TUicl91m349LNZpo
-         kcZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679148520;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HB3cmv6Sv7SdleBzkv5B5PR9GUQ7sHBXprhMZpqwa7M=;
-        b=MLEnwvpVJn/myIf9PpccmFGltx4lWPSSDUdOHYPT/LvF2Vl+ef4ycT4WLqkdjrINpg
-         bRtMe0tdPxVuZtK92EhgK5Y3Qdwz9a5CJ7IMLuCmWlw29/ES//veqTQTXDChHTBvHYvk
-         Pmt6V1aEzd6IZlB+C9J/G0qc6aB+5oTTO7dS/sEsVVPnZWlA6acq6WZmxuG7bGZjG3If
-         Abb4AwTVDYo4/xYRjmi07NwToA6UnzpzDgvcqMGPG65SmuLOgYC4j3CmZPdGcdpoT5qV
-         8uPFgK1YlO9z2x4e4d+P7eXsu3CTwycMLPBOpPwtrz46iQ2oTLlr6TC9iSv6KhVFWccw
-         y4vA==
-X-Gm-Message-State: AO0yUKUyj/Hh3tMGWEQVlYfnjFfpsoftWjmOCmKcpRwmNu0/o41Po+8r
-        LIhtKdiwsRQaiLc+hWxCMJzBYaE6MxAfS3fmRS0=
-X-Google-Smtp-Source: AK7set84fWddd9NO3HF0LBnwqDWLvPpSSlFEZ/L86hkrs1DNox9R/gPMzMKkcA5zkZMCaOLh/o6V9A==
-X-Received: by 2002:a05:651c:508:b0:294:6cde:b9f3 with SMTP id o8-20020a05651c050800b002946cdeb9f3mr6315626ljp.37.1679148520157;
-        Sat, 18 Mar 2023 07:08:40 -0700 (PDT)
-Received: from [192.168.1.101] (abym238.neoplus.adsl.tpnet.pl. [83.9.32.238])
-        by smtp.gmail.com with ESMTPSA id u5-20020ac24c25000000b004e7a0f67490sm842607lfq.110.2023.03.18.07.08.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Mar 2023 07:08:39 -0700 (PDT)
-Message-ID: <ca12735e-d6c8-997e-036f-693cd8a9870f@linaro.org>
-Date:   Sat, 18 Mar 2023 15:08:37 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH V2 4/6] regulator: qcom_smd: Add support to define the
- bootup voltage
-Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>,
-        Mark Brown <broonie@kernel.org>
-Cc:     agross@kernel.org, andersson@kernel.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_srichara@quicinc.com,
-        quic_gokulsri@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
-        quic_anusha@quicinc.com, quic_ipkumar@quicinc.com
-References: <20230217142030.16012-1-quic_devipriy@quicinc.com>
- <20230217142030.16012-5-quic_devipriy@quicinc.com>
- <907628d1-b88d-5ac6-ed9d-7f63e2875738@linaro.org>
- <Y/aeu5ua7cY5cGON@sirena.org.uk>
- <39f73580-f263-de0e-6819-89c3f4c75c3a@quicinc.com>
- <8ce07abd-2d02-69d2-8dc6-fe11525aecda@linaro.org>
- <11b05b9f-b969-6648-2204-2da5f8465c96@quicinc.com>
- <751e5129-3c11-0156-719e-3fe996a149be@quicinc.com>
- <3f434777-c4b6-272f-1971-f9adf3faefe4@linaro.org>
- <a54d4e1b-d62d-559d-1882-e460e696c056@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <a54d4e1b-d62d-559d-1882-e460e696c056@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+        Sat, 18 Mar 2023 10:46:58 -0400
+Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01on2093.outbound.protection.outlook.com [40.107.117.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24F59C144;
+        Sat, 18 Mar 2023 07:46:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CWdsqJeYpHbr6iF4jtswJ4RcKNMRuJSjYpOebP6ipjGtkOx3Tx1UmUq/GIvnK8frjBcik08BxvjOFumOZY6/QQg4JBz0sNAthoZzCqL+jHYDTOweLqw0djnidnM5jSaM6/OUrv7b3VZVDtULtez9dVLvBMzWQokbKDnYwGN403b1Qx3ZrMKqg3bUqBmUwQkL1On346E+06uHXo2zPceZiEurDX8zfsxWQqdLBkyJ3HcIkOVhCTU+rzWzOB0wHMZCQF5B2HHhB+XcS/RnpvUTBrg1NnoNz3qHQJIECujbb1JIxYQfpzdTWgjXbfu8Z8/2ZFj5PvxXwjghUidIUZg53w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5nIv0m6aN9A37vO7X82/QveyknUc3Kl6UAetm1E2t00=;
+ b=kKB00cQHRT9H/E9ozi+8qt1e2AaLkZLj/sYa9i+poeJbc52VWrPkOBzOG88Dn9tuyYciZkZHzCB6k9+0crTzOBbgCgKYT7xWSbSQxHjXZ35f2l8y9+lmTVSFmnfK+GNzAZtE2vlUfzuwjTA592olttWVxKa2wYD6ROsOPfgD2R6tYINACmtHJoA55iLoXMQyaxQm3QKmJEfxbt8wgEUqF0veZxpRtt/a6MURz6SVfjovm/BVdcOnVIDgJMjG1J2TgattitwruMtlrJzs/k9SHldBEOjjDmQeYWt5ReGtS7MBd6zRWkcBYLHKeS+8yKTNje0kUntfcUnf/3rvgQkC6w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5nIv0m6aN9A37vO7X82/QveyknUc3Kl6UAetm1E2t00=;
+ b=Rpsq/56eYGVVqQsGLV17yrogyAS1tKTyuxX4h9pkEUkWhFSAjKIQI3rHHgpoGgTt34vLx+ElYdN2LOmqiuF2+2zhm8sT+b263MvK+IXVRjwCrJecunRzbZZp5j2Nwai6Jukbq1PSbkr8HdmjDe92b3XV0W48zRVn6iKrk3gIFeg+xOr2nm9JlAa9v2u9ZlhEqX06DBYz1mZgzk8L6HTCuXHHGf6m8r5H89wi4r/zN1Zsv71sskVXADyXS51g/VaAyC+KIGLwyGmWlFZRTfpELQZWwbET2qofp7ozzA/XnrpQZSkRuI1StmAIf8i7c3Xw4kObb5yDFa6+ePf9h4AV9w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vivo.com;
+Received: from SEZPR06MB5269.apcprd06.prod.outlook.com (2603:1096:101:78::6)
+ by TY0PR06MB5283.apcprd06.prod.outlook.com (2603:1096:400:210::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.36; Sat, 18 Mar
+ 2023 14:45:19 +0000
+Received: from SEZPR06MB5269.apcprd06.prod.outlook.com
+ ([fe80::daf6:5ebb:a93f:1869]) by SEZPR06MB5269.apcprd06.prod.outlook.com
+ ([fe80::daf6:5ebb:a93f:1869%9]) with mapi id 15.20.6178.036; Sat, 18 Mar 2023
+ 14:45:19 +0000
+From:   Yangtao Li <frank.li@vivo.com>
+To:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     Yangtao Li <frank.li@vivo.com>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 9/9] thermal/drivers/qcom: remove redundant msg
+Date:   Sat, 18 Mar 2023 22:44:12 +0800
+Message-Id: <20230318144412.75046-9-frank.li@vivo.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20230318144412.75046-1-frank.li@vivo.com>
+References: <20230318144412.75046-1-frank.li@vivo.com>
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SI2PR02CA0032.apcprd02.prod.outlook.com
+ (2603:1096:4:195::12) To SEZPR06MB5269.apcprd06.prod.outlook.com
+ (2603:1096:101:78::6)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SEZPR06MB5269:EE_|TY0PR06MB5283:EE_
+X-MS-Office365-Filtering-Correlation-Id: fbf9b63d-707e-4ad4-fa8f-08db27bf6546
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: c3UDln+th3ckpOA6mz7mgl0d7T7UcoLMrwKKqNiz7CZLfQxgQSqDrxtDnKSTY4KOywuTArS85gGDS6s0ciEq1FESGIIBgatByetyFOACG5s+9ef6y70occ35RpiIAaQvMKOntCdibzhc7GrjDbBbav+oLsuVKWvwUSSmY+SrsvbA75k7df3jsmBpxU2fKB5c1MxFootH8I/E6DLdI519ALFNWUOoWpsTcXL+b3NACiX2f2eSJI+seHC+Fl8Su9Au879dAdk3Pno67RmdAJxE3LDHmqHvuv7TFiq3NbDiebBLtfRSi+nOEQBr34CQp3KeOrG4S7xwg+VPq9vw9ty/bkoB5KQofZ6zQi+RT5Rjebch7407OcSoJqdNk04lBJHlneNXCZS22RnfRdJX0sIGpjXXKzHax+83DKGGBDwjxxsIAy+4/O7HE324N/7WBxpQmCayd9aaCbb4eD+QbieClJJHmgtMbRKrwxZiWg4sfobfpDBWScoRxgNTpnLy99NsEq4++rU8c4C12xeL7W5SiL0pc+4yWlpo+7nz1ZJUCRYcRU7SDoEpNxJa/25+J95QlijvMs5Z4/6S+5bQbVclLRJH/2zr3yyUBVVXSgvQR8VztlcBJ2pRQaORPzFqz0ZTUBNBhO6NRWfsiHibtXsDOs6dxpagpu2FltuiSqvJqwGenxa7f48+tcjMN7scgL6jn5eMjksVXrw5LoFZAtKFsA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5269.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(39860400002)(376002)(366004)(346002)(136003)(396003)(451199018)(86362001)(36756003)(52116002)(316002)(66946007)(66556008)(66476007)(8676002)(4326008)(83380400001)(478600001)(110136005)(186003)(6512007)(6506007)(1076003)(26005)(2616005)(6486002)(6666004)(38100700002)(38350700002)(8936002)(41300700001)(2906002)(5660300002)(7416002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?W+NwwH8ekpB6ioEa9aZX+XzzjFFt/HjaraFKbxWHORcRYUE7SArOewx172mY?=
+ =?us-ascii?Q?1HiLGAmcgysI785O5Ft+z3fJvGYiG0MI9T+f5/V2Tfcd7YdIYRsdrpK30P1F?=
+ =?us-ascii?Q?U0vQWX8YsI/Fvrb2P0hL9PFBSGRWbJrkl3HRDFi0zXKM1VoflXZOYv32qbIx?=
+ =?us-ascii?Q?h8QT/ined9Z4eJkUlcAWmO2sMIc0SuNzoXgPcEylsGWVumDfyvXAYTtC9UQX?=
+ =?us-ascii?Q?xjtm3cfsZHHU0I3pBps3T9/TKieQLEDpLPevq8YgrmqdEZVk0Wg3UdfJYgrk?=
+ =?us-ascii?Q?AHHlPOmfLPiRilQQE3+XydRdQAMscnHDDuSBO1cWHMjV5kn3/yI+9u/+m195?=
+ =?us-ascii?Q?zpHqcxOA2N4VvQVHQS2XaIuYHr1uz8ysW/qQp5LUeqz22Vn5BlSnEYxt/POG?=
+ =?us-ascii?Q?Da6LE+UvbXQAddpyh9sb+O0COpg8l/KLi0tCM2DY2xo6rMQFm6zKpztdTZM3?=
+ =?us-ascii?Q?+1irfvlzbBhqtih81i2dtHl1u5wx0EMErDE6HXl+KM1v+dCGGuLgbjdxgIr7?=
+ =?us-ascii?Q?sPz7WP9Wful00LRVp1rFB57TAuFWy83rRXhIpjOOZ8kbnc9uW5Z5X4rYtGJ8?=
+ =?us-ascii?Q?5PJ9tHgpvotKhOcg0T72Cf3+9k8Qwxw5QX3kqRTBrltRvQYUjoe782a32F0D?=
+ =?us-ascii?Q?2FG74eXDqWM+8cEnw3TvDxwKZZ3VVkCy6+YGaYyX0kCBow59XTjBTFb6Ti2d?=
+ =?us-ascii?Q?9HnB2Fe9vw/QWR9bSgMdzRy9hEk0PvuHzlhUU0lADgcxPieOhM1nhQYwgmQG?=
+ =?us-ascii?Q?DyhpO84XKQqzwyJOIaMk1T1vfvM41Fn692vwc168gwuIaYGKrI883kkZC+BF?=
+ =?us-ascii?Q?jqPOpHYhfMxaXctpejAHEMg/6tcjXMjtQBpu8QJYXHxfmb+Rgtd4v4ENoHNj?=
+ =?us-ascii?Q?FPQRlFI8POhpUAcRdWqO6Lke+5i6S6yvL8lsdR//EE8tkty3d4jK5BeOe3vB?=
+ =?us-ascii?Q?v+Wocm3jtp+Z4UIlsgBqNNmPu3vmkp6mPnG5MpkI+eyASo61CXT3/ueTB/A7?=
+ =?us-ascii?Q?gORo3T3Rr/slJu2A0dsx8/9LYyvKZfukA7JuTY5o6Yusy6ZYrlZUxJcxkIyy?=
+ =?us-ascii?Q?jEb8+uGDj8AYK49fMk3kwFNrvInMVVPTSDJVZ2Zl16B2ClkD+QWxK2zW6Uet?=
+ =?us-ascii?Q?tVkxFIQkVo5y7tKzukb0Ir/C05G1nIkI1iYKmJXU6rvQKSKgNVTNykuHy+CS?=
+ =?us-ascii?Q?wMUtQkF6jc4F7uSqeLnumU9Km/tTnzp2OSaVPbCaDlbXOYRhrfXXpOok0QG8?=
+ =?us-ascii?Q?4asasrISmuz7UGC0x5socgP7pUERDBE9oA8UgIk0MMNI1CU9BURaVKsb3kRz?=
+ =?us-ascii?Q?Ci3Ii0m7ZAqQLelVJI3Y2pFUs20po9AP72y4UhiEOMeWRpxiXGPiHuaTmZHa?=
+ =?us-ascii?Q?t4Qs8T4+hH8xmGRUY+CVN6pgYeknJCmYYgKfUW7MRtxLQsyVp84Sr699d+0+?=
+ =?us-ascii?Q?4tPhEDlemRO4wizocIR4LjOE4AtF6xFoXtuEkcTWGNzxqG1tNUNnqeHCVXJ9?=
+ =?us-ascii?Q?EwtBZy8SydGOPowaURuj8uKsqw3j7D0iPLA7gTJK7af7FX5Ii4TYIeC302j7?=
+ =?us-ascii?Q?773Vjb0kWvxmFyc+6UTBfECkDc/LeOpkh6Ccnseu?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fbf9b63d-707e-4ad4-fa8f-08db27bf6546
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB5269.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Mar 2023 14:45:19.5694
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: lJffMyIrAL1HdutmE5dYT1W5VNCMEw0ryki/gMgt2ncHFcPZ7eBcHUP7OIoiZcSxl747FPpZfAgIfuk09CJv2A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB5283
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The upper-layer devm_thermal_add_hwmon_sysfs() function can directly
+print error information.
 
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+---
+ drivers/thermal/qcom/qcom-spmi-adc-tm5.c    | 4 +---
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 4 +---
+ drivers/thermal/qcom/tsens.c                | 4 +---
+ 3 files changed, 3 insertions(+), 9 deletions(-)
 
-On 14.03.2023 18:15, Devi Priya wrote:
-> 
-> 
-> On 3/8/2023 3:57 PM, Konrad Dybcio wrote:
->>
->>
->> On 7.03.2023 07:55, Devi Priya wrote:
->>>
->>>
->>> On 3/6/2023 6:39 PM, Devi Priya wrote:
->>>>
->>>>
->>>> On 3/3/2023 6:57 PM, Konrad Dybcio wrote:
->>>>>
->>>>>
->>>>> On 3.03.2023 14:21, Devi Priya wrote:
->>>>>>
->>>>>>
->>>>>> On 2/23/2023 4:31 AM, Mark Brown wrote:
->>>>>>> On Wed, Feb 22, 2023 at 11:11:42PM +0100, Konrad Dybcio wrote:
->>>>>>>
->>>>>>>> Thinking about it again, this seems like something that could be
->>>>>>>> generalized and introduced into regulator core.. Hardcoding this
->>>>>>>> will not end well.. Not to mention it'll affect all mp5496-using
->>>>>>>> boards that are already upstream.
->>>>>>>
->>>>>>>> WDYT about regulator-init-microvolts Mark?
->>>>>>>
->>>>>>> The overwhelming majority of devices that have variable voltages
->>>>>>> support readback, these Qualcomm firmware devices are pretty much
->>>>>>> unique in this regard.  We don't want a general property to set a
->>>>>>> specific voltage since normally we should be using the
->>>>>>> constraints and don't normally need to adjust things immediately
->>>>>>> since we can tell what the current voltage is.
->>>>>>>
->>>>>>> This is pretty much just going to be a device specific bodge,
->>>>>>> ideally something that does know what the voltage is would be
->>>>>>> able to tell us at runtime but if that's not possible then
->>>>>>> there's no good options.  If the initial voltage might vary based
->>>>>>> on board then a device specific DT property might be less
->>>>>>> terrible, if it's determined by the regulator the current code
->>>>>>> seems fine.  Or just leave the current behavour, if the
->>>>>>> constraints are accurate then hopefully a temporary dip in
->>>>>>> voltage is just inelegant rather than an issue.  Indeed the
->>>>>>> current behaviour might well save power if you've got a voltage
->>>>>>> range configured and nothing actually ever gets round to setting
->>>>>>> the voltage (which is depressingly common, people seem keen on
->>>>>>> setting voltage ranges even when the voltage is never varied in
->>>>>>> practice).
->>>>>>
->>>>>> Hi Mark, The initial bootup voltage is actually blown into the OTP register of the PMIC and it remains the same across boards for IPQ9574 SoC.
->>>>> But what about IPQ6018 which also uses MP5496? That's also gonna
->>>>> set the voltage on there, it may be too high/low..
->>> For IPQ6018, the bootup voltage is the same as that of IPQ9574 which is
->>> 875mV
->> Okay, but what about any other design that employs or may employ
->> MP5496 in the future?
->>
->>>>>
->>>>>    Initially the SoC runs at 800MHz with a voltage of 875mV set by the bootloaders. As kernel does not know the initial voltage, during regulator registration the framework considers the current voltage to be zero and tries to bring up the regulator to minimum supported voltage of 600mV. This causes the dip which might be of concern in SS parts where the voltage might be insufficient leading to silent reboots.
->>>>> That's an SoC-specific thing, the same regulator can be used with
->>>>> many different ones. We can't just assume it'll always be like this.
->>>>> I see the problem, but I believe this is not the correct solution
->>> Okay, As we had discussions on reading back the voltage & the generic
->>> DT property, do you suggest any other possible solutions here?
->> Due to the sudden influx of various IPQ SoCs on the mailing list lately
->> I have no idea if it concerned this one too, but at least one of them
->> was said not to use RPM for controlling the clocks. If that's the case,
->> I see no reason at all to use it for scaling the regulators, the PMIC
->> could be addressed directly over I2C as a normal device. You'd probably
->> want to keep VDD_[CM]X scaling through rpmpd, but it's easily done by
->> simply not registering the CX/MX registers as children of the I2C
->> regulator IC.
-> 
-> IPQ9574 SoC has RPM and uses it for controlling the regulators.
-> Currently, the RPM firmware does not have read support implemented
-> and so, we were not able to read the bootup voltage.
-> As we randomly saw silent reboots when the kernel boots up,
-> do you think we could proceed with this change for time being
-> and revisit the same when any SoC in the future employs MP5496?
-I'm still thinking about a cleaner fix because hardcoding voltages
-in kernel is just dangerous. Could you check whether attaching a CPU
-supply and adding an OPP table where each level has an opp-microvolt
-property would resolve your issue?
+diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+index 5749149ae2e4..5ddc39b2be32 100644
+--- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
++++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+@@ -689,9 +689,7 @@ static int adc_tm5_register_tzd(struct adc_tm5_chip *adc_tm)
+ 			return PTR_ERR(tzd);
+ 		}
+ 		adc_tm->channels[i].tzd = tzd;
+-		if (devm_thermal_add_hwmon_sysfs(adc_tm->dev, tzd))
+-			dev_warn(adc_tm->dev,
+-				 "Failed to add hwmon sysfs attributes\n");
++		devm_thermal_add_hwmon_sysfs(adc_tm->dev, tzd);
+ 	}
+ 
+ 	return 0;
+diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+index 0f88e98428ac..2a3b3e21260f 100644
+--- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
++++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+@@ -459,9 +459,7 @@ static int qpnp_tm_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
+-	if (devm_thermal_add_hwmon_sysfs(&pdev->dev, chip->tz_dev))
+-		dev_warn(&pdev->dev,
+-			 "Failed to add hwmon sysfs attributes\n");
++	devm_thermal_add_hwmon_sysfs(&pdev->dev, chip->tz_dev);
+ 
+ 	ret = devm_request_threaded_irq(&pdev->dev, irq, NULL, qpnp_tm_isr,
+ 					IRQF_ONESHOT, node->name, chip);
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index d3218127e617..f99b0539468b 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -1189,9 +1189,7 @@ static int tsens_register(struct tsens_priv *priv)
+ 		if (priv->ops->enable)
+ 			priv->ops->enable(priv, i);
+ 
+-		if (devm_thermal_add_hwmon_sysfs(priv->dev, tzd))
+-			dev_warn(priv->dev,
+-				 "Failed to add hwmon sysfs attributes\n");
++		devm_thermal_add_hwmon_sysfs(priv->dev, tzd);
+ 	}
+ 
+ 	/* VER_0 require to set MIN and MAX THRESH
+-- 
+2.35.1
 
-Konrad
->>
->> Konrad
->>>>>
->>>>> Konrad
->>>>>>
->>>>>> Best Regards,
->>>>>> Devi Priya
