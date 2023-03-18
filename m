@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFB056BFA25
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 14:11:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 56F736BFA28
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 14:13:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229738AbjCRNLg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Mar 2023 09:11:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59886 "EHLO
+        id S229654AbjCRNNp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Mar 2023 09:13:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbjCRNLe (ORCPT
+        with ESMTP id S229570AbjCRNNo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Mar 2023 09:11:34 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57F482916A
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 06:11:29 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id s8so9410938lfr.8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 06:11:29 -0700 (PDT)
+        Sat, 18 Mar 2023 09:13:44 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37F6F17CC9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 06:13:42 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id a32so7726824ljr.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 06:13:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679145087;
+        d=linaro.org; s=google; t=1679145220;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2oFobvAALnJplAPOPW+XgZw5HuAXyVgPdb0ia9lKRjA=;
-        b=Gr0U03VcP6HjWN0fTqhF0egq+7oxvYFpNYD9psJvVg8iRM1l6RTBRGUWljeEUYgfiQ
-         UVAupT79eC9qP3rq3YyNGxGTn410LlO3xdqXlQS1IGMmqZCM5BAqYgk5lPokN4Ewxbkf
-         uTA2RFmAL9bqCLXmMFz/f/s1krL+5aon4iaZOVKmvX7BgDMYU9pcCkYI+ORph79kIpKb
-         cxceNuT+ui3hQl7Xg+FMfREjvrpMdkBouFGXi6e0BXc2wC4AzfYJj9439GBTCm3fdXcH
-         FRhu95U2vbC9oKZDNGEXFiwny0WGK5+s8rlUpgY8FMAozc1OoeESaB6unM2tu8BX2K+t
-         Yt3A==
+        bh=xjmr2nAua78gEqtz1WDKDDPtSDYZ8DpOst2CageaHa0=;
+        b=xp362ba1yyj5PGKIBVIZWfa15y0rAnMlDjjHHP9r6s5+yvKaX1hayfOJGMae1kN5Bk
+         3nM5IkSzwrvcFxXoSdiVYZHVI2nEqgh8URXC32SBPUeRR9N+F2iAezGxDH5JUBa954Lt
+         bsTHnGiBQhhGmwUIDlffd1WbgCV1bRgATzBkSlEE0HX+vlnrPbwjN7JCX21z8qp27G8N
+         OzcBRaoKOLazd1hPpH7hshwh5FZd6Zgm7ijGrcSo0U9kgsnY9r/nq5bLL/Ggkcbr+mCD
+         JPctzoEXe6aBdyo38+qroygvHpUvy+RE3/re4TnSoa+SNXyj8K4Oj49Hw9aYR598jX85
+         x1mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679145087;
+        d=1e100.net; s=20210112; t=1679145220;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2oFobvAALnJplAPOPW+XgZw5HuAXyVgPdb0ia9lKRjA=;
-        b=xxMq0NaQJFEKn7wU9fImlThqUGx+ePrDweMgIqaB7DcVLByYsmrklgiNUOTEBDWub6
-         tzWSMd7UUfG4wT/a48Unk7m8EXhGAIKdrWc2Hp4mxgUybWz30vqFftYHMEFe/cVgH2+H
-         ON1XQQzZnmzIvA7/Llc74Rj1GJPJZCidQ0fTbRUhvR8e8C7td8cdwR0HKxk4WoSqDLZj
-         YNi/FI5RxKLJQBqSiGYCKUVyvXiXTitt5YnNSFzckBOwuITd60a2SDzsTQB67G+y8ngE
-         hznN4cIYx3BkwIOpTCfsgAWEIh9Q5Dw0gdPNpdV0a8ugZHgLH0QzjcTF+3mL2r6AaSgi
-         mYiw==
-X-Gm-Message-State: AO0yUKV2tZX1a6/rAkwjYcFw5577liM9YMS+em3cFQa8M4ooFV4+KSQY
-        zcpHgsS5OzNMDSOXP9AlsgJEVQ==
-X-Google-Smtp-Source: AK7set/vxs/hKwyf3U1vUyoVsH06YGgaToaSsmR3IGw3f9hakpnkJFSIbbmWd3cvenkEQ2ooecC1RQ==
-X-Received: by 2002:ac2:5596:0:b0:4e8:49fa:ec1d with SMTP id v22-20020ac25596000000b004e849faec1dmr6152087lfg.66.1679145087578;
-        Sat, 18 Mar 2023 06:11:27 -0700 (PDT)
+        bh=xjmr2nAua78gEqtz1WDKDDPtSDYZ8DpOst2CageaHa0=;
+        b=1d/xTm0sbehkvw3yTQK3nsuthedJZhwSaLMAOg0Z4JvvsMBJrcQNG76DeyiUgKfe8G
+         ucfF5w9Wes+ORULgtfhW3TWDXWwxK0lUkuba012Vy2VbU3a2uEGAI0t8nus4HyvYV/Pc
+         xgFHwI8kVesiMnR2PZG2KdG3g7wnAbyfB45zOfWsUytKnXAQZ9u8/ftpt2ZwGQah22Zz
+         vJmjqEGkQ3sjoCG2lmX7nPG2LhHLmg9SAwi1P6DLo6kAFy9mrgQ2YrgS7u3zRKG51BeF
+         o54I0WBo//MzBwMLqsOjt2a1BmkKE0n/asSpfwoEggSQ5PA93DO+4ON3wx7JGYFqwFuR
+         txIg==
+X-Gm-Message-State: AO0yUKXsOwpMPSgAgcNEiymXrtr5nJljuWSbSzVMBt8EbiGeCVa01ybC
+        D8/S2SpOUV4x3DV98Y3ZY83x8g==
+X-Google-Smtp-Source: AK7set/mZURMrzSttemnB8LyVCWsJ/nCFWzbuKXCB3kOdk2TmaO2WL3OUnEsV3sHoL4moxqYNPZcAg==
+X-Received: by 2002:a2e:95c7:0:b0:29b:c987:b34a with SMTP id y7-20020a2e95c7000000b0029bc987b34amr452925ljh.19.1679145220132;
+        Sat, 18 Mar 2023 06:13:40 -0700 (PDT)
 Received: from [192.168.1.101] (abym238.neoplus.adsl.tpnet.pl. [83.9.32.238])
-        by smtp.gmail.com with ESMTPSA id f7-20020ac24e47000000b004d85a7e8b17sm823941lfr.269.2023.03.18.06.11.26
+        by smtp.gmail.com with ESMTPSA id j21-20020a2e8015000000b00294649d3dcasm881652ljg.44.2023.03.18.06.13.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Mar 2023 06:11:27 -0700 (PDT)
-Message-ID: <3f223bda-fc1e-4340-ece2-183dca7b2f77@linaro.org>
-Date:   Sat, 18 Mar 2023 14:11:25 +0100
+        Sat, 18 Mar 2023 06:13:39 -0700 (PDT)
+Message-ID: <2e197a09-5e66-67f0-bcef-958578a85e75@linaro.org>
+Date:   Sat, 18 Mar 2023 14:13:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v4 18/18] arm64: dts: qcom: qrb5165-rb5: Switch on TCPM
- orientation-switch for usb_1_qmpphy
+Subject: Re: [PATCH v4 14/18] arm64: dts: qcom: pm8150b: Add a TCPM
+ description
 Content-Language: en-US
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux@roeck-us.net,
         heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
@@ -66,15 +66,15 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux@roeck-us.net,
 Cc:     wcheng@codeaurora.org, caleb.connolly@linaro.org,
         subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
 References: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
- <20230318121828.739424-19-bryan.odonoghue@linaro.org>
+ <20230318121828.739424-15-bryan.odonoghue@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230318121828.739424-19-bryan.odonoghue@linaro.org>
+In-Reply-To: <20230318121828.739424-15-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,53 +84,115 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 18.03.2023 13:18, Bryan O'Donoghue wrote:
-> Switch on USB orientation-switching for usb_1_qmp via TCPM. Detecting the
-> orientation switch is required to get the PHY to reset and bring-up the PHY
-> with the CC lines set to the appropriate lane.
+> Type-C port management functionality lives inside of the PMIC block on
+> pm8150b.
+> 
+> The Type-C port management logic controls orientation detection, vbus/vconn
+> sense and to send/receive Type-C Power Domain messages.
 > 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
+>  arch/arm64/boot/dts/qcom/pm8150b.dtsi | 70 +++++++++++++++++++++++++++
+>  1 file changed, 70 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> index 43d549d6672e9..e5eecf02653ff 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> @@ -1295,6 +1295,12 @@ &usb_1_qmpphy {
+> diff --git a/arch/arm64/boot/dts/qcom/pm8150b.dtsi b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
+> index 66752cc063d60..6db32bdbf5747 100644
+> --- a/arch/arm64/boot/dts/qcom/pm8150b.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
+> @@ -7,6 +7,8 @@
+>  #include <dt-bindings/iio/qcom,spmi-vadc.h>
+>  #include <dt-bindings/interrupt-controller/irq.h>
+>  #include <dt-bindings/spmi/spmi.h>
+> +#include <dt-bindings/usb/typec/qcom,pmic-typec.h>
+> +#include <dt-bindings/usb/typec/qcom,pmic-pdphy.h>
 >  
->  	vdda-phy-supply = <&vreg_l9a_1p2>;
->  	vdda-pll-supply = <&vreg_l18a_0p92>;
-> +	orientation-switch;
-I think this property could be put in the SoC DTSI, the hardware
-does support roleswitching
-
-Add a newline before the subnode, please.
-
-Konrad
-> +	port {
-> +		qmp_ss_mux: endpoint {
-> +			remote-endpoint = <&pmic_tcpm_ss_mux>;
-> +		};
+>  / {
+>  	thermal-zones {
+> @@ -37,6 +39,14 @@ trip2 {
+>  			};
+>  		};
+>  	};
+> +
+> +	tcpm: pm8150b-tcpm {
+> +		compatible = "qcom,pmic-virt-tcpm";
+> +		qcom,pmic-typec = <&pm8150b_typec>;
+> +		qcom,pmic-pdphy = <&pm8150b_pdphy>;
+> +
+> +		status = "disabled";
 > +	};
 >  };
 >  
->  &usb_2 {
-> @@ -1379,5 +1385,17 @@ connector {
->  					 PDO_FIXED_DUAL_ROLE |
->  					 PDO_FIXED_USB_COMM |
->  					 PDO_FIXED_DATA_SWAP)>;
-> +
-> +		ports {
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			port@0 {
-> +				reg = <0>;
-> +				pmic_tcpm_ss_mux: endpoint {
-> +					remote-endpoint = <&qmp_ss_mux>;
-> +				};
-> +			};
+>  &spmi_bus {
+> @@ -59,6 +69,66 @@ pm8150b_vbus: usb-vbus-regulator@1100 {
+>  			reg = <0x1100>;
+>  		};
+>  
+> +		pm8150b_typec: typec@1500 {
+> +			compatible = "qcom,pm8150b-typec";
+> +			reg = <0x1500>;
+> +			interrupts = <0x2 0x15 PMIC_TYPEC_OR_RID_IRQ
+> +				      IRQ_TYPE_EDGE_RISING>,
+> +				     <0x2 0x15 PMIC_TYPEC_VPD_IRQ
+> +				      IRQ_TYPE_EDGE_BOTH>,
+> +				     <0x2 0x15 PMIC_TYPEC_CC_STATE_IRQ
+> +				      IRQ_TYPE_EDGE_RISING>,
+> +				     <0x2 0x15 PMIC_TYPEC_VCONN_OC_IRQ
+> +				      IRQ_TYPE_EDGE_BOTH>,
+> +				     <0x2 0x15 PMIC_TYPEC_VBUS_IRQ
+> +				      IRQ_TYPE_EDGE_RISING>,
+> +				     <0x2 0x15 PMIC_TYPEC_ATTACH_DETACH_IRQ
+> +				      IRQ_TYPE_EDGE_RISING>,
+> +				     <0x2 0x15 PMIC_TYPEC_LEGACY_CABLE_IRQ
+> +				      IRQ_TYPE_EDGE_BOTH>,
+> +				     <0x2 0x15 PMIC_TYPEC_TRY_SNK_SRC_IRQ
+> +				      IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "or-rid-detect-change",
+> +					  "vpd-detect",
+> +					  "cc-state-change",
+> +					  "vconn-oc",
+> +					  "vbus-change",
+> +					  "attach-detach",
+> +					  "legacy-cable-detect",
+> +					  "try-snk-src-detect";
+> +			vdd-vbus-supply = <&pm8150b_vbus>;
+This belongs in the board dt, it references nodes defined there.
 > +		};
->  	};
->  };
+> +
+> +		pm8150b_pdphy: pdphy@1700 {
+> +			compatible = "qcom,pm8150b-pdphy";
+> +			reg = <0x1700>;
+> +			interrupts = <0x2 0x17 PMIC_PDPHY_SIG_TX_IRQ
+> +				      IRQ_TYPE_EDGE_RISING>,
+> +				     <0x2 0x17 PMIC_PDPHY_SIG_RX_IRQ
+> +				      IRQ_TYPE_EDGE_RISING>,
+> +				     <0x2 0x17 PMIC_PDPHY_MSG_TX_IRQ
+> +				      IRQ_TYPE_EDGE_RISING>,
+> +				     <0x2 0x17 PMIC_PDPHY_MSG_RX_IRQ
+> +				      IRQ_TYPE_EDGE_RISING>,
+> +				     <0x2 0x17 PMIC_PDPHY_MSG_TX_FAIL_IRQ
+> +				      IRQ_TYPE_EDGE_RISING>,
+> +				     <0x2 0x17 PMIC_PDPHY_MSG_TX_DISCARD_IRQ
+> +				      IRQ_TYPE_EDGE_RISING>,
+> +				     <0x2 0x17 PMIC_PDPHY_MSG_RX_DISCARD_IRQ
+> +				      IRQ_TYPE_EDGE_RISING>,
+> +				     <0x2 0x17 PMIC_PDPHY_FR_SWAP_IRQ
+> +				      IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "sig-tx",
+> +					  "sig-rx",
+> +					  "msg-tx",
+> +					  "msg-rx",
+> +					  "msg-tx-failed",
+> +					  "msg-tx-discarded",
+> +					  "msg-rx-discarded",
+> +					  "fr-swap";
+> +			vdd-phy-supply = <&vreg_l2a_3p1>;
+This belongs in the board dt, it references nodes defined there.
+
+The rest lgtm, I think!
+
+Konrad
+> +		};
+> +
+>  		pm8150b_temp: temp-alarm@2400 {
+>  			compatible = "qcom,spmi-temp-alarm";
+>  			reg = <0x2400>;
