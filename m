@@ -2,81 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 154F66BFAA0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 15:02:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 40FB96BFAA9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 15:08:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229778AbjCROCl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Mar 2023 10:02:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60572 "EHLO
+        id S229562AbjCROIp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Mar 2023 10:08:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229570AbjCROCl (ORCPT
+        with ESMTP id S229550AbjCROIo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Mar 2023 10:02:41 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF18C31BD3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 07:02:38 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id z5so7813214ljc.8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 07:02:38 -0700 (PDT)
+        Sat, 18 Mar 2023 10:08:44 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 063FB22123
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 07:08:42 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id g18so7844722ljl.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 07:08:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679148157;
+        d=linaro.org; s=google; t=1679148520;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=QRZv8HFmSWp+jd53Rhrn74J/QIYBoBtEs9x9jM7BMwc=;
-        b=N2rGfYnQO2wXQV18IQXwS/8Rui80++iZo6VKbBHWu5PAWkXliG3DkiwcxPYo3y2dg8
-         IYfhj8VJESgECvSjVIbGqCFd+/jbVpmWVRjcYG4CXZFK5orinLGtkQysUwLlFSIh/yuF
-         gG4lQtU4EI9APpROZaW/7G0rDZbDAOHmRQUWMpPOivHOV0tPJBcILnhK4wDhXPRenykS
-         erhTsiLYZj9K6jyUJDlql6vW9d1u8Zz9AbuxjbazJ/ubiSkCECX1fArhb+O8f2qbBVqR
-         Rzueqr8EFtIKX0d9zXuEbkpJqAIfMln6ZON5Xr4GKXWf4BYpnLNIz6WxR8bdvN5Xl+GD
-         I9tw==
+        bh=HB3cmv6Sv7SdleBzkv5B5PR9GUQ7sHBXprhMZpqwa7M=;
+        b=ukwSAx9A44DJyzN8axz+CRS4ixmUIY02BAL44IvhhXqNGwpBWtYmu0gn4/7z6gEFv0
+         UKBu2DIv9Qq0kKCn8a6z3hsVtzKa4t86T7UbL4HgB5yKb2g8sBX0HyelCVgv4KRO52Ly
+         4FRE+/Fm1qr+LP2gLoHe84WkFZDEAVm9Fp+PJgdNq9IcYSwwW8YheR394nUgbp1L7DJT
+         CPFjSnOzVTKCbiJL8o1fSJ91VINdEmPDgpGZOfWW7o6s8CgazywB4aIOTylYLrmJVT0b
+         lcQhu+9Pa4IIpOTM3O1bDaUchMmOP5sH3vV0mEKAForgsIWQYEu0TUicl91m349LNZpo
+         kcZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679148157;
+        d=1e100.net; s=20210112; t=1679148520;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QRZv8HFmSWp+jd53Rhrn74J/QIYBoBtEs9x9jM7BMwc=;
-        b=a9xJ/v4ySvZ2+6DN/yhGmglJYIOhvcjT3qNmTh/0F+imC9ijNIIxFLArKjKgNwDZJz
-         ESF2jGnaPX8jRhe1fAdnXEYSjHXItduZ8f+6FcqkI+h+IfZG4Cw7pzKBMIBAarAlPijz
-         2ES/NWXuGim63z5e9OmCzQ4SypMqkKlPRGI52nActzqKRSLNYn6OiTd27aG4YfcIwWex
-         DTAy+WKhW+FyRM7NlJ+goy3/Mivti8hDH8D1HW3Znd8UqAIvKJT7H4x0kDEl5OLleAmr
-         VGyhIhJG0wb8UbjmvneWbOHT5lwVvDSowQhHF3fs6fy3PSYu2gyXIWroKNF+7Fmohp1M
-         uw9A==
-X-Gm-Message-State: AO0yUKUgoY7/+CTqLkyzR8gBPU3hUQnRiX0nLpKlkomGVVrchKHL3CB8
-        mKSYXUZVBi7Y/nn4JpM3yajp9A==
-X-Google-Smtp-Source: AK7set/y30IUNrQJ7pZ91meccGbLsoOXLcbkzv751uA8FJO+MLxEf8ct+aVkfra39OTO3jxtJTN+8Q==
-X-Received: by 2002:a2e:9281:0:b0:294:899:afc3 with SMTP id d1-20020a2e9281000000b002940899afc3mr5151085ljh.35.1679148156920;
-        Sat, 18 Mar 2023 07:02:36 -0700 (PDT)
+        bh=HB3cmv6Sv7SdleBzkv5B5PR9GUQ7sHBXprhMZpqwa7M=;
+        b=MLEnwvpVJn/myIf9PpccmFGltx4lWPSSDUdOHYPT/LvF2Vl+ef4ycT4WLqkdjrINpg
+         bRtMe0tdPxVuZtK92EhgK5Y3Qdwz9a5CJ7IMLuCmWlw29/ES//veqTQTXDChHTBvHYvk
+         Pmt6V1aEzd6IZlB+C9J/G0qc6aB+5oTTO7dS/sEsVVPnZWlA6acq6WZmxuG7bGZjG3If
+         Abb4AwTVDYo4/xYRjmi07NwToA6UnzpzDgvcqMGPG65SmuLOgYC4j3CmZPdGcdpoT5qV
+         8uPFgK1YlO9z2x4e4d+P7eXsu3CTwycMLPBOpPwtrz46iQ2oTLlr6TC9iSv6KhVFWccw
+         y4vA==
+X-Gm-Message-State: AO0yUKUyj/Hh3tMGWEQVlYfnjFfpsoftWjmOCmKcpRwmNu0/o41Po+8r
+        LIhtKdiwsRQaiLc+hWxCMJzBYaE6MxAfS3fmRS0=
+X-Google-Smtp-Source: AK7set84fWddd9NO3HF0LBnwqDWLvPpSSlFEZ/L86hkrs1DNox9R/gPMzMKkcA5zkZMCaOLh/o6V9A==
+X-Received: by 2002:a05:651c:508:b0:294:6cde:b9f3 with SMTP id o8-20020a05651c050800b002946cdeb9f3mr6315626ljp.37.1679148520157;
+        Sat, 18 Mar 2023 07:08:40 -0700 (PDT)
 Received: from [192.168.1.101] (abym238.neoplus.adsl.tpnet.pl. [83.9.32.238])
-        by smtp.gmail.com with ESMTPSA id w2-20020a2e9582000000b00295a43fa3dfsm884034ljh.76.2023.03.18.07.02.35
+        by smtp.gmail.com with ESMTPSA id u5-20020ac24c25000000b004e7a0f67490sm842607lfq.110.2023.03.18.07.08.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Mar 2023 07:02:36 -0700 (PDT)
-Message-ID: <30e4ee62-0297-0ffe-23a5-87db096a6154@linaro.org>
-Date:   Sat, 18 Mar 2023 15:02:35 +0100
+        Sat, 18 Mar 2023 07:08:39 -0700 (PDT)
+Message-ID: <ca12735e-d6c8-997e-036f-693cd8a9870f@linaro.org>
+Date:   Sat, 18 Mar 2023 15:08:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v3 3/6] thermal: qcom: tsens-v0_1: Add mdm9607 correction
- offsets
+Subject: Re: [PATCH V2 4/6] regulator: qcom_smd: Add support to define the
+ bootup voltage
 Content-Language: en-US
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
-References: <20230315103950.2679317-1-stephan.gerhold@kernkonzept.com>
- <20230315103950.2679317-4-stephan.gerhold@kernkonzept.com>
+To:     Devi Priya <quic_devipriy@quicinc.com>,
+        Mark Brown <broonie@kernel.org>
+Cc:     agross@kernel.org, andersson@kernel.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_gokulsri@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_anusha@quicinc.com, quic_ipkumar@quicinc.com
+References: <20230217142030.16012-1-quic_devipriy@quicinc.com>
+ <20230217142030.16012-5-quic_devipriy@quicinc.com>
+ <907628d1-b88d-5ac6-ed9d-7f63e2875738@linaro.org>
+ <Y/aeu5ua7cY5cGON@sirena.org.uk>
+ <39f73580-f263-de0e-6819-89c3f4c75c3a@quicinc.com>
+ <8ce07abd-2d02-69d2-8dc6-fe11525aecda@linaro.org>
+ <11b05b9f-b969-6648-2204-2da5f8465c96@quicinc.com>
+ <751e5129-3c11-0156-719e-3fe996a149be@quicinc.com>
+ <3f434777-c4b6-272f-1971-f9adf3faefe4@linaro.org>
+ <a54d4e1b-d62d-559d-1882-e460e696c056@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230315103950.2679317-4-stephan.gerhold@kernkonzept.com>
+In-Reply-To: <a54d4e1b-d62d-559d-1882-e460e696c056@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -89,130 +93,96 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 15.03.2023 11:39, Stephan Gerhold wrote:
-> According to the msm-3.18 vendor kernel from Qualcomm, mdm9607 needs
-> "correction factors" to adjust for additional offsets observed after the
-> factory calibration values in the fuses [1, 2].
+On 14.03.2023 18:15, Devi Priya wrote:
 > 
-> The fixed offsets should be applied unless there is a special
-> calibration mode value that indicates that no offsets are needed [3].
 > 
-> Note that the new calibration mode values are called differently in this
-> patch compared to the vendor kernel:
->   - TSENS_TWO_POINT_CALIB_N_WA        -> ONE_PT_CALIB2_NO_OFFSET
->   - TSENS_TWO_POINT_CALIB_N_OFFSET_WA -> TWO_PT_CALIB_NO_OFFSET
-> This is because close inspection of the calibration function [3] reveals
-> that TSENS_TWO_POINT_CALIB_N_WA is actually a "one point" calibration
-> because the if statements skip all "point2" related code for it.
+> On 3/8/2023 3:57 PM, Konrad Dybcio wrote:
+>>
+>>
+>> On 7.03.2023 07:55, Devi Priya wrote:
+>>>
+>>>
+>>> On 3/6/2023 6:39 PM, Devi Priya wrote:
+>>>>
+>>>>
+>>>> On 3/3/2023 6:57 PM, Konrad Dybcio wrote:
+>>>>>
+>>>>>
+>>>>> On 3.03.2023 14:21, Devi Priya wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 2/23/2023 4:31 AM, Mark Brown wrote:
+>>>>>>> On Wed, Feb 22, 2023 at 11:11:42PM +0100, Konrad Dybcio wrote:
+>>>>>>>
+>>>>>>>> Thinking about it again, this seems like something that could be
+>>>>>>>> generalized and introduced into regulator core.. Hardcoding this
+>>>>>>>> will not end well.. Not to mention it'll affect all mp5496-using
+>>>>>>>> boards that are already upstream.
+>>>>>>>
+>>>>>>>> WDYT about regulator-init-microvolts Mark?
+>>>>>>>
+>>>>>>> The overwhelming majority of devices that have variable voltages
+>>>>>>> support readback, these Qualcomm firmware devices are pretty much
+>>>>>>> unique in this regard.  We don't want a general property to set a
+>>>>>>> specific voltage since normally we should be using the
+>>>>>>> constraints and don't normally need to adjust things immediately
+>>>>>>> since we can tell what the current voltage is.
+>>>>>>>
+>>>>>>> This is pretty much just going to be a device specific bodge,
+>>>>>>> ideally something that does know what the voltage is would be
+>>>>>>> able to tell us at runtime but if that's not possible then
+>>>>>>> there's no good options.  If the initial voltage might vary based
+>>>>>>> on board then a device specific DT property might be less
+>>>>>>> terrible, if it's determined by the regulator the current code
+>>>>>>> seems fine.  Or just leave the current behavour, if the
+>>>>>>> constraints are accurate then hopefully a temporary dip in
+>>>>>>> voltage is just inelegant rather than an issue.  Indeed the
+>>>>>>> current behaviour might well save power if you've got a voltage
+>>>>>>> range configured and nothing actually ever gets round to setting
+>>>>>>> the voltage (which is depressingly common, people seem keen on
+>>>>>>> setting voltage ranges even when the voltage is never varied in
+>>>>>>> practice).
+>>>>>>
+>>>>>> Hi Mark, The initial bootup voltage is actually blown into the OTP register of the PMIC and it remains the same across boards for IPQ9574 SoC.
+>>>>> But what about IPQ6018 which also uses MP5496? That's also gonna
+>>>>> set the voltage on there, it may be too high/low..
+>>> For IPQ6018, the bootup voltage is the same as that of IPQ9574 which is
+>>> 875mV
+>> Okay, but what about any other design that employs or may employ
+>> MP5496 in the future?
+>>
+>>>>>
+>>>>>    Initially the SoC runs at 800MHz with a voltage of 875mV set by the bootloaders. As kernel does not know the initial voltage, during regulator registration the framework considers the current voltage to be zero and tries to bring up the regulator to minimum supported voltage of 600mV. This causes the dip which might be of concern in SS parts where the voltage might be insufficient leading to silent reboots.
+>>>>> That's an SoC-specific thing, the same regulator can be used with
+>>>>> many different ones. We can't just assume it'll always be like this.
+>>>>> I see the problem, but I believe this is not the correct solution
+>>> Okay, As we had discussions on reading back the voltage & the generic
+>>> DT property, do you suggest any other possible solutions here?
+>> Due to the sudden influx of various IPQ SoCs on the mailing list lately
+>> I have no idea if it concerned this one too, but at least one of them
+>> was said not to use RPM for controlling the clocks. If that's the case,
+>> I see no reason at all to use it for scaling the regulators, the PMIC
+>> could be addressed directly over I2C as a normal device. You'd probably
+>> want to keep VDD_[CM]X scaling through rpmpd, but it's easily done by
+>> simply not registering the CX/MX registers as children of the I2C
+>> regulator IC.
 > 
-> [1]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/commit/d9d2db1b82bf3f72f5de0803d55e6849eb5b671e
-> [2]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/commit/d75aef53a760e8ff7bac54049d00c8b2ee1b193e
-> [3]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LE.UM.4.3.2.r1-04200-9x07/drivers/thermal/msm-tsens.c#L2987-3136
-> 
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Fixes: a2149ab815fc ("thermal/drivers/qcom/tsens-v0_1: Add support for MDM9607")
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-BTW, did you notice some crazy readouts or would this have gone
-unnoticed had you not dug in the code?
+> IPQ9574 SoC has RPM and uses it for controlling the regulators.
+> Currently, the RPM firmware does not have read support implemented
+> and so, we were not able to read the bootup voltage.
+> As we randomly saw silent reboots when the kernel boots up,
+> do you think we could proceed with this change for time being
+> and revisit the same when any SoC in the future employs MP5496?
+I'm still thinking about a cleaner fix because hardcoding voltages
+in kernel is just dangerous. Could you check whether attaching a CPU
+supply and adding an OPP table where each level has an opp-microvolt
+property would resolve your issue?
 
 Konrad
-> Changes in v3: None
-> Changes in v2: New patch
-> ---
->  drivers/thermal/qcom/tsens-v0_1.c | 11 +++++++++++
->  drivers/thermal/qcom/tsens.c      | 16 +++++++++++++++-
->  drivers/thermal/qcom/tsens.h      |  4 ++++
->  3 files changed, 30 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-> index 1b454de3928d..e69889dd524a 100644
-> --- a/drivers/thermal/qcom/tsens-v0_1.c
-> +++ b/drivers/thermal/qcom/tsens-v0_1.c
-> @@ -229,6 +229,17 @@ static int __init init_9607(struct tsens_priv *priv)
->  	for (i = 0; i < priv->num_sensors; ++i)
->  		priv->sensor[i].slope = 3000;
->  
-> +	priv->sensor[0].p1_calib_offset = 1;
-> +	priv->sensor[0].p2_calib_offset = 1;
-> +	priv->sensor[1].p1_calib_offset = -4;
-> +	priv->sensor[1].p2_calib_offset = -2;
-> +	priv->sensor[2].p1_calib_offset = 4;
-> +	priv->sensor[2].p2_calib_offset = 8;
-> +	priv->sensor[3].p1_calib_offset = -3;
-> +	priv->sensor[3].p2_calib_offset = -5;
-> +	priv->sensor[4].p1_calib_offset = -4;
-> +	priv->sensor[4].p2_calib_offset = -4;
-> +
->  	return init_common(priv);
->  }
->  
-> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index 8020ead2794e..32d2907f76e5 100644
-> --- a/drivers/thermal/qcom/tsens.c
-> +++ b/drivers/thermal/qcom/tsens.c
-> @@ -134,10 +134,12 @@ int tsens_read_calibration(struct tsens_priv *priv, int shift, u32 *p1, u32 *p2,
->  			p1[i] = p1[i] + (base1 << shift);
->  		break;
->  	case TWO_PT_CALIB:
-> +	case TWO_PT_CALIB_NO_OFFSET:
->  		for (i = 0; i < priv->num_sensors; i++)
->  			p2[i] = (p2[i] + base2) << shift;
->  		fallthrough;
->  	case ONE_PT_CALIB2:
-> +	case ONE_PT_CALIB2_NO_OFFSET:
->  		for (i = 0; i < priv->num_sensors; i++)
->  			p1[i] = (p1[i] + base1) << shift;
->  		break;
-> @@ -149,6 +151,18 @@ int tsens_read_calibration(struct tsens_priv *priv, int shift, u32 *p1, u32 *p2,
->  		}
->  	}
->  
-> +	/* Apply calibration offset workaround except for _NO_OFFSET modes */
-> +	switch (mode) {
-> +	case TWO_PT_CALIB:
-> +		for (i = 0; i < priv->num_sensors; i++)
-> +			p2[i] += priv->sensor[i].p2_calib_offset;
-> +		fallthrough;
-> +	case ONE_PT_CALIB2:
-> +		for (i = 0; i < priv->num_sensors; i++)
-> +			p1[i] += priv->sensor[i].p1_calib_offset;
-> +		break;
-> +	}
-> +
->  	return mode;
->  }
->  
-> @@ -254,7 +268,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
->  
->  		if (!priv->sensor[i].slope)
->  			priv->sensor[i].slope = SLOPE_DEFAULT;
-> -		if (mode == TWO_PT_CALIB) {
-> +		if (mode == TWO_PT_CALIB || mode == TWO_PT_CALIB_NO_OFFSET) {
->  			/*
->  			 * slope (m) = adc_code2 - adc_code1 (y2 - y1)/
->  			 *	temp_120_degc - temp_30_degc (x2 - x1)
-> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-> index dba9cd38f637..880be6be5c3f 100644
-> --- a/drivers/thermal/qcom/tsens.h
-> +++ b/drivers/thermal/qcom/tsens.h
-> @@ -10,6 +10,8 @@
->  #define ONE_PT_CALIB		0x1
->  #define ONE_PT_CALIB2		0x2
->  #define TWO_PT_CALIB		0x3
-> +#define ONE_PT_CALIB2_NO_OFFSET	0x6
-> +#define TWO_PT_CALIB_NO_OFFSET	0x7
->  #define CAL_DEGC_PT1		30
->  #define CAL_DEGC_PT2		120
->  #define SLOPE_FACTOR		1000
-> @@ -57,6 +59,8 @@ struct tsens_sensor {
->  	unsigned int			hw_id;
->  	int				slope;
->  	u32				status;
-> +	int				p1_calib_offset;
-> +	int				p2_calib_offset;
->  };
->  
->  /**
+>>
+>> Konrad
+>>>>>
+>>>>> Konrad
+>>>>>>
+>>>>>> Best Regards,
+>>>>>> Devi Priya
