@@ -2,146 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CA2A6BFB9E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 17:43:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E41A16BFB8E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 17:30:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229697AbjCRQn4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Mar 2023 12:43:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42064 "EHLO
+        id S229772AbjCRQaD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Mar 2023 12:30:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbjCRQnz (ORCPT
+        with ESMTP id S229550AbjCRQaC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Mar 2023 12:43:55 -0400
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2C72172C;
-        Sat, 18 Mar 2023 09:43:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1679157834; x=1710693834;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=N9cVN+VCKJAIk4wgagRUmzJqjpcPtAqI1YYy/7Sm3b0=;
-  b=RJtgMgDTxxCVYe6eQnSgAfrgdg6wUXz8RKeeiwjkcgXMhaUXbEAdGhxz
-   J8Muhgsv7vf9kres/j2SLTTzncVoH7gLqBWsPe+gNu0FfUFMZU337eJh5
-   nJT9AuPEpzLdC+0VgA7KF67GYaDq6PA96JTpjVolC/wP7muroFgjWNRhP
-   ySMC8FtHI7OaP5JPa6r3PfbqVAbmmhLWzsWbK9o0+Fau1tIG9KrQU21f8
-   VvT68/Z2MyerZpELsRBkh1T5sV97bXgNMsgcEfwBrZwvXlkSM+zc2B2up
-   E/sClp41hvj9coxzv6lhIsLNzn/njD10l3A43n5a8BLOFTiuOIb+fWNYR
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10653"; a="318847151"
-X-IronPort-AV: E=Sophos;i="5.98,271,1673942400"; 
-   d="scan'208";a="318847151"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2023 09:43:53 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10653"; a="749614597"
-X-IronPort-AV: E=Sophos;i="5.98,271,1673942400"; 
-   d="scan'208";a="749614597"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by fmsmga004.fm.intel.com with ESMTP; 18 Mar 2023 09:43:49 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pdZen-000AAK-09;
-        Sat, 18 Mar 2023 16:43:49 +0000
-Date:   Sun, 19 Mar 2023 00:42:49 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux@roeck-us.net,
-        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     oe-kbuild-all@lists.linux.dev, wcheng@codeaurora.org,
-        caleb.connolly@linaro.org, bryan.odonoghue@linaro.org,
-        konrad.dybcio@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
-        robertom@qti.qualcomm.com,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v4 13/18] phy: qcom-qmp: Register as a typec switch for
- orientation detection
-Message-ID: <202303190010.w3QR1CU6-lkp@intel.com>
-References: <20230318121828.739424-14-bryan.odonoghue@linaro.org>
+        Sat, 18 Mar 2023 12:30:02 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1C552799D;
+        Sat, 18 Mar 2023 09:29:59 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8A8D560ECD;
+        Sat, 18 Mar 2023 16:29:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD7AC433D2;
+        Sat, 18 Mar 2023 16:29:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679156998;
+        bh=AtbWDM1b1XIpGRo7m2NM4jhZhIEsMXFc9F32RHnTV28=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=iMB8iIJTtSXQ+NdBrNljqloJ2P9Y/xMgrznOuh2ymmwV7/7wKl19c8ypEt35+Oe2l
+         NiqChXqnHyTjfYmvYJzZ6WdL2Rl1hUOFWve2BALpBW6jkHBuC2oFHC5yEjOrpn1wS3
+         y86QbOiIuktLoGuhofx4MgOf6PpK69yNQLyUVUtGSYPv/ERgC7kmK3jQKWegjK54r1
+         3Ap9rx3UbUlY9q25igt5BgxiMVjgTPiEJfyv0S7Wa8/KRrvZUddv6EPm4KYrMSdq2h
+         aejq/a5Hkf2ioi8iRu0ZaclhlU1WWmKkffgFUUjxxyOqGIvcB3fVMzbT6yABfS0n0N
+         E/AnHJLEciYCQ==
+Date:   Sat, 18 Mar 2023 16:44:49 +0000
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Rob Herring <robh@kernel.org>, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        iio@vger.kernel.org, Lars-Peter Clausen <lars@metafoo.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] dt-bindings: thermal: qcom-spmi-adc-tm5: Use
+ generic ADC node name
+Message-ID: <20230318164449.1df8d0be@jic23-huawei>
+In-Reply-To: <20230316224450.onx2bldlisfwwp23@SoMainline.org>
+References: <20230201204447.542385-1-marijn.suijten@somainline.org>
+        <20230201204447.542385-3-marijn.suijten@somainline.org>
+        <20230203212501.GA908601-robh@kernel.org>
+        <20230205150645.549ff062@jic23-huawei>
+        <20230316124307.pzuvbacsmjdootfx@SoMainline.org>
+        <20230316174428.00003c4c@Huawei.com>
+        <20230316224450.onx2bldlisfwwp23@SoMainline.org>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230318121828.739424-14-bryan.odonoghue@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bryan,
+On Thu, 16 Mar 2023 23:44:50 +0100
+Marijn Suijten <marijn.suijten@somainline.org> wrote:
 
-I love your patch! Perhaps something to improve:
+> On 2023-03-16 17:44:28, Jonathan Cameron wrote:
+> <snip>
+> > > Should it inherit the common binding, or was it omitted for a reason?  
+> > 
+> > Harmless but little point as far as I can see given we don't happen
+> > to have any of the generic elements defined in the generic channel
+> > binding.  
+> 
+> Supposedly the reg property, and now also the node name.  Up to you to
+> say whether I should inherit this (and strip out the common bits) or
+> just focus on renaming the node name in the existing binding to channel.
+> 
+> - Marijn
 
-[auto build test WARNING on usb/usb-testing]
-[also build test WARNING on usb/usb-next usb/usb-linus robh/for-next broonie-regulator/for-next lee-mfd/for-mfd-next linus/master v6.3-rc2 next-20230317]
-[cannot apply to lee-mfd/for-mfd-fixes]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Just rename the node name.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Bryan-O-Donoghue/dt-bindings-regulator-qcom-usb-vbus-regulator-Mark-reg-as-required/20230318-202034
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-testing
-patch link:    https://lore.kernel.org/r/20230318121828.739424-14-bryan.odonoghue%40linaro.org
-patch subject: [PATCH v4 13/18] phy: qcom-qmp: Register as a typec switch for orientation detection
-config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20230319/202303190010.w3QR1CU6-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/76d1e355779b094d3ddb20776b0835215dc3646c
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Bryan-O-Donoghue/dt-bindings-regulator-qcom-usb-vbus-regulator-Mark-reg-as-required/20230318-202034
-        git checkout 76d1e355779b094d3ddb20776b0835215dc3646c
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=m68k olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=m68k SHELL=/bin/bash drivers/phy/qualcomm/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303190010.w3QR1CU6-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/phy/qualcomm/phy-qcom-qmp-combo.c: In function 'qmp_combo_typec_switch_set':
->> drivers/phy/qualcomm/phy-qcom-qmp-combo.c:3383:13: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
-    3383 |         int ret = 0;
-         |             ^~~
-
-
-vim +/ret +3383 drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-
-  3376	
-  3377	#if IS_ENABLED(CONFIG_PHY_QCOM_QMP_TYPEC)
-  3378	static int qmp_combo_typec_switch_set(struct typec_switch_dev *sw,
-  3379					      enum typec_orientation orientation)
-  3380	{
-  3381		struct qmp_combo *qmp = typec_switch_get_drvdata(sw);
-  3382		struct phy *dp_phy = qmp->dp_phy;
-> 3383		int ret = 0;
-  3384	
-  3385		dev_dbg(qmp->dev, "Toggling orientation current %d requested %d\n",
-  3386			qmp->orientation, orientation);
-  3387	
-  3388		qmp->orientation = orientation;
-  3389	
-  3390		if (orientation == TYPEC_ORIENTATION_NONE) {
-  3391			if (qmp->init_count)
-  3392				ret = qmp_combo_dp_power_off(dp_phy);
-  3393		} else {
-  3394			if (!qmp->init_count)
-  3395				ret = qmp_combo_dp_power_on(dp_phy);
-  3396		}
-  3397	
-  3398		return 0;
-  3399	}
-  3400	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+Jonathan
