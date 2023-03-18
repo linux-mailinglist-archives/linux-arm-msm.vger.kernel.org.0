@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A4376BF9D3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 13:18:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A7866BF9DC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Mar 2023 13:18:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229652AbjCRMSu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Mar 2023 08:18:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60408 "EHLO
+        id S229839AbjCRMSw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Mar 2023 08:18:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229788AbjCRMSm (ORCPT
+        with ESMTP id S229881AbjCRMSq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Mar 2023 08:18:42 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E34272ED56
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 05:18:39 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id bh21-20020a05600c3d1500b003ed1ff06fb0so4826601wmb.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 05:18:39 -0700 (PDT)
+        Sat, 18 Mar 2023 08:18:46 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2EFF3CE06
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 05:18:41 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id o11-20020a05600c4fcb00b003eb33ea29a8so4835815wmq.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Mar 2023 05:18:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679141919;
+        d=linaro.org; s=google; t=1679141921;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0h1UMM0j9zCioWczt99LUEVvu222yMb94T9JPkSX//E=;
-        b=BjLQSqoA36NQ6+eSX+TK61KD1DqoNQV/ybm8A+Woexs6P/hCFxkUjiV/hsaCTXghDe
-         WWjHMvh/s/GqGdd3iU2M1BiKAL4dT46XgQb1RLg3ANEYcqZ17C6ZAYG700nqjI/3Tn11
-         uDbsrJ4gjklv0ZEl7sQOAEsAhqYtv5vJs3Uy1yltHn9EFsLiL+xpOOdnwWELm+ayEmoU
-         TatpOPiJJA6RI0AEYxUVdFMTZm0v+zLEu4LPP+aBNNzTWPEN8kg+dlMSy9B/Ip10WxJQ
-         tSZNIHo2b+uW46O5f3cc7IswXRqbPXg/mfALlnkwYTyy3oEsX5UBxuqxDmrI+ayT1aPp
-         QhhA==
+        bh=l73lhSfJR0MXTja3lCI/L1FnLvsz9yKY6h4sxugZA5A=;
+        b=p7uFWd6oW2fsk7FImFHU7uiL3c4UNxMdTDkhJbDsKgytoyQRZwTxyn/gfCbObzNPF5
+         lsvx1k5ng2jaV2vdc7p8Rcb5pu4NAmcTQvrkk/+wcNU5Phc4x0ADSiRsk0FLtD4odAX3
+         qZ0TfJIWMY1HGPTWYOYYFbwf/2/8wA3HABUUY9mAXgH8odu0m896wESdrSXEM+8UsXXY
+         BkpCk39hmKqDzOivg3x0Bu1mBDW6THODnfdtpaNM48JHc53xRYe0AlxWrafDYwEi10IT
+         +DTTrXRNzNOiu2MQTiDn5n++552Q7phxnk6ReHqlEzF5bmQDrva+BU7MOLXwoTP3y834
+         3SMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679141919;
+        d=1e100.net; s=20210112; t=1679141921;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0h1UMM0j9zCioWczt99LUEVvu222yMb94T9JPkSX//E=;
-        b=aVSmfae5yU5Mku52hki0rsAnW63/llLaJaexDsUXnEIdlnu6HPh8JGMc5OsMSjWPif
-         g2Rd9iZJ6Oi5AnDR2TXaK2MaQAkXwck/zxmjC7hZNuIcxAQz3gEqnJ/CaCybERsK9Mhp
-         Gj7L0Yf/31yNd6UWhMGH2szOI7LGoTqyzMizJrOKl1I7q6G3NUuESaL0S3odZYShApZj
-         OI3eWpP4g52wjQwk9IqxKd6UGPkqQf6neXkFGRFKoCuFFdAUX1YHgauYUchHmAhveeNI
-         aOE3GUykRBzll7EM2oLtbxZ6pQOT86nM4Ex4k9ztdUSJpgkM7ZsxMO+FkqBiGbcb99xr
-         wbjg==
-X-Gm-Message-State: AO0yUKWcFYMMGW80uixzXgNqgjG7slw9EtA5t+l6kD3t4HJWcrCmDQd/
-        Qf7Grih7ewriUhrp6f4y+WwrRQ==
-X-Google-Smtp-Source: AK7set9sppaNNTfDHW0fvCuUhKVBr/VVnxsKfzgYODoyL0gV+jO0owOhuEP8OB2vMqpyMgGKe+CQWg==
-X-Received: by 2002:a05:600c:a41:b0:3eb:9822:f0 with SMTP id c1-20020a05600c0a4100b003eb982200f0mr28813847wmq.30.1679141919445;
-        Sat, 18 Mar 2023 05:18:39 -0700 (PDT)
+        bh=l73lhSfJR0MXTja3lCI/L1FnLvsz9yKY6h4sxugZA5A=;
+        b=d0hdyVxnbsPMZ3HwHFk/HndprRXJ6c+iNfmOYN4iCxYeYgB6WeQ7PQ22oeiA7eU0rb
+         GEiHhlEXS2uHSP/lhXeZg6sh8VVSqOOrzbqoeP+xJBPIl4VGLslrJ0+WAjcl/6wXTDVx
+         9yNOwPV34lQedE33l5j5tjSKYi86gHYSF3V1S816UlHNbbSMWkFlsgvlyjaUflzUbw/M
+         Soyy21Klu6czBGbDozhri+qnHYv7yQXn2rZHtmCBrmctxDM41oR99GdYuZmp7dLsqXje
+         ccw1zc2vnrKEEshj0+R9n6xDM/FJLm9ll2fTIggKSVhOsmteMJCsSVVAW6c2y5qb1apO
+         L1uw==
+X-Gm-Message-State: AO0yUKWxKeKk5wkVNog6utPcA5SM4zwfmBJdbhcqJUET/gfENVdiAlUY
+        0kxeWLOALubfbRdUYX5qpG3U8Q==
+X-Google-Smtp-Source: AK7set9SEmSPVQbsgjWcJNUcoI172tQtFIJk2apNAzcvfRQ8VUsdFYSjj/i7zGSAbFeF7Klps6fCnA==
+X-Received: by 2002:a05:600c:1d24:b0:3da:1f6a:7b36 with SMTP id l36-20020a05600c1d2400b003da1f6a7b36mr26807018wms.0.1679141921479;
+        Sat, 18 Mar 2023 05:18:41 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id az40-20020a05600c602800b003e2096da239sm10814997wmb.7.2023.03.18.05.18.38
+        by smtp.gmail.com with ESMTPSA id az40-20020a05600c602800b003e2096da239sm10814997wmb.7.2023.03.18.05.18.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Mar 2023 05:18:39 -0700 (PDT)
+        Sat, 18 Mar 2023 05:18:40 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
         gregkh@linuxfoundation.org, andersson@kernel.org,
@@ -59,9 +59,9 @@ To:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
 Cc:     wcheng@codeaurora.org, caleb.connolly@linaro.org,
         bryan.odonoghue@linaro.org, konrad.dybcio@linaro.org,
         subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
-Subject: [PATCH v4 06/18] dt-bindings: usb: Add Qualcomm PMIC Type-C controller YAML schema
-Date:   Sat, 18 Mar 2023 12:18:16 +0000
-Message-Id: <20230318121828.739424-7-bryan.odonoghue@linaro.org>
+Subject: [PATCH v4 07/18] dt-bindings: usb: Add qcom,pmic-pdphy dt-binding header
+Date:   Sat, 18 Mar 2023 12:18:17 +0000
+Message-Id: <20230318121828.739424-8-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
 References: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
@@ -77,115 +77,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a YAML binding for the Type-C silicon interface inside Qualcomm's
-pm8150b hardware block.
+Adds a series of defines which are used in the DTS and pdphy driver for
+identifying interrupts.
 
-The Type-C driver operates with a pdphy driver inside of a high level
-single TCPM device.
-
-Based on original work by Wesley.
-
-Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- .../bindings/usb/qcom,pmic-typec.yaml         | 88 +++++++++++++++++++
- 1 file changed, 88 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+ .../dt-bindings/usb/typec/qcom,pmic-pdphy.h    | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+ create mode 100644 include/dt-bindings/usb/typec/qcom,pmic-pdphy.h
 
-diff --git a/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+diff --git a/include/dt-bindings/usb/typec/qcom,pmic-pdphy.h b/include/dt-bindings/usb/typec/qcom,pmic-pdphy.h
 new file mode 100644
-index 0000000000000..d87bbab88d8be
+index 0000000000000..7d39985bcc779
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
-@@ -0,0 +1,88 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/usb/qcom,pmic-typec.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++++ b/include/dt-bindings/usb/typec/qcom,pmic-pdphy.h
+@@ -0,0 +1,18 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (c) 2023, Linaro Ltd. All rights reserved.
++ */
 +
-+title: Qualcomm PMIC based USB type C Detection Driver
++#ifndef _DT_BINDINGS_QCOM_PMIC_PDPHY_H
++#define _DT_BINDINGS_QCOM_PMIC_PDPHY_H
 +
-+maintainers:
-+  - Bryan O'Donoghue <bryan.odonoghue@linaro.org>
++#define PMIC_PDPHY_SIG_TX_IRQ		0x0
++#define PMIC_PDPHY_SIG_RX_IRQ		0x1
++#define PMIC_PDPHY_MSG_TX_IRQ		0x2
++#define PMIC_PDPHY_MSG_RX_IRQ		0x3
++#define PMIC_PDPHY_MSG_TX_FAIL_IRQ	0x4
++#define PMIC_PDPHY_MSG_TX_DISCARD_IRQ	0x5
++#define PMIC_PDPHY_MSG_RX_DISCARD_IRQ	0x6
++#define PMIC_PDPHY_FR_SWAP_IRQ		0x7
 +
-+description: |
-+  Qualcomm PMIC Type C Detect
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,pm8150b-typec
-+
-+  reg:
-+    maxItems: 1
-+    description: Type C base address
-+
-+  interrupts:
-+    items:
-+      - description: Bitmask of CC attach, VBUS error, tCCDebounce done and more
-+      - description: VCONN Powered Detection
-+      - description: CC state change
-+      - description: VCONN over-current condition
-+      - description: VBUS state change
-+      - description: Attach Deteach notification
-+      - description: Legacy cable detect
-+      - description: Try.Src Try.Snk state change
-+
-+  interrupt-names:
-+    items:
-+      - const: or-rid-detect-change
-+      - const: vpd-detect
-+      - const: cc-state-change
-+      - const: vconn-oc
-+      - const: vbus-change
-+      - const: attach-detach
-+      - const: legacy-cable-detect
-+      - const: try-snk-src-detect
-+
-+  vdd-vbus-supply:
-+    description: VBUS power supply.
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+  - vdd-vbus-supply
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/usb/typec/qcom,pmic-typec.h>
-+    pm8150b {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+
-+        pm8150b_typec: typec@1500 {
-+            compatible = "qcom,pm8150b-typec";
-+            reg = <0x1500>;
-+            interrupts = <0x2 0x15 PMIC_TYPEC_OR_RID_IRQ IRQ_TYPE_EDGE_RISING>,
-+                         <0x2 0x15 PMIC_TYPEC_VPD_IRQ IRQ_TYPE_EDGE_BOTH>,
-+                         <0x2 0x15 PMIC_TYPEC_CC_STATE_IRQ IRQ_TYPE_EDGE_RISING>,
-+                         <0x2 0x15 PMIC_TYPEC_VCONN_OC_IRQ IRQ_TYPE_EDGE_BOTH>,
-+                         <0x2 0x15 PMIC_TYPEC_VBUS_IRQ IRQ_TYPE_EDGE_RISING>,
-+                         <0x2 0x15 PMIC_TYPEC_ATTACH_DETACH_IRQ IRQ_TYPE_EDGE_RISING>,
-+                         <0x2 0x15 PMIC_TYPEC_LEGACY_CABLE_IRQ IRQ_TYPE_EDGE_BOTH>,
-+                         <0x2 0x15 PMIC_TYPEC_TRY_SNK_SRC_IRQ IRQ_TYPE_EDGE_RISING>;
-+            interrupt-names = "or-rid-detect-change",
-+                              "vpd-detect",
-+                              "cc-state-change",
-+                              "vconn-oc",
-+                              "vbus-change",
-+                              "attach-detach",
-+                              "legacy-cable-detect",
-+                              "try-snk-src-detect";
-+            vdd-vbus-supply = <&pm8150b_vbus>;
-+        };
-+    };
-+...
++#endif
 -- 
 2.39.2
 
