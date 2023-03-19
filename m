@@ -2,138 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 889106C0454
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Mar 2023 20:20:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 555A86C04F9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Mar 2023 21:52:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230183AbjCSTUs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Mar 2023 15:20:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52578 "EHLO
+        id S230094AbjCSUw0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Mar 2023 16:52:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230122AbjCSTTu (ORCPT
+        with ESMTP id S229538AbjCSUwZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Mar 2023 15:19:50 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6252F1E9E3;
-        Sun, 19 Mar 2023 12:18:58 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id v1so2417893wrv.1;
-        Sun, 19 Mar 2023 12:18:57 -0700 (PDT)
+        Sun, 19 Mar 2023 16:52:25 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 136721717D
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Mar 2023 13:52:23 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id e65so10811427ybh.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Mar 2023 13:52:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679253536;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oy4rJp/0zV8uQx96aqdFOna+cm21IPd+B8/oErRDE1c=;
-        b=ITt6syLmwNGy0ZbUxm216tTbp3mY9GEm/3lMvbbE2Rt2AmFNDP+lDlVo9z74NODKkT
-         PFUABL92MyqFqXD0IsdwgSVPYtr+hzSbiu2N45Nr+n8QX8AmyN8POiYqe5G/DajGXsJc
-         67FzzJrp7CrMFY4Y3HeIEpyujtlfFQpZokxqSIZ0j8ktmSZK1E7YZqfLTa/KyiYMHoCi
-         T4VCPN2ZwK6nDdX3L3rI6l6bJJY4SzMN+vB0EOUrtkw+1Dbccm31xymXbmoBaT0mARDG
-         M0OzS1dz+KV8WVgJiqN4sFnIBVzzEuNQ9Nb7uGwFagkzmu7y1OC0cB+tPyIYFnF2eRVd
-         Ry8Q==
+        d=linaro.org; s=google; t=1679259142;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7eau3b7zPmqe7SmciaTScsBbHt1A+72uIepOJsfjNRg=;
+        b=d9rPCtzOByh1+cJSI9d+76Q8bzYJmz1Ss1IdljLbzJW1S2zN1kEkjYm0FbFBc1UO2z
+         4VKgH2omJwDFhFG3kHc7m+cN7CVCXDwLdJF1INgIXvceYTfbyGzn3NusESedXEphCaJi
+         fYf1Eyb3H5GHmP/iTIyZTllbV3z56rO7Fq/eyPoWUWIq2Jk12zv2MKsCelc6vdAXl7Oh
+         lGK7qmVJaa5htjrPA2WYArc6QRp5h5Wx2PlI8V/9WGd3jM9AM+LNs7cKR0Gq3brf/2kT
+         8Ncw4tWtcVDLCihENNmB2PvhUwKZFgaB3KEpr1jqcaF/XRtFzyqzc0W8+99Qoyj4AFos
+         3MnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679253536;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1679259142;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oy4rJp/0zV8uQx96aqdFOna+cm21IPd+B8/oErRDE1c=;
-        b=BmLFh8WV1M+TZGUnzvPeSsGVXAQ6/vYpkGdESvvjYjJpD6zO5usE8f0HYBQ9kjZpzk
-         niBLr8jLmqTwOUNznKVsVTBt4TNb1Tcd/qA8WPpFIMpn2lM24BJ0Het5MI9QYB1Tcg9X
-         Df29M5/57Gx2gsnDYWV+Vo3vE25bLcs9ycXX5pee4VIPvgX03ATGu9JxtzNI5WEG/dnZ
-         9wvt9XeHx5AccaQduvXM+eGlHgUM8p0GO6za2z4DALIO0QTD5xOVMtKiNCEzL3/mbcoL
-         zkPWBeStNNEGL9aMYApF1jldrxQmMEqao3pO7+JSQo4D2fDeFuvgJyzOmL0fVoMNHeuc
-         Shtg==
-X-Gm-Message-State: AO0yUKWJIiv0ypZ1vCMrP5r0EYrVVKgE/DyGT9Yf+/MebxsCvgUzieD0
-        YbWyqO0hwFUmUMcBU0Svb/Q=
-X-Google-Smtp-Source: AK7set9RJTHUU3x+cB1vPG2tx4D/cF6g7trZnQtZGucpSHSmKWi61gPafYkIpRGJ4EUPGiGlo3eKQw==
-X-Received: by 2002:a5d:4205:0:b0:2cf:fd6:b83f with SMTP id n5-20020a5d4205000000b002cf0fd6b83fmr7367868wrq.8.1679253535952;
-        Sun, 19 Mar 2023 12:18:55 -0700 (PDT)
-Received: from localhost.localdomain (93-34-89-197.ip49.fastwebnet.it. [93.34.89.197])
-        by smtp.googlemail.com with ESMTPSA id b7-20020a5d4b87000000b002cfe0ab1246sm7165167wrt.20.2023.03.19.12.18.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Mar 2023 12:18:55 -0700 (PDT)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org
-Subject: [net-next PATCH v5 15/15] arm: mvebu: dt: Add PHY LED support for 370-rd WAN port
-Date:   Sun, 19 Mar 2023 20:18:14 +0100
-Message-Id: <20230319191814.22067-16-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230319191814.22067-1-ansuelsmth@gmail.com>
-References: <20230319191814.22067-1-ansuelsmth@gmail.com>
+        bh=7eau3b7zPmqe7SmciaTScsBbHt1A+72uIepOJsfjNRg=;
+        b=E8H//mK3jnD/uiDhnhinea4t1kFC71Ti1Vcs5JB9XerpyDo9jDVGLdWNbk9bZy75CG
+         CAOA+ZryhipAjNDZ6Dihu6/WK5IfMpI1y4WBhUTXeqwWBDBLXjor6Ez1RCfVy5S0yvyW
+         eOQZFBBL9Vcv5qQ4RMaJoj59Njuh8iI8q40ASVQKNCIyNAiUz6tEONq+DU7jdmvS1bc7
+         HdAwDRG5U/4qR5hW1Lpv5EAQwTwQL1ePohjX9hj+IiBkafba3/PAyYFK7wg2HZfkbOT+
+         akYuzZTugtm5gNeYpR80QShYfSB+I9CPTLbiM71IIeUkRfIFIbxQCnjlxgkNPvCJdxoA
+         LxnA==
+X-Gm-Message-State: AO0yUKXNQjTXsgM490bvGOPrxJmB2DFCM9R+u+zWpSQliGiJ3kqCnm1O
+        /at9xy5jDVMsdMuzabzFT97PXo8pWbcZZSfT2/smEg==
+X-Google-Smtp-Source: AK7set/tQ7OCelzEWdJsjsAkSRB+acENSH9SOXjaQ+EzOAXU2pgfkbMlHMfZQKUnyi4ylSBu7BTeUegXoKPqED2SmRY=
+X-Received: by 2002:a05:6902:1025:b0:b3b:d433:b063 with SMTP id
+ x5-20020a056902102500b00b3bd433b063mr2931680ybt.4.1679259142289; Sun, 19 Mar
+ 2023 13:52:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230311212114.108870-1-danila@jiaxyga.com>
+In-Reply-To: <20230311212114.108870-1-danila@jiaxyga.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Sun, 19 Mar 2023 21:52:11 +0100
+Message-ID: <CACRpkdboobW7dQ=77=e+-EBEQAxQCkmVG_J49EaYcDFBUquS-w@mail.gmail.com>
+Subject: Re: [PATCH 0/2] pinctrl: qcom: Add support for SM7150
+To:     Danila Tikhonov <danila@jiaxyga.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Andrew Lunn <andrew@lunn.ch>
+On Sat, Mar 11, 2023 at 10:21=E2=80=AFPM Danila Tikhonov <danila@jiaxyga.co=
+m> wrote:
 
-The WAN port of the 370-RD has a Marvell PHY, with one LED on
-the front panel. List this LED in the device tree.
+> This series adds pinctrl support for Qualcomm SM7150 SoC.
 
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- arch/arm/boot/dts/armada-370-rd.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+I don't see any issues with it and the DT bindings are reviewed so
+patches applied, unless Bjorn get upset they stay in.
 
-diff --git a/arch/arm/boot/dts/armada-370-rd.dts b/arch/arm/boot/dts/armada-370-rd.dts
-index be005c9f42ef..15b36aa34ef4 100644
---- a/arch/arm/boot/dts/armada-370-rd.dts
-+++ b/arch/arm/boot/dts/armada-370-rd.dts
-@@ -20,6 +20,7 @@
- /dts-v1/;
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/interrupt-controller/irq.h>
-+#include <dt-bindings/leds/common.h>
- #include <dt-bindings/gpio/gpio.h>
- #include "armada-370.dtsi"
- 
-@@ -135,6 +136,19 @@ &mdio {
- 	pinctrl-names = "default";
- 	phy0: ethernet-phy@0 {
- 		reg = <0>;
-+		leds {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			led@0 {
-+				reg = <0>;
-+				label = "WAN";
-+				color = <LED_COLOR_ID_WHITE>;
-+				function = LED_FUNCTION_LAN;
-+				function-enumerator = <1>;
-+				linux,default-trigger = "netdev";
-+			};
-+		};
- 	};
- 
- 	switch: switch@10 {
--- 
-2.39.2
-
+Yours,
+Linus Walleij
