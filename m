@@ -2,62 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B59A6C061B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Mar 2023 23:49:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E15536C069B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 00:33:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229849AbjCSWtY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Mar 2023 18:49:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41884 "EHLO
+        id S229592AbjCSXdw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Mar 2023 19:33:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229715AbjCSWtX (ORCPT
+        with ESMTP id S229529AbjCSXdv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Mar 2023 18:49:23 -0400
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94B2A13DFF;
-        Sun, 19 Mar 2023 15:49:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-        bh=6DxZO2hH60e5R+3GI4rscUU2uKUcFxM5hHa6Am0rX+o=; b=xam6TR0IzPC5KXUIu8Z6eY+YPf
-        /UUSYcR6SmeikvRv1qsRGJ4eMyfIUvbfSzjFrZXrvjCoML2Hl+JFD+AuzecOoOi8RZ7Z++Xu3Zyo6
-        4zoNUE+F68zQ4M+gi8FOfy6hdsQP8zXRJj5cWR/7SiovQUjcl2GMmFyLwo5slJHuE0aw=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-        (envelope-from <andrew@lunn.ch>)
-        id 1pe1pm-007nEY-FJ; Sun, 19 Mar 2023 23:49:02 +0100
-Date:   Sun, 19 Mar 2023 23:49:02 +0100
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org
-Subject: Re: [net-next PATCH v5 04/15] leds: Provide stubs for when CLASS_LED
- is disabled
-Message-ID: <aa2d0a8b-b98b-4821-9413-158be578e8e0@lunn.ch>
-References: <20230319191814.22067-1-ansuelsmth@gmail.com>
- <20230319191814.22067-5-ansuelsmth@gmail.com>
+        Sun, 19 Mar 2023 19:33:51 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F667E3A4;
+        Sun, 19 Mar 2023 16:33:48 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (213-243-189-158.bb.dnainternet.fi [213.243.189.158])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 261C41373;
+        Mon, 20 Mar 2023 00:33:46 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1679268826;
+        bh=rfehHzT0nNC1C/6Q8HysuOgzvRnx3AnZ/cu68zcvIDo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=AbjSS6ayXnuqLhNWp/mlyDEibEroimNo5524LDllyl+5l8OTzNL+N19fuRaa8JOkQ
+         /hMzNTpPDQoaW3ugi1qphNNqEpCX2hp2/Y5dXcqu1UBXKiQrXaiUGLpXnhZwk/4asE
+         cZfZf5l6VdSz+htrDT2WABZRId7PHRBwC2VQMVbw=
+Date:   Mon, 20 Mar 2023 01:33:52 +0200
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Cc:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
+        ming.qian@nxp.com, shijie.qin@nxp.com, eagle.zhou@nxp.com,
+        bin.liu@mediatek.com, matthias.bgg@gmail.com,
+        angelogioacchino.delregno@collabora.com, tiffany.lin@mediatek.com,
+        andrew-ct.chen@mediatek.com, yunfei.dong@mediatek.com,
+        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
+        daniel.almeida@collabora.com, hverkuil-cisco@xs4all.nl,
+        jerbel@kernel.org, linux-media@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, kernel@collabora.com
+Subject: Re: [RFC 2/4] media: videobuf2: Replace bufs array by a list
+Message-ID: <20230319233352.GC20234@pendragon.ideasonboard.com>
+References: <20230313135916.862852-1-benjamin.gaignard@collabora.com>
+ <20230313135916.862852-3-benjamin.gaignard@collabora.com>
+ <20230313181155.GC22646@pendragon.ideasonboard.com>
+ <bdade438cd93230daa47ee48eafab60f65cd4224.camel@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230319191814.22067-5-ansuelsmth@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <bdade438cd93230daa47ee48eafab60f65cd4224.camel@collabora.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
         autolearn=ham autolearn_force=no version=3.4.6
@@ -67,17 +62,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> +#if IS_ENABLED(CONFIG_LEDS_CLASS)
->  enum led_default_state led_init_default_state_get(struct fwnode_handle *fwnode);
-> +#else
-> +static inline enum led_default_state
-> +led_init_default_state_get(struct fwnode_handle *fwnode)
-> +{
-> +	return LEDS_DEFSTATE_OFF;
-> +}
-> +#endif
+On Wed, Mar 15, 2023 at 09:57:51AM -0400, Nicolas Dufresne wrote:
+> Le lundi 13 mars 2023 à 20:11 +0200, Laurent Pinchart a écrit :
+> > > -	/* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
+> > > -	num_buffers = min_t(unsigned int, num_buffers,
+> > > -			    VB2_MAX_FRAME - q->num_buffers);
+> > > -
+> > 
+> > We can indeed drop this check now, but shouldn't we introduce some kind
+> > of resource accounting and limitation ? Otherwise any unpriviledged
+> > userspace will be able to starve system memory. This could be
+> > implemented on top, as the problem largely exists today already, but I'd
+> > like to at least record this in a TODO comment.
+> 
+> The current limit already isn't work for resource accounting and limitation for
+> m2m drivers. You can open a device, allocate 32 buffers, and close that device
+> keeping the memory around. And redo this process as many times as you want.
 
-0-day is telling me i have this wrong. The function is in led-core.c,
-so this should be CONFIG_NEW_LEDS, not CONFIG_LEDS_CLASS.
+I know, that's why I mentioned that the problem largely exists today
+already.
 
-	    Andrew
+> A TODO is most appropriate, but I would prefer to see this done at a memory
+> layer level (rather then v4l2 specific), so that limits and accounting works
+> with containers and other sandboxes.
+
+I haven't thought about how this could be implemented, all I know is
+that it's about time to tackle this issue, so I would like to at least
+record it.
+
+> > I also wonder if we should still limit the number of allocated buffers.
+> > The limit could be large, for instance 1024 buffers, and it would be an
+> > in-kernel limit that could be increased later if needed. I'm concerned
+> > that dropping the limit completely will allow userspace to request
+> > UINT_MAX buffers, which may cause integer overflows somewhere. Limiting
+> > the number of buffers would avoid extensive review of all the code that
+> > deals with counting buffers.
+> 
+
+-- 
+Regards,
+
+Laurent Pinchart
