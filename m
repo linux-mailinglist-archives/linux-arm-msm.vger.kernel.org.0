@@ -2,158 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 576896C1574
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 15:47:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F6C16C1581
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 15:50:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231899AbjCTOq5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 10:46:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52088 "EHLO
+        id S230395AbjCTOuJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 10:50:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231912AbjCTOqT (ORCPT
+        with ESMTP id S231207AbjCTOti (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 10:46:19 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97A79233E0;
-        Mon, 20 Mar 2023 07:45:18 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id fd25so7072177pfb.1;
-        Mon, 20 Mar 2023 07:45:18 -0700 (PDT)
+        Mon, 20 Mar 2023 10:49:38 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE6912B2B0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 07:47:47 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id x3so47681484edb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 07:47:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679323518;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oauBr8L/4q4Zcgdj0lHO6PXlptkvS9AYRCFUFpLRYaw=;
-        b=W0rr2Cqq8hYbPCTku8RNPwzAfVaC1WEIRqg/Jo/IaQ3jvSFgpYQ8herChIJi7syMJ5
-         YIfI8bLz+etpsyzlOr+ptGN7aE4yv3qQncLdwK43FM6YBwMvLv2nGuzW75q86R0a+YAr
-         /BdXDMgQTi9jJFtm5pTOw4gXpkvXIjjdQ3m0/xGK4graIJcbepoylaU8+L3vUi3eQAwo
-         mtSrja7NmvnQcnDLmqflMFRZ/y0KW5yPJuyn1li/3tS0CJzypeUbWgn9VKnIYHVcT7zk
-         uSs37Ij8K4IFmzBssfj5JXRk9yXHeRHiK+Cxe3xgHa7l3E0jYsSkcDMjuztlg2g3IcnX
-         4Yqg==
+        d=linaro.org; s=google; t=1679323640;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Il9YWorlQE7qriqKsC4ZO4n1FQhxWC5upPu4Ay50MJY=;
+        b=FBcCe0Xs0m4wCKZL7wJQPbxIonSqZsX0kg3cURIN3/IszssXDbcQRURBwuYQCwhXra
+         wgFt+NPOwYG4vJfPKs86Ju9T/efHjo29D3lLGApKgLJ1zpH4Fy1zlZiBLDuWDCvpkTGU
+         Ea/nA+kpZPyZOk4+XlZDVG/bxVFZY/aK/bPcNGefdx1qVMAxq8vmjj9nNjnv9MyoUF2h
+         f322ouEa1vEVtuumatLFlxHEVoyPifT9g1g9L2WvT/Mr7wgwna9JYW2PTeZZXHAtA/4A
+         IUAK6Occ1xz5GFmiCcBWzehOcHgr2qpte2UAay2/51BLIuLpFWleLow3Z4tkYuX30lFJ
+         1FcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679323518;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oauBr8L/4q4Zcgdj0lHO6PXlptkvS9AYRCFUFpLRYaw=;
-        b=IRzK7tS7hr2DDEYXtjq0C5mRD6mdDoJr07+USdEarq+pbYCOadEwV1KrWzjrxJ/iQ0
-         2laO0OPjeoibtjxCaZyusZ84QIDqsjSuwlgRfI8qMonfoDCa5781cFo2OwZCPi1u9zr/
-         pG0tJ+pYzhMt2GYjBj4PxziALyDqAuTNdRSXIr6R0VT+gB5pxvmhCsttt0IaLUAhK2yZ
-         pgz6ZwToKcBjJ+bW2jziwFTpRzuc3VJlvCP1UOYUAmlXisTeKNZxzXj+DbPh68OhZx7J
-         s84jVLchyQAPWWGZ0MWLzd/zW1qhbF0O1slTePEhY9nkeHT47HEpTk28I9C6eRC/LaNF
-         n66g==
-X-Gm-Message-State: AO0yUKWdSANXwGV6zqpzGFedVUlAYmpZ0j6fojWjfC+tIdTcTiJemBJk
-        qWtIMy3xnYXJTDlK9SpoSpU=
-X-Google-Smtp-Source: AK7set9yi2RN2vxR93mdgHSZKeyGB3sxPREYIvUl6fxuZOWrBiOHFnCQYgj8gj4DknW3GheF00DOIw==
-X-Received: by 2002:a62:1a05:0:b0:5a8:9858:750a with SMTP id a5-20020a621a05000000b005a89858750amr13197023pfa.13.1679323517814;
-        Mon, 20 Mar 2023 07:45:17 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
-        by smtp.gmail.com with ESMTPSA id j24-20020aa78018000000b006245e034059sm6618112pfi.178.2023.03.20.07.45.17
+        d=1e100.net; s=20210112; t=1679323640;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Il9YWorlQE7qriqKsC4ZO4n1FQhxWC5upPu4Ay50MJY=;
+        b=ianl8NGWCl+tnAY24KVM0hDESnoBaOa+q582Zi2fhu/nFR3D1wrqnmMqjlVsT1Is9X
+         V0BTY+Jjs4NzsFEX3d7zclu/dF2wI3uQbH7D9Yr1Dtu0uj6ch9qAMJn7SRqFej1lIqPX
+         n0N/7bRDEqltqP8IoGM+1uLCgsYmNBNwniqf+t4J6NYD4bHaQ/KzykcXwy4BET88fYoQ
+         Bl+ZErpqb+LeKLfOkhli7hC70RL4cIdmggp8abC/JBKApQ87AeOQ4wlLlebOupDC3IzQ
+         YV0cL5zAxvd8YI6VW96ezv7JMsgGmc73SPw8aFVqwH2N7gjkXyDnjzY/WebEB8TOdEqd
+         K3vw==
+X-Gm-Message-State: AO0yUKXJnEUE2Sy+jGfnIOk6ZyOiAHXBMrLeQ8PBK2bjN7vrx2lmFDRe
+        5PTu0x+KcL2MnbPsQBFvZux0aw==
+X-Google-Smtp-Source: AK7set/OVWu4fwaMjI+KXgkPc6AvBpPPQLglH9fGEnmWHgw5U+gGtq86OjeKuhQ9kIsRt8FWJx9Ogg==
+X-Received: by 2002:a17:906:39ce:b0:932:c1e2:9983 with SMTP id i14-20020a17090639ce00b00932c1e29983mr10328923eje.15.1679323640207;
+        Mon, 20 Mar 2023 07:47:20 -0700 (PDT)
+Received: from localhost.localdomain ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id x2-20020a50ba82000000b004fb30fc1dabsm4913172ede.96.2023.03.20.07.47.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Mar 2023 07:45:17 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Daniel Vetter <daniel@ffwll.ch>, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 23/23] drm/sched: Add (optional) fence signaling annotation
-Date:   Mon, 20 Mar 2023 07:43:45 -0700
-Message-Id: <20230320144356.803762-24-robdclark@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230320144356.803762-1-robdclark@gmail.com>
-References: <20230320144356.803762-1-robdclark@gmail.com>
+        Mon, 20 Mar 2023 07:47:19 -0700 (PDT)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [RESEND PATCH v9 1/2] dt-bindings: PCI: qcom: Add SM8550 compatible
+Date:   Mon, 20 Mar 2023 16:46:57 +0200
+Message-Id: <20230320144658.1794991-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Add the SM8550 platform to the binding.
 
-Based on
-https://lore.kernel.org/dri-devel/20200604081224.863494-10-daniel.vetter@ffwll.ch/
-but made to be optional.
-
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_ringbuffer.c   | 1 +
- drivers/gpu/drm/scheduler/sched_main.c | 9 +++++++++
- include/drm/gpu_scheduler.h            | 2 ++
- 3 files changed, 12 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-index b60199184409..7e42baf16cd0 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-@@ -93,6 +93,7 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
- 	 /* currently managing hangcheck ourselves: */
- 	sched_timeout = MAX_SCHEDULE_TIMEOUT;
+This patch is a resend of the following:
+https://lore.kernel.org/all/20230208180020.2761766-10-abel.vesa@linaro.org/
+
+No changes since then.
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    | 40 +++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+index fb32c43dd12d..be7b4b805291 100644
+--- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
++++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+@@ -38,6 +38,7 @@ properties:
+           - qcom,pcie-sm8350
+           - qcom,pcie-sm8450-pcie0
+           - qcom,pcie-sm8450-pcie1
++          - qcom,pcie-sm8550
+       - items:
+           - const: qcom,pcie-msm8998
+           - const: qcom,pcie-msm8996
+@@ -58,6 +59,12 @@ properties:
+     minItems: 1
+     maxItems: 8
  
-+	ring->sched.fence_signaling = true;
- 	ret = drm_sched_init(&ring->sched, &msm_sched_ops,
- 			num_hw_submissions, 0, sched_timeout,
- 			NULL, NULL, to_msm_bo(ring->bo)->name, gpu->dev->dev);
-diff --git a/drivers/gpu/drm/scheduler/sched_main.c b/drivers/gpu/drm/scheduler/sched_main.c
-index 4e6ad6e122bc..c2ee44d6224b 100644
---- a/drivers/gpu/drm/scheduler/sched_main.c
-+++ b/drivers/gpu/drm/scheduler/sched_main.c
-@@ -978,10 +978,15 @@ static bool drm_sched_blocked(struct drm_gpu_scheduler *sched)
- static int drm_sched_main(void *param)
- {
- 	struct drm_gpu_scheduler *sched = (struct drm_gpu_scheduler *)param;
-+	const bool fence_signaling = sched->fence_signaling;
-+	bool fence_cookie;
- 	int r;
- 
- 	sched_set_fifo_low(current);
- 
-+	if (fence_signaling)
-+		fence_cookie = dma_fence_begin_signalling();
++  iommus:
++    maxItems: 1
 +
- 	while (!kthread_should_stop()) {
- 		struct drm_sched_entity *entity = NULL;
- 		struct drm_sched_fence *s_fence;
-@@ -1039,6 +1044,10 @@ static int drm_sched_main(void *param)
- 
- 		wake_up(&sched->job_scheduled);
- 	}
++  iommu-map:
++    maxItems: 2
 +
-+	if (fence_signaling)
-+		dma_fence_end_signalling(fence_cookie);
+   # Common definitions for clocks, clock-names and reset.
+   # Platform constraints are described later.
+   clocks:
+@@ -205,6 +212,7 @@ allOf:
+               - qcom,pcie-sm8350
+               - qcom,pcie-sm8450-pcie0
+               - qcom,pcie-sm8450-pcie1
++              - qcom,pcie-sm8550
+     then:
+       properties:
+         reg:
+@@ -639,6 +647,37 @@ allOf:
+           items:
+             - const: pci # PCIe core reset
+ 
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,pcie-sm8550
++    then:
++      properties:
++        clocks:
++          minItems: 7
++          maxItems: 8
++        clock-names:
++          minItems: 7
++          items:
++            - const: aux # Auxiliary clock
++            - const: cfg # Configuration clock
++            - const: bus_master # Master AXI clock
++            - const: bus_slave # Slave AXI clock
++            - const: slave_q2a # Slave Q2A clock
++            - const: ddrss_sf_tbu # PCIe SF TBU clock
++            - const: noc_aggr # Aggre NoC PCIe AXI clock
++            - const: cnoc_sf_axi # Config NoC PCIe1 AXI clock
++        resets:
++          minItems: 1
++          maxItems: 2
++        reset-names:
++          minItems: 1
++          items:
++            - const: pci # PCIe core reset
++            - const: link_down # PCIe link down reset
 +
- 	return 0;
- }
- 
-diff --git a/include/drm/gpu_scheduler.h b/include/drm/gpu_scheduler.h
-index 9db9e5e504ee..8f23ea522e22 100644
---- a/include/drm/gpu_scheduler.h
-+++ b/include/drm/gpu_scheduler.h
-@@ -483,6 +483,7 @@ struct drm_sched_backend_ops {
-  * @ready: marks if the underlying HW is ready to work
-  * @free_guilty: A hit to time out handler to free the guilty job.
-  * @dev: system &struct device
-+ * @fence_signaling: Opt in to fence signaling annotations
-  *
-  * One scheduler is implemented for each hardware ring.
-  */
-@@ -507,6 +508,7 @@ struct drm_gpu_scheduler {
- 	bool				ready;
- 	bool				free_guilty;
- 	struct device			*dev;
-+	bool 				fence_signaling;
- };
- 
- int drm_sched_init(struct drm_gpu_scheduler *sched,
+   - if:
+       properties:
+         compatible:
+@@ -724,6 +763,7 @@ allOf:
+               - qcom,pcie-sm8350
+               - qcom,pcie-sm8450-pcie0
+               - qcom,pcie-sm8450-pcie1
++              - qcom,pcie-sm8550
+     then:
+       oneOf:
+         - properties:
 -- 
-2.39.2
+2.34.1
 
