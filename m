@@ -2,78 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40DF76C0F65
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 11:41:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AF616C0F69
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 11:42:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230443AbjCTKlS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 06:41:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60950 "EHLO
+        id S229835AbjCTKmd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 06:42:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231277AbjCTKkC (ORCPT
+        with ESMTP id S230504AbjCTKmR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 06:40:02 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 794B31A66C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 03:38:51 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id x36so11557956ljq.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 03:38:51 -0700 (PDT)
+        Mon, 20 Mar 2023 06:42:17 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7B1827994
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 03:40:25 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id f18so14291676lfa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 03:40:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679308727;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1679308798;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=aqMd1/bvzkJr2S5YOFkrY+D78y5J8naNvqIi32NoRCM=;
-        b=uku/WQWhs3h922mxzqwiwM8cijN2GAkl9AYbzt/KPND/Efj9p75M94A8lYS6oOTWxO
-         SYdScdI1wmySbPtpi/v9382GFKGT+d3zisfwRFzGKC76eJnT473QT2sJdn+Ni1AVy+RA
-         dL74bUrG2fTHSM0Y+n7IA+FEVzLBz9IBei0Prz/0x9wqKeypUP2xAmNG78waWUS1Kag1
-         9gZ8e9IupnLUOF4OrepR9XSW8SKYldmFV0lO1i/9s3+8gGnHdiHXaCIEIlUgDPjVO4dG
-         0kbRxzsNKfw+r1VieL3TLLa2FC8stqIhurHQvt3FU4VtSqX07VhNsbd89mvpNS5CicTj
-         2Oxg==
+        bh=grRH4NuVjt1XazQwua0TqeDWJzVjyHC+00bGvm+991w=;
+        b=j3Q/3iuFNvsMRY0v692DqUltXzp1dIJq6dJCikzycfPVfAImbd0U0oT6VgFfWMaQ8a
+         vOEgt7P4mtEIoFWZPFm58qC7xlX46jU12HvXM0aqO1rXWmA3jIBXDu+tQvFogRSwJ7Q4
+         1B6B6YP6K9m5IybKDJeapTeed9CxCP10C19Syg7a0bqXOvoetNfMsmeX3s7pleR+22Cf
+         rQNpScvjnF8GCG8Jbm4qfIlhBoJZO3HDLtUpNxeLgHP/Qz+0vpkhZWp+RZM+ZwlV1JlM
+         A2SFw9eZ8Mq66GFBkd39b69cpwSRiowEUdgpv5fbU4XyGasMBiGAHEhPL0d708gyAbZ3
+         BX6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679308727;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1679308798;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aqMd1/bvzkJr2S5YOFkrY+D78y5J8naNvqIi32NoRCM=;
-        b=IQPWFmUxpmBJISRJB9sAYKkESZL+Q8fu1UmZP4lgQPYIPdX6NjhQoCyK/E0qIZML4M
-         EuAdGzVl5jNu5kxSCOskw/MNoyHIlVzbxMj5OkNRB+g37TOSMRimlsg7qPN9z2e19K5f
-         k9ESO2W4YCitbJA7DjHGjy3z1cNjtQ/knkfoWQW8GdPB9HStqQX5vaC+sCRFK5OIxap9
-         L/+bDqW0xXEwcbp14iwKKqf7MTnthSgHkrcd0gE+PxAR1kUWUi+q4RB4qg2Suaxni49q
-         tx+7umFK032iFEz9EKjEVuJ+AEICMSDDez+lKQnlUDfqNw/1DxOOPcI2ZzmlB1IFEOT8
-         HBlg==
-X-Gm-Message-State: AO0yUKVjz4YC6bywSguU/BEIKv9dvqrJoSY9bI0eW9PpdTkwQ+23y3NX
-        GwUjxGW5LCQITsq+/lEQ5bcTEw==
-X-Google-Smtp-Source: AK7set8My2CPrAzRUr2Uo6cI/0kZXyHszzZeIovquOsX7Pif/PtdFm1/JfqQQA8MuaBpztgKz9A0jQ==
-X-Received: by 2002:a2e:9281:0:b0:295:b0cd:519 with SMTP id d1-20020a2e9281000000b00295b0cd0519mr5460138ljh.3.1679308727473;
-        Mon, 20 Mar 2023 03:38:47 -0700 (PDT)
+        bh=grRH4NuVjt1XazQwua0TqeDWJzVjyHC+00bGvm+991w=;
+        b=6oSepG3p/Bjh6rkFizYsKU98Q8KejdgNs/EU1oFJUjP0CO8abdpPESBOs33qheeXhT
+         rrdj1g4g3uNPbCejCCrbIlGL14CdyzxkXnviAtCzeo8aZas5m0ONc0yGkg4bEjnQ6Xiv
+         s5xz9pS3pPMS4l85qVG6a4BJqzJEYabG1v2zOeujCZsm1qmkg32jY69kXcsg0GVUu2AP
+         v259kOuPNxOlP4BPXbghO979vu5/Vb4EkiKtFFvtxEiTF8yAVymF9ohGlq1jAC/tHJ+B
+         /sZBL5Bhc4KbxNe9jo1QRdDB0ksMrri9Vct/jlZu8/dq0K1EYg0LF1UDBn+21HEdS2JA
+         u5hA==
+X-Gm-Message-State: AO0yUKVC8NDTIbE/Sbqd0xa07K5djTBVVGf+AmYwdjTsl+ImmRutZHEK
+        nrn8rVkAkFsJbLac0o2gvXLlpA==
+X-Google-Smtp-Source: AK7set+36z+CyOiyN78yCcUMJLmwtnpXQyLubsOfMRU3Vx0PAfxfr+2Wvji0JpELECJNK6z8plNTSQ==
+X-Received: by 2002:a05:6512:3d24:b0:4d8:86c1:478c with SMTP id d36-20020a0565123d2400b004d886c1478cmr3521820lfv.33.1679308798457;
+        Mon, 20 Mar 2023 03:39:58 -0700 (PDT)
 Received: from [192.168.1.101] (abym238.neoplus.adsl.tpnet.pl. [83.9.32.238])
-        by smtp.gmail.com with ESMTPSA id v18-20020a2e9252000000b002934abfb109sm1688825ljg.45.2023.03.20.03.38.46
+        by smtp.gmail.com with ESMTPSA id f2-20020a2e9502000000b00298591be990sm1683115ljh.40.2023.03.20.03.39.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Mar 2023 03:38:47 -0700 (PDT)
-Message-ID: <c9485ea6-e419-947e-4d5e-bcaf5d0cfeb2@linaro.org>
-Date:   Mon, 20 Mar 2023 11:38:45 +0100
+        Mon, 20 Mar 2023 03:39:58 -0700 (PDT)
+Message-ID: <6ae97b26-b1e7-b382-b6f6-053afe26a1a2@linaro.org>
+Date:   Mon, 20 Mar 2023 11:39:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 05/14] arm64: dts: qcom: sa8775p: add support for the
- on-board PMICs
-To:     Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: Split out SA8155P and use correct
+ RPMh power domains
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        krzysztof.kozlowski@linaro.org, marijn.suijten@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230314183043.619997-1-brgl@bgdev.pl>
- <20230314183043.619997-6-brgl@bgdev.pl>
- <08dff56d-227a-a791-549c-15ac0f1ac08b@linaro.org>
- <CAMRc=MdSRY8w0pWuhprB1ALPFpcCdYOnyQZ63BSzJPa3u1a-jA@mail.gmail.com>
-Content-Language: en-US
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230214095435.2192153-1-konrad.dybcio@linaro.org>
+ <20230214095435.2192153-3-konrad.dybcio@linaro.org>
+ <20230314001052.7qvgbwkl73x22oll@ripper>
+ <eaf2ca0d-4d90-b68b-3b36-8bb0148cfb95@linaro.org>
+ <ee1ebac4-bf18-019a-f770-5cb88703d06b@linaro.org>
+ <20230315230024.wxuqthay74i5zgrq@ripper>
+ <3d3117d2-b3eb-1174-7061-b899cdcdf6ce@linaro.org>
+ <20230320021957.yzg6zhrhjr36rcz4@ripper>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAMRc=MdSRY8w0pWuhprB1ALPFpcCdYOnyQZ63BSzJPa3u1a-jA@mail.gmail.com>
+In-Reply-To: <20230320021957.yzg6zhrhjr36rcz4@ripper>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -86,92 +88,85 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 20.03.2023 11:24, Bartosz Golaszewski wrote:
-> On Tue, Mar 14, 2023 at 9:22 PM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->>
->> On 14.03.2023 19:30, Bartosz Golaszewski wrote:
->>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 20.03.2023 03:19, Bjorn Andersson wrote:
+> On Thu, Mar 16, 2023 at 12:50:49AM +0100, Konrad Dybcio wrote:
+>> On 16.03.2023 00:00, Bjorn Andersson wrote:
+>>> On Tue, Mar 14, 2023 at 12:41:45PM +0100, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 14.03.2023 12:36, Konrad Dybcio wrote:
+>>>>>
+>>>>>
+>>>>> On 14.03.2023 01:10, Bjorn Andersson wrote:
+>>>>>> On Tue, Feb 14, 2023 at 10:54:35AM +0100, Konrad Dybcio wrote:
+>>>>>>> The RPMhPD setup on SA8155P is different compared to SM8150. Correct
+>>>>>>> it to ensure the platform will not try accessing forbidden/missing
+>>>>>>> RPMh entries at boot, as a bad vote will hang the machine.
+>>>>>>>
+>>>>>>
+>>>>>> I don't see that this will scale, as soon as someone adds a new device
+>>>>>> in sm8150.dtsi that has the need to scale a power rail this will be
+>>>>>> forgotten and we will have a mix of references to the SM8150 and SA8155P
+>>>>>> value space.
+>>>>>>
+>>>>>> That said, I think it's reasonable to avoid duplicating the entire
+>>>>>> sm8150.dtsi.
+>>>>> Yeah, this problem has no obvious good solutions and even though it's
+>>>>> not very elegant, this seems to be the less bad one..
+>>>>>
+>>>>>>
+>>>>>> How about making the SA8155P_* macros match the SM8150_* macros?
+>>>>>> That way things will fail gracefully if a device node references a
+>>>>>> resource not defined for either platform...
+>>>>> Okay, let's do that
+>>>> Re-thinking it, it's good that the indices don't match, as this way the
+>>>> board will (should) refuse to function properly if there's an oversight,
+>>>> which may have gone unnoticed if they were matching, so this only guards
+>>>> us against programmer error which is not great :/
+>>>>
 >>>
->>> Add a new .dtsi file for sa8775p PMICs and add the four PMICs interfaced
->>> to the SoC via SPMI.
+>>> Right, ensuring that the resource indices never collides would be a good
+>>> way to capture this issue, as well as copy-paste errors etc. My
+>>> pragmatic proposal is that we make SA8155P_x == SM8150_x where a match
+>>> exist, and for the ones that doesn't match we pick numbers that doesn't
+>>> collide between the platforms.
 >>>
->>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 37 +++++++++++++++++++++
->>>  1 file changed, 37 insertions(+)
->>>  create mode 100644 arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+>>> The alternative is to start SA8155P_x at 11, but it's different and
+>>> forces sa8155p.dtsi to redefine every single power-domains property...
 >>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
->>> new file mode 100644
->>> index 000000000000..77e2515a7ab9
->>> --- /dev/null
->>> +++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
->>> @@ -0,0 +1,37 @@
->>> +// SPDX-License-Identifier: BSD-3-Clause
->>> +/*
->>> + * Copyright (c) 2023, Linaro Limited
->>> + */
->>> +
->>> +#include <dt-bindings/input/input.h>
->>> +#include <dt-bindings/spmi/spmi.h>
->>> +
->>> +&spmi_bus {
->>> +     pmk8775_0: pmic@0 {
->> pmk8775..
+>>>
+>>> This does bring back the feeling that it was a mistake to include the
+>>> platform name in these defines in the first place... Not sure if it's
+>>> worth mixing generic defines into the picture at this point, given that
+>>> we I don't see a way to use them on any existing platform.
+>> TBF we could, think:
 >>
->>> +             compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
->> ..or pmm8654au?
+>> sm1234_rpmpds[] = {
+>> 	[CX] = &foobar1,
+>> 	[CX_AO] = &foobar1_ao,
 >>
+>> 	[...]
+>>
+>> 	/* Legacy DT bindings */
+>> 	[SM1234_CX] = &foobar1,
+>> 	[SM1234_CX_AO] = &foobar1_ao,
+>> };
+>>
+>> WDYT?
 > 
-> Honestly, I got inspired by this bit from sc8280xp-pmics.dtsi:
+> Given that every platform got these defines different we'd have to start
+> at the new generic list at 17 (which would throw away 136 bytes per
+> platform), if we're going to allow the scheme for existing platforms.
+> Which I don't fancy.
 > 
->  54 &spmi_bus {
->  55         pmk8280: pmic@0 {
->  56                 compatible = "qcom,pmk8350", "qcom,spmi-pmic";
->  57                 reg = <0x0 SPMI_USID>;
->  58                 #address-cells = <1>;
->  59                 #size-cells = <0>;
+> It's not super-pretty to mix and match, but I think I would be okay
+> switching to this scheme for new platforms.
 > 
-> Where the label seems to follow the SoC's numbering. Do you think it
-> would be better to consistently use the pmic's name?
-Generally, the automotive PMICs seem to be carbon copies of their non-AU
-relatives, except they're built to a better electrical spec (because well..
-they're gonna be used in cars) or very very slightly modified, so I propose:
-
-actual_pmic: pmic@sid {
-	compatbile = "qcom,actualpmic", "qcom,pmic-its-based-on";
-}
+> PS. We'd better prefix the defines with something (perhaps RPM_?)
+Perhaps just VDD_{CX/MX/..}? We reference the rpm(h)pd's phandle
+each time it's used, anyway.
 
 Konrad
 > 
-> Bartosz
-> 
->> Konrad
->>> +             reg = <0x0 SPMI_USID>;
->>> +             #address-cells = <1>;
->>> +             #size-cells = <0>;
->>> +     };
->>> +
->>> +     pmk8775_1: pmic@2 {
->>> +             compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
->>> +             reg = <0x2 SPMI_USID>;
->>> +             #address-cells = <1>;
->>> +             #size-cells = <0>;
->>> +     };
->>> +
->>> +     pmk8775_2: pmic@4 {
->>> +             compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
->>> +             reg = <0x4 SPMI_USID>;
->>> +             #address-cells = <1>;
->>> +             #size-cells = <0>;
->>> +     };
->>> +
->>> +     pmk8775_3: pmic@6 {
->>> +             compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
->>> +             reg = <0x6 SPMI_USID>;
->>> +             #address-cells = <1>;
->>> +             #size-cells = <0>;
->>> +     };
->>> +};
+> Regards,
+> Bjorn
