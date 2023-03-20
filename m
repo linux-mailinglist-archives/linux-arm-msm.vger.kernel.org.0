@@ -2,112 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B9C16C0E86
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 11:18:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B5F456C0EAF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 11:24:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230039AbjCTKSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 06:18:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55276 "EHLO
+        id S229641AbjCTKY6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 06:24:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229950AbjCTKSP (ORCPT
+        with ESMTP id S230001AbjCTKYu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 06:18:15 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAB9511E8B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 03:18:12 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id h8so44513209ede.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 03:18:12 -0700 (PDT)
+        Mon, 20 Mar 2023 06:24:50 -0400
+Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22430AF0F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 03:24:47 -0700 (PDT)
+Received: by mail-vs1-xe2e.google.com with SMTP id f23so839503vsv.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 03:24:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679307491;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=M9QmThArlU3j/do0x0/HOKynN3iklRKOHG46pnLsnHw=;
-        b=cfKIOkAWt2qSqihZu+iJRamjO6lMQhnDcRYEV6P8j561vRc+Apj+CESbo74m4MU+20
-         z9OBbShtAEkZXCjwdfPwxH/ywg1w5QPwP9bau6B9z4Q/oH49tCRBl8T+BkWeKhLPydnM
-         lnzyhQdu7Vb9qPzNsdiq1JFCZoZzQO4X8acut3VxbpUKfcKZuLNLV+0Z3L5DqNDZ+xsK
-         JnHhYXCM5S9UEVNvGNen4IMgdSyYhxc2QKDgIBv0N2CAk6ckjDpirwCHmctbEqCf1bmS
-         T/4zDrlak6vMHplZHupoUBnpvz8So809N2GkYn2G45EMTc8ETGSxAl64KotQ1g3KGbwp
-         8/hg==
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1679307886;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MMr1WoTvszkHMn826fWIWzwxgXcAXUrmwDv+A43kxrw=;
+        b=HC0Ol9AjVA6fsxwuasIjT+8fB4dMQKcPk8dZP3YbCa6ryA6GJVYaZuLfgQOYP4oF3C
+         ee1FCMyZUlA1dqhvMtsrybitPi5eshAyrybZDDOHKlHJkCPsXPfuWSnrP8nfWRxmgkJx
+         GwVUtzid5QicAj69sqw4TN2KO0mxrsmKVcT4Evs7dh8Us3ZJp3OrEfsERMmyDfN6hdt1
+         oQMs1xFoUSfkwyy4cCRE1DvDBv4fw/CPWHHH+WieOEPgYUIBfZRoFC26VM8WxiWqhW5E
+         B2IBubyGKRWItXGMJcDGQEdcBTubZ675+8phT19v9xtl8lbIcC4FPXlY1kLn184kMAUH
+         zklg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679307491;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M9QmThArlU3j/do0x0/HOKynN3iklRKOHG46pnLsnHw=;
-        b=05DhqE1H65688Wxx0H+4n2zv0iHq/zABJ5C4hWA7/eS7pV6ndm18WFlX+ERsdif6+E
-         oOpjs7WD0X6XzuZJQkX3zfVDkZMd8WuCP29l0R/qejH1sgJDNzn5jKswvB8QuEq5gH8M
-         pyiUPVc5Ic9XdOJHuzX2IAIiSBYXSK3guzGyUEaM1gTvnlnvzh25jORdmrwtHh/a13BU
-         AVTbwfi1jkm4KIk8sk6QB9zktZZtnQj5LwAlvRaL5C0NfIulG2XH3ZazuzhyV9qeU2WX
-         Tavxa6Qd47zbH3qOpjsRanFWIaxoCV6K/FWYjGHNyD33010LTbOZ/QuCNdINrvO8VrAk
-         slqg==
-X-Gm-Message-State: AO0yUKX+8M3CeeZAdSfTnInyTOlvAac/bP6scgAjqxhXhDEVGoMhOVDM
-        SWYuqJk6bHZdLQ/R2ALFlU3B5g==
-X-Google-Smtp-Source: AK7set+TovgWorTvh0ACBLoB6PXtYdY+uBaQ+fhbXWNdFqjwNLDcjjjMwN+Ujio9D2J6NyIVvckFig==
-X-Received: by 2002:a05:6402:12c1:b0:4ff:844a:ed4c with SMTP id k1-20020a05640212c100b004ff844aed4cmr12664996edx.0.1679307491486;
-        Mon, 20 Mar 2023 03:18:11 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:4428:8354:afb6:2992? ([2a02:810d:15c0:828:4428:8354:afb6:2992])
-        by smtp.gmail.com with ESMTPSA id o2-20020a509b02000000b004faa1636758sm4633214edi.68.2023.03.20.03.18.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Mar 2023 03:18:11 -0700 (PDT)
-Message-ID: <713745fe-4963-6008-89b8-f0fb68c8056c@linaro.org>
-Date:   Mon, 20 Mar 2023 11:18:10 +0100
+        d=1e100.net; s=20210112; t=1679307886;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MMr1WoTvszkHMn826fWIWzwxgXcAXUrmwDv+A43kxrw=;
+        b=JVcMOX7uQ/wH/+Oi6qQrFHrlAr7oaGDJds5prOK9bbYN2+NpHq6/rP4OEHriOQKzod
+         iFmS+I73ze/noGubLeFSmHisTsD8hfMDwuS8/tMHEq9cJX411YIWqHWdkyzTKygmJ6zu
+         Q7Y9DJkwd053zq6MMo0LQ0AmA8qsOesKTc5b7GKzOYkkW8BTc4cigzC9H4N0VVyAAZpv
+         a6Lec5iibAtd0xkv6UpDkQbDoSH/8kt2Oidd8va2u1DnIdq02qo8zsXGI9pr5fu5PZc6
+         XjCBc3UBC5LUWSHEumO7WKNeJquNUodYhiH7CPvoKguah9PPs08Yd2G641RO4fJhLhQ9
+         fhwQ==
+X-Gm-Message-State: AO0yUKXzac7zgLojNzNSkqm+CX4grWYLO1JCljqx/e6XpLuFtloI75FJ
+        CfuKkR0qE+f4H0et2ZqcT6eZTSfwaqqBlWcCiNfm7A==
+X-Google-Smtp-Source: AK7set+QVBe9J3CJc30jBUPlLxhp9RAGQykt/RN2GdLJJ1f2BAGM9XTNEP1fhBJxspkysoECoTvry9uuwZ2wiscA4y8=
+X-Received: by 2002:a67:ca18:0:b0:425:b61a:9c13 with SMTP id
+ z24-20020a67ca18000000b00425b61a9c13mr3780116vsk.0.1679307886261; Mon, 20 Mar
+ 2023 03:24:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq5332: add few device nodes
-Content-Language: en-US
-To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        wim@linux-watchdog.org, linux@roeck-us.net, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230320094450.8015-1-quic_kathirav@quicinc.com>
- <20230320094450.8015-3-quic_kathirav@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230320094450.8015-3-quic_kathirav@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20230314183043.619997-1-brgl@bgdev.pl> <20230314183043.619997-6-brgl@bgdev.pl>
+ <08dff56d-227a-a791-549c-15ac0f1ac08b@linaro.org>
+In-Reply-To: <08dff56d-227a-a791-549c-15ac0f1ac08b@linaro.org>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Mon, 20 Mar 2023 11:24:35 +0100
+Message-ID: <CAMRc=MdSRY8w0pWuhprB1ALPFpcCdYOnyQZ63BSzJPa3u1a-jA@mail.gmail.com>
+Subject: Re: [PATCH 05/14] arm64: dts: qcom: sa8775p: add support for the
+ on-board PMICs
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/03/2023 10:44, Kathiravan T wrote:
-> Add the nodes for QUP peripheral, PRNG and WDOG. While at it, enable the
-> I2C device for MI01.2 board.
-> 
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts | 14 +++++
->  arch/arm64/boot/dts/qcom/ipq5332.dtsi       | 67 +++++++++++++++++++++
->  2 files changed, 81 insertions(+)
+On Tue, Mar 14, 2023 at 9:22=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
+>
+>
+> On 14.03.2023 19:30, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Add a new .dtsi file for sa8775p PMICs and add the four PMICs interface=
+d
+> > to the SoC via SPMI.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 37 +++++++++++++++++++++
+> >  1 file changed, 37 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/b=
+oot/dts/qcom/sa8775p-pmics.dtsi
+> > new file mode 100644
+> > index 000000000000..77e2515a7ab9
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+> > @@ -0,0 +1,37 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) 2023, Linaro Limited
+> > + */
+> > +
+> > +#include <dt-bindings/input/input.h>
+> > +#include <dt-bindings/spmi/spmi.h>
+> > +
+> > +&spmi_bus {
+> > +     pmk8775_0: pmic@0 {
+> pmk8775..
+>
+> > +             compatible =3D "qcom,pmm8654au", "qcom,spmi-pmic";
+> ..or pmm8654au?
+>
 
-Thank you for your patch. There is something to discuss/improve.
+Honestly, I got inspired by this bit from sc8280xp-pmics.dtsi:
 
-> +
->  		blsp1_uart0: serial@78af000 {
->  			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
->  			reg = <0x078af000 0x200>;
-> @@ -201,6 +218,48 @@
->  			status = "disabled";
->  		};
->  
-> +		blsp1_spi0: spi@78b5000 {
-> +			compatible = "qcom,spi-qup-v2.2.1";
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +			reg = <0x078b5000 0x600>;
+ 54 &spmi_bus {
+ 55         pmk8280: pmic@0 {
+ 56                 compatible =3D "qcom,pmk8350", "qcom,spmi-pmic";
+ 57                 reg =3D <0x0 SPMI_USID>;
+ 58                 #address-cells =3D <1>;
+ 59                 #size-cells =3D <0>;
 
-Please keep the reg as second property, after compatible.
+Where the label seems to follow the SoC's numbering. Do you think it
+would be better to consistently use the pmic's name?
 
+Bartosz
 
-Best regards,
-Krzysztof
-
+> Konrad
+> > +             reg =3D <0x0 SPMI_USID>;
+> > +             #address-cells =3D <1>;
+> > +             #size-cells =3D <0>;
+> > +     };
+> > +
+> > +     pmk8775_1: pmic@2 {
+> > +             compatible =3D "qcom,pmm8654au", "qcom,spmi-pmic";
+> > +             reg =3D <0x2 SPMI_USID>;
+> > +             #address-cells =3D <1>;
+> > +             #size-cells =3D <0>;
+> > +     };
+> > +
+> > +     pmk8775_2: pmic@4 {
+> > +             compatible =3D "qcom,pmm8654au", "qcom,spmi-pmic";
+> > +             reg =3D <0x4 SPMI_USID>;
+> > +             #address-cells =3D <1>;
+> > +             #size-cells =3D <0>;
+> > +     };
+> > +
+> > +     pmk8775_3: pmic@6 {
+> > +             compatible =3D "qcom,pmm8654au", "qcom,spmi-pmic";
+> > +             reg =3D <0x6 SPMI_USID>;
+> > +             #address-cells =3D <1>;
+> > +             #size-cells =3D <0>;
+> > +     };
+> > +};
