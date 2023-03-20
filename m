@@ -2,223 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 264026C0DA0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 10:45:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF6F06C0E0B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 11:03:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231235AbjCTJpj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 05:45:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36770 "EHLO
+        id S229764AbjCTKDk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 06:03:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230316AbjCTJpe (ORCPT
+        with ESMTP id S229657AbjCTKDj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 05:45:34 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ECF220542;
-        Mon, 20 Mar 2023 02:45:32 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32K8Nl5x029864;
-        Mon, 20 Mar 2023 09:45:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=52Aa9QVqTX4Dd1Soud4+IASjl18oxx5XAbR7JIMdT8A=;
- b=aCA3VbtoTMzqEy0OvabJcG1VZzIi6CslNqWJE9HBEgJlRjJP1gDZe6OgP5YcK0Ub5jc0
- Z0CLkY7dFbUZk9MeGa6nZPlwWA3Llj6KMpuR1prmzS+N1Fng7djQ3hV67Tym34y+vLRM
- QQgQFAF3H9vRm8YzgqXFWztsEGXsgG/z3B8Zbmeivdcjv7TQ0sLjoShsbPMvPAl6KKyZ
- FCvwW/vNJElWo7NHbNNytS8icUzqLWnzqueHON0gwloeGZPWIHkLti6oXKUWOl3fJNbj
- GbAfXaXaUzC7LtC341ZB6lev/9P844T2TFq2ljneUHyrTsG/HjPYKJl79whC4ny8VBbu eQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pd491cgxe-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 20 Mar 2023 09:45:17 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32K9jGYn003672
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 20 Mar 2023 09:45:16 GMT
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Mon, 20 Mar 2023 02:45:12 -0700
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <wim@linux-watchdog.org>,
-        <linux@roeck-us.net>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: ipq5332: add few device nodes
-Date:   Mon, 20 Mar 2023 15:14:50 +0530
-Message-ID: <20230320094450.8015-3-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230320094450.8015-1-quic_kathirav@quicinc.com>
-References: <20230320094450.8015-1-quic_kathirav@quicinc.com>
+        Mon, 20 Mar 2023 06:03:39 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 429002D76;
+        Mon, 20 Mar 2023 03:03:05 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 88CDFFEC;
+        Mon, 20 Mar 2023 03:03:47 -0700 (PDT)
+Received: from [10.57.20.45] (unknown [10.57.20.45])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D6ABB3F67D;
+        Mon, 20 Mar 2023 03:03:00 -0700 (PDT)
+Message-ID: <25b5fb44-fc33-cc2d-5a36-64e780015824@arm.com>
+Date:   Mon, 20 Mar 2023 10:03:06 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dfyCSEr7tIdJ9cl23yN21XO3p8S1pLFi
-X-Proofpoint-GUID: dfyCSEr7tIdJ9cl23yN21XO3p8S1pLFi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-20_06,2023-03-16_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- spamscore=0 bulkscore=0 clxscore=1015 impostorscore=0 malwarescore=0
- adultscore=0 phishscore=0 mlxlogscore=999 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303200084
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v2 4/4] serial: qcom_geni: Use devm_krealloc_array
+Content-Language: en-US
+To:     Jonathan Cameron <jic23@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, linux@roeck-us.net,
+        michal.simek@amd.com, Jonathan Corbet <corbet@lwn.net>,
+        Jean Delvare <jdelvare@suse.com>,
+        Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>, linux-doc@vger.kernel.org,
+        linux-hwmon@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org
+References: <20230309150334.216760-1-james.clark@arm.com>
+ <20230309150334.216760-5-james.clark@arm.com>
+ <20230311191800.74ec2b84@jic23-huawei>
+ <74d8b579-6ea8-d6f3-170f-ea13534b4565@arm.com>
+ <20230318173402.20a4f60d@jic23-huawei>
+From:   James Clark <james.clark@arm.com>
+In-Reply-To: <20230318173402.20a4f60d@jic23-huawei>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the nodes for QUP peripheral, PRNG and WDOG. While at it, enable the
-I2C device for MI01.2 board.
 
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts | 14 +++++
- arch/arm64/boot/dts/qcom/ipq5332.dtsi       | 67 +++++++++++++++++++++
- 2 files changed, 81 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts b/arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts
-index 702013b867d7..3af1d5556950 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts
-@@ -28,6 +28,13 @@
- 	status = "okay";
- };
- 
-+&blsp1_i2c1 {
-+	clock-frequency  = <400000>;
-+	pinctrl-0 = <&i2c_1_pins>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
- &sdhc {
- 	bus-width = <4>;
- 	max-frequency = <192000000>;
-@@ -50,6 +57,13 @@
- /* PINCTRL */
- 
- &tlmm {
-+	i2c_1_pins: i2c-1-state {
-+		pins = "gpio29", "gpio30";
-+		function = "blsp1_i2c0";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+
- 	sdc_default_state: sdc-default-state {
- 		clk-pins {
- 			pins = "gpio13";
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-index 04ef80f267bf..fcc2b901bb65 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-@@ -134,6 +134,13 @@
- 		#size-cells = <1>;
- 		ranges = <0 0 0 0xffffffff>;
- 
-+		rng: rng@e3000 {
-+			compatible = "qcom,prng-ee";
-+			reg = <0x000e3000 0x1000>;
-+			clocks = <&gcc GCC_PRNG_AHB_CLK>;
-+			clock-names = "core";
-+		};
-+
- 		tlmm: pinctrl@1000000 {
- 			compatible = "qcom,ipq5332-tlmm";
- 			reg = <0x01000000 0x300000>;
-@@ -191,6 +198,16 @@
- 			status = "disabled";
- 		};
- 
-+		blsp_dma: dma-controller@7884000 {
-+			compatible = "qcom,bam-v1.7.0";
-+			reg = <0x07884000 0x1d000>;
-+			interrupts = <GIC_SPI 289 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP1_AHB_CLK>;
-+			clock-names = "bam_clk";
-+			#dma-cells = <1>;
-+			qcom,ee = <0>;
-+		};
-+
- 		blsp1_uart0: serial@78af000 {
- 			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
- 			reg = <0x078af000 0x200>;
-@@ -201,6 +218,48 @@
- 			status = "disabled";
- 		};
- 
-+		blsp1_spi0: spi@78b5000 {
-+			compatible = "qcom,spi-qup-v2.2.1";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0x078b5000 0x600>;
-+			interrupts = <GIC_SPI 292 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP1_QUP1_SPI_APPS_CLK>,
-+				 <&gcc GCC_BLSP1_AHB_CLK>;
-+			clock-names = "core", "iface";
-+			dmas = <&blsp_dma 4>, <&blsp_dma 5>;
-+			dma-names = "tx", "rx";
-+			status = "disabled";
-+		};
-+
-+		blsp1_i2c1: i2c@78b6000 {
-+			compatible = "qcom,i2c-qup-v2.2.1";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0x078b6000 0x600>;
-+			interrupts = <GIC_SPI 293 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>,
-+				 <&gcc GCC_BLSP1_AHB_CLK>;
-+			clock-names = "core", "iface";
-+			dmas = <&blsp_dma 6>, <&blsp_dma 7>;
-+			dma-names = "tx", "rx";
-+			status = "disabled";
-+		};
-+
-+		blsp1_spi2: spi@78b7000 {
-+			compatible = "qcom,spi-qup-v2.2.1";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0x078b7000 0x600>;
-+			interrupts = <GIC_SPI 294 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP1_QUP3_SPI_APPS_CLK>,
-+				 <&gcc GCC_BLSP1_AHB_CLK>;
-+			clock-names = "core", "iface";
-+			dmas = <&blsp_dma 8>, <&blsp_dma 9>;
-+			dma-names = "tx", "rx";
-+			status = "disabled";
-+		};
-+
- 		intc: interrupt-controller@b000000 {
- 			compatible = "qcom,msm-qgic2";
- 			reg = <0x0b000000 0x1000>,	/* GICD */
-@@ -233,6 +292,14 @@
- 			};
- 		};
- 
-+		watchdog: watchdog@b017000 {
-+			compatible = "qcom,apss-wdt-ipq5332", "qcom,kpss-wdt";
-+			reg = <0x0b017000 0x1000>;
-+			interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>;
-+			clocks = <&sleep_clk>;
-+			timeout-sec = <30>;
-+		};
-+
- 		apcs_glb: mailbox@b111000 {
- 			compatible = "qcom,ipq5332-apcs-apps-global",
- 				     "qcom,ipq6018-apcs-apps-global";
--- 
-2.17.1
+On 18/03/2023 17:34, Jonathan Cameron wrote:
+> On Fri, 17 Mar 2023 11:34:49 +0000
+> James Clark <james.clark@arm.com> wrote:
+> 
+>> On 11/03/2023 19:18, Jonathan Cameron wrote:
+>>> On Thu,  9 Mar 2023 15:03:33 +0000
+>>> James Clark <james.clark@arm.com> wrote:
+>>>   
+>>>> Now that it exists, use it instead of doing the multiplication manually.
+>>>>
+>>>> Signed-off-by: James Clark <james.clark@arm.com>  
+>>>
+>>> Hmm. I've stared at the users of this for a bit, and it's not actually obvious
+>>> that it's being used as an array of u32.  The only typed user of this is as
+>>> the 2nd parameter of  
+>>> tty_insert_flip_string() which is an unsigned char *
+>>>
+>>> I wonder if that sizeof(u32) isn't a 'correct' description of where the 4 is coming
+>>> from even if it has the right value?  Perhaps the fifo depth is just a multiple of 4?
+>>>
+>>> Jonathan
+>>>   
+>>
+>> The commit that added it (b8caf69a6946) seems to hint that something
+>> reads from it in words. And I see this:
+>>
+>>   /* We always configure 4 bytes per FIFO word */
+>>   #define BYTES_PER_FIFO_WORD		4U
+>>
+>> Perhaps sizeof(u32) isn't as accurate of a description as using
+>> BYTES_PER_FIFO_WORD but I'd be reluctant to make a change because I
+>> don't really understand the implications.
+> 
+> Agreed with your analysis.  + fully understand why you don't want to change
+> it. 
+> 
+> I'd be tempted to take the view that whilst it's allocated in 4 byte chunks
+> because it's accessed elsewhere as a set of 1 byte entries, krealloc_array
+> isn't appropriate and so just leave it with devm_krealloc()
+> 
+> Risk is that a steady stream of patches will turn up 'fixing' this as
+> it will be easy for people to find with a script.  Maybe better to just add
+> a comment (either with or without your patch).
 
+Ok that makes sense to me. I can add a comment instead this patch to
+change this one.
+
+>>
+>> There is also this in handle_rx_console():
+>>
+>>   unsigned char buf[sizeof(u32)];
+>>
+>> James
+>>
+>>>
+>>>   
+>>>> ---
+>>>>  drivers/tty/serial/qcom_geni_serial.c | 6 +++---
+>>>>  1 file changed, 3 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+>>>> index d69592e5e2ec..23fc33d182ac 100644
+>>>> --- a/drivers/tty/serial/qcom_geni_serial.c
+>>>> +++ b/drivers/tty/serial/qcom_geni_serial.c
+>>>> @@ -1056,9 +1056,9 @@ static int setup_fifos(struct qcom_geni_serial_port *port)
+>>>>  		(port->tx_fifo_depth * port->tx_fifo_width) / BITS_PER_BYTE;
+>>>>  
+>>>>  	if (port->rx_buf && (old_rx_fifo_depth != port->rx_fifo_depth) && port->rx_fifo_depth) {
+>>>> -		port->rx_buf = devm_krealloc(uport->dev, port->rx_buf,
+>>>> -					     port->rx_fifo_depth * sizeof(u32),
+>>>> -					     GFP_KERNEL);
+>>>> +		port->rx_buf = devm_krealloc_array(uport->dev, port->rx_buf,
+>>>> +						   port->rx_fifo_depth, sizeof(u32),
+>>>> +						   GFP_KERNEL);
+>>>>  		if (!port->rx_buf)
+>>>>  			return -ENOMEM;
+>>>>  	}  
+>>>   
+> 
