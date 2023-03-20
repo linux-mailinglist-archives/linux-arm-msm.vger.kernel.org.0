@@ -2,125 +2,371 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DB226C1F61
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 19:19:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 90D746C1F9B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 19:25:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231249AbjCTSTH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 14:19:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56918 "EHLO
+        id S229696AbjCTSZX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 14:25:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229622AbjCTSS2 (ORCPT
+        with ESMTP id S230518AbjCTSY0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 14:18:28 -0400
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 346283FBA9;
-        Mon, 20 Mar 2023 11:12:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1679335930; x=1710871930;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=KGgMVkVYkzc5hGwH7fgh8riyDfxHum9YPyo5UnckO5Q=;
-  b=MQS4GLiMrTjh1Kth/SswsWI3KxJw6ozMMUrhilByyow0abVWG4ME68iB
-   6gcd0knfbeTZb/51MuEPHlMddy4f/L3ZiQ/XpHsVERb5FU3o01wty5yOr
-   aw/BtfQGQHC94QFKPxm6aq7/qq4amJUPHrzHB4DJ07f2mseZI96KKk7tc
-   sirzsaz3YNTyOwTxRcJiFNcKncVFzh6FYldhKb5YmRN4V2Yu37kPCTHb1
-   rS60g0vARWe6gboG3Z/uJ6IzjL4TS24P0kYW0TeWlTW0LCW0EN8GWI6au
-   ncETjH1i3gmF878q3Rex2qmt05oYEiFhzzK1groslDUhKbaf4Lk/u1v7V
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10655"; a="338764979"
-X-IronPort-AV: E=Sophos;i="5.98,276,1673942400"; 
-   d="scan'208";a="338764979"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2023 11:10:57 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10655"; a="927063951"
-X-IronPort-AV: E=Sophos;i="5.98,276,1673942400"; 
-   d="scan'208";a="927063951"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by fmsmga006.fm.intel.com with ESMTP; 20 Mar 2023 11:10:53 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1peJy8-000BDZ-1J;
-        Mon, 20 Mar 2023 18:10:52 +0000
-Date:   Tue, 21 Mar 2023 02:10:39 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, ogabbay@kernel.org,
-        airlied@gmail.com, daniel@ffwll.ch,
-        jacek.lawrynowicz@linux.intel.com,
-        stanislaw.gruszka@linux.intel.com
-Cc:     oe-kbuild-all@lists.linux.dev,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>, dafna@fastmail.com,
-        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, quic_ajitpals@quicinc.com,
-        quic_pkanojiy@quicinc.com, quic_carlv@quicinc.com
-Subject: Re: [PATCH v4 6/8] accel/qaic: Add mhi_qaic_cntl
-Message-ID: <202303210148.859DLhtz-lkp@intel.com>
-References: <1679325074-5494-7-git-send-email-quic_jhugo@quicinc.com>
+        Mon, 20 Mar 2023 14:24:26 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4856233465
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 11:17:38 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id h8so50330599ede.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 11:17:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679336256;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WqGMNpSipRdw8b7apACOFeIJhF2ZQ6XFL4UFhdRmF+g=;
+        b=lK2MANal4tGXZhZKtbwxNpYuaIxXP80lnIUqRmeI6tM4jNqHnMrEQ4RgAvzryFYH9X
+         v2Iw/xhqQ/k18W/US5lxoaCSJf/FdMbLZf8q2oICuglzCKfApDUmlE2B9HJVKO3UWng9
+         XC4d04UaO0dITzy6u+HkTg5XHyEC3vGO7QGbHts3QZUKoascyrnkSKq0Wb079VwT6Asd
+         hMcc2dOFb6V+zQDu0AyE4f1t+iFb55Z8zV0S/tCD/RrPwhG0b0kU/1ZrpoK1YKV7vTMc
+         DHDV8fQZmQVfzF7nc03y4ev7Ju8gfRJTfbXPp7maJrOb+UnMZHVwF+Ga7F6Y/zBIFdpn
+         nH5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679336256;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WqGMNpSipRdw8b7apACOFeIJhF2ZQ6XFL4UFhdRmF+g=;
+        b=msj3iMXy2kfgjt6/BhqFore/t49MTgcIdKNXpAMSGGNz0QPsh0RL0Lgu2bjv+F4E83
+         gGHCYz/fuF5Twm93tSkjZ65mXxEd4lw+w0GsS80RlOKAUD8h+wI0TznHvM8yrn7d3/qW
+         yzGLwoYvDl5wLAEIcRr8x3ZTbVzuEPIcrm9IRRPhQcDWlh1wf/jvbpckTn35jf20HETe
+         EBQGH7BS55U+pSYKGE185wHy7zEqJonpcy1WmFBddwsQpSrschxy1IJ3GH2Gz2J1W779
+         t36wKa2B5etimiht2hybXLMtRoSzumNzSZP1ZbbFGYDXnGQ7ggT+Lxdklkh7vJdmNi+k
+         H/UA==
+X-Gm-Message-State: AO0yUKXEEGNvjCVDju8vHbOm0Xi7OlArSZHwX62Tks8NJdwtl6SGHD66
+        09sR8KO3GpY7pmpS8h0On/cV1A==
+X-Google-Smtp-Source: AK7set+jAxInWPfvKmfjeCoZgX+UENXYh0g85MPxYm3aRy8olqD8AUQWKYAOvbqHO1Llh2UldffmbA==
+X-Received: by 2002:aa7:d7c7:0:b0:4fa:e1fd:5a30 with SMTP id e7-20020aa7d7c7000000b004fae1fd5a30mr529020eds.19.1679336256291;
+        Mon, 20 Mar 2023 11:17:36 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id w3-20020a50c443000000b004ac54d4da22sm5302952edf.71.2023.03.20.11.17.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Mar 2023 11:17:35 -0700 (PDT)
+Message-ID: <da49e690-326d-4a94-b4c7-58de25159c6d@linaro.org>
+Date:   Mon, 20 Mar 2023 18:17:31 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1679325074-5494-7-git-send-email-quic_jhugo@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] dt-bindings: nvmem: Drop unneeded quotes
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Vincent Shih <vincent.sunplus@gmail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org,
+        asahi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-mediatek@lists.infradead.org
+References: <20230317233640.3968821-1-robh@kernel.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230317233640.3968821-1-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeffrey,
 
-Thank you for the patch! Perhaps something to improve:
 
-[auto build test WARNING on drm/drm-next]
-[also build test WARNING on lwn/docs-next linus/master v6.3-rc3 next-20230320]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+On 17/03/2023 23:36, Rob Herring wrote:
+> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+> checking for this can be enabled in yamllint.
+> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Jeffrey-Hugo/accel-qaic-Add-documentation-for-AIC100-accelerator-driver/20230320-231611
-base:   git://anongit.freedesktop.org/drm/drm drm-next
-patch link:    https://lore.kernel.org/r/1679325074-5494-7-git-send-email-quic_jhugo%40quicinc.com
-patch subject: [PATCH v4 6/8] accel/qaic: Add mhi_qaic_cntl
-reproduce:
-        make versioncheck
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303210148.859DLhtz-lkp@intel.com/
+Applied thanks,
 
-versioncheck warnings: (new ones prefixed by >>)
-   INFO PATH=/opt/cross/clang/bin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-   /usr/bin/timeout -k 100 3h /usr/bin/make W=1 --keep-going HOSTCC=gcc-11 CC=gcc-11 -j32 ARCH=x86_64 versioncheck
-   find ./* \( -name SCCS -o -name BitKeeper -o -name .svn -o -name CVS -o -name .pc -o -name .hg -o -name .git \) -prune -o \
-   	-name '*.[hcS]' -type f -print | sort \
-   	| xargs perl -w ./scripts/checkversion.pl
->> ./drivers/accel/qaic/mhi_qaic_ctrl.c: 9 linux/version.h not needed.
-   ./drivers/accessibility/speakup/genmap.c: 13 linux/version.h not needed.
-   ./drivers/accessibility/speakup/makemapdata.c: 13 linux/version.h not needed.
-   ./drivers/net/ethernet/qlogic/qede/qede.h: 10 linux/version.h not needed.
-   ./drivers/net/ethernet/qlogic/qede/qede_ethtool.c: 7 linux/version.h not needed.
-   ./drivers/soc/tegra/cbb/tegra-cbb.c: 19 linux/version.h not needed.
-   ./drivers/soc/tegra/cbb/tegra194-cbb.c: 26 linux/version.h not needed.
-   ./drivers/soc/tegra/cbb/tegra234-cbb.c: 27 linux/version.h not needed.
-   ./drivers/staging/media/atomisp/include/linux/atomisp.h: 23 linux/version.h not needed.
-   ./samples/trace_events/trace_custom_sched.c: 11 linux/version.h not needed.
-   ./sound/soc/codecs/cs42l42.c: 14 linux/version.h not needed.
-   ./tools/lib/bpf/bpf_helpers.h: 289: need linux/version.h
-   ./tools/perf/tests/bpf-script-example.c: 60: need linux/version.h
-   ./tools/perf/tests/bpf-script-test-kbuild.c: 21: need linux/version.h
-   ./tools/perf/tests/bpf-script-test-prologue.c: 49: need linux/version.h
-   ./tools/perf/tests/bpf-script-test-relocation.c: 51: need linux/version.h
-   ./tools/testing/selftests/bpf/progs/dev_cgroup.c: 9 linux/version.h not needed.
-   ./tools/testing/selftests/bpf/progs/netcnt_prog.c: 3 linux/version.h not needed.
-   ./tools/testing/selftests/bpf/progs/test_map_lock.c: 4 linux/version.h not needed.
-   ./tools/testing/selftests/bpf/progs/test_send_signal_kern.c: 4 linux/version.h not needed.
-   ./tools/testing/selftests/bpf/progs/test_spin_lock.c: 4 linux/version.h not needed.
-   ./tools/testing/selftests/bpf/progs/test_tcp_estats.c: 37 linux/version.h not needed.
-   ./tools/testing/selftests/wireguard/qemu/init.c: 27 linux/version.h not needed.
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+--srini
+> ---
+>   .../devicetree/bindings/nvmem/allwinner,sun4i-a10-sid.yaml      | 2 +-
+>   Documentation/devicetree/bindings/nvmem/apple,efuses.yaml       | 2 +-
+>   Documentation/devicetree/bindings/nvmem/brcm,nvram.yaml         | 2 +-
+>   Documentation/devicetree/bindings/nvmem/fsl,layerscape-sfp.yaml | 2 +-
+>   Documentation/devicetree/bindings/nvmem/imx-iim.yaml            | 2 +-
+>   Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml          | 2 +-
+>   .../devicetree/bindings/nvmem/ingenic,jz4780-efuse.yaml         | 2 +-
+>   Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml     | 2 +-
+>   .../devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml       | 2 +-
+>   Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml          | 2 +-
+>   Documentation/devicetree/bindings/nvmem/nintendo-otp.yaml       | 2 +-
+>   Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml        | 2 +-
+>   Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml     | 2 +-
+>   Documentation/devicetree/bindings/nvmem/rmem.yaml               | 2 +-
+>   Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml     | 2 +-
+>   .../devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml     | 2 +-
+>   Documentation/devicetree/bindings/nvmem/st,stm32-romem.yaml     | 2 +-
+>   .../devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml         | 2 +-
+>   18 files changed, 18 insertions(+), 18 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/nvmem/allwinner,sun4i-a10-sid.yaml b/Documentation/devicetree/bindings/nvmem/allwinner,sun4i-a10-sid.yaml
+> index 14c170c6a86e..296001e7f498 100644
+> --- a/Documentation/devicetree/bindings/nvmem/allwinner,sun4i-a10-sid.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/allwinner,sun4i-a10-sid.yaml
+> @@ -11,7 +11,7 @@ maintainers:
+>     - Maxime Ripard <mripard@kernel.org>
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml b/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
+> index 5ec8f2bdb3a5..e0860b6b85f3 100644
+> --- a/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
+> @@ -15,7 +15,7 @@ maintainers:
+>     - Sven Peter <sven@svenpeter.dev>
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/brcm,nvram.yaml b/Documentation/devicetree/bindings/nvmem/brcm,nvram.yaml
+> index 25033de3ef6b..36def7128fca 100644
+> --- a/Documentation/devicetree/bindings/nvmem/brcm,nvram.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/brcm,nvram.yaml
+> @@ -20,7 +20,7 @@ maintainers:
+>     - Rafał Miłecki <rafal@milecki.pl>
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/fsl,layerscape-sfp.yaml b/Documentation/devicetree/bindings/nvmem/fsl,layerscape-sfp.yaml
+> index 3b4e6e94cb81..70fb2ad25103 100644
+> --- a/Documentation/devicetree/bindings/nvmem/fsl,layerscape-sfp.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/fsl,layerscape-sfp.yaml
+> @@ -14,7 +14,7 @@ description: |
+>     unique identifier per part.
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/imx-iim.yaml b/Documentation/devicetree/bindings/nvmem/imx-iim.yaml
+> index 7aac1995cfaf..e9d9d8df4811 100644
+> --- a/Documentation/devicetree/bindings/nvmem/imx-iim.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/imx-iim.yaml
+> @@ -14,7 +14,7 @@ description: |
+>     i.MX25, i.MX27, i.MX31, i.MX35, i.MX51 and i.MX53 SoCs.
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml
+> index d0a239d7e199..9876243ff1e8 100644
+> --- a/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml
+> @@ -15,7 +15,7 @@ description: |
+>     i.MX7D/S, i.MX7ULP, i.MX8MQ, i.MX8MM, i.MX8MN and i.MX8MP SoCs.
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/ingenic,jz4780-efuse.yaml b/Documentation/devicetree/bindings/nvmem/ingenic,jz4780-efuse.yaml
+> index fe2cd7f1afba..e89fd879c968 100644
+> --- a/Documentation/devicetree/bindings/nvmem/ingenic,jz4780-efuse.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/ingenic,jz4780-efuse.yaml
+> @@ -10,7 +10,7 @@ maintainers:
+>     - PrasannaKumar Muralidharan <prasannatsmkumar@gmail.com>
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml b/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml
+> index 75e0a516e59a..d16d42fb98b6 100644
+> --- a/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml
+> @@ -15,7 +15,7 @@ maintainers:
+>     - Lala Lin <lala.lin@mediatek.com>
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     $nodename:
+> diff --git a/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml b/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml
+> index c3c96fd0baac..a296d348adb4 100644
+> --- a/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml
+> @@ -15,7 +15,7 @@ description: |
+>     settings, chip identifiers) or user specific data could be stored.
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
+> index ff317fd7c15b..8938eec22b52 100644
+> --- a/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
+> @@ -10,7 +10,7 @@ maintainers:
+>     - Anson Huang <Anson.Huang@nxp.com>
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/nintendo-otp.yaml b/Documentation/devicetree/bindings/nvmem/nintendo-otp.yaml
+> index f93bc50c40d7..6c26800f8b79 100644
+> --- a/Documentation/devicetree/bindings/nvmem/nintendo-otp.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/nintendo-otp.yaml
+> @@ -17,7 +17,7 @@ maintainers:
+>     - Emmanuel Gil Peyrot <linkmauve@linkmauve.fr>
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> index 2173fe82317d..e952907ad1d5 100644
+> --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> @@ -10,7 +10,7 @@ maintainers:
+>     - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+> index e08504ef3b6e..34818683f80c 100644
+> --- a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+> @@ -15,7 +15,7 @@ description: |
+>     to/from the PBUS.
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/rmem.yaml b/Documentation/devicetree/bindings/nvmem/rmem.yaml
+> index a4a755dcfc43..38a39c9b8c1c 100644
+> --- a/Documentation/devicetree/bindings/nvmem/rmem.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/rmem.yaml
+> @@ -10,7 +10,7 @@ maintainers:
+>     - Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml b/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml
+> index febee8129aa9..c5403e149080 100644
+> --- a/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml
+> @@ -10,7 +10,7 @@ maintainers:
+>     - Heiko Stuebner <heiko@sntech.de>
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml b/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml
+> index dc790d2cd9f0..b8bca0599c45 100644
+> --- a/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml
+> @@ -11,7 +11,7 @@ maintainers:
+>     - Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     "#address-cells": true
+> diff --git a/Documentation/devicetree/bindings/nvmem/st,stm32-romem.yaml b/Documentation/devicetree/bindings/nvmem/st,stm32-romem.yaml
+> index 172597cc5c63..a69de3e92282 100644
+> --- a/Documentation/devicetree/bindings/nvmem/st,stm32-romem.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/st,stm32-romem.yaml
+> @@ -16,7 +16,7 @@ maintainers:
+>     - Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml
+> index a7644ebbc2ca..8877c2283e9e 100644
+> --- a/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml
+> @@ -11,7 +11,7 @@ maintainers:
+>     - Vincent Shih <vincent.sunplus@gmail.com>
+>   
+>   allOf:
+> -  - $ref: "nvmem.yaml#"
+> +  - $ref: nvmem.yaml#
+>   
+>   properties:
+>     compatible:
