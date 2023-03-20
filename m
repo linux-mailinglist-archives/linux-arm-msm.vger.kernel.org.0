@@ -2,135 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0634C6C0B07
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 08:04:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C377F6C0B29
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 08:12:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230078AbjCTHD7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 03:03:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39420 "EHLO
+        id S230128AbjCTHMd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 03:12:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230054AbjCTHD5 (ORCPT
+        with ESMTP id S229927AbjCTHMc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 03:03:57 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2DDE1ACF8;
-        Mon, 20 Mar 2023 00:03:56 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4BBA761241;
-        Mon, 20 Mar 2023 07:03:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4946C4339E;
-        Mon, 20 Mar 2023 07:03:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679295835;
-        bh=2H4AQ2SU481Tr1WbHtk4czK916TUGFna3lsTDF/M42w=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=XfxP8nunHNfa8ecRMsWEdiXfHmD+3ANvXwhSFmHl6NgiQ92xGH2ytDTTE30DlnvHp
-         hadk9c0S+gKq7GCAtzOn6GnLcSlti3r1PSZGcJP2LvUJPQHn+bErmMsQb5kuNUGTvP
-         vFiRGpdKIXVLPCz2g0Gh0CSe4bwzy3qd1fqgbJzGI/q9eoswRXG+7U6qedo18nqEn4
-         wDu6oT/0W4krCmW8cweVWUfQDiB5Qi1lQbtOo/DrrcqV5aE45NnM8Ta92roPIWO+gf
-         M8KUsHLXscTFqv4kI3yP3YQru6n/n2P6zbsvfj98q2ASzogKpxJkYYHYMtTAlxVdqr
-         ia3yMYif2LtUA==
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-5418d54d77bso206952367b3.12;
-        Mon, 20 Mar 2023 00:03:55 -0700 (PDT)
-X-Gm-Message-State: AO0yUKVnkWvr6YKHlJyn16VDEpdcLWeqIsTDo6XNriPufb96Hk19yqFa
-        yj1RK7iIG9auxEMcS+OzWNg8PmrW4H3tQz7KTn8=
-X-Google-Smtp-Source: AK7set89bEdjlCM3E14LMT7MClZ73N7FHeqNx6qsP8qKAUb/CfL5+5L5ehdU/HIyQGpQJqFvX9FDilzvmN/lwwuc2Qo=
-X-Received: by 2002:a81:ac25:0:b0:540:e744:13ae with SMTP id
- k37-20020a81ac25000000b00540e74413aemr9881948ywh.3.1679295834577; Mon, 20 Mar
- 2023 00:03:54 -0700 (PDT)
+        Mon, 20 Mar 2023 03:12:32 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E37AD21A3B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 00:12:23 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id fy10-20020a17090b020a00b0023b4bcf0727so11395985pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 00:12:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679296343;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xPJTzAUBl9aQkaatQh9jv7wmEMUxBwZiAFZub+QkGFU=;
+        b=wesqcDIp6CGIDZkttFy2CU6UGJ47kp56J2X9DNeu+p4pf5NQMe4OUzMv79j8IeI4+y
+         4gPEP3f1Cxg1ImguOlmI3/Hb4pD6ZJJXREwkgmYZeuTQlQ67Tx/qQ9e3jzr0sDllh7yy
+         aupO6L7PjeMqeyHHJ9P52Lgg0t4MA5Agm6W63CD1A1StYW4HrzDPbqPXrsBCx8rcvboZ
+         zr1LLvEHFmA5apuWqDJeAGdoDpG7f7JkrnbJ/lLDBuCWJOcvanZku3Z+31zE6dhrotbV
+         7DpwaUpunZDeiyhtvGa3pfWyC8qUcTXMNVG7PtjOf7Gdje6lfV+2exWifqkedTmw/Kkn
+         bCwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679296343;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xPJTzAUBl9aQkaatQh9jv7wmEMUxBwZiAFZub+QkGFU=;
+        b=QEKHb4h14d1dInqemqa5dqBQLqQsVpxYCgpB4mLzagJaJ4BeXh1FMelsZVQxpFl+qm
+         ESnUIno6/0TW7ztCIf7RA76cAuGegLnRzkYDdOz3UhRZnRnCyqHJiA4YGEVdywO5YKzo
+         w7hdVUIuJ+Kb4PIdf3NB+NtkKeM9QQAeYfx5cTeI0ooE49AvzbkYAS/QxCxk77an97wL
+         5jmY7JEaE55zIElAYpFFxiC1TOw13Bzh+a0gLxIfMSVWHHBRs+azicpBaqjdABc/17PO
+         sy3RdM/ERF2dOfsyC6l5W6dSvUlJedKER6rxVcYh+F/P62mcWsA66fXT4almb5TnCL7T
+         s/xQ==
+X-Gm-Message-State: AO0yUKVay0QYfeAI9Vxd1CAfX2K2W2p8ZADjlvOVl7SOBlDL1nEcGIe9
+        e6r5xDMcmjBX2wwB7bxEVPhHeA==
+X-Google-Smtp-Source: AK7set8+GGQ0GBnKezfamELSnYM3iCzRrxwRSznc7c7dTN7KY6YaM6wT3eo4ISJH84tWfbzbSgb/pA==
+X-Received: by 2002:a17:90b:1bc4:b0:23b:bd09:7f0b with SMTP id oa4-20020a17090b1bc400b0023bbd097f0bmr18084040pjb.30.1679296343242;
+        Mon, 20 Mar 2023 00:12:23 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c61:7331:922d:c0be:85c4:f0ae])
+        by smtp.gmail.com with ESMTPSA id m3-20020a63fd43000000b004facdf070d6sm5619477pgj.39.2023.03.20.00.12.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Mar 2023 00:12:22 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        andersson@kernel.org, bhupesh.sharma@linaro.org,
+        bhupesh.linux@gmail.com, vkoul@kernel.org,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, vladimir.zapolskiy@linaro.org
+Subject: [PATCH 1/2] dt-bindings: dma: Add support for SM6115 and QCS2290 SoCs
+Date:   Mon, 20 Mar 2023 12:42:10 +0530
+Message-Id: <20230320071211.3005769-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-References: <1678138443-2760-1-git-send-email-quic_jhugo@quicinc.com>
- <1678138443-2760-9-git-send-email-quic_jhugo@quicinc.com> <5e912413-eee4-5b25-5f6d-00ccc7501b9d@linux.intel.com>
- <daa3100e-8f5b-8dbb-297f-ca3a87b44a97@quicinc.com> <20230317140451.uywz7szrzvusyrjy@houat>
- <d46b8f76-ce60-1c01-edc7-ec227315faf9@quicinc.com>
-In-Reply-To: <d46b8f76-ce60-1c01-edc7-ec227315faf9@quicinc.com>
-From:   Oded Gabbay <ogabbay@kernel.org>
-Date:   Mon, 20 Mar 2023 09:03:28 +0200
-X-Gmail-Original-Message-ID: <CAFCwf11mo2rwTNDUO+7jT0OHJVs+EzxSg4c-pKO3h9V+Un1Ugg@mail.gmail.com>
-Message-ID: <CAFCwf11mo2rwTNDUO+7jT0OHJVs+EzxSg4c-pKO3h9V+Un1Ugg@mail.gmail.com>
-Subject: Re: [PATCH v3 8/8] MAINTAINERS: Add entry for QAIC driver
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     Maxime Ripard <maxime@cerno.tech>,
-        Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-        dafna@fastmail.com, airlied@gmail.com, daniel@ffwll.ch,
-        stanislaw.gruszka@linux.intel.com, dri-devel@lists.freedesktop.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_ajitpals@quicinc.com, quic_pkanojiy@quicinc.com,
-        quic_carlv@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 17, 2023 at 5:46=E2=80=AFPM Jeffrey Hugo <quic_jhugo@quicinc.co=
-m> wrote:
->
-> On 3/17/2023 8:04 AM, Maxime Ripard wrote:
-> > On Thu, Mar 16, 2023 at 11:04:05AM -0600, Jeffrey Hugo wrote:
-> >> On 3/14/2023 3:59 AM, Jacek Lawrynowicz wrote:
-> >>> Hi
-> >>>
-> >>> On 06.03.2023 22:34, Jeffrey Hugo wrote:
-> >>>> Add MAINTAINERS entry for the Qualcomm Cloud AI 100 driver.
-> >>>>
-> >>>> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> >>>> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-> >>>> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.co=
-m>
-> >>>> ---
-> >>>>    MAINTAINERS | 9 +++++++++
-> >>>>    1 file changed, 9 insertions(+)
-> >>>>
-> >>>> diff --git a/MAINTAINERS b/MAINTAINERS
-> >>>> index b0db911..feb2974 100644
-> >>>> --- a/MAINTAINERS
-> >>>> +++ b/MAINTAINERS
-> >>>> @@ -17253,6 +17253,15 @@ F:        Documentation/devicetree/bindings=
-/clock/qcom,*
-> >>>>    F:      drivers/clk/qcom/
-> >>>>    F:      include/dt-bindings/clock/qcom,*
-> >>>> +QUALCOMM CLOUD AI (QAIC) DRIVER
-> >>>> +M:        Jeffrey Hugo <quic_jhugo@quicinc.com>
-> >>>> +L:        linux-arm-msm@vger.kernel.org
-> >>>> +L:        dri-devel@lists.freedesktop.org
-> >>>> +S:        Supported
-> >>>> +F:        Documentation/accel/qaic/
-> >>>> +F:        drivers/accel/qaic/
-> >>>> +F:        include/uapi/drm/qaic_accel.h
-> >>>
-> >>> Aren't you missing repo link?
-> >>> T:  git git://anongit.freedesktop.org/drm/drm-misc
-> >>
-> >> Maarten/Maxime/Thomas are we ok to follow the iVPU example and use drm=
--misc
-> >> for this, or would a separate tree be preferred?
-> >
-> > Yeah, please go ahead with drm-misc
-> >
-> > Do you have commit rights?
->
-> No.  My operating assumption is this series will get merged first, which
-> will then justify having commit rights.  I'm new to DRM, so please
-> educate me if I'm missing something.
->
-> Thanks
->
-> -Jeff
+Add new compatible for BAM DMA engine version v1.7.4 which is
+found on Qualcomm SM6115 and QCS2290 SoCs.
 
-Your assumption is correct. Once it gets merged, I think that's enough
-for you to get commit rights.
-And drm-misc is the place for most of the drivers in drm, so that's
-also completely fine.
+While at it, also update qcom,bam-dma bindings to add comments
+which describe the BAM DMA versions used in SM8150 and SM8250 SoCs.
+This provides an easy reference for identifying the actual BAM DMA
+version available on Qualcomm SoCs.
 
-Thanks,
-Oded
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+index f1ddcf672261..4c8536df98fe 100644
+--- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
++++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+@@ -20,8 +20,10 @@ properties:
+       - qcom,bam-v1.3.0
+         # MSM8974, APQ8074 and APQ8084
+       - qcom,bam-v1.4.0
+-        # MSM8916 and SDM845
++        # MSM8916, SDM845, SM8150 and SM8250
+       - qcom,bam-v1.7.0
++        # SM6115 and QRB2290
++      - qcom,bam-v1.7.4
+ 
+   clocks:
+     maxItems: 1
+-- 
+2.38.1
+
