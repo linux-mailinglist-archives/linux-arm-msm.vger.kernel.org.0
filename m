@@ -2,62 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 989AF6C2069
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 19:54:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A03AF6C208C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 19:57:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230352AbjCTSyS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 14:54:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34224 "EHLO
+        id S231129AbjCTS53 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 14:57:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230050AbjCTSx5 (ORCPT
+        with ESMTP id S229717AbjCTS4z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 14:53:57 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7C9729428;
-        Mon, 20 Mar 2023 11:46:44 -0700 (PDT)
+        Mon, 20 Mar 2023 14:56:55 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25D8B48E31;
+        Mon, 20 Mar 2023 11:49:24 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 1107CCE1268;
-        Mon, 20 Mar 2023 18:41:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF97C433D2;
-        Mon, 20 Mar 2023 18:41:25 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9399761755;
+        Mon, 20 Mar 2023 18:49:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99AAFC433EF;
+        Mon, 20 Mar 2023 18:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679337689;
-        bh=2f37lfeV2uqUCawsoKtMP9QdXPtifZqxFzFW3xEcp8A=;
-        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-        b=lWjFQyEDIo8MQTCiFBBVl1jHJQAxQmCPf74aa6CD2aNlUTBxZk29rMePvw8C6mLZc
-         wrLYKoBIJEJBr84jjiWrDCUAOen5B8fxBAYivmL2MrxnYEaa7BLtJ0yNKhlJyJlhJn
-         mwO2PQGUjdAF//4mjd+cijoCJT/NPCkgIT1s085wg/N6CmLzuCuhpmGN9xNZpRS996
-         QgdIbY2voj2IIg2MFiNX4yGIE86800v/tQ4SJLTjcZCL3l3WbgQyAALlno3xrapB+e
-         J9/eA4VdhrKZiarWIOG/mieT8wjMe8N+wVuD6CJPn5AKpxNeO6gSsg5qN2EH05S8Ga
-         B9glULQd/XfTA==
-From:   Kalle Valo <kvalo@kernel.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
+        s=k20201202; t=1679338159;
+        bh=CZ1ZHhw3PAwUSr1RFLcjb3EwDHIuncqBo8djo22GoX0=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=EYP4qmc6qfu6EjAznMtGQhzvJWIyu3VfimKLlctzdcfkx90GWy1byGmGknYl4Wy5g
+         f+OLUhEcWq38tykmJqJIVnJz28QPzTaDnJ6XIYxqlkkp+9L2WfLHuAXUFWnBl5fsGx
+         vVlpIjPg+eps9cXh5RCYhPtsN+fzjAfxxyGhriaE+Agzrw6x5xDP+/cxv++/m3krAL
+         10jcJcCFpfXnnqwkt5hSPWszQX0vG7p+Eaw4x7M1nSqDFRZYaA6zPrTgxkQpLW1txu
+         Mnw2mcHnjmIvUVv9qyzJ9JAlzkduVPg+8OWsNvJv0HSL8W707B0ZYzsevQ0j3gwXua
+         oC8ObwL0L1waA==
+From:   Mark Brown <broonie@kernel.org>
+To:     Liam Girdwood <lgirdwood@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Benson Leung <bleung@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Saravanan Sekar <sravanhome@gmail.com>,
+        Jagan Teki <jagan@amarulasolutions.com>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org
-Subject: Re: [PATCH 1/3] dt-bindings: wireless: add ath11k pcie bindings
-References: <20230320104658.22186-1-johan+linaro@kernel.org>
-        <20230320104658.22186-2-johan+linaro@kernel.org>
-        <87ttyfhatn.fsf@kernel.org> <ZBhUo1C08U5mp9zP@hovoldconsulting.com>
-Date:   Mon, 20 Mar 2023 20:41:21 +0200
-In-Reply-To: <ZBhUo1C08U5mp9zP@hovoldconsulting.com> (Johan Hovold's message
-        of "Mon, 20 Mar 2023 13:42:11 +0100")
-Message-ID: <87a607fepa.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Luka Perkov <luka.perkov@sartura.hr>,
+        Rob Herring <robh@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        chrome-platform@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        patches@opensource.cirrus.com
+In-Reply-To: <20230317233616.3968003-1-robh@kernel.org>
+References: <20230317233616.3968003-1-robh@kernel.org>
+Subject: Re: [PATCH] regulator: dt-bindings: Drop unneeded quotes
+Message-Id: <167933815234.201304.14593009652707828902.b4-ty@kernel.org>
+Date:   Mon, 20 Mar 2023 18:49:12 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-bd1bf
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -67,50 +82,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ ath11k list
+On Fri, 17 Mar 2023 18:36:14 -0500, Rob Herring wrote:
+> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+> checking for this can be enabled in yamllint.
+> 
+> 
 
-Johan Hovold <johan@kernel.org> writes:
+Applied to
 
-> On Mon, Mar 20, 2023 at 02:22:12PM +0200, Kalle Valo wrote:
->> Johan Hovold <johan+linaro@kernel.org> writes:
->> 
->> > Add devicetree bindings for Qualcomm ath11k PCIe devices such as WCN6856
->> > for which the calibration data variant may need to be described.
->> >
->> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->> > ---
->> >  .../bindings/net/wireless/pci17cb,1103.yaml   | 56 +++++++++++++++++++
->> >  1 file changed, 56 insertions(+)
->> >  create mode 100644
->> > Documentation/devicetree/bindings/net/wireless/pci17cb,1103.yaml
->> 
->> I'm confused (as usual), how does this differ from
->> bindings/net/wireless/qcom,ath11k.yaml? Why we need two .yaml files?
->
-> Almost none of bindings/net/wireless/qcom,ath11k.yaml applies to WCN6856
-> when using PCIe (e.g. as most properties are then discoverable).
->
-> We could try to encode everything in one file, but that would likely
-> just result in a big mess of a schema with conditionals all over.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-Ah, so the current qcom,ath11k.yaml would be only for ath11k AHB devices
-and this new file is only for ath11k PCI devices? But why still the odd
-name pci17cb,1103.yaml? It's not really descriptive and I'm for sure
-will not remember that pci17cb,1103.yaml is for ath11k :)
+Thanks!
 
-Also it doesn't look good that we have qcom,ath11k-calibration-variant
-documented twice now. I'm no DT expert but isn't there any other way? Is
-it possible to include other files? For example, if we would have three
-files:
+[1/1] regulator: dt-bindings: Drop unneeded quotes
+      commit: cff5c895137cb5c3d48811881f111b17c444e2d5
 
-qcom,ath11k.yaml
-qcom,ath11k-ahb.yaml
-qcom,ath11k-pci.yaml
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-Then have the common properties like ath11k-calibration-variant in the
-first file and ahb/pci files would include that.
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
