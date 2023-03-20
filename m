@@ -2,91 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F1816C1F2E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 19:12:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 175746C1F4C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 19:16:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231136AbjCTSMd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 14:12:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47298 "EHLO
+        id S230476AbjCTSQV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 14:16:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230378AbjCTSMR (ORCPT
+        with ESMTP id S230479AbjCTSPy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 14:12:17 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8647A43467;
-        Mon, 20 Mar 2023 11:06:20 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id t17-20020a05600c451100b003edc906aeeaso1873999wmo.1;
-        Mon, 20 Mar 2023 11:06:20 -0700 (PDT)
+        Mon, 20 Mar 2023 14:15:54 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D27649F3;
+        Mon, 20 Mar 2023 11:09:58 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id n2so14211254qtp.0;
+        Mon, 20 Mar 2023 11:09:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679335557;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qovCtxHIhDjR5z8X/goS0zamNvJumBaq8hkkid2b0Tk=;
-        b=bj32SbhOYrf1MwTLc85rZOoVpreALwN32JNmelOm+FWPYvERh/ppvTQWhxgaVewQiy
-         sLr2uQj9GhuuC8x9FuB7/0hP2Ej3U5Al6/Ul8rujw/c4cIfcKBWfpLu1fKkoLn0Az62z
-         G6AX3JjdbbS/N6qaLGKU6UihZngo5Ch/TCZMy1S9AspInSNTltUyuSjgGq4ExKLpfMkl
-         wkBtK1RZDlXKFaGAEd2vpwzrwuYxPOnI48DZer/u3RQkol9rAZXh5VWWI5Wl86Mp7jAP
-         BgOQwP328giT0GOgtPJnTB/B0DxDDCN7Lf3BJwQ+Rd8O0IxnhRGLexh2Y1xZFfZ1/vmb
-         HmQQ==
+        d=gmail.com; s=20210112; t=1679335763;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9Ym0Aa6IJr35fCbX8wJyITkzyONp9K1eXcn9gLrMKEM=;
+        b=jV+wT9G9dMq++VXoHOITcaMwSKfT7Ne8l6voVfiCeH20VK0uzRJIf9CA2v8jn1mE42
+         9De/qJTXiN3NlwKDdk7NArH7WT5H+4m7s71wZTV+2BygDTiQuwk+mRLMpRhBukxFua9x
+         67hE9fL+3OgJ1dTRBMXtTwDXEznGIlnqEuoH6BXNz+DtDWm5LZSaKbCnlxFhePXKvQQw
+         biWPqZK1eoCZ6HeXFY1w+DmsNHS4W090fENE/el13ZE/cuRLHNVC7Li/p30/Ai1N8xhv
+         3ejM9NTyAoTh9dtKbufIgtWOwd6srKtNAzDZ9KiKE0PTE7Lb1wYokPUbe9HLqHLVnTp7
+         mdLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679335557;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qovCtxHIhDjR5z8X/goS0zamNvJumBaq8hkkid2b0Tk=;
-        b=Ej/XfRpr8uMvdYizFOBpY4qclUsbu7mObS12gj0CB9quVPg4LgD8PV6n7lVcl4XVxK
-         eGoymbfEpNPQ8G4FPKyBQEhbuiK0fzY04V3rOu6gT5hBeQTwaN7QqIfpzl6RnJ24U721
-         1bKNpIv+44G0NZoHWHRAGWoSIMyMyhtbSQ63FFxA7KYcUrh4d8V/x8FZP7BMQs2kvE/8
-         j5pL1kxH8MP9iNwwpl5qS6otBCDwwYViBDASNhYAFBIIlvH3M+JI4F+S1AXJRfNvtQZO
-         uYzQv/Bk6G/TeT0Caxa3t+p53kadcQh1cY7lu1tRz8SFg9Jl1BHXm1AE+T0UsyDnbGjf
-         3EkQ==
-X-Gm-Message-State: AO0yUKWcFal4Ah8Mpnt8LEkCCI127lHq9+JG1qn0RKyKiETICo7OzUCV
-        VjZ5c8tcf0LNncCRGQlNfiM=
-X-Google-Smtp-Source: AK7set9M7n47ivxwTUlCC32MV4CdFuRaSwXTCh6g3payQgyQeP9Rq3Azb7+JBgZfR4gy7ifkMULB0g==
-X-Received: by 2002:a7b:c454:0:b0:3ed:e447:1ed0 with SMTP id l20-20020a7bc454000000b003ede4471ed0mr374765wmi.14.1679335557239;
-        Mon, 20 Mar 2023 11:05:57 -0700 (PDT)
-Received: from Ansuel-xps. (93-34-89-197.ip49.fastwebnet.it. [93.34.89.197])
-        by smtp.gmail.com with ESMTPSA id q8-20020a1cf308000000b003ed4f6c6234sm11139577wmq.23.2023.03.20.11.05.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Mar 2023 11:05:56 -0700 (PDT)
-Message-ID: <6418a084.1c0a0220.de9c1.53e4@mx.google.com>
-X-Google-Original-Message-ID: <ZBiggnNsWspWJ/Fh@Ansuel-xps.>
-Date:   Mon, 20 Mar 2023 19:05:54 +0100
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Michal Kubiak <michal.kubiak@intel.com>
-Cc:     Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
+        d=1e100.net; s=20210112; t=1679335763;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9Ym0Aa6IJr35fCbX8wJyITkzyONp9K1eXcn9gLrMKEM=;
+        b=NHVzLYtMKdmsPkDgLcR0Hyt1XcwdYrZ7B7LtiPC1O0eiQeXLJE5a8q32RtCpnnmmcY
+         YDaKHsVM/VhH+pG+zQiieMGHhVbRjsaKATzEHtRTJ4gKGW06JAGUfSN6rIZLaYqi7tqh
+         t+gFFGmvcfDeZ0qH+ezUoIlCOCTBWgzCB5dP27sPitDx4P+NVwho/KiD+X6rUDZbjHQs
+         f6RknlOTBlTlNKxTHaUhHQ9+pMx8c8Qs1tiz5Y0XvTMy4uxsPG3ldAP8FmILHFuc+8Pv
+         z3T9KNERiVevWE4bZoEtZ5RYteukkWoO03Wg8R5it6IFxHrf3Y6Xz+r+YAa7IrQy+3MI
+         hYVQ==
+X-Gm-Message-State: AO0yUKV2sbjaC3xcTteESAd6/v2KVSJxbC5aao3XsB06ipmsbiP85cIq
+        nHlxVfLjV7/9+hgRoh/YVuY=
+X-Google-Smtp-Source: AK7set/rOHA8qVlayMALPx0FGjCcSWh/Kq1WvV8aodxfR3XsSBymHa1dS0evHblRHeVucdEeSCUF5g==
+X-Received: by 2002:a05:622a:190e:b0:3d7:1979:829e with SMTP id w14-20020a05622a190e00b003d71979829emr125230qtc.27.1679335763440;
+        Mon, 20 Mar 2023 11:09:23 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id l16-20020ac84a90000000b003d4ee7879d0sm2042741qtq.56.2023.03.20.11.09.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Mar 2023 11:09:22 -0700 (PDT)
+Message-ID: <82ae9fd5-a4f9-89a6-8040-c64d22a85ebb@gmail.com>
+Date:   Mon, 20 Mar 2023 11:08:56 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH] dt-bindings: net: Drop unneeded quotes
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>,
         "David S. Miller" <davem@davemloft.net>,
         Eric Dumazet <edumazet@google.com>,
         Jakub Kicinski <kuba@kernel.org>,
         Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        =?UTF-8?Q?Andreas_F=c3=a4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Joel Stanley <joel@jms.id.au>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Appana Durga Kedareswara rao <appana.durga.rao@xilinx.com>,
+        Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
+        Wolfgang Grandegger <wg@grandegger.com>,
+        Marc Kleine-Budde <mkl@pengutronix.de>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Vladimir Oltean <olteanv@gmail.com>,
         Heiner Kallweit <hkallweit1@gmail.com>,
         Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        Tobias Waldekranz <tobias@waldekranz.com>,
+        Lars Povlsen <lars.povlsen@microchip.com>,
+        Steen Hegelund <Steen.Hegelund@microchip.com>,
+        Daniel Machon <daniel.machon@microchip.com>,
+        UNGLinuxDriver@microchip.com, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Heiko Stuebner <heiko@sntech.de>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org
-Subject: Re: [net-next PATCH v5 02/15] net: dsa: qca8k: add LEDs basic support
-References: <20230319191814.22067-1-ansuelsmth@gmail.com>
- <20230319191814.22067-3-ansuelsmth@gmail.com>
- <ZBiKDX/WJPfJey/+@localhost.localdomain>
- <64188af6.050a0220.c5fe1.1d96@mx.google.com>
- <ZBicg28JwVLugzqz@localhost.localdomain>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZBicg28JwVLugzqz@localhost.localdomain>
+        linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-sunxi@lists.linux.dev, linux-aspeed@lists.ozlabs.org,
+        linux-can@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-mediatek@lists.infradead.org
+References: <20230317233605.3967621-1-robh@kernel.org>
+From:   Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230317233605.3967621-1-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -95,73 +118,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 20, 2023 at 06:48:51PM +0100, Michal Kubiak wrote:
-> On Mon, Mar 20, 2023 at 05:33:56PM +0100, Christian Marangi wrote:
-> > 
-> > Btw ok for the description of the LED mapping? It's a bit complex so
-> > tried to do my best to describe them.
-> > 
+On 3/17/23 16:36, Rob Herring wrote:
+> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+> checking for this can be enabled in yamllint.
 > 
-> Yes, now it is much easier to understand the logic behind LED mapping.
-> Thanks for adding that! I think it will save some time for anyone who
-> will be working with that code in the future.
-> 
-> The only thing I still do not understand is the initial 14 bit shift:
-> 
-> >	if (led->port_num == 0 || led->port_num == 4) {
-> >		mask = QCA8K_LED_PATTERN_EN_MASK;
-> >		val <<= QCA8K_LED_PATTERN_EN_SHIFT;
-> 
-> For example, according to the code above, for port 4:
-> 	- the value is shifted by 14 bits - to bits (15,14)
-> 	- mask is also set to bits (15,14)
-> 	- then, both mask and value are shifted again by 16 bits:
-> 
-> >		return regmap_update_bits(priv->regmap, reg_info.reg,
-> >					  mask << reg_info.shift,
-> >					  val << reg_info.shift);
-> 
-> because reg_info.shift == QCA8K_LED_PHY4_CONTROL_RULE_SHIFT == 16 for
-> port_num == 4.
-> 
-> It means, in fact, for controlling port 4 we use bits (31,30) which
-> seems to be inconsistent with your comment below.
-> 
-> >	 * To control port 4:
-> >	 * - the 2 bit (17, 16) of:
-> >	 *   - QCA8K_LED_CTRL0_REG for led1
-> >	 *   - QCA8K_LED_CTRL1_REG for led2
-> >	 *   - QCA8K_LED_CTRL2_REG for led3
-> >	 *
-> 
-> Are values for ports 0 and 4 correct in your description in
-> "qca8k_led_brightness_set()"?
-> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>   .../devicetree/bindings/net/actions,owl-emac.yaml  |  2 +-
+>   .../bindings/net/allwinner,sun4i-a10-emac.yaml     |  2 +-
+>   .../bindings/net/allwinner,sun4i-a10-mdio.yaml     |  2 +-
+>   .../devicetree/bindings/net/altr,tse.yaml          |  2 +-
+>   .../bindings/net/aspeed,ast2600-mdio.yaml          |  2 +-
+>   .../devicetree/bindings/net/brcm,amac.yaml         |  2 +-
+>   .../devicetree/bindings/net/brcm,systemport.yaml   |  2 +-
 
-Code is correct, comment is not.
-
-QCA8K_LED_CTRL0_REG is split in 2 part.
-- first 16 bit for phy0
-- second part (31, 16) for phy4
-
-In these 16 half there are the bit that control the hw control blink
-rules AND on the last 2 part of the half, the bit that control the state
-of the LED (off, on, always-blink, hw control)
-
-So I just didn't add on top of that MASK the required shift for
-QCA8K_LED_PATTERN_EN_SHIFT.
-
-so for phy0
-
-GENMASK(1, 0) << QCA8K_LED_PATTERN_EN_SHIFT << QCA8K_LED_PHY0123_CONTROL_RULE_SHIFT
-GENMASK(1, 0) << 14 << 0 
-
-for phy4
-
-GENMASK(1, 0) << QCA8K_LED_PATTERN_EN_SHIFT << QCA8K_LED_PHY4_CONTROL_RULE_SHIFT
-GENMASK(1, 0) << 14 << 16
-
-Thanks for the other review tag, will fix the last bit in v6.
-
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
 -- 
-	Ansuel
+Florian
+
