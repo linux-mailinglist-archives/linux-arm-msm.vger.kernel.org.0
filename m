@@ -2,68 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E7876C0AD7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 07:46:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0634C6C0B07
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 08:04:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229994AbjCTGq4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 02:46:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50228 "EHLO
+        id S230078AbjCTHD7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 03:03:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229635AbjCTGqy (ORCPT
+        with ESMTP id S230054AbjCTHD5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 02:46:54 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C81E2D40
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Mar 2023 23:46:53 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id e15-20020a17090ac20f00b0023d1b009f52so15370787pjt.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Mar 2023 23:46:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679294812;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VaxDrE6sBelofBs54+Z3CMb25A0XT3Une6FS0Y2mEhs=;
-        b=wi1+mN7GaJ4u0+hEKsy2oofsDrcs6R+8hM3lxZTB/rB1m0ZSCgQNTvHwNpL0xU9xfi
-         EaCqhXmw5isP6bSykPi5nvg/EzBDaZ9JpjJGnVC0RR1oAhyH48CrC4MHsnEfq6a6nT7R
-         OW3wNgX/H7dKYHNbIV7DKn90XtRCqYPj0kRaE+r7giVBYfywylF/VPqa3TQ0IdjV7IbJ
-         PRJeEai8K8rBpwEUgvp1vsjrxSRCrqzsoJD4NIidOmBROS0H8HOtRcQhCLTFZ3iMuZtm
-         9NdTo9cEc17eueWVv876JiJLgFRxnVVRVCEp72dugpnDwfdLIkuugLujXF+4ndBfGyAm
-         TMJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679294812;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VaxDrE6sBelofBs54+Z3CMb25A0XT3Une6FS0Y2mEhs=;
-        b=AYM4heC2N2Ut1JLOqNXmUWlDjOWyRnB4YeDOM+J09RVi43i3LRNkx+ln+3VM3DhUTt
-         WjrDx4eTSXCFkWsDgiqAXbebCWZsJzNSf5k5LVsUfm1h9B9tLB14/c1xgdEOg1MpJpwJ
-         66fv9w0FsCGYIrAHVWFy6MyV8N7jsCWNdoQdci1Apeg4EgEJQNGPkrR2dFcTtKMf6w3T
-         SL3che4vW5TYx5DfMm8LcMYOVCj+yghmneDVc7TNV8YuXm6JHBDnQsrk6pF3hV3Gs08s
-         WVR/lhWDDHYEQ+iuagpOAsNrdX+wTFiS8Ivutcku3lSZ8KOfJK/ho4n9CSKuvut+wG3R
-         Hz2Q==
-X-Gm-Message-State: AO0yUKU+ivQxD5LpFY8o4t86lGofIthk2F2m2135vcjAss2GS9A8NjHB
-        K8hhGljxH7Q4FKTBhSP7XI0k
-X-Google-Smtp-Source: AK7set+3SI3wk2EsbMEEQTr9wQv3GdLpwqjTZWBEPt2as3AtF1LSd86q/Bqa+7hWcN4ylIGkqU0tYQ==
-X-Received: by 2002:a17:902:db07:b0:1a1:d949:a52d with SMTP id m7-20020a170902db0700b001a1d949a52dmr635544plx.65.1679294812417;
-        Sun, 19 Mar 2023 23:46:52 -0700 (PDT)
-Received: from localhost.localdomain ([59.97.54.141])
-        by smtp.gmail.com with ESMTPSA id p7-20020a1709028a8700b001a1860da968sm5793382plo.178.2023.03.19.23.46.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Mar 2023 23:46:51 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     lpieralisi@kernel.org, kw@linux.com
-Cc:     robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        johan+linaro@kernel.org, steev@kali.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2] PCI: qcom: Add async probe support
-Date:   Mon, 20 Mar 2023 12:16:44 +0530
-Message-Id: <20230320064644.5217-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Mon, 20 Mar 2023 03:03:57 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2DDE1ACF8;
+        Mon, 20 Mar 2023 00:03:56 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4BBA761241;
+        Mon, 20 Mar 2023 07:03:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4946C4339E;
+        Mon, 20 Mar 2023 07:03:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679295835;
+        bh=2H4AQ2SU481Tr1WbHtk4czK916TUGFna3lsTDF/M42w=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=XfxP8nunHNfa8ecRMsWEdiXfHmD+3ANvXwhSFmHl6NgiQ92xGH2ytDTTE30DlnvHp
+         hadk9c0S+gKq7GCAtzOn6GnLcSlti3r1PSZGcJP2LvUJPQHn+bErmMsQb5kuNUGTvP
+         vFiRGpdKIXVLPCz2g0Gh0CSe4bwzy3qd1fqgbJzGI/q9eoswRXG+7U6qedo18nqEn4
+         wDu6oT/0W4krCmW8cweVWUfQDiB5Qi1lQbtOo/DrrcqV5aE45NnM8Ta92roPIWO+gf
+         M8KUsHLXscTFqv4kI3yP3YQru6n/n2P6zbsvfj98q2ASzogKpxJkYYHYMtTAlxVdqr
+         ia3yMYif2LtUA==
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-5418d54d77bso206952367b3.12;
+        Mon, 20 Mar 2023 00:03:55 -0700 (PDT)
+X-Gm-Message-State: AO0yUKVnkWvr6YKHlJyn16VDEpdcLWeqIsTDo6XNriPufb96Hk19yqFa
+        yj1RK7iIG9auxEMcS+OzWNg8PmrW4H3tQz7KTn8=
+X-Google-Smtp-Source: AK7set89bEdjlCM3E14LMT7MClZ73N7FHeqNx6qsP8qKAUb/CfL5+5L5ehdU/HIyQGpQJqFvX9FDilzvmN/lwwuc2Qo=
+X-Received: by 2002:a81:ac25:0:b0:540:e744:13ae with SMTP id
+ k37-20020a81ac25000000b00540e74413aemr9881948ywh.3.1679295834577; Mon, 20 Mar
+ 2023 00:03:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+References: <1678138443-2760-1-git-send-email-quic_jhugo@quicinc.com>
+ <1678138443-2760-9-git-send-email-quic_jhugo@quicinc.com> <5e912413-eee4-5b25-5f6d-00ccc7501b9d@linux.intel.com>
+ <daa3100e-8f5b-8dbb-297f-ca3a87b44a97@quicinc.com> <20230317140451.uywz7szrzvusyrjy@houat>
+ <d46b8f76-ce60-1c01-edc7-ec227315faf9@quicinc.com>
+In-Reply-To: <d46b8f76-ce60-1c01-edc7-ec227315faf9@quicinc.com>
+From:   Oded Gabbay <ogabbay@kernel.org>
+Date:   Mon, 20 Mar 2023 09:03:28 +0200
+X-Gmail-Original-Message-ID: <CAFCwf11mo2rwTNDUO+7jT0OHJVs+EzxSg4c-pKO3h9V+Un1Ugg@mail.gmail.com>
+Message-ID: <CAFCwf11mo2rwTNDUO+7jT0OHJVs+EzxSg4c-pKO3h9V+Un1Ugg@mail.gmail.com>
+Subject: Re: [PATCH v3 8/8] MAINTAINERS: Add entry for QAIC driver
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     Maxime Ripard <maxime@cerno.tech>,
+        Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+        dafna@fastmail.com, airlied@gmail.com, daniel@ffwll.ch,
+        stanislaw.gruszka@linux.intel.com, dri-devel@lists.freedesktop.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_ajitpals@quicinc.com, quic_pkanojiy@quicinc.com,
+        quic_carlv@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,34 +72,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qcom PCIe RC driver waits for the PHY link to be up during the probe. This
-consumes several milliseconds during boot. So add async probe support so
-that other drivers can load in parallel while this driver waits for the
-link to be up.
+On Fri, Mar 17, 2023 at 5:46=E2=80=AFPM Jeffrey Hugo <quic_jhugo@quicinc.co=
+m> wrote:
+>
+> On 3/17/2023 8:04 AM, Maxime Ripard wrote:
+> > On Thu, Mar 16, 2023 at 11:04:05AM -0600, Jeffrey Hugo wrote:
+> >> On 3/14/2023 3:59 AM, Jacek Lawrynowicz wrote:
+> >>> Hi
+> >>>
+> >>> On 06.03.2023 22:34, Jeffrey Hugo wrote:
+> >>>> Add MAINTAINERS entry for the Qualcomm Cloud AI 100 driver.
+> >>>>
+> >>>> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> >>>> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+> >>>> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.co=
+m>
+> >>>> ---
+> >>>>    MAINTAINERS | 9 +++++++++
+> >>>>    1 file changed, 9 insertions(+)
+> >>>>
+> >>>> diff --git a/MAINTAINERS b/MAINTAINERS
+> >>>> index b0db911..feb2974 100644
+> >>>> --- a/MAINTAINERS
+> >>>> +++ b/MAINTAINERS
+> >>>> @@ -17253,6 +17253,15 @@ F:        Documentation/devicetree/bindings=
+/clock/qcom,*
+> >>>>    F:      drivers/clk/qcom/
+> >>>>    F:      include/dt-bindings/clock/qcom,*
+> >>>> +QUALCOMM CLOUD AI (QAIC) DRIVER
+> >>>> +M:        Jeffrey Hugo <quic_jhugo@quicinc.com>
+> >>>> +L:        linux-arm-msm@vger.kernel.org
+> >>>> +L:        dri-devel@lists.freedesktop.org
+> >>>> +S:        Supported
+> >>>> +F:        Documentation/accel/qaic/
+> >>>> +F:        drivers/accel/qaic/
+> >>>> +F:        include/uapi/drm/qaic_accel.h
+> >>>
+> >>> Aren't you missing repo link?
+> >>> T:  git git://anongit.freedesktop.org/drm/drm-misc
+> >>
+> >> Maarten/Maxime/Thomas are we ok to follow the iVPU example and use drm=
+-misc
+> >> for this, or would a separate tree be preferred?
+> >
+> > Yeah, please go ahead with drm-misc
+> >
+> > Do you have commit rights?
+>
+> No.  My operating assumption is this series will get merged first, which
+> will then justify having commit rights.  I'm new to DRM, so please
+> educate me if I'm missing something.
+>
+> Thanks
+>
+> -Jeff
 
-Suggested-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
+Your assumption is correct. Once it gets merged, I think that's enough
+for you to get commit rights.
+And drm-misc is the place for most of the drivers in drm, so that's
+also completely fine.
 
-Changes in v2:
-
-* Rebased on top of v6.3-rc1
-
- drivers/pci/controller/dwc/pcie-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index a232b04af048..4ca357be88e0 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1862,6 +1862,7 @@ static struct platform_driver qcom_pcie_driver = {
- 		.name = "qcom-pcie",
- 		.suppress_bind_attrs = true,
- 		.of_match_table = qcom_pcie_match,
-+		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
- 	},
- };
- builtin_platform_driver(qcom_pcie_driver);
--- 
-2.25.1
-
+Thanks,
+Oded
