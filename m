@@ -2,177 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16EF86C1583
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 15:50:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B14E26C1590
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 15:52:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231702AbjCTOuK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 10:50:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55148 "EHLO
+        id S231947AbjCTOwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 10:52:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229639AbjCTOth (ORCPT
+        with ESMTP id S231949AbjCTOvo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 10:49:37 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5409323A68
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 07:47:53 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id i5so820902eda.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 07:47:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679323641;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QD7ylI6TVHUGdBJgMovYJYcYKC/vfqGxmwJNLbiL6ds=;
-        b=PkVWnB6X3c63HHvavZdeVbDn3Tx36qitT0fT6ic0Its1qN+eoMlxng6rqKjwWQDFyY
-         whXJcFWvxPa9cqiHXs2Kkgw3YrCnW03UTs96YcZpLxXHD3EgHAON0LddK5jOZAmlXcV7
-         S9TN/x2Y7cv1gHcJglVbmEyqWwlz2yXkcnC4r9WjqwFifBQedcDJYrO1AGJCARZfhjqX
-         PXXPU2e/kM7Srb3kfYIwp/us0ZjYp7bu3xKgggdzmKmV3S5jR6vkd+locDC4tnj3GWVH
-         +QD3N6tKee/XwzPoBx3DbsqIaq5j8jZqKJsewEm+i2QKDgyqR3WwCp6wH0ZURIYb7YbN
-         oEQA==
+        Mon, 20 Mar 2023 10:51:44 -0400
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1DBC2A99A;
+        Mon, 20 Mar 2023 07:50:10 -0700 (PDT)
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-17aa62d0a4aso13302709fac.4;
+        Mon, 20 Mar 2023 07:50:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679323641;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QD7ylI6TVHUGdBJgMovYJYcYKC/vfqGxmwJNLbiL6ds=;
-        b=g3v7vW9hdDPXCWxeJcaVx5vn/ZDOg/JvUDfOIY/diN7bLzIRh9ZHJU736Dk4uVVnkA
-         OHfHiCXdkgi8FZ+r5ao0zTbErjl6GdMkHXCwZ16JqnWCRWfXgDQ/jXqYYL/WdbZ8hC8f
-         0sI6qKz6E/9lol5Pn1ZkFY6i9bibIlsRNQ6d5PsC1EU4/5C+MYws2MaPl9f5FmIHD/rI
-         Yi1vYW9LIz/t1VvjhdFzdrlUZ9VdNJUYnLhT5aiFxbRr+YKYLv9ofI0zlaZtI3hIq2BZ
-         HZXpzPJ3GJJBlJx9aaAdpRHXNEyOhaKnyd9pCJQKnDjqDv3APpcMDimKVTCNfO22mbAQ
-         Br/g==
-X-Gm-Message-State: AO0yUKWUzwYJ4KYXYQ4flpfcmRGlij8ZEA9xiyAPTmHPJ604D1gl+eZw
-        vC5tgnxjY0+4d6tQTjxbCjli9w==
-X-Google-Smtp-Source: AK7set9AXmDHkrfGSpB3Wj9T0K1GNyabMNZ0AJIw+bnZjLcG3lQNkav0xtkhhLFt0gjqJA/tL7ycxw==
-X-Received: by 2002:a05:6402:7c3:b0:4fa:4b1c:5ea3 with SMTP id u3-20020a05640207c300b004fa4b1c5ea3mr12880116edy.23.1679323641641;
-        Mon, 20 Mar 2023 07:47:21 -0700 (PDT)
-Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id x2-20020a50ba82000000b004fb30fc1dabsm4913172ede.96.2023.03.20.07.47.20
+        d=1e100.net; s=20210112; t=1679323784;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=24gLtemlwEwclYk97xQS3tgIiOLty5AImjT/aeDGFUU=;
+        b=OwgEJApZxGZEEEwdblDsB3ZaQxjElwpHGGuBAzOdzg2yNCmCuJjdhzpC/lS9LD6gR9
+         HUZt/gN91IlQY3r0a2/6fi1uNAf/FYZ87EVFkpyn6zqTdWnUOZIjGHHplH8gn0fTTIms
+         zvwDBKMaSYua1JfQQxq/B00jVUUYYEI2WklLQLuzsdPhTCrdpq0x6lEyKCfQgn9zGqaI
+         80gNEJHc8kiFXkWuEij0uBVmoHlMKLaGL971sGghzQcuN16LUYSRi7vYSc1K/62Cp8S1
+         DDd/JSm/hu/qw04xzcmqivT3ZdbmoJWPnUsRXLciSHG0zH4d/tjYczcNGk+827bNCFaI
+         m47Q==
+X-Gm-Message-State: AO0yUKWmoy+GCeZdnGxqyQQ6KQqy57sZrOSulMJVhYLY+8ggRsjHqUSF
+        4MY0ef4KbujJAPLoCHFlyw==
+X-Google-Smtp-Source: AK7set+RqlXkEMahjquygOnExk5k9/cbtl8ORARJq5x3F2i+ux3p2b42vHbNFUCMROqdgqtZnFU/nA==
+X-Received: by 2002:a05:6870:8a1e:b0:17a:a825:6be9 with SMTP id p30-20020a0568708a1e00b0017aa8256be9mr5620143oaq.43.1679323783824;
+        Mon, 20 Mar 2023 07:49:43 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id t1-20020a9d7741000000b0068bc48c61a5sm140647otl.19.2023.03.20.07.49.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Mar 2023 07:47:21 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Mon, 20 Mar 2023 07:49:43 -0700 (PDT)
+Received: (nullmailer pid 1616110 invoked by uid 1000);
+        Mon, 20 Mar 2023 14:49:42 -0000
+Date:   Mon, 20 Mar 2023 09:49:42 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     devicetree@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>
-Subject: [RESEND PATCH v9 2/2] PCI: qcom: Add SM8550 PCIe support
-Date:   Mon, 20 Mar 2023 16:46:58 +0200
-Message-Id: <20230320144658.1794991-2-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230320144658.1794991-1-abel.vesa@linaro.org>
-References: <20230320144658.1794991-1-abel.vesa@linaro.org>
+        linux-arm-msm@vger.kernel.org, Lee Jones <lee@kernel.org>
+Subject: Re: [PATCH 04/14] dt-bindings: mfd: qcom,spmi-pmic: add compatible
+ for pmm8654au
+Message-ID: <167932378237.1616052.3467011584315312595.robh@kernel.org>
+References: <20230314183043.619997-1-brgl@bgdev.pl>
+ <20230314183043.619997-5-brgl@bgdev.pl>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230314183043.619997-5-brgl@bgdev.pl>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible for both PCIe found on SM8550.
-Also add the noc_aggr and cnoc_sf_axi clocks needed by the SM8550.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
----
+On Tue, 14 Mar 2023 19:30:33 +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> PMM8654au is the SPMI PMIC variant used on sa8775p-ride. Add a compatible
+> for it.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Cc: Lee Jones <lee@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-This patch is a resend of the following:
-https://lore.kernel.org/all/20230208180020.2761766-11-abel.vesa@linaro.org/
-
-No changes since then.
-
- drivers/pci/controller/dwc/pcie-qcom.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index a232b04af048..6a70c9c6f98d 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -182,10 +182,10 @@ struct qcom_pcie_resources_2_3_3 {
- 
- /* 6 clocks typically, 7 for sm8250 */
- struct qcom_pcie_resources_2_7_0 {
--	struct clk_bulk_data clks[12];
-+	struct clk_bulk_data clks[14];
- 	int num_clks;
- 	struct regulator_bulk_data supplies[2];
--	struct reset_control *pci_reset;
-+	struct reset_control *rst;
- };
- 
- struct qcom_pcie_resources_2_9_0 {
-@@ -1177,9 +1177,9 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
- 	unsigned int idx;
- 	int ret;
- 
--	res->pci_reset = devm_reset_control_get_exclusive(dev, "pci");
--	if (IS_ERR(res->pci_reset))
--		return PTR_ERR(res->pci_reset);
-+	res->rst = devm_reset_control_array_get_exclusive(dev);
-+	if (IS_ERR(res->rst))
-+		return PTR_ERR(res->rst);
- 
- 	res->supplies[0].supply = "vdda";
- 	res->supplies[1].supply = "vddpe-3v3";
-@@ -1205,9 +1205,11 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
- 	res->clks[idx++].id = "ddrss_sf_tbu";
- 	res->clks[idx++].id = "aggre0";
- 	res->clks[idx++].id = "aggre1";
-+	res->clks[idx++].id = "noc_aggr";
- 	res->clks[idx++].id = "noc_aggr_4";
- 	res->clks[idx++].id = "noc_aggr_south_sf";
- 	res->clks[idx++].id = "cnoc_qx";
-+	res->clks[idx++].id = "cnoc_sf_axi";
- 
- 	num_opt_clks = idx - num_clks;
- 	res->num_clks = idx;
-@@ -1237,17 +1239,17 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
- 	if (ret < 0)
- 		goto err_disable_regulators;
- 
--	ret = reset_control_assert(res->pci_reset);
--	if (ret < 0) {
--		dev_err(dev, "cannot assert pci reset\n");
-+	ret = reset_control_assert(res->rst);
-+	if (ret) {
-+		dev_err(dev, "reset assert failed (%d)\n", ret);
- 		goto err_disable_clocks;
- 	}
- 
- 	usleep_range(1000, 1500);
- 
--	ret = reset_control_deassert(res->pci_reset);
--	if (ret < 0) {
--		dev_err(dev, "cannot deassert pci reset\n");
-+	ret = reset_control_deassert(res->rst);
-+	if (ret) {
-+		dev_err(dev, "reset deassert failed (%d)\n", ret);
- 		goto err_disable_clocks;
- 	}
- 
-@@ -1841,6 +1843,7 @@ static const struct of_device_id qcom_pcie_match[] = {
- 	{ .compatible = "qcom,pcie-sm8350", .data = &cfg_1_9_0 },
- 	{ .compatible = "qcom,pcie-sm8450-pcie0", .data = &cfg_1_9_0 },
- 	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &cfg_1_9_0 },
-+	{ .compatible = "qcom,pcie-sm8550", .data = &cfg_1_9_0 },
- 	{ }
- };
- 
--- 
-2.34.1
+Acked-by: Rob Herring <robh@kernel.org>
 
