@@ -2,229 +2,474 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EDD8B6C113A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 12:52:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 87DC46C114B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 12:56:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231277AbjCTLwt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 07:52:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36316 "EHLO
+        id S231318AbjCTL4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 07:56:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230366AbjCTLws (ORCPT
+        with ESMTP id S231297AbjCTL4c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 07:52:48 -0400
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23A211EFEC;
-        Mon, 20 Mar 2023 04:52:47 -0700 (PDT)
+        Mon, 20 Mar 2023 07:56:32 -0400
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47A6C24108;
+        Mon, 20 Mar 2023 04:56:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1679313167; x=1710849167;
+  t=1679313390; x=1710849390;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=qaX/W4NW8LL69k/iCe59nSe6R3T+aQljmr/TjYHn54c=;
-  b=UnfgcegOda+EfPRQmwtg4l8On0WJymWGxQObON3G/lbte4X57hA/gwr6
-   RlzjFoE1mOZc4Ce8c2vrd+3XHYDXFXz50iU2SOt1+ZePqgfOL4Z/pFpoU
-   G/YQMEJrnpwDWaj6W3eOUipwlXJvQTNhiw771RezCW/uUuVMl8QFOSGzG
-   /KHm6IzVqhwYNZisnbPt2SZkzaBmjoSdmHYKk9120+GWLPTnlwvQna+Q1
-   SVHDGRCufFOO54oL4Wo8tqPracNp6kK88qZS6RLHc1eASG/2syu3Ryqj5
-   qaWhg7qxht3vMHfJ4MpK2rGezA7Ckb7g66A4z+IC3mhNcid6a0pJ4/+No
+  bh=r1s5/ZMg2lLOSle8HVr6eWPHl10IKSNJRBE1UwV5bX0=;
+  b=FDm1uJvrHZad9clSGe2KXImZdlrkJVDWEB2puL5mqpRZ5sCuR0MXAO+b
+   6RahidznhZT0N+LfmkAq6YYnhsuL0AOAGU3iU0Tpm9YBxtOTjgtLyB02C
+   s/gzi+EtX1Zlgc4kFUM2kFrHfTRnCpCHPwqIbKGvCyEjP+SEiTCSissJ1
+   /kWB0j3tS5goQoX57EYdtOYk4HUYRdWBUYUcLpvSqHJAV49QfBq+W1JLQ
+   n723F2+WabhUMDPxu1ORYpvfbQ+E3Ivyg+Vfb6R7D/hUCNEccBsWPzqSl
+   8Tx2yc0a11lA4IvMSQMha8HeHdS8bTU7dmVflHoqSC1PmNmOZSyyhNFvX
    Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10654"; a="319040808"
+X-IronPort-AV: E=McAfee;i="6600,9927,10654"; a="403511333"
 X-IronPort-AV: E=Sophos;i="5.98,274,1673942400"; 
-   d="scan'208";a="319040808"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2023 04:52:46 -0700
+   d="scan'208";a="403511333"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2023 04:56:29 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10654"; a="631096984"
+X-IronPort-AV: E=McAfee;i="6600,9927,10654"; a="824450449"
 X-IronPort-AV: E=Sophos;i="5.98,274,1673942400"; 
-   d="scan'208";a="631096984"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by orsmga003.jf.intel.com with ESMTP; 20 Mar 2023 04:52:42 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1peE49-000B1J-0x;
-        Mon, 20 Mar 2023 11:52:41 +0000
-Date:   Mon, 20 Mar 2023 19:51:51 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Yu Zhe <yuzhe@nfschina.com>, andersson@kernel.org,
-        mathieu.poirier@linaro.org,
-        angelogioacchino.delregno@collabora.com, agross@kernel.org,
-        konrad.dybcio@linaro.org, patrice.chotard@foss.st.com,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com
-Cc:     oe-kbuild-all@lists.linux.dev, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com, liqiong@nfschina.com,
-        Yu Zhe <yuzhe@nfschina.com>
-Subject: Re: [PATCH v2] remoteproc: remove unnecessary (void*) conversions
-Message-ID: <202303201947.sffcGruP-lkp@intel.com>
-References: <20230320061157.29660-1-yuzhe@nfschina.com>
+   d="scan'208";a="824450449"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmsmga001.fm.intel.com with SMTP; 20 Mar 2023 04:56:25 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 20 Mar 2023 13:56:24 +0200
+Date:   Mon, 20 Mar 2023 13:56:24 +0200
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v4 01/12] usb: typec: ucsi: add PMIC Glink UCSI driver
+Message-ID: <ZBhJ6P9lDcvwW3/x@kuha.fi.intel.com>
+References: <20230130-topic-sm8450-upstream-pmic-glink-v4-0-38bf0f5d07bd@linaro.org>
+ <20230130-topic-sm8450-upstream-pmic-glink-v4-1-38bf0f5d07bd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230320061157.29660-1-yuzhe@nfschina.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230130-topic-sm8450-upstream-pmic-glink-v4-1-38bf0f5d07bd@linaro.org>
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Yu,
+On Fri, Mar 17, 2023 at 04:04:17PM +0100, Neil Armstrong wrote:
+> Introduce the UCSI PMIC Glink aux driver that communicates
+> with the aDSP firmware with the UCSI protocol which handles
+> the USB-C Port(s) Power Delivery.
+> 
+> The UCSI messaging is necessary on newer Qualcomm SoCs to
+> provide USB role switch and altmode notifications.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-Thank you for the patch! Perhaps something to improve:
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-[auto build test WARNING on v6.3-rc3]
-[also build test WARNING on linus/master]
-[cannot apply to remoteproc/rproc-next next-20230320]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> ---
+>  drivers/usb/typec/ucsi/Kconfig      |  10 ++
+>  drivers/usb/typec/ucsi/Makefile     |   1 +
+>  drivers/usb/typec/ucsi/ucsi_glink.c | 345 ++++++++++++++++++++++++++++++++++++
+>  3 files changed, 356 insertions(+)
+> 
+> diff --git a/drivers/usb/typec/ucsi/Kconfig b/drivers/usb/typec/ucsi/Kconfig
+> index 8f9c4b9f31f7..b3bb0191987e 100644
+> --- a/drivers/usb/typec/ucsi/Kconfig
+> +++ b/drivers/usb/typec/ucsi/Kconfig
+> @@ -58,4 +58,14 @@ config UCSI_STM32G0
+>  	  To compile the driver as a module, choose M here: the module will be
+>  	  called ucsi_stm32g0.
+>  
+> +config UCSI_PMIC_GLINK
+> +	tristate "UCSI Qualcomm PMIC GLINK Interface Driver"
+> +	depends on QCOM_PMIC_GLINK
+> +	help
+> +	  This driver enables UCSI support on platforms that expose UCSI
+> +	  interface as PMIC GLINK device.
+> +
+> +	  To compile the driver as a module, choose M here: the module will be
+> +	  called ucsi_glink.
+> +
+>  endif
+> diff --git a/drivers/usb/typec/ucsi/Makefile b/drivers/usb/typec/ucsi/Makefile
+> index 480d533d762f..77f09e136956 100644
+> --- a/drivers/usb/typec/ucsi/Makefile
+> +++ b/drivers/usb/typec/ucsi/Makefile
+> @@ -18,3 +18,4 @@ endif
+>  obj-$(CONFIG_UCSI_ACPI)			+= ucsi_acpi.o
+>  obj-$(CONFIG_UCSI_CCG)			+= ucsi_ccg.o
+>  obj-$(CONFIG_UCSI_STM32G0)		+= ucsi_stm32g0.o
+> +obj-$(CONFIG_UCSI_PMIC_GLINK)		+= ucsi_glink.o
+> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+> new file mode 100644
+> index 000000000000..b454a5159896
+> --- /dev/null
+> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+> @@ -0,0 +1,345 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023, Linaro Ltd
+> + */
+> +#include <linux/auxiliary_bus.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/mutex.h>
+> +#include <linux/property.h>
+> +#include <linux/soc/qcom/pdr.h>
+> +#include <linux/soc/qcom/pmic_glink.h>
+> +#include "ucsi.h"
+> +
+> +#define UCSI_BUF_SIZE                   48
+> +
+> +#define MSG_TYPE_REQ_RESP               1
+> +#define UCSI_BUF_SIZE                   48
+> +
+> +#define UC_NOTIFY_RECEIVER_UCSI         0x0
+> +#define UC_UCSI_READ_BUF_REQ            0x11
+> +#define UC_UCSI_WRITE_BUF_REQ           0x12
+> +#define UC_UCSI_USBC_NOTIFY_IND         0x13
+> +
+> +struct ucsi_read_buf_req_msg {
+> +	struct pmic_glink_hdr   hdr;
+> +};
+> +
+> +struct ucsi_read_buf_resp_msg {
+> +	struct pmic_glink_hdr   hdr;
+> +	u8                      buf[UCSI_BUF_SIZE];
+> +	u32                     ret_code;
+> +};
+> +
+> +struct ucsi_write_buf_req_msg {
+> +	struct pmic_glink_hdr   hdr;
+> +	u8                      buf[UCSI_BUF_SIZE];
+> +	u32                     reserved;
+> +};
+> +
+> +struct ucsi_write_buf_resp_msg {
+> +	struct pmic_glink_hdr   hdr;
+> +	u32                     ret_code;
+> +};
+> +
+> +struct ucsi_notify_ind_msg {
+> +	struct pmic_glink_hdr   hdr;
+> +	u32                     notification;
+> +	u32                     receiver;
+> +	u32                     reserved;
+> +};
+> +
+> +struct pmic_glink_ucsi {
+> +	struct device *dev;
+> +
+> +	struct pmic_glink_client *client;
+> +
+> +	struct ucsi *ucsi;
+> +	struct completion read_ack;
+> +	struct completion write_ack;
+> +	struct completion sync_ack;
+> +	bool sync_pending;
+> +	struct mutex lock;	/* protects concurrent access to PMIC Glink interface */
+> +
+> +	int sync_val;
+> +
+> +	struct work_struct notify_work;
+> +	struct work_struct register_work;
+> +
+> +	u8 read_buf[UCSI_BUF_SIZE];
+> +};
+> +
+> +static int pmic_glink_ucsi_read(struct ucsi *__ucsi, unsigned int offset,
+> +				void *val, size_t val_len)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(__ucsi);
+> +	struct ucsi_read_buf_req_msg req = {};
+> +	unsigned long left;
+> +	int ret;
+> +
+> +	req.hdr.owner = PMIC_GLINK_OWNER_USBC;
+> +	req.hdr.type = MSG_TYPE_REQ_RESP;
+> +	req.hdr.opcode = UC_UCSI_READ_BUF_REQ;
+> +
+> +	mutex_lock(&ucsi->lock);
+> +	memset(ucsi->read_buf, 0, sizeof(ucsi->read_buf));
+> +	reinit_completion(&ucsi->read_ack);
+> +
+> +	ret = pmic_glink_send(ucsi->client, &req, sizeof(req));
+> +	if (ret < 0) {
+> +		dev_err(ucsi->dev, "failed to send UCSI read request: %d\n", ret);
+> +		goto out_unlock;
+> +	}
+> +
+> +	left = wait_for_completion_timeout(&ucsi->read_ack, 5 * HZ);
+> +	if (!left) {
+> +		dev_err(ucsi->dev, "timeout waiting for UCSI read response\n");
+> +		ret = -ETIMEDOUT;
+> +		goto out_unlock;
+> +	}
+> +
+> +	memcpy(val, &ucsi->read_buf[offset], val_len);
+> +	ret = 0;
+> +
+> +out_unlock:
+> +	mutex_unlock(&ucsi->lock);
+> +
+> +	return ret;
+> +}
+> +
+> +static int pmic_glink_ucsi_locked_write(struct pmic_glink_ucsi *ucsi, unsigned int offset,
+> +					const void *val, size_t val_len)
+> +{
+> +	struct ucsi_write_buf_req_msg req = {};
+> +	unsigned long left;
+> +	int ret;
+> +
+> +	req.hdr.owner = PMIC_GLINK_OWNER_USBC;
+> +	req.hdr.type = MSG_TYPE_REQ_RESP;
+> +	req.hdr.opcode = UC_UCSI_WRITE_BUF_REQ;
+> +	memcpy(&req.buf[offset], val, val_len);
+> +
+> +	reinit_completion(&ucsi->write_ack);
+> +
+> +	ret = pmic_glink_send(ucsi->client, &req, sizeof(req));
+> +	if (ret < 0) {
+> +		dev_err(ucsi->dev, "failed to send UCSI write request: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	left = wait_for_completion_timeout(&ucsi->write_ack, 5 * HZ);
+> +	if (!left) {
+> +		dev_err(ucsi->dev, "timeout waiting for UCSI write response\n");
+> +		return -ETIMEDOUT;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int pmic_glink_ucsi_async_write(struct ucsi *__ucsi, unsigned int offset,
+> +				       const void *val, size_t val_len)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(__ucsi);
+> +	int ret;
+> +
+> +	mutex_lock(&ucsi->lock);
+> +	ret = pmic_glink_ucsi_locked_write(ucsi, offset, val, val_len);
+> +	mutex_unlock(&ucsi->lock);
+> +
+> +	return ret;
+> +}
+> +
+> +static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
+> +				      const void *val, size_t val_len)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(__ucsi);
+> +	unsigned long left;
+> +	int ret;
+> +
+> +	/* TOFIX: Downstream forces recipient to CON when UCSI_GET_ALTERNATE_MODES command */
+> +
+> +	mutex_lock(&ucsi->lock);
+> +	ucsi->sync_val = 0;
+> +	reinit_completion(&ucsi->sync_ack);
+> +	ucsi->sync_pending = true;
+> +	ret = pmic_glink_ucsi_locked_write(ucsi, offset, val, val_len);
+> +	mutex_unlock(&ucsi->lock);
+> +
+> +	left = wait_for_completion_timeout(&ucsi->sync_ack, 5 * HZ);
+> +	if (!left) {
+> +		dev_err(ucsi->dev, "timeout waiting for UCSI sync write response\n");
+> +		ret = -ETIMEDOUT;
+> +	} else if (ucsi->sync_val) {
+> +		dev_err(ucsi->dev, "sync write returned: %d\n", ucsi->sync_val);
+> +	}
+> +
+> +	ucsi->sync_pending = false;
+> +
+> +	return ret;
+> +}
+> +
+> +static const struct ucsi_operations pmic_glink_ucsi_ops = {
+> +	.read = pmic_glink_ucsi_read,
+> +	.sync_write = pmic_glink_ucsi_sync_write,
+> +	.async_write = pmic_glink_ucsi_async_write
+> +};
+> +
+> +static void pmic_glink_ucsi_read_ack(struct pmic_glink_ucsi *ucsi, const void *data, int len)
+> +{
+> +	const struct ucsi_read_buf_resp_msg *resp = data;
+> +
+> +	if (resp->ret_code)
+> +		return;
+> +
+> +	memcpy(ucsi->read_buf, resp->buf, UCSI_BUF_SIZE);
+> +	complete(&ucsi->read_ack);
+> +}
+> +
+> +static void pmic_glink_ucsi_write_ack(struct pmic_glink_ucsi *ucsi, const void *data, int len)
+> +{
+> +	const struct ucsi_write_buf_resp_msg *resp = data;
+> +
+> +	if (resp->ret_code)
+> +		return;
+> +
+> +	ucsi->sync_val = resp->ret_code;
+> +	complete(&ucsi->write_ack);
+> +}
+> +
+> +static void pmic_glink_ucsi_notify(struct work_struct *work)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = container_of(work, struct pmic_glink_ucsi, notify_work);
+> +	unsigned int con_num;
+> +	u32 cci;
+> +	int ret;
+> +
+> +	ret = pmic_glink_ucsi_read(ucsi->ucsi, UCSI_CCI, &cci, sizeof(cci));
+> +	if (ret) {
+> +		dev_err(ucsi->dev, "failed to read CCI on notification\n");
+> +		return;
+> +	}
+> +
+> +	con_num = UCSI_CCI_CONNECTOR(cci);
+> +	if (con_num)
+> +		ucsi_connector_change(ucsi->ucsi, con_num);
+> +
+> +	if (ucsi->sync_pending && cci & UCSI_CCI_BUSY) {
+> +		ucsi->sync_val = -EBUSY;
+> +		complete(&ucsi->sync_ack);
+> +	} else if (ucsi->sync_pending &&
+> +		   (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
+> +		complete(&ucsi->sync_ack);
+> +	}
+> +}
+> +
+> +static void pmic_glink_ucsi_register(struct work_struct *work)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = container_of(work, struct pmic_glink_ucsi, register_work);
+> +
+> +	ucsi_register(ucsi->ucsi);
+> +}
+> +
+> +static void pmic_glink_ucsi_callback(const void *data, size_t len, void *priv)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = priv;
+> +	const struct pmic_glink_hdr *hdr = data;
+> +
+> +	switch (hdr->opcode) {
+> +	case UC_UCSI_READ_BUF_REQ:
+> +		pmic_glink_ucsi_read_ack(ucsi, data, len);
+> +		break;
+> +	case UC_UCSI_WRITE_BUF_REQ:
+> +		pmic_glink_ucsi_write_ack(ucsi, data, len);
+> +		break;
+> +	case UC_UCSI_USBC_NOTIFY_IND:
+> +		schedule_work(&ucsi->notify_work);
+> +		break;
+> +	};
+> +}
+> +
+> +static void pmic_glink_ucsi_pdr_notify(void *priv, int state)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = priv;
+> +
+> +	if (state == SERVREG_SERVICE_STATE_UP)
+> +		schedule_work(&ucsi->register_work);
+> +	else if (state == SERVREG_SERVICE_STATE_DOWN)
+> +		ucsi_unregister(ucsi->ucsi);
+> +}
+> +
+> +static void pmic_glink_ucsi_destroy(void *data)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = data;
+> +
+> +	/* Protect to make sure we're not in a middle of a transaction from a glink callback */
+> +	mutex_lock(&ucsi->lock);
+> +	ucsi_destroy(ucsi->ucsi);
+> +	mutex_unlock(&ucsi->lock);
+> +}
+> +
+> +static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
+> +				 const struct auxiliary_device_id *id)
+> +{
+> +	struct pmic_glink_ucsi *ucsi;
+> +	struct device *dev = &adev->dev;
+> +	int ret;
+> +
+> +	ucsi = devm_kzalloc(dev, sizeof(*ucsi), GFP_KERNEL);
+> +	if (!ucsi)
+> +		return -ENOMEM;
+> +
+> +	ucsi->dev = dev;
+> +	dev_set_drvdata(dev, ucsi);
+> +
+> +	INIT_WORK(&ucsi->notify_work, pmic_glink_ucsi_notify);
+> +	INIT_WORK(&ucsi->register_work, pmic_glink_ucsi_register);
+> +	init_completion(&ucsi->read_ack);
+> +	init_completion(&ucsi->write_ack);
+> +	init_completion(&ucsi->sync_ack);
+> +	mutex_init(&ucsi->lock);
+> +
+> +	ucsi->ucsi = ucsi_create(dev, &pmic_glink_ucsi_ops);
+> +	if (IS_ERR(ucsi->ucsi))
+> +		return PTR_ERR(ucsi->ucsi);
+> +
+> +	/* Make sure we destroy *after* pmic_glink unregister */
+> +	ret = devm_add_action_or_reset(dev, pmic_glink_ucsi_destroy, ucsi);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ucsi_set_drvdata(ucsi->ucsi, ucsi);
+> +
+> +	ucsi->client = devm_pmic_glink_register_client(dev,
+> +						       PMIC_GLINK_OWNER_USBC,
+> +						       pmic_glink_ucsi_callback,
+> +						       pmic_glink_ucsi_pdr_notify,
+> +						       ucsi);
+> +	return PTR_ERR_OR_ZERO(ucsi->client);
+> +}
+> +
+> +static void pmic_glink_ucsi_remove(struct auxiliary_device *adev)
+> +{
+> +	struct pmic_glink_ucsi *ucsi = dev_get_drvdata(&adev->dev);
+> +
+> +	/* Unregister first to stop having read & writes */
+> +	ucsi_unregister(ucsi->ucsi);
+> +}
+> +
+> +static const struct auxiliary_device_id pmic_glink_ucsi_id_table[] = {
+> +	{ .name = "pmic_glink.ucsi", },
+> +	{},
+> +};
+> +MODULE_DEVICE_TABLE(auxiliary, pmic_glink_ucsi_id_table);
+> +
+> +static struct auxiliary_driver pmic_glink_ucsi_driver = {
+> +	.name = "pmic_glink_ucsi",
+> +	.probe = pmic_glink_ucsi_probe,
+> +	.remove = pmic_glink_ucsi_remove,
+> +	.id_table = pmic_glink_ucsi_id_table,
+> +};
+> +
+> +module_auxiliary_driver(pmic_glink_ucsi_driver);
+> +
+> +MODULE_DESCRIPTION("Qualcomm PMIC GLINK UCSI driver");
+> +MODULE_LICENSE("GPL");
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Yu-Zhe/remoteproc-remove-unnecessary-void-conversions/20230320-141403
-patch link:    https://lore.kernel.org/r/20230320061157.29660-1-yuzhe%40nfschina.com
-patch subject: [PATCH v2] remoteproc: remove unnecessary (void*) conversions
-config: arm-allmodconfig (https://download.01.org/0day-ci/archive/20230320/202303201947.sffcGruP-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/38335303eda6c4de037cd00e20c9065a76f82291
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Yu-Zhe/remoteproc-remove-unnecessary-void-conversions/20230320-141403
-        git checkout 38335303eda6c4de037cd00e20c9065a76f82291
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/remoteproc/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303201947.sffcGruP-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/remoteproc/st_remoteproc.c: In function 'st_rproc_probe':
->> drivers/remoteproc/st_remoteproc.c:361:23: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-     361 |         ddata->config = match->data;
-         |                       ^
-
-
-vim +/const +361 drivers/remoteproc/st_remoteproc.c
-
-   337	
-   338	static int st_rproc_probe(struct platform_device *pdev)
-   339	{
-   340		struct device *dev = &pdev->dev;
-   341		const struct of_device_id *match;
-   342		struct st_rproc *ddata;
-   343		struct device_node *np = dev->of_node;
-   344		struct rproc *rproc;
-   345		struct mbox_chan *chan;
-   346		int enabled;
-   347		int ret, i;
-   348	
-   349		match = of_match_device(st_rproc_match, dev);
-   350		if (!match || !match->data) {
-   351			dev_err(dev, "No device match found\n");
-   352			return -ENODEV;
-   353		}
-   354	
-   355		rproc = rproc_alloc(dev, np->name, &st_rproc_ops, NULL, sizeof(*ddata));
-   356		if (!rproc)
-   357			return -ENOMEM;
-   358	
-   359		rproc->has_iommu = false;
-   360		ddata = rproc->priv;
- > 361		ddata->config = match->data;
-   362	
-   363		platform_set_drvdata(pdev, rproc);
-   364	
-   365		ret = st_rproc_parse_dt(pdev);
-   366		if (ret)
-   367			goto free_rproc;
-   368	
-   369		enabled = st_rproc_state(pdev);
-   370		if (enabled < 0) {
-   371			ret = enabled;
-   372			goto free_clk;
-   373		}
-   374	
-   375		if (enabled) {
-   376			atomic_inc(&rproc->power);
-   377			rproc->state = RPROC_RUNNING;
-   378		} else {
-   379			clk_set_rate(ddata->clk, ddata->clk_rate);
-   380		}
-   381	
-   382		if (of_get_property(np, "mbox-names", NULL)) {
-   383			ddata->mbox_client_vq0.dev		= dev;
-   384			ddata->mbox_client_vq0.tx_done		= NULL;
-   385			ddata->mbox_client_vq0.tx_block	= false;
-   386			ddata->mbox_client_vq0.knows_txdone	= false;
-   387			ddata->mbox_client_vq0.rx_callback	= st_rproc_mbox_callback_vq0;
-   388	
-   389			ddata->mbox_client_vq1.dev		= dev;
-   390			ddata->mbox_client_vq1.tx_done		= NULL;
-   391			ddata->mbox_client_vq1.tx_block	= false;
-   392			ddata->mbox_client_vq1.knows_txdone	= false;
-   393			ddata->mbox_client_vq1.rx_callback	= st_rproc_mbox_callback_vq1;
-   394	
-   395			/*
-   396			 * To control a co-processor without IPC mechanism.
-   397			 * This driver can be used without mbox and rpmsg.
-   398			 */
-   399			chan = mbox_request_channel_byname(&ddata->mbox_client_vq0, "vq0_rx");
-   400			if (IS_ERR(chan)) {
-   401				dev_err(&rproc->dev, "failed to request mbox chan 0\n");
-   402				ret = PTR_ERR(chan);
-   403				goto free_clk;
-   404			}
-   405			ddata->mbox_chan[ST_RPROC_VQ0 * MBOX_MAX + MBOX_RX] = chan;
-   406	
-   407			chan = mbox_request_channel_byname(&ddata->mbox_client_vq0, "vq0_tx");
-   408			if (IS_ERR(chan)) {
-   409				dev_err(&rproc->dev, "failed to request mbox chan 0\n");
-   410				ret = PTR_ERR(chan);
-   411				goto free_mbox;
-   412			}
-   413			ddata->mbox_chan[ST_RPROC_VQ0 * MBOX_MAX + MBOX_TX] = chan;
-   414	
-   415			chan = mbox_request_channel_byname(&ddata->mbox_client_vq1, "vq1_rx");
-   416			if (IS_ERR(chan)) {
-   417				dev_err(&rproc->dev, "failed to request mbox chan 1\n");
-   418				ret = PTR_ERR(chan);
-   419				goto free_mbox;
-   420			}
-   421			ddata->mbox_chan[ST_RPROC_VQ1 * MBOX_MAX + MBOX_RX] = chan;
-   422	
-   423			chan = mbox_request_channel_byname(&ddata->mbox_client_vq1, "vq1_tx");
-   424			if (IS_ERR(chan)) {
-   425				dev_err(&rproc->dev, "failed to request mbox chan 1\n");
-   426				ret = PTR_ERR(chan);
-   427				goto free_mbox;
-   428			}
-   429			ddata->mbox_chan[ST_RPROC_VQ1 * MBOX_MAX + MBOX_TX] = chan;
-   430		}
-   431	
-   432		ret = rproc_add(rproc);
-   433		if (ret)
-   434			goto free_mbox;
-   435	
-   436		return 0;
-   437	
-   438	free_mbox:
-   439		for (i = 0; i < ST_RPROC_MAX_VRING * MBOX_MAX; i++)
-   440			mbox_free_channel(ddata->mbox_chan[i]);
-   441	free_clk:
-   442		clk_unprepare(ddata->clk);
-   443	free_rproc:
-   444		rproc_free(rproc);
-   445		return ret;
-   446	}
-   447	
+thanks,
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+heikki
