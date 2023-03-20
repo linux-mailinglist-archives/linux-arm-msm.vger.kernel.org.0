@@ -2,144 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF6F06C0E0B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 11:03:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 307636C0E79
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 11:16:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229764AbjCTKDk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 06:03:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60966 "EHLO
+        id S229997AbjCTKQy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 06:16:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229657AbjCTKDj (ORCPT
+        with ESMTP id S229988AbjCTKQx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 06:03:39 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 429002D76;
-        Mon, 20 Mar 2023 03:03:05 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 88CDFFEC;
-        Mon, 20 Mar 2023 03:03:47 -0700 (PDT)
-Received: from [10.57.20.45] (unknown [10.57.20.45])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D6ABB3F67D;
-        Mon, 20 Mar 2023 03:03:00 -0700 (PDT)
-Message-ID: <25b5fb44-fc33-cc2d-5a36-64e780015824@arm.com>
-Date:   Mon, 20 Mar 2023 10:03:06 +0000
+        Mon, 20 Mar 2023 06:16:53 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 550291166E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 03:16:51 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id eh3so44453985edb.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 03:16:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679307410;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0cp2vcmT9t7MwTIVUhMaRHgkJtFsq3TIFJhEabjBhHw=;
+        b=Sf2AK1h17dFTqQdc8T5OXngd3bKxjdnHs+jR3C8FZScRTy+ScAkn3r1qSguhGmT3ot
+         PUHgpjarbh1R0yMhkh6qE3yxI2NndF4x7Jl/+RKqoBw7cFOwdIt4Nv7d7y2GTx6l24hd
+         YTDR1qGFJ0zKnUQlVlOeMPzNTcYRVmWcaXu1YbZN03qwr+jjgd8mcAhkDPjRQl5M5yoL
+         W2+fw93ZZ2tzTYsSWy0/5wJmdwWJzZq4p1mFPY1mGqR9ccQg79A+de/fFbph1Ci6EDzB
+         TlCuwdiGSmk5BwiDVn6BJkmW99YHjyjskgymaIJ8jXM0wB8jNrKqEQuwIm2TMclJnoud
+         FNqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679307410;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0cp2vcmT9t7MwTIVUhMaRHgkJtFsq3TIFJhEabjBhHw=;
+        b=QrjeJSLtzwIJ0/1HqozqPyXDz84G8XVtmBKM0T33E5Rk1uOT/Ct6Hqpj2edKXnCsNQ
+         9J92ND3Q5BDB/FQr7J1M1J3yrtq9Aya4Iiu9CjuIF1H9I4EPU7+2hpZtifEEPeCZjout
+         mPrvA2LbBL2+zbgtTFVwgZAvSI+GpGVxJ3wxnIgovgyrbpJ1+9YNRKZpcqjeksbWVjqs
+         mU7CLo8ZB9I6/P0XhEjlir0xkDf6swdQN9KszcOJ3hdBeqn9nsFVGNshfnG+Akwel+y4
+         ehl92MU09EvSCyjy7y9QqURjcfNOH7r3wUrvBuM5XasLX3cTZEyz1ihvY3JE/tSwwwDa
+         zoyw==
+X-Gm-Message-State: AO0yUKVrxqoNSGGcKW5hq2/0kXiDpeECx3gd/46J28F6fCGvcPrros3V
+        Xo54wUzwBOOwKU5hD2tLd9y5mQ==
+X-Google-Smtp-Source: AK7set9InN8Bu9+KED91WH/pYzS9/MBNPou7AP7fDvubN8arUIh0W6GH8gqBDB0OKzGRcYlDy2SzNQ==
+X-Received: by 2002:a17:906:13d2:b0:931:de86:1879 with SMTP id g18-20020a17090613d200b00931de861879mr8882806ejc.9.1679307409815;
+        Mon, 20 Mar 2023 03:16:49 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:4428:8354:afb6:2992? ([2a02:810d:15c0:828:4428:8354:afb6:2992])
+        by smtp.gmail.com with ESMTPSA id e9-20020a17090681c900b008cf377e8795sm4221067ejx.199.2023.03.20.03.16.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Mar 2023 03:16:49 -0700 (PDT)
+Message-ID: <1ee23674-8c1a-7b84-c759-d9f963b66cd4@linaro.org>
+Date:   Mon, 20 Mar 2023 11:16:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v2 4/4] serial: qcom_geni: Use devm_krealloc_array
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 1/2] dt-bindings: watchdog: qcom-wdt: add
+ qcom,apss-wdt-ipq5332 compatible
 Content-Language: en-US
-To:     Jonathan Cameron <jic23@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-kernel@vger.kernel.org, linux@roeck-us.net,
-        michal.simek@amd.com, Jonathan Corbet <corbet@lwn.net>,
-        Jean Delvare <jdelvare@suse.com>,
-        Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>, linux-doc@vger.kernel.org,
-        linux-hwmon@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org
-References: <20230309150334.216760-1-james.clark@arm.com>
- <20230309150334.216760-5-james.clark@arm.com>
- <20230311191800.74ec2b84@jic23-huawei>
- <74d8b579-6ea8-d6f3-170f-ea13534b4565@arm.com>
- <20230318173402.20a4f60d@jic23-huawei>
-From:   James Clark <james.clark@arm.com>
-In-Reply-To: <20230318173402.20a4f60d@jic23-huawei>
+To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        wim@linux-watchdog.org, linux@roeck-us.net, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230320094450.8015-1-quic_kathirav@quicinc.com>
+ <20230320094450.8015-2-quic_kathirav@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230320094450.8015-2-quic_kathirav@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 20/03/2023 10:44, Kathiravan T wrote:
+> Add a compatible for the IPQ5332 platform's APSS watchdog.
+> 
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
 
 
-On 18/03/2023 17:34, Jonathan Cameron wrote:
-> On Fri, 17 Mar 2023 11:34:49 +0000
-> James Clark <james.clark@arm.com> wrote:
-> 
->> On 11/03/2023 19:18, Jonathan Cameron wrote:
->>> On Thu,  9 Mar 2023 15:03:33 +0000
->>> James Clark <james.clark@arm.com> wrote:
->>>   
->>>> Now that it exists, use it instead of doing the multiplication manually.
->>>>
->>>> Signed-off-by: James Clark <james.clark@arm.com>  
->>>
->>> Hmm. I've stared at the users of this for a bit, and it's not actually obvious
->>> that it's being used as an array of u32.  The only typed user of this is as
->>> the 2nd parameter of  
->>> tty_insert_flip_string() which is an unsigned char *
->>>
->>> I wonder if that sizeof(u32) isn't a 'correct' description of where the 4 is coming
->>> from even if it has the right value?  Perhaps the fifo depth is just a multiple of 4?
->>>
->>> Jonathan
->>>   
->>
->> The commit that added it (b8caf69a6946) seems to hint that something
->> reads from it in words. And I see this:
->>
->>   /* We always configure 4 bytes per FIFO word */
->>   #define BYTES_PER_FIFO_WORD		4U
->>
->> Perhaps sizeof(u32) isn't as accurate of a description as using
->> BYTES_PER_FIFO_WORD but I'd be reluctant to make a change because I
->> don't really understand the implications.
-> 
-> Agreed with your analysis.  + fully understand why you don't want to change
-> it. 
-> 
-> I'd be tempted to take the view that whilst it's allocated in 4 byte chunks
-> because it's accessed elsewhere as a set of 1 byte entries, krealloc_array
-> isn't appropriate and so just leave it with devm_krealloc()
-> 
-> Risk is that a steady stream of patches will turn up 'fixing' this as
-> it will be easy for people to find with a script.  Maybe better to just add
-> a comment (either with or without your patch).
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Ok that makes sense to me. I can add a comment instead this patch to
-change this one.
+Best regards,
+Krzysztof
 
->>
->> There is also this in handle_rx_console():
->>
->>   unsigned char buf[sizeof(u32)];
->>
->> James
->>
->>>
->>>   
->>>> ---
->>>>  drivers/tty/serial/qcom_geni_serial.c | 6 +++---
->>>>  1 file changed, 3 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
->>>> index d69592e5e2ec..23fc33d182ac 100644
->>>> --- a/drivers/tty/serial/qcom_geni_serial.c
->>>> +++ b/drivers/tty/serial/qcom_geni_serial.c
->>>> @@ -1056,9 +1056,9 @@ static int setup_fifos(struct qcom_geni_serial_port *port)
->>>>  		(port->tx_fifo_depth * port->tx_fifo_width) / BITS_PER_BYTE;
->>>>  
->>>>  	if (port->rx_buf && (old_rx_fifo_depth != port->rx_fifo_depth) && port->rx_fifo_depth) {
->>>> -		port->rx_buf = devm_krealloc(uport->dev, port->rx_buf,
->>>> -					     port->rx_fifo_depth * sizeof(u32),
->>>> -					     GFP_KERNEL);
->>>> +		port->rx_buf = devm_krealloc_array(uport->dev, port->rx_buf,
->>>> +						   port->rx_fifo_depth, sizeof(u32),
->>>> +						   GFP_KERNEL);
->>>>  		if (!port->rx_buf)
->>>>  			return -ENOMEM;
->>>>  	}  
->>>   
-> 
