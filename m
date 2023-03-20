@@ -2,69 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB9BE6C0D45
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 10:28:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C74996C0D98
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 10:45:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231382AbjCTJ20 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 05:28:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39262 "EHLO
+        id S230097AbjCTJp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 05:45:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230052AbjCTJ17 (ORCPT
+        with ESMTP id S229970AbjCTJp0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 05:27:59 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBC2540CB;
-        Mon, 20 Mar 2023 02:27:22 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9CD36612D4;
-        Mon, 20 Mar 2023 09:27:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9D7C433A0;
-        Mon, 20 Mar 2023 09:27:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679304442;
-        bh=rCKrNjd3yw6vYapn4P5njBlAE6teSv1Bf+1tVsguCMA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DsisnhAgrDKYTQUBZVhCaTuo4xZHkVHl5076Fk7zLApJ55eWKS9K5j6UUuJYzpBCW
-         tpxQnrlfkK5dHzatJRPXm+b4jpDDoGimzOoUgaObzPs1unwqJdL9Mudi46bsy6Yyj/
-         WrqhgyLB7NENjQNTsPDS1r0DPuYXqxFeQXI0cUxBgL0Q0hwNyO8ZMLvPALQZr+KWeP
-         drbGDYbe/RWRVyH03u09M0C/W1p3Bbbw4gv1bzJ5z+8Ua/7KTdOO8sl8aEw6H+k6IR
-         PVSE2sxhd5IrvjwOoJZI/vHPmCSzLhxMvRdzXbXM6X+cSUYbjbSkEJN5RUm9FcgUyD
-         WphR7cavQmaFw==
-Date:   Mon, 20 Mar 2023 14:57:17 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, lpieralisi@kernel.org, robh@kernel.org,
-        kw@linux.com, krzysztof.kozlowski+dt@linaro.org,
-        konrad.dybcio@linaro.org, bhelgaas@google.com, kishon@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 12/13] phy: qcom-qmp-pcie: Add RC init sequence for
- SDX55
-Message-ID: <ZBgm9QxXWJWpEuIl@matsya>
-References: <20230308082424.140224-1-manivannan.sadhasivam@linaro.org>
- <20230308082424.140224-13-manivannan.sadhasivam@linaro.org>
+        Mon, 20 Mar 2023 05:45:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 169271689D;
+        Mon, 20 Mar 2023 02:45:25 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32K8O9am030427;
+        Mon, 20 Mar 2023 09:45:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=JDuIQbKMao+wWW6Ufi3gVOnNAyYqAbOG9yFVNg7be5Y=;
+ b=Yeo8/u9jBE5uCrUZyGt6RqWRcXS1OvONA06TrfeyQcGYuDDYzW3NBQ8TmHGpIeo4AX5m
+ 2YaC/X2sSWAAtAFQyHvDzEEBmARnLMZ2dX18dbk0wDel+R2HPl7CX0zNzyKcWCh0pR6v
+ ZaiQz31jS8Hh5LdY6uJQsSV3K/fjNtCUJXz1HPlF2kNY1KYFODNctt4yJhnblGrGUlnI
+ fBLjNMzZw/TQjtt3IFIS5n0ggsxMeHm5aNsLbWUrDH5FbRFnLVzJDiBtsIFMJv/03gvv
+ IiKfermdHMpvpuEFFjOPRAe7b7uqUHklH2o3TIUTDIwduTa1TZP/P0IBpUQCa7vJjlbl 2A== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pek4fg9kb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 20 Mar 2023 09:45:08 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32K9j8xn025415
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 20 Mar 2023 09:45:08 GMT
+Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Mon, 20 Mar 2023 02:45:04 -0700
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <wim@linux-watchdog.org>,
+        <linux@roeck-us.net>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH 0/2] Add few device nodes for IPQ5332 SoC
+Date:   Mon, 20 Mar 2023 15:14:48 +0530
+Message-ID: <20230320094450.8015-1-quic_kathirav@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230308082424.140224-13-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: viC1bv77-4i7UpfGZG_9bWTSkB2mz4Ud
+X-Proofpoint-ORIG-GUID: viC1bv77-4i7UpfGZG_9bWTSkB2mz4Ud
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-20_06,2023-03-16_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ mlxscore=0 priorityscore=1501 adultscore=0 impostorscore=0 spamscore=0
+ mlxlogscore=643 suspectscore=0 phishscore=0 clxscore=1011
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303150002 definitions=main-2303200084
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08-03-23, 13:54, Manivannan Sadhasivam wrote:
-> Add PCIe RC init sequence making use of the common init sequence. The RC
-> mode additionally requires REFCLK_DRV_DSBL bit to set during powerup and
-> powerdown.
+This series adds the support for QUP peripherals, PRNG, WDT for IPQ5332
+SoC.
 
-Applied to phy/next, thanks
+This series depends on the below patch, due to the node ordering
+https://lore.kernel.org/linux-arm-msm/20230217083308.12017-6-quic_kathirav@quicinc.com/#t
+
+
+Kathiravan T (2):
+  dt-bindings: watchdog: qcom-wdt: add qcom,apss-wdt-ipq5332 compatible
+  arm64: dts: qcom: ipq5332: add few device nodes
+
+ .../bindings/watchdog/qcom-wdt.yaml           |  1 +
+ arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts   | 14 ++++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 67 +++++++++++++++++++
+ 3 files changed, 82 insertions(+)
 
 -- 
-~Vinod
+2.17.1
+
