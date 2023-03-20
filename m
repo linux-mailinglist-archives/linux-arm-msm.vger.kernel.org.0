@@ -2,54 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 57D616C098B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 05:07:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52C1C6C0A3D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 06:46:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229583AbjCTEHL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 00:07:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37886 "EHLO
+        id S229754AbjCTFqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 01:46:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjCTEHK (ORCPT
+        with ESMTP id S229700AbjCTFqg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 00:07:10 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E1A2A5D3;
-        Sun, 19 Mar 2023 21:07:06 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 625F1B80D41;
-        Mon, 20 Mar 2023 04:07:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58156C433EF;
-        Mon, 20 Mar 2023 04:07:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679285223;
-        bh=LWrLSE3PjI2DAUNQSlxIRlBkpOj6wq3YhB8CFWL5u00=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DGRdLnMul6m8B4CDoDa6CbkxrnVszS/ygTj4WxwMuRXmuLSvNjBqVRQljfQ6SctS/
-         IQ/wjpMjsYFAUMwHSOSWxuxiG8/Ij/MG6Ypr8NRVcOb9PkG/75BJtruB6aK5s26uQI
-         3Mucfp7kV7zoRw3EAYmbw/YfAoZxIo8xdkphguarPfG8SRcLSvVHNH2BrdLkXS7Maa
-         pWtF1vItEESGJcAj4oTWquhnMnqtUQf3oCBxmpYThCJmSkSA1qsVNsPP7RN89kKUmO
-         9idlyuNeDSihCZenmzPhxaKmVQ8mNliJcEIj9HyJNTW4L13OW7R6RQfrg9AO8Wb6Y5
-         YWNZgxmy5r9+g==
-Date:   Sun, 19 Mar 2023 21:10:19 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
-        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v3 2/5] pinctrl: qcom: Use qcom_scm_io_update_field()
-Message-ID: <20230320041019.5qs6qbztvv45pacs@ripper>
-References: <1679070482-8391-1-git-send-email-quic_mojha@quicinc.com>
- <1679070482-8391-3-git-send-email-quic_mojha@quicinc.com>
- <CACRpkdbA27buNiOTz6ad4gyS4FCvcoYru6QB5k9Lqwiu72sf9g@mail.gmail.com>
+        Mon, 20 Mar 2023 01:46:36 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E4A818B16;
+        Sun, 19 Mar 2023 22:46:34 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32K5K3x0015415;
+        Mon, 20 Mar 2023 05:46:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=FdiERBDNupNV8C9GnoQMOmECcBVBz64rI00JxNqc3kc=;
+ b=ploVJHXTMBMU0aI1KvKd9h7Tes7aOJko/q2qqbeJguIQ4XjTzxMncT/QHahwbWMN+2nU
+ IKtbB7tvU5Wt4c2d8/ADDKROFhCl9+8xxjDlQLsnGs04rEd+ht3rDwmV6eIMRCMg2Y2f
+ NRxPuCm2cNdR9vzMxa85yCgSk7vQsljbaONSqLJPe2X0uszQV0lflNX5sUKJ4eqINnyj
+ k1Xgg3cljsiveVFtEyUrEa0qghPqRoFtUQQuWDZ0cp6A3J4vLBTS/qcr8BxU4E1ELBTb
+ 5WNShpDSzoXB7Sxq/fqQRj1wTne0RyX1VF46yr9Btjzas2Wfx1b3lethgjiUdI8jlt2m 8A== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pd6kgkv1c-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 20 Mar 2023 05:46:26 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32K5kPRA008738
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 20 Mar 2023 05:46:25 GMT
+Received: from [10.216.3.84] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Sun, 19 Mar
+ 2023 22:46:22 -0700
+Message-ID: <f673e050-6093-bf01-ed24-325f8de584d5@quicinc.com>
+Date:   Mon, 20 Mar 2023 11:16:19 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACRpkdbA27buNiOTz6ad4gyS4FCvcoYru6QB5k9Lqwiu72sf9g@mail.gmail.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v9 3/4] clk: qcom: lpassaudiocc-sc7280: Add required gdsc
+ power domain clks in lpass_cc_sc7280_desc strcuture
+Content-Language: en-US
+To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_visr@quicinc.com>,
+        <swboyd@chromium.org>
+References: <20230317141622.1926573-1-quic_mohs@quicinc.com>
+ <20230317141622.1926573-4-quic_mohs@quicinc.com>
+ <06cc8339e30eb38175e04058b69b41ca.sboyd@kernel.org>
+From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+In-Reply-To: <06cc8339e30eb38175e04058b69b41ca.sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nArNwX-OFIHeiD9u-ck6TP02jeR-Rgeu
+X-Proofpoint-ORIG-GUID: nArNwX-OFIHeiD9u-ck6TP02jeR-Rgeu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-20_02,2023-03-16_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
+ impostorscore=0 malwarescore=0 adultscore=0 priorityscore=1501
+ mlxlogscore=721 clxscore=1015 mlxscore=0 lowpriorityscore=0 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303150002 definitions=main-2303200051
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,42 +83,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 17, 2023 at 09:58:04PM +0100, Linus Walleij wrote:
-> On Fri, Mar 17, 2023 at 5:28 PM Mukesh Ojha <quic_mojha@quicinc.com> wrote:
-> 
-> > Use qcom_scm_io_update_field() exported function introduced
-> > in last commit.
-> >
-> > Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> 
-> Fine by me, but I want you to first consider switching the
-> custom register accessors to regmap.
-> 
 
-I took a quick look at it and there seem to be two ways that it can be
-done.
+On 3/18/2023 12:13 AM, Stephen Boyd wrote:
+> Just remove strcuture from the subject.
+>
+> Quoting Mohammad Rafi Shaik (2023-03-17 07:16:21)
+>> Add the gdsc's in lpass_cc_sc7280_desc strcuture,
+> s/strcuture/struct/
+>
+>> When qcom,adsp-pil-mode is enabled, gdsc's required to solve
+> Just 'GDSCs', because gdsc isn't owning anything.
+>
+>> dependencies in lpass_audiocc probe.
+> I think you're saying that we need to register the GDSCs when
+> qcom,adsp-pil-mode is set in the qcom,sc7280-lpassaoncc node. Otherwise,
+> we don't get any GDSCs provided by that node when we should always be
+> providing them.
 
-We can retain the MSM_ACCESSOR() macros that generates the custom
-register accessors, but plug in a regmap between these accessors and the
-mmio operations. But this just adds a few extra hops inbetween the
-driver and the volatile read/write, with a slight increase of memory,
-without any obvious benefits.
+Yes, need to register GDSCs when qcom,adsp-pil-mode is set in the 
+qcom,sc7280-lpassaoncc node.
 
+The lpass_audiocc requires GDSCs to probe become success.
 
-The more alluring alternative is to replace the custom accessors with
-reg_fields. This would allow us to replace some (perhaps many) of the
-bit-manipulation with regmap_update_bits().
-
-But at minimum we'd need one reg_field per register, per pin, so that's
-5 reg_fields per pin which adds up to ~10-24kb extra space, depending on
-platform.
-
-Even more alluring would be to have reg_fields describing the actual
-fields in the registers, which would allow us to better utilize the
-regmap API directly. This would cost us 35-75kb of heap.
-
-IMHO this is quite a significant effort, and given that the driver seems
-to be doing its job I'd rather see such efforts being focused elsewhere.
-
-Regards,
-Bjorn
+>> Fixes: 4ab43d171181 ("clk: qcom: Add lpass clock controller driver for SC7280")
+> If the above is right, then this fixes tag is wrong. It should really be
+>
+> Fixes: 0cbcfbe50cbf ("clk: qcom: lpass: Handle the regmap overlap of lpasscc and lpass_aon")
+>
+> right?
+Okay, will change fixes tag.
