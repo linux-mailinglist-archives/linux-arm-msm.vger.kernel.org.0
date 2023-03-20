@@ -2,100 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E8156C21AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 20:37:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BD7B6C2251
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 21:14:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231196AbjCTThu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 15:37:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52982 "EHLO
+        id S230021AbjCTUOV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 16:14:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230337AbjCTThT (ORCPT
+        with ESMTP id S229713AbjCTUOU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 15:37:19 -0400
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 390E83645F;
-        Mon, 20 Mar 2023 12:31:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-        bh=HojbwMSiEtZKlQdfE1hnnoB2RYxodFjMqNVmkdMaTE4=; b=UTwuS59N/DkJgr/7fUE2JTH62X
-        AhIEtJYFFX67UsLmhqkAOgHh4nQviuZbanJJ5f7SM98Xq/YbeJU1Mc3XeoxdfdEsym7a4Q0bty5sf
-        XU2PDo/aguksS9t7Gp0rZ6vDxNs0cA+Dmaf3GIHQ3xeplirk2AthvAl5u+QeTJ5Csk/8=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-        (envelope-from <andrew@lunn.ch>)
-        id 1peLEG-007tlX-8U; Mon, 20 Mar 2023 20:31:36 +0100
-Date:   Mon, 20 Mar 2023 20:31:36 +0100
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org
-Subject: Re: [net-next PATCH v5 04/15] leds: Provide stubs for when CLASS_LED
- is disabled
-Message-ID: <5ee3c2cf-8100-4f35-a2df-b379846a8736@lunn.ch>
-References: <20230319191814.22067-1-ansuelsmth@gmail.com>
- <20230319191814.22067-5-ansuelsmth@gmail.com>
- <aa2d0a8b-b98b-4821-9413-158be578e8e0@lunn.ch>
- <64189d72.190a0220.8d965.4a1c@mx.google.com>
+        Mon, 20 Mar 2023 16:14:20 -0400
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EE4E2FCFA;
+        Mon, 20 Mar 2023 13:14:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1679343258; x=1710879258;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=u+jOUwoE6OkKQ7xRHEiSIZbHt9zZyJpg1s70VOyfcyE=;
+  b=NHgDggIOJnZ3VuvH2CuI7NNSEFzg/arHBWJyS50r70ROerwoGqakrS4r
+   TxSOTIiewwPLKDjA5HrB9Y7Mra608y9s297Millt41KPvEHsJxKvvPISb
+   Xd40ManRRIsmD57ha4yfsC8/rNiVo+W0Ww0tMSrFvNGkxx1me0P1y+pnV
+   p4AfgwBzGr4cwP2uAHyRp8wGm3Ed65sYTnGj+wDFyUJ2KhSTSTEWfF0d4
+   GPTjQJtHB5+b4tFz1932QZ5FaReKPziFyR03FIgXUFHYvm1Z9JxdUunB3
+   0QC2FH5BqMZXNgC1qJ4KgyTQgDofLGS8Vt68WznzQ5N3WaF6ccEQ6GOSE
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10655"; a="319168744"
+X-IronPort-AV: E=Sophos;i="5.98,276,1673942400"; 
+   d="scan'208";a="319168744"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2023 13:13:59 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10655"; a="1010629523"
+X-IronPort-AV: E=Sophos;i="5.98,276,1673942400"; 
+   d="scan'208";a="1010629523"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by fmsmga005.fm.intel.com with ESMTP; 20 Mar 2023 13:13:56 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1peLtD-000BHc-1j;
+        Mon, 20 Mar 2023 20:13:55 +0000
+Date:   Tue, 21 Mar 2023 04:13:37 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+        Rob Clark <robdclark@chromium.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        "open list:POWER MANAGEMENT CORE" <linux-pm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 18/23] PM / QoS: Decouple request alloc from
+ dev_pm_qos_mtx
+Message-ID: <202303210444.Qtybv08z-lkp@intel.com>
+References: <20230320144356.803762-19-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <64189d72.190a0220.8d965.4a1c@mx.google.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230320144356.803762-19-robdclark@gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 20, 2023 at 06:52:47PM +0100, Christian Marangi wrote:
-> On Sun, Mar 19, 2023 at 11:49:02PM +0100, Andrew Lunn wrote:
-> > > +#if IS_ENABLED(CONFIG_LEDS_CLASS)
-> > >  enum led_default_state led_init_default_state_get(struct fwnode_handle *fwnode);
-> > > +#else
-> > > +static inline enum led_default_state
-> > > +led_init_default_state_get(struct fwnode_handle *fwnode)
-> > > +{
-> > > +	return LEDS_DEFSTATE_OFF;
-> > > +}
-> > > +#endif
-> > 
-> > 0-day is telling me i have this wrong. The function is in led-core.c,
-> > so this should be CONFIG_NEW_LEDS, not CONFIG_LEDS_CLASS.
-> > 
-> 
-> Any idea why? NEW_LEDS just enable LEDS_CLASS selection so why we need
-> to use that? Should not make a difference (in theory)
+Hi Rob,
 
-0-day came up with a configuration which resulted in NEW_LEDS enabled
-but LEDS_CLASS disabled. That then resulted in multiple definitions of 
-led_init_default_state_get() when linking.
+I love your patch! Perhaps something to improve:
 
-I _guess_ this is because select is used, which is not mandatory. So
-randconfig can turn off something which is enabled by select.
+[auto build test WARNING on drm-misc/drm-misc-next]
+[also build test WARNING on rafael-pm/linux-next drm-intel/for-linux-next drm-intel/for-linux-next-fixes drm-tip/drm-tip linus/master v6.3-rc3 next-20230320]
+[cannot apply to chanwoo/devfreq-testing]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-I updated my tree, and so far 0-day has not complained, but it can
-take a few days when it is busy.
+url:    https://github.com/intel-lab-lkp/linux/commits/Rob-Clark/drm-msm-Pre-allocate-hw_fence/20230320-224826
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20230320144356.803762-19-robdclark%40gmail.com
+patch subject: [PATCH v2 18/23] PM / QoS: Decouple request alloc from dev_pm_qos_mtx
+config: arm-randconfig-r005-20230319 (https://download.01.org/0day-ci/archive/20230321/202303210444.Qtybv08z-lkp@intel.com/config)
+compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project 67409911353323ca5edf2049ef0df54132fa1ca7)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm cross compiling tool for clang build
+        # apt-get install binutils-arm-linux-gnueabi
+        # https://github.com/intel-lab-lkp/linux/commit/2d7e4629d7265d7e77fc72d01e84d27d805b7485
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Rob-Clark/drm-msm-Pre-allocate-hw_fence/20230320-224826
+        git checkout 2d7e4629d7265d7e77fc72d01e84d27d805b7485
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/base/power/
 
-	Andrew
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202303210444.Qtybv08z-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/base/power/qos.c:947:8: warning: variable 'req' is uninitialized when used here [-Wuninitialized]
+                   if (!req) {
+                        ^~~
+   drivers/base/power/qos.c:938:33: note: initialize the variable 'req' to silence this warning
+                   struct dev_pm_qos_request *req;
+                                                 ^
+                                                  = NULL
+   1 warning generated.
+
+
+vim +/req +947 drivers/base/power/qos.c
+
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  917  
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  918  /**
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  919   * dev_pm_qos_update_user_latency_tolerance - Update user space latency tolerance.
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  920   * @dev: Device to update the user space latency tolerance for.
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  921   * @val: New user space latency tolerance for @dev (negative values disable).
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  922   */
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  923  int dev_pm_qos_update_user_latency_tolerance(struct device *dev, s32 val)
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  924  {
+2d7e4629d7265d Rob Clark         2023-03-20  925  	struct dev_pm_qos_request *req = NULL;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  926  	int ret;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  927  
+00dd582e52a535 Rob Clark         2023-03-20  928  	ret = dev_pm_qos_constraints_ensure_allocated(dev);
+00dd582e52a535 Rob Clark         2023-03-20  929  	if (ret)
+00dd582e52a535 Rob Clark         2023-03-20  930  		return ret;
+00dd582e52a535 Rob Clark         2023-03-20  931  
+2d7e4629d7265d Rob Clark         2023-03-20  932  	if (!dev->power.qos->latency_tolerance_req)
+2d7e4629d7265d Rob Clark         2023-03-20  933  		req = kzalloc(sizeof(*req), GFP_KERNEL);
+2d7e4629d7265d Rob Clark         2023-03-20  934  
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  935  	mutex_lock(&dev_pm_qos_mtx);
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  936  
+00dd582e52a535 Rob Clark         2023-03-20  937  	if (!dev->power.qos->latency_tolerance_req) {
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  938  		struct dev_pm_qos_request *req;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  939  
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  940  		if (val < 0) {
+80a6f7c79b7822 Andrew Lutomirski 2016-11-29  941  			if (val == PM_QOS_LATENCY_TOLERANCE_NO_CONSTRAINT)
+80a6f7c79b7822 Andrew Lutomirski 2016-11-29  942  				ret = 0;
+80a6f7c79b7822 Andrew Lutomirski 2016-11-29  943  			else
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  944  				ret = -EINVAL;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  945  			goto out;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  946  		}
+2d984ad132a87c Rafael J. Wysocki 2014-02-11 @947  		if (!req) {
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  948  			ret = -ENOMEM;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  949  			goto out;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  950  		}
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  951  		ret = __dev_pm_qos_add_request(dev, req, DEV_PM_QOS_LATENCY_TOLERANCE, val);
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  952  		if (ret < 0) {
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  953  			kfree(req);
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  954  			goto out;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  955  		}
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  956  		dev->power.qos->latency_tolerance_req = req;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  957  	} else {
+2d7e4629d7265d Rob Clark         2023-03-20  958  		/*
+2d7e4629d7265d Rob Clark         2023-03-20  959  		 * If we raced with another thread to allocate the request,
+2d7e4629d7265d Rob Clark         2023-03-20  960  		 * simply free the redundant allocation and move on.
+2d7e4629d7265d Rob Clark         2023-03-20  961  		 */
+2d7e4629d7265d Rob Clark         2023-03-20  962  		if (req)
+2d7e4629d7265d Rob Clark         2023-03-20  963  			kfree(req);
+2d7e4629d7265d Rob Clark         2023-03-20  964  
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  965  		if (val < 0) {
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  966  			__dev_pm_qos_drop_user_request(dev, DEV_PM_QOS_LATENCY_TOLERANCE);
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  967  			ret = 0;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  968  		} else {
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  969  			ret = __dev_pm_qos_update_request(dev->power.qos->latency_tolerance_req, val);
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  970  		}
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  971  	}
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  972  
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  973   out:
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  974  	mutex_unlock(&dev_pm_qos_mtx);
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  975  	return ret;
+2d984ad132a87c Rafael J. Wysocki 2014-02-11  976  }
+034e7906211c18 Andrew Lutomirski 2016-11-29  977  EXPORT_SYMBOL_GPL(dev_pm_qos_update_user_latency_tolerance);
+13b2c4a0c3b1cd Mika Westerberg   2015-07-27  978  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
