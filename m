@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A78A6C0C90
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 09:54:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7C506C0CA4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 09:59:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230518AbjCTIya (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 04:54:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53528 "EHLO
+        id S230489AbjCTI72 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 04:59:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230168AbjCTIy3 (ORCPT
+        with ESMTP id S230217AbjCTI72 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 04:54:29 -0400
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBA58BDE9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 01:54:27 -0700 (PDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-544f7c176easo66947797b3.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 01:54:27 -0700 (PDT)
+        Mon, 20 Mar 2023 04:59:28 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 923BF1FCD
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 01:59:26 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-5416698e889so211778497b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 01:59:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679302467;
+        d=linaro.org; s=google; t=1679302766;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0VwCsLRx1BqoZCFKmvQkscs5AX5CM53X2foeYLp/it0=;
-        b=kTQ2+k4ktXPkorygBmiiPssqIsjIfTv+lp5cN34Qm/XVt8ZAquFzTlEHBSNT7cNQVx
-         a3XRr3oIkD3xDMGCZYSuKx25VC+KCKZwuD+FLmsLp+rTaZ9uZ/qj6ukVjqcglVR9pM1S
-         iYFfPtSl2S6YFvcpD2YKN8hOP5nMcWC7bH4//qIW6gGbKw9NXAQVLKMULDK13KE556XT
-         /ZmoZTcaksoRup1cu17dZWwBjJ2WIJdtiFGVIff/Q6h+HQVQTjKG9nY5WsXDn9rQO5MR
-         eejLd9ZpXN41xqpwdOydlRoaWcggBgVvNwV34wVFGhJQa2xWoS4mhTaexYcAJSMjFgq+
-         0z7A==
+        bh=ZDWJfXvdVXROmcaw8SY1hPpIrcHxAiUQmw6S8AbfRjk=;
+        b=hT8zarIC6fGYO8JaQq+5aomWL4kdHdFIMWxkLjsEAGQyCKEjeN0eO7gH7NWS01wmZG
+         PeQq+pkGgtbGSr3a+xgj4NaPRyLVXeaLNmVgvXKoJUErSzDKgOKE0jBJqS4ioTI8SxO9
+         jCV/35h90ss/uAbNVb+xTGp1qtDmKiXHgrxbompb+SYr1TbJuFQvj+r3lcVrIrjDllOn
+         /r/7jFhcShwJnmUel5vb/6sKCAog8Y67DjWlTbSIiI9213OOkbgf2OFWehyfjp7HEUQc
+         qFa0Xqk8iHu7qFsRXggiYwC//ZVuR62CX8sqHX3dQq80jXDgBpzLISQecktE92sJxuMY
+         A47g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679302467;
+        d=1e100.net; s=20210112; t=1679302766;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0VwCsLRx1BqoZCFKmvQkscs5AX5CM53X2foeYLp/it0=;
-        b=JuLk1anxPpsJYRxor2u7CMMpw2HcPZ7ax9/RaonzLdkDqgRaWttzJ7lJ861fHRTXBu
-         ZvrmL85J/SMz4kqy/ldwZoYzgUEhCOTzzkrcVqyPl2WNx5/q/WeC7BFmLPQnoGsg/X83
-         fBz7sg3HhxVg1tSuZ1wJosKncoFlBITRreb+pVlRUXYMJtf2PWyshAvfZuKzaIssGRFX
-         1KtaMl27bpNpK4+zZzS8Jgo2TL7o6uGdzj9wWcYuMvMIOwgl+c/YEjqUvulIQOo1fGDK
-         ska+ZePU4lRrMZxoZJSxF0kHIq4T2acSsG0pEwJieA4ZBffJjqYFTMJO6YfL6HsMNSqb
-         Oy7A==
-X-Gm-Message-State: AO0yUKX8G9UXOEVqnodvdwoa8MuevUm8Gkt6SOzfR6Uu0L6Jwn47RC9z
-        mHPuZmDU9yO4Jeayl70C7834JHoe/t1eXdd8Qu+O17dsfyA7c+MK
-X-Google-Smtp-Source: AK7set9cIGT0nR09rLwg0UKkmrZo3q2jtFt7Xnztz809nAEgzPbiDoHduicc8RaVr7/eQUZ9wKC7+XPwFfILUV0Geo8=
+        bh=ZDWJfXvdVXROmcaw8SY1hPpIrcHxAiUQmw6S8AbfRjk=;
+        b=w0Jwhsdaqh8fgMRu+kzyLd3cEKLsojSrcGn4Bp68ZrokB3KDQEuhP17rBiBcRtbr4m
+         EMSwuin7uKHTai1uYOpHke9KNs7J0mHLwMi9c80Yblf2oHrlaoKtJXcp635yYy1OCFqC
+         /5VzLu++qiy/WVzxI571xGlXScbCOgEtaBDMqn6+ntMkSzSbOq/IK0qa2qMLkb8B8E4D
+         W1kMFwMuh/XKDj4S9XB8DVKWs9Q47vAK/7hcPKmNpjGaejt4vMlym74qPxvXOGEsFASr
+         RgG2JH8eBHpOe77LwekUjPcbfHLV/KD6Di3DCXeMG/Mifaup/wDC100BS+8Rr2bxC92r
+         ln4w==
+X-Gm-Message-State: AO0yUKVNMD++zYwmPjSoL/CTPp/j9XozTmV8gGZ9WNJOxSv5tQGxdTGa
+        f6iWs9ufaZQ5RxqywCCXVl7tZzvFiW2MbcUorF1pCQ==
+X-Google-Smtp-Source: AK7set/+qbyNpMEXruJw4ZG3Cg+VGChyijWfL/S1Gs9k8SMXV8jldggbsN7+QdqY5qCobMSvgsRb6xs+dByuL5RTqzs=
 X-Received: by 2002:a81:c749:0:b0:541:753d:32f9 with SMTP id
- i9-20020a81c749000000b00541753d32f9mr10032764ywl.9.1679302466888; Mon, 20 Mar
- 2023 01:54:26 -0700 (PDT)
+ i9-20020a81c749000000b00541753d32f9mr10038873ywl.9.1679302765812; Mon, 20 Mar
+ 2023 01:59:25 -0700 (PDT)
 MIME-Version: 1.0
 References: <1679070482-8391-1-git-send-email-quic_mojha@quicinc.com>
- <1679070482-8391-2-git-send-email-quic_mojha@quicinc.com> <CACRpkdb95V5GC81w8fiuLfx_V1DtWYpO33FOfMnArpJeC9SDQA@mail.gmail.com>
- <20230320032238.xf5jlt43qebcewm4@ripper>
-In-Reply-To: <20230320032238.xf5jlt43qebcewm4@ripper>
+ <1679070482-8391-3-git-send-email-quic_mojha@quicinc.com> <CACRpkdbA27buNiOTz6ad4gyS4FCvcoYru6QB5k9Lqwiu72sf9g@mail.gmail.com>
+ <20230320041019.5qs6qbztvv45pacs@ripper>
+In-Reply-To: <20230320041019.5qs6qbztvv45pacs@ripper>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 20 Mar 2023 09:54:15 +0100
-Message-ID: <CACRpkdYq96d=0hoBhNGYihVJbX-D4WLw3+GdQC5_NDXuBiaF7Q@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] firmware: qcom_scm: provide a read-modify-write function
+Date:   Mon, 20 Mar 2023 09:59:14 +0100
+Message-ID: <CACRpkdaWL_Rf+wbpLcAgr38Liy5_7J=UHrBbLqW-ZBkcpjvQKA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/5] pinctrl: qcom: Use qcom_scm_io_update_field()
 To:     Bjorn Andersson <andersson@kernel.org>
 Cc:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
         konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
@@ -64,52 +64,31 @@ Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 20, 2023 at 4:19=E2=80=AFAM Bjorn Andersson <andersson@kernel.o=
+On Mon, Mar 20, 2023 at 5:07=E2=80=AFAM Bjorn Andersson <andersson@kernel.o=
 rg> wrote:
 
-> > This is starting to reimplement regmap.
-> > In this case regmap_update_bits().
-> >
-> > What about just using regmap as accessor for these
-> > registers instead?
-> >
->
-> I'm not sure it would be beneficial...
+> > Fine by me, but I want you to first consider switching the
+> > custom register accessors to regmap.
+(...)
+> IMHO this is quite a significant effort, and given that the driver seems
+> to be doing its job I'd rather see such efforts being focused elsewhere.
 
-Me neither, I don't know the details, I just notice the similarity in the
-accessors.
+I think you know it better than me, if regmap is just going to clutter
+the view the don't do it.
 
-> The regmap interface provides a standardized representation of a block
-> of registers, with the suitable accessors backing it. But in both cases
-> touched upon in this series, the addressed registers are part of regions
-> already handled by the kernel.
->
-> So it wouldn't be suitable to create a regmap-abstraction for "a block
-> of secure registers", at best that would give us two kinds of regmaps
-> abstracting the same register block.
+Regmap does have the upside of looking the same on all platforms so it
+would potentially give less maintenance burden.
 
-From my viewpoint regmap does three things:
-- Abstract one coherent region of registers under a shared lock, with
-  nifty accessors (such as mask-and-set with regmap_update_bits())
-- Maps access patterns/permissions and permissible access range
-- Optionally cache the contents
-
-The way I would use it if these secure registers are in the same range as a
-bunch of non-secure ones is for sharing a lock and the regmap accessors.
-
-I wouldn't worry about access patterns and such. That usecase (block
-access to certain registers or bits) is partly overdesign in some cases
-IMO.
-
-If regmap abstraction isn't helpful overall then we shouldn't do it.
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+for these patches if you need to merge them elsewhere, I can also
+queue them if you ACK them.
 
 Yours,
 Linus Walleij
