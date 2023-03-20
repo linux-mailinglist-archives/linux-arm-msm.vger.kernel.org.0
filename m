@@ -2,117 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DC886C1053
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 12:10:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 562986C108A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 12:17:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230060AbjCTLKj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 07:10:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53374 "EHLO
+        id S231180AbjCTLRH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 07:17:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231310AbjCTLKM (ORCPT
+        with ESMTP id S230320AbjCTLQq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 07:10:12 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACC301ACF6;
-        Mon, 20 Mar 2023 04:06:37 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3E2C1B80DFA;
-        Mon, 20 Mar 2023 11:06:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF8EC433EF;
-        Mon, 20 Mar 2023 11:06:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679310394;
-        bh=7lVnvE+H0LwnZCwFqsBcASGQoZnp+CUIfRj+cb1hIhs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Tz/Iz9YFfmM0IQVgiLRwTXb7wqQyEO2uBYER6CiPDFY/5jedne251UlD1TJSNJa/+
-         ApO+2CvcyiS+pH85bzk6JWcUkkOTPPZK6R/FnCZ617K0jmueUTN6V0RrDTunMrntMr
-         LNp9/Zwsl/ur/u+GCYDJxBC/mM+eDXr+UcKOwAIA/JwW+RgOiE251ktt9sO6rE0kSz
-         9IeqQorb2/yNdpTPf18aj3pFwmDGb60W6GmEJItWdbl0ZHKNUbPp8p91zNhc4QyioQ
-         uQH/bT6pphC9NDX4yn1KylptAUf/GcVY4F90cDRk2G1q/p6iPwytP/HY5YTUhlSYjo
-         GW2tLfCJyD1gg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1peDMp-0005yt-Hh; Mon, 20 Mar 2023 12:07:55 +0100
-Date:   Mon, 20 Mar 2023 12:07:55 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Kalle Valo <kvalo@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
+        Mon, 20 Mar 2023 07:16:46 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EE2A9762
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 04:15:15 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id t11so14420288lfr.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 04:15:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679310911;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Qc9ZRBjX1gW/PO4dTPRCMAuvrMhl5YVmAVdMbAlY9ZM=;
+        b=aot7YGzMwa4OyDGUggFQuMJBby5EaYqELcWCgvcByo9h9VJi2vnicCwCfp01DYyrOK
+         UDkXOEkEijJm1Q6f5Q9pqV59feHdJak4Ws9bshNfbo2yn5uUyfeynocp6xiN8m721mkU
+         Yg8R+UXEun+WPawxCN3IK6eMg4ZUPmUdJCNGN93uhbmAOaJtXR5o11GzmA0W3Sm06CAJ
+         +OjOfccuUZ4aLe5+3YdTysCY4EPv7U6/NKf0ik41l9Oge8PMSd6erzVSD2UWUogdvYPm
+         jVVBDkessYZ3JAOfaIWWjNhAbDh7w864UD5jExuo60V17+H1KZVKXInXkg1f3Ygs2d3j
+         Jwuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679310911;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qc9ZRBjX1gW/PO4dTPRCMAuvrMhl5YVmAVdMbAlY9ZM=;
+        b=vV3Fi/fcKadHbBqBeJJQi+sRopkn2OfQK+NZfNLaYRe1I5LfNlJ+RArwap3oqt31gh
+         XfahOvW4z9jfa5zlYl4Xcxs9Bj13LIWP9LBtr+SvsoQwvIR12PcRq1MaeDahhbJtognk
+         92+fGjxbZGaMjv6hKR67mRVpLloMc2QkryJRETC4+vzGXqmVuHPORTpN6BVNH7Fxrx0d
+         eqq65MK0CATRoIzBFG65pKsiY/Wb+U3w+v23RLUuJ0EtkOM6LDgAx/DJ1Gv6/o/lHXwo
+         eZZgq3TscYfoFmLuCKwB18x7f/YkVA1qEuqRE/vTGDWyPYSVx+SUSJBVW6yBt+gDUqvp
+         Q32g==
+X-Gm-Message-State: AO0yUKXJdsv0qIoq+6lsAlOkZZ7TQQLC4qRKhuTZ719WclNbTH3asN7O
+        A1NChnn8lCS6UPxjWO34+C6yDQ==
+X-Google-Smtp-Source: AK7set8UnMd1OzsvH506jzTAXguOjt9jhFowcEhBvlLI0aobMm+h6RFRFYtbc1BRFsHPA5F/LTjLkQ==
+X-Received: by 2002:ac2:5334:0:b0:4e8:502e:b331 with SMTP id f20-20020ac25334000000b004e8502eb331mr5611701lfh.14.1679310910883;
+        Mon, 20 Mar 2023 04:15:10 -0700 (PDT)
+Received: from [192.168.1.101] (abym238.neoplus.adsl.tpnet.pl. [83.9.32.238])
+        by smtp.gmail.com with ESMTPSA id g12-20020a19ac0c000000b004dda76fad5asm1655955lfc.218.2023.03.20.04.15.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Mar 2023 04:15:10 -0700 (PDT)
+Message-ID: <62f9ff47-7934-e2e4-aec2-01e9ed2f0a45@linaro.org>
+Date:   Mon, 20 Mar 2023 12:15:08 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v6 5/5] arm64: dts: qcom: sm8450: add dp controller
+Content-Language: en-US
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sc8280xp-crd: add wifi calibration
- variant
-Message-ID: <ZBg+ixekH+Ou7jMd@hovoldconsulting.com>
-References: <20230320104658.22186-1-johan+linaro@kernel.org>
- <20230320104658.22186-4-johan+linaro@kernel.org>
- <244a59c6-2dc0-83c7-07d2-6bae04022605@linaro.org>
- <ZBg7tA8NLDnjPp+k@hovoldconsulting.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZBg7tA8NLDnjPp+k@hovoldconsulting.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230206-topic-sm8450-upstream-dp-controller-v6-0-d78313cbc41d@linaro.org>
+ <20230206-topic-sm8450-upstream-dp-controller-v6-5-d78313cbc41d@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230206-topic-sm8450-upstream-dp-controller-v6-5-d78313cbc41d@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 20, 2023 at 11:55:48AM +0100, Johan Hovold wrote:
-> On Mon, Mar 20, 2023 at 11:50:30AM +0100, Konrad Dybcio wrote:
-> > 
-> > 
-> > On 20.03.2023 11:46, Johan Hovold wrote:
-> > > Describe the bus topology for PCIe domain 6 and add the ath11k
-> > > calibration variant so that the board file (calibration data) can be
-> > > loaded.
-> > > 
-> > > Link: https://bugzilla.kernel.org/show_bug.cgi?id=216036
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 17 +++++++++++++++++
-> > >  1 file changed, 17 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > > index 90a5df9c7a24..5dfda12f669b 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > 
-> > 
-> > Was mixing
-> > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > 
-> > this /\
-> > 
-> > [...]
-> > 
-> > and this \/
-> > > +			qcom,ath11k-calibration-variant = "LE_X13S";
-> > Intentional? Especially given Kalle's comment on bugzilla?
+
+
+On 17.03.2023 16:06, Neil Armstrong wrote:
+> Add the Display Port controller subnode to the MDSS node.
 > 
-> Yes, it is intentional. The corresponding calibration data allows the
-> wifi to be used on the CRD. I measure 150 MBits/s which may a bit lower
-> than expected, but it's better than having no wifi at all.
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-I was going back and forth about mentioning this in the commit message
-and we could off on this one until someone confirms that the
-corresponding calibration data can (or should) be used for the X13s.
-
-Note that there is no other match for
-
-	'bus=pci,vendor=17cb,device=1103,subsystem-vendor=17cb,subsystem-device=0108,qmi-chip-id=2,qmi-board-id=140'
-
-in the new board-2.bin.
-
-Johan
+Konrad
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 79 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 79 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 97ce5fe0e9b0..da6d1881ef60 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -2751,6 +2751,13 @@ dpu_intf2_out: endpoint {
+>  						};
+>  					};
+>  
+> +					port@2 {
+> +						reg = <2>;
+> +						dpu_intf0_out: endpoint {
+> +							remote-endpoint = <&mdss_dp0_in>;
+> +						};
+> +					};
+> +
+>  				};
+>  
+>  				mdp_opp_table: opp-table {
+> @@ -2783,6 +2790,78 @@ opp-500000000 {
+>  				};
+>  			};
+>  
+> +			mdss_dp0: displayport-controller@ae90000 {
+> +				compatible = "qcom,sm8450-dp", "qcom,sm8350-dp";
+> +				reg = <0 0xae90000 0 0x200>,
+> +				      <0 0xae90200 0 0x200>,
+> +				      <0 0xae90400 0 0xc00>,
+> +				      <0 0xae91000 0 0x400>,
+> +				      <0 0xae91400 0 0x400>;
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <12>;
+> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX0_AUX_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
+> +				clock-names = "core_iface",
+> +					      "core_aux",
+> +					      "ctrl_link",
+> +			                      "ctrl_link_iface",
+> +					      "stream_pixel";
+> +
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
+> +				assigned-clock-parents = <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
+> +							 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
+> +
+> +				phys = <&usb_1_qmpphy QMP_USB43DP_DP_PHY>;
+> +			        phy-names = "dp";
+> +
+> +			        #sound-dai-cells = <0>;
+> +
+> +				operating-points-v2 = <&dp_opp_table>;
+> +				power-domains = <&rpmhpd SM8450_MMCX>;
+> +
+> +				status = "disabled";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +						mdss_dp0_in: endpoint {
+> +							remote-endpoint = <&dpu_intf0_out>;
+> +						};
+> +					};
+> +				};
+> +
+> +				dp_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-160000000 {
+> +						opp-hz = /bits/ 64 <160000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-270000000 {
+> +						opp-hz = /bits/ 64 <270000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
+> +
+> +					opp-540000000 {
+> +						opp-hz = /bits/ 64 <540000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +
+> +					opp-810000000 {
+> +						opp-hz = /bits/ 64 <810000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
+> +				};
+> +			};
+> +
+>  			mdss_dsi0: dsi@ae94000 {
+>  				compatible = "qcom,sm8450-dsi-ctrl", "qcom,mdss-dsi-ctrl";
+>  				reg = <0 0x0ae94000 0 0x400>;
+> 
