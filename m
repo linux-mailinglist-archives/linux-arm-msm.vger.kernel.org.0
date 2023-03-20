@@ -2,77 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 672546C0A93
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 07:27:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E7876C0AD7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 07:46:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229888AbjCTG1V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 02:27:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54618 "EHLO
+        id S229994AbjCTGq4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 02:46:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229782AbjCTG1K (ORCPT
+        with ESMTP id S229635AbjCTGqy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 02:27:10 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BD2576B7;
-        Sun, 19 Mar 2023 23:27:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
-        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=ymlj6tr7jc/Ds5qpTizc2igFIqLJSW+AJ2TX/23qHyA=; b=k1Unp9naWpT6C3jcgjEpwlJr9a
-        NiEPfknU57CWh7L1IhjSPld91xn7i02IEhK1eDM+W3lrETC0YSWW38zKqliLeF64l7opZ++5lkcaQ
-        l+4iyCtMIA2zX5Vp48GL2tL4M0UkLqeb47fn1ZIc9Tzi5Mlm84fbnFy9Qy40xycus1lCIuOepksJN
-        gas9lJfg+wdtVbMwfzN/Ywtr4YwZhlk89aVe78eB7Awo5yJBwy1s3XLpcvOeZGFmAfpfnuYShOwEG
-        g5nGkq652NYEj/gm6bbtV1G9P7WefZlIRZvEDli/vbTIxsK8g3FtkzfRiposFHRPV7VBmo9FG2Nk/
-        YqaXQk8w==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-        id 1pe8yo-008ED5-00;
-        Mon, 20 Mar 2023 06:26:50 +0000
-Date:   Sun, 19 Mar 2023 23:26:49 -0700
-From:   Christoph Hellwig <hch@infradead.org>
-To:     Trilok Soni <quic_tsoni@quicinc.com>
-Cc:     Christoph Hellwig <hch@infradead.org>,
-        John Moon <quic_johmoo@quicinc.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Todd Kjos <tkjos@google.com>,
-        Matthias Maennich <maennich@google.com>,
-        Giuliano Procida <gprocida@google.com>,
-        kernel-team@android.com, libabigail@sourceware.org,
-        Jordan Crouse <jorcrous@amazon.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>
-Subject: Re: [PATCH v2 0/2] Validating UAPI backwards compatibility
-Message-ID: <ZBf8qak4lg43MDgz@infradead.org>
-References: <20230301075402.4578-1-quic_johmoo@quicinc.com>
- <ZArlx5wrw+ZQWUg4@infradead.org>
- <c4b39b28-1f18-c436-e3c5-b015600ca3a2@quicinc.com>
+        Mon, 20 Mar 2023 02:46:54 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C81E2D40
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Mar 2023 23:46:53 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id e15-20020a17090ac20f00b0023d1b009f52so15370787pjt.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Mar 2023 23:46:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679294812;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VaxDrE6sBelofBs54+Z3CMb25A0XT3Une6FS0Y2mEhs=;
+        b=wi1+mN7GaJ4u0+hEKsy2oofsDrcs6R+8hM3lxZTB/rB1m0ZSCgQNTvHwNpL0xU9xfi
+         EaCqhXmw5isP6bSykPi5nvg/EzBDaZ9JpjJGnVC0RR1oAhyH48CrC4MHsnEfq6a6nT7R
+         OW3wNgX/H7dKYHNbIV7DKn90XtRCqYPj0kRaE+r7giVBYfywylF/VPqa3TQ0IdjV7IbJ
+         PRJeEai8K8rBpwEUgvp1vsjrxSRCrqzsoJD4NIidOmBROS0H8HOtRcQhCLTFZ3iMuZtm
+         9NdTo9cEc17eueWVv876JiJLgFRxnVVRVCEp72dugpnDwfdLIkuugLujXF+4ndBfGyAm
+         TMJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679294812;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VaxDrE6sBelofBs54+Z3CMb25A0XT3Une6FS0Y2mEhs=;
+        b=AYM4heC2N2Ut1JLOqNXmUWlDjOWyRnB4YeDOM+J09RVi43i3LRNkx+ln+3VM3DhUTt
+         WjrDx4eTSXCFkWsDgiqAXbebCWZsJzNSf5k5LVsUfm1h9B9tLB14/c1xgdEOg1MpJpwJ
+         66fv9w0FsCGYIrAHVWFy6MyV8N7jsCWNdoQdci1Apeg4EgEJQNGPkrR2dFcTtKMf6w3T
+         SL3che4vW5TYx5DfMm8LcMYOVCj+yghmneDVc7TNV8YuXm6JHBDnQsrk6pF3hV3Gs08s
+         WVR/lhWDDHYEQ+iuagpOAsNrdX+wTFiS8Ivutcku3lSZ8KOfJK/ho4n9CSKuvut+wG3R
+         Hz2Q==
+X-Gm-Message-State: AO0yUKU+ivQxD5LpFY8o4t86lGofIthk2F2m2135vcjAss2GS9A8NjHB
+        K8hhGljxH7Q4FKTBhSP7XI0k
+X-Google-Smtp-Source: AK7set+3SI3wk2EsbMEEQTr9wQv3GdLpwqjTZWBEPt2as3AtF1LSd86q/Bqa+7hWcN4ylIGkqU0tYQ==
+X-Received: by 2002:a17:902:db07:b0:1a1:d949:a52d with SMTP id m7-20020a170902db0700b001a1d949a52dmr635544plx.65.1679294812417;
+        Sun, 19 Mar 2023 23:46:52 -0700 (PDT)
+Received: from localhost.localdomain ([59.97.54.141])
+        by smtp.gmail.com with ESMTPSA id p7-20020a1709028a8700b001a1860da968sm5793382plo.178.2023.03.19.23.46.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 19 Mar 2023 23:46:51 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lpieralisi@kernel.org, kw@linux.com
+Cc:     robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        johan+linaro@kernel.org, steev@kali.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2] PCI: qcom: Add async probe support
+Date:   Mon, 20 Mar 2023 12:16:44 +0530
+Message-Id: <20230320064644.5217-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c4b39b28-1f18-c436-e3c5-b015600ca3a2@quicinc.com>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 10, 2023 at 10:20:14AM -0800, Trilok Soni wrote:
-> This tool will be helpful for the kernel maintainers and reviewers as well
-> if it can detect potential UAPI backward compatibilities. Even for the
-> developers while changing UAPI interfaces at kernel.org before submission.
+Qcom PCIe RC driver waits for the PHY link to be up during the probe. This
+consumes several milliseconds during boot. So add async probe support so
+that other drivers can load in parallel while this driver waits for the
+link to be up.
 
-So document it as that.
+Suggested-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+
+Changes in v2:
+
+* Rebased on top of v6.3-rc1
+
+ drivers/pci/controller/dwc/pcie-qcom.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index a232b04af048..4ca357be88e0 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1862,6 +1862,7 @@ static struct platform_driver qcom_pcie_driver = {
+ 		.name = "qcom-pcie",
+ 		.suppress_bind_attrs = true,
+ 		.of_match_table = qcom_pcie_match,
++		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
+ 	},
+ };
+ builtin_platform_driver(qcom_pcie_driver);
+-- 
+2.25.1
+
