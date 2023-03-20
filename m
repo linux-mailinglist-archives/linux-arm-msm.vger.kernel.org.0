@@ -2,165 +2,287 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87F036C25FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 00:47:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE59F6C2605
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 00:48:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229892AbjCTXrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 19:47:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45284 "EHLO
+        id S230163AbjCTXsD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 19:48:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbjCTXrJ (ORCPT
+        with ESMTP id S230141AbjCTXsB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 19:47:09 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ADBDE184
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 16:46:31 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id g17so17045686lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 16:46:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679355920;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6yNR8X23A98sblDxbw5Poz4eMrkTW4BedLygWYr/QqY=;
-        b=zhreF+PljbDmKvP/Iu8G+igR5OmJ+q+rU5tYXa5BiCuhvU2aEL0hqMDkE1X3CBtvYq
-         rlQPLKAkZkvoOyAUg86pz6otZJz5A+fLwDHzGsPp0EN1g2hTEr0CxiZsbIBPIXLFqYkx
-         p5t4JPKg2aLkVadeG6d5hFz+pAxd8i2q1/LXw0qlUc9oEwZwdETPzo4JL5CNSZy4exeh
-         BfO6Dwx8A1EhpO1q5OrU+lJK1EMc4iCXNaJbfQKqMxzE89PBrzPpgzrsP01BQoSrmwhX
-         ANIU33RxUUEZa1DLvHUgf0Z4WQzagFOZzgzzicvpUYefiWMpiTzbnCwwQGs8mXHzYfyJ
-         JGwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679355920;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6yNR8X23A98sblDxbw5Poz4eMrkTW4BedLygWYr/QqY=;
-        b=yT5BIBVUktim+sJokwJdIypKhNhkimBNWe4rHDNP6SDUfdCUS8d5Kdw5y/D6/tUWAU
-         j5y4fMP8JD+hCcvmh0dazM976EfBSowe0Vsy+IF0rt9ZqBpp2aNRrEHutAAqMJfDc5F1
-         N7Gj4/IC7H16dwIlPe5hXlGk3SOlwX2Y3YvSq4E+9X3F9mv+EJ1ZvU05hLiefCX0hQ/l
-         XzpfCZd6z0oEeiT9qPCap4ERU9tPjH22WCNofLDyStjojyBIxLLszziROyPDlGIfinU8
-         fIkqLEN/lzkdfxLDHiGtOEnCu1qxI+7jMp0XIFAifuzS13lJgeuKaExsODiiMoMs/OOu
-         1iYg==
-X-Gm-Message-State: AO0yUKUxUR613xFV/FdchCLZD+3ececsoOxjvK1rwRltkE/vaAxF4t/S
-        c+69mUt9MPhz3nRR1FCCdU2giA==
-X-Google-Smtp-Source: AK7set8MGVhASxzEwrHlVBfW2UlJo/rZ2P+TFZs8vUWIrx9O7hrMJAGVckUytY/qAEStsErgqHNslw==
-X-Received: by 2002:ac2:4310:0:b0:4dd:af76:d3c with SMTP id l16-20020ac24310000000b004ddaf760d3cmr170842lfh.48.1679355920301;
-        Mon, 20 Mar 2023 16:45:20 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s9-20020a2e98c9000000b00293534d9757sm1982264ljj.81.2023.03.20.16.45.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Mar 2023 16:45:19 -0700 (PDT)
-Message-ID: <2e352a73-181e-7539-7932-f753b29ee967@linaro.org>
-Date:   Tue, 21 Mar 2023 01:45:18 +0200
+        Mon, 20 Mar 2023 19:48:01 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15942DBD0;
+        Mon, 20 Mar 2023 16:47:22 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32KMBD4S023372;
+        Mon, 20 Mar 2023 23:46:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=27HtUd1mojbfhVpkD4e+wTcjCFDgUp2b3TdzzCWzVdQ=;
+ b=gjQhD47oPNq394Si2smK+1hEduPtrfxa9EzqhibfQH4fVfdlpQrBXRgqmzBOIQd+wDMQ
+ 8IVeegEAAWVB2v/aF0W/ZH9JObQvOS+3wBtylgFTgDCut2UeYx4gG6kg/0mQ9HOJmZ+V
+ 4uiSYROweKwzR5BGBcZj9RxQiJ6gul2gipBtxO3excKbuC9E/Gn8Y+++/E0/uSuW+nWi
+ 5Vt9tq18t3oalRns8dfE/+BRA83zc742Hmw2kp66ljR6W1wQmpXTIWa9HEm5pI8zsaa5
+ 5X1R2wWJw48z+zRWh8sMXKrgGkBhb8N6yP4vH9YdmBQzlE5OUuFyKwJub+Zov4KyAiJz +w== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pen6hsw49-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 20 Mar 2023 23:46:09 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32KNk6mJ001408
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 20 Mar 2023 23:46:06 GMT
+Received: from [10.110.115.97] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 20 Mar
+ 2023 16:46:05 -0700
+Message-ID: <e5753441-894d-e6f2-c628-eb931a6b2986@quicinc.com>
+Date:   Mon, 20 Mar 2023 16:46:04 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2] dt-bindings: display: Drop unneeded quotes
-Content-Language: en-GB
-To:     Rob Herring <robh@kernel.org>,
-        Robin van der Gracht <robin@protonic.nl>,
-        Miguel Ojeda <ojeda@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v2 6/7] remoteproc: qcom_q6v5_pas: Add support to attach a
+ DSP
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jyri Sarha <jyri.sarha@iki.fi>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
-        linux-tegra@vger.kernel.org
-References: <20230320233823.2919475-1-robh@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230320233823.2919475-1-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
+References: <20230306231202.12223-1-quic_molvera@quicinc.com>
+ <20230306231202.12223-7-quic_molvera@quicinc.com>
+ <20230316022740.umavd6jviftktag7@ripper>
+From:   Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <20230316022740.umavd6jviftktag7@ripper>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: K5qMRy4qy5zq3MB_PpcPonz44UrakDiR
+X-Proofpoint-GUID: K5qMRy4qy5zq3MB_PpcPonz44UrakDiR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-20_16,2023-03-20_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ malwarescore=0 priorityscore=1501 mlxscore=0 bulkscore=0 adultscore=0
+ spamscore=0 impostorscore=0 phishscore=0 clxscore=1015 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303150002 definitions=main-2303200200
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/03/2023 01:38, Rob Herring wrote:
-> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> checking for this can be enabled in yamllint.
-> 
-> Reviewed-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
-> v2:
->   - Also drop quotes on URLs
-> ---
->   .../bindings/auxdisplay/holtek,ht16k33.yaml   |  2 +-
->   .../display/amlogic,meson-dw-hdmi.yaml        |  4 ++--
->   .../bindings/display/amlogic,meson-vpu.yaml   |  4 ++--
->   .../display/bridge/analogix,anx7625.yaml      |  4 ++--
->   .../display/bridge/cdns,mhdp8546.yaml         |  4 ++--
->   .../bindings/display/bridge/nxp,ptn3460.yaml  |  2 +-
->   .../display/bridge/toshiba,tc358767.yaml      |  2 +-
->   .../bindings/display/dp-aux-bus.yaml          |  2 +-
->   .../bindings/display/imx/nxp,imx8mq-dcss.yaml |  4 ++--
->   .../display/mediatek/mediatek,hdmi.yaml       |  2 +-
->   .../display/msm/dsi-controller-main.yaml      |  8 +++----
->   .../bindings/display/msm/dsi-phy-10nm.yaml    |  2 +-
->   .../devicetree/bindings/display/msm/gmu.yaml  |  4 ++--
->   .../devicetree/bindings/display/msm/gpu.yaml  |  4 ++--
->   .../devicetree/bindings/display/msm/mdp4.yaml |  4 ++--
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> #display/msm
-
->   .../display/panel/ronbo,rb070d30.yaml         |  2 +-
->   .../bindings/display/renesas,du.yaml          |  4 ++--
->   .../display/tegra/nvidia,tegra114-mipi.yaml   |  2 +-
->   .../display/tegra/nvidia,tegra124-sor.yaml    | 12 +++++-----
->   .../display/tegra/nvidia,tegra186-dc.yaml     |  4 ++--
->   .../tegra/nvidia,tegra186-dsi-padctl.yaml     |  2 +-
->   .../display/tegra/nvidia,tegra20-dsi.yaml     | 12 +++++-----
->   .../display/tegra/nvidia,tegra20-hdmi.yaml    |  6 ++---
->   .../bindings/display/ti/ti,am65x-dss.yaml     |  6 ++---
->   .../bindings/display/ti/ti,j721e-dss.yaml     |  4 ++--
->   .../bindings/display/ti/ti,k2g-dss.yaml       |  4 ++--
->   .../display/xylon,logicvc-display.yaml        | 22 +++++++++----------
->   27 files changed, 66 insertions(+), 66 deletions(-)
 
 
--- 
-With best wishes
-Dmitry
+On 3/15/2023 7:27 PM, Bjorn Andersson wrote:
+> On Mon, Mar 06, 2023 at 03:12:01PM -0800, Melody Olvera wrote:
+>> Some chipsets will have DSPs which will have begun running prior
+>> to linux booting, so add support to late attach these DSPs by
+>> adding support for:
+>> - run-time checking of an offline or running DSP via rmb register
+>> - a late attach framework to attach to the running DSP
+>> - a handshake mechanism to ensure full and proper booting via rmb
+>>
+>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>> ---
+>>  drivers/remoteproc/qcom_q6v5_pas.c | 103 ++++++++++++++++++++++++++++-
+>>  1 file changed, 102 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+>> index 0871108fb4dc..e22be6a029a8 100644
+>> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+>> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+>> @@ -242,10 +242,89 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
+>>  	return ret;
+>>  }
+>>  
+>> +static int adsp_attach(struct rproc *rproc)
+>> +{
+>> +	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
+>> +	int i, ret;
+>> +
+>> +	ret = qcom_q6v5_prepare(&adsp->q6v5);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	ret = adsp_pds_enable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+>> +	if (ret < 0)
+>> +		goto disable_irqs;
+>> +
+>> +	ret = clk_prepare_enable(adsp->xo);
+>> +	if (ret)
+>> +		goto disable_proxy_pds;
+>> +
+>> +	ret = clk_prepare_enable(adsp->aggre2_clk);
+>> +	if (ret)
+>> +		goto disable_xo_clk;
+>> +
+>> +	if (adsp->cx_supply) {
+>> +		ret = regulator_enable(adsp->cx_supply);
+>> +		if (ret)
+>> +			goto disable_aggre2_clk;
+>> +	}
+>> +
+>> +	if (adsp->px_supply) {
+>> +		ret = regulator_enable(adsp->px_supply);
+>> +		if (ret)
+>> +			goto disable_cx_supply;
+>> +	}
+>> +
+>> +	/* if needed, signal Q6 to continute booting */
+>> +	if (adsp->q6v5.rmb_base) {
+>> +		for (i = 0; i < RMB_POLL_MAX_TIMES; i++) {
+>> +			if (readl_relaxed(adsp->q6v5.rmb_base + RMB_BOOT_WAIT_REG)) {
+>> +				writel_relaxed(1, adsp->q6v5.rmb_base + RMB_BOOT_CONT_REG);
+>> +				break;
+>> +			}
+>> +			msleep(20);
+>> +		}
+>> +
+>> +		if (!readl_relaxed(adsp->q6v5.rmb_base + RMB_BOOT_WAIT_REG)) {
+>> +			dev_err(adsp->dev, "Didn't get rmb signal from  %s\n", rproc->name);
+>> +			goto disable_px_supply;
+>> +		}
+>> +	}
+>> +
+>> +	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5000));
+>> +	if (ret == -ETIMEDOUT) {
+>> +		dev_err(adsp->dev, "start timed out\n");
+>> +		qcom_scm_pas_shutdown(adsp->pas_id);
+>> +		goto disable_px_supply;
+>> +	}
+>> +
+>> +	return 0;
+>> +
+>> +disable_px_supply:
+>> +	if (adsp->px_supply)
+>> +		regulator_disable(adsp->px_supply);
+>> +disable_cx_supply:
+>> +	if (adsp->cx_supply)
+>> +		regulator_disable(adsp->cx_supply);
+>> +disable_aggre2_clk:
+>> +	clk_disable_unprepare(adsp->aggre2_clk);
+>> +disable_xo_clk:
+>> +	clk_disable_unprepare(adsp->xo);
+>> +disable_proxy_pds:
+>> +	adsp_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+>> +disable_irqs:
+>> +	qcom_q6v5_unprepare(&adsp->q6v5);
+>> +
+>> +	/* Remove pointer to the loaded firmware, only valid in adsp_load() & adsp_start() */
+>> +	adsp->firmware = NULL;
+>> +
+>> +	return ret;
+>> +}
+>> +
+>>  static int adsp_start(struct rproc *rproc)
+>>  {
+>>  	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
+>> -	int ret;
+>> +	int i, ret;
+>>  
+>>  	ret = qcom_q6v5_prepare(&adsp->q6v5);
+>>  	if (ret)
+>> @@ -304,6 +383,22 @@ static int adsp_start(struct rproc *rproc)
+>>  		goto release_pas_metadata;
+>>  	}
+>>  
+>> +	/* if needed, signal Q6 to continute booting */
+> Why does this come before the wait_for_start()? Is the DSP actually up
+> and running when you hit attach, or is it just loaded?
+
+Yeah so DSP is loaded and partially booted, but it's waiting for a signal from our driver
+to complete the boot process through to err_ready.
+
+>
+>> +	if (adsp->q6v5.rmb_base) {
+> Afaict this is copy-paste from attach, please move it to a helper
+> function.
+
+Sure.
+
+>
+>> +		for (i = 0; i < RMB_POLL_MAX_TIMES; i++) {
+>> +			if (readl_relaxed(adsp->q6v5.rmb_base + RMB_BOOT_WAIT_REG)) {
+>> +				writel_relaxed(1, adsp->q6v5.rmb_base + RMB_BOOT_CONT_REG);
+>> +				break;
+>> +			}
+>> +			msleep(20);
+>> +		}
+>> +
+>> +		if (!readl_relaxed(adsp->q6v5.rmb_base + RMB_BOOT_WAIT_REG)) {
+> If you hit the break above, there should be no reason to read this
+> register again.
+>
+> Seems cleaner to write this as:
+>
+> 	ret = readl_poll_timeout();
+> 	if (ret < 0)
+> 		goto release;
+>
+> 	writel(1, ...);
+
+That is much cleaner; I didn't know about the poll timeout function. Will rewrite using it.
+
+Thanks,
+Melody
+>
+> Regards,
+> Bjorn
+>
+>> +			dev_err(adsp->dev, "Didn't get rmb signal from  %s\n", rproc->name);
+>> +			goto release_pas_metadata;
+>> +		}
+>> +	}
+>> +
+>>  	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5000));
+>>  	if (ret == -ETIMEDOUT) {
+>>  		dev_err(adsp->dev, "start timed out\n");
+>> @@ -413,6 +508,7 @@ static unsigned long adsp_panic(struct rproc *rproc)
+>>  static const struct rproc_ops adsp_ops = {
+>>  	.unprepare = adsp_unprepare,
+>>  	.start = adsp_start,
+>> +	.attach = adsp_attach,
+>>  	.stop = adsp_stop,
+>>  	.da_to_va = adsp_da_to_va,
+>>  	.parse_fw = qcom_register_dump_segments,
+>> @@ -423,6 +519,7 @@ static const struct rproc_ops adsp_ops = {
+>>  static const struct rproc_ops adsp_minidump_ops = {
+>>  	.unprepare = adsp_unprepare,
+>>  	.start = adsp_start,
+>> +	.attach = adsp_attach,
+>>  	.stop = adsp_stop,
+>>  	.da_to_va = adsp_da_to_va,
+>>  	.load = adsp_load,
+>> @@ -728,6 +825,10 @@ static int adsp_probe(struct platform_device *pdev)
+>>  	if (ret)
+>>  		goto detach_proxy_pds;
+>>  
+>> +	if (adsp->q6v5.rmb_base &&
+>> +			readl_relaxed(adsp->q6v5.rmb_base + RMB_Q6_BOOT_STATUS_REG))
+>> +		rproc->state = RPROC_DETACHED;
+>> +
+>>  	qcom_add_glink_subdev(rproc, &adsp->glink_subdev, desc->ssr_name);
+>>  	qcom_add_smd_subdev(rproc, &adsp->smd_subdev);
+>>  	adsp->sysmon = qcom_add_sysmon_subdev(rproc,
+>> -- 
+>> 2.25.1
+>>
 
