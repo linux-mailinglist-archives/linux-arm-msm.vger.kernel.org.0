@@ -2,128 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 677036C069F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 00:34:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E57016C08E3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 03:16:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229529AbjCSXd4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Mar 2023 19:33:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50134 "EHLO
+        id S229592AbjCTCQq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Mar 2023 22:16:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbjCSXdz (ORCPT
+        with ESMTP id S229473AbjCTCQp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Mar 2023 19:33:55 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC70E19687;
-        Sun, 19 Mar 2023 16:33:53 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (213-243-189-158.bb.dnainternet.fi [213.243.189.158])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 289A11449;
-        Mon, 20 Mar 2023 00:33:52 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1679268832;
-        bh=l2p4ZDBneAwEGOLjso6EkHUNvJxzex1xBmjmxf7QRGk=;
+        Sun, 19 Mar 2023 22:16:45 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A4621ABCA;
+        Sun, 19 Mar 2023 19:16:44 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 1B174B80D38;
+        Mon, 20 Mar 2023 02:16:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1FF3C433D2;
+        Mon, 20 Mar 2023 02:16:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679278601;
+        bh=cho+Cw6CT2KVRHUhfVes5dYNRH/VbgR1VeYtM1Fa6FU=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=aLcAv49AFw0OYSHbmnljKSRWyI2EloW7N3ryboN/dLV3MR3iF00oAyaxNlPwAjbTA
-         TRmqA5Cwa86orRcNH7geU2YfHVDB4sIM45GO+ZPVBETuvTSCzeVyunEXiZOfr0a/Jr
-         GPXVEd+Pz7pKmMVUVySEGmPANB3jS0kMSWW6MFxo=
-Date:   Mon, 20 Mar 2023 01:33:58 +0200
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Cc:     David Laight <David.Laight@ACULAB.COM>,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        "tfiga@chromium.org" <tfiga@chromium.org>,
-        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
-        "mchehab@kernel.org" <mchehab@kernel.org>,
-        "ming.qian@nxp.com" <ming.qian@nxp.com>,
-        "shijie.qin@nxp.com" <shijie.qin@nxp.com>,
-        "eagle.zhou@nxp.com" <eagle.zhou@nxp.com>,
-        "bin.liu@mediatek.com" <bin.liu@mediatek.com>,
-        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
-        "angelogioacchino.delregno@collabora.com" 
-        <angelogioacchino.delregno@collabora.com>,
-        "tiffany.lin@mediatek.com" <tiffany.lin@mediatek.com>,
-        "andrew-ct.chen@mediatek.com" <andrew-ct.chen@mediatek.com>,
-        "yunfei.dong@mediatek.com" <yunfei.dong@mediatek.com>,
-        "stanimir.k.varbanov@gmail.com" <stanimir.k.varbanov@gmail.com>,
-        "quic_vgarodia@quicinc.com" <quic_vgarodia@quicinc.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "andersson@kernel.org" <andersson@kernel.org>,
-        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
-        "ezequiel@vanguardiasur.com.ar" <ezequiel@vanguardiasur.com.ar>,
-        "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
-        "daniel.almeida@collabora.com" <daniel.almeida@collabora.com>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-mediatek@lists.infradead.org" 
-        <linux-mediatek@lists.infradead.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-rockchip@lists.infradead.org" 
-        <linux-rockchip@lists.infradead.org>,
-        "kernel@collabora.com" <kernel@collabora.com>
-Subject: Re: [RFC 2/4] media: videobuf2: Replace bufs array by a list
-Message-ID: <20230319233358.GD20234@pendragon.ideasonboard.com>
-References: <20230313135916.862852-1-benjamin.gaignard@collabora.com>
- <20230313135916.862852-3-benjamin.gaignard@collabora.com>
- <20230313181155.GC22646@pendragon.ideasonboard.com>
- <86df05244d974416903e919d387a0a0b@AcuMS.aculab.com>
- <e704b505-86d8-c6f2-8546-adccdab72622@xs4all.nl>
- <dc04d48e34ed40e58f43badd001a81d0@AcuMS.aculab.com>
- <cbf34cf1-e065-8136-8344-89ca1864f637@xs4all.nl>
+        b=s6gDs3dXUREH+uZi9PrWvqJVB/FYv4XW8M6UcvMASqMsVIn6WPqKc90HubdJYdXJU
+         jTAxDPdmeH5rd+RCFvZETZVFKT2Lb5DffuiHd680wkzvtlUHAvC8WiiFv12bFvqiHT
+         LrGM2NkcIX1u632v4ZEUDmsnl+lpyvnEe4OGN7JSHXEgWf8Q7deru8OQPLzVzqOyz9
+         76925jPQFfryP7hkFaDzlbCiesBhlQ2XOjxIrbvhMPWEJRGhQ6XCKHdT1L/5O0vbOh
+         DGNoFeLF+3wJ1dyHlfcpY5CJOANEAgQpEZzA07vEdwZzVMUNHq0lhV5qRwnTdmIIAi
+         YHiQHgcGEidvw==
+Date:   Sun, 19 Mar 2023 19:19:57 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        krzysztof.kozlowski@linaro.org, marijn.suijten@somainline.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: Split out SA8155P and use correct
+ RPMh power domains
+Message-ID: <20230320021957.yzg6zhrhjr36rcz4@ripper>
+References: <20230214095435.2192153-1-konrad.dybcio@linaro.org>
+ <20230214095435.2192153-3-konrad.dybcio@linaro.org>
+ <20230314001052.7qvgbwkl73x22oll@ripper>
+ <eaf2ca0d-4d90-b68b-3b36-8bb0148cfb95@linaro.org>
+ <ee1ebac4-bf18-019a-f770-5cb88703d06b@linaro.org>
+ <20230315230024.wxuqthay74i5zgrq@ripper>
+ <3d3117d2-b3eb-1174-7061-b899cdcdf6ce@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cbf34cf1-e065-8136-8344-89ca1864f637@xs4all.nl>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <3d3117d2-b3eb-1174-7061-b899cdcdf6ce@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Hans,
-
-On Tue, Mar 14, 2023 at 11:42:46AM +0100, Hans Verkuil wrote:
-> On 3/14/23 11:11, David Laight wrote:
-> > From: Hans Verkuil
-> >> Sent: 14 March 2023 08:55
-> > ...
-> >> Why not start with a dynamically allocated array of 32 vb2_buffer pointers?
-> >> And keep doubling the size (reallocing) whenever more buffers are needed,
-> >> up to some maximum (1024 would be a good initial value for that, I think).
-> >> This max could be even a module option.
-
-The kernel has IDR and IDA APIs, why not use them instead of reinventing
-the wheel ?
-
-> > I don't know the typical uses (or the code at all).
-> > But it might be worth having a small array in the structure itself.
-> > Useful if there are typically always (say) less than 8 buffers.
-> > For larger sizes use the (IIRC) kmalloc_size() to find the actual
-> > size of the structure that will be allocate and set the array
-> > size appropriately.
+On Thu, Mar 16, 2023 at 12:50:49AM +0100, Konrad Dybcio wrote:
+> On 16.03.2023 00:00, Bjorn Andersson wrote:
+> > On Tue, Mar 14, 2023 at 12:41:45PM +0100, Konrad Dybcio wrote:
+> >>
+> >>
+> >> On 14.03.2023 12:36, Konrad Dybcio wrote:
+> >>>
+> >>>
+> >>> On 14.03.2023 01:10, Bjorn Andersson wrote:
+> >>>> On Tue, Feb 14, 2023 at 10:54:35AM +0100, Konrad Dybcio wrote:
+> >>>>> The RPMhPD setup on SA8155P is different compared to SM8150. Correct
+> >>>>> it to ensure the platform will not try accessing forbidden/missing
+> >>>>> RPMh entries at boot, as a bad vote will hang the machine.
+> >>>>>
+> >>>>
+> >>>> I don't see that this will scale, as soon as someone adds a new device
+> >>>> in sm8150.dtsi that has the need to scale a power rail this will be
+> >>>> forgotten and we will have a mix of references to the SM8150 and SA8155P
+> >>>> value space.
+> >>>>
+> >>>> That said, I think it's reasonable to avoid duplicating the entire
+> >>>> sm8150.dtsi.
+> >>> Yeah, this problem has no obvious good solutions and even though it's
+> >>> not very elegant, this seems to be the less bad one..
+> >>>
+> >>>>
+> >>>> How about making the SA8155P_* macros match the SM8150_* macros?
+> >>>> That way things will fail gracefully if a device node references a
+> >>>> resource not defined for either platform...
+> >>> Okay, let's do that
+> >> Re-thinking it, it's good that the indices don't match, as this way the
+> >> board will (should) refuse to function properly if there's an oversight,
+> >> which may have gone unnoticed if they were matching, so this only guards
+> >> us against programmer error which is not great :/
+> >>
+> > 
+> > Right, ensuring that the resource indices never collides would be a good
+> > way to capture this issue, as well as copy-paste errors etc. My
+> > pragmatic proposal is that we make SA8155P_x == SM8150_x where a match
+> > exist, and for the ones that doesn't match we pick numbers that doesn't
+> > collide between the platforms.
+> > 
+> > The alternative is to start SA8155P_x at 11, but it's different and
+> > forces sa8155p.dtsi to redefine every single power-domains property...
+> > 
+> > 
+> > This does bring back the feeling that it was a mistake to include the
+> > platform name in these defines in the first place... Not sure if it's
+> > worth mixing generic defines into the picture at this point, given that
+> > we I don't see a way to use them on any existing platform.
+> TBF we could, think:
 > 
-> The typical usage is that applications allocate N buffers with the
-> VIDIOC_REQBUFS ioctl, and in most cases that's all they use.
+> sm1234_rpmpds[] = {
+> 	[CX] = &foobar1,
+> 	[CX_AO] = &foobar1_ao,
+> 
+> 	[...]
+> 
+> 	/* Legacy DT bindings */
+> 	[SM1234_CX] = &foobar1,
+> 	[SM1234_CX_AO] = &foobar1_ao,
+> };
+> 
+> WDYT?
 
-Note that once we get DELETE_BUF (or DELETE_BUFS) support I'd like to
-encourage applications to use the new API, and deprecate REQBUFS
-(dropping it isn't on my radar, as it would take forever before no
-userspace uses it anymore).
+Given that every platform got these defines different we'd have to start
+at the new generic list at 17 (which would throw away 136 bytes per
+platform), if we're going to allow the scheme for existing platforms.
+Which I don't fancy.
 
-> The
-> current max is 32 buffers, so allocating that initially (usually
-> during probe()) will cover all current cases with a single one-time
-> kzalloc.
+It's not super-pretty to mix and match, but I think I would be okay
+switching to this scheme for new platforms.
 
-Pre-allocating for the most common usage patterns is fine with me.
+PS. We'd better prefix the defines with something (perhaps RPM_?)
 
-> Only if the application wants to allocate more than 32 buffers will
-> there be a slight overhead.
-
--- 
 Regards,
-
-Laurent Pinchart
+Bjorn
