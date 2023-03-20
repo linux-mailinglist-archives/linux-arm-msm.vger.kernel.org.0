@@ -2,137 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 175746C1F4C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 19:16:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DB226C1F61
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 19:19:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230476AbjCTSQV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 14:16:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50370 "EHLO
+        id S231249AbjCTSTH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 14:19:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230479AbjCTSPy (ORCPT
+        with ESMTP id S229622AbjCTSS2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 14:15:54 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D27649F3;
-        Mon, 20 Mar 2023 11:09:58 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id n2so14211254qtp.0;
-        Mon, 20 Mar 2023 11:09:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679335763;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9Ym0Aa6IJr35fCbX8wJyITkzyONp9K1eXcn9gLrMKEM=;
-        b=jV+wT9G9dMq++VXoHOITcaMwSKfT7Ne8l6voVfiCeH20VK0uzRJIf9CA2v8jn1mE42
-         9De/qJTXiN3NlwKDdk7NArH7WT5H+4m7s71wZTV+2BygDTiQuwk+mRLMpRhBukxFua9x
-         67hE9fL+3OgJ1dTRBMXtTwDXEznGIlnqEuoH6BXNz+DtDWm5LZSaKbCnlxFhePXKvQQw
-         biWPqZK1eoCZ6HeXFY1w+DmsNHS4W090fENE/el13ZE/cuRLHNVC7Li/p30/Ai1N8xhv
-         3ejM9NTyAoTh9dtKbufIgtWOwd6srKtNAzDZ9KiKE0PTE7Lb1wYokPUbe9HLqHLVnTp7
-         mdLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679335763;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9Ym0Aa6IJr35fCbX8wJyITkzyONp9K1eXcn9gLrMKEM=;
-        b=NHVzLYtMKdmsPkDgLcR0Hyt1XcwdYrZ7B7LtiPC1O0eiQeXLJE5a8q32RtCpnnmmcY
-         YDaKHsVM/VhH+pG+zQiieMGHhVbRjsaKATzEHtRTJ4gKGW06JAGUfSN6rIZLaYqi7tqh
-         t+gFFGmvcfDeZ0qH+ezUoIlCOCTBWgzCB5dP27sPitDx4P+NVwho/KiD+X6rUDZbjHQs
-         f6RknlOTBlTlNKxTHaUhHQ9+pMx8c8Qs1tiz5Y0XvTMy4uxsPG3ldAP8FmILHFuc+8Pv
-         z3T9KNERiVevWE4bZoEtZ5RYteukkWoO03Wg8R5it6IFxHrf3Y6Xz+r+YAa7IrQy+3MI
-         hYVQ==
-X-Gm-Message-State: AO0yUKV2sbjaC3xcTteESAd6/v2KVSJxbC5aao3XsB06ipmsbiP85cIq
-        nHlxVfLjV7/9+hgRoh/YVuY=
-X-Google-Smtp-Source: AK7set/rOHA8qVlayMALPx0FGjCcSWh/Kq1WvV8aodxfR3XsSBymHa1dS0evHblRHeVucdEeSCUF5g==
-X-Received: by 2002:a05:622a:190e:b0:3d7:1979:829e with SMTP id w14-20020a05622a190e00b003d71979829emr125230qtc.27.1679335763440;
-        Mon, 20 Mar 2023 11:09:23 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id l16-20020ac84a90000000b003d4ee7879d0sm2042741qtq.56.2023.03.20.11.09.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Mar 2023 11:09:22 -0700 (PDT)
-Message-ID: <82ae9fd5-a4f9-89a6-8040-c64d22a85ebb@gmail.com>
-Date:   Mon, 20 Mar 2023 11:08:56 -0700
+        Mon, 20 Mar 2023 14:18:28 -0400
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 346283FBA9;
+        Mon, 20 Mar 2023 11:12:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1679335930; x=1710871930;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=KGgMVkVYkzc5hGwH7fgh8riyDfxHum9YPyo5UnckO5Q=;
+  b=MQS4GLiMrTjh1Kth/SswsWI3KxJw6ozMMUrhilByyow0abVWG4ME68iB
+   6gcd0knfbeTZb/51MuEPHlMddy4f/L3ZiQ/XpHsVERb5FU3o01wty5yOr
+   aw/BtfQGQHC94QFKPxm6aq7/qq4amJUPHrzHB4DJ07f2mseZI96KKk7tc
+   sirzsaz3YNTyOwTxRcJiFNcKncVFzh6FYldhKb5YmRN4V2Yu37kPCTHb1
+   rS60g0vARWe6gboG3Z/uJ6IzjL4TS24P0kYW0TeWlTW0LCW0EN8GWI6au
+   ncETjH1i3gmF878q3Rex2qmt05oYEiFhzzK1groslDUhKbaf4Lk/u1v7V
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10655"; a="338764979"
+X-IronPort-AV: E=Sophos;i="5.98,276,1673942400"; 
+   d="scan'208";a="338764979"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2023 11:10:57 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10655"; a="927063951"
+X-IronPort-AV: E=Sophos;i="5.98,276,1673942400"; 
+   d="scan'208";a="927063951"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by fmsmga006.fm.intel.com with ESMTP; 20 Mar 2023 11:10:53 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1peJy8-000BDZ-1J;
+        Mon, 20 Mar 2023 18:10:52 +0000
+Date:   Tue, 21 Mar 2023 02:10:39 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, ogabbay@kernel.org,
+        airlied@gmail.com, daniel@ffwll.ch,
+        jacek.lawrynowicz@linux.intel.com,
+        stanislaw.gruszka@linux.intel.com
+Cc:     oe-kbuild-all@lists.linux.dev,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>, dafna@fastmail.com,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, quic_ajitpals@quicinc.com,
+        quic_pkanojiy@quicinc.com, quic_carlv@quicinc.com
+Subject: Re: [PATCH v4 6/8] accel/qaic: Add mhi_qaic_cntl
+Message-ID: <202303210148.859DLhtz-lkp@intel.com>
+References: <1679325074-5494-7-git-send-email-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH] dt-bindings: net: Drop unneeded quotes
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        =?UTF-8?Q?Andreas_F=c3=a4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Joel Stanley <joel@jms.id.au>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Appana Durga Kedareswara rao <appana.durga.rao@xilinx.com>,
-        Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
-        Wolfgang Grandegger <wg@grandegger.com>,
-        Marc Kleine-Budde <mkl@pengutronix.de>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Tobias Waldekranz <tobias@waldekranz.com>,
-        Lars Povlsen <lars.povlsen@microchip.com>,
-        Steen Hegelund <Steen.Hegelund@microchip.com>,
-        Daniel Machon <daniel.machon@microchip.com>,
-        UNGLinuxDriver@microchip.com, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, linux-aspeed@lists.ozlabs.org,
-        linux-can@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-mediatek@lists.infradead.org
-References: <20230317233605.3967621-1-robh@kernel.org>
-From:   Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230317233605.3967621-1-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1679325074-5494-7-git-send-email-quic_jhugo@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/17/23 16:36, Rob Herring wrote:
-> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> checking for this can be enabled in yamllint.
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->   .../devicetree/bindings/net/actions,owl-emac.yaml  |  2 +-
->   .../bindings/net/allwinner,sun4i-a10-emac.yaml     |  2 +-
->   .../bindings/net/allwinner,sun4i-a10-mdio.yaml     |  2 +-
->   .../devicetree/bindings/net/altr,tse.yaml          |  2 +-
->   .../bindings/net/aspeed,ast2600-mdio.yaml          |  2 +-
->   .../devicetree/bindings/net/brcm,amac.yaml         |  2 +-
->   .../devicetree/bindings/net/brcm,systemport.yaml   |  2 +-
+Hi Jeffrey,
 
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Thank you for the patch! Perhaps something to improve:
+
+[auto build test WARNING on drm/drm-next]
+[also build test WARNING on lwn/docs-next linus/master v6.3-rc3 next-20230320]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Jeffrey-Hugo/accel-qaic-Add-documentation-for-AIC100-accelerator-driver/20230320-231611
+base:   git://anongit.freedesktop.org/drm/drm drm-next
+patch link:    https://lore.kernel.org/r/1679325074-5494-7-git-send-email-quic_jhugo%40quicinc.com
+patch subject: [PATCH v4 6/8] accel/qaic: Add mhi_qaic_cntl
+reproduce:
+        make versioncheck
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202303210148.859DLhtz-lkp@intel.com/
+
+versioncheck warnings: (new ones prefixed by >>)
+   INFO PATH=/opt/cross/clang/bin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+   /usr/bin/timeout -k 100 3h /usr/bin/make W=1 --keep-going HOSTCC=gcc-11 CC=gcc-11 -j32 ARCH=x86_64 versioncheck
+   find ./* \( -name SCCS -o -name BitKeeper -o -name .svn -o -name CVS -o -name .pc -o -name .hg -o -name .git \) -prune -o \
+   	-name '*.[hcS]' -type f -print | sort \
+   	| xargs perl -w ./scripts/checkversion.pl
+>> ./drivers/accel/qaic/mhi_qaic_ctrl.c: 9 linux/version.h not needed.
+   ./drivers/accessibility/speakup/genmap.c: 13 linux/version.h not needed.
+   ./drivers/accessibility/speakup/makemapdata.c: 13 linux/version.h not needed.
+   ./drivers/net/ethernet/qlogic/qede/qede.h: 10 linux/version.h not needed.
+   ./drivers/net/ethernet/qlogic/qede/qede_ethtool.c: 7 linux/version.h not needed.
+   ./drivers/soc/tegra/cbb/tegra-cbb.c: 19 linux/version.h not needed.
+   ./drivers/soc/tegra/cbb/tegra194-cbb.c: 26 linux/version.h not needed.
+   ./drivers/soc/tegra/cbb/tegra234-cbb.c: 27 linux/version.h not needed.
+   ./drivers/staging/media/atomisp/include/linux/atomisp.h: 23 linux/version.h not needed.
+   ./samples/trace_events/trace_custom_sched.c: 11 linux/version.h not needed.
+   ./sound/soc/codecs/cs42l42.c: 14 linux/version.h not needed.
+   ./tools/lib/bpf/bpf_helpers.h: 289: need linux/version.h
+   ./tools/perf/tests/bpf-script-example.c: 60: need linux/version.h
+   ./tools/perf/tests/bpf-script-test-kbuild.c: 21: need linux/version.h
+   ./tools/perf/tests/bpf-script-test-prologue.c: 49: need linux/version.h
+   ./tools/perf/tests/bpf-script-test-relocation.c: 51: need linux/version.h
+   ./tools/testing/selftests/bpf/progs/dev_cgroup.c: 9 linux/version.h not needed.
+   ./tools/testing/selftests/bpf/progs/netcnt_prog.c: 3 linux/version.h not needed.
+   ./tools/testing/selftests/bpf/progs/test_map_lock.c: 4 linux/version.h not needed.
+   ./tools/testing/selftests/bpf/progs/test_send_signal_kern.c: 4 linux/version.h not needed.
+   ./tools/testing/selftests/bpf/progs/test_spin_lock.c: 4 linux/version.h not needed.
+   ./tools/testing/selftests/bpf/progs/test_tcp_estats.c: 37 linux/version.h not needed.
+   ./tools/testing/selftests/wireguard/qemu/init.c: 27 linux/version.h not needed.
+
 -- 
-Florian
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
