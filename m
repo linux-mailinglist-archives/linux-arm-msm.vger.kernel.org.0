@@ -2,102 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE9A86C227C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 21:23:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 424296C2288
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Mar 2023 21:24:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229641AbjCTUXP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 16:23:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42300 "EHLO
+        id S229723AbjCTUY4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 16:24:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231276AbjCTUWw (ORCPT
+        with ESMTP id S229547AbjCTUYz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 16:22:52 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA54034008;
-        Mon, 20 Mar 2023 13:22:46 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 7910ACE13E7;
-        Mon, 20 Mar 2023 20:22:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E190CC4339C;
-        Mon, 20 Mar 2023 20:22:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679343762;
-        bh=DsQcH8xwycCkHIQ8QfvnCvZGiwQiVzM3IGKlFw3c6vs=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=C0iv1Wn2Pa5vHsqdFDR6zw0f6xRpMK70/N1T2glolnKQ3YLIxVa9NLi/VD/MuIgDD
-         AMlrJgSTLVgGIpOVJF1+Ghunoe4Mbsb67QPp53znrKW3xqS69cxFryb/04xLE/z2UL
-         cYlidr2lmoh4xOWy5u90QTZdPEyL7HL6T0jBjSwd5lfJMMfoBUHFNLgIBWf0S+srxu
-         QZQgZ6OIkcxVFR1EjRm8zUOSHLQaN3IU6e6CbVR9+h6qLlj6H177msFp2UNHRvKiJl
-         8K9FZ0cUgUsllPY3vklbGfqakT/9Rif52mfARdFAsLbORk70Elf2bjYltEQCF1V5q6
-         z2BOKHQPJU6XQ==
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-544787916d9so244339317b3.13;
-        Mon, 20 Mar 2023 13:22:42 -0700 (PDT)
-X-Gm-Message-State: AO0yUKViLwnhnSTssDtvD243PVLOWIq9eYqLY0+Uc0eKx4e8fgxyNqRe
-        xpJchmn/BgvPRbOhWHGE1YhIkIgoEbGhJLyk1w==
-X-Google-Smtp-Source: AK7set9FJ+m1VwanpiAMfxA818L7HV/dPyhWg6DYQSadevXyKErLiGfJvZlidEnREDYwVbhCFXXRZvTZAhJh0VfOM4I=
-X-Received: by 2002:a1f:28c4:0:b0:436:2fa4:e25d with SMTP id
- o187-20020a1f28c4000000b004362fa4e25dmr363729vko.3.1679343741554; Mon, 20 Mar
- 2023 13:22:21 -0700 (PDT)
+        Mon, 20 Mar 2023 16:24:55 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92341B46D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 13:24:52 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id t9so14714130qtx.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 13:24:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679343891;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pydtgT+7v0cju30MJcNRWWaLuxk5ERuwNf/eKdgFBIc=;
+        b=rXjX5bwIxHdfctQ6V3TG59Oyh3QpXwfzgUiGxqpkqiSZutjp00I48TAaSex3tgun/F
+         fmirya5bpOeZU0CD+L+3ghhdRdImBObY+fWeAsg/faiQs+/YB98ILJXNKWnzx+zh6zP+
+         dWAhNVVVcsG4nSyucT1R1HN6OSxs4HTZnq3O4dc+HJT49CrJjNjZ48UNdiVm+LeUlk+Q
+         IceFMgI+l4ZOK9ZzzvY/jqxd30i2PpqvbyvZlDkiVc66yqir2rgcgr+GPvslJsyOUaGs
+         PBdv6Z2zsSuqMXhQWSDTg7MK9rBKt607QD/4XSinJOh8DXqUZ82HLnox2/xrd9tmMqF+
+         wYag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679343891;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pydtgT+7v0cju30MJcNRWWaLuxk5ERuwNf/eKdgFBIc=;
+        b=JV4eT9/mOVjvhdwmwFLlnn/MulXHSxPvkVKKwok97rM9C89JR7BlRkGLrZncFIfl0w
+         Dk/J0zwGMips6mqJS8/7NI2jmyDpWrYC7uUcTHoWdHqLKQlqkV6J2HXVNmymZ6BNYG7A
+         in0K2/LadbE5fDjtbaDNMGEO5C5fDLKOlTjcpqIUuyUtLoVjQ3hkNVUdidjzJbz4fzGm
+         IyT1Htx9aeCb3poZKBtvgeICkLnBmeaG0ONshmn4f4yeoCkVmBFdymUPuJ6FhbOkBS+K
+         O0oWZJDovO308fvjUD70RFmAJlX87jJkg7HKkSBZlegCwW+vKdNB1amIJPDdhF0iS9SF
+         unJg==
+X-Gm-Message-State: AO0yUKW1iL+NMZ9yT0nIU8uSKFVVqQCsVGEoP283u9IYy3q79PSJPNtd
+        JmMvDAe4gSLiwPNr06NFHjuovQ==
+X-Google-Smtp-Source: AK7set/4fs8LRafPX4/mj6DOeUTP9gQaUhdfs+2p0RLSsRilO5Ui9bXCybb4NU4NJCFH1KhLpkKIGA==
+X-Received: by 2002:ac8:5c16:0:b0:3c0:401f:9c24 with SMTP id i22-20020ac85c16000000b003c0401f9c24mr662117qti.63.1679343891675;
+        Mon, 20 Mar 2023 13:24:51 -0700 (PDT)
+Received: from localhost.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id d184-20020a3768c1000000b0074688c36facsm2568371qkc.56.2023.03.20.13.24.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Mar 2023 13:24:51 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
+        andersson@kernel.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH net-next 0/3] net: ipa: fully support IPA v5.0
+Date:   Mon, 20 Mar 2023 15:24:44 -0500
+Message-Id: <20230320202447.2048016-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20230317233605.3967621-1-robh@kernel.org>
-In-Reply-To: <20230317233605.3967621-1-robh@kernel.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Mon, 20 Mar 2023 15:22:10 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqK+Q5HS=0PqnA60gV43O7ymxhPH-WHKFJKpQMYe5KfEfg@mail.gmail.com>
-Message-ID: <CAL_JsqK+Q5HS=0PqnA60gV43O7ymxhPH-WHKFJKpQMYe5KfEfg@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: net: Drop unneeded quotes
-To:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Joel Stanley <joel@jms.id.au>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Appana Durga Kedareswara rao <appana.durga.rao@xilinx.com>,
-        Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
-        Wolfgang Grandegger <wg@grandegger.com>,
-        Marc Kleine-Budde <mkl@pengutronix.de>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Tobias Waldekranz <tobias@waldekranz.com>,
-        Lars Povlsen <lars.povlsen@microchip.com>,
-        Steen Hegelund <Steen.Hegelund@microchip.com>,
-        Daniel Machon <daniel.machon@microchip.com>,
-        UNGLinuxDriver@microchip.com, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, linux-aspeed@lists.ozlabs.org,
-        linux-can@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-mediatek@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -105,52 +73,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 17, 2023 at 6:36=E2=80=AFPM Rob Herring <robh@kernel.org> wrote=
-:
->
-> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> checking for this can be enabled in yamllint.
->
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->  .../devicetree/bindings/net/actions,owl-emac.yaml  |  2 +-
->  .../bindings/net/allwinner,sun4i-a10-emac.yaml     |  2 +-
->  .../bindings/net/allwinner,sun4i-a10-mdio.yaml     |  2 +-
->  .../devicetree/bindings/net/altr,tse.yaml          |  2 +-
->  .../bindings/net/aspeed,ast2600-mdio.yaml          |  2 +-
->  .../devicetree/bindings/net/brcm,amac.yaml         |  2 +-
->  .../devicetree/bindings/net/brcm,systemport.yaml   |  2 +-
->  .../bindings/net/broadcom-bluetooth.yaml           |  2 +-
->  .../devicetree/bindings/net/can/xilinx,can.yaml    |  6 +++---
->  .../devicetree/bindings/net/dsa/brcm,sf2.yaml      |  2 +-
->  .../devicetree/bindings/net/dsa/qca8k.yaml         |  2 +-
->  .../devicetree/bindings/net/engleder,tsnep.yaml    |  2 +-
->  .../devicetree/bindings/net/ethernet-phy.yaml      |  2 +-
->  .../bindings/net/fsl,qoriq-mc-dpmac.yaml           |  2 +-
->  .../bindings/net/intel,ixp4xx-ethernet.yaml        |  8 ++++----
->  .../devicetree/bindings/net/intel,ixp4xx-hss.yaml  | 14 +++++++-------
->  .../devicetree/bindings/net/marvell,mvusb.yaml     |  2 +-
->  .../devicetree/bindings/net/mdio-gpio.yaml         |  2 +-
->  .../devicetree/bindings/net/mediatek,net.yaml      |  2 +-
->  .../bindings/net/mediatek,star-emac.yaml           |  2 +-
->  .../bindings/net/microchip,lan966x-switch.yaml     |  2 +-
->  .../bindings/net/microchip,sparx5-switch.yaml      |  4 ++--
->  .../devicetree/bindings/net/mscc,miim.yaml         |  2 +-
->  .../devicetree/bindings/net/nfc/marvell,nci.yaml   |  2 +-
->  .../devicetree/bindings/net/nfc/nxp,pn532.yaml     |  2 +-
->  .../bindings/net/pse-pd/podl-pse-regulator.yaml    |  2 +-
->  .../devicetree/bindings/net/qcom,ipq4019-mdio.yaml |  2 +-
->  .../devicetree/bindings/net/qcom,ipq8064-mdio.yaml |  2 +-
->  .../devicetree/bindings/net/rockchip,emac.yaml     |  2 +-
->  .../devicetree/bindings/net/snps,dwmac.yaml        |  2 +-
->  .../devicetree/bindings/net/stm32-dwmac.yaml       |  4 ++--
->  .../devicetree/bindings/net/ti,cpsw-switch.yaml    | 10 +++++-----
->  .../devicetree/bindings/net/ti,davinci-mdio.yaml   |  2 +-
->  .../devicetree/bindings/net/ti,dp83822.yaml        |  2 +-
->  .../devicetree/bindings/net/ti,dp83867.yaml        |  2 +-
->  .../devicetree/bindings/net/ti,dp83869.yaml        |  2 +-
->  36 files changed, 53 insertions(+), 53 deletions(-)
+At long last, add the IPA and GSI register definitions, and the
+configuration data required to support IPA v5.0.  This enables IPA
+support for the Qualcomm SDX65 SoC.
 
-Sending a v2 as there are a few more cases with $id and $schema quoted.
+					-Alex
 
-Rob
+Alex Elder (3):
+  net: ipa: add IPA v5.0 register definitions
+  net: ipa: add IPA v5.0 GSI register definitions
+  net: ipa: add IPA v5.0 configuration data
+
+ drivers/net/ipa/Makefile             |   4 +-
+ drivers/net/ipa/data/ipa_data-v5.0.c | 481 +++++++++++++++++++++++
+ drivers/net/ipa/gsi.h                |   4 +-
+ drivers/net/ipa/gsi_reg.c            |   3 +
+ drivers/net/ipa/gsi_reg.h            |   1 +
+ drivers/net/ipa/ipa_data.h           |   3 +-
+ drivers/net/ipa/ipa_main.c           |   6 +-
+ drivers/net/ipa/ipa_reg.c            |   2 +
+ drivers/net/ipa/ipa_reg.h            |   1 +
+ drivers/net/ipa/reg/gsi_reg-v5.0.c   | 317 +++++++++++++++
+ drivers/net/ipa/reg/ipa_reg-v5.0.c   | 564 +++++++++++++++++++++++++++
+ 11 files changed, 1380 insertions(+), 6 deletions(-)
+ create mode 100644 drivers/net/ipa/data/ipa_data-v5.0.c
+ create mode 100644 drivers/net/ipa/reg/gsi_reg-v5.0.c
+ create mode 100644 drivers/net/ipa/reg/ipa_reg-v5.0.c
+
+-- 
+2.34.1
+
