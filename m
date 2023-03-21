@@ -2,100 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A059D6C2E58
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 11:00:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98A5B6C2E60
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 11:05:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229864AbjCUKAk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 06:00:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42326 "EHLO
+        id S229841AbjCUKFC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 06:05:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229622AbjCUKAi (ORCPT
+        with ESMTP id S229854AbjCUKFB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 06:00:38 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE54EC44;
-        Tue, 21 Mar 2023 03:00:37 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AD96B61964;
-        Tue, 21 Mar 2023 10:00:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038A9C433D2;
-        Tue, 21 Mar 2023 10:00:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679392836;
-        bh=yROyHcsha6bspdtVDM6ZLrvNqofqU/Rj5v0b1JMOeUA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pSShlXiSMzX4U2aX/TzdA1Lm2+ceHH7HlhzCz4JSQ9DkxH0nBo7Zlz5uN5F61VhCS
-         tBpsBFe/r3N7JYatYYHKEdlWosbTJJTXST6hon91nrQFcguTyVfSwCDGHxfzhU8UPW
-         6Mok6u0vSQ6GGJ2qLPpYMDSrpIhOnBTeoJ1t/4WiJ37Wo51/ivt2bBoE1NZL+LyHkf
-         3Yw0dROmIg3WxXwGuw4FGJBRXl/zG+QOszlf7WzdYEzD0zgN8JgeiHr0RzE9kFj2I1
-         doIi9akvEwVb+tZ9wdXcJJeNgrwof+UlEY1DiKW9H5Qe1/osXZlVtGoPFC8IDBDD+s
-         8gZpdCKQEScSw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1peYoZ-0002lW-Gx; Tue, 21 Mar 2023 11:01:59 +0100
-Date:   Tue, 21 Mar 2023 11:01:59 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        johan+linaro@kernel.org, steev@kali.org
-Subject: Re: [PATCH v2] PCI: qcom: Add async probe support
-Message-ID: <ZBmAl3kW8vmbfyXk@hovoldconsulting.com>
-References: <20230320064644.5217-1-manivannan.sadhasivam@linaro.org>
+        Tue, 21 Mar 2023 06:05:01 -0400
+Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C390B22C93;
+        Tue, 21 Mar 2023 03:04:59 -0700 (PDT)
+Date:   Tue, 21 Mar 2023 11:04:56 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020; t=1679393098;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=Gs+5h35jpcBbsUqy1yYnuNWbnvGi9SFjCXiZrEILP6Y=;
+        b=FX37LclzSzYNgjIXv1slzw45d7o/t37Dt6f6cQy1Q+ttyiUKTSr8tBvL0J5ctMdZCO+mA2
+        ELa71WycrZ9+5KSzPrADLDDbP7m8EmQKibSTHo6kyamjv6dOuCTBXKG4Oj2n9M1NzuQ/R/
+        WqaLaOzKJ6ozvUPtWZT1Iii2uPlZsEi3Zg/n567JK1DyECKh6wd9jg5ePhnlwtngLfsmt0
+        Vfc89XhdhTr6xkJnH2B9PwIRVW+3EVf6LuuKTGHcfQZFDOv+bGh0DIUk2B5sd1kE5LrwJc
+        nT8aEy54Y4cPJ/P7uhAKuLS+vDDZWL5KdfPX+HjLztcgF92Jd5UfbPcTxURuIw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020e; t=1679393098;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=Gs+5h35jpcBbsUqy1yYnuNWbnvGi9SFjCXiZrEILP6Y=;
+        b=9b1LJ3Zuvi3m6zmWVdQdswxY1suryCcv+pBjseZEqLO/gRie3U6Hg2Mvr2dQGXB/1JM3HU
+        Gce2ECbXXVRL3oBQ==
+From:   Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Adrien Thierry <athierry@redhat.com>,
+        Brian Masney <bmasney@redhat.com>,
+        linux-rt-users@vger.kernel.org
+Subject: Re: [RFC PATCH] cpufreq: qcom-cpufreq-hw: allow work to be done on
+ other CPU for PREEMPT_RT
+Message-ID: <20230321100456.0_DhhkZJ@linutronix.de>
+References: <20230315164910.302265-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230320064644.5217-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230315164910.302265-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 20, 2023 at 12:16:44PM +0530, Manivannan Sadhasivam wrote:
-> Qcom PCIe RC driver waits for the PHY link to be up during the probe. This
-> consumes several milliseconds during boot. So add async probe support so
-> that other drivers can load in parallel while this driver waits for the
-> link to be up.
+On 2023-03-15 17:49:10 [+0100], Krzysztof Kozlowski wrote:
+> Qualcomm cpufreq driver configures interrupts with affinity to each
+> cluster, e.g.  dcvsh-irq-0, dcvsh-irq-4 and dcvsh-irq-7 on SM8250.
+> Triggered interrupt will schedule delayed work, but, since workqueue
+> prefers local CPUs, it might get executed on a CPU dedicated to realtime
+> tasks causing unexpected latencies in realtime workload.
+> 
+> Use unbound workqueue for such case.  This might come with performance
+> or energy penalty, e.g. because of cache miss or when other CPU is
+> sleeping.
 
-You're not really "adding support" for async probe as much as you are
-enabling it by default. Perhaps you can clarify that in the commit
-summary and commit message (e.g. by rephrasing as "prefer async probe").
+I miss the point where it explains that only PREEMPT_RT is affected by
+this.
 
-> Suggested-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
 > 
-> Changes in v2:
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index 2f581d2d617d..c5ff8d25fabb 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -390,7 +390,16 @@ static irqreturn_t qcom_lmh_dcvs_handle_irq(int irq, void *data)
+>  
+>  	/* Disable interrupt and enable polling */
+>  	disable_irq_nosync(c_data->throttle_irq);
+> -	schedule_delayed_work(&c_data->throttle_work, 0);
+> +
+> +	/*
+> +	 * Workqueue prefers local CPUs and since interrupts have set affinity,
+> +	 * the work might execute on a CPU dedicated to realtime tasks.
+> +	 */
+> +	if (IS_ENABLED(CONFIG_PREEMPT_RT))
+> +		queue_delayed_work_on(WORK_CPU_UNBOUND, system_unbound_wq,
+> +				      &c_data->throttle_work, 0);
+> +	else
+> +		schedule_delayed_work(&c_data->throttle_work, 0);
+
+You isolated CPUs and use this on PREEMPT_RT. And this special use-case
+is your reasoning to make this change and let it depend on PREEMPT_RT?
+
+If you do PREEMPT_RT and you care about latency I would argue that you
+either disable cpufreq and set it to PERFORMANCE so that the highest
+available frequency is set once and not changed afterwards.
+
+>  	if (qcom_cpufreq.soc_data->reg_intr_clr)
+>  		writel_relaxed(GT_IRQ_STATUS,
+> -- 
+> 2.34.1
 > 
-> * Rebased on top of v6.3-rc1
-
-With an updated commit message:
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-
->  drivers/pci/controller/dwc/pcie-qcom.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index a232b04af048..4ca357be88e0 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1862,6 +1862,7 @@ static struct platform_driver qcom_pcie_driver = {
->  		.name = "qcom-pcie",
->  		.suppress_bind_attrs = true,
->  		.of_match_table = qcom_pcie_match,
-> +		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
->  	},
->  };
->  builtin_platform_driver(qcom_pcie_driver);
-
-Johan
