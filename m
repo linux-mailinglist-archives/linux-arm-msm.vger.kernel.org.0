@@ -2,67 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BC546C3313
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 14:39:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 416976C335D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 14:53:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230504AbjCUNj2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 09:39:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35634 "EHLO
+        id S231254AbjCUNxN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 09:53:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230496AbjCUNj1 (ORCPT
+        with ESMTP id S231271AbjCUNxM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 09:39:27 -0400
-Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CB511A7;
-        Tue, 21 Mar 2023 06:39:26 -0700 (PDT)
-Date:   Tue, 21 Mar 2023 14:39:22 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1679405963;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=uW5fpG7UdO7junfYXzpr1VASUwkYgjePEMEZI0s2uKU=;
-        b=nAS1PiYdPQp25hSPtZD9qb4LVvIfl5+Iq5YN9Mxy/T1EHmDnbg8pR/VShA4l3+N1ogc6aW
-        VwtM2UDEZYA6VEkgWdZEDkmtWRDDukXVPXLHXTbLyH6ZbjoAJ9Cfs5RNZleYiuxWbLLgIz
-        1sA8e5lPAUKvng31ckchCFGaRylR3MWgiUqvqFPZFhGgEtSm+7G2BcaFlLjBdm8CtUZKbR
-        3qpTBNFWDOtkTbPA45Uc3zYiQeeDTJQCf42V2Lq7jvmRwTnHCalrc8CIeNA59l2+sM/kZT
-        lmWt30xKc70YatBYQPgSqUoUNbdlTLtiQnQbj5RrCjiGXUR/tmB3GkxlH4nR2w==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1679405963;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=uW5fpG7UdO7junfYXzpr1VASUwkYgjePEMEZI0s2uKU=;
-        b=MuC8fJg05kjTXLdb4HxI+i197gCnckEYTxojaKeYuFelpshq39C3x6bX0kq2UQSeu12Sg0
-        dPtD75Vt7oRPDUAA==
-From:   Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 21 Mar 2023 09:53:12 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D68B448E29;
+        Tue, 21 Mar 2023 06:53:08 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32LAL17U023402;
+        Tue, 21 Mar 2023 13:52:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=CZ5IUOIM+6Nj1yrJM1EOzdYAdH912N3pQCkds+1bKvQ=;
+ b=lu/pPiF4AY4StyhIlR0sPXKCVNXS8mUcidUvg7zzV0EodzVfaHXUauI2iIC19LmTOiWH
+ D59cEp7Gq0brpO/6/7uxywKKAiaRL8A8YwdSRcA+oYVObwts8HY9u7v800YRPFC7m18A
+ JMiDqQuTELdWYO/wwuWfIAZltjeh9gC7DG6h95BWnLNZY1vpxAvijRgZLwMu6LZkZJB5
+ xQV7YEXTqyiWV7VsIglupdzYE3Jh36bp75h67Fesfzk/3oCK5aG4Pkt0ZF8RqPKmPtc+
+ C2l+wCrKF2vWHcumBB7e+pGA3M0lkhB3Vuu+ysoGQhj9Lcyu7+8L9TT1+Cr3qc5zRe9P Dw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pf41vsnve-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 21 Mar 2023 13:52:55 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32LDqsF5015312
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 21 Mar 2023 13:52:54 GMT
+Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Tue, 21 Mar 2023 06:52:50 -0700
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Adrien Thierry <athierry@redhat.com>,
-        Brian Masney <bmasney@redhat.com>,
-        linux-rt-users@vger.kernel.org,
-        Frederic Weisbecker <fweisbec@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Ingo Molnar <mingo@kernel.org>
-Subject: Re: [RFC PATCH] cpufreq: qcom-cpufreq-hw: allow work to be done on
- other CPU for PREEMPT_RT
-Message-ID: <20230321133922.ontdC41h@linutronix.de>
-References: <20230315164910.302265-1-krzysztof.kozlowski@linaro.org>
- <20230321100456.0_DhhkZJ@linutronix.de>
- <ba547675-59f2-84a9-82f3-93f6cb131799@linaro.org>
- <20230321105734.Z7F3Uvf1@linutronix.de>
- <3e227a63-a45f-8c20-f697-b263121ec173@linaro.org>
+        Rob Herring <robh+dt@kernel.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Subject: [PATCH V1 0/4] soc: qcom: boot_stats: Add driver support for boot_stats
+Date:   Tue, 21 Mar 2023 19:21:47 +0530
+Message-ID: <cover.1679403696.git.quic_schowdhu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3e227a63-a45f-8c20-f697-b263121ec173@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6TGQosM47Pkw6twuqmlW-6F23xmBE4AQ
+X-Proofpoint-GUID: 6TGQosM47Pkw6twuqmlW-6F23xmBE4AQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-21_10,2023-03-21_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ priorityscore=1501 malwarescore=0 mlxlogscore=999 lowpriorityscore=0
+ bulkscore=0 adultscore=0 spamscore=0 clxscore=1011 phishscore=0
+ impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303150002 definitions=main-2303210108
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,43 +79,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-03-21 12:27:42 [+0100], Krzysztof Kozlowski wrote:
-> > I still fail to understand why this is PREEMPT_RT specific and not a
-> > problem in general when it comes not NO_HZ_FULL and/ or CPU isolation.
-> 
-> Hm, good point, I actually don't know what is the workqueue
-> recommendation for NO_HZ_FULL CPUs - is still locality of the workqueue
-> preferred?
+Qualcomm's proprietary Android boot-loaders capture boot time
+stats, like the time when the bootloader started execution and at what
+point the bootloader handed over control to the kernel etc. in the IMEM
+region. This information is captured in a specific format by this driver
+by mapping a structure to the IMEM memory region and then accessing the
+members of the structure to print the information. This information is
+useful in verifying if existing boot KPIs have regressed or not.
+A sample log in SM8450(waipio) device is as follows:-
 
-If you isolate a CPU you want the kernel to stay away from it. The idea
-is that something is done on that CPU and the kernel should leave it
-alone. That is why the HZ tick avoided. That is why timers migrate to
-the "housekeeping" CPU and do not fire on the CPU that it was programmed
-on (unless the timer has to fire on this CPU).
+KPI: Pre ABL Time = 3s
+KPI: ABL Time = 14s
+KPI: Kernel MPM timestamp = 890206
 
-> And how such code would look like?
-> if (tick_nohz_tick_stopped())?
+The Module Power Manager(MPM) sleep counter starts ticking at the PBL
+stage and the timestamp generated by the sleep counter is logged by
+the Qualcomm proprietary bootloader(ABL) at two points-> First when it
+starts execution which is logged here as "Pre ABL Time" and the second
+when it is about to load the kernel logged as "ABL Time". Both these
+values are read up by the driver from IMEM region and printed as above.
+The current sleep counter timestamp is also logged by the driver.
 
-Yeah closer :) The CPU-mask for workqueues can still be different on
-non-NOHZ-full CPUs. Still you interrupt the CPU doing in-userland work
-and this is not desired.
+Souradeep Chowdhury (4):
+  dt-bindings: sram: qcom,imem: Add Boot Stat region within IMEM
+  dt-bindings: soc: qcom,mpm-sleep-counter: Add the dtschema
+  soc: qcom: boot_stat: Add Driver Support for Boot Stats
+  MAINTAINERS: Add the entry for boot_stats driver support
 
-You have a threaded-IRQ which does nothing but schedules a worker. Why?
-Why not sleep and remain in that threaded IRQ until the work is done?
-You _can_ sleep in the threaded IRQ if you have to. Force-threaded is
-different but this is one is explicit threaded so you could do it.
-	
-> > However the thermal notifications have nothing to do with cpufreq.
-> 
-> They have. The FW notifies that thermal mitigation is happening and
-> maximum allowed frequency is now XYZ. The cpufreq receives this and sets
-> maximum allowed scaling frequency for governor.
+ .../bindings/soc/qcom/qcom,mpm-sleep-counter.yaml  |  40 ++++++++
+ .../devicetree/bindings/sram/qcom,imem.yaml        |  20 ++++
+ MAINTAINERS                                        |   7 ++
+ drivers/soc/qcom/Kconfig                           |   7 ++
+ drivers/soc/qcom/Makefile                          |   1 +
+ drivers/soc/qcom/boot_stats.c                      | 108 +++++++++++++++++++++
+ 6 files changed, 183 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,mpm-sleep-counter.yaml
+ create mode 100644 drivers/soc/qcom/boot_stats.c
 
-I see. So the driver is doing something in worst case. This interrupt,
-you have per-CPU and you need to do this CPU? I mean could you change
-the affinity of the interrupt to another CPU?
+-- 
+2.7.4
 
-> Best regards,
-> Krzysztof
-
-Sebastian
