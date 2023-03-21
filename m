@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 318FB6C3831
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 18:31:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36C716C383E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 18:33:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229991AbjCURba (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 13:31:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42544 "EHLO
+        id S230035AbjCURd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 13:33:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229923AbjCURb3 (ORCPT
+        with ESMTP id S229941AbjCURd1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 13:31:29 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE96D25BBB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 10:31:25 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id y4so62808418edo.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 10:31:25 -0700 (PDT)
+        Tue, 21 Mar 2023 13:33:27 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88647532AA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 10:33:21 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id y4so62830582edo.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 10:33:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679419884;
+        d=linaro.org; s=google; t=1679420000;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UTZd1bMO8xEU78JJj8yFbCWqQGZ1JfnnMRfW/5G1QAQ=;
-        b=ew6/UtpXqm8+AL/X2UZQaHEwUOVRFd2RRlwoqY/MfdtoolFTe3TS3egemCA/UVhWeT
-         hNdvYi5z8USwDri63hJe9lfVCZQkMoJnsJvBoeLbpETRP8ZQ6ABrTM/0K/NG86dljaM8
-         n2AgMSOjDE+JP7kOR2UGL8q6yGJ4g2d6JAN3s/EThazogkpjfzzgLUPeIHfkadXtk9R2
-         kfD/ZGLiVUdSSljf6UJ+2OWAVTTDduPGjhY+wATkWq0XCbKJ1FfMG7nNj+E8dFQCtd11
-         rPXQXPZC8IUeKKAjSrPvOLdk2oq9brHgOWeKIEUX0Ts22yKWmq0B846EKNWBnhABKkWe
-         IIXA==
+        bh=Ochp5U/z+JPJ/YorY5MT0cSwY1Sw+z1CDqsaJ+qW2jU=;
+        b=xeo1rt1i/Xy2YmniokvFRCzHeMIAub0jrdV+Ou2OsopQ7Sx0W9xBotcgFRZ4VnBH/G
+         2JAJBkYP1rpDPBNIErbDLhNLdX56BwjhubSL+Zdjsr+Kgo7psncK5VmkbNEOjMxlcONp
+         ewZ+1KlwinjdvLlWoMn+2Gpp63T0xvWjjGGMT6DiHIuKdUJOaPBj1Xc41DEeaM++/QmL
+         Z3fir6JozYswMIGIAnts48g2SQHx9wJLSnF39oI5FUx+5WvabIjNHH4KXqgBfquLCS7x
+         OFq2zt2zYVIrWqNF3F05qma6e7v/HIvd2Wf9SNVzUPCJY1XsXnMs0bmUQ0OBaGQLKpdL
+         ItFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679419884;
+        d=1e100.net; s=20210112; t=1679420000;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UTZd1bMO8xEU78JJj8yFbCWqQGZ1JfnnMRfW/5G1QAQ=;
-        b=nI7nJKEJoOeG2CCSFfQDFpXQ73p4o9Mh36rq+iNEh1JYxm/wEOUXAChofOr7J7r0Cb
-         I0onCnkYJvOdRpktBS+chvRgy+ygznl7lXLfAoK4Fs6x1YHAQlAE/mValJjIUSDu5+pz
-         Jjqs3ACiqqph5fu+rEjQnZkOAThjfyM6A/mAWQWUXbmfqpBqXxgfsQl1I1b6ykUwXixl
-         EM0KtmBWcPMBSlsjaFBHGyiz0aOy6ZiL00w9AUZK2FhNpn4lwv8hPt+rSKfFVlNzBGxM
-         cz1ZNP9SR1saQKvheqnL1JMhr+WLJT7IOBY8V5dUwgh9jXUiR3g1WwnE5VImTRjcZyFl
-         REkw==
-X-Gm-Message-State: AO0yUKWZGktJBwUEdcXwPm6JBxPL7T2C6FmpzK0tKrP8lh5bnp+d7a9W
-        0PuzapfdCtI+l488k+rA1p1wIw==
-X-Google-Smtp-Source: AK7set/ony5H01wz51r1wEwsuJS9bKkUDWLT7QLQW72Sb+0M2NjFg/tGSNyKe2mzBjuPT+aaU8VlCA==
-X-Received: by 2002:aa7:dad3:0:b0:4fb:80cf:89e6 with SMTP id x19-20020aa7dad3000000b004fb80cf89e6mr4134467eds.8.1679419884055;
-        Tue, 21 Mar 2023 10:31:24 -0700 (PDT)
+        bh=Ochp5U/z+JPJ/YorY5MT0cSwY1Sw+z1CDqsaJ+qW2jU=;
+        b=RP01jZOjvEjfbBue0ZApM1fEYYLyhuFv8IiQhyseIHr3dCRVDvJO6nlkxBJutg9w5s
+         ufJ1HrWrQ175D2TZKOpGkNxUh6tAcA29AT9g/OJUMx9b0EkJfg4vC/b+nwxPu/QhvZsx
+         XwKTPG+TOg/N3E/TYDkqCyw/xMcvzcC+P1VxpF1jnTmgSbN9N7jf027C2wIxqmqH2MaF
+         MX90/M+IaXXCpU7vkCnoVbDEIVitM64+b4To6dZ8x1DRLPP88k9dh9kpd32flqNqaAxF
+         75CmO2Fae1Im4MIrIUv4AQSss5bBNXSLl2t8I3Mz1Fl39+u4AwvgudxHRXXWUIJJQAY9
+         zeBQ==
+X-Gm-Message-State: AO0yUKUZrdNCtjP/y8n2yNWrKP92DDY4VPJ7vqDGSLSBGE6nNXmtF0c+
+        zwlHdVpWuLxKzbXuQ3C6ZRvh1w==
+X-Google-Smtp-Source: AK7set/v/ZVk5N7EL089HA1rFs0IQ+7797TjgYvJfWP5FuppUeBwgImPuQRLLhQvRVpAJCuZMYTb1A==
+X-Received: by 2002:a17:906:4a0d:b0:88f:a236:69e6 with SMTP id w13-20020a1709064a0d00b0088fa23669e6mr3428975eju.7.1679420000035;
+        Tue, 21 Mar 2023 10:33:20 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:2142:d8da:5ae4:d817? ([2a02:810d:15c0:828:2142:d8da:5ae4:d817])
-        by smtp.gmail.com with ESMTPSA id x2-20020a50ba82000000b004fb30fc1dabsm6505645ede.96.2023.03.21.10.31.23
+        by smtp.gmail.com with ESMTPSA id o7-20020a1709062e8700b00933356c681esm4552255eji.150.2023.03.21.10.33.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 10:31:23 -0700 (PDT)
-Message-ID: <c0c6c79b-ac77-cdbf-5b08-38b89e4fe481@linaro.org>
-Date:   Tue, 21 Mar 2023 18:31:22 +0100
+        Tue, 21 Mar 2023 10:33:19 -0700 (PDT)
+Message-ID: <fc46c48d-2de0-ba3a-08b0-a09526bd9e26@linaro.org>
+Date:   Tue, 21 Mar 2023 18:33:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH V1 1/4] dt-bindings: sram: qcom,imem: Add Boot Stat region
- within IMEM
+Subject: Re: [PATCH V1 2/4] dt-bindings: soc: qcom,mpm-sleep-counter: Add the
+ dtschema
 Content-Language: en-US
 To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -69,9 +69,9 @@ Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         Sibi Sankar <quic_sibis@quicinc.com>,
         Rajendra Nayak <quic_rjendra@quicinc.com>
 References: <cover.1679403696.git.quic_schowdhu@quicinc.com>
- <1589f33deda07cb9f9e6c3c26bce6e02e53c168e.1679403696.git.quic_schowdhu@quicinc.com>
+ <576e53a1d0ef218536da976102b4cc207436ec1d.1679403696.git.quic_schowdhu@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1589f33deda07cb9f9e6c3c26bce6e02e53c168e.1679403696.git.quic_schowdhu@quicinc.com>
+In-Reply-To: <576e53a1d0ef218536da976102b4cc207436ec1d.1679403696.git.quic_schowdhu@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,59 +85,85 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 21/03/2023 14:51, Souradeep Chowdhury wrote:
-> All Qualcomm bootloaders log useful timestamp information related
-> to bootloader stats in the IMEM region. Add the child node within
-> IMEM for the boot stat region containing register address and
-> compatible string.
+> Add the device tree bindings for the module power manager sleep
+> counter.
 > 
 > Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
 > ---
->  .../devicetree/bindings/sram/qcom,imem.yaml          | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
+>  .../bindings/soc/qcom/qcom,mpm-sleep-counter.yaml  | 40 ++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,mpm-sleep-counter.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> index 665c06e..c8c3890 100644
-> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> @@ -48,6 +48,26 @@ patternProperties:
->      $ref: /schemas/remoteproc/qcom,pil-info.yaml#
->      description: Peripheral image loader relocation region
->  
-> +  "^boot-stat@[0-9a-f]+$":
-> +    type: object
-> +    description:
-> +      node for boot stat.
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,mpm-sleep-counter.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,mpm-sleep-counter.yaml
+> new file mode 100644
+> index 0000000..f9f46b7
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,mpm-sleep-counter.yaml
+> @@ -0,0 +1,40 @@
+> +# SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/soc/qcom/qcom,mpm-sleep-counter.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: MPM Sleep Counter
+> +
+> +maintainers:
+> +  - Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +
+> +description: |
+> +    MPM(Module Power Manager) has a sleep counter which is used to track
 
-This basically copies the name of node, so not really helpful. Describe
-what's this.
+Missing space:
+MPM (Module
+
+> +    various stages of the boot process in Qualcomm.
+
+in Qualcomm SoC. Because you do not track it in the company...
 
 > +
-
-additionalProperties: false
-
-> +    properties:
-> +      compatible:
-> +        items:
+> +properties:
+> +  compatible:
+> +    items:
 
 Drop items.
 
-> +          - const: qcom,imem-boot_stats
+> +      - const: qcom,mpm2-sleep-counter
 
-No underscores in compatibles. Why this is not SoC specific compatible?
+SoC specific compatible.
 
 > +
-> +      reg:
-> +        maxItems: 1
-> +        description:
-> +          The base address of the register region in case of
-> +          imem boot stats.
+> +  reg:
+> +    items:
+> +      - description: MPM Sleep Counter Base
 
-Drop description, it's obvious.
+just maxItems: 1
+
 > +
-> +    required:
-> +      - compatible
-> +      - reg
+> +  clock-frequency:
+> +    description: Frequency for the sleep counter
+
+Since this does not have clocks, what frequency you are setting here?
+
 > +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    mpm2-sleep-counter@c221000{
+
+Node names should be generic.
+https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+
+> +       compatible = "qcom,mpm2-sleep-counter";
+> +       reg = <0xc221000 0x1000>;
+> +       clock-frequency = <32768>;
+> +    };
+
 Best regards,
 Krzysztof
 
