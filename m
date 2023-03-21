@@ -2,121 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 802766C3C05
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 21:40:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 73D0B6C3C2B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 21:49:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229791AbjCUUka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 16:40:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59138 "EHLO
+        id S229674AbjCUUtj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 16:49:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229663AbjCUUk3 (ORCPT
+        with ESMTP id S229512AbjCUUti (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 16:40:29 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88F613B0F1;
-        Tue, 21 Mar 2023 13:40:24 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id l16so9231068ybe.6;
-        Tue, 21 Mar 2023 13:40:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679431223;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rnJYCIHb3YOLk6h7F2Xo1WPCj6zYYjtkpvkZ8wpoQJs=;
-        b=jLlwwP11Eqd3QcuN1GuSMsYw65pUik7rYOLx5A1BPNTMKYJnucTWfSjnqUytJNHQXy
-         GlAFJL6HyR3XP707iPGwPLT9NY80fMZ/hCISBwSyJBwHfz7eX+lK3CL2OIHoNHXO5Kyz
-         no+vIz2/4ucVrHHNXkTOmblHIkWNlzdaISIxpB3ZjQRTD5u2I/FgqtMhRgiy9YzTWTcX
-         waavRaNlKiFGoog+iFNJImDr8t2BuR/0PLfTa74EW/SK1wMrTJ1l2qBB/fA5N5Y/t28Q
-         /rPFIaJLKvcae0dQ9PRxX/RisjwpluW3tmFgSdLMjx7xzAexmNpGqZa2XA5/3IwG7ffU
-         1+CQ==
+        Tue, 21 Mar 2023 16:49:38 -0400
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEEF0BB9D;
+        Tue, 21 Mar 2023 13:49:37 -0700 (PDT)
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-17ac5ee3f9cso17462370fac.12;
+        Tue, 21 Mar 2023 13:49:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679431223;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rnJYCIHb3YOLk6h7F2Xo1WPCj6zYYjtkpvkZ8wpoQJs=;
-        b=UDw/pTjDpVPB3R2MB4IPyDpBqxjevfkOFn/twFloF0zj3tK4+pMOQU5bA9nIIeV59O
-         foklRmlFan8ILt8HSg74rX8YcJ2ohP2aCfbcFGBDqymqWQWowvjERA3Nf9vLXFMGf2Fi
-         k9kgyC6AxVvYhpPGCx0sgUETfFZz+EMDn4f0BG1cLHlBQjXmfqWOr6NYIUIFBpGjZdF3
-         am75TALB6OX3K48NmIYjQsID9nuPZITxVqd08Brw1VqCV6lW+JlBirYqVVUvxejnwD9n
-         PKeTv8jinTyZzc7Z2udEKhxP4u4BFGC7KvSCgtueh/VS1HanONDreTwZkIlyAQDNwVJQ
-         fLOw==
-X-Gm-Message-State: AAQBX9dwVEOWOmKSA7Oq+2OO3KdryIdcU8p7qUb9nbYYoPvMEpOJMdPX
-        cgi/H6xDkC+ui3nAGKxmZAa5fZ8ItQx1b5RRufE=
-X-Google-Smtp-Source: AKy350Yr0lFcvlrRV/aUYAmitKBlF/YIDHoHGNgfQJQ9fN+jGmA0gMeojAbcNNdTi/SlMNF7cHZPfM6jxoOO65XX8gM=
-X-Received: by 2002:a05:6902:6:b0:b5c:f48:3083 with SMTP id
- l6-20020a056902000600b00b5c0f483083mr2322649ybh.11.1679431223686; Tue, 21 Mar
- 2023 13:40:23 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1679431777;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=smSJa7C01L9ZAtfGfuL2MISlj1MuIW27k+jiThsBapM=;
+        b=vwyaEbYZ5BZDt5588vWWnZiSSw8og0+fpaN84A5/ST0juVPstCTtJVLiPyZ6NHflUn
+         Qajs+x/X67dg9yTMAdbKHfy+5htPoCOfTDd7agp9rIdRpFuOjAB/90h9uM10Ew3mKj2t
+         Fl04eyE0STzgABZMXNNayVid+nRs65OnILy70bogloc20tQNXMBrpyfhgAVGmiCOawyB
+         avXNjt0QugvcvUKPXApr2jOeUdgFi45Rsi5/GuZ/uxZM9QmUMXszYnZOJj393O9UXaq2
+         nrGaK0/An5byON6RcrMC4sWB6ut9txLgvpYmnBcLjv1gEVB/Q39yH8jaudrdeYJksBgp
+         S81w==
+X-Gm-Message-State: AO0yUKUf3r8XPxb476UDXGLvvAkR238GfWW2UOhhtO8jogJL97pataiD
+        Q+XxWEWFryZCtAjnETewog==
+X-Google-Smtp-Source: AK7set/58QBGNjJxm8hvoWaEi7mPoXuaeYPwQFwT4zb8tBacxDAZIdCxBNh7uqVSLTiYobs/3qywLw==
+X-Received: by 2002:a05:6870:3121:b0:17a:a2bc:6373 with SMTP id v33-20020a056870312100b0017aa2bc6373mr178490oaa.1.1679431776991;
+        Tue, 21 Mar 2023 13:49:36 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id xa22-20020a0568707f1600b0016e9308e17bsm4560770oab.52.2023.03.21.13.49.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Mar 2023 13:49:36 -0700 (PDT)
+Received: (nullmailer pid 1534840 invoked by uid 1000);
+        Tue, 21 Mar 2023 20:49:35 -0000
+Date:   Tue, 21 Mar 2023 15:49:35 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux@roeck-us.net,
+        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
+        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, wcheng@codeaurora.org,
+        caleb.connolly@linaro.org, konrad.dybcio@linaro.org,
+        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
+Subject: Re: [PATCH v4 04/18] dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy:
+ Add port as an optional
+Message-ID: <20230321204935.GA1506038-robh@kernel.org>
+References: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
+ <20230318121828.739424-5-bryan.odonoghue@linaro.org>
+ <3f5efb36-f9be-0816-b9cc-dc87966552cc@linaro.org>
 MIME-Version: 1.0
-References: <20230320233823.2919475-1-robh@kernel.org>
-In-Reply-To: <20230320233823.2919475-1-robh@kernel.org>
-From:   Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date:   Tue, 21 Mar 2023 21:40:12 +0100
-Message-ID: <CANiq72m+cNuGiU_J9xU9QKmQK-ncD=1Y5imskrFNFSezzmjq8A@mail.gmail.com>
-Subject: Re: [PATCH v2] dt-bindings: display: Drop unneeded quotes
-To:     Rob Herring <robh@kernel.org>
-Cc:     Robin van der Gracht <robin@protonic.nl>,
-        Miguel Ojeda <ojeda@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jyri Sarha <jyri.sarha@iki.fi>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
-        linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3f5efb36-f9be-0816-b9cc-dc87966552cc@linaro.org>
+X-Spam-Status: No, score=0.8 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 21, 2023 at 12:38=E2=80=AFAM Rob Herring <robh@kernel.org> wrot=
-e:
->
->  .../bindings/auxdisplay/holtek,ht16k33.yaml   |  2 +-
+On Sun, Mar 19, 2023 at 12:45:13PM +0100, Krzysztof Kozlowski wrote:
+> On 18/03/2023 13:18, Bryan O'Donoghue wrote:
+> > port is required to instantiate a remote-endpoint which can receive
+> > orientation-switch messages from a Type-C mux.
+> > 
+> > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> > ---
+> >  .../bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml           | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
+> > index 52886cdb0e506..1c887e34b1223 100644
+> > --- a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
+> > +++ b/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
+> > @@ -65,6 +65,12 @@ properties:
+> >      description: Flag the port as possible handler of orientation switching
+> >      type: boolean
+> >  
+> > +  port:
+> > +    $ref: /schemas/graph.yaml#/properties/port
+> > +    description:
+> > +      A port node to link the PHY to a TypeC controller for the purpose of
+> > +      handling altmode muxing and orientation switching.
+> 
+> Please extend the example as well.
+> 
+> Don't you have there two ports? USB and DP?
 
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Or 3: USB, DP, and connector.
 
-Cheers,
-Miguel
+Please make sure this all aligns with what Bjorn and I discussed 
+recently. It was for glink specifically.
+
+Rob
