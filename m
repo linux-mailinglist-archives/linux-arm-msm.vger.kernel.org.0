@@ -2,118 +2,490 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F9676C3B3C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 21:07:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C58D86C3B9B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 21:20:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229968AbjCUUH0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 16:07:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44448 "EHLO
+        id S229806AbjCUUUc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 16:20:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229645AbjCUUHY (ORCPT
+        with ESMTP id S229789AbjCUUUa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 16:07:24 -0400
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D4D11CBC0;
-        Tue, 21 Mar 2023 13:07:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1679429225; x=1710965225;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=uC522O9FjPHxQ+tXnnlO/+TRKCyn/oGdK6IwgAN1Jjc=;
-  b=dfJletgiqO0eZqWFU2aU1zYPjXxniWeC85tMNotYI2CkJ7zIX9qqqJcx
-   U1KrWHMt7Jy6lPFZJiIdunP9i3z7tT6TpjL3Hhceu+oQWj/bMqBbIVIBK
-   egbe8Xua7bsC+LJPrPlCILxvwmUhnqtkxmgFDukA5/x4sOdA1pOoO2qfP
-   YIbyFf8TVkxMrkUARTKeFdDLviO9gwmVgAm7XStG+jcaqGXH1Yj7eaI5p
-   nRwPh2bLjdOzGJ3PxT+xocILZG7H+tRf4QWOs9OHirArJEQb7jeSD8LNu
-   0Zei4W2mw71goVTb9e87BgWSRUEulHS71AiJXOEes0T/KqitpL/SnNkZG
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10656"; a="339088143"
-X-IronPort-AV: E=Sophos;i="5.98,279,1673942400"; 
-   d="scan'208";a="339088143"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Mar 2023 13:07:00 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10656"; a="714123916"
-X-IronPort-AV: E=Sophos;i="5.98,279,1673942400"; 
-   d="scan'208";a="714123916"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by orsmga001.jf.intel.com with ESMTP; 21 Mar 2023 13:06:52 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1peiFv-000CMs-2J;
-        Tue, 21 Mar 2023 20:06:51 +0000
-Date:   Wed, 22 Mar 2023 04:06:38 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
-        ming.qian@nxp.com, shijie.qin@nxp.com, eagle.zhou@nxp.com,
-        bin.liu@mediatek.com, matthias.bgg@gmail.com,
-        angelogioacchino.delregno@collabora.com, tiffany.lin@mediatek.com,
-        andrew-ct.chen@mediatek.com, yunfei.dong@mediatek.com,
-        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
-        daniel.almeida@collabora.com, hverkuil-cisco@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, jernel@kernel.org
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, kernel@collabora.com
-Subject: Re: [PATCH v2 5/8] media: v4l2: Add DELETE_BUF ioctl
-Message-ID: <202303220359.f1UOGBNV-lkp@intel.com>
-References: <20230321102855.346732-6-benjamin.gaignard@collabora.com>
+        Tue, 21 Mar 2023 16:20:30 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3F461CBCA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 13:19:56 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id b20so31568628edd.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 13:19:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679429992;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zilK0d0Uf3iuezoEwzx+OD3k9KAQ8GpwZUTkAXC8lkI=;
+        b=wtBFPpjIV7KiImWUl3z6Q64vdi8IywvzOJPBt1juWZyXgq9JY5obeloe6CMlt3c8l2
+         n4OhQYP1hm4QknTg/dqNXV6G8smfonfZsYEP/EWnLLMP9TQPyE42cTukUZsAVj2uWLfE
+         p5nOus3r9n6uY1kH2T0EFUPWiXMzPQV5MicLhUI3PLnV0aKYebzaXU3t3tmlHorYeMKY
+         BZC7d94PaBML8zRpZ+1+C30SpztE+cm3EygWFUgF0ihhe3OBP2g/5zEoyWRJBTnOLhxg
+         jq6A+33Mx28bPUnH4eECNaF5zKUIXmj4wZw59AbTs7ZKayTRLjm1dJaDhPPHDCyMGZqL
+         lTQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679429992;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zilK0d0Uf3iuezoEwzx+OD3k9KAQ8GpwZUTkAXC8lkI=;
+        b=1UJo88dj2iej1+WfCsLmFSbydV5rvNjmWNYGkRjJ0+GVe1+qjAfAC6BWdZaAtuMR1f
+         mybw6TE9m8JMIx4qDPRmkPlnPMUGLQLjtKq8qL2ixgRPO47TTY/RJMOkzLv/8W7ebexY
+         ILKEeTH1521XhgZsT45npd5OIKnpScFhKgH+6bM3HvF3jPa/OrYpyz+4wul9dAeWwPZU
+         PMn8FRmHLi6yxEyvF3DbWfFMY4izqSJiDeE31ye21w/XHZlRrA9vds4+liLR6YqBtO/e
+         m0X+SVKnFGioOlKj5fhcuKhC+T4NwJBgHrsmzOGk7sOnQA6CTWYLazmGPwZ+BpIQN2vY
+         bsTg==
+X-Gm-Message-State: AO0yUKVBu9yjVCFTAmuvskXrgDlpdgi9LavgNQIOcmadKZd4BOSLWfIo
+        uHvENxDJ9Wsm5E+rEWLtShQdRA==
+X-Google-Smtp-Source: AK7set/P2f6JVMVgK8V1xGvovTLyqEKgqENGNj+wWyaiirzrrCld75wthFFfg2Vyka2tWaiswC5O5w==
+X-Received: by 2002:a17:906:7b96:b0:925:5549:f81c with SMTP id s22-20020a1709067b9600b009255549f81cmr4394298ejo.6.1679429991780;
+        Tue, 21 Mar 2023 13:19:51 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id fi9-20020a170906da0900b00931faf03db0sm5915177ejb.27.2023.03.21.13.19.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Mar 2023 13:19:51 -0700 (PDT)
+Message-ID: <3fe1023a-99b7-e905-20c1-12a51b57f701@linaro.org>
+Date:   Tue, 21 Mar 2023 20:19:48 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230321102855.346732-6-benjamin.gaignard@collabora.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v11 16/26] firmware: qcom_scm: Register Gunyah platform
+ ops
+Content-Language: en-US
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Alex Elder <elder@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230304010632.2127470-1-quic_eberman@quicinc.com>
+ <20230304010632.2127470-17-quic_eberman@quicinc.com>
+ <6c2e3fac-1bd8-be10-6e10-e200ee9b55f2@linaro.org>
+ <bc68f88e-81fd-e24c-30b6-73bff4652bae@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <bc68f88e-81fd-e24c-30b6-73bff4652bae@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Benjamin,
 
-I love your patch! Yet something to improve:
 
-[auto build test ERROR on media-tree/master]
-[also build test ERROR on linus/master v6.3-rc3 next-20230321]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+On 21/03/2023 18:40, Elliot Berman wrote:
+> 
+> 
+> On 3/21/2023 7:24 AM, Srinivas Kandagatla wrote:
+>> Hi Elliot,
+>>
+>> On 04/03/2023 01:06, Elliot Berman wrote:
+>>> Qualcomm platforms have a firmware entity which performs access control
+>>> to physical pages. Dynamically started Gunyah virtual machines use the
+>>> QCOM_SCM_RM_MANAGED_VMID for access. Linux thus needs to assign access
+>>> to the memory used by guest VMs. Gunyah doesn't do this operation for us
+>>> since it is the current VM (typically VMID_HLOS) delegating the access
+>>> and not Gunyah itself. Use the Gunyah platform ops to achieve this so
+>>> that only Qualcomm platforms attempt to make the needed SCM calls.
+>>>
+>>> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+>>> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+>>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+>>> ---
+>>>   drivers/firmware/Kconfig       |   2 +
+>>>   drivers/firmware/qcom_scm.c    | 100 +++++++++++++++++++++++++++++++++
+>>>   include/linux/gunyah_rsc_mgr.h |   2 +-
+>>>   3 files changed, 103 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+>>> index b59e3041fd62..b888068ff6f2 100644
+>>> --- a/drivers/firmware/Kconfig
+>>> +++ b/drivers/firmware/Kconfig
+>>> @@ -214,6 +214,8 @@ config MTK_ADSP_IPC
+>>>   config QCOM_SCM
+>>>       tristate
+>>> +    select VIRT_DRIVERS
+>>> +    select GUNYAH_PLATFORM_HOOKS
+>>>
+>>
+>> I still have concerns with this selects in Kconfig on older Qualcomm 
+>> platforms that use SCM and do not have GUNYAH.
+>>
+>> In our last discussing you mentioned the requirement for
+>> "CONFIG_GUNYAH=y and CONFIG_QCOM_SCM=m"
+>>
+>> I think that should be doable and remove selecting if you can make a 
+>> separate GUNYAH_QCOM_PLATFORM_HOOKS driver
+>>
+>> Does this work?
+> 
+> This works for Android and all the Qualcomm vendor (downstream) 
+> platforms where we can explicitly load modules. I don't think this 
+> module would be implicitly loaded by any kernel mechanism.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Benjamin-Gaignard/media-videobuf2-Access-vb2_queue-bufs-array-through-helper-functions/20230321-183154
-base:   git://linuxtv.org/media_tree.git master
-patch link:    https://lore.kernel.org/r/20230321102855.346732-6-benjamin.gaignard%40collabora.com
-patch subject: [PATCH v2 5/8] media: v4l2: Add DELETE_BUF ioctl
-config: x86_64-randconfig-a002-20230320 (https://download.01.org/0day-ci/archive/20230322/202303220359.f1UOGBNV-lkp@intel.com/config)
-compiler: clang version 14.0.6 (https://github.com/llvm/llvm-project f28c006a5895fc0e329fe15fead81e37457cb1d1)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/c33ab7329647eb04482423ac9945dee579038e84
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Benjamin-Gaignard/media-videobuf2-Access-vb2_queue-bufs-array-through-helper-functions/20230321-183154
-        git checkout c33ab7329647eb04482423ac9945dee579038e84
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=x86_64 olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash
+We could also load this module based on UUID match at the gunyah core 
+level too, if that helps.
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303220359.f1UOGBNV-lkp@intel.com/
 
-All errors (new ones prefixed by >>, old ones prefixed by <<):
+--srini
 
->> ERROR: modpost: "vb2_core_delete_buf" [drivers/media/common/videobuf2/videobuf2-v4l2.ko] undefined!
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+> 
+>>  >----------------------->cut<-------------------------------
+>>  From 1fb7995aecf17caefd09ffb516579bc4ac9ac301 Mon Sep 17 00:00:00 2001
+>> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> Date: Tue, 21 Mar 2023 13:34:02 +0000
+>> Subject: [PATCH] virt: gunyah: add qcom platform hooks
+>>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> ---
+>>   drivers/firmware/Kconfig                      |  2 --
+>>   drivers/firmware/qcom_scm.c                   | 14 +++-----
+>>   drivers/virt/gunyah/Kconfig                   |  5 +++
+>>   drivers/virt/gunyah/Makefile                  |  1 +
+>>   .../virt/gunyah/gunyah_qcom_platform_hooks.c  | 35 +++++++++++++++++++
+>>   include/linux/firmware/qcom/qcom_scm.h        |  3 ++
+>>   6 files changed, 48 insertions(+), 12 deletions(-)
+>>   create mode 100644 drivers/virt/gunyah/gunyah_qcom_platform_hooks.c
+>>
+>> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+>> index b888068ff6f2..b59e3041fd62 100644
+>> --- a/drivers/firmware/Kconfig
+>> +++ b/drivers/firmware/Kconfig
+>> @@ -214,8 +214,6 @@ config MTK_ADSP_IPC
+>>
+>>   config QCOM_SCM
+>>       tristate
+>> -    select VIRT_DRIVERS
+>> -    select GUNYAH_PLATFORM_HOOKS
+>>
+>>   config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
+>>       bool "Qualcomm download mode enabled by default"
+>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>> index 5273cf64ee2a..194ea2bc9a1d 100644
+>> --- a/drivers/firmware/qcom_scm.c
+>> +++ b/drivers/firmware/qcom_scm.c
+>> @@ -1301,7 +1301,7 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 
+>> payload_reg, u32 payload_val,
+>>   }
+>>   EXPORT_SYMBOL(qcom_scm_lmh_dcvsh);
+>>
+>> -static int qcom_scm_gh_rm_pre_mem_share(struct gh_rm *rm, struct 
+>> gh_rm_mem_parcel *mem_parcel)
+>> +int qcom_scm_gh_rm_pre_mem_share(struct gh_rm_mem_parcel *mem_parcel)
+>>   {
+>>       struct qcom_scm_vmperm *new_perms;
+>>       u64 src, src_cpy;
+>> @@ -1359,8 +1359,9 @@ static int qcom_scm_gh_rm_pre_mem_share(struct 
+>> gh_rm *rm, struct gh_rm_mem_parce
+>>       kfree(new_perms);
+>>       return ret;
+>>   }
+>> +EXPORT_SYMBOL_GPL(qcom_scm_gh_rm_pre_mem_share);
+>>
+>> -static int qcom_scm_gh_rm_post_mem_reclaim(struct gh_rm *rm, struct 
+>> gh_rm_mem_parcel *mem_parcel)
+>> +int qcom_scm_gh_rm_post_mem_reclaim(struct gh_rm_mem_parcel *mem_parcel)
+>>   {
+>>       struct qcom_scm_vmperm new_perms;
+>>       u64 src = 0, src_cpy;
+>> @@ -1388,11 +1389,7 @@ static int 
+>> qcom_scm_gh_rm_post_mem_reclaim(struct gh_rm *rm, struct gh_rm_mem_pa
+>>
+>>       return ret;
+>>   }
+>> -
+>> -static struct gh_rm_platform_ops qcom_scm_gh_rm_platform_ops = {
+>> -    .pre_mem_share = qcom_scm_gh_rm_pre_mem_share,
+>> -    .post_mem_reclaim = qcom_scm_gh_rm_post_mem_reclaim,
+>> -};
+>> +EXPORT_SYMBOL_GPL(qcom_scm_gh_rm_post_mem_reclaim);
+>>
+>>   static int qcom_scm_find_dload_address(struct device *dev, u64 *addr)
+>>   {
+>> @@ -1597,9 +1594,6 @@ static int qcom_scm_probe(struct platform_device 
+>> *pdev)
+>>       if (download_mode)
+>>           qcom_scm_set_download_mode(true);
+>>
+>> -    if (devm_gh_rm_register_platform_ops(&pdev->dev, 
+>> &qcom_scm_gh_rm_platform_ops))
+>> -        dev_warn(__scm->dev, "Gunyah RM platform ops were already 
+>> registered\n");
+>> -
+>>       return 0;
+>>   }
+>>
+>> diff --git a/drivers/virt/gunyah/Kconfig b/drivers/virt/gunyah/Kconfig
+>> index bd8e31184962..a9c48d6518f7 100644
+>> --- a/drivers/virt/gunyah/Kconfig
+>> +++ b/drivers/virt/gunyah/Kconfig
+>> @@ -16,6 +16,11 @@ config GUNYAH
+>>   config GUNYAH_PLATFORM_HOOKS
+>>       tristate
+>>
+>> +config GUNYAH_QCOM_PLATFORM_HOOKS
+>> +    tristate "Gunyah Platform hooks for Qualcomm"
+>> +        depends on ARCH_QCOM && QCOM_SCM
+>> +    depends on GUNYAH
+>> +
+>>   config GUNYAH_VCPU
+>>       tristate "Runnable Gunyah vCPUs"
+>>       depends on GUNYAH
+>> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
+>> index 7347b1470491..c33f701bb5c8 100644
+>> --- a/drivers/virt/gunyah/Makefile
+>> +++ b/drivers/virt/gunyah/Makefile
+>> @@ -2,6 +2,7 @@
+>>
+>>   obj-$(CONFIG_GUNYAH) += gunyah.o
+>>   obj-$(CONFIG_GUNYAH_PLATFORM_HOOKS) += gunyah_platform_hooks.o
+>> +obj-$(CONFIG_GUNYAH_QCOM_PLATFORM_HOOKS) += gunyah_qcom_platform_hooks.o
+>>
+>>   gunyah_rsc_mgr-y += rsc_mgr.o rsc_mgr_rpc.o vm_mgr.o vm_mgr_mm.o
+>>   obj-$(CONFIG_GUNYAH) += gunyah_rsc_mgr.o
+>> diff --git a/drivers/virt/gunyah/gunyah_qcom_platform_hooks.c 
+>> b/drivers/virt/gunyah/gunyah_qcom_platform_hooks.c
+>> new file mode 100644
+>> index 000000000000..3332f84134d3
+>> --- /dev/null
+>> +++ b/drivers/virt/gunyah/gunyah_qcom_platform_hooks.c
+>> @@ -0,0 +1,35 @@
+>> +#include <linux/kernel.h>
+>> +#include <linux/module.h>
+>> +#include <linux/firmware/qcom/qcom_scm.h>
+>> +#include <linux/gunyah_rsc_mgr.h>
+>> +
+>> +static int qcom_gh_rm_pre_mem_share(struct gh_rm *rm, struct 
+>> gh_rm_mem_parcel *mem_parcel)
+>> +{
+>> +    return qcom_scm_gh_rm_pre_mem_share(mem_parcel);
+>> +}
+>> +
+>> +static int qcom_gh_rm_post_mem_reclaim(struct gh_rm *rm, struct 
+>> gh_rm_mem_parcel *mem_parcel)
+>> +{
+>> +    return qcom_scm_gh_rm_post_mem_reclaim(mem_parcel);
+>> +}
+>> +
+>> +static struct gh_rm_platform_ops qcom_gh_platform_hooks_ops = {
+>> +    .pre_mem_share = qcom_gh_rm_pre_mem_share,
+>> +    .post_mem_reclaim = qcom_gh_rm_post_mem_reclaim,
+>> +};
+>> +
+>> +static int __init qcom_gh_platform_hooks_register(void)
+>> +{
+>> +    return gh_rm_register_platform_ops(&qcom_gh_platform_hooks_ops);
+>> +}
+>> +
+>> +static void __exit qcom_gh_platform_hooks_unregister(void)
+>> +{
+>> +    gh_rm_unregister_platform_ops(&qcom_gh_platform_hooks_ops);
+>> +}
+>> +
+>> +module_init(qcom_gh_platform_hooks_register);
+>> +module_exit(qcom_gh_platform_hooks_unregister);
+>> +
+>> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Gunyah Platform Hooks 
+>> driver");
+>> +MODULE_LICENSE("GPL v2");
+>> diff --git a/include/linux/firmware/qcom/qcom_scm.h 
+>> b/include/linux/firmware/qcom/qcom_scm.h
+>> index 1e449a5d7f5c..9b0d33db803d 100644
+>> --- a/include/linux/firmware/qcom/qcom_scm.h
+>> +++ b/include/linux/firmware/qcom/qcom_scm.h
+>> @@ -121,5 +121,8 @@ extern int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 
+>> payload_reg, u32 payload_val,
+>>                     u64 limit_node, u32 node_id, u64 version);
+>>   extern int qcom_scm_lmh_profile_change(u32 profile_id);
+>>   extern bool qcom_scm_lmh_dcvsh_available(void);
+>> +struct gh_rm_mem_parcel;
+>> +extern int qcom_scm_gh_rm_post_mem_reclaim(struct gh_rm_mem_parcel 
+>> *mem_parcel);
+>> +extern int qcom_scm_gh_rm_pre_mem_share(struct gh_rm_mem_parcel 
+>> *mem_parcel);
+>>
+>>   #endif
+>> --------------------------->cut<-----------------------
+>>
+>>>   config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
+>>>       bool "Qualcomm download mode enabled by default"
+>>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>>> index b95616b35bff..89a261a9e021 100644
+>>> --- a/drivers/firmware/qcom_scm.c
+>>> +++ b/drivers/firmware/qcom_scm.c
+>>> @@ -20,6 +20,7 @@
+>>>   #include <linux/clk.h>
+>>>   #include <linux/reset-controller.h>
+>>>   #include <linux/arm-smccc.h>
+>>> +#include <linux/gunyah_rsc_mgr.h>
+>>>   #include "qcom_scm.h"
+>>> @@ -30,6 +31,9 @@ module_param(download_mode, bool, 0);
+>>>   #define SCM_HAS_IFACE_CLK    BIT(1)
+>>>   #define SCM_HAS_BUS_CLK        BIT(2)
+>>> +#define QCOM_SCM_RM_MANAGED_VMID    0x3A
+>>> +#define QCOM_SCM_MAX_MANAGED_VMID    0x3F
+>>> +
+>>>   struct qcom_scm {
+>>>       struct device *dev;
+>>>       struct clk *core_clk;
+>>> @@ -1299,6 +1303,99 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 
+>>> payload_reg, u32 payload_val,
+>>>   }
+>>>   EXPORT_SYMBOL(qcom_scm_lmh_dcvsh);
+>>> +static int qcom_scm_gh_rm_pre_mem_share(struct gh_rm *rm, struct 
+>>> gh_rm_mem_parcel *mem_parcel)
+>>> +{
+>>> +    struct qcom_scm_vmperm *new_perms;
+>>> +    u64 src, src_cpy;
+>>> +    int ret = 0, i, n;
+>>> +    u16 vmid;
+>>> +
+>>> +    new_perms = kcalloc(mem_parcel->n_acl_entries, 
+>>> sizeof(*new_perms), GFP_KERNEL);
+>>> +    if (!new_perms)
+>>> +        return -ENOMEM;
+>>> +
+>>> +    for (n = 0; n < mem_parcel->n_acl_entries; n++) {
+>>> +        vmid = le16_to_cpu(mem_parcel->acl_entries[n].vmid);
+>>> +        if (vmid <= QCOM_SCM_MAX_MANAGED_VMID)
+>>> +            new_perms[n].vmid = vmid;
+>>> +        else
+>>> +            new_perms[n].vmid = QCOM_SCM_RM_MANAGED_VMID;
+>>> +        if (mem_parcel->acl_entries[n].perms & GH_RM_ACL_X)
+>>> +            new_perms[n].perm |= QCOM_SCM_PERM_EXEC;
+>>> +        if (mem_parcel->acl_entries[n].perms & GH_RM_ACL_W)
+>>> +            new_perms[n].perm |= QCOM_SCM_PERM_WRITE;
+>>> +        if (mem_parcel->acl_entries[n].perms & GH_RM_ACL_R)
+>>> +            new_perms[n].perm |= QCOM_SCM_PERM_READ;
+>>> +    }
+>>> +
+>>> +    src = (1ull << QCOM_SCM_VMID_HLOS);
+>>> +
+>>> +    for (i = 0; i < mem_parcel->n_mem_entries; i++) {
+>>> +        src_cpy = src;
+>>> +        ret = 
+>>> qcom_scm_assign_mem(le64_to_cpu(mem_parcel->mem_entries[i].ipa_base),
+>>> +                        le64_to_cpu(mem_parcel->mem_entries[i].size),
+>>> +                        &src_cpy, new_perms, 
+>>> mem_parcel->n_acl_entries);
+>>> +        if (ret) {
+>>> +            src = 0;
+>>> +            for (n = 0; n < mem_parcel->n_acl_entries; n++) {
+>>> +                vmid = le16_to_cpu(mem_parcel->acl_entries[n].vmid);
+>>> +                if (vmid <= QCOM_SCM_MAX_MANAGED_VMID)
+>>> +                    src |= (1ull << vmid);
+>>> +                else
+>>> +                    src |= (1ull << QCOM_SCM_RM_MANAGED_VMID);
+>>> +            }
+>>> +
+>>> +            new_perms[0].vmid = QCOM_SCM_VMID_HLOS;
+>>> +
+>>> +            for (i--; i >= 0; i--) {
+>>> +                src_cpy = src;
+>>> +                WARN_ON_ONCE(qcom_scm_assign_mem(
+>>> + le64_to_cpu(mem_parcel->mem_entries[i].ipa_base),
+>>> +                        le64_to_cpu(mem_parcel->mem_entries[i].size),
+>>> +                        &src_cpy, new_perms, 1));
+>>> +            }
+>>> +            break;
+>>> +        }
+>>> +    }
+>>> +
+>>> +    kfree(new_perms);
+>>> +    return ret;
+>>> +}
+>>> +
+>>> +static int qcom_scm_gh_rm_post_mem_reclaim(struct gh_rm *rm, struct 
+>>> gh_rm_mem_parcel *mem_parcel)
+>>> +{
+>>> +    struct qcom_scm_vmperm new_perms;
+>>> +    u64 src = 0, src_cpy;
+>>> +    int ret = 0, i, n;
+>>> +    u16 vmid;
+>>> +
+>>> +    new_perms.vmid = QCOM_SCM_VMID_HLOS;
+>>> +    new_perms.perm = QCOM_SCM_PERM_EXEC | QCOM_SCM_PERM_WRITE | 
+>>> QCOM_SCM_PERM_READ;
+>>> +
+>>> +    for (n = 0; n < mem_parcel->n_acl_entries; n++) {
+>>> +        vmid = le16_to_cpu(mem_parcel->acl_entries[n].vmid);
+>>> +        if (vmid <= QCOM_SCM_MAX_MANAGED_VMID)
+>>> +            src |= (1ull << vmid);
+>>> +        else
+>>> +            src |= (1ull << QCOM_SCM_RM_MANAGED_VMID);
+>>> +    }
+>>> +
+>>> +    for (i = 0; i < mem_parcel->n_mem_entries; i++) {
+>>> +        src_cpy = src;
+>>> +        ret = 
+>>> qcom_scm_assign_mem(le64_to_cpu(mem_parcel->mem_entries[i].ipa_base),
+>>> +                        le64_to_cpu(mem_parcel->mem_entries[i].size),
+>>> +                        &src_cpy, &new_perms, 1);
+>>> +        WARN_ON_ONCE(ret);
+>>> +    }
+>>> +
+>>> +    return ret;
+>>> +}
+>>> +
+>>> +static struct gh_rm_platform_ops qcom_scm_gh_rm_platform_ops = {
+>>> +    .pre_mem_share = qcom_scm_gh_rm_pre_mem_share,
+>>> +    .post_mem_reclaim = qcom_scm_gh_rm_post_mem_reclaim,
+>>> +};
+>>> +
+>>>   static int qcom_scm_find_dload_address(struct device *dev, u64 *addr)
+>>>   {
+>>>       struct device_node *tcsr;
+>>> @@ -1502,6 +1599,9 @@ static int qcom_scm_probe(struct 
+>>> platform_device *pdev)
+>>>       if (download_mode)
+>>>           qcom_scm_set_download_mode(true);
+>>> +    if (devm_gh_rm_register_platform_ops(&pdev->dev, 
+>>> &qcom_scm_gh_rm_platform_ops))
+>>> +        dev_warn(__scm->dev, "Gunyah RM platform ops were already 
+>>> registered\n");
+>>> +
+>>>       return 0;
+>>>   }
+>>> diff --git a/include/linux/gunyah_rsc_mgr.h 
+>>> b/include/linux/gunyah_rsc_mgr.h
+>>> index 515087931a2b..acf8c1545a6c 100644
+>>> --- a/include/linux/gunyah_rsc_mgr.h
+>>> +++ b/include/linux/gunyah_rsc_mgr.h
+>>> @@ -145,7 +145,7 @@ int gh_rm_get_hyp_resources(struct gh_rm *rm, u16 
+>>> vmid,
+>>>                   struct gh_rm_hyp_resources **resources);
+>>>   int gh_rm_get_vmid(struct gh_rm *rm, u16 *vmid);
+>>> -struct gunyah_rm_platform_ops {
+>>> +struct gh_rm_platform_ops {
+>>>       int (*pre_mem_share)(struct gh_rm *rm, struct gh_rm_mem_parcel 
+>>> *mem_parcel);
+>>>       int (*post_mem_reclaim)(struct gh_rm *rm, struct 
+>>> gh_rm_mem_parcel *mem_parcel);
+>>>   };
