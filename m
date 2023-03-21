@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 62AEB6C2754
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 02:20:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D6306C2751
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 02:20:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230249AbjCUBUC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 21:20:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46590 "EHLO
+        id S230289AbjCUBUA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 21:20:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231193AbjCUBT5 (ORCPT
+        with ESMTP id S231185AbjCUBT4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 21:19:57 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB56D12062
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 18:19:27 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id bi9so17190528lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 18:19:27 -0700 (PDT)
+        Mon, 20 Mar 2023 21:19:56 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A3A4A5D4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 18:19:26 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id x17so17234856lfu.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 18:19:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679361503;
+        d=linaro.org; s=google; t=1679361504;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kyKsHi3GCpQsQBL3ZUsB7GqCNqmr8gVxqyeAbsz/AVg=;
-        b=LAcWfLlNbVJI/jBqzT3qpnzVjMdHfGZMWvIDRAV3VjocoMGwSCV+Kj8wp1DT7u9ZTH
-         Lhj3GjvF6smFm6cIf4URzb8H7cRSDLccWI1ZpQxHDkGaIuGAnhoMg29MyELACue2BwmC
-         9pTkm9U64nW18OHr51H2P3Iq7VO/bLgQLdOz1MVTWrKto78XkjhnmyfKC71I+cPCKzXA
-         PqpzZ8rV8H8wsqV9ni22c+Xsy+kNyp5fgvdTK3TnVmabZid1lHYkdKhaP/loLTpSjLgr
-         5g8WeEyfZ7vQvto219sIFz0DCPKO6oWGcYeaUuGFNNyqNmBptYV/XxIiPCaQkT5vZgl3
-         JDvA==
+        bh=PYN3oYps1kExjbkf+zjFZYaGqiWBM1RDNanr9QzGX+M=;
+        b=GrqYqhhsIMn2xfgfbCoGZNP53LWMZSCxJxVxh3b92VCfmVcZyZUhLADpEkxVp97/9c
+         coPwD3Po75Uo65GLG/15Gvq6yTvNxeewn7Mrsnh/khiwtGIoB5LkPuns8HyzC7HeReEN
+         C2jeqtmb6IyzG3THhmf0DKEAkahOoqU9wEQ4jWyAxBwJhtJyasCNn5+nVVA6EFOepEOS
+         5LSfRGmGIra2+5+hsnsm/2nNlUGjd+m0MpLQHBaknMk9o41sddol+pC0pHkiOis7TO74
+         bBCbSuqzwcQr7XaHb20OYQU6JHi/tuVxIMij03/ce0bwEMdwqZuMxU8+WoKmMrGhG144
+         WWig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679361503;
+        d=1e100.net; s=20210112; t=1679361504;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kyKsHi3GCpQsQBL3ZUsB7GqCNqmr8gVxqyeAbsz/AVg=;
-        b=ZUEEk6Rkxrns9ihsX3e03p3dYTnx0Z/2oNRBaaUXXROsk2kkzx/aRgr6Xm+ibrc3Xz
-         Ottd3NG1tWsmYuxoD3a/eWpAOTY8SStRqRhR0QgdezxQhZAdR3pIaeu5CbaGtBSL2uEE
-         ktPgKlwsuFuA+qgoXzmOmECpVNA1GO3fVYMv5nUexlkUO3JlyTCeV9SBbNLQnGWb6bHC
-         KNe88xLkadWy35xG7vNO92ctk2msZN5fTIYQD8FOApxNZ4P0rI3+5HURcA3m2PZ7Nbir
-         VNXXjoNdVJrB4PH/IxLH36/9A9VMDzhiCeqYuMtwxmjeotdvChrKeYFN4ZApknsMX3Jv
-         jjwA==
-X-Gm-Message-State: AO0yUKUlzBMm0x5mxhK9jDi25WwPNezisBbbIqvxWQzwSkMw8gq9DpuN
-        kdsX8X1SZKttxhxp2a8N7vxcF7BTCRh+5yNSd+Xf+PfM
-X-Google-Smtp-Source: AK7set8RWsq4Zrhl6918J+yefTewlO3hLlJHbTFge15wK46WfuTBOw3fO0GhCrbwotXebulBLCcsDA==
-X-Received: by 2002:ac2:495e:0:b0:4a4:7be4:9baf with SMTP id o30-20020ac2495e000000b004a47be49bafmr262536lfi.59.1679361503228;
-        Mon, 20 Mar 2023 18:18:23 -0700 (PDT)
+        bh=PYN3oYps1kExjbkf+zjFZYaGqiWBM1RDNanr9QzGX+M=;
+        b=ybdlfAECN9WQwcbELwPrNg/9jauWHR2x/zp5UaX3NIpdOuoK+vJvUS+T+GNtsrZKXV
+         S4jfTn32hMyXz7bBijEHgZPlLvzHKRbJdZgq9touCoe+B5+Iw8o6YhYg8rsCzJYuyDPn
+         n3YQxXsMsBGMHKf0xIRfelpDlb/B/YtXuRjs/0EevYOz324JfWFFyhAK08KMWA2akTOr
+         ESK4DqpOQmLF6e/pyHP54HKVDzQohcwPUzqR+gwJ9i0mQDcKOce4nt+fb4udcXOLNlpL
+         q1wPFTa4u9SadtK+heSDF8uraJQ4ovQve0N2pKuozWqdghW3zQObWKiip56SStvv8vES
+         nGDg==
+X-Gm-Message-State: AO0yUKWssj7WSCvL6pBOWTZatd5tzYebBA8SsET19qDjd63bzepwgEQs
+        knyULOSCzBZZ/l9nPAUxLO7yGg==
+X-Google-Smtp-Source: AK7set//en3R7J7A36LAkaMdnCjbcNGxUJiPViGi+MCKzk39MaPSyhBsndT6fLK50TOdhIsO+FLMfg==
+X-Received: by 2002:ac2:5961:0:b0:4dd:a718:31dd with SMTP id h1-20020ac25961000000b004dda71831ddmr265068lfp.12.1679361504107;
+        Mon, 20 Mar 2023 18:18:24 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id c18-20020ac25312000000b004eaec70c68esm46863lfh.294.2023.03.20.18.18.22
+        by smtp.gmail.com with ESMTPSA id c18-20020ac25312000000b004eaec70c68esm46863lfh.294.2023.03.20.18.18.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Mar 2023 18:18:22 -0700 (PDT)
+        Mon, 20 Mar 2023 18:18:23 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -59,9 +59,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [RFC PATCH v2 01/13] drm/atomic-helper: split not-scaling part of drm_atomic_helper_check_plane_state
-Date:   Tue, 21 Mar 2023 04:18:09 +0300
-Message-Id: <20230321011821.635977-2-dmitry.baryshkov@linaro.org>
+Subject: [RFC PATCH v2 02/13] drm/msm/dpu: take plane rotation into account for wide planes
+Date:   Tue, 21 Mar 2023 04:18:10 +0300
+Message-Id: <20230321011821.635977-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
 References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
@@ -77,159 +77,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The helper drm_atomic_helper_check_plane_state() runs several checks on
-plane src and dst rectangles, including the check whether required
-scaling fits into the required margins. The msm driver would benefit
-from having a function that does all these checks except the scaling
-one. Split them into a new helper called
-drm_atomic_helper_check_plane_noscale().
+Take into account the plane rotation and flipping when calculating src
+positions for the wide plane parts.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/drm_atomic_helper.c | 85 ++++++++++++++++++++++-------
- include/drm/drm_atomic_helper.h     |  4 ++
- 2 files changed, 68 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 27 ++++++++++++++---------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
-index d579fd8f7cb8..86c5e19c7bdb 100644
---- a/drivers/gpu/drm/drm_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_atomic_helper.c
-@@ -825,11 +825,9 @@ drm_atomic_helper_check_wb_encoder_state(struct drm_encoder *encoder,
- EXPORT_SYMBOL(drm_atomic_helper_check_wb_encoder_state);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 2e63eb0a2f3f..d43e04fc4578 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -887,16 +887,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 		return -EINVAL;
+ 	}
  
- /**
-- * drm_atomic_helper_check_plane_state() - Check plane state for validity
-+ * drm_atomic_helper_check_plane_noscale() - Check plane state for validity
-  * @plane_state: plane state to check
-  * @crtc_state: CRTC state to check
-- * @min_scale: minimum @src:@dest scaling factor in 16.16 fixed point
-- * @max_scale: maximum @src:@dest scaling factor in 16.16 fixed point
-  * @can_position: is it legal to position the plane such that it
-  *                doesn't cover the entire CRTC?  This will generally
-  *                only be false for primary planes.
-@@ -845,19 +843,16 @@ EXPORT_SYMBOL(drm_atomic_helper_check_wb_encoder_state);
-  * RETURNS:
-  * Zero if update appears valid, error code on failure
-  */
--int drm_atomic_helper_check_plane_state(struct drm_plane_state *plane_state,
--					const struct drm_crtc_state *crtc_state,
--					int min_scale,
--					int max_scale,
--					bool can_position,
--					bool can_update_disabled)
-+int drm_atomic_helper_check_plane_noscale(struct drm_plane_state *plane_state,
-+					  const struct drm_crtc_state *crtc_state,
-+					  bool can_position,
-+					  bool can_update_disabled)
- {
- 	struct drm_framebuffer *fb = plane_state->fb;
- 	struct drm_rect *src = &plane_state->src;
- 	struct drm_rect *dst = &plane_state->dst;
- 	unsigned int rotation = plane_state->rotation;
- 	struct drm_rect clip = {};
--	int hscale, vscale;
- 
- 	WARN_ON(plane_state->crtc && plane_state->crtc != crtc_state->crtc);
- 
-@@ -883,17 +878,6 @@ int drm_atomic_helper_check_plane_state(struct drm_plane_state *plane_state,
- 
- 	drm_rect_rotate(src, fb->width << 16, fb->height << 16, rotation);
- 
--	/* Check scaling */
--	hscale = drm_rect_calc_hscale(src, dst, min_scale, max_scale);
--	vscale = drm_rect_calc_vscale(src, dst, min_scale, max_scale);
--	if (hscale < 0 || vscale < 0) {
--		drm_dbg_kms(plane_state->plane->dev,
--			    "Invalid scaling of plane\n");
--		drm_rect_debug_print("src: ", &plane_state->src, true);
--		drm_rect_debug_print("dst: ", &plane_state->dst, false);
--		return -ERANGE;
--	}
+-	pipe_cfg->src_rect = new_plane_state->src;
 -
- 	if (crtc_state->enable)
- 		drm_mode_get_hv_timing(&crtc_state->mode, &clip.x2, &clip.y2);
+-	/* state->src is 16.16, src_rect is not */
+-	pipe_cfg->src_rect.x1 >>= 16;
+-	pipe_cfg->src_rect.x2 >>= 16;
+-	pipe_cfg->src_rect.y1 >>= 16;
+-	pipe_cfg->src_rect.y2 >>= 16;
+-
+-	pipe_cfg->dst_rect = new_plane_state->dst;
+-
+ 	fb_rect.x2 = new_plane_state->fb->width;
+ 	fb_rect.y2 = new_plane_state->fb->height;
  
-@@ -921,6 +905,65 @@ int drm_atomic_helper_check_plane_state(struct drm_plane_state *plane_state,
+@@ -912,6 +902,15 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
  
- 	return 0;
- }
-+EXPORT_SYMBOL(drm_atomic_helper_check_plane_noscale);
-+
-+/**
-+ * drm_atomic_helper_check_plane_state() - Check plane state for validity
-+ * @plane_state: plane state to check
-+ * @crtc_state: CRTC state to check
-+ * @min_scale: minimum @src:@dest scaling factor in 16.16 fixed point
-+ * @max_scale: maximum @src:@dest scaling factor in 16.16 fixed point
-+ * @can_position: is it legal to position the plane such that it
-+ *                doesn't cover the entire CRTC?  This will generally
-+ *                only be false for primary planes.
-+ * @can_update_disabled: can the plane be updated while the CRTC
-+ *                       is disabled?
-+ *
-+ * Checks that a desired plane update is valid, and updates various
-+ * bits of derived state (clipped coordinates etc.). Drivers that provide
-+ * their own plane handling rather than helper-provided implementations may
-+ * still wish to call this function to avoid duplication of error checking
-+ * code.
-+ *
-+ * RETURNS:
-+ * Zero if update appears valid, error code on failure
-+ */
-+int drm_atomic_helper_check_plane_state(struct drm_plane_state *plane_state,
-+					const struct drm_crtc_state *crtc_state,
-+					int min_scale,
-+					int max_scale,
-+					bool can_position,
-+					bool can_update_disabled)
-+{
-+	struct drm_framebuffer *fb = plane_state->fb;
-+	struct drm_rect src;
-+	struct drm_rect dst;
-+	int hscale, vscale, ret;
-+
-+	ret = drm_atomic_helper_check_plane_noscale(plane_state, crtc_state, can_position, can_update_disabled);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (!plane_state->visible)
-+		return 0;
-+
-+	src = drm_plane_state_src(plane_state);
-+	dst = drm_plane_state_dest(plane_state);
-+
-+	drm_rect_rotate(&src, fb->width << 16, fb->height << 16, plane_state->rotation);
-+
-+	hscale = drm_rect_calc_hscale(&src, &dst, min_scale, max_scale);
-+	vscale = drm_rect_calc_vscale(&src, &dst, min_scale, max_scale);
-+	if (hscale < 0 || vscale < 0) {
-+		drm_dbg_kms(plane_state->plane->dev,
-+			    "Invalid scaling of plane\n");
-+		drm_rect_debug_print("src: ", &plane_state->src, true);
-+		drm_rect_debug_print("dst: ", &plane_state->dst, false);
-+		return -ERANGE;
-+	}
-+
-+	return 0;
-+}
- EXPORT_SYMBOL(drm_atomic_helper_check_plane_state);
+ 	max_linewidth = pdpu->catalog->caps->max_linewidth;
  
- /**
-diff --git a/include/drm/drm_atomic_helper.h b/include/drm/drm_atomic_helper.h
-index 33f982cd1a27..ebf95437431d 100644
---- a/include/drm/drm_atomic_helper.h
-+++ b/include/drm/drm_atomic_helper.h
-@@ -52,6 +52,10 @@ int drm_atomic_helper_check_modeset(struct drm_device *dev,
- int
- drm_atomic_helper_check_wb_encoder_state(struct drm_encoder *encoder,
- 					 struct drm_connector_state *conn_state);
-+int drm_atomic_helper_check_plane_noscale(struct drm_plane_state *plane_state,
-+					  const struct drm_crtc_state *crtc_state,
-+					  bool can_position,
-+					  bool can_update_disabled);
- int drm_atomic_helper_check_plane_state(struct drm_plane_state *plane_state,
- 					const struct drm_crtc_state *crtc_state,
- 					int min_scale,
++	/* state->src is 16.16, src_rect is not */
++	drm_rect_fp_to_int(&pipe_cfg->src_rect, &new_plane_state->src);
++
++	pipe_cfg->dst_rect = new_plane_state->dst;
++
++	drm_rect_rotate(&pipe_cfg->src_rect,
++			new_plane_state->fb->width, new_plane_state->fb->height,
++			new_plane_state->rotation);
++
+ 	if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
+ 		/*
+ 		 * In parallel multirect case only the half of the usual width
+@@ -959,6 +958,14 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
+ 	}
+ 
++	drm_rect_rotate_inv(&pipe_cfg->src_rect,
++			    new_plane_state->fb->width, new_plane_state->fb->height,
++			    new_plane_state->rotation);
++	if (r_pipe->sspp)
++		drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
++				    new_plane_state->fb->width, new_plane_state->fb->height,
++				    new_plane_state->rotation);
++
+ 	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt);
+ 	if (ret)
+ 		return ret;
 -- 
 2.30.2
 
