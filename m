@@ -2,121 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF6D06C2AB4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 07:48:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E764D6C2AC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 07:49:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230418AbjCUGsN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 02:48:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57448 "EHLO
+        id S229931AbjCUGtg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 02:49:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229622AbjCUGsL (ORCPT
+        with ESMTP id S229959AbjCUGte (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 02:48:11 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 890DD20052
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 23:48:00 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id t5so18896838edd.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 23:48:00 -0700 (PDT)
+        Tue, 21 Mar 2023 02:49:34 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71F1E39B9E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 23:49:04 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id o12so55702187edb.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 23:49:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679381278;
+        d=linaro.org; s=google; t=1679381342;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wInF6GafTuPljjFUA+Is8vEjW4Pl6T2we7ZsIWHpBdc=;
-        b=t9qzeK5r/pPr7nWar54bwzgkW8DFarwVWfGFpk9NaytbIwZEw12umrs7bj5QwxiuK9
-         +kES/0g4F0MOIqGI3y0l3OhtGun11qEdDNfxlGop6VqcPTYPWZiDsGR6MWW4HCkzKWje
-         nIezYvISRxREMY9fTomU4/11ue8ESMWS4hggPvBp3S3VmXnorkI5pZ9V1KEZvhlPzbqy
-         noAwHJARgZzzi+g7afH2SqNj6avLPLAFW13JEKXKc7AkAMtRUGwm40CRFQj9R3zAEcJQ
-         bjV9n63wr2KXFRgENQYbp/6cJ6azeqYMXLsTGiaad8fCbNzd8Me7BOEfbYj8BF+dg5KV
-         TqXQ==
+        bh=AVZ6hZGV1be7TstieJ1z6Us2bdyl2vfl7ifo76jUCuw=;
+        b=k5Jmd4pcm1709BE1YBCyyYCZAolOql+x+h8LPOpl/a4pL70NBjHsS9zWG32XRKIg5S
+         TNyEaglhRxhezCezs9aa9P2vZKRBuL57uhjzokgL1l5s1nIUEL9kiLWPl+AexzDeX2Pf
+         neRunurxqqcpx9DaOTgkNkzfS/mfZv132VRsBOCwTqfoGHMpjEUq/FzCuuRfkMRqhtn6
+         3SWMTvPar5KjcGkJwDUE07RGiTDt3Fwhx953X8ZhrHsVBQZLL+Up+vnPoSMbBbL4Cwyi
+         f19LyUi0xzsi8DjN5qKzkbE7Ob/tQhvKIvtWQKi5MQwWTch+DCz1KC1TBGm3w7V2/ZyD
+         rAyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679381278;
+        d=1e100.net; s=20210112; t=1679381342;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wInF6GafTuPljjFUA+Is8vEjW4Pl6T2we7ZsIWHpBdc=;
-        b=HFCpaTiP1FZJ6mn1xGljL2WvPKUFPRwztPkehDhYZm8AzwwCXN5KWWJSbW/wwfnN3D
-         h6qkkAzjTLQgoFpU3vMzertTXfHhv/Uu1bfHbtrA1yrih+/l28CN3gBrTkY9X/LZDtwy
-         Wza5ptt3YIlOf0I/slCNYddk0ROuNBMuJQ1LlshVCsrbK5fXAdctftNSad8BKVBk38Me
-         ul3WVaCkgCx96QHV7ONjmCewatocvK3uMn9TKrt5nnvWEeeKfm7sUY+2vwIyWDqrewOa
-         7d83m4u+RQyMuC2xV2fak7fR9YoBUMV7YSDu058y4irDRpfa4q/s02vv92+exUJHeG52
-         woTw==
-X-Gm-Message-State: AO0yUKWFvo5YjJnOZrlvLP//TYzQbPN9Cjo5UVOFQ1yP+lfkRdqj/hI/
-        9mqUGIszcb0sIe56uwHbOJQZaQ==
-X-Google-Smtp-Source: AK7set+yUBYPnpsgcGFshQfAIT5gVBUyoTKz/PVli/szhlsgnT8leqFozAyoOp7o+jk4oZaehIJKDw==
-X-Received: by 2002:a17:906:397:b0:932:1af9:7386 with SMTP id b23-20020a170906039700b009321af97386mr2043033eja.27.1679381278702;
-        Mon, 20 Mar 2023 23:47:58 -0700 (PDT)
+        bh=AVZ6hZGV1be7TstieJ1z6Us2bdyl2vfl7ifo76jUCuw=;
+        b=OG66POo3mznnx9v8oOoKeMBAHiD9v3aQPt/7qb7bIV+ff4IndSLL3aAYnet0faZlA6
+         1OZAvzaZ8rGIvdhbRTDOffeq1t8i63wSHraj9qKLjT+iRagtTegb8qETZRfuIjUVPhv5
+         hrmmWQwxgWdn/RLg3onMXAoSSPQgpo4B5UD5EKefe0rXI6umQ+nv6Kq0yMdrkYwEWBtB
+         hQ0+JoUmKxf+eUpEvhC4kxhsZV2aglJhxxtnp0jE10BqYMy1daMCiACFA5HxgkwCENlx
+         df1hVPI34zrhXRAAp70H8m28NdUwA3w7I0yzTPDXtvlIEAOjkgsOEV8m1ag7zpK8f0oG
+         7SMQ==
+X-Gm-Message-State: AO0yUKVW2R/MP9DTGWfFwiFj9PH4DLtqz23R0nggtISEE8NEbXA13Kg2
+        V0fWrAUmWiFbV1Rhu6l4F4WSTA==
+X-Google-Smtp-Source: AK7set9PZs+7KawDTkvqPiEQrhW6ENUp8FTOEk7sjywM8QulV+EuE8QztpFZtHEXS8azKQSvYkZBHw==
+X-Received: by 2002:a17:906:87d3:b0:8af:2107:6ce5 with SMTP id zb19-20020a17090687d300b008af21076ce5mr1748750ejb.35.1679381342659;
+        Mon, 20 Mar 2023 23:49:02 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:2142:d8da:5ae4:d817? ([2a02:810d:15c0:828:2142:d8da:5ae4:d817])
-        by smtp.gmail.com with ESMTPSA id qq24-20020a17090720d800b008df7d2e122dsm5344909ejb.45.2023.03.20.23.47.57
+        by smtp.gmail.com with ESMTPSA id ce20-20020a170906b25400b00929fc8d264dsm5396450ejb.17.2023.03.20.23.49.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Mar 2023 23:47:58 -0700 (PDT)
-Message-ID: <48261996-1993-7c9c-b090-eba68157aecf@linaro.org>
-Date:   Tue, 21 Mar 2023 07:47:56 +0100
+        Mon, 20 Mar 2023 23:49:02 -0700 (PDT)
+Message-ID: <6ce5ed8f-e2ae-f681-937b-1fdc9c6b0f3b@linaro.org>
+Date:   Tue, 21 Mar 2023 07:49:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH net-next v2 04/12] dt-bindings: net: qcom,ethqos: Add
- Qualcomm sc8280xp compatibles
+Subject: Re: [PATCH] dt-bindings: PCI: Drop unneeded quotes
 Content-Language: en-US
-To:     Andrew Halaney <ahalaney@redhat.com>, linux-kernel@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
-        bhupesh.sharma@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, peppe.cavallaro@st.com,
-        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
-        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
-        linux@armlinux.org.uk, veekhee@apple.com,
-        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
-        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
-        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
-        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
-References: <20230320221617.236323-1-ahalaney@redhat.com>
- <20230320221617.236323-5-ahalaney@redhat.com>
+To:     Rob Herring <robh@kernel.org>, Tom Joseph <tjoseph@cadence.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srikanth Thokala <srikanth.thokala@intel.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20230320233911.2920364-1-robh@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230320221617.236323-5-ahalaney@redhat.com>
+In-Reply-To: <20230320233911.2920364-1-robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/03/2023 23:16, Andrew Halaney wrote:
-> The sc8280xp has a new version of the ETHQOS hardware in it, EMAC v3.
-> Add a compatible for this.
+On 21/03/2023 00:39, Rob Herring wrote:
+> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+> checking for this can be enabled in yamllint.
 > 
-> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> Signed-off-by: Rob Herring <robh@kernel.org>
 > ---
-> 
-> Changes since v1:
-> 	* Alphabetical sorting (Krzysztof)
-> 
->  Documentation/devicetree/bindings/net/qcom,ethqos.yaml | 1 +
->  Documentation/devicetree/bindings/net/snps,dwmac.yaml  | 3 +++
->  2 files changed, 4 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> index 88234a2010b1..c60248e17e5a 100644
-> --- a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> +++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> @@ -21,6 +21,7 @@ properties:
->      enum:
->        - qcom,qcs404-ethqos
->        - qcom,sm8150-ethqos
-> +      - qcom,sc8280xp-ethqos
 
-This still needs sort.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
