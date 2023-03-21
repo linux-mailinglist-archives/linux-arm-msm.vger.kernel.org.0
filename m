@@ -2,104 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 287426C2A64
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 07:30:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6824F6C2A7B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 07:35:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229778AbjCUGac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 02:30:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60428 "EHLO
+        id S230301AbjCUGfL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 02:35:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229579AbjCUGa2 (ORCPT
+        with ESMTP id S230297AbjCUGfG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 02:30:28 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8FDF7D8A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 23:30:21 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id cn12so9956966edb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 23:30:21 -0700 (PDT)
+        Tue, 21 Mar 2023 02:35:06 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 200AAE181
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 23:34:58 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id v20-20020a05600c471400b003ed8826253aso279188wmo.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 23:34:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679380220;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n1ju9SHjn0EjnX+WJqAHc/qHXQe1M1fQAhQ9irmoRLI=;
-        b=mr0vXSG40cowcVbTWCszpsULDay3AkUTvIQNoxE/6Cjdl1xcl62ZeQlMkGQvvXsDrk
-         s4fxDaxslwg5/yMeL9Ig8LjT0F7SmaOuNm65fwSM2bZe5ypr3cel0Ym+RHZioMD/nru5
-         mMy6+NbhCnExJz0K0P+hxhwIn0NkAa4h4MZxQgBzN6hTWdEbIq57nKVhxXhzIB42Oay3
-         Gx67k8oY5N18LvZkJWFuaADFe/nYmF39zpxfXmBPtyLWan8sSBohpvoxtAOGBJVJH9CZ
-         2v+cmkV/91ZdgOLSTGAfnMkrBAWuXHXaYvxR640AZPv1BnGpo6zztRbBxugYNMnk9t0j
-         FvzA==
+        d=linaro.org; s=google; t=1679380496;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=aeU98+5k4UNo0IIDP5TmbAbzIZvq5NwXU7mw30mcFh4=;
+        b=my2o52HZ/sptlkDCPPrA12lnhy9kS2Xor6aihSPfCLGPAGYWnbaq5wsjIxLFRrx0Pb
+         1VwwZQmHVeIj8h/l3dJ+WtznDT6vtKV9Z7SgFiboHZ0MHkQxnWHInQlme3CkswRXZ8LT
+         39a/jWfDqoK4XjlyVVv2XnRL4BJLIM9OjhXrLFRsJSDuKWPYMfZkICKrhCPvJ3X9XyGZ
+         Jm6VR/WURvQKeHHy4IfIOidTpGijPOqS2FYmkcqchrw3fxHn33FyWnK4lQ9DygAIU7c/
+         eJbmffZoXUMSM+n0bbxErHrPoxcIOdeKQOKgyx1PieCXB0yxMmOLTHOeSjHwQmq05GoQ
+         vX7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679380220;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n1ju9SHjn0EjnX+WJqAHc/qHXQe1M1fQAhQ9irmoRLI=;
-        b=iSttmTx5rDS+xsm1oX8V1ErZHWwNiPAqt53D+ckLPXzqxQTkg+HRkn2TLvfUI6Igby
-         FjuMbBsKZTpE80mJiu25TN8A78vqrOeLlFk5saQnM79PNL2InBtZKjmDLf9yx7X/aQKx
-         7xnILkNRTD/cddiOIUWKEu1nL8dZtkakb70Uq28RXjznNj2tYFLVl/4WO+Fo7h1ENTIV
-         yqmR5JafT6VFKm5UPgrzSkgBgC2tkbTeprjKhx3XOdC4Q+DYBfmDiFY8RCJLzb8J/PTo
-         +ug9fkPlNAbV57m2rUkVXantlT+8UWC6IsjQiX5QKrgX4jXs72uvBlEOXr1LOkNfzaMF
-         WIcA==
-X-Gm-Message-State: AO0yUKV0BOj5GglT3hwrlOk1FLcH9lmVOcY50jdDSEGF22vW/8e6BtfE
-        KF1XV+1XStv/vh8PTUKOuwi5Qg==
-X-Google-Smtp-Source: AK7set/mnHhzkLfQ6NWBr4tgSxgW7U8c3Ph5LCp/K+YZdlpgbxJUDmtb0MS2Ksnkrt0SN/5/D3IQvQ==
-X-Received: by 2002:a17:906:391b:b0:92b:eca6:43fc with SMTP id f27-20020a170906391b00b0092beca643fcmr1611701eje.64.1679380220208;
-        Mon, 20 Mar 2023 23:30:20 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:2142:d8da:5ae4:d817? ([2a02:810d:15c0:828:2142:d8da:5ae4:d817])
-        by smtp.gmail.com with ESMTPSA id hy14-20020a1709068a6e00b009351546fb54sm1717874ejc.28.2023.03.20.23.30.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Mar 2023 23:30:19 -0700 (PDT)
-Message-ID: <35359dee-5803-0cbb-b3d2-89aa6461f6a5@linaro.org>
-Date:   Tue, 21 Mar 2023 07:30:17 +0100
+        d=1e100.net; s=20210112; t=1679380496;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aeU98+5k4UNo0IIDP5TmbAbzIZvq5NwXU7mw30mcFh4=;
+        b=HQFrbZaQru7VI/BeGQkA7KSL5PrR69SCBZcKVNxKIbFAn4p1DoPbjR7q+4iMH87TkS
+         pEJqWWIWOxXipOUVxqnH9V7rs0CC0OFwKCOO8gignMaPO/DHbvM3h/STgM7Nplm36EjP
+         vTi4dPhQps4AMIy+jc6Ik8r38M0SBsFZPeL5Aa8GZ+BuZ1aRRfCc3JPDycyWVSUz5Vf4
+         A1aYglh5lLSmvNnqbcpxKI22P0RoHs2wpy8Gvtsp9HIzqZ42UKlLK+olQJxWTzoikGiD
+         33vClswJ13hsocc25qT+SeW7Oq0DozlB2G2u7E55HluV3XKdanXm6Ga6AU/Nltdbqh9q
+         eIXw==
+X-Gm-Message-State: AO0yUKV6SZg9DYPi9XcOJ2WqmslczrmJQFedZ8ewZ5WaIZor+66igldV
+        aLpfr29gVFXsm4CRiU7tbeenkuHhFxcmT0KlTPcFYw==
+X-Google-Smtp-Source: AK7set+MTESzG510vY+KY7o33JEhtbA90pqbzZCqd1mGorBUpd1yfT2SUq/gLkeSmm1CWVVo0WzGsrlZxkxO34q3690=
+X-Received: by 2002:a7b:c444:0:b0:3ed:779c:4063 with SMTP id
+ l4-20020a7bc444000000b003ed779c4063mr453053wmi.8.1679380496252; Mon, 20 Mar
+ 2023 23:34:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH] dt-bindings: phy: Drop unneeded quotes
-To:     Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Yu Chen <chenyu56@huawei.com>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Chunfeng Yun <chunfeng.yun@mediatek.com>,
-        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Luka Perkov <luka.perkov@sartura.hr>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Wolfgang Grandegger <wg@grandegger.com>,
-        Marc Kleine-Budde <mkl@pengutronix.de>
-Cc:     linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-usb@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-can@vger.kernel.org
-References: <20230320233955.2921179-1-robh@kernel.org>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230320233955.2921179-1-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20230320071211.3005769-1-bhupesh.sharma@linaro.org>
+ <20230320071211.3005769-2-bhupesh.sharma@linaro.org> <0a8fcd57-94dc-61e6-0ba0-b1591e05e6f2@linaro.org>
+In-Reply-To: <0a8fcd57-94dc-61e6-0ba0-b1591e05e6f2@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Tue, 21 Mar 2023 12:04:45 +0530
+Message-ID: <CAH=2Ntxj6RyEtrxCZmg6gKR_RSxX-wnkoEqjQ9CGQXM0zuATKQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] dmaengine: qcom: bam_dma: Add support for BAM engine v1.7.4
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, andersson@kernel.org,
+        bhupesh.linux@gmail.com, vkoul@kernel.org,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        vladimir.zapolskiy@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -108,14 +72,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/03/2023 00:39, Rob Herring wrote:
-> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> checking for this can be enabled in yamllint.
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
+On Mon, 20 Mar 2023 at 16:12, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 20.03.2023 08:12, Bhupesh Sharma wrote:
+> > Qualcomm SoCs SM6115 and  QRB2290 support BAM engine version
+> > v1.7.4.
+> >
+> > Add the support for the same in driver. Since the reg info of
+> > this version is similar to version v1.7.0, so reuse the same.
+> >
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > ---
+> >  drivers/dma/qcom/bam_dma.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> > index 1e47d27e1f81..153d189de7d2 100644
+> > --- a/drivers/dma/qcom/bam_dma.c
+> > +++ b/drivers/dma/qcom/bam_dma.c
+> > @@ -1228,6 +1228,7 @@ static const struct of_device_id bam_of_match[] = {
+> >       { .compatible = "qcom,bam-v1.3.0", .data = &bam_v1_3_reg_info },
+> >       { .compatible = "qcom,bam-v1.4.0", .data = &bam_v1_4_reg_info },
+> >       { .compatible = "qcom,bam-v1.7.0", .data = &bam_v1_7_reg_info },
+> > +     { .compatible = "qcom,bam-v1.7.4", .data = &bam_v1_7_reg_info },
+> The compatible is meaningless as of today (it uses the exact same driver
+> data as v1.7.0), so I'd say going with:
+>
+> compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
+>
+> is what we want.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Ok, will send a v2.
 
-Best regards,
-Krzysztof
-
+Thanks.
