@@ -2,55 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 934996C3DDA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 23:48:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 01B606C3DE5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 23:54:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229912AbjCUWs4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 18:48:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50628 "EHLO
+        id S229945AbjCUWyx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 18:54:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229970AbjCUWsy (ORCPT
+        with ESMTP id S229934AbjCUWyw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 18:48:54 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26BE8EB44;
-        Tue, 21 Mar 2023 15:48:53 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D5F41B80D5C;
-        Tue, 21 Mar 2023 22:48:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C88C433D2;
-        Tue, 21 Mar 2023 22:48:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679438930;
-        bh=eRkCIDKtMuOnkY12HfzUf0za5OR3niuDosLQfAgVtEA=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=lY8hziGCpjvnfSPvhRPK1muiFE0geLAf8x7mxf377TCmLwVpqG/fVp9KMlZijkz7i
-         L8JMzlc5H33OOxevLOEGtr7KXLfshUbd6OjjlKTD6PzIopM49GQfRqRuZGxGd3bJwr
-         abuPRxzu2NtCx5YagH4C/EZjXQs/KUgG0xsnWNhYATX7sNCkDQSCOoQeSiSZDzTXgn
-         Zz214VkrHVFtHkY+Q2OHbn+kqxoSOyW436gG9IYHJfvIwVJM4JkRAXCH/p4UVkS7ZB
-         PuY57Rwe5LPDUXEuwdn7wvrzyp/k33COAlLhEtFg0n1y7t+GHCpfI99WY7oDLYioUT
-         E/MoJgetUvBwQ==
-Message-ID: <ab6757652325303964d3de29f920befe.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        Tue, 21 Mar 2023 18:54:52 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3C3458C0D;
+        Tue, 21 Mar 2023 15:54:50 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id v4-20020a05600c470400b003ee4f06428fso833563wmo.4;
+        Tue, 21 Mar 2023 15:54:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679439289;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3HAdzANA7GRiZJA2epDIo4XVuYsjDwv30y8YzH+0KtI=;
+        b=fbbcthgEVJKZpX19gE41dOEOZKGjPLVKXpR8AbRUpLUoU/Ydsut9Zy+qXTSDba3O7R
+         ogPPDSLCqyZUYOCPKk+OmrlyeNjPcYeRklvTVVvPSX4M4womGAubm5V5mwT7IZoQ2pYm
+         p+BAeasDHYp9yX9PFSrJ4iPGbZQKqGidrJDZxda7g0Kr45XoKI78QWNEhzNuZUmzPrXn
+         py/5T0NSmJHosHOMuugdEJDY5+Q7OoAnUoYeRiTLjqwcyyxHhmDZxe1e4ZTR0BLZy5iI
+         imPJNvtU0FUZ2P0ObJH3NNJOlecs4VQ86l16+H3iPEJUHgrV0EDMCXMnY4UrntCAgPTH
+         sIzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679439289;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3HAdzANA7GRiZJA2epDIo4XVuYsjDwv30y8YzH+0KtI=;
+        b=swU/voEmZwTXqHCREjwXzhSdfJoIa2X2AJ+sxRtHfPYG+QZhYnDF7HQ7IhP9TxssqU
+         IqlM9IuwEJd2Q1ilc5G0bJg8FJ32jIdB9QtPu+6ik4s4zdSeF+RPzvvW4toZ/ZngfQml
+         bPnIscmNVdoOa/3NPlnqTRTkaYI+7I9SGlTMKzI92c4EJA3RPp8gLy//gXkW3xcHokgY
+         IQk8rdQsOl+g7v5NPA2U20E/q8+byjgpuxAMchrYmq3+gUzGaJSE29/BQ23M59YmJ5Ud
+         JV0jD4SzI3qb5cxY//k/FsImLA0qvIXIL8CbmNckCKOKou6ipYdN+cA9B+VRtWiTycGp
+         FrQw==
+X-Gm-Message-State: AO0yUKVPFQAFjsNexcnK6k7FLwk5qnj8/QjDZ9Kkt4qXIitNM3fPv6YC
+        5zJhv2dls01BJwc6w3iqvh+yxEnUP1CVyw==
+X-Google-Smtp-Source: AK7set/E8pBAGWWNISHq/PCSZ5cZ24Z1eoHpQqNIofp1fioL8wjvPDeViM3lQCpr0N0Vic6sWSO9tA==
+X-Received: by 2002:a7b:ce8a:0:b0:3df:de28:f819 with SMTP id q10-20020a7bce8a000000b003dfde28f819mr3832933wmj.15.1679439288934;
+        Tue, 21 Mar 2023 15:54:48 -0700 (PDT)
+Received: from Ansuel-xps. (93-34-89-197.ip49.fastwebnet.it. [93.34.89.197])
+        by smtp.gmail.com with ESMTPSA id h20-20020a1ccc14000000b003dc522dd25esm14755161wmb.30.2023.03.21.15.54.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Mar 2023 15:54:48 -0700 (PDT)
+Message-ID: <641a35b8.1c0a0220.25419.2b4d@mx.google.com>
+X-Google-Original-Message-ID: <ZBo1tqarEyoA0sV0@Ansuel-xps.>
+Date:   Tue, 21 Mar 2023 23:54:46 +0100
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andrew Lunn <andrew@lunn.ch>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
+        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org
+Subject: Re: [net-next PATCH v5 10/15] dt-bindings: net: ethernet-controller:
+ Document support for LEDs node
+References: <20230319191814.22067-1-ansuelsmth@gmail.com>
+ <20230319191814.22067-11-ansuelsmth@gmail.com>
+ <20230321211953.GA1544549-robh@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <4df4d530-f12a-cc34-692a-1f5ff784bbe5@linaro.org>
-References: <20230321175758.26738-1-srinivas.kandagatla@linaro.org> <c5273d67493cbb008f13d7538837828a.sboyd@kernel.org> <4df4d530-f12a-cc34-692a-1f5ff784bbe5@linaro.org>
-Subject: Re: [PATCH] clk: qcom: gfm-mux: use runtime pm while accessing registers
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     konrad.dybcio@linaro.org, mturquette@baylibre.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Amit Pundir <amit.pundir@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        agross@kernel.org, andersson@kernel.org
-Date:   Tue, 21 Mar 2023 15:48:48 -0700
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230321211953.GA1544549-robh@kernel.org>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,50 +93,106 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivas Kandagatla (2023-03-21 13:33:49)
->=20
->=20
-> On 21/03/2023 18:46, Stephen Boyd wrote:
-> > Quoting Srinivas Kandagatla (2023-03-21 10:57:58)
-> >> gfm mux driver does support runtime pm but we never use it while
-> >> accessing registers. Looks like this driver was getting lucky and
-> >> totally depending on other drivers to leave the clk on.
-> >>
-> >> Fix this by doing runtime pm while accessing registers.
-> >>
-> >> Fixes: a2d8f507803e ("clk: qcom: Add support to LPASS AUDIO_CC Glitch =
-Free Mux clocks")
-> >> Cc: stable@vger.kernel.org
-> >> Reported-by: Amit Pundir <amit.pundir@linaro.org>
-> >=20
-> > Is there a link to the report?
->=20
-> https://www.spinics.net/lists/stable/msg638380.html
+On Tue, Mar 21, 2023 at 04:19:53PM -0500, Rob Herring wrote:
+> On Sun, Mar 19, 2023 at 08:18:09PM +0100, Christian Marangi wrote:
+> > Document support for LEDs node in ethernet-controller.
+> > Ethernet Controller may support different LEDs that can be configured
+> > for different operation like blinking on traffic event or port link.
+> > 
+> > Also add some Documentation to describe the difference of these nodes
+> > compared to PHY LEDs, since ethernet-controller LEDs are controllable
+> > by the ethernet controller regs and the possible intergated PHY doesn't
+> > have control on them.
+> > 
+> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> > ---
+> >  .../bindings/net/ethernet-controller.yaml     | 21 +++++++++++++++++++
+> >  1 file changed, 21 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/net/ethernet-controller.yaml b/Documentation/devicetree/bindings/net/ethernet-controller.yaml
+> > index 00be387984ac..a93673592314 100644
+> > --- a/Documentation/devicetree/bindings/net/ethernet-controller.yaml
+> > +++ b/Documentation/devicetree/bindings/net/ethernet-controller.yaml
+> > @@ -222,6 +222,27 @@ properties:
+> >          required:
+> >            - speed
+> >  
+> > +  leds:
+> > +    type: object
+> > +    description:
+> > +      Describes the LEDs associated by Ethernet Controller.
+> > +      These LEDs are not integrated in the PHY and PHY doesn't have any
+> > +      control on them. Ethernet Controller regs are used to control
+> > +      these defined LEDs.
+> > +
+> > +    properties:
+> > +      '#address-cells':
+> > +        const: 1
+> > +
+> > +      '#size-cells':
+> > +        const: 0
+> > +
+> > +    patternProperties:
+> > +      '^led(@[a-f0-9]+)?$':
+> > +        $ref: /schemas/leds/common.yaml#
+> 
+> Are specific ethernet controllers allowed to add their own properties in 
+> led nodes? If so, this doesn't work. As-is, this allows any other 
+> properties. You need 'unevaluatedProperties: false' here to prevent 
+> that. But then no one can add properties. If you want to support that, 
+> then you need this to be a separate schema that devices can optionally 
+> include if they don't extend the properties, and then devices that 
+> extend the binding would essentially have the above with:
+> 
+> $ref: /schemas/leds/common.yaml#
+> unevaluatedProperties: false
+> properties:
+>   a-custom-device-prop: ...
+> 
+> 
+> If you wanted to define both common ethernet LED properties and 
+> device specific properties, then you'd need to replace leds/common.yaml 
+> above  with the ethernet one.
+> 
+> This is all the same reasons the DSA/switch stuff and graph bindings are 
+> structured the way they are.
+> 
 
-Please add a Link: after the reported-by and use a lore link instead of
-spinics please.
+Hi Rob, thanks for the review/questions.
 
-> >>   {
-> >>          struct clk_gfm *clk =3D to_clk_gfm(hw);
-> >>          unsigned int val;
-> >> +       int ret;
-> >> +
-> >> +       ret =3D pm_runtime_resume_and_get(clk->priv->dev);
-> >=20
-> > Doesn't the clk framework already do this? Why do we need to do it
-> > again?
->=20
-> You are right, clk core already does do pm_runtime_resume_and_get for=20
-> set_parent.
->=20
-> this looks redundant here.
->=20
->=20
-> so we need only need to add this for get_parent
->=20
+The idea of all of this is to keep leds node as standard as possible.
+It was asked to add unevaluatedProperties: False but I didn't understood
+it was needed also for the led nodes.
 
-The get_parent() clk op is called from a couple places in the clk
-framework. I guess that you're getting called from
-clk_core_reparent_orphans() where the runtime PM count isn't
-incremented? Can you confirm? Either way, this should be fixed in the
-framework and not in the driver.
+leds/common.yaml have additionalProperties set to true but I guess that
+is not OK for the final schema and we need something more specific.
+
+Looking at the common.yaml schema reg binding is missing so an
+additional schema is needed.
+
+Reg is needed for ethernet LEDs and PHY but I think we should also permit
+to skip that if the device actually have just one LED. (if this wouldn't
+complicate the implementation. Maybe some hints from Andrew about this
+decision?)
+
+If we decide that reg is a must, if I understood it correctly we should
+create something like leds-ethernet.yaml that would reference common and
+add reg binding? Is it correct? This schema should be laded in leds
+directory and not in the net/ethernet.
+
+Also with setting reg mandatory I will have to fix the regex to require
+@ in the node name.
+
+
+Also also if we decide for a more specific schema, I guess I can
+reference that directly in ethernet-phy.yaml and ethernet-controller.yaml
+with something like:
+
+leds:
+  $ref: /schemas/leds/leds-ethernet.yaml#
+
+Again thanks for the review and hope you can give some
+hint/clarification if I got everything right.
+
+-- 
+	Ansuel
