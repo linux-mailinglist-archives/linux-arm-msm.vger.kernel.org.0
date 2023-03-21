@@ -2,174 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 600816C3637
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 16:50:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB0EE6C365F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 16:58:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231544AbjCUPuW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 11:50:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35128 "EHLO
+        id S230425AbjCUP6r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 11:58:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230447AbjCUPuV (ORCPT
+        with ESMTP id S229744AbjCUP6q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 11:50:21 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC6444DE25
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:49:52 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id h8so61478536ede.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:49:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679413779;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qVyJMxLLt9V1BcoFqKd8pjnJHsSXtyBIzuBrMRPzTYg=;
-        b=Z4mXDYQzwCqGi3T12yWoKMGSngcKpTRClrvVz9eAZISdwtm5ARW3pIZ5ddFP3xCzvV
-         A4PeFHzEOSviauwirR/jzNaDTbK7oRVXMHvGbbI0YE9bQqMrtaZuQyd0p9Zte/w+ItQ7
-         q0dNPJL6QkQZVlws9vTIvbYngjkpuoq1YftqCzOjphEz2VVXydhaqRvAKVp9iYruIMbn
-         qicplBbMtQGSbt+pwuMIowR6H6+SXRBpzCeaTR9hilEKtCTMMJjJWHBrHTIFsx1/yS9H
-         029K47ex37CaSHrPNZtL504KOWZUZFkh5N/8UQX4Xi9RbTN/THWIeh4/49nM0E02ugtU
-         ecKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679413779;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qVyJMxLLt9V1BcoFqKd8pjnJHsSXtyBIzuBrMRPzTYg=;
-        b=sjDpf3ziX5Z1xgTEJ0u10n1SbsOg8YK2+uFdXWnU+HL3whXxEkANWq7vi49RFgqM6g
-         iHVGYq6wRWDE5wzIMF6EE9kzNhAHXEPS0LnPngM9OnjQgaJoZ5WkHYbBzJ0opiIYa9tU
-         LLTQQMFRogpuR/LDa7E2i30JTRrp9xHKtCskFHJ6YCK/4M61jx13TwfyIKVv4oaWQwa7
-         mjip0j/RHgwNN5ofqXdYfcWp+GyIFAhi4AggsC917zlgKMjsSo1AY0jCHuv28Qi5i9GZ
-         zrVZ7pmXW0q3Y4WK2ngG1+TSEJjDyb2ludF7BgN4cDc47HcRR9Fb36hEeSvQUBQJQLuA
-         MWzA==
-X-Gm-Message-State: AO0yUKVqgXs5HbgYqlcasQ6u8CFUEL0a5m470gOejVIwQwO5Ayc5E9eG
-        x2782EgmdWevNeYg/7wJRiE/Vg==
-X-Google-Smtp-Source: AK7set/v7EtXCG8c8bpthQcAsWwXbRQyN2L/SFPdqduXrbjXnxoJ3VSTiW1XBy8gfJysBk30r8vCYw==
-X-Received: by 2002:a17:906:9bd8:b0:879:ab3:93d1 with SMTP id de24-20020a1709069bd800b008790ab393d1mr2982425ejc.4.1679413779316;
-        Tue, 21 Mar 2023 08:49:39 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id k6-20020a1709063e0600b00930aa50372csm5977851eji.43.2023.03.21.08.49.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 08:49:38 -0700 (PDT)
-Message-ID: <55f401bf-5b52-bcf5-bab5-a73d3457c470@linaro.org>
-Date:   Tue, 21 Mar 2023 15:49:36 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v11 06/26] virt: gunyah: msgq: Add hypercalls to send and
- receive messages
-Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Tue, 21 Mar 2023 11:58:46 -0400
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3914010A8D;
+        Tue, 21 Mar 2023 08:58:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+        bh=URL1tZO+Mirs0erydKMklYrp3ZSfkDqzdADLJvizp6w=; b=6O7pbXHfrDLF1ERdKmcEt4/wro
+        CWPWCweOhhbqISBnDZYDjlM9/2ETuYnwCYE6KeGvbwKEi8GamEsBa8qyrD1gVIb6Q184e92b1noDZ
+        viurRXe3X38vQUeoz2nv+b7oD4Gt/tEjp4su8bZwanLZprQygZpFo48rLfs8OCZCWQvw=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+        (envelope-from <andrew@lunn.ch>)
+        id 1peeNR-007yuF-79; Tue, 21 Mar 2023 16:58:21 +0100
+Date:   Tue, 21 Mar 2023 16:58:21 +0100
+From:   Andrew Lunn <andrew@lunn.ch>
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230304010632.2127470-1-quic_eberman@quicinc.com>
- <20230304010632.2127470-7-quic_eberman@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230304010632.2127470-7-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
+        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org
+Subject: Re: [net-next PATCH v5 04/15] leds: Provide stubs for when CLASS_LED
+ is disabled
+Message-ID: <32202a37-270f-4503-9147-55aa2615116a@lunn.ch>
+References: <20230319191814.22067-1-ansuelsmth@gmail.com>
+ <20230319191814.22067-5-ansuelsmth@gmail.com>
+ <aa2d0a8b-b98b-4821-9413-158be578e8e0@lunn.ch>
+ <64189d72.190a0220.8d965.4a1c@mx.google.com>
+ <5ee3c2cf-8100-4f35-a2df-b379846a8736@lunn.ch>
+ <6419c60e.df0a0220.1949a.c432@mx.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6419c60e.df0a0220.1949a.c432@mx.google.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+> Also why IS_ENABLED instead of a simple ifdef? (in leds.h there is a mix
+> of both so I wonder if we should use one or the other)
+
+/*
+ * IS_ENABLED(CONFIG_FOO) evaluates to 1 if CONFIG_FOO is set to 'y' or 'm',
+ * 0 otherwise.  Note that CONFIG_FOO=y results in "#define CONFIG_FOO 1" in
+ * autoconf.h, while CONFIG_FOO=m results in "#define CONFIG_FOO_MODULE 1".
+ */
+#define IS_ENABLED(option) __or(IS_BUILTIN(option), IS_MODULE(option))
+
+It cleanly handles the module case, which i guess most people would
+get wrong.
+
+    Andrew
 
 
-On 04/03/2023 01:06, Elliot Berman wrote:
-> Add hypercalls to send and receive messages on a Gunyah message queue.
-> 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
->   arch/arm64/gunyah/gunyah_hypercall.c | 31 ++++++++++++++++++++++++++++
->   include/linux/gunyah.h               |  6 ++++++
->   2 files changed, 37 insertions(+)
-> 
-> diff --git a/arch/arm64/gunyah/gunyah_hypercall.c b/arch/arm64/gunyah/gunyah_hypercall.c
-> index 0d14e767e2c8..3420d8f286a9 100644
-> --- a/arch/arm64/gunyah/gunyah_hypercall.c
-> +++ b/arch/arm64/gunyah/gunyah_hypercall.c
-> @@ -41,6 +41,8 @@ EXPORT_SYMBOL_GPL(arch_is_gh_guest);
->   						   fn)
->   
->   #define GH_HYPERCALL_HYP_IDENTIFY		GH_HYPERCALL(0x8000)
-> +#define GH_HYPERCALL_MSGQ_SEND			GH_HYPERCALL(0x801B)
-> +#define GH_HYPERCALL_MSGQ_RECV			GH_HYPERCALL(0x801C)
->   
->   /**
->    * gh_hypercall_hyp_identify() - Returns build information and feature flags
-> @@ -60,5 +62,34 @@ void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identi
->   }
->   EXPORT_SYMBOL_GPL(gh_hypercall_hyp_identify);
->   
-> +enum gh_error gh_hypercall_msgq_send(u64 capid, size_t size, void *buff, int tx_flags, bool *ready)
-> +{
-> +	struct arm_smccc_res res;
-> +
-> +	arm_smccc_1_1_hvc(GH_HYPERCALL_MSGQ_SEND, capid, size, (uintptr_t)buff, tx_flags, 0, &res);
-> +
-> +	if (res.a0 == GH_ERROR_OK)
-> +		*ready = !!res.a1;
-> +
-> +	return res.a0;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_hypercall_msgq_send);
-> +
-> +enum gh_error gh_hypercall_msgq_recv(u64 capid, void *buff, size_t size, size_t *recv_size,
-> +					bool *ready)
-> +{
-> +	struct arm_smccc_res res;
-> +
-> +	arm_smccc_1_1_hvc(GH_HYPERCALL_MSGQ_RECV, capid, (uintptr_t)buff, size, 0, &res);
-> +
-> +	if (res.a0 == GH_ERROR_OK) {
-> +		*recv_size = res.a1;
-> +		*ready = !!res.a2;
-> +	}
-> +
-> +	return res.a0;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_hypercall_msgq_recv);
-> +
->   MODULE_LICENSE("GPL");
->   MODULE_DESCRIPTION("Gunyah Hypervisor Hypercalls");
-> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
-> index bd080e3a6fc9..18cfbf5ee48b 100644
-> --- a/include/linux/gunyah.h
-> +++ b/include/linux/gunyah.h
-> @@ -108,4 +108,10 @@ struct gh_hypercall_hyp_identify_resp {
->   
->   void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity);
->   
-> +#define GH_HYPERCALL_MSGQ_TX_FLAGS_PUSH		BIT(0)
-> +
-> +enum gh_error gh_hypercall_msgq_send(u64 capid, size_t size, void *buff, int tx_flags, bool *ready);
-> +enum gh_error gh_hypercall_msgq_recv(u64 capid, void *buff, size_t size, size_t *recv_size,
-> +					bool *ready);
-> +
->   #endif
