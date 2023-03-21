@@ -2,112 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7723A6C2E10
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 10:39:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AA826C2E2A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 10:45:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230032AbjCUJjO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 05:39:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43752 "EHLO
+        id S229934AbjCUJpj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 05:45:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229634AbjCUJjN (ORCPT
+        with ESMTP id S229511AbjCUJph (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 05:39:13 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0D433668D;
-        Tue, 21 Mar 2023 02:39:11 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 59BADB8133B;
-        Tue, 21 Mar 2023 09:39:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B11C4339B;
-        Tue, 21 Mar 2023 09:39:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679391548;
-        bh=y4DQQgqTeIOp+QSV53CC0j5id0oCyBXkdp89zbwqiMA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=R5Z9G5RhRob13EVQTljJZCAmCEYyyM9fYBf+rNjtCNqM+iL+MxJ1+MujMcRZjZTjr
-         xhhPd4QD5t4ElLlkVFsDLYb7I341Y4aXnl3zQvTDyUxVTQn5l92Y9fk8AW2n4qMHDQ
-         Ejjc8Y8rkqkOYZsNTJ3BN2Lt69j6rVDwMCO3gMNdcsdg5wzs54qUT/56B6ywxM3nLo
-         TLHeUenQTUE6+PBT1FfrIBbc1OMamsmaFeq1zx24yEkc1KAKMs0xkOZyrmycKQIOZO
-         xPSi/PbZuEset6GkJzTHqUw90m8nOr0CIcWhxYqZFU1Y7yDsPu3hFFto6M9ADEy2dg
-         Ymd2iQIXqNicg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1peYTo-0002Y0-DN; Tue, 21 Mar 2023 10:40:32 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Kalle Valo <kvalo@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        ath11k@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: sc8280xp-x13s: add wifi calibration variant
-Date:   Tue, 21 Mar 2023 10:40:11 +0100
-Message-Id: <20230321094011.9759-3-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230321094011.9759-1-johan+linaro@kernel.org>
-References: <20230321094011.9759-1-johan+linaro@kernel.org>
+        Tue, 21 Mar 2023 05:45:37 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0BB93756F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 02:45:35 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id ek18so57204340edb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 02:45:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679391934;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pvHJKDHY8iATaKDHrW52pjTQ08nKOuxTNUz703I9tcI=;
+        b=QF1em8XfANrrX2hd0qUpb9+biEigvVdSjSiMZ1s4tBHGBwvYHECk1p3p97LYvFK2F9
+         CIYIW2mA1NCiIkNkIGqezcyFktlqynC7ybw2T2fUtrcjOioHVNLr5sPyuzD46G+tyY10
+         +5hBFbZgzQUblxiRP+PBZihqp4v0GOImKvBPxsRf2iPJuJOPM31IR/GyQGJKY6L2agk1
+         bmb6AGFXQAuNhAlxTKoWRvtV8Xd7TcodxOBjpQwVKlHVFl4G63GuyIf5SoE3SMHD5IoF
+         JMMvK343iL12tIkMm1KrOXRVFaAdr429SylUvi+J2dCRPxqV5LEw97Jf+18toonQUxDu
+         weng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679391934;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pvHJKDHY8iATaKDHrW52pjTQ08nKOuxTNUz703I9tcI=;
+        b=5EAWJp5S9ZXoBAS5R2rk1vbyslQTeGqXvFHXnnfbjtwF3wXHRjPuL7yoeEDzhew1tE
+         YuRhzKc/I6W4Xx3Ne5s/dKKaWmY5WX3BZfjO7S7bae/0cGZnk5oEZ25v5cEaoN/NlFzm
+         67I0Xk8+0fB8SNExdCdi9drVMukzgnbyj6z+TqVAcCmu+rn8d28AYwYmGX/PRdu1yfaX
+         TyPC42AsVpJ2Skg/cQdl5wnhi5NAhKO5vgqAtbhEqG8LyiIcVS1ACesX5VReFMNTaZAt
+         AA6bVLlXKiLmcWMzvlY7nQmWzyS0vZOT3f8CSj3wlceDBeDazI19cIPJ/yzVYcL0UVtN
+         w3sQ==
+X-Gm-Message-State: AO0yUKVB/+/YuDMvQjmR9KirZTVbzDjCY9cgR1teUDRbeu2cHTzrpTPQ
+        jcb71r8QYtiJQJrzdZAvjUbabw==
+X-Google-Smtp-Source: AK7set+UvWU6OCYe+wROsnxPFIUDBtUafE9x7WbzBRosjBUR7fMgUbvdG6+1FyRd/dRlmhtgpyT0+Q==
+X-Received: by 2002:aa7:d38e:0:b0:4a3:43c1:8430 with SMTP id x14-20020aa7d38e000000b004a343c18430mr15479165edq.4.1679391934324;
+        Tue, 21 Mar 2023 02:45:34 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id b44-20020a509f2f000000b004c09527d62dsm6002460edf.30.2023.03.21.02.45.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Mar 2023 02:45:33 -0700 (PDT)
+Message-ID: <5687e3a0-ed1b-be16-f8f6-5c77a8787c50@linaro.org>
+Date:   Tue, 21 Mar 2023 09:45:32 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 2/2] misc: fastrpc: reject new invocations during device
+ removal
+Content-Language: en-US
+To:     Richard Acayan <mailingradian@gmail.com>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Thierry Escande <thierry.escande@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230130222716.7016-1-mailingradian@gmail.com>
+ <20230130222716.7016-3-mailingradian@gmail.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230130222716.7016-3-mailingradian@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Describe the bus topology for PCIe domain 6 and add the ath11k
-calibration variant so that the board file (calibration data) can be
-loaded.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216246
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Tested-by: Steev Klimaszewski <steev@kali.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts  | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 150f51f1db37..0051025e0aa8 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -711,6 +711,23 @@ &pcie4 {
- 	pinctrl-0 = <&pcie4_default>;
- 
- 	status = "okay";
-+
-+	pcie@0 {
-+		device_type = "pci";
-+		reg = <0x0 0x0 0x0 0x0 0x0>;
-+		#address-cells = <3>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		bus-range = <0x01 0xff>;
-+
-+		wifi@0 {
-+			compatible = "pci17cb,1103";
-+			reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+			qcom,ath11k-calibration-variant = "LE_X13S";
-+		};
-+	};
- };
- 
- &pcie4_phy {
--- 
-2.39.2
+On 30/01/2023 22:27, Richard Acayan wrote:
+> The channel's rpmsg object allows new invocations to be made. After old
+> invocations are already interrupted, the driver shouldn't try to invoke
+> anymore. Invalidating the rpmsg at the end of the driver removal
+> function makes it easy to cause a race condition in userspace. Even
+> closing a file descriptor before the driver finishes its cleanup can
+> cause an invocation via fastrpc_release_current_dsp_process() and
+> subsequent timeout.
+> 
+> Invalidate the channel before the invocations are interrupted to make
+> sure that no invocations can be created to hang after the device closes.
+> 
 
+------------->cut<-------------
+> Demonstration of the bug as performed on a Google Pixel 3a with
+> devicetree patches:
+> 
+> 	#include <fcntl.h>
+> 	#include <misc/fastrpc.h>
+> 	#include <stdint.h>
+> 	#include <stdio.h>
+> 	#include <string.h>
+> 	#include <sys/ioctl.h>
+> 	#include <unistd.h>
+> 
+> 	static int remotectl_open(int fd,
+> 				  const char *name,
+> 				  uint32_t *handle)
+> 	{
+> 		struct fastrpc_invoke invoke;
+> 		struct fastrpc_invoke_args args[4];
+> 		struct {
+> 			uint32_t namelen;
+> 			uint32_t errlen;
+> 		} in;
+> 		struct {
+> 			uint32_t handle;
+> 			uint32_t err;
+> 		} out;
+> 		char errstr[256];
+> 		int ret;
+> 
+> 		// Remoteproc expects to receive a null terminator
+> 		in.namelen = strlen(name) + 1;
+> 		in.errlen = 256;
+> 
+> 		args[0].ptr = (__u64) &in;
+> 		args[0].length = sizeof(in);
+> 		args[0].fd = -1;
+> 
+> 		args[1].ptr = (__u64) name;
+> 		args[1].length = in.namelen;
+> 		args[1].fd = -1;
+> 
+> 		args[2].ptr = (__u64) &out;
+> 		args[2].length = sizeof(out);
+> 		args[2].fd = -1;
+> 
+> 		args[3].ptr = (__u64) errstr;
+> 		args[3].length = 256;
+> 		args[3].fd = -1;
+> 
+> 		invoke.handle = 0;
+> 		invoke.sc = 0x00020200;
+> 		invoke.args = (__u64) args;
+> 
+> 		ret = ioctl(fd, FASTRPC_IOCTL_INVOKE, (__u64) &invoke);
+> 
+> 		if (!ret)
+> 			*handle = out.handle;
+> 
+> 		return ret;
+> 	}
+> 
+> 	int main()
+> 	{
+> 		struct fastrpc_init_create_static create;
+> 		uint32_t handle;
+> 		int fd, ret;
+> 
+> 		fd = open("/dev/fastrpc-adsp", O_RDWR);
+> 		if (fd == -1) {
+> 			perror("Could not open /dev/fastrpc-adsp");
+> 			return 1;
+> 		}
+> 
+> 		ret = ioctl(fd, FASTRPC_IOCTL_INIT_ATTACH_SNS, NULL);
+> 		if (ret) {
+> 			perror("Could not attach to sensorspd");
+> 			goto close_dev;
+> 		}
+> 
+> 		/*
+> 		 * Under normal circumstances, the remote processor
+> 		 * would request a file from a different client, and
+> 		 * quickly find out that there is no such file. When
+> 		 * this other client is not running, this procedure call
+> 		 * conveniently waits for the ADSP to crash.
+> 		 */
+> 		ret = remotectl_open(fd, "a", &handle);
+> 		if (ret == -1)
+> 			perror("Could not open CHRE interface");
+> 
+> 	close_dev:
+> 		// This takes 10 seconds
+> 		printf("Closing file descriptor\n");
+> 		close(fd);
+> 		printf("Closed file descriptor\n");
+> 
+> 		return 0;
+> 	}
+> 
+------------->cut<-------------
+
+move this after --- in commit log so that this is not part of commit log.
+
+> Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>   drivers/misc/fastrpc.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 2334a4fd5869..c8a36b9cf4fe 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -2351,7 +2351,9 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
+>   	struct fastrpc_user *user;
+>   	unsigned long flags;
+>   
+> +	// No invocations past this point
+use /* */ style commenting, as its preferred one.
+
+Once these are fixed
+
+
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
+
+--srini
+>   	spin_lock_irqsave(&cctx->lock, flags);
+> +	cctx->rpdev = NULL;
+>   	list_for_each_entry(user, &cctx->users, user)
+>   		fastrpc_notify_users(user);
+>   	spin_unlock_irqrestore(&cctx->lock, flags);
+> @@ -2370,7 +2372,6 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
+>   
+>   	of_platform_depopulate(&rpdev->dev);
+>   
+> -	cctx->rpdev = NULL;
+>   	fastrpc_channel_ctx_put(cctx);
+>   }
+>   
