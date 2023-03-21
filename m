@@ -2,201 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC92B6C3841
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 18:33:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 844676C3865
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 18:38:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229513AbjCURd5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 13:33:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46178 "EHLO
+        id S229997AbjCURi2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 13:38:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229922AbjCURdx (ORCPT
+        with ESMTP id S230156AbjCURi0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 13:33:53 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F1EC53739
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 10:33:39 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id h9so16368830ljq.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 10:33:39 -0700 (PDT)
+        Tue, 21 Mar 2023 13:38:26 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E5AD18B12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 10:37:39 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id x3so62740606edb.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 10:37:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679420017;
+        d=linaro.org; s=google; t=1679420247;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=LDwSwzPjD3OmF84qtgDXFqEH88rRTxQOUzKCvWTZg7o=;
-        b=Nuj2JeD4rsGzzlDo9UKgA4bvRT01eirRyUTYHHwsc+ua4RG/H6RTxWwwUX/VoOF1JQ
-         7LNmg/FqYH3ASWg9k77e8ut/0/rAZZTlDhSJ4P4Gc6xlWdlRx2jNcNNW1/JioFZxOG/F
-         /JBq/CwCeSO47RYdKCTsRd77dXUqgSio8i+HeWZ57nUra1tCn7B6nmeTJmt2qzBbbTcY
-         EQ1dmdjel1rb0hQAEk03dPGujuTy8YR35Dws1Gz2WK+QBgkTH/sOzvrmXDivMMAZmExS
-         RKSvg03OzB/szl2vgDBhGyhYoH7tyyskFzffPTE3qRYct7KjBuevQp9fA6oGAP6IRLvO
-         /PGw==
+        bh=NSFN+vcAKBFw9CRrOYxwC+q3dw6MZ4zFCC9rNy3oZWA=;
+        b=mB4V1KsAyRBedrHItqtzDgzZDsCtyU5w9IhYM+dAykklkQa0yAz+MMLvf94MYlP2g+
+         h1AtfqvglvgRcnv4NrxkHxQ7rUqoHxCi1bTM4F8yXSdmeLmWUsvajReSsHHoAIYUhhcZ
+         o7DERoqWNC7h2iO5IUORsDN9G8O0tH5g9NxLvMyL9Boej8KVKlP0orYNimYxHBtgLZkh
+         Rm21t5ti8Ii49KzGtrGjclCKLDRz0++odTj0tgOtqwlwq5/dhtXzqM9nJIEuWHQfJVFJ
+         P9MCWKSh0O4LyUBfE66V5awrIBFLQtCq5tJUnkVW8U/TGWvjkXlibG36M+EirAmjJa52
+         KEfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679420017;
+        d=1e100.net; s=20210112; t=1679420247;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LDwSwzPjD3OmF84qtgDXFqEH88rRTxQOUzKCvWTZg7o=;
-        b=C+BPZvBL0BbjfPMjRWRtS1NH9cO2VbVxT3B34NgSfu/V3H94quvZdjCwLbIFMxk3ZN
-         qDZG7pEMX2+jvXwwgPPSZkEMNLiLkHrGmO5fJ7jG3Og6LylB1mlzPpw5b7191MdnvHH2
-         /QcYzPRNr8AQ1xU1R5GPJwobNTaQkX9rcoq1bWgaLdHnTah0OXKajGP+RMEadEAvHx5q
-         BrXWFOrREw+JaeAF+w0+rOD5znCt9RxH0LoMjkFDNrRdbBCQUziDr2PHxpr1pSVmRpd5
-         GaEF6yoiw3Y8VXDgPtkUbJsnhkfuCQhAwCWxR/6OE8fewmagK7MvvZeBC/kl03CJNKaL
-         Q/7Q==
-X-Gm-Message-State: AO0yUKX8xptUQ/q9TqkSBJDbug2vbDc1WYB7d3lxC5U/M4Bs4CvoOSnq
-        SbUS5f3pCRwfIf17RJPEDuXwoQ==
-X-Google-Smtp-Source: AK7set9oLoBN5qVhPyUil9/Rg3m9u1I4YYDTnxm3ahqrTYWVm7mtVqkYbJ3Og4n7B59zrYisKgcJFA==
-X-Received: by 2002:a05:651c:10e:b0:29b:d436:5c91 with SMTP id a14-20020a05651c010e00b0029bd4365c91mr1158228ljb.4.1679420017283;
-        Tue, 21 Mar 2023 10:33:37 -0700 (PDT)
-Received: from [192.168.1.101] (abym238.neoplus.adsl.tpnet.pl. [83.9.32.238])
-        by smtp.gmail.com with ESMTPSA id u5-20020ac24c25000000b004e7a0f67490sm2220806lfq.110.2023.03.21.10.33.36
+        bh=NSFN+vcAKBFw9CRrOYxwC+q3dw6MZ4zFCC9rNy3oZWA=;
+        b=JLC3GVHKWQXqyXnMSghPqAJoDK5MFh+/g2hHOYQgvtfsYgmVCrWnxwc2wJs7w8uYYQ
+         01BGTcpND7cAyWK8PPwNoo6MLInRHY7X1MyiCZulism6AkPgWXartUE6pAWddIe00q0F
+         3J+xTMwTV0NWxMc0DIzsk5GjJ2OXKip2Ldz8CfHJMAw2u6zRg1oEHyb2G49CRgh4qrgi
+         bzKRUsw8x4KB3iZAwNjWZDnkJhp03vFXpHe3BmgKzxlt9cUSYexkqr2Xt3T2atGduDA2
+         TzH56C5X5nGZvXSCIPr6AZEdT8DIuet0i0hMrageZmGHp3Gcyv86X/4cIWtnqvPEA6Vd
+         7iQA==
+X-Gm-Message-State: AO0yUKXz000xLEjui1m10IYX0RMqysgP3WUhWzQTYDV0zteY5hu3P+pQ
+        ahM80Y0ejaCtgFpiX32KPTkMyA==
+X-Google-Smtp-Source: AK7set8Uy9OaFw50NEy/nbItPw+/m/3jWKl13WeHGIOpVaMRPYTcSXDoBlgcKw3lU2R9ULIJw5BTTQ==
+X-Received: by 2002:a17:907:a074:b0:923:c199:dab1 with SMTP id ia20-20020a170907a07400b00923c199dab1mr3530925ejc.55.1679420247526;
+        Tue, 21 Mar 2023 10:37:27 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:2142:d8da:5ae4:d817? ([2a02:810d:15c0:828:2142:d8da:5ae4:d817])
+        by smtp.gmail.com with ESMTPSA id w29-20020a50d79d000000b004bf5981ef3dsm6216731edi.94.2023.03.21.10.37.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 10:33:36 -0700 (PDT)
-Message-ID: <564e5b54-66a5-2cb8-5bfc-b13b08f5eb6e@linaro.org>
-Date:   Tue, 21 Mar 2023 18:33:35 +0100
+        Tue, 21 Mar 2023 10:37:27 -0700 (PDT)
+Message-ID: <611ea918-64a6-f306-b5ec-db55e41abda2@linaro.org>
+Date:   Tue, 21 Mar 2023 18:37:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v7 2/9] interconnect: qcom: rpm: Add support for
- specifying channel num
+Subject: Re: [PATCH V1 3/4] soc: qcom: boot_stat: Add Driver Support for Boot
+ Stats
 Content-Language: en-US
-To:     Georgi Djakov <djakov@kernel.org>, Andy Gross <agross@kernel.org>,
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230228-topic-qos-v7-0-815606092fff@linaro.org>
- <20230228-topic-qos-v7-2-815606092fff@linaro.org>
- <2f54ae85-f7b9-4666-cc05-6aa034028789@kernel.org>
- <38fe0736-b566-9e1b-d7f3-71e3fcd01d90@linaro.org>
- <f8baed88-6a3b-17c5-4134-ce3917ee8632@kernel.org>
- <101834f0-e00c-5469-c8a5-59a00a5160a5@linaro.org>
- <b3ef4fb6-91c7-1730-ceef-22fa3ef08e4e@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <b3ef4fb6-91c7-1730-ceef-22fa3ef08e4e@kernel.org>
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <cover.1679403696.git.quic_schowdhu@quicinc.com>
+ <3f385562845ae26d519940ca8098fde89282991b.1679403696.git.quic_schowdhu@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <3f385562845ae26d519940ca8098fde89282991b.1679403696.git.quic_schowdhu@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 21/03/2023 14:51, Souradeep Chowdhury wrote:
+> All of Qualcomm's proprietary Android boot-loaders capture boot time
+> stats, like the time when the bootloader started execution and at what
+> point the bootloader handed over control to the kernel etc. in the IMEM
+> region. This information is captured in a specific format by this driver
+> by mapping a structure to the IMEM memory region and then accessing the
+> members of the structure to print the information. This information is
+> useful in verifying if the existing boot KPIs have regre
 
 
-On 21.03.2023 15:49, Georgi Djakov wrote:
-> On 21.03.23 16:23, Konrad Dybcio wrote:
->>
->>
->> On 21.03.2023 15:21, Georgi Djakov wrote:
->>> On 21.03.23 16:09, Konrad Dybcio wrote:
->>>>
->>>> On 21.03.2023 15:06, Georgi Djakov wrote:
->>>>> Hi Konrad,
->>>>>
->>>>> Thanks for the patch!
->>>>>
->>>>> On 8.03.23 23:40, Konrad Dybcio wrote:
->>>>>> Some nodes, like EBI0 (DDR) or L3/LLCC, may be connected over more than
->>>>>> one channel. This should be taken into account in bandwidth calcualtion,
->>>>>> as we're supposed to feed msmbus with the per-channel bandwidth. Add
->>>>>> support for specifying that and use it during bandwidth aggregation.
->>>>>>
->>>>>
->>>>> This looks good, but do you have any follow-up patch to use this and set
->>>>> the channels in some driver?
->>>> Yes, I have a couple of OOT drivers that are gonna make use of it.
->>>> TBF it should have been sent separately from the QoS mess, but I
->>>> don't think it's much of an issue to take it as-is.
->>>>
->>>> The aforementioned OOT drivers for MSM8998 and SM6375 will be
->>>> submitted after we reach a consensus on how we want to ensure
->>>> that each node is guaranteed to have its clocks enabled before
->>>> access, among some other minor things.
->>>
->>> Yes, these QoS clocks are confusing. Maybe you can even submit them
->>> without configuring any QoS stuff in first place? Does enabling QoS
->>> actually show any benefits on these devices?
->> Haven't tested that thoroughly to be honest. But I'll try to get
->> some numbers.
-> 
-> I expect this to have impact only on some latency sensitive stuff like
-> modem or when there is heavy traffic flows. Maybe we can start without
-> QoS first and then add it on top as a next step?
-I only now remembered why I didn't do that.. Adding QoS at a later time
-will break older DTs, as with QoS we need to pass some clocks to the driver.
+> +/**
+> + *  struct boot_stats - timestamp information related to boot stats
+> + *  @bootloader_start:	Time for the starting point of the abl bootloader
+> + *  @bootloader_end:	Time when the kernel starts loading from abl bootloader
+> + */
+> +struct boot_stats {
+> +	u32 bootloader_start;
+> +	u32 bootloader_end;
+> +} __packed;
+> +
+> +static struct boot_stats __iomem *boot_stats;
+> +static void __iomem *mpm_counter_base;
+> +static u32 mpm_counter_freq;
 
-Konrad
-> 
-> BR,
-> Georgi
-> 
->>
->> Konrad
->>>
->>> Thanks,
->>> Georgi
->>>
->>>> Konrad
->>>>>
->>>>> BR,
->>>>> Georgi
->>>>>
->>>>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>>>> ---
->>>>>>     drivers/interconnect/qcom/icc-rpm.c | 7 ++++++-
->>>>>>     drivers/interconnect/qcom/icc-rpm.h | 2 ++
->>>>>>     2 files changed, 8 insertions(+), 1 deletion(-)
->>>>>>
->>>>>> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
->>>>>> index 35fd75ae70e3..27c4c6497994 100644
->>>>>> --- a/drivers/interconnect/qcom/icc-rpm.c
->>>>>> +++ b/drivers/interconnect/qcom/icc-rpm.c
->>>>>> @@ -317,6 +317,7 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
->>>>>>     {
->>>>>>         struct icc_node *node;
->>>>>>         struct qcom_icc_node *qn;
->>>>>> +    u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
->>>>>>         int i;
->>>>>>           /* Initialise aggregate values */
->>>>>> @@ -334,7 +335,11 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
->>>>>>         list_for_each_entry(node, &provider->nodes, node_list) {
->>>>>>             qn = node->data;
->>>>>>             for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
->>>>>> -            agg_avg[i] += qn->sum_avg[i];
->>>>>> +            if (qn->channels)
->>>>>> +                sum_avg[i] = div_u64(qn->sum_avg[i], qn->channels);
->>>>>> +            else
->>>>>> +                sum_avg[i] = qn->sum_avg[i];
->>>>>> +            agg_avg[i] += sum_avg[i];
->>>>>>                 agg_peak[i] = max_t(u64, agg_peak[i], qn->max_peak[i]);
->>>>>>             }
->>>>>>         }
->>>>>> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
->>>>>> index 8ba1918d7997..8aed5400afda 100644
->>>>>> --- a/drivers/interconnect/qcom/icc-rpm.h
->>>>>> +++ b/drivers/interconnect/qcom/icc-rpm.h
->>>>>> @@ -66,6 +66,7 @@ struct qcom_icc_qos {
->>>>>>      * @id: a unique node identifier
->>>>>>      * @links: an array of nodes where we can go next while traversing
->>>>>>      * @num_links: the total number of @links
->>>>>> + * @channels: number of channels at this node (e.g. DDR channels)
->>>>>>      * @buswidth: width of the interconnect between a node and the bus (bytes)
->>>>>>      * @sum_avg: current sum aggregate value of all avg bw requests
->>>>>>      * @max_peak: current max aggregate value of all peak bw requests
->>>>>> @@ -78,6 +79,7 @@ struct qcom_icc_node {
->>>>>>         u16 id;
->>>>>>         const u16 *links;
->>>>>>         u16 num_links;
->>>>>> +    u16 channels;
->>>>>>         u16 buswidth;
->>>>>>         u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
->>>>>>         u64 max_peak[QCOM_ICC_NUM_BUCKETS];
->>>>>>
->>>>>
->>>
-> 
+No file-scope variables. Does not scale, not easy for review and
+maintenance. Avoid such code.
+
+> +
+> +static int mpm_parse_dt(void)
+> +{
+> +	struct device_node *np_imem, *np_mpm2;
+> +
+> +	np_imem = of_find_compatible_node(NULL, NULL,
+> +					  "qcom,imem-boot_stats");
+> +	if (!np_imem) {
+> +		pr_err("can't find qcom,imem node\n");
+
+So you are printing errors everywhere, on every soc and with compile
+test on every platform there is in the world... sorry, it does not work
+like that.
+
+> +		return -ENODEV;
+> +	}
+> +	boot_stats = of_iomap(np_imem, 0);
+> +	if (!boot_stats) {
+> +		pr_err("boot_stats: Can't map imem\n");
+> +		goto err1;
+> +	}
+
+
+> +
+> +static void __exit boot_stats_exit(void)
+> +{
+> +}
+> +module_exit(boot_stats_exit)
+
+
+I don't think this is some special code which deserves init calls. Make
+it module_platform_driver().
+
+
+Best regards,
+Krzysztof
+
