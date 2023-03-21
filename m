@@ -2,112 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BC056C336A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 14:53:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C9A7C6C337F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 14:56:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231322AbjCUNxu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 09:53:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51398 "EHLO
+        id S231335AbjCUN44 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 09:56:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231319AbjCUNxn (ORCPT
+        with ESMTP id S229696AbjCUN4t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 09:53:43 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 223064FAB6;
-        Tue, 21 Mar 2023 06:53:23 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32LDafnB014293;
-        Tue, 21 Mar 2023 13:53:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=GlbQ6R7BvqzcBCmdNU07/9LL8nz61k8DP3MPvKU1WtM=;
- b=JsYzteUgebJm6FcRLGKpNiuat2rOarSZA9IMwOypnuHBlvO59tcvFIuF1RnZeG8OUk9t
- xoN0ZcZjq/dRtygSmknuH918JpLoJ/rjTtc7D8SuPwbs3F1m8m6ZM0HpYHFEt/QK1d5C
- PwG3Da2DL4CPeD30X2TYRMrS5h8KXoC9ASyEBklEIX5NMyFM402eSrxkpXStB3rn/6YJ
- zqU1BUx8M6jHX66/g1wR5vtIqSAytyTjPOPp7iVLE/4XQYJWUCBcRFSfY1znqNpd1qU/
- lMSpBEX+F6rBiQ9ImS43YEyETle/wfnGJ7RtZgFCYBh2lnTMv8pUeLSIoQK4jfDNpZx0 bA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pfdm4g1qs-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 21 Mar 2023 13:53:11 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32LDrA8E002493
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 21 Mar 2023 13:53:10 GMT
-Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Tue, 21 Mar 2023 06:53:06 -0700
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Subject: [PATCH V1 4/4] MAINTAINERS: Add the entry for boot_stats driver support
-Date:   Tue, 21 Mar 2023 19:21:51 +0530
-Message-ID: <40cc0359245bd1e29c6c95a12ffb96fd32d63142.1679403696.git.quic_schowdhu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1679403696.git.quic_schowdhu@quicinc.com>
-References: <cover.1679403696.git.quic_schowdhu@quicinc.com>
+        Tue, 21 Mar 2023 09:56:49 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CAED6199;
+        Tue, 21 Mar 2023 06:56:48 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9F06861C14;
+        Tue, 21 Mar 2023 13:56:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23950C433D2;
+        Tue, 21 Mar 2023 13:56:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679407007;
+        bh=ezAwooPCONqOE3wCgSpV5G/v4lBoltOn+J+AETmWWLk=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=VLi5xk4+KrQZ3LPmifTMt/HGiUMRfZnocFTOrMRPwIU2YG90z6qMuDvzqDGbinAp8
+         FCrOWWN98c+cTc+mLR3760ZYW+c1zKyu7FMwVNHBI5VrRQ7D42uiKp45DZpj0O+W8z
+         KHBxpiplb3BOj3uTvaArK3VbmYzktIF3aLQLH5PDUIx27O12YDy94gfTQarH8JaFKD
+         09uVZxnPSLP9uMsqC7NY2+Xl6DnjASr4FADJDxenOSf4Q5bFPCPM9zJJPQlpVrHUjj
+         YH5JJleSHdYUbR00x4KUAiZp6/oqQCGPk5lAwfIi8twyt93JhRL9uWKTytXk2ohJ8+
+         it2hd92EtM3pQ==
+Message-ID: <32bcb19f-db74-8660-7270-305e81363376@kernel.org>
+Date:   Tue, 21 Mar 2023 15:56:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uKz3rmpAgc_s3uWjgh1ylVZNptF6Wy0p
-X-Proofpoint-GUID: uKz3rmpAgc_s3uWjgh1ylVZNptF6Wy0p
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-21_10,2023-03-21_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 clxscore=1015
- spamscore=0 phishscore=0 bulkscore=0 malwarescore=0 adultscore=0
- mlxlogscore=999 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303210108
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Subject: Re: [PATCH v7 6/9] interconnect: qcom: rpm: Handle interface clocks
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230228-topic-qos-v7-0-815606092fff@linaro.org>
+ <20230228-topic-qos-v7-6-815606092fff@linaro.org>
+Content-Language: en-US
+From:   Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <20230228-topic-qos-v7-6-815606092fff@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the entries for all the files added as a part of driver support for
-boot stats.
+Hi Konrad,
 
-Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
----
- MAINTAINERS | 7 +++++++
- 1 file changed, 7 insertions(+)
+Thank you for working on this and sorry about jumping a bit late into
+the discussion.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f2c3d47..6a55577 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -17071,6 +17071,13 @@ L:	netdev@vger.kernel.org
- S:	Supported
- F:	drivers/net/ipa/
- 
-+QCOM BOOT_STATS DRIVER
-+M:	Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/soc/qcom/qcom,mpm-sleep-counter.yaml
-+F:	drivers/soc/qcom/boot_stats.c
-+
- QEMU MACHINE EMULATOR AND VIRTUALIZER SUPPORT
- M:	Gabriel Somlo <somlo@cmu.edu>
- M:	"Michael S. Tsirkin" <mst@redhat.com>
--- 
-2.7.4
+On 8.03.23 23:40, Konrad Dybcio wrote:
+> Some (but not all) providers (or their specific nodes) require
+> specific clocks to be turned on before they can be accessed. Failure
+> to ensure that results in a seemingly random system crash (which
+> would usually happen at boot with the interconnect driver built-in),
+> resulting in the platform not booting up properly.
+
+These "interface" clocks seem to be used only to program QoS for the
+respective ip block (eg ufs). So if we don't program QoS, there should
+be no crashes, right?
+
+I believe that in downstream they defer setting QoS until the first
+non-zero bandwidth request because of drivers that probe asynchronously
+or there is some firmware booting involved (IPA maybe). And bad stuff
+might happen if we touch the clock while the firmware is still booting.
+So setting the QoS on the first non-zero bandwidth request might not be
+a bad idea. Such nodes should probably be also excluded from sync_state
+by implementing get_bw() to return 0 bandwidth.
+
+BR,
+Georgi
+
+> 
+> Limit the number of bus_clocks to 2 (which is the maximum that SMD
+> RPM interconnect supports anyway) and handle non-scaling clocks
+> separately. Update MSM8996 and SDM660 drivers to make sure they do
+> not regress with this change.
+> 
+> This unfortunately has to be done in one patch to prevent either
+> compile errors or broken bisect.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/interconnect/qcom/icc-rpm.c | 52 ++++++++++++++++++++++++++++++-------
+>   drivers/interconnect/qcom/icc-rpm.h | 14 ++++++++--
+>   drivers/interconnect/qcom/msm8996.c | 22 +++++++---------
+>   drivers/interconnect/qcom/sdm660.c  | 16 +++++-------
+>   4 files changed, 70 insertions(+), 34 deletions(-)
+> 
+[..]
 
