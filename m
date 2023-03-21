@@ -2,215 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5707F6C285D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 03:56:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F1FE6C2861
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 03:58:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbjCUC4G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 22:56:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51462 "EHLO
+        id S229931AbjCUC6N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 22:58:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbjCUC4F (ORCPT
+        with ESMTP id S229511AbjCUC6M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 22:56:05 -0400
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2059.outbound.protection.outlook.com [40.107.92.59])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4968517148;
-        Mon, 20 Mar 2023 19:56:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kRSZshCr2RcDnW9fGnJzp/XQgLrhv8iFT0i334gfbw8KIdjoy6F+nWWLMm/cnnfqsZRhA7wEmMjLWcut0yT/G2ZHV2fRzqyS9+KxL4+WkxhjpuigK+f3a7Owyo+PjDwgbnCXXCP+2zH1maObs8ejHB0fIlGfS+5k6C0+4vtFHlAuDY9833PMX7kT2Wgg7Oj9S4Ty41mnxl+l+PLbBIFqG1PSXA0gIACkLjZObdihj3OnYODgMjvH3jKuOJdGUaBafqTYVKNmm8ty73dbu6O/Q6XaszkUZ71vvlgHHZnaFYskKNN6CE40IL0AYky+qFXvSwkL9s+M8TLnVKaZIqWAPA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aF+HTQ8gds3JND65WXm8Y2ksv6y+4cVCg0/DUiH++sA=;
- b=XC91R9OgZeIMPuIg31ahEHIm0+oC48NNcKfh3R0ioaj0/PGmkrHIlGLW0eUpoBlWku03ueH90the1yJhxC+ABCx7EPww4V1Olv6kHep7GR6X3K1LgKhjrptx0Yo/kx5UPuTggnsyjmF6J4j73DG7mTjQOv0qwYh2foZjKK8KrnCPofZ1VyK02LoBCbNAdQDSnUkyDRmqSUuvBhBaalJjyH8XFEQDK3Q6dUgII8LbJW2DVATO5h+eldpnvqt2OA30hDjQFrMmDr9VE0/+TphxaLLNA0WSKID7NTOLglF3STbCGwBn8MW5gKQKBGdAIzSnqKG8kiQzKbkV5RMcvyw63Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aF+HTQ8gds3JND65WXm8Y2ksv6y+4cVCg0/DUiH++sA=;
- b=jixEA8vKn67Gyg4e0vJxvrOCDz1riJBfsZwtGrepc/GvklrlhwcRNpnOJWc0OZo6QW+GoLynLeo1VOPYXdCPHZkfzn9xSDrQ3DWo8WJoRWzKzjITRefUPap8iR6JjnRdbUW6e3oS5sVMR7GwM4V5zebWtqa0A3q8gTfTAQHYrkI=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DM6PR12MB3370.namprd12.prod.outlook.com (2603:10b6:5:38::25) by
- CY8PR12MB7217.namprd12.prod.outlook.com (2603:10b6:930:5b::20) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6178.37; Tue, 21 Mar 2023 02:55:58 +0000
-Received: from DM6PR12MB3370.namprd12.prod.outlook.com
- ([fe80::e43d:5bd2:7a85:d0cf]) by DM6PR12MB3370.namprd12.prod.outlook.com
- ([fe80::e43d:5bd2:7a85:d0cf%7]) with mapi id 15.20.6178.037; Tue, 21 Mar 2023
- 02:55:58 +0000
-Message-ID: <97416541-5051-932d-c364-a7c602d54aae@amd.com>
-Date:   Mon, 20 Mar 2023 22:55:54 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v2 23/23] drm/sched: Add (optional) fence signaling
- annotation
-Content-Language: en-CA
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     Daniel Vetter <daniel@ffwll.ch>, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20230320144356.803762-1-robdclark@gmail.com>
- <20230320144356.803762-24-robdclark@gmail.com>
-From:   Luben Tuikov <luben.tuikov@amd.com>
-In-Reply-To: <20230320144356.803762-24-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YT4P288CA0016.CANP288.PROD.OUTLOOK.COM
- (2603:10b6:b01:d4::29) To DM6PR12MB3370.namprd12.prod.outlook.com
- (2603:10b6:5:38::25)
+        Mon, 20 Mar 2023 22:58:12 -0400
+Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCB8840EC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 19:58:08 -0700 (PDT)
+Received: (qmail 25382 invoked by uid 990); 21 Mar 2023 02:58:04 -0000
+Authentication-Results: devico.uberspace.de;
+        auth=pass (plain)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB3370:EE_|CY8PR12MB7217:EE_
-X-MS-Office365-Filtering-Correlation-Id: e90e4582-7dfb-4b2c-9ca7-08db29b7cc19
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: KZTaPI/2EcpdnMBcy7cALnvZMX5x5ho0sv4iAS1cp2EzzjYue+itKMc0EZmgvXxTJuvNqqDfnEoXD6izTIJCBoXULM+uIEBEMr8nJYJC4TqMIRNF4R5J62jhCay5+Y8NSNLgeiIyRCXv8hgFwdX+EWzRQd8pocHpPC05h98jM/gNO1HCOS5QKjICXO574kWhDwGKEy6ZUfOPxMArI2XNmShAAxDR0xd56EBUgJtTc++bMMMv8LxOXvwInow3/Ithi3TFt9mPozsDeFB4G2RoGiqzFwJbAiJtjM9ElpORKaaIVI5PgqK9KX+jKiQhQNEQhDgmreB46FVDGoIn/6eC78d9fnHNyYLjRFSv2vt83nJRh3C1kLBtkUfN0LLX/NCRuV0U/smPCaHULN2EGzK9k74ZTZLISeeJ0EB/rfqtYwhXJ6WpuE1BRIORy7fmfE3SWPWf5qJmXLJ5JWQYhk18nlKQuMAAuyg7MrKgtiCxwbEBgYcWpByXDg01fUV/VmxSodDBEVRiQk1rKcGdLTtVeLBtFduIAnqqcrLj5a/C77t31lF4fc0r8DK/IFEnwZgC6+HgSfwmoE1Y/RmNMJg0AEg++NBIcfs8V/tgUPFHOQUNeUumJaas+8DdQ+4DVkkMd9My+6fN0z3VEjJAa3k6/iruT5IKFwb5ASiCYDQxDf3xyGtfkQ/IwuDH0sgARaJ7grhx+aV0Un0izxgxlCNzcgUp54iLPRjMqh7WsMaA2Xw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(136003)(39860400002)(376002)(366004)(346002)(396003)(451199018)(966005)(6486002)(44832011)(38100700002)(31686004)(478600001)(7416002)(5660300002)(54906003)(316002)(86362001)(31696002)(83380400001)(66556008)(4326008)(66946007)(8676002)(2616005)(6666004)(66476007)(36756003)(8936002)(53546011)(55236004)(41300700001)(186003)(2906002)(26005)(6506007)(6512007)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dHlwL1dPNWRsSUVHNVlod3hhUXNZS3ZXVFpIN3VmVTJjVTBrbXA3aG5xMjls?=
- =?utf-8?B?MEhVKzVCcHg3amI4bHFCRDY0bS9YMXplL0x2RWpmdTZvRWZlbjdQbk9yd2Jh?=
- =?utf-8?B?MUVLNWNFL1VUQUxXdnJqbnY3ZEdHYW5LRmhkRHhuek9aQVNZcG00bTBQcjdE?=
- =?utf-8?B?YWdxbUp2aUdMdVNCbk5DVGdFcXRzZTcyVE9wTDdZcVdXTnNCemlrU3RleFdZ?=
- =?utf-8?B?alRKVXhHamtEd0ZlMWtuaWFSeEpIWDkvZm1PNk81YXRqOS8zVDBUY1VGMDJO?=
- =?utf-8?B?VWw5YWpFL1N3NU1kRkJabzJjZjQ1RmR5TWorSXkwaGZnWUl0RXZ2OVpMemFx?=
- =?utf-8?B?VFpvVmdFekQ0aS9XVWdpbVBvNDNCaHgxaG5KNzl5RTZXVHZlakZ1T1dtUG5y?=
- =?utf-8?B?U0Q5V3Q0ME90ZjFxMHEyekpDVFF1NjJFR0VCRmE4a1BHOHZTWVFYUjZtQUFx?=
- =?utf-8?B?UU14L1dWTFlBL2tZbXM5bHlsY0lIR1hQWVZqUWIxUW9OYitDL2ZNVHQwcXBT?=
- =?utf-8?B?aWowdHJKUGlDRUJRdG9jbE50M2piOWFkMlUyUlZ5Q3hIcGNuUU5Ha1VsNE90?=
- =?utf-8?B?U0ZGamNhSVNFeDRTQWx0dFhGNnJaNG9nSk12OEpmdDQ2eUVLSUxqcm5FL1RG?=
- =?utf-8?B?NXM5VndHbnZqWEhtOC9va2srSkFjTDJBb3dwNUxZRUh0aE1QYlZQRXZqNUM5?=
- =?utf-8?B?R1BjOGFVOEFsbiszUEJuczBGZExZdVRsTjYzOUovbnZ2SElNOFV4SVNobUxx?=
- =?utf-8?B?djgraTR0Y3ZpL1lDN0p0NVErekgxMHJFbmtiaUhJdlNXUDBjSFBrcjVtbFIv?=
- =?utf-8?B?SUZLcVRKNWgwR25xaThrMTFtbFl4TnQ2Z2tpTU5Fa1ZWaTZNS05KMTdNeEE1?=
- =?utf-8?B?U0RGekZ2c3lPblZ5MkF3aUdWbys5dklhN1ltenV4RzViSE93N1NWRUQ3R2xS?=
- =?utf-8?B?ZVc2eWdzZkd2TjdnU0Fha2JXU0hKVlpiVXlzQngrcmNjT2F6SzRlVk1HWCtl?=
- =?utf-8?B?MGlhVUhXVVU3d3pUd2ljSUdNUXNyM1dKbmNpWXhyTXdJMkhGNGs1Y2RVL1FO?=
- =?utf-8?B?Y2p3WW5UdEtPYTljdWRmTUpkQ2JBRkpzd1d2WnBxNW44UVQ0cW12VVl3aCtq?=
- =?utf-8?B?akprSEQ5b2d4MVlNUEFXV0RnazZjeDdTZFpvRFBOb09rU0pTRmRvUTRWdTBP?=
- =?utf-8?B?Z1g1VW9PZEl4WnpJekQ5d29DdDB3aWx0Z21kREZWNzZEZ210cDM5OWVIUTlz?=
- =?utf-8?B?QkhPc080VzIySHdJVGNVOHJNalYvaXI0ZVhKTW5mMzZ5S1VDWFlXR1BYWFNy?=
- =?utf-8?B?U3h4WUI3eFZ1NWxwa20vWkpwTDBDMWw4Nml3STJHUEtRZmg1YjBmREVRR3Z6?=
- =?utf-8?B?Sm5xL01NbnBhd1A0RkxuYnZMZTFqeERta0RIQ3BKWHh1T2VrdHFNSEFTemxm?=
- =?utf-8?B?L0hEQkt3TFN3TTdQWjE5bndOV3NtVkV3Q0ljQlFmSlkzc3pqdzJtMUsrNkhD?=
- =?utf-8?B?OXlPRlN5V2pCZFpVV1VCWDR5a2ZsUFV3bHRIeHJJM3NCOURNdXE0bXF5bjdO?=
- =?utf-8?B?d1lDVXZEeWVZdExtQzBVRjlZNlA1cnhZd3VXS0VneU14ejU3aGp2UGczL0lu?=
- =?utf-8?B?cmhqa3NXZnRlQlo5QU8zSm9Oc1VmWE5hdHZkRkl3bWpqSmhJdjJhZDMydDhK?=
- =?utf-8?B?TDhmc3JyQnNlK3pJVjNrL0d0SENSNVljR052cm5oSEtKbkNWNVZOOXNDQkZB?=
- =?utf-8?B?dnZ4LzBvRUJFSkZ1c2gyUzRpNnNhR0VuZitVYjRZNk5talloRk1wQTN6bnhG?=
- =?utf-8?B?TkVLdkwrbTRYUW5KRjluaWYwSmJYZkJNS2MrakdyZWh2Ny8zOE5aNDc4VW5X?=
- =?utf-8?B?K0Eyc2JHV09DM1JLOG5sUEdRKzVpb05kT3AxL2NwVFJweVkzNkd1S1NDTzJa?=
- =?utf-8?B?djFlRXA3SW81OGVZWkhKaTZkQXZqY1FVN0hDZjh2VGNqc3RHWGgwUnY5M3RG?=
- =?utf-8?B?elVqSTdQaTZIOGdBQUdTbW8yS21IYVpKdVV2TDN3eGFKU3cwNGtRSWNWV0hH?=
- =?utf-8?B?Mnllc2VMbUhjcG9JaDVvbkplR3FQNUtBNG1MZnFkczloMm93aDNjbGM1NktP?=
- =?utf-8?Q?fTRJAdpTcnACZOsTBG03cKJ4a?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e90e4582-7dfb-4b2c-9ca7-08db29b7cc19
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3370.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Mar 2023 02:55:58.5072
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Zd9Y+6ZwY3jEgb7rEu8K0MVXfIyrVrFTJROdCVxbxt7MMaftoj52TmJg3uMg2jPH
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7217
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Date:   Tue, 21 Mar 2023 02:58:04 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From:   "Leonard Lausen" <leonard@lausen.nl>
+Message-ID: <6f33219dc848ccd7122bce6933338033aa18c33c@lausen.nl>
+TLS-Required: No
+Subject: [PATCH v2] drm/msm/dpu: Add support for AR30 format
+To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+X-Rspamd-Bar: ---
+X-Rspamd-Report: BAYES_HAM(-2.999999) MIME_GOOD(-0.1)
+X-Rspamd-Score: -3.099999
+Received: from unknown (HELO unkown) (::1)
+        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Tue, 21 Mar 2023 03:58:04 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+        d=lausen.nl; s=uberspace;
+        h=from;
+        bh=rYbDhks1ZE3HAb7y2rSMfUjbBwhYGu9ZnE2vd1eSzvM=;
+        b=MDTpbnXG29DKkpF8ZfL2uLn/Q3jPopFzVlffIANlVfzjDtZShZ4aOLTLA/bQZ80HQCHiEOMnaO
+        9JRgBh2b0xsrZeSweogA+k2YyT9oFHZLLU60S52hfVQ9gqyVrLWgz3/pXLAb9URTZAaKJLDMDwcF
+        QY/Tf5cM0QQjOUpiIY9kqQBEzR/v/QWtbTNNKyZsu4XkDi4uxYqMTIcMPfGbX8Om6bu9Ge4R+wg5
+        jWdCZ2yie56kDHioAISflmYrVRJHa120b7byyd+X3u/Q06jKHRbuyxPOkCbHFqkcTvHujdXJoLcp
+        BcdfPFMs0RiUBA43QVo1b9HoxSWpm8FRBgov6fz7BuEEQpDc4ObqLJATtGVD8fKFJBkrTdZttXog
+        DLJLJliHWlc7SjL/vCtoY41BPhHV3LI3ZlJ1ebzKurWY2AEord89twkKJfFg9UHF34fi7fzesuYu
+        tYOWF3RCqZu/j6k7nm9foC53SQDg6jtmFT8GH2cOt0w1G+PopCSF4+MeBRqgFgTFLCUmkOxj2TBP
+        VlEtXtdQ614185sY4Hh97A3sE4B59kzutEGglxlt8yd7AwDSf1n2/s2UdP4OgUmpUkR/804fNP7k
+        kixRrhajOBthYsl1eqJFHUUN2OmNIf3/BJyIGaO+IDgExd/2idkQszfU9erXMJVL3LpHTf6bgIPn
+        8=
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is good. Hopefully it helps us catch lockdep bugs.
+Commit da7716a249b699978fb5 ("drm/msm/dpu: Add support for XR30 format") =
+enabled
+support for the 10-bit XR30 color format but missed enabling support for =
+the
+corresponding per-pixel alpha-blending AR30 color format.
 
-Reviewed-by: Luben Tuikov <luben.tuikov@amd.com>
+Declaring only XR30 but not AR30 color format support can trigger bugs in
+userspace. KDE KWin compositor versions prior to 5.27.3 for example prefe=
+r
+10-bit color formats, rendering a 1cm^2 black box around the cursor due t=
+o
+missing per-pixel alpha-blending.
 
-Regards,
-Luben
+Signed-off-by: Leonard Lausen <leonard@lausen.nl>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c    | 11 +++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  2 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      |  1 +
+ 3 files changed, 14 insertions(+)
 
-On 2023-03-20 10:43, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Based on
-> https://lore.kernel.org/dri-devel/20200604081224.863494-10-daniel.vetter@ffwll.ch/
-> but made to be optional.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/gpu/drm/msm/msm_ringbuffer.c   | 1 +
->  drivers/gpu/drm/scheduler/sched_main.c | 9 +++++++++
->  include/drm/gpu_scheduler.h            | 2 ++
->  3 files changed, 12 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-> index b60199184409..7e42baf16cd0 100644
-> --- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-> @@ -93,6 +93,7 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
->  	 /* currently managing hangcheck ourselves: */
->  	sched_timeout = MAX_SCHEDULE_TIMEOUT;
->  
-> +	ring->sched.fence_signaling = true;
->  	ret = drm_sched_init(&ring->sched, &msm_sched_ops,
->  			num_hw_submissions, 0, sched_timeout,
->  			NULL, NULL, to_msm_bo(ring->bo)->name, gpu->dev->dev);
-> diff --git a/drivers/gpu/drm/scheduler/sched_main.c b/drivers/gpu/drm/scheduler/sched_main.c
-> index 4e6ad6e122bc..c2ee44d6224b 100644
-> --- a/drivers/gpu/drm/scheduler/sched_main.c
-> +++ b/drivers/gpu/drm/scheduler/sched_main.c
-> @@ -978,10 +978,15 @@ static bool drm_sched_blocked(struct drm_gpu_scheduler *sched)
->  static int drm_sched_main(void *param)
->  {
->  	struct drm_gpu_scheduler *sched = (struct drm_gpu_scheduler *)param;
-> +	const bool fence_signaling = sched->fence_signaling;
-> +	bool fence_cookie;
->  	int r;
->  
->  	sched_set_fifo_low(current);
->  
-> +	if (fence_signaling)
-> +		fence_cookie = dma_fence_begin_signalling();
-> +
->  	while (!kthread_should_stop()) {
->  		struct drm_sched_entity *entity = NULL;
->  		struct drm_sched_fence *s_fence;
-> @@ -1039,6 +1044,10 @@ static int drm_sched_main(void *param)
->  
->  		wake_up(&sched->job_scheduled);
->  	}
-> +
-> +	if (fence_signaling)
-> +		dma_fence_end_signalling(fence_cookie);
-> +
->  	return 0;
->  }
->  
-> diff --git a/include/drm/gpu_scheduler.h b/include/drm/gpu_scheduler.h
-> index 9db9e5e504ee..8f23ea522e22 100644
-> --- a/include/drm/gpu_scheduler.h
-> +++ b/include/drm/gpu_scheduler.h
-> @@ -483,6 +483,7 @@ struct drm_sched_backend_ops {
->   * @ready: marks if the underlying HW is ready to work
->   * @free_guilty: A hit to time out handler to free the guilty job.
->   * @dev: system &struct device
-> + * @fence_signaling: Opt in to fence signaling annotations
->   *
->   * One scheduler is implemented for each hardware ring.
->   */
-> @@ -507,6 +508,7 @@ struct drm_gpu_scheduler {
->  	bool				ready;
->  	bool				free_guilty;
->  	struct device			*dev;
-> +	bool 				fence_signaling;
->  };
->  
->  int drm_sched_init(struct drm_gpu_scheduler *sched,
-
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/dr=
+m/msm/disp/dpu1/dpu_formats.c
+index d95540309d4d..2b1ef186b909 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+@@ -536,6 +536,16 @@ static const struct dpu_format dpu_format_map_ubwc[]=
+ =3D {
+                true, 4, DPU_FORMAT_FLAG_DX | DPU_FORMAT_FLAG_COMPRESSED,
+                DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
+=20
++=20      /* XRGB2101010 and ARGB2101010 purposely have the same color
++        * ordering.  The hardware only supports ARGB2101010 UBWC
++        * natively.
++        */
++       INTERLEAVED_RGB_FMT_TILED(ARGB2101010,
++               COLOR_8BIT, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
++               C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
++               true, 4, DPU_FORMAT_FLAG_DX | DPU_FORMAT_FLAG_COMPRESSED,
++               DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
++
+        PSEUDO_YUV_FMT_TILED(NV12,
+                0, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
+                C1_B_Cb, C2_R_Cr,
+@@ -591,6 +601,7 @@ static int _dpu_format_get_media_color_ubwc(const str=
+uct dpu_format *fmt)
+                {DRM_FORMAT_XBGR8888, COLOR_FMT_RGBA8888_UBWC},
+                {DRM_FORMAT_XRGB8888, COLOR_FMT_RGBA8888_UBWC},
+                {DRM_FORMAT_ABGR2101010, COLOR_FMT_RGBA1010102_UBWC},
++               {DRM_FORMAT_ARGB2101010, COLOR_FMT_RGBA1010102_UBWC},
+                {DRM_FORMAT_XRGB2101010, COLOR_FMT_RGBA1010102_UBWC},
+                {DRM_FORMAT_XBGR2101010, COLOR_FMT_RGBA1010102_UBWC},
+                {DRM_FORMAT_BGR565, COLOR_FMT_RGB565_UBWC},
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu=
+/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index e8a217d242ca..6ae9c5358c5c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -157,6 +157,7 @@ static const uint32_t plane_formats[] =3D {
+        DRM_FORMAT_RGBX8888,
+        DRM_FORMAT_BGRX8888,
+        DRM_FORMAT_XBGR8888,
++       DRM_FORMAT_ARGB2101010,
+        DRM_FORMAT_XRGB2101010,
+        DRM_FORMAT_RGB888,
+        DRM_FORMAT_BGR888,
+@@ -186,6 +187,7 @@ static const uint32_t plane_formats_yuv[] =3D {
+        DRM_FORMAT_RGBA8888,
+        DRM_FORMAT_BGRX8888,
+        DRM_FORMAT_BGRA8888,
++       DRM_FORMAT_ARGB2101010,
+        DRM_FORMAT_XRGB2101010,
+        DRM_FORMAT_XRGB8888,
+        DRM_FORMAT_XBGR8888,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/=
+msm/disp/dpu1/dpu_plane.c
+index bfd5be89e8b8..0ed6a1a114c7 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -69,6 +69,7 @@ static const uint32_t qcom_compressed_supported_formats=
+[] =3D {
+        DRM_FORMAT_ARGB8888,
+        DRM_FORMAT_XBGR8888,
+        DRM_FORMAT_XRGB8888,
++       DRM_FORMAT_ARGB2101010,
+        DRM_FORMAT_XRGB2101010,
+        DRM_FORMAT_BGR565,
+=20
+--=20
+2.30.2
