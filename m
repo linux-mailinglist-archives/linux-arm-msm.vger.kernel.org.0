@@ -2,64 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 946836C3631
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 16:49:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 600816C3637
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 16:50:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231871AbjCUPtR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 11:49:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59766 "EHLO
+        id S231544AbjCUPuW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 11:50:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231486AbjCUPtE (ORCPT
+        with ESMTP id S230447AbjCUPuV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 11:49:04 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C42C4DE25
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:49:01 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id r11so61495847edd.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:49:01 -0700 (PDT)
+        Tue, 21 Mar 2023 11:50:21 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC6444DE25
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:49:52 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id h8so61478536ede.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:49:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679413739;
+        d=linaro.org; s=google; t=1679413779;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SzDFIymbRjbLhmlcc42BiXxJve1ZLr1cxA94sUeeuDQ=;
-        b=xOT3dQErkNbyGneftJFjSnjdfjvRXh/wgUVE5YAfSTsdLMTa+oockgRQBPsMclLUqB
-         U4IIkytzklFq3jHOSyH/KRiUUMWFL904rv+e2yYFdLIGSSxwYfEn66IwA+O/FKnkH9iK
-         OJK3kwJMjNqVkvLoIjBC6FS9mNN4Ll7JAfWxkUWqChVcMIXFTR5NbWlFd0yD13vIyBxI
-         uAKdjSajzGq8sZ6BxflLceYT/1OTdUELaqxWhf+6s70Re59N2OD/PhlyfVbBfXF4GO6g
-         nH4567gpkoZS/JXECrwQYFmnNnPF7Aat07MoTwnRh/gCm8hQ+LrxqJqlp9XGSbdaAFlx
-         NpRw==
+        bh=qVyJMxLLt9V1BcoFqKd8pjnJHsSXtyBIzuBrMRPzTYg=;
+        b=Z4mXDYQzwCqGi3T12yWoKMGSngcKpTRClrvVz9eAZISdwtm5ARW3pIZ5ddFP3xCzvV
+         A4PeFHzEOSviauwirR/jzNaDTbK7oRVXMHvGbbI0YE9bQqMrtaZuQyd0p9Zte/w+ItQ7
+         q0dNPJL6QkQZVlws9vTIvbYngjkpuoq1YftqCzOjphEz2VVXydhaqRvAKVp9iYruIMbn
+         qicplBbMtQGSbt+pwuMIowR6H6+SXRBpzCeaTR9hilEKtCTMMJjJWHBrHTIFsx1/yS9H
+         029K47ex37CaSHrPNZtL504KOWZUZFkh5N/8UQX4Xi9RbTN/THWIeh4/49nM0E02ugtU
+         ecKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679413739;
+        d=1e100.net; s=20210112; t=1679413779;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SzDFIymbRjbLhmlcc42BiXxJve1ZLr1cxA94sUeeuDQ=;
-        b=1F9vnZEHu63PAYjR/6JKjqYMTZRlslSRLdJ0I8FlNmob6+6dYpTn788KPPzGjYk2Vy
-         pMdbo63g5k8Hwjj+0gHaWYokKdm7mdkacM27ZOrGSWVmmQNvOas/r6w8wuOI1iJO08Tb
-         EEa5n5pXLghqIWh8ofz3mPs8s41ZbTBTk5KxjXzrZLtv9H3FdkNWSlxexmSmfXjAGqSd
-         uZchdP7JHC0zhd+VKOLRGWMFdp0DnLyQcYKKXAaIZYMAWr2xkRuGBnJumbtGVLXTpz7F
-         JqBEeV8tH5IeA6IXcJbreNDerFHCwsHT2CFy/0Zz2X4c8HsZgMK88OupGLZA8FR4Y4ui
-         VBtQ==
-X-Gm-Message-State: AO0yUKW3Ve6rpeG1K6BHO5uAaAoWML2xnYuY8kT9lde2dCk4JBIPCGxT
-        KwsY6kV1pibmO1kbw6tx9HQppw==
-X-Google-Smtp-Source: AK7set9vvgE0/AZT5nETWstzcgB/WJjjvy5BXgYV3f+XN39lD7CIun132siBk0Fq/T5DQE94TJZWlQ==
-X-Received: by 2002:a17:906:6d13:b0:925:f542:1a3d with SMTP id m19-20020a1709066d1300b00925f5421a3dmr3383284ejr.25.1679413739616;
-        Tue, 21 Mar 2023 08:48:59 -0700 (PDT)
+        bh=qVyJMxLLt9V1BcoFqKd8pjnJHsSXtyBIzuBrMRPzTYg=;
+        b=sjDpf3ziX5Z1xgTEJ0u10n1SbsOg8YK2+uFdXWnU+HL3whXxEkANWq7vi49RFgqM6g
+         iHVGYq6wRWDE5wzIMF6EE9kzNhAHXEPS0LnPngM9OnjQgaJoZ5WkHYbBzJ0opiIYa9tU
+         LLTQQMFRogpuR/LDa7E2i30JTRrp9xHKtCskFHJ6YCK/4M61jx13TwfyIKVv4oaWQwa7
+         mjip0j/RHgwNN5ofqXdYfcWp+GyIFAhi4AggsC917zlgKMjsSo1AY0jCHuv28Qi5i9GZ
+         zrVZ7pmXW0q3Y4WK2ngG1+TSEJjDyb2ludF7BgN4cDc47HcRR9Fb36hEeSvQUBQJQLuA
+         MWzA==
+X-Gm-Message-State: AO0yUKVqgXs5HbgYqlcasQ6u8CFUEL0a5m470gOejVIwQwO5Ayc5E9eG
+        x2782EgmdWevNeYg/7wJRiE/Vg==
+X-Google-Smtp-Source: AK7set/v7EtXCG8c8bpthQcAsWwXbRQyN2L/SFPdqduXrbjXnxoJ3VSTiW1XBy8gfJysBk30r8vCYw==
+X-Received: by 2002:a17:906:9bd8:b0:879:ab3:93d1 with SMTP id de24-20020a1709069bd800b008790ab393d1mr2982425ejc.4.1679413779316;
+        Tue, 21 Mar 2023 08:49:39 -0700 (PDT)
 Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id s9-20020a170906454900b008f89953b761sm5958260ejq.3.2023.03.21.08.48.57
+        by smtp.googlemail.com with ESMTPSA id k6-20020a1709063e0600b00930aa50372csm5977851eji.43.2023.03.21.08.49.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 08:48:58 -0700 (PDT)
-Message-ID: <fcffc785-42b0-0312-daa3-f927f18cd43e@linaro.org>
-Date:   Tue, 21 Mar 2023 15:48:54 +0000
+        Tue, 21 Mar 2023 08:49:38 -0700 (PDT)
+Message-ID: <55f401bf-5b52-bcf5-bab5-a73d3457c470@linaro.org>
+Date:   Tue, 21 Mar 2023 15:49:36 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v11 05/26] virt: gunyah: Identify hypervisor version
+Subject: Re: [PATCH v11 06/26] virt: gunyah: msgq: Add hypercalls to send and
+ receive messages
 Content-Language: en-US
 To:     Elliot Berman <quic_eberman@quicinc.com>,
         Alex Elder <elder@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
 Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
         Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
@@ -73,16 +76,15 @@ Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Jonathan Corbet <corbet@lwn.net>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
+        Andy Gross <agross@kernel.org>,
         Jassi Brar <jassisinghbrar@gmail.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
 References: <20230304010632.2127470-1-quic_eberman@quicinc.com>
- <20230304010632.2127470-6-quic_eberman@quicinc.com>
+ <20230304010632.2127470-7-quic_eberman@quicinc.com>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230304010632.2127470-6-quic_eberman@quicinc.com>
+In-Reply-To: <20230304010632.2127470-7-quic_eberman@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -98,104 +100,76 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 04/03/2023 01:06, Elliot Berman wrote:
-> Export the version of Gunyah which is reported via the hyp_identify
-> hypercall. Increments of the major API version indicate possibly
-> backwards incompatible changes.
-> 
-> Export the hypervisor identity so that Gunyah drivers can act according
-> to the major API version.
+> Add hypercalls to send and receive messages on a Gunyah message queue.
 > 
 > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-
+> ---
 Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
---srini
-> ---
->   drivers/virt/Makefile        |  1 +
->   drivers/virt/gunyah/Makefile |  3 ++
->   drivers/virt/gunyah/gunyah.c | 57 ++++++++++++++++++++++++++++++++++++
->   3 files changed, 61 insertions(+)
->   create mode 100644 drivers/virt/gunyah/Makefile
->   create mode 100644 drivers/virt/gunyah/gunyah.c
+>   arch/arm64/gunyah/gunyah_hypercall.c | 31 ++++++++++++++++++++++++++++
+>   include/linux/gunyah.h               |  6 ++++++
+>   2 files changed, 37 insertions(+)
 > 
-> diff --git a/drivers/virt/Makefile b/drivers/virt/Makefile
-> index e9aa6fc96fab..a5817e2d7d71 100644
-> --- a/drivers/virt/Makefile
-> +++ b/drivers/virt/Makefile
-> @@ -12,3 +12,4 @@ obj-$(CONFIG_ACRN_HSM)		+= acrn/
->   obj-$(CONFIG_EFI_SECRET)	+= coco/efi_secret/
->   obj-$(CONFIG_SEV_GUEST)		+= coco/sev-guest/
->   obj-$(CONFIG_INTEL_TDX_GUEST)	+= coco/tdx-guest/
-> +obj-y				+= gunyah/
-> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
-> new file mode 100644
-> index 000000000000..34f32110faf9
-> --- /dev/null
-> +++ b/drivers/virt/gunyah/Makefile
-> @@ -0,0 +1,3 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +
-> +obj-$(CONFIG_GUNYAH) += gunyah.o
-> diff --git a/drivers/virt/gunyah/gunyah.c b/drivers/virt/gunyah/gunyah.c
-> new file mode 100644
-> index 000000000000..4b7e6f3edaff
-> --- /dev/null
-> +++ b/drivers/virt/gunyah/gunyah.c
-> @@ -0,0 +1,57 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#define pr_fmt(fmt) "gunyah: " fmt
-> +
-> +#include <linux/gunyah.h>
-> +#include <linux/init.h>
-> +#include <linux/module.h>
-> +#include <linux/printk.h>
-> +
-> +static struct gh_hypercall_hyp_identify_resp gh_api;
-> +
-> +u16 gh_api_version(void)
+> diff --git a/arch/arm64/gunyah/gunyah_hypercall.c b/arch/arm64/gunyah/gunyah_hypercall.c
+> index 0d14e767e2c8..3420d8f286a9 100644
+> --- a/arch/arm64/gunyah/gunyah_hypercall.c
+> +++ b/arch/arm64/gunyah/gunyah_hypercall.c
+> @@ -41,6 +41,8 @@ EXPORT_SYMBOL_GPL(arch_is_gh_guest);
+>   						   fn)
+>   
+>   #define GH_HYPERCALL_HYP_IDENTIFY		GH_HYPERCALL(0x8000)
+> +#define GH_HYPERCALL_MSGQ_SEND			GH_HYPERCALL(0x801B)
+> +#define GH_HYPERCALL_MSGQ_RECV			GH_HYPERCALL(0x801C)
+>   
+>   /**
+>    * gh_hypercall_hyp_identify() - Returns build information and feature flags
+> @@ -60,5 +62,34 @@ void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identi
+>   }
+>   EXPORT_SYMBOL_GPL(gh_hypercall_hyp_identify);
+>   
+> +enum gh_error gh_hypercall_msgq_send(u64 capid, size_t size, void *buff, int tx_flags, bool *ready)
 > +{
-> +	return FIELD_GET(GH_API_INFO_API_VERSION_MASK, gh_api.api_info);
+> +	struct arm_smccc_res res;
+> +
+> +	arm_smccc_1_1_hvc(GH_HYPERCALL_MSGQ_SEND, capid, size, (uintptr_t)buff, tx_flags, 0, &res);
+> +
+> +	if (res.a0 == GH_ERROR_OK)
+> +		*ready = !!res.a1;
+> +
+> +	return res.a0;
 > +}
-> +EXPORT_SYMBOL_GPL(gh_api_version);
+> +EXPORT_SYMBOL_GPL(gh_hypercall_msgq_send);
 > +
-> +bool gh_api_has_feature(enum gh_api_feature feature)
+> +enum gh_error gh_hypercall_msgq_recv(u64 capid, void *buff, size_t size, size_t *recv_size,
+> +					bool *ready)
 > +{
-> +	switch (feature) {
-> +	case GH_FEATURE_DOORBELL:
-> +	case GH_FEATURE_MSGQUEUE:
-> +	case GH_FEATURE_VCPU:
-> +	case GH_FEATURE_MEMEXTENT:
-> +		return !!(gh_api.flags[0] & BIT_ULL(feature));
-> +	default:
-> +		return false;
-> +	}
-> +}
-> +EXPORT_SYMBOL_GPL(gh_api_has_feature);
+> +	struct arm_smccc_res res;
 > +
-> +static int __init gh_init(void)
-> +{
-> +	if (!arch_is_gh_guest())
-> +		return -ENODEV;
+> +	arm_smccc_1_1_hvc(GH_HYPERCALL_MSGQ_RECV, capid, (uintptr_t)buff, size, 0, &res);
 > +
-> +	gh_hypercall_hyp_identify(&gh_api);
-> +
-> +	pr_info("Running under Gunyah hypervisor %llx/v%u\n",
-> +		FIELD_GET(GH_API_INFO_VARIANT_MASK, gh_api.api_info),
-> +		gh_api_version());
-> +
-> +	/* We might move this out to individual drivers if there's ever an API version bump */
-> +	if (gh_api_version() != GH_API_V1) {
-> +		pr_info("Unsupported Gunyah version: %u\n", gh_api_version());
-> +		return -ENODEV;
+> +	if (res.a0 == GH_ERROR_OK) {
+> +		*recv_size = res.a1;
+> +		*ready = !!res.a2;
 > +	}
 > +
-> +	return 0;
+> +	return res.a0;
 > +}
-> +arch_initcall(gh_init);
+> +EXPORT_SYMBOL_GPL(gh_hypercall_msgq_recv);
 > +
-> +MODULE_LICENSE("GPL");
-> +MODULE_DESCRIPTION("Gunyah Hypervisor Driver");
+>   MODULE_LICENSE("GPL");
+>   MODULE_DESCRIPTION("Gunyah Hypervisor Hypercalls");
+> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
+> index bd080e3a6fc9..18cfbf5ee48b 100644
+> --- a/include/linux/gunyah.h
+> +++ b/include/linux/gunyah.h
+> @@ -108,4 +108,10 @@ struct gh_hypercall_hyp_identify_resp {
+>   
+>   void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity);
+>   
+> +#define GH_HYPERCALL_MSGQ_TX_FLAGS_PUSH		BIT(0)
+> +
+> +enum gh_error gh_hypercall_msgq_send(u64 capid, size_t size, void *buff, int tx_flags, bool *ready);
+> +enum gh_error gh_hypercall_msgq_recv(u64 capid, void *buff, size_t size, size_t *recv_size,
+> +					bool *ready);
+> +
+>   #endif
