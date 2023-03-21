@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A36EB6C3D7D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 23:13:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A1476C3D85
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 23:13:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229639AbjCUWMy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 18:12:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60948 "EHLO
+        id S229997AbjCUWNF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 18:13:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229997AbjCUWMw (ORCPT
+        with ESMTP id S230105AbjCUWM6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 18:12:52 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8A8F57099
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 15:12:50 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id y20so21015726lfj.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 15:12:50 -0700 (PDT)
+        Tue, 21 Mar 2023 18:12:58 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 333B4570BD
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 15:12:52 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id h25so9327164lfv.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 15:12:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679436769;
+        d=linaro.org; s=google; t=1679436770;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vgZbupn0k37+a4wCBuLR6J1C7AEfEIAI+ys1wz8gGnE=;
-        b=Z/CYlLlhpcaLLmW9gO2Tj2zwHGQsTDfqQG/LiFQ5M/jTiI97kzwwakeIV2Nt4yrRcy
-         lVy5dAd3M4N3HgRa44E6mydVkZpB8AiPeFHdqUG1cD4u9c/hM/1C842YJisdaMM3uEeC
-         kwotOz25RSfIz9kdx3ccetBK8G56AZ+/jarDhgxQZv3W1G8ptAGVEgsd8s9YWp2xKCTg
-         RmLhSZPvtQTYJXJ0nM4qEP7DyuaJ+sEcOMV76RbW3wmmIHzQ5iny2x9mddOvFBvIBw13
-         7KZdTw43jq9SCzho0mTbn0RKY/mdZXVfTNsOpeL1gWnMR6lnypNEywuIusySYI/l/mF4
-         /AKQ==
+        bh=13Zv1FUEwXx4yLngj7RFNjjKZHhiuq0qCRERwhQpaHM=;
+        b=TVuYpJX2h2hgxrXCaQvHejEwvzDdasb9KPUcqB5a+pdXGkqtqaByqa3QRdPSRyYrC1
+         yvH/dpUOZk3mt0XFCIEicnwR9snV7o3ElME2ErKL93QqZmBywIfyZxeshol3k3RBVKBa
+         ZWGXn3pmJm+5XGoKFvH/JnrHBIHKQoN4vaYYKGniIDJxq2okgkoxLH4uYicHOgx331mV
+         SOmApg7Vymy+iR8Q4EKrvV0+FcCwzFTUEUPPVwWr5ioCNbZubO3ffdDqXpV2UkHKpOGR
+         kiB+Nh8qD7r0NXNGoW5cxb2mvihMkXHDMMsUu7F9br4Tj6TjfwZ/ycBXuJ3SSfJeGqA4
+         qIuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679436769;
+        d=1e100.net; s=20210112; t=1679436770;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vgZbupn0k37+a4wCBuLR6J1C7AEfEIAI+ys1wz8gGnE=;
-        b=wmwvQ7x/VVVqoLuhKTdKAA9Z8aESh1LszZDLunWi/xL4tqgfFlVtVTtyj9NDj7p75e
-         Aypc/oElVUpxqip8hmeUKS6Cct+GYHTEMCzjyknrZyl52nV3dnEaM9a1YlRuPgdraS0E
-         20iJVUMXFaP9I8hgWrjkOok6fgXdl1TvIG+7IOpocJmq4XNuvTFA2zUvcrSFpTzZOgKH
-         HE6mc4V8qe6nLgwAVdRQ+9eDlBkUnA8JkKGL7e12yL2BGqiPHcpnJ960wwnUfLLEbLgx
-         BwLJhxhds1/R28/1Dhn+TC1sIkdV6S5yxdRW/mycU06rDS8++gCuMhqUlYdvB907xHM3
-         dwAg==
-X-Gm-Message-State: AO0yUKVPQGcZW6vHDEzPRl9Uz9FtyrSg0G3zbLBrqUZp9J5N7uHs8aak
-        KpaWvVFsfQu+YlNViw4MyTmRDQ==
-X-Google-Smtp-Source: AK7set8NC1hHuAr9DZDY1/qyIjOyi6D1y8hG1sM5srS04pt4cLnvMWBC1/yxzqGuooDq7+dOWU5i7w==
-X-Received: by 2002:ac2:5510:0:b0:4d5:a0d2:f542 with SMTP id j16-20020ac25510000000b004d5a0d2f542mr1366826lfk.18.1679436769199;
-        Tue, 21 Mar 2023 15:12:49 -0700 (PDT)
+        bh=13Zv1FUEwXx4yLngj7RFNjjKZHhiuq0qCRERwhQpaHM=;
+        b=xD4tGDxkrHIMF8OIqyBw/uOcP26/8AmIGaUJklXFxfgvOJSijV4zU35KmdrcjzQEO6
+         eE6dtVqbrz9Idl0egGRClyYQFVoAgL/f6bU1wDObLN3XkfPPwSif9s6K3vlzEMvaxhTu
+         8m5LhYUAEK/GHjASCJ5CXh+ZpmjcnTw4LdgyY7v3bqD8u2nKftGbhMEQ7o7XJC+pY4F7
+         /nsD1oQH60ILomKYfR0jLUSHvsbjwgzWfU8YM6IE7YWXIuReDa5/8QgT9C7O3V0hXq2j
+         Z6Yhv1E6Walg6P8LW4CvcDSRSbzR3OvOmjacdASh0ixLwLrMRmev1I4IrY4P6k2XmERz
+         u+7A==
+X-Gm-Message-State: AO0yUKVbBVmzZ1aqha6sL+GMwk2paibOURnjFC/uChd+bubYDYDb8jwd
+        DdFX2lEfBK4N0VnkL8H0X1IUnw==
+X-Google-Smtp-Source: AK7set/HbvRs2o8GvFlrB1PxbxWzkQeDfHexsDnns6zywGT0jmSu8t9oRMx+73W4owCg686i1/pKJg==
+X-Received: by 2002:a05:6512:11e1:b0:4e9:6033:20d3 with SMTP id p1-20020a05651211e100b004e9603320d3mr1313142lfs.24.1679436770366;
+        Tue, 21 Mar 2023 15:12:50 -0700 (PDT)
 Received: from [192.168.1.101] (abym238.neoplus.adsl.tpnet.pl. [83.9.32.238])
-        by smtp.gmail.com with ESMTPSA id o15-20020a056512050f00b004e9c983a007sm1220344lfb.289.2023.03.21.15.12.48
+        by smtp.gmail.com with ESMTPSA id o15-20020a056512050f00b004e9c983a007sm1220344lfb.289.2023.03.21.15.12.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 15:12:48 -0700 (PDT)
+        Tue, 21 Mar 2023 15:12:50 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 21 Mar 2023 23:12:30 +0100
-Subject: [PATCH 3/4] arm64: dts: qcom: sm8350-sagami: Hook up USB-C Display
- Port
+Date:   Tue, 21 Mar 2023 23:12:31 +0100
+Subject: [PATCH 4/4] arm64: dts: qcom: sm8350-nagara: Unify status property
+ placement
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230321-topic-sagami_dp-v1-3-340c8bce4276@linaro.org>
+Message-Id: <20230321-topic-sagami_dp-v1-4-340c8bce4276@linaro.org>
 References: <20230321-topic-sagami_dp-v1-0-340c8bce4276@linaro.org>
 In-Reply-To: <20230321-topic-sagami_dp-v1-0-340c8bce4276@linaro.org>
 To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -70,11 +70,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1679436764; l=2565;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1679436764; l=3059;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=JKAzoWwTB0GRos4VagsWq8iTqG3cdlc3p5d9QT8cpTA=;
- b=KSPF1FGKDbORSghLobT6NXwThP7VyXehthaet7Wg7ls5lLx37QiSElsR+s4SIsYj4Um4ulj310fW
- +/tN1RoECe+OksWa7HgrcVsI/r4jgHp2d4KK1xuMwtlBgUhI9sFn
+ bh=PVuMTdifNqJ5Z9yoopYhHdxk90HwveOlTjYOQjYaiCQ=;
+ b=a/DZcv2drxELLeAnMNRTKju2/lidHG2b/fLv1uCpGms/QwtibA0s5OuDX897ZdRKlqSiUSqgwWF3
+ etA5Tt2uDugI33oTmOXhkdCWx2vAtUeB8BBlDdvG6ULSUfDSBXxH
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -86,118 +86,145 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sagami devices feature Display Port on their USB-C port. Add the
-necessary nodes to support it.
+As we're heading towards getting the status property last everywhere,
+take care of it for SM8350 SONY Sagami.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- .../boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 72 ++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
+ .../boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 30 ++++++++++------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-index 21462b6de686..b2baa81baf5e 100644
+index b2baa81baf5e..95b1ba4ce470 100644
 --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-@@ -120,6 +120,23 @@ pmic_glink_dwc3_ss_in: endpoint {
- 						remote-endpoint = <&usb_1_dwc3_ss>;
- 					};
- 				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					pmic_glink_dp_in: endpoint@0 {
-+						reg = <0>;
-+						remote-endpoint = <&mdss_dp_altmode>;
-+					};
-+
-+					pmic_glink_sbu_mux_out: endpoint@1 {
-+						reg = <1>;
-+						remote-endpoint = <&sbu_mux_in>;
-+					};
-+				};
- 			};
- 		};
- 	};
-@@ -140,6 +157,26 @@ ramoops@ffc00000 {
- 		};
- 	};
- 
-+	sbu-mux {
-+		/* TODO: switch to a proper driver when one gets upstreamed */
-+		compatible = "onnn,nb7vpq904m-mux", "gpio-sbu-mux";
-+
-+		enable-gpios = <&tlmm 54 GPIO_ACTIVE_HIGH>;
-+		select-gpios = <&tlmm 55 GPIO_ACTIVE_HIGH>;
-+		svid = /bits/ 16 <0xff01>;
-+
-+		mode-switch;
-+		orientation-switch;
-+
-+		pinctrl-0 = <&sbu_sw_oe &sbu_sw_sel>;
-+
-+		port {
-+			sbu_mux_in: endpoint {
-+				remote-endpoint = <&pmic_glink_sbu_mux_out>;
-+			};
-+		};
-+	};
-+
- 	vph_pwr: vph-pwr-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vph_pwr";
-@@ -595,6 +632,25 @@ &ipa {
- 	status = "okay";
+@@ -189,8 +189,8 @@ vph_pwr: vph-pwr-regulator {
  };
  
-+&mdss {
+ &adsp {
+-	status = "okay";
+ 	firmware-name = "qcom/sm8350/Sony/sagami/adsp.mbn";
 +	status = "okay";
-+};
-+
-+&mdss_dp {
-+	data-lanes = <0 1 2 3>;
-+	status = "okay";
-+
-+	ports {
-+		port@1 {
-+			reg = <1>;
-+
-+			mdss_dp_altmode: endpoint {
-+				remote-endpoint = <&pmic_glink_dp_in>;
-+			};
-+		};
-+	};
-+};
-+
- &mpss {
- 	status = "okay";
- 	firmware-name = "qcom/sm8350/Sony/sagami/modem.mbn";
-@@ -916,6 +972,22 @@ ts_int_default: ts-int-default-state {
- 		input-enable;
- 	};
+ };
  
-+	sbu_sw_oe: sbu-sw-oe-state {
-+		pins = "gpio54";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+
-+	sbu_sw_sel: sbu-sw-sel-state {
-+		pins = "gpio55";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+
- 	sdc2_card_det_active: sd-card-det-active-state {
- 		pins = "gpio92";
- 		function = "gpio";
+ &apps_rsc {
+@@ -542,27 +542,27 @@ pmr735a_l7: ldo7 {
+ };
+ 
+ &cdsp {
+-	status = "okay";
+ 	firmware-name = "qcom/sm8350/Sony/sagami/cdsp.mbn";
++	status = "okay";
+ };
+ 
+ &i2c1 {
+-	status = "okay";
+ 	clock-frequency = <1000000>;
++	status = "okay";
+ 
+ 	/* Some subset of SONY IMX663 camera sensor @ 38 */
+ };
+ 
+ &i2c4 {
+-	status = "okay";
+ 	clock-frequency = <400000>;
++	status = "okay";
+ 
+ 	/* Samsung Touchscreen (needs I2C GPI DMA) @ 48 */
+ };
+ 
+ &i2c11 {
+-	status = "okay";
+ 	clock-frequency = <1000000>;
++	status = "okay";
+ 
+ 	cs35l41_l: speaker-amp@40 {
+ 		compatible = "cirrus,cs35l41";
+@@ -596,31 +596,31 @@ cs35l41_r: speaker-amp@41 {
+ };
+ 
+ &i2c12 {
+-	status = "okay";
+ 	/* Clock frequency was not specified downstream, let's park it to 100 KHz */
+ 	clock-frequency = <100000>;
++	status = "okay";
+ 
+ 	/* AMS TCS3490 RGB+IR color sensor @ 72 */
+ };
+ 
+ &i2c13 {
+-	status = "okay";
+ 	/* Clock frequency was not specified downstream, let's park it to 100 KHz */
+ 	clock-frequency = <100000>;
++	status = "okay";
+ 
+ 	/* Qualcomm PM8008i/PM8008j (?) @ 8, 9, c, d */
+ };
+ 
+ &i2c15 {
+-	status = "okay";
+ 	clock-frequency = <400000>;
++	status = "okay";
+ 
+ 	/* NXP SN1X0 NFC @ 28 */
+ };
+ 
+ &i2c17 {
+-	status = "okay";
+ 	clock-frequency = <1000000>;
++	status = "okay";
+ 
+ 	/* Cirrus Logic CS40L25A boosted haptics driver @ 40 */
+ };
+@@ -652,8 +652,8 @@ mdss_dp_altmode: endpoint {
+ };
+ 
+ &mpss {
+-	status = "okay";
+ 	firmware-name = "qcom/sm8350/Sony/sagami/modem.mbn";
++	status = "okay";
+ };
+ 
+ &pm8350_gpios {
+@@ -719,8 +719,8 @@ &pon_pwrkey {
+ };
+ 
+ &pon_resin {
+-	status = "okay";
+ 	linux,code = <KEY_VOLUMEUP>;
++	status = "okay";
+ };
+ 
+ &qupv3_id_0 {
+@@ -748,8 +748,8 @@ &sdhc_2 {
+ };
+ 
+ &slpi {
+-	status = "okay";
+ 	firmware-name = "qcom/sm8350/Sony/sagami/slpi.mbn";
++	status = "okay";
+ };
+ 
+ &spi14 {
+@@ -1038,16 +1038,14 @@ usb_1_dwc3_ss: endpoint {
+ };
+ 
+ &usb_1_hsphy {
+-	status = "okay";
+-
+ 	vdda-pll-supply = <&pm8350_l5>;
+ 	vdda18-supply = <&pm8350c_l1>;
+ 	vdda33-supply = <&pm8350_l2>;
++	status = "okay";
+ };
+ 
+ &usb_1_qmpphy {
+-	status = "okay";
+-
+ 	vdda-phy-supply = <&pm8350_l6>;
+ 	vdda-pll-supply = <&pm8350_l1>;
++	status = "okay";
+ };
 
 -- 
 2.40.0
