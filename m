@@ -2,207 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BC106C304B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 12:24:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E70D6C3061
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 12:27:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230241AbjCULYM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 07:24:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46768 "EHLO
+        id S230411AbjCUL1u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 07:27:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231173AbjCULYF (ORCPT
+        with ESMTP id S230172AbjCUL1s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 07:24:05 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06DF835269
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 04:23:52 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id by8so13920875ljb.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 04:23:51 -0700 (PDT)
+        Tue, 21 Mar 2023 07:27:48 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D7FE48E3D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 04:27:45 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id y4so58346468edo.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 04:27:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679397829;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ER78GHh5meRUHq/j4G9iD3cSNrSOw2jr5A6Yqe49ido=;
-        b=j0c1dNmNOiKvzn+MKcBDmz8oC7QduFqCJEGBELhkG3uwT8+MZWZT17Y9FN4BILwBIH
-         e63eHVnmnphbJ1I38xl0RJW9U0SVjXbOR5Cp4j+6pb5z6yNSoG6in6y9QR15u28P0W36
-         sSLFa0oSyUvfO3IFgYsqh0W8gjiXNKux4ozqYNhawqWTGKuPzplzosd3+vKTRqt418tc
-         wrlliFQ6fErIuyAGgeVid3AEQwDpH6nE0xTc3OiaxPs2wXzHK11mj/dHk4NRef5BBjZV
-         Cxcz8TsPP8HWRszymXdecLPajgRwLdVvFRU99tE4/VSCHiOR5tk9TE/1ciWHoTc1Pp4r
-         7zxg==
+        d=linaro.org; s=google; t=1679398063;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ghw9ZOYCO8p5X8MZw35JfRmw8QR/Co7FvKY0kNpiVmg=;
+        b=Y0HZjSxpyalb6EJExgDJdAmTI+KnEyQM/8q//l2QvvYM+JP1/ReYVbQh3hNy/Uq9ds
+         rl2YLQGpRMLxM8tRXIIdW3gy1rNPFCAF+J8haTxxc+PWpfcGZ8fssvS2z4tIf/VbZgUM
+         8GHcby76RecYrnz3f3Lof//qIpqYJbVdP4vaSBUAb4D6+zCb/UdEMesPWj9VEEE00dhb
+         gCHPv0q3ZrR/Wd8EIpgfbKD55226zj5ef4Rx8Ahx7ZFoE+WpLJfrBiGJQwLyKTIGAnYK
+         JLSfhGFxEK+KFvbXJXxbsrUSAhciovj+tbi3w/KKBwbc60A9VL+UWuknrQKdKkzoWLG6
+         Qdng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679397829;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:to:from:date:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=ER78GHh5meRUHq/j4G9iD3cSNrSOw2jr5A6Yqe49ido=;
-        b=6K4+u+tEW5B7lDpZf7ae5LGJyEGvUGgZtsUYSLhuDD0n6JdP/wDxlHPGu6WJgqUTIC
-         qiZS/0vvVilLiwp5JNv8Aw5WYxP8D0uHAjKeh7DDI62Lb8k3tfXsfktbpnOvRQIAc2gJ
-         xQ5QDffQxlaNJFgS/WiB8DwbtJ5o4P7nVq/zz533r6ELs8jcyC1TnMFpoaxREc6NZh9y
-         aZrN8PWN9gUjL79KCGKl9WrsP3Y/jiNEUG2Lf/4ytEJtbiAYTsw9g+ubVw/PdtOgjD7J
-         F091ng+duTUNUASCGSPWxOQKiIhMH4o5huKeUVD33623U+RIOF6xlihmLCCHJJsOQIBL
-         LWvg==
-X-Gm-Message-State: AO0yUKXq0jBWxzW+tVQy51j4Up88wxR28UVdQgkA9iqry66HTL/QyLhp
-        h9fiw1vTMTQOMkawkwe40t1KhA==
-X-Google-Smtp-Source: AK7set/mVbvLGeipIKw4ztCPoVgboNoFh6FukbmES88Qkm4XRAa6hcn/LLLdwYaDQ78cYiiZzuI9LA==
-X-Received: by 2002:a2e:7c10:0:b0:298:592e:113a with SMTP id x16-20020a2e7c10000000b00298592e113amr768230ljc.6.1679397829545;
-        Tue, 21 Mar 2023 04:23:49 -0700 (PDT)
-Received: from [127.0.0.1] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id m10-20020ac2428a000000b004b6f00832cesm2113222lfh.166.2023.03.21.04.23.48
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Mar 2023 04:23:49 -0700 (PDT)
-Date:   Tue, 21 Mar 2023 14:23:26 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
-        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
-User-Agent: K-9 Mail for Android
-In-Reply-To: <644b4b0f17f72e109445a7b31f3e0d2e75dcc361.1679388632.git.quic_varada@quicinc.com>
-References: <cover.1677749625.git.quic_varada@quicinc.com> <cover.1679388632.git.quic_varada@quicinc.com> <644b4b0f17f72e109445a7b31f3e0d2e75dcc361.1679388632.git.quic_varada@quicinc.com>
-Message-ID: <122A5E4F-2794-43AE-8DAC-CC2D51279AC6@linaro.org>
+        d=1e100.net; s=20210112; t=1679398063;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ghw9ZOYCO8p5X8MZw35JfRmw8QR/Co7FvKY0kNpiVmg=;
+        b=pmUJMpj6eRQtYx+VshIciX7nNVJXOqKLGGbbwL5Tt6lSXr6U7Q/yB5IPHtZSHxGERu
+         eLL4KZ2oWNMNT5PHjwIHqsJujsgg3bvtGtaqb+HIEEqNCJhKJmomQBsaZ7vlwsvyaD02
+         XJ+7PzxQDvtE/AeLvzLtKfyc9PGwsC/UHOOUlE6hcYuRMNd9ANt9Ss/M3kh5xtZdN3GM
+         BdBHIblmI+OFEcKFO6S2zAsUAacHVcVvFmv5NVHFrA7xoxkefqHWgIJRDLbBCORWeBqx
+         U6dI1E20jaAekiv+1uDa6lv+3jYRI948h94SSnWGi0ixrBTTKCBRR6t3VumY2SXJ60Rh
+         l6vw==
+X-Gm-Message-State: AO0yUKXaCD0B04aBo/3fDyfCmOFLSaf4yJmqOgO+tFKvaYdEj5w6/j6x
+        XnoJ/icOtSMGuZd09XAkhuNGug==
+X-Google-Smtp-Source: AK7set90T2W503PVRuXveaJoEM/exHdqXIVgfTzqo0hhs8/pVFAPVwJ8LkBECNAen5qiKGG/4QsE/A==
+X-Received: by 2002:a17:906:60c9:b0:931:b2ae:116e with SMTP id f9-20020a17090660c900b00931b2ae116emr2083370ejk.64.1679398063687;
+        Tue, 21 Mar 2023 04:27:43 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:2142:d8da:5ae4:d817? ([2a02:810d:15c0:828:2142:d8da:5ae4:d817])
+        by smtp.gmail.com with ESMTPSA id kj2-20020a170907764200b009324717b9f3sm5128403ejc.71.2023.03.21.04.27.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Mar 2023 04:27:43 -0700 (PDT)
+Message-ID: <3e227a63-a45f-8c20-f697-b263121ec173@linaro.org>
+Date:   Tue, 21 Mar 2023 12:27:42 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [RFC PATCH] cpufreq: qcom-cpufreq-hw: allow work to be done on
+ other CPU for PREEMPT_RT
+To:     Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Adrien Thierry <athierry@redhat.com>,
+        Brian Masney <bmasney@redhat.com>,
+        linux-rt-users@vger.kernel.org
+References: <20230315164910.302265-1-krzysztof.kozlowski@linaro.org>
+ <20230321100456.0_DhhkZJ@linutronix.de>
+ <ba547675-59f2-84a9-82f3-93f6cb131799@linaro.org>
+ <20230321105734.Z7F3Uvf1@linutronix.de>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230321105734.Z7F3Uvf1@linutronix.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 21/03/2023 11:57, Sebastian Andrzej Siewior wrote:
+> On 2023-03-21 11:24:46 [+0100], Krzysztof Kozlowski wrote:
+>>>> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+>>>> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+>>>> @@ -390,7 +390,16 @@ static irqreturn_t qcom_lmh_dcvs_handle_irq(int irq, void *data)
+>>>>  
+>>>>  	/* Disable interrupt and enable polling */
+>>>>  	disable_irq_nosync(c_data->throttle_irq);
+>>>> -	schedule_delayed_work(&c_data->throttle_work, 0);
+>>>> +
+>>>> +	/*
+>>>> +	 * Workqueue prefers local CPUs and since interrupts have set affinity,
+>>>> +	 * the work might execute on a CPU dedicated to realtime tasks.
+>>>> +	 */
+>>>> +	if (IS_ENABLED(CONFIG_PREEMPT_RT))
+>>>> +		queue_delayed_work_on(WORK_CPU_UNBOUND, system_unbound_wq,
+>>>> +				      &c_data->throttle_work, 0);
+>>>> +	else
+>>>> +		schedule_delayed_work(&c_data->throttle_work, 0);
+>>>
+>>> You isolated CPUs and use this on PREEMPT_RT. And this special use-case
+>>> is your reasoning to make this change and let it depend on PREEMPT_RT?
+>>>
+>>> If you do PREEMPT_RT and you care about latency I would argue that you
+>>> either disable cpufreq and set it to PERFORMANCE so that the highest
+>>> available frequency is set once and not changed afterwards.
+>>
+>> The cpufreq is set to performance. It will be changed anyway because
+>> underlying FW notifies through such interrupts about thermal mitigation
+>> happening.
+> 
+> I still fail to understand why this is PREEMPT_RT specific and not a
+> problem in general when it comes not NO_HZ_FULL and/ or CPU isolation.
 
+Hm, good point, I actually don't know what is the workqueue
+recommendation for NO_HZ_FULL CPUs - is still locality of the workqueue
+preferred?
 
-On 21 March 2023 11:54:25 GMT+03:00, Varadarajan Narayanan <quic_varada@qu=
-icinc=2Ecom> wrote:
->Add USB phy and controller related nodes
->
->Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc=2Ecom>
->
->---
-> Changes in v2:
->	- Fixed issues flagged by Krzysztof
->	- Fix issues reported by make dtbs_check
->	- Remove NOC related clocks (to be added with proper
->	  interconnect support)
->---
-> arch/arm64/boot/dts/qcom/ipq9574=2Edtsi | 86 +++++++++++++++++++++++++++=
-++++++++
-> 1 file changed, 86 insertions(+)
->
->diff --git a/arch/arm64/boot/dts/qcom/ipq9574=2Edtsi b/arch/arm64/boot/dt=
-s/qcom/ipq9574=2Edtsi
->index 2bb4053=2E=2E513da74 100644
->--- a/arch/arm64/boot/dts/qcom/ipq9574=2Edtsi
->+++ b/arch/arm64/boot/dts/qcom/ipq9574=2Edtsi
->@@ -829,6 +829,92 @@
-> 			msi-parent =3D <&v2m0>;
-> 			status =3D "disabled";
-> 		};
+And how such code would look like?
+if (tick_nohz_tick_stopped())?
 
-The last device node is pci@28000000=2E Thus you are trying to add all usb=
- nodes at the wrong place=2E Please move them so that all nodes are still s=
-orted by the address part=2E
+> However the thermal notifications have nothing to do with cpufreq.
 
+They have. The FW notifies that thermal mitigation is happening and
+maximum allowed frequency is now XYZ. The cpufreq receives this and sets
+maximum allowed scaling frequency for governor.
 
->+
->+		qusb_phy_0: phy@7b000 {
->+			compatible =3D "qcom,ipq9574-qusb2-phy";
->+			reg =3D <0x07b000 0x180>;
->+			#phy-cells =3D <0>;
->+
->+			clocks =3D <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
->+				<&xo_board_clk>;
->+			clock-names =3D "cfg_ahb", "ref";
->+
->+			resets =3D <&gcc GCC_QUSB2_0_PHY_BCR>;
->+			status =3D "disabled";
->+		};
->+
->+		ssphy_0: phy@7d000 {
->+			compatible =3D "qcom,ipq9574-qmp-usb3-phy";
->+			reg =3D <0x7d000 0x1c4>;
->+			#clock-cells =3D <1>;
->+			#address-cells =3D <1>;
->+			#size-cells =3D <1>;
->+			ranges;
->+
->+			clocks =3D <&gcc GCC_USB0_AUX_CLK>,
->+				 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>;
->+			clock-names =3D "aux", "cfg_ahb";
->+
->+			resets =3D  <&gcc GCC_USB0_PHY_BCR>,
->+				 <&gcc GCC_USB3PHY_0_PHY_BCR>;
->+			reset-names =3D "phy","common";
->+			status =3D "disabled";
->+
->+			usb0_ssphy: phy@7d200 {
->+				reg =3D <0x0007d200 0x130>,	/* tx */
->+				      <0x0007d400 0x200>,	/* rx */
->+				      <0x0007d800 0x1f8>,	/* pcs  */
->+				      <0x0007d600 0x044>;	/* pcs misc */
->+				#phy-cells =3D <0>;
->+				clocks =3D <&gcc GCC_USB0_PIPE_CLK>;
->+				clock-names =3D "pipe0";
->+				clock-output-names =3D "usb0_pipe_clk";
->+			};
->+		};
->+
->+		usb3: usb3@8a00000 {
->+			compatible =3D "qcom,ipq9574-dwc3", "qcom,dwc3";
->+			reg =3D <0x8af8800 0x400>;
->+			#address-cells =3D <1>;
->+			#size-cells =3D <1>;
->+			ranges;
->+
->+			clocks =3D <&gcc GCC_SNOC_USB_CLK>,
->+				 <&gcc GCC_ANOC_USB_AXI_CLK>,
->+				 <&gcc GCC_USB0_MASTER_CLK>,
->+				 <&gcc GCC_USB0_SLEEP_CLK>,
->+				 <&gcc GCC_USB0_MOCK_UTMI_CLK>;
->+
->+			clock-names =3D "sys_noc_axi",
->+				      "anoc_axi",
->+				      "master",
->+				      "sleep",
->+				      "mock_utmi";
->+
->+			assigned-clocks =3D <&gcc GCC_USB0_MASTER_CLK>,
->+					  <&gcc GCC_USB0_MOCK_UTMI_CLK>;
->+			assigned-clock-rates =3D <200000000>,
->+					       <24000000>;
->+
->+			resets =3D <&gcc GCC_USB_BCR>;
->+			status =3D "disabled";
->+
->+			dwc_0: usb@8a00000 {
->+				compatible =3D "snps,dwc3";
->+				reg =3D <0x8a00000 0xcd00>;
->+				clocks =3D <&gcc GCC_USB0_MOCK_UTMI_CLK>;
->+				clock-names =3D "ref";
->+				interrupts =3D <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
->+				phys =3D <&qusb_phy_0>, <&usb0_ssphy>;
->+				phy-names =3D "usb2-phy", "usb3-phy";
->+				tx-fifo-resize;
->+				snps,is-utmi-l1-suspend;
->+				snps,hird-threshold =3D /bits/ 8 <0x0>;
->+				snps,dis_u2_susphy_quirk;
->+				snps,dis_u3_susphy_quirk;
->+				dr_mode =3D "host";
->+			};
->+		};
-> 	};
->=20
-> 	rpm-glink {
+> 
+>> The only other solution is to disable the cpufreq device, e.g. by not
+>> compiling it.
+> 
+> People often disable cpufreq because _usually_ the system boots at
+> maximum performance. There are however exceptions and even x86 system
+> are configured sometimes to a lower clock speed by the firmware/ BIOS.
+> In this case it is nice to have a cpufreq so it is possible to set the
+> system during boot to a higher clock speed. And then remain idle unless
+> the cpufreq governor changed.
 
---=20
-With best wishes
-Dmitry
+Which we do not want here, thus disabling cpufreq is not the interesting
+solution...
+
+Best regards,
+Krzysztof
+
