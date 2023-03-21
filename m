@@ -2,145 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5FC56C2EAE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 11:24:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF7016C2EE4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 11:29:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbjCUKY4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 06:24:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42526 "EHLO
+        id S230260AbjCUK31 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 06:29:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230213AbjCUKYw (ORCPT
+        with ESMTP id S230242AbjCUK3X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 06:24:52 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45A25C653
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 03:24:49 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id y4so57675567edo.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 03:24:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679394287;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IojLlT21b+GTCHUtZS1AK6pqmw384n2x7uObuVhtqoc=;
-        b=UKXfMgENBu09lAoUSD7nvesPp0S9T1AzoiAdAZHyKn0WHgV3DqQ4FU8TJ10FzPwKXm
-         8D4JVetj2hzKVtpPDJK7+hkKLlUWAFNFXGfGSMAStSZABMIEUNHo/+TUqItMgDPM5uFl
-         hYLBeuTdHDlesRIrQL3alAhd6tijHEAxfDlvR+Pxe1QeJWkO9ExTUFCwXmfiL3vctEp/
-         qvj0W60irEm66vsi+17rc6DbP0XkD0f9x1pM3YLvPCoSx8SwELSOhJIqjHJG1UR/UOJ+
-         rTqNl5BG/aMw8NiBkYU0dVnQ1GZQ3wxpB0xNyg9a8nvj0cHsuMUf0Wz4uKsmXHxisRBg
-         S3ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679394287;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IojLlT21b+GTCHUtZS1AK6pqmw384n2x7uObuVhtqoc=;
-        b=k9S4eb+kPbUrNkIJiIGoTs57dfDZoI6LhzWby+qRbsbrUyYDlMXUX644bTMvZP/gAP
-         G4pn+jnqPgp00kCJJHUhxA+U7ld4ysupYdClJLQ2CZbIn7zD+sTq8NG3Y4xsFoLKDDml
-         W5JUIOP7uFg/E1pGVP81JUSleX7sHMT40Vk7wXBHUacNtyxHLbuFU00siZzpcNCkKDf6
-         nF6NLLX/RTvxr/vOKHBb+lkq9AvN1qS9Gg+VMv9rEfGezeJTF99hmOeUeKpeoge0hFYv
-         0LmuJ3CfJZXCBDKM7QPTlScuDuJuimgs+UZ+eBB4qB0HHT6UwbPzLgiiAZJZ2wHbhDLC
-         p3vg==
-X-Gm-Message-State: AO0yUKWTiW6Bwjz5mCIEY0g0N0H1lptf4ZZ8UFjqbpi/cuhVKmoDQGyy
-        y4ZANFB5hoFAoiJtuFmUxQSNWw==
-X-Google-Smtp-Source: AK7set+Re3gHO4/eHWbeE7YoEV3C+eK0AvkdSnJPHMcJRgk8nhROk37jPOCG3x6x2FoLieODZrSWQw==
-X-Received: by 2002:a17:906:30d2:b0:8ab:4c4:d0f6 with SMTP id b18-20020a17090630d200b008ab04c4d0f6mr2023868ejb.56.1679394287704;
-        Tue, 21 Mar 2023 03:24:47 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:2142:d8da:5ae4:d817? ([2a02:810d:15c0:828:2142:d8da:5ae4:d817])
-        by smtp.gmail.com with ESMTPSA id ia9-20020a170907a06900b00932b3e2c015sm4696908ejc.51.2023.03.21.03.24.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 03:24:47 -0700 (PDT)
-Message-ID: <ba547675-59f2-84a9-82f3-93f6cb131799@linaro.org>
-Date:   Tue, 21 Mar 2023 11:24:46 +0100
+        Tue, 21 Mar 2023 06:29:23 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 508B45FFB;
+        Tue, 21 Mar 2023 03:29:10 -0700 (PDT)
+Received: from benjamin-XPS-13-9310.. (unknown [IPv6:2a01:e0a:120:3210:f5ef:1040:e3c1:3d00])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: benjamin.gaignard)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 6900266030DA;
+        Tue, 21 Mar 2023 10:29:07 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1679394548;
+        bh=thP50rZe85eKdLn09P/bJZIXTEK1LuBUDkCFuB2KNec=;
+        h=From:To:Cc:Subject:Date:From;
+        b=WANier/NNPyE0Tv/3S9lJSi5ZYSmzU0VgJo+nRTJVSmYgRQ7lVfT014TDpr5IZxDe
+         Ekzaiy1mtjb/2ANsIToKpM8WO7QfkSspjxYUj4JUoY/Cov+A6nkJLafapGCI8PcFWO
+         m8uM6LMu3dRbEC2h5lsGhKz3sJ4zRt0QE+YQso0OtHxhIBnPvB89xcAdbjLH17BsLi
+         9EAC/w+2NIaN2gCS12NwzyF15MXCVZ/Qwls8e0n52FNRbm9b5M6zmR85n3eZfd8Lt7
+         CWDq1ix3An5x04XiwjW4SfVMhUqFeUmVVbLXAenVCYC42YkdyOEiPKPBS0fiJ+taMH
+         c/Jg7F9DXYEsA==
+From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
+To:     tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
+        ming.qian@nxp.com, shijie.qin@nxp.com, eagle.zhou@nxp.com,
+        bin.liu@mediatek.com, matthias.bgg@gmail.com,
+        angelogioacchino.delregno@collabora.com, tiffany.lin@mediatek.com,
+        andrew-ct.chen@mediatek.com, yunfei.dong@mediatek.com,
+        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
+        daniel.almeida@collabora.com, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, jernel@kernel.org
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, kernel@collabora.com,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Subject: [PATCH v2 0/8] Add DELETE_BUF ioctl
+Date:   Tue, 21 Mar 2023 11:28:47 +0100
+Message-Id: <20230321102855.346732-1-benjamin.gaignard@collabora.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [RFC PATCH] cpufreq: qcom-cpufreq-hw: allow work to be done on
- other CPU for PREEMPT_RT
-Content-Language: en-US
-To:     Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Adrien Thierry <athierry@redhat.com>,
-        Brian Masney <bmasney@redhat.com>,
-        linux-rt-users@vger.kernel.org
-References: <20230315164910.302265-1-krzysztof.kozlowski@linaro.org>
- <20230321100456.0_DhhkZJ@linutronix.de>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230321100456.0_DhhkZJ@linutronix.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/03/2023 11:04, Sebastian Andrzej Siewior wrote:
-> On 2023-03-15 17:49:10 [+0100], Krzysztof Kozlowski wrote:
->> Qualcomm cpufreq driver configures interrupts with affinity to each
->> cluster, e.g.  dcvsh-irq-0, dcvsh-irq-4 and dcvsh-irq-7 on SM8250.
->> Triggered interrupt will schedule delayed work, but, since workqueue
->> prefers local CPUs, it might get executed on a CPU dedicated to realtime
->> tasks causing unexpected latencies in realtime workload.
->>
->> Use unbound workqueue for such case.  This might come with performance
->> or energy penalty, e.g. because of cache miss or when other CPU is
->> sleeping.
-> 
-> I miss the point where it explains that only PREEMPT_RT is affected by
-> this.
+VP9 dynamic resolution change use case requires to change resolution
+without doing stream off/on to keep references frames.
+In consequence the numbers of buffers increase until all 'old'
+reference frames are deprecated.
+To make it possible this series remove the 32 buffers limit per queue
+and introduce DELETE_BUF ioctl to delete buffers from a queue without
+doing stream off/on sequence.
 
-I assume "realtime tasks" implies this, but I can make it clearer.
+change in version 2:
+- Use a dynamic array and not a list to keep trace of allocated buffers.
+  Not use IDR interface because it is marked as deprecated in kernel
+  documentation.
+- Add a module parameter to limit the number of buffer per queue.
+- Add DELETE_BUF ioctl and m2m helpers.
 
-> 
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  drivers/cpufreq/qcom-cpufreq-hw.c | 11 ++++++++++-
->>  1 file changed, 10 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
->> index 2f581d2d617d..c5ff8d25fabb 100644
->> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
->> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
->> @@ -390,7 +390,16 @@ static irqreturn_t qcom_lmh_dcvs_handle_irq(int irq, void *data)
->>  
->>  	/* Disable interrupt and enable polling */
->>  	disable_irq_nosync(c_data->throttle_irq);
->> -	schedule_delayed_work(&c_data->throttle_work, 0);
->> +
->> +	/*
->> +	 * Workqueue prefers local CPUs and since interrupts have set affinity,
->> +	 * the work might execute on a CPU dedicated to realtime tasks.
->> +	 */
->> +	if (IS_ENABLED(CONFIG_PREEMPT_RT))
->> +		queue_delayed_work_on(WORK_CPU_UNBOUND, system_unbound_wq,
->> +				      &c_data->throttle_work, 0);
->> +	else
->> +		schedule_delayed_work(&c_data->throttle_work, 0);
-> 
-> You isolated CPUs and use this on PREEMPT_RT. And this special use-case
-> is your reasoning to make this change and let it depend on PREEMPT_RT?
-> 
-> If you do PREEMPT_RT and you care about latency I would argue that you
-> either disable cpufreq and set it to PERFORMANCE so that the highest
-> available frequency is set once and not changed afterwards.
+Benjamin Gaignard (8):
+  media: videobuf2: Access vb2_queue bufs array through helper functions
+  media: videobuf2: Make bufs array dynamic allocated
+  media: videobuf2: Add a module param to limit vb2 queue buffer storage
+  media: videobuf2: Stop define VB2_MAX_FRAME as global
+  media: v4l2: Add DELETE_BUF ioctl
+  media: v4l2: Add mem2mem helpers for DELETE_BUF ioctl
+  media: vim2m: Use v4l2-mem2mem helpers for VIDIOC_DELETE_BUF ioctl
+  media: verisilicon: Use v4l2-mem2mem helpers for VIDIOC_DELETE_BUF
+    ioctl
 
-The cpufreq is set to performance. It will be changed anyway because
-underlying FW notifies through such interrupts about thermal mitigation
-happening.
+ .../userspace-api/media/v4l/user-func.rst     |   1 +
+ .../media/v4l/vidioc-delete-buf.rst           |  51 ++++++
+ .../media/common/videobuf2/videobuf2-core.c   | 168 +++++++++++++-----
+ .../media/common/videobuf2/videobuf2-v4l2.c   |  23 ++-
+ drivers/media/platform/amphion/vdec.c         |   1 +
+ drivers/media/platform/amphion/vpu_dbg.c      |   4 +-
+ .../platform/mediatek/jpeg/mtk_jpeg_core.c    |   2 +-
+ .../vcodec/vdec/vdec_vp9_req_lat_if.c         |   4 +-
+ drivers/media/platform/qcom/venus/hfi.h       |   2 +
+ .../media/platform/verisilicon/hantro_hw.h    |   2 +
+ .../media/platform/verisilicon/hantro_v4l2.c  |   1 +
+ drivers/media/test-drivers/vim2m.c            |   1 +
+ drivers/media/test-drivers/visl/visl-dec.c    |  16 +-
+ drivers/media/v4l2-core/v4l2-dev.c            |   1 +
+ drivers/media/v4l2-core/v4l2-ioctl.c          |  10 ++
+ drivers/media/v4l2-core/v4l2-mem2mem.c        |  20 +++
+ .../staging/media/atomisp/pci/atomisp_ioctl.c |   2 +-
+ drivers/staging/media/ipu3/ipu3-v4l2.c        |   2 +
+ include/media/v4l2-ioctl.h                    |   4 +
+ include/media/v4l2-mem2mem.h                  |  12 ++
+ include/media/videobuf2-core.h                |  84 ++++++++-
+ include/media/videobuf2-v4l2.h                |  15 +-
+ include/uapi/linux/videodev2.h                |   1 +
+ 23 files changed, 353 insertions(+), 74 deletions(-)
+ create mode 100644 Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst
 
-The only other solution is to disable the cpufreq device, e.g. by not
-compiling it.
-
-Best regards,
-Krzysztof
+-- 
+2.34.1
 
