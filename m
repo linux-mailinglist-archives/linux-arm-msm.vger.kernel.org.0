@@ -2,65 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DAE26C3AA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 20:33:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 58B5D6C3AAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 20:34:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230107AbjCUTdz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 15:33:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48776 "EHLO
+        id S230114AbjCUTeK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 15:34:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230098AbjCUTdy (ORCPT
+        with ESMTP id S230098AbjCUTeJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 15:33:54 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA370574C7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 12:32:50 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pehiW-0008EF-GO; Tue, 21 Mar 2023 20:32:20 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pehiU-005l64-Uv; Tue, 21 Mar 2023 20:32:18 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pehiU-006qxz-Au; Tue, 21 Mar 2023 20:32:18 +0100
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Rahul Tanwar <rtanwar@maxlinear.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Vidya Sagar <vidyas@nvidia.com>,
-        Jisheng Zhang <jszhang@kernel.org>,
-        Miaoqian Lin <linmq006@gmail.com>
-Cc:     Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
-        kernel@pengutronix.de, linux-arm-msm@vger.kernel.org,
-        linux-tegra@vger.kernel.org
-Subject: [PATCH 06/15] PCI: dwc/*: Convert to platform remove callback returning void
-Date:   Tue, 21 Mar 2023 20:31:59 +0100
-Message-Id: <20230321193208.366561-7-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230321193208.366561-1-u.kleine-koenig@pengutronix.de>
-References: <20230321193208.366561-1-u.kleine-koenig@pengutronix.de>
+        Tue, 21 Mar 2023 15:34:09 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D373C44B1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 12:33:12 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id by8so15486393ljb.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 12:33:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679427190;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DOJedXqzU4VqWJK2Ajbw3X3+PFnOG//f2bTihr6Ow9s=;
+        b=GLM3DYS2JL2It4G6BzoIJ2VGfllIZyUTyFizD2iw7R1nQ/2Nxw7s1eUA4S475UZ30E
+         RRYPrXV+WtXKvvHWVQA+mkJeFTUzRQ7PiclfuUNDSZQrSITkCUvu5MS5yIcyeiSw2xpG
+         TJylosF3L45XsVG1r+7VfG+NiDUacqoboZLj91Yr50Fcw5URjdl8g8ThnfqbP7+U7R/v
+         eKUxRfwh1Y3706MWwpv8qmqpPXKUm3Yl2lPgxYBzzgiFBPvu5xtuzrhREfL1hlPzNA8r
+         yJEsi1N22r00cg0uXwTzXYRvGaCrs9z0gGgysEzANaA3egBRhHbyyRjwy0Qcru8YSOLj
+         AqtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679427190;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DOJedXqzU4VqWJK2Ajbw3X3+PFnOG//f2bTihr6Ow9s=;
+        b=qIqj4y0B9z/GyFA4ymXMCuycwvG/lFKkUBlSdBtF50KnRlAZ8B4lpl34BSwoBwBMGx
+         DfaJWP7DDq7B9/kM58OwqF4fOLUCj+OFexLs5BVjjP8E1eCyAsG25Lci9uJZGf2N9vFI
+         mjiSMXwP6t+zPMPKrEXt8QpJGC1l1JvTEOPfPZrU27IcwWYe3sJbyFSguSVFTQtXD1f1
+         pxkjJx2rJQDtrcyLBMOQnQHHRsvuj/Te5peV4sM4wbncIBJKm73c3Pd2qZ2S1+6jq/bY
+         wGsM5xKQZRkky3NnKOdck7ZI05+BJm/zV+9rfaO+hZwRdipIaO/ID7RD4n4Zw21NSvVT
+         OyBw==
+X-Gm-Message-State: AO0yUKWaK+F73TWIgIOAAzVh3U0quyff16UjCLY1pymAD7pysfjsTSTV
+        3mRBY6uJdgkJLr3pShgIMtQNiw==
+X-Google-Smtp-Source: AK7set/Ex+jNMGHlNPs7MD/8WHLmtZjVZAaZIPc3DR+BKF/CGbp/oAxGt7AI1rUvwWvA4YPWwZQhAw==
+X-Received: by 2002:a2e:9e53:0:b0:29b:aee8:29b3 with SMTP id g19-20020a2e9e53000000b0029baee829b3mr1074275ljk.38.1679427189980;
+        Tue, 21 Mar 2023 12:33:09 -0700 (PDT)
+Received: from [192.168.1.101] (abym238.neoplus.adsl.tpnet.pl. [83.9.32.238])
+        by smtp.gmail.com with ESMTPSA id y22-20020a2e9d56000000b002991baef49bsm2349020ljj.12.2023.03.21.12.33.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Mar 2023 12:33:09 -0700 (PDT)
+Message-ID: <013babf9-713b-b0ee-c70b-d12ab5e2b3eb@linaro.org>
+Date:   Tue, 21 Mar 2023 20:33:05 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH net-next v2 05/12] clk: qcom: gcc-sc8280xp: Add EMAC GDSCs
+Content-Language: en-US
+To:     Andrew Halaney <ahalaney@redhat.com>, linux-kernel@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        vkoul@kernel.org, bhupesh.sharma@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, peppe.cavallaro@st.com,
+        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
+        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
+        linux@armlinux.org.uk, veekhee@apple.com,
+        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
+        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
+        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
+        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
+References: <20230320221617.236323-1-ahalaney@redhat.com>
+ <20230320221617.236323-6-ahalaney@redhat.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230320221617.236323-6-ahalaney@redhat.com>
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6565; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=5K3iqpNqflnwgUplfDS7tn4+EN+yS5W2zvIdkqbS3JM=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkGgYS37kTLTlIMhlyj5NjMF8wxSLVTLifxX0ac W0JOQbfrMKJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZBoGEgAKCRCPgPtYfRL+ TlDBB/9reIW9UmLLehQvYzz4jvUEwhJV3Hhxx3rgN6+/qXzmVTOW9XGlpjiNh4lWdenqLv/k1MN dupbSlb7qr5mEA1umO68UiPR2PH+qd0Sbvmj+IC9GOB4X1Zz91X6MSyhYyDn3s+L5sZ2i7dTFXO FDwt889y9t9R+rq9iHIWZWjy49AqU5SCo89dUqnbh+a7jrQ01l8BK4LCLATUf+tiyB64s8rwfmx MKG5SCXoLWCJRSPixlsaj8TDNMW76I1wd+y1kEY4YPPiOqLwFsh5/ACOEsp6ePE+q3sf4OJxw7Y 1s4qmwBTbtkYBZeXFzwLgv2yjCwN3oJNXpU0KiEniSCWYbeC
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,188 +90,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
 
-Trivially convert the dwc drivers from always returning zero in the remove
-callback to the void returning variant.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/pci/controller/dwc/pcie-bt1.c      | 6 ++----
- drivers/pci/controller/dwc/pcie-histb.c    | 6 ++----
- drivers/pci/controller/dwc/pcie-intel-gw.c | 6 ++----
- drivers/pci/controller/dwc/pcie-qcom-ep.c  | 8 +++-----
- drivers/pci/controller/dwc/pcie-tegra194.c | 8 +++-----
- 5 files changed, 12 insertions(+), 22 deletions(-)
+On 20.03.2023 23:16, Andrew Halaney wrote:
+> Add the EMAC GDSCs to allow the EMAC hardware to be enabled.
+> 
+> Acked-by: Stephen Boyd <sboyd@kernel.org>
+> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-diff --git a/drivers/pci/controller/dwc/pcie-bt1.c b/drivers/pci/controller/dwc/pcie-bt1.c
-index 95a723a6fd46..17e696797ff5 100644
---- a/drivers/pci/controller/dwc/pcie-bt1.c
-+++ b/drivers/pci/controller/dwc/pcie-bt1.c
-@@ -617,13 +617,11 @@ static int bt1_pcie_probe(struct platform_device *pdev)
- 	return bt1_pcie_add_port(btpci);
- }
- 
--static int bt1_pcie_remove(struct platform_device *pdev)
-+static void bt1_pcie_remove(struct platform_device *pdev)
- {
- 	struct bt1_pcie *btpci = platform_get_drvdata(pdev);
- 
- 	bt1_pcie_del_port(btpci);
--
--	return 0;
- }
- 
- static const struct of_device_id bt1_pcie_of_match[] = {
-@@ -634,7 +632,7 @@ MODULE_DEVICE_TABLE(of, bt1_pcie_of_match);
- 
- static struct platform_driver bt1_pcie_driver = {
- 	.probe = bt1_pcie_probe,
--	.remove = bt1_pcie_remove,
-+	.remove_new = bt1_pcie_remove,
- 	.driver = {
- 		.name	= "bt1-pcie",
- 		.of_match_table = bt1_pcie_of_match,
-diff --git a/drivers/pci/controller/dwc/pcie-histb.c b/drivers/pci/controller/dwc/pcie-histb.c
-index 927ae05dc920..fd484cc7c481 100644
---- a/drivers/pci/controller/dwc/pcie-histb.c
-+++ b/drivers/pci/controller/dwc/pcie-histb.c
-@@ -421,7 +421,7 @@ static int histb_pcie_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int histb_pcie_remove(struct platform_device *pdev)
-+static void histb_pcie_remove(struct platform_device *pdev)
- {
- 	struct histb_pcie *hipcie = platform_get_drvdata(pdev);
- 
-@@ -429,8 +429,6 @@ static int histb_pcie_remove(struct platform_device *pdev)
- 
- 	if (hipcie->phy)
- 		phy_exit(hipcie->phy);
--
--	return 0;
- }
- 
- static const struct of_device_id histb_pcie_of_match[] = {
-@@ -441,7 +439,7 @@ MODULE_DEVICE_TABLE(of, histb_pcie_of_match);
- 
- static struct platform_driver histb_pcie_platform_driver = {
- 	.probe	= histb_pcie_probe,
--	.remove	= histb_pcie_remove,
-+	.remove_new = histb_pcie_remove,
- 	.driver = {
- 		.name = "histb-pcie",
- 		.of_match_table = histb_pcie_of_match,
-diff --git a/drivers/pci/controller/dwc/pcie-intel-gw.c b/drivers/pci/controller/dwc/pcie-intel-gw.c
-index 333c33d98a70..9c7caed9e706 100644
---- a/drivers/pci/controller/dwc/pcie-intel-gw.c
-+++ b/drivers/pci/controller/dwc/pcie-intel-gw.c
-@@ -340,15 +340,13 @@ static void __intel_pcie_remove(struct intel_pcie *pcie)
- 	phy_exit(pcie->phy);
- }
- 
--static int intel_pcie_remove(struct platform_device *pdev)
-+static void intel_pcie_remove(struct platform_device *pdev)
- {
- 	struct intel_pcie *pcie = platform_get_drvdata(pdev);
- 	struct dw_pcie_rp *pp = &pcie->pci.pp;
- 
- 	dw_pcie_host_deinit(pp);
- 	__intel_pcie_remove(pcie);
--
--	return 0;
- }
- 
- static int intel_pcie_suspend_noirq(struct device *dev)
-@@ -443,7 +441,7 @@ static const struct of_device_id of_intel_pcie_match[] = {
- 
- static struct platform_driver intel_pcie_driver = {
- 	.probe = intel_pcie_probe,
--	.remove = intel_pcie_remove,
-+	.remove_new = intel_pcie_remove,
- 	.driver = {
- 		.name = "intel-gw-pcie",
- 		.of_match_table = of_intel_pcie_match,
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index 19b32839ea26..3e5f1b637aeb 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -784,7 +784,7 @@ static int qcom_pcie_ep_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int qcom_pcie_ep_remove(struct platform_device *pdev)
-+static void qcom_pcie_ep_remove(struct platform_device *pdev)
- {
- 	struct qcom_pcie_ep *pcie_ep = platform_get_drvdata(pdev);
- 
-@@ -794,11 +794,9 @@ static int qcom_pcie_ep_remove(struct platform_device *pdev)
- 	debugfs_remove_recursive(pcie_ep->debugfs);
- 
- 	if (pcie_ep->link_status == QCOM_PCIE_EP_LINK_DISABLED)
--		return 0;
-+		return;
- 
- 	qcom_pcie_disable_resources(pcie_ep);
--
--	return 0;
- }
- 
- static const struct of_device_id qcom_pcie_ep_match[] = {
-@@ -810,7 +808,7 @@ MODULE_DEVICE_TABLE(of, qcom_pcie_ep_match);
- 
- static struct platform_driver qcom_pcie_ep_driver = {
- 	.probe	= qcom_pcie_ep_probe,
--	.remove = qcom_pcie_ep_remove,
-+	.remove_new = qcom_pcie_ep_remove,
- 	.driver	= {
- 		.name = "qcom-pcie-ep",
- 		.of_match_table	= qcom_pcie_ep_match,
-diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 09825b4a075e..f373a00e2ea3 100644
---- a/drivers/pci/controller/dwc/pcie-tegra194.c
-+++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -2268,13 +2268,13 @@ static int tegra_pcie_dw_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int tegra_pcie_dw_remove(struct platform_device *pdev)
-+static void tegra_pcie_dw_remove(struct platform_device *pdev)
- {
- 	struct tegra_pcie_dw *pcie = platform_get_drvdata(pdev);
- 
- 	if (pcie->of_data->mode == DW_PCIE_RC_TYPE) {
- 		if (!pcie->link_state)
--			return 0;
-+			return;
- 
- 		debugfs_remove_recursive(pcie->debugfs);
- 		tegra_pcie_deinit_controller(pcie);
-@@ -2288,8 +2288,6 @@ static int tegra_pcie_dw_remove(struct platform_device *pdev)
- 	tegra_bpmp_put(pcie->bpmp);
- 	if (pcie->pex_refclk_sel_gpiod)
- 		gpiod_set_value(pcie->pex_refclk_sel_gpiod, 0);
--
--	return 0;
- }
- 
- static int tegra_pcie_dw_suspend_late(struct device *dev)
-@@ -2483,7 +2481,7 @@ static const struct dev_pm_ops tegra_pcie_dw_pm_ops = {
- 
- static struct platform_driver tegra_pcie_dw_driver = {
- 	.probe = tegra_pcie_dw_probe,
--	.remove = tegra_pcie_dw_remove,
-+	.remove_new = tegra_pcie_dw_remove,
- 	.shutdown = tegra_pcie_dw_shutdown,
- 	.driver = {
- 		.name	= "tegra194-pcie",
--- 
-2.39.2
-
+Konrad
+> 
+> I'm still unsure if Bjorn wants to take this patch or net-dev, and how I am
+> supposed to indicate such other than commenting here (per Stephen's
+> comment on v1): https://lore.kernel.org/netdev/e5cb46e8874b12dbe438be12ee0cf949.sboyd@kernel.org/#t
+> 
+> Changes since v1:
+> 	* Add Stephen's Acked-by
+> 	* Explicitly tested on x13s laptop with no noticeable side effect (Konrad)
+> 
+>  drivers/clk/qcom/gcc-sc8280xp.c               | 18 ++++++++++++++++++
+>  include/dt-bindings/clock/qcom,gcc-sc8280xp.h |  2 ++
+>  2 files changed, 20 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+> index b3198784e1c3..04a99dbaa57e 100644
+> --- a/drivers/clk/qcom/gcc-sc8280xp.c
+> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
+> @@ -6873,6 +6873,22 @@ static struct gdsc usb30_sec_gdsc = {
+>  	.pwrsts = PWRSTS_RET_ON,
+>  };
+>  
+> +static struct gdsc emac_0_gdsc = {
+> +	.gdscr = 0xaa004,
+> +	.pd = {
+> +		.name = "emac_0_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +};
+> +
+> +static struct gdsc emac_1_gdsc = {
+> +	.gdscr = 0xba004,
+> +	.pd = {
+> +		.name = "emac_1_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +};
+> +
+>  static struct clk_regmap *gcc_sc8280xp_clocks[] = {
+>  	[GCC_AGGRE_NOC_PCIE0_TUNNEL_AXI_CLK] = &gcc_aggre_noc_pcie0_tunnel_axi_clk.clkr,
+>  	[GCC_AGGRE_NOC_PCIE1_TUNNEL_AXI_CLK] = &gcc_aggre_noc_pcie1_tunnel_axi_clk.clkr,
+> @@ -7351,6 +7367,8 @@ static struct gdsc *gcc_sc8280xp_gdscs[] = {
+>  	[USB30_MP_GDSC] = &usb30_mp_gdsc,
+>  	[USB30_PRIM_GDSC] = &usb30_prim_gdsc,
+>  	[USB30_SEC_GDSC] = &usb30_sec_gdsc,
+> +	[EMAC_0_GDSC] = &emac_0_gdsc,
+> +	[EMAC_1_GDSC] = &emac_1_gdsc,
+>  };
+>  
+>  static const struct clk_rcg_dfs_data gcc_dfs_clocks[] = {
+> diff --git a/include/dt-bindings/clock/qcom,gcc-sc8280xp.h b/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
+> index cb2fb638825c..721105ea4fad 100644
+> --- a/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
+> +++ b/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
+> @@ -492,5 +492,7 @@
+>  #define USB30_MP_GDSC					9
+>  #define USB30_PRIM_GDSC					10
+>  #define USB30_SEC_GDSC					11
+> +#define EMAC_0_GDSC					12
+> +#define EMAC_1_GDSC					13
+>  
+>  #endif
