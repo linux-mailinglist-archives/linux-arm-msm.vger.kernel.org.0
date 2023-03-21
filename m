@@ -2,110 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DC346C2C64
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 09:30:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 54FA96C2CC4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 09:43:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230417AbjCUIaG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 04:30:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50024 "EHLO
+        id S230008AbjCUInc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 04:43:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231145AbjCUI3S (ORCPT
+        with ESMTP id S230070AbjCUIna (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 04:29:18 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A86FA14E86
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 01:29:06 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id b20so23542137edd.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 01:29:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679387345;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cIK8tv9ks6psHuZhE+GzBiUGzc6Fhss7rZzNhUXOnf4=;
-        b=Ae/xed2e5w/AOlmf4k4cDuATbvbOp0NJ00/8+LVG+jogPyl/6k/vn+ip8s7HYa8pyv
-         OcYXENl/PV48g+zhsC7XHuZCpIniPYxethZnjG+h1cLEjHnFbqvZyCCWHf8c12fUyHiI
-         nLNj9VVx6gs5K22rofdJ93F2WSg7Qn/0ZnSPzX4YogbqTii4+ItDJKkNe/N9IlDKTObe
-         8qvoWFqyE9UdV7aKsVmhIrk644QxfL7lZRVGMCrceVAL+9Yr8RtoTIG47SgWqHF95oN4
-         jB5UaEBpRfposD90if/TlcwR5M1mhX8ZAFyll7xt3RtWa1pY8hJfw6fSh9u7At4HdHGd
-         TtLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679387345;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cIK8tv9ks6psHuZhE+GzBiUGzc6Fhss7rZzNhUXOnf4=;
-        b=NE+nXAtM2ba6eB/cSEP34FTS0AOcgOGRoP3MOH30VgVTCW6ubLy+ee5QzD1h4R9ugh
-         3c1NSj/BTaLU4SPoUp0zrL43F/vxqTXfstTPBbX95cOiq5Wb6S5enPbHiMcJYmXO8k3M
-         s/aHJuHIT5Wpug4yzmvXa4IG07nGeLm5VY4OkUJ9jnn7vBsxZ/MedgqNF3ph3b7NsF3u
-         2OT56r6uS656UIGlm7ZZpscoKxcjRp4Q11iRKen3f6jx7Mw0FstNtPhP56UhQ2jvfH23
-         2GnxsENwDx8MEeX3pIFH3g5pNMunN1npQ7vDLdsKARP9RzzOB7jHB+nC8J4L67yCrEgo
-         YO2Q==
-X-Gm-Message-State: AO0yUKWU7MjWg8vXfnBgm4Kycdi3WNeljHBy6B8ZiJwNVAAMCfepU70w
-        5Inal1deKPDOEOYb0SunSxay4g==
-X-Google-Smtp-Source: AK7set83ywsPDbcH3aooNJOf1IUCiM3mFiJBZY8OcdwvX6MHn9leW47hD5YXFkg/k7EoJls7Mfcz9w==
-X-Received: by 2002:a17:906:c9c6:b0:902:874:9c31 with SMTP id hk6-20020a170906c9c600b0090208749c31mr11361569ejb.35.1679387345095;
-        Tue, 21 Mar 2023 01:29:05 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:2142:d8da:5ae4:d817? ([2a02:810d:15c0:828:2142:d8da:5ae4:d817])
-        by smtp.gmail.com with ESMTPSA id c21-20020a50f615000000b004fce9ff4830sm5934109edn.88.2023.03.21.01.29.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 01:29:04 -0700 (PDT)
-Message-ID: <ffbc4b70-03bf-a475-d7d9-076c02e85c42@linaro.org>
-Date:   Tue, 21 Mar 2023 09:29:03 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 1/3] dt-bindings: wireless: add ath11k pcie bindings
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Kalle Valo <kvalo@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Tue, 21 Mar 2023 04:43:30 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 468F71A4BF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 01:42:54 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1peXYi-0001Qt-Cv; Tue, 21 Mar 2023 09:41:32 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1peXYd-005e8w-Jl; Tue, 21 Mar 2023 09:41:27 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1peXYc-006hGE-Ph; Tue, 21 Mar 2023 09:41:26 +0100
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Vladimir Oltean <vladimir.oltean@nxp.com>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Jon Nettleton <jon@solid-run.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+        Yicong Yang <yangyicong@hisilicon.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        Rob Clark <robdclark@gmail.com>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        kernel@pengutronix.de, Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        asahi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230320104658.22186-1-johan+linaro@kernel.org>
- <20230320104658.22186-2-johan+linaro@kernel.org>
- <a8356f76-189d-928b-1a1c-f4171de1e2d0@linaro.org>
- <ZBlqZLHwqLLZhtTi@hovoldconsulting.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ZBlqZLHwqLLZhtTi@hovoldconsulting.com>
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        linux-mediatek@lists.infradead.org
+Subject: [PATCH 00/10] iommu: Convert to platform remove callback returning void
+Date:   Tue, 21 Mar 2023 09:41:15 +0100
+Message-Id: <20230321084125.337021-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2617; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=rdSh4Xeg6tHQ79VpKnn+68R53WjFDJ2aA4WrZ0yXy7Y=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkGW2krstvUjjQL/q4EkmqkS0b+KWpRPx1JGlde 3eOjPfzWzKJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZBltpAAKCRCPgPtYfRL+ ToMUCACnQcRCXUTbwMElh8PDqFXVRLM9/fPmIh/eTNNZeW37hXTU+p85ntqq8ViojhXklq/A4S2 +6ojPGlqDz/ToIwc70XC6nSNJBiKE+QLXIBFEA+9UPpU6uDsP4TfinB/cdeV5MYQueWfWaHCj15 876m8UHC1y7+2JRIT6yta0v2yE3U8JBvqgHNH688UOQDimcPCRUmE/zD+B3GGIbuynQaGfwcNDY 9B2eHrCHXzPILMBtPe0sSnAxEyXi8GSXnEaPwCcEsqweFtYvrTbEcGmuTqjN8V6pRq1Opg0mQMj jmwVUZwveCV7qKMw4dVOAs7fsRN6HS89wm4ryoWjk/PKprPH
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/03/2023 09:27, Johan Hovold wrote:
-> 
->>> +    $ref: /schemas/types.yaml#/definitions/string
->>> +    description: calibration data variant
->>
->> Your description copies the name of property. Instead say something more...
-> 
-> Yeah, I was actively avoiding trying to say too much (e.g. mentioning
-> the name of the current firmware file). See the definition in
-> qcom,ath11k.yaml.
-> 
-> I can try to find some middle ground unless you prefer copying the
-> current definition.
+Hello,
 
-So just copy the description or its parts.
+this series adapts the platform drivers below drivers/iommu to use the
+.remove_new() callback. Compared to the traditional .remove() callback
+.remove_new() returns no value. This is a good thing because the driver core
+doesn't (and cannot) cope for errors during remove. The only effect of a
+non-zero return value in .remove() is that the driver core emits a warning. The
+device is removed anyhow and an early return from .remove() usually yields a
+resource leak.
 
-Best regards,
-Krzysztof
+By changing the remove callback to return void driver authors cannot
+reasonably assume any more that there is some kind of cleanup later.
+
+After the first patch all drivers return zero unconditionally in their
+.remove() callback, then the remaining patches convert to .remove_new()
+without side effects.
+
+There is only a single interdependency (namely patch #4 depends on #1).
+If there are concerns for individual patches[1], please still apply the
+others. Then I'd only care for the actual change requests and don't need
+to resend the other unchanged patches at a later point in time.
+
+Thanks
+Uwe
+
+[1] I don't expect something more tragic than "You picked the wrong
+subject prefix" or similar.
+
+Uwe Kleine-König (10):
+  iommu/arm-smmu: Drop if with an always false condition
+  iommu/apple-dart: Convert to platform remove callback returning void
+  iommu/arm-smmu-v3: Convert to platform remove callback returning void
+  iommu/arm-smmu: Convert to platform remove callback returning void
+  iommu/ipmmu-vmsa: Convert to platform remove callback returning void
+  iommu/msm: Convert to platform remove callback returning void
+  iommu/mtk: Convert to platform remove callback returning void
+  iommu/mtk_iommu_v1: Convert to platform remove callback returning void
+  iommu/omap: Convert to platform remove callback returning void
+  iommu/sprd: Convert to platform remove callback returning void
+
+ drivers/iommu/apple-dart.c                  |  6 ++----
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |  6 ++----
+ drivers/iommu/arm/arm-smmu/arm-smmu.c       | 12 ++----------
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c     | 12 ++++--------
+ drivers/iommu/ipmmu-vmsa.c                  |  6 ++----
+ drivers/iommu/msm_iommu.c                   |  5 ++---
+ drivers/iommu/mtk_iommu.c                   |  5 ++---
+ drivers/iommu/mtk_iommu_v1.c                |  5 ++---
+ drivers/iommu/omap-iommu.c                  |  5 ++---
+ drivers/iommu/sprd-iommu.c                  |  6 ++----
+ 10 files changed, 22 insertions(+), 46 deletions(-)
+
+base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
+-- 
+2.39.2
 
