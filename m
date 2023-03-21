@@ -2,133 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 898846C3BED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 21:39:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 802766C3C05
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 21:40:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229794AbjCUUi7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 16:38:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56392 "EHLO
+        id S229791AbjCUUka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 16:40:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbjCUUi6 (ORCPT
+        with ESMTP id S229663AbjCUUk3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 16:38:58 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D07838B6A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 13:38:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1679431125; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=NujyCUUEuZYxloUBc3+USyHsIS3soISUsO3rzdDli1eTo57fzs5H2Q5DTaheVRmbQ+
-    MeXsTI8vTPoFULdX4Jr1tlfWEmAhwKG2R3O6k+vy3vBmxiP7Kq3LHQHc4tIHqEbyCL6s
-    zfyy8sufSDgeQkiDlsgiUJrMUV+czOF8hFSLD44UP1X9zYMO6MrlezATksx8QTxy0d7L
-    BvJAWI+BtvR+ZKyG7ol86MyhyeTnozmNB4enRz/MxfD9Rrz1QB2h2SNimkfkM12PoAZj
-    XLnpFOgR1mgwvcvfGgT2fsVb88BjYt9JeZPDsppx2dNk1+f3QiTvNp6gzU++0xoJt9Xp
-    /gPA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1679431125;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=VW2u1rxZfoleWEV+NDM3NNhETGJc+x24ln7uHM4gVmo=;
-    b=QAbxCmqo6ImkJpNZASkcMeMh/d2A81Rllme5qKi6HX5lcsKl/eDL2wZWKetUj1KYSW
-    b6qZfhcR6gKIdDp0to4O0iriv7d9VsC2KKsXyM1r3ohAd7qBRqa4IovB+XZ7e14Zms3g
-    gYnnuAJapfv3n0w4GcnBRPWvtfLZye5p78TEcd7WI4NnieuDUkc9WNU1A+8MvN50Bc5a
-    0+OHkAFK/9V8y99J/mHww41hmK6RR+aeWIEFgQ40HQnmFOWv16ncMhjps+VAtyeaCkjJ
-    ff6NEVUUErUoofPpjvS7RIctHH4QcO3btlw8mO8i6d1pbCDnWJf45Qx72hsUsDSUbyLL
-    w1Yw==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1679431125;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=VW2u1rxZfoleWEV+NDM3NNhETGJc+x24ln7uHM4gVmo=;
-    b=a8lKhp9e0taDuFaMWWgfmLW9BKodlin2ndNX92KP3/U2IHdnH6Yv4q64SecgMFV30c
-    nt3TwoGqY8Npisy+XS3rnUC0kjQ2L9tjxSsh+67li7Do0kI7lzfOkRQQx1eSqjmjQHyY
-    dxScMuCZdICNHMsVk+eLhb64zrCjHSDHzbQH2MpmznmKRKyAGn6+CKSDf8NAl7QEtqC6
-    KxTmBee8tvstUmR/FdVhngOHcviNIFxP4t0ZoNwOdu482/O2XW1ZcRN/yL5spAS4OteT
-    tOU2a6SJWoXdMBH1VQk/BaWyAHdDDJlgIBFVjXOJPjQ8/KNzvTbFcLJ4aTFUvidEJE2j
-    8jGg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKjXrKw7+KY="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.3.1 AUTH)
-    with ESMTPSA id i40d22z2LKcjHBV
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 21 Mar 2023 21:38:45 +0100 (CET)
-Date:   Tue, 21 Mar 2023 21:38:36 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        andersson@kernel.org, bhupesh.linux@gmail.com,
-        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
-        konrad.dybcio@linaro.org, vladimir.zapolskiy@linaro.org,
-        rfoss@kernel.org
-Subject: Re: [PATCH 2/5] arm64: dts: qcom: sm6115: Add Crypto Engine support
-Message-ID: <ZBoVzFTr8LBWsmrX@gerhold.net>
-References: <20230321190118.3327360-1-bhupesh.sharma@linaro.org>
- <20230321190118.3327360-3-bhupesh.sharma@linaro.org>
+        Tue, 21 Mar 2023 16:40:29 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88F613B0F1;
+        Tue, 21 Mar 2023 13:40:24 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id l16so9231068ybe.6;
+        Tue, 21 Mar 2023 13:40:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679431223;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rnJYCIHb3YOLk6h7F2Xo1WPCj6zYYjtkpvkZ8wpoQJs=;
+        b=jLlwwP11Eqd3QcuN1GuSMsYw65pUik7rYOLx5A1BPNTMKYJnucTWfSjnqUytJNHQXy
+         GlAFJL6HyR3XP707iPGwPLT9NY80fMZ/hCISBwSyJBwHfz7eX+lK3CL2OIHoNHXO5Kyz
+         no+vIz2/4ucVrHHNXkTOmblHIkWNlzdaISIxpB3ZjQRTD5u2I/FgqtMhRgiy9YzTWTcX
+         waavRaNlKiFGoog+iFNJImDr8t2BuR/0PLfTa74EW/SK1wMrTJ1l2qBB/fA5N5Y/t28Q
+         /rPFIaJLKvcae0dQ9PRxX/RisjwpluW3tmFgSdLMjx7xzAexmNpGqZa2XA5/3IwG7ffU
+         1+CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679431223;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rnJYCIHb3YOLk6h7F2Xo1WPCj6zYYjtkpvkZ8wpoQJs=;
+        b=UDw/pTjDpVPB3R2MB4IPyDpBqxjevfkOFn/twFloF0zj3tK4+pMOQU5bA9nIIeV59O
+         foklRmlFan8ILt8HSg74rX8YcJ2ohP2aCfbcFGBDqymqWQWowvjERA3Nf9vLXFMGf2Fi
+         k9kgyC6AxVvYhpPGCx0sgUETfFZz+EMDn4f0BG1cLHlBQjXmfqWOr6NYIUIFBpGjZdF3
+         am75TALB6OX3K48NmIYjQsID9nuPZITxVqd08Brw1VqCV6lW+JlBirYqVVUvxejnwD9n
+         PKeTv8jinTyZzc7Z2udEKhxP4u4BFGC7KvSCgtueh/VS1HanONDreTwZkIlyAQDNwVJQ
+         fLOw==
+X-Gm-Message-State: AAQBX9dwVEOWOmKSA7Oq+2OO3KdryIdcU8p7qUb9nbYYoPvMEpOJMdPX
+        cgi/H6xDkC+ui3nAGKxmZAa5fZ8ItQx1b5RRufE=
+X-Google-Smtp-Source: AKy350Yr0lFcvlrRV/aUYAmitKBlF/YIDHoHGNgfQJQ9fN+jGmA0gMeojAbcNNdTi/SlMNF7cHZPfM6jxoOO65XX8gM=
+X-Received: by 2002:a05:6902:6:b0:b5c:f48:3083 with SMTP id
+ l6-20020a056902000600b00b5c0f483083mr2322649ybh.11.1679431223686; Tue, 21 Mar
+ 2023 13:40:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230321190118.3327360-3-bhupesh.sharma@linaro.org>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20230320233823.2919475-1-robh@kernel.org>
+In-Reply-To: <20230320233823.2919475-1-robh@kernel.org>
+From:   Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date:   Tue, 21 Mar 2023 21:40:12 +0100
+Message-ID: <CANiq72m+cNuGiU_J9xU9QKmQK-ncD=1Y5imskrFNFSezzmjq8A@mail.gmail.com>
+Subject: Re: [PATCH v2] dt-bindings: display: Drop unneeded quotes
+To:     Rob Herring <robh@kernel.org>
+Cc:     Robin van der Gracht <robin@protonic.nl>,
+        Miguel Ojeda <ojeda@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jyri Sarha <jyri.sarha@iki.fi>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 22, 2023 at 12:31:15AM +0530, Bhupesh Sharma wrote:
-> Add crypto engine (CE) and CE BAM related nodes and definitions to
-> 'sm6115.dtsi'.
-> 
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm6115.dtsi | 26 ++++++++++++++++++++++++++
->  1 file changed, 26 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> index c56738633431..b2d2cdde41fa 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> @@ -664,6 +664,32 @@ usb_1_hsphy: phy@1613000 {
->  			status = "disabled";
->  		};
->  
-> +		cryptobam: dma-controller@1b04000 {
-> +			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
-> +			reg = <0x0 0x01b04000 0x0 0x24000>;
-> +			interrupts = <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>;
-> +			#dma-cells = <1>;
-> +			qcom,ee = <0>;
-> +			qcom,controlled-remotely;
-> +			num-channels = <8>;
-> +			qcom,num-ees = <2>;
-> +			iommus = <&apps_smmu 0x84 0x11>,
-> +				 <&apps_smmu 0x86 0x11>,
-> +				 <&apps_smmu 0x94 0x11>,
-> +				 <&apps_smmu 0x96 0x11>;
-> +		};
-> +
-> +		crypto: crypto@1b3a000 {
-> +			compatible = "qcom,sm6115-qce", "qcom,sm8150-qce", "qcom,qce";
-> +			reg = <0x0 0x01b3a000 0x0 0x6000>;
-> +			dmas = <&cryptobam 6>, <&cryptobam 7>;
-> +			dma-names = "rx", "tx";
-> +			iommus = <&apps_smmu 0x84 0x11>,
-> +				 <&apps_smmu 0x86 0x11>,
-> +				 <&apps_smmu 0x94 0x11>,
-> +				 <&apps_smmu 0x96 0x11>;
+On Tue, Mar 21, 2023 at 12:38=E2=80=AFAM Rob Herring <robh@kernel.org> wrot=
+e:
+>
+>  .../bindings/auxdisplay/holtek,ht16k33.yaml   |  2 +-
 
-If you apply the 0x11 mask to the stream ID then the last two items here
-are identical to the first two (0x94 & ~0x11 = 0x84). Why are they
-needed? They look redundant to me.
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
 
-Thanks,
-Stephan
+Cheers,
+Miguel
