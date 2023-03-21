@@ -2,146 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DF0A6C3CC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 22:35:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C7716C3C8F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 22:20:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229675AbjCUVfm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 17:35:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53822 "EHLO
+        id S230017AbjCUVUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 17:20:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229464AbjCUVfl (ORCPT
+        with ESMTP id S229663AbjCUVUW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 17:35:41 -0400
-X-Greylist: delayed 2139 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 21 Mar 2023 14:35:39 PDT
-Received: from mo-csw-fb.securemx.jp (mo-csw-fb1516.securemx.jp [210.130.202.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DC84580DC;
-        Tue, 21 Mar 2023 14:35:38 -0700 (PDT)
-Received: by mo-csw-fb.securemx.jp (mx-mo-csw-fb1516) id 32LKn83N015893; Wed, 22 Mar 2023 05:49:08 +0900
-Received: by mo-csw.securemx.jp (mx-mo-csw1515) id 32LKk8oj031836; Wed, 22 Mar 2023 05:46:08 +0900
-X-Iguazu-Qid: 34trPsC3C9By8mkvT6
-X-Iguazu-QSIG: v=2; s=0; t=1679431567; q=34trPsC3C9By8mkvT6; m=5O3ktZL+Z7CWHzU0e0y41i4IsuxBUeG0IpaB/PGyXY8=
-Received: from imx12-a.toshiba.co.jp ([38.106.60.135])
-        by relay.securemx.jp (mx-mr1511) id 32LKjrOx015186
-        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128 verify=NOT);
-        Wed, 22 Mar 2023 05:45:54 +0900
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=EGNzF5WovWUCswR3OcHbkuTQKsNIeHbbJpeA8SMAxF3UQ6NlCgo+HKwA6bmGB+gLxnT5B4V7nxxE4ReZZB/7S+EmK+Rm1VPT5I1bN1ZXvDSHGQu0ve27noX4fX9HDrsbDZ/yf+ywrXHZjo0GmTBsGfWAeiKuEvAeye4ETeTTdvvAfC94fqVl+WoKCBFowAVDGx3+YT0I8NBI8dP/fFoeiD05OuVB2GaAJwgeaRAlCb2M5s0GtE/Nb/Hs9GXPO9+xgttOscVvFMZyUpaT3MPVktDszLd8OTuH5wVrF+4wKjqmgdJMqS/fTGLpF7uwIa9bH9i4gTMwrYPIGdsfgFcPHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XqdLyfDjlF9bae7VUQ6KFS5BcRkdAW5ZDzdiRh1pUK0=;
- b=ZBvjKS/38PNLs+QlDylA9mD4FqFCknM5v7JXp0tVCMN0ffVqyC8twV/6ZVb4ryfdcT+yeTHPREit4DnxBzmQ8Q0LNXcVXX345q6CSKii5V54iM+KKj+LoPVYqaa51sQr6HLYEguB/5KVR6+J6zpQOEz/zexNvQXgZyQ4aUJF/7IqK9R5ABwDXmX8CQNDejjI8JK0XcV2/pLqqlRfN0TnpMjWTlDOZ20T0L4uHxoQ3FV2FraDWgeIWmNF9xFgDEg7lNtWNVhe9yq168Q/VtvE5x0NsIexsA2SnlrEABQwRMej+3EiEgzywvVZFoXbwW22yRptew3VhzTat/86euZ4og==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=toshiba.co.jp; dmarc=pass action=none
- header.from=toshiba.co.jp; dkim=pass header.d=toshiba.co.jp; arc=none
-From:   <nobuhiro1.iwamatsu@toshiba.co.jp>
-To:     <robh@kernel.org>, <davem@davemloft.net>, <edumazet@google.com>,
-        <kuba@kernel.org>, <pabeni@redhat.com>,
-        <krzysztof.kozlowski+dt@linaro.org>, <afaerber@suse.de>,
-        <mani@kernel.org>, <wens@csie.org>, <jernej.skrabec@gmail.com>,
-        <samuel@sholland.org>, <neil.armstrong@linaro.org>,
-        <khilman@baylibre.com>, <jbrunet@baylibre.com>,
-        <martin.blumenstingl@googlemail.com>, <joel@jms.id.au>,
-        <andrew@aj.id.au>, <rafal@milecki.pl>,
-        <bcm-kernel-feedback-list@broadcom.com>, <f.fainelli@gmail.com>,
-        <appana.durga.rao@xilinx.com>, <naga.sureshkumar.relli@xilinx.com>,
-        <wg@grandegger.com>, <mkl@pengutronix.de>,
-        <michal.simek@xilinx.com>, <andrew@lunn.ch>, <olteanv@gmail.com>,
-        <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
-        <tobias@waldekranz.com>, <lars.povlsen@microchip.com>,
-        <Steen.Hegelund@microchip.com>, <daniel.machon@microchip.com>,
-        <UNGLinuxDriver@microchip.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <heiko@sntech.de>, <mcoquelin.stm32@gmail.com>,
-        <alexandre.torgue@foss.st.com>, <richardcochran@gmail.com>,
-        <matthias.bgg@gmail.com>, <angelogioacchino.delregno@collabora.com>
-CC:     <krzysztof.kozlowski@linaro.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-actions@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-sunxi@lists.linux.dev>,
-        <linux-amlogic@lists.infradead.org>,
-        <linux-aspeed@lists.ozlabs.org>, <linux-can@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-rockchip@lists.infradead.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-mediatek@lists.infradead.org>
-Subject: RE: [PATCH v2] dt-bindings: net: Drop unneeded quotes
-Thread-Topic: [PATCH v2] dt-bindings: net: Drop unneeded quotes
-Thread-Index: AQHZW4UUv62gNfnH206QhJKcONRYbq8FtEnw
-Date:   Tue, 21 Mar 2023 20:45:48 +0000
-X-TSB-HOP2: ON
-Message-ID: <TYWPR01MB9420194A9C7EA41A70CF8DA892819@TYWPR01MB9420.jpnprd01.prod.outlook.com>
-References: <20230320233758.2918972-1-robh@kernel.org>
-In-Reply-To: <20230320233758.2918972-1-robh@kernel.org>
-Accept-Language: ja-JP, en-US
-Content-Language: ja-JP
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=toshiba.co.jp;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYWPR01MB9420:EE_|OS7PR01MB12044:EE_
-x-ms-office365-filtering-correlation-id: 96ba23e0-473b-4755-b5be-08db2a4d4031
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: z1ZwMtYkY7bz8w0l6jU6Bj/ja6M1dAVRNbWM69ZJ3N+xwokw62f+kv8jPMQrgaAsEJkXwAZ5meHpTL5NXscFQGu7KRHT78on2swFnp7MilUAVn4sNEUu/xGg2FrhqdezANXc/dtyohbuW/OAR97cmkpaA5zGPFeLfQRyV0lKoOSNVACixqvtoJ3KzjwrxhWwdd6TD+Pu1u8easABBDK01aJ70006hhQx+dKReDdINFXI0PzOXjpgMs/UzVM4ZDIzt9j4omyOyBa1oBScNmowE35bK8Pm8isavEJeV4jrYoEtLYTzMHpghm83NOLVYpW4buHq9U1Zyi1MRLhUAjzgMDtT2iGX70rrV0KJXB3SiurxJq8pCYDapAiDxqCi81xOTcoWKvpHyyMVrWwjFouEWZ45kXO2kKv69++DRaO0iWZe0WgVhpTOpT0LiF3O1OFaN49ZBZ017v5r+154HZG0MxCXu0aXoks7sZrvDhQHDPBa54t0np1qVBGpvon/TG27o5Z3OU26KCQtTPuFX+i/UxOOwgLLf9+TUgCLEoaS+nFR+NiBu/CTOXW4eg9BbzGVx9r41wigVXCwisIW/D2YafkBdlvf6g7p0PS9h+UR4CmM+znSK+BQIHRRrRCl++Mh/gjUyS/P3n3UeElM3IcjTadHoqb47Jx98z1QcdWitBvyu4nSEINrJQi4qF0eOIElp+9IqPZevt4xtd5zyVrWLT9GHntzyMjutQZuqDkyntg=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYWPR01MB9420.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(376002)(396003)(346002)(366004)(39860400002)(136003)(451199018)(52536014)(8936002)(5660300002)(7366002)(41300700001)(7416002)(7406005)(921005)(55016003)(33656002)(86362001)(38100700002)(122000001)(38070700005)(2906002)(4326008)(83380400001)(478600001)(6506007)(7696005)(9686003)(71200400001)(186003)(26005)(53546011)(55236004)(54906003)(110136005)(316002)(8676002)(66946007)(76116006)(64756008)(66446008)(66556008)(66476007);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?L0U2TjV3azNvLzYrZnpiMDBuWS90bWFtV2cvUTlWb1BRTXhLR0FITEdaQTZG?=
- =?utf-8?B?TFA5K3NaT2tXYXI5U2xROHF3dFdSRWFxNWY2NUtncFhhSmhmOXJ5VU9YblpD?=
- =?utf-8?B?WE5DNW5jQzVZcDVwbnc2UjdiMVBmT1ZvTGRHQ3h4OXBmYXM2MFBsS0lzRlh5?=
- =?utf-8?B?MllWWmhWQ09XUVZnckwxVUR3WmowRUlZS21iZStnSFMvakZFaTk4aVdudUNx?=
- =?utf-8?B?bUgvVjR1OCtkUUFoYXlBKzMrN3JUREZaR3VyMUkwUmxNVGw5SWIzWkhONlhK?=
- =?utf-8?B?OGozcUk1ZTJ4OVMxZmxTN1NiNlJGSTZnZk02bkdyb01RY3J0Zm91VnptUnc4?=
- =?utf-8?B?VExraTE1SmVJU1k0NFFFWHFZOGNVRm16RXR4REc5MVNXUmpBMEZXN2dCRlR1?=
- =?utf-8?B?VXVydkx1NTE3U05qYmQ4V25tWHRaaEF1QnppQ2FXcDlwaGUwOTVlTE9IZmpQ?=
- =?utf-8?B?YUJSSlBZOFlsR3FaSTlDNXNneS9yOEVSS29pNkErU3hxOWpIeS9MQ3RXNGND?=
- =?utf-8?B?SUVxTmZWV3JJMUhrRi90WXJLclU0TVZsU2RkWm5aaVFad08wN2FrclJSbGtM?=
- =?utf-8?B?a1Y5dXR2YmRZd0RDZ2xUWjhVclNTemFOWE95WS9uYXhkTFF4QVpiMFVjamhV?=
- =?utf-8?B?eHUwdzQ0b0JMUlJZcFQ3eWZKdU9TdS9QdHVpWVM0U09TUkpTbzZZaFA1RHBz?=
- =?utf-8?B?OGtZelFlaG92U2lmM2sxQ3dOT3Jka0E3SmRDVGFZRzJaZHFRNmphU1c1T3hh?=
- =?utf-8?B?d1FBOGRvZHFMUXZsTlhTNlVBaWFIZjIzVkw1TlQxeWJVRXBnbHN6MlVaMGti?=
- =?utf-8?B?MHczNkJ3ZVJ4RE1mYkZpRlNMeEw2emt4QjFScGo3ZUZHVS9GUWdCeE00SGxv?=
- =?utf-8?B?YkFUd2wyS2R0TXZLUnFoU3lZcHhmbEJvVlZVMHhpdkwxdHVVOUpUSXJkcFpN?=
- =?utf-8?B?cHdHeWY5dGlZNU91ZnhoUnZNY2VWekM5VXhValpzQVo5ZWh5bWhGWFNwZ3JT?=
- =?utf-8?B?b3YyQlZlZk9EQ0J1MWVFR01yT2dtNnBmNTR2VXNqRWlUUTBlcHVjODUranNX?=
- =?utf-8?B?NzJINU1uN2FqdGJCaXZWYU9rQTloOVZyWmtkZ3NwVGZ4aVhmV0x5MmFldmQv?=
- =?utf-8?B?V1VucHRRNWV2N0ZUOG5rUnBkQmJzOEQyaFUzM1JKNzR0R05Hek4xK21KbFdZ?=
- =?utf-8?B?eSt3enQzUTVSenIrRXVtTHNoT3NEOVFoS0pXcXN1MzFZVnJlVVdUSG1UYmZ4?=
- =?utf-8?B?cDVIRS9UemtHSExoaWlWN0xWZ2czNENxNmZweDVvUFZVVUNOUVl5UHNwWlBi?=
- =?utf-8?B?V3BabUNNNFpjMEZRQW5KQmVSV29yZnlYcEt1d0kwczVCV2lpRFJ0RHlIazI4?=
- =?utf-8?B?RlQrVkFrMmM0NVhHSnQwdm92OE9GYndvY2VBYTl0aDJNcTgvN29iWElFNDZv?=
- =?utf-8?B?MmhQMXVLbTF3eC9uY3JWeWhjNVpoWXYyWlNiM0hOY1dLVHc5Si9HNHQ1YXJE?=
- =?utf-8?B?OXN2YW9QL0xTSFRpTlk4VXJkb1VSRndSZC94bVczRHJ0dU15cGpob2t5c0dw?=
- =?utf-8?B?OUJkMmdIQjJJWWdtOGJZU01FYUtxbHE4YzdFRERiWnJuWjZISzJWdXhRTlh2?=
- =?utf-8?B?elY1ci80N3cwSmJZUlRqWXF1Qk41dWZ4TWcxTTZnQnNoMDV1czkyTGVZMjRE?=
- =?utf-8?B?VTNHUHdZMkxoRldrT21kRjhwZFM5UDAxNjBraG84VmF5a0FjVU9CaDJlK2hw?=
- =?utf-8?B?aC84VVVIRDY5Qk1BU21XSUN2OWk4TTFBUVNxenJFTG9yeDVhQmtrV1F4eUFP?=
- =?utf-8?B?eDAwU05KN2craFNhS3NVRTBWb0FiajFBT2Y4ZTJBU0pCdzd2UktqQnFTTnpD?=
- =?utf-8?B?VUFlQStqWFREYnBKLzBjdnp3dmw1MFdWUWRpbnRnUzE3eDlua0llSXdrOVps?=
- =?utf-8?B?NDBVRC9LZFRiTHluOXZGeFBONUlvMmZ5UThlZjF6L2FPbHpiUWd4Z3RQVmtE?=
- =?utf-8?B?NjRYL2FQQzMydzJDbHFFSUttTXlzbklTUnFCVHAwYUFSMXIvbzNleGY4Z2k2?=
- =?utf-8?B?dkpIS3NoYlVZQTFySCszSTlZdU1BTUF0NmV5R0hxNHYwY1hxNjlmTVZUK0VS?=
- =?utf-8?B?bkthYWRSZ1pUS2VyV0N2Ri9yM2cyL010bW9iSXBPWjdtOFB2LzFMRldINjBD?=
- =?utf-8?B?R3c9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        Tue, 21 Mar 2023 17:20:22 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F369123C66;
+        Tue, 21 Mar 2023 14:20:11 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6363CB81A34;
+        Tue, 21 Mar 2023 21:20:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050A3C4339B;
+        Tue, 21 Mar 2023 21:20:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679433609;
+        bh=2wKTGNUgT01SGXFLp6S9vKpyw1vx+bPEoU6LrUlPCoA=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=afJNVHSLfVF9NXtX2aGnfNrMnWmhHRxuNv5YPf7LxeA4iGNqKJvslIDoxOsO5/Y1a
+         /IZzn/YMCMr9Uy9JFQWxtFSSgNKx6FqrQWg6vG8qjy80GgVGD9kohrJqQtr/3x9d4E
+         wtUAvVdQQ+YG5uAo8mo1RpFmDh4TDu5aaS9I/fLnlj9aEwh7u+8mWsqAHd7h/NfBJP
+         1alahMyHdPsI+O0ZxHUBY7z14Tl4u5rxS4mngU+FDGCTZRjuGFxiIxjbAZWtnbpONi
+         rE3vkEGE78XLb9lp7RfRdiSyH/vZrHVCjeb10NNxfzO+AAp0WUnrOsjnHSVtBcM4zx
+         yL/JUWshFRHAQ==
+Received: by mail-lj1-f174.google.com with SMTP id s20so9740130ljp.1;
+        Tue, 21 Mar 2023 14:20:08 -0700 (PDT)
+X-Gm-Message-State: AO0yUKUJHXfOxCU7U+5HV0Q6Hh1BTh6aPMMT7n0NJk4PeeuXbOGyyZAv
+        f3YOMQcRaw8K6/IL18WAyHnPuN3emR4Xgn49fgw=
+X-Google-Smtp-Source: AK7set9cMksvnNvFHgVFeeZzQMkT0FpuXmgsrtAm/r6k8wBJPs0ghrW5lUIkiySJQ5jKLKwmJG4Uzz77x4dNkMRItTA=
+X-Received: by 2002:a2e:82d7:0:b0:295:945d:b382 with SMTP id
+ n23-20020a2e82d7000000b00295945db382mr1336079ljh.4.1679433607232; Tue, 21 Mar
+ 2023 14:20:07 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYWPR01MB9420.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 96ba23e0-473b-4755-b5be-08db2a4d4031
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Mar 2023 20:45:48.0749
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: f109924e-fb71-4ba0-b2cc-65dcdf6fbe4f
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: KpEsiHDaIhsQsenpiBkK53itYSBGaU6jZLE77JXL85CjAvoLJkbfuyVJOd0TjbPA7N5KWe0ubNWz2GEZdJlJl83HVJfnO/5cMb12SR1K7fAtBo6wKXT4p3RULZTjhH5O
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS7PR01MB12044
-X-OriginatorOrg: toshiba.co.jp
-X-Spam-Status: No, score=-0.7 required=5.0 tests=RCVD_IN_DNSWL_LOW,
-        SPF_HELO_PASS,SPF_PASS autolearn=unavailable autolearn_force=no
+References: <20230316181555.9327-1-quic_johmoo@quicinc.com> <20230316181555.9327-2-quic_johmoo@quicinc.com>
+In-Reply-To: <20230316181555.9327-2-quic_johmoo@quicinc.com>
+From:   Masahiro Yamada <masahiroy@kernel.org>
+Date:   Wed, 22 Mar 2023 06:19:28 +0900
+X-Gmail-Original-Message-ID: <CAK7LNATFTOc_9qGMP4B8cRr4NY_NSpE8dMXPjEkJv+aqUj2_Lw@mail.gmail.com>
+Message-ID: <CAK7LNATFTOc_9qGMP4B8cRr4NY_NSpE8dMXPjEkJv+aqUj2_Lw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] check-uapi: Introduce check-uapi.sh
+To:     John Moon <quic_johmoo@quicinc.com>
+Cc:     Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Todd Kjos <tkjos@google.com>,
+        Matthias Maennich <maennich@google.com>,
+        Giuliano Procida <gprocida@google.com>,
+        kernel-team@android.com, libabigail@sourceware.org,
+        Jordan Crouse <jorcrous@amazon.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -149,64 +80,812 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGkgUm9iLA0KDQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IFJvYiBIZXJy
-aW5nIDxyb2JoQGtlcm5lbC5vcmc+DQo+IFNlbnQ6IFR1ZXNkYXksIE1hcmNoIDIxLCAyMDIzIDg6
-MzggQU0NCj4gVG86IERhdmlkIFMuIE1pbGxlciA8ZGF2ZW1AZGF2ZW1sb2Z0Lm5ldD47IEVyaWMg
-RHVtYXpldA0KPiA8ZWR1bWF6ZXRAZ29vZ2xlLmNvbT47IEpha3ViIEtpY2luc2tpIDxrdWJhQGtl
-cm5lbC5vcmc+OyBQYW9sbyBBYmVuaQ0KPiA8cGFiZW5pQHJlZGhhdC5jb20+OyBLcnp5c3p0b2Yg
-S296bG93c2tpDQo+IDxrcnp5c3p0b2Yua296bG93c2tpK2R0QGxpbmFyby5vcmc+OyBBbmRyZWFz
-IEbDpHJiZXIgPGFmYWVyYmVyQHN1c2UuZGU+Ow0KPiBNYW5pdmFubmFuIFNhZGhhc2l2YW0gPG1h
-bmlAa2VybmVsLm9yZz47IENoZW4tWXUgVHNhaQ0KPiA8d2Vuc0Bjc2llLm9yZz47IEplcm5laiBT
-a3JhYmVjIDxqZXJuZWouc2tyYWJlY0BnbWFpbC5jb20+OyBTYW11ZWwNCj4gSG9sbGFuZCA8c2Ft
-dWVsQHNob2xsYW5kLm9yZz47IE5laWwgQXJtc3Ryb25nDQo+IDxuZWlsLmFybXN0cm9uZ0BsaW5h
-cm8ub3JnPjsgS2V2aW4gSGlsbWFuIDxraGlsbWFuQGJheWxpYnJlLmNvbT47IEplcm9tZQ0KPiBC
-cnVuZXQgPGpicnVuZXRAYmF5bGlicmUuY29tPjsgTWFydGluIEJsdW1lbnN0aW5nbA0KPiA8bWFy
-dGluLmJsdW1lbnN0aW5nbEBnb29nbGVtYWlsLmNvbT47IEpvZWwgU3RhbmxleSA8am9lbEBqbXMu
-aWQuYXU+Ow0KPiBBbmRyZXcgSmVmZmVyeSA8YW5kcmV3QGFqLmlkLmF1PjsgUmFmYcWCIE1pxYJl
-Y2tpIDxyYWZhbEBtaWxlY2tpLnBsPjsNCj4gQnJvYWRjb20gaW50ZXJuYWwga2VybmVsIHJldmll
-dyBsaXN0DQo+IDxiY20ta2VybmVsLWZlZWRiYWNrLWxpc3RAYnJvYWRjb20uY29tPjsgRmxvcmlh
-biBGYWluZWxsaQ0KPiA8Zi5mYWluZWxsaUBnbWFpbC5jb20+OyBBcHBhbmEgRHVyZ2EgS2VkYXJl
-c3dhcmEgcmFvDQo+IDxhcHBhbmEuZHVyZ2EucmFvQHhpbGlueC5jb20+OyBOYWdhIFN1cmVzaGt1
-bWFyIFJlbGxpDQo+IDxuYWdhLnN1cmVzaGt1bWFyLnJlbGxpQHhpbGlueC5jb20+OyBXb2xmZ2Fu
-ZyBHcmFuZGVnZ2VyDQo+IDx3Z0BncmFuZGVnZ2VyLmNvbT47IE1hcmMgS2xlaW5lLUJ1ZGRlIDxt
-a2xAcGVuZ3V0cm9uaXguZGU+OyBNaWNoYWwNCj4gU2ltZWsgPG1pY2hhbC5zaW1la0B4aWxpbngu
-Y29tPjsgQW5kcmV3IEx1bm4gPGFuZHJld0BsdW5uLmNoPjsNCj4gVmxhZGltaXIgT2x0ZWFuIDxv
-bHRlYW52QGdtYWlsLmNvbT47IEhlaW5lciBLYWxsd2VpdA0KPiA8aGthbGx3ZWl0MUBnbWFpbC5j
-b20+OyBSdXNzZWxsIEtpbmcgPGxpbnV4QGFybWxpbnV4Lm9yZy51az47IFRvYmlhcw0KPiBXYWxk
-ZWtyYW56IDx0b2JpYXNAd2FsZGVrcmFuei5jb20+OyBMYXJzIFBvdmxzZW4NCj4gPGxhcnMucG92
-bHNlbkBtaWNyb2NoaXAuY29tPjsgU3RlZW4gSGVnZWx1bmQNCj4gPFN0ZWVuLkhlZ2VsdW5kQG1p
-Y3JvY2hpcC5jb20+OyBEYW5pZWwgTWFjaG9uDQo+IDxkYW5pZWwubWFjaG9uQG1pY3JvY2hpcC5j
-b20+OyBVTkdMaW51eERyaXZlckBtaWNyb2NoaXAuY29tOyBBbmR5DQo+IEdyb3NzIDxhZ3Jvc3NA
-a2VybmVsLm9yZz47IEJqb3JuIEFuZGVyc3NvbiA8YW5kZXJzc29uQGtlcm5lbC5vcmc+Ow0KPiBL
-b25yYWQgRHliY2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+OyBIZWlrbyBTdHVlYm5lcg0K
-PiA8aGVpa29Ac250ZWNoLmRlPjsgTWF4aW1lIENvcXVlbGluIDxtY29xdWVsaW4uc3RtMzJAZ21h
-aWwuY29tPjsNCj4gQWxleGFuZHJlIFRvcmd1ZSA8YWxleGFuZHJlLnRvcmd1ZUBmb3NzLnN0LmNv
-bT47IGl3YW1hdHN1IG5vYnVoaXJvKOWyqeadvg0KPiDkv6HmtIsg4pah77yz77y377yj4pev77yh
-77yj77y0KSA8bm9idWhpcm8xLml3YW1hdHN1QHRvc2hpYmEuY28uanA+OyBSaWNoYXJkDQo+IENv
-Y2hyYW4gPHJpY2hhcmRjb2NocmFuQGdtYWlsLmNvbT47IE1hdHRoaWFzIEJydWdnZXINCj4gPG1h
-dHRoaWFzLmJnZ0BnbWFpbC5jb20+OyBBbmdlbG9HaW9hY2NoaW5vIERlbCBSZWdubw0KPiA8YW5n
-ZWxvZ2lvYWNjaGluby5kZWxyZWdub0Bjb2xsYWJvcmEuY29tPg0KPiBDYzogS3J6eXN6dG9mIEtv
-emxvd3NraSA8a3J6eXN6dG9mLmtvemxvd3NraUBsaW5hcm8ub3JnPjsNCj4gbmV0ZGV2QHZnZXIu
-a2VybmVsLm9yZzsgZGV2aWNldHJlZUB2Z2VyLmtlcm5lbC5vcmc7DQo+IGxpbnV4LWFybS1rZXJu
-ZWxAbGlzdHMuaW5mcmFkZWFkLm9yZzsgbGludXgtYWN0aW9uc0BsaXN0cy5pbmZyYWRlYWQub3Jn
-Ow0KPiBsaW51eC1rZXJuZWxAdmdlci5rZXJuZWwub3JnOyBsaW51eC1zdW54aUBsaXN0cy5saW51
-eC5kZXY7DQo+IGxpbnV4LWFtbG9naWNAbGlzdHMuaW5mcmFkZWFkLm9yZzsgbGludXgtYXNwZWVk
-QGxpc3RzLm96bGFicy5vcmc7DQo+IGxpbnV4LWNhbkB2Z2VyLmtlcm5lbC5vcmc7IGxpbnV4LWFy
-bS1tc21Admdlci5rZXJuZWwub3JnOw0KPiBsaW51eC1yb2NrY2hpcEBsaXN0cy5pbmZyYWRlYWQu
-b3JnOw0KPiBsaW51eC1zdG0zMkBzdC1tZC1tYWlsbWFuLnN0b3JtcmVwbHkuY29tOw0KPiBsaW51
-eC1tZWRpYXRla0BsaXN0cy5pbmZyYWRlYWQub3JnDQo+IFN1YmplY3Q6IFtQQVRDSCB2Ml0gZHQt
-YmluZGluZ3M6IG5ldDogRHJvcCB1bm5lZWRlZCBxdW90ZXMNCj4gDQo+IENsZWFudXAgYmluZGlu
-Z3MgZHJvcHBpbmcgdW5uZWVkZWQgcXVvdGVzLiBPbmNlIGFsbCB0aGVzZSBhcmUgZml4ZWQsDQo+
-IGNoZWNraW5nIGZvciB0aGlzIGNhbiBiZSBlbmFibGVkIGluIHlhbWxsaW50Lg0KPiANCj4gQWNr
-ZWQtYnk6IE1hcmMgS2xlaW5lLUJ1ZGRlIDxta2xAcGVuZ3V0cm9uaXguZGU+ICMgZm9yIGJpbmRp
-bmdzL25ldC9jYW4NCj4gUmV2aWV3ZWQtYnk6IEtyenlzenRvZiBLb3psb3dza2kgPGtyenlzenRv
-Zi5rb3psb3dza2lAbGluYXJvLm9yZz4NCj4gQWNrZWQtYnk6IEplcm5laiBTa3JhYmVjIDxqZXJu
-ZWouc2tyYWJlY0BnbWFpbC5jb20+DQo+IEFja2VkLWJ5OiBGbG9yaWFuIEZhaW5lbGxpIDxmLmZh
-aW5lbGxpQGdtYWlsLmNvbT4NCj4gUmV2aWV3ZWQtYnk6IFN0ZWVuIEhlZ2VsdW5kIDxTdGVlbi5I
-ZWdlbHVuZEBtaWNyb2NoaXAuY29tPg0KPiBTaWduZWQtb2ZmLWJ5OiBSb2IgSGVycmluZyA8cm9i
-aEBrZXJuZWwub3JnPg0KPiAtLS0NCj4gdjI6DQo+ICAtIEFsc28gZHJvcCBxdW90ZXMgb24gVVJM
-cw0KPiAtLS0NCg0KW3NuaXBdDQoNCj4gIC4uLi9iaW5kaW5ncy9uZXQvdG9zaGliYSx2aXNjb250
-aS1kd21hYy55YW1sICAgfCAgNCArKy0tDQoNCkFja2VkLWJ5OiBOb2J1aGlybyBJd2FtYXRzdSA8
-bm9idWhpcm8xLml3YW1hdHN1QHRvc2hpYmEuY28uanA+ICMgZm9yIGJpbmRpbmdzL25ldC90b3No
-aWJhLHZpc2NvbnRpLWR3bWFjLnlhbWwNCg0KQmVzdCByZWdhcmRzLA0KICBOb2J1aGlybw0K
+On Fri, Mar 17, 2023 at 3:17=E2=80=AFAM John Moon <quic_johmoo@quicinc.com>=
+ wrote:
+>
+> While the kernel community has been good at maintaining backwards
+> compatibility with kernel UAPIs, it would be helpful to have a tool
+> to check if a commit introduces changes that break backwards
+> compatibility.
+>
+> To that end, introduce check-uapi.sh: a simple shell script that
+> checks for changes to UAPI headers using libabigail.
+>
+> libabigail is "a framework which aims at helping developers and
+> software distributors to spot some ABI-related issues like interface
+> incompatibility in ELF shared libraries by performing a static
+> analysis of the ELF binaries at hand."
+>
+> The script uses one of libabigail's tools, "abidiff", to compile the
+> changed header before and after the commit to detect any changes.
+>
+> abidiff "compares the ABI of two shared libraries in ELF format. It
+> emits a meaningful report describing the differences between the two
+> ABIs."
+>
+> The script also includes the ability to check the compatibility of
+> all UAPI headers across commits. This allows developers to inspect
+> the stability of the UAPIs over time.
+>
+> Signed-off-by: John Moon <quic_johmoo@quicinc.com>
 
+
+
+I think I pointed out that not all UAPI headers are checked-in.
+
+
+I applied the following.
+This will remove <asm/termios.h>.
+So, definitely it is a UAPI breakage, but check_all=3Dtrue
+mode succeeds.
+
+
+ diff --git a/include/uapi/asm-generic/Kbuild b/include/uapi/asm-generic/Kb=
+uild
+ index ebb180aac74e..a9c88b0a8b3b 100644
+ --- a/include/uapi/asm-generic/Kbuild
+ +++ b/include/uapi/asm-generic/Kbuild
+ @@ -31,6 +31,6 @@ mandatory-y +=3D stat.h
+  mandatory-y +=3D statfs.h
+  mandatory-y +=3D swab.h
+  mandatory-y +=3D termbits.h
+ -mandatory-y +=3D termios.h
+ +#mandatory-y +=3D termios.h
+  mandatory-y +=3D types.h
+  mandatory-y +=3D unistd.h
+
+
+
+
+Another false positive is a change outside the uapi directories.
+
+For x86, syscall UAPI headers are generated in
+arch/x86/entry/syscalls/.
+
+
+You never know the compatibility of UAPI unless you check
+all the headers that 'make headers_install' results in.
+
+
+I am reluctant to read the whole code,
+but I spotted possible bugs.
+
+
+
+
+
+> +
+> +readonly SUCCESS=3D0
+> +readonly FAIL_ABI=3D1
+> +readonly FAIL_PREREQ=3D2
+> +readonly FAIL_COMPILE=3D3
+> +readonly FAIL_ARCH=3D4
+> +readonly FAIL=3D5
+> +
+> +# Print to stderr
+> +eprintf() {
+> +       # shellcheck disable=3DSC2059
+> +       printf "$@" >&2
+> +}
+> +
+> +# Print list of UAPI files to operate on
+> +get_uapi_files() {
+> +       local -r check_all=3D"$1"
+> +       local -r base_ref=3D"$2"
+> +       local -r ref=3D"$3"
+
+local -r past_ref=3D"$3"
+
+
+
+> +       local -r file_list=3D"${tmp_dir}/file_list.txt"
+> +
+> +       # Return already-processed list if it's available
+> +       if [ -s "$file_list" ]; then
+> +               cat "$file_list"
+> +               return 0
+> +       fi
+> +
+> +       if [ "$check_all" =3D "true" ]; then
+> +               # Print all of the UAPI header files at the commit in que=
+stion
+> +               # Ignore the headers that we can't test.
+> +               # shellcheck disable=3DSC2086,SC2046
+> +               git ls-tree --full-tree --name-only -r "${base_ref:-HEAD}=
+" -- "${UAPI_DIRS[@]}" \
+> +                       | grep '.h$' \
+> +                       | sed -e 's/^/M\t/g' \
+> +                       | grep -v $({ get_no_header_list "$base_ref"; get=
+_no_export_list; } | xargs -- printf '-e %s ') \
+> +                       > "$file_list"
+> +       else
+> +               if [ -z "$base_ref" ] || [ -z "$ref" ]; then
+
+
+[ -z "$ref" ] is always false.
+
+
+
+> +                       # shellcheck disable=3DSC2086
+> +                       git diff $GIT_ARGS > "$file_list"
+
+
+This is a bug.
+
+Think about this situation:
+
+  $base_ref is empty, i.e. workspace
+  $ref is not HEAD but a commit in the past.
+
+
+"git diff" will return the diff
+between the cache and the workspace.
+
+
+
+
+
+
+> +               else
+> +                       # shellcheck disable=3DSC2086
+> +                       git diff "$ref" "$base_ref" $GIT_ARGS > "$file_li=
+st"
+> +               fi
+
+
+Do you need this if...else...fi block in the first place?
+
+
+   git diff $ref $base_ref $GIT_ARGS > "$file_list"
+
+
+will naturally work correctly for all cases.
+(do not quote $base_ref, which might be empty)
+
+
+
+
+> +
+> +               if mismatch_arch_files=3D$(grep -v "arch/${ARCH}" "$file_=
+list" | grep -o "arch/.*\.h"); then
+> +                       eprintf "warning - detected changes to following =
+files, but can't check them with %s compiler:\n" "$ARCH"
+> +                       for f in $mismatch_arch_files; do
+> +                               eprintf "  - %s\n" "$f"
+> +                               sed -i -e "\|${f}|d" "$file_list"
+> +                               printf "warning - could not perform ABI c=
+heck on %s with %s compiler\n" "$f" "$ARCH" \
+> +                                       >> "${tmp_dir}/arch_mismatches.er=
+ror"
+> +                       done
+> +                       eprintf "\nFiltering them out and performing part=
+ial check on remaining files...\n"
+> +                       if [ ! -s "$file_list" ]; then
+> +                               eprintf "error - all files were filtered =
+out, there's nothing to check!\n"
+> +                               exit "$FAIL_ARCH"
+> +                       fi
+> +               fi
+> +       fi
+> +
+> +       if [ ! -s "$file_list" ]; then
+> +               return 1
+> +       fi
+> +
+> +       cat "$file_list"
+> +}
+> +
+> +# Compile the simple test app
+> +do_compile() {
+> +       local -r inc_dir=3D"$1"
+> +       local -r header=3D"$2"
+> +       local -r out=3D"$3"
+> +       printf "int main(void) { return 0; }\n" | \
+> +               "$CC" -c \
+> +                 -o "$out" \
+> +                 -x c \
+> +                 -O0 \
+> +                 -std=3Dc90 \
+> +                 -fno-eliminate-unused-debug-types \
+> +                 -g \
+> +                 "-I${inc_dir}" \
+> +                 -include "$header" \
+> +                 -
+> +}
+> +
+> +# Print the list of incompatible headers
+> +get_no_header_list() {
+> +       local -r ref=3D"${1:-HEAD}"
+> +       # Start with the usr/include/Makefile to get a list of the header=
+s
+> +       # that don't compile using this method.
+> +       {
+> +               # shellcheck disable=3DSC2016
+> +               printf 'all: ; @echo $(no-header-test)\n'
+> +               cat "usr/include/Makefile"
+> +       } | SRCARCH=3D"$ARCH" make -f - | tr " " "\n" | grep -v "asm-gene=
+ric"
+> +
+> +       # The makefile also skips all asm-generic files, but prints "asm-=
+generic/%"
+> +       # which won't match the files in this script, so just print all t=
+he asm-generic
+> +       # headers manually.
+> +       git ls-tree --full-tree --name-only -r "$ref" -- include/uapi/asm=
+-generic \
+> +               | grep '.h$' \
+> +               | cut -d '/' -f 2-
+> +
+> +       # Finally, print all the architecture-specific headers that are _=
+not_ for the
+> +       # ARCH we're targeting
+> +       git ls-tree --full-tree --name-only -r "$ref" -- arch/*/include/u=
+api \
+> +               | grep '.h$' \
+> +               | grep -v "^arch/${ARCH}"
+> +}
+> +
+> +# Print the list of headers that are not exported for this architecture
+> +get_no_export_list() {
+> +       {
+> +               # shellcheck disable=3DSC2016
+> +               printf 'all: ; @echo $(no-export-headers)\n'
+> +               cat "include/uapi/Kbuild"
+> +       } | SRCARCH=3D"$ARCH" srctree=3D"$KERNEL_SRC" make -f - | tr " " =
+"\n" | sed '/^[[:space:]]*$/d'
+> +}
+> +
+> +# Save the current git tree state, stashing if needed
+> +save_tree_state() {
+> +       printf "Saving current tree state... "
+> +       current_ref=3D"$(git rev-parse HEAD)"
+> +       readonly current_ref
+> +       if ! git diff-index --quiet HEAD; then
+> +               unstash=3D"true"
+> +               git stash push --quiet
+> +       fi
+> +       printf "OK\n"
+> +}
+> +
+> +# Restore the git tree state, unstashing if needed
+> +restore_tree_state() {
+> +       if [ -z "$current_ref" ]; then
+> +               return 0
+> +       fi
+> +
+> +       printf "Restoring current tree state... "
+> +       git checkout --quiet "$current_ref"
+> +       if [ "$unstash" =3D "true" ]; then
+> +               git stash pop --quiet
+> +               unstash=3D"false"
+> +       fi
+> +       printf "OK\n"
+> +}
+> +
+> +# Install headers for both git refs
+> +install_headers() {
+> +       local -r check_all=3D"$1"
+> +       local -r base_ref=3D"$2"
+> +       local -r ref=3D"$3"
+> +
+> +       deviated_from_current_tree=3D"false"
+> +       for inst_ref in "$base_ref" "$ref"; do
+
+
+Bakeshed1: personally, I would use 'ref' as an iterator.
+
+     for ref in "$base_ref" "$past_ref"; do
+
+I see overall inconsistency between ref vs past_ref.
+
+
+
+
+
+> +               if [ -n "$inst_ref" ]; then
+> +                       if [ "$deviated_from_current_tree" =3D "false" ];=
+ then
+> +                               save_tree_state
+> +                               trap 'rm -rf "$tmp_dir"; restore_tree_sta=
+te;' EXIT
+
+
+Bikeshed2:
+Instead of updating the trap back-and-force,
+I would create a function.
+
+
+exit_handler () {
+      if [ "$deviated_from_current_tree" =3D true ]; then
+                restore_tree_state
+      fi
+
+      if [ -n "$tmp_dir" ]; then
+                rm -rf "$tmp_dir"
+      fi
+}
+
+trap exist_handler EXIT
+
+
+
+
+
+
+> +                               deviated_from_current_tree=3D"true"
+> +                       fi
+> +                       # This script ($0) is already loaded into memory =
+at this point,
+> +                       # so this operation is safe
+> +                       git checkout --quiet "$(git rev-parse "$inst_ref"=
+)"
+> +               fi
+> +
+> +               printf "Installing sanitized UAPI headers from %s... " "$=
+{inst_ref:-dirty tree}"
+> +               make ARCH=3D"$ARCH" INSTALL_HDR_PATH=3D"${tmp_dir}/${inst=
+_ref}/usr" headers_install > /dev/null 2>&1
+
+
+You can add -j${MAX_THREADS} for faster 'make headers_install'.
+
+
+
+
+
+
+
+
+> +               printf "OK\n"
+> +       done
+> +
+> +       restore_tree_state
+> +       trap 'rm -rf "$tmp_dir"' EXIT
+> +}
+> +
+> +# Check file list for UAPI compatibility
+> +check_uapi_files() {
+> +       local -r check_all=3D"$1"
+> +       local -r base_ref=3D"$2"
+> +       local -r ref=3D"$3"
+> +
+> +       install_headers "$check_all" "$base_ref" "$ref"
+> +
+> +       local passed=3D0;
+> +       local failed=3D0;
+> +       local -a threads=3D()
+> +
+> +       printf "Checking changes to UAPI headers between %s and %s\n" "$r=
+ef" "${base_ref:-dirty tree}"
+> +       while read -r status file; do
+> +               if [ "${#threads[@]}" -ge "$MAX_THREADS" ]; then
+> +                       if wait "${threads[0]}"; then
+> +                               passed=3D$((passed + 1))
+> +                       else
+> +                               failed=3D$((failed + 1))
+> +                       fi
+> +                       threads=3D("${threads[@]:1}")
+> +               fi
+> +
+> +               check_individual_file "$base_ref" "$ref" "$status" "$file=
+" &
+> +               threads+=3D("$!")
+> +       done < <(get_uapi_files "$check_all" "$base_ref" "$ref")
+> +
+> +       for t in "${threads[@]}"; do
+> +               if wait "$t"; then
+> +                       passed=3D$((passed + 1))
+> +               else
+> +                       failed=3D$((failed + 1))
+> +               fi
+> +       done
+> +
+> +       if [ "$check_all" =3D "true" ]; then
+> +               scope=3D$(printf "UAPI headers compatible with %s" "$ARCH=
+")
+> +       else
+> +               scope=3D$(printf "UAPI headers modified between %s and %s=
+" "$ref" "${base_ref:-dirty tree}")
+> +       fi
+> +
+> +       total=3D"$((passed + failed))"
+> +       if [ "$failed" -gt 0 ]; then
+> +               eprintf "error - %d/%d %s appear _not_ to be backwards co=
+mpatible\n" "$failed" "$total" "$scope"
+> +       else
+> +               printf "All %d %s appear to be backwards compatible\n" "$=
+total" "$scope"
+> +       fi
+> +
+> +       if [ "$check_all" =3D "true" ]; then
+> +               printf "Note: UAPI headers for architectures other than %=
+s were not checked\n" "$ARCH"
+> +       fi
+> +
+> +       return "$failed"
+> +}
+> +
+> +# Print the path to a given header in the tmp_dir
+> +get_header() {
+> +       local -r ref=3D"$1"
+> +       local -r arch=3D"$2"
+> +       local -r base=3D"$3"
+> +
+> +       if [ -z "$arch" ]; then
+> +               printf "%s" "${tmp_dir}/${ref}/usr/${base}"
+> +       else
+> +               printf "%s" "${tmp_dir}/${ref}/usr/$(printf "%s" "$base" =
+| cut -d '/' -f 3-)"
+> +       fi
+> +}
+> +
+> +# Check an individual file for UAPI compatibility
+> +check_individual_file() {
+> +       local -r base_ref=3D"$1"
+> +       local -r ref=3D"$2"
+> +       local -r status=3D"$3"
+> +       local -r file=3D"$4"
+> +
+> +       local -r base=3D${file/uapi\//}
+> +       local -r uapi_arch=3D"$(printf "%s" "$file" | grep -o 'arch/.*/ua=
+pi' | cut -d '/' -f 2)"
+> +       local -r base_header=3D$(get_header "$base_ref" "$uapi_arch" "$ba=
+se")
+> +       local -r ref_header=3D$(get_header "$ref" "$uapi_arch" "$base")
+> +       local -r installed_base=3D"$(printf "%s" "$base_header" | grep -o=
+ "usr/include/.*" | cut -d '/' -f 3-)"
+> +
+> +       if [ "$status" =3D "D" ]; then
+> +               eprintf "error - UAPI header %s was incorrectly removed\n=
+" "$file" | tee "${base_header}.error"
+> +               return 1
+> +       fi
+> +
+> +       # shellcheck disable=3DSC2076
+> +       if [[ " $(get_no_header_list | xargs) " =3D~ " $installed_base " =
+]]; then
+> +               printf "warning - %s cannot be tested by this script (see=
+ usr/include/Makefile)\n" "$file" | tee "${base_header}.error"
+> +               return 1
+> +       fi
+> +
+> +       # shellcheck disable=3DSC2076
+> +       if [[ " $(get_no_export_list | xargs) " =3D~ " $installed_base " =
+]]; then
+> +               printf "warning - %s is not exported by the %s architectu=
+re, so cannot be tested\n" "$file" "$ARCH" | tee "${base_header}.error"
+> +               return 1
+> +       fi
+> +
+> +       for h in "$base_header" "$ref_header"; do
+> +               if [ ! -f "$h" ]; then
+> +                       eprintf "error - %s does not exist - cannot compa=
+re ABI\n" "$h" | tee "${h}.error"
+> +                       return 1
+> +               fi
+> +       done
+> +
+> +       compare_abi "$file" "$base_header" "$ref_header" "$base_ref" "$re=
+f"
+> +}
+> +
+> +# Perform the A/B compilation and compare output ABI
+> +compare_abi() {
+> +       local -r file=3D"$1"
+> +       local -r base_header=3D"$2"
+> +       local -r ref_header=3D"$3"
+> +       local -r base_ref=3D"$4"
+> +       local -r ref=3D"$5"
+> +       local -r log=3D"${tmp_dir}/log/$(basename "$file").log"
+> +
+> +       mkdir -p "$(dirname "$log")"
+> +
+> +       if ! do_compile "${tmp_dir}/${base_ref}/usr/include" "$base_heade=
+r" "${base_header}.bin" 2> "$log"; then
+> +               eprintf "error - couldn't compile version of UAPI header =
+%s at %s\n" "$file" "$base_ref"
+> +               cat "$log" >&2
+> +               exit "$FAIL_COMPILE"
+> +       fi
+> +
+> +       if ! do_compile "${tmp_dir}/${ref}/usr/include" "$ref_header" "${=
+ref_header}.bin" 2> "$log"; then
+> +               eprintf "error - couldn't compile version of UAPI header =
+%s at %s\n" "$file" "$ref"
+> +               cat "$log" >&2
+> +               exit "$FAIL_COMPILE"
+> +       fi
+> +
+> +       "$ABIDIFF" --non-reachable-types "${ref_header}.bin" "${base_head=
+er}.bin" > "$log" && ret=3D"$?" || ret=3D"$?"
+> +       if [ "$ret" -eq 0 ]; then
+> +               if [ "$VERBOSE" =3D "true" ]; then
+> +                       printf "No ABI differences detected in %s from %s=
+ -> %s\n" "$file" "$ref" "${base_ref:-dirty tree}"
+> +               fi
+> +       else
+> +               # Bits in abidiff's return code can be used to determine =
+the type of error
+> +               if [ $(("$ret" & 0x1)) -gt 0 ]; then
+> +                       eprintf "error - abidiff did not run properly\n"
+> +                       exit 1
+> +               fi
+> +
+> +               # If the only changes were additions (not modifications t=
+o existing APIs), then
+> +               # there's no problem. Ignore these diffs.
+> +               if grep "Unreachable types summary" "$log" | grep -q "0 r=
+emoved" &&
+> +                  grep "Unreachable types summary" "$log" | grep -q "0 c=
+hanged"; then
+> +                       return 0
+> +               fi
+> +               {
+> +                       printf "!!! ABI differences detected in %s from %=
+s -> %s !!!\n\n" "$file" "$ref" "${base_ref:-dirty tree}"
+> +                       sed  -e '/summary:/d' -e '/changed type/d' -e '/^=
+$/d' -e 's/^/  /g' "$log"
+> +
+> +                       if ! cmp "$ref_header" "$base_header" > /dev/null=
+ 2>&1; then
+> +                               printf "\nHeader file diff (after headers=
+_install):\n"
+> +                               diff -Naur "$ref_header" "$base_header" \
+> +                                       | sed -e "s|${ref_header}|${ref}/=
+${file}|g" \
+> +                                             -e "s|${base_header}|${base=
+_ref:-dirty}/${file}|g"
+> +                               printf "\n"
+> +                       else
+> +                               printf "\n%s did not change between %s an=
+d %s...\n" "$file" "$ref" "${base_ref:-dirty tree}"
+> +                               printf "It's possible a change to one of =
+the headers it includes caused this error:\n"
+> +                               grep '^#include' "$base_header"
+> +                               printf "\n"
+> +                       fi
+> +               } | tee "${base_header}.error" >&2
+> +               return 1
+> +       fi
+> +}
+> +
+> +min_version_is_satisfied() {
+> +       local -r min_version=3D"$1"
+> +       local -r version_installed=3D"$2"
+> +
+> +       printf "%s\n%s\n" "$min_version" "$version_installed" | sort -Vc =
+> /dev/null 2>&1
+> +}
+> +
+> +# Make sure we have the tools we need
+> +check_deps() {
+> +       ABIDIFF=3D"${ABIDIFF:-abidiff}"
+> +       CC=3D"${CC:-gcc}"
+> +       ARCH=3D"${ARCH:-$(uname -m)}"
+> +       if [ "$ARCH" =3D "x86_64" ]; then
+> +               ARCH=3D"x86"
+> +       fi
+> +
+> +       local -r abidiff_min_version=3D"1.7"
+> +       local -r libdw_min_version_if_clang=3D"0.171"
+> +
+> +       if ! command -v "$ABIDIFF" > /dev/null 2>&1; then
+> +               eprintf "error - abidiff not found!\n"
+> +               eprintf "Please install abigail-tools version %s or great=
+er\n" "$abidiff_min_version"
+> +               eprintf "See: https://sourceware.org/libabigail/manual/li=
+babigail-overview.html\n"
+> +               exit "$FAIL_PREREQ"
+> +       fi
+> +
+> +       local -r abidiff_version=3D"$("$ABIDIFF" --version | cut -d ' ' -=
+f 2)"
+> +       if ! min_version_is_satisfied "$abidiff_min_version" "$abidiff_ve=
+rsion"; then
+> +               eprintf "error - abidiff version too old: %s\n" "$abidiff=
+_version"
+> +               eprintf "Please install abigail-tools version %s or great=
+er\n" "$abidiff_min_version"
+> +               eprintf "See: https://sourceware.org/libabigail/manual/li=
+babigail-overview.html\n"
+> +               exit "$FAIL_PREREQ"
+> +       fi
+> +
+> +       if ! command -v "$CC" > /dev/null 2>&1; then
+> +               eprintf 'error - %s not found\n' "$CC"
+> +               exit "$FAIL_PREREQ"
+> +       fi
+> +
+> +       if "$CC" --version | grep -q clang; then
+> +               local -r libdw_version=3D"$(ldconfig -v 2>/dev/null | gre=
+p -v SKIPPED | grep -m 1 -o 'libdw-[0-9]\+.[0-9]\+' | cut -c 7-)"
+> +               if ! min_version_is_satisfied "$libdw_min_version_if_clan=
+g" "$libdw_version"; then
+> +                       eprintf "error - libdw version too old for use wi=
+th clang: %s\n" "$libdw_version"
+> +                       eprintf "Please install libdw from elfutils versi=
+on %s or greater\n" "$libdw_min_version_if_clang"
+> +                       eprintf "See: https://sourceware.org/elfutils/\n"
+> +                       exit "$FAIL_PREREQ"
+> +               fi
+> +       fi
+> +
+> +       if [ ! -d "arch/${ARCH}" ]; then
+> +               eprintf 'error - ARCH "%s" is not a subdirectory under ar=
+ch/\n' "$ARCH"
+> +               eprintf "Please set ARCH to one of:\n%s\n" "$(find arch -=
+maxdepth 1 -mindepth 1 -type d -printf '%f ' | fmt)"
+> +               exit "$FAIL_PREREQ"
+> +       fi
+> +}
+> +
+> +run() {
+> +       local base_ref=3D"$1"
+> +       local -r check_all=3D"$2"
+> +       shift 2
+> +       local -r orig_args=3D"$*"
+> +       if [ -z "$KERNEL_SRC" ]; then
+> +               KERNEL_SRC=3D"$(realpath "$(dirname "$0")"/..)"
+> +       fi
+> +
+> +       cd "$KERNEL_SRC"
+> +
+> +       abi_error_log=3D"${abi_error_log:-${KERNEL_SRC}/abi_error_log.txt=
+}"
+> +
+> +       tmp_dir=3D$(mktemp -d)
+> +       trap 'rm -rf "$tmp_dir"' EXIT
+> +
+> +       check_deps
+> +
+> +       # Set of UAPI directories to check by default
+> +       UAPI_DIRS=3D(include/uapi arch/*/include/uapi)
+> +       GIT_ARGS=3D"--name-status --no-renames --format=3D --diff-filter=
+=3Da -- ${UAPI_DIRS[*]/%/\/*.h}"
+> +
+> +       if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+> +               eprintf "error - this script requires the kernel tree to =
+be initialized with Git\n"
+> +               exit "$FAIL_PREREQ"
+> +       fi
+> +
+> +       # If there are no dirty UAPI files, use HEAD as base_ref
+> +       # shellcheck disable=3DSC2086
+> +       if [ -z "$base_ref" ] && git diff --exit-code $GIT_ARGS > /dev/nu=
+ll 2>&1; then
+
+
+I think this behavior is difficult to understand.
+
+I think it is clearer to do 'git diff' for the entire tree
+when you determine the base_ref.
+
+
+
+
+
+> +               base_ref=3D"HEAD"
+> +       fi
+> +
+> +       if [ -z "$past_ref" ]; then
+> +               if [ -n "$base_ref" ]; then
+> +                       past_ref=3D"${base_ref}^1"
+> +               else
+> +                       past_ref=3D"HEAD"
+> +               fi
+> +       fi
+
+
+
+So, past_ref is set to either ${base_ref}^1 or HEAD here.
+
+
+No quotes are needed for HEAD.
+
+   past_ref=3DHEAD
+
+is enough.
+
+
+
+> +
+> +       if [ -n "$past_ref" ] && ! git rev-parse --verify "$past_ref" > /=
+dev/null 2>&1; then
+
+
+[ -n "$past_ref" ] is always true since past_ref is set to something.
+
+
+
+
+
+
+
+
+> +               printf 'error - invalid git reference "%s"\n' "$past_ref"
+> +               exit "$FAIL_PREREQ"
+> +       fi
+> +
+> +       if [ -n "$base_ref" ]; then
+> +               if ! git merge-base --is-ancestor "$past_ref" "$base_ref"=
+ > /dev/null 2>&1; then
+> +                       printf 'error - "%s" is not an ancestor of base r=
+ef "%s"\n' "$past_ref" "$base_ref"
+> +                       exit "$FAIL_PREREQ"
+> +               fi
+> +       fi
+> +
+> +       if [ "$check_all" !=3D "true" ] && ! get_uapi_files "$check_all" =
+"$base_ref" "$past_ref" > /dev/null; then
+> +               printf "No changes to UAPI headers were applied between %=
+s and %s\n" "$past_ref" "$base_ref"
+> +               exit "$SUCCESS"
+> +       fi
+> +
+> +       if ! check_uapi_files "$check_all" "$base_ref" "$past_ref"; then
+> +               eprintf "error - UAPI header ABI check failed\n"
+> +               {
+> +                       printf 'Generated by "%s %s" from git ref %s\n\n'=
+ "$0" "$orig_args" "$(git rev-parse "HEAD")"
+> +                       find "$tmp_dir" -type f -name '*.error' -exec cat=
+ {} +
+> +               } > "$abi_error_log"
+> +               eprintf "Failure summary saved to %s\n" "$abi_error_log"
+> +               exit "$FAIL_ABI"
+> +       fi
+> +}
+> +
+> +main() {
+> +       MAX_THREADS=3D$(nproc)
+> +       VERBOSE=3D"false"
+> +       local base_ref=3D""
+> +       local check_all=3D"true"
+> +       local quiet=3D"false"
+> +       while getopts "hb:p:mj:l:qv" opt; do
+> +               case $opt in
+> +               h)
+> +                       print_usage
+> +                       exit "$SUCCESS"
+> +                       ;;
+> +               b)
+> +                       base_ref=3D"$OPTARG"
+> +                       ;;
+> +               p)
+> +                       past_ref=3D"$OPTARG"
+> +                       ;;
+> +               m)
+> +                       check_all=3D"false"
+> +                       ;;
+> +               j)
+> +                       MAX_THREADS=3D"$OPTARG"
+> +                       ;;
+> +               l)
+> +                       abi_error_log=3D"$OPTARG"
+> +                       ;;
+> +               q)
+> +                       quiet=3D"true"
+> +                       ;;
+> +               v)
+> +                       VERBOSE=3D"true"
+> +                       ;;
+> +               *)
+> +                       exit "$FAIL_PREREQ"
+> +               esac
+> +       done
+> +
+> +       if [ "$quiet" =3D "true" ]; then
+> +               run "$base_ref" "$check_all" "$@" > /dev/null
+> +       else
+> +               run "$base_ref" "$check_all" "$@"
+> +       fi
+> +}
+> +
+> +main "$@"
+> --
+> 2.17.1
+>
+
+
+--
+Best Regards
+Masahiro Yamada
