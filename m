@@ -2,154 +2,293 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D0486C33EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 15:21:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78D356C33F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 15:22:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231415AbjCUOVY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 10:21:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35260 "EHLO
+        id S230232AbjCUOWb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 10:22:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230509AbjCUOVX (ORCPT
+        with ESMTP id S231217AbjCUOWa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 10:21:23 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C87E421974;
-        Tue, 21 Mar 2023 07:21:12 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B3540B816ED;
-        Tue, 21 Mar 2023 14:21:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD594C433EF;
-        Tue, 21 Mar 2023 14:21:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679408467;
-        bh=3xT7x0pBcWaKYFo4t2LsM4NDEaF9mrj6optAqDsUUfI=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=Do3KnLCv/NfjHYqjDAN5uTwu6A+DlEa+P/AubBV0oUU+CoWR5CBI6SHknFw7RqVdz
-         k/3YY49JUe4COz7v+/E+PjZj8AxIsXfDfMDTuDTnNaLcFeaIMTgRungIqtIvo4lEOa
-         i0UPLntBQU6T2hV22IQqqOlXV8dCwLHcAh6v7lEJxirMBo7Y22hCi05q4VKrjZuOsu
-         0EdCCfJBO1GUCaL0L7LQz7MvadtVjnZyKZjmoNa53Ndxy8mnmOqCfz9LjsqYySbFUz
-         ECkyFe25VHJ3uWTYmv9ccyNooRPyRBSEwhD5pTaW0zJBRRT3CmF0qMYpLW7dRC03bT
-         59szPWCgBsbfw==
-Message-ID: <f8baed88-6a3b-17c5-4134-ce3917ee8632@kernel.org>
-Date:   Tue, 21 Mar 2023 16:21:03 +0200
+        Tue, 21 Mar 2023 10:22:30 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B1E42A9B5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 07:22:26 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id o12so60344383edb.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 07:22:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679408545;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jmucUrqyd/MnyOVAm1ejfduqN0HRUOWtSQ0Le0BhDUA=;
+        b=ArVS4qWOC6um6eUCwvOLZiQB4j9zKlC0VpZSAMTugyVyu0Psz3DHS3BQhRPTQ1M6yz
+         +JzS+CX+6SXP9uQX3kGoMFAS0VKea38e/40Tz5nWLx7h5CCvZwH9nyiOAn6xTB/6m9EU
+         1iQ+6Ku3wdAq+U9VfGMfrO+Hd+GCFeQS2TQleNS2P1xXRTic8DJhNqkSruWQFoT49ArT
+         GdqAjKYeD3uGpZa6zqcyVP6HVxNdYLIeY0cQeMf9o+AJK/JmEAC4EoPehqp3m9Xjzj/Y
+         YyDgKomCeLSohY2MXdATkrW+LMxsx4vMJAtDN8mcl37x3dtaogC4HxEqj41jV/oC0h5n
+         NaFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679408545;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jmucUrqyd/MnyOVAm1ejfduqN0HRUOWtSQ0Le0BhDUA=;
+        b=A0F0R3pXR1W3fYLsBwYy0BBAjMf1yuTh7Mz7sLtr10KCZ1Dka+3EZD/hAAh+Vfu2xx
+         UOkFY2L8vqv9R/lDldL8GI85P6FXQcnIUVd3qAiSY07wLseIex1uqyWmRNVwIyPo3jAK
+         FshRybeCMcULGrJNNrRgUQwMwYO8YBrnUMGvXPb4nqBRvpq41yktmPJZUkDf1yPYsDiq
+         JPjZOBnvw7WIIe86diwpsVdoSGv5jUdovz2Fd6rxBiLSQ8cS+g90EsWd+/eQ/wAP0gJJ
+         /HXtQccsFgSXj29Tqe0EqCVUn2nlUOkW8MxhhaFERWkO7MTbESCrxxP+jWCTTBowqDN3
+         LQPw==
+X-Gm-Message-State: AO0yUKUjUAYzOcSU+BCf3fj9l67nGrI/16dRddwEE1aFZgLGKrig3VyA
+        DWTb9f7l7BG1huZdiN4L2OcWgA==
+X-Google-Smtp-Source: AK7set/D4BxAud5yooLeJMznBZZWW1+2FHW7UxONsijkvmadhk3b5rTv5/Lzj0oXdj8DjGRk6QT1XA==
+X-Received: by 2002:aa7:c04a:0:b0:4a2:5652:d8ba with SMTP id k10-20020aa7c04a000000b004a25652d8bamr3454251edo.18.1679408544853;
+        Tue, 21 Mar 2023 07:22:24 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id g3-20020a50d5c3000000b004fb17f10326sm6385484edj.10.2023.03.21.07.22.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Mar 2023 07:22:24 -0700 (PDT)
+Message-ID: <e99db638-8610-831b-2e3b-d875000e93e2@linaro.org>
+Date:   Tue, 21 Mar 2023 14:22:19 +0000
 MIME-Version: 1.0
-Subject: Re: [PATCH v7 2/9] interconnect: qcom: rpm: Add support for
- specifying channel num
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v11 04/26] virt: gunyah: Add hypercalls to identify Gunyah
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230228-topic-qos-v7-0-815606092fff@linaro.org>
- <20230228-topic-qos-v7-2-815606092fff@linaro.org>
- <2f54ae85-f7b9-4666-cc05-6aa034028789@kernel.org>
- <38fe0736-b566-9e1b-d7f3-71e3fcd01d90@linaro.org>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <38fe0736-b566-9e1b-d7f3-71e3fcd01d90@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230304010632.2127470-1-quic_eberman@quicinc.com>
+ <20230304010632.2127470-5-quic_eberman@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230304010632.2127470-5-quic_eberman@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21.03.23 16:09, Konrad Dybcio wrote:
+
+
+On 04/03/2023 01:06, Elliot Berman wrote:
+> Add hypercalls to identify when Linux is running a virtual machine under
+> Gunyah.
 > 
-> On 21.03.2023 15:06, Georgi Djakov wrote:
->> Hi Konrad,
->>
->> Thanks for the patch!
->>
->> On 8.03.23 23:40, Konrad Dybcio wrote:
->>> Some nodes, like EBI0 (DDR) or L3/LLCC, may be connected over more than
->>> one channel. This should be taken into account in bandwidth calcualtion,
->>> as we're supposed to feed msmbus with the per-channel bandwidth. Add
->>> support for specifying that and use it during bandwidth aggregation.
->>>
->>
->> This looks good, but do you have any follow-up patch to use this and set
->> the channels in some driver?
-> Yes, I have a couple of OOT drivers that are gonna make use of it.
-> TBF it should have been sent separately from the QoS mess, but I
-> don't think it's much of an issue to take it as-is.
+> There are two calls to help identify Gunyah:
 > 
-> The aforementioned OOT drivers for MSM8998 and SM6375 will be
-> submitted after we reach a consensus on how we want to ensure
-> that each node is guaranteed to have its clocks enabled before
-> access, among some other minor things.
+> 1. gh_hypercall_get_uid() returns a UID when running under a Gunyah
+>     hypervisor.
+> 2. gh_hypercall_hyp_identify() returns build information and a set of
+>     feature flags that are supported by Gunyah.
+> 
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 
-Yes, these QoS clocks are confusing. Maybe you can even submit them
-without configuring any QoS stuff in first place? Does enabling QoS
-actually show any benefits on these devices?
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-Thanks,
-Georgi
-
-> Konrad
->>
->> BR,
->> Georgi
->>
->>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->>>    drivers/interconnect/qcom/icc-rpm.c | 7 ++++++-
->>>    drivers/interconnect/qcom/icc-rpm.h | 2 ++
->>>    2 files changed, 8 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
->>> index 35fd75ae70e3..27c4c6497994 100644
->>> --- a/drivers/interconnect/qcom/icc-rpm.c
->>> +++ b/drivers/interconnect/qcom/icc-rpm.c
->>> @@ -317,6 +317,7 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
->>>    {
->>>        struct icc_node *node;
->>>        struct qcom_icc_node *qn;
->>> +    u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
->>>        int i;
->>>          /* Initialise aggregate values */
->>> @@ -334,7 +335,11 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
->>>        list_for_each_entry(node, &provider->nodes, node_list) {
->>>            qn = node->data;
->>>            for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
->>> -            agg_avg[i] += qn->sum_avg[i];
->>> +            if (qn->channels)
->>> +                sum_avg[i] = div_u64(qn->sum_avg[i], qn->channels);
->>> +            else
->>> +                sum_avg[i] = qn->sum_avg[i];
->>> +            agg_avg[i] += sum_avg[i];
->>>                agg_peak[i] = max_t(u64, agg_peak[i], qn->max_peak[i]);
->>>            }
->>>        }
->>> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
->>> index 8ba1918d7997..8aed5400afda 100644
->>> --- a/drivers/interconnect/qcom/icc-rpm.h
->>> +++ b/drivers/interconnect/qcom/icc-rpm.h
->>> @@ -66,6 +66,7 @@ struct qcom_icc_qos {
->>>     * @id: a unique node identifier
->>>     * @links: an array of nodes where we can go next while traversing
->>>     * @num_links: the total number of @links
->>> + * @channels: number of channels at this node (e.g. DDR channels)
->>>     * @buswidth: width of the interconnect between a node and the bus (bytes)
->>>     * @sum_avg: current sum aggregate value of all avg bw requests
->>>     * @max_peak: current max aggregate value of all peak bw requests
->>> @@ -78,6 +79,7 @@ struct qcom_icc_node {
->>>        u16 id;
->>>        const u16 *links;
->>>        u16 num_links;
->>> +    u16 channels;
->>>        u16 buswidth;
->>>        u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
->>>        u64 max_peak[QCOM_ICC_NUM_BUCKETS];
->>>
->>
-
+> ---
+>   arch/arm64/Kbuild                    |  1 +
+>   arch/arm64/gunyah/Makefile           |  3 ++
+>   arch/arm64/gunyah/gunyah_hypercall.c | 64 ++++++++++++++++++++++++++++
+>   drivers/virt/Kconfig                 |  2 +
+>   drivers/virt/gunyah/Kconfig          | 13 ++++++
+>   include/linux/gunyah.h               | 28 ++++++++++++
+>   6 files changed, 111 insertions(+)
+>   create mode 100644 arch/arm64/gunyah/Makefile
+>   create mode 100644 arch/arm64/gunyah/gunyah_hypercall.c
+>   create mode 100644 drivers/virt/gunyah/Kconfig
+> 
+> diff --git a/arch/arm64/Kbuild b/arch/arm64/Kbuild
+> index 5bfbf7d79c99..e4847ba0e3c9 100644
+> --- a/arch/arm64/Kbuild
+> +++ b/arch/arm64/Kbuild
+> @@ -3,6 +3,7 @@ obj-y			+= kernel/ mm/ net/
+>   obj-$(CONFIG_KVM)	+= kvm/
+>   obj-$(CONFIG_XEN)	+= xen/
+>   obj-$(subst m,y,$(CONFIG_HYPERV))	+= hyperv/
+> +obj-$(CONFIG_GUNYAH)	+= gunyah/
+>   obj-$(CONFIG_CRYPTO)	+= crypto/
+>   
+>   # for cleaning
+> diff --git a/arch/arm64/gunyah/Makefile b/arch/arm64/gunyah/Makefile
+> new file mode 100644
+> index 000000000000..84f1e38cafb1
+> --- /dev/null
+> +++ b/arch/arm64/gunyah/Makefile
+> @@ -0,0 +1,3 @@
+> +# SPDX-License-Identifier: GPL-2.0
+> +
+> +obj-$(CONFIG_GUNYAH) += gunyah_hypercall.o
+> diff --git a/arch/arm64/gunyah/gunyah_hypercall.c b/arch/arm64/gunyah/gunyah_hypercall.c
+> new file mode 100644
+> index 000000000000..0d14e767e2c8
+> --- /dev/null
+> +++ b/arch/arm64/gunyah/gunyah_hypercall.c
+> @@ -0,0 +1,64 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/arm-smccc.h>
+> +#include <linux/module.h>
+> +#include <linux/gunyah.h>
+> +#include <linux/uuid.h>
+> +
+> +static const uuid_t gh_known_uuids[] = {
+> +	/* Qualcomm's version of Gunyah {19bd54bd-0b37-571b-946f-609b54539de6} */
+> +	UUID_INIT(0x19bd54bd, 0x0b37, 0x571b, 0x94, 0x6f, 0x60, 0x9b, 0x54, 0x53, 0x9d, 0xe6),
+> +	/* Standard version of Gunyah {c1d58fcd-a453-5fdb-9265-ce36673d5f14} */
+> +	UUID_INIT(0xc1d58fcd, 0xa453, 0x5fdb, 0x92, 0x65, 0xce, 0x36, 0x67, 0x3d, 0x5f, 0x14),
+> +};
+> +
+> +bool arch_is_gh_guest(void)
+> +{
+> +	struct arm_smccc_res res;
+> +	uuid_t uuid;
+> +	int i;
+> +
+> +	arm_smccc_1_1_hvc(ARM_SMCCC_VENDOR_HYP_CALL_UID_FUNC_ID, &res);
+> +
+> +	((u32 *)&uuid.b[0])[0] = lower_32_bits(res.a0);
+> +	((u32 *)&uuid.b[0])[1] = lower_32_bits(res.a1);
+> +	((u32 *)&uuid.b[0])[2] = lower_32_bits(res.a2);
+> +	((u32 *)&uuid.b[0])[3] = lower_32_bits(res.a3);
+> +
+> +	for (i = 0; i < ARRAY_SIZE(gh_known_uuids); i++)
+> +		if (uuid_equal(&uuid, &gh_known_uuids[i]))
+> +			return true;
+> +
+> +	return false;
+> +}
+> +EXPORT_SYMBOL_GPL(arch_is_gh_guest);
+> +
+> +#define GH_HYPERCALL(fn)	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_64, \
+> +						   ARM_SMCCC_OWNER_VENDOR_HYP, \
+> +						   fn)
+> +
+> +#define GH_HYPERCALL_HYP_IDENTIFY		GH_HYPERCALL(0x8000)
+> +
+> +/**
+> + * gh_hypercall_hyp_identify() - Returns build information and feature flags
+> + *                               supported by Gunyah.
+> + * @hyp_identity: filled by the hypercall with the API info and feature flags.
+> + */
+> +void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity)
+> +{
+> +	struct arm_smccc_res res;
+> +
+> +	arm_smccc_1_1_hvc(GH_HYPERCALL_HYP_IDENTIFY, &res);
+> +
+> +	hyp_identity->api_info = res.a0;
+> +	hyp_identity->flags[0] = res.a1;
+> +	hyp_identity->flags[1] = res.a2;
+> +	hyp_identity->flags[2] = res.a3;
+> +}
+> +EXPORT_SYMBOL_GPL(gh_hypercall_hyp_identify);
+> +
+> +MODULE_LICENSE("GPL");
+> +MODULE_DESCRIPTION("Gunyah Hypervisor Hypercalls");
+> diff --git a/drivers/virt/Kconfig b/drivers/virt/Kconfig
+> index f79ab13a5c28..85bd6626ffc9 100644
+> --- a/drivers/virt/Kconfig
+> +++ b/drivers/virt/Kconfig
+> @@ -54,4 +54,6 @@ source "drivers/virt/coco/sev-guest/Kconfig"
+>   
+>   source "drivers/virt/coco/tdx-guest/Kconfig"
+>   
+> +source "drivers/virt/gunyah/Kconfig"
+> +
+>   endif
+> diff --git a/drivers/virt/gunyah/Kconfig b/drivers/virt/gunyah/Kconfig
+> new file mode 100644
+> index 000000000000..1a737694c333
+> --- /dev/null
+> +++ b/drivers/virt/gunyah/Kconfig
+> @@ -0,0 +1,13 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +
+> +config GUNYAH
+> +	tristate "Gunyah Virtualization drivers"
+> +	depends on ARM64
+> +	depends on MAILBOX
+> +	help
+> +	  The Gunyah drivers are the helper interfaces that run in a guest VM
+> +	  such as basic inter-VM IPC and signaling mechanisms, and higher level
+> +	  services such as memory/device sharing, IRQ sharing, and so on.
+> +
+> +	  Say Y/M here to enable the drivers needed to interact in a Gunyah
+> +	  virtual environment.
+> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
+> index 54b4be71caf7..bd080e3a6fc9 100644
+> --- a/include/linux/gunyah.h
+> +++ b/include/linux/gunyah.h
+> @@ -6,8 +6,10 @@
+>   #ifndef _LINUX_GUNYAH_H
+>   #define _LINUX_GUNYAH_H
+>   
+> +#include <linux/bitfield.h>
+>   #include <linux/errno.h>
+>   #include <linux/limits.h>
+> +#include <linux/types.h>
+>   
+>   /******************************************************************************/
+>   /* Common arch-independent definitions for Gunyah hypercalls                  */
+> @@ -80,4 +82,30 @@ static inline int gh_remap_error(enum gh_error gh_error)
+>   	}
+>   }
+>   
+> +enum gh_api_feature {
+> +	GH_FEATURE_DOORBELL = 1,
+> +	GH_FEATURE_MSGQUEUE = 2,
+> +	GH_FEATURE_VCPU = 5,
+> +	GH_FEATURE_MEMEXTENT = 6,
+> +};
+> +
+> +bool arch_is_gh_guest(void);
+> +
+> +u16 gh_api_version(void);
+> +bool gh_api_has_feature(enum gh_api_feature feature);
+> +
+> +#define GH_API_V1			1
+> +
+> +#define GH_API_INFO_API_VERSION_MASK	GENMASK_ULL(13, 0)
+> +#define GH_API_INFO_BIG_ENDIAN		BIT_ULL(14)
+> +#define GH_API_INFO_IS_64BIT		BIT_ULL(15)
+> +#define GH_API_INFO_VARIANT_MASK	GENMASK_ULL(63, 56)
+> +
+> +struct gh_hypercall_hyp_identify_resp {
+> +	u64 api_info;
+> +	u64 flags[3];
+> +};
+> +
+> +void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity);
+> +
+>   #endif
