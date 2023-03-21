@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3DB26C2C19
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 09:15:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D7FCE6C2C1E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 09:17:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230515AbjCUIPG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 04:15:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56668 "EHLO
+        id S231229AbjCUIRW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 04:17:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230526AbjCUIOW (ORCPT
+        with ESMTP id S231219AbjCUIQm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 04:14:22 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21C22FF08
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 01:14:18 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id eg48so56241990edb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 01:14:18 -0700 (PDT)
+        Tue, 21 Mar 2023 04:16:42 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F40FF28D3C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 01:16:29 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id t5so19563314edd.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 01:16:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679386456;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1679386588;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=/GlY80fVC6uH/ZqU7yXSUIACPGr/6fR1rzfz7PKIC1U=;
-        b=XTHClEkFj9/GzezOJiRBJAo+Tywih9fsnGLCx2EvfPO7EkU3qr0lhvujZ4rV/hC0bA
-         AQzYjyLPOMFzqaZRQNA1Hxz63j2WJ92NwAyEG19ijt2gJb1h1nT92mk7a+ADJpaLc2e7
-         jFytPhvYu6J1WM7YTxzs57YNFmKYVV2BWBRBjnOwgUHjAuopWFAQUVCrzb1Wb5KZnHrY
-         VelFH6I+KLmKhYtvQdVPZca5ss7DQZTbQ2Z6wf1VUAasYPb848o2f3kJqWRkWA/7vJxa
-         xXaYt68thkNcW5U3sUxorS9a6d+oVSnF1fyvyTfSyWb5H8c9CClCTZuj2H3xTQNJFAV9
-         IonQ==
+        bh=tBxCksv4+AUPTCqkuOrtfjmwuvWpCvtIaxZde9QVqzY=;
+        b=pXZtkMEqXzy0+xoqJLrZHYn0grjE1FgS1loxdgHeqZeGobhsZRyzNycuDfCxznPX0g
+         LmtQbSEXhx7RRNabeE43+TLfPdnj0v/uADhnftBE8R6c9RjygcjtZ6kAr7BAAlIgWHTz
+         CpTojZqkED840eapTpL6oncMLUKBtl4cK5ioVvg4Gs9lrjW5fhOg0jc10Rt/9hEu5isa
+         t/Hu6nTuaHfPn7qNphkydJOkT6GbuwagDUn7c30s4NIlba0fzZPbWga/+bTi3p+FJwUQ
+         FPDhHj24MlwWLEzLGtghug6hs7L2FK2Ih2c3rY7pw/kz6L9J2H2syAmLA4zbRYOnVffg
+         xajg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679386456;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20210112; t=1679386588;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/GlY80fVC6uH/ZqU7yXSUIACPGr/6fR1rzfz7PKIC1U=;
-        b=hrRBfvx3tHBeYjd7RTXqaP6YYvjuS71CcM+473Q5kSUWeMuFwm30DO80qtOySNf277
-         YWG8cl1ME10n2UgjkN27zXDGZt2DIW6qyHrfqpoiUrJBnapsUYS1efyPvEI8a0NUlcab
-         wDzcVUBBcT2yeIWpgKCMRMPv20aiuVjxthDfaXUfrGfd3Ea30Rr/NejdiYsEViPxNpms
-         vus2vno2TS8pzrIWme5qVapQ1cOnXxp+fY+6liHUKCtNRde3u1Dx3RkZHUGmoqW0gE8B
-         0IK7lc5ApDheHJKHp7KeWyHlu8L4A8k02vIaD9hxbIVGKyVSA/UFi0LV4DG0kZrlTCtU
-         ug5A==
-X-Gm-Message-State: AO0yUKVwTTEYUTdcnd8D7erZbz4aLLEkJfZIBx94aB0JnSFQmMRiu755
-        MntDLj5pYTRtPV9ylocRhMMcGg==
-X-Google-Smtp-Source: AK7set+KavFTi/5gL3fFGZNK4zqO5JayQgZGCYyegKnxMgWSDSLPf/Gpn9hgDWKSYK0FTrdYRdNBLA==
-X-Received: by 2002:a17:906:2756:b0:931:d350:9aef with SMTP id a22-20020a170906275600b00931d3509aefmr2159037ejd.25.1679386456630;
-        Tue, 21 Mar 2023 01:14:16 -0700 (PDT)
+        bh=tBxCksv4+AUPTCqkuOrtfjmwuvWpCvtIaxZde9QVqzY=;
+        b=Gc6bECNjR8Ngqj7NnvvSMiWvPvqit0aYfCc9uZA4pnB6KZvILpTEi+KgxszHSAambj
+         woEmg21bopDDldFZHr6sMR2iMOEb73/rqJUZjKJ0WJCEILvT/U3+Xd0o5pbvIPxgd0+h
+         HAJdZc1SFFQyGsvl31P4+hvzv8HdrWXECmL3q/Y22HZ6rADwoKik53kYxBIliN0tW1YR
+         LhlUdKRyVISau43G5Z/MAwAjkVsnXnhc28ckk2yLIqp/Jce56OkNdGxx0CqLRjB1Rhvs
+         70KxTnIsit22EKg3it4TqiFddHrviFS1dhd2OT8py3ma8kSzOSjT1y/0nz9UdiF6Zehn
+         b35A==
+X-Gm-Message-State: AO0yUKXkEax7wsYN5qGBGdxRKUr7YEdIopGau33jhU77M5KJDtGxgdKU
+        InpVaTV6UGt9euotQ7Ss4Xz2GQ==
+X-Google-Smtp-Source: AK7set9DFIlXBqYvUREvhQe/bGFPfuG9JsCCS2yRE6Ey5jvk6WdvPtAZWoSQxRPdwK+vRjhIsrAZCA==
+X-Received: by 2002:a05:6402:114d:b0:4fe:9374:30d0 with SMTP id g13-20020a056402114d00b004fe937430d0mr2038401edw.39.1679386588525;
+        Tue, 21 Mar 2023 01:16:28 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:2142:d8da:5ae4:d817? ([2a02:810d:15c0:828:2142:d8da:5ae4:d817])
-        by smtp.gmail.com with ESMTPSA id m20-20020a170906259400b0092b8c1f41ebsm5411140ejb.24.2023.03.21.01.14.15
+        by smtp.gmail.com with ESMTPSA id r3-20020a50d683000000b004c0239e41d8sm5847287edi.81.2023.03.21.01.16.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 01:14:16 -0700 (PDT)
-Message-ID: <a8356f76-189d-928b-1a1c-f4171de1e2d0@linaro.org>
-Date:   Tue, 21 Mar 2023 09:14:15 +0100
+        Tue, 21 Mar 2023 01:16:28 -0700 (PDT)
+Message-ID: <09463d3e-0b80-f8d8-d358-cddae75484bf@linaro.org>
+Date:   Tue, 21 Mar 2023 09:16:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
 Subject: Re: [PATCH 1/3] dt-bindings: wireless: add ath11k pcie bindings
 Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Kalle Valo <kvalo@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>
@@ -73,8 +74,8 @@ Cc:     "David S. Miller" <davem@davemloft.net>,
         linux-kernel@vger.kernel.org
 References: <20230320104658.22186-1-johan+linaro@kernel.org>
  <20230320104658.22186-2-johan+linaro@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230320104658.22186-2-johan+linaro@kernel.org>
+ <a8356f76-189d-928b-1a1c-f4171de1e2d0@linaro.org>
+In-Reply-To: <a8356f76-189d-928b-1a1c-f4171de1e2d0@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,60 +88,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/03/2023 11:46, Johan Hovold wrote:
-> Add devicetree bindings for Qualcomm ath11k PCIe devices such as WCN6856
-> for which the calibration data variant may need to be described.
+On 21/03/2023 09:14, Krzysztof Kozlowski wrote:
+> On 20/03/2023 11:46, Johan Hovold wrote:
+>> Add devicetree bindings for Qualcomm ath11k PCIe devices such as WCN6856
+>> for which the calibration data variant may need to be described.
+>>
+>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>> ---
+>>  .../bindings/net/wireless/pci17cb,1103.yaml   | 56 +++++++++++++++++++
+>>  1 file changed, 56 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/net/wireless/pci17cb,1103.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/net/wireless/pci17cb,1103.yaml b/Documentation/devicetree/bindings/net/wireless/pci17cb,1103.yaml
+>> new file mode 100644
+>> index 000000000000..df67013822c6
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/net/wireless/pci17cb,1103.yaml
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  .../bindings/net/wireless/pci17cb,1103.yaml   | 56 +++++++++++++++++++
->  1 file changed, 56 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/wireless/pci17cb,1103.yaml
+> PCI devices are kind of exception in the naming, so this should be
+> qcom,ath11k-pci.yaml or qcom,wcn6856.yaml (or something similar)
 > 
-> diff --git a/Documentation/devicetree/bindings/net/wireless/pci17cb,1103.yaml b/Documentation/devicetree/bindings/net/wireless/pci17cb,1103.yaml
-> new file mode 100644
-> index 000000000000..df67013822c6
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/wireless/pci17cb,1103.yaml
+> 
+>> @@ -0,0 +1,56 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +# Copyright (c) 2023 Linaro Limited
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/net/wireless/pci17cb,1103.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Technologies ath11k wireless devices (PCIe)
+>> +
+>> +maintainers:
+>> +  - Kalle Valo <kvalo@kernel.org>
+>> +
+>> +description: |
+>> +  Qualcomm Technologies IEEE 802.11ax PCIe devices.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - pci17cb,1103  # WCN6856
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  qcom,ath11k-calibration-variant:
+> 
+> qcom,calibration-variant
 
-PCI devices are kind of exception in the naming, so this should be
-qcom,ath11k-pci.yaml or qcom,wcn6856.yaml (or something similar)
-
-
-> @@ -0,0 +1,56 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +# Copyright (c) 2023 Linaro Limited
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/wireless/pci17cb,1103.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies ath11k wireless devices (PCIe)
-> +
-> +maintainers:
-> +  - Kalle Valo <kvalo@kernel.org>
-> +
-> +description: |
-> +  Qualcomm Technologies IEEE 802.11ax PCIe devices.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - pci17cb,1103  # WCN6856
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  qcom,ath11k-calibration-variant:
-
-qcom,calibration-variant
-
-> +    $ref: /schemas/types.yaml#/definitions/string
-> +    description: calibration data variant
-
-Your description copies the name of property. Instead say something more...
-
-> +
+Ah, so there is already property with ath11k, then let's go with
+existing name.
 
 Best regards,
 Krzysztof
