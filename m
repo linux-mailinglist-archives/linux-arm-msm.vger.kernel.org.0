@@ -2,130 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 724D26C2B6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 08:34:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3DB26C2C19
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 09:15:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229997AbjCUHer convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 03:34:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35792 "EHLO
+        id S230515AbjCUIPG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 04:15:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230078AbjCUHeq (ORCPT
+        with ESMTP id S230526AbjCUIOW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 03:34:46 -0400
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F36FB301A9;
-        Tue, 21 Mar 2023 00:34:22 -0700 (PDT)
-Received: by mail-qt1-f174.google.com with SMTP id c19so16845825qtn.13;
-        Tue, 21 Mar 2023 00:34:22 -0700 (PDT)
+        Tue, 21 Mar 2023 04:14:22 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21C22FF08
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 01:14:18 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id eg48so56241990edb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 01:14:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679386456;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/GlY80fVC6uH/ZqU7yXSUIACPGr/6fR1rzfz7PKIC1U=;
+        b=XTHClEkFj9/GzezOJiRBJAo+Tywih9fsnGLCx2EvfPO7EkU3qr0lhvujZ4rV/hC0bA
+         AQzYjyLPOMFzqaZRQNA1Hxz63j2WJ92NwAyEG19ijt2gJb1h1nT92mk7a+ADJpaLc2e7
+         jFytPhvYu6J1WM7YTxzs57YNFmKYVV2BWBRBjnOwgUHjAuopWFAQUVCrzb1Wb5KZnHrY
+         VelFH6I+KLmKhYtvQdVPZca5ss7DQZTbQ2Z6wf1VUAasYPb848o2f3kJqWRkWA/7vJxa
+         xXaYt68thkNcW5U3sUxorS9a6d+oVSnF1fyvyTfSyWb5H8c9CClCTZuj2H3xTQNJFAV9
+         IonQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679384058;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Vi2yBeJQj8793+/KHPYZqClW0o0BUE+jiSVHLBZTZjU=;
-        b=eVuADknkkqLB1c6ILbn0H1aztEp1OfLpZWOyUC3KrbYOW4dzt8DzL+UU65SIWG32Gp
-         xVOl+j4keGYTQalJ+qBlRStGmTJDaJdmcqQ6gutnjuLQkjW+sIcgaeqWQi9DPKG2JVeh
-         gxPYd7oHdDb9SepSlGocxSl2ALpwzyZa5urg6qsVJUuLumRa5fhPDTTb7f9GVM23W29H
-         rCOWez4768iXBgwmKSn9nyhqEM0sI1Uj6vqvwi7OGlV1do+ZL32ULKXGwmmDAJoVidok
-         6pkIBJDlW0VNy7y1Ut3k1+EaLtiA2o+m+ysthOMC2kBo8xqFrwdUL+ztwFnHNtKnimB+
-         KVJg==
-X-Gm-Message-State: AO0yUKVaWrWF5yg85WadMnxt49C2yVMabqb0CZdeuAn1KQ5yGLDZMxuh
-        aZCmLCgN7z+/5kAtndxVVF6l7wjEs0NRUA==
-X-Google-Smtp-Source: AK7set+iCSpsmEdTcu698xydMV6X6ZJFNKxgMaJxv4GAM6au5yaB0BPPDiwv5bP8cUH/DLiYT4U6vQ==
-X-Received: by 2002:a05:622a:1313:b0:3db:e078:2886 with SMTP id v19-20020a05622a131300b003dbe0782886mr3120025qtk.38.1679384057998;
-        Tue, 21 Mar 2023 00:34:17 -0700 (PDT)
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
-        by smtp.gmail.com with ESMTPSA id 196-20020a370acd000000b0074690b42617sm2276716qkk.15.2023.03.21.00.34.16
+        d=1e100.net; s=20210112; t=1679386456;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/GlY80fVC6uH/ZqU7yXSUIACPGr/6fR1rzfz7PKIC1U=;
+        b=hrRBfvx3tHBeYjd7RTXqaP6YYvjuS71CcM+473Q5kSUWeMuFwm30DO80qtOySNf277
+         YWG8cl1ME10n2UgjkN27zXDGZt2DIW6qyHrfqpoiUrJBnapsUYS1efyPvEI8a0NUlcab
+         wDzcVUBBcT2yeIWpgKCMRMPv20aiuVjxthDfaXUfrGfd3Ea30Rr/NejdiYsEViPxNpms
+         vus2vno2TS8pzrIWme5qVapQ1cOnXxp+fY+6liHUKCtNRde3u1Dx3RkZHUGmoqW0gE8B
+         0IK7lc5ApDheHJKHp7KeWyHlu8L4A8k02vIaD9hxbIVGKyVSA/UFi0LV4DG0kZrlTCtU
+         ug5A==
+X-Gm-Message-State: AO0yUKVwTTEYUTdcnd8D7erZbz4aLLEkJfZIBx94aB0JnSFQmMRiu755
+        MntDLj5pYTRtPV9ylocRhMMcGg==
+X-Google-Smtp-Source: AK7set+KavFTi/5gL3fFGZNK4zqO5JayQgZGCYyegKnxMgWSDSLPf/Gpn9hgDWKSYK0FTrdYRdNBLA==
+X-Received: by 2002:a17:906:2756:b0:931:d350:9aef with SMTP id a22-20020a170906275600b00931d3509aefmr2159037ejd.25.1679386456630;
+        Tue, 21 Mar 2023 01:14:16 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:2142:d8da:5ae4:d817? ([2a02:810d:15c0:828:2142:d8da:5ae4:d817])
+        by smtp.gmail.com with ESMTPSA id m20-20020a170906259400b0092b8c1f41ebsm5411140ejb.24.2023.03.21.01.14.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 00:34:17 -0700 (PDT)
-Received: by mail-yb1-f170.google.com with SMTP id y5so15981500ybu.3;
-        Tue, 21 Mar 2023 00:34:16 -0700 (PDT)
-X-Received: by 2002:a5b:c0d:0:b0:a02:a3a6:78fa with SMTP id
- f13-20020a5b0c0d000000b00a02a3a678famr628369ybq.12.1679384056720; Tue, 21 Mar
- 2023 00:34:16 -0700 (PDT)
+        Tue, 21 Mar 2023 01:14:16 -0700 (PDT)
+Message-ID: <a8356f76-189d-928b-1a1c-f4171de1e2d0@linaro.org>
+Date:   Tue, 21 Mar 2023 09:14:15 +0100
 MIME-Version: 1.0
-References: <CAHk-=wiPd8R8-zSqTOtJ9KYeZLBByHug7ny3rgP-ZqzpP_KELg@mail.gmail.com>
- <20230320082146.4117022-1-geert@linux-m68k.org> <c85681c6-6fcf-33ed-210f-661e539f78d8@infradead.org>
-In-Reply-To: <c85681c6-6fcf-33ed-210f-661e539f78d8@infradead.org>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Tue, 21 Mar 2023 08:34:05 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdWw0OdLPUORh6=Be8AW6bN+Pa2t=dcF47B1m=-ihsNPZQ@mail.gmail.com>
-Message-ID: <CAMuHMdWw0OdLPUORh6=Be8AW6bN+Pa2t=dcF47B1m=-ihsNPZQ@mail.gmail.com>
-Subject: Re: Build regressions/improvements in v6.3-rc3 (drm/msm/)
-To:     Randy Dunlap <rdunlap@infradead.org>
-Cc:     linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 1/3] dt-bindings: wireless: add ath11k pcie bindings
+Content-Language: en-US
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Kalle Valo <kvalo@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230320104658.22186-1-johan+linaro@kernel.org>
+ <20230320104658.22186-2-johan+linaro@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230320104658.22186-2-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Randy,
+On 20/03/2023 11:46, Johan Hovold wrote:
+> Add devicetree bindings for Qualcomm ath11k PCIe devices such as WCN6856
+> for which the calibration data variant may need to be described.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  .../bindings/net/wireless/pci17cb,1103.yaml   | 56 +++++++++++++++++++
+>  1 file changed, 56 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/net/wireless/pci17cb,1103.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/net/wireless/pci17cb,1103.yaml b/Documentation/devicetree/bindings/net/wireless/pci17cb,1103.yaml
+> new file mode 100644
+> index 000000000000..df67013822c6
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/wireless/pci17cb,1103.yaml
 
-On Tue, Mar 21, 2023 at 6:38 AM Randy Dunlap <rdunlap@infradead.org> wrote:
-> On 3/20/23 01:21, Geert Uytterhoeven wrote:
-> > Below is the list of build error/warning regressions/improvements in
-> > v6.3-rc3[1] compared to v6.2[2].
-> >
-> > Summarized:
-> >   - build errors: +9/-14
-> >   - build warnings: +4/-1447
-> >
-> > JFYI, when comparing v6.3-rc3[1] to v6.3-rc2[3], the summaries are:
-> >   - build errors: +0/-1
-> >   - build warnings: +0/-0
-> >
-> > Happy fixing! ;-)
-> >
-> > Thanks to the linux-next team for providing the build service.
-> >
-> > [1] http://kisskb.ellerman.id.au/kisskb/branch/linus/head/e8d018dd0257f744ca50a729e3d042cf2ec9da65/ (all 152 configs)
-> > [2] http://kisskb.ellerman.id.au/kisskb/branch/linus/head/c9c3395d5e3dcc6daee66c6908354d47bf98cb0c/ (all 152 configs)
-> > [3] http://kisskb.ellerman.id.au/kisskb/branch/linus/head/eeac8ede17557680855031c6f305ece2378af326/ (all 152 configs)
-> >
-> >
-> > *** ERRORS ***
-> >
-> > 9 error regressions:
->
-> >   + /kisskb/src/drivers/gpu/drm/msm/msm_mdss.c: error: case label does not reduce to an integer constant:  => 300:2, 299:2, 296:2
->
->
-> Are these due to the sign bit being set after a shift?
-> It looks that way since it is only reported for such values.
+PCI devices are kind of exception in the naming, so this should be
+qcom,ath11k-pci.yaml or qcom,wcn6856.yaml (or something similar)
 
-Yep.
 
-> From the reports on the build server, it only happens when building with gcc5.
-> I don't have the ability to build with gcc5 or I would test it.
+> @@ -0,0 +1,56 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +# Copyright (c) 2023 Linaro Limited
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/wireless/pci17cb,1103.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies ath11k wireless devices (PCIe)
+> +
+> +maintainers:
+> +  - Kalle Valo <kvalo@kernel.org>
+> +
+> +description: |
+> +  Qualcomm Technologies IEEE 802.11ax PCIe devices.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - pci17cb,1103  # WCN6856
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  qcom,ath11k-calibration-variant:
 
-I deliberately installed gcc-5.5.0-nolibc/aarch64-linux to reproduce it
-(gcc5 on x86 didn't reproduce).
+qcom,calibration-variant
 
-> @Rob and other drm/msm people, what do you think about this?
-> (or is this already fixed somewhere but not yet in linux-next?)
+> +    $ref: /schemas/types.yaml#/definitions/string
+> +    description: calibration data variant
 
-Thanks, I posted a similar fix two weeks ago:
-https://lore.kernel.org/all/20230306090633.65918-1-geert+renesas@glider.be
+Your description copies the name of property. Instead say something more...
 
-Gr{oetje,eeting}s,
+> +
 
-                        Geert
+Best regards,
+Krzysztof
 
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
