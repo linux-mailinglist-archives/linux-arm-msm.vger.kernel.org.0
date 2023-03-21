@@ -2,103 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95A1B6C35E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 16:39:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE1336C35F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 16:41:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231755AbjCUPjZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 11:39:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45156 "EHLO
+        id S231326AbjCUPlD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 11:41:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231754AbjCUPjJ (ORCPT
+        with ESMTP id S230521AbjCUPlC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 11:39:09 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D595217CD3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:39:01 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id a11so5442357lji.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:39:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679413140;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dWP2ph0M6Dxxe0lHeRqTKQNZfKUBhP+hcSeJ9cU6CPo=;
-        b=DCNUeJyRJ2l2Nmh6vR+vyB7WWJiHnYGRKcjvtDrr9CC3h5qMhBXRXx+q9XOW6k8uH0
-         JPHHCxTYNBQzUbknECCjrABMKkO9fMWID+kSC1Sx9oHbwILtFyYpoizP+kqjHuDlRyAC
-         NNEqyUErOUZB9wnn5kv2iVWEq5pQrOpOGJBDn/vXOIhKPh/0oSo5Dgv2clrZ+wdeY06j
-         iZS1R3E1hF8qQX9X4gBxKZiNcY/UqDGy0jcMc3mJRnVc421TpR9Vy6cU2T+IaUIYLiOx
-         QEHNOMQgKgv62tEN7XzOdP2XyAyHr5c3WoR+JFms8U6rg3WjEdF8vvGY0L6nCV9BWTyI
-         aBig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679413140;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dWP2ph0M6Dxxe0lHeRqTKQNZfKUBhP+hcSeJ9cU6CPo=;
-        b=JIP9fCFvG/ALRSjV542sq8ixHyX1khj4O7t0acTMu+W3XgpkQ1RdLtaQG2TyEUU2WI
-         E9Cwwv5DSxYrI7l6KQ52AY2noqtoG1f60Y5qJJ2cyJ03l4peIBSOntUOhSsg6dqeh3XO
-         yurRElaJdXyD+HQIWX0peAJqz6BwqoujwpGNL4PZGJlktE2U4oT3kDnd4Nk7aAu+Mswa
-         IhOU8JsIOaR0nLOf84Bor35rq1u/KNcsCjnHu1pRT/9RXIwGNrlsSqU3AZMbiXtO3qV2
-         8NOIduutGea0Tb5eZfE8fAmqmQZUls2jAR/VDs/1/3OcpMC1z6pEu28cxVyMr8BJ6SZm
-         wPhQ==
-X-Gm-Message-State: AO0yUKVtFjuC+2ZOEguB1yL0O7sfd4n/47stF5Xkx3+JOl2TMjkoJcZf
-        c/12GlfH3RzrH8zAXzr4yhI/WQ==
-X-Google-Smtp-Source: AK7set+QouC4Xlc0D6msR+OSNNKaFzzruJKD2vBpGM+q9GQ03WlvV0NxqoCzKXG8twHpGrxssN3FUQ==
-X-Received: by 2002:a2e:3516:0:b0:299:cf0a:bf8 with SMTP id z22-20020a2e3516000000b00299cf0a0bf8mr1043784ljz.17.1679413140003;
-        Tue, 21 Mar 2023 08:39:00 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id o22-20020a2e9456000000b0029caabd3c7asm1031027ljh.54.2023.03.21.08.38.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 08:38:59 -0700 (PDT)
-Message-ID: <4e8357fd-233b-5d4d-6153-433c52e703d0@linaro.org>
-Date:   Tue, 21 Mar 2023 17:38:58 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v5 09/12] arm64: dts: qcom: sm8350-hdk: add pmic glink
- node
-Content-Language: en-GB
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 21 Mar 2023 11:41:02 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44333F950
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:40:52 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pee6O-0003FW-KD; Tue, 21 Mar 2023 16:40:44 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pee6N-005iqD-V8; Tue, 21 Mar 2023 16:40:43 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pee6N-006neX-2T; Tue, 21 Mar 2023 16:40:43 +0100
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230130-topic-sm8450-upstream-pmic-glink-v5-0-552f3b721f9e@linaro.org>
- <20230130-topic-sm8450-upstream-pmic-glink-v5-9-552f3b721f9e@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230130-topic-sm8450-upstream-pmic-glink-v5-9-552f3b721f9e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        kernel@pengutronix.de
+Subject: [PATCH 0/3] rpmsg: Convert to platform remove callback returning void
+Date:   Tue, 21 Mar 2023 16:40:36 +0100
+Message-Id: <20230321154039.355098-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1388; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=N6wdbr/FFulU1PbWUDnt+sVVTgjd5CYaTsNrxM4xFpI=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkGc/xHJe1ygUAJCFytP8ePAmLqZGDVEJtGGm5J 4yzrV6pio+JATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZBnP8QAKCRCPgPtYfRL+ TnYwB/oC7MZJ0dGTyfPBJc19oGBqut9eSXkc1EPQOBHPmKpfnrSGfxwLc8MftG3UuKaI4Fw1c0+ D5f26B5Yl3ethAdnQn/LlXo6fkOdetf/5H24n9G46T3WFQ5a+p+9ySssfAZs0E+rk7/PyT1ADZj ILZSsIAua5afp8VvxhvXKTYkNZZzYXW5Y9/Eff6vk7+xZV9lw2BT3eWHgxpQmdJ3az+EgwsPRS3 8z8OCsJaHPILlpthq8T5FfnYr34JPUozBJl7RfI5Gq1K0jHE6boooxPCdI2EM3HCRLBbGwwOaHI HAOV+s+3WYmN1xEl8xFMMnoqkTCqB/scdMZ3pUDiO+u1PqMI
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/03/2023 15:21, Neil Armstrong wrote:
-> Add the pmic glink node linked with the DWC3 USB controller
-> switched to OTG mode and tagged with usb-role-switch.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 46 +++++++++++++++++++++++++++++++--
->   1 file changed, 44 insertions(+), 2 deletions(-)
+Hello,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+this series adapts the platform drivers below drivers/rpmsg to use the
+.remove_new() callback. Compared to the traditional .remove() callback
+.remove_new() returns no value. This is a good thing because the driver core
+doesn't (and cannot) cope for errors during remove. The only effect of a
+non-zero return value in .remove() is that the driver core emits a warning. The
+device is removed anyhow and an early return from .remove() usually yields a
+resource leak.
 
+By changing the remove callback to return void driver authors cannot
+reasonably assume any more that there is some kind of cleanup later.
+
+The two rpmsg platform drivers always returned zero before. This just
+wasn't obvious, so the first patch simplifies a bit to make it obvious.
+After that the drivers are converted without side effects to
+.remove_new().
+
+Best regards
+Uwe
+
+Uwe Kleine-König (3):
+  rpmsg: qcom_smd: Make qcom_smd_unregister_edge() return void
+  rpmsg: qcom_glink_rpm: Convert to platform remove callback returning
+    void
+  rpmsg: qcom_smd: Convert to platform remove callback returning void
+
+ drivers/rpmsg/qcom_glink_rpm.c |  6 ++----
+ drivers/rpmsg/qcom_smd.c       | 24 +++++++++++-------------
+ include/linux/rpmsg/qcom_smd.h |  5 ++---
+ 3 files changed, 15 insertions(+), 20 deletions(-)
+
+base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
 -- 
-With best wishes
-Dmitry
+2.39.2
 
