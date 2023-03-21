@@ -2,127 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 684AC6C33C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 15:11:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B75F36C33E1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 15:18:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230451AbjCUOLc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 10:11:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50972 "EHLO
+        id S230337AbjCUOR7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 10:17:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230170AbjCUOLb (ORCPT
+        with ESMTP id S230141AbjCUOR6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 10:11:31 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08F304A1D5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 07:11:29 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id t11so19305713lfr.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 07:11:28 -0700 (PDT)
+        Tue, 21 Mar 2023 10:17:58 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6C6EB472
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 07:17:50 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id q14so1296591ljm.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 07:17:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679407887;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tAGB7Aj6eWN9c4AIsJYfnptIIniy9VIg48C8wvaeq9E=;
-        b=Afm3AWjUAa2d8BjU70q955PKyyPVHboO1a16UaU67Iuld1g7MYhNxNNBjXdnKmSm/4
-         x6gBY64A1McGTG7qYGFH4PiZHRcRL3j8z7kbWRkny/ya847x30QTYK94FGQtYRmr2y9Q
-         xPILABGC42YPAaaWpC9F0xKghxKWjpMVQJfI5BXNzNsbf+xIx1zgoxDa8eR2bK2H7Yyu
-         GFy3UFIcwc9Mlr3oTWjDth6UjzAwRuuIQSbyAThI5mbQkU4vWBouv/AtYkuxIXhJuF15
-         DshsiKdWcARtUc9D08sMxgxWkY2Ry4WYYb1Dg/v8nz9KphsunSx+EplmfNIsIMm3JiDN
-         JCkw==
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1679408269;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tMn7LHKKTu4Ns9vFmGoBtS8cTIhQAr15IAlChqCRIjg=;
+        b=XNmIG6LCixSgb0IbQeT7vxzIHWMRiNclEzB7QBxzg+WYYt2jEZNuEIrOFo2bGCmdk2
+         Sjbl+pBpHvovFPW7yF74xFa4B9WUOkxNhoOge0xavCIjfKbZm4JB+4EAhBPBlvwGZZcg
+         xP05I38BIyJxDjUtlct1p3PRgWTylor6TbfUlQvxXA4gFsGMxyK2kNGgsMLi1ScKip7Q
+         OXhhehwButp4x98UVyIvVYHQPAuP+8HzSjqvtI3KBwSA1HJG2tScxkEaca4/9cKGFdFg
+         WsrKIgUgJ7Xi70lJPWPUs6V2WIBG/muqmycPiNNF3jnlNez3kTH45mqbrnPYvE2aRsOh
+         utrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679407887;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tAGB7Aj6eWN9c4AIsJYfnptIIniy9VIg48C8wvaeq9E=;
-        b=BOcPdcNZuJ4viRlCA6bJ5GY9etmJE3Y7JvdBalllVkSuQBylR1UBWUV+jIiSGYqfN7
-         z0aKxFUqRyC8z5XY4ogxjDpSy7P+1rXrf/gJ72HHcBAvkwTfamCRAjkx0ExoSAaGo746
-         lZpaZ/AjJiLslAcgVoiReMXtfa6S+Ort9JeslH7vJBiqjMJKuF1cic0G5W6O5pKYPtUq
-         bv7En2W7c+ZLRgnWKcOoRMBjn5CEYqBRvslQ6uNbDqs0sQQydfrGl5h++DZXr+5Sq5Cj
-         B8u2v80A8cqe5mQJI+NuPB6Q2i6poVEYyeYTxifJuscsnPaxKeiaAGnav/JMAhrfvXdH
-         caJw==
-X-Gm-Message-State: AO0yUKUAmuGS1h6iv1t6obXn+0Ti2+Mi9k5vnTSV4lTOVBsSX75IAy8g
-        TlnpFvccTn7QUkVYlzyYKDsh8A==
-X-Google-Smtp-Source: AK7set/JmSkv5k/zkT+L5VPfMmgQ3P6A/FmkZFBsiT23pb+hi1sIAmmjqGj8YU6ju8j8HZRBmCO4hw==
-X-Received: by 2002:a19:a401:0:b0:4b4:8f01:f8b1 with SMTP id q1-20020a19a401000000b004b48f01f8b1mr870353lfc.31.1679407887246;
-        Tue, 21 Mar 2023 07:11:27 -0700 (PDT)
-Received: from [192.168.1.101] (abym238.neoplus.adsl.tpnet.pl. [83.9.32.238])
-        by smtp.gmail.com with ESMTPSA id c5-20020a197605000000b004eaeb0a984csm317916lff.88.2023.03.21.07.11.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 07:11:26 -0700 (PDT)
-Message-ID: <5459d8d3-4829-01ab-7000-2c1f58ad69e8@linaro.org>
-Date:   Tue, 21 Mar 2023 15:11:25 +0100
+        d=1e100.net; s=20210112; t=1679408269;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tMn7LHKKTu4Ns9vFmGoBtS8cTIhQAr15IAlChqCRIjg=;
+        b=ckWm+y63oFunb483fk16Ys40TpULaywlMKffy/vp6cPS9oP5cfE5NKVhlZU8gTDLT1
+         GgjqBRHbfjUFQXkrzWfLk+4AWmM2OaGmlbC2VU+O0/YjjJ7sAptpjrEfAzXFT8OtmS8f
+         F5cgzIzF2GczupN3axevNsSwrEQGKZtBtqqwb2YcbMRPI6SH/GXIX+LR8/uIduGj4+GN
+         5Mp4IBer7fs2tqQ4lZLrvxnjJn6QNri4op9ODbxE+lCCQ1rxgjdhJ4SHTePNPVTXeyT3
+         GAML9X5fpvGmlcRm9jR4B7wRxm49fIXm87KJnH0E2672FJ6OzOFoqcT/2+Y8X6Eo6mSM
+         Bwpg==
+X-Gm-Message-State: AO0yUKUHJkc9p0Qw2gCg5cDXWo6ZHNdAnCG30hZ760tyzdeHnmRCbEnO
+        Y5JJM17vT9ShKeNwK4oPyWYzC5S/TScuDBB/e1wJbw==
+X-Google-Smtp-Source: AK7set8b0x6Hc/6GcdfBaiyGfeNfULbWOK7+qOwTD2eBr42E8cIkkxgtVYted3CNCO2pKDyXkWKZbmkwrodDXaQN4ck=
+X-Received: by 2002:a2e:901a:0:b0:299:aa7a:94c8 with SMTP id
+ h26-20020a2e901a000000b00299aa7a94c8mr896022ljg.10.1679408269057; Tue, 21 Mar
+ 2023 07:17:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v7 6/9] interconnect: qcom: rpm: Handle interface clocks
-Content-Language: en-US
-To:     Georgi Djakov <djakov@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20230320154841.327908-1-brgl@bgdev.pl> <20230320154841.327908-10-brgl@bgdev.pl>
+ <65d15d82-c106-b0a7-11b4-703bf22c28b1@linaro.org> <c74e0683-304d-7571-1d22-c2c65d02dc6a@linaro.org>
+In-Reply-To: <c74e0683-304d-7571-1d22-c2c65d02dc6a@linaro.org>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Tue, 21 Mar 2023 15:17:35 +0100
+Message-ID: <CAMRc=McNAy_08es7CRwhyE+OGHM-+GSsd0xGJNAdNcOs9eNq7Q@mail.gmail.com>
+Subject: Re: [PATCH v2 09/15] arm64: dts: qcom: sa8775p: add the Power On
+ device node
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230228-topic-qos-v7-0-815606092fff@linaro.org>
- <20230228-topic-qos-v7-6-815606092fff@linaro.org>
- <68a5d81a-5de8-798a-c150-d74c8ad38cb7@linaro.org>
- <f848061a-763e-fbf2-860c-758373e953df@linaro.org>
- <CAA8EJpqh+A_YKbhSQB5sWj4EP9eQtNHeohDira9o-jrx3pPRNg@mail.gmail.com>
- <51c41e49-5183-551e-c796-5b3d792b422f@linaro.org>
- <74f154b1-a440-fa83-1a46-a5b9223f5760@linaro.org>
- <0af8ba67-f33c-4861-bea5-e662d19638bf@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <0af8ba67-f33c-4861-bea5-e662d19638bf@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,T_SPF_TEMPERROR
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Mar 20, 2023 at 6:25=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
+>
+>
+> On 20.03.2023 18:23, Konrad Dybcio wrote:
+> >
+> >
+> > On 20.03.2023 16:48, Bartosz Golaszewski wrote:
+> >> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >>
+> >> Add the PON node to PMIC #0 for sa8775p platforms.
+> >>
+> >> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >> ---
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >
+> > Konrad
+> Hold up, I am not sure if PBS is there on PMM8654AU. Check the
+> -pmic-overlay.dtsi.
+>
 
+Yep, it's there alright.
 
-On 21.03.2023 14:58, Georgi Djakov wrote:
-> Hi,
-> 
-> On 11.03.23 17:26, Dmitry Baryshkov wrote:
->> On 11/03/2023 16:38, Bryan O'Donoghue wrote:
->>> On 11/03/2023 14:35, Dmitry Baryshkov wrote:
->>>>> Its probably worthwhile experimenting to see if the*ufs*_clk can/should
->>>>> be added to the UFS device list of clocks.
->>>> While we were doing this for some of the clocks (PCIe and USB, if I'm
->>>> not mistaken), I think that generally this is not fully correct. In my
->>>> opinion it should be in the interconnect driver, who turns
->>>> corresponding clocks on and off. These clocks correspond to the SoC
->>>> topology, rather than the end-device.
->>>>
->>>
->>> True enough, they are interconnect clocks.
->>>
->>> The question is how to only turn them on when the device that depends on them wants them.
->>
->> I think we can turn them on an off from qcom_icc_set(). Each node can list required clocks.
->>
-> 
-> Yes, this is a bit weird, but looks like these are the interface clocks
-> required for programming the qos box of the respective peripheral and
-> nothing else. Maybe we can even configure QoS just once (eg. on the first
-> bandwidth request) and not every time we call qcom_icc_set().
-Would that persist a full bus reset - if we e.g. shut down MMNoC 
-after the display stack is turned off in preparation for a power
-collapse, would we have to reprogram it?
+Bartosz
 
-Another thing is, do we know "how persistent" the QoS settings are?
-What could reset them? Would a bandwidth request for a node that
-belongs to the same path do so?
-
-Konrad
-> 
-> BR,
-> Georgi
+> Konrad
+> >>  arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 8 ++++++++
+> >>  1 file changed, 8 insertions(+)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/=
+boot/dts/qcom/sa8775p-pmics.dtsi
+> >> index afe220b374c2..dbc596e32253 100644
+> >> --- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+> >> @@ -12,6 +12,14 @@ pmm8654au_0: pmic@0 {
+> >>              reg =3D <0x0 SPMI_USID>;
+> >>              #address-cells =3D <1>;
+> >>              #size-cells =3D <0>;
+> >> +
+> >> +            pmm8654au_0_pon: pon@1200 {
+> >> +                    compatible =3D "qcom,pmk8350-pon";
+> >> +                    reg =3D <0x1200>, <0x800>;
+> >> +                    reg-names =3D "hlos", "pbs";
+> >> +                    mode-recovery =3D <0x1>;
+> >> +                    mode-bootloader =3D <0x2>;
+> >> +            };
+> >>      };
+> >>
+> >>      pmm8654au_1: pmic@2 {
