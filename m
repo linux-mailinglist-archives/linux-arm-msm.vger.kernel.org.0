@@ -2,348 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A691C6C3D16
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 22:53:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BA8FD6C3D74
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 23:12:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229939AbjCUVxU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 17:53:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51392 "EHLO
+        id S229941AbjCUWMu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 18:12:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230137AbjCUVxE (ORCPT
+        with ESMTP id S229639AbjCUWMt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 17:53:04 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9D1E515F0;
-        Tue, 21 Mar 2023 14:52:43 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32LLiXbn025654;
-        Tue, 21 Mar 2023 21:52:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=PcE667DJcFj2w9l1bNqMFrpNeZt6KZomaAf5kAvLTWs=;
- b=ewzvb9GGVoYKtO6jUd4vOUxnVbGq7TzjxdwuUUzWqU+KwBvAP7+o3R7DKlrK43+pim6j
- Ehw5d7vrE3OTyC5m/KwFHaYfRHes/WWt1pNbxv8SKIBURcFfAz8SS5DzkdMtJTlDUr1q
- 2IeFI3Hb0bVSpHd300Vyuj6R+Z3lj0q0fCdC6dWgQ2ubreYREmxhZBkQ/RRcx9OQpUcE
- 8luD92V1MLScszjPJBKthZD21+Q7FpPRqkkyWJ72W3SCyalSC4xEZidIg/w9o0ArzHsd
- f6T0r/wSTkqxNUN+de7uj62XzIa2mIgbVq7OL4dcBJ5NeaijLKlzKheZS2FSdKEnz7BW nA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pfhnt0d6g-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 21 Mar 2023 21:52:14 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32LLqDR2005084
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 21 Mar 2023 21:52:13 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 21 Mar
- 2023 14:52:12 -0700
-Message-ID: <aa2ee071-952b-f8b5-bfcf-53cef99478be@quicinc.com>
-Date:   Tue, 21 Mar 2023 15:52:11 -0600
+        Tue, 21 Mar 2023 18:12:49 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72C9357088
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 15:12:47 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id br6so20977230lfb.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 15:12:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679436765;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RvgpZDeCmRQsyPKurV6WYYQqLIwO3CdVYVB5sBeSl5c=;
+        b=QcSQaMbNhDT1mLrpJm9bxHS/7BXEBP++byZH2NKc7axMSMmLsLwszqZlQ+a3Yp3uU3
+         r/8rIbhvGlq5j6uhsaKKisQTTJON9wPWoQYv8CokKwlLkaFL2gLjzx/znmMRdurkv2vi
+         Cld+RTTLK8jTVQhww44pZnRt/7KrNZbOg4OijUqsa3eFKibSHazQrAQ/xc7nfqHMjg0g
+         L80RMzJa5TSx+9ZiF0JXuj+7V5PRPTilzK6JaQZJq+elZAxAYxPwTMAn/zJQA4annyhH
+         Zflr3LFnFQyHGxvbOi7ZBx1jS+SiDQ27/5YZ0GIsmDIfFMdMPq8yopxNU/3pe5Np4KtM
+         Ia9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679436765;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RvgpZDeCmRQsyPKurV6WYYQqLIwO3CdVYVB5sBeSl5c=;
+        b=YPNAwkc1Cin7PMD22R9EJX2n1WA2XYJbpwaqsVknGEsEWlIriuwiqC89hrUPHTzwix
+         VL3UcFprqJ49NUOcwNzzzRj1PrUYRYuTUTbtrTLtkUv1OVWIiEnPlhbS3RvRmvZVRL3/
+         cA2v++RuuHlGZKEOycqe/kttaIJvxDAn9tgE0iLhvFMTwfh5Yhw5Z8YX3mMoD6wjvswe
+         d2Ok9RCADExwpanWqlQrBHXmjUzOGUAQj7vwK52LDI2HGboNy/X1TnFuNdh6pGpWN4KI
+         iOV7t6pPqjU4mIC9FursbATP9MmS8vobPm0XErrX3fTpVt33f56oa9AgzKKRFKNDfkye
+         dZ0Q==
+X-Gm-Message-State: AO0yUKUz9xe6KwEARGmuaVdTGWngE9DmyRRB/MZolykB51zOCHdR/yW9
+        7dZYIUhRMufO2FxNf4ZxeHUPkA==
+X-Google-Smtp-Source: AK7set9DuFZ0/GVvujdTGrcvMkSVyDribzWT5knHKK3YffMpYfAaJ1vw/21+RelTRo89PykUk+7qMQ==
+X-Received: by 2002:a19:a419:0:b0:4cb:d3:3b99 with SMTP id q25-20020a19a419000000b004cb00d33b99mr1205432lfc.36.1679436765642;
+        Tue, 21 Mar 2023 15:12:45 -0700 (PDT)
+Received: from [192.168.1.101] (abym238.neoplus.adsl.tpnet.pl. [83.9.32.238])
+        by smtp.gmail.com with ESMTPSA id o15-20020a056512050f00b004e9c983a007sm1220344lfb.289.2023.03.21.15.12.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Mar 2023 15:12:45 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/4] Enable DisplayPort over USB-C on SONY Sagami
+Date:   Tue, 21 Mar 2023 23:12:27 +0100
+Message-Id: <20230321-topic-sagami_dp-v1-0-340c8bce4276@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v4 1/8] accel/qaic: Add documentation for AIC100
- accelerator driver
-Content-Language: en-US
-To:     Bagas Sanjaya <bagasdotme@gmail.com>, <ogabbay@kernel.org>,
-        <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <jacek.lawrynowicz@linux.intel.com>,
-        <stanislaw.gruszka@linux.intel.com>
-CC:     <dafna@fastmail.com>, <dri-devel@lists.freedesktop.org>,
-        <quic_pkanojiy@quicinc.com>, <quic_carlv@quicinc.com>,
-        <quic_ajitpals@quicinc.com>, <linux-doc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <1679325074-5494-1-git-send-email-quic_jhugo@quicinc.com>
- <1679325074-5494-2-git-send-email-quic_jhugo@quicinc.com>
- <ZBmxl0sFH5PBG36H@debian.me>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <ZBmxl0sFH5PBG36H@debian.me>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CTXKYs4fhOQYwhw_8NP8IU-72Ql6fzVO
-X-Proofpoint-ORIG-GUID: CTXKYs4fhOQYwhw_8NP8IU-72Ql6fzVO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-21_11,2023-03-21_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- lowpriorityscore=0 adultscore=0 impostorscore=0 suspectscore=0
- phishscore=0 priorityscore=1501 mlxlogscore=999 bulkscore=0 clxscore=1015
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303210173
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAMsrGmQC/x2NywrCQAwAf6XkbGAfHlp/RUTS3bQN1O2yqSKU/
+ rvB4wwMc4ByE1a4dQc0/ojKVgz8pYO0UJkZJRtDcCG6GDzuW5WESjO95Jkrej8NjmOfrzGBVSM
+ p49iopMW68l5Xk7XxJN//5v44zx9ieccPdgAAAA==
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1679436764; l=1008;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=Rts1LWN2BTe8l0VWILmKq9hnsPnZkTBxaeWIjKysvz8=;
+ b=A67WQifCRYY1DBo13nrFzRAvZuuZQdhqFm4FNwvWeRzSyP/QQLlO356GImT1XYri8s37N05Bmgxn
+ pJz/ouM6A/1BvM6JBAzNcAIcM0t4xCahvZ+zaz12PEZIjgytqu2t
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/21/2023 7:31 AM, Bagas Sanjaya wrote:
-> On Mon, Mar 20, 2023 at 09:11:07AM -0600, Jeffrey Hugo wrote:
->> +AIC100 defines a number of MHI channels for different purposes. This is a list
->> +of the defined channels, and their uses.
->> +
->> +| QAIC_LOOPBACK
->> +| Channels 0 & 1
->> +| Valid for AMSS
->> +| Any data sent to the device on this channel is sent back to the host.
->> +
->> +| QAIC_SAHARA
->> +| Channels 2 & 3
->> +| Valid for SBL
->> +| Used by SBL to obtain the runtime firmware from the host.
->> +
->> +| QAIC_DIAG
->> +| Channels 4 & 5
->> +| Valid for AMSS
->> +| Used to communicate with QSM via the Diag protocol.
->> +
->> +| QAIC_SSR
->> +| Channels 6 & 7
->> +| Valid for AMSS
->> +| Used to notify the host of subsystem restart events, and to offload SSR crashdumps.
->> +
->> +| QAIC_QDSS
->> +| Channels 8 & 9
->> +| Valid for AMSS
->> +| Used for the Qualcomm Debug Subsystem.
->> +
->> +| QAIC_CONTROL
->> +| Channels 10 & 11
->> +| Valid for AMSS
->> +| Used for the Neural Network Control (NNC) protocol.  This is the primary channel between host and
->> +  QSM for managing workloads.
->> +
->> +| QAIC_LOGGING
->> +| Channels 12 & 13
->> +| Valid for SBL
->> +| Used by the SBL to send the bootlog to the host.
->> +
->> +| QAIC_STATUS
->> +| Channels 14 & 15
->> +| Valid for AMSS
->> +| Used to notify the host of Reliability, Accessibility, Serviceability (RAS) events.
->> +
->> +| QAIC_TELEMETRY
->> +| Channels 16 & 17
->> +| Valid for AMSS
->> +| Used to get/set power/thermal/etc attributes.
->> +
->> +| QAIC_DEBUG
->> +| Channels 18 & 19
->> +| Valid for AMSS
->> +| Not used.
->> +
->> +| QAIC_TIMESYNC
->> +| Channels 20 & 21
->> +| Valid for SBL/AMSS
->> +| Used to synchronize timestamps in the device side logs with the host time source.
-> 
-> For the tabular data above, use table syntax instead.
+DisplayPort is there before DSI panel, kinda funny!
 
-Done.
+Depends on:
 
->> +A request FIFO element has the following structure:
->> +
->> +| {
->> +|	u16 req_id;
->> +|	u8  seq_id;
->> +|	u8  pcie_dma_cmd;
->> +|	u32 reserved;
->> +|	u64 pcie_dma_source_addr;
->> +|	u64 pcie_dma_dest_addr;
->> +|	u32 pcie_dma_len;
->> +|	u32 reserved;
->> +|	u64 doorbell_addr;
->> +|	u8  doorbell_attr;
->> +|	u8  reserved;
->> +|	u16 reserved;
->> +|	u32 doorbell_data;
->> +|	u32 sem_cmd0;
->> +|	u32 sem_cmd1;
->> +|	u32 sem_cmd2;
->> +|	u32 sem_cmd3;
->> +| }
-> 
-> IMO code blocks should better fit the struct listing above.
+https://lore.kernel.org/linux-arm-msm/20230130-topic-sm8450-upstream-pmic-glink-v5-0-552f3b721f9e@linaro.org
+https://lore.kernel.org/linux-arm-msm/20230206-topic-sm8450-upstream-dp-controller-v6-3-d78313cbc41d@linaro.org
 
-Done
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (4):
+      dt-bindings: usb: gpio-sbu-mux: Add OnSemi NB7VPQ904M mux
+      arm64: dts: qcom: sm8350-sagami: Add PMIC GLINK
+      arm64: dts: qcom: sm8350-sagami: Hook up USB-C Display Port
+      arm64: dts: qcom: sm8350-nagara: Unify status property placement
 
->> +
->> +Request field descriptions:
->> +
->> +| req_id- request ID. A request FIFO element and a response FIFO element with
->> +|         the same request ID refer to the same command.
->> +
->> +| seq_id- sequence ID within a request. Ignored by the DMA Bridge.
->> +
->> +| pcie_dma_cmd- describes the DMA element of this request.
->> +| 	Bit(7) is the force msi flag, which overrides the DMA Bridge MSI logic
->> +| 		and generates a MSI when this request is complete, and QSM
->> +| 		configures the DMA Bridge to look at this bit.
->> +| 	Bits(6:5) are reserved.
->> +| 	Bit(4) is the completion code flag, and indicates that the DMA Bridge
->> +| 		shall generate a response FIFO element when this request is
->> +| 		complete.
->> +| 	Bit(3) indicates if this request is a linked list transfer(0) or a bulk
->> +| 		transfer(1).
->> +| 	Bit(2) is reserved.
->> +| 	Bits(1:0) indicate the type of transfer. No transfer(0), to device(1),
->> +| 		from device(2). Value 3 is illegal.
->> +
->> +| pcie_dma_source_addr- source address for a bulk transfer, or the address of
->> +|         the linked list.
->> +
->> +| pcie_dma_dest_addr- destination address for a bulk transfer.
->> +
->> +| pcie_dma_len- length of the bulk transfer. Note that the size of this field
->> +| 	limits transfers to 4G in size.
->> +
->> +| doorbell_addr- address of the doorbell to ring when this request is complete.
->> +
->> +| doorbell_attr- doorbell attributes.
->> +| 	Bit(7) indicates if a write to a doorbell is to occur.
->> +| 	Bits(6:2) are reserved.
->> +| 	Bits(1:0) contain the encoding of the doorbell length. 0 is 32-bit,
->> +| 		1 is 16-bit, 2 is 8-bit, 3 is reserved. The doorbell address
->> +| 		must be naturally aligned to the specified length.
->> +
->> +| doorbell_data- data to write to the doorbell. Only the bits corresponding to
->> +| 	the doorbell length are valid.
->> +
->> +| sem_cmdN- semaphore command.
->> +| 	Bit(31) indicates this semaphore command is enabled.
->> +| 	Bit(30) is the to-device DMA fence. Block this request until all
->> +| 		to-device DMA transfers are complete.
->> +| 	Bit(29) is the from-device DMA fence. Block this request until all
->> +| 		from-device DMA transfers are complete.
->> +| 	Bits(28:27) are reserved.
->> +| 	Bits(26:24) are the semaphore command. 0 is NOP. 1 is init with the
->> +| 		specified value. 2 is increment. 3 is decrement. 4 is wait
->> +| 		until the semaphore is equal to the specified value. 5 is wait
->> +| 		until the semaphore is greater or equal to the specified value.
->> +| 		6 is "P", wait until semaphore is greater than 0, then
->> +| 		decrement by 1. 7 is reserved.
->> +| 	Bit(23) is reserved.
->> +| 	Bit(22) is the semaphore sync. 0 is post sync, which means that the
->> +| 		semaphore operation is done after the DMA transfer. 1 is
->> +| 		presync, which gates the DMA transfer. Only one presync is
->> +| 		allowed per request.
->> +| 	Bit(21) is reserved.
->> +| 	Bits(20:16) is the index of the semaphore to operate on.
->> +| 	Bits(15:12) are reserved.
->> +| 	Bits(11:0) are the semaphore value to use in operations.
-> 
-> What about bullet lists?
+ .../devicetree/bindings/usb/gpio-sbu-mux.yaml      |   1 +
+ .../boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 162 ++++++++++++++++++---
+ 2 files changed, 146 insertions(+), 17 deletions(-)
+---
+base-commit: 52581937d6423c3bd15eb3894580ab87fe7308a1
+change-id: 20230321-topic-sagami_dp-11f90e38d43c
 
-It doesn't feel like the above fits into a bullet list structure.  Do 
-you have an example reference, or can you transform a small section of 
-the above to illustrate what you are thinking?
-
->> +
->> +| {
->> +| 	u16 req_id;
->> +| 	u16 completion_code;
->> +| }
-> 
-> Again, use code blocks.
-
-Done
-
->> +passthrough- Allows userspace to send an opaque payload directly to the QSM.
->> +This is used for NNC commands. Userspace is responsible for managing
->> +the QSM message requirements in the payload
->> +
->> +dma_xfer- DMA transfer. Describes an object that the QSM should DMA into the
->> +device via address and size tuples.
->> +
->> +activate- Activate a workload onto NSPs. The host must provide memory to be
->> +used by the DBC.
->> +
->> +deactivate- Deactivate an active workload and return the NSPs to idle.
->> +
->> +status- Query the QSM about it's NNC implementation. Returns the NNC version,
->> +and if CRC is used.
->> +
->> +terminate- Release a user's resources.
->> +
->> +dma_xfer_cont- Continuation of a previous DMA transfer. If a DMA transfer
->> +cannot be specified in a single message (highly fragmented), this
->> +transaction can be used to specify more ranges.
->> +
->> +validate_partition- Query to QSM to determine if a partition identifier is
->> +valid.
-> 
-> What about using definition lists?
-
-Done
-
->> +DRM_IOCTL_QAIC_MANAGE:
->> +This IOCTL allows userspace to send a NNC request to the QSM. The call will
->> +block until a response is received, or the request has timed out.
->> +
->> +DRM_IOCTL_QAIC_CREATE_BO:
->> +This IOCTL allows userspace to allocate a buffer object (BO) which can send or
->> +receive data from a workload. The call will return a GEM handle that
->> +represents the allocated buffer. The BO is not usable until it has been sliced
->> +(see DRM_IOCTL_QAIC_ATTACH_SLICE_BO).
->> +
->> +DRM_IOCTL_QAIC_MMAP_BO:
->> +This IOCTL allows userspace to prepare an allocated BO to be mmap'd into the
->> +userspace process.
->> +
->> +DRM_IOCTL_QAIC_ATTACH_SLICE_BO:
->> +This IOCTL allows userspace to slice a BO in preparation for sending the BO to
->> +the device. Slicing is the operation of describing what portions of a BO get
->> +sent where to a workload. This requires a set of DMA transfers for the DMA
->> +Bridge, and as such, locks the BO to a specific DBC.
->> +
->> +DRM_IOCTL_QAIC_EXECUTE_BO:
->> +This IOCTL allows userspace to submit a set of sliced BOs to the device. The
->> +call is non-blocking. Success only indicates that the BOs have been queued
->> +to the device, but does not guarantee they have been executed.
->> +
->> +DRM_IOCTL_QAIC_PARTIAL_EXECUTE_BO:
->> +This IOCTL operates like DRM_IOCTL_QAIC_EXECUTE_BO, but it allows userspace to
->> +shrink the BOs sent to the device for this specific call. If a BO typically has
->> +N inputs, but only a subset of those is available, this IOCTL allows userspace
->> +to indicate that only the first M bytes of the BO should be sent to the device
->> +to minimize data transfer overhead. This IOCTL dynamically recomputes the
->> +slicing, and therefore has some processing overhead before the BOs can be queued
->> +to the device.
->> +
->> +DRM_IOCTL_QAIC_WAIT_BO:
->> +This IOCTL allows userspace to determine when a particular BO has been processed
->> +by the device. The call will block until either the BO has been processed and
->> +can be re-queued to the device, or a timeout occurs.
->> +
->> +DRM_IOCTL_QAIC_PERF_STATS_BO:
->> +This IOCTL allows userspace to collect performance statistics on the most
->> +recent execution of a BO. This allows userspace to construct an end to end
->> +timeline of the BO processing for a performance analysis.
->> +
->> +DRM_IOCTL_QAIC_PART_DEV:
->> +This IOCTL allows userspace to request a duplicate "shadow device". This extra
->> +accelN device is associated with a specific partition of resources on the AIC100
->> +device and can be used for limiting a process to some subset of resources.
-> 
-> Again, I'd like to see definition lists for above.
-
-Done.
-
-> See Sphinx primer [1] for examples of markups I point above.
-> 
-> Thanks.
-> 
-> [1]: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
-> 
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
