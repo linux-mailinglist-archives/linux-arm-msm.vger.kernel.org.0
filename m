@@ -2,162 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45C846C3BE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 21:34:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 898846C3BED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 21:39:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230308AbjCUUd5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 16:33:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50286 "EHLO
+        id S229794AbjCUUi7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 16:38:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230301AbjCUUd4 (ORCPT
+        with ESMTP id S229487AbjCUUi6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 16:33:56 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3682A1F49F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 13:33:53 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id y4so64719782edo.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 13:33:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679430832;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KTpu7F9BL2yL3dz5JaGLJyVf1Ik8YB0yHGfUTS5ixLY=;
-        b=p+bIXPROrY9Nrek+Wmbtia3iwVn1uy5t5w/nMtRwmRA8GTLXIuMWRTOTMjAwvAADPV
-         DACTTt5AzcV0w90we/PtHmkPjievW5kvs59J9hzQLWyky5rRuUgY1b5xiseQW36ZPKK9
-         Qwqwk8npprKqw1mJPUEG7w210YMUp93BRMFT1lnoh9lD+y6tFqpkIoIQMg4RAUfh0KK6
-         Wwfbp+utgdZ+r1i1hW04RWiH5VYdU0mdiPpGB8DIcCsI+IupfeQ+6anQzwFCdo+wJWpT
-         nV9TgkqYd3VykDsAhd5lMfSMmXrgd36f605L+P5vjqTFjEEn8Fifu0TRTFskB/NSP27F
-         WaFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679430832;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KTpu7F9BL2yL3dz5JaGLJyVf1Ik8YB0yHGfUTS5ixLY=;
-        b=KJy1NSQTj1Bv6oTtUEnfdiRdQAh01hVJ+7Wr+HJVNtwLEcgrxby2+LUm7x9VBP182+
-         RrGqb8HbMF3AN+3P2X3lgmSM7nW1u+IIrSKGvcFEjEO2LiSowT0/vf6uP/VGmw++n1Pz
-         K+C20r+FvIzUuUl92r+T38aOsm7JqOr8JgjyJeZEK4d3UCdtIAX7u4j5NCwmFl6a2yCP
-         hlkb9LI5RTTgA3OQThh/96liTwwVBwJp1CizvTxGq5uTymOHO09MRvopCq8Fx8et16aQ
-         nbNg6z3Tm4jEhyY9G6rEnv2bYR0jE4Ni4QDRZywadFPR7z8aVieA1bJUEi75lo9g3fVQ
-         3XDg==
-X-Gm-Message-State: AO0yUKUBCYIU/7yTS5ZOUdv9KHoUSoY1926mk+oukI/Gj+qqProtHCr8
-        xwi2dFeH5zp75XMKYxtdGnk7Sg==
-X-Google-Smtp-Source: AK7set8DiQQyI/6A7EQc/HPSa7kGeb9afOqUgPq7x5HSX2RAXq6ySWlu8V7lc1HMMxcVwyd57KB7FA==
-X-Received: by 2002:a17:907:2122:b0:92f:b290:78c with SMTP id qo2-20020a170907212200b0092fb290078cmr4179455ejb.21.1679430831701;
-        Tue, 21 Mar 2023 13:33:51 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id b1-20020a1709065e4100b008ca52f7fbcbsm6212839eju.1.2023.03.21.13.33.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 13:33:51 -0700 (PDT)
-Message-ID: <4df4d530-f12a-cc34-692a-1f5ff784bbe5@linaro.org>
-Date:   Tue, 21 Mar 2023 20:33:49 +0000
+        Tue, 21 Mar 2023 16:38:58 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D07838B6A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 13:38:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1679431125; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=NujyCUUEuZYxloUBc3+USyHsIS3soISUsO3rzdDli1eTo57fzs5H2Q5DTaheVRmbQ+
+    MeXsTI8vTPoFULdX4Jr1tlfWEmAhwKG2R3O6k+vy3vBmxiP7Kq3LHQHc4tIHqEbyCL6s
+    zfyy8sufSDgeQkiDlsgiUJrMUV+czOF8hFSLD44UP1X9zYMO6MrlezATksx8QTxy0d7L
+    BvJAWI+BtvR+ZKyG7ol86MyhyeTnozmNB4enRz/MxfD9Rrz1QB2h2SNimkfkM12PoAZj
+    XLnpFOgR1mgwvcvfGgT2fsVb88BjYt9JeZPDsppx2dNk1+f3QiTvNp6gzU++0xoJt9Xp
+    /gPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1679431125;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=VW2u1rxZfoleWEV+NDM3NNhETGJc+x24ln7uHM4gVmo=;
+    b=QAbxCmqo6ImkJpNZASkcMeMh/d2A81Rllme5qKi6HX5lcsKl/eDL2wZWKetUj1KYSW
+    b6qZfhcR6gKIdDp0to4O0iriv7d9VsC2KKsXyM1r3ohAd7qBRqa4IovB+XZ7e14Zms3g
+    gYnnuAJapfv3n0w4GcnBRPWvtfLZye5p78TEcd7WI4NnieuDUkc9WNU1A+8MvN50Bc5a
+    0+OHkAFK/9V8y99J/mHww41hmK6RR+aeWIEFgQ40HQnmFOWv16ncMhjps+VAtyeaCkjJ
+    ff6NEVUUErUoofPpjvS7RIctHH4QcO3btlw8mO8i6d1pbCDnWJf45Qx72hsUsDSUbyLL
+    w1Yw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo02
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1679431125;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=VW2u1rxZfoleWEV+NDM3NNhETGJc+x24ln7uHM4gVmo=;
+    b=a8lKhp9e0taDuFaMWWgfmLW9BKodlin2ndNX92KP3/U2IHdnH6Yv4q64SecgMFV30c
+    nt3TwoGqY8Npisy+XS3rnUC0kjQ2L9tjxSsh+67li7Do0kI7lzfOkRQQx1eSqjmjQHyY
+    dxScMuCZdICNHMsVk+eLhb64zrCjHSDHzbQH2MpmznmKRKyAGn6+CKSDf8NAl7QEtqC6
+    KxTmBee8tvstUmR/FdVhngOHcviNIFxP4t0ZoNwOdu482/O2XW1ZcRN/yL5spAS4OteT
+    tOU2a6SJWoXdMBH1VQk/BaWyAHdDDJlgIBFVjXOJPjQ8/KNzvTbFcLJ4aTFUvidEJE2j
+    8jGg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKjXrKw7+KY="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.3.1 AUTH)
+    with ESMTPSA id i40d22z2LKcjHBV
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 21 Mar 2023 21:38:45 +0100 (CET)
+Date:   Tue, 21 Mar 2023 21:38:36 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        andersson@kernel.org, bhupesh.linux@gmail.com,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, vladimir.zapolskiy@linaro.org,
+        rfoss@kernel.org
+Subject: Re: [PATCH 2/5] arm64: dts: qcom: sm6115: Add Crypto Engine support
+Message-ID: <ZBoVzFTr8LBWsmrX@gerhold.net>
+References: <20230321190118.3327360-1-bhupesh.sharma@linaro.org>
+ <20230321190118.3327360-3-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] clk: qcom: gfm-mux: use runtime pm while accessing
- registers
-Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>, agross@kernel.org,
-        andersson@kernel.org
-Cc:     konrad.dybcio@linaro.org, mturquette@baylibre.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Amit Pundir <amit.pundir@linaro.org>
-References: <20230321175758.26738-1-srinivas.kandagatla@linaro.org>
- <c5273d67493cbb008f13d7538837828a.sboyd@kernel.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <c5273d67493cbb008f13d7538837828a.sboyd@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230321190118.3327360-3-bhupesh.sharma@linaro.org>
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 21/03/2023 18:46, Stephen Boyd wrote:
-> Quoting Srinivas Kandagatla (2023-03-21 10:57:58)
->> gfm mux driver does support runtime pm but we never use it while
->> accessing registers. Looks like this driver was getting lucky and
->> totally depending on other drivers to leave the clk on.
->>
->> Fix this by doing runtime pm while accessing registers.
->>
->> Fixes: a2d8f507803e ("clk: qcom: Add support to LPASS AUDIO_CC Glitch Free Mux clocks")
->> Cc: stable@vger.kernel.org
->> Reported-by: Amit Pundir <amit.pundir@linaro.org>
+On Wed, Mar 22, 2023 at 12:31:15AM +0530, Bhupesh Sharma wrote:
+> Add crypto engine (CE) and CE BAM related nodes and definitions to
+> 'sm6115.dtsi'.
 > 
-> Is there a link to the report?
-
-https://www.spinics.net/lists/stable/msg638380.html
-
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 26 ++++++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
 > 
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> ---
->>   drivers/clk/qcom/lpass-gfm-sm8250.c | 29 ++++++++++++++++++++++++++++-
->>   1 file changed, 28 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/clk/qcom/lpass-gfm-sm8250.c b/drivers/clk/qcom/lpass-gfm-sm8250.c
->> index 96f476f24eb2..bcf0ea534f7f 100644
->> --- a/drivers/clk/qcom/lpass-gfm-sm8250.c
->> +++ b/drivers/clk/qcom/lpass-gfm-sm8250.c
->> @@ -38,14 +38,37 @@ struct clk_gfm {
->>   static u8 clk_gfm_get_parent(struct clk_hw *hw)
->>   {
->>          struct clk_gfm *clk = to_clk_gfm(hw);
->> +       int ret;
->> +       u8 parent;
->> +
->> +       ret = pm_runtime_resume_and_get(clk->priv->dev);
->> +       if (ret < 0 && ret != -EACCES) {
->> +               dev_err_ratelimited(clk->priv->dev,
->> +                                   "pm_runtime_resume_and_get failed in %s, ret %d\n",
->> +                                   __func__, ret);
->> +               return ret;
->> +       }
->> +
->> +       parent = readl(clk->gfm_mux) & clk->mux_mask;
->> +
->> +       pm_runtime_mark_last_busy(clk->priv->dev);
->>   
->> -       return readl(clk->gfm_mux) & clk->mux_mask;
->> +       return parent;
->>   }
->>   
->>   static int clk_gfm_set_parent(struct clk_hw *hw, u8 index)
->>   {
->>          struct clk_gfm *clk = to_clk_gfm(hw);
->>          unsigned int val;
->> +       int ret;
->> +
->> +       ret = pm_runtime_resume_and_get(clk->priv->dev);
-> 
-> Doesn't the clk framework already do this? Why do we need to do it
-> again?
+> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> index c56738633431..b2d2cdde41fa 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> @@ -664,6 +664,32 @@ usb_1_hsphy: phy@1613000 {
+>  			status = "disabled";
+>  		};
+>  
+> +		cryptobam: dma-controller@1b04000 {
+> +			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
+> +			reg = <0x0 0x01b04000 0x0 0x24000>;
+> +			interrupts = <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>;
+> +			#dma-cells = <1>;
+> +			qcom,ee = <0>;
+> +			qcom,controlled-remotely;
+> +			num-channels = <8>;
+> +			qcom,num-ees = <2>;
+> +			iommus = <&apps_smmu 0x84 0x11>,
+> +				 <&apps_smmu 0x86 0x11>,
+> +				 <&apps_smmu 0x94 0x11>,
+> +				 <&apps_smmu 0x96 0x11>;
+> +		};
+> +
+> +		crypto: crypto@1b3a000 {
+> +			compatible = "qcom,sm6115-qce", "qcom,sm8150-qce", "qcom,qce";
+> +			reg = <0x0 0x01b3a000 0x0 0x6000>;
+> +			dmas = <&cryptobam 6>, <&cryptobam 7>;
+> +			dma-names = "rx", "tx";
+> +			iommus = <&apps_smmu 0x84 0x11>,
+> +				 <&apps_smmu 0x86 0x11>,
+> +				 <&apps_smmu 0x94 0x11>,
+> +				 <&apps_smmu 0x96 0x11>;
 
-You are right, clk core already does do pm_runtime_resume_and_get for 
-set_parent.
+If you apply the 0x11 mask to the stream ID then the last two items here
+are identical to the first two (0x94 & ~0x11 = 0x84). Why are they
+needed? They look redundant to me.
 
-this looks redundant here.
-
-
-so we need only need to add this for get_parent
-
---srini
-> 
->> +       if (ret < 0 && ret != -EACCES) {
->> +               dev_err_ratelimited(clk->priv->dev,
->> +                                   "pm_runtime_resume_and_get failed in %s, ret %d\n",
->> +                                   __func__, ret);
->> +               return ret;
->> +       }
->>   
->>          val = readl(clk->gfm_mux);
->>
+Thanks,
+Stephan
