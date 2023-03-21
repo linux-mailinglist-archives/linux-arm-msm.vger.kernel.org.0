@@ -2,204 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 783136C38FE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 19:16:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B24016C3914
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 19:23:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230184AbjCUSQL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 14:16:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52126 "EHLO
+        id S230395AbjCUSX3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 14:23:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229606AbjCUSQK (ORCPT
+        with ESMTP id S230393AbjCUSX2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 14:16:10 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8ADA8A7E;
-        Tue, 21 Mar 2023 11:16:06 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (213-243-189-158.bb.dnainternet.fi [213.243.189.158])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 460FAFB;
-        Tue, 21 Mar 2023 19:16:04 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1679422564;
-        bh=YYbBI+yZSSJbYGhSeo7clHqjJfv86VCoUJSEWpYXO+Y=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=et96KRBewPZzizQfexOFCLJXkqb5wSeGgSv6hB9T2tVkzio8N0HVTy7cx7cQxPgeJ
-         xkoMRqVvU70aL6Gb9D3BeLPHdljMgL/LuwnNWcLW5bf0+XFhvoWCKgy4EI5/1+occk
-         4d/lA/Yw7mIY0BWH9k+99HYvgqDCoH4KUE2+nYE4=
-Date:   Tue, 21 Mar 2023 20:16:10 +0200
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc:     tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
-        ming.qian@nxp.com, shijie.qin@nxp.com, eagle.zhou@nxp.com,
-        bin.liu@mediatek.com, matthias.bgg@gmail.com,
-        angelogioacchino.delregno@collabora.com, tiffany.lin@mediatek.com,
-        andrew-ct.chen@mediatek.com, yunfei.dong@mediatek.com,
-        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
-        daniel.almeida@collabora.com, hverkuil-cisco@xs4all.nl,
-        jernel@kernel.org, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, kernel@collabora.com
-Subject: Re: [PATCH v2 2/8] media: videobuf2: Make bufs array dynamic
- allocated
-Message-ID: <20230321181610.GE20234@pendragon.ideasonboard.com>
-References: <20230321102855.346732-1-benjamin.gaignard@collabora.com>
- <20230321102855.346732-3-benjamin.gaignard@collabora.com>
+        Tue, 21 Mar 2023 14:23:28 -0400
+Received: from smtp36.i.mail.ru (smtp36.i.mail.ru [95.163.41.77])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67F6230D3;
+        Tue, 21 Mar 2023 11:23:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
+        h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=xs4uVFznL219tuyNHCYHp5XAjWFTcAzTNnZpaFv2jQs=;
+        t=1679423006;x=1679513006; 
+        b=jBSLkAu+zxXndosmBRBQzq7UOtNMxs+chBiVkjwCMHYfuNGpxcdgq1hKJELyhFuj2SRmrfQdMVpxD1/Ii3yLru7bo5TamLuNcQoos3bvTjx1dtByxECtYCOv5HaRfvPSa4P0eALp/rX7MDaAwZccx8RF6hE1ckZw4JwMJ9pEIE0=;
+Received: by smtp36.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
+        id 1pegdm-00Glud-Ve; Tue, 21 Mar 2023 21:23:23 +0300
+From:   Danila Tikhonov <danila@jiaxyga.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Danila Tikhonov <danila@jiaxyga.com>
+Subject: [PATCH] arm64: dts: qcom: pm8150l: add spmi-flash-led node
+Date:   Tue, 21 Mar 2023 21:23:19 +0300
+Message-Id: <20230321182319.24958-1-danila@jiaxyga.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230321102855.346732-3-benjamin.gaignard@collabora.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp36.i.mail.ru; auth=pass smtp.auth=danila@jiaxyga.com smtp.mailfrom=danila@jiaxyga.com
+X-Mailru-Src: smtp
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD992B47CBA3690DD1E730BF522A0F2D395FFC21FDAFD9DE6B100894C459B0CD1B9F999F90D02607CDAC5E967044ABC5E847A462112700F1F46471E6F0AD5863D70
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE75EB26DC3398F980CEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006372338AE33E473C9B88638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8762A69D38D3ADF52617B2ACF1C05D33B117882F4460429724CE54428C33FAD305F5C1EE8F4F765FCC0EC8C44E4C1BEE2A471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F44604297287769387670735200AC5B80A05675ACD2CC0D3CB04F14752D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE599709FD55CB46A69100238FE36DC7A2D8FC6C240DEA7642DBF02ECDB25306B2B78CF848AE20165D0A6AB1C7CE11FEE31DAA61796BF5227BC0837EA9F3D19764C4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947CB11811A4A51E3B096D1867E19FE1407959CC434672EE6371089D37D7C0E48F6C8AA50765F7900637C17C018527E75DCFEFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
+X-C1DE0DAB: 0D63561A33F958A5791C3B3D973970FABAED44A26150250F522FF0690FA73574F87CCE6106E1FC07E67D4AC08A07B9B01F9513A7CA91E5559C5DF10A05D560A950611B66E3DA6D700B0A020F03D25A09EDCF5861DED71B2FF32E08699F8F45A1CDFF42231550506261332C5CB50AE517BDAD6C7F3747799A
+X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D34B9F55CA4D2956E3039AA125374783AFBE7AC28D960128EAEB5F56B1F83090FE0BCE2591BB1B8A7CD1D7E09C32AA3244C6216DAD2275768759DC9622E5D9CEF78A995755A1445935E27AC49D2B05FCCD8
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXgzVV34exisKqFl6dER70/N
+X-DA7885C5: F372DD1B80E89470D92A718BBF65D2EC48836285C89F130DDE4C75F5F09B0B58D8288D6B1992AB67EF2421ABFA55128D02E9C42E3A59EA20
+X-Mailru-Sender: 9EB879F2C80682A09F26F806C7394981B35C08DFF3606A0C4592769330D757D0976AF1CB91E6EA81643683D8C0F3ED1CA3C71A376745D86BBE86167304C7680C3980CE5AAA35C7CD60F22E8815EDE5EAEAB4BC95F72C04283CDA0F3B3F5B9367
+X-Mras: Ok
+X-Spam-Status: No, score=-0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_VALIDITY_RPBL,SPF_HELO_PASS,SPF_PASS,URIBL_BLOCKED
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Benjamin,
+Add a node describing the flash block found on pm8150l.
 
-Thank you for the patch.
+Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+---
+ arch/arm64/boot/dts/qcom/pm8150l.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-On Tue, Mar 21, 2023 at 11:28:49AM +0100, Benjamin Gaignard wrote:
-> Instead of a static array change bufs to a dynamically allocated array.
-> This will allow to store more video buffer if needed.
-> Protect the array with a spinlock.
-
-I think I asked in the review of v1 why we couldn't use the kernel
-IDA/IDR APIs to allocate buffer IDs and register buffers, but I don't
-think I've received a reply. Wouldn't it be better than rolling out our
-own mechanism ?
-
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> ---
->  .../media/common/videobuf2/videobuf2-core.c   |  8 +++
->  include/media/videobuf2-core.h                | 49 ++++++++++++++++---
->  2 files changed, 49 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-> index 79e90e338846..ae9d72f4d181 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-core.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> @@ -2452,6 +2452,13 @@ int vb2_core_queue_init(struct vb2_queue *q)
->  	mutex_init(&q->mmap_lock);
->  	init_waitqueue_head(&q->done_wq);
->  
-> +	q->max_num_bufs = 32;
-> +	q->bufs = kmalloc_array(q->max_num_bufs, sizeof(*q->bufs), GFP_KERNEL | __GFP_ZERO);
-> +	if (!q->bufs)
-> +		return -ENOMEM;
-> +
-> +	spin_lock_init(&q->bufs_lock);
-> +
->  	q->memory = VB2_MEMORY_UNKNOWN;
->  
->  	if (q->buf_struct_size == 0)
-> @@ -2479,6 +2486,7 @@ void vb2_core_queue_release(struct vb2_queue *q)
->  	mutex_lock(&q->mmap_lock);
->  	__vb2_queue_free(q, q->num_buffers);
->  	mutex_unlock(&q->mmap_lock);
-> +	kfree(q->bufs);
->  }
->  EXPORT_SYMBOL_GPL(vb2_core_queue_release);
->  
-> diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-core.h
-> index 5b1e3d801546..397dbf6e61e1 100644
-> --- a/include/media/videobuf2-core.h
-> +++ b/include/media/videobuf2-core.h
-> @@ -558,6 +558,8 @@ struct vb2_buf_ops {
->   * @dma_dir:	DMA mapping direction.
->   * @bufs:	videobuf2 buffer structures
->   * @num_buffers: number of allocated/used buffers
-> + * @bufs_lock: lock to protect bufs access
-> + * @max_num_bufs: max number of buffers storable in bufs
->   * @queued_list: list of buffers currently queued from userspace
->   * @queued_count: number of buffers queued and ready for streaming.
->   * @owned_by_drv_count: number of buffers owned by the driver
-> @@ -619,8 +621,10 @@ struct vb2_queue {
->  	struct mutex			mmap_lock;
->  	unsigned int			memory;
->  	enum dma_data_direction		dma_dir;
-> -	struct vb2_buffer		*bufs[VB2_MAX_FRAME];
-> +	struct vb2_buffer		**bufs;
->  	unsigned int			num_buffers;
-> +	spinlock_t			bufs_lock;
-> +	size_t				max_num_bufs;
->  
->  	struct list_head		queued_list;
->  	unsigned int			queued_count;
-> @@ -1239,9 +1243,16 @@ static inline void vb2_clear_last_buffer_dequeued(struct vb2_queue *q)
->  static inline struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q,
->  						unsigned int index)
->  {
-> -	if (index < q->num_buffers)
-> -		return q->bufs[index];
-> -	return NULL;
-> +	struct vb2_buffer *vb = NULL;
-> +
-> +	spin_lock(&q->bufs_lock);
-> +
-> +	if (index < q->max_num_bufs)
-> +		vb = q->bufs[index];
-> +
-> +	spin_unlock(&q->bufs_lock);
-> +
-> +	return vb;
->  }
->  
->  /**
-> @@ -1251,12 +1262,30 @@ static inline struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q,
->   */
->  static inline bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb)
->  {
-> -	if (vb->index < VB2_MAX_FRAME) {
-> +	bool ret = false;
-> +
-> +	spin_lock(&q->bufs_lock);
-> +
-> +	if (vb->index >= q->max_num_bufs) {
-> +		struct vb2_buffer **tmp;
-> +
-> +		tmp = krealloc_array(q->bufs, q->max_num_bufs * 2, sizeof(*q->bufs), GFP_KERNEL);
-> +		if (!tmp)
-> +			goto realloc_failed;
-> +
-> +		q->max_num_bufs *= 2;
-> +		q->bufs = tmp;
-> +	}
-> +
-> +	if (vb->index < q->max_num_bufs) {
->  		q->bufs[vb->index] = vb;
-> -		return true;
-> +		ret = true;
->  	}
->  
-> -	return false;
-> +realloc_failed:
-> +	spin_unlock(&q->bufs_lock);
-> +
-> +	return ret;
->  }
->  
->  /**
-> @@ -1266,8 +1295,12 @@ static inline bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *
->   */
->  static inline void vb2_queue_remove_buffer(struct vb2_queue *q, struct vb2_buffer *vb)
->  {
-> -	if (vb->index < VB2_MAX_FRAME)
-> +	spin_lock(&q->bufs_lock);
-> +
-> +	if (vb->index < q->max_num_bufs)
->  		q->bufs[vb->index] = NULL;
-> +
-> +	spin_unlock(&q->bufs_lock);
->  }
->  
->  /*
-
+diff --git a/arch/arm64/boot/dts/qcom/pm8150l.dtsi b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
+index 135bfb8d629b..cca45fad75ac 100644
+--- a/arch/arm64/boot/dts/qcom/pm8150l.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
+@@ -116,6 +116,12 @@ pmic@5 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 
++		pm8150l_flash: led-controller@d300 {
++			compatible = "qcom,pm8150l-flash-led", "qcom,spmi-flash-led";
++			reg = <0xd300>;
++			status = "disabled";
++		};
++
+ 		pm8150l_lpg: pwm {
+ 			compatible = "qcom,pm8150l-lpg";
+ 
 -- 
-Regards,
+2.39.2
 
-Laurent Pinchart
