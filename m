@@ -2,92 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01C3D6C34E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 15:58:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E4196C324B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 14:08:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231270AbjCUO62 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 10:58:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36548 "EHLO
+        id S229976AbjCUNIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 09:08:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230219AbjCUO61 (ORCPT
+        with ESMTP id S230381AbjCUNIC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 10:58:27 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF45231CD;
-        Tue, 21 Mar 2023 07:58:24 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id l27so5687298wrb.2;
-        Tue, 21 Mar 2023 07:58:24 -0700 (PDT)
+        Tue, 21 Mar 2023 09:08:02 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D50E24D61C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 06:07:46 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-5445009c26bso279193097b3.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 06:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679410703;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=bgXEnYwzn/S6BlOb++Eaqru+i6YXyzKGwwPJBmaxtD4=;
-        b=ga4YMD0irqHN4ilQrJ2QMVEbWHArwcWv2PG1FGLGI3et3uRUC94zk6BZpYLXtYwFfq
-         Ww9fw7+pA7jFvc7QMMl9umhdWEA/kXceI4gCT4ZS+u6cf5+k8wZDH1mBjOQF2IZwG0eP
-         BbF2RgvFUaLtqL8bqcA2Zc3372cO+99MGl3tVQ4B1oDiwwkK2/0cyJ9S8MYkfaLa2oaM
-         7HxJWl67A3Jb7WSMyAi9EIoCBfiTwvWCOacUirjCW8pP1pNszz6QJU7mkI3miHldqUgt
-         Enrh0ZOQr8wcVepDFsJOkm3WoNuy9MeBo+P0WBP6DG/Eu1lLdMhF71YyTtIOzp8Xc7lc
-         HGpQ==
+        d=linaro.org; s=google; t=1679404066;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7OMTf5Ga7cygQE1B9rsS6pN7RAXO/nEzZ4boh/y9Vt0=;
+        b=cmJ8XIdSsNL/DkdwP6cioRpdQEMqyvRHRipv5kDKib1eCTK9r/TTQFkJ591EPAprgW
+         kq+VOaFqG5IX5Y49IJLieVe4Yfzzh0D1CbApAa2dUuBDYA2BQKTHPzVhniNz4VD8TBmW
+         4BquqEkEWXiF/o+8UKQ02d9YUbI2e0zJzXEUI4h6K9P1ZuDYQusqtbSPZ5a7NSUD26Cv
+         ffegSH5qZRqhh+unOsVNC8HjiZJZe13TQR1kZOv7c/SgoL2Z/zOYub+eld/LVyB/ot02
+         akzOY70zzgoeGMVkMtWSYvwHdpV3ThAm3o5tWKy9XvO4dfqJnRiN3+TAqeppxewF7dzE
+         iXAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679410703;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bgXEnYwzn/S6BlOb++Eaqru+i6YXyzKGwwPJBmaxtD4=;
-        b=a9+x/9qzfIRngLeOzY0OOHw89nWNN+4oMrkdQvKAF5yUi7l1bg19op5s0SYepETJje
-         WjHnneGUlA8BmvxJJe8wqu2ieCTcT4vIAltxMS/ltRpPiV4aaaBSSJ1JJGGTvCGNLRoZ
-         VayF6L6FRRHAn9UKu53tpC5Ah48XHQZsZhGjTNuRaOHFVYnogAbTgQeZEhYXnl9osOMC
-         uMcNCgHHyeM1fMrkv2OU/GQzSXF+B1ML31ODcf9L3/Vb1/NBecwYoYl3G4iLber+i7Ns
-         TMlM9lGg2OLx5kEjfYvI+B0rOw8iAE5N84xI3bFNhgyFy6kvo2QcszpVol6YWDwoiFD9
-         ylDw==
-X-Gm-Message-State: AO0yUKXtikfmCn0WNPInC3gW7PD0+wszW8t7AYz7KrNxzyxvU3o+IJBA
-        ieZ6m2SVz+bOw18eECYPDZ8=
-X-Google-Smtp-Source: AK7set+K7ppr5kVHCtHkrUaYjB+7uxp7G1eEctUkA+c9/tYtmX8WRNtLlnpL/VsrO7ZBl1mm/ABfEA==
-X-Received: by 2002:adf:f2c8:0:b0:2d2:22eb:824a with SMTP id d8-20020adff2c8000000b002d222eb824amr2419295wrp.34.1679410702538;
-        Tue, 21 Mar 2023 07:58:22 -0700 (PDT)
-Received: from Ansuel-xps. (93-34-89-197.ip49.fastwebnet.it. [93.34.89.197])
-        by smtp.gmail.com with ESMTPSA id d5-20020adfef85000000b002cfed482e9asm11556989wro.61.2023.03.21.07.58.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 07:58:22 -0700 (PDT)
-Message-ID: <6419c60e.df0a0220.1949a.c432@mx.google.com>
-X-Google-Original-Message-ID: <ZBli4hn6oPZzQZk0@Ansuel-xps.>
-Date:   Tue, 21 Mar 2023 08:55:14 +0100
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Andrew Lunn <andrew@lunn.ch>
-Cc:     Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org
-Subject: Re: [net-next PATCH v5 04/15] leds: Provide stubs for when CLASS_LED
- is disabled
-References: <20230319191814.22067-1-ansuelsmth@gmail.com>
- <20230319191814.22067-5-ansuelsmth@gmail.com>
- <aa2d0a8b-b98b-4821-9413-158be578e8e0@lunn.ch>
- <64189d72.190a0220.8d965.4a1c@mx.google.com>
- <5ee3c2cf-8100-4f35-a2df-b379846a8736@lunn.ch>
+        d=1e100.net; s=20210112; t=1679404066;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7OMTf5Ga7cygQE1B9rsS6pN7RAXO/nEzZ4boh/y9Vt0=;
+        b=G8zOfGLwz//zApnpuO8MiDbwmMS2t4HJRuq2DoxED1d3WLTtNcQWVCq8oKB56qp4+F
+         mFrNrRO26fByufQiDv/4bCk3VHgMm1/eFc0h4AK3/eg5hOUNh/rtWCdf0mXgQ8NhQch5
+         fGVu06hqKiQfOUn0zkaQxE76HZHfi31ne/hH9qEqhpy6IahqpzMoW+PpaR1nXFRBipA9
+         XePB+93WmmazRfTp7rl7bbGegDdQR3GJQ2FzabprRGslqOivWR+WhF5b1ouUIGUQURXw
+         a1dJQzleFMrkWiS2ToFPG/JwtUgd49luicCvQAcVlAScJS6XlWQm17ulHLLtETmWyqpy
+         GRYg==
+X-Gm-Message-State: AAQBX9dL4AOyBwYH707M11RFsPhdZj4jHsC5uVLTIra8DzTLqwfVEgqo
+        cKdYWQVse51WQhva7HWfwEyqRRx9By0KglEkTkUXnQ==
+X-Google-Smtp-Source: AKy350aj0PlWxbSVBeOrBC5vlMmi49wh+264w2jb98dmgSFBHyYGXdbEC1QiSslS+rFn7ARz91359uDeEapA874kEBA=
+X-Received: by 2002:a81:4305:0:b0:52e:e095:d840 with SMTP id
+ q5-20020a814305000000b0052ee095d840mr1020956ywa.0.1679404065610; Tue, 21 Mar
+ 2023 06:07:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5ee3c2cf-8100-4f35-a2df-b379846a8736@lunn.ch>
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
+References: <20230320134217.1685781-1-abel.vesa@linaro.org>
+In-Reply-To: <20230320134217.1685781-1-abel.vesa@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 21 Mar 2023 14:07:09 +0100
+Message-ID: <CAPDyKFrhqOfiUPEcb724Qw0ZCUV6LYj8HL0OhnVbr-2vj+_6Wg@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 0/5] Allow genpd providers to power off domains on
+ sync state
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+        Len Brown <len.brown@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Saravana Kannan <saravanak@google.com>,
+        linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -95,53 +81,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 20, 2023 at 08:31:36PM +0100, Andrew Lunn wrote:
-> On Mon, Mar 20, 2023 at 06:52:47PM +0100, Christian Marangi wrote:
-> > On Sun, Mar 19, 2023 at 11:49:02PM +0100, Andrew Lunn wrote:
-> > > > +#if IS_ENABLED(CONFIG_LEDS_CLASS)
-> > > >  enum led_default_state led_init_default_state_get(struct fwnode_handle *fwnode);
-> > > > +#else
-> > > > +static inline enum led_default_state
-> > > > +led_init_default_state_get(struct fwnode_handle *fwnode)
-> > > > +{
-> > > > +	return LEDS_DEFSTATE_OFF;
-> > > > +}
-> > > > +#endif
-> > > 
-> > > 0-day is telling me i have this wrong. The function is in led-core.c,
-> > > so this should be CONFIG_NEW_LEDS, not CONFIG_LEDS_CLASS.
-> > > 
-> > 
-> > Any idea why? NEW_LEDS just enable LEDS_CLASS selection so why we need
-> > to use that? Should not make a difference (in theory)
-> 
-> 0-day came up with a configuration which resulted in NEW_LEDS enabled
-> but LEDS_CLASS disabled. That then resulted in multiple definitions of 
-> led_init_default_state_get() when linking.
-> 
-> I _guess_ this is because select is used, which is not mandatory. So
-> randconfig can turn off something which is enabled by select.
-> 
-> I updated my tree, and so far 0-day has not complained, but it can
-> take a few days when it is busy.
-> 
+On Mon, 20 Mar 2023 at 14:42, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> There have been already a couple of tries to make the genpd "disable
+> unused" late initcall skip the powering off of domains that might be
+> needed until later on (i.e. until some consumer probes). The conclusion
+> was that the provider could return -EBUSY from the power_off callback
+> until the provider's sync state has been reached. This patch series tries
+> to provide a proof-of-concept that is working on Qualcomm platforms.
+>
+> I've been doing extensive testing on SM8450, but I've also spinned this
+> on my X13s (SC8280XP). Both patches that add the sync state callback to
+> the SC8280XP and SM8450 are here to provide context. Once we agree on
+> the form, I intend to add the sync state callback to all gdsc providers.
+>
+> Currently, some of the gdsc providers might not reach sync state due to
+> list of consumers not probing yet (or at all). The sync state can be
+> enforced by writing 1 to the state_synced sysfs attribute of the
+> provider, thanks to Saravana's commit [1] which has been already merged.
+>
+> [1] https://lore.kernel.org/r/20230304005355.746421-3-saravanak@google.com
+>
+> V1 of this patchset was here:
+> https://lore.kernel.org/all/20230315132330.450877-1-abel.vesa@linaro.org/
+>
+> Changes since v1:
+>  * Added the qcom_cc sync state callback which calls in turn the gdsc one
+>  * dropped extra semicolon from pm_domain.h
+>
+> Abel Vesa (5):
+>   PM: domains: Allow power off queuing from providers
+>   soc: qcom: rpmhpd: Do proper power off when state synced
+>   clk: qcom: gdsc: Avoid actual power off until sync state
+>   clk: qcom: Add sync state callback to all SC8280XP providers
+>   clk: qcom: Add sync state callback to all SM8450 providers
+>
+>  drivers/base/power/domain.c        |  3 ++-
+>  drivers/clk/qcom/camcc-sm8450.c    |  1 +
+>  drivers/clk/qcom/common.c          | 19 +++++++++++++++++++
+>  drivers/clk/qcom/common.h          |  2 ++
+>  drivers/clk/qcom/dispcc-sc8280xp.c |  1 +
+>  drivers/clk/qcom/dispcc-sm8450.c   |  1 +
+>  drivers/clk/qcom/gcc-sc8280xp.c    |  1 +
+>  drivers/clk/qcom/gcc-sm8450.c      |  1 +
+>  drivers/clk/qcom/gdsc.c            | 26 ++++++++++++++++++++++++++
+>  drivers/clk/qcom/gdsc.h            |  6 ++++++
+>  drivers/clk/qcom/gpucc-sc8280xp.c  |  1 +
+>  drivers/soc/qcom/rpmhpd.c          | 19 +++++++------------
+>  include/linux/pm_domain.h          |  6 ++++++
+>  13 files changed, 74 insertions(+), 13 deletions(-)
+>
 
-BTW yes I repro the problem.
+Besides the minor comments on patch1, this looks good to me! So, feel
+free to add:
 
-Checked the makefile and led-core.c is compiled with NEW_LEDS and
-led-class is compiled with LEDS_CLASS.
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 
-led_init_default_state_get is in led-core.c and this is the problem with
-using LEDS_CLASS instead of NEW_LEDS...
-
-But actually why we are putting led_init_default_state_get behind a
-config? IMHO we should compile it anyway.
-
-So my suggestion is to keep the LEDS_CLASS and just remove the part for 
-led_init_default_state_get.
-
-Also why IS_ENABLED instead of a simple ifdef? (in leds.h there is a mix
-of both so I wonder if we should use one or the other)
-
--- 
-	Ansuel
+Kind regards
+Uffe
