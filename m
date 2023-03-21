@@ -2,230 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A1476C3D85
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 23:13:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AEB36C3DAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 23:20:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229997AbjCUWNF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 18:13:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33176 "EHLO
+        id S230008AbjCUWUz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 18:20:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230105AbjCUWM6 (ORCPT
+        with ESMTP id S229997AbjCUWUy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 18:12:58 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 333B4570BD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 15:12:52 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id h25so9327164lfv.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 15:12:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679436770;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=13Zv1FUEwXx4yLngj7RFNjjKZHhiuq0qCRERwhQpaHM=;
-        b=TVuYpJX2h2hgxrXCaQvHejEwvzDdasb9KPUcqB5a+pdXGkqtqaByqa3QRdPSRyYrC1
-         yvH/dpUOZk3mt0XFCIEicnwR9snV7o3ElME2ErKL93QqZmBywIfyZxeshol3k3RBVKBa
-         ZWGXn3pmJm+5XGoKFvH/JnrHBIHKQoN4vaYYKGniIDJxq2okgkoxLH4uYicHOgx331mV
-         SOmApg7Vymy+iR8Q4EKrvV0+FcCwzFTUEUPPVwWr5ioCNbZubO3ffdDqXpV2UkHKpOGR
-         kiB+Nh8qD7r0NXNGoW5cxb2mvihMkXHDMMsUu7F9br4Tj6TjfwZ/ycBXuJ3SSfJeGqA4
-         qIuA==
+        Tue, 21 Mar 2023 18:20:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41D9E2333C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 15:20:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1679437205;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=3d30Yo9IkuDAuQ71lplDlZlFi1tH3/S4QrO8CaL0yaU=;
+        b=c74XzAhZhaRiC93A05vjFe641KOU747zvrkRZaWgEiZ3bHaa3Rlrr+FRaEl1zvEQjG/w32
+        bp+0DI3CXxiu9CHjqu6GRPOmzmn2KejheJ6PDW/25+2TA3JET8eq8zd4AuaOw7+XH9DoQT
+        SFnHk0RcJ398TofE1SyObzTTjkM8Mfw=
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
+ [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-297-LA6-EtIyPOiaIVIEGnFnGQ-1; Tue, 21 Mar 2023 18:20:03 -0400
+X-MC-Unique: LA6-EtIyPOiaIVIEGnFnGQ-1
+Received: by mail-oo1-f71.google.com with SMTP id s62-20020a4a5141000000b00537d702c199so5045765ooa.15
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 15:20:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679436770;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=13Zv1FUEwXx4yLngj7RFNjjKZHhiuq0qCRERwhQpaHM=;
-        b=xD4tGDxkrHIMF8OIqyBw/uOcP26/8AmIGaUJklXFxfgvOJSijV4zU35KmdrcjzQEO6
-         eE6dtVqbrz9Idl0egGRClyYQFVoAgL/f6bU1wDObLN3XkfPPwSif9s6K3vlzEMvaxhTu
-         8m5LhYUAEK/GHjASCJ5CXh+ZpmjcnTw4LdgyY7v3bqD8u2nKftGbhMEQ7o7XJC+pY4F7
-         /nsD1oQH60ILomKYfR0jLUSHvsbjwgzWfU8YM6IE7YWXIuReDa5/8QgT9C7O3V0hXq2j
-         Z6Yhv1E6Walg6P8LW4CvcDSRSbzR3OvOmjacdASh0ixLwLrMRmev1I4IrY4P6k2XmERz
-         u+7A==
-X-Gm-Message-State: AO0yUKVbBVmzZ1aqha6sL+GMwk2paibOURnjFC/uChd+bubYDYDb8jwd
-        DdFX2lEfBK4N0VnkL8H0X1IUnw==
-X-Google-Smtp-Source: AK7set/HbvRs2o8GvFlrB1PxbxWzkQeDfHexsDnns6zywGT0jmSu8t9oRMx+73W4owCg686i1/pKJg==
-X-Received: by 2002:a05:6512:11e1:b0:4e9:6033:20d3 with SMTP id p1-20020a05651211e100b004e9603320d3mr1313142lfs.24.1679436770366;
-        Tue, 21 Mar 2023 15:12:50 -0700 (PDT)
-Received: from [192.168.1.101] (abym238.neoplus.adsl.tpnet.pl. [83.9.32.238])
-        by smtp.gmail.com with ESMTPSA id o15-20020a056512050f00b004e9c983a007sm1220344lfb.289.2023.03.21.15.12.49
+        d=1e100.net; s=20210112; t=1679437203;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3d30Yo9IkuDAuQ71lplDlZlFi1tH3/S4QrO8CaL0yaU=;
+        b=wobgH+VFv+CTWTvmNOz1u46LiYdOOGjvOXdNwkBhiGiNcoH+FoNgoi+clNEx8YQVYh
+         NcenSlR+Gc8kUfNqgnDbgCdqzfTV5PeNSYTdHnOB658B0JkycP96QQ9JJP3TJCr1qtGx
+         bU7mhLJqpu4sBGZYTOTpqNrVg3Oku+ZyjfMXPgvEQbfSPEEHnn04bLL46aNkA/K0w3PT
+         UadpBLhE54cupirPgz0VHPJ4vaPp0t6+FHxOdPRAiIpVsdVSg0KJ1Xd4eKMNK/z7NzaI
+         JJ5e0U9cP+iGX/Br3AmfXedrBDTBgW5Bqaq1J5hBUM37vKMVpdWGeQSBqlK8AC+ySMvf
+         Hffw==
+X-Gm-Message-State: AO0yUKXog7fq1PsxIvt0LM36AyzPX/dmMtPPtaeLEZSg9MQ9jy4uHnME
+        PYvgAhiH26pd7iCSq5X947mgRSFfTLj2GfzAD3jVDwU8y2urjFcRG5CX2rGnVpBFRNNAyMleHwA
+        3RrI24pAhk39L45VEogeMa/jNUg==
+X-Received: by 2002:a05:6870:461c:b0:17a:cabc:c92c with SMTP id z28-20020a056870461c00b0017acabcc92cmr389526oao.4.1679437202793;
+        Tue, 21 Mar 2023 15:20:02 -0700 (PDT)
+X-Google-Smtp-Source: AK7set+U0ekkEh5oox/1FTDAwz5G/lXb0i1Zm4idONxXrNRjXje54uB3CMGHl647zfImhCphOO1Nqw==
+X-Received: by 2002:a05:6870:461c:b0:17a:cabc:c92c with SMTP id z28-20020a056870461c00b0017acabcc92cmr389491oao.4.1679437202547;
+        Tue, 21 Mar 2023 15:20:02 -0700 (PDT)
+Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
+        by smtp.gmail.com with ESMTPSA id x5-20020a9d6285000000b0069d4e5284fdsm5566268otk.7.2023.03.21.15.20.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 15:12:50 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 21 Mar 2023 23:12:31 +0100
-Subject: [PATCH 4/4] arm64: dts: qcom: sm8350-nagara: Unify status property
- placement
+        Tue, 21 Mar 2023 15:20:02 -0700 (PDT)
+Date:   Tue, 21 Mar 2023 17:19:58 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        vkoul@kernel.org, bhupesh.sharma@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, peppe.cavallaro@st.com,
+        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
+        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
+        linux@armlinux.org.uk, veekhee@apple.com,
+        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
+        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
+        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
+        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
+Subject: Re: [PATCH net-next v2 09/12] net: stmmac: Add EMAC3 variant of
+ dwmac4
+Message-ID: <20230321221958.e3s7mbpxp5hpm7su@halaney-x13s>
+References: <20230320221617.236323-1-ahalaney@redhat.com>
+ <20230320221617.236323-10-ahalaney@redhat.com>
+ <20230320204153.21736840@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230321-topic-sagami_dp-v1-4-340c8bce4276@linaro.org>
-References: <20230321-topic-sagami_dp-v1-0-340c8bce4276@linaro.org>
-In-Reply-To: <20230321-topic-sagami_dp-v1-0-340c8bce4276@linaro.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1679436764; l=3059;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=PVuMTdifNqJ5Z9yoopYhHdxk90HwveOlTjYOQjYaiCQ=;
- b=a/DZcv2drxELLeAnMNRTKju2/lidHG2b/fLv1uCpGms/QwtibA0s5OuDX897ZdRKlqSiUSqgwWF3
- etA5Tt2uDugI33oTmOXhkdCWx2vAtUeB8BBlDdvG6ULSUfDSBXxH
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230320204153.21736840@kernel.org>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As we're heading towards getting the status property last everywhere,
-take care of it for SM8350 SONY Sagami.
+On Mon, Mar 20, 2023 at 08:41:53PM -0700, Jakub Kicinski wrote:
+> On Mon, 20 Mar 2023 17:16:14 -0500 Andrew Halaney wrote:
+> > The next approach that was checked was to have a function pointer
+> > embedded inside a structure that does the appropriate conversion based
+> > on the variant that's in use. However, some of the function definitions
+> > are like the following:
+> > 
+> >     void emac3_set_rx_ring_len(void __iomem *ioaddr, u32 len, u32 chan)
+> 
+> I checked a couple of callbacks and they seem to all be called with
+> priv->iomem as an arg, so there is no strong reason to pass iomem
+> instead of priv / hw. Or at least not to pass both..
+> 
+> I think that's a better approach than adding the wrappers :(
+> 
+> Are you familiar with coccinelle / spatch? It's often better than 
+> just regexps for refactoring, maybe it can help?
+> 
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- .../boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 30 ++++++++++------------
- 1 file changed, 14 insertions(+), 16 deletions(-)
+No worries, I'll try and refactor as you mentioned. Looking at it some
+this afternoon makes me think I'll try something like this:
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-index b2baa81baf5e..95b1ba4ce470 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-@@ -189,8 +189,8 @@ vph_pwr: vph-pwr-regulator {
- };
- 
- &adsp {
--	status = "okay";
- 	firmware-name = "qcom/sm8350/Sony/sagami/adsp.mbn";
-+	status = "okay";
- };
- 
- &apps_rsc {
-@@ -542,27 +542,27 @@ pmr735a_l7: ldo7 {
- };
- 
- &cdsp {
--	status = "okay";
- 	firmware-name = "qcom/sm8350/Sony/sagami/cdsp.mbn";
-+	status = "okay";
- };
- 
- &i2c1 {
--	status = "okay";
- 	clock-frequency = <1000000>;
-+	status = "okay";
- 
- 	/* Some subset of SONY IMX663 camera sensor @ 38 */
- };
- 
- &i2c4 {
--	status = "okay";
- 	clock-frequency = <400000>;
-+	status = "okay";
- 
- 	/* Samsung Touchscreen (needs I2C GPI DMA) @ 48 */
- };
- 
- &i2c11 {
--	status = "okay";
- 	clock-frequency = <1000000>;
-+	status = "okay";
- 
- 	cs35l41_l: speaker-amp@40 {
- 		compatible = "cirrus,cs35l41";
-@@ -596,31 +596,31 @@ cs35l41_r: speaker-amp@41 {
- };
- 
- &i2c12 {
--	status = "okay";
- 	/* Clock frequency was not specified downstream, let's park it to 100 KHz */
- 	clock-frequency = <100000>;
-+	status = "okay";
- 
- 	/* AMS TCS3490 RGB+IR color sensor @ 72 */
- };
- 
- &i2c13 {
--	status = "okay";
- 	/* Clock frequency was not specified downstream, let's park it to 100 KHz */
- 	clock-frequency = <100000>;
-+	status = "okay";
- 
- 	/* Qualcomm PM8008i/PM8008j (?) @ 8, 9, c, d */
- };
- 
- &i2c15 {
--	status = "okay";
- 	clock-frequency = <400000>;
-+	status = "okay";
- 
- 	/* NXP SN1X0 NFC @ 28 */
- };
- 
- &i2c17 {
--	status = "okay";
- 	clock-frequency = <1000000>;
-+	status = "okay";
- 
- 	/* Cirrus Logic CS40L25A boosted haptics driver @ 40 */
- };
-@@ -652,8 +652,8 @@ mdss_dp_altmode: endpoint {
- };
- 
- &mpss {
--	status = "okay";
- 	firmware-name = "qcom/sm8350/Sony/sagami/modem.mbn";
-+	status = "okay";
- };
- 
- &pm8350_gpios {
-@@ -719,8 +719,8 @@ &pon_pwrkey {
- };
- 
- &pon_resin {
--	status = "okay";
- 	linux,code = <KEY_VOLUMEUP>;
-+	status = "okay";
- };
- 
- &qupv3_id_0 {
-@@ -748,8 +748,8 @@ &sdhc_2 {
- };
- 
- &slpi {
--	status = "okay";
- 	firmware-name = "qcom/sm8350/Sony/sagami/slpi.mbn";
-+	status = "okay";
- };
- 
- &spi14 {
-@@ -1038,16 +1038,14 @@ usb_1_dwc3_ss: endpoint {
- };
- 
- &usb_1_hsphy {
--	status = "okay";
--
- 	vdda-pll-supply = <&pm8350_l5>;
- 	vdda18-supply = <&pm8350c_l1>;
- 	vdda33-supply = <&pm8350_l2>;
-+	status = "okay";
- };
- 
- &usb_1_qmpphy {
--	status = "okay";
--
- 	vdda-phy-supply = <&pm8350_l6>;
- 	vdda-pll-supply = <&pm8350_l1>;
-+	status = "okay";
- };
+    diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+    index 16a7421715cb..75c55f696c7a 100644
+    --- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
+    +++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+    @@ -12,7 +12,7 @@
+     ({ \
+            int __result = -EINVAL; \
+            if ((__priv)->hw->__module && (__priv)->hw->__module->__cname) { \
+    -               (__priv)->hw->__module->__cname((__arg0), ##__args); \
+    +               (__priv)->hw->__module->__cname((__priv), (__arg0), ##__args); \
+                    __result = 0; \
+            } \
+            __result; \
+    @@ -21,7 +21,7 @@
+     ({ \
+            int __result = -EINVAL; \
+            if ((__priv)->hw->__module && (__priv)->hw->__module->__cname) \
+    -               __result = (__priv)->hw->__module->__cname((__arg0), ##__args); \
+    +               __result = (__priv)->hw->__module->__cname((__priv), (__arg0), ##__args); \
+            __result; \
+     })
+     
+    @@ -34,68 +34,68 @@ struct dma_edesc;
+     /* Descriptors helpers */
+     struct stmmac_desc_ops {
+            /* DMA RX descriptor ring initialization */
+    -       void (*init_rx_desc)(struct dma_desc *p, int disable_rx_ic, int mode,
+    -                       int end, int bfsize);
+    +       void (*init_rx_desc)(struct stmmac_priv *priv, struct dma_desc *p,
+    +                            int disable_rx_ic, int mode, int end, int bfsize);
+            /* DMA TX descriptor ring initialization */
+    (...)
 
--- 
-2.40.0
+and then, I'll add something like:
+
+    diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
+    index a152678b82b7..f5f406a09ae3 100644
+    --- a/include/linux/stmmac.h
+    +++ b/include/linux/stmmac.h
+    @@ -273,5 +273,7 @@ struct plat_stmmacenet_data {
+            bool use_phy_wol;
+            bool sph_disable;
+            bool serdes_up_after_phy_linkup;
+    +       u32 mtl_base;
+    +       u32 mtl_offset;
+     };
+     #endif
+
+and rewrite:
+
+    #define MTL_CHANX_BASE_ADDR(x)		(MTL_CHAN_BASE_ADDR + \
+                                            (x * MTL_CHAN_BASE_OFFSET))
+
+to use mtl_base/offset if they exist, and so on for the DMA versions,
+etc...
+
+I'm sure I'll probably run into some issue and change course slightly,
+but thought I'd post a hint of the path to make sure I'm not way off the
+mark.
+
+Thanks for your feedback,
+Andrew
 
