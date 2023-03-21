@@ -2,63 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7128A6C2AC6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 07:50:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A6F16C2B2D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 08:16:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230363AbjCUGuf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 02:50:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60878 "EHLO
+        id S229552AbjCUHP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 03:15:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229838AbjCUGue (ORCPT
+        with ESMTP id S229869AbjCUHP5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 02:50:34 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8AC63C7A4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 23:50:04 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id cy23so55612848edb.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 23:50:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679381404;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AVZ6hZGV1be7TstieJ1z6Us2bdyl2vfl7ifo76jUCuw=;
-        b=yfBGAkzYkRznU9Ng945BSIqo31Bk5T0PtagdkfIHR2Q1BeqH5OnMJ4fsG1zFEiehiS
-         KZ3/pYphUZP+d7j+TETF5ibJ22qi8JxUtbeR5/rMsVWBLbLtVafpphEGHOgtkfufvthr
-         kfFqq23RxghjFGHcvf7wzurvqXl77TX0lreCe4zdMXibkctRdAIFIHy2nFlymDviILbG
-         cJHWfu2Mf2f0H4Zek7CU3vs712CDHZtYrkN+Dnj8r9iTZ3wsTUFj2dPI9y02J/EmUF03
-         XuUbrwNwkbxeyyaBiz152Yt33fiVzez/AHc3FxXutFCupBB3a+cT+4yKOMj9xOon+xKG
-         WmsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679381404;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AVZ6hZGV1be7TstieJ1z6Us2bdyl2vfl7ifo76jUCuw=;
-        b=aFw+nezD4kGPZGnJtSwdh7PUmOJZn3Bq2JA5lvKGJi+3Lserh/L6fcpOph8mYsQC3u
-         W6Fv8jgmMn7liUC/yo+Q20g5mFl1r9Jf8LoEIDU686xq76WwpE/LgHp2+O798UObFkQV
-         +Ik1FiFoCBQfzC8yRHigs/82XXKIRsbIc37NhhUei+ilz1XC4e4RwULeha+NOmHt+b28
-         L2kTPWSsB46fB2vReM+e4FU0iYdr4t8O5M5YeESY6qjd0b0KvbyMu08VnHc3V7K4Cg5y
-         i35UsaqWqf7NmBMie70zRfajbjzWgyggdJJpd/CAX2TBGP/4ugDpGLp8O6/VUTdftqmr
-         Mm+Q==
-X-Gm-Message-State: AO0yUKXMuIqciEbV4R3fAZ99bKN5wwD+Zx6jtE1cK8ltMNLYxbIyD5aY
-        kZNbTPSm/pVVCLnJO20mWRY9xQ==
-X-Google-Smtp-Source: AK7set8eB3GSlawOodRmMBJ+h20F9+s+seoY5Xp11h5THWtKB+BDrw+xLcE75DD32t4gpHpf4nRxYg==
-X-Received: by 2002:a17:906:6449:b0:8b2:abcd:624 with SMTP id l9-20020a170906644900b008b2abcd0624mr1888422ejn.0.1679381404434;
-        Mon, 20 Mar 2023 23:50:04 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:2142:d8da:5ae4:d817? ([2a02:810d:15c0:828:2142:d8da:5ae4:d817])
-        by smtp.gmail.com with ESMTPSA id z16-20020a170906715000b00930894eb708sm5361112ejj.223.2023.03.20.23.50.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Mar 2023 23:50:03 -0700 (PDT)
-Message-ID: <c9365b87-3cd5-9df6-7f2c-e4e848165062@linaro.org>
-Date:   Tue, 21 Mar 2023 07:50:01 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH] media: dt-bindings: Drop unneeded quotes
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Tue, 21 Mar 2023 03:15:57 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AD743E606
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 00:15:23 -0700 (PDT)
+Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <mkl@pengutronix.de>)
+        id 1peWCD-0005ev-Co; Tue, 21 Mar 2023 08:14:13 +0100
+Received: from pengutronix.de (unknown [IPv6:2a01:4f8:1c1c:29e9:22:41ff:fe00:1400])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (Client did not present a certificate)
+        (Authenticated sender: mkl-all@blackshift.org)
+        by smtp.blackshift.org (Postfix) with ESMTPSA id CFC9A19831D;
+        Tue, 21 Mar 2023 07:14:02 +0000 (UTC)
+Date:   Tue, 21 Mar 2023 08:14:01 +0100
+From:   Marc Kleine-Budde <mkl@pengutronix.de>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Chen-Yu Tsai <wens@csie.org>,
         Jernej Skrabec <jernej.skrabec@gmail.com>,
@@ -67,47 +40,44 @@ To:     Rob Herring <robh@kernel.org>,
         Kevin Hilman <khilman@baylibre.com>,
         Jerome Brunet <jbrunet@baylibre.com>,
         Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Joe Tessler <jrt@google.com>,
-        Dongchun Zhu <dongchun.zhu@mediatek.com>,
-        Jacopo Mondi <jacopo+renesas@jmondi.org>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        =?UTF-8?Q?Niklas_S=c3=b6derlund?= 
-        <niklas.soderlund+renesas@ragnatech.se>,
-        Tiffany Lin <tiffany.lin@mediatek.com>,
-        Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
-        Yunfei Dong <yunfei.dong@mediatek.com>,
-        Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Robert Foss <rfoss@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
+        Yu Chen <chenyu56@huawei.com>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Chunfeng Yun <chunfeng.yun@mediatek.com>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Benoit Parrot <bparrot@ti.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Cc:     linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        Robert Marko <robert.marko@sartura.hr>,
+        Luka Perkov <luka.perkov@sartura.hr>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Vincent Shih <vincent.sunplus@gmail.com>,
+        Wolfgang Grandegger <wg@grandegger.com>,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
         linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-References: <20230320233944.2920964-1-robh@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230320233944.2920964-1-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        linux-usb@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-can@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: phy: Drop unneeded quotes
+Message-ID: <20230321071401.tmzxmedhjtup3gil@pengutronix.de>
+References: <20230320233955.2921179-1-robh@kernel.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="be3e4amne3fqyhxc"
+Content-Disposition: inline
+In-Reply-To: <20230320233955.2921179-1-robh@kernel.org>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:b01:1d::7b
+X-SA-Exim-Mail-From: mkl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -116,15 +86,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/03/2023 00:39, Rob Herring wrote:
+
+--be3e4amne3fqyhxc
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 20.03.2023 18:39:52, Rob Herring wrote:
 > Cleanup bindings dropping unneeded quotes. Once all these are fixed,
 > checking for this can be enabled in yamllint.
-> 
+>=20
 > Signed-off-by: Rob Herring <robh@kernel.org>
 > ---
+>  Documentation/devicetree/bindings/phy/ti,tcan104x-can.yaml  | 4 ++--
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Marc Kleine-Budde <mkl@pengutronix.de> # for ti,tcan104x-can.yaml
 
-Best regards,
-Krzysztof
+Marc
 
+--=20
+Pengutronix e.K.                 | Marc Kleine-Budde           |
+Embedded Linux                   | https://www.pengutronix.de  |
+Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-5555 |
+
+--be3e4amne3fqyhxc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEDs2BvajyNKlf9TJQvlAcSiqKBOgFAmQZWTcACgkQvlAcSiqK
+BOhnJggArFl7SeXMUoTFqF4RAxiwJqkBFw93RzRXX0UR0G4PQJiS7lLHDZ7ouvtO
+rhXsWIOs5a6P/Ui5FqXcfmo19Lv0KoJY/qddMLlT/bZ5JkS5uAgrqbHe+nLos462
+41OBQby+tr3pxNThQcX8/sq6Od9GHQ5ZrbtiIV3yyd7z65cmR2WgRvomHEADY6uh
+m+x5woaXBVJqK5m1srOvvOs4gS+ruZdSbjMuVPNJJr4Kp7r05JRRGyaIhlAQ2zTV
+RjASaGhVK8Gq5uknd2s684jKIfcCeSxmN1P8JLNA3I2rwTmn5+b7XrawnbOWrKlS
+e56NNf6fuROlFhJVzNzl24yI+zqsyg==
+=Khyr
+-----END PGP SIGNATURE-----
+
+--be3e4amne3fqyhxc--
