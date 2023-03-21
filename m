@@ -2,118 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDEA06C29F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 06:38:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DDB9B6C2A05
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 06:50:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229634AbjCUFis (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 01:38:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57420 "EHLO
+        id S229755AbjCUFuG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 01:50:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229798AbjCUFii (ORCPT
+        with ESMTP id S229524AbjCUFuF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 01:38:38 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F18822134;
-        Mon, 20 Mar 2023 22:38:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-        Content-Type:In-Reply-To:Cc:From:References:To:Subject:MIME-Version:Date:
-        Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-        bh=+NQR2cPC+9ftHy9bkc6ojFpRutVyCr2wlZ//xE3JKzU=; b=UKGzuF1+vvffxv8tV1c7SOUMNf
-        N6gOBaXUq1Z2WBP6vYfwQm1sD+G9eXycB7QfSXba+4a5C/bDlK2bkVo0Ab4iohEGRbrSqPYKF812K
-        MjQDv+BjpwO9UY4upzyh4tjIBtEbERfxbkYgung/jovgyz5RAAJpMzTzdDI+34lS43r94T5xHZHeK
-        xm3UhfHFtSaXyeP0C7TP+yngL6HKFHKRjUhgRMA6tbhrYhW9B4QYy1XQFvRa8J9k1QocnOVB/NLjT
-        kUGAkcHhlHckdcckTA5Z78MynD3gb8FYWcJT2DCpXhPR4Whx1gqGJkqC5nMB3JVzkNsSDefta1ZMK
-        TrCi2dcw==;
-Received: from [2601:1c2:980:9ec0::21b4]
-        by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-        id 1peUhc-00BHNo-39;
-        Tue, 21 Mar 2023 05:38:33 +0000
-Message-ID: <c85681c6-6fcf-33ed-210f-661e539f78d8@infradead.org>
-Date:   Mon, 20 Mar 2023 22:38:31 -0700
+        Tue, 21 Mar 2023 01:50:05 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E7718A5C;
+        Mon, 20 Mar 2023 22:50:02 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id f19-20020a9d5f13000000b00693ce5a2f3eso7948362oti.8;
+        Mon, 20 Mar 2023 22:50:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679377801;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PQRYTyJUcXjGIlb32K69CN7N/CfuacDHmOLvuVVkIeU=;
+        b=F5so8U9eSPDfKwLwdhjWe1tE8PfeVDHKjkiyKaVpWQqKRuyuavEeTzXd4hk6L3z6zp
+         VHPO8QjxcIT4MYzTcNnHQK4kCkDGjZgPowyHLuCLV9GljdqpK9u99uNfqkBMK5RA93gv
+         FGjbjWg9KVC+SGloN3ekhh+2k6L7EF7wthr0pjQIqJLNck01caZneaWdLgqxokr/RLrO
+         1sgViMnoTTZxc9T5zi936whRCWGOMENT2d8QDQSNUknsMhStPJdQFhKuw7YCDQdWuHuY
+         XA7Htk2YAl4jH1GHMq/ggeJA09GTqzjWLySHNgMO09vanozHHeos4pEKMn6CfOVlZGDt
+         TxtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679377801;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PQRYTyJUcXjGIlb32K69CN7N/CfuacDHmOLvuVVkIeU=;
+        b=F+s8zjzIrEGYsx6hUIpY4AypQRSgaI1J7euQkQ42p6TNiWR74+Ud4W3WVMAditLJQr
+         CaowjZJsj4VOVBiY73DILXuj3n8dIFKKlDOzRQycXhzqak3mJzisw0X7W0rwfuLLvRVa
+         z9eC4RuXcuND7FSIotBqml8LvChmRxDlfbzak3IIEgZykkxXvnR98fmKAE/gY0B6iJWI
+         3K6BFRwIxhGk/uEJd1rgoZrcWFqAWmntoK5dVXJ3X9PqM0Xo6MUHeEVOY7DngFtGfSQB
+         ukGxegKWRtQPXMBRWWZRJ6bN8VxyHS5OmJ16tKzw9wIOZilgG8lIG8cJCCN7Gokc3AHu
+         v7Sg==
+X-Gm-Message-State: AO0yUKWmHcErfDaWY4rFJTxA2dExzj9FWKjUTnOPCZDHm/k8X/cLEk4a
+        PK3HM0Z9jYhzC7DHIEy1kM5zp9CPH1PMihlxGU0=
+X-Google-Smtp-Source: AK7set9hGdm8jb3Zms52xIkHW02ezlDplA4s1W/5C+8w1fxRVUiCGMOX1ghjWbWe1rulG24xEDF5Rs78eQG2Vsd6oW8=
+X-Received: by 2002:a05:6830:13d3:b0:69e:24a7:e042 with SMTP id
+ e19-20020a05683013d300b0069e24a7e042mr409968otq.3.1679377801763; Mon, 20 Mar
+ 2023 22:50:01 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: Build regressions/improvements in v6.3-rc3 (drm/msm/)
-Content-Language: en-US
-To:     Geert Uytterhoeven <geert@linux-m68k.org>,
-        linux-kernel@vger.kernel.org
-References: <CAHk-=wiPd8R8-zSqTOtJ9KYeZLBByHug7ny3rgP-ZqzpP_KELg@mail.gmail.com>
- <20230320082146.4117022-1-geert@linux-m68k.org>
-From:   Randy Dunlap <rdunlap@infradead.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>
-In-Reply-To: <20230320082146.4117022-1-geert@linux-m68k.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20230320233955.2921179-1-robh@kernel.org>
+In-Reply-To: <20230320233955.2921179-1-robh@kernel.org>
+From:   Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Date:   Tue, 21 Mar 2023 06:49:49 +0100
+Message-ID: <CAMhs-H829e-QSwMXAVN6b4pYTB+_d-PLJxbEqdhd9oOrYnY-aQ@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: phy: Drop unneeded quotes
+To:     Rob Herring <robh@kernel.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Yu Chen <chenyu56@huawei.com>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Chunfeng Yun <chunfeng.yun@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Luka Perkov <luka.perkov@sartura.hr>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Vincent Shih <vincent.sunplus@gmail.com>,
+        Wolfgang Grandegger <wg@grandegger.com>,
+        Marc Kleine-Budde <mkl@pengutronix.de>,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-usb@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-can@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi--
+On Tue, Mar 21, 2023 at 12:40=E2=80=AFAM Rob Herring <robh@kernel.org> wrot=
+e:
+>
+> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+> checking for this can be enabled in yamllint.
+>
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
-On 3/20/23 01:21, Geert Uytterhoeven wrote:
-> Below is the list of build error/warning regressions/improvements in
-> v6.3-rc3[1] compared to v6.2[2].
-> 
-> Summarized:
->   - build errors: +9/-14
->   - build warnings: +4/-1447
-> 
-> JFYI, when comparing v6.3-rc3[1] to v6.3-rc2[3], the summaries are:
->   - build errors: +0/-1
->   - build warnings: +0/-0
-> 
-> Happy fixing! ;-)
-> 
-> Thanks to the linux-next team for providing the build service.
-> 
-> [1] http://kisskb.ellerman.id.au/kisskb/branch/linus/head/e8d018dd0257f744ca50a729e3d042cf2ec9da65/ (all 152 configs)
-> [2] http://kisskb.ellerman.id.au/kisskb/branch/linus/head/c9c3395d5e3dcc6daee66c6908354d47bf98cb0c/ (all 152 configs)
-> [3] http://kisskb.ellerman.id.au/kisskb/branch/linus/head/eeac8ede17557680855031c6f305ece2378af326/ (all 152 configs)
-> 
-> 
-> *** ERRORS ***
-> 
-> 9 error regressions:
+>  .../devicetree/bindings/phy/mediatek,mt7621-pci-phy.yaml    | 4 ++--
 
->   + /kisskb/src/drivers/gpu/drm/msm/msm_mdss.c: error: case label does not reduce to an integer constant:  => 300:2, 299:2, 296:2
-
-
-Are these due to the sign bit being set after a shift?
-It looks that way since it is only reported for such values.
-
-From the reports on the build server, it only happens when building with gcc5.
-I don't have the ability to build with gcc5 or I would test it.
-
-@Rob and other drm/msm people, what do you think about this?
-(or is this already fixed somewhere but not yet in linux-next?)
-
-Thanks.
-
------
-diff -- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -19,9 +19,9 @@
-  */
- #define MAX_BLOCKS    12
- 
--#define DPU_HW_VER(MAJOR, MINOR, STEP) (((MAJOR & 0xF) << 28)    |\
--		((MINOR & 0xFFF) << 16)  |\
--		(STEP & 0xFFFF))
-+#define DPU_HW_VER(MAJOR, MINOR, STEP) ((((__u32)MAJOR & 0xF) << 28)    |\
-+		(((__u32)MINOR & 0xFFF) << 16)  |\
-+		((__u32)STEP & 0xFFFF))
- 
- #define DPU_HW_MAJOR(rev)		((rev) >> 28)
- #define DPU_HW_MINOR(rev)		(((rev) >> 16) & 0xFFF)
+Acked-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
