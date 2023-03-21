@@ -2,114 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BA4B6C35F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 16:41:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 946836C3631
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 16:49:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231681AbjCUPlD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 11:41:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49604 "EHLO
+        id S231871AbjCUPtR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 11:49:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231487AbjCUPlC (ORCPT
+        with ESMTP id S231486AbjCUPtE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 11:41:02 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40F039EC0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:40:52 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pee6P-0003Fi-2C; Tue, 21 Mar 2023 16:40:45 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pee6O-005iqN-Dh; Tue, 21 Mar 2023 16:40:44 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pee6N-006neg-Ow; Tue, 21 Mar 2023 16:40:43 +0100
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        kernel@pengutronix.de
-Subject: [PATCH 3/3] rpmsg: qcom_smd: Convert to platform remove callback returning void
-Date:   Tue, 21 Mar 2023 16:40:39 +0100
-Message-Id: <20230321154039.355098-4-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230321154039.355098-1-u.kleine-koenig@pengutronix.de>
-References: <20230321154039.355098-1-u.kleine-koenig@pengutronix.de>
+        Tue, 21 Mar 2023 11:49:04 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C42C4DE25
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:49:01 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id r11so61495847edd.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:49:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679413739;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SzDFIymbRjbLhmlcc42BiXxJve1ZLr1cxA94sUeeuDQ=;
+        b=xOT3dQErkNbyGneftJFjSnjdfjvRXh/wgUVE5YAfSTsdLMTa+oockgRQBPsMclLUqB
+         U4IIkytzklFq3jHOSyH/KRiUUMWFL904rv+e2yYFdLIGSSxwYfEn66IwA+O/FKnkH9iK
+         OJK3kwJMjNqVkvLoIjBC6FS9mNN4Ll7JAfWxkUWqChVcMIXFTR5NbWlFd0yD13vIyBxI
+         uAKdjSajzGq8sZ6BxflLceYT/1OTdUELaqxWhf+6s70Re59N2OD/PhlyfVbBfXF4GO6g
+         nH4567gpkoZS/JXECrwQYFmnNnPF7Aat07MoTwnRh/gCm8hQ+LrxqJqlp9XGSbdaAFlx
+         NpRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679413739;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SzDFIymbRjbLhmlcc42BiXxJve1ZLr1cxA94sUeeuDQ=;
+        b=1F9vnZEHu63PAYjR/6JKjqYMTZRlslSRLdJ0I8FlNmob6+6dYpTn788KPPzGjYk2Vy
+         pMdbo63g5k8Hwjj+0gHaWYokKdm7mdkacM27ZOrGSWVmmQNvOas/r6w8wuOI1iJO08Tb
+         EEa5n5pXLghqIWh8ofz3mPs8s41ZbTBTk5KxjXzrZLtv9H3FdkNWSlxexmSmfXjAGqSd
+         uZchdP7JHC0zhd+VKOLRGWMFdp0DnLyQcYKKXAaIZYMAWr2xkRuGBnJumbtGVLXTpz7F
+         JqBEeV8tH5IeA6IXcJbreNDerFHCwsHT2CFy/0Zz2X4c8HsZgMK88OupGLZA8FR4Y4ui
+         VBtQ==
+X-Gm-Message-State: AO0yUKW3Ve6rpeG1K6BHO5uAaAoWML2xnYuY8kT9lde2dCk4JBIPCGxT
+        KwsY6kV1pibmO1kbw6tx9HQppw==
+X-Google-Smtp-Source: AK7set9vvgE0/AZT5nETWstzcgB/WJjjvy5BXgYV3f+XN39lD7CIun132siBk0Fq/T5DQE94TJZWlQ==
+X-Received: by 2002:a17:906:6d13:b0:925:f542:1a3d with SMTP id m19-20020a1709066d1300b00925f5421a3dmr3383284ejr.25.1679413739616;
+        Tue, 21 Mar 2023 08:48:59 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id s9-20020a170906454900b008f89953b761sm5958260ejq.3.2023.03.21.08.48.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Mar 2023 08:48:58 -0700 (PDT)
+Message-ID: <fcffc785-42b0-0312-daa3-f927f18cd43e@linaro.org>
+Date:   Tue, 21 Mar 2023 15:48:54 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2074; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=vfP+6zhvD7kjimlQb22nCx08X9KwzGWQAEQx2IhXimk=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkGc/1+KJIkhAk3rRv1A43kavA2Wz57kw8+MGKD KfKIuYWM5CJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZBnP9QAKCRCPgPtYfRL+ TjTzB/97fSHtcCeTzilW09t7bjpdrUhPzH56lwctf5C5ZqqU9j5hsyyXJbHJUmXLp7RIUn8pHg2 KLsz4U2O1zW0Zy8LMy+S0QI0Py3K07mXX9e2alCXTAb22/eiVd+En7JIQpp/tuhnVcYtxHkUewz ey4ohNl27HsxuOGspLuNl/m9D55vjcs4utQUhbR8D5pqUP5H3G0kCSQUMVU1DM+Bs/bCNSH24vM PfuaSARxSX7PzV852+Ljgb5rAXuj33nagCyHJa6t4mJXd0whALD0xRegV0I3PLGWqs0X1YtAUdQ K1MnRK60LMiGHI4dUWvj2r9Az4OtbehaGIISD6pyCESr0wSZ
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v11 05/26] virt: gunyah: Identify hypervisor version
+Content-Language: en-US
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230304010632.2127470-1-quic_eberman@quicinc.com>
+ <20230304010632.2127470-6-quic_eberman@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230304010632.2127470-6-quic_eberman@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
 
-qcom_smd_remove() always returned zero, though that isn't completely
-trivial to see. So explain that in a comment and convert to
-.remove_new().
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/rpmsg/qcom_smd.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+On 04/03/2023 01:06, Elliot Berman wrote:
+> Export the version of Gunyah which is reported via the hyp_identify
+> hypercall. Increments of the major API version indicate possibly
+> backwards incompatible changes.
+> 
+> Export the hypervisor identity so that Gunyah drivers can act according
+> to the major API version.
+> 
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 
-diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-index 38352f5792f4..7b9c298aa491 100644
---- a/drivers/rpmsg/qcom_smd.c
-+++ b/drivers/rpmsg/qcom_smd.c
-@@ -1579,15 +1579,13 @@ static int qcom_smd_remove_edge(struct device *dev, void *data)
-  * Shut down all smd clients by making sure that each edge stops processing
-  * events and scanning for new channels, then call destroy on the devices.
-  */
--static int qcom_smd_remove(struct platform_device *pdev)
-+static void qcom_smd_remove(struct platform_device *pdev)
- {
--	int ret;
--
--	ret = device_for_each_child(&pdev->dev, NULL, qcom_smd_remove_edge);
--	if (ret)
--		dev_warn(&pdev->dev, "can't remove smd device: %d\n", ret);
--
--	return ret;
-+	/*
-+	 * qcom_smd_remove_edge always returns zero, so there is no need to
-+	 * check the return value of device_for_each_child.
-+	 */
-+	device_for_each_child(&pdev->dev, NULL, qcom_smd_remove_edge);
- }
- 
- static const struct of_device_id qcom_smd_of_match[] = {
-@@ -1598,7 +1596,7 @@ MODULE_DEVICE_TABLE(of, qcom_smd_of_match);
- 
- static struct platform_driver qcom_smd_driver = {
- 	.probe = qcom_smd_probe,
--	.remove = qcom_smd_remove,
-+	.remove_new = qcom_smd_remove,
- 	.driver = {
- 		.name = "qcom-smd",
- 		.of_match_table = qcom_smd_of_match,
--- 
-2.39.2
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
+--srini
+> ---
+>   drivers/virt/Makefile        |  1 +
+>   drivers/virt/gunyah/Makefile |  3 ++
+>   drivers/virt/gunyah/gunyah.c | 57 ++++++++++++++++++++++++++++++++++++
+>   3 files changed, 61 insertions(+)
+>   create mode 100644 drivers/virt/gunyah/Makefile
+>   create mode 100644 drivers/virt/gunyah/gunyah.c
+> 
+> diff --git a/drivers/virt/Makefile b/drivers/virt/Makefile
+> index e9aa6fc96fab..a5817e2d7d71 100644
+> --- a/drivers/virt/Makefile
+> +++ b/drivers/virt/Makefile
+> @@ -12,3 +12,4 @@ obj-$(CONFIG_ACRN_HSM)		+= acrn/
+>   obj-$(CONFIG_EFI_SECRET)	+= coco/efi_secret/
+>   obj-$(CONFIG_SEV_GUEST)		+= coco/sev-guest/
+>   obj-$(CONFIG_INTEL_TDX_GUEST)	+= coco/tdx-guest/
+> +obj-y				+= gunyah/
+> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
+> new file mode 100644
+> index 000000000000..34f32110faf9
+> --- /dev/null
+> +++ b/drivers/virt/gunyah/Makefile
+> @@ -0,0 +1,3 @@
+> +# SPDX-License-Identifier: GPL-2.0
+> +
+> +obj-$(CONFIG_GUNYAH) += gunyah.o
+> diff --git a/drivers/virt/gunyah/gunyah.c b/drivers/virt/gunyah/gunyah.c
+> new file mode 100644
+> index 000000000000..4b7e6f3edaff
+> --- /dev/null
+> +++ b/drivers/virt/gunyah/gunyah.c
+> @@ -0,0 +1,57 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#define pr_fmt(fmt) "gunyah: " fmt
+> +
+> +#include <linux/gunyah.h>
+> +#include <linux/init.h>
+> +#include <linux/module.h>
+> +#include <linux/printk.h>
+> +
+> +static struct gh_hypercall_hyp_identify_resp gh_api;
+> +
+> +u16 gh_api_version(void)
+> +{
+> +	return FIELD_GET(GH_API_INFO_API_VERSION_MASK, gh_api.api_info);
+> +}
+> +EXPORT_SYMBOL_GPL(gh_api_version);
+> +
+> +bool gh_api_has_feature(enum gh_api_feature feature)
+> +{
+> +	switch (feature) {
+> +	case GH_FEATURE_DOORBELL:
+> +	case GH_FEATURE_MSGQUEUE:
+> +	case GH_FEATURE_VCPU:
+> +	case GH_FEATURE_MEMEXTENT:
+> +		return !!(gh_api.flags[0] & BIT_ULL(feature));
+> +	default:
+> +		return false;
+> +	}
+> +}
+> +EXPORT_SYMBOL_GPL(gh_api_has_feature);
+> +
+> +static int __init gh_init(void)
+> +{
+> +	if (!arch_is_gh_guest())
+> +		return -ENODEV;
+> +
+> +	gh_hypercall_hyp_identify(&gh_api);
+> +
+> +	pr_info("Running under Gunyah hypervisor %llx/v%u\n",
+> +		FIELD_GET(GH_API_INFO_VARIANT_MASK, gh_api.api_info),
+> +		gh_api_version());
+> +
+> +	/* We might move this out to individual drivers if there's ever an API version bump */
+> +	if (gh_api_version() != GH_API_V1) {
+> +		pr_info("Unsupported Gunyah version: %u\n", gh_api_version());
+> +		return -ENODEV;
+> +	}
+> +
+> +	return 0;
+> +}
+> +arch_initcall(gh_init);
+> +
+> +MODULE_LICENSE("GPL");
+> +MODULE_DESCRIPTION("Gunyah Hypervisor Driver");
