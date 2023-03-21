@@ -2,128 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B57E6C397A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 19:47:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F18056C3983
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 19:48:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229810AbjCUSrB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 14:47:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32942 "EHLO
+        id S230403AbjCUSs6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 14:48:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230500AbjCUSqu (ORCPT
+        with ESMTP id S230475AbjCUSs4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 14:46:50 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2849B567B3;
-        Tue, 21 Mar 2023 11:46:17 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AB89361DB1;
-        Tue, 21 Mar 2023 18:46:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039BBC433EF;
-        Tue, 21 Mar 2023 18:46:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679424373;
-        bh=AkV5mMvCPQu+Wixqy+QjFKEzp2Wq/u6jxA9GfPmKyXg=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=GmjTNpjtRXAtOrZYSOAV0Hi2cKDoLNKMTZttBIxX0XBv3FIuGQabPF4uCU3D016Sm
-         XyWQPe1B2FaQkU652sl5RW1bYeGqpLRy2eifegZBYDGCBlljp+Lvs8NPLkg/kJz4kn
-         Wu8czOwiSzRPZUiNjf8W7vLp9bXmy1Y7Bwt9kNFsjwCzU7cNci79nS/x8h0mncA7ze
-         44AvIUUUq/DzQ8y4ktRI0pX6QzvfEJVL+pXjBz9dBOytqUvKJis+50yyUAU5K2+rdP
-         wfJhTUxhezYKDeUdg3NSGmC3yzmreXtHgmzupuPCYxC6VriyN59JnE1dXpvQqWgkuQ
-         58uPR+t7odGvQ==
-Message-ID: <c5273d67493cbb008f13d7538837828a.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        Tue, 21 Mar 2023 14:48:56 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F301C56793
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 11:48:22 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id bc12so16419335plb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 11:48:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679424501;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OU2TpmTbkt/6hvSTm+PPEoXU/hSqJlv3qM+jLeXgjsM=;
+        b=OVw0ECtyo2lDexPfAB5v+xW9q4bqZYx4ZfJqU2SL5kXXnye4/lrm/ei4i+2v4vBE70
+         5lQb1OCAoRw8sN4zTYaaR0isVYdumbxVJQLLwe9hQvmcq8R/g9l0Bs3NyBkvFfslZmUA
+         4n2Hh8fqXkOGJeVfvZuoh1KkaZRFXyaONmAhQefe9xb/sNJrdGApo26vdhUnxorrgjNq
+         9GWI7d12jnIS+TqpVA200Zdmeu/lAGY9WQ1qZhNVlPfUkSQyDU73ANsjwWZ9R6vnrgjI
+         UqR9/hVdy9PEhsC0sYoGn0wZg/NfjqPKFHpEjUktqegt2qR1HUSjDqISD5j4a+q7TOqL
+         Va1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679424501;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OU2TpmTbkt/6hvSTm+PPEoXU/hSqJlv3qM+jLeXgjsM=;
+        b=DHI2zwclkPpED3r9t3GTeOmm4LAdwc0V5oSBCURILOl/9WEn+m18XFfQXlhpxIlsBs
+         s78XMZ1wItLgXoZd7MawU4Lf2X4tFt36wMwV04MrOQxWPMEaYN1h6uvTcgpdWwNoNSMW
+         kSEv8sPfWnlAJrfwudtoZoP/Dop7Ov7hHB4ZM7qtazajrIgr8HjChiWmylbTb5MMp2Nc
+         NP9dESj34ZWer5peHhbxLUwyOq5F78h9Fk4FwSrPTOzqLZt0aO8sLZnzLKH9/T6t5y8z
+         u4rBisDPyLwo/BTG2ueCgRqkrxBvid5K7rcDcNcdGCmXBXTuQbzuDrrmS3lqMiXpzVm1
+         xkHg==
+X-Gm-Message-State: AO0yUKVQHSGUZ4Y90YPQ1Sf8WhcGunvJebbm2FA1vuTFbj4p2k2edZsd
+        Rb2HKvAuAP6ejSCmlTlqWa8RmA==
+X-Google-Smtp-Source: AK7set8XEqG4QjXF0VsgxuBGSQjsXwO402XZCIkV0X3tEjleTYEVr/x82XLGqxVgbgCGh5vDIOLbsA==
+X-Received: by 2002:a05:6a20:baa1:b0:d5:b3d1:bff9 with SMTP id fb33-20020a056a20baa100b000d5b3d1bff9mr2305721pzb.52.1679424500498;
+        Tue, 21 Mar 2023 11:48:20 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c60:d4c3:8671:83c0:33ae:5a96])
+        by smtp.gmail.com with ESMTPSA id s24-20020aa78298000000b005d4360ed2bbsm8590817pfm.197.2023.03.21.11.48.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Mar 2023 11:48:20 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        andersson@kernel.org, bhupesh.sharma@linaro.org,
+        bhupesh.linux@gmail.com, vkoul@kernel.org,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, vladimir.zapolskiy@linaro.org
+Subject: [PATCH v2 1/1] dt-bindings: dma: Add support for SM6115 and QCS2290 SoCs
+Date:   Wed, 22 Mar 2023 00:18:11 +0530
+Message-Id: <20230321184811.3325725-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230321175758.26738-1-srinivas.kandagatla@linaro.org>
-References: <20230321175758.26738-1-srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH] clk: qcom: gfm-mux: use runtime pm while accessing registers
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     konrad.dybcio@linaro.org, mturquette@baylibre.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        stable@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        agross@kernel.org, andersson@kernel.org
-Date:   Tue, 21 Mar 2023 11:46:10 -0700
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivas Kandagatla (2023-03-21 10:57:58)
-> gfm mux driver does support runtime pm but we never use it while
-> accessing registers. Looks like this driver was getting lucky and
-> totally depending on other drivers to leave the clk on.
->=20
-> Fix this by doing runtime pm while accessing registers.
->=20
-> Fixes: a2d8f507803e ("clk: qcom: Add support to LPASS AUDIO_CC Glitch Fre=
-e Mux clocks")
-> Cc: stable@vger.kernel.org
-> Reported-by: Amit Pundir <amit.pundir@linaro.org>
+Add new compatible for BAM DMA engine version v1.7.4 which is
+found on Qualcomm SM6115 and QCS2290 SoCs. Since its very similar
+to v1.7.0 used on SM8150 like SoCs, mark the comptible scheme
+accordingly.
 
-Is there a link to the report?
+While at it, also update qcom,bam-dma bindings to add comments
+which describe the BAM DMA versions used in SM8150 and SM8250 SoCs.
+This provides an easy reference for identifying the actual BAM DMA
+version available on Qualcomm SoCs.
 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
->  drivers/clk/qcom/lpass-gfm-sm8250.c | 29 ++++++++++++++++++++++++++++-
->  1 file changed, 28 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/clk/qcom/lpass-gfm-sm8250.c b/drivers/clk/qcom/lpass=
--gfm-sm8250.c
-> index 96f476f24eb2..bcf0ea534f7f 100644
-> --- a/drivers/clk/qcom/lpass-gfm-sm8250.c
-> +++ b/drivers/clk/qcom/lpass-gfm-sm8250.c
-> @@ -38,14 +38,37 @@ struct clk_gfm {
->  static u8 clk_gfm_get_parent(struct clk_hw *hw)
->  {
->         struct clk_gfm *clk =3D to_clk_gfm(hw);
-> +       int ret;
-> +       u8 parent;
-> +
-> +       ret =3D pm_runtime_resume_and_get(clk->priv->dev);
-> +       if (ret < 0 && ret !=3D -EACCES) {
-> +               dev_err_ratelimited(clk->priv->dev,
-> +                                   "pm_runtime_resume_and_get failed in =
-%s, ret %d\n",
-> +                                   __func__, ret);
-> +               return ret;
-> +       }
-> +
-> +       parent =3D readl(clk->gfm_mux) & clk->mux_mask;
-> +
-> +       pm_runtime_mark_last_busy(clk->priv->dev);
-> =20
-> -       return readl(clk->gfm_mux) & clk->mux_mask;
-> +       return parent;
->  }
-> =20
->  static int clk_gfm_set_parent(struct clk_hw *hw, u8 index)
->  {
->         struct clk_gfm *clk =3D to_clk_gfm(hw);
->         unsigned int val;
-> +       int ret;
-> +
-> +       ret =3D pm_runtime_resume_and_get(clk->priv->dev);
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
 
-Doesn't the clk framework already do this? Why do we need to do it
-again?
+Changes since v1:
+ ~ v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230320071211.3005769-1-bhupesh.sharma@linaro.org/
+ ~ Addressed Konrad's comments on v1, where he suggested how compatibles
+   should be used for SoCs which support BAM DMA engine v1.7.4
+ ~ Dropped v1's [PATCH 2/2] in v2.
 
-> +       if (ret < 0 && ret !=3D -EACCES) {
-> +               dev_err_ratelimited(clk->priv->dev,
-> +                                   "pm_runtime_resume_and_get failed in =
-%s, ret %d\n",
-> +                                   __func__, ret);
-> +               return ret;
-> +       }
-> =20
->         val =3D readl(clk->gfm_mux);
->
+ .../devicetree/bindings/dma/qcom,bam-dma.yaml | 22 +++++++++++++------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+index f1ddcf672261..bed966fa7653 100644
+--- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
++++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+@@ -15,13 +15,21 @@ allOf:
+ 
+ properties:
+   compatible:
+-    enum:
+-        # APQ8064, IPQ8064 and MSM8960
+-      - qcom,bam-v1.3.0
+-        # MSM8974, APQ8074 and APQ8084
+-      - qcom,bam-v1.4.0
+-        # MSM8916 and SDM845
+-      - qcom,bam-v1.7.0
++    oneOf:
++      - items:
++          - enum:
++              # APQ8064, IPQ8064 and MSM8960
++              - qcom,bam-v1.3.0
++              # MSM8974, APQ8074 and APQ8084
++              - qcom,bam-v1.4.0
++              # MSM8916
++              - qcom,bam-v1.7.0
++
++      - items:
++          - enum:
++              # SDM845, SM6115, SM8150, SM8250 and QRB2290
++              - qcom,bam-v1.7.4
++          - const: qcom,bam-v1.7.0
+ 
+   clocks:
+     maxItems: 1
+-- 
+2.38.1
+
