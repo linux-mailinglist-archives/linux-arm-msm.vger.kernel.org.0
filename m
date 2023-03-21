@@ -2,80 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1672B6C269B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 01:58:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 181F06C2753
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 02:20:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbjCUA57 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Mar 2023 20:57:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40730 "EHLO
+        id S229838AbjCUBUB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Mar 2023 21:20:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbjCUA56 (ORCPT
+        with ESMTP id S231213AbjCUBT7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Mar 2023 20:57:58 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23EA831BD8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 17:57:57 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id g17so17200845lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 17:57:57 -0700 (PDT)
+        Mon, 20 Mar 2023 21:19:59 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB5C913D68
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 18:19:30 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id g17so17242761lfv.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Mar 2023 18:19:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679360275;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+QQdv0je5amo1Cq/oKaE0BYeIx+5NHEzCllldmhnRkA=;
-        b=Sv5/kJ7JjO/+KR/2+5I2oRGcDtHD1zZyIh6guCTdrRzJ+t2sK/7lOsblXgxhnrT4Wg
-         QE+EBDpSgpWZvTtBAJlJwRJNS1i01GGk5tMUnPJdXT2HlCEWD/H7qHI8kunxFbtSNAVG
-         dU9xeWyu/UMMxBH45ZPk8R3it1MnWXgplHfTAuiIq3lYNxej5yIHlBBrj6cLckLUPX8+
-         lNyhYUgE6md03W6TjCy0U9o0+W8ZCEQBYdiflHiwrn/Wjjzw5eufP/+DqYpMtKVP6aTJ
-         WJJjgMI1mCYn874Eecyqomc/pJnPoS/bsW0Eh3Y5fE+eUkmuXyahv9Pb63gJTCq80d4J
-         j6sw==
+        d=linaro.org; s=google; t=1679361502;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=y2oSBrtXTlIavj0D+3ImHLkkGT3pMw5W/AEEoPft+s0=;
+        b=bHGX8XhbTx1A4sp4Ch1TGkqQRQSBfNGa+qToVD0BDf86yYlQHsyQF+d2qpS9szjsDO
+         U4yCsi0ntZisSZbngbWKVjShEMcF85Pvs9zzjexIKthkfZRztHxrVFB5t2n2ROnruZ1G
+         4VQ/i4kPlAATdmya55bgkrThXNmrUE4n8clgPtG/D6tSxqXFIUXbCmZLVMKiQWULp01r
+         DAxQnuk/esMmvTVQ4SVzOUsDxunGy/bNmYwmbWM8wEl5hxcQkZD++ZvL4SA5L1z4C1OP
+         ec8H4du+mnbRHHGD7fLxS6f59H1OFqfcg3aFcIS1zfJen29ugOODd0aSe1HxZXP4tRBI
+         dxDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679360275;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+QQdv0je5amo1Cq/oKaE0BYeIx+5NHEzCllldmhnRkA=;
-        b=nUtP0V1trQKlZnMFWDMBXGRNQ52uXOGvV/Js+5bBiWfRA2O7SBTPrnm/Pg/r48rzIg
-         FsrLKVo8YvvQoS1O3OG6kFkgFJaAfOKCTdPzo7k3mjU4dRzP+Y9wWn/HHo3wXr7czsp6
-         NDXdZgSKqwP0uyuqdnvLTGFKktn9gbCu67fZkxBrtT0yTJHZfiOlCv80hxgH/YNazs5O
-         fhkk5KcNzddvJnNupRk6RAanmYLGIhDnIWcumgC0mXVt2jeHq4kXn3x0nyPeuLzC94ON
-         bqKHvfcZYkfLeLQOGRRUMJctl4wCB0t4rPMYRV0zncn4KsBAl2j8QvGIT5dEtp+q/vFh
-         3xeg==
-X-Gm-Message-State: AO0yUKXYtw1hUiMVOSJMdEWiqCCD2jvjuqTD8XiZuKP9qkdxh6VPFxGB
-        aptpNLbj6xThu0YsRi8gaeksbw==
-X-Google-Smtp-Source: AK7set+/moO/EhNXfUSGHTpDEIfpltuj+gV8kcRXMkwAT/Z6crxiXVSmrm6xJkRykoS8kJXuWTjAiQ==
-X-Received: by 2002:a19:a410:0:b0:4de:f972:6aa with SMTP id q16-20020a19a410000000b004def97206aamr294802lfc.4.1679360275333;
-        Mon, 20 Mar 2023 17:57:55 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id f1-20020ac251a1000000b004e95f1c9e7dsm1919893lfk.78.2023.03.20.17.57.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Mar 2023 17:57:54 -0700 (PDT)
-Message-ID: <b396c5ed-5453-8755-c2f0-8fbd79fad2ba@linaro.org>
-Date:   Tue, 21 Mar 2023 02:57:53 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [RESEND PATCH v3 1/3] thermal: qcom-spmi-temp-alarm: enable stage
- 2 shutdown when required
-Content-Language: en-GB
-To:     David Collins <quic_collinsd@quicinc.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <cover.1674602698.git.quic_collinsd@quicinc.com>
- <57466b092dd16ed2a25e5a472dfd0b856a5cca00.1674602698.git.quic_collinsd@quicinc.com>
+        d=1e100.net; s=20210112; t=1679361502;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y2oSBrtXTlIavj0D+3ImHLkkGT3pMw5W/AEEoPft+s0=;
+        b=jDtGjZodGtO9IJyCRz0gGgcHgshRoZptfYfDiDVaET8B+LjGGkbQs2Y0934f5c2CMY
+         wGeWEb5/Nh2vllH/lMN/58wKoUQ7uHJvykzh0KV0rxz34WJCFhkjoZ16NDxlg8JySYiq
+         jQdAEKezIrY7VLS/EeNvU0z9ntuGcExMPdDhDxHdJRyhV3BfDWxUlM0Y/T18k4bX2UwS
+         s25VZmZg4OUP1/Rc7W6elfs9E8e6hfLfF5zeFhHANdEckkDfF2X2379H4MBIYCUZXa28
+         81l/dBeHvX+G2cySDRYTrwhrWfiRbZrnU9vocFB+i8XaP7AI6WHvoTjuxhM55moRtn7P
+         PjOQ==
+X-Gm-Message-State: AO0yUKWdWKeVvXzk7f4duWg7Lhj7DUyk1KmLtVb9q2Thcv+YzA1ccDdY
+        m26u0deahDUr8N8ithmkVG+hmQ==
+X-Google-Smtp-Source: AK7set8H/L9QCHzP+FOraHrifOmo4RTU50Io+FObShBKB4dSBGughgusTRUE1KIkQsHtECSTtiqkcw==
+X-Received: by 2002:ac2:554d:0:b0:4e8:16e8:88b with SMTP id l13-20020ac2554d000000b004e816e8088bmr216430lfk.29.1679361502514;
+        Mon, 20 Mar 2023 18:18:22 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id c18-20020ac25312000000b004eaec70c68esm46863lfh.294.2023.03.20.18.18.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Mar 2023 18:18:22 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <57466b092dd16ed2a25e5a472dfd0b856a5cca00.1674602698.git.quic_collinsd@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [RFC PATCH v2 00/13] drm/msm/dpu: support virtual wide planes
+Date:   Tue, 21 Mar 2023 04:18:08 +0300
+Message-Id: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,112 +74,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/01/2023 01:46, David Collins wrote:
-> Certain TEMP_ALARM GEN2 PMIC peripherals need over-temperature
-> stage 2 automatic PMIC partial shutdown to be enabled in order to
-> avoid repeated faults in the event of reaching over-temperature
-> stage 3.  Modify the stage 2 shutdown control logic to ensure that
-> stage 2 shutdown is enabled on all affected PMICs.  Read the
-> digital major and minor revision registers to identify these
-> PMICs.
-> 
-> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
-> ---
->   drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 32 +++++++++++++++++++--
->   1 file changed, 30 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> index ad84978109e6..e2e52703ac4d 100644
-> --- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> +++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> @@ -1,6 +1,7 @@
->   // SPDX-License-Identifier: GPL-2.0-only
->   /*
->    * Copyright (c) 2011-2015, 2017, 2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
->    */
->   
->   #include <linux/bitops.h>
-> @@ -18,6 +19,7 @@
->   #include "../thermal_core.h"
->   #include "../thermal_hwmon.h"
->   
-> +#define QPNP_TM_REG_DIG_MINOR		0x00
->   #define QPNP_TM_REG_DIG_MAJOR		0x01
->   #define QPNP_TM_REG_TYPE		0x04
->   #define QPNP_TM_REG_SUBTYPE		0x05
-> @@ -73,6 +75,7 @@ struct qpnp_tm_chip {
->   	struct device			*dev;
->   	struct thermal_zone_device	*tz_dev;
->   	unsigned int			subtype;
-> +	unsigned int			dig_revision;
->   	long				temp;
->   	unsigned int			thresh;
->   	unsigned int			stage;
-> @@ -224,6 +227,7 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
->   	long stage2_threshold_min = (*chip->temp_map)[THRESH_MIN][1];
->   	long stage2_threshold_max = (*chip->temp_map)[THRESH_MAX][1];
->   	bool disable_s2_shutdown = false;
-> +	bool require_s2_shutdown = false;
->   	u8 reg;
->   
->   	WARN_ON(!mutex_is_locked(&chip->lock));
-> @@ -256,9 +260,25 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
->   				 temp, stage2_threshold_max, stage2_threshold_max);
->   	}
->   
-> +	if (chip->subtype == QPNP_TM_SUBTYPE_GEN2) {
-> +		/*
-> +		 * Check if stage 2 automatic partial shutdown must remain
-> +		 * enabled to avoid potential repeated faults upon reaching
-> +		 * over-temperature stage 3.
-> +		 */
-> +		switch (chip->dig_revision) {
-> +		case 0x0001:
-> +		case 0x0002:
-> +		case 0x0100:
-> +		case 0x0101:
-> +			require_s2_shutdown = true;
-> +			break;
-> +		}
-> +	}
+As promised in the basic wide planes support ([1]) here comes a series
+supporting 2*max_linewidth for all the planes.
 
-Please move this switch to _probe and set chip->require_s2_shutdown instead.
+Note: this iteration features handling of rotation and reflection of the
+wide plane. However rot90 is still not tested: it is enabled on sc7280
+and it only supports UBWC (tiled) framebuffers, it was quite low on my
+priority list.
 
-> +
->   skip:
->   	reg |= chip->thresh;
-> -	if (disable_s2_shutdown)
-> +	if (disable_s2_shutdown && !require_s2_shutdown)
->   		reg |= SHUTDOWN_CTRL1_OVERRIDE_S2;
->   
->   	return qpnp_tm_write(chip, QPNP_TM_REG_SHUTDOWN_CTRL1, reg);
-> @@ -373,7 +393,7 @@ static int qpnp_tm_probe(struct platform_device *pdev)
->   {
->   	struct qpnp_tm_chip *chip;
->   	struct device_node *node;
-> -	u8 type, subtype, dig_major;
-> +	u8 type, subtype, dig_major, dig_minor;
->   	u32 res;
->   	int ret, irq;
->   
-> @@ -429,6 +449,14 @@ static int qpnp_tm_probe(struct platform_device *pdev)
->   		return ret;
->   	}
->   
-> +	ret = qpnp_tm_read(chip, QPNP_TM_REG_DIG_MINOR, &dig_minor);
-> +	if (ret < 0) {
-> +		dev_err(&pdev->dev, "could not read dig_minor\n");
-> +		return ret;
-> +	}
-> +
-> +	chip->dig_revision = (dig_major << 8) | dig_minor;
-> +
->   	if (type != QPNP_TM_TYPE || (subtype != QPNP_TM_SUBTYPE_GEN1
->   				     && subtype != QPNP_TM_SUBTYPE_GEN2)) {
->   		dev_err(&pdev->dev, "invalid type 0x%02x or subtype 0x%02x\n",
+Note#2: to simplify the dpu_plane_virtual_assign_resources(), which
+already becomes big enough, I stripped support for sharing the SSPP
+across two planes (doubling amount of planes available to some of
+compositors/applications). I plan to get back to this topic once this
+series lands.
+
+Dependencies: msm-next + msm-fixes, [1], [2]
+
+[1] https://patchwork.freedesktop.org/series/99909/
+
+[2] https://patchwork.freedesktop.org/series/113423/
+
+Changes since v1:
+- Fixed build error due to me missing one of fixups, it was left
+  uncommitted.
+- Implementated proper handling of wide plane rotation & reflection.
+
+Dmitry Baryshkov (13):
+  drm/atomic-helper: split not-scaling part of
+    drm_atomic_helper_check_plane_state
+  drm/msm/dpu: take plane rotation into account for wide planes
+  drm/msm/dpu: encoder: simplify debugfs handling
+  drm/msm/dpu: remove unused fields from dpu_encoder_virt
+  drm/msm/dpu: get rid of struct dpu_rm_requirements
+  drm/msm/dpu: switch RM to use crtc_id rather than enc_id for
+    allocation
+  drm/msm/dpu: move resource allocation to CRTC
+  drm/msm/dpu: fill CRTC resources in dpu_crtc.c
+  drm/msm/dpu: move pstate->pipe initialization to
+    dpu_plane_atomic_check
+  drm/msm/dpu: add list of supported formats to the DPU caps
+  drm/msm/dpu: add a field describing inline rotation to dpu_caps
+  drm/msm/dpu: add support for virtual planes
+  drm/msm/dpu: allow using two SSPP blocks for a single plane
+
+ drivers/gpu/drm/drm_atomic_helper.c           |  85 +++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      | 162 ++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 150 +-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |   8 +
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |   3 -
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  27 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   6 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 120 +++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 428 ++++++++++++++++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h     |  33 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        | 243 +++++-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |  41 +-
+ include/drm/drm_atomic_helper.h               |   4 +
+ 14 files changed, 959 insertions(+), 365 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.30.2
 
