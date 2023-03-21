@@ -2,76 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3072A6C35C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 16:34:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E5056C35D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 16:38:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230267AbjCUPec (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 11:34:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37838 "EHLO
+        id S231725AbjCUPiP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 11:38:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231547AbjCUPe3 (ORCPT
+        with ESMTP id S231710AbjCUPiO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 11:34:29 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44DA950722
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:34:14 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id bi9so19608773lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:34:14 -0700 (PDT)
+        Tue, 21 Mar 2023 11:38:14 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BA98269A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:38:09 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id q16so8811742lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 08:38:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679412852;
+        d=linaro.org; s=google; t=1679413087;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=dRrvL17SGhgIzWulyapIo6dSLR96fnq7Sq3PVNcOcKk=;
-        b=Ox92bRYPFTze4TB/gn8Hvx5EU3GDwTiaHvn2PbiYI0hSO3cTSvyfcxlijXZqQdYRdP
-         cKmuRON8+1hswhOV0fIhzafiI/7TGrMHHTqp46YbpMl+qiZ0URXaN7GItCMHaei/sG0X
-         6Z86OA76BsRdbE96CwE2qZcB6eOSVJqIOJzVAO9DFEvUhdPBLI0I0O9jd3WcMZcwgUQh
-         FW/meuEwJmK0kFYYlkq1LB8xfdZCiu4HetSLRQY9DGfkGGdG2KCNapIgxzhVwgkZMNcO
-         uNMy84a7GWXgK1823jX9yAt0dyYuDJYV6wzVrSIwjUaQOOitIByGCCXsVlxBgwD+U1Yr
-         qDJw==
+        bh=Q/hHAe5iawN3skZzVZDnwhhdvLIa9hx/rH3tuAV1a/Y=;
+        b=nl+cB0MrV4ln5nxojPnc/K4a0UCvfGjtmVhygVZpD7PVa/igo4qoW/bWhyN58nE345
+         sOcsidbdyQelA0q5yyb9CKK/7Vdshos6+YQWgiK6za7PZtTRs9l2JhRNFtr6F58VsC3o
+         S/rBGzfytaeT4LmmjvNV+ZFZjYV5vQOzTmLE2zmjJBni0QbfsVsemeBI8eF5EtzZw285
+         lthQRCX/7kOEOvH+7gtdT2tVdw892MHQ+A4eeK3Tk4Baa1cKXWyZIxE5TVjGxsP7ArPG
+         ZWQc1ymC0IKKpOvNebI4KA1kF/jgmkC0wft0eIjYAlPVZpO2wPPcK+ED2RtpBZXfIQiE
+         njcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679412852;
+        d=1e100.net; s=20210112; t=1679413087;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dRrvL17SGhgIzWulyapIo6dSLR96fnq7Sq3PVNcOcKk=;
-        b=bkqAzfzjnK83NKU/hKKI2HoV3Ojp+lDq7jkDNTzD8YFC4ZvyUPQSsUiRQe8GzJgXfv
-         gB+/hPinWzjaD6XjaTJUsB0r3OZN7Axq45B0WFLbLwD0c97LuEwNvhQloRcX4sg5zmF6
-         iKNEq3+1rJoE8KXsc4RC1fLvZ5REY6qW/AEV6dJyMDWcieCMJaFdvgmhIueG8fEYyktD
-         Tx2LwO+mgrYm3NgFzyhYHlXUKQn1sho2lgR4sfDXlnR3/CkfM1fRWhSX2PydblemJWxc
-         hnXxXLkv/O3UhgaZV+pnDF7OvHGGAQZGtX86bBw6xF3JAXwNC0bulnbvDggKip9/GRG8
-         J6HA==
-X-Gm-Message-State: AO0yUKXEwawME10rkPBC/rDg6pc3hgZPmI8udDBLLu4hrz8SSC57sEzt
-        MJ4lPRpNrhgFOrr7zh4VP11ZJQ==
-X-Google-Smtp-Source: AK7set9oVFEsxONO8OJd9uARDwJtOBpIRSk1V/I82RWfm8mCD31ZLqZGG4tn7csj9Q/V1D1vi7WaZQ==
-X-Received: by 2002:ac2:4462:0:b0:4db:4530:2b2d with SMTP id y2-20020ac24462000000b004db45302b2dmr976279lfl.49.1679412852463;
-        Tue, 21 Mar 2023 08:34:12 -0700 (PDT)
+        bh=Q/hHAe5iawN3skZzVZDnwhhdvLIa9hx/rH3tuAV1a/Y=;
+        b=DnypgVFAhsioAuNOOnzVKOcXPJG/Zgjb0OcR4DtM+TN+1sucN74gx9qWnUvf6puYQT
+         CT41AjusKFdbcCKW+RAhLX9cCkx0pJ8OevROny5NzYJ466Awph+m0MYda8JQKHSrqqx6
+         lXxUruUNl3DcDCK1wfp9q0hsgiLEsOUa22qNswLXMJX6DcHaqK2QfZHZOEhH5nWDrm53
+         BQ9u1zLh49ly1cfhsSn2GgNajSeQ+4VgSgeuUerPOVW/eztknu0JUuJKidjz32Fqecjh
+         8BObybOQpdq5BUej31a5SUJgimUSlQmDgdDQzH8TrUFtC0RnbnMpmf4P2d5lgtOvPINW
+         9LLw==
+X-Gm-Message-State: AO0yUKU9M+zDxulQJYKquD2ZryVvxHB5NHVSmrn0/wuLlKm8RdQKMY9u
+        OjM5Pas6eFmqAHtxFgUqH+LrZ7wcyv8ZwSFsDASrjuuH
+X-Google-Smtp-Source: AK7set+STU3G9QvNmNnVmdGOtK+qF7WbPNGCp2TWURDMZxtNtpOd5g+l+wav4QS+f2Wk7N556My/8Q==
+X-Received: by 2002:ac2:424e:0:b0:4db:3e56:55c8 with SMTP id m14-20020ac2424e000000b004db3e5655c8mr1010770lfl.59.1679413087349;
+        Tue, 21 Mar 2023 08:38:07 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id f10-20020ac24e4a000000b004db3e330dcesm2207807lfr.178.2023.03.21.08.34.11
+        by smtp.gmail.com with ESMTPSA id v5-20020a056512048500b004db513b0175sm2208560lfq.136.2023.03.21.08.38.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 08:34:11 -0700 (PDT)
-Message-ID: <0f42a631-7932-5b81-4bc0-a07af7eab367@linaro.org>
-Date:   Tue, 21 Mar 2023 17:34:11 +0200
+        Tue, 21 Mar 2023 08:38:06 -0700 (PDT)
+Message-ID: <7ef646e0-388e-b2ef-a28c-f1fcce486203@linaro.org>
+Date:   Tue, 21 Mar 2023 17:38:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [RESEND PATCH v3 3/3] thermal: qcom-spmi-temp-alarm: add support
- for LITE PMIC peripherals
+Subject: Re: [PATCH v5 04/12] soc: qcom: pmic_glink: register ucsi aux device
 Content-Language: en-GB
-To:     David Collins <quic_collinsd@quicinc.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <cover.1674602698.git.quic_collinsd@quicinc.com>
- <5fe697a29958813ce3c07104eb6f9d7a95b176ac.1674602698.git.quic_collinsd@quicinc.com>
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230130-topic-sm8450-upstream-pmic-glink-v5-0-552f3b721f9e@linaro.org>
+ <20230130-topic-sm8450-upstream-pmic-glink-v5-4-552f3b721f9e@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <5fe697a29958813ce3c07104eb6f9d7a95b176ac.1674602698.git.quic_collinsd@quicinc.com>
+In-Reply-To: <20230130-topic-sm8450-upstream-pmic-glink-v5-4-552f3b721f9e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,372 +86,153 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/01/2023 01:46, David Collins wrote:
-> Add support for TEMP_ALARM LITE PMIC peripherals.  This subtype
-> utilizes a pair of registers to configure a warning interrupt
-> threshold temperature and an automatic hardware shutdown
-> threshold temperature.
-
-This adds additional DT requirements to the lite temp-alarm trip points. 
-Please consider adding a separate DT compatible string and describing 
-these details in DT bindings. And the commit message _must_ also 
-describe them.
-
+On 21/03/2023 15:21, Neil Armstrong wrote:
+> Only register UCSI on know working devices, like on the SM8450
+> or SM8550 which requires UCSI to get USB mode switch events.
 > 
-> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Two nits below:
+
 > ---
->   drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 217 +++++++++++++++++++-
->   1 file changed, 208 insertions(+), 9 deletions(-)
+>   drivers/soc/qcom/pmic_glink.c | 65 +++++++++++++++++++++++++++++++++++--------
+>   1 file changed, 54 insertions(+), 11 deletions(-)
 > 
-> diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> index 1fe8ff7a274e..dbf13dec7acd 100644
-> --- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> +++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+> diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
+> index bb3fb57abcc6..8bf95df0a56a 100644
+> --- a/drivers/soc/qcom/pmic_glink.c
+> +++ b/drivers/soc/qcom/pmic_glink.c
 > @@ -4,6 +4,7 @@
->    * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
+>    * Copyright (c) 2022, Linaro Ltd
 >    */
+>   #include <linux/auxiliary_bus.h>
+> +#include <linux/of_device.h>
+>   #include <linux/module.h>
+>   #include <linux/platform_device.h>
+>   #include <linux/rpmsg.h>
+> @@ -11,12 +12,23 @@
+>   #include <linux/soc/qcom/pdr.h>
+>   #include <linux/soc/qcom/pmic_glink.h>
 >   
-> +#include <linux/bitfield.h>
->   #include <linux/bitops.h>
->   #include <linux/delay.h>
->   #include <linux/err.h>
-> @@ -24,21 +25,28 @@
->   #define QPNP_TM_REG_TYPE		0x04
->   #define QPNP_TM_REG_SUBTYPE		0x05
->   #define QPNP_TM_REG_STATUS		0x08
-> +#define QPNP_TM_REG_IRQ_STATUS		0x10
->   #define QPNP_TM_REG_SHUTDOWN_CTRL1	0x40
->   #define QPNP_TM_REG_ALARM_CTRL		0x46
->   /* TEMP_DAC_* registers are only present for TEMP_GEN2 v2.0 */
->   #define QPNP_TM_REG_TEMP_DAC_STG1	0x47
->   #define QPNP_TM_REG_TEMP_DAC_STG2	0x48
->   #define QPNP_TM_REG_TEMP_DAC_STG3	0x49
-> +#define QPNP_TM_REG_LITE_TEMP_CFG1	0x50
-> +#define QPNP_TM_REG_LITE_TEMP_CFG2	0x51
->   
->   #define QPNP_TM_TYPE			0x09
->   #define QPNP_TM_SUBTYPE_GEN1		0x08
->   #define QPNP_TM_SUBTYPE_GEN2		0x09
-> +#define QPNP_TM_SUBTYPE_LITE		0xC0
->   
->   #define STATUS_GEN1_STAGE_MASK		GENMASK(1, 0)
->   #define STATUS_GEN2_STATE_MASK		GENMASK(6, 4)
->   #define STATUS_GEN2_STATE_SHIFT		4
->   
-> +/* IRQ status only needed for TEMP_ALARM_LITE */
-> +#define IRQ_STATUS_MASK			BIT(0)
-> +
->   #define SHUTDOWN_CTRL1_OVERRIDE_S2	BIT(6)
->   #define SHUTDOWN_CTRL1_THRESHOLD_MASK	GENMASK(1, 0)
->   
-> @@ -46,6 +54,8 @@
->   
->   #define ALARM_CTRL_FORCE_ENABLE		BIT(7)
->   
-> +#define LITE_TEMP_CFG_THRESHOLD_MASK	GENMASK(3, 2)
-> +
->   #define THRESH_COUNT			4
->   #define STAGE_COUNT			3
->   
-> @@ -90,6 +100,19 @@ static const long temp_dac_max[STAGE_COUNT] = {
->   	119375, 159375, 159375
->   };
->   
-> +/*
-> + * TEMP_ALARM_LITE has two stages: warning and shutdown with independently
-> + * configured threshold temperatures.
-> + */
-> +
-> +static const long temp_map_lite_warning[THRESH_COUNT] = {
-> +	115000, 125000, 135000, 145000
+> +enum {
+> +	PMIC_GLINK_CLIENT_BATT = 0,
+> +	PMIC_GLINK_CLIENT_ALTMODE,
+> +	PMIC_GLINK_CLIENT_UCSI,
 > +};
 > +
-> +static const long temp_map_lite_shutdown[THRESH_COUNT] = {
-> +	135000, 145000, 160000, 175000
-> +};
+> +#define PMIC_GLINK_CLIENT_DEFAULT	(BIT(PMIC_GLINK_CLIENT_BATT) |	\
+> +					 BIT(PMIC_GLINK_CLIENT_ALTMODE))
 > +
->   /* Temperature in Milli Celsius reported during stage 0 if no ADC is present */
->   #define DEFAULT_TEMP			37000
+>   struct pmic_glink {
+>   	struct device *dev;
+>   	struct pdr_handle *pdr;
 >   
-> @@ -146,7 +169,7 @@ static int qpnp_tm_write(struct qpnp_tm_chip *chip, u16 addr, u8 data)
->    */
->   static long qpnp_tm_decode_temp(struct qpnp_tm_chip *chip, unsigned int stage)
->   {
-> -	if (chip->has_temp_dac) {
-> +	if (chip->has_temp_dac || chip->subtype == QPNP_TM_SUBTYPE_LITE) {
->   		if (stage == 0 || stage > STAGE_COUNT)
->   			return 0;
+>   	struct rpmsg_endpoint *ept;
 >   
-> @@ -164,19 +187,26 @@ static long qpnp_tm_decode_temp(struct qpnp_tm_chip *chip, unsigned int stage)
->    * qpnp_tm_get_temp_stage() - return over-temperature stage
->    * @chip:		Pointer to the qpnp_tm chip
->    *
-> - * Return: stage (GEN1) or state (GEN2) on success, or errno on failure.
-> + * Return: stage (GEN1), state (GEN2), or alarm interrupt state (LITE) on
-> + *	   success; or errno on failure.
->    */
->   static int qpnp_tm_get_temp_stage(struct qpnp_tm_chip *chip)
+> +	unsigned long client_mask;
+> +
+>   	struct auxiliary_device altmode_aux;
+>   	struct auxiliary_device ps_aux;
+>   	struct auxiliary_device ucsi_aux;
+> @@ -233,6 +245,7 @@ static struct rpmsg_driver pmic_glink_rpmsg_driver = {
+>   
+>   static int pmic_glink_probe(struct platform_device *pdev)
 >   {
+> +	const unsigned long *match_data;
+>   	struct pdr_service *service;
+>   	struct pmic_glink *pg;
 >   	int ret;
-> +	u16 addr = QPNP_TM_REG_STATUS;
->   	u8 reg = 0;
+> @@ -249,12 +262,27 @@ static int pmic_glink_probe(struct platform_device *pdev)
+>   	mutex_init(&pg->client_lock);
+>   	mutex_init(&pg->state_lock);
 >   
-> -	ret = qpnp_tm_read(chip, QPNP_TM_REG_STATUS, &reg);
-> +	if (chip->subtype == QPNP_TM_SUBTYPE_LITE)
-> +		addr = QPNP_TM_REG_IRQ_STATUS;
+> -	ret = pmic_glink_add_aux_device(pg, &pg->altmode_aux, "altmode");
+> -	if (ret)
+> -		return ret;
+> -	ret = pmic_glink_add_aux_device(pg, &pg->ps_aux, "power-supply");
+> -	if (ret)
+> -		goto out_release_altmode_aux;
+> +	match_data = (unsigned long *)of_device_get_match_data(&pdev->dev);
+
+Nit: type cast should not be necessary here.
+
+> +	if (match_data)
+> +		pg->client_mask = *match_data;
+> +	else
+> +		pg->client_mask = PMIC_GLINK_CLIENT_DEFAULT;
 > +
-> +	ret = qpnp_tm_read(chip, addr, &reg);
->   	if (ret < 0)
->   		return ret;
->   
->   	if (chip->subtype == QPNP_TM_SUBTYPE_GEN1)
->   		ret = reg & STATUS_GEN1_STAGE_MASK;
-> +	else if (chip->subtype == QPNP_TM_SUBTYPE_LITE)
-> +		ret = reg & IRQ_STATUS_MASK;
->   	else
->   		ret = (reg & STATUS_GEN2_STATE_MASK) >> STATUS_GEN2_STATE_SHIFT;
->   
-> @@ -199,7 +229,8 @@ static int qpnp_tm_update_temp_no_adc(struct qpnp_tm_chip *chip)
->   		return ret;
->   	stage = ret;
->   
-> -	if (chip->subtype == QPNP_TM_SUBTYPE_GEN1) {
-> +	if (chip->subtype == QPNP_TM_SUBTYPE_GEN1
-> +	    || chip->subtype == QPNP_TM_SUBTYPE_LITE) {
->   		stage_new = stage;
->   		stage_old = chip->stage;
->   	} else {
-> @@ -282,6 +313,78 @@ static int qpnp_tm_set_temp_dac_thresh(struct qpnp_tm_chip *chip, int trip,
->   	return 0;
->   }
->   
-> +static int qpnp_tm_set_temp_lite_thresh(struct qpnp_tm_chip *chip, int trip,
-> +				       int temp)
-> +{
-> +	int ret, temp_cfg, i;
-> +	const long *temp_map;
-> +	u16 addr;
-> +	u8 reg, thresh;
-> +
-> +	if (trip < 0 || trip >= STAGE_COUNT) {
-> +		dev_err(chip->dev, "invalid TEMP_LITE trip = %d\n", trip);
-> +		return -EINVAL;
-> +	}
-> +
-> +	switch (trip) {
-> +	case 0:
-> +		temp_map = temp_map_lite_warning;
-> +		addr = QPNP_TM_REG_LITE_TEMP_CFG1;
-> +		break;
-> +	case 1:
-> +		/*
-> +		 * The second trip point is purely in software to facilitate
-> +		 * a controlled shutdown after the warning threshold is crossed
-> +		 * but before the automatic hardware shutdown threshold is
-> +		 * crossed.
-> +		 */
-> +		return 0;
-> +	case 2:
-> +		temp_map = temp_map_lite_shutdown;
-> +		addr = QPNP_TM_REG_LITE_TEMP_CFG2;
-> +		break;
-> +	default:
-> +		return 0;
-> +	}
-> +
-> +	if (temp < temp_map[THRESH_MIN] || temp > temp_map[THRESH_MAX]) {
-> +		dev_err(chip->dev, "invalid TEMP_LITE temp = %d\n", temp);
-> +		return -EINVAL;
-> +	}
-> +
-> +	thresh = 0;
-> +	temp_cfg = temp_map[thresh];
-> +	for (i = THRESH_MAX; i >= THRESH_MIN; i--) {
-> +		if (temp >= temp_map[i]) {
-> +			thresh = i;
-> +			temp_cfg = temp_map[i];
-> +			break;
-> +		}
-> +	}
-> +
-> +	if (temp_cfg == chip->temp_dac_map[trip])
-> +		return 0;
-> +
-> +	ret = qpnp_tm_read(chip, addr, &reg);
-> +	if (ret < 0) {
-> +		dev_err(chip->dev, "LITE_TEMP_CFG read failed, ret=%d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	reg &= ~LITE_TEMP_CFG_THRESHOLD_MASK;
-> +	reg |= FIELD_PREP(LITE_TEMP_CFG_THRESHOLD_MASK, thresh);
-> +
-> +	ret = qpnp_tm_write(chip, addr, reg);
-> +	if (ret < 0) {
-> +		dev_err(chip->dev, "LITE_TEMP_CFG write failed, ret=%d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	chip->temp_dac_map[trip] = temp_cfg;
-> +
-> +	return 0;
-> +}
-> +
->   static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
->   					     int temp)
->   {
-> @@ -388,6 +491,24 @@ static const struct thermal_zone_device_ops qpnp_tm_sensor_temp_dac_ops = {
->   	.set_trip_temp = qpnp_tm_set_temp_dac_trip_temp,
->   };
->   
-> +static int qpnp_tm_set_temp_lite_trip_temp(struct thermal_zone_device *tz,
-> +					   int trip, int temp)
-> +{
-> +	struct qpnp_tm_chip *chip = tz->devdata;
-> +	int ret;
-> +
-> +	mutex_lock(&chip->lock);
-> +	ret = qpnp_tm_set_temp_lite_thresh(chip, trip, temp);
-> +	mutex_unlock(&chip->lock);
-> +
-> +	return ret;
-> +}
-> +
-> +static const struct thermal_zone_device_ops qpnp_tm_sensor_temp_lite_ops = {
-> +	.get_temp = qpnp_tm_get_temp,
-> +	.set_trip_temp = qpnp_tm_set_temp_lite_trip_temp,
-> +};
-> +
->   static irqreturn_t qpnp_tm_isr(int irq, void *data)
->   {
->   	struct qpnp_tm_chip *chip = data;
-> @@ -474,6 +595,71 @@ static int qpnp_tm_temp_dac_init(struct qpnp_tm_chip *chip)
->   	return 0;
->   }
->   
-> +/* Configure TEMP_LITE registers based on DT thermal_zone trips */
-> +static int qpnp_tm_temp_lite_update_trip_temps(struct qpnp_tm_chip *chip)
-> +{
-> +	const struct thermal_trip *trips;
-> +	int ret, ntrips, i;
-> +
-> +	ntrips = of_thermal_get_ntrips(chip->tz_dev);
-> +	/* Keep hardware defaults if no DT trips are defined. */
-> +	if (ntrips <= 0)
-> +		return 0;
-> +
-> +	trips = of_thermal_get_trip_points(chip->tz_dev);
-> +	if (!trips)
-> +		return -EINVAL;
-> +
-> +	for (i = 0; i < ntrips; i++) {
-> +		if (of_thermal_is_trip_valid(chip->tz_dev, i)) {
-> +			ret = qpnp_tm_set_temp_lite_thresh(chip, i,
-> +							  trips[i].temperature);
-> +			if (ret < 0)
-> +				return ret;
-> +		}
-> +	}
-> +
-> +	/* Verify that trips are strictly increasing. */
-> +	if (chip->temp_dac_map[2] <= chip->temp_dac_map[0]) {
-> +		dev_err(chip->dev, "Threshold 2=%ld <= threshold 0=%ld\n",
-> +			chip->temp_dac_map[2], chip->temp_dac_map[0]);
-> +		return -EINVAL;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +/* Read the hardware default TEMP_LITE stage threshold temperatures */
-> +static int qpnp_tm_temp_lite_init(struct qpnp_tm_chip *chip)
-> +{
-> +	int ret, thresh;
-> +	u8 reg = 0;
-> +
-> +	/*
-> +	 * Store the warning trip temp in temp_dac_map[0] and the shutdown trip
-> +	 * temp in temp_dac_map[2].  The second trip point is purely in software
-> +	 * to facilitate a controlled shutdown after the warning threshold is
-> +	 * crossed but before the automatic hardware shutdown threshold is
-> +	 * crossed.  Thus, there is no register to read for the second trip
-> +	 * point.
-> +	 */
-> +	ret = qpnp_tm_read(chip, QPNP_TM_REG_LITE_TEMP_CFG1, &reg);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	thresh = FIELD_GET(LITE_TEMP_CFG_THRESHOLD_MASK, reg);
-> +	chip->temp_dac_map[0] = temp_map_lite_warning[thresh];
-> +
-> +	ret = qpnp_tm_read(chip, QPNP_TM_REG_LITE_TEMP_CFG2, &reg);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	thresh = FIELD_GET(LITE_TEMP_CFG_THRESHOLD_MASK, reg);
-> +	chip->temp_dac_map[2] = temp_map_lite_shutdown[thresh];
-> +
-> +	return 0;
-> +}
-> +
->   /*
->    * This function initializes the internal temp value based on only the
->    * current thermal stage and threshold. Setup threshold control and
-> @@ -500,13 +686,18 @@ static int qpnp_tm_init(struct qpnp_tm_chip *chip)
->   		goto out;
->   	chip->stage = ret;
->   
-> -	stage = chip->subtype == QPNP_TM_SUBTYPE_GEN1
-> -		? chip->stage : alarm_state_map[chip->stage];
-> +	stage = (chip->subtype == QPNP_TM_SUBTYPE_GEN1
-> +		 || chip->subtype == QPNP_TM_SUBTYPE_LITE)
-> +			? chip->stage : alarm_state_map[chip->stage];
->   
->   	if (stage)
->   		chip->temp = qpnp_tm_decode_temp(chip, stage);
->   
-> -	if (chip->has_temp_dac) {
-> +	if (chip->subtype == QPNP_TM_SUBTYPE_LITE) {
-> +		ret = qpnp_tm_temp_lite_update_trip_temps(chip);
-> +		if (ret < 0)
-> +			goto out;
-> +	} else if (chip->has_temp_dac) {
->   		ret = qpnp_tm_temp_dac_update_trip_temps(chip);
->   		if (ret < 0)
->   			goto out;
-> @@ -598,7 +789,8 @@ static int qpnp_tm_probe(struct platform_device *pdev)
->   	chip->dig_revision = (dig_major << 8) | dig_minor;
->   
->   	if (type != QPNP_TM_TYPE || (subtype != QPNP_TM_SUBTYPE_GEN1
-> -				     && subtype != QPNP_TM_SUBTYPE_GEN2)) {
-> +				     && subtype != QPNP_TM_SUBTYPE_GEN2
-> +				     && subtype != QPNP_TM_SUBTYPE_LITE)) {
->   		dev_err(&pdev->dev, "invalid type 0x%02x or subtype 0x%02x\n",
->   			type, subtype);
->   		return -ENODEV;
-> @@ -610,7 +802,7 @@ static int qpnp_tm_probe(struct platform_device *pdev)
->   		chip->has_temp_dac = true;
->   	else if (subtype == QPNP_TM_SUBTYPE_GEN2 && dig_major >= 1)
->   		chip->temp_map = &temp_map_gen2_v1;
-> -	else
-> +	else if (subtype == QPNP_TM_SUBTYPE_GEN1)
->   		chip->temp_map = &temp_map_gen1;
->   
->   	if (chip->has_temp_dac) {
-> @@ -620,6 +812,13 @@ static int qpnp_tm_probe(struct platform_device *pdev)
->   			return ret;
->   	}
->   
-> +	if (chip->subtype == QPNP_TM_SUBTYPE_LITE) {
-> +		ops = &qpnp_tm_sensor_temp_lite_ops;
-> +		ret = qpnp_tm_temp_lite_init(chip);
-> +		if (ret < 0)
+> +	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_UCSI)) {
+> +		ret = pmic_glink_add_aux_device(pg, &pg->ucsi_aux, "ucsi");
+> +		if (ret)
 > +			return ret;
 > +	}
+> +	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_ALTMODE)) {
+> +		ret = pmic_glink_add_aux_device(pg, &pg->altmode_aux, "altmode");
+> +		if (ret)
+> +			goto out_release_ucsi_aux;
+> +	}
+> +	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_BATT)) {
+> +		ret = pmic_glink_add_aux_device(pg, &pg->ps_aux, "power-supply");
+> +		if (ret)
+> +			goto out_release_altmode_aux;
+> +	}
+>   
+>   	pg->pdr = pdr_handle_alloc(pmic_glink_pdr_callback, pg);
+>   	if (IS_ERR(pg->pdr)) {
+> @@ -278,9 +306,14 @@ static int pmic_glink_probe(struct platform_device *pdev)
+>   out_release_pdr_handle:
+>   	pdr_handle_release(pg->pdr);
+>   out_release_aux_devices:
+> -	pmic_glink_del_aux_device(pg, &pg->ps_aux);
+> +	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_BATT))
+> +		pmic_glink_del_aux_device(pg, &pg->ps_aux);
+>   out_release_altmode_aux:
+> -	pmic_glink_del_aux_device(pg, &pg->altmode_aux);
+> +	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_ALTMODE))
+> +		pmic_glink_del_aux_device(pg, &pg->altmode_aux);
+> +out_release_ucsi_aux:
+> +	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_UCSI))
+> +		pmic_glink_del_aux_device(pg, &pg->ucsi_aux);
+>   
+>   	return ret;
+>   }
+> @@ -291,8 +324,12 @@ static int pmic_glink_remove(struct platform_device *pdev)
+>   
+>   	pdr_handle_release(pg->pdr);
+>   
+> -	pmic_glink_del_aux_device(pg, &pg->ps_aux);
+> -	pmic_glink_del_aux_device(pg, &pg->altmode_aux);
+> +	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_BATT))
+> +		pmic_glink_del_aux_device(pg, &pg->ps_aux);
+> +	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_ALTMODE))
+> +		pmic_glink_del_aux_device(pg, &pg->altmode_aux);
+> +	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_UCSI))
+> +		pmic_glink_del_aux_device(pg, &pg->ucsi_aux);
+>   
+>   	mutex_lock(&__pmic_glink_lock);
+>   	__pmic_glink = NULL;
+> @@ -301,8 +338,14 @@ static int pmic_glink_remove(struct platform_device *pdev)
+>   	return 0;
+>   }
+>   
+> +/* Do not handle altmode for now on those platforms */
+> +static const unsigned long pmic_glink_sm8450_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
+> +							   BIT(PMIC_GLINK_CLIENT_UCSI);
 > +
->   	/*
->   	 * Register the sensor before initializing the hardware to be able to
->   	 * read the trip points. get_temp() returns the default temperature
+>   static const struct of_device_id pmic_glink_of_match[] = {
+> -	{ .compatible = "qcom,pmic-glink", },
+
+Nit: one can leave comma in place to remove noise.
+
+> +	{ .compatible = "qcom,sm8450-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
+> +	{ .compatible = "qcom,sm8550-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
+> +	{ .compatible = "qcom,pmic-glink" },
+>   	{}
+>   };
+>   MODULE_DEVICE_TABLE(of, pmic_glink_of_match);
+> 
 
 -- 
 With best wishes
