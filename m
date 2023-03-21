@@ -2,126 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B75F36C33E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 15:18:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D0486C33EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 15:21:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230337AbjCUOR7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 10:17:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58414 "EHLO
+        id S231415AbjCUOVY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 10:21:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230141AbjCUOR6 (ORCPT
+        with ESMTP id S230509AbjCUOVX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 10:17:58 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6C6EB472
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 07:17:50 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id q14so1296591ljm.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 07:17:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1679408269;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tMn7LHKKTu4Ns9vFmGoBtS8cTIhQAr15IAlChqCRIjg=;
-        b=XNmIG6LCixSgb0IbQeT7vxzIHWMRiNclEzB7QBxzg+WYYt2jEZNuEIrOFo2bGCmdk2
-         Sjbl+pBpHvovFPW7yF74xFa4B9WUOkxNhoOge0xavCIjfKbZm4JB+4EAhBPBlvwGZZcg
-         xP05I38BIyJxDjUtlct1p3PRgWTylor6TbfUlQvxXA4gFsGMxyK2kNGgsMLi1ScKip7Q
-         OXhhehwButp4x98UVyIvVYHQPAuP+8HzSjqvtI3KBwSA1HJG2tScxkEaca4/9cKGFdFg
-         WsrKIgUgJ7Xi70lJPWPUs6V2WIBG/muqmycPiNNF3jnlNez3kTH45mqbrnPYvE2aRsOh
-         utrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679408269;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tMn7LHKKTu4Ns9vFmGoBtS8cTIhQAr15IAlChqCRIjg=;
-        b=ckWm+y63oFunb483fk16Ys40TpULaywlMKffy/vp6cPS9oP5cfE5NKVhlZU8gTDLT1
-         GgjqBRHbfjUFQXkrzWfLk+4AWmM2OaGmlbC2VU+O0/YjjJ7sAptpjrEfAzXFT8OtmS8f
-         F5cgzIzF2GczupN3axevNsSwrEQGKZtBtqqwb2YcbMRPI6SH/GXIX+LR8/uIduGj4+GN
-         5Mp4IBer7fs2tqQ4lZLrvxnjJn6QNri4op9ODbxE+lCCQ1rxgjdhJ4SHTePNPVTXeyT3
-         GAML9X5fpvGmlcRm9jR4B7wRxm49fIXm87KJnH0E2672FJ6OzOFoqcT/2+Y8X6Eo6mSM
-         Bwpg==
-X-Gm-Message-State: AO0yUKUHJkc9p0Qw2gCg5cDXWo6ZHNdAnCG30hZ760tyzdeHnmRCbEnO
-        Y5JJM17vT9ShKeNwK4oPyWYzC5S/TScuDBB/e1wJbw==
-X-Google-Smtp-Source: AK7set8b0x6Hc/6GcdfBaiyGfeNfULbWOK7+qOwTD2eBr42E8cIkkxgtVYted3CNCO2pKDyXkWKZbmkwrodDXaQN4ck=
-X-Received: by 2002:a2e:901a:0:b0:299:aa7a:94c8 with SMTP id
- h26-20020a2e901a000000b00299aa7a94c8mr896022ljg.10.1679408269057; Tue, 21 Mar
- 2023 07:17:49 -0700 (PDT)
+        Tue, 21 Mar 2023 10:21:23 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C87E421974;
+        Tue, 21 Mar 2023 07:21:12 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B3540B816ED;
+        Tue, 21 Mar 2023 14:21:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD594C433EF;
+        Tue, 21 Mar 2023 14:21:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679408467;
+        bh=3xT7x0pBcWaKYFo4t2LsM4NDEaF9mrj6optAqDsUUfI=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=Do3KnLCv/NfjHYqjDAN5uTwu6A+DlEa+P/AubBV0oUU+CoWR5CBI6SHknFw7RqVdz
+         k/3YY49JUe4COz7v+/E+PjZj8AxIsXfDfMDTuDTnNaLcFeaIMTgRungIqtIvo4lEOa
+         i0UPLntBQU6T2hV22IQqqOlXV8dCwLHcAh6v7lEJxirMBo7Y22hCi05q4VKrjZuOsu
+         0EdCCfJBO1GUCaL0L7LQz7MvadtVjnZyKZjmoNa53Ndxy8mnmOqCfz9LjsqYySbFUz
+         ECkyFe25VHJ3uWTYmv9ccyNooRPyRBSEwhD5pTaW0zJBRRT3CmF0qMYpLW7dRC03bT
+         59szPWCgBsbfw==
+Message-ID: <f8baed88-6a3b-17c5-4134-ce3917ee8632@kernel.org>
+Date:   Tue, 21 Mar 2023 16:21:03 +0200
 MIME-Version: 1.0
-References: <20230320154841.327908-1-brgl@bgdev.pl> <20230320154841.327908-10-brgl@bgdev.pl>
- <65d15d82-c106-b0a7-11b4-703bf22c28b1@linaro.org> <c74e0683-304d-7571-1d22-c2c65d02dc6a@linaro.org>
-In-Reply-To: <c74e0683-304d-7571-1d22-c2c65d02dc6a@linaro.org>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Tue, 21 Mar 2023 15:17:35 +0100
-Message-ID: <CAMRc=McNAy_08es7CRwhyE+OGHM-+GSsd0xGJNAdNcOs9eNq7Q@mail.gmail.com>
-Subject: Re: [PATCH v2 09/15] arm64: dts: qcom: sa8775p: add the Power On
- device node
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Subject: Re: [PATCH v7 2/9] interconnect: qcom: rpm: Add support for
+ specifying channel num
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,T_SPF_TEMPERROR
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230228-topic-qos-v7-0-815606092fff@linaro.org>
+ <20230228-topic-qos-v7-2-815606092fff@linaro.org>
+ <2f54ae85-f7b9-4666-cc05-6aa034028789@kernel.org>
+ <38fe0736-b566-9e1b-d7f3-71e3fcd01d90@linaro.org>
+From:   Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <38fe0736-b566-9e1b-d7f3-71e3fcd01d90@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 20, 2023 at 6:25=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
-.org> wrote:
->
->
->
-> On 20.03.2023 18:23, Konrad Dybcio wrote:
-> >
-> >
-> > On 20.03.2023 16:48, Bartosz Golaszewski wrote:
-> >> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >>
-> >> Add the PON node to PMIC #0 for sa8775p platforms.
-> >>
-> >> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >> ---
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >
-> > Konrad
-> Hold up, I am not sure if PBS is there on PMM8654AU. Check the
-> -pmic-overlay.dtsi.
->
+On 21.03.23 16:09, Konrad Dybcio wrote:
+> 
+> On 21.03.2023 15:06, Georgi Djakov wrote:
+>> Hi Konrad,
+>>
+>> Thanks for the patch!
+>>
+>> On 8.03.23 23:40, Konrad Dybcio wrote:
+>>> Some nodes, like EBI0 (DDR) or L3/LLCC, may be connected over more than
+>>> one channel. This should be taken into account in bandwidth calcualtion,
+>>> as we're supposed to feed msmbus with the per-channel bandwidth. Add
+>>> support for specifying that and use it during bandwidth aggregation.
+>>>
+>>
+>> This looks good, but do you have any follow-up patch to use this and set
+>> the channels in some driver?
+> Yes, I have a couple of OOT drivers that are gonna make use of it.
+> TBF it should have been sent separately from the QoS mess, but I
+> don't think it's much of an issue to take it as-is.
+> 
+> The aforementioned OOT drivers for MSM8998 and SM6375 will be
+> submitted after we reach a consensus on how we want to ensure
+> that each node is guaranteed to have its clocks enabled before
+> access, among some other minor things.
 
-Yep, it's there alright.
+Yes, these QoS clocks are confusing. Maybe you can even submit them
+without configuring any QoS stuff in first place? Does enabling QoS
+actually show any benefits on these devices?
 
-Bartosz
+Thanks,
+Georgi
 
 > Konrad
-> >>  arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 8 ++++++++
-> >>  1 file changed, 8 insertions(+)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/=
-boot/dts/qcom/sa8775p-pmics.dtsi
-> >> index afe220b374c2..dbc596e32253 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> >> @@ -12,6 +12,14 @@ pmm8654au_0: pmic@0 {
-> >>              reg =3D <0x0 SPMI_USID>;
-> >>              #address-cells =3D <1>;
-> >>              #size-cells =3D <0>;
-> >> +
-> >> +            pmm8654au_0_pon: pon@1200 {
-> >> +                    compatible =3D "qcom,pmk8350-pon";
-> >> +                    reg =3D <0x1200>, <0x800>;
-> >> +                    reg-names =3D "hlos", "pbs";
-> >> +                    mode-recovery =3D <0x1>;
-> >> +                    mode-bootloader =3D <0x2>;
-> >> +            };
-> >>      };
-> >>
-> >>      pmm8654au_1: pmic@2 {
+>>
+>> BR,
+>> Georgi
+>>
+>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>    drivers/interconnect/qcom/icc-rpm.c | 7 ++++++-
+>>>    drivers/interconnect/qcom/icc-rpm.h | 2 ++
+>>>    2 files changed, 8 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
+>>> index 35fd75ae70e3..27c4c6497994 100644
+>>> --- a/drivers/interconnect/qcom/icc-rpm.c
+>>> +++ b/drivers/interconnect/qcom/icc-rpm.c
+>>> @@ -317,6 +317,7 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
+>>>    {
+>>>        struct icc_node *node;
+>>>        struct qcom_icc_node *qn;
+>>> +    u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
+>>>        int i;
+>>>          /* Initialise aggregate values */
+>>> @@ -334,7 +335,11 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
+>>>        list_for_each_entry(node, &provider->nodes, node_list) {
+>>>            qn = node->data;
+>>>            for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
+>>> -            agg_avg[i] += qn->sum_avg[i];
+>>> +            if (qn->channels)
+>>> +                sum_avg[i] = div_u64(qn->sum_avg[i], qn->channels);
+>>> +            else
+>>> +                sum_avg[i] = qn->sum_avg[i];
+>>> +            agg_avg[i] += sum_avg[i];
+>>>                agg_peak[i] = max_t(u64, agg_peak[i], qn->max_peak[i]);
+>>>            }
+>>>        }
+>>> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
+>>> index 8ba1918d7997..8aed5400afda 100644
+>>> --- a/drivers/interconnect/qcom/icc-rpm.h
+>>> +++ b/drivers/interconnect/qcom/icc-rpm.h
+>>> @@ -66,6 +66,7 @@ struct qcom_icc_qos {
+>>>     * @id: a unique node identifier
+>>>     * @links: an array of nodes where we can go next while traversing
+>>>     * @num_links: the total number of @links
+>>> + * @channels: number of channels at this node (e.g. DDR channels)
+>>>     * @buswidth: width of the interconnect between a node and the bus (bytes)
+>>>     * @sum_avg: current sum aggregate value of all avg bw requests
+>>>     * @max_peak: current max aggregate value of all peak bw requests
+>>> @@ -78,6 +79,7 @@ struct qcom_icc_node {
+>>>        u16 id;
+>>>        const u16 *links;
+>>>        u16 num_links;
+>>> +    u16 channels;
+>>>        u16 buswidth;
+>>>        u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
+>>>        u64 max_peak[QCOM_ICC_NUM_BUCKETS];
+>>>
+>>
+
