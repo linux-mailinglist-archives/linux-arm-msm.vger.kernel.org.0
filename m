@@ -2,167 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CAA66C2955
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 05:53:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDEA06C29F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Mar 2023 06:38:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229677AbjCUExm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 00:53:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57358 "EHLO
+        id S229634AbjCUFis (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 01:38:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229634AbjCUExl (ORCPT
+        with ESMTP id S229798AbjCUFii (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 00:53:41 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E01E3C01;
-        Mon, 20 Mar 2023 21:53:39 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id i10-20020a05600c354a00b003ee0da1132eso2114222wmq.4;
-        Mon, 20 Mar 2023 21:53:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679374417;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GX92zv5VKe7ckWl7sGbnyvzQGMyhv0ppTgbomfq1PHk=;
-        b=qF3P8D4CRjzvhUxLVQgRiz6W+/M1ImZhcGKi9Pa0nX1Ff6WYPi63iF4XyriDoUaYvb
-         QnB3UVfLFdHHSS6XYstKNll0YwK6hb3vEAh13/HkjvahLtPX+piikYURGlt/NGF6rytO
-         nq7Bbt4QUIr2WNIQC/V5JWShA/iygKlM8vouw3PhLJeDPHu9S3vLcc3iux3BvtyjfrVT
-         6nt0zQBJhnkTcuy9lSpW/1Rv2qCgBBvXsUSsdrMqvy2WTIZQsOxMqnAvhhENYjQqTMcP
-         M25KrjljExnmI1mbMoAG1TkTQwaBwXvm5mevcQ7qY3Q3+EgAnZOyzxDdlQKsvgYOZFcT
-         /PSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679374417;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GX92zv5VKe7ckWl7sGbnyvzQGMyhv0ppTgbomfq1PHk=;
-        b=HthukRLCr5Ygc/wq4VofQEFMS1oS/WdPREcnUsM7A6mE+Wv9ZVJ0n9gp71e+bUQH6+
-         UDYQb4EOieXcJcSJWKBYI0HRLKEsxBqCOErShoszn0dmXbwmrjMli5CTC4hOuGZmJmv5
-         LuImUCvCucy85SUGsbH6L/CC8irhOKUdZxM1hnZhj0PHePzVy/tEcvxReqZM1gApN15g
-         l/OyaQfv7wD+7IcMergBoICCib2D1vc4S/jCVgBYpG/svnkMb/vCO4egv2u/Ku1J5N9B
-         LfjaagmZxd6GotbEE1yUuhk7L64Vm87v+tdWd5jAwhkQB36sxlWo5p4xXmxpG58nP6mH
-         hbdg==
-X-Gm-Message-State: AO0yUKUkFTE9ChcGo0+WwAwUD0OSyMQrk8anYNx56Vo5uYuCYjQGfzIn
-        QezLBDf+E1GPiekyppCeK1w=
-X-Google-Smtp-Source: AK7set87NeoiO5ioLPK68M5XrIbeQVoFDpjKadoZoPnR87tYfA6zznLp86hd1TMPB583S2T+TthuaA==
-X-Received: by 2002:a05:600c:21c7:b0:3dc:4042:5c21 with SMTP id x7-20020a05600c21c700b003dc40425c21mr1263182wmj.6.1679374417390;
-        Mon, 20 Mar 2023 21:53:37 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id h20-20020a1ccc14000000b003dc522dd25esm12244259wmb.30.2023.03.20.21.53.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Mar 2023 21:53:36 -0700 (PDT)
-Date:   Tue, 21 Mar 2023 07:53:32 +0300
-From:   Dan Carpenter <error27@gmail.com>
-To:     oe-kbuild@lists.linux.dev, Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org
-Cc:     lkp@intel.com, oe-kbuild-all@lists.linux.dev,
-        Rob Clark <robdclark@chromium.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        "open list:POWER MANAGEMENT CORE" <linux-pm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 18/23] PM / QoS: Decouple request alloc from
- dev_pm_qos_mtx
-Message-ID: <155085b0-d2e4-4503-b75b-1a71193c2587@kili.mountain>
+        Tue, 21 Mar 2023 01:38:38 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F18822134;
+        Mon, 20 Mar 2023 22:38:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+        Content-Type:In-Reply-To:Cc:From:References:To:Subject:MIME-Version:Date:
+        Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+        bh=+NQR2cPC+9ftHy9bkc6ojFpRutVyCr2wlZ//xE3JKzU=; b=UKGzuF1+vvffxv8tV1c7SOUMNf
+        N6gOBaXUq1Z2WBP6vYfwQm1sD+G9eXycB7QfSXba+4a5C/bDlK2bkVo0Ab4iohEGRbrSqPYKF812K
+        MjQDv+BjpwO9UY4upzyh4tjIBtEbERfxbkYgung/jovgyz5RAAJpMzTzdDI+34lS43r94T5xHZHeK
+        xm3UhfHFtSaXyeP0C7TP+yngL6HKFHKRjUhgRMA6tbhrYhW9B4QYy1XQFvRa8J9k1QocnOVB/NLjT
+        kUGAkcHhlHckdcckTA5Z78MynD3gb8FYWcJT2DCpXhPR4Whx1gqGJkqC5nMB3JVzkNsSDefta1ZMK
+        TrCi2dcw==;
+Received: from [2601:1c2:980:9ec0::21b4]
+        by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
+        id 1peUhc-00BHNo-39;
+        Tue, 21 Mar 2023 05:38:33 +0000
+Message-ID: <c85681c6-6fcf-33ed-210f-661e539f78d8@infradead.org>
+Date:   Mon, 20 Mar 2023 22:38:31 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230320144356.803762-19-robdclark@gmail.com>
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: Build regressions/improvements in v6.3-rc3 (drm/msm/)
+Content-Language: en-US
+To:     Geert Uytterhoeven <geert@linux-m68k.org>,
+        linux-kernel@vger.kernel.org
+References: <CAHk-=wiPd8R8-zSqTOtJ9KYeZLBByHug7ny3rgP-ZqzpP_KELg@mail.gmail.com>
+ <20230320082146.4117022-1-geert@linux-m68k.org>
+From:   Randy Dunlap <rdunlap@infradead.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>
+In-Reply-To: <20230320082146.4117022-1-geert@linux-m68k.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Hi--
 
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+On 3/20/23 01:21, Geert Uytterhoeven wrote:
+> Below is the list of build error/warning regressions/improvements in
+> v6.3-rc3[1] compared to v6.2[2].
+> 
+> Summarized:
+>   - build errors: +9/-14
+>   - build warnings: +4/-1447
+> 
+> JFYI, when comparing v6.3-rc3[1] to v6.3-rc2[3], the summaries are:
+>   - build errors: +0/-1
+>   - build warnings: +0/-0
+> 
+> Happy fixing! ;-)
+> 
+> Thanks to the linux-next team for providing the build service.
+> 
+> [1] http://kisskb.ellerman.id.au/kisskb/branch/linus/head/e8d018dd0257f744ca50a729e3d042cf2ec9da65/ (all 152 configs)
+> [2] http://kisskb.ellerman.id.au/kisskb/branch/linus/head/c9c3395d5e3dcc6daee66c6908354d47bf98cb0c/ (all 152 configs)
+> [3] http://kisskb.ellerman.id.au/kisskb/branch/linus/head/eeac8ede17557680855031c6f305ece2378af326/ (all 152 configs)
+> 
+> 
+> *** ERRORS ***
+> 
+> 9 error regressions:
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Rob-Clark/drm-msm-Pre-allocate-hw_fence/20230320-224826
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/20230320144356.803762-19-robdclark%40gmail.com
-patch subject: [PATCH v2 18/23] PM / QoS: Decouple request alloc from dev_pm_qos_mtx
-config: arm64-randconfig-m041-20230319 (https://download.01.org/0day-ci/archive/20230321/202303211207.mUCSt3CK-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 12.1.0
+>   + /kisskb/src/drivers/gpu/drm/msm/msm_mdss.c: error: case label does not reduce to an integer constant:  => 300:2, 299:2, 296:2
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Reported-by: Dan Carpenter <error27@gmail.com>
-| Link: https://lore.kernel.org/r/202303211207.mUCSt3CK-lkp@intel.com/
 
-smatch warnings:
-drivers/base/power/qos.c:947 dev_pm_qos_update_user_latency_tolerance() error: uninitialized symbol 'req'.
-drivers/base/power/qos.c:975 dev_pm_qos_update_user_latency_tolerance() warn: possible memory leak of 'req'
+Are these due to the sign bit being set after a shift?
+It looks that way since it is only reported for such values.
 
-vim +/req +947 drivers/base/power/qos.c
+From the reports on the build server, it only happens when building with gcc5.
+I don't have the ability to build with gcc5 or I would test it.
 
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  923  int dev_pm_qos_update_user_latency_tolerance(struct device *dev, s32 val)
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  924  {
-2d7e4629d7265d Rob Clark         2023-03-20  925  	struct dev_pm_qos_request *req = NULL;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  926  	int ret;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  927  
-00dd582e52a535 Rob Clark         2023-03-20  928  	ret = dev_pm_qos_constraints_ensure_allocated(dev);
-00dd582e52a535 Rob Clark         2023-03-20  929  	if (ret)
-00dd582e52a535 Rob Clark         2023-03-20  930  		return ret;
-00dd582e52a535 Rob Clark         2023-03-20  931  
-2d7e4629d7265d Rob Clark         2023-03-20  932  	if (!dev->power.qos->latency_tolerance_req)
-2d7e4629d7265d Rob Clark         2023-03-20  933  		req = kzalloc(sizeof(*req), GFP_KERNEL);
-2d7e4629d7265d Rob Clark         2023-03-20  934  
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  935  	mutex_lock(&dev_pm_qos_mtx);
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  936  
-00dd582e52a535 Rob Clark         2023-03-20  937  	if (!dev->power.qos->latency_tolerance_req) {
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  938  		struct dev_pm_qos_request *req;
+@Rob and other drm/msm people, what do you think about this?
+(or is this already fixed somewhere but not yet in linux-next?)
 
-This "req" shadows the ealier req.
+Thanks.
 
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  939  
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  940  		if (val < 0) {
-80a6f7c79b7822 Andrew Lutomirski 2016-11-29  941  			if (val == PM_QOS_LATENCY_TOLERANCE_NO_CONSTRAINT)
-80a6f7c79b7822 Andrew Lutomirski 2016-11-29  942  				ret = 0;
-80a6f7c79b7822 Andrew Lutomirski 2016-11-29  943  			else
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  944  				ret = -EINVAL;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  945  			goto out;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  946  		}
-2d984ad132a87c Rafael J. Wysocki 2014-02-11 @947  		if (!req) {
-
-So it leads to an unintialized variable and a leak.
-
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  948  			ret = -ENOMEM;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  949  			goto out;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  950  		}
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  951  		ret = __dev_pm_qos_add_request(dev, req, DEV_PM_QOS_LATENCY_TOLERANCE, val);
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  952  		if (ret < 0) {
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  953  			kfree(req);
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  954  			goto out;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  955  		}
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  956  		dev->power.qos->latency_tolerance_req = req;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  957  	} else {
-2d7e4629d7265d Rob Clark         2023-03-20  958  		/*
-2d7e4629d7265d Rob Clark         2023-03-20  959  		 * If we raced with another thread to allocate the request,
-2d7e4629d7265d Rob Clark         2023-03-20  960  		 * simply free the redundant allocation and move on.
-2d7e4629d7265d Rob Clark         2023-03-20  961  		 */
-2d7e4629d7265d Rob Clark         2023-03-20  962  		if (req)
-2d7e4629d7265d Rob Clark         2023-03-20  963  			kfree(req);
-2d7e4629d7265d Rob Clark         2023-03-20  964  
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  965  		if (val < 0) {
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  966  			__dev_pm_qos_drop_user_request(dev, DEV_PM_QOS_LATENCY_TOLERANCE);
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  967  			ret = 0;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  968  		} else {
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  969  			ret = __dev_pm_qos_update_request(dev->power.qos->latency_tolerance_req, val);
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  970  		}
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  971  	}
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  972  
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  973   out:
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  974  	mutex_unlock(&dev_pm_qos_mtx);
-2d984ad132a87c Rafael J. Wysocki 2014-02-11 @975  	return ret;
-2d984ad132a87c Rafael J. Wysocki 2014-02-11  976  }
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
-
+-----
+diff -- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -19,9 +19,9 @@
+  */
+ #define MAX_BLOCKS    12
+ 
+-#define DPU_HW_VER(MAJOR, MINOR, STEP) (((MAJOR & 0xF) << 28)    |\
+-		((MINOR & 0xFFF) << 16)  |\
+-		(STEP & 0xFFFF))
++#define DPU_HW_VER(MAJOR, MINOR, STEP) ((((__u32)MAJOR & 0xF) << 28)    |\
++		(((__u32)MINOR & 0xFFF) << 16)  |\
++		((__u32)STEP & 0xFFFF))
+ 
+ #define DPU_HW_MAJOR(rev)		((rev) >> 28)
+ #define DPU_HW_MINOR(rev)		(((rev) >> 16) & 0xFFF)
