@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFEF76C54F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 20:31:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6A176C54F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 20:31:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231268AbjCVTbG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 15:31:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60434 "EHLO
+        id S231289AbjCVTbH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 15:31:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230503AbjCVTa6 (ORCPT
+        with ESMTP id S229717AbjCVTbC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 15:30:58 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 928A362DB3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 12:30:56 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id o12so77375151edb.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 12:30:56 -0700 (PDT)
+        Wed, 22 Mar 2023 15:31:02 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CB2D64239
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 12:30:57 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id ew6so14406124edb.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 12:30:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679513454;
+        d=linaro.org; s=google; t=1679513455;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9x1PwiUD4PUFjaVQWHWZ2kBLiECk6niT366SMAu8e64=;
-        b=m3nvSoUnbPCIgaSJib9udRBvVFJOO7aU51z6/ZlFbh1P6s2zgj1wsYsB1rkXT0Boax
-         o+M0JyN47OTKSJEV0FMYXbOQ7WrhL9KLsSyseExt/hGvKSw1Zr88YM0uQhfw4we2cqic
-         +Vm4yLK8M4Rk+D7DhGo+w/bcxWMDaLGjRm0Sct9cXBDm70Wln9MYD3gsARPwzmZms2hi
-         WlFKv9M3A/QdXMVZ4FCMdyirkXmGS+V7+XgJ0+b0NStkqTEtyPZLsaKfLjp5XrEb8Yr+
-         N7XudGUcMq4hhkwR9Uk4q06BlaQpZEF1pQkQ3gM9kWFnnkfA2vRo2KbuM8JnR+VCZ9Kt
-         ua9w==
+        bh=ZjZRp40FPRrskzF7ZI87t7kgEWRDXNcFtKlljyaufmU=;
+        b=I4w03IzrYWAmk/+JiLr6F2z1+ONFW1HIkI+m4d2O6t0A36P+dwfw8RufoI4D5OVGwK
+         6fRoCKk8PUWALnlUpSqbs50KgoqpC4GiuBSBkpcMUtm/wvglgDNY9Rj7LC2e8v2ShlAk
+         Q0DY2ifmKDyoT4YweW6QmgfD2afvyGwYs09U548bPdk0bjWuJEQdTf5QyKaDMnvVq9lS
+         tlNaThCoE+yABN14iFu1tQEM526hPEEOWxp1XfJllyGzb/Z69Kv5yYSfhBtSpR+ksVqi
+         69tx6UjKDZggmPuRz4HGJY6lJ3fg7KR4HeZ6WBfRC9oNTl48fd38yjwI7/CGbd195Qs6
+         6x1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679513454;
+        d=1e100.net; s=20210112; t=1679513455;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9x1PwiUD4PUFjaVQWHWZ2kBLiECk6niT366SMAu8e64=;
-        b=M3Q/ziNAFjzLAhc6BArHMYod3wwpvuUKZOU4fcHvC0UmOS4J6zor+oFJ8nxco8CkbZ
-         3/mCG/lZIN0ANK6IQD8fshqVl2/LCmfw8NEeQMKSuwlz1TNZUKo92GNC7SC48zfJIbGI
-         rbpihCFctvFO79He7LUx1YmskyHB4HNMOnn/ooSs38/drbz83SL++yB46KMP6dZhnDZG
-         RCKlqWUgFzuxbbHIDBy8HIgtGJT/3Y7Y6fdzqUNBoUye6JpxZc5zUkBIYTQ8XEWqZs5e
-         rdKP/NwHdhb2VACTpFHU8Ax7nQZD42NTURhecggvBSU7KAj9VBHt88nO8MXtIunRoH2u
-         TgvA==
-X-Gm-Message-State: AO0yUKVx5hvMV5lhNFvCDcWbii9mMqA2WPNIrEhMlTRDhX1QNSDI8G6+
-        qYD7Ar9y890xS9U1EeyRm6eRtg==
-X-Google-Smtp-Source: AK7set+mMZPwDLFIVTxI8GHBjUq6j/Eqc3Mejz4uZKAOuyE0SzIX9iEAaS4SSep54sfGN/6uEHUdAQ==
-X-Received: by 2002:a17:906:229a:b0:932:9d28:9668 with SMTP id p26-20020a170906229a00b009329d289668mr7992759eja.6.1679513454603;
-        Wed, 22 Mar 2023 12:30:54 -0700 (PDT)
+        bh=ZjZRp40FPRrskzF7ZI87t7kgEWRDXNcFtKlljyaufmU=;
+        b=IO8wEfOOO2xkDBnR9vFInqzmg+CsUdV3UdpQEDrH/eriM70CS775mz54iKwWaoGbg0
+         pGHA3/Cak9UvDhBEdWjw5lLSBe6EBffQAmrDtJfb/1th1Gbbw5nuB+eGYACUU+ADZJ7f
+         CutjSZuxDEC53ENP5wTpBErvE2kfGXMyLi16GN9RrmjugwNNUEEzOiXRL9JJLtNyNfZ8
+         j3kWQeSmZZqo2j/BBYqIUhWjtgHUel2nn6hTo/07dJpPNBaXRmSU7jfteUV5Eq0S+iH6
+         TIqPkdmohc/ZrgrM72f10PLkgV+LUpAfH8l6dW4RNJqDcoCxG49aBOAY66dTZJuItP8F
+         Pz/A==
+X-Gm-Message-State: AO0yUKXm6GxXstiZAh9HA/08yf1L1aHV5j8m/fXMy8dQrlhc2OPiRNYN
+        zRGZ3WiV6p/seXYbU9diiaUZWQ==
+X-Google-Smtp-Source: AK7set958KtOpibEr6Y5biy/UzSGGFcFMZ0TaPqL2USPc4H1DRMEZtbkWoCoYp7+Tv4MYXKC21b96g==
+X-Received: by 2002:a17:906:b847:b0:933:4a3e:c625 with SMTP id ga7-20020a170906b84700b009334a3ec625mr7592562ejb.40.1679513455655;
+        Wed, 22 Mar 2023 12:30:55 -0700 (PDT)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:5050:151b:e755:1c6])
-        by smtp.gmail.com with ESMTPSA id n25-20020a1709061d1900b008e9c79ff14csm7660309ejh.96.2023.03.22.12.30.53
+        by smtp.gmail.com with ESMTPSA id n25-20020a1709061d1900b008e9c79ff14csm7660309ejh.96.2023.03.22.12.30.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 12:30:54 -0700 (PDT)
+        Wed, 22 Mar 2023 12:30:55 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -59,9 +59,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [RESEND PATCH 1/4] arm64: dts: qcom: sdm850-lenovo-yoga-c630: Use proper WSA881x shutdown GPIO polarity
-Date:   Wed, 22 Mar 2023 20:30:48 +0100
-Message-Id: <20230322193051.826167-2-krzysztof.kozlowski@linaro.org>
+Subject: [RESEND PATCH 2/4] arm64: dts: qcom: sdm850-samsung-w737: Use proper WSA881x shutdown GPIO polarity
+Date:   Wed, 22 Mar 2023 20:30:49 +0100
+Message-Id: <20230322193051.826167-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230322193051.826167-1-krzysztof.kozlowski@linaro.org>
 References: <20230322193051.826167-1-krzysztof.kozlowski@linaro.org>
@@ -84,14 +84,14 @@ The change is not backwards compatible with older Linux kernel.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 4 ++--
+ arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index 67d2a663ce75..5c688cb6a7ce 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -753,7 +753,7 @@ swm: swm@c85 {
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+index 9850140514ba..41f59e32af64 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+@@ -662,7 +662,7 @@ swm: swm@c85 {
  		left_spkr: speaker@0,3 {
  			compatible = "sdw10217211000";
  			reg = <0 3>;
@@ -100,7 +100,7 @@ index 67d2a663ce75..5c688cb6a7ce 100644
  			#thermal-sensor-cells = <0>;
  			sound-name-prefix = "SpkrLeft";
  			#sound-dai-cells = <0>;
-@@ -761,7 +761,7 @@ left_spkr: speaker@0,3 {
+@@ -670,7 +670,7 @@ left_spkr: speaker@0,3 {
  
  		right_spkr: speaker@0,4 {
  			compatible = "sdw10217211000";
