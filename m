@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1A586C3F7C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 02:14:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF3B26C3F7F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 02:14:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229751AbjCVBOs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 21:14:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50686 "EHLO
+        id S229937AbjCVBOt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 21:14:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229915AbjCVBOr (ORCPT
+        with ESMTP id S229996AbjCVBOr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 21 Mar 2023 21:14:47 -0400
-Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0C8D50718
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 18:14:44 -0700 (PDT)
-Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-17ac5ee3f9cso18001681fac.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 18:14:44 -0700 (PDT)
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B4765551B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 18:14:46 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id q30so5459561oiw.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 18:14:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1679447684;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BlSUN2wZYTEOgt9J14JNZCw4zLCT6q6O5ss5D6gIjf0=;
-        b=HDZ2R5RP427bFYGVsGeYZEE/bYSq4q4pBEGo9athBCMKeOI0xlhP1ORNFxH30pDZPw
-         VaMQGlxn1NwmyZvENCuYYtprYjm64Hol4xoPykXIQsul3QkhmhUyv21YW8fTs0/w1JQT
-         q9DzJl//GQwL9aYbysI5jnyOPLKVRSer348QMfDvogjpO9VN4DAc+esGOQsTs4txesqp
-         6hN0R80FyIiTqGIGZE/yl4wrLDgiepvWic6OHjMlBGx17FB9+LMOFlMnn3FRxKPVXT8p
-         3c4Fi4p/ktJVYqjNzFrKoeRu61m+fE+PEGb4ZINCLEGn5b/ElglHfkRIA24PWsVUh1Ug
-         V6MA==
+        d=kali.org; s=google; t=1679447685;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5gTZseNIfPdBe/0NuqBE26CCNGdGPf26kM9+Ru7h+44=;
+        b=TrH+dk0EXzS3HGqqtjcqdZ4Fubti3ErYYie0R2TMzVWqXr4cDCdjBiwIO6eeiGxd0G
+         Mm6mflQch7aa7Y4bgl7rhsTPVGNebZvk6GOyR23wGV2pJyp0PvQQsNBN0FEkopFuZ3Ed
+         AVS49QTNG5CvYlSB+VzEv+7s6tQJazV+mM9EUsdsw3Tgj01ERc4DrfBw0HuJLOqPIl8N
+         9K659i+HGMW8p8KZOVpm/bzdNmdM+WYgqFdcQOM4KdgMA50VgrzKGtIbbi7dyT8rBo+o
+         XYhkH5eU4i53EKcaCNVW6Ozq9Ve3VuGvEyCC7Oz078ioMvee5xOywtGPdQyIEK0joc3r
+         TOeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679447684;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BlSUN2wZYTEOgt9J14JNZCw4zLCT6q6O5ss5D6gIjf0=;
-        b=T/weyW2kKbHSm6W1ysooO/btKMWNVdZexBBJK+aLkw5lV+tUdklEzdkZAgrpg6mUSB
-         vKAftlOfuK4mccGcYdV9HokK367ZUpFa5hy+iYJc4LvSeWEZsfiPmSeHmZwk1TYoRW/T
-         BcCepLzlQ6Bmm7oMVWgHiW0a0vzU1s4PRDNA//kqUJOA3SWg9z5FFq3nfID0+L6s47hz
-         Yy4WTw0srcXV2Mxavlysbp5ZzTvl2SsSnlWT5BdSSf9evF2Dm3xU4zQfTFm93roG4FHL
-         /Puv8FWdfzk7oJFb6ZAiNUwlwLoB49K8Na7JdiXRH59mIe7xaGZhTwrZ2ZEszpXNtxrA
-         AKuA==
-X-Gm-Message-State: AO0yUKVbB4zdkIQVh3NKQrBO71X8GsonxpELsw2VD9lf5VKQH75/PufT
-        DOZ0mDADVinSju65d9Y/pbQAcQ==
-X-Google-Smtp-Source: AK7set8wF5RckXOZbDxt0S8uH8SUI2HOJmxyduS8hpsH1nJuMaMMQkDtO5febM76mSa13LquWxVpeQ==
-X-Received: by 2002:a05:6870:17a8:b0:177:956c:36c3 with SMTP id r40-20020a05687017a800b00177956c36c3mr507922oae.36.1679447684178;
-        Tue, 21 Mar 2023 18:14:44 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1679447685;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5gTZseNIfPdBe/0NuqBE26CCNGdGPf26kM9+Ru7h+44=;
+        b=C87mycwY7yrbLAl+qTh7ZE+3MbhtIuZUbEXzIfZuHPcI0nIzCECavBOC3gaUidFwbe
+         3ebUAMNqqPRuWWjs4qszQPbWs2mhRK2ghEwxBQe6tcI/zVjpF/X2FyWU8oJVsZCr2X8b
+         CUVxaJMRin0JZrkZ45n/3vpf2RJcbAvzil98fXLjyTG2Qf8zNBPZ2REQgva/i+qH8gqu
+         Zl+bjYI0U9J4UYpAQNa9oL8SbmtclOV/vNQNhADFFA5Fj1UcWMSOkXEvNHFxRltzuaZb
+         3Rnj/D3+YHfNrbwn1X5XfGaN778v5/ie7cTR3Og1PZhvphULb7Tszbss2qz52OPn3VGr
+         84wg==
+X-Gm-Message-State: AO0yUKUAqKDcUwcvqlJ6k3YmIkUmLeaVHlcCo5iytcMM8kTIfT8B9ALe
+        cPlbKcuD7NsMGGSMFn/57HXGfA==
+X-Google-Smtp-Source: AK7set+gB17zX+JyMlvxgHvJlgFOOvTWlXwtbz30b6VRPvN7jPpWC9VC/NSloAstlDVcGDg2hkeMkg==
+X-Received: by 2002:aca:190a:0:b0:383:ee1d:f489 with SMTP id l10-20020aca190a000000b00383ee1df489mr590575oii.0.1679447685426;
+        Tue, 21 Mar 2023 18:14:45 -0700 (PDT)
 Received: from localhost (23-118-233-243.lightspeed.snantx.sbcglobal.net. [23.118.233.243])
-        by smtp.gmail.com with ESMTPSA id o9-20020a9d7649000000b00697be532609sm5688980otl.73.2023.03.21.18.14.43
+        by smtp.gmail.com with ESMTPSA id e13-20020a9d63cd000000b0069f9a73a65fsm40505otl.29.2023.03.21.18.14.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 18:14:43 -0700 (PDT)
+        Tue, 21 Mar 2023 18:14:45 -0700 (PDT)
 From:   Steev Klimaszewski <steev@kali.org>
 To:     Steev Klimaszewski <steev@kali.org>
 Cc:     "David S. Miller" <davem@davemloft.net>,
@@ -67,14 +68,14 @@ Cc:     "David S. Miller" <davem@davemloft.net>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
         Mark Pearson <markpearson@lenovo.com>,
-        Tim Jiang <quic_tjiang@quicinc.com>,
-        Johan Hovold <johan@kernel.org>
-Subject: [PATCH v7 0/4] Add WCN6855 Bluetooth support
-Date:   Tue, 21 Mar 2023 20:14:38 -0500
-Message-Id: <20230322011442.34475-1-steev@kali.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v7 1/4] dt-bindings: net: Add WCN6855 Bluetooth
+Date:   Tue, 21 Mar 2023 20:14:39 -0500
+Message-Id: <20230322011442.34475-2-steev@kali.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230322011442.34475-1-steev@kali.org>
+References: <20230322011442.34475-1-steev@kali.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
@@ -85,89 +86,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-First things first, I do not have access to the specs nor the schematics, so a
-lot of this was done via guess work, looking at the acpi tables, and looking at
-how a similar device (wcn6750) was added.
+Add bindings for the QTI WCN6855 chipset.
 
-The end result is that we do have a working device, using the firmware files
-that are found in the linux-firmware git repository already.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Steev Klimaszewski <steev@kali.org>
+---
+Changes since v6:
+ * None
 
+ .../net/bluetooth/qualcomm-bluetooth.yaml       | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-Bluetooth: hci0: setting up wcn6855
-Bluetooth: hci0: Frame reassembly failed (-84)
-Bluetooth: hci0: QCA Product ID   :0x00000013
-Bluetooth: hci0: QCA SOC Version  :0x400c0210
-Bluetooth: hci0: QCA ROM Version  :0x00000201
-Bluetooth: hci0: QCA Patch Version:0x000038e6
-Bluetooth: hci0: QCA controller version 0x02100201
-Bluetooth: hci0: QCA Downloading qca/hpbtfw21.tlv
-Bluetooth: hci0: QCA Downloading qca/hpnv21.bin
-Bluetooth: hci0: QCA setup on UART is completed
-
-There are a few things that I am not sure why they happen, and don't have the
-knowledge level to figure out why they happen or debugging it.
-
-I do not know why the Frame assembly failed, and modprobe -r hci_uart and then
-modprobe hci_uart does not always show the same Frame assembly failed.
-
-The BD Address also seems to be incorrect, and I'm not sure what is going on
-there either.
-
-Testing was done by connecting a Razer Orochi bluetooth mouse, and using it, as
-well as connecting to and using an H2GO bluetooth speaker and playing audio out
-via canberra-gtk-play as well as a couple of YouTube videos in a browser.
-Additionally, a huddle was done in Slack on Chromium with a pair of Gen1 Apple
-AirPods as well as a hangout in Discord on Firefox ESR.
-
-steev@wintermute:~$ hciconfig -a
-hci0:   Type: Primary  Bus: UART
-        BD Address: 00:00:00:00:5A:AD  ACL MTU: 1024:8  SCO MTU: 240:4
-        UP RUNNING PSCAN
-        RX bytes:1492 acl:0 sco:0 events:126 errors:0
-        TX bytes:128743 acl:0 sco:0 commands:597 errors:0
-        Features: 0xff 0xfe 0x8f 0xfe 0xd8 0x3f 0x5b 0x87
-        Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3
-        Link policy: RSWITCH HOLD SNIFF
-        Link mode: PERIPHERAL ACCEPT
-        Name: 'wintermute'
-        Class: 0x0c010c
-        Service Classes: Rendering, Capturing
-        Device Class: Computer, Laptop
-        HCI Version:  (0xc)  Revision: 0x0
-        LMP Version:  (0xc)  Subversion: 0x46f7
-        Manufacturer: Qualcomm (29)
-
-steev@wintermute:~$ dmesg | grep Razer
-[ 3089.235440] input: Razer Orochi as /devices/virtual/misc/uhid/0005:1532:0056.0003/input/input11
-[ 3089.238580] hid-generic 0005:1532:0056.0003: input,hidraw2: BLUETOOTH HID v0.01 Mouse [Razer Orochi] on 00:00:00:00:5a:ad
-steev@wintermute:~$ dmesg | grep H2GO
-[ 3140.959947] input: H2GO Speaker (AVRCP) as /devices/virtual/input/input12
-steev@wintermute:~$ dmesg | grep AirPod
-[  853.742619] input: Steev’s AirPods (AVRCP) as /devices/virtual/input/input14
-
-v7 Addresses commit message review nits by Paul, as  well as dts
-changes requested by Johan. Additionally, the dt bindings now rely on
-https://lore.kernel.org/lkml/20230316105800.18751-1-johan+linaro@kernel.org/ for
-the bias-bus-hold option on sc8280xp.
-
-v6 can be found at https://lore.kernel.org/all/20230316034759.73489-1-steev@kali.org/
-
-Bjorn Andersson (1):
-  arm64: dts: qcom: sc8280xp: Define uart2
-
-Steev Klimaszewski (3):
-  dt-bindings: net: Add WCN6855 Bluetooth
-  Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6855
-  arm64: dts: qcom: sc8280xp-x13s: Add bluetooth
-
- .../net/bluetooth/qualcomm-bluetooth.yaml     | 17 ++++
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 78 +++++++++++++++++++
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 14 ++++
- drivers/bluetooth/btqca.c                     | 14 +++-
- drivers/bluetooth/btqca.h                     | 10 +++
- drivers/bluetooth/hci_qca.c                   | 57 ++++++++++----
- 6 files changed, 175 insertions(+), 15 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+index a6a6b0e4df7a..68f78b90d23a 100644
+--- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
++++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+@@ -23,6 +23,7 @@ properties:
+       - qcom,wcn3998-bt
+       - qcom,qca6390-bt
+       - qcom,wcn6750-bt
++      - qcom,wcn6855-bt
+ 
+   enable-gpios:
+     maxItems: 1
+@@ -133,6 +134,22 @@ allOf:
+         - vddrfa1p7-supply
+         - vddrfa1p2-supply
+         - vddasd-supply
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,wcn6855-bt
++    then:
++      required:
++        - enable-gpios
++        - swctrl-gpios
++        - vddio-supply
++        - vddbtcxmx-supply
++        - vddrfacmn-supply
++        - vddrfa0p8-supply
++        - vddrfa1p2-supply
++        - vddrfa1p7-supply
+ 
+ examples:
+   - |
 -- 
 2.39.2
 
