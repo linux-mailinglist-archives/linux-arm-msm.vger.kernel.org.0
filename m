@@ -2,162 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C79A46C475F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 11:18:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 089346C4774
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 11:21:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230120AbjCVKS5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 06:18:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50194 "EHLO
+        id S230144AbjCVKVk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 06:21:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229595AbjCVKSw (ORCPT
+        with ESMTP id S230116AbjCVKVj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 06:18:52 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 831BD5550A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 03:18:45 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id y14so16428125wrq.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 03:18:45 -0700 (PDT)
+        Wed, 22 Mar 2023 06:21:39 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFD7B5C9FE;
+        Wed, 22 Mar 2023 03:21:30 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id lr16-20020a17090b4b9000b0023f187954acso18653919pjb.2;
+        Wed, 22 Mar 2023 03:21:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679480323;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=twYsvHvBcwCGaiyh4ywZfgnIdYqfOKcSYxo4b5/XpTE=;
-        b=YIz7QstvZh+wYK3/FETPzkyCigsTCLiMS4ygjqCZWxOqK1IL/BtN/SNsRpGtqZg3Mm
-         +pC3QxG4Cx7RabX7NOOVBeFK0gSqaB5oQdMyZShaSQyUEOEe5hFNWg50AB1OT15lEozs
-         jd6SQLRKlkBjKyveRO8fxVgwvzelhfShw2ZxgnLCCUwYacD9p+6vH0IKDvV32/H3e46E
-         tLqRXO61H2Zr8VJQUJY3cziwESHfreFMEUnWKv6sxRarlhPo8oKX7DNhdG6o9uAPBDQM
-         Mz67w1mue+pDsdUxYRjwr695ppYcMJn7DCcZecZ2u747TcbXnSEwLo5S0b2/TJ4dOKV0
-         Knkw==
+        d=gmail.com; s=20210112; t=1679480490;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JHk6WrdRBOaXZfvy3sfCH7b75YTuvdgFdO1JgqgHyhk=;
+        b=ESLIyorCStnd6ZJLdkq6ShlIpDoTi1na7kkDyzFImBmWJXl514bkfA7+NlxO0FBoBj
+         fHOVfb9wP5/XFQ7slclalePoikPRCrD+4uEdKbXmFkxdXuHC1RW827Ka78NvU5iIXgxD
+         3EzrQouxwUi8eSVWiLvDcp3nCjH7Mdc/NLS0emVo9Dl1Nr5FtmMAf/L1IYLukoqBIEOp
+         wRTsGWYkv9CGlXr0iaShOu/mFDt4jKgXKb7sao+rzQSbGvj7fbwpxrch82tSgQAr3SJk
+         j8phLSWEpXcYPLvwslqbq9tbYfi6A1Q6+VH1yWJSEAhz6KptZ0YZhDORctOiDuu6gMyi
+         lqxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679480323;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20210112; t=1679480490;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=twYsvHvBcwCGaiyh4ywZfgnIdYqfOKcSYxo4b5/XpTE=;
-        b=TtGdTCA4OZNZYxRD/dMNMzfYB82qU2aqUTM5KZKj8KTqDiucRG4MQJ6E9aU2PqnCzH
-         2Be4nV8IMQ+Q9yOUkbiRY4brer5xJ2EpKpiN2aR92bLBljIN3VcD1sETW+BgMW4Bpjx3
-         Wklr1K/9dCSeL+DEw54Sd/MvifRZRPA0YknA+oRivLqK3eiuMmfeFxncGcIPtBda0KUg
-         7VKCSB7372rJZWM5ttK1jOWEGc5n/BM8/TIFVPU6K7/PYhL8k8TXNl3Q9RLeQRORrKfT
-         lVNbYHEilzJM9JKRReUP2hFkXY2Ym5aT9AfK7Eu2o+rzrBCrLv6n2/Mzo+sH1UepWqSg
-         FNyw==
-X-Gm-Message-State: AO0yUKUxo8Aia5u0lZRHvSqbp1dA08K1u9X20trNLsV6tFggqUskmKhk
-        YNscrayltv/hFG7q8HcjjO6hJg==
-X-Google-Smtp-Source: AK7set8j5M25uQP+bYkbtVX8qL/F+gQt8LfAzEW0ABz1KjS58wM/c+Ojkn+ICTRmLflr4dZ2zpj61w==
-X-Received: by 2002:adf:ce11:0:b0:2d7:998c:5ad9 with SMTP id p17-20020adfce11000000b002d7998c5ad9mr4919174wrn.8.1679480323627;
-        Wed, 22 Mar 2023 03:18:43 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:3606:a601:f273:994a? ([2a01:e0a:982:cbb0:3606:a601:f273:994a])
-        by smtp.gmail.com with ESMTPSA id k10-20020a5d6e8a000000b002d1daafea30sm13447682wrz.34.2023.03.22.03.18.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Mar 2023 03:18:43 -0700 (PDT)
-Message-ID: <1e03050c-38d1-f9a5-aaaf-0966b143147f@linaro.org>
-Date:   Wed, 22 Mar 2023 11:18:42 +0100
+        bh=JHk6WrdRBOaXZfvy3sfCH7b75YTuvdgFdO1JgqgHyhk=;
+        b=nKMuhdzq60YDvLQWZFGLeyEH+noxU0du1ID8Bs7fbLMekY078uw8pqrKkGxLoomSPS
+         wpT4q48t6dOW3PNjh5rRFT86NmKPFQdTm0EniNLXAVGaKRgn3S1ySsrmzoCxJBrraJbk
+         RhXxz/lKWfKm032XvEM3h1Qex+tReghfvCc0w3OIxAm7WWDUeDQJrlY8of5OnV7K12/3
+         +sfzxczsB4BYxr5swPNCIicrZiRJKh2XbProKUwOA8rzxPpd9Wt/fQoTARi6yKe+YG4K
+         5nQfrXZrB07X3vxkE284zwuD5V/1KQFGBGV1oJPXycDyKEheb+x0ezmXo+RzsGiemkbl
+         DnkQ==
+X-Gm-Message-State: AO0yUKVellQy4vOFLof4W3Vv5iphB+AAdmvcMQFPGOi9eFX576cJ+eGt
+        37wsn3wUJkZ2y7pxOC79sENkk8kDXrWxBKjw10o=
+X-Google-Smtp-Source: AK7set+PZ4mznos49hq2OljDlTJRK/UrXGgXlPBhVsXZJlMLdmy24ZzPCXCYQpg7X+qYkMuhAAwcieb4L4j1EruC/Js=
+X-Received: by 2002:a17:902:e812:b0:1a1:add5:c35b with SMTP id
+ u18-20020a170902e81200b001a1add5c35bmr913153plg.10.1679480490265; Wed, 22 Mar
+ 2023 03:21:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: add crypto nodes
-Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+References: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
+ <1678164097-13247-9-git-send-email-quic_mmanikan@quicinc.com>
+ <059bec3f-0c77-fc16-83a3-d78cf82d543f@linaro.org> <bb56bbb7-7b08-79f9-ad1b-a2de63eca5f6@quicinc.com>
+In-Reply-To: <bb56bbb7-7b08-79f9-ad1b-a2de63eca5f6@quicinc.com>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Wed, 22 Mar 2023 11:21:19 +0100
+Message-ID: <CAOX2RU5H=fmxjAE+Er8n7qzrvUZmOpYwgqFox-RLc2C7BqJyjQ@mail.gmail.com>
+Subject: Re: [PATCH 08/11] remoteproc: qcom: Add Hexagon based multipd rproc driver
+To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        jassisinghbrar@gmail.com, mathieu.poirier@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, quic_gurus@quicinc.com,
+        loic.poulain@linaro.org, quic_eberman@quicinc.com,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230322-topic-sm8450-upstream-qce-v1-1-b76eaa1824ff@linaro.org>
- <CAH=2NtwoLbjNV88DHbS27CwYA_Y-uoKAamKorhaUnany9akNWw@mail.gmail.com>
-Organization: Linaro Developer Services
-In-Reply-To: <CAH=2NtwoLbjNV88DHbS27CwYA_Y-uoKAamKorhaUnany9akNWw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-clk@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_gokulsri@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_anusha@quicinc.com, quic_poovendh@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/03/2023 11:15, Bhupesh Sharma wrote:
-> On Wed, 22 Mar 2023 at 15:34, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->>
->> Add crypto engine (CE) and CE BAM related nodes and definitions
->> for the SM8450 SoC.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 28 ++++++++++++++++++++++++++++
->>   1 file changed, 28 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> index 7c1d1464a1f8..d7e0a1993558 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> @@ -4084,6 +4084,34 @@ ufs_mem_phy_lanes: phy@1d87400 {
->>                          };
->>                  };
->>
->> +               cryptobam: dma-controller@1dc4000 {
->> +                       compatible = "qcom,bam-v1.7.0";
-> 
-> This should be "qcom,bam-v1.7.4" instead, as per the HW documentation.
-> Please refer to my patch here:
-> https://lore.kernel.org/linux-arm-msm/20230321184811.3325725-1-bhupesh.sharma@linaro.org/
-> 
-> So, if you want I can modify this and fold it in my overall dts
-> patchset, for which I am about to send a v2:
-> https://lore.kernel.org/linux-arm-msm/20230321190118.3327360-1-bhupesh.sharma@linaro.org/
+On Wed, 22 Mar 2023 at 11:19, Manikanta Mylavarapu
+<quic_mmanikan@quicinc.com> wrote:
+>
+>
+>
+> On 3/7/2023 9:09 PM, Krzysztof Kozlowski wrote:
+> > Why exactly do you need a new driver for this instead of extending
+> > existing PIL? I feel all this is growing because no one wants to touch
+> > existing code and merge with it...
+>
+> Previously we raised patch to add secure-pil to existing rproc driver.
+> Bjorn suggested to introduce a new secure-pil driver.
+>
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/1611984013-10201-3-git-send-email-gokulsri@codeaurora.org/
+>
+>
+> Also IPQ5018, IPQ9574 soc's follows multipd model. So we decided to
+> have new driver which consists 'secure-pil + multi pd' in one
+> place.
 
-Sure take it in your v2 !
+Would it be possible to have IPQ8074 and IPQ6018 support in it as well?
+Cause, those are supported by ath11k but remoteproc support is missing,
+I have been upstreaming parts for IPQ8074 for years now and it is usable but
+we are still missing remoteproc.
 
-Neil
+Regards,
+Robert
 
-> 
-> Thanks,
-> Bhupesh
-> 
->> +                       reg = <0 0x01dc4000 0 0x28000>;
->> +                       interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
->> +                       #dma-cells = <1>;
->> +                       qcom,ee = <0>;
->> +                       qcom,controlled-remotely;
->> +                       iommus = <&apps_smmu 0x584 0x11>,
->> +                                <&apps_smmu 0x588 0x0>,
->> +                                <&apps_smmu 0x598 0x5>,
->> +                                <&apps_smmu 0x59a 0x0>,
->> +                                <&apps_smmu 0x59f 0x0>;
->> +               };
->> +
->> +               crypto: crypto@1de0000 {
->> +                       compatible = "qcom,sm8450-qce", "qcom,sm8150-qce", "qcom,qce";
->> +                       reg = <0 0x01dfa000 0 0x6000>;
->> +                       dmas = <&cryptobam 4>, <&cryptobam 5>;
->> +                       dma-names = "rx", "tx";
->> +                       iommus = <&apps_smmu 0x584 0x11>,
->> +                                <&apps_smmu 0x588 0x0>,
->> +                                <&apps_smmu 0x598 0x5>,
->> +                                <&apps_smmu 0x59a 0x0>,
->> +                                <&apps_smmu 0x59f 0x0>;
->> +                       interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
->> +                       interconnect-names = "memory";
->> +               };
->> +
->>                  sdhc_2: mmc@8804000 {
->>                          compatible = "qcom,sm8450-sdhci", "qcom,sdhci-msm-v5";
->>                          reg = <0 0x08804000 0 0x1000>;
->>
->> ---
->> base-commit: b12b871ec9079b0baefa69f8a869712682d16020
->> change-id: 20230322-topic-sm8450-upstream-qce-04daf8d81bb1
->>
->> Best regards,
->> --
->> Neil Armstrong <neil.armstrong@linaro.org>
->>
-
+>
+> Thanks & Regards,
+> Manikanta.
