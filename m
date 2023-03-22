@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD6D96C5365
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 19:15:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 328216C5367
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 19:15:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230447AbjCVSPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 14:15:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60508 "EHLO
+        id S229676AbjCVSPO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 14:15:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230333AbjCVSO7 (ORCPT
+        with ESMTP id S229534AbjCVSPM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 14:14:59 -0400
-Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 709DE62B71
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 11:14:58 -0700 (PDT)
-Received: by mail-qv1-xf30.google.com with SMTP id m6so12758970qvq.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 11:14:58 -0700 (PDT)
+        Wed, 22 Mar 2023 14:15:12 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73F7964A94
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 11:15:10 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id w25so1199438qtc.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 11:15:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1679508897;
+        d=chromium.org; s=google; t=1679508908;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mv/fhOOQ5K5aUx1ATfnJVpvBsiQzQ1dAgrwhuKG15KE=;
-        b=QSh+j0Jn/twZcguFHTjOg/DWNqPf83cQNnOOxXT2rQJ5IqXuHkaEBlus1QY7WlfaOW
-         92+00hHxVy69NIJz/28pYL2IePEya4Qhb+QtP68kYW5qVtoe0BrwbUDuzNfNoM9aSWO6
-         udoVtWS5j87+Beu4AxUP2PT9huX14ahiwUMtE=
+        bh=nSvNmSJ9+TgKBQqU49EzQTMckYiccw3IcZ2Wfcswm7w=;
+        b=Tj3Zq8aA4hVsSNG0y8sehgJek9ZCi1tIPG3jTqdPCblsK47dD2BwG/r4Ajm1XTYYHE
+         0lnwBeNInGORLfFml1bSgO9gbc9NxoQFkqacbhqKJNqBbxzfk6gKQgWNFij0Z8lRC0lf
+         BtLuujtrjvT6TohyhCC7AZH/demMWj7FJZla4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679508897;
+        d=1e100.net; s=20210112; t=1679508908;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mv/fhOOQ5K5aUx1ATfnJVpvBsiQzQ1dAgrwhuKG15KE=;
-        b=oiftbNPHg4SBoaXvEJfwm1OZrT03I14wMgDr6WvmxMRejJrnwIG/Ihb5aExe4MyASF
-         5+hQC2cyaImqhl2RjugyGw/PVMchbR+ZwF5HyvewHvMydWCQM7iSsTXz/CMKmbZUGpKz
-         V4ArJOlzSWbHB52IvtBTfpTa3KJNKziC8K+z2J9TOj4EJSGZHAeiRm5hiro0xjIRYkPA
-         yv/SR8VfGf//+zy6pAfSqnt+i1CrbChCr1UhdDqRC5YD6swfhSwtCjdyAe3kLaCPSPOP
-         ALYuAoubXYsbMqANBEk5mj9qw35CNvhyRC7jc9XE5XiAll9gWvZKowezgI9+1CooBNCW
-         3zNw==
-X-Gm-Message-State: AO0yUKUcFEYrmNSnilzQi180Ds3G1DfeKdWUu7NBE0UqZ17PRcGNUv6u
-        vE4uaja0iSbDHUtefGIRY29z0MkZ5EbmzVncevA=
-X-Google-Smtp-Source: AK7set+mYkkScegxW/ThMt9J3CN20klWjiHgszZ6iCmEle3yizLkiXXCHZVTZE/y6X84oUe9vo03DA==
-X-Received: by 2002:ad4:5aef:0:b0:5bd:14f9:650d with SMTP id c15-20020ad45aef000000b005bd14f9650dmr8263732qvh.36.1679508896974;
-        Wed, 22 Mar 2023 11:14:56 -0700 (PDT)
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com. [209.85.219.172])
-        by smtp.gmail.com with ESMTPSA id y16-20020a376410000000b00746aa4465b4sm2121845qkb.43.2023.03.22.11.14.52
+        bh=nSvNmSJ9+TgKBQqU49EzQTMckYiccw3IcZ2Wfcswm7w=;
+        b=Hf5XOH2HcY05gfsutXr2omOYTKAC4JZyIMwn9WJPb8R4XILNAAGjeEe/nlVBCo2P9k
+         tyaC6dp+kowZDHfHxCHVe+a7dhkmOShsAVsZ1OyuMTT3MJQ1j7Blg4bwmse8OGpahkD0
+         bh7jclwtz8Nj/deuvPDXn2/qtcBaIclo4hsKJOYKRZyqiuoX9SiLeYtM2rDXwQkmYOQL
+         2CUpkJxnhediFXaOIrX6Wo3ncCY1H3oGWtjhp0QPwu1bVrpRdGLLWgZVjHFknaftUmX2
+         6ov+6bP+9TlTiGwVJQueX4HVtJsLFBrCOHenTL89n2w8VUngQa4Ce9F6IgNooM1YF/Fn
+         fyAQ==
+X-Gm-Message-State: AO0yUKVpzM1i4tS15dYZI0R9Q2MoGz5vce/Ki46U2KdsOOFLWgoWrJu3
+        maMHxm0OeVn52ga1Y4X/9FEZo7jks0sjaiYqhGs=
+X-Google-Smtp-Source: AK7set9MywFYcEyCcAZHWmDg+hLNiUsYz8NAjQxklZQoFPSgPO27HdchvF8QOz3XVa38SWgrdBr0/w==
+X-Received: by 2002:a05:622a:180f:b0:3b9:bc8c:c1f6 with SMTP id t15-20020a05622a180f00b003b9bc8cc1f6mr5184038qtc.1.1679508907813;
+        Wed, 22 Mar 2023 11:15:07 -0700 (PDT)
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
+        by smtp.gmail.com with ESMTPSA id x22-20020ac84a16000000b003e1d8c193c1sm5680605qtq.48.2023.03.22.11.15.06
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Mar 2023 11:14:54 -0700 (PDT)
-Received: by mail-yb1-f172.google.com with SMTP id z83so22087103ybb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 11:14:52 -0700 (PDT)
+        Wed, 22 Mar 2023 11:15:07 -0700 (PDT)
+Received: by mail-yb1-f170.google.com with SMTP id k17so11326906ybm.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 11:15:06 -0700 (PDT)
 X-Received: by 2002:a05:6902:1083:b0:b69:ca6f:452c with SMTP id
- v3-20020a056902108300b00b69ca6f452cmr531063ybu.0.1679508892480; Wed, 22 Mar
- 2023 11:14:52 -0700 (PDT)
+ v3-20020a056902108300b00b69ca6f452cmr531528ybu.0.1679508906594; Wed, 22 Mar
+ 2023 11:15:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230217155838.848403-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230217155838.848403-1-krzysztof.kozlowski@linaro.org>
+References: <20230217155838.848403-1-krzysztof.kozlowski@linaro.org> <20230217155838.848403-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230217155838.848403-2-krzysztof.kozlowski@linaro.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 22 Mar 2023 11:14:39 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XTJsrnPszQ6GHMqYm0hUedA+N126jDSm2uVyVZ+L1e1Q@mail.gmail.com>
-Message-ID: <CAD=FV=XTJsrnPszQ6GHMqYm0hUedA+N126jDSm2uVyVZ+L1e1Q@mail.gmail.com>
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc7180-trogdor-pazquel360: drop
- incorrect RT5682S VBAT-supply
+Date:   Wed, 22 Mar 2023 11:14:54 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=V6gJ3if8CueyQ=jJnVR_fJL2Xm3t2Oo_scq=CxGZETGQ@mail.gmail.com>
+Message-ID: <CAD=FV=V6gJ3if8CueyQ=jJnVR_fJL2Xm3t2Oo_scq=CxGZETGQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc7280-herobrine-audio-rt5682: add
+ missing supplies
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -88,26 +88,22 @@ Hi,
 On Fri, Feb 17, 2023 at 7:58=E2=80=AFAM Krzysztof Kozlowski
 <krzysztof.kozlowski@linaro.org> wrote:
 >
-> It seems that the RT5682S codec does not use VBAT-supply:
+> Bindings expect DBVDD-supply and LDO1-IN-supply:
 >
->   sc7180-trogdor-pazquel360-lte.dtb: codec@1a: Unevaluated properties are=
- not allowed ('VBAT-supply' was unexpected)
+>   sc7280-herobrine-evoker-lte.dtb: codec@1a: 'DBVDD-supply' is a required=
+ property
+>   sc7280-herobrine-evoker-lte.dtb: codec@1a: 'LDO1-IN-supply' is a requir=
+ed property
+>
+> In sc7180-trogdor.dtsi they come from the same regulator, so let's
+> assume intention was the same here.
 >
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
 > ---
->
-> I don't have access to datasheet. Driver still requests VBAT-supply but
-> other boards simply remove this property for RT5682S.
+>  .../arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi | 2 ++
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi     | 2 ++
+>  2 files changed, 4 insertions(+)
 
-I checked and I don't see the driver requesting VBAT. Specifically
-note that this is the "s" variant which seems to share no code with
-the old variants (the "i" variant and the SDW variant).
-
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi | 1 +
->  1 file changed, 1 insertion(+)
-
-This seems right to me.
+Confirmed on schematics.
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
