@@ -2,63 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B54B6C44F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 09:32:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AFCD6C44F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 09:33:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229917AbjCVIcY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 04:32:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59646 "EHLO
+        id S230185AbjCVIdB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 04:33:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229835AbjCVIcX (ORCPT
+        with ESMTP id S230143AbjCVIdA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 04:32:23 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA1135C9DF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 01:32:21 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id r19-20020a05600c459300b003eb3e2a5e7bso10886246wmo.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 01:32:21 -0700 (PDT)
+        Wed, 22 Mar 2023 04:33:00 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51978729B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 01:32:58 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id i9so16108695wrp.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 01:32:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679473940;
+        d=linaro.org; s=google; t=1679473977;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QnZkdiX76ZN4vR+x/LMRxd2A2o1J9Wji75teHmv4ZGg=;
-        b=dWVu6SIIh8b+euxhaENPGQzYd8nRA7uF26Ge6FGV3JsAUisKNWU7N5sIui2caEBk3E
-         Ba10ioxVisjmg8Dn4S+t5uRM7xYas/Q7XRZkg24/J7o76yC5ABAl3D21DgHvsFdnmJvG
-         mB/byZH5fhFbN5ApzqL5rLSyZXS4BYgXMbrHQKGZZ4x1oLoEuws1Fn6D/VKE9QmW59ir
-         6pnV8mYg9as87TwK94YjE4vct41hXW9oUCJIw3VG7vBs4P7OciPecd7RX24CmX3us3XW
-         YLDY8wwvqInAe10Br8DeqCqi9B+PnJiZdxlX77PksSVaJPhpMSlXy8fqL1VHxiWTVU77
-         Nm2g==
+        bh=UiWL/lZ2skulVxFFnlJvXX89DF4CayLI/QTdiEskW+g=;
+        b=rIS+YiL3B/ENyQ7QcB/1Vi3kyORiXTh7xa6wvw6jchMqkGXn0YnuBuGHkgTKDebTxP
+         Crhp25/WM3EfaSfGBtmwVcNMDAHus5UrtnglblO0MrqRLnbaz1sxTUmCk0xSZ4ixgMxe
+         Z59K1urd8FTn/yfO6ZINcAwBfwS/Wc+YUZz5397fnNEvKgh9hyXdtKnc2d7AMA2ubY/n
+         1vnJVX8n3AZfMhw+gdfFzwgdBO/+JIwZ6mkRvT+C8VTsT6NjsL4+tGSr18Ve0pDpoaHc
+         u7TNBZoohW4qxw1qkTOAjQauI/t9PaFGny2sAfPyx9LCrW11+9h/B9IoUf8eF7MloFXQ
+         LrnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679473940;
+        d=1e100.net; s=20210112; t=1679473977;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QnZkdiX76ZN4vR+x/LMRxd2A2o1J9Wji75teHmv4ZGg=;
-        b=n3n4kxrqO1wyroQI/1Q59xlrhTGzvW75ehnWkb51j7gOL6QY9YrZiYFH3S4VsQzreo
-         zmwSEJtbxxPhvWx/NCmUPLdTgxqru467FYqYdV0DOmzh50w0DVW0ZrfTf90UbS5lp0y5
-         JfGuegrry/ImvkGTJf7vA1Vo/nECRlXV9Z/qf1QY2jW/tdO2XAjDlzsJOjsD2A1v31qV
-         F/ttB98Aeb2TFgCjZbVrJymDavlORnfRyS1FO5KFUEAsllyzGM1QmTx5NjYDi9l+oQ3E
-         fmh2fpOpOActgVYfU6jKK45f3XuAvDZhP2YFtJfzzKlK67jQxmTWkl/IzZvkTpsfPZur
-         6Ixg==
-X-Gm-Message-State: AO0yUKWxHdZFw4T+9HjHA8sUf9z2DQMTOa40i+HsRtRwBMjHYorLdMWp
-        coEMVH6kkz4VHE50yuYPZGwUfW9nLeY22I6TE5A7CQ==
-X-Google-Smtp-Source: AK7set9jbx6IcXCXy5IlWquYuPV9FZa4fN8gjTQ+iLZe9YDGw/vuRit6/77PtV6GsQyRt50mmKUcUXD1tooXXwhGm6o=
-X-Received: by 2002:a1c:7c18:0:b0:3ed:d2ae:9aeb with SMTP id
- x24-20020a1c7c18000000b003edd2ae9aebmr1348176wmc.8.1679473940269; Wed, 22 Mar
- 2023 01:32:20 -0700 (PDT)
+        bh=UiWL/lZ2skulVxFFnlJvXX89DF4CayLI/QTdiEskW+g=;
+        b=2ttaqnV9tYM56aeV5fL2Jj8rHk/4WdJJwLGkI7NGOaoFUCDgHWHFclhmXM2QaFOS8t
+         MeRr4OFRgdLRwRL/O54b4yoppDIft5nSo4+lgIf7yGbhEdpKjVB7Pu5KifkN6Pf8+D57
+         /9b0tXL0sktR5K3SK6fYnPRHZfo1Gd+otPt3qane3R5lzY8kLTazg7PnmoLWVV9lcecE
+         Ig47W6E9Lyu7T3Dv70vZLYLmhtMt0Vg51exbsVPNJSEa275eKeU9LbxvFdqufgg23fdy
+         rGx5BRrGgtFbhWrJX3KZu0AW2edIR0DWoy5B+K4jMy4wnyfqoYla1Hrd2PdzQ++uNXYw
+         EatQ==
+X-Gm-Message-State: AO0yUKU0xu6scCfrtAdou0NYoSxewn7HbzLhxPPWLIbZP+ZCX1rJedAu
+        zjneE7DoAgoy/yJ6qd9/X8k7rUM5hO1GFz0Oh53ghJ1rJYKOu3U4
+X-Google-Smtp-Source: AK7set+MQadPiKz4l1YrADrNL38dCb91yYO2V7w9Nci9n8Bj1a8iFI/ZcSdYUv+qdiz8quIPFnDGXr6JO9suB/n4kRE=
+X-Received: by 2002:adf:f88f:0:b0:2ce:817b:846d with SMTP id
+ u15-20020adff88f000000b002ce817b846dmr1185115wrp.4.1679473976692; Wed, 22 Mar
+ 2023 01:32:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230320073816.3012198-1-bhupesh.sharma@linaro.org> <20230321213139.GA1646917-robh@kernel.org>
-In-Reply-To: <20230321213139.GA1646917-robh@kernel.org>
+References: <20230321184811.3325725-1-bhupesh.sharma@linaro.org> <3d00adbb-a19e-3c0e-c25e-fb6accbf2c7a@linaro.org>
+In-Reply-To: <3d00adbb-a19e-3c0e-c25e-fb6accbf2c7a@linaro.org>
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Wed, 22 Mar 2023 14:02:09 +0530
-Message-ID: <CAH=2NtxpREHJptSaEmAOLrVQwSJ86TaneOv-MKqnZc-AF-222Q@mail.gmail.com>
-Subject: Re: [PATCH 1/1] dt-bindings: qcom-qce: Add compatibles for SM6115 and QCS2290
-To:     Rob Herring <robh@kernel.org>
-Cc:     devicetree@vger.kernel.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        andersson@kernel.org, bhupesh.linux@gmail.com,
-        linux-crypto@vger.kernel.org, krzysztof.kozlowski@linaro.org,
-        konrad.dybcio@linaro.org, vladimir.zapolskiy@linaro.org
+Date:   Wed, 22 Mar 2023 14:02:45 +0530
+Message-ID: <CAH=2Ntw3Mqsk=DexPa9X0ctUnr3k8dH9orCGhmrD3vh4i4oxGg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] dt-bindings: dma: Add support for SM6115 and
+ QCS2290 SoCs
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, andersson@kernel.org,
+        bhupesh.linux@gmail.com, vkoul@kernel.org,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        vladimir.zapolskiy@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
@@ -69,37 +71,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 22 Mar 2023 at 03:01, Rob Herring <robh@kernel.org> wrote:
+On Wed, 22 Mar 2023 at 00:58, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >
-> On Mon, Mar 20, 2023 at 01:08:16PM +0530, Bhupesh Sharma wrote:
-> > Crypto Engine block on Qualcomm SoCs SM6115 and QCS2290
-> > do not require clocks strictly, so add compatibles for these
-> > SoCs, indicating that they are similar to the flavour
-> > found on SM8150.
-> >
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/crypto/qcom-qce.yaml | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-> > index e375bd981300..e6840d124af3 100644
-> > --- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-> > +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-> > @@ -35,10 +35,12 @@ properties:
-> >
-> >        - items:
-> >            - enum:
-> > +              - qcom,sm6115-qce
-> >                - qcom,sm8250-qce
-> >                - qcom,sm8350-qce
-> >                - qcom,sm8450-qce
-> >                - qcom,sm8550-qce
-> > +              - qcom,qcs2290-qce
 >
-> 'q' goes before 's'
+>
+> On 21.03.2023 19:48, Bhupesh Sharma wrote:
+> > Add new compatible for BAM DMA engine version v1.7.4 which is
+> > found on Qualcomm SM6115 and QCS2290 SoCs.
+> All compatibles upstream are QCM2290-themed, let's keep it consistent.
+>
+> [...]
+>
+> > +      - items:
+> > +          - enum:
+> > +              # SDM845, SM6115, SM8150, SM8250 and QRB2290
+> The robotics SoC is QRB2210, but this should be QCM.
 
-Ok, will send v2
+Sure, will be addressed in v2.
 
-Thanks,
-Bhupesh
+Thanks.
+
+> > +              - qcom,bam-v1.7.4
+> > +          - const: qcom,bam-v1.7.0
+> >
+> >    clocks:
+> >      maxItems: 1
