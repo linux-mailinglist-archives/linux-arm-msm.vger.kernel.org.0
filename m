@@ -2,45 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7F986C4E4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 15:44:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2318A6C4E50
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 15:44:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231898AbjCVOoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231901AbjCVOoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 22 Mar 2023 10:44:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43002 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231773AbjCVOnZ (ORCPT
+        with ESMTP id S231772AbjCVOnZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 22 Mar 2023 10:43:25 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0D6265466
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:42:36 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A14B065C72;
+        Wed, 22 Mar 2023 07:42:36 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 372C862176
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 14:42:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5295DC433D2;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CFAF36217A;
+        Wed, 22 Mar 2023 14:42:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01EBC4339C;
         Wed, 22 Mar 2023 14:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679496148;
-        bh=iDe1/CN7w29vYWoGIgBkjZRVmocGrMXtY+BMxinOeJ8=;
+        s=k20201202; t=1679496149;
+        bh=Wt77lysSTPBf3Cq7dk0L3R6p4ERUUZCZGTRyiUHFh+k=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=mLv5rqzQb5hZe90uuqxRz+NzG/pCGD+u2D7tU7iXbCzooK+QFGNPvo0eOoM/OF7b+
-         RypUBsHtFPQE0hxR3NuGwu8a3F+U5uUJQobCMxBB5PtKgZWHipcjdREZh/p1O9OycQ
-         k6+WqZudMPYYa6lh+neQmDoYkUdfuc8VCsvlWvnoSAnbp549xuOWXTcFXEEgEV4riq
-         Tl7tBp37zBhZKFg+Ayk0i9SOmgrqNUVjuBOCknCqHV3DGmX2dPi4acdvwB7EdxzpEM
-         JDWUR7cSwpJnbhVBjyKMRbWMqYbjD8rdIP4bQPHOXn7x8UvCt4Qw8KUQ3qdjAK+a0h
-         5tGJlu4yD6euA==
+        b=AQFFv3zFs99AiH/b6BzeX5CPJ4DlvIwRMO1iYSQ0Vbo2/gg9nVrz5//DR+2NaBQYY
+         RWwP4Tjz0VX84waNDy3CFw5GBdSZBRT8q9iwR5cfpjQx7YRQbEfEhYpu7ZNjwt8Vb5
+         DjdxpdoYSrghT04XjwreiAGCasV98gNVTAwRlmUvGEVgpfpVkK4qkzzmUq/gFoFFck
+         cZDgaWCQ9V0aggZp02KzjuqAjqWnwM0SB2giMWgsw0okfL1fjlbYMfd35cqoCiLRNB
+         UJXVt2e2yWwSh/DvHspnQHUlkIBzg15lTX5B24uYarOCTAN1qDoQVhTKh/RMEsu6Oi
+         qhkUdPOoRKLxw==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Petr Vorel <pvorel@suse.cz>, linux-arm-msm@vger.kernel.org
-Cc:     Saravana Kannan <saravanak@google.com>
-Subject: Re: [PATCH 0/2] Switch msm899{4,6,8} clk drivers to module
-Date:   Wed, 22 Mar 2023 07:45:21 -0700
-Message-Id: <167949631651.1081726.998611857071519527.b4-ty@kernel.org>
+To:     konrad.dybcio@linaro.org, agross@kernel.org,
+        Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3] firmware: qcom_scm: Clear download bit during reboot
+Date:   Wed, 22 Mar 2023 07:45:22 -0700
+Message-Id: <167949631650.1081726.14607318206320828086.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230217184239.21450-1-pvorel@suse.cz>
-References: <20230217184239.21450-1-pvorel@suse.cz>
+In-Reply-To: <1678979666-551-1-git-send-email-quic_mojha@quicinc.com>
+References: <1678979666-551-1-git-send-email-quic_mojha@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -53,24 +54,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 17 Feb 2023 19:42:37 +0100, Petr Vorel wrote:
-> based on previous discussion, tested on msm8994 angler.
-> I don't dare to set arm 32bit clocks in multi_v7_defconfig.
+On Thu, 16 Mar 2023 20:44:26 +0530, Mukesh Ojha wrote:
+> During normal restart of a system download bit should
+> be cleared irrespective of whether download mode is
+> set or not.
 > 
-> [1] https://lore.kernel.org/linux-arm-msm/20230208230628.xoaqt4hby5ec4s6t@ripper/
 > 
-> Petr Vorel (2):
->   arm64: defconfig: Switch msm8996 clk drivers to module
->   arm64: defconfig: Enable qcom msm899{4,8} clk drivers
-> 
-> [...]
 
 Applied, thanks!
 
-[1/2] arm64: defconfig: Switch msm8996 clk drivers to module
-      commit: 8f680c287445c467c927e875103ad2bfd7d356e1
-[2/2] arm64: defconfig: Enable qcom msm899{4,8} clk drivers
-      commit: 4705d0137af61823dca83bb6302073181d83945d
+[1/1] firmware: qcom_scm: Clear download bit during reboot
+      commit: 781d32d1c9709fd25655c4e3e3e15370ae4ae4db
 
 Best regards,
 -- 
