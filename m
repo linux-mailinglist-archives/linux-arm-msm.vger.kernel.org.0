@@ -2,123 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B0A46C47D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 11:41:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A4D7B6C47DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 11:45:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230319AbjCVKlr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 06:41:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58870 "EHLO
+        id S229664AbjCVKpC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 06:45:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230300AbjCVKlq (ORCPT
+        with ESMTP id S229671AbjCVKpC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 06:41:46 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC6EC5FA48
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 03:41:45 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id y14so16499993wrq.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 03:41:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679481704;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=skDnyQLe1JXdCg1sNQHqpeJHAlfAsnOpU7qQyP4hHOg=;
-        b=GSamitR5gd+/UzbyXSgYPJV7PmQ5ceiqB2gRsLSYfgDBbvjxo2QYvkSXKnM5bEzeSD
-         B7qXr4fCsv+cghc+QYyE/3ZBGrikeib607wQYkwUA47N5hn21hj8KNbODFSyOaowLCmt
-         HPHZBYlYCXTcUyVZ51+0NsjdpDgw7A/Tw/Y8OL9NlKo6n2sc0ETcGhA3FBmN7xAfKzNU
-         KUllCOt9xplQPWUCSboOZAIt8Hya1qLXR85iWUcCUu5sBpXnug3XV3C3hAgfzRUbLSQj
-         KJlYcQsLqyxICGLivSBKQIgkLAnul/X98QbqzEz7QGxQnLBuY/Vieh5YC+LIVRXfF01E
-         THBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679481704;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=skDnyQLe1JXdCg1sNQHqpeJHAlfAsnOpU7qQyP4hHOg=;
-        b=57gQ+AhehYlERTF0/kaisswU1mE8VqawdFrobqQZ0FxUCpL/U5yVJ8XE5oYKqPiP2k
-         iCXG1XCnZBlXL55d8c9RJ/0PuSsQ8YfuT7ktWbVTivNpSjCyysV6jbmpE+2wuWqNvRSM
-         j5uvlLH7CxxCyOtMM5AbrtSNjOGqQqONBUtElB1Er9v/8/tlQkWw4i4Rch8sF8wkKyMs
-         o7SQY3OGGOwyPY6GY2gPCz8vGz7U7Mcaljgd4HqKJALxYELfyCpj65jsTnM47/WsH7nQ
-         GHJi9JfrM/WZAwW9cWs5TCr9Hd4Y7pQracaUhHK0u6XLDGHU8zSzqCPd+7jxxDhWwmMm
-         smPA==
-X-Gm-Message-State: AO0yUKVO4rK3duvIRZBFbQkjUFptwrWRKJPbVVxKA6vkWHbWUBUTTR83
-        7xDEcNmhS7VEhyVQ0eqdax0s3xdciGjum7aYwxhwjQ==
-X-Google-Smtp-Source: AK7set8wAPw5tK+KOLu3l95YMhBqfO34Pi6ONEtsWZgiwe84T8NwsFpmq2fBkotWjwqz/Ud4m6hn17Aj50DyVc2GhAM=
-X-Received: by 2002:a5d:6641:0:b0:2d0:58f9:a69 with SMTP id
- f1-20020a5d6641000000b002d058f90a69mr1153282wrw.4.1679481704118; Wed, 22 Mar
- 2023 03:41:44 -0700 (PDT)
+        Wed, 22 Mar 2023 06:45:02 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A53B5ADFB;
+        Wed, 22 Mar 2023 03:45:00 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32M5UC2J031665;
+        Wed, 22 Mar 2023 10:44:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=2zUsAxusiknHcBSIUqmqdhHVjw9JMqVGq/GGIYaJ+Kk=;
+ b=LpF7V0X+OQeV8LXoEdmLMtiW6hD0m+RZYcGIG1XuQ2CeiGFGQsqLNVfsDHfKcGcI69Ys
+ zys5Ix9j1PhX9UdS10cGcB+KHKcM4wkzL+cwba9NE6Yaqabqm6Qvxa6jfZGmpLNA692Q
+ YVtGMihm8Sgg5iIKtiDLK4o7C3f054MsxDL1rhK5OKICFtUxsBQ8xU9uoeDxRx/7G0Dx
+ OefeX69GbDs6hdeea+Hi7Zkc7JVAsQktInKJkOWD7JUALRHsen7MRrNpn711YI/AQGU1
+ UneKFT9iFgW1dZI6qW9wuBnh4NqkQxpdoATGTzsQkmjAxkV71v0gAR6OvvwJZ7rZYGan Kg== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pfrk0s3k8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Mar 2023 10:44:50 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32MAin0g006366
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Mar 2023 10:44:49 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Wed, 22 Mar 2023 03:44:43 -0700
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <quic_wcheng@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>
+CC:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Subject: [PATCH v2 0/8] Enable IPQ9754 USB
+Date:   Wed, 22 Mar 2023 16:14:04 +0530
+Message-ID: <cover.1679479634.git.quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-References: <20230321190118.3327360-1-bhupesh.sharma@linaro.org>
- <20230321190118.3327360-3-bhupesh.sharma@linaro.org> <ZBoVzFTr8LBWsmrX@gerhold.net>
-In-Reply-To: <ZBoVzFTr8LBWsmrX@gerhold.net>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Wed, 22 Mar 2023 16:11:32 +0530
-Message-ID: <CAH=2NtyJHGcfhWMdUmJ=38kC-CjP7jznQEU7jX+983hdEJs4-A@mail.gmail.com>
-Subject: Re: [PATCH 2/5] arm64: dts: qcom: sm6115: Add Crypto Engine support
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        andersson@kernel.org, bhupesh.linux@gmail.com,
-        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
-        konrad.dybcio@linaro.org, vladimir.zapolskiy@linaro.org,
-        rfoss@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: RhcjNpgXQ8k3TkAyRxcTPKbFj8V5kmki
+X-Proofpoint-ORIG-GUID: RhcjNpgXQ8k3TkAyRxcTPKbFj8V5kmki
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-22_07,2023-03-22_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 impostorscore=0 adultscore=0
+ lowpriorityscore=0 spamscore=0 mlxlogscore=535 phishscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303150002
+ definitions=main-2303220076
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 22 Mar 2023 at 02:09, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> On Wed, Mar 22, 2023 at 12:31:15AM +0530, Bhupesh Sharma wrote:
-> > Add crypto engine (CE) and CE BAM related nodes and definitions to
-> > 'sm6115.dtsi'.
-> >
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sm6115.dtsi | 26 ++++++++++++++++++++++++++
-> >  1 file changed, 26 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> > index c56738633431..b2d2cdde41fa 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> > @@ -664,6 +664,32 @@ usb_1_hsphy: phy@1613000 {
-> >                       status = "disabled";
-> >               };
-> >
-> > +             cryptobam: dma-controller@1b04000 {
-> > +                     compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
-> > +                     reg = <0x0 0x01b04000 0x0 0x24000>;
-> > +                     interrupts = <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>;
-> > +                     #dma-cells = <1>;
-> > +                     qcom,ee = <0>;
-> > +                     qcom,controlled-remotely;
-> > +                     num-channels = <8>;
-> > +                     qcom,num-ees = <2>;
-> > +                     iommus = <&apps_smmu 0x84 0x11>,
-> > +                              <&apps_smmu 0x86 0x11>,
-> > +                              <&apps_smmu 0x94 0x11>,
-> > +                              <&apps_smmu 0x96 0x11>;
-> > +             };
-> > +
-> > +             crypto: crypto@1b3a000 {
-> > +                     compatible = "qcom,sm6115-qce", "qcom,sm8150-qce", "qcom,qce";
-> > +                     reg = <0x0 0x01b3a000 0x0 0x6000>;
-> > +                     dmas = <&cryptobam 6>, <&cryptobam 7>;
-> > +                     dma-names = "rx", "tx";
-> > +                     iommus = <&apps_smmu 0x84 0x11>,
-> > +                              <&apps_smmu 0x86 0x11>,
-> > +                              <&apps_smmu 0x94 0x11>,
-> > +                              <&apps_smmu 0x96 0x11>;
->
-> If you apply the 0x11 mask to the stream ID then the last two items here
-> are identical to the first two (0x94 & ~0x11 = 0x84). Why are they
-> needed? They look redundant to me.
+This patch series adds the relevant phy and controller
+configurations for enabling USB on IPQ9754
 
-Thanks, I will check them out and fix them in v2.
+Depends on:
+https://lore.kernel.org/all/20230217142030.16012-1-quic_devipriy@quicinc.com/
 
-Regards.
+[v3]:
+        - Incorporated review comments regarding coding style
+
+[v2]:
+        - Incorporated review comments regarding coding style,
+          maintaining sorted order of entries and unused phy register
+          offsets
+        - Removed NOC clock entries from DT node (will be implemented
+          later with interconnect support)
+        - Fixed 'make dtbs_check' errors/warnings
+
+[v1]:
+        https://lore.kernel.org/linux-arm-msm/5dac3aa4-8dc7-f9eb-5cf3-b361efdc9494@linaro.org/T/
+
+Varadarajan Narayanan (8):
+  dt-bindings: phy: qcom,qusb2: Document IPQ9574 compatible
+  dt-bindings: phy: qcom,qmp-usb: Add IPQ9574 USB3 PHY
+  dt-bindings: usb: dwc3: Add IPQ9574 compatible
+  clk: qcom: gcc-ipq9574: Add USB related clocks
+  phy: qcom-qusb2: add QUSB2 support for IPQ9574
+  phy: qcom: qmp: Update IPQ9574 USB Phy initialization Sequence
+  arm64: dts: qcom: ipq9574: Add USB related nodes
+  arm64: dts: qcom: ipq9574: Enable USB
+
+ .../bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml    |  22 ++++
+ .../devicetree/bindings/phy/qcom,qusb2-phy.yaml    |   3 +-
+ .../devicetree/bindings/usb/qcom,dwc3.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts       |  12 +++
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi              |  86 +++++++++++++++
+ drivers/clk/qcom/gcc-ipq9574.c                     |  37 +++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c            | 119 +++++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qusb2.c              |   3 +
+ include/dt-bindings/clock/qcom,ipq9574-gcc.h       |   2 +
+ 9 files changed, 284 insertions(+), 1 deletion(-)
+
+-- 
+2.7.4
+
