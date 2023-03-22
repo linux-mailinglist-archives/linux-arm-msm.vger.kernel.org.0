@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AA286C54F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 20:31:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFEF76C54F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 20:31:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231261AbjCVTbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 15:31:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60178 "EHLO
+        id S231268AbjCVTbG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 15:31:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230372AbjCVTa5 (ORCPT
+        with ESMTP id S230503AbjCVTa6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 15:30:57 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B1AA637E2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 12:30:55 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id b20so44450205edd.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 12:30:55 -0700 (PDT)
+        Wed, 22 Mar 2023 15:30:58 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 928A362DB3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 12:30:56 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id o12so77375151edb.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 12:30:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679513453;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=oRGfqxS3Cuhr+hCasaA+YOW33r20PpniBOrtxdIGcX0=;
-        b=inQm7xzCyQOh5EJoTJb3jasI4/FSfygaq+ZRJe0pZrojhUEzzCPW9JFRfZJm2NTiRT
-         /UD7LxStKPeFPsQpjIh5hkhg4g4Lv+ZhRxMsKLgYUP9KbRAHqFm0NsHO2OGkE/S+RlaX
-         ej6foPCIIpGeIKXlEvkeNaSaW9BiYHv0X47LlV/kiuSRfKGRw16wHI2X9oupebYYHDTR
-         HsydLgnLglziWOG8h1K5dfbe05qOiC2Z0gW4DCiEe1Dftzh0UwtEcvrC58IxjSwii31B
-         P82Xj7+XKOEi5K8LnQVSoYfy06TUd9h17RIsZ9ZAUf9jBS2xm+IyhJGGS8w6KMoDS3bZ
-         gO6w==
+        d=linaro.org; s=google; t=1679513454;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9x1PwiUD4PUFjaVQWHWZ2kBLiECk6niT366SMAu8e64=;
+        b=m3nvSoUnbPCIgaSJib9udRBvVFJOO7aU51z6/ZlFbh1P6s2zgj1wsYsB1rkXT0Boax
+         o+M0JyN47OTKSJEV0FMYXbOQ7WrhL9KLsSyseExt/hGvKSw1Zr88YM0uQhfw4we2cqic
+         +Vm4yLK8M4Rk+D7DhGo+w/bcxWMDaLGjRm0Sct9cXBDm70Wln9MYD3gsARPwzmZms2hi
+         WlFKv9M3A/QdXMVZ4FCMdyirkXmGS+V7+XgJ0+b0NStkqTEtyPZLsaKfLjp5XrEb8Yr+
+         N7XudGUcMq4hhkwR9Uk4q06BlaQpZEF1pQkQ3gM9kWFnnkfA2vRo2KbuM8JnR+VCZ9Kt
+         ua9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679513453;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oRGfqxS3Cuhr+hCasaA+YOW33r20PpniBOrtxdIGcX0=;
-        b=isyHvj7t1iWghQLZgqmq1Ff8zzZDHdz/wqNHgpZTgVqUHcpjTlP1cjZ7jDlV8/KFzI
-         eO4CfVh5DLVnetDx1s72gfPC4TPr6XHC6iUGsQH/3DFa6PIczlHMJ0HKonItBy4TDRWB
-         rVF9UKAa5fjHE90Iq1vsbTR2W94A8t0hYab2EpN95bj8Ngonb24qxe3kQTREcGdzUGQh
-         0suZc4ram+1DJsdjkrC2RWo+h32QlmkZpOCfRwO/frlTZnkevu3RqAPa4qcYr1qkCzIN
-         /I0IZ72gvJlRwsa486RYCjxRe8IoyNHVLcohbN4ggdDLv4XxZAtduPeDRNHh6HwR5oBI
-         ZhAA==
-X-Gm-Message-State: AO0yUKVz3QYldGNFySxMW348mKqXXNDiMI1548s8MLI2zcm1E8qiK21V
-        WWp4OixyGhW+FXHuP0PxdK63orGlreZccBCZlo8=
-X-Google-Smtp-Source: AK7set9WLN7NWaQ52fw51W8qEE+YjRmc+x333mjWlC90BmMCEViH9M8ALzprJHojcfxTdTdWWpdjXA==
-X-Received: by 2002:a17:906:d92f:b0:8a9:e330:3a23 with SMTP id rn15-20020a170906d92f00b008a9e3303a23mr7897458ejb.26.1679513453691;
-        Wed, 22 Mar 2023 12:30:53 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1679513454;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9x1PwiUD4PUFjaVQWHWZ2kBLiECk6niT366SMAu8e64=;
+        b=M3Q/ziNAFjzLAhc6BArHMYod3wwpvuUKZOU4fcHvC0UmOS4J6zor+oFJ8nxco8CkbZ
+         3/mCG/lZIN0ANK6IQD8fshqVl2/LCmfw8NEeQMKSuwlz1TNZUKo92GNC7SC48zfJIbGI
+         rbpihCFctvFO79He7LUx1YmskyHB4HNMOnn/ooSs38/drbz83SL++yB46KMP6dZhnDZG
+         RCKlqWUgFzuxbbHIDBy8HIgtGJT/3Y7Y6fdzqUNBoUye6JpxZc5zUkBIYTQ8XEWqZs5e
+         rdKP/NwHdhb2VACTpFHU8Ax7nQZD42NTURhecggvBSU7KAj9VBHt88nO8MXtIunRoH2u
+         TgvA==
+X-Gm-Message-State: AO0yUKVx5hvMV5lhNFvCDcWbii9mMqA2WPNIrEhMlTRDhX1QNSDI8G6+
+        qYD7Ar9y890xS9U1EeyRm6eRtg==
+X-Google-Smtp-Source: AK7set+mMZPwDLFIVTxI8GHBjUq6j/Eqc3Mejz4uZKAOuyE0SzIX9iEAaS4SSep54sfGN/6uEHUdAQ==
+X-Received: by 2002:a17:906:229a:b0:932:9d28:9668 with SMTP id p26-20020a170906229a00b009329d289668mr7992759eja.6.1679513454603;
+        Wed, 22 Mar 2023 12:30:54 -0700 (PDT)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:5050:151b:e755:1c6])
-        by smtp.gmail.com with ESMTPSA id n25-20020a1709061d1900b008e9c79ff14csm7660309ejh.96.2023.03.22.12.30.52
+        by smtp.gmail.com with ESMTPSA id n25-20020a1709061d1900b008e9c79ff14csm7660309ejh.96.2023.03.22.12.30.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 12:30:53 -0700 (PDT)
+        Wed, 22 Mar 2023 12:30:54 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -58,10 +59,12 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [RESEND PATCH 0/4] arm64: dts: qcom: Use proper WSA881x shutdown GPIO polarity
-Date:   Wed, 22 Mar 2023 20:30:47 +0100
-Message-Id: <20230322193051.826167-1-krzysztof.kozlowski@linaro.org>
+Subject: [RESEND PATCH 1/4] arm64: dts: qcom: sdm850-lenovo-yoga-c630: Use proper WSA881x shutdown GPIO polarity
+Date:   Wed, 22 Mar 2023 20:30:48 +0100
+Message-Id: <20230322193051.826167-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230322193051.826167-1-krzysztof.kozlowski@linaro.org>
+References: <20230322193051.826167-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -73,37 +76,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-Resending after all dependencies got merged.  The DTS changes are not
-compatible with kernel older than v6.3-rc1 (where the driver changes were
-merged).
-
-Description
-===========
 The WSA881x shutdown GPIO is active low (SD_N), but Linux driver assumed
-DTS always comes with active high.  Since Linux driver were updated to
+DTS always comes with active high.  Since Linux drivers were updated to
 handle proper flag, correct the DTS.
 
-Best regards,
-Krzysztof
+The change is not backwards compatible with older Linux kernel.
 
-Krzysztof Kozlowski (4):
-  arm64: dts: qcom: sdm850-lenovo-yoga-c630: Use proper WSA881x shutdown
-    GPIO polarity
-  arm64: dts: qcom: sdm850-samsung-w737: Use proper WSA881x shutdown
-    GPIO polarity
-  arm64: dts: qcom: sm8250-mtp: Use proper WSA881x shutdown GPIO
-    polarity
-  arm64: dts: qcom: qrb5165-rb5: Use proper WSA881x shutdown GPIO
-    polarity
-
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts             | 4 ++--
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
  arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 4 ++--
- arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts     | 4 ++--
- arch/arm64/boot/dts/qcom/sm8250-mtp.dts              | 4 ++--
- 4 files changed, 8 insertions(+), 8 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index 67d2a663ce75..5c688cb6a7ce 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -753,7 +753,7 @@ swm: swm@c85 {
+ 		left_spkr: speaker@0,3 {
+ 			compatible = "sdw10217211000";
+ 			reg = <0 3>;
+-			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_HIGH>;
++			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_LOW>;
+ 			#thermal-sensor-cells = <0>;
+ 			sound-name-prefix = "SpkrLeft";
+ 			#sound-dai-cells = <0>;
+@@ -761,7 +761,7 @@ left_spkr: speaker@0,3 {
+ 
+ 		right_spkr: speaker@0,4 {
+ 			compatible = "sdw10217211000";
+-			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
++			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_LOW>;
+ 			reg = <0 4>;
+ 			#thermal-sensor-cells = <0>;
+ 			sound-name-prefix = "SpkrRight";
 -- 
 2.34.1
 
