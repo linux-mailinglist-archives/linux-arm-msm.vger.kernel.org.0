@@ -2,102 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84DC26C4E6D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 15:49:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 689D46C4E8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 15:52:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231709AbjCVOt2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 10:49:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58738 "EHLO
+        id S231300AbjCVOww (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 10:52:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231708AbjCVOtQ (ORCPT
+        with ESMTP id S229744AbjCVOwc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 10:49:16 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC20E5709C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:47:46 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id e13so507995ioc.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:47:46 -0700 (PDT)
+        Wed, 22 Mar 2023 10:52:32 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DADE6A41E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:50:56 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id n2so22945910qtp.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:50:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679496466;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hDOGO+KNCLOdYgcHnk8rDrs0nfv9Q715qQlcv78HGMQ=;
-        b=GkS74GrVMU/JUAuKij1Ex9c43SEyFwQ+tr7pTB1hkgZaVwFGCSk3+KtqKY7ikd8Fi8
-         sYiUQHWSpQ57+VMVdoXpUF2daaRDeXlVUW2B10HZjreLQnjzJ6wAfVBE5NClWEBFXE5n
-         kaVqLZdhaY+tI9+t9A962fcjmgkRvd9nsnm5h0npdXtCDT5lUhMNVAM2rsaoxvl/4fwx
-         oViDSucUmbU+2y+1/epPN08lm30GWO3S+017LkGEv1JvToO1PGhKu2WSIoICWYNAAAvb
-         eY6z8rLf3780TQ0++R3WxZ020gqDF9uKopeZ8j0+XRARQnpWmeg1mNSmNH1BQunE+Iwg
-         mGNQ==
+        d=ndufresne-ca.20210112.gappssmtp.com; s=20210112; t=1679496655;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=xqEwR0mnH2dQTWES7qcpZxyDU3kIdJJrQjcIfcIfUws=;
+        b=4mDo4UpOGVHUWLxUshM4Dz9N05BjdMLZQ56BMssgs0qciRkedoa4RVR4EJUVB3FRjs
+         Ve7/uD241dSYiTmpXtZO/ZPzqSqxEq1/dEWNWiCFmglU4N115xERZS8mj66G1g44ObEU
+         DUXgol5g66ixnMBg57YAmEiwVV5RMg8nWH9LyC9QJfrkVJZnspc3wbP4ekuFLLG990eZ
+         p0dt1wZDF0FDDJHO6VuJnmTyVBSfbRBkRPEWGQawc0zvjyxupCmql6MVg/fw3DeJxUwp
+         6EoMlWZn20w7yUhUSWMybVMwQUzOlI3RCagsvYnUA360+1fl0qLv0KXrHwazDroI58FA
+         Cilg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679496466;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hDOGO+KNCLOdYgcHnk8rDrs0nfv9Q715qQlcv78HGMQ=;
-        b=wuCk3WjXWRsvEQTivFmHWJP5189Z/TuezX5F/5KUWFn8/GeXQll9ADibbRAd3qfGrw
-         UkWbLm4/UniOg2vXf4bIjM9Sa881wvvhoGAYLYVfkKltgRhaFbTpUmbAKVAhK/YjNKS3
-         yzlLhYMPc1E8P/yAQKg6Qt1l5a5Xq4YTBag2LDoRRPI0tkf/BRZp+AI0yH7FpbSkAlOB
-         hnFOXsfkwn1oQkd04TG6lr0BM0fn4iwXcXgKysGLMrOvUJzAyGOEoNeS4DyU/uk+F0TG
-         +Q6+gc+nbbRJVIV09mjGH1M5S1VVwfaudabeyBf1o52PIpAILBxDXlNGAjNhnbbPynbb
-         9+pw==
-X-Gm-Message-State: AO0yUKUfTbIoui4qIuB2xTzVzkfmPWq/L0GdOUdeEgywfXDLPsegVSFA
-        8ugiPlkSJTvgfNn4U/Mqw7kGKw==
-X-Google-Smtp-Source: AK7set/Bs0wJ3Xv1KtLWpP25dS54Xbl6M1c/LDLHW80vWT2Suh3IQrYWatnFoldkH2qGU0dSph+7wQ==
-X-Received: by 2002:a5e:8d03:0:b0:74c:9450:8094 with SMTP id m3-20020a5e8d03000000b0074c94508094mr4514988ioj.17.1679496465936;
-        Wed, 22 Mar 2023 07:47:45 -0700 (PDT)
-Received: from localhost.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id n24-20020a056638121800b00406132281e4sm5120463jas.109.2023.03.22.07.47.44
+        d=1e100.net; s=20210112; t=1679496655;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xqEwR0mnH2dQTWES7qcpZxyDU3kIdJJrQjcIfcIfUws=;
+        b=1fFGrUy6D+4TxiaEDhxziEbR3raUpON7EIjtYUce2G1SF4QC8tuljrk9VM6TuJBwKV
+         cF7jMmRgA8S0bexXcC56KI2QvTeORnJYgCkfSVx+OUkKcgXJaJf9GloPkE6RrtYRuIoz
+         O71VTCRvJmrXqKmEhjhJVYCnA2Fss3wl2oKNyGcV79R8ghRxG87qR7QyUN+VEp0Qe61c
+         hvK4touoyU+nsBgHDfPhfTIAFK1aNcuz8NA7V6ThK1hh6hLnWEE7zR+Pz4W7m4qgiw7g
+         LfP2f426eH312+BxQtURzKqvZ5V0G1FG1OTcGwCw0yJkzSoqCoqIFBfOmktxsm04l0F9
+         ue/A==
+X-Gm-Message-State: AO0yUKU0sA1afB1WuOOdUzNBsR5eQKu9agbiXB67BUHGisUEi+yGQQXC
+        M9Q+As9cu8gZXvF/Top3NJDYsw==
+X-Google-Smtp-Source: AK7set+olGnH2L8HiH8wu79IhsPwiTafG3zfFFddwhNxvuWfFc+q5aG+tjjynN8ff7zGF9L/LuK8og==
+X-Received: by 2002:a05:622a:4d2:b0:3bf:e471:69a3 with SMTP id q18-20020a05622a04d200b003bfe47169a3mr6127461qtx.65.1679496655113;
+        Wed, 22 Mar 2023 07:50:55 -0700 (PDT)
+Received: from nicolas-tpx395.localdomain (192-222-136-102.qc.cable.ebox.net. [192.222.136.102])
+        by smtp.gmail.com with ESMTPSA id 69-20020a370c48000000b00746777fd176sm5025558qkm.26.2023.03.22.07.50.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 07:47:45 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
-        andersson@kernel.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH net-next] net: ipa: add IPA v5.0 to ipa_version_string()
-Date:   Wed, 22 Mar 2023 09:47:42 -0500
-Message-Id: <20230322144742.2203947-1-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Wed, 22 Mar 2023 07:50:54 -0700 (PDT)
+Message-ID: <f085aa9225c573df906bdc7ff032a8fd591b18b3.camel@ndufresne.ca>
+Subject: Re: [RFC 2/4] media: videobuf2: Replace bufs array by a list
+From:   Nicolas Dufresne <nicolas@ndufresne.ca>
+To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc:     David Laight <David.Laight@ACULAB.COM>,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        "tfiga@chromium.org" <tfiga@chromium.org>,
+        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
+        "mchehab@kernel.org" <mchehab@kernel.org>,
+        "ming.qian@nxp.com" <ming.qian@nxp.com>,
+        "shijie.qin@nxp.com" <shijie.qin@nxp.com>,
+        "eagle.zhou@nxp.com" <eagle.zhou@nxp.com>,
+        "bin.liu@mediatek.com" <bin.liu@mediatek.com>,
+        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+        "angelogioacchino.delregno@collabora.com" 
+        <angelogioacchino.delregno@collabora.com>,
+        "tiffany.lin@mediatek.com" <tiffany.lin@mediatek.com>,
+        "andrew-ct.chen@mediatek.com" <andrew-ct.chen@mediatek.com>,
+        "yunfei.dong@mediatek.com" <yunfei.dong@mediatek.com>,
+        "stanimir.k.varbanov@gmail.com" <stanimir.k.varbanov@gmail.com>,
+        "quic_vgarodia@quicinc.com" <quic_vgarodia@quicinc.com>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "andersson@kernel.org" <andersson@kernel.org>,
+        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
+        "ezequiel@vanguardiasur.com.ar" <ezequiel@vanguardiasur.com.ar>,
+        "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
+        "daniel.almeida@collabora.com" <daniel.almeida@collabora.com>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-mediatek@lists.infradead.org" 
+        <linux-mediatek@lists.infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-rockchip@lists.infradead.org" 
+        <linux-rockchip@lists.infradead.org>,
+        "kernel@collabora.com" <kernel@collabora.com>
+Date:   Wed, 22 Mar 2023 10:50:52 -0400
+In-Reply-To: <20230319233358.GD20234@pendragon.ideasonboard.com>
+References: <20230313135916.862852-1-benjamin.gaignard@collabora.com>
+         <20230313135916.862852-3-benjamin.gaignard@collabora.com>
+         <20230313181155.GC22646@pendragon.ideasonboard.com>
+         <86df05244d974416903e919d387a0a0b@AcuMS.aculab.com>
+         <e704b505-86d8-c6f2-8546-adccdab72622@xs4all.nl>
+         <dc04d48e34ed40e58f43badd001a81d0@AcuMS.aculab.com>
+         <cbf34cf1-e065-8136-8344-89ca1864f637@xs4all.nl>
+         <20230319233358.GD20234@pendragon.ideasonboard.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4 (3.46.4-1.fc37) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In the IPA device sysfs directory, the "version" file can be read to
-find out what IPA version is implemented.  The content of this file
-is supplied by ipa_version_string(), which needs to be updated to
-properly handle IPA v5.0.
+Hi Laurent,
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
-This should have been included in the previous series...
+Le lundi 20 mars 2023 =C3=A0 01:33 +0200, Laurent Pinchart a =C3=A9crit=C2=
+=A0:
+> > The typical usage is that applications allocate N buffers with the
+> > VIDIOC_REQBUFS ioctl, and in most cases that's all they use.
+>=20
+> Note that once we get DELETE_BUF (or DELETE_BUFS) support I'd like to
+> encourage applications to use the new API, and deprecate REQBUFS
+> (dropping it isn't on my radar, as it would take forever before no
+> userspace uses it anymore).
 
- drivers/net/ipa/ipa_sysfs.c | 2 ++
- 1 file changed, 2 insertions(+)
+I was wondering if you can extend on this. I'm worried the count semantic m=
+ight
+prevent emulating it over create_bufs() ops, but if that works, did you mea=
+nt to
+emulate it so driver no longer have to implement reqbufs() if they have
+create_bufs() ?
 
-diff --git a/drivers/net/ipa/ipa_sysfs.c b/drivers/net/ipa/ipa_sysfs.c
-index 14bd2f9030453..2ff09ce343b73 100644
---- a/drivers/net/ipa/ipa_sysfs.c
-+++ b/drivers/net/ipa/ipa_sysfs.c
-@@ -36,6 +36,8 @@ static const char *ipa_version_string(struct ipa *ipa)
- 		return "4.9";
- 	case IPA_VERSION_4_11:
- 		return "4.11";
-+	case IPA_VERSION_5_0:
-+		return "5.0";
- 	default:
- 		return "0.0";	/* Won't happen (checked at probe time) */
- 	}
--- 
-2.34.1
-
+Nicolas
