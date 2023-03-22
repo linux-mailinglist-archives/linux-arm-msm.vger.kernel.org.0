@@ -2,139 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B39716C4D39
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 15:14:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F1496C4E0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 15:42:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229865AbjCVOOS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 10:14:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42176 "EHLO
+        id S231728AbjCVOmJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 10:42:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229794AbjCVOOR (ORCPT
+        with ESMTP id S230335AbjCVOlv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 10:14:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 339E62737
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:13:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1679494407;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=gIhIZ9iTRojGJMYiKTfmFBTTGDFbr5/gvROIxAATKTs=;
-        b=Alz3ehPOSIPTZ6fgoMgVa+oXtH5zDgjlU+zpci1ugRLrfon8O3khuErjvyBbzEdXZQlZI1
-        RrAKDnyF7buqWjicShli3vXVVIChMtK+87FlNfpNsukQDuGW4yK+/Y1UvcrwGYmypgmWRq
-        Chb2zmUY1ua5tK9MqZZdHSU0PRd80/g=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-90-bCaO19EQMkGiq9RQMkiFew-1; Wed, 22 Mar 2023 10:13:25 -0400
-X-MC-Unique: bCaO19EQMkGiq9RQMkiFew-1
-Received: by mail-wm1-f71.google.com with SMTP id k29-20020a05600c1c9d00b003ee3a8d547eso2495054wms.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:13:25 -0700 (PDT)
+        Wed, 22 Mar 2023 10:41:51 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B0CF65441
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:41:20 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id l16so11705265ybe.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:41:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679496072;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=dwrWFBfwB9kGIHdKOm9I7XrkyLQMCrqtoZsi4Z0QdbM=;
+        b=F0w5e6ZMX4ejR5QsVQiqxR3dcGhYhLoC0lZNvEZOA0Q7DL2mOy3SrO7dbV15fGayLP
+         OyXmKujQ0zcDkkemYCGNsyf75hLK6LlpbxIh5GVqde2o0sjQo2lRTFwIGGSvLk/nvdTr
+         lkuNFvcuE+FNrR6LuFS5EuCM4/ZRCbnvpW7opbAWoh13a9QP8sFpw36WEdUMsREEIpK1
+         adCs+5hzP7cWPvxU5pwPwkG1I6W24jY2fEoKgMWEPbDVIJVbGAWAbRg3G3t/ua30bcE2
+         Bp3nUoo3S5yMaczrYsbO+6tNLgweA9mdFDVwZwLvJGeb/9kGlJVSb/ZNdehyTelgUAc2
+         gNTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679494404;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gIhIZ9iTRojGJMYiKTfmFBTTGDFbr5/gvROIxAATKTs=;
-        b=PmwstFLmpqEcd3+tk4tEa88OYDJX1djHEiDTQcHtzMynAw9kuxaJ/MDcdezvwhTya3
-         6c967S1dNuX7zbMSiaxrpFhgHWzN6gJaDt4VEF5ai5/GOF4Obp0n0psqgteEBBOwmpIa
-         ln23FHvh5277gYj/Nc7CB7El/F1KPs7tFnE5Xr4yOBNEP94gLiCpAuK/OzCyPWNbcHdj
-         SPtMH1X+Th6ai3Ivl2S6s+bZRsvGnwJBQli7NynfEwgreupBwCgMp47VIbqqTtf1NK3/
-         3W+7qM/LrHEZiGnPnHdcmEyJsdzyFbb2y/aTBwrst5PCjaUkHWuIOoYOAnHq/Nl4RGW9
-         +jKQ==
-X-Gm-Message-State: AAQBX9d20paPrKhzYCATGeb2f5sUprWqD7GFLLTdZ2+Y25zeTTFqDX+m
-        UMoQaMwsq98HP74VsNUI8Q+tmtsRluCxhDXX87QxFi0O/EdpdUopujsY0zgVTLVeqtTbCFjl+Iy
-        pRYMPW3GJkMfb9+LqG7onQ7kxPg==
-X-Received: by 2002:a05:6000:1cb:b0:2d3:f610:8410 with SMTP id t11-20020a05600001cb00b002d3f6108410mr48481wrx.0.1679494404217;
-        Wed, 22 Mar 2023 07:13:24 -0700 (PDT)
-X-Google-Smtp-Source: AKy350bwPM1I+KdwU+k+LnKMhL8L8AvemWt4BBwZWovdn++jO3C4QynGXhNPsmQm5XFePAlaJEWMPA==
-X-Received: by 2002:a05:6000:1cb:b0:2d3:f610:8410 with SMTP id t11-20020a05600001cb00b002d3f6108410mr48464wrx.0.1679494403910;
-        Wed, 22 Mar 2023 07:13:23 -0700 (PDT)
-Received: from localhost (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
-        by smtp.gmail.com with ESMTPSA id c15-20020adfef4f000000b002c7066a6f77sm13914075wrp.31.2023.03.22.07.13.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 07:13:23 -0700 (PDT)
-From:   Javier Martinez Canillas <javierm@redhat.com>
-To:     Jordan Crouse <jorcrous@amazon.com>,
-        Enric Balletbo i Serra <eballetb@redhat.com>
-Cc:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        linux-kernel@vger.kernel.org, Albert Esteve <aesteve@redhat.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Sergio Lopez <slp@redhat.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org
-Subject: Re: [PATCH] media: venus: dec: Fix capture formats enumeration order
-In-Reply-To: <87ttyu54wy.fsf@minerva.mail-host-address-is-not-set>
-References: <20230210081835.2054482-1-javierm@redhat.com>
- <20230303220918.qr5ydbin3nye3qtz@amazon.com>
- <87h6uydwel.fsf@minerva.mail-host-address-is-not-set>
- <3d0315fa-14ca-dc34-81ae-467d9ed5133d@quicinc.com>
- <87sfeh0yjn.fsf@minerva.mail-host-address-is-not-set>
- <CALE0LRvR=DjUp2_DBuPQkEr9jvzGH4Mx4-7=rc6zOw1APQdyeQ@mail.gmail.com>
- <20230308181245.nbnwkdtdnsldd65l@amazon.com>
- <87ttyu54wy.fsf@minerva.mail-host-address-is-not-set>
-Date:   Wed, 22 Mar 2023 15:13:22 +0100
-Message-ID: <87bkkkoovx.fsf@minerva.mail-host-address-is-not-set>
+        d=1e100.net; s=20210112; t=1679496072;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dwrWFBfwB9kGIHdKOm9I7XrkyLQMCrqtoZsi4Z0QdbM=;
+        b=A7jmsb0abISPTm6ipkyqnJ1OJxWXXpWZDGetsK/d7Zr4Yn/LnX7YtHtqgqPAmI+995
+         UIUEVNAU55HXme2A8GDxpMMuZz/HcQTMYQV2ZQKJ4MRYU9Ls1a0MU8chIC3co44BdVbT
+         nhI+M7Z8YyCZG6m9Yhdy2vnAp4shTAmbaJ9NtObsAkTSDfZFTfYBMbj9xAwbFspaRfyc
+         3M2fFbtpfklSASUnTiyoy+0LPjr4pqEXsd6/zlGLOfY2oxcsXPLEZ6CEv9tSmCya34u8
+         NVk7eiCawaqT37TtoDoqicUhezmf1+RFiu3U+vPEzt44jGbskiYvfNrZASntEerPqcDr
+         mjIQ==
+X-Gm-Message-State: AAQBX9d/SQM3vjobxL3IzwmptLITHyX3X5FdVhONQDCqHrvNgkwMc8TO
+        pFrxWrN7ayFr1W2lF0lH2EIljNPUYbg/sVEemz4emL/6/0LYn7fF
+X-Google-Smtp-Source: AKy350brfn7Z6o8S2/0vpnavmEx1927OK55K5Jv3TrdYOcq2VC9PIKusWzICyXRr17lUOcIb7jQf8MvaL8LUkwY93es=
+X-Received: by 2002:a25:7456:0:b0:b6b:79a2:8cff with SMTP id
+ p83-20020a257456000000b00b6b79a28cffmr12890ybc.9.1679496072367; Wed, 22 Mar
+ 2023 07:41:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+References: <cover.1679479634.git.quic_varada@quicinc.com> <5b7213a4c402ee334ff48f2efe2b920858637ac5.1679479634.git.quic_varada@quicinc.com>
+In-Reply-To: <5b7213a4c402ee334ff48f2efe2b920858637ac5.1679479634.git.quic_varada@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 22 Mar 2023 16:41:01 +0200
+Message-ID: <CAA8EJppXuaGx4VhZ9fOBUkD8fECngzJ8pubNC4bm_0M9+64ZqQ@mail.gmail.com>
+Subject: Re: [PATCH v3 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Javier Martinez Canillas <javierm@redhat.com> writes:
-
-Hello Stanimir and Dikshita,
-
-> Jordan Crouse <jorcrous@amazon.com> writes:
+On Wed, 22 Mar 2023 at 12:46, Varadarajan Narayanan
+<quic_varada@quicinc.com> wrote:
 >
->> On Tue, Mar 07, 2023 at 05:20:18PM +0100, Enric Balletbo i Serra wrote:
+> Add USB phy and controller related nodes
 >
-> [...]
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+>  Changes in v3:
+>         - Insert the nodes at proper location
 >
->>> >
->>> > But regardless, I think that it would be better for a driver to
->>> > not change the order of advertised VIDIOC_ENUM_FMT pixel formats.
->>> >
->>> > Because what happens now is that a decoding that was previously
->>> > working by default is not working anymore due a combination of
->>> > the default being changed and S_FMT not working as expected.
->>
->> For my part, I was using the gstreamer v4l2 decoder which for some reason tries
->> to verify it can support whatever format it gets with G_FMT *before*
->> trying a S_FMT. I can't confirm or deny if S_FMT currently works or not.
->>
->> That said, I entirely agree with Javier. While it might be more
->> bandwidth efficient, QC08C is a obscure format. It is far more likely that the
->> average open source user would rather use a well known output format and, as
->> has been mentioned, once S_FMT is fixed those in the know can use the other
->> formats if they are working with other Qualcomm hardware blocks.
->>
+>  Changes in v2:
+>         - Fixed issues flagged by Krzysztof
+>         - Fix issues reported by make dtbs_check
+>         - Remove NOC related clocks (to be added with proper
+>           interconnect support)
+> ---
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 86 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 86 insertions(+)
 >
-> Agreed. The rule is that the kernel shouldn't regress user-space and the
-> patches that changed the default format certainly did that. So from that
-> point of view I think that this patch should land.
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> index 2bb4053..0943901 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> @@ -215,6 +215,48 @@
+>                 #size-cells = <1>;
+>                 ranges = <0 0 0 0xffffffff>;
 >
-> There's also Enric's point that NV12 is a more common format and supported
-> by more user-space programs. That's why think that regardless of the S_FMT
-> situation, makes sense to revert to the previous default behaviour.
+> +               qusb_phy_0: phy@7b000 {
+> +                       compatible = "qcom,ipq9574-qusb2-phy";
+> +                       reg = <0x07b000 0x180>;
+
+Please pad addresses to 8 hex digits.
+
+
+> +                       #phy-cells = <0>;
+> +
+> +                       clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
+> +                               <&xo_board_clk>;
+> +                       clock-names = "cfg_ahb", "ref";
+> +
+> +                       resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
+> +                       status = "disabled";
+> +               };
+> +
+> +               ssphy_0: phy@7d000 {
+> +                       compatible = "qcom,ipq9574-qmp-usb3-phy";
+> +                       reg = <0x7d000 0x1c4>;
+> +                       #clock-cells = <1>;
+> +                       #address-cells = <1>;
+> +                       #size-cells = <1>;
+> +                       ranges;
+> +
+> +                       clocks = <&gcc GCC_USB0_AUX_CLK>,
+> +                                <&gcc GCC_USB0_PHY_CFG_AHB_CLK>;
+
+Could you please check the indentation here? Vertical lists should be aligned
+
+> +                       clock-names = "aux", "cfg_ahb";
+
+One item per line
+
+> +
+> +                       resets =  <&gcc GCC_USB0_PHY_BCR>,
+> +                                <&gcc GCC_USB3PHY_0_PHY_BCR>;
+> +                       reset-names = "phy","common";
+> +                       status = "disabled";
+> +
+> +                       usb0_ssphy: phy@7d200 {
+
+Newer bindings please, without subnodes.
+
+> +                               reg = <0x0007d200 0x130>,       /* tx */
+> +                                     <0x0007d400 0x200>,       /* rx */
+> +                                     <0x0007d800 0x1f8>,       /* pcs  */
+> +                                     <0x0007d600 0x044>;       /* pcs misc */
+> +                               #phy-cells = <0>;
+> +                               clocks = <&gcc GCC_USB0_PIPE_CLK>;
+> +                               clock-names = "pipe0";
+> +                               clock-output-names = "usb0_pipe_clk";
+> +                       };
+> +               };
+> +
+>                 pcie0_phy: phy@84000 {
+>                         compatible = "qcom,ipq9574-qmp-gen3x1-pcie-phy";
+>                         reg = <0x00084000 0x1bc>; /* Serdes PLL */
+> @@ -436,6 +478,50 @@
+>                         status = "disabled";
+>                 };
+>
+> +               usb3: usb3@8a00000 {
+> +                       compatible = "qcom,ipq9574-dwc3", "qcom,dwc3";
+> +                       reg = <0x8af8800 0x400>;
+> +                       #address-cells = <1>;
+> +                       #size-cells = <1>;
+> +                       ranges;
+> +
+> +                       clocks = <&gcc GCC_SNOC_USB_CLK>,
+> +                                <&gcc GCC_ANOC_USB_AXI_CLK>,
+> +                                <&gcc GCC_USB0_MASTER_CLK>,
+> +                                <&gcc GCC_USB0_SLEEP_CLK>,
+> +                                <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+> +
+> +                       clock-names = "sys_noc_axi",
+> +                                     "anoc_axi",
+> +                                     "master",
+> +                                     "sleep",
+> +                                     "mock_utmi";
+> +
+> +                       assigned-clocks = <&gcc GCC_USB0_MASTER_CLK>,
+> +                                         <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+> +                       assigned-clock-rates = <200000000>,
+> +                                              <24000000>;
+
+Indentation?
+
+> +
+> +                       resets = <&gcc GCC_USB_BCR>;
+> +                       status = "disabled";
+> +
+> +                       dwc_0: usb@8a00000 {
+> +                               compatible = "snps,dwc3";
+> +                               reg = <0x8a00000 0xcd00>;
+> +                               clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+> +                               clock-names = "ref";
+> +                               interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
+> +                               phys = <&qusb_phy_0>, <&usb0_ssphy>;
+> +                               phy-names = "usb2-phy", "usb3-phy";
+> +                               tx-fifo-resize;
+> +                               snps,is-utmi-l1-suspend;
+> +                               snps,hird-threshold = /bits/ 8 <0x0>;
+> +                               snps,dis_u2_susphy_quirk;
+> +                               snps,dis_u3_susphy_quirk;
+> +                               dr_mode = "host";
+
+Is dr_mode a property of the host or of the board?
+
+> +                       };
+> +               };
+> +
+>                 intc: interrupt-controller@b000000 {
+>                         compatible = "qcom,msm-qgic2";
+>                         reg = <0x0b000000 0x1000>,  /* GICD */
+> --
+> 2.7.4
 >
 
-Any news on this patch? It would be great to fix this at least for v6.3.
 
--- 
-Best regards,
-
-Javier Martinez Canillas
-Core Platforms
-Red Hat
-
+--
+With best wishes
+Dmitry
