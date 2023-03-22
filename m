@@ -2,117 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB4636C52A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 18:37:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C790A6C52BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 18:41:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230150AbjCVRhy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 13:37:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48724 "EHLO
+        id S230146AbjCVRl4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 13:41:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230111AbjCVRht (ORCPT
+        with ESMTP id S230076AbjCVRlz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 13:37:49 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7187C442F7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 10:37:43 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id i5so29206945eda.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 10:37:43 -0700 (PDT)
+        Wed, 22 Mar 2023 13:41:55 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89C035F6D0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 10:41:53 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id cn12so30507607edb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 10:41:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679506662;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gA9v9nFXxMYuk8TaGFnohJPpRyhNADWGj1tI0eex/Bo=;
-        b=K4/UxDXF4SWuSSyN2dVFIeo7JaNA4cLfq+JcTiPCkLKMUkOSrxQURuXuAZ24CMIPGC
-         rDDA5oXX4pVNfbdGH6t4VcqE6s8Xd1kk0REFmVJSWoh/DzipU5ge1T6rGZyEirKXgGnV
-         D1JQVoFp+RSa04aQP37CBD/PntX2u2Ol/8aLbXZ7E7HqBBAwVTDS27BUZlnaAGEADLUM
-         TC+ZP/x0dJQLSEqMziBIMmQ54YUzaXNsADiVPe65ti4EDdwseLbNVRdnwXWmbjbqlrAk
-         a4qsQMa9IHnzJShRZCSFMAHFH77baWV9QICxyWuMJIcB7QPjpA/vd4jus4EZAlFSXlR9
-         3JxQ==
+        d=linaro.org; s=google; t=1679506912;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=aKlL6nsYofXrtklvN1qI1lejcYycd4GhbbCIaQ5NUPQ=;
+        b=jO9pMLZFmIBx4QiK9NtouToQqQgfCw4psqC40hSYjOYE3v0afiVflW4+5q8b5PqTyB
+         LNhiXumAxIjVigf0g4khe9JFIKSnSxKwj3RWEXeonE+N5+XF+bwW11VQfd6vymNKMCJT
+         3HSCcuiyFLShCuE7DUa05MqdlZ0J+7WOHjBfpvuLyMhD5HpgQh3Waw0PSKYLE0V88WsK
+         PvPYg4lwUJe2OK0whQT54v64W6zGNZcFj4PponDYcLCljLFCKuR8PQPeZwcWbxfuSP2x
+         ThuUFoTX2AmDnrwxNljnYn53thGcs6rTyGwHY38AzFq7D/GXfJ6Xlem5NNTPrZReF0p6
+         DxWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679506662;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gA9v9nFXxMYuk8TaGFnohJPpRyhNADWGj1tI0eex/Bo=;
-        b=SWHBBL7d9148/quFhLIzmVEAjD5Fx+GO6DYZnb6OevnHlfWa/MyyEghtQx08+9zwpq
-         u98QyHq8X5QzvQ7gwGz44P3DCt9GmowWRMAajlyS7TnBIAz06Q0iLgZOjhr0xBepGLU7
-         i+tq4PZPYP+IC69lMIcAtBLPvcLq+Sk1Vm/WVEaiIkxa3pSMKoTVnAEe7JcAIjJJlQhy
-         F7Xwp9dIyU9BeJWMej4DHE/5AgBR1IujCmDsxr0PPfvztKCNjFGKMA7ETymH3DNXqxmy
-         Us2Pk8rjZMse5YLrVjbjrPKjq3IOqv+SRYBvKerXglUUuYGIMY+mouq1XxsIrVsBw7c4
-         Fk/A==
-X-Gm-Message-State: AO0yUKUEOUwj98OrPxc2YJgWzpxzWidHJhHWWZT8fdOrSkkxmYPbdlge
-        RVs9hMPdFNUFxydcvTjnWunUSg==
-X-Google-Smtp-Source: AK7set8WO00ak1rfgb4uCE15GliBwuhYtsMbfMQ8SA3CKz+bqKUU4t0VlrpUyJNaexFgRWTGS4h7bQ==
-X-Received: by 2002:a05:6402:10d7:b0:501:dc02:1956 with SMTP id p23-20020a05640210d700b00501dc021956mr6603469edu.29.1679506662000;
-        Wed, 22 Mar 2023 10:37:42 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:5050:151b:e755:1c6? ([2a02:810d:15c0:828:5050:151b:e755:1c6])
-        by smtp.gmail.com with ESMTPSA id ec21-20020a0564020d5500b004fc01b0aa55sm8031076edb.4.2023.03.22.10.37.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Mar 2023 10:37:41 -0700 (PDT)
-Message-ID: <59a6ef88-758f-4ec4-f663-47e4caa552c5@linaro.org>
-Date:   Wed, 22 Mar 2023 18:37:40 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v2 00/13] mailbox/arm64/ qcom: rework compatibles for
- fallback
-Content-Language: en-US
+        d=1e100.net; s=20210112; t=1679506912;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aKlL6nsYofXrtklvN1qI1lejcYycd4GhbbCIaQ5NUPQ=;
+        b=on5bw5ocuBbyhy0+pCyr/GjylfsrwperuBiup1ZUCMNSpann1VrSJhhKEIDT7LqEYH
+         GRfcE841iCe2T0uZAd/IQ1LZsJm2sOXj0d3qAmgVyBCuy2cwdOpPHb/QZ+D27RNVByhK
+         elUy6dPD6lVbj7yHkUncMX5JZ/ZWipbQJbwgtPJ2La8DgWwR4jSLX7UT0oT+pt7a+62F
+         zIZHhWiD5SReeMaOsl2lgB1CT+N8cUhGzIXZyUFSxNscXbj17HYAK5ijz+yB7ec7hbqY
+         wuZdYtYSLAyc5YnnnuWv+fkfHgbuJY2hWlStVZm+sNzALCxBrzeQSKb+cDAcv44k13R4
+         WP9w==
+X-Gm-Message-State: AO0yUKV7IXVxHHm1runwZnA+P/tFdvrsC6hJMR5JyRMIb9lvR7e5VRtJ
+        Mt8Qme6DP5F56xjFNYlacqxMww==
+X-Google-Smtp-Source: AK7set9ZqSnoxPTJoYl8rmNhO6mCJvGJiuwW3XY++uRRew01B/OdANi5i7AG+3W5py5YYuxWkdRGiQ==
+X-Received: by 2002:a17:907:8a1a:b0:920:7827:302 with SMTP id sc26-20020a1709078a1a00b0092078270302mr3629263ejc.18.1679506911966;
+        Wed, 22 Mar 2023 10:41:51 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:5050:151b:e755:1c6])
+        by smtp.gmail.com with ESMTPSA id jx3-20020a170907760300b00930876176e2sm7548088ejc.29.2023.03.22.10.41.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Mar 2023 10:41:51 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Jassi Brar <jassisinghbrar@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
-References: <20230314080917.68246-1-krzysztof.kozlowski@linaro.org>
- <c35fd641-12ff-beba-341c-4d0305bcaa40@linaro.org>
- <290b9b19-a320-38a1-4426-51f5725dd54f@linaro.org>
-In-Reply-To: <290b9b19-a320-38a1-4426-51f5725dd54f@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 00/11] mailbox/arm64/ qcom: rework compatibles for fallback
+Date:   Wed, 22 Mar 2023 18:41:37 +0100
+Message-Id: <20230322174148.810938-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/03/2023 07:52, Krzysztof Kozlowski wrote:
-> On 14/03/2023 13:16, Dmitry Baryshkov wrote:
->> On 14/03/2023 10:09, Krzysztof Kozlowski wrote:
->>> Hi,
->>>
->>> Changes since v1
->>> ================
->>> 1. Rebase
->>> 2. Make msm8994 fallback for several variants, not msm8953, because the latter
->>>     actually might take some clocks.
->>
->> Although the approach looks correct, I think that in some cases it tries 
->> to mark devices compatible judging from the current driver, not from the 
->> hardware itself.
-> 
-> Which is what compatibility is about...
-> 
->>
->> For the reference, on msm8994 the apcs is a clock controller for the l2 
->> clocks (which we do not support yet). If I'm not mistaken, on msm8976 
->> the apcs region contains a mux for the cluster1 clocks. On sdm630/660 
->> the apcs region also seems to be involved in CPU clocks scaling.
-> 
-> The question is this means they are incompatible?
+Hi,
 
-Since there are no more comments I assume they are actually compatible
-in the terms of SW interface.
+Changes since v2
+================
+1. Split fixes to separate patchset which is now dependency:
+   https://lore.kernel.org/linux-arm-msm/20230322173559.809805-1-krzysztof.kozlowski@linaro.org/T/#t
+2. Add Ack
+3. No other changes, as discussion with Dmitry did not reach conclusion on incompatibility.
+
+Changes since v1
+================
+1. Rebase
+2. Make msm8994 fallback for several variants, not msm8953, because the latter
+   actually might take some clocks.
+3. Two new patches for SDX55.
+4. Minor corrections in bindings style.
+v1: https://lore.kernel.org/all/20230202161856.385825-1-krzysztof.kozlowski@linaro.org/
+
+Description
+===========
+
+If entire approach is accepted (and correct), there are no dependencies and
+patches can be picked independently.  Although the best in the same cycle, so
+there will be no new `dtbs_check` warnings.
 
 Best regards,
 Krzysztof
+
+Krzysztof Kozlowski (11):
+  dt-bindings: mailbox: qcom,apcs-kpss-global: use fallbacks
+  mailbox: qcom-apcs-ipc: do not grow the of_device_id
+  arm64: dts: qcom: ipq8074: add compatible fallback to mailbox
+  arm64: dts: qcom: msm8976: add compatible fallback to mailbox
+  arm64: dts: qcom: msm8998: add compatible fallback to mailbox
+  arm64: dts: qcom: sdm630: add compatible fallback to mailbox
+  arm64: dts: qcom: sm6115: add compatible fallback to mailbox
+  arm64: dts: qcom: sm6125: add compatible fallback to mailbox
+  arm64: dts: qcom: qcs404: add compatible fallback to mailbox
+  arm64: dts: qcom: sc7180: add compatible fallback to mailbox
+  arm64: dts: qcom: sm8150: add compatible fallback to mailbox
+
+ .../mailbox/qcom,apcs-kpss-global.yaml        | 58 ++++++++++---------
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi         |  3 +-
+ arch/arm64/boot/dts/qcom/msm8976.dtsi         |  3 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |  3 +-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |  3 +-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |  3 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          |  3 +-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          |  3 +-
+ arch/arm64/boot/dts/qcom/sm6125.dtsi          |  3 +-
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  3 +-
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c       | 11 ++--
+ 11 files changed, 55 insertions(+), 41 deletions(-)
+
+-- 
+2.34.1
 
