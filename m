@@ -2,350 +2,820 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D548A6C419F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 05:39:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42FEF6C41B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 05:46:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229682AbjCVEju (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 00:39:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35898 "EHLO
+        id S229676AbjCVEqb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 00:46:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbjCVEjt (ORCPT
+        with ESMTP id S229459AbjCVEqa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 00:39:49 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68B31B761;
-        Tue, 21 Mar 2023 21:39:48 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id l7so410215pjg.5;
-        Tue, 21 Mar 2023 21:39:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679459988;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xm0M1kcuL6xFu2eK/DxZuL2ZfVmnA4tafMen2+OWSWw=;
-        b=mSuchzjfljBMbdDULRddFK0aPiZCcTU1+tbT/nfRrb8Ap6x/TXsyugBT6w3lv3yMpB
-         woXU/IJVacipXn6P0SoPWb7IZt3AxJHfAQAQSNxOueI7+y3nS3avsrztg2lAlUhzUOgO
-         VMlW7DpFWr9xliD3qGsr5J7Sj5rKrdQws/h+l6PuObVFEdZ+XahKxaxeUWJx1eUVPhqa
-         fO8dPw12X9DtRe92+x93RkJX+jve7pPerbNwhVhJa6wdXHgLuAUNiLgCfcFwujXt51H/
-         n8ZsedB82MNit9wC260woOVYGML+0NMGIbrPY3HLK1hm0d7Djp99LqFgSWj7ZGH3T4fM
-         mkkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679459988;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xm0M1kcuL6xFu2eK/DxZuL2ZfVmnA4tafMen2+OWSWw=;
-        b=qMyjKPMIeqaKz3vMnlDFolEEn6kSuO5qi91l8dUejcsszZRCVKQICnnQM/tdkMlOfh
-         +c9Uw0zkm9h6N0QPz5O4zcRfCUJvqMGvjR5Nq3d3KUydEOhGzm0jdxHBjh456AOvcinw
-         TOLk92VczF/7bfcVdF6ZBIJxFNcl+9eOBAM+755CA4WWkfDs0qq1n9e+nqUyuT7w1WtK
-         ChSb16bLDr3RozvkYTG8A2IoDiewK/tj4RtJMbLZ38BgiUD+JLDtXlGAC8T+D/KfZ6Kz
-         prJzxA68CqEmLNxnYf21E6Z2WhD/R3IfUDi8bcePo3YPldOo+ku30QsmlptltoQwRT5d
-         weQQ==
-X-Gm-Message-State: AO0yUKXXZHcdaWCfnu/dMhnHNQm2ttF+RsSB3K7H8VPk8O57OIQOgLce
-        yS0ClZ41C78sWWCrQc54+tY=
-X-Google-Smtp-Source: AK7set+SWZhbEAI+gnRhYaNeVGUPOUw0LhZI77y0MwZcyezPwJ1nB8cL8gtJ6BpnsZdJsAcQSWaNtQ==
-X-Received: by 2002:a17:90b:38c8:b0:23b:4005:26e6 with SMTP id nn8-20020a17090b38c800b0023b400526e6mr2239670pjb.34.1679459987739;
-        Tue, 21 Mar 2023 21:39:47 -0700 (PDT)
-Received: from debian.me (subs02-180-214-232-30.three.co.id. [180.214.232.30])
-        by smtp.gmail.com with ESMTPSA id hg4-20020a17090b300400b002340d317f3esm8859243pjb.52.2023.03.21.21.39.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 21:39:47 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-        id F29F710665C; Wed, 22 Mar 2023 11:39:43 +0700 (WIB)
-Date:   Wed, 22 Mar 2023 11:39:43 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, ogabbay@kernel.org,
-        airlied@gmail.com, daniel@ffwll.ch,
-        jacek.lawrynowicz@linux.intel.com,
-        stanislaw.gruszka@linux.intel.com
-Cc:     dafna@fastmail.com, dri-devel@lists.freedesktop.org,
-        quic_pkanojiy@quicinc.com, quic_carlv@quicinc.com,
-        quic_ajitpals@quicinc.com, linux-doc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 1/8] accel/qaic: Add documentation for AIC100
- accelerator driver
-Message-ID: <ZBqGj+gyl4c5Yz7E@debian.me>
-References: <1679325074-5494-1-git-send-email-quic_jhugo@quicinc.com>
- <1679325074-5494-2-git-send-email-quic_jhugo@quicinc.com>
- <ZBmxl0sFH5PBG36H@debian.me>
- <aa2ee071-952b-f8b5-bfcf-53cef99478be@quicinc.com>
+        Wed, 22 Mar 2023 00:46:30 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC41058C3C;
+        Tue, 21 Mar 2023 21:46:27 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32M41MjR026969;
+        Wed, 22 Mar 2023 04:45:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=oH79mtNU8C/BJ6DXARe718Nl1KQgKoBrVcaEb9hmltM=;
+ b=nj8wLIv8rcKU1umyN02VReMBvhHPOIltqETILhccAPloWTdvs0HFwX+Xpticy7D6C7Rp
+ iQRAD9OxpdLysJvu3xpIwH04x3Eu10fvna41Fb40as7klvInpfWAWnMjuxYrLFL3mkSD
+ LygM/nEX4eijue2xeTpvAAsE1LDD9CB5fSv84YjGNEMEDm/XGKmUAj2PG1jj3RT7WiwW
+ ni+DCCr0eHrGoI2kOdUpWuFWGGH6Dpg7ZVnIDdcYg9jvcaaeveAFPYZ2uPAhe4uVPyrR
+ VJEMEcyo7Qh+GP4ZZNenbWaY0fsz8dPq2wU94nDv2dq+QYA3w39ifV7dz3Iyi7A5S5ip TQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pfpfgrhuf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Mar 2023 04:45:56 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32M4jtEu007644
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 22 Mar 2023 04:45:55 GMT
+Received: from [10.110.27.2] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 21 Mar
+ 2023 21:45:52 -0700
+Message-ID: <89d702ff-bc10-5904-e489-a4097b3f38c4@quicinc.com>
+Date:   Tue, 21 Mar 2023 21:45:51 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="EXPXy0S25JFamHAK"
-Content-Disposition: inline
-In-Reply-To: <aa2ee071-952b-f8b5-bfcf-53cef99478be@quicinc.com>
-X-Spam-Status: No, score=1.3 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v3 1/2] check-uapi: Introduce check-uapi.sh
+To:     Masahiro Yamada <masahiroy@kernel.org>
+CC:     Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Todd Kjos <tkjos@google.com>,
+        Matthias Maennich <maennich@google.com>,
+        Giuliano Procida <gprocida@google.com>,
+        <kernel-team@android.com>, <libabigail@sourceware.org>,
+        Jordan Crouse <jorcrous@amazon.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Satya Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>
+References: <20230316181555.9327-1-quic_johmoo@quicinc.com>
+ <20230316181555.9327-2-quic_johmoo@quicinc.com>
+ <CAK7LNATFTOc_9qGMP4B8cRr4NY_NSpE8dMXPjEkJv+aqUj2_Lw@mail.gmail.com>
+Content-Language: en-US
+From:   John Moon <quic_johmoo@quicinc.com>
+In-Reply-To: <CAK7LNATFTOc_9qGMP4B8cRr4NY_NSpE8dMXPjEkJv+aqUj2_Lw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 7ef9tB7McqKPA-My_5rXj7RW4_6GUP4g
+X-Proofpoint-ORIG-GUID: 7ef9tB7McqKPA-My_5rXj7RW4_6GUP4g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-21_11,2023-03-21_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ mlxlogscore=999 spamscore=0 suspectscore=0 impostorscore=0 bulkscore=0
+ phishscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303150002
+ definitions=main-2303220034
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
-X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 3/21/2023 2:19 PM, Masahiro Yamada wrote:
 
---EXPXy0S25JFamHAK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> 
+> I think I pointed out that not all UAPI headers are checked-in.
+> 
+> 
+> I applied the following.
+> This will remove <asm/termios.h>.
+> So, definitely it is a UAPI breakage, but check_all=true
+> mode succeeds.
+> 
+> 
+>   diff --git a/include/uapi/asm-generic/Kbuild b/include/uapi/asm-generic/Kbuild
+>   index ebb180aac74e..a9c88b0a8b3b 100644
+>   --- a/include/uapi/asm-generic/Kbuild
+>   +++ b/include/uapi/asm-generic/Kbuild
+>   @@ -31,6 +31,6 @@ mandatory-y += stat.h
+>    mandatory-y += statfs.h
+>    mandatory-y += swab.h
+>    mandatory-y += termbits.h
+>   -mandatory-y += termios.h
+>   +#mandatory-y += termios.h
+>    mandatory-y += types.h
+>    mandatory-y += unistd.h
+> 
+> 
+> 
+> 
+> Another false positive is a change outside the uapi directories.
+> 
+> For x86, syscall UAPI headers are generated in
+> arch/x86/entry/syscalls/.
+> 
+> 
+> You never know the compatibility of UAPI unless you check
+> all the headers that 'make headers_install' results in.
+> 
 
-On Tue, Mar 21, 2023 at 03:52:11PM -0600, Jeffrey Hugo wrote:
-> > > +
-> > > +Request field descriptions:
-> > > +
-> > > +| req_id- request ID. A request FIFO element and a response FIFO ele=
-ment with
-> > > +|         the same request ID refer to the same command.
-> > > +
-> > > +| seq_id- sequence ID within a request. Ignored by the DMA Bridge.
-> > > +
-> > > +| pcie_dma_cmd- describes the DMA element of this request.
-> > > +| 	Bit(7) is the force msi flag, which overrides the DMA Bridge MSI =
-logic
-> > > +| 		and generates a MSI when this request is complete, and QSM
-> > > +| 		configures the DMA Bridge to look at this bit.
-> > > +| 	Bits(6:5) are reserved.
-> > > +| 	Bit(4) is the completion code flag, and indicates that the DMA Br=
-idge
-> > > +| 		shall generate a response FIFO element when this request is
-> > > +| 		complete.
-> > > +| 	Bit(3) indicates if this request is a linked list transfer(0) or =
-a bulk
-> > > +| 		transfer(1).
-> > > +| 	Bit(2) is reserved.
-> > > +| 	Bits(1:0) indicate the type of transfer. No transfer(0), to devic=
-e(1),
-> > > +| 		from device(2). Value 3 is illegal.
-> > > +
-> > > +| pcie_dma_source_addr- source address for a bulk transfer, or the a=
-ddress of
-> > > +|         the linked list.
-> > > +
-> > > +| pcie_dma_dest_addr- destination address for a bulk transfer.
-> > > +
-> > > +| pcie_dma_len- length of the bulk transfer. Note that the size of t=
-his field
-> > > +| 	limits transfers to 4G in size.
-> > > +
-> > > +| doorbell_addr- address of the doorbell to ring when this request i=
-s complete.
-> > > +
-> > > +| doorbell_attr- doorbell attributes.
-> > > +| 	Bit(7) indicates if a write to a doorbell is to occur.
-> > > +| 	Bits(6:2) are reserved.
-> > > +| 	Bits(1:0) contain the encoding of the doorbell length. 0 is 32-bi=
-t,
-> > > +| 		1 is 16-bit, 2 is 8-bit, 3 is reserved. The doorbell address
-> > > +| 		must be naturally aligned to the specified length.
-> > > +
-> > > +| doorbell_data- data to write to the doorbell. Only the bits corres=
-ponding to
-> > > +| 	the doorbell length are valid.
-> > > +
-> > > +| sem_cmdN- semaphore command.
-> > > +| 	Bit(31) indicates this semaphore command is enabled.
-> > > +| 	Bit(30) is the to-device DMA fence. Block this request until all
-> > > +| 		to-device DMA transfers are complete.
-> > > +| 	Bit(29) is the from-device DMA fence. Block this request until all
-> > > +| 		from-device DMA transfers are complete.
-> > > +| 	Bits(28:27) are reserved.
-> > > +| 	Bits(26:24) are the semaphore command. 0 is NOP. 1 is init with t=
-he
-> > > +| 		specified value. 2 is increment. 3 is decrement. 4 is wait
-> > > +| 		until the semaphore is equal to the specified value. 5 is wait
-> > > +| 		until the semaphore is greater or equal to the specified value.
-> > > +| 		6 is "P", wait until semaphore is greater than 0, then
-> > > +| 		decrement by 1. 7 is reserved.
-> > > +| 	Bit(23) is reserved.
-> > > +| 	Bit(22) is the semaphore sync. 0 is post sync, which means that t=
-he
-> > > +| 		semaphore operation is done after the DMA transfer. 1 is
-> > > +| 		presync, which gates the DMA transfer. Only one presync is
-> > > +| 		allowed per request.
-> > > +| 	Bit(21) is reserved.
-> > > +| 	Bits(20:16) is the index of the semaphore to operate on.
-> > > +| 	Bits(15:12) are reserved.
-> > > +| 	Bits(11:0) are the semaphore value to use in operations.
-> >=20
-> > What about bullet lists?
->=20
-> It doesn't feel like the above fits into a bullet list structure.  Do you
-> have an example reference, or can you transform a small section of the ab=
-ove
-> to illustrate what you are thinking?
->=20
+Excellent points. We'll make another pass looking exclusively at the 
+"make headers_install" trees for the two refs. That should be more 
+reliable, require less code, and catch issues like these.
 
-Oops, sorry for suggesting the wrong construct.
+> 
+> I am reluctant to read the whole code,
+> but I spotted possible bugs.
+> 
+> 
+> 
+> 
+> 
+>> +
+>> +readonly SUCCESS=0
+>> +readonly FAIL_ABI=1
+>> +readonly FAIL_PREREQ=2
+>> +readonly FAIL_COMPILE=3
+>> +readonly FAIL_ARCH=4
+>> +readonly FAIL=5
+>> +
+>> +# Print to stderr
+>> +eprintf() {
+>> +       # shellcheck disable=SC2059
+>> +       printf "$@" >&2
+>> +}
+>> +
+>> +# Print list of UAPI files to operate on
+>> +get_uapi_files() {
+>> +       local -r check_all="$1"
+>> +       local -r base_ref="$2"
+>> +       local -r ref="$3"
+> 
+> local -r past_ref="$3"
+> 
+> 
+> 
+>> +       local -r file_list="${tmp_dir}/file_list.txt"
+>> +
+>> +       # Return already-processed list if it's available
+>> +       if [ -s "$file_list" ]; then
+>> +               cat "$file_list"
+>> +               return 0
+>> +       fi
+>> +
+>> +       if [ "$check_all" = "true" ]; then
+>> +               # Print all of the UAPI header files at the commit in question
+>> +               # Ignore the headers that we can't test.
+>> +               # shellcheck disable=SC2086,SC2046
+>> +               git ls-tree --full-tree --name-only -r "${base_ref:-HEAD}" -- "${UAPI_DIRS[@]}" \
+>> +                       | grep '.h$' \
+>> +                       | sed -e 's/^/M\t/g' \
+>> +                       | grep -v $({ get_no_header_list "$base_ref"; get_no_export_list; } | xargs -- printf '-e %s ') \
+>> +                       > "$file_list"
+>> +       else
+>> +               if [ -z "$base_ref" ] || [ -z "$ref" ]; then
+> 
+> 
+> [ -z "$ref" ] is always false.
+> 
+> 
+> 
+>> +                       # shellcheck disable=SC2086
+>> +                       git diff $GIT_ARGS > "$file_list"
+> 
+> 
+> This is a bug.
+> 
+> Think about this situation:
+> 
+>    $base_ref is empty, i.e. workspace
+>    $ref is not HEAD but a commit in the past.
+> 
+> 
+> "git diff" will return the diff
+> between the cache and the workspace.
+> 
+> 
+> 
+> 
+> 
+> 
+>> +               else
+>> +                       # shellcheck disable=SC2086
+>> +                       git diff "$ref" "$base_ref" $GIT_ARGS > "$file_list"
+>> +               fi
+> 
+> 
+> Do you need this if...else...fi block in the first place?
+> 
+> 
+>     git diff $ref $base_ref $GIT_ARGS > "$file_list"
+> 
+> 
+> will naturally work correctly for all cases.
+> (do not quote $base_ref, which might be empty)
+> 
+> 
 
-Definition lists fit in this case, since there are request fields along
-with their individual descriptions. For bit lists, bullet lists should
-suffice.
+Great suggestion, that's far more elegant. Thank you!
 
-Here is the illustration diff:
+> 
+> 
+>> +
+>> +               if mismatch_arch_files=$(grep -v "arch/${ARCH}" "$file_list" | grep -o "arch/.*\.h"); then
+>> +                       eprintf "warning - detected changes to following files, but can't check them with %s compiler:\n" "$ARCH"
+>> +                       for f in $mismatch_arch_files; do
+>> +                               eprintf "  - %s\n" "$f"
+>> +                               sed -i -e "\|${f}|d" "$file_list"
+>> +                               printf "warning - could not perform ABI check on %s with %s compiler\n" "$f" "$ARCH" \
+>> +                                       >> "${tmp_dir}/arch_mismatches.error"
+>> +                       done
+>> +                       eprintf "\nFiltering them out and performing partial check on remaining files...\n"
+>> +                       if [ ! -s "$file_list" ]; then
+>> +                               eprintf "error - all files were filtered out, there's nothing to check!\n"
+>> +                               exit "$FAIL_ARCH"
+>> +                       fi
+>> +               fi
+>> +       fi
+>> +
+>> +       if [ ! -s "$file_list" ]; then
+>> +               return 1
+>> +       fi
+>> +
+>> +       cat "$file_list"
+>> +}
+>> +
+>> +# Compile the simple test app
+>> +do_compile() {
+>> +       local -r inc_dir="$1"
+>> +       local -r header="$2"
+>> +       local -r out="$3"
+>> +       printf "int main(void) { return 0; }\n" | \
+>> +               "$CC" -c \
+>> +                 -o "$out" \
+>> +                 -x c \
+>> +                 -O0 \
+>> +                 -std=c90 \
+>> +                 -fno-eliminate-unused-debug-types \
+>> +                 -g \
+>> +                 "-I${inc_dir}" \
+>> +                 -include "$header" \
+>> +                 -
+>> +}
+>> +
+>> +# Print the list of incompatible headers
+>> +get_no_header_list() {
+>> +       local -r ref="${1:-HEAD}"
+>> +       # Start with the usr/include/Makefile to get a list of the headers
+>> +       # that don't compile using this method.
+>> +       {
+>> +               # shellcheck disable=SC2016
+>> +               printf 'all: ; @echo $(no-header-test)\n'
+>> +               cat "usr/include/Makefile"
+>> +       } | SRCARCH="$ARCH" make -f - | tr " " "\n" | grep -v "asm-generic"
+>> +
+>> +       # The makefile also skips all asm-generic files, but prints "asm-generic/%"
+>> +       # which won't match the files in this script, so just print all the asm-generic
+>> +       # headers manually.
+>> +       git ls-tree --full-tree --name-only -r "$ref" -- include/uapi/asm-generic \
+>> +               | grep '.h$' \
+>> +               | cut -d '/' -f 2-
+>> +
+>> +       # Finally, print all the architecture-specific headers that are _not_ for the
+>> +       # ARCH we're targeting
+>> +       git ls-tree --full-tree --name-only -r "$ref" -- arch/*/include/uapi \
+>> +               | grep '.h$' \
+>> +               | grep -v "^arch/${ARCH}"
+>> +}
+>> +
+>> +# Print the list of headers that are not exported for this architecture
+>> +get_no_export_list() {
+>> +       {
+>> +               # shellcheck disable=SC2016
+>> +               printf 'all: ; @echo $(no-export-headers)\n'
+>> +               cat "include/uapi/Kbuild"
+>> +       } | SRCARCH="$ARCH" srctree="$KERNEL_SRC" make -f - | tr " " "\n" | sed '/^[[:space:]]*$/d'
+>> +}
+>> +
+>> +# Save the current git tree state, stashing if needed
+>> +save_tree_state() {
+>> +       printf "Saving current tree state... "
+>> +       current_ref="$(git rev-parse HEAD)"
+>> +       readonly current_ref
+>> +       if ! git diff-index --quiet HEAD; then
+>> +               unstash="true"
+>> +               git stash push --quiet
+>> +       fi
+>> +       printf "OK\n"
+>> +}
+>> +
+>> +# Restore the git tree state, unstashing if needed
+>> +restore_tree_state() {
+>> +       if [ -z "$current_ref" ]; then
+>> +               return 0
+>> +       fi
+>> +
+>> +       printf "Restoring current tree state... "
+>> +       git checkout --quiet "$current_ref"
+>> +       if [ "$unstash" = "true" ]; then
+>> +               git stash pop --quiet
+>> +               unstash="false"
+>> +       fi
+>> +       printf "OK\n"
+>> +}
+>> +
+>> +# Install headers for both git refs
+>> +install_headers() {
+>> +       local -r check_all="$1"
+>> +       local -r base_ref="$2"
+>> +       local -r ref="$3"
+>> +
+>> +       deviated_from_current_tree="false"
+>> +       for inst_ref in "$base_ref" "$ref"; do
+> 
+> 
+> Bakeshed1: personally, I would use 'ref' as an iterator.
+> 
+>       for ref in "$base_ref" "$past_ref"; do
+> 
+> I see overall inconsistency between ref vs past_ref.
+> 
+> 
 
-diff --git a/Documentation/accel/qaic/aic100.rst b/Documentation/accel/qaic=
-/aic100.rst
-index 7ed95bb164bbeb..4d438fd8121451 100644
---- a/Documentation/accel/qaic/aic100.rst
-+++ b/Documentation/accel/qaic/aic100.rst
-@@ -308,67 +308,79 @@ A request FIFO element has the following structure:
-=20
- Request field descriptions:
-=20
--| req_id- request ID. A request FIFO element and a response FIFO element w=
-ith
--|         the same request ID refer to the same command.
-+  req_id
-+      request ID. A request FIFO element and a response FIFO element with
-+      the same request ID refer to the same command.
-=20
--| seq_id- sequence ID within a request. Ignored by the DMA Bridge.
-+  seq_id
-+      sequence ID within a request. Ignored by the DMA Bridge.
-=20
--| pcie_dma_cmd- describes the DMA element of this request.
--| 	Bit(7) is the force msi flag, which overrides the DMA Bridge MSI logic
--| 		and generates a MSI when this request is complete, and QSM
--| 		configures the DMA Bridge to look at this bit.
--| 	Bits(6:5) are reserved.
--| 	Bit(4) is the completion code flag, and indicates that the DMA Bridge
--| 		shall generate a response FIFO element when this request is
--| 		complete.
--| 	Bit(3) indicates if this request is a linked list transfer(0) or a bulk
--| 		transfer(1).
--| 	Bit(2) is reserved.
--| 	Bits(1:0) indicate the type of transfer. No transfer(0), to device(1),
--| 		from device(2). Value 3 is illegal.
-+  pcie_dma_cmd
-+      describes the DMA element of this request.
-=20
--| pcie_dma_source_addr- source address for a bulk transfer, or the address=
- of
--|         the linked list.
-+      * Bit(7) is the force msi flag, which overrides the DMA Bridge MSI l=
-ogic
-+        and generates a MSI when this request is complete, and QSM
-+        configures the DMA Bridge to look at this bit.
-+      * Bits(6:5) are reserved.
-+      * Bit(4) is the completion code flag, and indicates that the DMA Bri=
-dge
-+        shall generate a response FIFO element when this request is
-+        complete.
-+      * Bit(3) indicates if this request is a linked list transfer(0) or a=
- bulk
-+      * transfer(1).
-+      * Bit(2) is reserved.
-+      * Bits(1:0) indicate the type of transfer. No transfer(0), to device=
-(1),
-+      * from device(2). Value 3 is illegal.
-=20
--| pcie_dma_dest_addr- destination address for a bulk transfer.
-+  pcie_dma_source_addr
-+      source address for a bulk transfer, or the address of  the linked li=
-st.
-=20
--| pcie_dma_len- length of the bulk transfer. Note that the size of this fi=
-eld
--| 	limits transfers to 4G in size.
-+  pcie_dma_dest_addr
-+      destination address for a bulk transfer.
-=20
--| doorbell_addr- address of the doorbell to ring when this request is comp=
-lete.
-+  pcie_dma_len
-+      length of the bulk transfer. Note that the size of this field
-+      limits transfers to 4G in size.
-=20
--| doorbell_attr- doorbell attributes.
--| 	Bit(7) indicates if a write to a doorbell is to occur.
--| 	Bits(6:2) are reserved.
--| 	Bits(1:0) contain the encoding of the doorbell length. 0 is 32-bit,
--| 		1 is 16-bit, 2 is 8-bit, 3 is reserved. The doorbell address
--| 		must be naturally aligned to the specified length.
-+  doorbell_addr
-+      address of the doorbell to ring when this request is complete.
-=20
--| doorbell_data- data to write to the doorbell. Only the bits correspondin=
-g to
--| 	the doorbell length are valid.
-+  doorbell_attr
-+      doorbell attributes.
-=20
--| sem_cmdN- semaphore command.
--| 	Bit(31) indicates this semaphore command is enabled.
--| 	Bit(30) is the to-device DMA fence. Block this request until all
--| 		to-device DMA transfers are complete.
--| 	Bit(29) is the from-device DMA fence. Block this request until all
--| 		from-device DMA transfers are complete.
--| 	Bits(28:27) are reserved.
--| 	Bits(26:24) are the semaphore command. 0 is NOP. 1 is init with the
--| 		specified value. 2 is increment. 3 is decrement. 4 is wait
--| 		until the semaphore is equal to the specified value. 5 is wait
--| 		until the semaphore is greater or equal to the specified value.
--| 		6 is "P", wait until semaphore is greater than 0, then
--| 		decrement by 1. 7 is reserved.
--| 	Bit(23) is reserved.
--| 	Bit(22) is the semaphore sync. 0 is post sync, which means that the
--| 		semaphore operation is done after the DMA transfer. 1 is
--| 		presync, which gates the DMA transfer. Only one presync is
--| 		allowed per request.
--| 	Bit(21) is reserved.
--| 	Bits(20:16) is the index of the semaphore to operate on.
--| 	Bits(15:12) are reserved.
--| 	Bits(11:0) are the semaphore value to use in operations.
-+      * Bit(7) indicates if a write to a doorbell is to occur.
-+      * Bits(6:2) are reserved.
-+      * Bits(1:0) contain the encoding of the doorbell length. 0 is 32-bit,
-+        1 is 16-bit, 2 is 8-bit, 3 is reserved. The doorbell address
-+        must be naturally aligned to the specified length.
-+
-+  doorbell_data
-+      data to write to the doorbell. Only the bits corresponding to
-+      the doorbell length are valid.
-+
-+  sem_cmdN
-+      semaphore command.
-+
-+      * Bit(31) indicates this semaphore command is enabled.
-+      * Bit(30) is the to-device DMA fence. Block this request until all
-+        to-device DMA transfers are complete.
-+      * Bit(29) is the from-device DMA fence. Block this request until all
-+        from-device DMA transfers are complete.
-+      * Bits(28:27) are reserved.
-+        Bits(26:24) are the semaphore command. 0 is NOP. 1 is init with the
-+        specified value. 2 is increment. 3 is decrement. 4 is wait
-+        until the semaphore is equal to the specified value. 5 is wait
-+        until the semaphore is greater or equal to the specified value.
-+        6 is "P", wait until semaphore is greater than 0, then
-+        decrement by 1. 7 is reserved.
-+      * Bit(23) is reserved.
-+      * Bit(22) is the semaphore sync. 0 is post sync, which means that the
-+        semaphore operation is done after the DMA transfer. 1 is
-+      * presync, which gates the DMA transfer. Only one presync is
-+      * allowed per request.
-+      * Bit(21) is reserved.
-+      * Bits(20:16) is the index of the semaphore to operate on.
-+      * Bits(15:12) are reserved.
-+      * Bits(11:0) are the semaphore value to use in operations.
-=20
- Overall, a request is processed in 4 steps:
-=20
+Right, I will clean that up in v4.
 
-Thanks.
+> 
+> 
+> 
+>> +               if [ -n "$inst_ref" ]; then
+>> +                       if [ "$deviated_from_current_tree" = "false" ]; then
+>> +                               save_tree_state
+>> +                               trap 'rm -rf "$tmp_dir"; restore_tree_state;' EXIT
+> 
+> 
+> Bikeshed2:
+> Instead of updating the trap back-and-force,
+> I would create a function.
+> 
+> 
+> exit_handler () {
+>        if [ "$deviated_from_current_tree" = true ]; then
+>                  restore_tree_state
+>        fi
+> 
+>        if [ -n "$tmp_dir" ]; then
+>                  rm -rf "$tmp_dir"
+>        fi
+> }
+> 
+> trap exist_handler EXIT
+> 
+> 
 
---=20
-An old man doll... just what I always wanted! - Clara
+Good idea, will add in v4.
 
---EXPXy0S25JFamHAK
-Content-Type: application/pgp-signature; name="signature.asc"
+> 
+> 
+> 
+> 
+>> +                               deviated_from_current_tree="true"
+>> +                       fi
+>> +                       # This script ($0) is already loaded into memory at this point,
+>> +                       # so this operation is safe
+>> +                       git checkout --quiet "$(git rev-parse "$inst_ref")"
+>> +               fi
+>> +
+>> +               printf "Installing sanitized UAPI headers from %s... " "${inst_ref:-dirty tree}"
+>> +               make ARCH="$ARCH" INSTALL_HDR_PATH="${tmp_dir}/${inst_ref}/usr" headers_install > /dev/null 2>&1
+> 
+> 
+> You can add -j${MAX_THREADS} for faster 'make headers_install'.
+> 
+> 
 
------BEGIN PGP SIGNATURE-----
+Thanks for the tip. Will add in v4.
 
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZBqGiwAKCRD2uYlJVVFO
-o8YcAP99Ek9bDxbQwDy9P1xr8cC6hW5c8NcwEvyvIUls3e+hVAEA0V2KwAmMxPcn
-b1APtu6ox4tlgoFPgFfyynftXRePTgQ=
-=zliE
------END PGP SIGNATURE-----
+> 
+> 
+> 
+> 
+> 
+> 
+>> +               printf "OK\n"
+>> +       done
+>> +
+>> +       restore_tree_state
+>> +       trap 'rm -rf "$tmp_dir"' EXIT
+>> +}
+>> +
+>> +# Check file list for UAPI compatibility
+>> +check_uapi_files() {
+>> +       local -r check_all="$1"
+>> +       local -r base_ref="$2"
+>> +       local -r ref="$3"
+>> +
+>> +       install_headers "$check_all" "$base_ref" "$ref"
+>> +
+>> +       local passed=0;
+>> +       local failed=0;
+>> +       local -a threads=()
+>> +
+>> +       printf "Checking changes to UAPI headers between %s and %s\n" "$ref" "${base_ref:-dirty tree}"
+>> +       while read -r status file; do
+>> +               if [ "${#threads[@]}" -ge "$MAX_THREADS" ]; then
+>> +                       if wait "${threads[0]}"; then
+>> +                               passed=$((passed + 1))
+>> +                       else
+>> +                               failed=$((failed + 1))
+>> +                       fi
+>> +                       threads=("${threads[@]:1}")
+>> +               fi
+>> +
+>> +               check_individual_file "$base_ref" "$ref" "$status" "$file" &
+>> +               threads+=("$!")
+>> +       done < <(get_uapi_files "$check_all" "$base_ref" "$ref")
+>> +
+>> +       for t in "${threads[@]}"; do
+>> +               if wait "$t"; then
+>> +                       passed=$((passed + 1))
+>> +               else
+>> +                       failed=$((failed + 1))
+>> +               fi
+>> +       done
+>> +
+>> +       if [ "$check_all" = "true" ]; then
+>> +               scope=$(printf "UAPI headers compatible with %s" "$ARCH")
+>> +       else
+>> +               scope=$(printf "UAPI headers modified between %s and %s" "$ref" "${base_ref:-dirty tree}")
+>> +       fi
+>> +
+>> +       total="$((passed + failed))"
+>> +       if [ "$failed" -gt 0 ]; then
+>> +               eprintf "error - %d/%d %s appear _not_ to be backwards compatible\n" "$failed" "$total" "$scope"
+>> +       else
+>> +               printf "All %d %s appear to be backwards compatible\n" "$total" "$scope"
+>> +       fi
+>> +
+>> +       if [ "$check_all" = "true" ]; then
+>> +               printf "Note: UAPI headers for architectures other than %s were not checked\n" "$ARCH"
+>> +       fi
+>> +
+>> +       return "$failed"
+>> +}
+>> +
+>> +# Print the path to a given header in the tmp_dir
+>> +get_header() {
+>> +       local -r ref="$1"
+>> +       local -r arch="$2"
+>> +       local -r base="$3"
+>> +
+>> +       if [ -z "$arch" ]; then
+>> +               printf "%s" "${tmp_dir}/${ref}/usr/${base}"
+>> +       else
+>> +               printf "%s" "${tmp_dir}/${ref}/usr/$(printf "%s" "$base" | cut -d '/' -f 3-)"
+>> +       fi
+>> +}
+>> +
+>> +# Check an individual file for UAPI compatibility
+>> +check_individual_file() {
+>> +       local -r base_ref="$1"
+>> +       local -r ref="$2"
+>> +       local -r status="$3"
+>> +       local -r file="$4"
+>> +
+>> +       local -r base=${file/uapi\//}
+>> +       local -r uapi_arch="$(printf "%s" "$file" | grep -o 'arch/.*/uapi' | cut -d '/' -f 2)"
+>> +       local -r base_header=$(get_header "$base_ref" "$uapi_arch" "$base")
+>> +       local -r ref_header=$(get_header "$ref" "$uapi_arch" "$base")
+>> +       local -r installed_base="$(printf "%s" "$base_header" | grep -o "usr/include/.*" | cut -d '/' -f 3-)"
+>> +
+>> +       if [ "$status" = "D" ]; then
+>> +               eprintf "error - UAPI header %s was incorrectly removed\n" "$file" | tee "${base_header}.error"
+>> +               return 1
+>> +       fi
+>> +
+>> +       # shellcheck disable=SC2076
+>> +       if [[ " $(get_no_header_list | xargs) " =~ " $installed_base " ]]; then
+>> +               printf "warning - %s cannot be tested by this script (see usr/include/Makefile)\n" "$file" | tee "${base_header}.error"
+>> +               return 1
+>> +       fi
+>> +
+>> +       # shellcheck disable=SC2076
+>> +       if [[ " $(get_no_export_list | xargs) " =~ " $installed_base " ]]; then
+>> +               printf "warning - %s is not exported by the %s architecture, so cannot be tested\n" "$file" "$ARCH" | tee "${base_header}.error"
+>> +               return 1
+>> +       fi
+>> +
+>> +       for h in "$base_header" "$ref_header"; do
+>> +               if [ ! -f "$h" ]; then
+>> +                       eprintf "error - %s does not exist - cannot compare ABI\n" "$h" | tee "${h}.error"
+>> +                       return 1
+>> +               fi
+>> +       done
+>> +
+>> +       compare_abi "$file" "$base_header" "$ref_header" "$base_ref" "$ref"
+>> +}
+>> +
+>> +# Perform the A/B compilation and compare output ABI
+>> +compare_abi() {
+>> +       local -r file="$1"
+>> +       local -r base_header="$2"
+>> +       local -r ref_header="$3"
+>> +       local -r base_ref="$4"
+>> +       local -r ref="$5"
+>> +       local -r log="${tmp_dir}/log/$(basename "$file").log"
+>> +
+>> +       mkdir -p "$(dirname "$log")"
+>> +
+>> +       if ! do_compile "${tmp_dir}/${base_ref}/usr/include" "$base_header" "${base_header}.bin" 2> "$log"; then
+>> +               eprintf "error - couldn't compile version of UAPI header %s at %s\n" "$file" "$base_ref"
+>> +               cat "$log" >&2
+>> +               exit "$FAIL_COMPILE"
+>> +       fi
+>> +
+>> +       if ! do_compile "${tmp_dir}/${ref}/usr/include" "$ref_header" "${ref_header}.bin" 2> "$log"; then
+>> +               eprintf "error - couldn't compile version of UAPI header %s at %s\n" "$file" "$ref"
+>> +               cat "$log" >&2
+>> +               exit "$FAIL_COMPILE"
+>> +       fi
+>> +
+>> +       "$ABIDIFF" --non-reachable-types "${ref_header}.bin" "${base_header}.bin" > "$log" && ret="$?" || ret="$?"
+>> +       if [ "$ret" -eq 0 ]; then
+>> +               if [ "$VERBOSE" = "true" ]; then
+>> +                       printf "No ABI differences detected in %s from %s -> %s\n" "$file" "$ref" "${base_ref:-dirty tree}"
+>> +               fi
+>> +       else
+>> +               # Bits in abidiff's return code can be used to determine the type of error
+>> +               if [ $(("$ret" & 0x1)) -gt 0 ]; then
+>> +                       eprintf "error - abidiff did not run properly\n"
+>> +                       exit 1
+>> +               fi
+>> +
+>> +               # If the only changes were additions (not modifications to existing APIs), then
+>> +               # there's no problem. Ignore these diffs.
+>> +               if grep "Unreachable types summary" "$log" | grep -q "0 removed" &&
+>> +                  grep "Unreachable types summary" "$log" | grep -q "0 changed"; then
+>> +                       return 0
+>> +               fi
+>> +               {
+>> +                       printf "!!! ABI differences detected in %s from %s -> %s !!!\n\n" "$file" "$ref" "${base_ref:-dirty tree}"
+>> +                       sed  -e '/summary:/d' -e '/changed type/d' -e '/^$/d' -e 's/^/  /g' "$log"
+>> +
+>> +                       if ! cmp "$ref_header" "$base_header" > /dev/null 2>&1; then
+>> +                               printf "\nHeader file diff (after headers_install):\n"
+>> +                               diff -Naur "$ref_header" "$base_header" \
+>> +                                       | sed -e "s|${ref_header}|${ref}/${file}|g" \
+>> +                                             -e "s|${base_header}|${base_ref:-dirty}/${file}|g"
+>> +                               printf "\n"
+>> +                       else
+>> +                               printf "\n%s did not change between %s and %s...\n" "$file" "$ref" "${base_ref:-dirty tree}"
+>> +                               printf "It's possible a change to one of the headers it includes caused this error:\n"
+>> +                               grep '^#include' "$base_header"
+>> +                               printf "\n"
+>> +                       fi
+>> +               } | tee "${base_header}.error" >&2
+>> +               return 1
+>> +       fi
+>> +}
+>> +
+>> +min_version_is_satisfied() {
+>> +       local -r min_version="$1"
+>> +       local -r version_installed="$2"
+>> +
+>> +       printf "%s\n%s\n" "$min_version" "$version_installed" | sort -Vc > /dev/null 2>&1
+>> +}
+>> +
+>> +# Make sure we have the tools we need
+>> +check_deps() {
+>> +       ABIDIFF="${ABIDIFF:-abidiff}"
+>> +       CC="${CC:-gcc}"
+>> +       ARCH="${ARCH:-$(uname -m)}"
+>> +       if [ "$ARCH" = "x86_64" ]; then
+>> +               ARCH="x86"
+>> +       fi
+>> +
+>> +       local -r abidiff_min_version="1.7"
+>> +       local -r libdw_min_version_if_clang="0.171"
+>> +
+>> +       if ! command -v "$ABIDIFF" > /dev/null 2>&1; then
+>> +               eprintf "error - abidiff not found!\n"
+>> +               eprintf "Please install abigail-tools version %s or greater\n" "$abidiff_min_version"
+>> +               eprintf "See: https://sourceware.org/libabigail/manual/libabigail-overview.html\n"
+>> +               exit "$FAIL_PREREQ"
+>> +       fi
+>> +
+>> +       local -r abidiff_version="$("$ABIDIFF" --version | cut -d ' ' -f 2)"
+>> +       if ! min_version_is_satisfied "$abidiff_min_version" "$abidiff_version"; then
+>> +               eprintf "error - abidiff version too old: %s\n" "$abidiff_version"
+>> +               eprintf "Please install abigail-tools version %s or greater\n" "$abidiff_min_version"
+>> +               eprintf "See: https://sourceware.org/libabigail/manual/libabigail-overview.html\n"
+>> +               exit "$FAIL_PREREQ"
+>> +       fi
+>> +
+>> +       if ! command -v "$CC" > /dev/null 2>&1; then
+>> +               eprintf 'error - %s not found\n' "$CC"
+>> +               exit "$FAIL_PREREQ"
+>> +       fi
+>> +
+>> +       if "$CC" --version | grep -q clang; then
+>> +               local -r libdw_version="$(ldconfig -v 2>/dev/null | grep -v SKIPPED | grep -m 1 -o 'libdw-[0-9]\+.[0-9]\+' | cut -c 7-)"
+>> +               if ! min_version_is_satisfied "$libdw_min_version_if_clang" "$libdw_version"; then
+>> +                       eprintf "error - libdw version too old for use with clang: %s\n" "$libdw_version"
+>> +                       eprintf "Please install libdw from elfutils version %s or greater\n" "$libdw_min_version_if_clang"
+>> +                       eprintf "See: https://sourceware.org/elfutils/\n"
+>> +                       exit "$FAIL_PREREQ"
+>> +               fi
+>> +       fi
+>> +
+>> +       if [ ! -d "arch/${ARCH}" ]; then
+>> +               eprintf 'error - ARCH "%s" is not a subdirectory under arch/\n' "$ARCH"
+>> +               eprintf "Please set ARCH to one of:\n%s\n" "$(find arch -maxdepth 1 -mindepth 1 -type d -printf '%f ' | fmt)"
+>> +               exit "$FAIL_PREREQ"
+>> +       fi
+>> +}
+>> +
+>> +run() {
+>> +       local base_ref="$1"
+>> +       local -r check_all="$2"
+>> +       shift 2
+>> +       local -r orig_args="$*"
+>> +       if [ -z "$KERNEL_SRC" ]; then
+>> +               KERNEL_SRC="$(realpath "$(dirname "$0")"/..)"
+>> +       fi
+>> +
+>> +       cd "$KERNEL_SRC"
+>> +
+>> +       abi_error_log="${abi_error_log:-${KERNEL_SRC}/abi_error_log.txt}"
+>> +
+>> +       tmp_dir=$(mktemp -d)
+>> +       trap 'rm -rf "$tmp_dir"' EXIT
+>> +
+>> +       check_deps
+>> +
+>> +       # Set of UAPI directories to check by default
+>> +       UAPI_DIRS=(include/uapi arch/*/include/uapi)
+>> +       GIT_ARGS="--name-status --no-renames --format= --diff-filter=a -- ${UAPI_DIRS[*]/%/\/*.h}"
+>> +
+>> +       if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+>> +               eprintf "error - this script requires the kernel tree to be initialized with Git\n"
+>> +               exit "$FAIL_PREREQ"
+>> +       fi
+>> +
+>> +       # If there are no dirty UAPI files, use HEAD as base_ref
+>> +       # shellcheck disable=SC2086
+>> +       if [ -z "$base_ref" ] && git diff --exit-code $GIT_ARGS > /dev/null 2>&1; then
+> 
+> 
+> I think this behavior is difficult to understand.
+> 
+> I think it is clearer to do 'git diff' for the entire tree
+> when you determine the base_ref.
+> 
+> 
 
---EXPXy0S25JFamHAK--
+Okay. With the model of only looking at "make headers_install" output, I 
+imagine this bit will change anyway.
+
+> 
+> 
+> 
+>> +               base_ref="HEAD"
+>> +       fi
+>> +
+>> +       if [ -z "$past_ref" ]; then
+>> +               if [ -n "$base_ref" ]; then
+>> +                       past_ref="${base_ref}^1"
+>> +               else
+>> +                       past_ref="HEAD"
+>> +               fi
+>> +       fi
+> 
+> 
+> 
+> So, past_ref is set to either ${base_ref}^1 or HEAD here.
+> 
+> 
+> No quotes are needed for HEAD.
+> 
+>     past_ref=HEAD
+> 
+> is enough.
+> 
+> 
+> 
+>> +
+>> +       if [ -n "$past_ref" ] && ! git rev-parse --verify "$past_ref" > /dev/null 2>&1; then
+> 
+> 
+> [ -n "$past_ref" ] is always true since past_ref is set to something.
+> 
+> 
+
+Good point, must have missed this in an earlier refactor. Will fix in v4.
+
+> 
+> 
+> 
+> 
+> 
+> 
+>> +               printf 'error - invalid git reference "%s"\n' "$past_ref"
+>> +               exit "$FAIL_PREREQ"
+>> +       fi
+>> +
+>> +       if [ -n "$base_ref" ]; then
+>> +               if ! git merge-base --is-ancestor "$past_ref" "$base_ref" > /dev/null 2>&1; then
+>> +                       printf 'error - "%s" is not an ancestor of base ref "%s"\n' "$past_ref" "$base_ref"
+>> +                       exit "$FAIL_PREREQ"
+>> +               fi
+>> +       fi
+>> +
+>> +       if [ "$check_all" != "true" ] && ! get_uapi_files "$check_all" "$base_ref" "$past_ref" > /dev/null; then
+>> +               printf "No changes to UAPI headers were applied between %s and %s\n" "$past_ref" "$base_ref"
+>> +               exit "$SUCCESS"
+>> +       fi
+>> +
+>> +       if ! check_uapi_files "$check_all" "$base_ref" "$past_ref"; then
+>> +               eprintf "error - UAPI header ABI check failed\n"
+>> +               {
+>> +                       printf 'Generated by "%s %s" from git ref %s\n\n' "$0" "$orig_args" "$(git rev-parse "HEAD")"
+>> +                       find "$tmp_dir" -type f -name '*.error' -exec cat {} +
+>> +               } > "$abi_error_log"
+>> +               eprintf "Failure summary saved to %s\n" "$abi_error_log"
+>> +               exit "$FAIL_ABI"
+>> +       fi
+>> +}
+>> +
+>> +main() {
+>> +       MAX_THREADS=$(nproc)
+>> +       VERBOSE="false"
+>> +       local base_ref=""
+>> +       local check_all="true"
+>> +       local quiet="false"
+>> +       while getopts "hb:p:mj:l:qv" opt; do
+>> +               case $opt in
+>> +               h)
+>> +                       print_usage
+>> +                       exit "$SUCCESS"
+>> +                       ;;
+>> +               b)
+>> +                       base_ref="$OPTARG"
+>> +                       ;;
+>> +               p)
+>> +                       past_ref="$OPTARG"
+>> +                       ;;
+>> +               m)
+>> +                       check_all="false"
+>> +                       ;;
+>> +               j)
+>> +                       MAX_THREADS="$OPTARG"
+>> +                       ;;
+>> +               l)
+>> +                       abi_error_log="$OPTARG"
+>> +                       ;;
+>> +               q)
+>> +                       quiet="true"
+>> +                       ;;
+>> +               v)
+>> +                       VERBOSE="true"
+>> +                       ;;
+>> +               *)
+>> +                       exit "$FAIL_PREREQ"
+>> +               esac
+>> +       done
+>> +
+>> +       if [ "$quiet" = "true" ]; then
+>> +               run "$base_ref" "$check_all" "$@" > /dev/null
+>> +       else
+>> +               run "$base_ref" "$check_all" "$@"
+>> +       fi
+>> +}
+>> +
+>> +main "$@"
+>> --
+>> 2.17.1
+>>
+> 
+> 
+> --
+> Best Regards
+> Masahiro Yamada
+
+Thanks for the review!
