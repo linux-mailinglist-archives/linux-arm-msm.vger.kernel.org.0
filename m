@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09FED6C52BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 18:42:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FD336C52C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 18:42:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230036AbjCVRl6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 13:41:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57504 "EHLO
+        id S230211AbjCVRl7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 13:41:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230169AbjCVRl4 (ORCPT
+        with ESMTP id S230174AbjCVRl4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 22 Mar 2023 13:41:56 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 795485F6E7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 10:41:54 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id cy23so76050892edb.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 10:41:54 -0700 (PDT)
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6387A5DECB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 10:41:55 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id h8so76131402ede.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 10:41:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679506913;
+        d=linaro.org; s=google; t=1679506914;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=J7HvLHiM0yNYVR94aOydsK2tw/ZrP3jrkkPekAOv51g=;
-        b=GZvF2cNEbd5qaVApCSOIZ82OiRHJYd2LczLtSLFYVHP5Wn7lH0PUdA7OeADEZlEi7x
-         rF1pH4yC1mNtvCUQbrOFtSbWZQ+tHy3fVZ0lnDxKJaxGedHBNk/LuVGExHaMQC9+wSZQ
-         h0OEkYtzeOUcPYEgEhmX3Z0kxyabISOhQgXSU7swbx8fq+5Qt1PisD/MVY6QpKO2oiUr
-         AdXidgMu5Y0YwILtTM84tqqvhHVSmC+lQlxPa/rAUn0dzaLjpLCE9ZTwVpYPIZ+/cr37
-         tkR91i2WOgf8hzj/KF+xlKV/Kw6EBBt3o4wz7sgUA2tXZV5nLrk9BrBNXMRSNydg8DnO
-         EGjQ==
+        bh=dpSUX7WridYFFvb5Xp7cUrsNqCFgLBD3FO2lvz7TpLw=;
+        b=IV1x1BqgCGt63Cp1Rtj+Sl1p+8KgiPEaF3rr1g2nvx46txOZl3R7pJuM4R+EBFAG8P
+         i/Bi5FG7Nr0QPg1Dqt6HLXhJACgwWVtpn3zpyb1qLuf/rcclMJ8iTbZC+xmUKWAj4O7w
+         Ad8wEckfV7Lg1UTwBs9FW2uTn6/Oj82dFxyfhqiqZAwfnE7UAEUkY1xvhB83Ha5/HrpW
+         iMbF3SLu/hPf1j1UhJ4+9WphYQEkV0pLty8Z0Map6qG1zx8sr5E7z0l7KEB+8M5ywo6I
+         HSniMAzyCKjAerY9ZFRGvDMRR2ul7r++24WvRiUg1OdvuzFTBweF09vfHwTkBOupFcnU
+         6PFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679506913;
+        d=1e100.net; s=20210112; t=1679506914;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=J7HvLHiM0yNYVR94aOydsK2tw/ZrP3jrkkPekAOv51g=;
-        b=nKykl6KD/mVtF2uuAc6Lh+szCh/GrrVtDYuhF8oB5nYj7RFBPluJEyQtYgN2IeC3ZQ
-         9c7uBRS3/JdIvxUeLiByFlWMAt5Ks9JlfVrSjj9NqPQkh8+W4sqHdFtAR5jrW5RfevK2
-         ZzYdVdjg9EMwnbCDBfz0AiN1yNpZ7NMB8vYM/QS59NvIyTlCWzKz45WLdQfwKy1d/33e
-         PqspX5G/00BGsfb2p/atvpAQ9EUO7Q8q3ypt3Je/MUcmlFtOI/ax1ytZnA3q7T2AelCy
-         GlQqOsC0PXq6q32DoBv4R5vCitMgzJaz/Qomvye7m8ERGyqZ2TX+J51KeUZzo3bEuTHS
-         594g==
-X-Gm-Message-State: AO0yUKUwqipCrps4Bzx+eM7Xoq+TqAHJIZ7/tFNeZqtj4uBoUot6I3gW
-        yYj2ybNNE70QofDF12kT5V+dSw==
-X-Google-Smtp-Source: AK7set8Qqg/m7sdwIgjryhOkmY8jcPoyODI+I9mg0UQifuIq5KlCNLLRUuC/Ss7ttCwDhznmt7KfTg==
-X-Received: by 2002:a17:907:100b:b0:8f6:88b7:73a7 with SMTP id ox11-20020a170907100b00b008f688b773a7mr2909465ejb.7.1679506912987;
-        Wed, 22 Mar 2023 10:41:52 -0700 (PDT)
+        bh=dpSUX7WridYFFvb5Xp7cUrsNqCFgLBD3FO2lvz7TpLw=;
+        b=ZkFupK7fsuOnNcRLIzvfb4X3AIPb/32JcX71pIy+xoUrZmzhVdwOXWDqLS3gUa7LIz
+         5l9DL6S1aCsvy1oic5OfxdDjzU6B0Ws4iVw9sHQAZN7PqczUPF7cOG66BC45ZzY6Gtmj
+         pkf1TcCUzoyqtYC1QBGjcE5F1QD/X5ctDje0+x5lyD/0XMyWMYhkC3lk11nGrhyVZSNX
+         hPRBq3FqwoEjtxbB2Org2nslgkkXLHPDMvejNi9SHEVkUFxr0rbruSdewWmGIQUg78Fr
+         8kAC1UP1OgPVLx4fUSnYvmeHm29h8DW9bNwYB8u+JMw25SBfgdffBGOWPDbUY1FtL6pe
+         n+6Q==
+X-Gm-Message-State: AO0yUKXd/iVrgelW/vG0djNnxcSjIIKgz0m1i/br6IGNoZ5uu2gUqPa1
+        0UZ4ceCIvSjxhVZ+aQp1b9eb5w==
+X-Google-Smtp-Source: AK7set/aO2+dIbJ5tWFhN6pYhaj+pQe5AHVtFd1G1wRKBTmH5FX2UZ2lXtHGXiyxHNpCUzteIexImQ==
+X-Received: by 2002:a17:906:6083:b0:931:e5de:d28d with SMTP id t3-20020a170906608300b00931e5ded28dmr6467345ejj.33.1679506914038;
+        Wed, 22 Mar 2023 10:41:54 -0700 (PDT)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:5050:151b:e755:1c6])
-        by smtp.gmail.com with ESMTPSA id jx3-20020a170907760300b00930876176e2sm7548088ejc.29.2023.03.22.10.41.52
+        by smtp.gmail.com with ESMTPSA id jx3-20020a170907760300b00930876176e2sm7548088ejc.29.2023.03.22.10.41.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 10:41:52 -0700 (PDT)
+        Wed, 22 Mar 2023 10:41:53 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -59,11 +59,10 @@ To:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Subject: [PATCH v3 01/11] dt-bindings: mailbox: qcom,apcs-kpss-global: use fallbacks
-Date:   Wed, 22 Mar 2023 18:41:38 +0100
-Message-Id: <20230322174148.810938-2-krzysztof.kozlowski@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 02/11] mailbox: qcom-apcs-ipc: do not grow the of_device_id
+Date:   Wed, 22 Mar 2023 18:41:39 +0100
+Message-Id: <20230322174148.810938-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230322174148.810938-1-krzysztof.kozlowski@linaro.org>
 References: <20230322174148.810938-1-krzysztof.kozlowski@linaro.org>
@@ -78,158 +77,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rework the compatibles and group devices which have similar interface
-(same from Linux driver point of view) as compatible.  This allows
-smaller of_device_id table in the Linux driver and smaller
-allOf:if:then: constraints.
+Re-organize the compatible devices and add a comment to avoid unneeded
+of_device_id growth with every new SoC.  These devices have quite a lot
+of similarities and they can use only one compatible fallback for driver
+binding.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Rob Herring <robh@kernel.org>
-
 ---
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-Depends on:
-https://lore.kernel.org/linux-arm-msm/20230322173559.809805-1-krzysztof.kozlowski@linaro.org/T/#t
----
- .../mailbox/qcom,apcs-kpss-global.yaml        | 58 ++++++++++---------
- 1 file changed, 31 insertions(+), 27 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-index 4d2f408a5efb..792778924eb3 100644
---- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-+++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-@@ -19,32 +19,46 @@ properties:
-       - items:
-           - enum:
-               - qcom,ipq5332-apcs-apps-global
-+              - qcom,ipq8074-apcs-apps-global
-           - const: qcom,ipq6018-apcs-apps-global
-       - items:
-           - enum:
--              - qcom,ipq6018-apcs-apps-global
--              - qcom,ipq8074-apcs-apps-global
--              - qcom,msm8996-apcs-hmss-global
-+              - qcom,msm8939-apcs-kpss-global
-+              - qcom,qcs404-apcs-apps-global
-+          - const: qcom,msm8916-apcs-kpss-global
-+          - const: syscon
-+      - items:
-+          - enum:
-+              - qcom,msm8976-apcs-kpss-global
-+          - const: qcom,msm8994-apcs-kpss-global
-+          - const: syscon
-+      - items:
-+          - enum:
-               - qcom,msm8998-apcs-hmss-global
-               - qcom,qcm2290-apcs-hmss-global
--              - qcom,sc7180-apss-shared
--              - qcom,sc8180x-apss-shared
-               - qcom,sdm660-apcs-hmss-global
--              - qcom,sdm845-apss-shared
-               - qcom,sm4250-apcs-hmss-global
--              - qcom,sm6125-apcs-hmss-global
-               - qcom,sm6115-apcs-hmss-global
-+              - qcom,sm6125-apcs-hmss-global
-+          - const: qcom,msm8994-apcs-kpss-global
-+      - items:
-+          - enum:
-+              - qcom,sc7180-apss-shared
-+              - qcom,sc8180x-apss-shared
-               - qcom,sm8150-apss-shared
-+          - const: qcom,sdm845-apss-shared
-       - items:
-           - enum:
-               - qcom,msm8916-apcs-kpss-global
--              - qcom,msm8939-apcs-kpss-global
-               - qcom,msm8953-apcs-kpss-global
--              - qcom,msm8976-apcs-kpss-global
-               - qcom,msm8994-apcs-kpss-global
--              - qcom,qcs404-apcs-apps-global
-               - qcom,sdx55-apcs-gcc
-           - const: syscon
-+      - enum:
-+          - qcom,ipq6018-apcs-apps-global
-+          - qcom,msm8996-apcs-hmss-global
-+          - qcom,sdm845-apss-shared
-+
-   reg:
-     maxItems: 1
- 
-@@ -74,10 +88,9 @@ allOf:
-   - if:
-       properties:
-         compatible:
--          enum:
--            - qcom,msm8916-apcs-kpss-global
--            - qcom,msm8939-apcs-kpss-global
--            - qcom,qcs404-apcs-apps-global
-+          contains:
-+            enum:
-+              - qcom,msm8916-apcs-kpss-global
-     then:
-       properties:
-         clocks:
-@@ -88,6 +101,7 @@ allOf:
-           items:
-             - const: pll
-             - const: aux
-+
-   - if:
-       properties:
-         compatible:
-@@ -106,13 +120,13 @@ allOf:
-             - const: ref
-             - const: pll
-             - const: aux
-+
-   - if:
-       properties:
-         compatible:
-           contains:
-             enum:
-               - qcom,ipq6018-apcs-apps-global
--              - qcom,ipq8074-apcs-apps-global
-     then:
-       properties:
-         clocks:
-@@ -129,19 +143,9 @@ allOf:
-         compatible:
-           enum:
-             - qcom,msm8953-apcs-kpss-global
--            - qcom,msm8976-apcs-kpss-global
-             - qcom,msm8994-apcs-kpss-global
-             - qcom,msm8996-apcs-hmss-global
--            - qcom,msm8998-apcs-hmss-global
--            - qcom,qcm2290-apcs-hmss-global
--            - qcom,sc7180-apss-shared
--            - qcom,sc8180x-apss-shared
--            - qcom,sdm660-apcs-hmss-global
-             - qcom,sdm845-apss-shared
--            - qcom,sm4250-apcs-hmss-global
--            - qcom,sm6115-apcs-hmss-global
--            - qcom,sm6125-apcs-hmss-global
--            - qcom,sm8150-apss-shared
-     then:
-       properties:
-         clocks: false
-@@ -153,7 +157,6 @@ allOf:
-           contains:
-             enum:
-               - qcom,ipq6018-apcs-apps-global
--              - qcom,ipq8074-apcs-apps-global
-     then:
-       properties:
-         '#clock-cells':
-@@ -188,7 +191,8 @@ examples:
-     #define GCC_APSS_AHB_CLK_SRC  1
-     #define GCC_GPLL0_AO_OUT_MAIN 123
-     apcs: mailbox@b011000 {
--        compatible = "qcom,qcs404-apcs-apps-global", "syscon";
-+        compatible = "qcom,qcs404-apcs-apps-global",
-+                     "qcom,msm8916-apcs-kpss-global", "syscon";
-         reg = <0x0b011000 0x1000>;
-         #mbox-cells = <1>;
-         clocks = <&apcs_hfpll>, <&gcc GCC_GPLL0_AO_OUT_MAIN>;
+diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+index 6bbf87c6d60b..f3ac0b035945 100644
+--- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
++++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+@@ -143,17 +143,19 @@ static int qcom_apcs_ipc_remove(struct platform_device *pdev)
+ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
+ 	{ .compatible = "qcom,ipq5332-apcs-apps-global", .data = &ipq6018_apcs_data },
+ 	{ .compatible = "qcom,ipq6018-apcs-apps-global", .data = &ipq6018_apcs_data },
+-	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = &ipq6018_apcs_data },
+ 	{ .compatible = "qcom,msm8916-apcs-kpss-global", .data = &msm8916_apcs_data },
+-	{ .compatible = "qcom,msm8939-apcs-kpss-global", .data = &msm8916_apcs_data },
+ 	{ .compatible = "qcom,msm8953-apcs-kpss-global", .data = &msm8994_apcs_data },
++	{ .compatible = "qcom,msm8996-apcs-hmss-global", .data = &msm8996_apcs_data },
++	{ .compatible = "qcom,sc7180-apss-shared", .data = &apps_shared_apcs_data },
++	{ .compatible = "qcom,sdx55-apcs-gcc", .data = &sdx55_apcs_data },
++	/* Do not add any more entries using existing driver data */
++	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = &ipq6018_apcs_data },
++	{ .compatible = "qcom,msm8939-apcs-kpss-global", .data = &msm8916_apcs_data },
+ 	{ .compatible = "qcom,msm8976-apcs-kpss-global", .data = &msm8994_apcs_data },
+ 	{ .compatible = "qcom,msm8994-apcs-kpss-global", .data = &msm8994_apcs_data },
+-	{ .compatible = "qcom,msm8996-apcs-hmss-global", .data = &msm8996_apcs_data },
+ 	{ .compatible = "qcom,msm8998-apcs-hmss-global", .data = &msm8994_apcs_data },
+ 	{ .compatible = "qcom,qcm2290-apcs-hmss-global", .data = &msm8994_apcs_data },
+ 	{ .compatible = "qcom,qcs404-apcs-apps-global", .data = &msm8916_apcs_data },
+-	{ .compatible = "qcom,sc7180-apss-shared", .data = &apps_shared_apcs_data },
+ 	{ .compatible = "qcom,sc8180x-apss-shared", .data = &apps_shared_apcs_data },
+ 	{ .compatible = "qcom,sdm660-apcs-hmss-global", .data = &msm8994_apcs_data },
+ 	{ .compatible = "qcom,sdm845-apss-shared", .data = &apps_shared_apcs_data },
+@@ -161,7 +163,6 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
+ 	{ .compatible = "qcom,sm6125-apcs-hmss-global", .data = &msm8994_apcs_data },
+ 	{ .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
+ 	{ .compatible = "qcom,sm6115-apcs-hmss-global", .data = &msm8994_apcs_data },
+-	{ .compatible = "qcom,sdx55-apcs-gcc", .data = &sdx55_apcs_data },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, qcom_apcs_ipc_of_match);
 -- 
 2.34.1
 
