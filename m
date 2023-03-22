@@ -2,115 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B74B16C4ECB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 16:01:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ED72C6C4ED6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 16:03:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229928AbjCVPBw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 11:01:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46214 "EHLO
+        id S229482AbjCVPDk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 11:03:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbjCVPBv (ORCPT
+        with ESMTP id S230171AbjCVPDj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 11:01:51 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FCAB11643;
-        Wed, 22 Mar 2023 08:01:50 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (213-243-189-158.bb.dnainternet.fi [213.243.189.158])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 5B113BC1;
-        Wed, 22 Mar 2023 16:01:47 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1679497307;
-        bh=Az9CmcJ+XBb4olbWe91Aj3r8+M/Mn03lE84beJHYWcQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=WKXlws0YL/fxPG1M5ZQGaWla8QrHlrOYNJMXI2o/UFolpE4TobnpdShV9cjraTqeO
-         MwA6homUVXpEZ5ca7dTz/vAQQhQlSiv7sA8a4cprGocH5iNqqFk8jBFOGn1mJ3u5mP
-         wimrpwmLpPfLk6YPVwEV2dY/f3itqV+8uUElZbK8=
-Date:   Wed, 22 Mar 2023 17:01:53 +0200
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Nicolas Dufresne <nicolas@ndufresne.ca>
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        David Laight <David.Laight@ACULAB.COM>,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        "tfiga@chromium.org" <tfiga@chromium.org>,
-        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
-        "mchehab@kernel.org" <mchehab@kernel.org>,
-        "ming.qian@nxp.com" <ming.qian@nxp.com>,
-        "shijie.qin@nxp.com" <shijie.qin@nxp.com>,
-        "eagle.zhou@nxp.com" <eagle.zhou@nxp.com>,
-        "bin.liu@mediatek.com" <bin.liu@mediatek.com>,
-        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
-        "angelogioacchino.delregno@collabora.com" 
-        <angelogioacchino.delregno@collabora.com>,
-        "tiffany.lin@mediatek.com" <tiffany.lin@mediatek.com>,
-        "andrew-ct.chen@mediatek.com" <andrew-ct.chen@mediatek.com>,
-        "yunfei.dong@mediatek.com" <yunfei.dong@mediatek.com>,
-        "stanimir.k.varbanov@gmail.com" <stanimir.k.varbanov@gmail.com>,
-        "quic_vgarodia@quicinc.com" <quic_vgarodia@quicinc.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "andersson@kernel.org" <andersson@kernel.org>,
-        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
-        "ezequiel@vanguardiasur.com.ar" <ezequiel@vanguardiasur.com.ar>,
-        "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
-        "daniel.almeida@collabora.com" <daniel.almeida@collabora.com>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-mediatek@lists.infradead.org" 
-        <linux-mediatek@lists.infradead.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-rockchip@lists.infradead.org" 
-        <linux-rockchip@lists.infradead.org>,
-        "kernel@collabora.com" <kernel@collabora.com>
-Subject: Re: [RFC 2/4] media: videobuf2: Replace bufs array by a list
-Message-ID: <20230322150153.GO20234@pendragon.ideasonboard.com>
-References: <20230313135916.862852-1-benjamin.gaignard@collabora.com>
- <20230313135916.862852-3-benjamin.gaignard@collabora.com>
- <20230313181155.GC22646@pendragon.ideasonboard.com>
- <86df05244d974416903e919d387a0a0b@AcuMS.aculab.com>
- <e704b505-86d8-c6f2-8546-adccdab72622@xs4all.nl>
- <dc04d48e34ed40e58f43badd001a81d0@AcuMS.aculab.com>
- <cbf34cf1-e065-8136-8344-89ca1864f637@xs4all.nl>
- <20230319233358.GD20234@pendragon.ideasonboard.com>
- <f085aa9225c573df906bdc7ff032a8fd591b18b3.camel@ndufresne.ca>
+        Wed, 22 Mar 2023 11:03:39 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5124D21A35;
+        Wed, 22 Mar 2023 08:03:36 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id lr16-20020a17090b4b9000b0023f187954acso19435148pjb.2;
+        Wed, 22 Mar 2023 08:03:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679497416;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vlDYEVeWXdvuDC7Z36pSTJuAsUJDvI1ubkbi2mOoDLM=;
+        b=F6Wn/NvBdQrl5XFsJGT250xMrB1RP45wxwAU77e16tYFLnCA4vM6jzPDvt65zJ0Phe
+         OLB75CccwBaLXOw4EQMvErfr91/wHM976Fet7kBrwfRUlNXqJhxnJOu94yIeZPb0TchO
+         YmeSko0HsWl37Z0EpECz5+HbTOQG5kotRunJLlNLvmO9ljXAfPtW3AT2c/rM4j2xxvE0
+         uQL+Cut9g8fjJMEv7Z/ETA03NZDeAKz/4HTRpl0pZAbEfb5CB8xW37pDezxEELMklaoE
+         9crhirwDWaeH3Z3DabmtBuSdSUJ1IC+5tcRSO3ko3T6sIUeOxbplYD+Ky3JJXtNpMc94
+         yUyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679497416;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vlDYEVeWXdvuDC7Z36pSTJuAsUJDvI1ubkbi2mOoDLM=;
+        b=s39dJmYh8LBKr5n6x+teeH/cziULUE2yTZ1DtsKZD4PDk6YiBBonpYkXA8oAmTYo0i
+         XgDam4SZMrV1nPPzCVnNC0x+0GxvA5t9jMwbsLiGroQuHdljRFbWKUJht7wzw8dJv66G
+         AHEVlUPxys+EwesKVq2xgxfWvCPdfs6gbP/1VgU94WiFlB55AtP5KlRSh2WE6QyHU4bx
+         udqH7MBpSIB/bEvgVmJbNodT+teIjjtyyFgvhNLHF32PWtI3D9TrFlZqg0PWbAEBLQwc
+         6afsZe0lJuP46MRiUukUOToh75DYiXLn3vvJjbJ+QB3TAOEJPbadNdlw4upP61cHFH3v
+         VJwQ==
+X-Gm-Message-State: AO0yUKUkvKgwOhByqpB01Kpqs0AOZW0+IKmHQuTKDQ5ATAqepJNNJVrL
+        r5L1B98gy25nZCH0aBNc0c8=
+X-Google-Smtp-Source: AK7set/ol1/Ysh6iIZcjzavsEW0i0qlM2XSsNN8OYuiqN9bGCLaZLP0W5jGaakKQGAgMYGatTlUJXg==
+X-Received: by 2002:a17:903:1391:b0:19c:e05a:ea6 with SMTP id jx17-20020a170903139100b0019ce05a0ea6mr2530816plb.56.1679497416393;
+        Wed, 22 Mar 2023 08:03:36 -0700 (PDT)
+Received: from localhost.localdomain (n220246252084.netvigator.com. [220.246.252.84])
+        by smtp.gmail.com with ESMTPSA id o7-20020a635d47000000b0050fb4181e8bsm2761238pgm.40.2023.03.22.08.03.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Mar 2023 08:03:35 -0700 (PDT)
+From:   Jianhua Lu <lujianhua000@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Jianhua Lu <lujianhua000@gmail.com>
+Subject: [PATCH 1/4] arm64: dts: qcom: move elish dts to common dtsi
+Date:   Wed, 22 Mar 2023 23:03:17 +0800
+Message-Id: <20230322150320.31787-1-lujianhua000@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <f085aa9225c573df906bdc7ff032a8fd591b18b3.camel@ndufresne.ca>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 22, 2023 at 10:50:52AM -0400, Nicolas Dufresne wrote:
-> Hi Laurent,
-> 
-> Le lundi 20 mars 2023 à 01:33 +0200, Laurent Pinchart a écrit :
-> > > The typical usage is that applications allocate N buffers with the
-> > > VIDIOC_REQBUFS ioctl, and in most cases that's all they use.
-> > 
-> > Note that once we get DELETE_BUF (or DELETE_BUFS) support I'd like to
-> > encourage applications to use the new API, and deprecate REQBUFS
-> > (dropping it isn't on my radar, as it would take forever before no
-> > userspace uses it anymore).
-> 
-> I was wondering if you can extend on this. I'm worried the count semantic might
-> prevent emulating it over create_bufs() ops, but if that works, did you meant to
-> emulate it so driver no longer have to implement reqbufs() if they have
-> create_bufs() ?
+There are two panel variants of xiaomi-elish, BOE and CSOT panel.
+In order to support both panels, so move elish dts to common dtsi.
 
-For drivers it should be fairly simply, as the reqbufs and create_bufs
-ioctl handlers should just point to the corresponding videobuf2 helpers.
+Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+---
+ ...m8250-xiaomi-elish.dts => sm8250-xiaomi-elish-common.dtsi} | 4 ----
+ 1 file changed, 4 deletions(-)
+ rename arch/arm64/boot/dts/qcom/{sm8250-xiaomi-elish.dts => sm8250-xiaomi-elish-common.dtsi} (99%)
 
-What I meant is that I'd like to encourage userspace to use the
-VIDIOC_CREATE_BUFS ioctl instead of VIDIOC_REQBUFS.
-
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+similarity index 99%
+rename from arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
+rename to arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+index dd79671f5614..a43d4b73ffca 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
++++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+@@ -3,8 +3,6 @@
+  * Copyright (c) 2022, 2023 Jianhua Lu <lujianhua000@gmail.com>
+  */
+ 
+-/dts-v1/;
+-
+ #include <dt-bindings/arm/qcom,ids.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "sm8250.dtsi"
+@@ -24,8 +22,6 @@
+ /delete-node/ &xbl_aop_mem;
+ 
+ / {
+-	model = "Xiaomi Mi Pad 5 Pro";
+-	compatible = "xiaomi,elish", "qcom,sm8250";
+ 	classis-type = "tablet";
+ 
+ 	/* required for bootloader to select correct board */
 -- 
-Regards,
+2.39.2
 
-Laurent Pinchart
