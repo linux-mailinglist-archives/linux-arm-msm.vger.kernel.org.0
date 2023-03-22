@@ -2,108 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 689D46C4E8C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 15:52:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB3FC6C4E9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 15:54:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231300AbjCVOww (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 10:52:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45438 "EHLO
+        id S229799AbjCVOy4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 10:54:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229744AbjCVOwc (ORCPT
+        with ESMTP id S230195AbjCVOyi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 10:52:32 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DADE6A41E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:50:56 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id n2so22945910qtp.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:50:56 -0700 (PDT)
+        Wed, 22 Mar 2023 10:54:38 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE4FA4C6F2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:53:24 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id i5so27168423eda.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:53:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20210112.gappssmtp.com; s=20210112; t=1679496655;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=xqEwR0mnH2dQTWES7qcpZxyDU3kIdJJrQjcIfcIfUws=;
-        b=4mDo4UpOGVHUWLxUshM4Dz9N05BjdMLZQ56BMssgs0qciRkedoa4RVR4EJUVB3FRjs
-         Ve7/uD241dSYiTmpXtZO/ZPzqSqxEq1/dEWNWiCFmglU4N115xERZS8mj66G1g44ObEU
-         DUXgol5g66ixnMBg57YAmEiwVV5RMg8nWH9LyC9QJfrkVJZnspc3wbP4ekuFLLG990eZ
-         p0dt1wZDF0FDDJHO6VuJnmTyVBSfbRBkRPEWGQawc0zvjyxupCmql6MVg/fw3DeJxUwp
-         6EoMlWZn20w7yUhUSWMybVMwQUzOlI3RCagsvYnUA360+1fl0qLv0KXrHwazDroI58FA
-         Cilg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679496655;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+        d=linaro.org; s=google; t=1679496803;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xqEwR0mnH2dQTWES7qcpZxyDU3kIdJJrQjcIfcIfUws=;
-        b=1fFGrUy6D+4TxiaEDhxziEbR3raUpON7EIjtYUce2G1SF4QC8tuljrk9VM6TuJBwKV
-         cF7jMmRgA8S0bexXcC56KI2QvTeORnJYgCkfSVx+OUkKcgXJaJf9GloPkE6RrtYRuIoz
-         O71VTCRvJmrXqKmEhjhJVYCnA2Fss3wl2oKNyGcV79R8ghRxG87qR7QyUN+VEp0Qe61c
-         hvK4touoyU+nsBgHDfPhfTIAFK1aNcuz8NA7V6ThK1hh6hLnWEE7zR+Pz4W7m4qgiw7g
-         LfP2f426eH312+BxQtURzKqvZ5V0G1FG1OTcGwCw0yJkzSoqCoqIFBfOmktxsm04l0F9
-         ue/A==
-X-Gm-Message-State: AO0yUKU0sA1afB1WuOOdUzNBsR5eQKu9agbiXB67BUHGisUEi+yGQQXC
-        M9Q+As9cu8gZXvF/Top3NJDYsw==
-X-Google-Smtp-Source: AK7set+olGnH2L8HiH8wu79IhsPwiTafG3zfFFddwhNxvuWfFc+q5aG+tjjynN8ff7zGF9L/LuK8og==
-X-Received: by 2002:a05:622a:4d2:b0:3bf:e471:69a3 with SMTP id q18-20020a05622a04d200b003bfe47169a3mr6127461qtx.65.1679496655113;
-        Wed, 22 Mar 2023 07:50:55 -0700 (PDT)
-Received: from nicolas-tpx395.localdomain (192-222-136-102.qc.cable.ebox.net. [192.222.136.102])
-        by smtp.gmail.com with ESMTPSA id 69-20020a370c48000000b00746777fd176sm5025558qkm.26.2023.03.22.07.50.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 07:50:54 -0700 (PDT)
-Message-ID: <f085aa9225c573df906bdc7ff032a8fd591b18b3.camel@ndufresne.ca>
-Subject: Re: [RFC 2/4] media: videobuf2: Replace bufs array by a list
-From:   Nicolas Dufresne <nicolas@ndufresne.ca>
-To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Cc:     David Laight <David.Laight@ACULAB.COM>,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        "tfiga@chromium.org" <tfiga@chromium.org>,
-        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
-        "mchehab@kernel.org" <mchehab@kernel.org>,
-        "ming.qian@nxp.com" <ming.qian@nxp.com>,
-        "shijie.qin@nxp.com" <shijie.qin@nxp.com>,
-        "eagle.zhou@nxp.com" <eagle.zhou@nxp.com>,
-        "bin.liu@mediatek.com" <bin.liu@mediatek.com>,
-        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
-        "angelogioacchino.delregno@collabora.com" 
-        <angelogioacchino.delregno@collabora.com>,
-        "tiffany.lin@mediatek.com" <tiffany.lin@mediatek.com>,
-        "andrew-ct.chen@mediatek.com" <andrew-ct.chen@mediatek.com>,
-        "yunfei.dong@mediatek.com" <yunfei.dong@mediatek.com>,
-        "stanimir.k.varbanov@gmail.com" <stanimir.k.varbanov@gmail.com>,
-        "quic_vgarodia@quicinc.com" <quic_vgarodia@quicinc.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "andersson@kernel.org" <andersson@kernel.org>,
-        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
-        "ezequiel@vanguardiasur.com.ar" <ezequiel@vanguardiasur.com.ar>,
-        "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
-        "daniel.almeida@collabora.com" <daniel.almeida@collabora.com>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-mediatek@lists.infradead.org" 
-        <linux-mediatek@lists.infradead.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-rockchip@lists.infradead.org" 
-        <linux-rockchip@lists.infradead.org>,
-        "kernel@collabora.com" <kernel@collabora.com>
-Date:   Wed, 22 Mar 2023 10:50:52 -0400
-In-Reply-To: <20230319233358.GD20234@pendragon.ideasonboard.com>
-References: <20230313135916.862852-1-benjamin.gaignard@collabora.com>
-         <20230313135916.862852-3-benjamin.gaignard@collabora.com>
-         <20230313181155.GC22646@pendragon.ideasonboard.com>
-         <86df05244d974416903e919d387a0a0b@AcuMS.aculab.com>
-         <e704b505-86d8-c6f2-8546-adccdab72622@xs4all.nl>
-         <dc04d48e34ed40e58f43badd001a81d0@AcuMS.aculab.com>
-         <cbf34cf1-e065-8136-8344-89ca1864f637@xs4all.nl>
-         <20230319233358.GD20234@pendragon.ideasonboard.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4 (3.46.4-1.fc37) 
+        bh=qB6CqrQG0O85iIeK2/9UU3y3s70XZTORdp66X0QLG10=;
+        b=t2QtOEPQITEAqrfcEMg5f8r2igPACmc/vitkqzn60BElrRIc3DLc7yCaj3Gm9ADi36
+         v4iM6OEHFLCEH5d5QdZPXWkwsgD6A2A77sC4eLKs1VYbGJCS5Ia5rlUgFNGA6RE4SDlw
+         SE3wsOICE+9kqcqVoMB6r3L/hFAFoOZzBpxOh8hqfq81dRDHUqfKeIxGAUo9zt4X+5gj
+         GPJqZY+dwI6kkvrvV93H+2YdPANNt5T/XuwpcKUCVYfUWseX6faUpX/iNxwMki91bXiw
+         fMBmREapmRuKV97mc7itsbJ6NCQoznnXNoH/iMi5MwBv0ivoquT6+A1xcQGKCzdMIcDD
+         ZQbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679496803;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qB6CqrQG0O85iIeK2/9UU3y3s70XZTORdp66X0QLG10=;
+        b=g5/Qn7ASHo9RWGMLPfptCNIvkbOhBaX3Rcl8MZcAH/oNUSCy58XKzQsldVhH1r4iTh
+         y4QbY6aCk9VEmH/RAnTJUdTopeRNnqWeMt5oRV3N8QfG4AY7C2+AvqekNs1g1+Zn4Km7
+         XbHk9c0szqwDqKPWhB/UlyDjm/x3ZRigJ9EYbLxaFS7CFaFRc2oyD8nsrBF2X7a4vGZe
+         d1Lg3oHyKvOgLwa8M0lSPg4K0mayvhzTkfIdogEKVuAslxhZoSlIk7GMpeR1jT0719j3
+         aMWCXeAmRqIsT4UgyNHrDed98F+vrP4b9hVX10q0TurI3LvQww8tUt2/jAlkYXZu6mvp
+         We/Q==
+X-Gm-Message-State: AO0yUKXIToqAN/QC79ldcGm6Csm3jMEG9InDNqPOr1+jtI2QQE3YrRAC
+        NUH+G7byUquNdHcFCOdDBaWzCc/c+xMelJeL6mI=
+X-Google-Smtp-Source: AK7set/TvLlLhJWVyQQ7HaqKCpn6yL1O/38sfD9/Gd/9HSGELN0CjCbVEupJw+wrerGH1y0xouZvEw==
+X-Received: by 2002:a17:906:f8db:b0:8b1:7ae8:ba6f with SMTP id lh27-20020a170906f8db00b008b17ae8ba6fmr7152751ejb.16.1679496803408;
+        Wed, 22 Mar 2023 07:53:23 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:5050:151b:e755:1c6? ([2a02:810d:15c0:828:5050:151b:e755:1c6])
+        by smtp.gmail.com with ESMTPSA id s26-20020a170906169a00b009200601ea12sm7224670ejd.208.2023.03.22.07.53.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Mar 2023 07:53:23 -0700 (PDT)
+Message-ID: <7b939818-993a-e849-e7e0-ae9ea74ea52b@linaro.org>
+Date:   Wed, 22 Mar 2023 15:53:21 +0100
 MIME-Version: 1.0
-X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH V1 3/4] soc: qcom: boot_stat: Add Driver Support for Boot
+ Stats
+Content-Language: en-US
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <cover.1679403696.git.quic_schowdhu@quicinc.com>
+ <3f385562845ae26d519940ca8098fde89282991b.1679403696.git.quic_schowdhu@quicinc.com>
+ <611ea918-64a6-f306-b5ec-db55e41abda2@linaro.org>
+ <321005fc-1bfd-c04d-b2b5-d85d213ac00a@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <321005fc-1bfd-c04d-b2b5-d85d213ac00a@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -111,23 +86,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Laurent,
+On 22/03/2023 14:54, Souradeep Chowdhury wrote:
+> 
+> 
+> On 3/21/2023 11:07 PM, Krzysztof Kozlowski wrote:
+>> On 21/03/2023 14:51, Souradeep Chowdhury wrote:
+>>> All of Qualcomm's proprietary Android boot-loaders capture boot time
+>>> stats, like the time when the bootloader started execution and at what
+>>> point the bootloader handed over control to the kernel etc. in the IMEM
+>>> region. This information is captured in a specific format by this driver
+>>> by mapping a structure to the IMEM memory region and then accessing the
+>>> members of the structure to print the information. This information is
+>>> useful in verifying if the existing boot KPIs have regre
+>>
+>>
+>>> +/**
+>>> + *  struct boot_stats - timestamp information related to boot stats
+>>> + *  @bootloader_start:	Time for the starting point of the abl bootloader
+>>> + *  @bootloader_end:	Time when the kernel starts loading from abl bootloader
+>>> + */
+>>> +struct boot_stats {
+>>> +	u32 bootloader_start;
+>>> +	u32 bootloader_end;
+>>> +} __packed;
+>>> +
+>>> +static struct boot_stats __iomem *boot_stats;
+>>> +static void __iomem *mpm_counter_base;
+>>> +static u32 mpm_counter_freq;
+>>
+>> No file-scope variables. Does not scale, not easy for review and
+>> maintenance. Avoid such code.
+> 
+> Ack
+>>
+>>> +
+>>> +static int mpm_parse_dt(void)
+>>> +{
+>>> +	struct device_node *np_imem, *np_mpm2;
+>>> +
+>>> +	np_imem = of_find_compatible_node(NULL, NULL,
+>>> +					  "qcom,imem-boot_stats");
+>>> +	if (!np_imem) {
+>>> +		pr_err("can't find qcom,imem node\n");
+>>
+>> So you are printing errors everywhere, on every soc and with compile
+>> test on every platform there is in the world... sorry, it does not work
+>> like that.
+> 
+> Ack
+>>
+>>> +		return -ENODEV;
+>>> +	}
+>>> +	boot_stats = of_iomap(np_imem, 0);
+>>> +	if (!boot_stats) {
+>>> +		pr_err("boot_stats: Can't map imem\n");
+>>> +		goto err1;
+>>> +	}
+>>
+>>
+>>> +
+>>> +static void __exit boot_stats_exit(void)
+>>> +{
+>>> +}
+>>> +module_exit(boot_stats_exit)
+>>
+>>
+>> I don't think this is some special code which deserves init calls. Make
+>> it module_platform_driver().
+> 
+> Since this just reads some values from the Imem region and prints it to 
+> the user and doesn't have a specific device associated with it, a 
 
-Le lundi 20 mars 2023 =C3=A0 01:33 +0200, Laurent Pinchart a =C3=A9crit=C2=
-=A0:
-> > The typical usage is that applications allocate N buffers with the
-> > VIDIOC_REQBUFS ioctl, and in most cases that's all they use.
->=20
-> Note that once we get DELETE_BUF (or DELETE_BUFS) support I'd like to
-> encourage applications to use the new API, and deprecate REQBUFS
-> (dropping it isn't on my radar, as it would take forever before no
-> userspace uses it anymore).
+Which is not really an argument for such antipattern, but okay...
 
-I was wondering if you can extend on this. I'm worried the count semantic m=
-ight
-prevent emulating it over create_bufs() ops, but if that works, did you mea=
-nt to
-emulate it so driver no longer have to implement reqbufs() if they have
-create_bufs() ?
+> generic module code is written for it and not a module_platform_driver().
 
-Nicolas
+... so how do you handle deferred probe?
+
+Best regards,
+Krzysztof
+
