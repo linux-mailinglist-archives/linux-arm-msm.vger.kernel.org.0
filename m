@@ -2,83 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FAEC6C4D24
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 15:11:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B39716C4D39
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 15:14:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231248AbjCVOLx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 10:11:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37330 "EHLO
+        id S229865AbjCVOOS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 10:14:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231331AbjCVOLs (ORCPT
+        with ESMTP id S229794AbjCVOOR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 10:11:48 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F33AF60D6A;
-        Wed, 22 Mar 2023 07:11:45 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32MCpcVi011279;
-        Wed, 22 Mar 2023 14:11:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Vemu7qiT1mPDOUsmvY7OHgh2fRESakJx8u/T0nigTwM=;
- b=h+72E3Xy+IIwQQwLd7/sTlat2yyE97W+nW9utCFBr7FH04I4sfEYKvGai8fIoKH2bKpz
- VZmilUkOUNMC2sRHhUII+eiawZ6dI/DE6BeFcU19NBlKlIT4zZoQtni1668pzuN7MPlt
- 1hr0Rr2i2UzSIIylI0O9d0KOkGaAKsS9dFJfEXQDxpoqpyhjuV7bJW6UT85vSugg/20w
- FbOUpXiLP79RP8/l90x2R2U11X7dmhcsNK5ssLeLHN+aIm4Em1RtPm54+KrsoE31UsJK
- MvK3MJpV9S9mrg+zlKr41aUejKrvbcdJgq/GUZRWr4xfDgBP2WUrOcdgiG9FljcBRqd2 0Q== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pfhntjarv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 22 Mar 2023 14:11:30 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32MEBT8B028110
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 22 Mar 2023 14:11:29 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 22 Mar
- 2023 07:11:28 -0700
-Message-ID: <e9b9bd7e-89d8-9a95-a6b5-0a4c82b609bb@quicinc.com>
-Date:   Wed, 22 Mar 2023 08:11:27 -0600
+        Wed, 22 Mar 2023 10:14:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 339E62737
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:13:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1679494407;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=gIhIZ9iTRojGJMYiKTfmFBTTGDFbr5/gvROIxAATKTs=;
+        b=Alz3ehPOSIPTZ6fgoMgVa+oXtH5zDgjlU+zpci1ugRLrfon8O3khuErjvyBbzEdXZQlZI1
+        RrAKDnyF7buqWjicShli3vXVVIChMtK+87FlNfpNsukQDuGW4yK+/Y1UvcrwGYmypgmWRq
+        Chb2zmUY1ua5tK9MqZZdHSU0PRd80/g=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-90-bCaO19EQMkGiq9RQMkiFew-1; Wed, 22 Mar 2023 10:13:25 -0400
+X-MC-Unique: bCaO19EQMkGiq9RQMkiFew-1
+Received: by mail-wm1-f71.google.com with SMTP id k29-20020a05600c1c9d00b003ee3a8d547eso2495054wms.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:13:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679494404;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gIhIZ9iTRojGJMYiKTfmFBTTGDFbr5/gvROIxAATKTs=;
+        b=PmwstFLmpqEcd3+tk4tEa88OYDJX1djHEiDTQcHtzMynAw9kuxaJ/MDcdezvwhTya3
+         6c967S1dNuX7zbMSiaxrpFhgHWzN6gJaDt4VEF5ai5/GOF4Obp0n0psqgteEBBOwmpIa
+         ln23FHvh5277gYj/Nc7CB7El/F1KPs7tFnE5Xr4yOBNEP94gLiCpAuK/OzCyPWNbcHdj
+         SPtMH1X+Th6ai3Ivl2S6s+bZRsvGnwJBQli7NynfEwgreupBwCgMp47VIbqqTtf1NK3/
+         3W+7qM/LrHEZiGnPnHdcmEyJsdzyFbb2y/aTBwrst5PCjaUkHWuIOoYOAnHq/Nl4RGW9
+         +jKQ==
+X-Gm-Message-State: AAQBX9d20paPrKhzYCATGeb2f5sUprWqD7GFLLTdZ2+Y25zeTTFqDX+m
+        UMoQaMwsq98HP74VsNUI8Q+tmtsRluCxhDXX87QxFi0O/EdpdUopujsY0zgVTLVeqtTbCFjl+Iy
+        pRYMPW3GJkMfb9+LqG7onQ7kxPg==
+X-Received: by 2002:a05:6000:1cb:b0:2d3:f610:8410 with SMTP id t11-20020a05600001cb00b002d3f6108410mr48481wrx.0.1679494404217;
+        Wed, 22 Mar 2023 07:13:24 -0700 (PDT)
+X-Google-Smtp-Source: AKy350bwPM1I+KdwU+k+LnKMhL8L8AvemWt4BBwZWovdn++jO3C4QynGXhNPsmQm5XFePAlaJEWMPA==
+X-Received: by 2002:a05:6000:1cb:b0:2d3:f610:8410 with SMTP id t11-20020a05600001cb00b002d3f6108410mr48464wrx.0.1679494403910;
+        Wed, 22 Mar 2023 07:13:23 -0700 (PDT)
+Received: from localhost (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id c15-20020adfef4f000000b002c7066a6f77sm13914075wrp.31.2023.03.22.07.13.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Mar 2023 07:13:23 -0700 (PDT)
+From:   Javier Martinez Canillas <javierm@redhat.com>
+To:     Jordan Crouse <jorcrous@amazon.com>,
+        Enric Balletbo i Serra <eballetb@redhat.com>
+Cc:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        linux-kernel@vger.kernel.org, Albert Esteve <aesteve@redhat.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Sergio Lopez <slp@redhat.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH] media: venus: dec: Fix capture formats enumeration order
+In-Reply-To: <87ttyu54wy.fsf@minerva.mail-host-address-is-not-set>
+References: <20230210081835.2054482-1-javierm@redhat.com>
+ <20230303220918.qr5ydbin3nye3qtz@amazon.com>
+ <87h6uydwel.fsf@minerva.mail-host-address-is-not-set>
+ <3d0315fa-14ca-dc34-81ae-467d9ed5133d@quicinc.com>
+ <87sfeh0yjn.fsf@minerva.mail-host-address-is-not-set>
+ <CALE0LRvR=DjUp2_DBuPQkEr9jvzGH4Mx4-7=rc6zOw1APQdyeQ@mail.gmail.com>
+ <20230308181245.nbnwkdtdnsldd65l@amazon.com>
+ <87ttyu54wy.fsf@minerva.mail-host-address-is-not-set>
+Date:   Wed, 22 Mar 2023 15:13:22 +0100
+Message-ID: <87bkkkoovx.fsf@minerva.mail-host-address-is-not-set>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v4 6/8] accel/qaic: Add mhi_qaic_cntl
-Content-Language: en-US
-To:     Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-        <ogabbay@kernel.org>, <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <stanislaw.gruszka@linux.intel.com>
-CC:     <dafna@fastmail.com>, <linux-doc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <quic_ajitpals@quicinc.com>, <quic_pkanojiy@quicinc.com>,
-        <quic_carlv@quicinc.com>
-References: <1679325074-5494-1-git-send-email-quic_jhugo@quicinc.com>
- <1679325074-5494-7-git-send-email-quic_jhugo@quicinc.com>
- <8571460d-17eb-bc76-6d07-58bd036ff0d0@quicinc.com>
- <d79799c4-6ed3-c7ec-8061-3e5a6bf42d43@linux.intel.com>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <d79799c4-6ed3-c7ec-8061-3e5a6bf42d43@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _YjYmSZ8OSYB2Xmy4dGxp1s3f9cIFKDi
-X-Proofpoint-ORIG-GUID: _YjYmSZ8OSYB2Xmy4dGxp1s3f9cIFKDi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-22_11,2023-03-22_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- suspectscore=0 phishscore=0 mlxlogscore=999 bulkscore=0 mlxscore=0
- lowpriorityscore=0 spamscore=0 adultscore=0 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303220104
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+Content-Type: text/plain
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,68 +91,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/22/2023 2:11 AM, Jacek Lawrynowicz wrote:
-> Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-> 
-> Hi,
-> 
-> On 20.03.2023 20:06, Jeffrey Hugo wrote:
->> On 3/20/2023 9:11 AM, Jeffrey Hugo wrote:
->>> From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
->>>
->>> Some of the MHI channels for an AIC100 device need to be routed to
->>> userspace so that userspace can communicate directly with QSM. The MHI
->>> bus does not support this, and while the WWAN subsystem does (for the same
->>> reasons), AIC100 is not a WWAN device. Also, MHI is not something that
->>> other accelerators are expected to share, thus an accel subsystem function
->>> that meets this usecase is unlikely.
->>>
->>> Create a QAIC specific MHI userspace shim that exposes these channels.
->>>
->>> Start with QAIC_SAHARA which is required to boot AIC100 and is consumed by
->>> the kickstart application as documented in aic100.rst
->>>
->>> Each AIC100 instance (currently, up to 16) in a system will create a
->>> chardev for QAIC_SAHARA. This chardev will be found as
->>> /dev/<mhi instance>_QAIC_SAHARA
->>> For example - /dev/mhi0_QAIC_SAHARA
->>>
->>> Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
->>> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
->>> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
->>> Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
->>> ---
->>>    drivers/accel/qaic/mhi_qaic_ctrl.c | 571 +++++++++++++++++++++++++++++++++++++
->>>    drivers/accel/qaic/mhi_qaic_ctrl.h |  12 +
->>>    2 files changed, 583 insertions(+)
->>>    create mode 100644 drivers/accel/qaic/mhi_qaic_ctrl.c
->>>    create mode 100644 drivers/accel/qaic/mhi_qaic_ctrl.h
->>>
->>> diff --git a/drivers/accel/qaic/mhi_qaic_ctrl.c b/drivers/accel/qaic/mhi_qaic_ctrl.c
->>> new file mode 100644
->>> index 0000000..a46ba1d
->>> --- /dev/null
->>> +++ b/drivers/accel/qaic/mhi_qaic_ctrl.c
->>> @@ -0,0 +1,571 @@
->>> +// SPDX-License-Identifier: GPL-2.0-only
->>> +/* Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved. */
->>> +
->>> +#include <linux/kernel.h>
->>> +#include <linux/mhi.h>
->>> +#include <linux/mod_devicetable.h>
->>> +#include <linux/module.h>
->>> +#include <linux/poll.h>
->>> +#include <linux/version.h>
+Javier Martinez Canillas <javierm@redhat.com> writes:
+
+Hello Stanimir and Dikshita,
+
+> Jordan Crouse <jorcrous@amazon.com> writes:
+>
+>> On Tue, Mar 07, 2023 at 05:20:18PM +0100, Enric Balletbo i Serra wrote:
+>
+> [...]
+>
+>>> >
+>>> > But regardless, I think that it would be better for a driver to
+>>> > not change the order of advertised VIDIOC_ENUM_FMT pixel formats.
+>>> >
+>>> > Because what happens now is that a decoding that was previously
+>>> > working by default is not working anymore due a combination of
+>>> > the default being changed and S_FMT not working as expected.
 >>
->> Will remove this.
+>> For my part, I was using the gstreamer v4l2 decoder which for some reason tries
+>> to verify it can support whatever format it gets with G_FMT *before*
+>> trying a S_FMT. I can't confirm or deny if S_FMT currently works or not.
 >>
->> Jacek, I think I've got all of your comments addressed.  Do you see anything more?  I'm hopeful that we are just looking at one more spin.
-> 
-> Yeah, I don't have any additional comments.
-> The whole patchset looks OK to me :)
+>> That said, I entirely agree with Javier. While it might be more
+>> bandwidth efficient, QC08C is a obscure format. It is far more likely that the
+>> average open source user would rather use a well known output format and, as
+>> has been mentioned, once S_FMT is fixed those in the know can use the other
+>> formats if they are working with other Qualcomm hardware blocks.
+>>
+>
+> Agreed. The rule is that the kernel shouldn't regress user-space and the
+> patches that changed the default format certainly did that. So from that
+> point of view I think that this patch should land.
+>
+> There's also Enric's point that NV12 is a more common format and supported
+> by more user-space programs. That's why think that regardless of the S_FMT
+> situation, makes sense to revert to the previous default behaviour.
+>
 
-Thanks for the review.  I appreciate the constructive feedback.
+Any news on this patch? It would be great to fix this at least for v6.3.
 
--Jeff
+-- 
+Best regards,
 
+Javier Martinez Canillas
+Core Platforms
+Red Hat
 
