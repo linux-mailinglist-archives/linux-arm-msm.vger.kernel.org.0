@@ -2,139 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D9BD16C58A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 22:19:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD3A56C58FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 22:52:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229639AbjCVVTW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 17:19:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54538 "EHLO
+        id S229877AbjCVVwu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 17:52:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbjCVVTV (ORCPT
+        with ESMTP id S229927AbjCVVwt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 17:19:21 -0400
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2136.outbound.protection.outlook.com [40.107.244.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EBB34ED2;
-        Wed, 22 Mar 2023 14:19:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WFlZo8pTQeLYauC6g6EzWN8wrw4+eBUSEKnIx/NizjxIx4YxKe6yGykdFTyW8XubDHN7qUFtDFHLQR58POjucVYzJJLFIpvFtk9ZIT/4OGZS/zlepsxaAkHD5yRMZ6bKA7Oq1+uYunHWRNslUn+TFkHRNKKKD+ixL19bLWXofNkDr0jNuNePj7sUIi3K7lWWx8Vql/3ADey3EPtHDTG3aMDJTIT4Sdp2QyeKtof9sTYJiSpt4UmaBlXAWLoI5wrs6IJitZQN5sLfHP9RxAkX2hDQyb3I9g/MZRmjD2W/3w05JSRnuHY0fO3e3X0CVMew8zr0bPHJR+1KTZKcdUul1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WSdFiv8oL04Gz6cXjGhxxv/4iVFCTgT1SCQ+EHaC2Mc=;
- b=b1KQC+t3j+eEPJHrijYUYjKow43DWlN4SKUylkk0s+TkA29v7QAAjSKkBlZXbEodo5i3iVYhlV7Pe7/BCVuGmI/YAD8LL/co4S0vbBpWfXMyllFerNaEV5+1ifT6Cey8Wyd6Q3+b+XTS6X1pZZmpiy2dB7U4L2qhxB7fnV9SrHmBDvRFAjBCEYJj/w/GI3rd9VInwnH5sMjT9TjTizcmpmRHuje91TnUomVh87Mv4qdGeEfqjkxUMume1pNNheoN2WqiJlfD68B2RbA6OtYd+fY5w2qHWz/qniA8fR1xJbJZFDbqxAYEQsVZdyIZKOu3CTvZbOJlC4ITc2cj854MLQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=corigine.com; dmarc=pass action=none header.from=corigine.com;
- dkim=pass header.d=corigine.com; arc=none
+        Wed, 22 Mar 2023 17:52:49 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F7DC61AC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 14:52:47 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id b20so45843049edd.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 14:52:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=corigine.onmicrosoft.com; s=selector2-corigine-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WSdFiv8oL04Gz6cXjGhxxv/4iVFCTgT1SCQ+EHaC2Mc=;
- b=SiKkPKAVLt2eW1MbSpdBt+RhEASXFkgav//Qbbe3eY7/ENKgime37CPT9KgZe+UcDXKi+oKXFtCUAs+qvCV4vFoieF51E80GuNc1+8w2ODmKlEXDwalBr3icHbN/ZVcuCCdmhdGOZ3SFDjIdK7qpnmtcUIQcUQ1XIks0EC8HKcw=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=corigine.com;
-Received: from PH0PR13MB4842.namprd13.prod.outlook.com (2603:10b6:510:78::6)
- by CO1PR13MB4822.namprd13.prod.outlook.com (2603:10b6:303:f1::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.37; Wed, 22 Mar
- 2023 21:18:15 +0000
-Received: from PH0PR13MB4842.namprd13.prod.outlook.com
- ([fe80::85f5:bdb:fb9e:294c]) by PH0PR13MB4842.namprd13.prod.outlook.com
- ([fe80::85f5:bdb:fb9e:294c%2]) with mapi id 15.20.6178.037; Wed, 22 Mar 2023
- 21:18:15 +0000
-Date:   Wed, 22 Mar 2023 22:18:07 +0100
-From:   Simon Horman <simon.horman@corigine.com>
-To:     Alex Elder <elder@linaro.org>
-Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, caleb.connolly@linaro.org, mka@chromium.org,
-        evgreen@chromium.org, andersson@kernel.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next] net: ipa: add IPA v5.0 to ipa_version_string()
-Message-ID: <ZBtwj8L6uj018iqy@corigine.com>
-References: <20230322144742.2203947-1-elder@linaro.org>
- <ZBtrfLOh3EKBKW+F@corigine.com>
- <a0e5f9e3-403d-3334-9f7c-9d649d794a96@linaro.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a0e5f9e3-403d-3334-9f7c-9d649d794a96@linaro.org>
-X-ClientProxiedBy: AS4P192CA0004.EURP192.PROD.OUTLOOK.COM
- (2603:10a6:20b:5da::12) To PH0PR13MB4842.namprd13.prod.outlook.com
- (2603:10b6:510:78::6)
+        d=linaro.org; s=google; t=1679521966;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ae1Fg1XrNO0U2G9oXfkthXql4Cz6bcgr28jd3JL36xQ=;
+        b=MhhTNWacisy6aVXWag8D/bV7u6OA1Z5BweJMma4y2nxaFetFPEd1946+0b+Ylqw2OC
+         Kq0bqlJVqcv+wj/EB+AR89gfXto7MWzPeQ06XW99ZVveKLV0jTKp/y923NdLqvt+vxFR
+         EvC+RZiHhkOoKODsvKtiG7i7dL/7U7Cy4wqFQCYgenxFfihZk8MbQGHtehsL37txDRmP
+         HaI/VNZRWWOE9cYic9BwSguWuef225+VL+y4CLBeK0EhhVQfEJQXazo9fB2vyvC7q+d/
+         M1zftfaWEuHy1y0n+E3dWI9/RF5noB59veAPSGQ8VjOn2dlZtoByfzbsf1UNLONrTLKg
+         Ofqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679521966;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ae1Fg1XrNO0U2G9oXfkthXql4Cz6bcgr28jd3JL36xQ=;
+        b=BFhPg9UsxRxBrJz6h1XLR2TQuwOzpZB5iRRUsuxeS7vRuYumYeUlPIHHJXudwk1uol
+         0V8fApC0DYoe0tubBRmnCIQkWJkBFA1hdcNce9Pq/OPG96C7ZANsPlqbl39RkieniW4V
+         9VVuShfusjyMFQKLYAcRG7Tr94vqsfphH1AlJno7AWb2fomARQOyHG7xBXz7WOpvJAo9
+         SOi1r5auH0w76V3/cLPxAmRB3nP+avua0JZTR+KwCNNdD6/8RIwxUvWOouIxSg7jNzDY
+         Ghct3Hd/kBTKrkamFH4EIdC2idFwC2ADUmNGYGssgaj7P2t9lxd6CU2SIUrArUzVVEER
+         d8DA==
+X-Gm-Message-State: AO0yUKWyym0GmNJ9/dK5SsDo2bN3fm0nETMQ9fgXNxqOCEJUZkN3dJl3
+        1Fq9zr6yBMRPOCg3kW7YW/K2nw==
+X-Google-Smtp-Source: AK7set+36xqihcRaSbhw9EZd7MivK51J2wyj0FDKumen87LrblW3ZwyU1x5vO2IU1KXVqvSiIqgKkA==
+X-Received: by 2002:a17:907:1628:b0:878:6477:d7 with SMTP id hb40-20020a170907162800b00878647700d7mr9845624ejc.72.1679521966159;
+        Wed, 22 Mar 2023 14:52:46 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:626d:5729:6e71:4c22? ([2a02:810d:15c0:828:626d:5729:6e71:4c22])
+        by smtp.gmail.com with ESMTPSA id t25-20020a170906065900b00939a61113d3sm2987235ejb.110.2023.03.22.14.52.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Mar 2023 14:52:45 -0700 (PDT)
+Message-ID: <c52a329d-8683-de82-9b55-209b99ac36c0@linaro.org>
+Date:   Wed, 22 Mar 2023 22:52:44 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR13MB4842:EE_|CO1PR13MB4822:EE_
-X-MS-Office365-Filtering-Correlation-Id: 72468c8f-90ce-4dd6-762b-08db2b1af32d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 5DRdBgsC1ixjhzcLzkrKnNcGJANNgsdbrwSMs+rHohzxSfS9iil7D+JqLHKCXByPsuYmXpD/GnYXpiznvo+5ywadcVYyrX6swalzRZtrKPTJjm/EUfFCgDWS2hCwXuJLInmnIp3JNpSVS2A/OcQkdy46Rt/Gozwxy6egUpetDHsE/lmbHviXy+/WwXngJJ3Pgaw2sJYOBlu4yRwLE8YOJcOHxTI/cTkRuKo6XTSC52hf/plikFS3cEtTkOU2AcubhbVchDoA21YYrXOWjsPaqd27bmS1W23bpKWXzwX5q6kdq58ztmRG0bIM/7kJayaqnp9ANLsMKi0iH5CBDTG2h+1cB0DM3i9NliOi3+Hx5ge/eJOUkhI6QZ6tMTlqlsuM8Ih7gSPCDG2pDxdGmQ3AljmDP16ocoUe16BpzHGHiIhlGSbF5EDIYAIfWHCLEgx+ER8GDAdSYAj1pTFlNePaOXApgNwtgCOexJeAr8ffrSzFxYKFfDPnl47tPh9Z+ghUSUITDnkWBWjMvVbM5CyQdo38wpl8uhKmfiQgTszz644vtsCgYo6EEHFyrFEVDtDYaLMP0TGw5j7VJWM+Y3HWlawwV6DnmkAdN5JloYwQzrpPTTIbH7fIrebbRx6edBhelE6dNfJLFbHu1i4rl0W0qQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR13MB4842.namprd13.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(136003)(39840400004)(376002)(366004)(396003)(346002)(451199018)(7416002)(5660300002)(8936002)(44832011)(4744005)(41300700001)(36756003)(86362001)(38100700002)(2906002)(4326008)(6486002)(6666004)(478600001)(2616005)(186003)(6506007)(6512007)(53546011)(66476007)(316002)(8676002)(66946007)(6916009)(66556008);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?QR/hufg31rVUs1wjYeT8h/feoy+pcUczRTYmmHlYHwdJmAREEFfOA/NYVEZV?=
- =?us-ascii?Q?pyjiGnw50eMX28HwDZJgjM+SBYYuQHvFP2/kgpXi+LrTAsNhJFigx6Z7Rv95?=
- =?us-ascii?Q?vBuXK9M8R6JR8E01Q1N6auX62paDBzFOm4AKs9yYGyXdOG/ABWdhSDIgQOrX?=
- =?us-ascii?Q?nzWqYDEVH/5mjpGn+4Bk/ZCDjOcdBHxsieQzF6630ecnLnUv9Ktm4NBKifEd?=
- =?us-ascii?Q?p+PiCbL/qtcao2Ik0Yzb7SsnI0Coz5F78D54EJ6KgCmgbtDC1GoNlvST4SZY?=
- =?us-ascii?Q?spsSYxSY+e305tF5vunf6oP/QOOWSHs4DLAf6jVayUSEYXVknxd3Ipdjp9ac?=
- =?us-ascii?Q?cQ3WpuyhNSIssesQL+HrDXinoZedFXC1wmnEHH1/3pjKLEUGTRMHvylUMu7U?=
- =?us-ascii?Q?Bl5wwmrjJtpMoL6mWRt+L9Z7wvAYkBmfcuNbqBy0hZ3xfsRyei8otgtFJ92T?=
- =?us-ascii?Q?sX1CmGKATgg++FFCVzBGmx91Z/o3xUW0+Bn2QZabg7S4+/i/VeTikatkMzMP?=
- =?us-ascii?Q?LO6/DnLctVHCMXJswt/GQdLJ5zDJU+OxdCm9FH5Yo0jtQAXFFuHgnA7boVw2?=
- =?us-ascii?Q?HxIWQ+PeHY/Xw+LiKgOmAQa9UVZUc1wY4bElEm0OaS6oNOCfb/wk+vsIlOls?=
- =?us-ascii?Q?wdNnCfphgxwlY3/D9fjO4PT8wh0nj0mjoQoBbScWj738cG5sVpmcdgmBjL4J?=
- =?us-ascii?Q?XpC1GgCil3HdjI9nJB/7Q4+eDakIs8+9OVgMcDvD1uDub9J3J1Xq+IKHTiVN?=
- =?us-ascii?Q?Hw92+8egtAxjfSunBI4WFb/ESUql27RJ8ZRoHRuvNJe8AFwSjjSfbFWERcFj?=
- =?us-ascii?Q?WjAlPrBbGTaRhcsjfHULVfF0Azq/96+qaXazqVh4+VejQ8W7jjdolm58a3BE?=
- =?us-ascii?Q?gZRfUphZvNTji0LJ7BJ5lrSWxMPauJ3Gcp4QNGc0tx6fazwFtAVfEtZf/iJW?=
- =?us-ascii?Q?XFZGJJkPXJlnCrXbibF7nWJbs9N/xAIGxvsYNkl8FX5vhKA/SkuVVxnIAF/9?=
- =?us-ascii?Q?1q6CzuMSCT+rC1g2tKZo09evon4Ky8SCHwkKdLz41Qv30y/+70gs16YBE3gD?=
- =?us-ascii?Q?Xl0g6mXOLTyoGLYn33QXMzJTT8CnuqxPjHqnjhCcUvOzyguAwAk+YmCVpGzu?=
- =?us-ascii?Q?/F6PEYrwTKwUa1mL3EU/c4jmp9oy+9/BEAxhVAeYDQ6UUhZcSEZcktobeiwp?=
- =?us-ascii?Q?Z8gKQ+B1P/8yZ3lZFEcux6Z6lMahZNFr93MJ0ehY52n3LE2iXoiJKN9zhSqZ?=
- =?us-ascii?Q?+EfSADDGPdY/5/IObaW0Vo4hRlZiAWdwjc2fLaTC2yJfUi3jztuQdnbn+8Xv?=
- =?us-ascii?Q?8AMYJsmss1fdjBtntX+4TesDzOFgFrQ/jwIqcQI0FEjSksmV+mkmJa/qSOPM?=
- =?us-ascii?Q?zQH3lECX4fGdyzy2dOG7RNEtJz84DTZocMchxMdgkIXOFQMeI0cVLEvO/zZX?=
- =?us-ascii?Q?fzykKC2E1sWo+5XLHoJFLBiXc8+Y5DpcbInaS1uDR+R2Pf3HcB5PIZv/QQ2o?=
- =?us-ascii?Q?wM6Y5QrsE0XtKy7GFTa4AaHrkgTFMBP9wvLF8pE6NwK1/wlWV0bs8Jh+l9nu?=
- =?us-ascii?Q?A4Zo/BXdRhsaOnIPwhAnGx4X5JTu6Rz1K4KiwE2xI419TWvuhogrJClOC74d?=
- =?us-ascii?Q?KlwiEynVG2AzALWSmbdKhvoUKhOo+0/IH5mJ21/cnpd7U4hGiS/5IG1lc638?=
- =?us-ascii?Q?seT8AQ=3D=3D?=
-X-OriginatorOrg: corigine.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 72468c8f-90ce-4dd6-762b-08db2b1af32d
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR13MB4842.namprd13.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Mar 2023 21:18:15.3897
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: fe128f2c-073b-4c20-818e-7246a585940c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3KiwYrv649n7V/5XGAmWmYMyzRxQT0KuEjnYSXnEswoaLP4z4txCgiQzN7+lPxBTpISZVF7tWc49nBQPr1BqYd6OUjNPE59Uoov19E3L9eI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR13MB4822
-X-Spam-Status: No, score=-0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3 2/8] dt-bindings: phy: qcom,qmp-usb: Add IPQ9574 USB3
+ PHY
+Content-Language: en-US
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
+References: <cover.1679479634.git.quic_varada@quicinc.com>
+ <e34d8eddc1dda8bb0ff840a7dd18ca4dd6c62d22.1679479634.git.quic_varada@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <e34d8eddc1dda8bb0ff840a7dd18ca4dd6c62d22.1679479634.git.quic_varada@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 22, 2023 at 04:08:01PM -0500, Alex Elder wrote:
-> On 3/22/23 3:56 PM, Simon Horman wrote:
-> > Should IPA_VERSION_5_1 and IPA_VERSION_5_5 also be added?
+On 22/03/2023 11:44, Varadarajan Narayanan wrote:
+> Add dt-bindings for USB3 PHY found on Qualcomm IPQ9574
 > 
-> They could, since their symbols are defined.
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > 
-> We expect to support both of those versions pretty
-> soon, and we'll certainly add them to this function
-> then.  For now, unless someone thinks it's important
-> to add this now, I'd rather keep it this way.
+> ---
+>  Changes in v2:
+> 	- Updated sections missed in previous patch
+> ---
+>  .../bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml    | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+> index e81a382..beae44c 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+> @@ -21,6 +21,7 @@ properties:
+>      enum:
+>        - qcom,ipq6018-qmp-usb3-phy
+>        - qcom,ipq8074-qmp-usb3-phy
+> +      - qcom,ipq9574-qmp-usb3-phy
+>        - qcom,msm8996-qmp-usb3-phy
+>        - qcom,msm8998-qmp-usb3-phy
+>        - qcom,qcm2290-qmp-usb3-phy
+> @@ -204,6 +205,27 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> +              - qcom,ipq9574-qmp-usb3-phy
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 2
 
-Thanks for the clarification.
+toplevel defines minItems as 3, so are you sure this works? Did you test it?
 
-FWIIW,
-
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Best regards,
+Krzysztof
 
