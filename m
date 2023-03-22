@@ -2,72 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 059986C450C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 09:35:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B5E546C451E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 09:36:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230297AbjCVIfG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 04:35:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36722 "EHLO
+        id S230289AbjCVIg1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 04:36:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230281AbjCVIew (ORCPT
+        with ESMTP id S230328AbjCVIgK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 04:34:52 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D78A53B21A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 01:34:50 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id a11so7544924lji.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 01:34:50 -0700 (PDT)
+        Wed, 22 Mar 2023 04:36:10 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A68005DEFE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 01:35:38 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id ew6so6588338edb.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 01:35:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679474089;
+        d=linaro.org; s=google; t=1679474137;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=U58SQGAdB8WZgcTHG2Lfm70EP6ZtZM71YzBDDEdpTSc=;
-        b=R/BVpWHxX1lMprKKvnlFrPRzGgs5Qf3AUJYCzO0arLRbK4GZtrvmsWaBx1R2jzQTfh
-         gtCXetN6xxRFENuzL+7QszCpDpz1Kk4PGsFAbrN0cVV4zWTd4jlYccQ8fP8d6xq/qquQ
-         MfD6YBkQOTLWxtxW1Jh4+6LXmZXcp+Rgdt7nelYsOBXncd+fcqLyW4TGpTSTqRKOdFof
-         Z3LpfVGsbjQxj703MYcy2Sgntm/c9G21lioHnM6Ey8aPXbqMcCDvW95GiJKVNvfQTm4Q
-         dVim8DLIwqVunke1dh7XzXcCQ2LHV4fde8d+z1lm9U2VSoMAk81+gZgMjpp83lStU+Ds
-         +FqA==
+        bh=8DntXGXvr8H/rQ6dM4/EUrhiL65qM60t+UtrrOzvHSo=;
+        b=GsJlggwAIG7TtATrtOuWrAS5Phb1YH+82ht27aTMSh6RvkGNQQtlWYuWM+Zk/1N75R
+         2ztnLRIIGzbFK++utgCU5OE7Eo1xNJAj7CS1jb+ihKNBaDdrXcoimJpq20zWyAnU8+sZ
+         Tb2XGt9XgDiD3od+z/d3EjJh+XUkprbgWT/9pzaDQGwuuplK1jD24KvCvf4Dzk407t9M
+         8g+4AKORzxllippydprSyUXSDKQ4SzHVvFWJyRubwTb02LS90kwZt6/9uM/d3pC8PEK6
+         Hz5/9HwzRyIRderXzulqMO+kPGO5/UgyajJ5wcX99zid+D8gSb7YJ5xxX5nfZKuno5HM
+         2/Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679474089;
+        d=1e100.net; s=20210112; t=1679474137;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U58SQGAdB8WZgcTHG2Lfm70EP6ZtZM71YzBDDEdpTSc=;
-        b=fHt5P7ewbo/w1LNQghy1B0Yj73ecDepZzjYiQv3M3GWnb+XMQFDLHx9x52dXjRsRO6
-         noUP5t2+/Q0sWU3d2C5xoaY3wVGOrtq+LVdZSEinTZIaNOhnd3q2OD26nwh2XuEsxxxs
-         YZ9C/pO3rEY3AHTX4Cn30YGNPOfH4kJUFp29kLgndwxHT6RGfAkkSoL3RH3M9PA+Lzl0
-         wtWg6GwFWlMlX5MZYecX3RWmLrlHaWe8kfl81PvyTyr5yEcK1nwPmiFEJQ7q/IBoud66
-         7T/B+FqSLR0kxAqWabtpD1mwNhc/VT2+U31uWWGhM5MGZ3glIpOYy0HlHElCqozc2ljm
-         vI2w==
-X-Gm-Message-State: AO0yUKVLcLWeopJeUtQZSJCTYx95UKT7k6LHgbV992+bzsyHf5YmTcga
-        oW5HzuK5hSJngUFVkj1z19uE+g==
-X-Google-Smtp-Source: AK7set8A3jBP6Uv2xqAXq8eF3WXNWxl0CTW0wfvZOq126nqhhSgtxnWkZYplG2AuUcfmhQ55S9dyEg==
-X-Received: by 2002:a2e:9c84:0:b0:298:97d7:8fc3 with SMTP id x4-20020a2e9c84000000b0029897d78fc3mr1881970lji.4.1679474089137;
-        Wed, 22 Mar 2023 01:34:49 -0700 (PDT)
-Received: from [192.168.1.101] (abym238.neoplus.adsl.tpnet.pl. [83.9.32.238])
-        by smtp.gmail.com with ESMTPSA id a17-20020a2eb171000000b0029bcfada416sm1918799ljm.138.2023.03.22.01.34.47
+        bh=8DntXGXvr8H/rQ6dM4/EUrhiL65qM60t+UtrrOzvHSo=;
+        b=FyjkeSQdTEuCdh5mQ5iojxbz3WdlTydBgf4vvwkhdwI3g4agjb+ydQPve+cb5Aa85y
+         0dho3JzFxniefUeCTFofI6+XokT2lDcdG7khFPKN0Yv+yDS2aheC6ja4dZUU9o1Nb4oy
+         JlnAn2Z3sgW3IyxtVdO34sHhMwWhW2FmLPa9q8I/MbalmJw4bGyfJ5JruJ5xS4rpDCYX
+         lLqVRJbxWPxI3+rhrUA1KZdVr0NzA/sbaIRTCLxkL4/fYA+eBiESI0Rxa3m2NrNnCoSu
+         bdkpqCWv9JGnEAQE5jjxciTfkz/R61CwAu0/scLtjKrPFKtGP6gzh/I2ynzk3Am8L7kA
+         d+RQ==
+X-Gm-Message-State: AO0yUKV8DnLCuNzLHpLEg3w/Yzd74ZrPmOPxtZpjd06sVWLP0Vj3G2GV
+        VIyUYoDxSakRCTl/agSc7BcKOg==
+X-Google-Smtp-Source: AK7set/YphAfz81YC4ks4tfTIhsNWkCbCmBVjJL/CegkBZNDsqvqDlYbhPGAzWIK8D5Ygyc2YoDi2g==
+X-Received: by 2002:aa7:c44d:0:b0:4fa:ac78:7f2a with SMTP id n13-20020aa7c44d000000b004faac787f2amr5186649edr.41.1679474137076;
+        Wed, 22 Mar 2023 01:35:37 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:5050:151b:e755:1c6? ([2a02:810d:15c0:828:5050:151b:e755:1c6])
+        by smtp.gmail.com with ESMTPSA id e23-20020a50d4d7000000b004bf28bfc9absm7202223edj.11.2023.03.22.01.35.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Mar 2023 01:34:48 -0700 (PDT)
-Message-ID: <e121d58d-831a-f593-b933-5177d3d26c43@linaro.org>
-Date:   Wed, 22 Mar 2023 09:34:47 +0100
+        Wed, 22 Mar 2023 01:35:36 -0700 (PDT)
+Message-ID: <ea863eac-58bd-cd61-ce5c-a0393bb4e4a8@linaro.org>
+Date:   Wed, 22 Mar 2023 09:35:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
 Subject: Re: [PATCH 0/5] arm64: dts: qcom: Enable Crypto Engine for a few
  Qualcomm SoCs
 Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        andersson@kernel.org, bhupesh.linux@gmail.com,
-        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        andersson@kernel.org, bhupesh.linux@gmail.com, robh+dt@kernel.org,
         vladimir.zapolskiy@linaro.org, rfoss@kernel.org
 References: <20230321190118.3327360-1-bhupesh.sharma@linaro.org>
  <41111f93-ef02-0e57-98af-01327213d854@linaro.org>
  <CAH=2NtziWx2g_4K92iH+9DLo8XV0P32NNnEpxy6f0G_dQOVs+Q@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 In-Reply-To: <CAH=2NtziWx2g_4K92iH+9DLo8XV0P32NNnEpxy6f0G_dQOVs+Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
@@ -81,9 +81,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 22.03.2023 09:33, Bhupesh Sharma wrote:
+On 22/03/2023 09:33, Bhupesh Sharma wrote:
 > On Wed, 22 Mar 2023 at 00:57, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >>
 >>
@@ -107,29 +105,10 @@ On 22.03.2023 09:33, Bhupesh Sharma wrote:
 > 
 > Err.. the dt-binding maintainers have been asking to split the
 > dt-binding patches from
-> the dts ones in the past.
-Quite the opposite!
+> the dts ones in the past. So, let's stick to that for now :)
 
-So, let's stick to that for now :)
+For submissions? No, we did not.
 
+Best regards,
+Krzysztof
 
-Konrad
-> 
-> Thanks.
-> 
->>> Also this patchset is rebased on linux-next/master.
->>>
->>> Bhupesh Sharma (5):
->>>   arm64: dts: qcom: sdm845: Fix the BAM DMA engine compatible string
->>>   arm64: dts: qcom: sm6115: Add Crypto Engine support
->>>   arm64: dts: qcom: sm8150: Add Crypto Engine support
->>>   arm64: dts: qcom: sm8250: Add Crypto Engine support
->>>   arm64: dts: qcom: sm8350: Add Crypto Engine support
->>>
->>>  arch/arm64/boot/dts/qcom/sdm845.dtsi |  2 +-
->>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 26 ++++++++++++++++++++++++++
->>>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 26 ++++++++++++++++++++++++++
->>>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 26 ++++++++++++++++++++++++++
->>>  arch/arm64/boot/dts/qcom/sm8350.dtsi | 26 ++++++++++++++++++++++++++
->>>  5 files changed, 105 insertions(+), 1 deletion(-)
->>>
