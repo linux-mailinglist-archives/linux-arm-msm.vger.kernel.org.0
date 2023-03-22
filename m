@@ -2,120 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8891F6C3EC7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 00:52:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1A586C3F7C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 02:14:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229584AbjCUXwj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 19:52:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43856 "EHLO
+        id S229751AbjCVBOs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 21:14:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjCUXwi (ORCPT
+        with ESMTP id S229915AbjCVBOr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 19:52:38 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E34258B50
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 16:52:36 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id l12so15355175wrm.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 16:52:36 -0700 (PDT)
+        Tue, 21 Mar 2023 21:14:47 -0400
+Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0C8D50718
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 18:14:44 -0700 (PDT)
+Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-17ac5ee3f9cso18001681fac.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 18:14:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679442755;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Zv291RLqrvxioxJX0RVTeF2Z5czhUbpRp3iyyUP2rZE=;
-        b=l5W4fM/Vl6k8l4CrD0lxkEpheMeo4XDxKHxYW0xM2VN86RonThDeFET7if3a3n12No
-         UddaRadbnbdM7iMX9D3shY0v61wYJLsgZqGcdKLr13c/2QphthGH1AB0RoZGy+aDEr9T
-         cNKN7mTHGfjzgEQMrRmUDkE6e95SyJviUnnc2FR4qY4Gly/b42OZmsXDpGrDPX2u/J2k
-         /6/CFFCTdHYr+S/02x57vY79uSEvogi1GdsYKgoiTL134untpUI2rWGouIuV3rvHfKQH
-         OV8C+1OfpedfduOdHRZcaZk3iDD4+pz6ARbgSH0YxukB6/zepf7+2AI0SfT0+GxXVA0G
-         K60Q==
+        d=kali.org; s=google; t=1679447684;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BlSUN2wZYTEOgt9J14JNZCw4zLCT6q6O5ss5D6gIjf0=;
+        b=HDZ2R5RP427bFYGVsGeYZEE/bYSq4q4pBEGo9athBCMKeOI0xlhP1ORNFxH30pDZPw
+         VaMQGlxn1NwmyZvENCuYYtprYjm64Hol4xoPykXIQsul3QkhmhUyv21YW8fTs0/w1JQT
+         q9DzJl//GQwL9aYbysI5jnyOPLKVRSer348QMfDvogjpO9VN4DAc+esGOQsTs4txesqp
+         6hN0R80FyIiTqGIGZE/yl4wrLDgiepvWic6OHjMlBGx17FB9+LMOFlMnn3FRxKPVXT8p
+         3c4Fi4p/ktJVYqjNzFrKoeRu61m+fE+PEGb4ZINCLEGn5b/ElglHfkRIA24PWsVUh1Ug
+         V6MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679442755;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zv291RLqrvxioxJX0RVTeF2Z5czhUbpRp3iyyUP2rZE=;
-        b=A9DQa+1HY2xk5UkcnXaQfUjjThOKqvc0ff7/l5QexGwds0vigC3s4ujbkqukvBAqlu
-         39icprLR7G34rzXcTmWmhZBxf4FYfYn86dlC5/bpprJYpk1fG31AnYhu1EfLZBWihun2
-         S1S/11+OjgQrgRR2q2Vg7MYuCZEF4MbCF8nTUjnkDxPyq0MNEr9YbiST48wkJ07k4mlZ
-         +x3JFme8MEuaS+GIiWym1b9HCUguaqH6bsBA5SG04+ETy9wbGftH4kYdO10enmDbtdeS
-         anfrZ+vtMdKDPh/S2EwNZzjpjcQk9mjRzyOKeDlpnizqxL7Z1PQccBo/UADG6hOnaNH/
-         vzYA==
-X-Gm-Message-State: AO0yUKUIvdivf4TO0g2pDfEc3LqjMYkl4mG88iGBBi4ymZCMwubt3LTr
-        1N+kFam2eXQOg1meEcoaVeT/3g==
-X-Google-Smtp-Source: AK7set8Tbju7lmyp7KNRw4+1RjB7OwLCd/Ql/YeCyg7aWDQJV6lTSLynwbHAvjT8HzoBkRi9ORGRBw==
-X-Received: by 2002:adf:e987:0:b0:2d2:3b59:cbd4 with SMTP id h7-20020adfe987000000b002d23b59cbd4mr3923227wrm.12.1679442754789;
-        Tue, 21 Mar 2023 16:52:34 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id j6-20020a5d5646000000b002d2f0e23acbsm12432127wrw.12.2023.03.21.16.52.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 16:52:33 -0700 (PDT)
-Message-ID: <701e1b8c-7f71-ca8f-ad22-e86dedf3d7be@linaro.org>
-Date:   Tue, 21 Mar 2023 23:52:32 +0000
+        d=1e100.net; s=20210112; t=1679447684;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BlSUN2wZYTEOgt9J14JNZCw4zLCT6q6O5ss5D6gIjf0=;
+        b=T/weyW2kKbHSm6W1ysooO/btKMWNVdZexBBJK+aLkw5lV+tUdklEzdkZAgrpg6mUSB
+         vKAftlOfuK4mccGcYdV9HokK367ZUpFa5hy+iYJc4LvSeWEZsfiPmSeHmZwk1TYoRW/T
+         BcCepLzlQ6Bmm7oMVWgHiW0a0vzU1s4PRDNA//kqUJOA3SWg9z5FFq3nfID0+L6s47hz
+         Yy4WTw0srcXV2Mxavlysbp5ZzTvl2SsSnlWT5BdSSf9evF2Dm3xU4zQfTFm93roG4FHL
+         /Puv8FWdfzk7oJFb6ZAiNUwlwLoB49K8Na7JdiXRH59mIe7xaGZhTwrZ2ZEszpXNtxrA
+         AKuA==
+X-Gm-Message-State: AO0yUKVbB4zdkIQVh3NKQrBO71X8GsonxpELsw2VD9lf5VKQH75/PufT
+        DOZ0mDADVinSju65d9Y/pbQAcQ==
+X-Google-Smtp-Source: AK7set8wF5RckXOZbDxt0S8uH8SUI2HOJmxyduS8hpsH1nJuMaMMQkDtO5febM76mSa13LquWxVpeQ==
+X-Received: by 2002:a05:6870:17a8:b0:177:956c:36c3 with SMTP id r40-20020a05687017a800b00177956c36c3mr507922oae.36.1679447684178;
+        Tue, 21 Mar 2023 18:14:44 -0700 (PDT)
+Received: from localhost (23-118-233-243.lightspeed.snantx.sbcglobal.net. [23.118.233.243])
+        by smtp.gmail.com with ESMTPSA id o9-20020a9d7649000000b00697be532609sm5688980otl.73.2023.03.21.18.14.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Mar 2023 18:14:43 -0700 (PDT)
+From:   Steev Klimaszewski <steev@kali.org>
+To:     Steev Klimaszewski <steev@kali.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>,
+        Tim Jiang <quic_tjiang@quicinc.com>,
+        Johan Hovold <johan@kernel.org>
+Subject: [PATCH v7 0/4] Add WCN6855 Bluetooth support
+Date:   Tue, 21 Mar 2023 20:14:38 -0500
+Message-Id: <20230322011442.34475-1-steev@kali.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v4 10/18] dt-bindings: mfd: qcom,spmi-pmic: Add pdphy to
- SPMI device types
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
-        gregkh@linuxfoundation.org, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        wcheng@codeaurora.org, caleb.connolly@linaro.org,
-        konrad.dybcio@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
-        robertom@qti.qualcomm.com
-References: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
- <20230318121828.739424-11-bryan.odonoghue@linaro.org>
- <88ccb21c-4370-7132-b2c1-c74b1f865cec@linaro.org>
- <20230321205802.GA1540152-robh@kernel.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230321205802.GA1540152-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/03/2023 20:58, Rob Herring wrote:
-> On Sun, Mar 19, 2023 at 12:58:48PM +0100, Krzysztof Kozlowski wrote:
->> On 18/03/2023 13:18, Bryan O'Donoghue wrote:
->>> The PDPHY sits inside of the PMIC SPMI block providing register-level
->>> ability to read/write USB Type-C Power Delivery protocol packets over the
->>> SBU pins.
->>>
->>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>> ---
->>>   Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++++
->>>   1 file changed, 4 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->>> index 8f076bb622b15..111aec53caeb5 100644
->>> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->>> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->>> @@ -140,6 +140,10 @@ patternProperties:
->>>       type: object
->>>       $ref: /schemas/power/reset/qcom,pon.yaml#
->>>   
->>> +  "pdphy@[0-9a-f]+$":
->>
->> phy@
-> 
-> But it is not a phy which I would define as something doing digital to
-> analog (or vice-versa) signal conversion/encoding. Sounds like an SBU
-> controller or something...
-> 
-> Rob
+First things first, I do not have access to the specs nor the schematics, so a
+lot of this was done via guess work, looking at the acpi tables, and looking at
+how a similar device (wcn6750) was added.
 
-Its an SBU controller.
+The end result is that we do have a working device, using the firmware files
+that are found in the linux-firmware git repository already.
 
----
-bod
+
+Bluetooth: hci0: setting up wcn6855
+Bluetooth: hci0: Frame reassembly failed (-84)
+Bluetooth: hci0: QCA Product ID   :0x00000013
+Bluetooth: hci0: QCA SOC Version  :0x400c0210
+Bluetooth: hci0: QCA ROM Version  :0x00000201
+Bluetooth: hci0: QCA Patch Version:0x000038e6
+Bluetooth: hci0: QCA controller version 0x02100201
+Bluetooth: hci0: QCA Downloading qca/hpbtfw21.tlv
+Bluetooth: hci0: QCA Downloading qca/hpnv21.bin
+Bluetooth: hci0: QCA setup on UART is completed
+
+There are a few things that I am not sure why they happen, and don't have the
+knowledge level to figure out why they happen or debugging it.
+
+I do not know why the Frame assembly failed, and modprobe -r hci_uart and then
+modprobe hci_uart does not always show the same Frame assembly failed.
+
+The BD Address also seems to be incorrect, and I'm not sure what is going on
+there either.
+
+Testing was done by connecting a Razer Orochi bluetooth mouse, and using it, as
+well as connecting to and using an H2GO bluetooth speaker and playing audio out
+via canberra-gtk-play as well as a couple of YouTube videos in a browser.
+Additionally, a huddle was done in Slack on Chromium with a pair of Gen1 Apple
+AirPods as well as a hangout in Discord on Firefox ESR.
+
+steev@wintermute:~$ hciconfig -a
+hci0:   Type: Primary  Bus: UART
+        BD Address: 00:00:00:00:5A:AD  ACL MTU: 1024:8  SCO MTU: 240:4
+        UP RUNNING PSCAN
+        RX bytes:1492 acl:0 sco:0 events:126 errors:0
+        TX bytes:128743 acl:0 sco:0 commands:597 errors:0
+        Features: 0xff 0xfe 0x8f 0xfe 0xd8 0x3f 0x5b 0x87
+        Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3
+        Link policy: RSWITCH HOLD SNIFF
+        Link mode: PERIPHERAL ACCEPT
+        Name: 'wintermute'
+        Class: 0x0c010c
+        Service Classes: Rendering, Capturing
+        Device Class: Computer, Laptop
+        HCI Version:  (0xc)  Revision: 0x0
+        LMP Version:  (0xc)  Subversion: 0x46f7
+        Manufacturer: Qualcomm (29)
+
+steev@wintermute:~$ dmesg | grep Razer
+[ 3089.235440] input: Razer Orochi as /devices/virtual/misc/uhid/0005:1532:0056.0003/input/input11
+[ 3089.238580] hid-generic 0005:1532:0056.0003: input,hidraw2: BLUETOOTH HID v0.01 Mouse [Razer Orochi] on 00:00:00:00:5a:ad
+steev@wintermute:~$ dmesg | grep H2GO
+[ 3140.959947] input: H2GO Speaker (AVRCP) as /devices/virtual/input/input12
+steev@wintermute:~$ dmesg | grep AirPod
+[  853.742619] input: Steev’s AirPods (AVRCP) as /devices/virtual/input/input14
+
+v7 Addresses commit message review nits by Paul, as  well as dts
+changes requested by Johan. Additionally, the dt bindings now rely on
+https://lore.kernel.org/lkml/20230316105800.18751-1-johan+linaro@kernel.org/ for
+the bias-bus-hold option on sc8280xp.
+
+v6 can be found at https://lore.kernel.org/all/20230316034759.73489-1-steev@kali.org/
+
+Bjorn Andersson (1):
+  arm64: dts: qcom: sc8280xp: Define uart2
+
+Steev Klimaszewski (3):
+  dt-bindings: net: Add WCN6855 Bluetooth
+  Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6855
+  arm64: dts: qcom: sc8280xp-x13s: Add bluetooth
+
+ .../net/bluetooth/qualcomm-bluetooth.yaml     | 17 ++++
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 78 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 14 ++++
+ drivers/bluetooth/btqca.c                     | 14 +++-
+ drivers/bluetooth/btqca.h                     | 10 +++
+ drivers/bluetooth/hci_qca.c                   | 57 ++++++++++----
+ 6 files changed, 175 insertions(+), 15 deletions(-)
+
+-- 
+2.39.2
+
