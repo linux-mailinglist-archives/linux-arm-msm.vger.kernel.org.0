@@ -2,314 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F3186C4F5C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 16:22:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 294286C4F78
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 16:31:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231589AbjCVPWa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 11:22:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33906 "EHLO
+        id S231678AbjCVPbN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 11:31:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230127AbjCVPWa (ORCPT
+        with ESMTP id S231626AbjCVPbM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 11:22:30 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7403466D03;
-        Wed, 22 Mar 2023 08:22:26 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32MDpjCh021258;
-        Wed, 22 Mar 2023 15:22:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=qGTfLIc3drovlUBC/EyUNv5R9vD4u38xW+/xnKXdUgM=;
- b=YC2pJxuqps3W4JpZOfK/euOn+gIU+/528CsVZ1J7vhizACrjDT48DvpcdIo/Z3T7VTaV
- pXM6QR7csr6/7Zxov6fpBBnOAdc8D4GmbZwOqQgJ8AVf+1inc1R5/3HR2OdUdjF9o3iT
- d3ycl4Hdz1POG9e/4IWb8Px+jUxBx7jBqDB0fKU8Aj1wN6bbCQWBsaF/mducXJApSvkW
- G6ygXKPehccUjo1XeU7xLvpvFoBhFfbgecLjmyGX4otEcJZeqh3DERYt0zY5KXmB29K5
- 7O3rUHrAkZdz6mhmPtjWMWrT/fMGp4NUaET7QWzOJlPqbRIGOVndnx8ICeqHTPHSNNY4 3Q== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pfdm4kevu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 22 Mar 2023 15:22:16 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32MFMFbN007425
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 22 Mar 2023 15:22:15 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 22 Mar
- 2023 08:22:14 -0700
-Message-ID: <0c297244-823f-9516-8708-d9b3cf1b22f9@quicinc.com>
-Date:   Wed, 22 Mar 2023 09:22:13 -0600
+        Wed, 22 Mar 2023 11:31:12 -0400
+Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D7C966D03
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 08:31:10 -0700 (PDT)
+Received: by mail-ua1-x930.google.com with SMTP id m5so12886374uae.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 08:31:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1679499069;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0JTo8jph/aEjP08QKbcmScKBA9sBPX+GiZwkKubY1Gk=;
+        b=eauVrq3lCS2jOzGbplgI8zdDDffe6LpWln3OvKIInQDiOix8KTpVLFGH8+AQ0TdRo8
+         F4xd74EfYHgpAkeccXwraHZ5ytlfu/C0mX4ktGEarHhyxUnbgyvdi6ExPEjngzOWjnah
+         FUOIg7Imp5Yh3y/ba1zTCNBvH5Pr1xp6Vs1XXN7XpXs3rddczEPODsYOPyIVlwK0lhxG
+         LGsEyFttuQOQm+B/UJEViFBMojvgEgWcLnE7KzvsRKz5m8eNdAqxdf+uSKDxoiuGsqRi
+         SD0fPbnaouPtIHo9ZELWnjqSBwMpPF0hIvNHTZ0+4+hI7Rc20uxdM1HHuW2W3/2aRzeJ
+         skIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679499069;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0JTo8jph/aEjP08QKbcmScKBA9sBPX+GiZwkKubY1Gk=;
+        b=Q+M6D4QaTWy1gf49nxFJU+wTQE2MugX1zB8QgIXQzqNtKln5HvOly68+CwafHVEtLJ
+         0zI5ZrqikacHhfn012rGrtvk5Kv151zQXd3jPK6FkLHsKRnvBPInREepful1fJWrGBKy
+         ogT3ZKZC+Y5kx2avzAAijv2P1QynOiCAME79Lazfuvt7gednHc6dCQnx2uqPnJZ79qy1
+         aXqTSfy0gCtsWXu1/uQGYaTlJcsIxcioPY9533u4I3Gzu/sh32jXjKjOx7U+fVMglhsS
+         UEw6dh+qcAmkpbUfa1HbjqMaRRJ26HN+roZytVVhFr7UChIOuydUj98SoyzOTHpoThv1
+         ne/Q==
+X-Gm-Message-State: AAQBX9fYVHMkFDSmz6wjJstO9CZsu6edUQdJVmZ/JJ+x1NO5ytG42/Vx
+        HfVgKLvFaQd7gxPJKf+HkuHZ8FzsL4XiK2Stj+8drQ==
+X-Google-Smtp-Source: AKy350bgPvOaa5GVQyfGusKzp7YCG85tu9N7HftX4ULnuhznxfaZFYV1rSSglte4O1kEw+RW+KtprQo8LzYWDFTtwz8=
+X-Received: by 2002:ab0:3c4a:0:b0:68e:2dce:3162 with SMTP id
+ u10-20020ab03c4a000000b0068e2dce3162mr3757083uaw.2.1679499069601; Wed, 22 Mar
+ 2023 08:31:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v4 1/8] accel/qaic: Add documentation for AIC100
- accelerator driver
-Content-Language: en-US
-To:     Bagas Sanjaya <bagasdotme@gmail.com>, <ogabbay@kernel.org>,
-        <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <jacek.lawrynowicz@linux.intel.com>,
-        <stanislaw.gruszka@linux.intel.com>
-CC:     <dafna@fastmail.com>, <dri-devel@lists.freedesktop.org>,
-        <quic_pkanojiy@quicinc.com>, <quic_carlv@quicinc.com>,
-        <quic_ajitpals@quicinc.com>, <linux-doc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <1679325074-5494-1-git-send-email-quic_jhugo@quicinc.com>
- <1679325074-5494-2-git-send-email-quic_jhugo@quicinc.com>
- <ZBmxl0sFH5PBG36H@debian.me>
- <aa2ee071-952b-f8b5-bfcf-53cef99478be@quicinc.com>
- <ZBqGj+gyl4c5Yz7E@debian.me>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <ZBqGj+gyl4c5Yz7E@debian.me>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: tjjCl4FJxx2c8aMpfpc7eQrzmPurUgAw
-X-Proofpoint-GUID: tjjCl4FJxx2c8aMpfpc7eQrzmPurUgAw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-22_12,2023-03-22_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 clxscore=1015
- spamscore=0 phishscore=0 bulkscore=0 malwarescore=0 adultscore=0
- mlxlogscore=999 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303220110
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20230320154841.327908-1-brgl@bgdev.pl> <20230320154841.327908-13-brgl@bgdev.pl>
+ <a215c54b-c12e-4463-f9fe-588053f74300@linaro.org> <20230322025047.gvo252mh2flcbzuc@ripper>
+In-Reply-To: <20230322025047.gvo252mh2flcbzuc@ripper>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Wed, 22 Mar 2023 16:30:58 +0100
+Message-ID: <CAMRc=MeVaMaQMsLUPH0QDjuOBt3TjVofbj7SgA5zMg3sQGBh=w@mail.gmail.com>
+Subject: Re: [PATCH v2 12/15] arm64: dts: qcom: sa8775p: pmic: add thermal zones
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/21/2023 10:39 PM, Bagas Sanjaya wrote:
-> On Tue, Mar 21, 2023 at 03:52:11PM -0600, Jeffrey Hugo wrote:
->>>> +
->>>> +Request field descriptions:
->>>> +
->>>> +| req_id- request ID. A request FIFO element and a response FIFO element with
->>>> +|         the same request ID refer to the same command.
->>>> +
->>>> +| seq_id- sequence ID within a request. Ignored by the DMA Bridge.
->>>> +
->>>> +| pcie_dma_cmd- describes the DMA element of this request.
->>>> +| 	Bit(7) is the force msi flag, which overrides the DMA Bridge MSI logic
->>>> +| 		and generates a MSI when this request is complete, and QSM
->>>> +| 		configures the DMA Bridge to look at this bit.
->>>> +| 	Bits(6:5) are reserved.
->>>> +| 	Bit(4) is the completion code flag, and indicates that the DMA Bridge
->>>> +| 		shall generate a response FIFO element when this request is
->>>> +| 		complete.
->>>> +| 	Bit(3) indicates if this request is a linked list transfer(0) or a bulk
->>>> +| 		transfer(1).
->>>> +| 	Bit(2) is reserved.
->>>> +| 	Bits(1:0) indicate the type of transfer. No transfer(0), to device(1),
->>>> +| 		from device(2). Value 3 is illegal.
->>>> +
->>>> +| pcie_dma_source_addr- source address for a bulk transfer, or the address of
->>>> +|         the linked list.
->>>> +
->>>> +| pcie_dma_dest_addr- destination address for a bulk transfer.
->>>> +
->>>> +| pcie_dma_len- length of the bulk transfer. Note that the size of this field
->>>> +| 	limits transfers to 4G in size.
->>>> +
->>>> +| doorbell_addr- address of the doorbell to ring when this request is complete.
->>>> +
->>>> +| doorbell_attr- doorbell attributes.
->>>> +| 	Bit(7) indicates if a write to a doorbell is to occur.
->>>> +| 	Bits(6:2) are reserved.
->>>> +| 	Bits(1:0) contain the encoding of the doorbell length. 0 is 32-bit,
->>>> +| 		1 is 16-bit, 2 is 8-bit, 3 is reserved. The doorbell address
->>>> +| 		must be naturally aligned to the specified length.
->>>> +
->>>> +| doorbell_data- data to write to the doorbell. Only the bits corresponding to
->>>> +| 	the doorbell length are valid.
->>>> +
->>>> +| sem_cmdN- semaphore command.
->>>> +| 	Bit(31) indicates this semaphore command is enabled.
->>>> +| 	Bit(30) is the to-device DMA fence. Block this request until all
->>>> +| 		to-device DMA transfers are complete.
->>>> +| 	Bit(29) is the from-device DMA fence. Block this request until all
->>>> +| 		from-device DMA transfers are complete.
->>>> +| 	Bits(28:27) are reserved.
->>>> +| 	Bits(26:24) are the semaphore command. 0 is NOP. 1 is init with the
->>>> +| 		specified value. 2 is increment. 3 is decrement. 4 is wait
->>>> +| 		until the semaphore is equal to the specified value. 5 is wait
->>>> +| 		until the semaphore is greater or equal to the specified value.
->>>> +| 		6 is "P", wait until semaphore is greater than 0, then
->>>> +| 		decrement by 1. 7 is reserved.
->>>> +| 	Bit(23) is reserved.
->>>> +| 	Bit(22) is the semaphore sync. 0 is post sync, which means that the
->>>> +| 		semaphore operation is done after the DMA transfer. 1 is
->>>> +| 		presync, which gates the DMA transfer. Only one presync is
->>>> +| 		allowed per request.
->>>> +| 	Bit(21) is reserved.
->>>> +| 	Bits(20:16) is the index of the semaphore to operate on.
->>>> +| 	Bits(15:12) are reserved.
->>>> +| 	Bits(11:0) are the semaphore value to use in operations.
->>>
->>> What about bullet lists?
->>
->> It doesn't feel like the above fits into a bullet list structure.  Do you
->> have an example reference, or can you transform a small section of the above
->> to illustrate what you are thinking?
->>
-> 
-> Oops, sorry for suggesting the wrong construct.
-> 
-> Definition lists fit in this case, since there are request fields along
-> with their individual descriptions. For bit lists, bullet lists should
-> suffice.
-> 
-> Here is the illustration diff:
-> 
-> diff --git a/Documentation/accel/qaic/aic100.rst b/Documentation/accel/qaic/aic100.rst
-> index 7ed95bb164bbeb..4d438fd8121451 100644
-> --- a/Documentation/accel/qaic/aic100.rst
-> +++ b/Documentation/accel/qaic/aic100.rst
-> @@ -308,67 +308,79 @@ A request FIFO element has the following structure:
->   
->   Request field descriptions:
->   
-> -| req_id- request ID. A request FIFO element and a response FIFO element with
-> -|         the same request ID refer to the same command.
-> +  req_id
-> +      request ID. A request FIFO element and a response FIFO element with
-> +      the same request ID refer to the same command.
->   
-> -| seq_id- sequence ID within a request. Ignored by the DMA Bridge.
-> +  seq_id
-> +      sequence ID within a request. Ignored by the DMA Bridge.
->   
-> -| pcie_dma_cmd- describes the DMA element of this request.
-> -| 	Bit(7) is the force msi flag, which overrides the DMA Bridge MSI logic
-> -| 		and generates a MSI when this request is complete, and QSM
-> -| 		configures the DMA Bridge to look at this bit.
-> -| 	Bits(6:5) are reserved.
-> -| 	Bit(4) is the completion code flag, and indicates that the DMA Bridge
-> -| 		shall generate a response FIFO element when this request is
-> -| 		complete.
-> -| 	Bit(3) indicates if this request is a linked list transfer(0) or a bulk
-> -| 		transfer(1).
-> -| 	Bit(2) is reserved.
-> -| 	Bits(1:0) indicate the type of transfer. No transfer(0), to device(1),
-> -| 		from device(2). Value 3 is illegal.
-> +  pcie_dma_cmd
-> +      describes the DMA element of this request.
->   
-> -| pcie_dma_source_addr- source address for a bulk transfer, or the address of
-> -|         the linked list.
-> +      * Bit(7) is the force msi flag, which overrides the DMA Bridge MSI logic
-> +        and generates a MSI when this request is complete, and QSM
-> +        configures the DMA Bridge to look at this bit.
-> +      * Bits(6:5) are reserved.
-> +      * Bit(4) is the completion code flag, and indicates that the DMA Bridge
-> +        shall generate a response FIFO element when this request is
-> +        complete.
-> +      * Bit(3) indicates if this request is a linked list transfer(0) or a bulk
-> +      * transfer(1).
-> +      * Bit(2) is reserved.
-> +      * Bits(1:0) indicate the type of transfer. No transfer(0), to device(1),
-> +      * from device(2). Value 3 is illegal.
->   
-> -| pcie_dma_dest_addr- destination address for a bulk transfer.
-> +  pcie_dma_source_addr
-> +      source address for a bulk transfer, or the address of  the linked list.
->   
-> -| pcie_dma_len- length of the bulk transfer. Note that the size of this field
-> -| 	limits transfers to 4G in size.
-> +  pcie_dma_dest_addr
-> +      destination address for a bulk transfer.
->   
-> -| doorbell_addr- address of the doorbell to ring when this request is complete.
-> +  pcie_dma_len
-> +      length of the bulk transfer. Note that the size of this field
-> +      limits transfers to 4G in size.
->   
-> -| doorbell_attr- doorbell attributes.
-> -| 	Bit(7) indicates if a write to a doorbell is to occur.
-> -| 	Bits(6:2) are reserved.
-> -| 	Bits(1:0) contain the encoding of the doorbell length. 0 is 32-bit,
-> -| 		1 is 16-bit, 2 is 8-bit, 3 is reserved. The doorbell address
-> -| 		must be naturally aligned to the specified length.
-> +  doorbell_addr
-> +      address of the doorbell to ring when this request is complete.
->   
-> -| doorbell_data- data to write to the doorbell. Only the bits corresponding to
-> -| 	the doorbell length are valid.
-> +  doorbell_attr
-> +      doorbell attributes.
->   
-> -| sem_cmdN- semaphore command.
-> -| 	Bit(31) indicates this semaphore command is enabled.
-> -| 	Bit(30) is the to-device DMA fence. Block this request until all
-> -| 		to-device DMA transfers are complete.
-> -| 	Bit(29) is the from-device DMA fence. Block this request until all
-> -| 		from-device DMA transfers are complete.
-> -| 	Bits(28:27) are reserved.
-> -| 	Bits(26:24) are the semaphore command. 0 is NOP. 1 is init with the
-> -| 		specified value. 2 is increment. 3 is decrement. 4 is wait
-> -| 		until the semaphore is equal to the specified value. 5 is wait
-> -| 		until the semaphore is greater or equal to the specified value.
-> -| 		6 is "P", wait until semaphore is greater than 0, then
-> -| 		decrement by 1. 7 is reserved.
-> -| 	Bit(23) is reserved.
-> -| 	Bit(22) is the semaphore sync. 0 is post sync, which means that the
-> -| 		semaphore operation is done after the DMA transfer. 1 is
-> -| 		presync, which gates the DMA transfer. Only one presync is
-> -| 		allowed per request.
-> -| 	Bit(21) is reserved.
-> -| 	Bits(20:16) is the index of the semaphore to operate on.
-> -| 	Bits(15:12) are reserved.
-> -| 	Bits(11:0) are the semaphore value to use in operations.
-> +      * Bit(7) indicates if a write to a doorbell is to occur.
-> +      * Bits(6:2) are reserved.
-> +      * Bits(1:0) contain the encoding of the doorbell length. 0 is 32-bit,
-> +        1 is 16-bit, 2 is 8-bit, 3 is reserved. The doorbell address
-> +        must be naturally aligned to the specified length.
-> +
-> +  doorbell_data
-> +      data to write to the doorbell. Only the bits corresponding to
-> +      the doorbell length are valid.
-> +
-> +  sem_cmdN
-> +      semaphore command.
-> +
-> +      * Bit(31) indicates this semaphore command is enabled.
-> +      * Bit(30) is the to-device DMA fence. Block this request until all
-> +        to-device DMA transfers are complete.
-> +      * Bit(29) is the from-device DMA fence. Block this request until all
-> +        from-device DMA transfers are complete.
-> +      * Bits(28:27) are reserved.
-> +        Bits(26:24) are the semaphore command. 0 is NOP. 1 is init with the
-> +        specified value. 2 is increment. 3 is decrement. 4 is wait
-> +        until the semaphore is equal to the specified value. 5 is wait
-> +        until the semaphore is greater or equal to the specified value.
-> +        6 is "P", wait until semaphore is greater than 0, then
-> +        decrement by 1. 7 is reserved.
-> +      * Bit(23) is reserved.
-> +      * Bit(22) is the semaphore sync. 0 is post sync, which means that the
-> +        semaphore operation is done after the DMA transfer. 1 is
-> +      * presync, which gates the DMA transfer. Only one presync is
-> +      * allowed per request.
-> +      * Bit(21) is reserved.
-> +      * Bits(20:16) is the index of the semaphore to operate on.
-> +      * Bits(15:12) are reserved.
-> +      * Bits(11:0) are the semaphore value to use in operations.
->   
->   Overall, a request is processed in 4 steps:
->   
-> 
-> Thanks.
+On Wed, Mar 22, 2023 at 3:47=E2=80=AFAM Bjorn Andersson <andersson@kernel.o=
+rg> wrote:
+>
+> On Mon, Mar 20, 2023 at 06:28:20PM +0100, Konrad Dybcio wrote:
+> >
+> >
+> > On 20.03.2023 16:48, Bartosz Golaszewski wrote:
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > Add the thermal zones and associated alarm nodes for the PMICs that h=
+ave
+> > > them hooked up on sa8775p-ride.
+> > >
+> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 58 +++++++++++++++++++=
+++
+> > >  1 file changed, 58 insertions(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64=
+/boot/dts/qcom/sa8775p-pmics.dtsi
+> > > index 8616ead3daf5..276070b62ccd 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+> > > @@ -6,6 +6,50 @@
+> > >  #include <dt-bindings/input/input.h>
+> > >  #include <dt-bindings/spmi/spmi.h>
+> > >
+> > > +/ {
+> > > +   thermal-zones {
+> > > +           pmm8654au_1_thermal: pm8775-1-thermal {
+> > Please reindex this, downstream uses _1 for pmic@0, but this
+> > makes little sense. Make it match the SID.
+> >
+>
+> Please use the naming from the schematics for these things, rather than
+> just an iterator (which might be what Bartosz is doing here).
+>
 
-Ok.  This is making sense to me.  Thanks for the clarification.  I'll 
-give this a try.
+Not sure how to approach that. All currently existing
+"qcom,spmi-temp-alarm" nodes use the PMIC name for the label.
+Otherwise it would have to go into the board file and be replicated
+for each board using the same PMIC?
 
--Jeff
+Bart
+
+> Regards,
+> Bjorn
+>
+> > > +                   polling-delay-passive =3D <100>;
+> > > +                   polling-delay =3D <0>;
+> > > +                   thermal-sensors =3D <&pmm8654au_1_temp_alarm>;
+> > > +
+> > > +                   trips {
+> > > +                           trip0 {
+> > > +                                   temperature =3D <105000>;
+> > > +                                   hysteresis =3D <0>;
+> > > +                                   type =3D "passive";
+> > > +                           };
+> > > +
+> > > +                           trip1 {
+> > > +                                   temperature =3D <125000>;
+> > > +                                   hysteresis =3D <0>;
+> > > +                                   type =3D "critical";
+> > > +                           };
+> > > +                   };
+> > > +           };
+> > > +
+> > What happened to the downstream _2 (pmic@2) one and _4 (pmic@6)?
+> >
+> > Konrad
+> >
+> > > +           pmm8654au_3_thermal: pm8775-3-thermal {
+> > > +                   polling-delay-passive =3D <100>;
+> > > +                   polling-delay =3D <0>;
+> > > +                   thermal-sensors =3D <&pmm8654au_3_temp_alarm>;
+> > > +
+> > > +                   trips {
+> > > +                           trip0 {
+> > > +                                   temperature =3D <105000>;
+> > > +                                   hysteresis =3D <0>;
+> > > +                                   type =3D "passive";
+> > > +                           };
+> > > +
+> > > +                           trip1 {
+> > > +                                   temperature =3D <125000>;
+> > > +                                   hysteresis =3D <0>;
+> > > +                                   type =3D "critical";
+> > > +                           };
+> > > +                   };
+> > > +           };
+> > > +   };
+> > > +};
+> > > +
+> > >  &spmi_bus {
+> > >     pmm8654au_0: pmic@0 {
+> > >             compatible =3D "qcom,pmm8654au", "qcom,spmi-pmic";
+> > > @@ -41,6 +85,13 @@ pmm8654au_1: pmic@2 {
+> > >             reg =3D <0x2 SPMI_USID>;
+> > >             #address-cells =3D <1>;
+> > >             #size-cells =3D <0>;
+> > > +
+> > > +           pmm8654au_1_temp_alarm: temp-alarm@a00 {
+> > > +                   compatible =3D "qcom,spmi-temp-alarm";
+> > > +                   reg =3D <0xa00>;
+> > > +                   interrupts-extended =3D <&spmi_bus 0x2 0xa 0x0 IR=
+Q_TYPE_EDGE_BOTH>;
+> > > +                   #thermal-sensor-cells =3D <0>;
+> > > +           };
+> > >     };
+> > >
+> > >     pmm8654au_2: pmic@4 {
+> > > @@ -55,5 +106,12 @@ pmm8654au_3: pmic@6 {
+> > >             reg =3D <0x6 SPMI_USID>;
+> > >             #address-cells =3D <1>;
+> > >             #size-cells =3D <0>;
+> > > +
+> > > +           pmm8654au_3_temp_alarm: temp-alarm@a00 {
+> > > +                   compatible =3D "qcom,spmi-temp-alarm";
+> > > +                   reg =3D <0xa00>;
+> > > +                   interrupts-extended =3D <&spmi_bus 0x6 0xa 0x0 IR=
+Q_TYPE_EDGE_BOTH>;
+> > > +                   #thermal-sensor-cells =3D <0>;
+> > > +           };
+> > >     };
+> > >  };
