@@ -2,104 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73A546C57CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 21:40:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E77746C5822
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 21:51:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231519AbjCVUkk convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 16:40:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34512 "EHLO
+        id S231793AbjCVUvY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 16:51:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230211AbjCVUk2 (ORCPT
+        with ESMTP id S229670AbjCVUvB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 16:40:28 -0400
-Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8918019F18;
-        Wed, 22 Mar 2023 13:32:39 -0700 (PDT)
-Received: from p508fd58e.dip0.t-ipconnect.de ([80.143.213.142] helo=phil.localnet)
-        by gloria.sntech.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <heiko@sntech.de>)
-        id 1pf56y-0004XT-Oa; Wed, 22 Mar 2023 21:31:08 +0100
-From:   Heiko Stuebner <heiko@sntech.de>
-To:     Andreas =?ISO-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Joel Stanley <joel@jms.id.au>,
-        Damien Le Moal <damien.lemoal@wdc.com>,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Sean Wang <sean.wang@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Jianlong Huang <jianlong.huang@starfivetech.com>,
-        Dvorkin Dmitry <dvorkin@tibbo.com>,
-        Wells Lu <wellslutw@gmail.com>,
-        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Rob Herring <robh@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-actions@lists.infradead.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, asahi@lists.linux.dev,
-        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
-        linux-riscv@lists.infradead.org, patches@opensource.cirrus.com,
-        alsa-devel@alsa-project.org, linux-mediatek@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH] dt-bindings: pinctrl: Drop unneeded quotes
-Date:   Wed, 22 Mar 2023 21:31:06 +0100
-Message-ID: <14697371.uLZWGnKmhe@phil>
-In-Reply-To: <20230317233623.3968172-1-robh@kernel.org>
-References: <20230317233623.3968172-1-robh@kernel.org>
+        Wed, 22 Mar 2023 16:51:01 -0400
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26E5912BC4;
+        Wed, 22 Mar 2023 13:48:57 -0700 (PDT)
+Received: by mail-oi1-x22e.google.com with SMTP id bj20so5216946oib.3;
+        Wed, 22 Mar 2023 13:48:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679518136;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MPANpQo2pbBjv7bN+m6aSZeybQN0T9mXhbFUpa61TPQ=;
+        b=fx9hdW6p0dQdtSIlZNZVy26SYG5ERPukARJpRq4EZ12B/ilaMyklpkLz3p7498u1ZP
+         zkKaBNEiOwxxqaHEn0DdRQQwxjYO8fSCzYCpT1Q4hn26Ps1v4J55dK2f4sPtW61yf8Eo
+         OLliIc20a9ml5L+Z6oQiuhKfLNvBmTpq51k+8V9lL/i64RxIutVo/LOaogcjkgNJYIZX
+         kk60XrmYuDM/OimXwdTNdasE8+NlQAAhO9M9VU8QHJGL7nXcaKpXDrcaeHXEatPnDqKQ
+         Z1btLvtCIdHOOk4yEmoY67WSIhz22y/Xm49IztnbYrLMkExi9Btd593xkfo+GFFOKTUJ
+         9lTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679518136;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MPANpQo2pbBjv7bN+m6aSZeybQN0T9mXhbFUpa61TPQ=;
+        b=23qK7scEi9kd2mx6M0FM2LPdbpXps+3ufP0jVSss00or8i9CtZmWv5KBLWCdK/R6OY
+         xeYi2jpvwdO9BDO17sCMtLfX3QSaziPvzDL/RFQO4uZyJe0YTULz7sw9z30iWAqVhSRJ
+         D3JjL5ANtaMEkHXbUp6LT9B0caGsv2aJPKSzvqLWM7sjV5aDCX1cT8bdUxMCXD1fEBFV
+         BwcbIAyGi57QxGiMOgVK9kOUnQXotTdEqwWThYXJZZ5E7unUdbRQ3yWJ8w32+uMwzMWU
+         mxJHAwnGeTBblNAIZa2Vtdy34LdELl3ik5JVPYPcTSgo+ZZ29rC7LIrMUnfVuniI24yF
+         EWgQ==
+X-Gm-Message-State: AO0yUKVNouzjFdTiKxHai7iTjgoRTEIkBGJkrUTNrBT6n+9tHjaLn6Ew
+        S3j6qrtfUEhWg8dacudmXAL4pcyahAwS2JVakLQ=
+X-Google-Smtp-Source: AK7set/ZbUQNbAR4aFIk7VnLqx7B6Seh+3ogULmXSVniL38EBZndSAX2MDpf7tdc0/FahMyfyYS6l4wNzt57YdsP8lY=
+X-Received: by 2002:aca:1010:0:b0:384:6d14:c707 with SMTP id
+ 16-20020aca1010000000b003846d14c707mr1304761oiq.5.1679518136556; Wed, 22 Mar
+ 2023 13:48:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_PASS,T_SPF_HELO_TEMPERROR
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20230306090633.65918-1-geert+renesas@glider.be> <f2ac0d80-fab1-8211-1dfe-cea078929e91@infradead.org>
+In-Reply-To: <f2ac0d80-fab1-8211-1dfe-cea078929e91@infradead.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 22 Mar 2023 13:48:45 -0700
+Message-ID: <CAF6AEGvxOdqeK65fWOqqOvTO4fHS83U4orMG6GdQyx1tcSiK_Q@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dpu: Fix bit-shifting UB in DPU_HW_VER() macro
+To:     Randy Dunlap <rdunlap@infradead.org>
+Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Vinod Koul <vkoul@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am Samstag, 18. März 2023, 00:36:18 CET schrieb Rob Herring:
-> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> checking for this can be enabled in yamllint.
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
+On Tue, Mar 21, 2023 at 8:08=E2=80=AFAM Randy Dunlap <rdunlap@infradead.org=
+> wrote:
+>
+>
+>
+> On 3/6/23 01:06, Geert Uytterhoeven wrote:
+> > With gcc-5 and CONFIG_UBSAN_SHIFT=3Dy:
+> >
+> >     drivers/gpu/drm/msm/msm_mdss.c: In function 'msm_mdss_enable':
+> >     drivers/gpu/drm/msm/msm_mdss.c:296:2: error: case label does not re=
+duce to an integer constant
+> >       case DPU_HW_VER_800:
+> >       ^
+> >     drivers/gpu/drm/msm/msm_mdss.c:299:2: error: case label does not re=
+duce to an integer constant
+> >       case DPU_HW_VER_810:
+> >       ^
+> >     drivers/gpu/drm/msm/msm_mdss.c:300:2: error: case label does not re=
+duce to an integer constant
+> >       case DPU_HW_VER_900:
+> >       ^
+> >
+> > This happens because for major revisions 8 or greather, the non-sign bi=
+t
+> > of the major revision number is shifted into bit 31 of a signed integer=
+,
+> > which is undefined behavior.
+> >
+> > Fix this by casting the major revision number to unsigned int.
+> >
+> > Fixes: efcd0107727c4f04 ("drm/msm/dpu: add support for SM8550")
+> > Fixes: 4a352c2fc15aec1e ("drm/msm/dpu: Introduce SC8280XP")
+> > Fixes: 100d7ef6995d1f86 ("drm/msm/dpu: add support for SM8450")
+> > Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+>
+> Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
 
->  .../devicetree/bindings/pinctrl/rockchip,pinctrl.yaml  | 10 +++++-----
+Reviewed-by: Rob Clark <robdclark@gmail.com>
 
-Reviewed-by: Heiko Stuebner <heiko@sntech.de> #rockchip
-
-
+>
+> Thanks.
+>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 5 +++--
+> >  1 file changed, 3 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/g=
+pu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> > index ddab9caebb18c40d..bbd3cbdd77956c5d 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> > @@ -19,8 +19,9 @@
+> >   */
+> >  #define MAX_BLOCKS    12
+> >
+> > -#define DPU_HW_VER(MAJOR, MINOR, STEP) (((MAJOR & 0xF) << 28)    |\
+> > -             ((MINOR & 0xFFF) << 16)  |\
+> > +#define DPU_HW_VER(MAJOR, MINOR, STEP)                       \
+> > +             ((((unsigned int)MAJOR & 0xF) << 28) |  \
+> > +             ((MINOR & 0xFFF) << 16) |               \
+> >               (STEP & 0xFFFF))
+> >
+> >  #define DPU_HW_MAJOR(rev)            ((rev) >> 28)
+>
+> --
+> ~Randy
