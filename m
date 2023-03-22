@@ -2,232 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0D1A6C4071
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 03:38:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BAD646C4079
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 03:40:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229671AbjCVCiA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 22:38:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56894 "EHLO
+        id S229522AbjCVCky (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 22:40:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229922AbjCVCh7 (ORCPT
+        with ESMTP id S229487AbjCVCkx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 22:37:59 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50B7059436;
-        Tue, 21 Mar 2023 19:37:52 -0700 (PDT)
+        Tue, 21 Mar 2023 22:40:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 360373803D;
+        Tue, 21 Mar 2023 19:40:52 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B51D461F25;
-        Wed, 22 Mar 2023 02:37:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62DDC433EF;
-        Wed, 22 Mar 2023 02:37:49 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C11F461F1D;
+        Wed, 22 Mar 2023 02:40:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76A3C433D2;
+        Wed, 22 Mar 2023 02:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679452671;
-        bh=ahMSQCrkvdtTzmw3vLAN58JOl0U83Mm+lJR6IhMp+pY=;
+        s=k20201202; t=1679452851;
+        bh=79dMe7RsL9m8pXI5ORMx795he2zXkKmcbbpL+80vMiA=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MnnyXCLlmTGLJb511gFy7XMUwbkT8RPYP3iaZ5+i+qV2cl2AiULWTUZHu/f9JuHBA
-         zVX0koAWRxjsQggOkbpjK6iOrP05QAOR+uOhXgrqOTucdYja/1wYYBNDxPP7HhTjAC
-         ErltnuvPPketKfZoed+UixkwMfFqXZUynFQM9cCg85R28OkMoeQOcmlemJNOCDqX4a
-         Sr7+hVU+zE1r5tfgmgLddo/db1AMbqamnNnxKnPttMMQacRmjk8Hg3J0du5bdAzwi0
-         Pb0gNa5R1NL2B4GuLBMkOqUvHVVO6n1+2S+CmRk79ATw8+CT7YWL+Gswvq9e538lmx
-         4IPIntVLXG7eg==
-Date:   Tue, 21 Mar 2023 19:41:03 -0700
+        b=Z3UXnnuKedblvn/nRQfhBeuDKLUTEt0aMd/m/ImG+mVm9ivGKl8i1BP4ka4+jJgVe
+         W/kt+4V5ixJhH12L4DIbpz3YxnSR7m6/ncJybF4AL/7Ss9VPilMUoWhFT+sGsFcIN6
+         FSa+iB295LWnPVfEhWVVHj7dkMW9DKZADVgVGj5l6fe5ECTUWn98SSNYRQmytgKvnM
+         AzhvN9/G2jR/DDWTrBSViGw+uQa2HYUJpPkwabe05pcROAV5tVD3uPZDUePzuZLryP
+         dpA2aPhCAWfClyELnIP6v0rRXhQcaGHzEm5n5kIWDThzJMd02piaIclj6g7D0dV/tr
+         TXR8cMR9BcCzw==
+Date:   Tue, 21 Mar 2023 19:44:02 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>,
-        Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH v7 4/4] arm64: dts: qcom: sc8280xp-x13s: Add bluetooth
-Message-ID: <20230322024103.fxht7qgaan4m2z5b@ripper>
-References: <20230322011442.34475-1-steev@kali.org>
- <20230322011442.34475-5-steev@kali.org>
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     Jakub Kicinski <kuba@kernel.org>, linux-kernel@vger.kernel.org,
+        agross@kernel.org, konrad.dybcio@linaro.org, davem@davemloft.net,
+        edumazet@google.com, pabeni@redhat.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        bhupesh.sharma@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, peppe.cavallaro@st.com,
+        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
+        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
+        linux@armlinux.org.uk, veekhee@apple.com,
+        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
+        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
+        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
+        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
+Subject: Re: [PATCH net-next v2 00/12] Add EMAC3 support for sa8540p-ride
+Message-ID: <20230322024402.l6awwelwdzxydmam@ripper>
+References: <20230320221617.236323-1-ahalaney@redhat.com>
+ <20230320202802.4e7dc54c@kernel.org>
+ <20230321184435.5pqkjp4adgn6cpxy@halaney-x13s>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230322011442.34475-5-steev@kali.org>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <20230321184435.5pqkjp4adgn6cpxy@halaney-x13s>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 21, 2023 at 08:14:42PM -0500, Steev Klimaszewski wrote:
-> The Lenovo Thinkpad X13s has a WCN6855 Bluetooth controller on uart2,
-> add this.
+On Tue, Mar 21, 2023 at 01:44:35PM -0500, Andrew Halaney wrote:
+> On Mon, Mar 20, 2023 at 08:28:02PM -0700, Jakub Kicinski wrote:
+> > On Mon, 20 Mar 2023 17:16:05 -0500 Andrew Halaney wrote:
+> > > This is a forward port / upstream refactor of code delivered
+> > > downstream by Qualcomm over at [0] to enable the DWMAC5 based
+> > > implementation called EMAC3 on the sa8540p-ride dev board.
+> > > 
+> > > From what I can tell with the board schematic in hand,
+> > > as well as the code delivered, the main changes needed are:
+> > > 
+> > >     1. A new address space layout for /dwmac5/EMAC3 MTL/DMA regs
+> > >     2. A new programming sequence required for the EMAC3 base platforms
+> > > 
+> > > This series makes those adaptations as well as other housekeeping items
+> > > such as converting dt-bindings to yaml, adding clock descriptions, etc.
+> > > 
+> > > [0] https://git.codelinaro.org/clo/la/kernel/ark-5.14/-/commit/510235ad02d7f0df478146fb00d7a4ba74821b17
+> > > 
+> > > v1: https://lore.kernel.org/netdev/20230313165620.128463-1-ahalaney@redhat.com/
+> > 
+> > At a glance 1-4,8-12 need to go via networking, 5 via clock tree,
+> > and 6,7 via ARM/Qualcomm.
+> > 
+> > AFAICT there are no strong (compile) dependencies so we can each merge
+> > our chunk and they will meet in Linus's tree? If so please repost just
+> > the networking stuff for net-next, and the other bits to respective
+> > trees, as separate series.
+> > 
 > 
-> Signed-off-by: Steev Klimaszewski <steev@kali.org>
+> That makes sense to me, thanks for the advice.
+> 
+> The only note is that 5 (the clk patch) is depended on by 6/7 to
+> compile (they use the header value in 5)... So I'll keep those together!
+> 
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Sounds good to me!
 
 Regards,
 Bjorn
 
-> ---
-> Changes since v6:
->  * Remove allowed-modes as they aren't needed
->  * Remove regulator-allow-set-load
->  * Set regulator-always-on because the wifi chip also uses the regulator
->  * cts pin uses bias-bus-hold
->  * Alphabetize uart2 pins
+> So all in all it will be the dt-binding changes + stmmac changes in one
+> series for networking, and the clock + devicetree changes via
+> ARM/Qualcomm if I am following properly.
 > 
-> Changes since v5:
->  * Update patch subject
->  * Specify initial mode (via guess) for vreg_s1c
->  * Drop uart17 definition
->  * Rename bt_en to bt_default because configuring more than one pin
->  * Correct (maybe) bias configurations
->  * Correct cts gpio
->  * Split rts-tx into two nodes
->  * Drop incorrect link in the commit message
+> I'll go that route for v3 and link here (just to make finding the split
+> easier) unless someone objects (got some time as I need to refactor
+> based on series feedback)!
 > 
-> Changes since v4:
->  * Address Konrad's review comments.
-> 
-> Changes since v3:
->  * Add vreg_s1c
->  * Add regulators and not dead code
->  * Fix commit message changelog
-> 
-> Changes since v2:
->  * Remove dead code and add TODO comment
->  * Make dtbs_check happy with the pin definitions
->  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 78 +++++++++++++++++++
->  1 file changed, 78 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> index 92d365519546..05e66505e5cc 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> @@ -24,6 +24,7 @@ / {
->  	aliases {
->  		i2c4 = &i2c4;
->  		i2c21 = &i2c21;
-> +		serial1 = &uart2;
->  	};
->  
->  	wcd938x: audio-codec {
-> @@ -431,6 +432,14 @@ regulators-1 {
->  		qcom,pmic-id = "c";
->  		vdd-bob-supply = <&vreg_vph_pwr>;
->  
-> +		vreg_s1c: smps1 {
-> +			regulator-name = "vreg_s1c";
-> +			regulator-min-microvolt = <1880000>;
-> +			regulator-max-microvolt = <1900000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-always-on;
-> +		};
-> +
->  		vreg_l1c: ldo1 {
->  			regulator-name = "vreg_l1c";
->  			regulator-min-microvolt = <1800000>;
-> @@ -918,6 +927,32 @@ &qup0 {
->  	status = "okay";
->  };
->  
-> +&uart2 {
-> +	pinctrl-0 = <&uart2_default>;
-> +	pinctrl-names = "default";
-> +
-> +	status = "okay";
-> +
-> +	bluetooth {
-> +		compatible = "qcom,wcn6855-bt";
-> +
-> +		vddio-supply = <&vreg_s10b>;
-> +		vddbtcxmx-supply = <&vreg_s12b>;
-> +		vddrfacmn-supply = <&vreg_s12b>;
-> +		vddrfa0p8-supply = <&vreg_s12b>;
-> +		vddrfa1p2-supply = <&vreg_s11b>;
-> +		vddrfa1p7-supply = <&vreg_s1c>;
-> +
-> +		max-speed = <3200000>;
-> +
-> +		enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-> +		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
-> +
-> +		pinctrl-0 = <&bt_default>;
-> +		pinctrl-names = "default";
-> +	};
-> +};
-> +
->  &qup1 {
->  	status = "okay";
->  };
-> @@ -1192,6 +1227,21 @@ hastings_reg_en: hastings-reg-en-state {
->  &tlmm {
->  	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
->  
-> +	bt_default: bt-default-state {
-> +		hstp-sw-ctrl-pins {
-> +			pins = "gpio132";
-> +			function = "gpio";
-> +			bias-pull-down;
-> +		};
-> +
-> +		hstp-bt-en-pins {
-> +			pins = "gpio133";
-> +			function = "gpio";
-> +			drive-strength = <16>;
-> +			bias-disable;
-> +		};
-> +	};
-> +
->  	edp_reg_en: edp-reg-en-state {
->  		pins = "gpio25";
->  		function = "gpio";
-> @@ -1213,6 +1263,34 @@ i2c4_default: i2c4-default-state {
->  		bias-disable;
->  	};
->  
-> +	uart2_default: uart2-default-state {
-> +		cts-pins {
-> +			pins = "gpio121";
-> +			function = "qup2";
-> +			bias-bus-hold;
-> +		};
-> +
-> +		rts-pins {
-> +			pins = "gpio122";
-> +			function = "qup2";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +
-> +		rx-pins {
-> +			pins = "gpio124";
-> +			function = "qup2";
-> +			bias-pull-up;
-> +		};
-> +
-> +		tx-pins {
-> +			pins = "gpio123";
-> +			function = "qup2";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +	};
-> +
->  	i2c21_default: i2c21-default-state {
->  		pins = "gpio81", "gpio82";
->  		function = "qup21";
-> -- 
-> 2.39.2
+> Thanks,
+> Andrew
 > 
