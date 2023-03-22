@@ -2,55 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D5956C4E40
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 15:44:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D7F986C4E4C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 15:44:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231873AbjCVOoF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 10:44:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40894 "EHLO
+        id S231898AbjCVOoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 10:44:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231755AbjCVOnV (ORCPT
+        with ESMTP id S231773AbjCVOnZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 10:43:21 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16B6D64B27;
-        Wed, 22 Mar 2023 07:42:33 -0700 (PDT)
+        Wed, 22 Mar 2023 10:43:25 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0D6265466
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 07:42:36 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id A4466CE1DC9;
-        Wed, 22 Mar 2023 14:42:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148AAC4339B;
-        Wed, 22 Mar 2023 14:42:27 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 372C862176
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 14:42:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5295DC433D2;
+        Wed, 22 Mar 2023 14:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1679496148;
-        bh=xEyKZaa1+RXFhK2lv1wKEyVPh8wrA5Ghs6WICLxgLV0=;
+        bh=iDe1/CN7w29vYWoGIgBkjZRVmocGrMXtY+BMxinOeJ8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=OY3q2++VOzzMH6fqxfOsljPG6l24QjRnR+9K8/S82zW08s/JAhM3aPbJFXU6uV2hf
-         huK2Nk6a0PSFE4cj9j4GWXhti50cSa7zHrpesi3mr1vgsRo14y7lo1VPWhv2WfIisS
-         I55nklUs0bqiWu2aaPCzQqV51sOKJbPeAeMlmx0a78N9dr/e0yxaUomftRNFMeQUq6
-         +RJrPlS1bgd58ehFfVCuJP1YchvK01AylBSENvV+g2D70hg1yvUYj6g42lvCtEZ5JK
-         WuLtpI+tFKABHJGB338MHO4ELGsRP6sFZfC+Xukep/2qxMm1mUb+ecWVV2NCC6PP3s
-         5t7r362NXxv+g==
+        b=mLv5rqzQb5hZe90uuqxRz+NzG/pCGD+u2D7tU7iXbCzooK+QFGNPvo0eOoM/OF7b+
+         RypUBsHtFPQE0hxR3NuGwu8a3F+U5uUJQobCMxBB5PtKgZWHipcjdREZh/p1O9OycQ
+         k6+WqZudMPYYa6lh+neQmDoYkUdfuc8VCsvlWvnoSAnbp549xuOWXTcFXEEgEV4riq
+         Tl7tBp37zBhZKFg+Ayk0i9SOmgrqNUVjuBOCknCqHV3DGmX2dPi4acdvwB7EdxzpEM
+         JDWUR7cSwpJnbhVBjyKMRbWMqYbjD8rdIP4bQPHOXn7x8UvCt4Qw8KUQ3qdjAK+a0h
+         5tGJlu4yD6euA==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Catalin Marinas <catalin.marinas@arm.com>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        Rob Herring <robh@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: (subset) [PATCH v5 00/12] soc: qcom: add UCSI function to PMIC GLINK
-Date:   Wed, 22 Mar 2023 07:45:20 -0700
-Message-Id: <167949631651.1081726.4846765935793443746.b4-ty@kernel.org>
+To:     Petr Vorel <pvorel@suse.cz>, linux-arm-msm@vger.kernel.org
+Cc:     Saravana Kannan <saravanak@google.com>
+Subject: Re: [PATCH 0/2] Switch msm899{4,6,8} clk drivers to module
+Date:   Wed, 22 Mar 2023 07:45:21 -0700
+Message-Id: <167949631651.1081726.998611857071519527.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230130-topic-sm8450-upstream-pmic-glink-v5-0-552f3b721f9e@linaro.org>
-References: <20230130-topic-sm8450-upstream-pmic-glink-v5-0-552f3b721f9e@linaro.org>
+In-Reply-To: <20230217184239.21450-1-pvorel@suse.cz>
+References: <20230217184239.21450-1-pvorel@suse.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -63,20 +53,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 21 Mar 2023 14:21:40 +0100, Neil Armstrong wrote:
-> The PMIC GLINK interface offers an UCSI endpoint for newer
-> SoCs, the UCSI exchange is necessary to configure the USB-C
-> port USB role and altmode on the SM8450 HDK and SM8550 MTP
-> boards.
-> Since the DT description is the same, support for SM8350 HDK
-> is also added.
+On Fri, 17 Feb 2023 19:42:37 +0100, Petr Vorel wrote:
+> based on previous discussion, tested on msm8994 angler.
+> I don't dare to set arm 32bit clocks in multi_v7_defconfig.
+> 
+> [1] https://lore.kernel.org/linux-arm-msm/20230208230628.xoaqt4hby5ec4s6t@ripper/
+> 
+> Petr Vorel (2):
+>   arm64: defconfig: Switch msm8996 clk drivers to module
+>   arm64: defconfig: Enable qcom msm899{4,8} clk drivers
 > 
 > [...]
 
 Applied, thanks!
 
-[12/12] arm64: defconfig: add PMIC GLINK modules
-        commit: 4ffd0b0019560a52b46b9ebd8127be3fdc157f16
+[1/2] arm64: defconfig: Switch msm8996 clk drivers to module
+      commit: 8f680c287445c467c927e875103ad2bfd7d356e1
+[2/2] arm64: defconfig: Enable qcom msm899{4,8} clk drivers
+      commit: 4705d0137af61823dca83bb6302073181d83945d
 
 Best regards,
 -- 
