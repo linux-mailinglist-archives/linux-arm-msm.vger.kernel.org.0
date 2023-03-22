@@ -2,108 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34FDD6C52EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 18:44:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16F386C5342
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 19:07:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230274AbjCVRoW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 13:44:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59828 "EHLO
+        id S230114AbjCVSHF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 14:07:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230408AbjCVRoK (ORCPT
+        with ESMTP id S229484AbjCVSHE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 13:44:10 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 002B76423E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 10:43:40 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id cn12so30527277edb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 10:43:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679507016;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Bz0GFwOBw4FSvdCteGZo11Dbw1t8O4+71KL8pO8s3Fw=;
-        b=OHOI8Z/2mnCkG1BpVa4vIPM872lkUsqnVFmvtNoXvprqmK453DF3RoKxCCkBTFmeLG
-         lLGk+LcT+GomsR5UIY53XrwQwOolIPtrnVFv7t9YVjzlxnRG4kY/TNHLD/wPpSfaokiY
-         Orxpz9nzQc3haBs0ggypW+juXJ663D0kdfN2LmYI6H2FUxycUsiN+663lEdkAxYQ519N
-         0k0z4yPhkn2rbgzYAfUEpeIgfYjMYVHdjf3ia/niqQLKHepo3AGDUfRCd+NWfgGanzy1
-         Vx7xyC68Azr7wFQqeAhCQhZJncHO5CsPpuS/bcYpWqyKyRJk8b3kPZyAaRaqxZgojD4j
-         ipXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679507016;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Bz0GFwOBw4FSvdCteGZo11Dbw1t8O4+71KL8pO8s3Fw=;
-        b=CLBmMVZ+UnBETtfxcNbM+LcruIr21XfW1m7l/bsFJOhFN81WIDCA+R9IfMfuny5Y1B
-         qzu2/tpG7B+ymUFOOXHG1vi+VAZkyTMHaEebPWj86ceauKfo24sAP8uRLXvhoEqm15L5
-         zpS0dFDHwhfX2iI6PWsuDEjVG4grk7fJjlhXS5n2R+d2Uk+IvngfJkGVnEPU3MuGU/PG
-         ughzEBnXSFSbBx+5a7x/XEszMIQQwpLCFbdaR/ZMTxTKcBp/moQ/2gpvnHiyJZfl/v2j
-         Mg6EIIDNMhWRtWQuqJmbXzGlXjzyka1cWdzXNmQ6R2PGz4JaUy7KIL2Lys8INiWbodAm
-         H31Q==
-X-Gm-Message-State: AO0yUKU9qCX9+EOrCpNTyBOdA5D1HVm32pC14jEK1e9v+WkWsoKtYctZ
-        UubuChRlR5aF2xpxs7orLnO2mw==
-X-Google-Smtp-Source: AK7set+nkmtoqjYEzZaku0D/7qQI5HO9as0edhrib1GD9nZDSZ9uxRhZ1jH+E0y8NuK4755/15GYjw==
-X-Received: by 2002:a17:907:7050:b0:932:b7ce:27b4 with SMTP id ws16-20020a170907705000b00932b7ce27b4mr7503749ejb.27.1679507016059;
-        Wed, 22 Mar 2023 10:43:36 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:5050:151b:e755:1c6? ([2a02:810d:15c0:828:5050:151b:e755:1c6])
-        by smtp.gmail.com with ESMTPSA id bu6-20020a170906a14600b00933c52c2a0esm4959743ejb.173.2023.03.22.10.43.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Mar 2023 10:43:35 -0700 (PDT)
-Message-ID: <af57ecdb-5f06-9a5c-30d2-0bfd71c798cd@linaro.org>
-Date:   Wed, 22 Mar 2023 18:43:34 +0100
+        Wed, 22 Mar 2023 14:07:04 -0400
+Received: from post.baikalelectronics.com (post.baikalelectronics.com [213.79.110.86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 1219F5D45A;
+        Wed, 22 Mar 2023 11:07:00 -0700 (PDT)
+Received: from post.baikalelectronics.com (localhost.localdomain [127.0.0.1])
+        by post.baikalelectronics.com (Proxmox) with ESMTP id BB3EEE0EAE;
+        Wed, 22 Mar 2023 21:06:58 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        baikalelectronics.ru; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:from:from:in-reply-to:message-id
+        :mime-version:references:reply-to:subject:subject:to:to; s=post;
+         bh=Ww2kcFcr7CcTTENKIqWDIjWc8wmlgXRUj4b9WQCI0Hc=; b=Dl+r57CRPnDM
+        3pYrgDVVod6E9phYjHNl874eBYb1eMts7cM9YChXBnFHaw7SLA+4l6NQrJj+D3uS
+        uyMnPyaFB3EQhKXJRfMels2l1iOqk3uTsfUmOmODQOLFLIrWxhzfzEeAco3mRCl7
+        s88XWETp2mAKhjsGHhXr4llPyA3Y7oU=
+Received: from mail.baikal.int (mail.baikal.int [192.168.51.25])
+        by post.baikalelectronics.com (Proxmox) with ESMTP id 9BF4CE0E6A;
+        Wed, 22 Mar 2023 21:06:58 +0300 (MSK)
+Received: from mobilestation (10.8.30.14) by mail (192.168.51.25) with
+ Microsoft SMTP Server (TLS) id 15.0.1395.4; Wed, 22 Mar 2023 21:06:57 +0300
+Date:   Wed, 22 Mar 2023 21:06:57 +0300
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+CC:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Rahul Tanwar <rtanwar@maxlinear.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Jisheng Zhang <jszhang@kernel.org>,
+        Miaoqian Lin <linmq006@gmail.com>,
+        Rob Herring <robh@kernel.org>, <linux-pci@vger.kernel.org>,
+        <kernel@pengutronix.de>, <linux-arm-msm@vger.kernel.org>,
+        <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 06/15] PCI: dwc/*: Convert to platform remove callback
+ returning void
+Message-ID: <20230322180657.s3ctphnkkmle4l42@mobilestation>
+References: <20230321193208.366561-1-u.kleine-koenig@pengutronix.de>
+ <20230321193208.366561-7-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH] dt-bindings: mailbox: Drop unneeded quotes
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Conor Dooley <conor.dooley@microchip.com>,
-        Daire McNamara <daire.mcnamara@microchip.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Michal Simek <michal.simek@xilinx.com>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-riscv@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com
-References: <20230322173449.3970718-1-robh@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230322173449.3970718-1-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230321193208.366561-7-u.kleine-koenig@pengutronix.de>
+X-Originating-IP: [10.8.30.14]
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/03/2023 18:34, Rob Herring wrote:
-> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> checking for this can be enabled in yamllint.
+On Tue, Mar 21, 2023 at 08:31:59PM +0100, Uwe Kleine-König wrote:
+> The .remove() callback for a platform driver returns an int which makes
+> many driver authors wrongly assume it's possible to do error handling by
+> returning an error code. However the value returned is (mostly) ignored
+> and this typically results in resource leaks. To improve here there is a
+> quest to make the remove callback return void. In the first step of this
+> quest all drivers are converted to .remove_new() which already returns
+> void.
 > 
-> Signed-off-by: Rob Herring <robh@kernel.org>
+> Trivially convert the dwc drivers from always returning zero in the remove
+> callback to the void returning variant.
+> 
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 > ---
+>  drivers/pci/controller/dwc/pcie-bt1.c      | 6 ++----
+>  drivers/pci/controller/dwc/pcie-histb.c    | 6 ++----
+>  drivers/pci/controller/dwc/pcie-intel-gw.c | 6 ++----
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c  | 8 +++-----
+>  drivers/pci/controller/dwc/pcie-tegra194.c | 8 +++-----
+>  5 files changed, 12 insertions(+), 22 deletions(-)
+> 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> diff --git a/drivers/pci/controller/dwc/pcie-bt1.c b/drivers/pci/controller/dwc/pcie-bt1.c
+> index 95a723a6fd46..17e696797ff5 100644
+> --- a/drivers/pci/controller/dwc/pcie-bt1.c
+> +++ b/drivers/pci/controller/dwc/pcie-bt1.c
+> @@ -617,13 +617,11 @@ static int bt1_pcie_probe(struct platform_device *pdev)
+>  	return bt1_pcie_add_port(btpci);
+>  }
+>  
+> -static int bt1_pcie_remove(struct platform_device *pdev)
+> +static void bt1_pcie_remove(struct platform_device *pdev)
+>  {
+>  	struct bt1_pcie *btpci = platform_get_drvdata(pdev);
+>  
+>  	bt1_pcie_del_port(btpci);
+> -
+> -	return 0;
+>  }
+>  
+>  static const struct of_device_id bt1_pcie_of_match[] = {
+> @@ -634,7 +632,7 @@ MODULE_DEVICE_TABLE(of, bt1_pcie_of_match);
+>  
+>  static struct platform_driver bt1_pcie_driver = {
+>  	.probe = bt1_pcie_probe,
+> -	.remove = bt1_pcie_remove,
+> +	.remove_new = bt1_pcie_remove,
+>  	.driver = {
+>  		.name	= "bt1-pcie",
+>  		.of_match_table = bt1_pcie_of_match,
 
-Best regards,
-Krzysztof
+Looking good. Thanks!
+Acked-by: Serge Semin <fancer.lancer@gmail.com>
+* For Baikal-T1 PCIe part
+
+-Serge(y)
+
+[nip]
+
+> -- 
+> 2.39.2
+> 
+> 
 
