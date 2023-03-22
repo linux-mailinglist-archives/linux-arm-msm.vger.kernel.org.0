@@ -2,81 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB9136C444D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 08:46:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A4AA26C4459
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 08:50:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229912AbjCVHq3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 03:46:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53160 "EHLO
+        id S229912AbjCVHuQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 03:50:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjCVHq2 (ORCPT
+        with ESMTP id S229733AbjCVHuP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 03:46:28 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF8A35AB74;
-        Wed, 22 Mar 2023 00:46:27 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 78062B81A34;
-        Wed, 22 Mar 2023 07:46:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F176BC433EF;
-        Wed, 22 Mar 2023 07:46:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679471185;
-        bh=OcfApPzBhFbVilWX9veIC9cR3TcxTEM6uyoh7NQTV4I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Ieqy7YeKERD238mqSeqZHh7bdt9fv+09KJAVhevtdiTYCEvGE9yxrzC3swox3JAPb
-         NfqyXmLjIqhaRUjmAtqjkMxmhBoozBBh/ukaB8AFPSxzPu5m7aEGgQE9kWjGqtcdQ/
-         O/KPhln1Xk/gb2TYzrb97riZItapLy5TVtlRo2Kru2gq6hCpNX6WhkBXUe4kn3asu6
-         GpOGzQ6HnmiZRA/KlS74CvuDUQM1gXZWD+Clwx4c3QTltnB4tyRBAEBWl6wiMnYsRW
-         7vVaKdsFj5QX3Lv9orvk3bS2n0JOHa1yvyUPBkJty7oI/vRbSvh+RIS3w92sJyGpIA
-         EE2WuNkUxPRxA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1petCI-0002Sf-Be; Wed, 22 Mar 2023 08:47:51 +0100
-Date:   Wed, 22 Mar 2023 08:47:50 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 05/10] drm/msm: fix drm device leak on bind errors
-Message-ID: <ZBqypsYBMSr8HPxP@hovoldconsulting.com>
-References: <20230306100722.28485-1-johan+linaro@kernel.org>
- <20230306100722.28485-6-johan+linaro@kernel.org>
- <90264695-131e-46b7-46db-822b0aee9801@linaro.org>
+        Wed, 22 Mar 2023 03:50:15 -0400
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A170E51F88;
+        Wed, 22 Mar 2023 00:50:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1679471414; x=1711007414;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=c5IWexXFeXkhmnCerJHyrPKe9ek6FXbyZZzv/dM56gM=;
+  b=NonO0vIhGbReRniXaMnUp7B/OVM0aNCLhF0bnf1KV7jWYcC1V4OYa/O+
+   n94rUEaRBqlzzDazDl3T8tGQUek/2IjecTcntUI1K8trKS7ug1/UzzG30
+   TCtFaOoWtVca2xHQCYl82Qgpa/zEukD6QTMej6uN3pIVH/Z639yUisK4s
+   ZEyYMpAHdJQq5VHY/wuiTqqojVyCSSD4s302wcl3moCqgF0WqlYB3lPW8
+   fHf8v0d4Q0cTpOmeIMKhYrGypvwcpkS18grv21WQfiREQYipv9ZuHTmaI
+   WOJokrmf1PfU+V3Vz8xX72hKhBlsFssd4ySg5UvUsryOsytikKWDfy7Hb
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10656"; a="341507466"
+X-IronPort-AV: E=Sophos;i="5.98,281,1673942400"; 
+   d="scan'208";a="341507466"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2023 00:49:08 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10656"; a="1011262366"
+X-IronPort-AV: E=Sophos;i="5.98,281,1673942400"; 
+   d="scan'208";a="1011262366"
+Received: from jlawryno-mobl.ger.corp.intel.com (HELO [10.249.146.128]) ([10.249.146.128])
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2023 00:49:05 -0700
+Message-ID: <fd654635-5b77-a6c1-f776-22e33e296300@linux.intel.com>
+Date:   Wed, 22 Mar 2023 08:49:03 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <90264695-131e-46b7-46db-822b0aee9801@linaro.org>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v4 8/8] MAINTAINERS: Add entry for QAIC driver
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, ogabbay@kernel.org,
+        airlied@gmail.com, daniel@ffwll.ch,
+        stanislaw.gruszka@linux.intel.com
+Cc:     dafna@fastmail.com, linux-doc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        quic_ajitpals@quicinc.com, quic_pkanojiy@quicinc.com,
+        quic_carlv@quicinc.com
+References: <1679325074-5494-1-git-send-email-quic_jhugo@quicinc.com>
+ <1679325074-5494-9-git-send-email-quic_jhugo@quicinc.com>
+Content-Language: en-US
+From:   Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Organization: Intel Technology Poland sp. z o.o. - ul. Slowackiego 173, 80-298
+ Gdansk - KRS 101882 - NIP 957-07-52-316
+In-Reply-To: <1679325074-5494-9-git-send-email-quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 21, 2023 at 04:54:51PM +0200, Dmitry Baryshkov wrote:
-> On 06/03/2023 12:07, Johan Hovold wrote:
-> > Make sure to free the DRM device also in case of early errors during
-> > bind().
-> > 
-> > Fixes: 2027e5b3413d ("drm/msm: Initialize MDSS irq domain at probe time")
-> > Cc: stable@vger.kernel.org      # 5.17
-> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+
+On 20.03.2023 16:11, Jeffrey Hugo wrote:
+> Add MAINTAINERS entry for the Qualcomm Cloud AI 100 driver.
 > 
-> Can we migrate to devm_drm_dev_alloc instead() ? Will it make code 
-> simpler and/or easier to handle?
-
-I'm just fixing the bugs here. Cleanups/rework like that can be done on
-top but should not be backported as it risks introducing new issues.
-
-Johan
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+> ---
+>  MAINTAINERS | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b0db911..12f3028 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -17253,6 +17253,16 @@ F:	Documentation/devicetree/bindings/clock/qcom,*
+>  F:	drivers/clk/qcom/
+>  F:	include/dt-bindings/clock/qcom,*
+>  
+> +QUALCOMM CLOUD AI (QAIC) DRIVER
+> +M:	Jeffrey Hugo <quic_jhugo@quicinc.com>
+> +L:	linux-arm-msm@vger.kernel.org
+> +L:	dri-devel@lists.freedesktop.org
+> +S:	Supported
+> +T:	git git://anongit.freedesktop.org/drm/drm-misc
+> +F:	Documentation/accel/qaic/
+> +F:	drivers/accel/qaic/
+> +F:	include/uapi/drm/qaic_accel.h
+> +
+>  QUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER
+>  M:	Bjorn Andersson <andersson@kernel.org>
+>  M:	Konrad Dybcio <konrad.dybcio@linaro.org>
