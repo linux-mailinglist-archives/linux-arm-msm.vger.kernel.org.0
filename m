@@ -2,78 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34B226C50CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 17:32:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DCAC86C5120
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 17:47:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229745AbjCVQcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 12:32:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42270 "EHLO
+        id S230338AbjCVQrj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 12:47:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229668AbjCVQcY (ORCPT
+        with ESMTP id S230195AbjCVQrh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 12:32:24 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A639265C44
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 09:32:09 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id ew6so12377041edb.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 09:32:09 -0700 (PDT)
+        Wed, 22 Mar 2023 12:47:37 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF8D164272;
+        Wed, 22 Mar 2023 09:47:27 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id mp3-20020a17090b190300b0023fcc8ce113so9205610pjb.4;
+        Wed, 22 Mar 2023 09:47:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679502728;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=V+i6i0olRP38jt/sd5KbM3b2NTrDoLmJjG7X2O9x6AE=;
-        b=hnBxt8ZvhRt67vRmkSRcuWkFQm0Bs4hZ9L16icEdFCpm6D3xwV9sGtrA+qBbNqLIYn
-         Bg3N7/fOofWcYpAuWywDU7kMjeFq2xK/dBXWzq6nN50HKLFvqipcFR/O5GSM9kSn1f+i
-         nTFqS+A5tSac37wtmCYXCdd7Q1OynZjoEygzsinp+yIRMdoQSP5NeQAYie3RLR+xtlmz
-         FjASOGVBKCchvHOmEEMEkawK3d1+eJic2ygesLrA0SJMxcCHBndOfJuRl/sqAQ9RW2Cb
-         AW+8VD8opKzp1OjWW0BqDDeZv/shxr8A/sSUw2qhUNPMQYWOQXa7VNEBVOQI351s7Qjw
-         xOUA==
+        d=gmail.com; s=20210112; t=1679503647;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=LpONkzfOzhTH79tK5TxGy1m6Rwb93Q8fXC1hWk39Vlo=;
+        b=QZ74OaqlkD8zv1ghDdRVHqbYtIVJxdWOejZN3IRVc13BcoaHHu7WOc16YXD2zQyV4B
+         0cl2WTs0ldoNqvchBYj/ZDanw7IADbQreZVGvrxPUym5lhoZh+ukrIhiQOkfjN1A1rUM
+         nrx/3BYXbRlP4rM5hQzWYD8kkPCCICAKQAB5YQ+jLRxoPiB9beaNbkTHjwnqTqVq2kO/
+         23NmQs6x5Mgut3EqSh/88uXcqkjuB/cdu2wvdBss+jRRDtNv83ihe9YzvjEff/dnof05
+         FJxbqL24n7birT6QRqMAQGRhMWlQZ4nga1QxdO77PGtAdgQpqh8DnNvdkXh6yYnuOF6j
+         hDDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679502728;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V+i6i0olRP38jt/sd5KbM3b2NTrDoLmJjG7X2O9x6AE=;
-        b=x9rt3qZemgoYvJpp89Nnv94kzffNTNbNt7F/xtLdJgzR6xxTyPxjZBHL88WgtwegMH
-         Bbt3lQT5Xnr/sgiOuoXOPNBT6BkjRVXO824mLlCwTUqL50+5odoWoqWwjcmeBRAK/TML
-         kr/rHSgTAMrE/fV2y+Kl+WAAKAd8llxpDcQIcAKoRAka16VN6CgS+G/riF0DDKA0vdwY
-         8LRKBrv7wnuoyNZYvR4FXuMkgA1W9GbbxQ7r6gnwzfscjNhUupYyb2bihoEVjxDn3geR
-         4mk/SFP899yN/1UDLi+nerAZcAPW96KTAjZBvOjBvQTbdscJnn2nw1Yamh6GrLRX4niS
-         PqDg==
-X-Gm-Message-State: AO0yUKUa5WfmquifduL9s9KWNsP+CXp415X3IrE2x5x3gnZ/M3S6KUEj
-        O4EQ1hBboKmrtsaa4Z9ev4lQlQ==
-X-Google-Smtp-Source: AK7set8/kyHn3yaWx8aQ/JRJFCUYw7PEPwsszRJF7DuXmqkwnUHS2rwonarvwlHh++PzsO0WpZ1yjw==
-X-Received: by 2002:aa7:dac8:0:b0:4fd:2007:d40b with SMTP id x8-20020aa7dac8000000b004fd2007d40bmr7484771eds.9.1679502727997;
-        Wed, 22 Mar 2023 09:32:07 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:5050:151b:e755:1c6? ([2a02:810d:15c0:828:5050:151b:e755:1c6])
-        by smtp.gmail.com with ESMTPSA id i20-20020a508714000000b004fc649481basm8099908edb.58.2023.03.22.09.32.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Mar 2023 09:32:07 -0700 (PDT)
-Message-ID: <2cb5fca2-56bc-c706-912b-2b8eaf7b3b94@linaro.org>
-Date:   Wed, 22 Mar 2023 17:32:06 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: move elish dts to common dtsi
-Content-Language: en-US
-To:     Jianhua Lu <lujianhua000@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20210112; t=1679503647;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LpONkzfOzhTH79tK5TxGy1m6Rwb93Q8fXC1hWk39Vlo=;
+        b=hfTnapF/1yHlaCasPizoKb7C9rQ+4rfoWGWULYU/18FQX+pPP9N7w0/dkR2M5sZ4Eq
+         gCO44T6LEYTtG09BJapzwxDtDB4SCxZ5g9flVlmnjwxRoHK/vkU2EYy2tDTRb2c12ZZz
+         n1DkikSZ5x/gr1+XfRlOT9bMQ823gUVajURKwQ6KY1x8Kia0J+WHEz8C5BaiHOA/T6Oy
+         qw3VKrwSw9Yrn2EsmoDgXtU0rvSEd+1tdCgdIFDm5jICfjACVXBNaAID4mqWO+90b4IS
+         jeWVmdJorP4xi+j53hHp2qQ5XFU/cfVY4mhmUFjfQ0EI7qtjcKtOVPNtUzBlExA7SyO9
+         //LA==
+X-Gm-Message-State: AO0yUKVR7oDE7iJVIxNbLHzPKNW4VmA4DpI+r5Pu33n2Hk1qP3RwQ8LD
+        fQ+bOvxPmuEyGnMRPF3i95A=
+X-Google-Smtp-Source: AK7set/mhxHpN1/DAuFzM8ChAXJD4RHuoL4I8fCe6g1mrgeIZ6Qdiok4c8utR0sUrA90kIXjfOLgwA==
+X-Received: by 2002:a17:903:2301:b0:1a1:8fd4:251 with SMTP id d1-20020a170903230100b001a18fd40251mr3487080plh.55.1679503647254;
+        Wed, 22 Mar 2023 09:47:27 -0700 (PDT)
+Received: from Gentoo (n220246252084.netvigator.com. [220.246.252.84])
+        by smtp.gmail.com with ESMTPSA id 6-20020a170902c20600b0019b089bc8d7sm10898239pll.78.2023.03.22.09.47.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Mar 2023 09:47:26 -0700 (PDT)
+Date:   Thu, 23 Mar 2023 00:47:18 +0800
+From:   Jianhua Lu <lujianhua000@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: move elish dts to common dtsi
+Message-ID: <ZBsxFh2qH6hv2Wo1@Gentoo>
 References: <20230322150320.31787-1-lujianhua000@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230322150320.31787-1-lujianhua000@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+ <2cb5fca2-56bc-c706-912b-2b8eaf7b3b94@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2cb5fca2-56bc-c706-912b-2b8eaf7b3b94@linaro.org>
+X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,16 +78,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/03/2023 16:03, Jianhua Lu wrote:
-> There are two panel variants of xiaomi-elish, BOE and CSOT panel.
-> In order to support both panels, so move elish dts to common dtsi.
+On Wed, Mar 22, 2023 at 05:32:06PM +0100, Krzysztof Kozlowski wrote:
+> On 22/03/2023 16:03, Jianhua Lu wrote:
+> > There are two panel variants of xiaomi-elish, BOE and CSOT panel.
+> > In order to support both panels, so move elish dts to common dtsi.
+> > 
+> > Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+> > ---
+> >  ...m8250-xiaomi-elish.dts => sm8250-xiaomi-elish-common.dtsi} | 4 ----
 > 
-> Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
-> ---
->  ...m8250-xiaomi-elish.dts => sm8250-xiaomi-elish-common.dtsi} | 4 ----
-
-This breaks the build.
-
-Best regards,
-Krzysztof
-
+> This breaks the build.
+Thanks for spotting it. I will fix it in v2.
+> 
+> Best regards,
+> Krzysztof
+> 
