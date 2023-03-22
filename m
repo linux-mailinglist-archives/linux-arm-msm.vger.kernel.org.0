@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 328216C5367
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 19:15:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CB346C536B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 19:15:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229676AbjCVSPO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 14:15:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32770 "EHLO
+        id S229873AbjCVSPa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 14:15:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbjCVSPM (ORCPT
+        with ESMTP id S229534AbjCVSP3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 14:15:12 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73F7964A94
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 11:15:10 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id w25so1199438qtc.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 11:15:10 -0700 (PDT)
+        Wed, 22 Mar 2023 14:15:29 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D407264A81
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 11:15:23 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id jl13so12715282qvb.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 11:15:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1679508908;
+        d=chromium.org; s=google; t=1679508921;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nSvNmSJ9+TgKBQqU49EzQTMckYiccw3IcZ2Wfcswm7w=;
-        b=Tj3Zq8aA4hVsSNG0y8sehgJek9ZCi1tIPG3jTqdPCblsK47dD2BwG/r4Ajm1XTYYHE
-         0lnwBeNInGORLfFml1bSgO9gbc9NxoQFkqacbhqKJNqBbxzfk6gKQgWNFij0Z8lRC0lf
-         BtLuujtrjvT6TohyhCC7AZH/demMWj7FJZla4=
+        bh=Q6E9eFLmm6ygcs6kDLNjXTtbQ9rYQAmNSLK7F6Ytjeo=;
+        b=m4vSWntEg2ZoxWKxicPTMF/nFx6Xjvf6X97Bazqxn+ZvOrc5xR/nWb1X0yaZXKjnAG
+         fbDcYRx6sVzFha5lhgNSyKBQ+jajzSmtjTvh6kQ6Swo5pfAJJs+HBNw47kiOyXIEA0IQ
+         XzkxVb/CU2WWreTMWYUUFA6lYn7AwooiD/Iq4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679508908;
+        d=1e100.net; s=20210112; t=1679508921;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nSvNmSJ9+TgKBQqU49EzQTMckYiccw3IcZ2Wfcswm7w=;
-        b=Hf5XOH2HcY05gfsutXr2omOYTKAC4JZyIMwn9WJPb8R4XILNAAGjeEe/nlVBCo2P9k
-         tyaC6dp+kowZDHfHxCHVe+a7dhkmOShsAVsZ1OyuMTT3MJQ1j7Blg4bwmse8OGpahkD0
-         bh7jclwtz8Nj/deuvPDXn2/qtcBaIclo4hsKJOYKRZyqiuoX9SiLeYtM2rDXwQkmYOQL
-         2CUpkJxnhediFXaOIrX6Wo3ncCY1H3oGWtjhp0QPwu1bVrpRdGLLWgZVjHFknaftUmX2
-         6ov+6bP+9TlTiGwVJQueX4HVtJsLFBrCOHenTL89n2w8VUngQa4Ce9F6IgNooM1YF/Fn
-         fyAQ==
-X-Gm-Message-State: AO0yUKVpzM1i4tS15dYZI0R9Q2MoGz5vce/Ki46U2KdsOOFLWgoWrJu3
-        maMHxm0OeVn52ga1Y4X/9FEZo7jks0sjaiYqhGs=
-X-Google-Smtp-Source: AK7set9MywFYcEyCcAZHWmDg+hLNiUsYz8NAjQxklZQoFPSgPO27HdchvF8QOz3XVa38SWgrdBr0/w==
-X-Received: by 2002:a05:622a:180f:b0:3b9:bc8c:c1f6 with SMTP id t15-20020a05622a180f00b003b9bc8cc1f6mr5184038qtc.1.1679508907813;
-        Wed, 22 Mar 2023 11:15:07 -0700 (PDT)
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
-        by smtp.gmail.com with ESMTPSA id x22-20020ac84a16000000b003e1d8c193c1sm5680605qtq.48.2023.03.22.11.15.06
+        bh=Q6E9eFLmm6ygcs6kDLNjXTtbQ9rYQAmNSLK7F6Ytjeo=;
+        b=Qxh4N1+nzwbKzWonqstY0Un4vxdEA8+D3xWJfF8fn6sEtcPbretjWOgmE3HL/k1VwN
+         5K4P5b/VncsiIbEwv2Uyd+AScvmuJ2KdmJBE7EkCGKzewidO8c/Ax6Hgd91fnRksK4Hm
+         gdg/WNgqK9DieUZ9t+WdPTUcSO1oOLjUjPqNkodGwyjLOUF0EmymyUAec2YX+YvEftqA
+         5aStdxBedlA2GTNa4o/y4lt19DimrcljFXUbH1PhqKsJ/ZSt8ppsvVIc2OUvk8su6SVF
+         E0rFpqoFi8dYWNEo1HUvkGdtpejdWBEsB9Z0QyN4scQptC974sw/TU3u9AR7FzUqVyRJ
+         fDyQ==
+X-Gm-Message-State: AO0yUKUtwGovXXJJvRtBE60VXnUy90YLTXvR4PZDvIOMkEYkygrZGUbT
+        7QTBiWDP7eWCzjHb3iwK2saAw6fh5JQT6gUH3Q8=
+X-Google-Smtp-Source: AK7set/EJHdLUHhgMhhszTbYIolmbnh9c6pYyt0MW0ipi6MM8aKUsy7D9KMnxBKAHDHLplr/cJuvsg==
+X-Received: by 2002:ad4:5ca7:0:b0:557:a5c5:7e01 with SMTP id q7-20020ad45ca7000000b00557a5c57e01mr5051234qvh.25.1679508921396;
+        Wed, 22 Mar 2023 11:15:21 -0700 (PDT)
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com. [209.85.219.175])
+        by smtp.gmail.com with ESMTPSA id a72-20020ae9e84b000000b00745a3b63569sm11734412qkg.107.2023.03.22.11.15.20
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Mar 2023 11:15:07 -0700 (PDT)
-Received: by mail-yb1-f170.google.com with SMTP id k17so11326906ybm.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 11:15:06 -0700 (PDT)
-X-Received: by 2002:a05:6902:1083:b0:b69:ca6f:452c with SMTP id
- v3-20020a056902108300b00b69ca6f452cmr531528ybu.0.1679508906594; Wed, 22 Mar
- 2023 11:15:06 -0700 (PDT)
+        Wed, 22 Mar 2023 11:15:20 -0700 (PDT)
+Received: by mail-yb1-f175.google.com with SMTP id b18so3040120ybp.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 11:15:20 -0700 (PDT)
+X-Received: by 2002:a05:6902:124a:b0:b69:fab9:de60 with SMTP id
+ t10-20020a056902124a00b00b69fab9de60mr540062ybu.0.1679508920292; Wed, 22 Mar
+ 2023 11:15:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230217155838.848403-1-krzysztof.kozlowski@linaro.org> <20230217155838.848403-2-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230217155838.848403-2-krzysztof.kozlowski@linaro.org>
+References: <20230217155838.848403-1-krzysztof.kozlowski@linaro.org> <20230217155838.848403-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230217155838.848403-3-krzysztof.kozlowski@linaro.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 22 Mar 2023 11:14:54 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V6gJ3if8CueyQ=jJnVR_fJL2Xm3t2Oo_scq=CxGZETGQ@mail.gmail.com>
-Message-ID: <CAD=FV=V6gJ3if8CueyQ=jJnVR_fJL2Xm3t2Oo_scq=CxGZETGQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc7280-herobrine-audio-rt5682: add
- missing supplies
+Date:   Wed, 22 Mar 2023 11:15:08 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X7-abQsE5s6Tbz9B22ZXT_yRFii55cUF2LR81BSVnbVg@mail.gmail.com>
+Message-ID: <CAD=FV=X7-abQsE5s6Tbz9B22ZXT_yRFii55cUF2LR81BSVnbVg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sc7280: align RPMh regulator nodes
+ with bindings
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -69,8 +69,7 @@ Cc:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Judy Hsiao <judyhsiao@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
+        linux-kernel@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
@@ -88,22 +87,23 @@ Hi,
 On Fri, Feb 17, 2023 at 7:58=E2=80=AFAM Krzysztof Kozlowski
 <krzysztof.kozlowski@linaro.org> wrote:
 >
-> Bindings expect DBVDD-supply and LDO1-IN-supply:
->
->   sc7280-herobrine-evoker-lte.dtb: codec@1a: 'DBVDD-supply' is a required=
- property
->   sc7280-herobrine-evoker-lte.dtb: codec@1a: 'LDO1-IN-supply' is a requir=
-ed property
->
-> In sc7180-trogdor.dtsi they come from the same regulator, so let's
-> assume intention was the same here.
+> Device node names should be generic and bindings expect certain pattern
+> for RPMh regulator nodes.
 >
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
 > ---
->  .../arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi | 2 ++
->  arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi     | 2 ++
->  2 files changed, 4 insertions(+)
-
-Confirmed on schematics.
+>
+> I was fixing these in other boards, but missed SC7280. Previous
+> (applied) set:
+> https://lore.kernel.org/r/20230127114347.235963-4-krzysztof.kozlowski@lin=
+aro.org
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts        | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dts           | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi          | 4 ++--
+>  arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi        | 4 ++--
+>  5 files changed, 7 insertions(+), 7 deletions(-)
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
