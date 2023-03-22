@@ -2,243 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C794B6C3F92
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 02:15:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1582C6C4012
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 03:00:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230115AbjCVBPQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 21:15:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51308 "EHLO
+        id S229899AbjCVCAN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 22:00:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230044AbjCVBO5 (ORCPT
+        with ESMTP id S229611AbjCVCAM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 21:14:57 -0400
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C58BF5942B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 18:14:50 -0700 (PDT)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-17aceccdcf6so18039247fac.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 18:14:50 -0700 (PDT)
+        Tue, 21 Mar 2023 22:00:12 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 234574DBCE;
+        Tue, 21 Mar 2023 19:00:11 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id g17so21540104lfv.4;
+        Tue, 21 Mar 2023 19:00:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1679447689;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1679450409;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=d4WRBYhVHBZ8wEtUoS7CcmKTTwWyVK3DaxRziT3IUGY=;
-        b=PaV2rxfk+xHLAwglDpJwNswMUDoe0XdAFxmgsEjWcscE431eO/bAtMuz2wqjmzySZV
-         GzzyHFsSQYiA26cEfhzRQPMdMEJqRT/f4Yw/K2dT4XuBKhbbUDoDZTyjWrwrEJLUQY7C
-         9bk62yu6ii2UNXV1ysNoIfhVKGFAOkkCyFoaVkS9XKzL6D/q6T3e2ybR6LwQCQf7WrGE
-         1i959QcT8FPZSLGJRYswr0LxBPEhFdbKRn70tLXgOfiLW+FVD9NswMsZo/pk2u1bLwQA
-         8bqYeVzVMRfWzEujRE0itwukDdGT1o0oq+YO1oQmSTgiU9jflmYw9yIEq6YaffW3cnTS
-         atPg==
+        bh=ie5E22uk0w9QlkDqcEPCeQ07zHlCQwhf3VA/3a+3Jkk=;
+        b=UDh7QcadOjbbUNHwDtGEHKr/pp/feNlDjUVoY2E+wZdt/w5CRLlkz5Y5fle1BLtZCk
+         xdFkjBDCY8HtrhZUDLr/D7HSpz3/hyFD2+DUzsKc0mGSk6p18MYQF2j9av4gP2nFgDr/
+         CmgFfY6YnXzWK2yWptkncFlp99GXXe61uqUPBjdJvvaY0rRKGa7b7VrFEp/dC6J+WKpP
+         7L3K3kHd+Gg7IzUMBg00653rBut1H9bdjb1BIuI8gTDRH50/lvDRX/TRWRiLClWQ4yrG
+         jrScyO3Y2Um75mwQb2/0djS8LP5Eo9r44o2A0sP4eNTprjuVr2mUUtXcx1nOJb8XF0C8
+         MC4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679447689;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1679450409;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=d4WRBYhVHBZ8wEtUoS7CcmKTTwWyVK3DaxRziT3IUGY=;
-        b=UrLwzdZtYPpCWl1+Dg0l92JS8ftUtTOZu3AOZPYN0cn/64xmN12RyUsTn5SDYik0Ny
-         +2O4npzZaqzBepCbJ3uq9fAr3Ua9n1Zm2aAebFQfMqGCmm+EDuWWSGBhxKiB1I4DkpG+
-         r2uLbHB8wx/ycihZpwOoePzmPRnNEFSJu531C8UYtMhNBL+vQcif5d7uRBAiNjUlTzRf
-         zNcTHKFAiS9aPO6ulLnl1JxsIS2Wa7yXBBigMGohG6ilKHyOfKCWkh8YzT4IF3sxLG8B
-         FTZtyACYmAHh4q73l+Ev/b9PdwDyCJEJGmzmxEDmfpK7vohOp4lST8WkzlOjQZFw0OPR
-         G0Ng==
-X-Gm-Message-State: AO0yUKUgVV6FP4lBcC/rrMqBC9TnqN6mHd67iVWZGHQPkvhCuwJN8Rfr
-        SV9V0oAlXvdlmtYBrUr20yTfmw==
-X-Google-Smtp-Source: AK7set98lpmfliSClNeXPozbcX91zLQLW1HRymvDIIVVSvViJNENAAgdU8fH2fVbavdgit7z+k+DCg==
-X-Received: by 2002:a05:6870:a1a7:b0:17a:c102:b449 with SMTP id a39-20020a056870a1a700b0017ac102b449mr576632oaf.59.1679447689676;
-        Tue, 21 Mar 2023 18:14:49 -0700 (PDT)
-Received: from localhost (23-118-233-243.lightspeed.snantx.sbcglobal.net. [23.118.233.243])
-        by smtp.gmail.com with ESMTPSA id ee48-20020a056870c83000b0017299192eb1sm4715522oab.25.2023.03.21.18.14.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 18:14:49 -0700 (PDT)
-From:   Steev Klimaszewski <steev@kali.org>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>,
-        Johan Hovold <johan@kernel.org>
-Subject: [PATCH v7 4/4] arm64: dts: qcom: sc8280xp-x13s: Add bluetooth
-Date:   Tue, 21 Mar 2023 20:14:42 -0500
-Message-Id: <20230322011442.34475-5-steev@kali.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230322011442.34475-1-steev@kali.org>
-References: <20230322011442.34475-1-steev@kali.org>
+        bh=ie5E22uk0w9QlkDqcEPCeQ07zHlCQwhf3VA/3a+3Jkk=;
+        b=L17jmKLh7DYirT+44acdBRNT8rulrwKOh4urDGIC8KCZOWJmSzKRMlLj2kCjsITixO
+         HC0qh92u7mTHuYQn2eh0thwqfDdM/964afirRC1kVNJgmlU81eiyAoIjV1guCEAgSOfr
+         ltTQ3xSdTIlaN/rRaR0Qyq5uvBkZTmZLv22/3wZEO5gLh3YOLZWYHS645XPO2DZq+r17
+         LfZioYW7ZgHP9KDbVnSOr+DuPxaaiEMgl47y0aUDaKAk8Cw1wMNF3B4jXDEGKCJrVbO2
+         gX4QG5NLpUoTQF3XyqmDnvfIjQVa3vUwtZyRJdGiR7/GznPDa0Ml0kiRVaLKaywnKtZJ
+         mz/g==
+X-Gm-Message-State: AO0yUKWAb7PYZm21nhysjFtA67nEXO8JMmHrLqGOghs6GmwAxqVeD5mf
+        jJRqkhoQPT67R1R7pr1XdHm1HIrXqV2f3wC/2Z8=
+X-Google-Smtp-Source: AK7set8j/uN5VQ2o5R7ii7zHSwGtrYpzt7eNS1FPlyYHId/A01NaD2piRg05FtSJuq9TkMvV4ckZv0lPDggbsTkOMxY=
+X-Received: by 2002:ac2:528c:0:b0:4e8:4b7a:6b72 with SMTP id
+ q12-20020ac2528c000000b004e84b7a6b72mr1469020lfm.2.1679450409204; Tue, 21 Mar
+ 2023 19:00:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230216014120.3110-1-k1rh4.lee@gmail.com> <9bfef283-e2ac-b2ba-386c-6833e9cb1283@linaro.org>
+In-Reply-To: <9bfef283-e2ac-b2ba-386c-6833e9cb1283@linaro.org>
+From:   sangsup lee <k1rh4.lee@gmail.com>
+Date:   Wed, 22 Mar 2023 10:59:32 +0900
+Message-ID: <CAJkuJRjKszq75M_QttFSO+zVixqfNjHBeajZFa8r0x+wnE6xiA@mail.gmail.com>
+Subject: Re: [PATCH] misc: fastrpc: Fix a Use after-free-bug by race condition
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Lenovo Thinkpad X13s has a WCN6855 Bluetooth controller on uart2,
-add this.
+Sounds great.
 
-Signed-off-by: Steev Klimaszewski <steev@kali.org>
+Thank you for your recommendation.
+The patch code that you recommend is clear and simple.
+Please patch this.
+
+Signed-off-by: Sangsup lee <k1rh4.lee@gmail.com>
 ---
-Changes since v6:
- * Remove allowed-modes as they aren't needed
- * Remove regulator-allow-set-load
- * Set regulator-always-on because the wifi chip also uses the regulator
- * cts pin uses bias-bus-hold
- * Alphabetize uart2 pins
+ drivers/misc/fastrpc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Changes since v5:
- * Update patch subject
- * Specify initial mode (via guess) for vreg_s1c
- * Drop uart17 definition
- * Rename bt_en to bt_default because configuring more than one pin
- * Correct (maybe) bias configurations
- * Correct cts gpio
- * Split rts-tx into two nodes
- * Drop incorrect link in the commit message
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 93ebd174d848..aa1cf0e9f4ed 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1901,7 +1901,9 @@ static long fastrpc_device_ioctl(struct file
+*file, unsigned int cmd,
+                err =3D fastrpc_req_mmap(fl, argp);
+                break;
+        case FASTRPC_IOCTL_MUNMAP:
++               mutex_lock(&fl->mutex);
+                err =3D fastrpc_req_munmap(fl, argp);
++               mutex_unlock(&fl->mutex);
+                break;
+        case FASTRPC_IOCTL_MEM_MAP:
+                err =3D fastrpc_req_mem_map(fl, argp);
+--
+2.25.1
 
-Changes since v4:
- * Address Konrad's review comments.
 
-Changes since v3:
- * Add vreg_s1c
- * Add regulators and not dead code
- * Fix commit message changelog
-
-Changes since v2:
- * Remove dead code and add TODO comment
- * Make dtbs_check happy with the pin definitions
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 78 +++++++++++++++++++
- 1 file changed, 78 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 92d365519546..05e66505e5cc 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -24,6 +24,7 @@ / {
- 	aliases {
- 		i2c4 = &i2c4;
- 		i2c21 = &i2c21;
-+		serial1 = &uart2;
- 	};
- 
- 	wcd938x: audio-codec {
-@@ -431,6 +432,14 @@ regulators-1 {
- 		qcom,pmic-id = "c";
- 		vdd-bob-supply = <&vreg_vph_pwr>;
- 
-+		vreg_s1c: smps1 {
-+			regulator-name = "vreg_s1c";
-+			regulator-min-microvolt = <1880000>;
-+			regulator-max-microvolt = <1900000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-always-on;
-+		};
-+
- 		vreg_l1c: ldo1 {
- 			regulator-name = "vreg_l1c";
- 			regulator-min-microvolt = <1800000>;
-@@ -918,6 +927,32 @@ &qup0 {
- 	status = "okay";
- };
- 
-+&uart2 {
-+	pinctrl-0 = <&uart2_default>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn6855-bt";
-+
-+		vddio-supply = <&vreg_s10b>;
-+		vddbtcxmx-supply = <&vreg_s12b>;
-+		vddrfacmn-supply = <&vreg_s12b>;
-+		vddrfa0p8-supply = <&vreg_s12b>;
-+		vddrfa1p2-supply = <&vreg_s11b>;
-+		vddrfa1p7-supply = <&vreg_s1c>;
-+
-+		max-speed = <3200000>;
-+
-+		enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-+		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&bt_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
- &qup1 {
- 	status = "okay";
- };
-@@ -1192,6 +1227,21 @@ hastings_reg_en: hastings-reg-en-state {
- &tlmm {
- 	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
- 
-+	bt_default: bt-default-state {
-+		hstp-sw-ctrl-pins {
-+			pins = "gpio132";
-+			function = "gpio";
-+			bias-pull-down;
-+		};
-+
-+		hstp-bt-en-pins {
-+			pins = "gpio133";
-+			function = "gpio";
-+			drive-strength = <16>;
-+			bias-disable;
-+		};
-+	};
-+
- 	edp_reg_en: edp-reg-en-state {
- 		pins = "gpio25";
- 		function = "gpio";
-@@ -1213,6 +1263,34 @@ i2c4_default: i2c4-default-state {
- 		bias-disable;
- 	};
- 
-+	uart2_default: uart2-default-state {
-+		cts-pins {
-+			pins = "gpio121";
-+			function = "qup2";
-+			bias-bus-hold;
-+		};
-+
-+		rts-pins {
-+			pins = "gpio122";
-+			function = "qup2";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		rx-pins {
-+			pins = "gpio124";
-+			function = "qup2";
-+			bias-pull-up;
-+		};
-+
-+		tx-pins {
-+			pins = "gpio123";
-+			function = "qup2";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
- 	i2c21_default: i2c21-default-state {
- 		pins = "gpio81", "gpio82";
- 		function = "qup21";
--- 
-2.39.2
-
+2023=EB=85=84 3=EC=9B=94 21=EC=9D=BC (=ED=99=94) =EC=98=A4=ED=9B=84 6:27, S=
+rinivas Kandagatla
+<srinivas.kandagatla@linaro.org>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
+>
+> Thanks Sangsup for reporting the issue and sharing the patch,
+>
+> Sorry, for some reason I missed this patch.
+>
+> On 16/02/2023 01:41, Sangsup Lee wrote:
+> > This patch adds mutex_lock for fixing an Use-after-free bug.
+> > fastrpc_req_munmap_impl can be called concurrently in multi-threded env=
+ironments.
+> > The buf which is allocated by list_for_each_safe can be used after anot=
+her thread frees it.
+> >
+> Commit log can be improved here to something like:
+>
+> fastrcp_munmap takes two steps to unmap the memory, first to find a
+> matching fastrpc buf in the list and second is to send request to DSP to
+> unmap it.
+> There is a potentially window of race between these two operations,
+> which can lead to user-after-free.
+>
+> Fix this by adding locking around this two operations.
+>
+> > Signed-off-by: Sangsup Lee <k1rh4.lee@gmail.com>
+> > ---
+> >   drivers/misc/fastrpc.c | 7 ++++++-
+> >   1 file changed, 6 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> > index 5310606113fe..c4b5fa4a50a6 100644
+> > --- a/drivers/misc/fastrpc.c
+> > +++ b/drivers/misc/fastrpc.c
+> > @@ -1806,10 +1806,12 @@ static int fastrpc_req_munmap(struct fastrpc_us=
+er *fl, char __user *argp)
+> >       struct fastrpc_buf *buf =3D NULL, *iter, *b;
+> >       struct fastrpc_req_munmap req;
+> >       struct device *dev =3D fl->sctx->dev;
+> > +     int err;
+> >
+> >       if (copy_from_user(&req, argp, sizeof(req)))
+> >               return -EFAULT;
+> >
+> > +     mutex_lock(&fl->mutex);
+> >       spin_lock(&fl->lock);
+> >       list_for_each_entry_safe(iter, b, &fl->mmaps, node) {
+> >               if ((iter->raddr =3D=3D req.vaddrout) && (iter->size =3D=
+=3D req.size)) {
+> > @@ -1822,10 +1824,13 @@ static int fastrpc_req_munmap(struct fastrpc_us=
+er *fl, char __user *argp)
+> >       if (!buf) {
+> >               dev_err(dev, "mmap\t\tpt 0x%09llx [len 0x%08llx] not in l=
+ist\n",
+> >                       req.vaddrout, req.size);
+> > +             mutex_unlock(&fl->mutex);
+> >               return -EINVAL;
+> >       }
+> >
+> > -     return fastrpc_req_munmap_impl(fl, buf);
+> > +     err =3D fastrpc_req_munmap_impl(fl, buf);
+> > +     mutex_unlock(&fl->mutex);
+> > +     return err;
+>
+> How about moving the locking to ioctl:
+>
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index a701132638cf..2f217071a6c3 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -2087,7 +2087,9 @@ static long fastrpc_device_ioctl(struct file
+> *file, unsigned int cmd,
+>                  err =3D fastrpc_req_mmap(fl, argp);
+>                  break;
+>          case FASTRPC_IOCTL_MUNMAP:
+> +               mutex_lock(&fl->mutex);
+>                  err =3D fastrpc_req_munmap(fl, argp);
+> +               mutex_unlock(&fl->mutex);
+>                  break;
+>          case FASTRPC_IOCTL_MEM_MAP:
+>                  err =3D fastrpc_req_mem_map(fl, argp);
+>
+>
+> thanks,
+> srini
+> >   }
+> >
+> >   static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *arg=
+p)
