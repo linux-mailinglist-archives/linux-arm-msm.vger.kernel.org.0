@@ -2,107 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BB566C5915
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 22:54:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 053F26C596E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 23:29:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229812AbjCVVx6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 17:53:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60418 "EHLO
+        id S229745AbjCVW3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 18:29:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230045AbjCVVx4 (ORCPT
+        with ESMTP id S229487AbjCVW3K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 17:53:56 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE0934315
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 14:53:54 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id cn12so33155557edb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 14:53:54 -0700 (PDT)
+        Wed, 22 Mar 2023 18:29:10 -0400
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04F852D71
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 15:29:08 -0700 (PDT)
+Received: by mail-yb1-xb2f.google.com with SMTP id k17so12059759ybm.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 15:29:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679522032;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xehrL2dgpZYyP/0AM2a+lXnXwn5PW3e0iW5W0VmPTqg=;
-        b=KI4TzoNHQxflEoUcBryC3LXEvMO9lxh2bsIloTZApwsunrsKsg/6DG3LYjPR5oFezI
-         5d8J3vnMlni6v+vzv9ACcW66GzUBcBw/K8sL01C5mAu3Sl/R6PDlECvjEAcR6l0oG9iI
-         3TAXYG4RGicppbFPS+KwYwga/aDWrOF6JisGaWjN6DkxOPEEmb2096NhC7ZlQdeu+XwH
-         6GILqbGa4V8HaiubNnE+t5cWZAP5TQQmCIdNdah2XT1/mPkplH0H6XKVLHOZGz+PbalS
-         SsQ02tae7TxAYj7DnzjObjMbDHUrMrzXtAmVblIqV5PpLUD86/Lz0S1/Oh+XmlAy3xkS
-         1j1w==
+        d=linaro.org; s=google; t=1679524147;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bBHWvMJsWqZ9ugEE7zal8FR6mI+XljGhpniMAzWRfuQ=;
+        b=rcUNnocBQ6+8Z1CHCYO9tahnnruR87B872YINxlKjH2OFD8ODY3pwdy0VXgr9kafT7
+         601HY1Jf9dQ6RlpP2Alxe93svY7Hw7PmMczudLjnoREA9oGYrMjCqkeiBAhWtA2Cvkf2
+         OTt3lLh1nuWnbuQxQjDshzmIEhPN19VAgapeKAl6ww3CNtGKkr3xEEUmhaWnh1y3xIGh
+         B43Ddv4tDXZL4kD18PGxfNFmosSyQxKfFcZtdnqp/QwWstEASF6rEykRfoEFEjU/Kd4W
+         OsswRL+B4JK6wgnDR1FW4WCAGFN9dBjpY1GYIigjX5522qyfSweOKYNqC+11U5v5w1J/
+         4KDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679522032;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xehrL2dgpZYyP/0AM2a+lXnXwn5PW3e0iW5W0VmPTqg=;
-        b=ur3PHNN+rG5g42QS+9cx9ocXJ0Qthx+E3e2wQbeDoQMQNB+fthCTkyCB9RouG7iSm2
-         htYVKSEBKWm8bzWVIhyxMFJKQz3uFri8Fd6FQpwPqeG3cVRz6yke4X7xgrOsmaBeCWn2
-         xn61YxvVbEgb60Lu7vU+fAkwfTPa+sJtwWzW73d07ZXNc590GsUgQa60XIH4K7T/4n7a
-         fN+JsLDXlNST6TXdwGu+I6TlG9Hs248pL7FX/y3d1rzLBqa/XmxK7DmKao8Cd4AH62Oh
-         GgXtPFWrhaaHe8yvNOv6slswc8j4GGz8M/WLtNJDOh8UbOFIj8GK8CZ4sNLzNmKM3wD1
-         N/qQ==
-X-Gm-Message-State: AO0yUKVCHYE1To7oRD1fmUT9ZiWsWp8n9mrPMnJEaK6d88MvLrQkQQkP
-        uFEUP9ClXnaXd4dnrDPKGw6YyQ==
-X-Google-Smtp-Source: AK7set+sdpyhZHcj4stGuQd5RDDcBiVcAch7q43+icvAAhA35KsTbJdpiWJDVoDcAHwDrvEpoPevgA==
-X-Received: by 2002:a17:906:46d7:b0:930:7164:e8e5 with SMTP id k23-20020a17090646d700b009307164e8e5mr7122905ejs.38.1679522032625;
-        Wed, 22 Mar 2023 14:53:52 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:626d:5729:6e71:4c22? ([2a02:810d:15c0:828:626d:5729:6e71:4c22])
-        by smtp.gmail.com with ESMTPSA id lk8-20020a170906cb0800b009311c9d33d7sm7656336ejb.184.2023.03.22.14.53.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Mar 2023 14:53:52 -0700 (PDT)
-Message-ID: <4e1cc130-8bfb-96d1-1f93-f1389544b8e3@linaro.org>
-Date:   Wed, 22 Mar 2023 22:53:51 +0100
+        d=1e100.net; s=20210112; t=1679524147;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bBHWvMJsWqZ9ugEE7zal8FR6mI+XljGhpniMAzWRfuQ=;
+        b=vgg06f2KUrMLgsITHbqXXkbFvhYDkeqlhqHCL6S01BmRUBYeWLHYHY0p+TgK6txZY8
+         yAXtTqmR1ICT0lDPaRuhpt8HOOvH0+tUTd1hw17Eym/1mR3jH+I6A5mD77XHDx2JCzBo
+         F5r8O3Y1tqeZBD+7P4/QgemoVFVqkfpJ+fq3RYYQW2wLeFP1ZOAiY9zXd1kIBfcLASRb
+         agb8sQULRaBFgeWkDQm1qak4hiKO1qU1PJHId+SFv6qBgsRFvOHeQMidpMEUcLFs2O9C
+         D4r9Z+O2ODGhp6EHXU7z2tMYvsF3WFBUWidfH3cNj2JuXD2fU6PFMUW6yVySB9sNVz/C
+         g6tA==
+X-Gm-Message-State: AAQBX9dwCUmHuB0UyRdMgIwNYWH5zUhiDTqSj7qIkUdHq8CppP/phD4L
+        UgIHgoC17nUiO4kHb5/OPaiI20/L5KnkXx4pVe8kLQ==
+X-Google-Smtp-Source: AKy350aRhjzfdPTMr6v/xzQ2fyevdeCE9ghmdEGpJRaR1kvd5aSjdq5MOMySA5C+ZO/UQm3E7zglfl/W2BqirJikB4g=
+X-Received: by 2002:a25:7456:0:b0:b6b:79a2:8cff with SMTP id
+ p83-20020a257456000000b00b6b79a28cffmr719682ybc.9.1679524147243; Wed, 22 Mar
+ 2023 15:29:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 3/8] dt-bindings: usb: dwc3: Add IPQ9574 compatible
-Content-Language: en-US
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
-        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
-References: <cover.1679479634.git.quic_varada@quicinc.com>
- <2ef0959be2aba24b3e3017cd09af7cc63aea74ba.1679479634.git.quic_varada@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2ef0959be2aba24b3e3017cd09af7cc63aea74ba.1679479634.git.quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20230314080917.68246-1-krzysztof.kozlowski@linaro.org>
+ <c35fd641-12ff-beba-341c-4d0305bcaa40@linaro.org> <290b9b19-a320-38a1-4426-51f5725dd54f@linaro.org>
+ <59a6ef88-758f-4ec4-f663-47e4caa552c5@linaro.org>
+In-Reply-To: <59a6ef88-758f-4ec4-f663-47e4caa552c5@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 23 Mar 2023 00:28:55 +0200
+Message-ID: <CAA8EJprqXVrXdBD6eBHoDGhvST2hViZUbMgdaeKEBohpv5_V3w@mail.gmail.com>
+Subject: Re: [PATCH v2 00/13] mailbox/arm64/ qcom: rework compatibles for fallback
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/03/2023 11:44, Varadarajan Narayanan wrote:
-> Document the IPQ9574 dwc3 compatible.
-> 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> index a2aabda..3ae56d3 100644
-> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> @@ -17,6 +17,7 @@ properties:
->            - qcom,ipq6018-dwc3
->            - qcom,ipq8064-dwc3
->            - qcom,ipq8074-dwc3
-> +          - qcom,ipq9574-dwc3
->            - qcom,msm8953-dwc3
->            - qcom,msm8994-dwc3
+On Wed, 22 Mar 2023 at 19:37, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 16/03/2023 07:52, Krzysztof Kozlowski wrote:
+> > On 14/03/2023 13:16, Dmitry Baryshkov wrote:
+> >> On 14/03/2023 10:09, Krzysztof Kozlowski wrote:
+> >>> Hi,
+> >>>
+> >>> Changes since v1
+> >>> ================
+> >>> 1. Rebase
+> >>> 2. Make msm8994 fallback for several variants, not msm8953, because the latter
+> >>>     actually might take some clocks.
+> >>
+> >> Although the approach looks correct, I think that in some cases it tries
+> >> to mark devices compatible judging from the current driver, not from the
+> >> hardware itself.
+> >
+> > Which is what compatibility is about...
 
-No updates for clocks? Then disallow them for your variant.
+Well, I was trying to say that once we update the driver, the devices
+will not be compatible. But probably our definitions of being
+compatible differ.
 
-Best regards,
-Krzysztof
+> >
+> >>
+> >> For the reference, on msm8994 the apcs is a clock controller for the l2
+> >> clocks (which we do not support yet). If I'm not mistaken, on msm8976
+> >> the apcs region contains a mux for the cluster1 clocks. On sdm630/660
+> >> the apcs region also seems to be involved in CPU clocks scaling.
+> >
+> > The question is this means they are incompatible?
+>
+> Since there are no more comments I assume they are actually compatible
+> in the terms of SW interface.
 
+-- 
+With best wishes
+Dmitry
