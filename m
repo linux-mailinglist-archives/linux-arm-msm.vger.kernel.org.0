@@ -2,58 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 392DA6C3F87
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 02:15:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C794B6C3F92
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 02:15:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230022AbjCVBOy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 21:14:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50848 "EHLO
+        id S230115AbjCVBPQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 21:15:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230001AbjCVBOu (ORCPT
+        with ESMTP id S230044AbjCVBO5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 21:14:50 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9C3850718
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 18:14:48 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id x8-20020a9d3788000000b0069f922cd5ceso1170296otb.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 18:14:48 -0700 (PDT)
+        Tue, 21 Mar 2023 21:14:57 -0400
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C58BF5942B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 18:14:50 -0700 (PDT)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-17aceccdcf6so18039247fac.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Mar 2023 18:14:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1679447688;
+        d=kali.org; s=google; t=1679447689;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aL/N9AV3WhGqQ+Vb9bYix0gGfCvLXKt0K6k2QBL/KxM=;
-        b=aJjrv5RzCRlgZ56o2/+n2nWWuZ96bMUoY++1xmdw0KnkyVlj9GTrI6MhJc13w2vKNV
-         S6ll7BCqmgfDtSEWnVK/HZapj4kW4jmOxM3qjlt1k9VTas68WF3NeFR/vmeVGxMuzZSx
-         idnxS8UB8mO6rhBO0qEKRAIsv+MAUko9PdtIiGxxkkR1vVKmcp0UrUuY1lJU2UFDiDxo
-         KWJfsdG3EgQYkdM3Z5TkFo5O+JtqB0chaGqGMSuCIWVq1iykEE7ORAUdPLdQxoYGZ9lg
-         mzeyd2ZjQrfxwOT7BBkIxhcsDtSUgy7Uj93EiwZEE6fFF8WSK074s8hIoWxBf8KUqMAm
-         BZUg==
+        bh=d4WRBYhVHBZ8wEtUoS7CcmKTTwWyVK3DaxRziT3IUGY=;
+        b=PaV2rxfk+xHLAwglDpJwNswMUDoe0XdAFxmgsEjWcscE431eO/bAtMuz2wqjmzySZV
+         GzzyHFsSQYiA26cEfhzRQPMdMEJqRT/f4Yw/K2dT4XuBKhbbUDoDZTyjWrwrEJLUQY7C
+         9bk62yu6ii2UNXV1ysNoIfhVKGFAOkkCyFoaVkS9XKzL6D/q6T3e2ybR6LwQCQf7WrGE
+         1i959QcT8FPZSLGJRYswr0LxBPEhFdbKRn70tLXgOfiLW+FVD9NswMsZo/pk2u1bLwQA
+         8bqYeVzVMRfWzEujRE0itwukDdGT1o0oq+YO1oQmSTgiU9jflmYw9yIEq6YaffW3cnTS
+         atPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679447688;
+        d=1e100.net; s=20210112; t=1679447689;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=aL/N9AV3WhGqQ+Vb9bYix0gGfCvLXKt0K6k2QBL/KxM=;
-        b=yKXBgqimml3DKJNoJ0tdx1uAxjV3e1q6iideGWkzjGolTpv8zTlLf+oe/Y9LlDhNTE
-         Bbvp/PQsmthF0vAZkK97kz3G2SaL9KQwuERQgn4WwGHZmxi/8nnxsFSmC48ck/Tsayg0
-         VnOBoTkqKNkQ6Ju3QtOikjDX8AMR0apWgMOmqKKUGHwpyfiCXWPbYgfxkqo4o+ck3B6F
-         TZmXOcghnuXTx5+m2wPso/qFGPJVXMtSeKll3beqN6KU8RfMjbqOcGvMG/zlO1Wz8tUu
-         Xy+u5YLhcmi6hrD6G6vRyXvnWyjY01bunv9rcgzijWobohVz+iYCxFRWe1pRCvI8Yr0Z
-         8vqw==
-X-Gm-Message-State: AO0yUKWOU7wuTxF1GDemAo+uK9tfxbQ3+SF3SVo0vNEWjMoqqJ3p1KU5
-        a49a3M1syAqzcM1bq2xnZso+Ig==
-X-Google-Smtp-Source: AK7set9K1MSbCV1ueihm5z69nVjnORAmEu3Xc9pzp+x6xd3F+89wz1dITK3sA8Vnh8KYCZdkJzoDGQ==
-X-Received: by 2002:a9d:615a:0:b0:699:221e:b07d with SMTP id c26-20020a9d615a000000b00699221eb07dmr233302otk.11.1679447688094;
-        Tue, 21 Mar 2023 18:14:48 -0700 (PDT)
+        bh=d4WRBYhVHBZ8wEtUoS7CcmKTTwWyVK3DaxRziT3IUGY=;
+        b=UrLwzdZtYPpCWl1+Dg0l92JS8ftUtTOZu3AOZPYN0cn/64xmN12RyUsTn5SDYik0Ny
+         +2O4npzZaqzBepCbJ3uq9fAr3Ua9n1Zm2aAebFQfMqGCmm+EDuWWSGBhxKiB1I4DkpG+
+         r2uLbHB8wx/ycihZpwOoePzmPRnNEFSJu531C8UYtMhNBL+vQcif5d7uRBAiNjUlTzRf
+         zNcTHKFAiS9aPO6ulLnl1JxsIS2Wa7yXBBigMGohG6ilKHyOfKCWkh8YzT4IF3sxLG8B
+         FTZtyACYmAHh4q73l+Ev/b9PdwDyCJEJGmzmxEDmfpK7vohOp4lST8WkzlOjQZFw0OPR
+         G0Ng==
+X-Gm-Message-State: AO0yUKUgVV6FP4lBcC/rrMqBC9TnqN6mHd67iVWZGHQPkvhCuwJN8Rfr
+        SV9V0oAlXvdlmtYBrUr20yTfmw==
+X-Google-Smtp-Source: AK7set98lpmfliSClNeXPozbcX91zLQLW1HRymvDIIVVSvViJNENAAgdU8fH2fVbavdgit7z+k+DCg==
+X-Received: by 2002:a05:6870:a1a7:b0:17a:c102:b449 with SMTP id a39-20020a056870a1a700b0017ac102b449mr576632oaf.59.1679447689676;
+        Tue, 21 Mar 2023 18:14:49 -0700 (PDT)
 Received: from localhost (23-118-233-243.lightspeed.snantx.sbcglobal.net. [23.118.233.243])
-        by smtp.gmail.com with ESMTPSA id o23-20020a9d6d17000000b0069d80ce577asm5778527otp.18.2023.03.21.18.14.47
+        by smtp.gmail.com with ESMTPSA id ee48-20020a056870c83000b0017299192eb1sm4715522oab.25.2023.03.21.18.14.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 18:14:47 -0700 (PDT)
+        Tue, 21 Mar 2023 18:14:49 -0700 (PDT)
 From:   Steev Klimaszewski <steev@kali.org>
 To:     Steev Klimaszewski <steev@kali.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
+Cc:     "David S. Miller" <davem@davemloft.net>,
         Eric Dumazet <edumazet@google.com>,
         Jakub Kicinski <kuba@kernel.org>,
         Paolo Abeni <pabeni@redhat.com>,
@@ -69,11 +68,10 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
         Mark Pearson <markpearson@lenovo.com>,
-        Brian Masney <bmasney@redhat.com>,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v7 3/4] arm64: dts: qcom: sc8280xp: Define uart2
-Date:   Tue, 21 Mar 2023 20:14:41 -0500
-Message-Id: <20230322011442.34475-4-steev@kali.org>
+        Johan Hovold <johan@kernel.org>
+Subject: [PATCH v7 4/4] arm64: dts: qcom: sc8280xp-x13s: Add bluetooth
+Date:   Tue, 21 Mar 2023 20:14:42 -0500
+Message-Id: <20230322011442.34475-5-steev@kali.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230322011442.34475-1-steev@kali.org>
 References: <20230322011442.34475-1-steev@kali.org>
@@ -88,61 +86,159 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
+The Lenovo Thinkpad X13s has a WCN6855 Bluetooth controller on uart2,
+add this.
 
-Add the definition for uart2 for sc8280xp devices.
-
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Steev Klimaszewski <steev@kali.org>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 ---
 Changes since v6:
- * No changes
+ * Remove allowed-modes as they aren't needed
+ * Remove regulator-allow-set-load
+ * Set regulator-always-on because the wifi chip also uses the regulator
+ * cts pin uses bias-bus-hold
+ * Alphabetize uart2 pins
 
 Changes since v5:
- * Add sentence to git commit description.
- * Add Johan's R-b
+ * Update patch subject
+ * Specify initial mode (via guess) for vreg_s1c
+ * Drop uart17 definition
+ * Rename bt_en to bt_default because configuring more than one pin
+ * Correct (maybe) bias configurations
+ * Correct cts gpio
+ * Split rts-tx into two nodes
+ * Drop incorrect link in the commit message
 
 Changes since v4:
- * None
+ * Address Konrad's review comments.
 
 Changes since v3:
+ * Add vreg_s1c
+ * Add regulators and not dead code
  * Fix commit message changelog
 
 Changes since v2:
- * No changes since v2
+ * Remove dead code and add TODO comment
+ * Make dtbs_check happy with the pin definitions
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 78 +++++++++++++++++++
+ 1 file changed, 78 insertions(+)
 
-Changes since v1:
- * change subject line, move node, and add my s-o-b
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 05544a6c1b21..f1d0e8d5edd2 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -1209,6 +1209,20 @@ spi2: spi@988000 {
- 				status = "disabled";
- 			};
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index 92d365519546..05e66505e5cc 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -24,6 +24,7 @@ / {
+ 	aliases {
+ 		i2c4 = &i2c4;
+ 		i2c21 = &i2c21;
++		serial1 = &uart2;
+ 	};
  
-+			uart2: serial@988000 {
-+				compatible = "qcom,geni-uart";
-+				reg = <0 0x00988000 0 0x4000>;
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S2_CLK>;
-+				clock-names = "se";
-+				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
-+				operating-points-v2 = <&qup_opp_table_100mhz>;
-+				power-domains = <&rpmhpd SC8280XP_CX>;
-+				interconnects = <&clk_virt MASTER_QUP_CORE_0 0 &clk_virt SLAVE_QUP_CORE_0 0>,
-+						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_0 0>;
-+				interconnect-names = "qup-core", "qup-config";
-+				status = "disabled";
-+			};
+ 	wcd938x: audio-codec {
+@@ -431,6 +432,14 @@ regulators-1 {
+ 		qcom,pmic-id = "c";
+ 		vdd-bob-supply = <&vreg_vph_pwr>;
+ 
++		vreg_s1c: smps1 {
++			regulator-name = "vreg_s1c";
++			regulator-min-microvolt = <1880000>;
++			regulator-max-microvolt = <1900000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
++		};
 +
- 			i2c3: i2c@98c000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x0098c000 0 0x4000>;
+ 		vreg_l1c: ldo1 {
+ 			regulator-name = "vreg_l1c";
+ 			regulator-min-microvolt = <1800000>;
+@@ -918,6 +927,32 @@ &qup0 {
+ 	status = "okay";
+ };
+ 
++&uart2 {
++	pinctrl-0 = <&uart2_default>;
++	pinctrl-names = "default";
++
++	status = "okay";
++
++	bluetooth {
++		compatible = "qcom,wcn6855-bt";
++
++		vddio-supply = <&vreg_s10b>;
++		vddbtcxmx-supply = <&vreg_s12b>;
++		vddrfacmn-supply = <&vreg_s12b>;
++		vddrfa0p8-supply = <&vreg_s12b>;
++		vddrfa1p2-supply = <&vreg_s11b>;
++		vddrfa1p7-supply = <&vreg_s1c>;
++
++		max-speed = <3200000>;
++
++		enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
++		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&bt_default>;
++		pinctrl-names = "default";
++	};
++};
++
+ &qup1 {
+ 	status = "okay";
+ };
+@@ -1192,6 +1227,21 @@ hastings_reg_en: hastings-reg-en-state {
+ &tlmm {
+ 	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
+ 
++	bt_default: bt-default-state {
++		hstp-sw-ctrl-pins {
++			pins = "gpio132";
++			function = "gpio";
++			bias-pull-down;
++		};
++
++		hstp-bt-en-pins {
++			pins = "gpio133";
++			function = "gpio";
++			drive-strength = <16>;
++			bias-disable;
++		};
++	};
++
+ 	edp_reg_en: edp-reg-en-state {
+ 		pins = "gpio25";
+ 		function = "gpio";
+@@ -1213,6 +1263,34 @@ i2c4_default: i2c4-default-state {
+ 		bias-disable;
+ 	};
+ 
++	uart2_default: uart2-default-state {
++		cts-pins {
++			pins = "gpio121";
++			function = "qup2";
++			bias-bus-hold;
++		};
++
++		rts-pins {
++			pins = "gpio122";
++			function = "qup2";
++			drive-strength = <2>;
++			bias-disable;
++		};
++
++		rx-pins {
++			pins = "gpio124";
++			function = "qup2";
++			bias-pull-up;
++		};
++
++		tx-pins {
++			pins = "gpio123";
++			function = "qup2";
++			drive-strength = <2>;
++			bias-disable;
++		};
++	};
++
+ 	i2c21_default: i2c21-default-state {
+ 		pins = "gpio81", "gpio82";
+ 		function = "qup21";
 -- 
 2.39.2
 
