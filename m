@@ -2,54 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 742DE6C4086
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 03:52:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2846D6C409F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 03:59:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbjCVCwJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 22:52:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43640 "EHLO
+        id S229826AbjCVC7I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 22:59:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbjCVCwI (ORCPT
+        with ESMTP id S229662AbjCVC7I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 22:52:08 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5681A4BEA8;
-        Tue, 21 Mar 2023 19:52:07 -0700 (PDT)
+        Tue, 21 Mar 2023 22:59:08 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35F66570B9;
+        Tue, 21 Mar 2023 19:59:07 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DC78761E10;
-        Wed, 22 Mar 2023 02:52:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFA1C433D2;
-        Wed, 22 Mar 2023 02:52:05 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C225061F0A;
+        Wed, 22 Mar 2023 02:59:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40105C433D2;
+        Wed, 22 Mar 2023 02:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679453526;
-        bh=Izwao8nr3IGO8OyqNDeMr7/hC8B2ahj8Sv6MkEDqtz4=;
+        s=k20201202; t=1679453946;
+        bh=hbbRSvW3k2Vdsx6zL8t6kCVT4bupyyrB6lhawAkzPOk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=t3n2vwfmSa9C1uQ5pIG5Hh2iEnuCQMcW5v9YdyANAzp6TwHRvV2bG27kI3U05I9na
-         pG0qFEpw1fUUeVhmueIpvcIHmOHorpaaEY4I+xDXD7ayNHBnHOhAU7FT+qg7gIPqdg
-         ZEkYrE/pCuf0vR38toqyyQowseArfC+3lXUb5ytFYmETs5xPyv5IEkeMPC4hjmeGbe
-         Y1zcxFBbFrOKhnbrGqO/zgrPnvhUEjfU6K3APQ3/VtCn5n+2L1GVwKCKbLXPZPga1v
-         d1q9Z+gZRnYH62L9InHP9DrE3zQSv0bMxHLB8E1/EpU0O32zM9qWtctyxeY5Da2qVQ
-         VjGuQCK7jJEPA==
-Date:   Tue, 21 Mar 2023 19:55:19 -0700
+        b=rC3XCQ7ZIjJ24wJUytONOtqdk/19S7cAHUzrah6RaVcKeQ2nOKwM1i7WLnnAKH1Jy
+         ekEqCpg2HYn16FNnL2g2qsRs1Rst95TF4QtguJLSvWlOnxw+KwzhHgnHPiE14d7GnV
+         iwMcyrcP8VwEhBAtC8yTOTJQ46kyeScn8uhesixRC3vop1KbrBFLEHrQA1F3Wg0wCe
+         ZL4cpfWe27PXD6nZEVkMsiYp30VFibwprzWn8FFFvl1r54wjCt1DPxfQ0V9vCNm9MH
+         cCPXP2cFTuY87pn2MUMomVtebHM1sSURpnYxDyWwZt2LIS3dys+j5Dz51eO3ItVbje
+         i14FoaYo7Ntlw==
+Date:   Tue, 21 Mar 2023 20:02:18 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Eric Chanudet <echanude@redhat.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: add symbols to dtb
-Message-ID: <20230322025519.a5vrqljezo74qxwi@ripper>
-References: <20230309233945.1199358-1-echanude@redhat.com>
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
+Subject: Re: [PATCH RFT v2 02/14] clk: qcom: smd-rpm: Add .is_enabled hook
+Message-ID: <20230322030218.7xjrsgt3abqft2y7@ripper>
+References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
+ <20230303-topic-rpmcc_sleep-v2-2-ae80a325fe94@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230309233945.1199358-1-echanude@redhat.com>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+In-Reply-To: <20230303-topic-rpmcc_sleep-v2-2-ae80a325fe94@linaro.org>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,40 +61,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 09, 2023 at 06:39:48PM -0500, Eric Chanudet wrote:
-> ABL uses the __symbols__ section to process the DTB before passing it
-> forward. Without it, the bootstrap is interrupted.
+On Wed, Mar 08, 2023 at 10:35:18PM +0100, Konrad Dybcio wrote:
+> From: Shawn Guo <shawn.guo@linaro.org>
+> 
+> The RPM clock enabling state can be found with 'enabled' in struct
+> clk_smd_rpm.  Add .is_enabled hook so that clk_summary in debugfs can
+> show a correct enabling state for RPM clocks.
 > 
 
-If the reason is that ABL refuses to boot without it, then please have
-ABL fixed. If on the other hand there is a valid reason for ABL to
-require the dtb to have __symbols__ defined, please describe that - if
-nothing else so that others know when this is supposed to be used.
+I don't think .is_enabled should be implemented for clocks where the
+actual state can't be queried.
 
-Thanks,
+E.g. should a clock which is is_enabled = false be unprepared during
+disable_unused? It's already disabled...
+
+Regards,
 Bjorn
 
-> Signed-off-by: Eric Chanudet <echanude@redhat.com>
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> [Konrad: rebase]
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-> Depends on initial sa8775p-ride.dts:
-> https://lore.kernel.org/all/20230214092713.211054-3-brgl@bgdev.pl/
+>  drivers/clk/qcom/clk-smd-rpm.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 > 
->  arch/arm64/boot/dts/qcom/Makefile | 4 ++++
->  1 file changed, 4 insertions(+)
+> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+> index 198886c1b6c8..ecacfbc4a16c 100644
+> --- a/drivers/clk/qcom/clk-smd-rpm.c
+> +++ b/drivers/clk/qcom/clk-smd-rpm.c
+> @@ -424,18 +424,27 @@ static int clk_smd_rpm_enable_scaling(struct qcom_smd_rpm *rpm)
+>  	return 0;
+>  }
+>  
+> +static int clk_smd_rpm_is_enabled(struct clk_hw *hw)
+> +{
+> +	struct clk_smd_rpm *r = to_clk_smd_rpm(hw);
+> +
+> +	return r->enabled;
+> +}
+> +
+>  static const struct clk_ops clk_smd_rpm_ops = {
+>  	.prepare	= clk_smd_rpm_prepare,
+>  	.unprepare	= clk_smd_rpm_unprepare,
+>  	.set_rate	= clk_smd_rpm_set_rate,
+>  	.round_rate	= clk_smd_rpm_round_rate,
+>  	.recalc_rate	= clk_smd_rpm_recalc_rate,
+> +	.is_enabled	= clk_smd_rpm_is_enabled,
+>  };
+>  
+>  static const struct clk_ops clk_smd_rpm_branch_ops = {
+>  	.prepare	= clk_smd_rpm_prepare,
+>  	.unprepare	= clk_smd_rpm_unprepare,
+>  	.recalc_rate	= clk_smd_rpm_recalc_rate,
+> +	.is_enabled	= clk_smd_rpm_is_enabled,
+>  };
+>  
+>  DEFINE_CLK_SMD_RPM_BRANCH_A(bi_tcxo, QCOM_SMD_RPM_MISC_CLK, 0, 19200000);
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index b63cd1861e68..72e85ab31d74 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -1,4 +1,8 @@
->  # SPDX-License-Identifier: GPL-2.0
-> +
-> +# Enable support for device-tree overlays required on sa8775p-ride.
-> +DTC_FLAGS_sa8775p-ride := -@
-> +
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
 > -- 
-> 2.39.1
+> 2.39.2
 > 
