@@ -2,123 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAD646C4079
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 03:40:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C9896C4083
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 03:47:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229522AbjCVCky (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 22:40:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60474 "EHLO
+        id S229789AbjCVCrh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 22:47:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbjCVCkx (ORCPT
+        with ESMTP id S229487AbjCVCrg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 22:40:53 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 360373803D;
-        Tue, 21 Mar 2023 19:40:52 -0700 (PDT)
+        Tue, 21 Mar 2023 22:47:36 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82A2C52904;
+        Tue, 21 Mar 2023 19:47:35 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C11F461F1D;
-        Wed, 22 Mar 2023 02:40:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76A3C433D2;
-        Wed, 22 Mar 2023 02:40:48 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1C50B61F1D;
+        Wed, 22 Mar 2023 02:47:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCF3C433D2;
+        Wed, 22 Mar 2023 02:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679452851;
-        bh=79dMe7RsL9m8pXI5ORMx795he2zXkKmcbbpL+80vMiA=;
+        s=k20201202; t=1679453254;
+        bh=SPOc+sENXiBCVO4AI8Jed9UIOqMKW+rWUAuqxHfKg3o=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Z3UXnnuKedblvn/nRQfhBeuDKLUTEt0aMd/m/ImG+mVm9ivGKl8i1BP4ka4+jJgVe
-         W/kt+4V5ixJhH12L4DIbpz3YxnSR7m6/ncJybF4AL/7Ss9VPilMUoWhFT+sGsFcIN6
-         FSa+iB295LWnPVfEhWVVHj7dkMW9DKZADVgVGj5l6fe5ECTUWn98SSNYRQmytgKvnM
-         AzhvN9/G2jR/DDWTrBSViGw+uQa2HYUJpPkwabe05pcROAV5tVD3uPZDUePzuZLryP
-         dpA2aPhCAWfClyELnIP6v0rRXhQcaGHzEm5n5kIWDThzJMd02piaIclj6g7D0dV/tr
-         TXR8cMR9BcCzw==
-Date:   Tue, 21 Mar 2023 19:44:02 -0700
+        b=m8CABjKUa8jjdDsopBfvFdUFewZATA4jnVooD4mdZ1uMR7foBBUtlMSu6E83ChOCP
+         rAEvOAUNv/6g4gYFjYEGsEPuTWn2isaFv98SFcVth3sH2GOnIKWYdS2y9+RW36GcMa
+         cFnxFURgVsHc7wjXzqtCs1eDXDjsdDeM0gtHPOI8u3Cr0BZh1i8wLaZRfq/F0Wax60
+         L3wJdiGoAlTGuXjrT8mSBWW1Mnk82n/1EaFZ+d7nr3bFx2TZGqDOCkbURRPSzBGcNQ
+         IbIrSvOm2IaD+RD9tMTJH4sc6VG/0Q0B4bBeI6/R6oAt8MC+Txmnc0mvWVSLYN5ahV
+         on8Ln8yzbGkqw==
+Date:   Tue, 21 Mar 2023 19:50:47 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     Jakub Kicinski <kuba@kernel.org>, linux-kernel@vger.kernel.org,
-        agross@kernel.org, konrad.dybcio@linaro.org, davem@davemloft.net,
-        edumazet@google.com, pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
-        bhupesh.sharma@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, peppe.cavallaro@st.com,
-        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
-        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
-        linux@armlinux.org.uk, veekhee@apple.com,
-        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
-        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
-        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
-        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
-Subject: Re: [PATCH net-next v2 00/12] Add EMAC3 support for sa8540p-ride
-Message-ID: <20230322024402.l6awwelwdzxydmam@ripper>
-References: <20230320221617.236323-1-ahalaney@redhat.com>
- <20230320202802.4e7dc54c@kernel.org>
- <20230321184435.5pqkjp4adgn6cpxy@halaney-x13s>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v2 12/15] arm64: dts: qcom: sa8775p: pmic: add thermal
+ zones
+Message-ID: <20230322025047.gvo252mh2flcbzuc@ripper>
+References: <20230320154841.327908-1-brgl@bgdev.pl>
+ <20230320154841.327908-13-brgl@bgdev.pl>
+ <a215c54b-c12e-4463-f9fe-588053f74300@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230321184435.5pqkjp4adgn6cpxy@halaney-x13s>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <a215c54b-c12e-4463-f9fe-588053f74300@linaro.org>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 21, 2023 at 01:44:35PM -0500, Andrew Halaney wrote:
-> On Mon, Mar 20, 2023 at 08:28:02PM -0700, Jakub Kicinski wrote:
-> > On Mon, 20 Mar 2023 17:16:05 -0500 Andrew Halaney wrote:
-> > > This is a forward port / upstream refactor of code delivered
-> > > downstream by Qualcomm over at [0] to enable the DWMAC5 based
-> > > implementation called EMAC3 on the sa8540p-ride dev board.
-> > > 
-> > > From what I can tell with the board schematic in hand,
-> > > as well as the code delivered, the main changes needed are:
-> > > 
-> > >     1. A new address space layout for /dwmac5/EMAC3 MTL/DMA regs
-> > >     2. A new programming sequence required for the EMAC3 base platforms
-> > > 
-> > > This series makes those adaptations as well as other housekeeping items
-> > > such as converting dt-bindings to yaml, adding clock descriptions, etc.
-> > > 
-> > > [0] https://git.codelinaro.org/clo/la/kernel/ark-5.14/-/commit/510235ad02d7f0df478146fb00d7a4ba74821b17
-> > > 
-> > > v1: https://lore.kernel.org/netdev/20230313165620.128463-1-ahalaney@redhat.com/
-> > 
-> > At a glance 1-4,8-12 need to go via networking, 5 via clock tree,
-> > and 6,7 via ARM/Qualcomm.
-> > 
-> > AFAICT there are no strong (compile) dependencies so we can each merge
-> > our chunk and they will meet in Linus's tree? If so please repost just
-> > the networking stuff for net-next, and the other bits to respective
-> > trees, as separate series.
-> > 
+On Mon, Mar 20, 2023 at 06:28:20PM +0100, Konrad Dybcio wrote:
 > 
-> That makes sense to me, thanks for the advice.
 > 
-> The only note is that 5 (the clk patch) is depended on by 6/7 to
-> compile (they use the header value in 5)... So I'll keep those together!
+> On 20.03.2023 16:48, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > 
+> > Add the thermal zones and associated alarm nodes for the PMICs that have
+> > them hooked up on sa8775p-ride.
+> > 
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 58 +++++++++++++++++++++
+> >  1 file changed, 58 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+> > index 8616ead3daf5..276070b62ccd 100644
+> > --- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+> > @@ -6,6 +6,50 @@
+> >  #include <dt-bindings/input/input.h>
+> >  #include <dt-bindings/spmi/spmi.h>
+> >  
+> > +/ {
+> > +	thermal-zones {
+> > +		pmm8654au_1_thermal: pm8775-1-thermal {
+> Please reindex this, downstream uses _1 for pmic@0, but this
+> makes little sense. Make it match the SID.
 > 
 
-Sounds good to me!
+Please use the naming from the schematics for these things, rather than
+just an iterator (which might be what Bartosz is doing here).
 
 Regards,
 Bjorn
 
-> So all in all it will be the dt-binding changes + stmmac changes in one
-> series for networking, and the clock + devicetree changes via
-> ARM/Qualcomm if I am following properly.
+> > +			polling-delay-passive = <100>;
+> > +			polling-delay = <0>;
+> > +			thermal-sensors = <&pmm8654au_1_temp_alarm>;
+> > +
+> > +			trips {
+> > +				trip0 {
+> > +					temperature = <105000>;
+> > +					hysteresis = <0>;
+> > +					type = "passive";
+> > +				};
+> > +
+> > +				trip1 {
+> > +					temperature = <125000>;
+> > +					hysteresis = <0>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> What happened to the downstream _2 (pmic@2) one and _4 (pmic@6)?
 > 
-> I'll go that route for v3 and link here (just to make finding the split
-> easier) unless someone objects (got some time as I need to refactor
-> based on series feedback)!
+> Konrad
 > 
-> Thanks,
-> Andrew
-> 
+> > +		pmm8654au_3_thermal: pm8775-3-thermal {
+> > +			polling-delay-passive = <100>;
+> > +			polling-delay = <0>;
+> > +			thermal-sensors = <&pmm8654au_3_temp_alarm>;
+> > +
+> > +			trips {
+> > +				trip0 {
+> > +					temperature = <105000>;
+> > +					hysteresis = <0>;
+> > +					type = "passive";
+> > +				};
+> > +
+> > +				trip1 {
+> > +					temperature = <125000>;
+> > +					hysteresis = <0>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +	};
+> > +};
+> > +
+> >  &spmi_bus {
+> >  	pmm8654au_0: pmic@0 {
+> >  		compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
+> > @@ -41,6 +85,13 @@ pmm8654au_1: pmic@2 {
+> >  		reg = <0x2 SPMI_USID>;
+> >  		#address-cells = <1>;
+> >  		#size-cells = <0>;
+> > +
+> > +		pmm8654au_1_temp_alarm: temp-alarm@a00 {
+> > +			compatible = "qcom,spmi-temp-alarm";
+> > +			reg = <0xa00>;
+> > +			interrupts-extended = <&spmi_bus 0x2 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
+> > +			#thermal-sensor-cells = <0>;
+> > +		};
+> >  	};
+> >  
+> >  	pmm8654au_2: pmic@4 {
+> > @@ -55,5 +106,12 @@ pmm8654au_3: pmic@6 {
+> >  		reg = <0x6 SPMI_USID>;
+> >  		#address-cells = <1>;
+> >  		#size-cells = <0>;
+> > +
+> > +		pmm8654au_3_temp_alarm: temp-alarm@a00 {
+> > +			compatible = "qcom,spmi-temp-alarm";
+> > +			reg = <0xa00>;
+> > +			interrupts-extended = <&spmi_bus 0x6 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
+> > +			#thermal-sensor-cells = <0>;
+> > +		};
+> >  	};
+> >  };
