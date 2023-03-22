@@ -2,122 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2846D6C409F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 03:59:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 140506C40D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Mar 2023 04:15:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229826AbjCVC7I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Mar 2023 22:59:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52996 "EHLO
+        id S229998AbjCVDP2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Mar 2023 23:15:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229662AbjCVC7I (ORCPT
+        with ESMTP id S229664AbjCVDP1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Mar 2023 22:59:08 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35F66570B9;
-        Tue, 21 Mar 2023 19:59:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        Tue, 21 Mar 2023 23:15:27 -0400
+Received: from mxct.zte.com.cn (mxct.zte.com.cn [183.62.165.209])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B246F2597B;
+        Tue, 21 Mar 2023 20:15:25 -0700 (PDT)
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C225061F0A;
-        Wed, 22 Mar 2023 02:59:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40105C433D2;
-        Wed, 22 Mar 2023 02:59:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679453946;
-        bh=hbbRSvW3k2Vdsx6zL8t6kCVT4bupyyrB6lhawAkzPOk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rC3XCQ7ZIjJ24wJUytONOtqdk/19S7cAHUzrah6RaVcKeQ2nOKwM1i7WLnnAKH1Jy
-         ekEqCpg2HYn16FNnL2g2qsRs1Rst95TF4QtguJLSvWlOnxw+KwzhHgnHPiE14d7GnV
-         iwMcyrcP8VwEhBAtC8yTOTJQ46kyeScn8uhesixRC3vop1KbrBFLEHrQA1F3Wg0wCe
-         ZL4cpfWe27PXD6nZEVkMsiYp30VFibwprzWn8FFFvl1r54wjCt1DPxfQ0V9vCNm9MH
-         cCPXP2cFTuY87pn2MUMomVtebHM1sSURpnYxDyWwZt2LIS3dys+j5Dz51eO3ItVbje
-         i14FoaYo7Ntlw==
-Date:   Tue, 21 Mar 2023 20:02:18 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
-Subject: Re: [PATCH RFT v2 02/14] clk: qcom: smd-rpm: Add .is_enabled hook
-Message-ID: <20230322030218.7xjrsgt3abqft2y7@ripper>
-References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
- <20230303-topic-rpmcc_sleep-v2-2-ae80a325fe94@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230303-topic-rpmcc_sleep-v2-2-ae80a325fe94@linaro.org>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        by mxct.zte.com.cn (FangMail) with ESMTPS id 4PhDB36Bd8z501SY;
+        Wed, 22 Mar 2023 11:15:23 +0800 (CST)
+Received: from xaxapp02.zte.com.cn ([10.88.97.241])
+        by mse-fl2.zte.com.cn with SMTP id 32M3FDr0006888;
+        Wed, 22 Mar 2023 11:15:13 +0800 (+08)
+        (envelope-from ye.xingchen@zte.com.cn)
+Received: from mapi (xaxapp02[null])
+        by mapi (Zmail) with MAPI id mid31;
+        Wed, 22 Mar 2023 11:15:14 +0800 (CST)
+Date:   Wed, 22 Mar 2023 11:15:14 +0800 (CST)
+X-Zmail-TransId: 2afa641a72c25da-b2591
+X-Mailer: Zmail v1.0
+Message-ID: <202303221115145068959@zte.com.cn>
+Mime-Version: 1.0
+From:   <ye.xingchen@zte.com.cn>
+To:     <andersson@kernel.org>
+Cc:     <agross@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: =?UTF-8?B?W1BBVENIXSByZW1vdGVwcm9jOiBxY29tOiBxNnY1OiB1c2XCoGRldm1fcGxhdGZvcm1faW9yZW1hcF9yZXNvdXJjZV9ieW5hbWUoKQ==?=
+Content-Type: text/plain;
+        charset="UTF-8"
+X-MAIL: mse-fl2.zte.com.cn 32M3FDr0006888
+X-Fangmail-Gw-Spam-Type: 0
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 641A72CB.000/4PhDB36Bd8z501SY
+X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_NONE,SPF_PASS,
+        UNPARSEABLE_RELAY autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 08, 2023 at 10:35:18PM +0100, Konrad Dybcio wrote:
-> From: Shawn Guo <shawn.guo@linaro.org>
-> 
-> The RPM clock enabling state can be found with 'enabled' in struct
-> clk_smd_rpm.  Add .is_enabled hook so that clk_summary in debugfs can
-> show a correct enabling state for RPM clocks.
-> 
+From: Ye Xingchen <ye.xingchen@zte.com.cn>
 
-I don't think .is_enabled should be implemented for clocks where the
-actual state can't be queried.
+Convert platform_get_resource_byname(),devm_ioremap_resource() to a single
+call to devm_platform_ioremap_resource_byname(), as this is exactly what
+this function does.
 
-E.g. should a clock which is is_enabled = false be unprepared during
-disable_unused? It's already disabled...
+Signed-off-by: Ye Xingchen <ye.xingchen@zte.com.cn>
+---
+ drivers/remoteproc/qcom_q6v5_wcss.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Regards,
-Bjorn
+diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
+index ba24d745b2d6..dadb9dccd541 100644
+--- a/drivers/remoteproc/qcom_q6v5_wcss.c
++++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+@@ -837,8 +837,7 @@ static int q6v5_wcss_init_mmio(struct q6v5_wcss *wcss,
+ 		return -ENOMEM;
 
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> [Konrad: rebase]
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  drivers/clk/qcom/clk-smd-rpm.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
-> index 198886c1b6c8..ecacfbc4a16c 100644
-> --- a/drivers/clk/qcom/clk-smd-rpm.c
-> +++ b/drivers/clk/qcom/clk-smd-rpm.c
-> @@ -424,18 +424,27 @@ static int clk_smd_rpm_enable_scaling(struct qcom_smd_rpm *rpm)
->  	return 0;
->  }
->  
-> +static int clk_smd_rpm_is_enabled(struct clk_hw *hw)
-> +{
-> +	struct clk_smd_rpm *r = to_clk_smd_rpm(hw);
-> +
-> +	return r->enabled;
-> +}
-> +
->  static const struct clk_ops clk_smd_rpm_ops = {
->  	.prepare	= clk_smd_rpm_prepare,
->  	.unprepare	= clk_smd_rpm_unprepare,
->  	.set_rate	= clk_smd_rpm_set_rate,
->  	.round_rate	= clk_smd_rpm_round_rate,
->  	.recalc_rate	= clk_smd_rpm_recalc_rate,
-> +	.is_enabled	= clk_smd_rpm_is_enabled,
->  };
->  
->  static const struct clk_ops clk_smd_rpm_branch_ops = {
->  	.prepare	= clk_smd_rpm_prepare,
->  	.unprepare	= clk_smd_rpm_unprepare,
->  	.recalc_rate	= clk_smd_rpm_recalc_rate,
-> +	.is_enabled	= clk_smd_rpm_is_enabled,
->  };
->  
->  DEFINE_CLK_SMD_RPM_BRANCH_A(bi_tcxo, QCOM_SMD_RPM_MISC_CLK, 0, 19200000);
-> 
-> -- 
-> 2.39.2
-> 
+ 	if (wcss->version == WCSS_IPQ8074) {
+-		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "rmb");
+-		wcss->rmb_base = devm_ioremap_resource(&pdev->dev, res);
++		wcss->rmb_base = devm_platform_ioremap_resource_byname(pdev, "rmb");
+ 		if (IS_ERR(wcss->rmb_base))
+ 			return PTR_ERR(wcss->rmb_base);
+ 	}
+-- 
+2.25.1
