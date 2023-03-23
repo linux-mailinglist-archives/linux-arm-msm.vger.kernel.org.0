@@ -2,52 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F7966C6115
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 08:47:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3D216C616E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 09:16:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbjCWHri (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 03:47:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38448 "EHLO
+        id S230110AbjCWIQg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 04:16:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229836AbjCWHrh (ORCPT
+        with ESMTP id S229904AbjCWIQf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 03:47:37 -0400
-Received: from mxct.zte.com.cn (mxct.zte.com.cn [183.62.165.209])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D49FE3BF;
-        Thu, 23 Mar 2023 00:47:33 -0700 (PDT)
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxct.zte.com.cn (FangMail) with ESMTPS id 4Phy9Z4wthz501Sl;
-        Thu, 23 Mar 2023 15:47:30 +0800 (CST)
-Received: from xaxapp01.zte.com.cn ([10.88.99.176])
-        by mse-fl2.zte.com.cn with SMTP id 32N7lBVN092219;
-        Thu, 23 Mar 2023 15:47:11 +0800 (+08)
-        (envelope-from ye.xingchen@zte.com.cn)
-Received: from mapi (xaxapp02[null])
-        by mapi (Zmail) with MAPI id mid31;
-        Thu, 23 Mar 2023 15:47:13 +0800 (CST)
-Date:   Thu, 23 Mar 2023 15:47:13 +0800 (CST)
-X-Zmail-TransId: 2afa641c04011bd-8a3a9
-X-Mailer: Zmail v1.0
-Message-ID: <202303231547134442295@zte.com.cn>
-Mime-Version: 1.0
-From:   <ye.xingchen@zte.com.cn>
-To:     <robert.marko@sartura.hr>
-Cc:     <luka.perkov@sartura.hr>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <vkoul@kernel.org>, <kishon@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: =?UTF-8?B?W1BBVENIXSBwaHk6IHF1YWxjb21tOiBVc2UgZGV2X2Vycl9wcm9iZSgp?=
-Content-Type: text/plain;
-        charset="UTF-8"
-X-MAIL: mse-fl2.zte.com.cn 32N7lBVN092219
-X-Fangmail-Gw-Spam-Type: 0
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 641C0412.003/4Phy9Z4wthz501Sl
-X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_NONE,SPF_PASS,
-        UNPARSEABLE_RELAY autolearn=unavailable autolearn_force=no
+        Thu, 23 Mar 2023 04:16:35 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA6763028E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 01:16:31 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id y4so83070385edo.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 01:16:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679559390;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AqP+ZP8sH6vMG+bn3ACKrPM9D21kWUUhEZmJlPJtpmY=;
+        b=FdNJgshxeGZT5pwBN/Co+A+q/UQ468gKHVTlrYyytUQmjKBZ+cuWFQXf0lwi0n8A7U
+         skuylVDirnBnQ5WkEK0xwRPPmONDYGXrDg3LtzFitCmSWh5Evy9T02iAZLOC59SBytBf
+         tGyZ8ofs6+gZXFoht+ncc7RNl31yMDVqEoKQ+itB6wj1AwNXMyCNypEoBQzbI30hwfNP
+         SQ+kk6N5ots/Xa0qzfAhEkrRqOaioqWGwQ9+yi8ahXkNVSe6gkoXXzE4pjJfSxCFOX+5
+         STP50gtubDfTyNSHnyDHl8BvEiHIuTMouNMsNVc56SR01g38H6KrtGs42t46x5oTE6KZ
+         /5Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679559390;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AqP+ZP8sH6vMG+bn3ACKrPM9D21kWUUhEZmJlPJtpmY=;
+        b=q/KYGNlE67KvOEWP/ElmaPmD/jCGx+DLpVPk+JdcKJygIQ8Fg0Byqw2peECW7m7dJp
+         S0gVeSZMtSyyLcfacMaF+om+e0i++ffKRjPrQzVL5mRunSR2Uenrc6OKjHFxUWzI+FIo
+         vhs2cipOlCW9mww9tYAEt0ReuHG0RLQ99xED3QDxQIZWXoj4UPm5eQvVxtADYh0yy1on
+         P+YyKdPHuzDyALpLfW9egn/twwkyZCu4UCMtkds3vq/57Bp/lzskChIURkd+weKC3eKO
+         X+mXygnhxeS8UV5Xi1hBzplL+tqVL44N4hTX2CI/kzXlfmIoerM+VmJBnC34+TpplqZz
+         rRYA==
+X-Gm-Message-State: AO0yUKW65YH1bGxUNSyhlzbTrihpkYx8cQdOnQF9Kpbk50AFxGk2KaO1
+        73IegpoRa8V+NjAeEkngrjn/2w==
+X-Google-Smtp-Source: AK7set+JP9ir3V7fgGfUv1Je6oAcXJaO5jckAE1d7CoD7z376FD7oyJOURnrCV/q/ZX3UiCxFeEqZw==
+X-Received: by 2002:aa7:c947:0:b0:500:4c0e:cb8d with SMTP id h7-20020aa7c947000000b005004c0ecb8dmr9127551edt.5.1679559390163;
+        Thu, 23 Mar 2023 01:16:30 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:a665:ed1e:3966:c991? ([2a02:810d:15c0:828:a665:ed1e:3966:c991])
+        by smtp.gmail.com with ESMTPSA id y2-20020a50ce02000000b004c0057b478bsm8838242edi.34.2023.03.23.01.16.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Mar 2023 01:16:28 -0700 (PDT)
+Message-ID: <386e5c1b-cf64-8047-97e5-2cbbe3dc415b@linaro.org>
+Date:   Thu, 23 Mar 2023 09:16:27 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [RFC PATCH] cpufreq: qcom-cpufreq-hw: allow work to be done on
+ other CPU for PREEMPT_RT
+To:     Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Adrien Thierry <athierry@redhat.com>,
+        Brian Masney <bmasney@redhat.com>,
+        linux-rt-users@vger.kernel.org,
+        Frederic Weisbecker <fweisbec@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Ingo Molnar <mingo@kernel.org>
+References: <20230315164910.302265-1-krzysztof.kozlowski@linaro.org>
+ <20230321100456.0_DhhkZJ@linutronix.de>
+ <ba547675-59f2-84a9-82f3-93f6cb131799@linaro.org>
+ <20230321105734.Z7F3Uvf1@linutronix.de>
+ <3e227a63-a45f-8c20-f697-b263121ec173@linaro.org>
+ <20230321133922.ontdC41h@linutronix.de>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230321133922.ontdC41h@linutronix.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -55,32 +91,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Ye Xingchen <ye.xingchen@zte.com.cn>
+On 21/03/2023 14:39, Sebastian Andrzej Siewior wrote:
+> On 2023-03-21 12:27:42 [+0100], Krzysztof Kozlowski wrote:
+>>> I still fail to understand why this is PREEMPT_RT specific and not a
+>>> problem in general when it comes not NO_HZ_FULL and/ or CPU isolation.
+>>
+>> Hm, good point, I actually don't know what is the workqueue
+>> recommendation for NO_HZ_FULL CPUs - is still locality of the workqueue
+>> preferred?
+> 
+> If you isolate a CPU you want the kernel to stay away from it. The idea
+> is that something is done on that CPU and the kernel should leave it
+> alone. That is why the HZ tick avoided. That is why timers migrate to
+> the "housekeeping" CPU and do not fire on the CPU that it was programmed
+> on (unless the timer has to fire on this CPU).
+> 
+>> And how such code would look like?
+>> if (tick_nohz_tick_stopped())?
+> 
+> Yeah closer :) The CPU-mask for workqueues can still be different on
+> non-NOHZ-full CPUs. Still you interrupt the CPU doing in-userland work
+> and this is not desired.
 
-Replace the open-code with dev_err_probe() to simplify the code.
+Probably this should be done by workqueue core code.  Individual drivers
+should not need to investigate which CPUs are isolated.
 
-Signed-off-by: Ye Xingchen <ye.xingchen@zte.com.cn>
----
- drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
-index d3e7d5e1d1b6..190f12247235 100644
---- a/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
-@@ -110,11 +110,8 @@ static int ipq4019_usb_phy_probe(struct platform_device *pdev)
- 	}
+> You have a threaded-IRQ which does nothing but schedules a worker. Why?
+> Why not sleep and remain in that threaded IRQ until the work is done?
+> You _can_ sleep in the threaded IRQ if you have to. Force-threaded is
+> different but this is one is explicit threaded so you could do it.
 
- 	phy->por_rst = devm_reset_control_get(phy->dev, "por_rst");
--	if (IS_ERR(phy->por_rst)) {
--		if (PTR_ERR(phy->por_rst) != -EPROBE_DEFER)
--			dev_err(dev, "POR reset is missing\n");
--		return PTR_ERR(phy->por_rst);
--	}
-+	if (IS_ERR(phy->por_rst))
-+		return dev_err_probe(dev, PTR_ERR(phy->por_rst), "POR reset is missing\n");
+If I get your point correctly, you want the IRQ handler thread to do the
+actual work instead of scheduling work? The answer to this is probably here:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e0e27c3d4e20dab861566f1c348ae44e4b498630
 
- 	phy->srif_rst = devm_reset_control_get_optional(phy->dev, "srif_rst");
- 	if (IS_ERR(phy->srif_rst))
--- 
-2.25.1
+> 	
+>>> However the thermal notifications have nothing to do with cpufreq.
+>>
+>> They have. The FW notifies that thermal mitigation is happening and
+>> maximum allowed frequency is now XYZ. The cpufreq receives this and sets
+>> maximum allowed scaling frequency for governor.
+> 
+> I see. So the driver is doing something in worst case. This interrupt,
+> you have per-CPU and you need to do this CPU? I mean could you change
+> the affinity of the interrupt to another CPU?
+
+I don't know. The commit introducing it:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3ed6dfbd3bb987b3d2de86304ae45972ebff5870
+claimed it helps to reduce number of interrupts hitting CPU 10x-100x
+times... I don't see it - neither in tests nor in the code, so I am just
+thinking to revert that one.
+
+Best regards,
+Krzysztof
+
