@@ -2,139 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 547396C5B6F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 01:40:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 246986C5B9A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 01:59:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229569AbjCWAkM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 20:40:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59360 "EHLO
+        id S229847AbjCWA7f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Mar 2023 20:59:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230075AbjCWAkA (ORCPT
+        with ESMTP id S229543AbjCWA7e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 20:40:00 -0400
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com [209.85.166.72])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F0961A656
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 17:39:55 -0700 (PDT)
-Received: by mail-io1-f72.google.com with SMTP id s3-20020a056602240300b007589413aea0so2694151ioa.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 17:39:55 -0700 (PDT)
+        Wed, 22 Mar 2023 20:59:34 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 015C01BEC;
+        Wed, 22 Mar 2023 17:59:33 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id fb38so7303585pfb.7;
+        Wed, 22 Mar 2023 17:59:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679533173;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NRTtWZFrjGQyyLUPV9FPoANYfARHF+AlCJvVnplhgaI=;
+        b=UIrTpiMXpPPaeGHanlAu5dDEuOb8Ll5M1YOka8oncWDzTr00HjtWBNK7UKwbzf0dJY
+         f1DqAO6Iu/Sp2YlfHLZ3KKIFEuxfnXbzOgIgnZ7Ydr5HaaOo8fB8Cyv/8gDb8azemRgo
+         wAf3c2c1A8QX98n4KrhQQ3G+7fxwQZ8DhvZldCqzrK+8j/iR859+sGxRlxwFhTmGPI1j
+         LvlAogLnX6G6pLhcTcftg+MFYO9/wUcgedWB453+VtE07yNqyGshuaSMJAcs6LPgfIAP
+         N1MYvp/lre7zmUx00S2UCJTOiDhxO//xy0NcCYNC/kO5Psj0i3VPAHE5z9rpuRD9Krn9
+         EelA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679531994;
-        h=to:from:subject:message-id:date:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cRmAnTw5x2//9xw8ssGmcUbF4NEnjW4TaY2uygOKll4=;
-        b=qBzGupu2wZnY6uhg4ZyYFSHRveey7y+eD4BpTqOZv5SHdC64UoKA2kDztzfngbvzta
-         mUaoWSR0q9MEjoZnB62OIZ5crkaYhcUQ6cBOASDAqkUNDBx7ZcIobEjoWoc57y1TEfXI
-         9cdxRqJuJ7hq41nSQ9Mtrb/6z1LbyA9hncmIWCrxB1LsI5CgFHvQhxZ8mCztJ7VIQ24W
-         Rk6t3U0d1BEfvKDsoQtNWsEQmECKXt4naKCSNVMYf6dYpwJIoJLKG3k7xwNxGN4jLQGV
-         /sWdMceP6N9jzbLjcRZVnnFeZVlhs2DMxCNX08dVeCYMZXjL7V4hgXB0HoY6TSgz9peP
-         Ww6w==
-X-Gm-Message-State: AO0yUKUWpRiJZjMOyE3cYu9gN8QAvFBerqBOAlgZ2xqGgqEKXMUV+Jbd
-        pHyzJPcFKplfVIiNIrElFZRBqdRT/0ZbauDlmHu46RVXhTfc
-X-Google-Smtp-Source: AK7set+lg35o6E3vNTGqfBkhJh4iHmqWe/pBv0lYcq/fhuijMdnHb973Am1aOOD/gFF2NnmeIci09LMorlH0GDh/RAPQAPXKckwK
+        d=1e100.net; s=20210112; t=1679533173;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NRTtWZFrjGQyyLUPV9FPoANYfARHF+AlCJvVnplhgaI=;
+        b=YM/d9cFy3nMbvKMSyFj26Vq6ZgPD5AJL6yivG85MTjLOfH4SdD9mRYmNNLV3DTRhTC
+         eJ8C1B5f8G21DlQjz8onMG4xmKYBjp0K8HcILYmwjIvRORCXG6PP/sQ2tJxqmWmacBW0
+         gROHuboQT87dvZCr5sSDFaBujsA0peoq8Z96fr8fTTxBiAgT1VNQclNkvZGLDhFGyyRA
+         51dmbjp2dn0rclgvgNMgU89LyrqlS5IcXcN4O+W1Qk57gW+waE1IrCLVYgTn28xFfO7K
+         bFuLdmNSrupFx61bzw6TIwlipBc4xBcCs6oabGKUaqvE5IFLUcy9jE9Upkb0nUGYlRQo
+         Hlfg==
+X-Gm-Message-State: AO0yUKUnxnanRq3s031x5UzN3Eh0JYfyVBJWg3LFouU4fDoPDm2ARmTA
+        Ibn9zEUqJGiIuJaYrnLUvLI=
+X-Google-Smtp-Source: AK7set8CwGKE/m/+SMKPy1UTcYb+CEvnPMoB7bcV6D51Q4XPBhpPKQ6B3Keebx1q72qYDu50N2cqMw==
+X-Received: by 2002:aa7:9dc1:0:b0:627:e69c:847c with SMTP id g1-20020aa79dc1000000b00627e69c847cmr5115259pfq.16.1679533173445;
+        Wed, 22 Mar 2023 17:59:33 -0700 (PDT)
+Received: from localhost.localdomain (n220246252084.netvigator.com. [220.246.252.84])
+        by smtp.gmail.com with ESMTPSA id s10-20020aa7828a000000b006288ca3cadfsm2114579pfm.35.2023.03.22.17.59.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Mar 2023 17:59:32 -0700 (PDT)
+From:   Jianhua Lu <lujianhua000@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Jianhua Lu <lujianhua000@gmail.com>
+Subject: [PATCH v3 1/3] arm64: dts: qcom: Split elish dts into common dtsi and elish-boe dts
+Date:   Thu, 23 Mar 2023 08:59:23 +0800
+Message-Id: <20230323005925.23179-1-lujianhua000@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-X-Received: by 2002:a02:84e6:0:b0:3c5:1971:1b7f with SMTP id
- f93-20020a0284e6000000b003c519711b7fmr3728669jai.6.1679531994236; Wed, 22 Mar
- 2023 17:39:54 -0700 (PDT)
-Date:   Wed, 22 Mar 2023 17:39:54 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000e7f27b05f78683fb@google.com>
-Subject: [syzbot] [arm-msm?] [net?] WARNING: refcount bug in qrtr_node_lookup (2)
-From:   syzbot <syzbot+e8a22d28d4527d9d6148@syzkaller.appspotmail.com>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mani@kernel.org, netdev@vger.kernel.org, pabeni@redhat.com,
-        syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=3.1 required=5.0 tests=FROM_LOCAL_HEX,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SORTED_RECIPS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: ***
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+There are two panel variants of xiaomi-elish, BOE and CSOT panels.
+In order to support both panels, so split elish dts into common dtsi
+and elish-boe dts.
 
-syzbot found the following issue on:
-
-HEAD commit:    fe15c26ee26e Linux 6.3-rc1
-git tree:       git://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux.git for-kernelci
-console output: https://syzkaller.appspot.com/x/log.txt?x=111b3ca4c80000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=7573cbcd881a88c9
-dashboard link: https://syzkaller.appspot.com/bug?extid=e8a22d28d4527d9d6148
-compiler:       Debian clang version 15.0.7, GNU ld (GNU Binutils for Debian) 2.35.2
-userspace arch: arm64
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=160ec3dcc80000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=103d9d42c80000
-
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/89d41abd07bd/disk-fe15c26e.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/fa75f5030ade/vmlinux-fe15c26e.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/590d0f5903ee/Image-fe15c26e.gz.xz
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+e8a22d28d4527d9d6148@syzkaller.appspotmail.com
-
-------------[ cut here ]------------
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 1 PID: 9 at lib/refcount.c:25 refcount_warn_saturate+0x1a8/0x20c lib/refcount.c:25
-Modules linked in:
-CPU: 1 PID: 9 Comm: kworker/u4:0 Not tainted 6.3.0-rc1-syzkaller-gfe15c26ee26e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/02/2023
-Workqueue: qrtr_ns_handler qrtr_ns_worker
-pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : refcount_warn_saturate+0x1a8/0x20c lib/refcount.c:25
-lr : refcount_warn_saturate+0x1a8/0x20c lib/refcount.c:25
-sp : ffff80001a3a6da0
-x29: ffff80001a3a6da0 x28: dfff800000000000 x27: ffff700003474dc8
-x26: ffff80001a3a6e60 x25: 0000000000000000 x24: 00000000003a6056
-x23: ffff0000d22173f0 x22: 0000000000000000 x21: 0000000000000002
-x20: ffff0000d751c098 x19: ffff8000186ee000 x18: ffff80001a3a62a0
-x17: 0000000000000000 x16: ffff80001246250c x15: 0000000000000000
-x14: 0000000000000000 x13: 0000000000000001 x12: 0000000000000001
-x11: ff808000081bd230 x10: 0000000000000000 x9 : 04bb8433d1680a00
-x8 : 04bb8433d1680a00 x7 : 0000000000000001 x6 : 0000000000000001
-x5 : ffff80001a3a6698 x4 : ffff800015dc52c0 x3 : ffff80000859c514
-x2 : 0000000000000001 x1 : 0000000100000001 x0 : 0000000000000000
-Call trace:
- refcount_warn_saturate+0x1a8/0x20c lib/refcount.c:25
- __refcount_inc include/linux/refcount.h:250 [inline]
- refcount_inc include/linux/refcount.h:267 [inline]
- kref_get include/linux/kref.h:45 [inline]
- qrtr_node_acquire net/qrtr/af_qrtr.c:202 [inline]
- qrtr_node_lookup+0xdc/0x100 net/qrtr/af_qrtr.c:398
- qrtr_send_resume_tx net/qrtr/af_qrtr.c:1003 [inline]
- qrtr_recvmsg+0x3dc/0x954 net/qrtr/af_qrtr.c:1070
- sock_recvmsg_nosec net/socket.c:1015 [inline]
- sock_recvmsg net/socket.c:1036 [inline]
- kernel_recvmsg+0x124/0x18c net/socket.c:1061
- qrtr_ns_worker+0x294/0x513c net/qrtr/ns.c:688
- process_one_work+0x868/0x16f4 kernel/workqueue.c:2390
- worker_thread+0x8e0/0xfe8 kernel/workqueue.c:2537
- kthread+0x24c/0x2d4 kernel/kthread.c:376
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:870
-irq event stamp: 766220
-hardirqs last  enabled at (766219): [<ffff800012543b48>] __raw_spin_unlock_irqrestore include/linux/spinlock_api_smp.h:151 [inline]
-hardirqs last  enabled at (766219): [<ffff800012543b48>] _raw_spin_unlock_irqrestore+0x44/0xa4 kernel/locking/spinlock.c:194
-hardirqs last disabled at (766220): [<ffff80001254393c>] __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:108 [inline]
-hardirqs last disabled at (766220): [<ffff80001254393c>] _raw_spin_lock_irqsave+0x2c/0x88 kernel/locking/spinlock.c:162
-softirqs last  enabled at (766216): [<ffff80001066ca80>] spin_unlock_bh include/linux/spinlock.h:395 [inline]
-softirqs last  enabled at (766216): [<ffff80001066ca80>] lock_sock_nested+0xe8/0x138 net/core/sock.c:3480
-softirqs last disabled at (766214): [<ffff80001066ca28>] spin_lock_bh include/linux/spinlock.h:355 [inline]
-softirqs last disabled at (766214): [<ffff80001066ca28>] lock_sock_nested+0x90/0x138 net/core/sock.c:3476
----[ end trace 0000000000000000 ]---
-
-
+Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
 ---
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+Changes in v2:
+  - Remove sm8250-xiaomi-elish.dtb to avoid build failure.
 
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-syzbot can test patches for this issue, for details see:
-https://goo.gl/tpsmEJ#testing-patches
+Changes in v3:
+  - squash patch[3/4]
+
+ arch/arm64/boot/dts/qcom/Makefile                   |  2 +-
+ .../arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dts | 13 +++++++++++++
+ ...mi-elish.dts => sm8250-xiaomi-elish-common.dtsi} |  4 ----
+ 3 files changed, 14 insertions(+), 5 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dts
+ rename arch/arm64/boot/dts/qcom/{sm8250-xiaomi-elish.dts => sm8250-xiaomi-elish-common.dtsi} (99%)
+
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 1a29403400b7..808f46947661 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -183,7 +183,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-hdk.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx203.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx206.dtb
+-dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-xiaomi-elish.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-xiaomi-elish-boe.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-hdk.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-microsoft-surface-duo2.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-mtp.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dts
+new file mode 100644
+index 000000000000..bd9ad109daf9
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dts
+@@ -0,0 +1,13 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2023 Jianhua Lu <lujianhua000@gmail.com>
++ */
++
++/dts-v1/;
++
++#include "sm8250-xiaomi-elish-common.dtsi"
++
++/ {
++	model = "Xiaomi Mi Pad 5 Pro (BOE)";
++	compatible = "xiaomi,elish", "qcom,sm8250";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+similarity index 99%
+rename from arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
+rename to arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+index dd79671f5614..a43d4b73ffca 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
++++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+@@ -3,8 +3,6 @@
+  * Copyright (c) 2022, 2023 Jianhua Lu <lujianhua000@gmail.com>
+  */
+ 
+-/dts-v1/;
+-
+ #include <dt-bindings/arm/qcom,ids.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "sm8250.dtsi"
+@@ -24,8 +22,6 @@
+ /delete-node/ &xbl_aop_mem;
+ 
+ / {
+-	model = "Xiaomi Mi Pad 5 Pro";
+-	compatible = "xiaomi,elish", "qcom,sm8250";
+ 	classis-type = "tablet";
+ 
+ 	/* required for bootloader to select correct board */
+-- 
+2.39.2
+
