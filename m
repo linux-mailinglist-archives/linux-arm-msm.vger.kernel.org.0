@@ -2,246 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B49D6C5F74
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 07:06:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 20D2C6C5FC0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 07:33:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230181AbjCWGGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 02:06:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50824 "EHLO
+        id S229461AbjCWGdW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 02:33:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231277AbjCWGGU (ORCPT
+        with ESMTP id S229500AbjCWGdV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 02:06:20 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B29228862;
-        Wed, 22 Mar 2023 23:05:58 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32N4A9AW014933;
-        Thu, 23 Mar 2023 06:05:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=PABeRwgm7smZILa6KOy469iBjz3t9AmX/db4PxWe2ms=;
- b=e1gUzYR5vLDr3M63Rs5cd3deFt0MhCwbsVSxj1X4SutB0cqLxekH/7guX59VQmLjCjuA
- Kw9tv3T7aJhteX3qsFLKT7ONDP36gNVjp8zxLLcUCRRYeVjQMr7//GTCzGUGRVhDt2is
- xGr7h0uEx4MH8BJv+gY2/lulUyw9/lq0pcKg9prPzq/IrxDhamoRyblZMpZLB9LXrG0j
- czpXuUF83uApksyspWpFHYmEhCYjSmCILCD92gH95yodo2QS7RPLt65V009V9Wo3brVT
- gKyStvRH7lbDvVMVKkU1vzESSDfT9EldcM/Zaf7Spv3UyfGiLAcutyiBPv+pXmzAklsI 3w== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pg64k1ek8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Mar 2023 06:05:40 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32N65Ujd007814
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Mar 2023 06:05:30 GMT
-Received: from taozha-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Wed, 22 Mar 2023 23:05:25 -0700
-From:   Tao Zhang <quic_taozha@quicinc.com>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Tao Zhang <quic_taozha@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <bjorn.andersson@linaro.org>
-Subject: [PATCH v3 11/11] coresight-tpdm: Add nodes for dsb msr support
-Date:   Thu, 23 Mar 2023 14:04:08 +0800
-Message-ID: <1679551448-19160-12-git-send-email-quic_taozha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1679551448-19160-1-git-send-email-quic_taozha@quicinc.com>
-References: <1679551448-19160-1-git-send-email-quic_taozha@quicinc.com>
+        Thu, 23 Mar 2023 02:33:21 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F59A1EFE2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 23:33:14 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id eg48so82084105edb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 23:33:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679553193;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=P26M5F00UYnJITnW1PuJMXRSHcsZ7mkPrkAisDp/mcw=;
+        b=nSkaEW9HRcfQyhrDgk+uHc84d53HvzIkSPKGI2Cl7LALmspI9IIUK5GdPbuCxNHeXp
+         2L2lUZ3ZH0k6VzT3JNiO4ghSBM9piHaetxnUZg3GmxNNW7K0mx1fkHszTlL8elG+v5JJ
+         5xgP3JdFj7C+77gpteq64j+z/QJ30Un/dOOBNzyYaTOIpbaI9eLRNzdMDJhwAHQnHk9x
+         O/XZNSBTUt07jcocowui9LmubyUI1xgmSAyuE22lPwe3NQ3fVHEiQVlOQh8Z+9jGvE5f
+         AtWfKCoIt7Kyg7OHqhGm+PTgOyS9w+7SF1VV9ESo4ZGo7Es/mE9Lrve9sxM1+9CFPRdY
+         M83Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679553193;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=P26M5F00UYnJITnW1PuJMXRSHcsZ7mkPrkAisDp/mcw=;
+        b=uIDN6I1tMAsi29PvfmL508j9ZuiEsCvZ1aP7xK6XitiOJjXKvg02hy5ktjswNabIrH
+         R8q+8raME1hH2vtYV9XA4nDfadQnEaBFUxXUt47p9CnCJ6P2a7jrPUKC9l48DWtnLsz2
+         TPEayAUxPqfWpErPbq+RcS+tFDTfEEbU+GInhnsP8oavJsV9kvjcbrqN+1vYkgDI/i3+
+         pS2Q+Q9uqyNxonkJa7N2USsOzj6StuqOjgCqsr8q5c3rD9tR0eDTx1SRIpw3yaWFZ6pz
+         OYMuoUp1M6lwlO+RPzND7QGYnzo7w4ZxheC5hLGKFi2vF74AvGgfh+RtsasCBjoX7Y7j
+         4D3g==
+X-Gm-Message-State: AO0yUKV2rdE4Rpjxox/TY6pD1e0lq2bU7UGycj8eczFYNITb8k1QJVbT
+        YtdM2T6/6oRM797ZWvblamEH1g==
+X-Google-Smtp-Source: AK7set++CB5WXkyCT+haZZtvv0tmdf8UJ7T93bBXXDjeTepZzJ/1CEozqGivphGI+xif2kpqiVsDLw==
+X-Received: by 2002:a17:906:698d:b0:930:28d6:4581 with SMTP id i13-20020a170906698d00b0093028d64581mr9280915ejr.59.1679553192931;
+        Wed, 22 Mar 2023 23:33:12 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:a665:ed1e:3966:c991? ([2a02:810d:15c0:828:a665:ed1e:3966:c991])
+        by smtp.gmail.com with ESMTPSA id k8-20020a17090627c800b008d1693c212csm8138596ejc.8.2023.03.22.23.33.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Mar 2023 23:33:12 -0700 (PDT)
+Message-ID: <554dd2ca-0514-dc1e-9add-d49a711bc1f2@linaro.org>
+Date:   Thu, 23 Mar 2023 07:33:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: cva3ww9Jog-1kc5F2-X2iqKmsu6TIqNo
-X-Proofpoint-ORIG-GUID: cva3ww9Jog-1kc5F2-X2iqKmsu6TIqNo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-22_21,2023-03-22_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- clxscore=1015 priorityscore=1501 adultscore=0 mlxlogscore=999 phishscore=0
- malwarescore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303230046
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v2 00/13] mailbox/arm64/ qcom: rework compatibles for
+ fallback
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230314080917.68246-1-krzysztof.kozlowski@linaro.org>
+ <c35fd641-12ff-beba-341c-4d0305bcaa40@linaro.org>
+ <290b9b19-a320-38a1-4426-51f5725dd54f@linaro.org>
+ <59a6ef88-758f-4ec4-f663-47e4caa552c5@linaro.org>
+ <CAA8EJprqXVrXdBD6eBHoDGhvST2hViZUbMgdaeKEBohpv5_V3w@mail.gmail.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAA8EJprqXVrXdBD6eBHoDGhvST2hViZUbMgdaeKEBohpv5_V3w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the nodes for DSB subunit MSR(mux select register) support.
-The TPDM MSR (mux select register) interface is an optional
-interface and associated bank of registers per TPDM subunit.
-The intent of mux select registers is to control muxing structures
-driving the TPDM’s’ various subunit interfaces.
+On 22/03/2023 23:28, Dmitry Baryshkov wrote:
+> On Wed, 22 Mar 2023 at 19:37, Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 16/03/2023 07:52, Krzysztof Kozlowski wrote:
+>>> On 14/03/2023 13:16, Dmitry Baryshkov wrote:
+>>>> On 14/03/2023 10:09, Krzysztof Kozlowski wrote:
+>>>>> Hi,
+>>>>>
+>>>>> Changes since v1
+>>>>> ================
+>>>>> 1. Rebase
+>>>>> 2. Make msm8994 fallback for several variants, not msm8953, because the latter
+>>>>>     actually might take some clocks.
+>>>>
+>>>> Although the approach looks correct, I think that in some cases it tries
+>>>> to mark devices compatible judging from the current driver, not from the
+>>>> hardware itself.
+>>>
+>>> Which is what compatibility is about...
+> 
+> Well, I was trying to say that once we update the driver, the devices
+> will not be compatible. But probably our definitions of being
+> compatible differ.
 
-Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
----
- .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 12 +++++
- drivers/hwtracing/coresight/coresight-tpdm.c       | 53 ++++++++++++++++++++++
- drivers/hwtracing/coresight/coresight-tpdm.h       | 17 ++++---
- 3 files changed, 75 insertions(+), 7 deletions(-)
+What do you want to update in the driver? What's going to happen with
+it? What is missing?
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-index 60ff660..6bdba7d 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-@@ -143,3 +143,15 @@ Description:
- 		Accepts only one of the 2 values -  0 or 1.
- 		0 : Set the DSB pattern type to false
- 		1 : Set the DSB pattern type to true
-+
-+What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_msr
-+Date:		March 2023
-+KernelVersion	6.3
-+Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-+Description:
-+		(Write) Set the MSR(mux select register) of DSB tpdm. Read
-+		the MSR(mux select register) of DSB tpdm.
-+
-+		Accepts the following two values.
-+		value 1: Index number of MSR register
-+		value 2: The value need to be written
-diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-index c740681..5aaee06 100644
---- a/drivers/hwtracing/coresight/coresight-tpdm.c
-+++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-@@ -42,6 +42,14 @@ static int tpdm_init_datasets(struct tpdm_drvdata *drvdata)
- 						    sizeof(*drvdata->dsb), GFP_KERNEL);
- 			if (!drvdata->dsb)
- 				return -ENOMEM;
-+			if (!of_property_read_u32(drvdata->dev->of_node,
-+					   "qcom,dsb_msr_num", &drvdata->dsb->msr_num)) {
-+				drvdata->dsb->msr = devm_kzalloc(drvdata->dev,
-+					(drvdata->dsb->msr_num * sizeof(*drvdata->dsb->msr)),
-+					GFP_KERNEL);
-+					if (!drvdata->dsb->msr)
-+						return -ENOMEM;
-+				}
- 		} else
- 			memset(drvdata->dsb, 0, sizeof(struct dsb_dataset));
- 
-@@ -769,6 +777,50 @@ static ssize_t dsb_trig_ts_store(struct device *dev,
- }
- static DEVICE_ATTR_RW(dsb_trig_ts);
- 
-+static ssize_t dsb_msr_show(struct device *dev,
-+				 struct device_attribute *attr,
-+				 char *buf)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	unsigned int i;
-+	ssize_t size = 0;
-+
-+	if (drvdata->dsb->msr_num == 0)
-+		return -EINVAL;
-+
-+	spin_lock(&drvdata->spinlock);
-+	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
-+		size += sysfs_emit_at(buf, size,
-+				  "%u 0x%x\n", i, drvdata->dsb->msr[i]);
-+	}
-+	spin_unlock(&drvdata->spinlock);
-+
-+	return size;
-+}
-+
-+static ssize_t dsb_msr_store(struct device *dev,
-+				  struct device_attribute *attr,
-+				  const char *buf,
-+				  size_t size)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	unsigned int num, val;
-+	int nval;
-+
-+	if (drvdata->dsb->msr_num == 0)
-+		return -EINVAL;
-+
-+	nval = sscanf(buf, "%u %x", &num, &val);
-+	if ((nval != 2) || (num >= (drvdata->dsb->msr_num - 1)))
-+		return -EINVAL;
-+
-+	spin_lock(&drvdata->spinlock);
-+	drvdata->dsb->msr[num] = val;
-+	spin_unlock(&drvdata->spinlock);
-+	return size;
-+}
-+static DEVICE_ATTR_RW(dsb_msr);
-+
- static struct attribute *tpdm_dsb_attrs[] = {
- 	&dev_attr_dsb_mode.attr,
- 	&dev_attr_dsb_edge_ctrl.attr,
-@@ -781,6 +833,7 @@ static struct attribute *tpdm_dsb_attrs[] = {
- 	&dev_attr_dsb_trig_patt_mask.attr,
- 	&dev_attr_dsb_trig_ts.attr,
- 	&dev_attr_dsb_trig_type.attr,
-+	&dev_attr_dsb_msr.attr,
- 	NULL,
- };
- 
-diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-index f9d4dd9..1872f26 100644
---- a/drivers/hwtracing/coresight/coresight-tpdm.h
-+++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-@@ -18,6 +18,7 @@
- #define TPDM_DSB_XPMR(n)	(0x7E8 + (n * 4))
- #define TPDM_DSB_EDCR(n)	(0x808 + (n * 4))
- #define TPDM_DSB_EDCMR(n)	(0x848 + (n * 4))
-+#define TPDM_DSB_MSR(n)		(0x980 + (n * 4))
- 
- /* Enable bit for DSB subunit */
- #define TPDM_DSB_CR_ENA		BIT(0)
-@@ -92,17 +93,19 @@
-  * @trig_type:        Enable/Disable trigger type.
-  */
- struct dsb_dataset {
--	u32				mode;
--	u32				edge_ctrl[TPDM_DSB_MAX_EDCR];
--	u32				edge_ctrl_mask[TPDM_DSB_MAX_EDCMR];
--	u32				patt_val[TPDM_DSB_MAX_PATT];
--	u32				patt_mask[TPDM_DSB_MAX_PATT];
-+	u32			mode;
-+	u32			edge_ctrl[TPDM_DSB_MAX_EDCR];
-+	u32			edge_ctrl_mask[TPDM_DSB_MAX_EDCMR];
-+	u32			patt_val[TPDM_DSB_MAX_PATT];
-+	u32			patt_mask[TPDM_DSB_MAX_PATT];
- 	bool			patt_ts;
- 	bool			patt_type;
--	u32				trig_patt_val[TPDM_DSB_MAX_PATT];
--	u32				trig_patt_mask[TPDM_DSB_MAX_PATT];
-+	u32			trig_patt_val[TPDM_DSB_MAX_PATT];
-+	u32			trig_patt_mask[TPDM_DSB_MAX_PATT];
- 	bool			trig_ts;
- 	bool			trig_type;
-+	u32			msr_num;
-+	u32			*msr;
- };
- 
- /**
--- 
-2.7.4
+Best regards,
+Krzysztof
 
