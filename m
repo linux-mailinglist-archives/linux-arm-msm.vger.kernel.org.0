@@ -2,70 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2256B6C5FE1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 07:45:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D55E6C5FF9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 07:52:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229951AbjCWGof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 02:44:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45928 "EHLO
+        id S229639AbjCWGwM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 02:52:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230072AbjCWGoK (ORCPT
+        with ESMTP id S229903AbjCWGwL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 02:44:10 -0400
+        Thu, 23 Mar 2023 02:52:11 -0400
 Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 376E32DE49
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 23:44:09 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id cy23so82167267edb.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 23:44:09 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C69D2D162
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 23:52:09 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id i5so35412293eda.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 23:52:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679553847;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=linaro.org; s=google; t=1679554328;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=nM/3ywyvpAsiOiRY1HG3AOIo3FGoRoVm1IbIAeulEYo=;
-        b=xmy41Dff79qydbj9wKemr6aBQC0XKLClWYZ1/+XIZiVohdMkGZJ3QKWXtj7Oas6pAn
-         ldPX8vzbA8iht3C0HmibE5watwyMozHf0LmEN4iP2kI/b+Qtq05XzUA0kTEP17vPOmy9
-         5tVHC1kyAfrLGtjIWpY4P8gRjvj3HErA819f1QHu+QOcszwMScwZl5EPe+2pUx/a1Okk
-         mjedExTz7dM5edumDgRMTPZheLYzy//eor94c+ffp3c7KbJmJp23O2RowN7igR4mlAaO
-         ypmEGPtxEKgG2/TK15pKhCTwzMLKBPdimmQGskMRgXeZzSuLVD2YK6jCd8L4ZKRBS9E1
-         X1RA==
+        bh=dnm4wZIIGBJUM5ou0VD6Sn8yNcOFEKHAZVQNv/SjS+k=;
+        b=RmK1frKIkjVvuWGPZ1rgnEINhuP7jWE/E2Yo1zdF4Ki4xOVdBuPwNUbcABVkpRbBxD
+         A947o0KEbWyUFEvJBG+sJ5zp2+fsx0rC4UrkiWBE136HG5JeLXxw8NAVUuG02E0iPEy/
+         UhpyK4hsLgEgwm3K5iXWX3N0+zDjNYOQZNEg0lMvuy8OEcfBHnmHODG1kZyulo/tdOqx
+         KirG3fRovG0O7iKdhDOM53lNWywb+Hay+D6MZxzwE1oeh7hpHUdH3fp7XhgIzQiETCTv
+         go6i9dSMoaod35QVTzkQtMDvZadek/RhV9RTcRayxWoaZNI1LS7c/KIOHBwWmnUHV5Ko
+         w9Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679553847;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=1e100.net; s=20210112; t=1679554328;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nM/3ywyvpAsiOiRY1HG3AOIo3FGoRoVm1IbIAeulEYo=;
-        b=i/FxMNrtbeo29iW9u6WwcF/mor1SF8BaZCfYtHZvnA10AdPOgzMZoXh8eD9odZkHQl
-         ORJssiilKmDobEzM2OEA7Afpz4Q9WdXWfnvk3AGUsgHHol5VeIgjNqn5vFXHg9oNY8VQ
-         0YBZOXz62x+0E/n7Pw6tIxihNL5ZowE4y16aOA0qJqTPTNn3LH86TkQIAQELvtF7GVVt
-         ct162lZmdmTRg3iqSvrEWC2w/JzgxO2OcrhmpY0FzoLu1hVuLi9qVfDzkz2dQPSAX26G
-         mLFrymnJOvo+LfPNr8hv5uBn6mTB4BPEF4U+jwaI9tiCYJe9cryPWqzfKMf7jw6HH1x2
-         GJgg==
-X-Gm-Message-State: AO0yUKXOf5Fj+XpAGQHWRtDyo6bZcTaiZcwc1QC5AO7F7c3jikejlQ8W
-        yQomNPABhhxy+hW8Pm0cJTI4SQ==
-X-Google-Smtp-Source: AK7set99aCxB2NNu170LpJUYY1O9/A3/pVich1AlGKdGJ2lRlsdCiHActK9XKOraSg3Fw0G08QsM2g==
-X-Received: by 2002:a17:907:382:b0:921:412b:d8c1 with SMTP id ss2-20020a170907038200b00921412bd8c1mr9233255ejb.71.1679553847515;
-        Wed, 22 Mar 2023 23:44:07 -0700 (PDT)
+        bh=dnm4wZIIGBJUM5ou0VD6Sn8yNcOFEKHAZVQNv/SjS+k=;
+        b=VJUfAqo5OosHsV7a+nZC7+Eg7O2L9pnekbfTUfcsQUu/TofRECDh8dG4bX6ukhy7d1
+         C5KIvzaOVTXvGhFSj7TUGKQ6mkF7WAxc9EmsPtqr981eaQumwn5WqCCnwDkU2L8snjEu
+         2qfLf5RLMm4Nph6JrE6XldF2fK2bPiDUAemmuLcITY5ztsKmqUmsuWyYADlVk3qZlBQw
+         pwGxZttfVmsUcD3k50hz2u/hFXaSdF2Y2uYcujEuoCUM0vxffc3XAaih9Ur6yiEdT2J2
+         wEqZB9eAXBCt0T0JUSyl9l7GXEjncDdX/262K73X5Yw7rB0f1S8Cb1LLY7bV2W+/UIiD
+         O7LQ==
+X-Gm-Message-State: AO0yUKWpD58fKi36v5R2knnEsUy5fogz8Dqfzr4JRXypP8LDij2NV66h
+        //HWvHXNvrtfNO6bfe8c7hRoFg==
+X-Google-Smtp-Source: AK7set8XhOPtFHczouViFH9gLeW8HlnzbmHouwapcy11GQ87D7fFlWevDg3qhu5r61dqh6Eu4ojnpw==
+X-Received: by 2002:aa7:d486:0:b0:500:40f4:f8 with SMTP id b6-20020aa7d486000000b0050040f400f8mr8933178edr.0.1679554327799;
+        Wed, 22 Mar 2023 23:52:07 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:a665:ed1e:3966:c991? ([2a02:810d:15c0:828:a665:ed1e:3966:c991])
-        by smtp.gmail.com with ESMTPSA id ch19-20020a170906c2d300b00933d64cd447sm5552271ejb.121.2023.03.22.23.44.06
+        by smtp.gmail.com with ESMTPSA id u3-20020a50d503000000b004fcd78d1215sm8808439edi.36.2023.03.22.23.52.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Mar 2023 23:44:07 -0700 (PDT)
-Message-ID: <b50470b0-4062-5d2c-2eaf-29cef34fd2d4@linaro.org>
-Date:   Thu, 23 Mar 2023 07:44:06 +0100
+        Wed, 22 Mar 2023 23:52:07 -0700 (PDT)
+Message-ID: <ea980e5c-3dc8-0fd6-8635-8f58a0745ac5@linaro.org>
+Date:   Thu, 23 Mar 2023 07:52:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq5332: add support for the RDP468
- variant
+Subject: Re: [PATCH v3 1/3] arm64: dts: qcom: Split elish dts into common dtsi
+ and elish-boe dts
 Content-Language: en-US
-To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230323044929.8694-1-quic_kathirav@quicinc.com>
- <20230323044929.8694-3-quic_kathirav@quicinc.com>
+To:     Jianhua Lu <lujianhua000@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230323005925.23179-1-lujianhua000@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230323044929.8694-3-quic_kathirav@quicinc.com>
+In-Reply-To: <20230323005925.23179-1-lujianhua000@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -78,84 +82,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/03/2023 05:49, Kathiravan T wrote:
-> Add the initial device tree support for the Reference Design
-> Platform(RDP) 468 based on IPQ5332 family of SoCs. This patch carries the
-> support for Console UART, SPI NOR, eMMC.
+On 23/03/2023 01:59, Jianhua Lu wrote:
+> There are two panel variants of xiaomi-elish, BOE and CSOT panels.
+> In order to support both panels, so split elish dts into common dtsi
+> and elish-boe dts.
 > 
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile           |   1 +
->  arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts | 103 ++++++++++++++++++++
->  2 files changed, 104 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts
+> Changes in v2:
+>   - Remove sm8250-xiaomi-elish.dtb to avoid build failure.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 1a29403400b7..79cf8373997f 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -4,6 +4,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-mi01.2.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp468.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts
-> new file mode 100644
-> index 000000000000..b2899f953aa4
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts
-> @@ -0,0 +1,103 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * IPQ5332 RDP468 board device tree source
-> + *
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "ipq5332.dtsi"
-> +
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. IPQ5332 MI01.6";
-> +	compatible = "qcom,ipq5332-ap-mi01.6", "qcom,ipq5332";
-> +
-> +	aliases {
-> +		serial0 = &blsp1_uart0;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0";
-> +	};
-> +};
-> +
-> +&blsp1_uart0 {
-> +	pinctrl-0 = <&serial_0_pins>;
-> +	pinctrl-names = "default";
-> +	status = "okay";
-> +};
-> +
-> +&blsp1_spi0 {
-> +	pinctrl-0 = <&spi_0_data_clk_pins &spi_0_cs_pins>;
-> +	pinctrl-names = "default";
-> +	status = "okay";
-> +
-> +	flash@0 {
-> +		compatible = "micron,n25q128a11", "jedec,spi-nor";
-> +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +		reg = <0>;
+> Changes in v3:
+>   - squash patch[3/4]
 
-reg is always second property, after compatible.
-
-> +		spi-max-frequency = <50000000>;
-> +	};
-> +};
-> +
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
