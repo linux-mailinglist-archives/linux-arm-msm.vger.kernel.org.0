@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8801D6C6940
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 14:13:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 636196C694D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 14:14:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231320AbjCWNNI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 09:13:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40050 "EHLO
+        id S231318AbjCWNOT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 09:14:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229600AbjCWNNH (ORCPT
+        with ESMTP id S229923AbjCWNOR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 09:13:07 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34FE12101
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 06:13:05 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id o40-20020a05600c512800b003eddedc47aeso1151606wms.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 06:13:05 -0700 (PDT)
+        Thu, 23 Mar 2023 09:14:17 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D8AE9750
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 06:14:16 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id u1so1089534wmn.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 06:14:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679577183;
+        d=linaro.org; s=google; t=1679577255;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=juhp9OBUsPann54i4wUeJoNbrt/MgaPH7KWeZa71+xE=;
-        b=jNzxhh+kAMOJUnJAJiZlm8CqqNjJB84FeneV/bsFBFNkwsv5ewzKW99RwM/+yo+dWD
-         O5M7PoVQ+HmSm0Fp7TUSM4WUmaCD/M9RquYD/SYCw+xZ3DF85LQBhq6DffN9QsAzPSiz
-         +SXGeH8zvrCymDFBZtcQHoWfSF5M0GCyh2Yk8xunJZ3oUEoj5sOSwvola6tWm9KPAExx
-         wppVx0YrDi/ArfaymWwbqT75kwaGW9d3Z9Vn8zQPyMtL5GoGAHwYOoySoOmjx3hdS1VP
-         UJk4RORne+G8ZcUQqELIerD3KaGhrzSzjw76MslFrWinmJXZ+hINTJ/vsGD5S7LbjbfF
-         VXWw==
+        bh=3ozbiTjZMTtZdhbfQMuafqLt5s0mYlr+S+oK5ku6wPM=;
+        b=lZT4yTsZI86TtOEPmavRCOef4D3RW1/nuZBrTzMbE98FuAzEIyWdjLDegnf6jrxZA+
+         ONjkVPvzSXDq88fS+6uvpspwpVLfj7god+2EuT5bsj6nKTpu7cbyXlXJQdX9OEDOdepB
+         syE9WfGnMbNFde06i6F3ixx2V0DbrfH+dZHIlaf49AJsawg656MXcwsT9BMUjL7hnxki
+         gXw5ww2yJmINWWYwei7sFMPdJnSkkzgYORHmb7bz7OJYWX/DNcZBkv5lehSjkSuTnHo6
+         M4nzoMLmTmrsmqOVP7mWrYBY8IrxinwiliUyVl6MADd+4Ty2C/ig8WfYV8E0zh0IvO90
+         /UBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679577183;
+        d=1e100.net; s=20210112; t=1679577255;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=juhp9OBUsPann54i4wUeJoNbrt/MgaPH7KWeZa71+xE=;
-        b=cxOVPMoCqhxu7YqXx29PKXoYns0Hq3QucS934D7EHWY651nQKyno3b8OMb6XslzWd0
-         9q83ctf2nVSX/Mil10DGFYBpdQqB3Ykj9Vl+QqaU5xADhdjAmd45z0fLzhrnPRhYoQbz
-         /JGLU6t1o8bDp4DnAVYYRUVofZiDSR86j5Jtq4MCu5zdXzovOeGR6Uy+iXxzcyP8wey1
-         mjBGDMppUvKrdFOQC3k/QfSUYEGiTXcl8eKxTVf41GnwKNgqyQUMex3tn4+IXXL36frP
-         8OGXOJyqkR6T83poKT5Bdy6/dorIZCk9nWiZ+LEYh7wyjgzGdDbNVIeoAVUOH5Zs35EP
-         0c5w==
-X-Gm-Message-State: AO0yUKXW2k2ZK+BujaCxyG7bDSFI0pz+aF/0wOYQZwnmfOEciEamlAk9
-        iUZEjFIFcCmApvaBKvIs4xnlrw==
-X-Google-Smtp-Source: AK7set9AOlKnA/7JArDu4NZy/tacv+1Jc1By+62lRGQ2qjTDOfxTCEOmbDcLbYSrwaVOaWhWVZPiKA==
-X-Received: by 2002:a1c:f709:0:b0:3ed:c763:2765 with SMTP id v9-20020a1cf709000000b003edc7632765mr2405501wmh.7.1679577183642;
-        Thu, 23 Mar 2023 06:13:03 -0700 (PDT)
+        bh=3ozbiTjZMTtZdhbfQMuafqLt5s0mYlr+S+oK5ku6wPM=;
+        b=Kjvd2i3cHGuRvA9aIohLHCBMpsmteHg/8hQKhrAh43uY1qFH/H8wQN/TTOO4skrZKi
+         VVz6FQ/Q95oX9CAzM10JeI+FsKIznbFPvEZ3PY/ngWt4t1leTrZSJB0pGMfkWEB1RHNd
+         Fe41d2bbbrAlRl0B/NazR2Tzttv3as1uMcfhmGKaUK0EV3MyYXkQqxmCy26fUzLOVn+p
+         gbgEEXVfUop1rwBYZx0dgUGs+Z3QfsVsqDGA7Loc/5cAeyhCVlB7uDYa8PO2338b6GJ/
+         CS9V9OsURQhwJvPar2SmJ5YDgb+ehfcHbQTywYZnmI5u0vbiQtwxH75TMOYMMJNv7nWr
+         WJJg==
+X-Gm-Message-State: AO0yUKVQ/KFT8qK7NjZUTthvdZiL9ppVnqSJ1FQAbpx7YiyZktBe/H8c
+        3fqxHKQmO0QUvZg7z2SEcJoKCQ==
+X-Google-Smtp-Source: AK7set9KH31TZh7tubmQPEjPzDWKzuzoSIfSWMARsbW8oRdJ+eBdyMTtKXVVNWxugh2iobMdSN2lww==
+X-Received: by 2002:a05:600c:a0c:b0:3ee:90fa:aedf with SMTP id z12-20020a05600c0a0c00b003ee90faaedfmr1139192wmp.11.1679577254774;
+        Thu, 23 Mar 2023 06:14:14 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:e25a:65de:379a:3899? ([2a01:e0a:982:cbb0:e25a:65de:379a:3899])
-        by smtp.gmail.com with ESMTPSA id v4-20020a05600c470400b003ee8ab8d6cfsm1825918wmo.21.2023.03.23.06.13.02
+        by smtp.gmail.com with ESMTPSA id g20-20020a05600c4ed400b003edc4788fa0sm1992204wmq.2.2023.03.23.06.14.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Mar 2023 06:13:03 -0700 (PDT)
-Message-ID: <006bf3bf-ab9a-4a08-3ba5-fa23ff4ea05a@linaro.org>
-Date:   Thu, 23 Mar 2023 14:13:00 +0100
+        Thu, 23 Mar 2023 06:14:14 -0700 (PDT)
+Message-ID: <215efc34-68bf-53d7-2191-a5132c3d2198@linaro.org>
+Date:   Thu, 23 Mar 2023 14:14:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 6/8] arm64: dts: qcom: sm8450: remove invalid npl clock in
- vamacro node
+Subject: Re: [PATCH 4/8] arm64: dts: qcom: sm8450: remove invalid properties
+ in cluster-sleep nodes
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Rob Clark <robdclark@gmail.com>,
@@ -83,10 +83,10 @@ Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         Krzysztof Kozlowski <krzk@kernel.org>,
         linux-scsi@vger.kernel.org
 References: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-0-3ead1e418fe4@linaro.org>
- <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-6-3ead1e418fe4@linaro.org>
- <35e3aa8b-ccff-25fa-42da-d8934ef366c6@linaro.org>
+ <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-4-3ead1e418fe4@linaro.org>
+ <0bcad5cc-112f-386c-b70e-146530ac4898@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <35e3aa8b-ccff-25fa-42da-d8934ef366c6@linaro.org>
+In-Reply-To: <0bcad5cc-112f-386c-b70e-146530ac4898@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -99,23 +99,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/03/2023 11:47, Krzysztof Kozlowski wrote:
+On 23/03/2023 11:51, Krzysztof Kozlowski wrote:
 > On 23/03/2023 11:25, Neil Armstrong wrote:
 >> Fixes the following DT bindings check error:
->> codec@33f0000: clocks: [[137, 57, 1], [137, 102, 1], [137, 103, 1], [137, 70, 1]] is too long
->> codec@33f0000: clock-names: 'oneOf' conditional failed, one must be fixed:
->> 	        ['mclk', 'macro', 'dcodec', 'npl'] is too long
->>
->> The implementation was checked and this npl clock isn't used for the VA macro.
->>
+>> domain-idle-states: cluster-sleep-0: 'idle-state-name', 'local-timer-stop' do not match any of the regexes:
+>> 'pinctrl-[0-9]+'
+>> domain-idle-states: cluster-sleep-1: 'idle-state-name', 'local-timer-stop' do not match any of the regexes:
+>> 'pinctrl-[0-9]+'
 > 
-> This does not look correct. DTS looks good, you miss some patches in
-> your tree.
+> I don't get from the commit msg why these properties are not correct
+> here. The idle states allow them, so maybe something is missing in the
+> binding? At least commit msg should explain this.
 
-I'm based on today's linux-next, while the other lpass macros uses the npl clock,
-the lpass vamacro bindings doesn't document the npl clock.
-
-And I found no fixes whatsover to add the npl clock to bindings.
+The domain-idle-states bindings doesn't document those 2 properties, so perhaps it's missing ?
 
 Neil
 
