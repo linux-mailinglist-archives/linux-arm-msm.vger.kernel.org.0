@@ -2,74 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EE216C6D2B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 17:17:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E73C6C6D35
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 17:18:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231263AbjCWQRD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 12:17:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46666 "EHLO
+        id S231161AbjCWQS3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 12:18:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231954AbjCWQQq (ORCPT
+        with ESMTP id S231314AbjCWQSZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 12:16:46 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2666D3646B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 09:16:29 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id e11so14463139lji.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 09:16:29 -0700 (PDT)
+        Thu, 23 Mar 2023 12:18:25 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 035B4193F3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 09:18:22 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id h9so23158445ljq.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 09:18:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679588187;
+        d=linaro.org; s=google; t=1679588300;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ryTu6zaCoI2WK0bZO1AkabKmhlUxG/TKoy8qClCDl3s=;
-        b=X35gckylit4clnuJCHYArzsheet/i/G//qUBdWpgiz31svNxTKw9uIF1ce96dYHrlU
-         wf7biuyvGZzW053nOjPU1al8iq2TEIaOjAhWhFLmmy95b9hECCRdLK0c0/9lxE6mKP68
-         U89tN/BuLAy3Vywj+ZvVTaC0F31vOv8SQeHbqLa7KhNM0qorUpUhH7p3/NgsdZ868WHt
-         A1D5EN90vgs2q9aMIlvpLwv+YGmM9OkoVlRTu+cydBGjgotNsqN4UpaL2cWxjJu9rPC0
-         mBPsVsIhzTWugKDz3+exNLswtjqD34cgyxAx17qiCiWVVnZHydRHF6LC7OL9rwbSJ76k
-         7+pQ==
+        bh=QSTISpeEnDJPqAU6jSux3fWpEzcIJpR2kNb4sJooRtU=;
+        b=CsCdxwtLtLl+i5n0KdQlyTY18IXjPLHbpvytAcFp+pEHHq1yHZRER503+zxPCMjOZN
+         RZ7gazMfjdQDhUw1M8SESp//8JXYgFCNkTzk2Nyuqt/pg8X21JoeHl1Blb0l4OTs/+UH
+         kF47yxprUegdr1abj5ZeeTuphjNEr21n+b4qWS/+R8/7/LmCJc+J2XeJZByolM/Vl6gR
+         AXt74X4uLLgD64emakLB5d0hnTdmuH4gWDFNIdJ6MYAhLkgrPDXiwWj6K2RMKN8o9NCA
+         NkNW4Hxt087xCrlCs9U/3+7ccO2EUxQDlWojioUXDCYBo3ZmI6Lr13KNU67NpV2pAK+j
+         nYRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679588187;
+        d=1e100.net; s=20210112; t=1679588300;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ryTu6zaCoI2WK0bZO1AkabKmhlUxG/TKoy8qClCDl3s=;
-        b=U8yClKW9p64i41WAg3TLut1WKmsV96j6LUaCKYCQixn/VinGot187uAtj0K8uNXlgn
-         PSvjAFpY1JBLHCXY44tJteIfEUTYFKjdO20VJdo2PYnU2lvUeCfB3jQevFIgrrhNTme/
-         rXpFBlXLDG+ho1WROz4gy+5FHR5uP81fq+FQ8B3jRU3092g/j3lyjGamqTo2znMQ2/KI
-         pIWq83oSL6BSnjmFwYpOQ1TwoJ00YHAF6oLmdwuoC+ABR4GyfEFku7nqqWtqyHWetWUF
-         1xC9m2hZHuar5qWjIOuxmU4+NVkTuMVKhkztBttIY2c+RzLILyyieXcAgPWEiNFy/UfP
-         VoQw==
-X-Gm-Message-State: AO0yUKU/dbasyoHs5roG7DXZG7cwfOFQq/2jcWuQnCo3PXiMtz4Ud0go
-        OD/rpDMWJQZdovHxaI7fudTZtw==
-X-Google-Smtp-Source: AK7set9Y4cajNDfcbllrzFUVHfIvE/fAcRhK+cwjghBUW380/gIDvSK6YWOY/ErBaBnPUCnkf5w9Qg==
-X-Received: by 2002:a2e:6a0d:0:b0:2a0:51b4:855b with SMTP id f13-20020a2e6a0d000000b002a051b4855bmr2371646ljc.18.1679588187317;
-        Thu, 23 Mar 2023 09:16:27 -0700 (PDT)
+        bh=QSTISpeEnDJPqAU6jSux3fWpEzcIJpR2kNb4sJooRtU=;
+        b=tZUPhWinNQScAKX1x/2Q7TAW8wZHG/vOwZ01mtkxxBM3o6Jboddn+7YmmGAiU8Ld75
+         TcgX7AO3a38QNxa6sjivZ2BG7YsorQevXzNqQKBWIVa9Mm4mqflK6QTYESBuCxTayPwc
+         oavpi6seSsZZw12nKmFcL9R82Wwk6WXZSD/LKXlm4XR0vD9PJ6Af/jUdWysSREdFXg1x
+         G87dQRtZyFlzCrGhDgpYm3W5y5r3vAPyTFmkZOn6BBSDAoFAw2M3HRznq9j96e31nnka
+         tL05YoR4quqIQtqc2qxkQce0g3NCxVBQ9i2krFI08mzOjkRf9KirYm3LSSsUkFl3XAWK
+         WhTQ==
+X-Gm-Message-State: AO0yUKW0fi44ySlfXjMCFl/kKn+75VN3jkAVz4dOHpTKPwIStpCT0OoQ
+        ca6kb3VE9E5n7gSugSjkCdfcT9Ul2n9PfatZoms=
+X-Google-Smtp-Source: AK7set9SBP2mz7mp5AkpjXzbnYUPIgsBjfZTPHwBBmVK031Vw9WWl0S/QQ3RRQxmKj+brvIsGmr8Pg==
+X-Received: by 2002:a2e:b0d7:0:b0:293:32e0:5c8a with SMTP id g23-20020a2eb0d7000000b0029332e05c8amr3388075ljl.15.1679588300715;
+        Thu, 23 Mar 2023 09:18:20 -0700 (PDT)
 Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id a1-20020a05651c010100b00298a8527806sm3070801ljb.93.2023.03.23.09.16.24
+        by smtp.gmail.com with ESMTPSA id f15-20020a2e918f000000b00298a7fcda67sm3080163ljg.97.2023.03.23.09.18.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Mar 2023 09:16:26 -0700 (PDT)
-Message-ID: <146cd9ba-5646-2033-0f46-ab7cab5d6b86@linaro.org>
-Date:   Thu, 23 Mar 2023 17:16:22 +0100
+        Thu, 23 Mar 2023 09:18:20 -0700 (PDT)
+Message-ID: <30f3dc2d-67d3-6935-1efb-bf888a28987f@linaro.org>
+Date:   Thu, 23 Mar 2023 17:18:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sm8250-xiaomi-elish-boe: Add
- mdss and dsi panel
+Subject: Re: [PATCH] venus: Enable sufficient sequence change support for
+ sc7180 and fix for Decoder STOP command issue.
 Content-Language: en-US
-To:     Jianhua Lu <lujianhua000@gmail.com>,
+To:     "Viswanath Boma (Temp)" <vboma@qti.qualcomm.com>,
+        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
+        "Viswanath Boma (Temp) (QUIC)" <quic_vboma@quicinc.com>
+Cc:     "stanimir.varbanov@linaro.org" <stanimir.varbanov@linaro.org>,
+        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20230323005925.23179-1-lujianhua000@gmail.com>
- <20230323005925.23179-2-lujianhua000@gmail.com>
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Vikash Garodia <vgarodia@qti.qualcomm.com>
+References: <20230202064712.5804-2-quic_vboma@quicinc.com>
+ <20230316081509.12201-1-quic_vboma@quicinc.com>
+ <20230316081509.12201-2-quic_vboma@quicinc.com>
+ <CAA8EJpozq1nCgG5npK5JUXc-Y-7LiPe3Y_VP8++Rq70AreCenA@mail.gmail.com>
+ <SJ0PR02MB8848AD9F976AA962B1EA292E85879@SJ0PR02MB8848.namprd02.prod.outlook.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230323005925.23179-2-lujianhua000@gmail.com>
+In-Reply-To: <SJ0PR02MB8848AD9F976AA962B1EA292E85879@SJ0PR02MB8848.namprd02.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -84,137 +91,225 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 23.03.2023 01:59, Jianhua Lu wrote:
-> Add nodes for BOE NT36523 panel found in xiaomi-elish. This panel
-> is a dual dsi mode panel and the dsi phy type is cphy.
+On 23.03.2023 10:16, Viswanath Boma (Temp) wrote:
+> Hi Dmirty ,
 > 
-> Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Thanks for reviews .
+Please don't top-post.
+
+A: http://en.wikipedia.org/wiki/Top_post
+Q: Were do I find info about this thing called top-posting?
+A: Because it messes up the order in which people normally read text.
+Q: Why is top-posting such a bad thing?
+A: Top-posting.
+Q: What is the most annoying thing in e-mail?
+
+A: No.
+Q: Should I include quotations after my reply?
 
 Konrad
-> Changes in v2:
->   - Include missing <dt-bindings/phy/phy.h> for phy-type property.
 > 
-> Changes in v3:
->   - Sort include header.
->   - Move qcom,sync-dual-dsi to the front of qcom,master-dsi 
->   - Add newline before subnode.
+>> -----Original Message-----
+>> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Sent: Thursday, March 16, 2023 3:50 PM
+>> To: Viswanath Boma (Temp) (QUIC) <quic_vboma@quicinc.com>
+>> Cc: stanimir.varbanov@linaro.org; Vikash Garodia (QUIC)
+>> <quic_vgarodia@quicinc.com>; Andy Gross <agross@kernel.org>;
+>> bjorn.andersson@linaro.org; Konrad Dybcio <konrad.dybcio@linaro.org>;
+>> Mauro Carvalho Chehab <mchehab@kernel.org>; linux-
+>> media@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-
+>> kernel@vger.kernel.org; Vikash Garodia <vgarodia@qti.qualcomm.com>
+>> Subject: Re: [PATCH] venus: Enable sufficient sequence change support for
+>> sc7180 and fix for Decoder STOP command issue.
+>>
+>> WARNING: This email originated from outside of Qualcomm. Please be wary of
+>> any links or attachments, and do not enable macros.
+>>
+>> On Thu, 16 Mar 2023 at 10:17, <quic_vboma@quicinc.com> wrote:
+>>>
+>>> From: Viswanath Boma <quic_vboma@quicinc.com>
+>>>
+>>> For VP9 bitstreams, there could be a change in resolution at
+>>> interframe, for driver to get notified of such resolution change,
+>>> enable the property in video firmware.
+>>> Also, EOS handling is now made same in video firmware across all V6
+>>> SOCs, hence above a certain firmware version, the driver handling is
+>>> made generic for all V6s
+>>>
+>>> Signed-off-by: Vikash Garodia <vgarodia@qti.qualcomm.com>
+>>> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
+>>> Tested-by: Nathan Hebert <nhebert@chromium.org>
+>>> ---
+>>
+>> Which version of the patch is this? Were there any changes compared to the
+>> previous version? Please include a changelog below the dashed line to let other
+>> people know what has changed
+>>
+> This is version v2 or v3 --> Keep this as per the version.
+> Sure, let me fix the version and changes info in the next revision.
 > 
->  .../boot/dts/qcom/sm8250-xiaomi-elish-boe.dts |  5 ++
->  .../dts/qcom/sm8250-xiaomi-elish-common.dtsi  | 75 +++++++++++++++++++
->  2 files changed, 80 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dts
-> index bd9ad109daf9..8b2ae39950ff 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dts
-> @@ -11,3 +11,8 @@ / {
->  	model = "Xiaomi Mi Pad 5 Pro (BOE)";
->  	compatible = "xiaomi,elish", "qcom,sm8250";
->  };
-> +
-> +&display_panel {
-> +	compatible = "xiaomi,elish-boe-nt36523";
-> +	status = "okay";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-> index a43d4b73ffca..4585f61781f1 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-> @@ -4,6 +4,7 @@
->   */
->  
->  #include <dt-bindings/arm/qcom,ids.h>
-> +#include <dt-bindings/phy/phy.h>
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->  #include "sm8250.dtsi"
->  #include "pm8150.dtsi"
-> @@ -469,6 +470,76 @@ &cdsp {
->  	status = "okay";
->  };
->  
-> +&dsi0 {
-> +	vdda-supply = <&vreg_l9a_1p2>;
-> +	qcom,dual-dsi-mode;
-> +	qcom,sync-dual-dsi;
-> +	qcom,master-dsi;
-> +	status = "okay";
-> +
-> +	display_panel: panel@0 {
-> +		reg = <0>;
-> +		vddio-supply = <&vreg_l14a_1p88>;
-> +		reset-gpios = <&tlmm 75 GPIO_ACTIVE_LOW>;
-> +		backlight = <&backlight>;
-> +
-> +		status = "disabled";
-> +
-> +		ports {
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			port@0 {
-> +				reg = <0>;
-> +
-> +				panel_in_0: endpoint {
-> +					remote-endpoint = <&dsi0_out>;
-> +				};
-> +			};
-> +
-> +			port@1{
-> +				reg = <1>;
-> +
-> +				panel_in_1: endpoint {
-> +					remote-endpoint = <&dsi1_out>;
-> +				};
-> +			};
-> +
-> +		};
-> +	};
-> +};
-> +
-> +&dsi0_out {
-> +	data-lanes = <0 1 2>;
-> +	remote-endpoint = <&panel_in_0>;
-> +};
-> +
-> +&dsi0_phy {
-> +	vdds-supply = <&vreg_l5a_0p88>;
-> +	phy-type = <PHY_TYPE_CPHY>;
-> +	status = "okay";
-> +};
-> +
-> +&dsi1 {
-> +	vdda-supply = <&vreg_l9a_1p2>;
-> +	qcom,dual-dsi-mode;
-> +	qcom,sync-dual-dsi;
-> +	/* DSI1 is slave, so use DSI0 clocks */
-> +	assigned-clock-parents = <&dsi0_phy 0>, <&dsi0_phy 1>;
-> +	status = "okay";
-> +};
-> +
-> +&dsi1_out {
-> +	data-lanes = <0 1 2>;
-> +	remote-endpoint = <&panel_in_1>;
-> +};
-> +
-> +&dsi1_phy {
-> +	vdds-supply = <&vreg_l5a_0p88>;
-> +	phy-type = <PHY_TYPE_CPHY>;
-> +	status = "okay";
-> +};
-> +
->  &gmu {
->  	status = "okay";
->  };
-> @@ -533,6 +604,10 @@ fuel-gauge@55 {
->  	};
->  };
->  
-> +&mdss {
-> +	status = "okay";
-> +};
-> +
->  &pcie0 {
->  	status = "okay";
->  };
+>>>  drivers/media/platform/qcom/venus/core.h       | 18 ++++++++++++++++++
+>>>  drivers/media/platform/qcom/venus/hfi_cmds.c   |  1 +
+>>>  drivers/media/platform/qcom/venus/hfi_helper.h |  2 ++
+>>>  drivers/media/platform/qcom/venus/hfi_msgs.c   | 11 +++++++++--
+>>>  drivers/media/platform/qcom/venus/vdec.c       | 12 +++++++++++-
+>>>  5 files changed, 41 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/venus/core.h
+>>> b/drivers/media/platform/qcom/venus/core.h
+>>> index 32551c2602a9..ee8b70a34656 100644
+>>> --- a/drivers/media/platform/qcom/venus/core.h
+>>> +++ b/drivers/media/platform/qcom/venus/core.h
+>>> @@ -202,6 +202,11 @@ struct venus_core {
+>>>         unsigned int core0_usage_count;
+>>>         unsigned int core1_usage_count;
+>>>         struct dentry *root;
+>>> +       struct venus_img_version {
+>>> +               u32 major;
+>>> +               u32 minor;
+>>> +               u32 rev;
+>>> +       } venus_ver;
+>>>  };
+>>>
+>>>  struct vdec_controls {
+>>> @@ -500,4 +505,17 @@ venus_caps_by_codec(struct venus_core *core, u32
+>> codec, u32 domain)
+>>>         return NULL;
+>>>  }
+>>>
+>>> +static inline int
+>>> +is_fw_rev_or_newer(struct venus_core *core, u32 vmajor, u32 vminor,
+>>> +u32 vrev) {
+>>> +       return ((core)->venus_ver.major == vmajor && (core)-
+>>> venus_ver.minor ==
+>>> +                       vminor && (core)->venus_ver.rev >= vrev); }
+>>> +
+>>> +static inline int
+>>> +is_fw_rev_or_older(struct venus_core *core, u32 vmajor, u32 vminor,
+>>> +u32 vrev) {
+>>> +       return ((core)->venus_ver.major == vmajor && (core)-
+>>> venus_ver.minor ==
+>>> +                       vminor && (core)->venus_ver.rev <= vrev); }
+>>>  #endif
+>>> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c
+>>> b/drivers/media/platform/qcom/venus/hfi_cmds.c
+>>> index 930b743f225e..e2539b58340f 100644
+>>> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
+>>> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+>>> @@ -521,6 +521,7 @@ static int pkt_session_set_property_1x(struct
+>> hfi_session_set_property_pkt *pkt,
+>>>                 pkt->shdr.hdr.size += sizeof(u32) + sizeof(*en);
+>>>                 break;
+>>>         }
+>>> +       case
+>> HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT:
+>>>         case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER: {
+>>>                 struct hfi_enable *in = pdata;
+>>>                 struct hfi_enable *en = prop_data; diff --git
+>>> a/drivers/media/platform/qcom/venus/hfi_helper.h
+>>> b/drivers/media/platform/qcom/venus/hfi_helper.h
+>>> index d2d6719a2ba4..20516b4361d3 100644
+>>> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
+>>> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+>>> @@ -469,6 +469,8 @@
+>>>  #define HFI_PROPERTY_PARAM_VDEC_PIXEL_BITDEPTH
+>> 0x1003007
+>>>  #define HFI_PROPERTY_PARAM_VDEC_PIC_STRUCT                     0x1003009
+>>>  #define HFI_PROPERTY_PARAM_VDEC_COLOUR_SPACE
+>> 0x100300a
+>>> +#define
+>> HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT \
+>>> +
+>>> +0x0100300b
+>>>
+>>>  /*
+>>>   * HFI_PROPERTY_CONFIG_VDEC_COMMON_START
+>>> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c
+>>> b/drivers/media/platform/qcom/venus/hfi_msgs.c
+>>> index df96db3761a7..07ac0fcd2852 100644
+>>> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
+>>> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+>>> @@ -248,9 +248,10 @@ static void hfi_sys_init_done(struct venus_core
+>>> *core, struct venus_inst *inst,  }
+>>>
+>>>  static void
+>>> -sys_get_prop_image_version(struct device *dev,
+>>> +sys_get_prop_image_version(struct venus_core *core,
+>>>                            struct hfi_msg_sys_property_info_pkt *pkt)
+>>> {
+>>> +       struct device *dev = core->dev;
+>>>         u8 *smem_tbl_ptr;
+>>>         u8 *img_ver;
+>>>         int req_bytes;
+>>> @@ -263,6 +264,12 @@ sys_get_prop_image_version(struct device *dev,
+>>>                 return;
+>>>
+>>>         img_ver = pkt->data;
+>>> +       if (IS_V4(core))
+>>> +               sscanf(img_ver, "14:VIDEO.VE.%u.%u-%u-PROD",
+>>> +                      &core->venus_ver.major, &core->venus_ver.minor, &core-
+>>> venus_ver.rev);
+>>> +       else if (IS_V6(core))
+>>> +               sscanf(img_ver, "14:VIDEO.VPU.%u.%u-%u-PROD",
+>>> +                      &core->venus_ver.major, &core->venus_ver.minor,
+>>> + &core->venus_ver.rev);
+>>>
+>>>         dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
+>>>
+>>> @@ -286,7 +293,7 @@ static void hfi_sys_property_info(struct
+>>> venus_core *core,
+>>>
+>>>         switch (pkt->property) {
+>>>         case HFI_PROPERTY_SYS_IMAGE_VERSION:
+>>> -               sys_get_prop_image_version(dev, pkt);
+>>> +               sys_get_prop_image_version(core, pkt);
+>>>                 break;
+>>>         default:
+>>>                 dev_dbg(dev, VDBGL "unknown property data\n"); diff
+>>> --git a/drivers/media/platform/qcom/venus/vdec.c
+>>> b/drivers/media/platform/qcom/venus/vdec.c
+>>> index 4ceaba37e2e5..36c88858ea9d 100644
+>>> --- a/drivers/media/platform/qcom/venus/vdec.c
+>>> +++ b/drivers/media/platform/qcom/venus/vdec.c
+>>> @@ -545,7 +545,7 @@ vdec_decoder_cmd(struct file *file, void *fh,
+>>> struct v4l2_decoder_cmd *cmd)
+>>>
+>>>                 fdata.buffer_type = HFI_BUFFER_INPUT;
+>>>                 fdata.flags |= HFI_BUFFERFLAG_EOS;
+>>> -               if (IS_V6(inst->core))
+>>> +               if (IS_V6(inst->core) &&
+>>> + is_fw_rev_or_older(inst->core, 1, 0, 87))
+>>>                         fdata.device_addr = 0;
+>>>                 else
+>>>                         fdata.device_addr = 0xdeadb000; @@ -671,6
+>>> +671,16 @@ static int vdec_set_properties(struct venus_inst *inst)
+>>>                         return ret;
+>>>         }
+>>>
+>>> +       /* Enabling sufficient sequence change support for VP9 */
+>>> +       if (of_device_is_compatible(inst->core->dev->of_node,
+>>> + "qcom,sc7180-venus")) {
+>>
+>> Is it really specific just to sc7180 or will it be applicable to any other platform
+>> using venus-5.4 firmware?
+>>
+>>> +               if (is_fw_rev_or_newer(inst->core, 5, 4, 51)) {
+>>> +                       ptype =
+>> HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT;
+>>> +                       ret = hfi_session_set_property(inst, ptype, &en);
+>>> +                       if (ret)
+>>> +                               return ret;
+>>> +               }
+>>> +       }
+>>> +
+>>>         ptype = HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR;
+>>>         conceal = ctr->conceal_color & 0xffff;
+>>>         conceal |= ((ctr->conceal_color >> 16) & 0xffff) << 10;
+>>> --
+>>> 2.17.1
+>>>
+>>
+>>
+>> --
+>> With best wishes
+>> Dmitry
