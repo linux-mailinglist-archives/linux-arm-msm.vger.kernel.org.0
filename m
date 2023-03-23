@@ -2,119 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8D7E6C6B47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 15:41:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBAC36C6B57
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 15:44:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231524AbjCWOlg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 10:41:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38988 "EHLO
+        id S231672AbjCWOoa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 10:44:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230157AbjCWOlf (ORCPT
+        with ESMTP id S229548AbjCWOo2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 10:41:35 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8D61F212A9;
-        Thu, 23 Mar 2023 07:41:34 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 400C44B3;
-        Thu, 23 Mar 2023 07:42:18 -0700 (PDT)
-Received: from [10.57.53.151] (unknown [10.57.53.151])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 173FC3F6C4;
-        Thu, 23 Mar 2023 07:41:30 -0700 (PDT)
-Message-ID: <a7484268-49a5-632b-bfc2-8731de01d82b@arm.com>
-Date:   Thu, 23 Mar 2023 14:41:29 +0000
+        Thu, 23 Mar 2023 10:44:28 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 419FB23C49
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 07:44:26 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id p34so8688802wms.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 07:44:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679582665;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=0Ek4wZhl4Mg0GrDMidRpjCLxiT+Jj8TNIew80B1+dS8=;
+        b=t3Vp7RyFM8QV+VOhJkauXK9ZBmgTbo+zXmbbdNc5YTzFZhULmKx7ULUx2hi9UKIvj4
+         yIAo+gNJ6mUmL6zRsgWruEYkTL1nqJr4XVGp9j53f1R59pcJo9BvjgV6ZGPCOWExngg3
+         9lwyhlQ7PfizNhOXlnvJ2BjCjfCnW+3z+rA2W9HGw5O1aPBlgxrSE/lr6RkeFNqBSoPK
+         gJ3bS3SEKIW41PNmlixE4c62EWhsHJcY3ftPuqZ/F3JOmp8dUDVFskJH15Bv/IRWLTtI
+         VmGC96o6jb8k6ouaD0vV0GREdN870JpBDWppohe72sFOYfxOkxkoAarzmhvWz0vtwhhG
+         l4sQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679582665;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0Ek4wZhl4Mg0GrDMidRpjCLxiT+Jj8TNIew80B1+dS8=;
+        b=8BLudhiwyKdGXHuBoOrYqD0MLUjoHMEj8+zuwif1nanrlJBOB+ZBBNjZDmMrO/+yQF
+         KmeeyYtNAyFjGQmnDxtqKVnE2Cr+rB9YDTVno9wCabrK4GltjWPsK3CNEGjPo/fp1lVo
+         +LzpqAKCwHJSj504JebfzCfwtuQq352IiXf5RTvMfy0gEIU2nHU3RmqtjY4KhLUdQD+0
+         mUWi5ZJmmvcKdOdsORuEr8wN2gmYHXruLlW8GAgYYK4/5RozjwpNOFC/KILty92PS4fI
+         jjZ+J4rUQa1RLDUhL+QPb8hHqmYdo6nZeSipimk2GXURpSCmcu3uNcIbfPMb0hJE7w8y
+         fSvQ==
+X-Gm-Message-State: AO0yUKWQk03QKEOcac/MWSSLm3i2HTLucYjeD4hACUA21FD0x7a3Imk2
+        RSYXSILwVe6FZdQxj3jgWKox9A==
+X-Google-Smtp-Source: AK7set/LnBgJwUokuNj+rBAbXxBzVAIv6jLo1Im7boQzr5ZnmQ5GFZnXrwDgWbSR8lrMohjRlVuXtQ==
+X-Received: by 2002:a05:600c:2c48:b0:3eb:39e0:3530 with SMTP id r8-20020a05600c2c4800b003eb39e03530mr2306311wmg.41.1679582664667;
+        Thu, 23 Mar 2023 07:44:24 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:e25a:65de:379a:3899? ([2a01:e0a:982:cbb0:e25a:65de:379a:3899])
+        by smtp.gmail.com with ESMTPSA id c18-20020a7bc852000000b003ed2c0a0f37sm2045208wml.35.2023.03.23.07.44.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Mar 2023 07:44:23 -0700 (PDT)
+Message-ID: <381cad84-da61-5a55-73eb-869294aa1d1c@linaro.org>
+Date:   Thu, 23 Mar 2023 15:44:22 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.9.0
-Subject: Re: [PATCH v3 04/11] coresight-tpdm: Add reset node to TPDM node
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/8] dt-bindings: display: msm: sm8450-mdss: Fix DSI
+ compatible
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+Cc:     Lee Jones <lee@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
-References: <1679551448-19160-1-git-send-email-quic_taozha@quicinc.com>
- <1679551448-19160-5-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1679551448-19160-5-git-send-email-quic_taozha@quicinc.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Avri Altman <avri.altman@wdc.com>, Sean Paul <sean@poorly.run>,
+        freedreno@lists.freedesktop.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-scsi@vger.kernel.org,
+        Bart Van Assche <bvanassche@acm.org>
+References: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-0-3ead1e418fe4@linaro.org>
+ <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-1-3ead1e418fe4@linaro.org>
+ <167957963042.3095255.5445133387110199668.robh@kernel.org>
+Organization: Linaro Developer Services
+In-Reply-To: <167957963042.3095255.5445133387110199668.robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.3 required=5.0 tests=NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/03/2023 06:04, Tao Zhang wrote:
-> TPDM device need a node to reset the configurations and status of
-> it. This change provides a node to reset the configurations and
-> disable the TPDM if it has been enabled.
+On 23/03/2023 14:58, Rob Herring wrote:
 > 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->   drivers/hwtracing/coresight/coresight-tpdm.c | 28 ++++++++++++++++++++++++++++
->   1 file changed, 28 insertions(+)
+> On Thu, 23 Mar 2023 11:25:16 +0100, Neil Armstrong wrote:
+>> The DSI compatible changed between patchset revisions, but that wasn't
+>> reflected in the bindings. Fix it.
+>>
+>> 0eda3c6cb1c5 ("dt-bindings: display/msm: add support for the display on SM8450")
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
 > 
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index 5e1e2ba..104638d 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -161,6 +161,33 @@ static void tpdm_datasets_setup(struct tpdm_drvdata *drvdata)
->   	drvdata->datasets |= pidr & GENMASK(TPDM_DATASETS - 1, 0);
->   }
->   
-> +static ssize_t reset_store(struct device *dev,
-> +					  struct device_attribute *attr,
-> +					  const char *buf,
-> +					  size_t size)
-> +{
-> +	int ret = 0;
-> +	unsigned long val;
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +
-> +	ret = kstrtoul(buf, 10, &val);
-> +	if (ret || val != 1)
-> +		return -EINVAL;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	/* Reset all datasets to ZERO, and init the default data*/
-> +	tpdm_init_datasets(drvdata);
-
-With the suggested rename in the previous patch, you wouldn't need
-a comment here.
-
-> +
-> +	spin_unlock(&drvdata->spinlock);
-> +
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.example.dtb: display-subsystem@ae00000: phy@ae94400:compatible:0: 'qcom,sm8450-dsi-phy-5nm' was expected
+> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.example.dtb: display-subsystem@ae00000: phy@ae96400:compatible:0: 'qcom,sm8450-dsi-phy-5nm' was expected
+> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml
+> Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.example.dtb: /example-0/display-subsystem@ae00000/phy@ae94400: failed to match any schema with compatible: ['qcom,dsi-phy-5nm-8450']
+> Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.example.dtb: /example-0/display-subsystem@ae00000/phy@ae96400: failed to match any schema with compatible: ['qcom,dsi-phy-5nm-8450']
 
 
-> +	/* Disable tpdm if enabled */
-> +	if (drvdata->enable)
-> +		coresight_disable(drvdata->csdev);
+Indeed I forgot to fix the bindings example....
 
-Couldn't this be done via disable_source ? Please don't overload
-the sysfs handle.
+Thx,
+Neil
 
-> +
-> +	return size;
-> +}
-> +static DEVICE_ATTR_WO(reset);
-
-Documentation for the sysfs node please ?
-
-Suzuki
+> 
+> doc reference errors (make refcheckdocs):
+> 
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-1-3ead1e418fe4@linaro.org
+> 
+> The base for the series is generally the latest rc1. A different dependency
+> should be noted in *this* patch.
+> 
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+> 
+> pip3 install dtschema --upgrade
+> 
+> Please check and re-submit after running the above command yourself. Note
+> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+> your schema. However, it must be unset to test all examples with your schema.
+> 
 
