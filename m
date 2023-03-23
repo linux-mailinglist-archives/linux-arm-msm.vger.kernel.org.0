@@ -2,120 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DACDB6C64F4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 11:26:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD1D16C657E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 11:45:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231484AbjCWK0X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 06:26:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43268 "EHLO
+        id S231409AbjCWKpR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 06:45:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231395AbjCWKZ6 (ORCPT
+        with ESMTP id S231743AbjCWKo7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 06:25:58 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D43E21CAC1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 03:25:35 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id l12so19851124wrm.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 03:25:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679567135;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iaQACbxWFe/pP0PYdcE2NPjjd/o5GOPyZh6BOGAwiP8=;
-        b=EDK/OC2gr0VhTqb/8cfkz3D7WlMPMQM2ELils/2BJph5U5K9iidkuqoUxZlw2Rh4yY
-         bG9nXl3bN8p8ByXNnmUizw7VxwxiBMaFatQ+QWA25ecnX8/EvkWtD1qcL6FpEOZlvnYR
-         +xXKkFPGzURm1L4waqYLeX9UhOuOT3swffCfg/GmLq0qa1q7bk/Ng/0EV8WUnS+G8AXF
-         LfT0kd80T66ZOC5MG/60vWfd0UC2E2zAJ0zP1F9NUpF1IXB5ZbmaYYbC+YBQ7NEA1XMt
-         uFCH47IhPi3S2YE2gzbkBClbF/PAUwlHbpmJ1w+7vZSAOQStcKGGz+EZvu0JdKwZXyzX
-         sPug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679567135;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iaQACbxWFe/pP0PYdcE2NPjjd/o5GOPyZh6BOGAwiP8=;
-        b=EVpwP0NjNAUuKW5EH2OtHI9eLenlMgUmjnT4Y6vO4gRrGCUTe9UcuS2P7q+RKGsHTD
-         W2JL6IjwLGt064wK0QNc0GWf/DbdRtMmH1uv1C1lxqGYWIX4Gy9OP2dyQKKbDn3s09nq
-         DZq0QzBHBYBOo8nFZP5AqOKrfAc16IcQTXi5mL7fXLPH6oiRsu9PI/yjT7Ix2IQ9cYNY
-         ftzFw0YUh4dTSqqAKuyp39/jSdpgYrheXYnDWebIjePk6qWfBlYunA9+IOLFrB6mHmEV
-         dTQAsHWbkkbmQ6cB66CiIiB/XzX70OwJ9oiJppYxwS1qlII7V8UxxjQIX3X+b9FP4WVR
-         xpRg==
-X-Gm-Message-State: AAQBX9f6Eu7ROdzU5bCuNa8cxMZsn3N4oKge606EjbLmkSSgyxpqdWbV
-        K7NX9Q2IJzdvtHYYh3gty28BnQ==
-X-Google-Smtp-Source: AKy350bCeDHpSVI8xLS6NQ/SiOOsVX2JYPYHUtQ3vn3tZY3Uc4D9P3VP7wUr81eOPMcUs86Lve47yw==
-X-Received: by 2002:a5d:49c3:0:b0:2d9:5608:ee0 with SMTP id t3-20020a5d49c3000000b002d956080ee0mr1808899wrs.69.1679567135399;
-        Thu, 23 Mar 2023 03:25:35 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id e23-20020a5d5957000000b002cfefa50a8esm15753530wri.98.2023.03.23.03.25.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Mar 2023 03:25:34 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Thu, 23 Mar 2023 11:25:23 +0100
-Subject: [PATCH 8/8] arm64: dts: qcom: sm8450: fix pcie1 gpios properties
- name
+        Thu, 23 Mar 2023 06:44:59 -0400
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95E68367FD;
+        Thu, 23 Mar 2023 03:42:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1679568130; x=1711104130;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=6ECBo5nXzp7yKrrIvIT2vya4+rrfWKNQRNTuIco/UAY=;
+  b=Oyl2x7PNI/OAsLb2qtn8HMop4ozYQjRy5yCAEs8apSK+1bw9L1Elhqws
+   do/apleG943k/1BkpeDNQa0JGP+OFRZ8fPWV3QfdK+/DrJXMcgkDOCO9X
+   nnykN5VX7ACm8P4qcNfG43M4G/VjwDCB4lDQxuj+u5lFhqhjawOVDmAba
+   vBCxoTM8IBjVzdB9q1r+cHIM/RozPO98/0tHqEiWAF06YCv6IPPjJ8hUh
+   W3zjnLRRunfIp0LMpeqTZNt/8vovrqKKXH0kd4vHHjmekSClE9UOkpQ7Y
+   cpy8NBZdMFZM5ipnHGkkz4JnsqOhsIQ6SzyjZzgztzb1rZPy/VwcpSJAY
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10657"; a="319840812"
+X-IronPort-AV: E=Sophos;i="5.98,283,1673942400"; 
+   d="scan'208";a="319840812"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Mar 2023 03:41:29 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10657"; a="746671508"
+X-IronPort-AV: E=Sophos;i="5.98,283,1673942400"; 
+   d="scan'208";a="746671508"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by fmsmga008.fm.intel.com with ESMTP; 23 Mar 2023 03:41:27 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pfINl-000EFo-1w;
+        Thu, 23 Mar 2023 10:41:21 +0000
+Date:   Thu, 23 Mar 2023 18:40:27 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     oe-kbuild-all@lists.linux.dev,
+        Kathiravan T <quic_kathirav@quicinc.com>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq5332: add support for the
+ RDP468 variant
+Message-ID: <202303231817.8ZgIUk1u-lkp@intel.com>
+References: <20230323044929.8694-3-quic_kathirav@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-8-3ead1e418fe4@linaro.org>
-References: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-0-3ead1e418fe4@linaro.org>
-In-Reply-To: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-0-3ead1e418fe4@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-scsi@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.1
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230323044929.8694-3-quic_kathirav@quicinc.com>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the final "s" to the pgio properties and fix the invalid "enable"
-name to the correct "wake", checked against the HDK8450 schematics.
+Hi Kathiravan,
 
-Fixes: bc6588bc25fb ("arm64: dts: qcom: sm8450: add PCIe1 root device")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Thank you for the patch! Yet something to improve:
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 8ecc48c7c5ef..d964d3fbe20c 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -1908,8 +1908,8 @@ pcie1: pci@1c08000 {
- 			phys = <&pcie1_lane>;
- 			phy-names = "pciephy";
- 
--			perst-gpio = <&tlmm 97 GPIO_ACTIVE_LOW>;
--			enable-gpio = <&tlmm 99 GPIO_ACTIVE_HIGH>;
-+			perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
-+			wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
- 
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&pcie1_default_state>;
+[auto build test ERROR on next-20230322]
+[cannot apply to robh/for-next v6.3-rc3 v6.3-rc2 v6.3-rc1 linus/master v6.3-rc3]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Kathiravan-T/arm-qcom-document-MI01-6-board-based-on-IPQ5332-family/20230323-125035
+patch link:    https://lore.kernel.org/r/20230323044929.8694-3-quic_kathirav%40quicinc.com
+patch subject: [PATCH 2/2] arm64: dts: qcom: ipq5332: add support for the RDP468 variant
+config: arm64-randconfig-s032-20230322 (https://download.01.org/0day-ci/archive/20230323/202303231817.8ZgIUk1u-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 12.1.0
+reproduce:
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # apt-get install sparse
+        # sparse version: v0.6.4-39-gce1a6720-dirty
+        # https://github.com/intel-lab-lkp/linux/commit/4ffc03616fd37a138e119e0e8ee38944b2f7d99d
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Kathiravan-T/arm-qcom-document-MI01-6-board-based-on-IPQ5332-family/20230323-125035
+        git checkout 4ffc03616fd37a138e119e0e8ee38944b2f7d99d
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__' O=build_dir ARCH=arm64 olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__' O=build_dir ARCH=arm64 SHELL=/bin/bash
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202303231817.8ZgIUk1u-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> Error: arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts:31.1-12 Label or path blsp1_spi0 not found
+>> FATAL ERROR: Syntax error parsing input tree
 
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
