@@ -2,70 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C07B26C5FDD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 07:43:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2256B6C5FE1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 07:45:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229801AbjCWGn2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 02:43:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45380 "EHLO
+        id S229951AbjCWGof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 02:44:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbjCWGn1 (ORCPT
+        with ESMTP id S230072AbjCWGoK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 02:43:27 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 411192B9FA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 23:43:26 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id r11so82283184edd.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 23:43:26 -0700 (PDT)
+        Thu, 23 Mar 2023 02:44:10 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 376E32DE49
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 23:44:09 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id cy23so82167267edb.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Mar 2023 23:44:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679553805;
+        d=linaro.org; s=google; t=1679553847;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KMstDaxIo7QDe7MvS8uu7aa17VLPebxI9kqoNib2A2k=;
-        b=uxC1y+LWu9pqT2v/6Ee/Kos/qzF49sg2YK8pHq3JAmy5Mzjwjlx2CkszMz6K39XQca
-         01hSaIgvyFeldRs6Lo+zq8sk9QOVwV6vKdwkdzaNmow69fmibnsYB6f5ju8kJFxyAnfx
-         SRx3DEkXcbSJ6El92L7BWOSxCifjk2Tb4YgMOzKhIWsjBOK6bWKKR5KMyFOURhEtzQtt
-         cTm/cE7Ff870dnrgRMkVldTl9CICXBvFYlk+4IJZS8YdEePOkqMhZl6dk6qHF1nevdth
-         fA0YH/2jjhE+Cg3FaLe3tk7z9HVfqPcdpTT/gWf30o77stP0kKvmdsjuamjyHwb9v09X
-         vcYA==
+        bh=nM/3ywyvpAsiOiRY1HG3AOIo3FGoRoVm1IbIAeulEYo=;
+        b=xmy41Dff79qydbj9wKemr6aBQC0XKLClWYZ1/+XIZiVohdMkGZJ3QKWXtj7Oas6pAn
+         ldPX8vzbA8iht3C0HmibE5watwyMozHf0LmEN4iP2kI/b+Qtq05XzUA0kTEP17vPOmy9
+         5tVHC1kyAfrLGtjIWpY4P8gRjvj3HErA819f1QHu+QOcszwMScwZl5EPe+2pUx/a1Okk
+         mjedExTz7dM5edumDgRMTPZheLYzy//eor94c+ffp3c7KbJmJp23O2RowN7igR4mlAaO
+         ypmEGPtxEKgG2/TK15pKhCTwzMLKBPdimmQGskMRgXeZzSuLVD2YK6jCd8L4ZKRBS9E1
+         X1RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679553805;
+        d=1e100.net; s=20210112; t=1679553847;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KMstDaxIo7QDe7MvS8uu7aa17VLPebxI9kqoNib2A2k=;
-        b=jmXftEYyKy41XYwlUaZll/hdrBmQau6dZBlglOXpOzjmY8UimoahAz3TTsYsnULImS
-         P7UDLRH3FOUWbJlJ0WGjkcF5+gqWGwAlimSokLWLLkbyrfo8c2W+HfDod1K5qjin1n6n
-         B9wMiepxAVKJBqoOCHQQ13txDPeDeTTIVFVq+YrEAbVe4oZFeWaD8BdI9Tb27EvM8H1k
-         +FObS5l+An3i8hLPrDREd/Ns5Z8sEUXvrerOca3KBy2AlUmx8ZInxh4/iyLtbkpqBjO/
-         3BL/iKVUfk8mqKiDun+F1+XAIrQ8kvyI5PWk8QWxAmecUlHXbkj431keTFtnmUe0P7i8
-         fn0w==
-X-Gm-Message-State: AO0yUKXXbhm7D/jidPlgt76HQ/hFsOESOiTj2hKSYW4X/p71lsGkbPin
-        xfPnZWVuMMldCwhrg17aDOkRUQ==
-X-Google-Smtp-Source: AK7set/gHIJWEZr93ODMdLwd1QBFzT0ySar24Lhp25hvuevBlNyjI4wIDW5Hr1bkgba9o7/fCw0zUw==
-X-Received: by 2002:a17:906:3159:b0:884:9217:4536 with SMTP id e25-20020a170906315900b0088492174536mr10099013eje.64.1679553804787;
-        Wed, 22 Mar 2023 23:43:24 -0700 (PDT)
+        bh=nM/3ywyvpAsiOiRY1HG3AOIo3FGoRoVm1IbIAeulEYo=;
+        b=i/FxMNrtbeo29iW9u6WwcF/mor1SF8BaZCfYtHZvnA10AdPOgzMZoXh8eD9odZkHQl
+         ORJssiilKmDobEzM2OEA7Afpz4Q9WdXWfnvk3AGUsgHHol5VeIgjNqn5vFXHg9oNY8VQ
+         0YBZOXz62x+0E/n7Pw6tIxihNL5ZowE4y16aOA0qJqTPTNn3LH86TkQIAQELvtF7GVVt
+         ct162lZmdmTRg3iqSvrEWC2w/JzgxO2OcrhmpY0FzoLu1hVuLi9qVfDzkz2dQPSAX26G
+         mLFrymnJOvo+LfPNr8hv5uBn6mTB4BPEF4U+jwaI9tiCYJe9cryPWqzfKMf7jw6HH1x2
+         GJgg==
+X-Gm-Message-State: AO0yUKXOf5Fj+XpAGQHWRtDyo6bZcTaiZcwc1QC5AO7F7c3jikejlQ8W
+        yQomNPABhhxy+hW8Pm0cJTI4SQ==
+X-Google-Smtp-Source: AK7set99aCxB2NNu170LpJUYY1O9/A3/pVich1AlGKdGJ2lRlsdCiHActK9XKOraSg3Fw0G08QsM2g==
+X-Received: by 2002:a17:907:382:b0:921:412b:d8c1 with SMTP id ss2-20020a170907038200b00921412bd8c1mr9233255ejb.71.1679553847515;
+        Wed, 22 Mar 2023 23:44:07 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:a665:ed1e:3966:c991? ([2a02:810d:15c0:828:a665:ed1e:3966:c991])
-        by smtp.gmail.com with ESMTPSA id m27-20020a170906259b00b0093a3a663ebdsm3045523ejb.154.2023.03.22.23.43.23
+        by smtp.gmail.com with ESMTPSA id ch19-20020a170906c2d300b00933d64cd447sm5552271ejb.121.2023.03.22.23.44.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Mar 2023 23:43:24 -0700 (PDT)
-Message-ID: <22ad032d-a1b0-cfe5-11d6-94f6fc76e2c7@linaro.org>
-Date:   Thu, 23 Mar 2023 07:43:23 +0100
+        Wed, 22 Mar 2023 23:44:07 -0700 (PDT)
+Message-ID: <b50470b0-4062-5d2c-2eaf-29cef34fd2d4@linaro.org>
+Date:   Thu, 23 Mar 2023 07:44:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 1/2] arm: qcom: document MI01.6 board based on IPQ5332
- family
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq5332: add support for the RDP468
+ variant
 Content-Language: en-US
 To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230323044929.8694-1-quic_kathirav@quicinc.com>
- <20230323044929.8694-2-quic_kathirav@quicinc.com>
+ <20230323044929.8694-3-quic_kathirav@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230323044929.8694-2-quic_kathirav@quicinc.com>
+In-Reply-To: <20230323044929.8694-3-quic_kathirav@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -79,19 +79,82 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23/03/2023 05:49, Kathiravan T wrote:
-> Document the MI01.6 (Reference Design Platform 468) board based on IPQ5332
-> family of SoCs.
+> Add the initial device tree support for the Reference Design
+> Platform(RDP) 468 based on IPQ5332 family of SoCs. This patch carries the
+> support for Console UART, SPI NOR, eMMC.
 > 
 > Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-
-Use subject prefixes matching the subsystem (which you can get for
-example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-your patch is touching).
-
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  arch/arm64/boot/dts/qcom/Makefile           |   1 +
+>  arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts | 103 ++++++++++++++++++++
+>  2 files changed, 104 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 1a29403400b7..79cf8373997f 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -4,6 +4,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-mi01.2.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp468.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts
+> new file mode 100644
+> index 000000000000..b2899f953aa4
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts
+> @@ -0,0 +1,103 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * IPQ5332 RDP468 board device tree source
+> + *
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "ipq5332.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. IPQ5332 MI01.6";
+> +	compatible = "qcom,ipq5332-ap-mi01.6", "qcom,ipq5332";
+> +
+> +	aliases {
+> +		serial0 = &blsp1_uart0;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0";
+> +	};
+> +};
+> +
+> +&blsp1_uart0 {
+> +	pinctrl-0 = <&serial_0_pins>;
+> +	pinctrl-names = "default";
+> +	status = "okay";
+> +};
+> +
+> +&blsp1_spi0 {
+> +	pinctrl-0 = <&spi_0_data_clk_pins &spi_0_cs_pins>;
+> +	pinctrl-names = "default";
+> +	status = "okay";
+> +
+> +	flash@0 {
+> +		compatible = "micron,n25q128a11", "jedec,spi-nor";
+> +		#address-cells = <1>;
+> +		#size-cells = <1>;
+> +		reg = <0>;
 
+reg is always second property, after compatible.
+
+> +		spi-max-frequency = <50000000>;
+> +	};
+> +};
+> +
 
 
 Best regards,
