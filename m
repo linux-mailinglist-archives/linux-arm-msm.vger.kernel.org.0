@@ -2,67 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66E766C70CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 20:11:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC6866C70DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 20:16:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231211AbjCWTLE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 15:11:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33760 "EHLO
+        id S230025AbjCWTQC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 15:16:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229823AbjCWTLD (ORCPT
+        with ESMTP id S229951AbjCWTQB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 15:11:03 -0400
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49D37171C;
-        Thu, 23 Mar 2023 12:11:02 -0700 (PDT)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-        id 6FE291C0E45; Thu, 23 Mar 2023 20:11:00 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
-        t=1679598660;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=aRHbTBB+ZgSTv8KzTFw1avZ2sf6wVSfYjmXj3OLadfU=;
-        b=WUsbZMTdi1dQlK/4H3Xv9ArPjsuIMUxpSFwGMub4AZtfoYc0oMVOCdkbQ2YjKggzu6dMB1
-        8/6ydNZJvXxECORDcGhsUhgc71YQX105BVUfg1favqDeOxxfizoj39rK55mpyM+ncRrurM
-        7AuueYcYPNp8XcC2R2Lb0NBjGgM+2GI=
-Date:   Thu, 23 Mar 2023 20:11:00 +0100
-From:   Pavel Machek <pavel@ucw.cz>
-To:     Andrew Lunn <andrew@lunn.ch>
-Cc:     Christian Marangi <ansuelsmth@gmail.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, John Crispin <john@phrozen.org>,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org
-Subject: Re: [net-next PATCH v5 15/15] arm: mvebu: dt: Add PHY LED support
- for 370-rd WAN port
-Message-ID: <ZBykRJmkxF7zf8g8@duo.ucw.cz>
-References: <20230319191814.22067-1-ansuelsmth@gmail.com>
- <20230319191814.22067-16-ansuelsmth@gmail.com>
- <ZBxAZRcEBg4to132@duo.ucw.cz>
- <318f65ef-fd63-446d-bd08-1ba51b1d1f72@lunn.ch>
+        Thu, 23 Mar 2023 15:16:01 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E082A46BD;
+        Thu, 23 Mar 2023 12:15:53 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32N9c24I012513;
+        Thu, 23 Mar 2023 19:15:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=E6sRcFYLj/ODfv6xpWX7Y3ex6yAZfSKdj+3I1ftGCPc=;
+ b=dfjtRitVi3rHkCqy7A5ssteI91mhJT2f4u1NhkO7Ce56wZVpWjhBe5KYb5aw9Slr7fEH
+ kLnuvup0DlsiXh7km5HOrq0FXJ4QiwQUgtsILGMg/9b5DtdH5lSaYLCiISxjsj7iLBYP
+ EIwpJY/CWMsJGQdW69qzJvSE0x7nPXuWcdWg+XVLhqimZuIlhMaIi4YMSA9xr/9ST2ap
+ S+Ca4szjlgiwbDGeLJE8Q2+fUkC8bJu+vbe2zH32jDyZzJKe3xJf3z++W3JukK+SnVQy
+ iR4IFbE7iwBuVYYElwkWoWOAYqk6ox7HbQEob7C+vjD9joX927BlJSKahgIeLz8PBQOV Iw== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pgm9x9g2t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 23 Mar 2023 19:15:49 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32NJFnqC002479
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 23 Mar 2023 19:15:49 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Thu, 23 Mar 2023 12:15:48 -0700
+From:   Elliot Berman <quic_eberman@quicinc.com>
+To:     Jassi Brar <jassisinghbrar@gmail.com>
+CC:     Elliot Berman <quic_eberman@quicinc.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        <linux-kernel@vger.kernel.org>, <linux-acpi@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH v2 0/3] mailbox: Allow direct registration to a channel
+Date:   Thu, 23 Mar 2023 12:15:24 -0700
+Message-ID: <20230323191527.1472695-1-quic_eberman@quicinc.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="rI4G7utm2RBg+ik3"
-Content-Disposition: inline
-In-Reply-To: <318f65ef-fd63-446d-bd08-1ba51b1d1f72@lunn.ch>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NLQngCub2PMNedec7vYB8ohVtuvdcKrQ
+X-Proofpoint-ORIG-GUID: NLQngCub2PMNedec7vYB8ohVtuvdcKrQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-23_12,2023-03-23_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ mlxlogscore=709 adultscore=0 spamscore=0 impostorscore=0
+ priorityscore=1501 clxscore=1011 mlxscore=0 bulkscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303150002 definitions=main-2303230141
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,75 +76,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Two mailbox controllers have channel/client binding mechanisms that are
+controller-specific and not using the devicetree binding mechanisms. Mailbox
+channel/client is conceptually done in two steps: selecting the channel
+and binding the selected to channel to a client. Channel selection is sometimes
+controller specific (pcc and omap are examples). The channel/client binding
+code is all the same.
 
---rI4G7utm2RBg+ik3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This small series de-duplicates and refactors the channel/client binding
+into a common framework function: "mbox_bind_client" which all of the
+channel selection mechanisms can use.
 
-Hi!
+I found this duplicate code while working on the support for Gunyah hypervisor
+message queues [1]. I've only been able to compile-test omap-mailbox and pcc,
+however it is a straightforward conversion here.
 
-> > > The WAN port of the 370-RD has a Marvell PHY, with one LED on
-> > > the front panel. List this LED in the device tree.
-> > >=20
-> > > Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-> > > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> >=20
-> > > @@ -135,6 +136,19 @@ &mdio {
-> > >  	pinctrl-names =3D "default";
-> > >  	phy0: ethernet-phy@0 {
-> > >  		reg =3D <0>;
-> > > +		leds {
-> > > +			#address-cells =3D <1>;
-> > > +			#size-cells =3D <0>;
-> > > +
-> > > +			led@0 {
-> > > +				reg =3D <0>;
-> > > +				label =3D "WAN";
-> > > +				color =3D <LED_COLOR_ID_WHITE>;
-> > > +				function =3D LED_FUNCTION_LAN;
-> > > +				function-enumerator =3D <1>;
-> > > +				linux,default-trigger =3D "netdev";
-> > > +			};
-> > > +		};
-> > >  	};
-> > > =20
-> >=20
-> > How will this end up looking in sysfs?
->=20
-> Hi Pavel
->=20
-> It is just a plain boring LED, so it will look like all other LEDs.
-> There is nothing special here.
+[1]: https://lore.kernel.org/all/20230120224627.4053418-9-quic_eberman@quicinc.com/
 
-Well, AFAICT it will end up as /sys/class/leds/WAN, which is really
-not what we want. (Plus the netdev trigger should be tested; we'll
-need some kind of link to the ethernet device if we want this to work
-on multi-ethernet systems).
+Changes since v1:
+ - Rebase to https://git.linaro.org/landing-teams/working/fujitsu/integration.git/log/?h=mailbox-for-next
+ - Add Tested-By from Sudeep (thanks!)
 
-> > Should documentation be added to Documentation/leds/leds-blinkm.rst
-> >  ?
->=20
-> This has nothing to do with blinkm, which appears to be an i2c LED
-> driver.
+Elliot Berman (3):
+  mailbox: Allow direct registration to a channel
+  mailbox: omap: Use mbox_bind_client
+  mailbox: pcc: Use mbox_bind_client
 
-Sorry, I meant
+ drivers/mailbox/mailbox.c      | 96 ++++++++++++++++++++++++----------
+ drivers/mailbox/omap-mailbox.c | 22 ++------
+ drivers/mailbox/pcc.c          | 82 ++++++++++++++++-------------
+ include/linux/mailbox_client.h |  1 +
+ 4 files changed, 118 insertions(+), 83 deletions(-)
 
-Should documentation be added to Documentation/leds/well-known-leds.txt ?
 
-Best regards,
-								Pavel
---=20
-People of Russia, stop Putin before his war on Ukraine escalates.
+base-commit: 6ccbe33a39523f6d62b22c5ee99c6695993c935e
+-- 
+2.39.2
 
---rI4G7utm2RBg+ik3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZBykRAAKCRAw5/Bqldv6
-8hYAAJ9Bvn10XxUIr7aK5MpezU9ojjLFBQCdGvLFTqwn12xC4aE58YdyoLAftHM=
-=uXc6
------END PGP SIGNATURE-----
-
---rI4G7utm2RBg+ik3--
