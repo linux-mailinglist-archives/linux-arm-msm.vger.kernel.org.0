@@ -2,89 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 466016C69F4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 14:52:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C57C6C6A3E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 14:59:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231809AbjCWNwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 09:52:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40096 "EHLO
+        id S231283AbjCWN7F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 09:59:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231127AbjCWNwC (ORCPT
+        with ESMTP id S232000AbjCWN6t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 09:52:02 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A7A93599;
-        Thu, 23 Mar 2023 06:52:01 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32N86q2v021150;
-        Thu, 23 Mar 2023 13:51:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=NlVdZ9nLQmvQl7BXjEHStDcD+x9JoHAKNiHr8EHjfW4=;
- b=hKvJLtNjj5TpDoQ8dRpOOAB4yA0ejPsxaj0xnKP1n7IvMEHh/fZKrwAwWenuYaxFp9jA
- Y5jTKgqDwFnjCt5085LqZOd+lWKEdzGLuAhlktEtSd0JiY2jP0v+nXBby5SHj8Z7onYt
- fFjPz0DDR/a49fqTnWpSTJaAd7uOfzgYTKzX7lUZWyYSpKbZpbzVpknHGKmJx3fHxwgb
- yKO/DlXe0S7iE7xyfwIIBsOdF6iyrYPckq11Z5nBp5FrDhynLqUrJHqB7IMu19JNBwQL
- RvTz8vklsWt8hH4+6KiQAk0y1fFl1XaxUbWKAJ1KrEHaqvPOVzmglhuXfnPS5an99Tww kQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pgfaxh9eu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Mar 2023 13:51:51 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32NDpoW9018017
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Mar 2023 13:51:50 GMT
-Received: from [10.50.6.215] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 23 Mar
- 2023 06:51:46 -0700
-Message-ID: <9467586f-4fda-7fb9-2752-35a9e1147ad8@quicinc.com>
-Date:   Thu, 23 Mar 2023 19:21:42 +0530
+        Thu, 23 Mar 2023 09:58:49 -0400
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4AC126C15;
+        Thu, 23 Mar 2023 06:58:43 -0700 (PDT)
+Received: by mail-oi1-f174.google.com with SMTP id bj20so6728940oib.3;
+        Thu, 23 Mar 2023 06:58:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679579923;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=kLy7q/A/bSUpQB88gV+M1rWoFEj0u/mE7p9M7z5KPxc=;
+        b=Y4Sy7uYLUJnyvyS+rVzyQGfv71cv4UXuCnwMaCDzw4ZH1sRVwt6LGwh+1NM8mSR9Bb
+         eKGNLvXGgGkg6d1DEa7l8CJsOLyMtzmkt+UooR7/yOnVZKLljcxkClx3uIYvfkR+TMq5
+         NJoytvn1mjNhJcvOS6J3F7+vUXnJIqNX4fB1+o9zcDg6dvIrx9FSaRS+K8sFQrngvyZK
+         +iqzDCyLtvVa3rQMTJiP2hAbLH1XJcEpJpt9FCaSgQdxNYsh9/0sdNOaw1z8LJUJfKKh
+         lJe6+BpBFXEkDOfXIQG7YooHJj0OsGKsDXxfG1yQ8Ps7UVWW8RewCyrjgzoVIQIceWT1
+         H9AA==
+X-Gm-Message-State: AO0yUKWCFjGRPV/KQhBWfXdg3tveNrr77mJxlzjRow+nf+H8qo0xEJxR
+        95WApHUqlJ+iqaTANowC/w==
+X-Google-Smtp-Source: AK7set8qwrjXII8gCt0viTsj6luC6GTMyRzo91grHXaVn2O6CN5v9bpYOQNNQI2X4OcnrQchlFDcpQ==
+X-Received: by 2002:a05:6808:1a24:b0:387:1ad3:6c75 with SMTP id bk36-20020a0568081a2400b003871ad36c75mr3578090oib.1.1679579922898;
+        Thu, 23 Mar 2023 06:58:42 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id b1-20020a4a98c1000000b00524f47b4682sm7208582ooj.10.2023.03.23.06.58.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Mar 2023 06:58:42 -0700 (PDT)
+Received: (nullmailer pid 3103742 invoked by uid 1000);
+        Thu, 23 Mar 2023 13:58:37 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH V1 2/4] dt-bindings: soc: qcom,mpm-sleep-counter: Add the
- dtschema
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+From:   Rob Herring <robh@kernel.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        devicetree@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <cover.1679403696.git.quic_schowdhu@quicinc.com>
- <576e53a1d0ef218536da976102b4cc207436ec1d.1679403696.git.quic_schowdhu@quicinc.com>
- <e845b412-9afa-3d9e-54fc-7f9f04d25c05@linaro.org>
- <8efa2296-7136-690a-6e6b-c9b41562ba84@quicinc.com>
- <855b64ea-ccd3-4925-29a8-ebb8d0734adc@linaro.org>
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <855b64ea-ccd3-4925-29a8-ebb8d0734adc@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: aECxtBJgfDAqk5qEqYto4prmuEjtXv3r
-X-Proofpoint-ORIG-GUID: aECxtBJgfDAqk5qEqYto4prmuEjtXv3r
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-22_21,2023-03-22_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- lowpriorityscore=0 malwarescore=0 phishscore=0 impostorscore=0
- adultscore=0 spamscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303230105
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Avri Altman <avri.altman@wdc.com>, Sean Paul <sean@poorly.run>,
+        dri-devel@lists.freedesktop.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Lee Jones <lee@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        David Airlie <airlied@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        freedreno@lists.freedesktop.org
+In-Reply-To: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-3-3ead1e418fe4@linaro.org>
+References: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-0-3ead1e418fe4@linaro.org>
+ <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-3-3ead1e418fe4@linaro.org>
+Message-Id: <167957963115.3095299.4593054829506617284.robh@kernel.org>
+Subject: Re: [PATCH 3/8] dt-bindings: ufs: qcom: document the fact the UFS
+ controller can have an ICE core
+Date:   Thu, 23 Mar 2023 08:58:37 -0500
+X-Spam-Status: No, score=0.8 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -92,37 +83,44 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On Thu, 23 Mar 2023 11:25:18 +0100, Neil Armstrong wrote:
+> Move the qcom,sm8450-ufshc to the right allOf:if allowing the ICE clocks
+> and registers to be specified.
+> 
+> Fixes: 462c5c0aa798 ("dt-bindings: ufs: qcom,ufs: convert to dtschema")
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-On 3/22/2023 10:01 PM, Krzysztof Kozlowski wrote:
-> On 22/03/2023 15:02, Souradeep Chowdhury wrote:
->>
->>
->> On 3/21/2023 11:09 PM, Krzysztof Kozlowski wrote:
->>> On 21/03/2023 14:51, Souradeep Chowdhury wrote:
->>>> Add the device tree bindings for the module power manager sleep
->>>> counter.
->>>>
->>>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->>>> ---
->>>>    .../bindings/soc/qcom/qcom,mpm-sleep-counter.yaml  | 40 ++++++++++++++++++++++
->>>>    1 file changed, 40 insertions(+)
->>>>    create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,mpm-sleep-counter.yaml
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,mpm-sleep-counter.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,mpm-sleep-counter.yaml
->>>> new file mode 100644
->>>> index 0000000..f9f46b7
->>>> --- /dev/null
->>>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,mpm-sleep-counter.yaml
->>>
->>> Your code a bit explains this... this is not a device but some memory
->>> region. Does not look like suitable for bindings as separate device.
->>
->> Ack. Can you let me know the suitable place to put the bindings for this?
-> 
-> Reserved memory region? Or drop from bindings entirely.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Ack. Will drop this for now.
-> 
-> Best regards,
-> Krzysztof
-> 
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: clocks: [[4294967295, 151], [4294967295, 10], [4294967295, 150], [4294967295, 166], [4294967295, 0], [4294967295, 164], [4294967295, 160], [4294967295, 162]] is too short
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: clock-names: ['core_clk', 'bus_aggr_clk', 'iface_clk', 'core_clk_unipro', 'ref_clk', 'tx_lane0_sync_clk', 'rx_lane0_sync_clk', 'rx_lane1_sync_clk'] is too short
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: reg: [[0, 30949376, 0, 12288]] is too short
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-3-3ead1e418fe4@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
