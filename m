@@ -2,122 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD9496C6B71
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 15:47:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D3746C6B73
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 15:48:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229548AbjCWOrb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 10:47:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48614 "EHLO
+        id S231611AbjCWOsM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 10:48:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230435AbjCWOrb (ORCPT
+        with ESMTP id S231552AbjCWOsL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 10:47:31 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E16A726590
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 07:47:29 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id y20so28104015lfj.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 07:47:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679582848;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7FnaHvkF/EeUZFXtYAGWVdOTWkg/zMiRbhBKZ4hSqrA=;
-        b=K8hQz8uz6sDTC4RwHRVPoE7V1oYrLzk/9kyOh2PrHn0B50om43st3+8UiBs4scpFze
-         7SMi1tW/2k70JsGXVnW5JjaoUCdTxNtIKvK1XBtLI5139dIvqXgXsGR7PqTBU4g/QPqY
-         U16nBl+GxTIRAvmbNeFQN/fH/m2kN+yyio79+rveLgOZkehlgzMynOZhpLAQUb2hsSOp
-         66bpDv71DR8u2RhgDd4ykLpDuLoUrLqboulR7cTrVV3jvB2lMBsLQrnkYfHufV4CaIzA
-         KAwGTQYWGNbYoAtH9914HV/AxRdy7vPcVO9LYHCYCD/r/drKZD+/19xWbcPiI9kxjNiV
-         8eSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679582848;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7FnaHvkF/EeUZFXtYAGWVdOTWkg/zMiRbhBKZ4hSqrA=;
-        b=lkyvgPZ2dRF2lpZ8Dck9ONkJUlC929UV1YKKSrNh69u2EJg9Z5PD80xJ476pAN6IsF
-         WRY1enWRlN0USJrH5h1Hs+b6OkrVr1ea5T0hcRtnTqHnq5Ozz9zJzYhO4pAL54cbJ8cR
-         Si8hy24hD3KErSU34vOZDzRHdk0ZCBgM7vc5jVj60Ke6V9zelYakcIVdnm8cWSXuYMBs
-         i3CuY5u8kOnXUc8mYcstiI2pWfjpqoTsDLeto+k++oRi8XWLgdhzbLWPHaZzkM4U85zs
-         NOpas11kckUPGrXNbc1tLeOryayEu4H2yc4bn+3fHkaLIgjpe2jlShQQrAOVABNe2uso
-         U3LA==
-X-Gm-Message-State: AO0yUKUrRdCUTf0eB7jHRvt3iSwHq3ZNfYn1EMie6l1FkjjR7jBxgLsC
-        lLiJfX2PmQ3CWxjtJ4F2ApgijA==
-X-Google-Smtp-Source: AK7set8g5D2AaDWEp61cURfkGfT32ewkiNOn9Lfx/3jzOjCBt4S0jUTaGPcOfbyKpiBkVYvluUxLnQ==
-X-Received: by 2002:a05:6512:15b:b0:4b5:8507:9ae6 with SMTP id m27-20020a056512015b00b004b585079ae6mr3297539lfo.2.1679582848198;
-        Thu, 23 Mar 2023 07:47:28 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id z15-20020ac24f8f000000b004e83fc5f627sm2922033lfs.188.2023.03.23.07.47.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Mar 2023 07:47:27 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH 2/2] phy: qcom-qmp-combo: use qmp_combo_offsets_v3 instead of _v6
-Date:   Thu, 23 Mar 2023 17:47:26 +0300
-Message-Id: <20230323144726.1614344-2-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20230323144726.1614344-1-dmitry.baryshkov@linaro.org>
-References: <20230323144726.1614344-1-dmitry.baryshkov@linaro.org>
+        Thu, 23 Mar 2023 10:48:11 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 17401DBE2;
+        Thu, 23 Mar 2023 07:48:10 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D3BDF4B3;
+        Thu, 23 Mar 2023 07:48:53 -0700 (PDT)
+Received: from [10.57.53.151] (unknown [10.57.53.151])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9C80A3F6C4;
+        Thu, 23 Mar 2023 07:48:06 -0700 (PDT)
+Message-ID: <4cde9235-e86a-73a0-5c6c-ac193328006b@arm.com>
+Date:   Thu, 23 Mar 2023 14:48:04 +0000
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.0
+Subject: Re: [PATCH v3 04/11] coresight-tpdm: Add reset node to TPDM node
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+References: <1679551448-19160-1-git-send-email-quic_taozha@quicinc.com>
+ <1679551448-19160-5-git-send-email-quic_taozha@quicinc.com>
+ <a7484268-49a5-632b-bfc2-8731de01d82b@arm.com>
+In-Reply-To: <a7484268-49a5-632b-bfc2-8731de01d82b@arm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.3 required=5.0 tests=NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The qmp_combo_offsets_v3 table is already used for v3 and v4 PHYs. Reuse
-it for v6 too, dropping the separate qmp_combo_offsets_v6.
+On 23/03/2023 14:41, Suzuki K Poulose wrote:
+> On 23/03/2023 06:04, Tao Zhang wrote:
+>> TPDM device need a node to reset the configurations and status of
+>> it. This change provides a node to reset the configurations and
+>> disable the TPDM if it has been enabled.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 18 +-----------------
- 1 file changed, 1 insertion(+), 17 deletions(-)
+Please justify why this "do everything" magic knob is required
+when there are tunables for individual controls in the later
+patches.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 3b488d12c933..6850e04c329b 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -1417,22 +1417,6 @@ static const struct qmp_combo_offsets qmp_combo_offsets_v5 = {
- 	.dp_dp_phy	= 0x2200,
- };
- 
--static const struct qmp_combo_offsets qmp_combo_offsets_v6 = {
--	.com		= 0x0000,
--	.txa		= 0x1200,
--	.rxa		= 0x1400,
--	.txb		= 0x1600,
--	.rxb		= 0x1800,
--	.usb3_serdes	= 0x1000,
--	.usb3_pcs_misc	= 0x1a00,
--	.usb3_pcs	= 0x1c00,
--	.usb3_pcs_usb	= 0x1f00,
--	.dp_serdes	= 0x2000,
--	.dp_txa		= 0x2200,
--	.dp_txb		= 0x2600,
--	.dp_dp_phy	= 0x2a00,
--};
--
- static const struct qmp_phy_cfg sc7180_usb3dpphy_cfg = {
- 	.serdes_tbl		= qmp_v3_usb3_serdes_tbl,
- 	.serdes_tbl_num		= ARRAY_SIZE(qmp_v3_usb3_serdes_tbl),
-@@ -1759,7 +1743,7 @@ static const struct qmp_phy_cfg sm8350_usb3dpphy_cfg = {
- };
- 
- static const struct qmp_phy_cfg sm8550_usb3dpphy_cfg = {
--	.offsets		= &qmp_combo_offsets_v6,
-+	.offsets		= &qmp_combo_offsets_v3,
- 
- 	.serdes_tbl		= sm8550_usb3_serdes_tbl,
- 	.serdes_tbl_num		= ARRAY_SIZE(sm8550_usb3_serdes_tbl),
--- 
-2.30.2
+Suzuki
+
+>>
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>> ---
+>>   drivers/hwtracing/coresight/coresight-tpdm.c | 28 
+>> ++++++++++++++++++++++++++++
+>>   1 file changed, 28 insertions(+)
+>>
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c 
+>> b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> index 5e1e2ba..104638d 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> @@ -161,6 +161,33 @@ static void tpdm_datasets_setup(struct 
+>> tpdm_drvdata *drvdata)
+>>       drvdata->datasets |= pidr & GENMASK(TPDM_DATASETS - 1, 0);
+>>   }
+>> +static ssize_t reset_store(struct device *dev,
+>> +                      struct device_attribute *attr,
+>> +                      const char *buf,
+>> +                      size_t size)
+>> +{
+>> +    int ret = 0;
+>> +    unsigned long val;
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    ret = kstrtoul(buf, 10, &val);
+>> +    if (ret || val != 1)
+>> +        return -EINVAL;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    /* Reset all datasets to ZERO, and init the default data*/
+>> +    tpdm_init_datasets(drvdata);
+> 
+> With the suggested rename in the previous patch, you wouldn't need
+> a comment here.
+> 
+>> +
+>> +    spin_unlock(&drvdata->spinlock);
+>> +
+> 
+> 
+>> +    /* Disable tpdm if enabled */
+>> +    if (drvdata->enable)
+>> +        coresight_disable(drvdata->csdev);
+> 
+> Couldn't this be done via disable_source ? Please don't overload
+> the sysfs handle.
+> 
+>> +
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_WO(reset);
+> 
+> Documentation for the sysfs node please ?
+> 
+> Suzuki
+> 
 
