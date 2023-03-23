@@ -2,103 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 716436C6EC9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 18:27:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3ED3C6C6EE1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 18:31:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231659AbjCWR11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 13:27:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38108 "EHLO
+        id S232296AbjCWRbZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 13:31:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230132AbjCWR10 (ORCPT
+        with ESMTP id S232213AbjCWRbV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 13:27:26 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 201E8F1;
-        Thu, 23 Mar 2023 10:27:25 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DC3CB2F4;
-        Thu, 23 Mar 2023 10:28:08 -0700 (PDT)
-Received: from [10.57.53.151] (unknown [10.57.53.151])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B25633F766;
-        Thu, 23 Mar 2023 10:27:21 -0700 (PDT)
-Message-ID: <b3bb6dc1-ceeb-0116-055b-25a27da8ab38@arm.com>
-Date:   Thu, 23 Mar 2023 17:27:20 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.9.0
-Subject: Re: [PATCH v3 08/11] coresight-tpdm: Add nodes to configure pattern
- match output
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+        Thu, 23 Mar 2023 13:31:21 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D28A2BF13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 10:31:09 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id d22so13026535pgw.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 10:31:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1679592668;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wNlWMVOfIBJ5sYCGk8cV0F2Gur6V9aihLXHyK/3m6GA=;
+        b=D1RO0Cz6QFWcPTByVwzHxkejA8/LZKJHXqOZ52+1fJ13P+NhalK/oDMzGRpbyvCpSo
+         uTvXg9zRZarU4aMWWUX/LajFQET4gAUxlsx714/9xguyX2PZIIwrdEQkNw+Py97QDJ8w
+         KHoes0QMnx09cpXmq5K0lMxqq02IAF2kNq9ZU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679592668;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wNlWMVOfIBJ5sYCGk8cV0F2Gur6V9aihLXHyK/3m6GA=;
+        b=gloE9SQo21J0cx5Dp2Ct3+VyLCKUO7MOngM+U2l0EZFS8WCsYJyIFM34zVPZZZkwwu
+         SLiDMaHCLkppKuk0fM98elXUawWWeDnB+yxQnLRqeksu4w6mVMdBxPpMY2eGAeataBt0
+         J/a9v0YZ04c8epAqJvllA4XJF5Z16DUFxq6x8E2kpS/AzNJi56DZXapeckjNqoR76u3q
+         8uTfs7Rer3DBMTFO5p7yJBmaDfpSG/GiPVFFdc7hRwSplfenlYHNviChcBgYs0TZ+82h
+         72KcS6mSJnJX43siE3ZpiT8kCmpPCK3NFKcmOvI6PkGWKOpl3pKNb5qXG/PQEOKnMh7/
+         uEig==
+X-Gm-Message-State: AAQBX9dqeZA2kZdrI0sBveqFzuEbr4UTBHbTpuvYrzna/teesUOPl8+P
+        y15jnRk467l1NAoL8qASKUL/Zg==
+X-Google-Smtp-Source: AKy350aVBE8amoEnujDOw4ZJ3MN4p91l6YRmGHGGL84SD74zqJPXm29xNcOOhDNThqjqrWETQpaaPQ==
+X-Received: by 2002:a62:1d85:0:b0:62a:4503:53b8 with SMTP id d127-20020a621d85000000b0062a450353b8mr248927pfd.1.1679592667856;
+        Thu, 23 Mar 2023 10:31:07 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:16d3:ef20:206a:6521])
+        by smtp.gmail.com with ESMTPSA id x13-20020a62fb0d000000b0061a6f4c1b2bsm12613546pfm.171.2023.03.23.10.31.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Mar 2023 10:31:07 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
-References: <1679551448-19160-1-git-send-email-quic_taozha@quicinc.com>
- <1679551448-19160-9-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1679551448-19160-9-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.3 required=5.0 tests=NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-gpio@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rajesh Patil <rajpat@codeaurora.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 00/14] Control Quad SPI pinctrl better on Qualcomm Chromebooks
+Date:   Thu, 23 Mar 2023 10:30:04 -0700
+Message-Id: <20230323173019.3706069-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.40.0.348.gf938b09366-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/03/2023 06:04, Tao Zhang wrote:
-> Add nodes to configure trigger pattern and trigger pattern mask.
-> Each DSB subunit TPDM has maximum of n(n<7) XPR registers to
-> configure trigger pattern match output. Eight 32 bit registers
-> providing DSB interface trigger output pattern match comparison.
-> And each DSB subunit TPDM has maximum of m(m<7) XPMR registers to
-> configure trigger pattern mask match output. Eight 32 bit
-> registers providing DSB interface trigger output pattern match
-> mask.
-> 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 24 +++++++
->   drivers/hwtracing/coresight/coresight-tpdm.c       | 84 ++++++++++++++++++++++
->   drivers/hwtracing/coresight/coresight-tpdm.h       |  8 +++
->   3 files changed, 116 insertions(+)
-> 
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> index 094d624..c06374f 100644
-> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> @@ -71,3 +71,27 @@ Description:
->   		value 1: Start EDCMR register number
->   		value 2: End EDCMR register number
->   		value 3: The value need to be written
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_patt_val
-> +Date:		March 2023
-> +KernelVersion	6.3
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(Write) Set the trigger pattern value of DSB tpdm.
-> +		Read the trigger pattern value of DSB tpdm.
-> +
-> +		Accepts the following two values.
-> +		value 1: Index number of XPR register
-> +		value 2: The value need to be written
+The main goal of this series is to do a better job of controling the
+pins related to the "Quad SPI" IP block on Qualcomm Chromebooks. This
+is essentially 'v2' of my previous attempt in the patch ("arm64: dts:
+qcom: sc7180: Fix trogdor qspi pull direction") [1] but since it's
+spiraled out a bit and there are no patches that are exactly the same
+I've reset to v1.
 
-minor nit: What values are acceptable ? Otherwise looks fine.
+The early patches in this series are just no-op cleanup patches that
+can be applied. They're not terribly critical but since they are
+"Fixes" I've listed them first.
 
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+The next patch in the series is a very simple and (hopefully)
+non-controversial SPI patch. It can be applied independently if
+anything else.
+
+Next, we have a bunch of pinctrl patches (including the device tree
+bindings related to them). I dunno what folks are going to think about
+these. If everyone hates them, we can drop them and just change the
+later patches in the series to use "input-enable" instead of
+"output-disable". It feels ugly to me, but it maybe less upheval.
+
+Next I removed the now-deprecated "input-enable" property from all
+Chromebooks. None of them were necessary.
+
+Finally, I did what I really wanted to do in the first place: attempt
+to cleanup the pinctrl states of the Quad SPI. These patches have a
+hard requirement on the pinctrl change.
+
+[1] https://lore.kernel.org/r/20230213165743.1.I6f03f86546e6ce9abb1d24fd9ece663c3a5b950c@changeid
+
+
+Douglas Anderson (14):
+  arm64: dts: sc7180: Rename qspi data12 as data23
+  arm64: dts: sc7280: Rename qspi data12 as data23
+  arm64: dts: sdm845: Rename qspi data12 as data23
+  arm64: dts: qcom: sc7180: Annotate l13a on trogdor to always-on
+  spi: spi-qcom-qspi: Support pinctrl sleep states
+  dt-bindings: pinctrl: qcom: tlmm should use output-disable, not
+    input-enable
+  dt-bindings: pinctrl: qcom: Add output-enable
+  pinctrl: qcom: Support OUTPUT_ENABLE; deprecate INPUT_ENABLE
+  arm64: dts: qcom: sc7180: Remove superfluous "input-enable"s from
+    trogdor
+  arm64: dts: qcom: sc7280: Remove superfluous "input-enable"s from
+    idp-ec-h1
+  arm64: dts: qcom: sdm845: Remove superfluous "input-enable"s from
+    cheza
+  arm64: dts: qcom: sc7180: Fix trogdor qspi pin config
+  arm64: dts: qcom: sc7280: Fix qspi pin config
+  arm64: dts: qcom: sdm845: Fix cheza qspi pin config
+
+ .../bindings/pinctrl/qcom,tlmm-common.yaml    |  4 +-
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts       |  9 ++--
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 41 +++++++++++++------
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          | 11 +++--
+ .../boot/dts/qcom/sc7280-chrome-common.dtsi   | 25 ++++++++++-
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 14 ++++---
+ .../arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi |  2 -
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      | 13 +++---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          | 11 +++--
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi    | 37 ++++++++++++-----
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 11 +++--
+ drivers/pinctrl/qcom/pinctrl-msm.c            | 36 +++++++++++++---
+ drivers/spi/spi-qcom-qspi.c                   |  5 +++
+ 13 files changed, 165 insertions(+), 54 deletions(-)
+
+-- 
+2.40.0.348.gf938b09366-goog
 
