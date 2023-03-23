@@ -2,140 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D3416C6F0C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 18:32:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 685D66C6F7D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 18:41:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232558AbjCWRcF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 13:32:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44498 "EHLO
+        id S231277AbjCWRlG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 13:41:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232469AbjCWRbl (ORCPT
+        with ESMTP id S229823AbjCWRkq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 13:31:41 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5E9534010
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 10:31:30 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id p34so9094608wms.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 10:31:30 -0700 (PDT)
+        Thu, 23 Mar 2023 13:40:46 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C44B21ADD8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 10:40:33 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id eh3so90154831edb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 10:40:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679592689;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rZoadvcYq3zRwthELt1OcUAmnTDKQKRIcaDoyBrhRZA=;
-        b=VLveLU9J+QeBh215ifoeTa68GNJ6XnGXxi14qRrRdJXmx9BheChOG2e0myzeyecdep
-         ld7s3KBVeZtzWrmonSYbSVeThlxtoxKFnsmxDhxbsjWZVPTTDvZccQ2JT4s1lTmY4c0f
-         RxF34v/P/RFwZBINNwxSu9lCe7dIXMsKPBIJfRwWawHhjjbexP8I+AuAyTmoCETYTs6b
-         Nb0hMis6IL12GUecZeYXtFxa2pJSgMaw7t6LT/44tylUpbvWjCZvUveL6sy5NTtKr7xa
-         UoWXYj2tTyHtoycZyJJypALOg7TELUuzSTBxL+zf6AEOB6WmpcPxB5n29+7iGt8xTn/b
-         YgCw==
+        d=linaro.org; s=google; t=1679593232;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ONmJsFn4VtTyqhV76hclBRWNA9ptPEzWzjO41FRshbk=;
+        b=ZOOMx6qRt3g7nOII6cvvW0hyxEjWWWvDyB98rJc12tcsH6noQhIsqu5xLxTof0r+F6
+         Fk6ByrMV8UwbwL7tUhXCMW1/tQSupmgreeis3cnrbTucwxJBVGbIiXo47uHi1RmFtad0
+         NfcBboj+c0EQ0W89ocXkpz6EoGXfx8QSla2bJ2Yp79BR1UJTy1y9u77coZDKkC/wVe/o
+         Iz1oE7G00uYZTSzJM9ApeuHNhP8WjV+yLj3GpTAYs4gp1Is9P5SwwM8n1y5WJVPzVR7l
+         r1tuvwipZ6u/wfdNztLFTIOVgRjlAmxDsrgCPJjuKVfrWG4i2K3jtA8FZ3Ll3veAvA9K
+         ZkkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679592689;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rZoadvcYq3zRwthELt1OcUAmnTDKQKRIcaDoyBrhRZA=;
-        b=FTrqmSydIcRk07rsWd38jJgkbBQt315mv8phIT8QrC3b4vNwFIW7LO34LJJAtqq3OC
-         Wh6DJTDU3eSWMNAYvdok4vjM2U1TaTFgILmRKiS2XqeN32lBpLB8q7CEia6jCXdntKIp
-         vOzJYueAaciyQZTC9PLIWoloOrQ5IU9F6alZyVjKYaX60qa1Do6bGiIo5uzUuT1Iqf+U
-         S/HlhHdthTbsy9IgseblZwZi+RZukhDqAEJsOeq/cHuTkv2jxMPOiTQMTSJrvHiWQChV
-         nTe6yRdIzTyQ5cRPpXKdCv5bqZQWKE30TCZXQeMzdlCuEILFLjEctxneGL5PHPizlo52
-         Y73A==
-X-Gm-Message-State: AO0yUKXpPQFbtArqwVqO9+rfxmIpgz8PvI3khP90Z+ml91XQa30aKNcR
-        BEP2DjivEqbLu71R8nHPJdTAQw==
-X-Google-Smtp-Source: AK7set83huOmWhiPusaKxwZNwqntCmiNrQGjDUyek4mZJSGXP+U7yZfPhNZsrXKF29pmLssRQx2KGA==
-X-Received: by 2002:a05:600c:218d:b0:3ed:9576:34ce with SMTP id e13-20020a05600c218d00b003ed957634cemr336352wme.9.1679592688900;
-        Thu, 23 Mar 2023 10:31:28 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id bg19-20020a05600c3c9300b003ede2c4701dsm2621824wmb.14.2023.03.23.10.31.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Mar 2023 10:31:28 -0700 (PDT)
-Message-ID: <89bca327-a860-672c-b4ae-766698d38639@linaro.org>
-Date:   Thu, 23 Mar 2023 17:31:26 +0000
+        d=1e100.net; s=20210112; t=1679593232;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ONmJsFn4VtTyqhV76hclBRWNA9ptPEzWzjO41FRshbk=;
+        b=7PuBkwFHhnARP3PmJJwiklsZNKz6xSrZvctwTyAS6h2aGNGbyUBLWzaLQgCqwBXZoU
+         zmL6IAiNqWrpc6URRun7MXLgniExUdGxNJiNoaIb4VXU2rPrl3o1EZWx045aEzGHRzV+
+         wf5EQRhQDzk0ubj/euMCKbMMJPcydx/Nj6EyOK3dmAgwjqq6IvN4GSmbk4ECsm1R/mz3
+         YLE6W/+5Xz3zhy3owO43YnoxRfAR1T2TK4+8zBbC71NUpTMQ9Np6jAIeIKyVpK38l1Sq
+         tQjbkwtlAWRGgOB6XzwKOeW5Y+MDbYOcWVUsLN17Kz+G2e7rdUSRJthqGj0U9ACcYW06
+         pDXQ==
+X-Gm-Message-State: AO0yUKXmSsiHmrH4WAx6k9Em6XJHmwXTk7SigkOXKcNlX5RyPxsezo4B
+        A3eGi72wNt9+/gLlySmuawvFCg==
+X-Google-Smtp-Source: AK7set8rJQZ+O/FCvIPcGJhP6YlCEw19hFeuaPslN52OzsFHLjmX9FRAHXgcMjsK45mV7kDxLqZerQ==
+X-Received: by 2002:a17:906:378d:b0:930:7ae6:9ebd with SMTP id n13-20020a170906378d00b009307ae69ebdmr11866028ejc.70.1679593232231;
+        Thu, 23 Mar 2023 10:40:32 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:d350:23b1:cb94:f39d])
+        by smtp.gmail.com with ESMTPSA id e5-20020a170906314500b009236ae669ecsm8890787eje.191.2023.03.23.10.40.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Mar 2023 10:40:31 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        stable@vger.kernel.org
+Subject: [PATCH] cpufreq: qcom-cpufreq-hw: fix double IO unmap and resource release on exit
+Date:   Thu, 23 Mar 2023 18:40:26 +0100
+Message-Id: <20230323174026.950622-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v4 12/18] usb: typec: qcom: Add Qualcomm PMIC TCPM support
-Content-Language: en-US
-To:     Jianhua Lu <lujianhua000@gmail.com>
-Cc:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
-        gregkh@linuxfoundation.org, andersson@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, wcheng@codeaurora.org,
-        caleb.connolly@linaro.org, konrad.dybcio@linaro.org,
-        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
-References: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
- <20230318121828.739424-13-bryan.odonoghue@linaro.org>
- <ZBxkB04KqY8WbeA1@Gentoo>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <ZBxkB04KqY8WbeA1@Gentoo>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/03/2023 14:36, Jianhua Lu wrote:
->> +	/* Poll waiting for transition to required vSafe5V or vSafe0V */
->> +	ret = regmap_read_poll_timeout(pmic_typec->regmap,
->> +				       pmic_typec->base + TYPEC_SM_STATUS_REG,
->> +				       sm_stat, sm_stat & val,
->> +				       100, 250000);
-> This statement isn't very useful and will case a error,
-> After I remove it, usb-c works well. What's about dropping this statement?
-> 
-> [   63.030672] xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
-> [   63.030702] xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus number 1
-> [   63.030895] xhci-hcd xhci-hcd.1.auto: hcc params 0x0230ffe5 hci version 0x110 quirks 0x0000000000010010
-> [   63.030926] xhci-hcd xhci-hcd.1.auto: irq 168, io mem 0x0a600000
-> [   63.031043] xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
-> [   63.031054] xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus number 2
-> [   63.031063] xhci-hcd xhci-hcd.1.auto: Host supports USB 3.1 Enhanced SuperSpeed
-> [   63.031835] hub 1-0:1.0: USB hub found
-> [   63.031863] hub 1-0:1.0: 1 port detected
-> [   63.032151] usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
-> [   63.032690] hub 2-0:1.0: USB hub found
-> [   63.032713] hub 2-0:1.0: 1 port detected
-> [   63.168912] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: vbus vsafe5v fail
-> [   63.169185] xhci-hcd xhci-hcd.1.auto: remove, state 1
-> [   63.169195] usb usb2: USB disconnect, device number 1
-> [   63.178808] xhci-hcd xhci-hcd.1.auto: USB bus 2 deregistered
-> [   63.178825] xhci-hcd xhci-hcd.1.auto: remove, state 1
-> [   63.178832] usb usb1: USB disconnect, device number 1
-> [   63.182114] hub 1-0:1.0: activate --> -19
-> [   63.182791] xhci-hcd xhci-hcd.1.auto: USB bus 1 deregistered
+Commit 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data
+during probe") moved getting memory resource and iomap from
+qcom_cpufreq_hw_cpu_init() to the probe function, however it left
+untouched cleanup in qcom_cpufreq_hw_cpu_exit().
 
-Interesting.
+During device unbind this will lead to doule release of resource and
+double iounmap(), first by qcom_cpufreq_hw_cpu_exit() and second via
+managed resources:
 
-What's your hardware configuration ? Could it be you don't have the VBUS 
-regulator pointed to the correct place ?
+  resource: Trying to free nonexistent resource <0x0000000018593000-0x0000000018593fff>
+  Trying to vunmap() nonexistent vm area (0000000088a7d4dc)
+  ...
+  vunmap (mm/vmalloc.c:2771 (discriminator 1))
+  iounmap (mm/ioremap.c:60)
+  devm_ioremap_release (lib/devres.c:19)
+  devres_release_all (drivers/base/devres.c:506 drivers/base/devres.c:535)
+  device_unbind_cleanup (drivers/base/dd.c:523)
+  device_release_driver_internal (drivers/base/dd.c:1248 drivers/base/dd.c:1263)
+  device_driver_detach (drivers/base/dd.c:1300)
+  unbind_store (drivers/base/bus.c:243)
+  drv_attr_store (drivers/base/bus.c:127)
+  sysfs_kf_write (fs/sysfs/file.c:137)
+  kernfs_fop_write_iter (fs/kernfs/file.c:334)
+  vfs_write (include/linux/fs.h:1851 fs/read_write.c:491 fs/read_write.c:584)
+  ksys_write (fs/read_write.c:637)
+  __arm64_sys_write (fs/read_write.c:646)
+  invoke_syscall (arch/arm64/include/asm/current.h:19 arch/arm64/kernel/syscall.c:57)
+  el0_svc_common.constprop.0 (arch/arm64/include/asm/daifflags.h:28 arch/arm64/kernel/syscall.c:150)
+  do_el0_svc (arch/arm64/kernel/syscall.c:194)
+  el0_svc (arch/arm64/include/asm/daifflags.h:28 arch/arm64/kernel/entry-common.c:133 arch/arm64/kernel/entry-common.c:142 arch/arm64/kernel/entry-common.c:638)
+  el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:656)
+  el0t_64_sync (arch/arm64/kernel/entry.S:591)
 
-&pm8150b_vbus {
-	regulator-min-microamp = <500000>;
-	regulator-max-microamp = <3000000>;
-	status = "okay";
-};
-
-&pm8150b_typec {
-	vdd-vbus-supply = <&pm8150b_vbus>;
-};
-
-i.e. something else on your board supplies VBUS ?
-
-vSafe5V should indicate to the controller that you have successfully 
-switched on vBus, so what this indicates to me is that on your hardware 
-VBUS either hasn't been asserted or hasn't been detected.
-
-Can you show the printout of *(pmic_typec->base + TYPEC_SM_STATUS_REG) ? 
-And can you check your schematics and verify VBUS is supplied by 
-pm8150b_vbus and not say by an external IC ?
-
+Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
+Cc: <stable@vger.kernel.org>
+Cc: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
-bod
+ drivers/cpufreq/qcom-cpufreq-hw.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 2f581d2d617d..b2d2907200a9 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -43,7 +43,6 @@ struct qcom_cpufreq_soc_data {
+ 
+ struct qcom_cpufreq_data {
+ 	void __iomem *base;
+-	struct resource *res;
+ 
+ 	/*
+ 	 * Mutex to synchronize between de-init sequence and re-starting LMh
+@@ -590,16 +589,12 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	struct device *cpu_dev = get_cpu_device(policy->cpu);
+ 	struct qcom_cpufreq_data *data = policy->driver_data;
+-	struct resource *res = data->res;
+-	void __iomem *base = data->base;
+ 
+ 	dev_pm_opp_remove_all_dynamic(cpu_dev);
+ 	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
+ 	qcom_cpufreq_hw_lmh_exit(data);
+ 	kfree(policy->freq_table);
+ 	kfree(data);
+-	iounmap(base);
+-	release_mem_region(res->start, resource_size(res));
+ 
+ 	return 0;
+ }
+@@ -718,17 +713,15 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+ 	for (i = 0; i < num_domains; i++) {
+ 		struct qcom_cpufreq_data *data = &qcom_cpufreq.data[i];
+ 		struct clk_init_data clk_init = {};
+-		struct resource *res;
+ 		void __iomem *base;
+ 
+-		base = devm_platform_get_and_ioremap_resource(pdev, i, &res);
++		base = devm_platform_ioremap_resource(pdev, i);
+ 		if (IS_ERR(base)) {
+-			dev_err(dev, "Failed to map resource %pR\n", res);
++			dev_err(dev, "Failed to map resource index %d\n", i);
+ 			return PTR_ERR(base);
+ 		}
+ 
+ 		data->base = base;
+-		data->res = res;
+ 
+ 		/* Register CPU clock for each frequency domain */
+ 		clk_init.name = kasprintf(GFP_KERNEL, "qcom_cpufreq%d", i);
+-- 
+2.34.1
+
