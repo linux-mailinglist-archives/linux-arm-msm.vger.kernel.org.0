@@ -2,158 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 353F86C5FFF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 07:53:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C096C6C6072
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 08:14:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229801AbjCWGxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 02:53:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54464 "EHLO
+        id S229873AbjCWHOC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 03:14:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbjCWGxV (ORCPT
+        with ESMTP id S229499AbjCWHOB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 02:53:21 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894F21F5C2;
-        Wed, 22 Mar 2023 23:53:20 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32N6KDpa016196;
-        Thu, 23 Mar 2023 06:53:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=2b/5067R9GHcy29L7fsJhopZDL7DjzKE9imXFmh9BrY=;
- b=mHeSVT3BslTA6jzuzvCq1F/UQQkrZR3kUGUreWCafnkQ8R1hqLpw3W1/ZMJMA8fNPtC0
- utT+uiiUG8i6XxLfX7nb59BiaLvDfOgNes2/XdBcq0oZvcdRYvQQ1pK9L2/7o+D5EdPa
- cYoK9XR6c8ZhQhrDjryfaAxo6w2mGO9dsnnA6HqFl/a+Uz0aR7mqzTuHBMBeET3b4gPL
- ec3Vhl5HZX48OysXWQhdCDxwLkEgQMScWye16Ud/3WSM+PUw6oClEErKy6AVU8P+fd1g
- Tuz0MQ+jg9i2RojsbKYXEqdb+6A5zXXSNMKOMzvHqxCzeBl40w33Amx2H8c9FW4Irg+g pA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pg3c9a22c-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Mar 2023 06:53:12 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32N6rBHI009152
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Mar 2023 06:53:11 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Wed, 22 Mar 2023 23:53:05 -0700
-Date:   Thu, 23 Mar 2023 12:23:01 +0530
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <quic_wcheng@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>
-Subject: Re: [PATCH v3 2/8] dt-bindings: phy: qcom,qmp-usb: Add IPQ9574 USB3
- PHY
-Message-ID: <20230323065300.GB19800@varda-linux.qualcomm.com>
-References: <cover.1679479634.git.quic_varada@quicinc.com>
- <e34d8eddc1dda8bb0ff840a7dd18ca4dd6c62d22.1679479634.git.quic_varada@quicinc.com>
- <c52a329d-8683-de82-9b55-209b99ac36c0@linaro.org>
- <20230323063705.GA19800@varda-linux.qualcomm.com>
- <a8c3f324-0231-2180-8464-a3bfc663f743@linaro.org>
+        Thu, 23 Mar 2023 03:14:01 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ADF546BB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 00:13:59 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id x3so82434931edb.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 00:13:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679555637;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LBJgZk/5gZTMXWKLjqWieGCHA6/EePG1dJ76A5v7KBE=;
+        b=C3Y45eJBP6qd6Z8kgCqJMFag5Xg1Wyu7Pbw+5qO2V7+N40It/EKSxlPrum6bxn5wUg
+         kU6qGNvK3Eyx0O0iRlXaMpzZg1NAXb7qS1ADhr4m42Mn6hZn4oyFR+AiW0tBWFAocggN
+         7LSac5eUxJNdk1JLLMgLJI580EkGLpH1SCyxKFnwGTh0zClBLKyBwiRE5hPP7slQXR5W
+         9YA5mlWSqEt+KLR0IGb4TXCylKYWF+KDKZjScX6dgwJuw9f7xxaphM1uTcUxWuQZIWbU
+         pekR2kOmus46Ss1FuZfNWeR8UjvfQHfSKGg1hymFgngMsr6cxY84aKlDlJkVzSaukM8b
+         ywyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679555637;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LBJgZk/5gZTMXWKLjqWieGCHA6/EePG1dJ76A5v7KBE=;
+        b=ck11L+ME12M6lxLGnyp0Cw70sTZBeEdhH2kiBOHtX5C9ycl1cs3ixqCtXN871S3ya1
+         XZdDgvi3UAgtfsQjCvybXGrJNR8qD+YYGxrH9fIoM+VX1wUrV6WjCes3TbX+fGQKC06H
+         q2kFfnSDUlVIFECiktRtu9uLDq4rSflUJG7FMqA8FLV9baEVtWWLA90REEHDRkR9Bxo5
+         ktaWhTHgzYh19wROx6u+lnDVErdogFA7/ZF628bIPY0A+kZfEc8B3vGk5gtFko39zjuj
+         nyLow92jB8ITRlHCsI3Px9iuqDV6zQEFm3AY28pLxnZdUPwclBiCI8eYvZ+DDrYoZOAF
+         UUJw==
+X-Gm-Message-State: AO0yUKWLOXdTubxci45+uqaj3ntLTjRdurmx4mmvb8xSMCTN3/caXY19
+        VEus2ylP8buiHojCDF8eogGSHg==
+X-Google-Smtp-Source: AK7set+TQJM01LMv3gKPoGhiFzaMyZYEPquadg55mOCGLlyXbLbGIp4+2kj8G0/9wXGb+9kbMevLEQ==
+X-Received: by 2002:a17:906:660f:b0:930:a7c9:e45 with SMTP id b15-20020a170906660f00b00930a7c90e45mr8833758ejp.8.1679555637523;
+        Thu, 23 Mar 2023 00:13:57 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id ox7-20020a170907100700b008cf8c6f5c43sm8240180ejb.83.2023.03.23.00.13.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Mar 2023 00:13:56 -0700 (PDT)
+Message-ID: <c53239d3-75b5-a51e-ccc1-2215f1c797a8@linaro.org>
+Date:   Thu, 23 Mar 2023 07:13:55 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <a8c3f324-0231-2180-8464-a3bfc663f743@linaro.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NA7dAzEcAnRdzB5xSAN5Zb_fXrFfX3BR
-X-Proofpoint-ORIG-GUID: NA7dAzEcAnRdzB5xSAN5Zb_fXrFfX3BR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-22_21,2023-03-22_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 bulkscore=0 priorityscore=1501 mlxscore=0 malwarescore=0
- clxscore=1015 suspectscore=0 adultscore=0 impostorscore=0 phishscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303150002 definitions=main-2303230052
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 1/2] dt-bindings: nvmem: Add compatible for SM6350
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230314-topic-nvmem_compats-v1-0-508100c17603@linaro.org>
+ <20230314-topic-nvmem_compats-v1-1-508100c17603@linaro.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230314-topic-nvmem_compats-v1-1-508100c17603@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 23, 2023 at 07:42:37AM +0100, Krzysztof Kozlowski wrote:
-> On 23/03/2023 07:37, Varadarajan Narayanan wrote:
-> > On Wed, Mar 22, 2023 at 10:52:44PM +0100, Krzysztof Kozlowski wrote:
-> >> On 22/03/2023 11:44, Varadarajan Narayanan wrote:
-> >>> Add dt-bindings for USB3 PHY found on Qualcomm IPQ9574
-> >>>
-> >>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> >>>
-> >>> ---
-> >>>  Changes in v2:
-> >>> 	- Updated sections missed in previous patch
-> >>> ---
-> >>>  .../bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml    | 22 ++++++++++++++++++++++
-> >>>  1 file changed, 22 insertions(+)
-> >>>
-> >>> diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> >>> index e81a382..beae44c 100644
-> >>> --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> >>> +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> >>> @@ -21,6 +21,7 @@ properties:
-> >>>      enum:
-> >>>        - qcom,ipq6018-qmp-usb3-phy
-> >>>        - qcom,ipq8074-qmp-usb3-phy
-> >>> +      - qcom,ipq9574-qmp-usb3-phy
-> >>>        - qcom,msm8996-qmp-usb3-phy
-> >>>        - qcom,msm8998-qmp-usb3-phy
-> >>>        - qcom,qcm2290-qmp-usb3-phy
-> >>> @@ -204,6 +205,27 @@ allOf:
-> >>>          compatible:
-> >>>            contains:
-> >>>              enum:
-> >>> +              - qcom,ipq9574-qmp-usb3-phy
-> >>> +    then:
-> >>> +      properties:
-> >>> +        clocks:
-> >>> +          maxItems: 2
-> >>
-> >> toplevel defines minItems as 3, so are you sure this works? Did you test it?
-> >
-> > Yes, this is tested. Able to do I/O.
->
-> Bindings do not impact on whether you can or can not do IO, so I meant
-> tested as DTS is compliant with bindings. I assume it was not, so please
-> test bindings and DTS before sending new version.
-> see Documentation/devicetree/bindings/writing-schema.rst for instructions
 
-Sorry. Misunderstood the question. Yes, I ran make dtbs_check and
-got these messages. But couldn't relate them with the
-minItems/maxItems mismatch...
 
-	phy@7d000: clocks: [[8, 93], [8, 102]] is too short
-	phy@7d000: clock-names: ['aux', 'cfg_ahb'] is too short
+On 14/03/2023 13:35, Konrad Dybcio wrote:
+> Docuemnt the QFPROM on SM6350.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
 
-Will fix it now. Thanks for the clarification.
+Applied both
 
-> > We only have 2 items. Is it ok change the minItems to 2?
->
-> Yes, because you must update top level (and maybe other) constraints to
-> correct ones. Just test the code...
-
-Ok.
-
-Thanks
-Varada
-
->
->
-> Best regards,
-> Krzysztof
->
+thanks,
+srini
+>   Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> index 2173fe82317d..cbc5a1ed7c6b 100644
+> --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> @@ -32,6 +32,7 @@ properties:
+>             - qcom,sdm670-qfprom
+>             - qcom,sdm845-qfprom
+>             - qcom,sm6115-qfprom
+> +          - qcom,sm6350-qfprom
+>             - qcom,sm8150-qfprom
+>             - qcom,sm8250-qfprom
+>         - const: qcom,qfprom
+> 
