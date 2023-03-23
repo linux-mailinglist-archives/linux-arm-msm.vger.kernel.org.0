@@ -2,206 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C31646C6AD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 15:23:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 22C6E6C6B26
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 15:36:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230451AbjCWOXh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 10:23:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60510 "EHLO
+        id S231417AbjCWOg0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 10:36:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbjCWOXf (ORCPT
+        with ESMTP id S231162AbjCWOgZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 10:23:35 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C34561727;
-        Thu, 23 Mar 2023 07:23:32 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8830C4B3;
-        Thu, 23 Mar 2023 07:24:16 -0700 (PDT)
-Received: from [10.57.53.151] (unknown [10.57.53.151])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 605463F6C4;
-        Thu, 23 Mar 2023 07:23:29 -0700 (PDT)
-Message-ID: <65bb7624-9d57-1056-61fd-ae840728ecd6@arm.com>
-Date:   Thu, 23 Mar 2023 14:23:27 +0000
+        Thu, 23 Mar 2023 10:36:25 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86D6E2724
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 07:36:20 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id v4-20020a05600c470400b003ee4f06428fso1243665wmo.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 07:36:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679582179;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=rEhytZxehTs3+RJ5GfT9s2lxvfEx0RYE515lvUYjdJ0=;
+        b=V5SDWIsRwgNllTO/1dZ8+2BeK8fbUIMrxlRp8YqiPNgzroz2Wbf42M22zyEjpuE2bY
+         qgqp/Io2hGg1kuOh6iNwhebtRd73evLzKIpwIV2tQVpC7RdEvmN59f6Ne5BM1a9AisYl
+         neiJw5JYJv3H2VxgaKHAVI6d/r+7tUHQh5i6jEiKm/quY1AMvH2/bNAG2s/oDxIQx74N
+         0R1yDBwYe8r+SVMvEtW21TLR03uQlcqzpGXVVQqbW4lde1BiTLehpjaH2zD+wVrDvolC
+         GfZ9Hf4iWQl5qSQc8JudkWgWuRZBt0PUJB0ngMPpmcuynMFqDC7PXWD8ICpDVXxTyaQZ
+         QrEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679582179;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rEhytZxehTs3+RJ5GfT9s2lxvfEx0RYE515lvUYjdJ0=;
+        b=cp2la4ybEucL+1ZrBYwJ6D4bb6dyPAEjOm2pZyr6DpFX0goL02tszp5mPWYlIo00dl
+         1EkdxbmTj49J0IEVT30NjwchH/LHeYu04rjptFA66kdxEHq6Dg6VD9G6XX3x9bOx7BvH
+         BMHUenNRQrxL+7bHhpUZmE447IxFRRcbyJvUIS9+1QFmuKIIFGZRahWtlTUgrmNhRN/P
+         nprI9AHmtC8GY6WVrVXbnOloHZSmQ+BRSLcTrNCxZKIxuz9iwDQXMrafWD3MZn7xhZnm
+         2Mp0AviNqXMsBLh8VU8hW2etMMarJ0+I3+FBeenwN84nPh95zWSeczuwjqL8XGHJP9zl
+         vBIg==
+X-Gm-Message-State: AO0yUKUbA7ggJR9du/aigsOykq8cdxFHsAgC+TBz706+74LPLV6jvP6P
+        VphpsjgGBIIomV4wJ0lyR/21Jg==
+X-Google-Smtp-Source: AK7set+24+OLG2+h3jPdMAyZlS0SXJwCzS2t+JZk67f0y0qT5SVukxMnGLO7PUFJy2j1bri6RObmeg==
+X-Received: by 2002:a05:600c:365a:b0:3ee:5754:f139 with SMTP id y26-20020a05600c365a00b003ee5754f139mr2585793wmq.13.1679582179009;
+        Thu, 23 Mar 2023 07:36:19 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:e25a:65de:379a:3899? ([2a01:e0a:982:cbb0:e25a:65de:379a:3899])
+        by smtp.gmail.com with ESMTPSA id o10-20020a05600c510a00b003edd2ec9f85sm2247944wms.6.2023.03.23.07.36.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Mar 2023 07:36:18 -0700 (PDT)
+Message-ID: <5ab0601c-5acd-ef49-419b-36f5a7679758@linaro.org>
+Date:   Thu, 23 Mar 2023 15:36:17 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.9.0
-Subject: Re: [PATCH v3 03/11] coresight-tpdm: Initialize DSB subunit
- configuration
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v6 5/5] arm64: dts: qcom: sm8450: add dp controller
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
-References: <1679551448-19160-1-git-send-email-quic_taozha@quicinc.com>
- <1679551448-19160-4-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1679551448-19160-4-git-send-email-quic_taozha@quicinc.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230206-topic-sm8450-upstream-dp-controller-v6-0-d78313cbc41d@linaro.org>
+ <20230206-topic-sm8450-upstream-dp-controller-v6-5-d78313cbc41d@linaro.org>
+ <b1e6ca00-348b-4d61-6e90-30bef756732c@linaro.org>
+ <20230323143814.cdfbgzlnlbnocx5z@ripper>
+Organization: Linaro Developer Services
+In-Reply-To: <20230323143814.cdfbgzlnlbnocx5z@ripper>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.3 required=5.0 tests=NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/03/2023 06:04, Tao Zhang wrote:
-> DSB is used for monitoring “events”. Events are something that
-> occurs at some point in time. It could be a state decode, the
-> act of writing/reading a particular address, a FIFO being empty,
-> etc. This decoding of the event desired is done outside TPDM.
-> DSB subunit need to be configured in enablement and disablement.
-> A struct that specifics associated to dsb dataset is needed. It
-> saves the configuration and parameters of the dsb datasets. This
-> change is to add this struct and initialize the configuration of
-> DSB subunit.
+Hi,
+
+On 23/03/2023 15:38, Bjorn Andersson wrote:
+> On Tue, Mar 21, 2023 at 09:51:34PM +0100, Konrad Dybcio wrote:
+>> On 17.03.2023 16:06, Neil Armstrong wrote:
+>>> @@ -2783,6 +2790,78 @@ opp-500000000 {
+>>>   				};
+>>>   			};
+>>>   
+>>> +			mdss_dp0: displayport-controller@ae90000 {
+>>> +				compatible = "qcom,sm8450-dp", "qcom,sm8350-dp";
+>>> +				reg = <0 0xae90000 0 0x200>,
+>>> +				      <0 0xae90200 0 0x200>,
+>>> +				      <0 0xae90400 0 0xc00>,
+>>> +				      <0 0xae91000 0 0x400>,
+>>> +				      <0 0xae91400 0 0x400>;
+>>> +				interrupt-parent = <&mdss>;
+>>> +				interrupts = <12>;
+>>> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+>>> +					 <&dispcc DISP_CC_MDSS_DPTX0_AUX_CLK>,
+>>> +					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK>,
+>>> +					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
+>>> +					 <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
+>>> +				clock-names = "core_iface",
+>>> +					      "core_aux",
+>>> +					      "ctrl_link",
+>>> +			                      "ctrl_link_iface",
+>> I applied this locally and noticed line has 2x 8 spaces.. Bjorn, could
+>> you please take care of that when applying?
+>>
 > 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->   drivers/hwtracing/coresight/coresight-tpdm.c | 58 +++++++++++++++++++++++++---
->   drivers/hwtracing/coresight/coresight-tpdm.h | 17 ++++++++
->   2 files changed, 70 insertions(+), 5 deletions(-)
+> Thanks for pointing it out. I did correct it, and I had to do the same
+> in sm8350.dtsi.
 > 
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index f4854af..5e1e2ba 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -20,17 +20,59 @@
->   
->   DEFINE_CORESIGHT_DEVLIST(tpdm_devs, "tpdm");
->   
-> +static int tpdm_init_datasets(struct tpdm_drvdata *drvdata)
+> @Neil, please run checkpatch --strict, it will highlight these errors.
 
+Thx, sorry... usually I don't miss such errors, won't happen again.
 
-> +{
-> +	if (drvdata->datasets & TPDM_PIDR0_DS_DSB) {
-> +		if (!drvdata->dsb) {
-> +			drvdata->dsb = devm_kzalloc(drvdata->dev,
-> +						    sizeof(*drvdata->dsb), GFP_KERNEL);
-> +			if (!drvdata->dsb)
-> +				return -ENOMEM;
+Neil
 
-Please do not club init/allocation of datasets to "resetting" the
-datasets. Why don't we move the allocation to tpmd_datasets_setup() ?
-And this function could simply be called :
+> 
+> Thanks,
+> Bjorn
 
-tpdm_reset_datasets()
-
-and can be called from the tpdm_datasets_setup() too.
-
-
-> +		} else
-> +			memset(drvdata->dsb, 0, sizeof(struct dsb_dataset));
-> +
-> +		drvdata->dsb->trig_ts = true;
-> +		drvdata->dsb->trig_type = false;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static void set_trigger_type(struct tpdm_drvdata *drvdata, u32 *val)
-> +{
-> +	if (drvdata->dsb->trig_type)
-> +		*val |= TPDM_DSB_CR_TRIG_TYPE;
-> +	else
-> +		*val &= ~TPDM_DSB_CR_TRIG_TYPE;
-> +}
-> +
-
-Do we really need a function for this ? How is it different from trig_ts ?
-
->   static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
->   {
->   	u32 val;
->   
-> -	/* Set the enable bit of DSB control register to 1 */
-> +	val = readl_relaxed(drvdata->base + TPDM_DSB_TIER);
-> +	/* Set trigger timestamp */
-> +	if (drvdata->dsb->trig_ts)
-> +		val |= TPDM_DSB_TIER_XTRIG_TSENAB;
-> +	else
-> +		val &= ~TPDM_DSB_TIER_XTRIG_TSENAB;
-> +	writel_relaxed(val, drvdata->base + TPDM_DSB_TIER);
-> +
->   	val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
-> +	/* Set trigger type */
-> +	set_trigger_type(drvdata, &val);
-> +	/* Set the enable bit of DSB control register to 1 */
->   	val |= TPDM_DSB_CR_ENA;
->   	writel_relaxed(val, drvdata->base + TPDM_DSB_CR);
->   }
->   
->   /* TPDM enable operations */
-> +/* The TPDM or Monitor serves as data collection component for various
-> + * dataset types. It covers Basic Counts(BC), Tenure Counts(TC),
-> + * Continuous Multi-Bit(CMB), Multi-lane CMB(MCMB) and Discrete Single
-> + * Bit(DSB). This function will initialize the configuration according
-> + * to the dataset type supported by the TPDM.
-> + */
->   static void __tpdm_enable(struct tpdm_drvdata *drvdata)
->   {
->   	CS_UNLOCK(drvdata->base);
-> @@ -110,15 +152,13 @@ static const struct coresight_ops tpdm_cs_ops = {
->   	.source_ops	= &tpdm_source_ops,
->   };
->   
-> -static void tpdm_init_default_data(struct tpdm_drvdata *drvdata)
-> +static void tpdm_datasets_setup(struct tpdm_drvdata *drvdata)
->   {
->   	u32 pidr;
->   
-> -	CS_UNLOCK(drvdata->base);
-
-Why is this removed ?
-
->   	/*  Get the datasets present on the TPDM. */
->   	pidr = readl_relaxed(drvdata->base + CORESIGHT_PERIPHIDR0);
->   	drvdata->datasets |= pidr & GENMASK(TPDM_DATASETS - 1, 0);
-> -	CS_LOCK(drvdata->base);
->   }
->   
->   /*
-> @@ -181,6 +221,7 @@ static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
->   	struct coresight_platform_data *pdata;
->   	struct tpdm_drvdata *drvdata;
->   	struct coresight_desc desc = { 0 };
-> +	int ret;
->   
->   	pdata = coresight_get_platform_data(dev);
->   	if (IS_ERR(pdata))
-> @@ -200,6 +241,8 @@ static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
->   
->   	drvdata->base = base;
->   
-> +	tpdm_datasets_setup(drvdata);
-> +
->   	/* Set up coresight component description */
->   	desc.name = coresight_alloc_device_name(&tpdm_devs, dev);
->   	if (!desc.name)
-> @@ -216,7 +259,12 @@ static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
->   		return PTR_ERR(drvdata->csdev);
->   
->   	spin_lock_init(&drvdata->spinlock);
-> -	tpdm_init_default_data(drvdata);
-> +	ret = tpdm_init_datasets(drvdata);
-
-Couldn't this be done before the coresight_register() ? As such
-I don't see any dependency on having a csdev ?
-
-Suzuki
