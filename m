@@ -2,91 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBAC36C6B57
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 15:44:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4E4F6C6B66
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 15:45:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231672AbjCWOoa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 10:44:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42746 "EHLO
+        id S231741AbjCWOpw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 10:45:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229548AbjCWOo2 (ORCPT
+        with ESMTP id S231834AbjCWOpp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 10:44:28 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 419FB23C49
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 07:44:26 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id p34so8688802wms.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 07:44:26 -0700 (PDT)
+        Thu, 23 Mar 2023 10:45:45 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72471252B9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 07:45:23 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id e18so9254971wra.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 07:45:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679582665;
+        d=linaro.org; s=google; t=1679582722;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=0Ek4wZhl4Mg0GrDMidRpjCLxiT+Jj8TNIew80B1+dS8=;
-        b=t3Vp7RyFM8QV+VOhJkauXK9ZBmgTbo+zXmbbdNc5YTzFZhULmKx7ULUx2hi9UKIvj4
-         yIAo+gNJ6mUmL6zRsgWruEYkTL1nqJr4XVGp9j53f1R59pcJo9BvjgV6ZGPCOWExngg3
-         9lwyhlQ7PfizNhOXlnvJ2BjCjfCnW+3z+rA2W9HGw5O1aPBlgxrSE/lr6RkeFNqBSoPK
-         gJ3bS3SEKIW41PNmlixE4c62EWhsHJcY3ftPuqZ/F3JOmp8dUDVFskJH15Bv/IRWLTtI
-         VmGC96o6jb8k6ouaD0vV0GREdN870JpBDWppohe72sFOYfxOkxkoAarzmhvWz0vtwhhG
-         l4sQ==
+        bh=W4MzrlpTb4Yhk+gf2dIUjuh7tsdX9/TNDTntW+YKJvQ=;
+        b=VNwqpfZrV6vnFmwiRhLKz9jY1Ib2cmBxdbakZRZrHeSHzA9AKpPVstW5bUCEJCE5Dq
+         Rprv/C1AYM3gKWrk0hpsmQZpmZMTCBD5Mhd9nkaP6QHffhntf1hkEhmDTI6s/SXZSxho
+         6jRUFnSso3D7ypelnHOflwy+xoxZSJo9rcG8mUvDwqMVtb16X1CfTci70fPpd0d5ZMYg
+         dv8C2R78hJroZ7ldiETHkKLa9e9Nxxtq0/XEz3SwiugYytzGgyfvtKgcBNCc6kWgnOiD
+         KFOtM5WsAYQPvBIsypLEo1OkcmcV1YT/tc0KBwnXhEv9vzn1JPdiWBxzk9AgQTm/NQcg
+         pncw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679582665;
+        d=1e100.net; s=20210112; t=1679582722;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0Ek4wZhl4Mg0GrDMidRpjCLxiT+Jj8TNIew80B1+dS8=;
-        b=8BLudhiwyKdGXHuBoOrYqD0MLUjoHMEj8+zuwif1nanrlJBOB+ZBBNjZDmMrO/+yQF
-         KmeeyYtNAyFjGQmnDxtqKVnE2Cr+rB9YDTVno9wCabrK4GltjWPsK3CNEGjPo/fp1lVo
-         +LzpqAKCwHJSj504JebfzCfwtuQq352IiXf5RTvMfy0gEIU2nHU3RmqtjY4KhLUdQD+0
-         mUWi5ZJmmvcKdOdsORuEr8wN2gmYHXruLlW8GAgYYK4/5RozjwpNOFC/KILty92PS4fI
-         jjZ+J4rUQa1RLDUhL+QPb8hHqmYdo6nZeSipimk2GXURpSCmcu3uNcIbfPMb0hJE7w8y
-         fSvQ==
-X-Gm-Message-State: AO0yUKWQk03QKEOcac/MWSSLm3i2HTLucYjeD4hACUA21FD0x7a3Imk2
-        RSYXSILwVe6FZdQxj3jgWKox9A==
-X-Google-Smtp-Source: AK7set/LnBgJwUokuNj+rBAbXxBzVAIv6jLo1Im7boQzr5ZnmQ5GFZnXrwDgWbSR8lrMohjRlVuXtQ==
-X-Received: by 2002:a05:600c:2c48:b0:3eb:39e0:3530 with SMTP id r8-20020a05600c2c4800b003eb39e03530mr2306311wmg.41.1679582664667;
-        Thu, 23 Mar 2023 07:44:24 -0700 (PDT)
+        bh=W4MzrlpTb4Yhk+gf2dIUjuh7tsdX9/TNDTntW+YKJvQ=;
+        b=qS0+qfxwgrbObcwkyF+P9RcBChAAKN4HA3WoGRNMgJzo8NvvOVtz5cI/U6k0ODNjx2
+         Kd9t1jWkNKLKHZYVH//TarpUbwCPpfjQs0PtzKYLAIZivaHOnkG51Z+FajzhIn97L3nU
+         rDVBFq6FZc1GU424J7vlFE080bRMif5muqP2e+NRYV3Hh04EQpbtg3GyOU0gYPmxGyke
+         Miq/uEKw/DEQIvZHwe1m201XC4vYxleEFGPXf09xmlpU1qPfFeNCDz8Z8itmjih21/as
+         DFrhRw8YjW4JZqbqG0A7704NeAWjEo9KgrlUrueq9sqQmNTU7QLF6AzjCs7XfDIohFC3
+         94JQ==
+X-Gm-Message-State: AAQBX9drbkez89+gWBcNlzAu/lTqfIMvMQ0EIC+SlCNx0J3uspU0zhMt
+        FKx3Ic1n6cyr68iR/RUE7zeEFA==
+X-Google-Smtp-Source: AKy350YwaJwmjXC3UxTKUTSA0ajmbVXL4atAUE52yKdngL+u+dc4euwmiy4LP0GSK7l3dnIU6r4mCw==
+X-Received: by 2002:a5d:4d82:0:b0:2db:11f3:f7ee with SMTP id b2-20020a5d4d82000000b002db11f3f7eemr2473114wru.63.1679582721738;
+        Thu, 23 Mar 2023 07:45:21 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:e25a:65de:379a:3899? ([2a01:e0a:982:cbb0:e25a:65de:379a:3899])
-        by smtp.gmail.com with ESMTPSA id c18-20020a7bc852000000b003ed2c0a0f37sm2045208wml.35.2023.03.23.07.44.22
+        by smtp.gmail.com with ESMTPSA id p7-20020a1c5447000000b003dd1bd0b915sm2121364wmi.22.2023.03.23.07.45.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Mar 2023 07:44:23 -0700 (PDT)
-Message-ID: <381cad84-da61-5a55-73eb-869294aa1d1c@linaro.org>
-Date:   Thu, 23 Mar 2023 15:44:22 +0100
+        Thu, 23 Mar 2023 07:45:21 -0700 (PDT)
+Message-ID: <d16ebe42-e462-b1dd-0ea3-c368b8721ba5@linaro.org>
+Date:   Thu, 23 Mar 2023 15:45:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 1/8] dt-bindings: display: msm: sm8450-mdss: Fix DSI
- compatible
+Subject: Re: [PATCH 3/8] dt-bindings: ufs: qcom: document the fact the UFS
+ controller can have an ICE core
 Content-Language: en-US
 To:     Rob Herring <robh@kernel.org>
-Cc:     Lee Jones <lee@kernel.org>,
+Cc:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        devicetree@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>, Sean Paul <sean@poorly.run>,
+        dri-devel@lists.freedesktop.org,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Lee Jones <lee@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         David Airlie <airlied@gmail.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Avri Altman <avri.altman@wdc.com>, Sean Paul <sean@poorly.run>,
-        freedreno@lists.freedesktop.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-scsi@vger.kernel.org,
-        Bart Van Assche <bvanassche@acm.org>
+        freedreno@lists.freedesktop.org
 References: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-0-3ead1e418fe4@linaro.org>
- <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-1-3ead1e418fe4@linaro.org>
- <167957963042.3095255.5445133387110199668.robh@kernel.org>
+ <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-3-3ead1e418fe4@linaro.org>
+ <167957963115.3095299.4593054829506617284.robh@kernel.org>
 Organization: Linaro Developer Services
-In-Reply-To: <167957963042.3095255.5445133387110199668.robh@kernel.org>
+In-Reply-To: <167957963115.3095299.4593054829506617284.robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -101,14 +101,14 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23/03/2023 14:58, Rob Herring wrote:
 > 
-> On Thu, 23 Mar 2023 11:25:16 +0100, Neil Armstrong wrote:
->> The DSI compatible changed between patchset revisions, but that wasn't
->> reflected in the bindings. Fix it.
+> On Thu, 23 Mar 2023 11:25:18 +0100, Neil Armstrong wrote:
+>> Move the qcom,sm8450-ufshc to the right allOf:if allowing the ICE clocks
+>> and registers to be specified.
 >>
->> 0eda3c6cb1c5 ("dt-bindings: display/msm: add support for the display on SM8450")
+>> Fixes: 462c5c0aa798 ("dt-bindings: ufs: qcom,ufs: convert to dtschema")
 >> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 >> ---
->>   Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml | 2 +-
+>>   Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 +-
 >>   1 file changed, 1 insertion(+), 1 deletion(-)
 >>
 > 
@@ -118,23 +118,21 @@ On 23/03/2023 14:58, Rob Herring wrote:
 > yamllint warnings/errors:
 > 
 > dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.example.dtb: display-subsystem@ae00000: phy@ae94400:compatible:0: 'qcom,sm8450-dsi-phy-5nm' was expected
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.example.dtb: display-subsystem@ae00000: phy@ae96400:compatible:0: 'qcom,sm8450-dsi-phy-5nm' was expected
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml
-> Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.example.dtb: /example-0/display-subsystem@ae00000/phy@ae94400: failed to match any schema with compatible: ['qcom,dsi-phy-5nm-8450']
-> Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.example.dtb: /example-0/display-subsystem@ae00000/phy@ae96400: failed to match any schema with compatible: ['qcom,dsi-phy-5nm-8450']
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: clocks: [[4294967295, 151], [4294967295, 10], [4294967295, 150], [4294967295, 166], [4294967295, 0], [4294967295, 164], [4294967295, 160], [4294967295, 162]] is too short
+> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: clock-names: ['core_clk', 'bus_aggr_clk', 'iface_clk', 'core_clk_unipro', 'ref_clk', 'tx_lane0_sync_clk', 'rx_lane0_sync_clk', 'rx_lane1_sync_clk'] is too short
+> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: reg: [[0, 30949376, 0, 12288]] is too short
+> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
 
+Same as patch 1, I forgot to fix the example...
 
-Indeed I forgot to fix the bindings example....
-
-Thx,
 Neil
 
 > 
 > doc reference errors (make refcheckdocs):
 > 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-1-3ead1e418fe4@linaro.org
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-3-3ead1e418fe4@linaro.org
 > 
 > The base for the series is generally the latest rc1. A different dependency
 > should be noted in *this* patch.
