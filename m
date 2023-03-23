@@ -2,103 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E0736C5C2F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 02:37:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12F556C5E2F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 05:49:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229757AbjCWBhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Mar 2023 21:37:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45540 "EHLO
+        id S229615AbjCWEtz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 00:49:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229713AbjCWBhC (ORCPT
+        with ESMTP id S229690AbjCWEtu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Mar 2023 21:37:02 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B814218A9F;
-        Wed, 22 Mar 2023 18:37:01 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id f6-20020a17090ac28600b0023b9bf9eb63so460783pjt.5;
-        Wed, 22 Mar 2023 18:37:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679535421;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=d+nLoNSamCdcaSuM8a5raHPPptoIUI/NpNVM0KOw2DY=;
-        b=igo+EYJZj9Np8pmWxTIn1kf2XAEW2zxstGeyuKelxBCvfczgFrvrCzyb+kYTqsyTK9
-         p0Fivn8BjAiA58T466deaGhokx2UXFJQDDANtf9WrLVKU7DzP1DZd+2ZpQsqQBbm1+dk
-         hCESdEfZ4NEsBAGmRrnW+eZrV946jVwdlm43vgDX9e8qrEoNLT1+mW6cDtCWxYiuU71A
-         AQkoVx8zHRZjfyV1G2Zi1QsDdrG1z0Fe6hChGJ8H84GZb+EzxC+n5ASBWnxLAgD628YJ
-         +RAWaOpCa6mQFIXfyxrtN2hhtcLxGRsX0fqJS0p6S5hPKsayjWTOi0nH410x2wa0gGIZ
-         ZLFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679535421;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=d+nLoNSamCdcaSuM8a5raHPPptoIUI/NpNVM0KOw2DY=;
-        b=WWir4/OY10NfzhR3xmArMCroaXkbyLpD7o4AE/bG/Bp0nwqU2JdTcWc/CSfcsJF9JB
-         qiHqEJ8YHatxSRmHkAqJjMCftVBcydOhsFAaxo4oFhBaKHlyxXjQQ0p2yvIH7PjldpdY
-         73YbSRVaeV4gHNY1W1AKevtZ1JD1UxUS0bsxXgn+3s/ZyQNWgwNGS+SbJVEKbvBnqM2d
-         UX4+fQqAETpGnzOJfrQ7r7XbAIsWsmkflkHa1puuBgGxu/NpoWoJGqUaxB1m7BegRtn2
-         Ck/In1CX9uzoJcxO32OoKWeisco94PRE83wMi9VrJM8P4O9iQAYS/lXgBXgfu8pB5QFy
-         /1zg==
-X-Gm-Message-State: AO0yUKUC2sI/CUjwwS3SyWzTUNnOhELkqi9xVykJg/8nhDEqMUcI2F1l
-        +QLuBUAa4ZCvGYQEdGEHGH4=
-X-Google-Smtp-Source: AK7set8Uogh7PBV2UJKv6iAnGMwOTFkAHfIjqn/Z6asXmPCu4qRi/1TxsnLRD96NHYtfEdj7PVTuwg==
-X-Received: by 2002:a05:6a20:89a8:b0:dc:4369:16a4 with SMTP id h40-20020a056a2089a800b000dc436916a4mr945762pzg.19.1679535421067;
-        Wed, 22 Mar 2023 18:37:01 -0700 (PDT)
-Received: from DESKTOP-HTCHK5O.localdomain ([219.254.222.254])
-        by smtp.gmail.com with ESMTPSA id t13-20020a62ea0d000000b005a87d636c70sm10652102pfh.130.2023.03.22.18.36.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 18:37:00 -0700 (PDT)
-From:   Sangsup Lee <k1rh4.lee@gmail.com>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Sangsup lee <k1rh4.lee@gmail.com>
-Subject: [PATCH v2] misc: fastrpc: Fix a Use after-free-bug by race condition
-Date:   Thu, 23 Mar 2023 10:36:55 +0900
-Message-Id: <20230323013655.366-1-k1rh4.lee@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        Thu, 23 Mar 2023 00:49:50 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23B4935AA;
+        Wed, 22 Mar 2023 21:49:50 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32N4mIGb009059;
+        Thu, 23 Mar 2023 04:49:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=vZZIDWj/xZzVL9y/f11rlVtYZwpu3vAL3tdgFLOtvGQ=;
+ b=dLOtMOdpVrz1AadpeBrtaXVnhXnpHbnfj9XvY79WutN3kM+w8rUYLsnSyhj8AuKouJMP
+ wYtJSk1Gxq99kA8Y96ESIpYu4MVhUQaikKoZqobqvgpfnkCW3kB4vEchGoZGlpxkIu50
+ QnBhV89BMiw0OY4w+n9z1Pjfv1LX3M1n+7AXZdltd3laIGHWYGcwJegXr4bPVWUKbu73
+ RPLbbjJKYnPtBjk/ztnMAt9nQ92ZyiTf1fp6VWNKcEHKnY+/MM+aKau8inY2mrqO7Ns9
+ r87FZuXCmlhNRKQNr3iBWozKvVL3BSqYlAkI8sgyeA0LviI6sCBY2nuiha6PynitH/3p 0g== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pg9nagspp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 23 Mar 2023 04:49:45 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32N4njgI004941
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 23 Mar 2023 04:49:45 GMT
+Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Wed, 22 Mar 2023 21:49:41 -0700
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH 0/2] Add initial support for RDP468 of IPQ5332 family
+Date:   Thu, 23 Mar 2023 10:19:27 +0530
+Message-ID: <20230323044929.8694-1-quic_kathirav@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rPUsDb9aX09ppIZNirf-3FoJmmvArP1J
+X-Proofpoint-ORIG-GUID: rPUsDb9aX09ppIZNirf-3FoJmmvArP1J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-22_21,2023-03-22_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=751 suspectscore=0 lowpriorityscore=0 phishscore=0
+ malwarescore=0 priorityscore=1501 adultscore=0 mlxscore=0 bulkscore=0
+ spamscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303150002 definitions=main-2303230036
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sangsup lee <k1rh4.lee@gmail.com>
+Add the initial device tree support for the RDP(Reference Design
+Platform)468 based on IPQ5332 family of SoCs. This patch carries the
+support for Console UART, SPI NOR, eMMC.
 
-This patch adds mutex_lock for fixing an Use-after-free bug.
-fastrpc_req_munmap_impl can be called concurrently in multi-threded environments.
-The buf which is allocated by list_for_each_safe can be used after another thread frees it.
+This series depends on the below which adds support the SPI NOR
+https://lore.kernel.org/linux-arm-msm/20230320104530.30411-1-quic_kathirav@quicinc.com/
 
-Signed-off-by: Sangsup lee <k1rh4.lee@gmail.com>
----
- V1 -> V2: moving the locking to ioctl.
+Kathiravan T (2):
+  arm: qcom: document MI01.6 board based on IPQ5332 family
+  arm64: dts: qcom: ipq5332: add support for the RDP468 variant
 
- drivers/misc/fastrpc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../devicetree/bindings/arm/qcom.yaml         |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts   | 103 ++++++++++++++++++
+ 3 files changed, 106 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 93ebd174d848..aa1cf0e9f4ed 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1901,7 +1901,9 @@ static long fastrpc_device_ioctl(struct file *file, unsigned int cmd,
- 		err = fastrpc_req_mmap(fl, argp);
- 		break;
- 	case FASTRPC_IOCTL_MUNMAP:
-+		mutex_lock(&fl->mutex);
- 		err = fastrpc_req_munmap(fl, argp);
-+		mutex_unlock(&fl->mutex);
- 		break;
- 	case FASTRPC_IOCTL_MEM_MAP:
- 		err = fastrpc_req_mem_map(fl, argp);
 -- 
-2.25.1
+2.17.1
 
