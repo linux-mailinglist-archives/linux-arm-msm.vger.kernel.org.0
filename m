@@ -2,111 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30B4A6C6BA3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 15:55:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E4A176C6BA7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 15:56:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231395AbjCWOzp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 10:55:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33264 "EHLO
+        id S229976AbjCWO4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 10:56:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231934AbjCWOzo (ORCPT
+        with ESMTP id S231949AbjCWO4B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 10:55:44 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 457521C5A0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 07:55:43 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id p13-20020a05600c358d00b003ed346d4522so1291891wmq.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 07:55:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679583342;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=E4M/ocI2aBcPn7dk5asZ9gOO9Pu/P0ulfvgoCMj9PfY=;
-        b=RmV1ULAgTJbfeUfTtYLc5lEFYTxluY6m2quGpt4+y7JYzrBrQKsWHJkv9Mj+wR+VAi
-         ki8lj0Kuzg3yh36GG3+zi40V5Z0k68rKEd/m7aocaWqQn0s4JTveHBM+C/Ka2JEsi3E8
-         gNjcCzo6TxvvFOJ28jbMS7ioX/PT+O4nCMsHtKCW2iZXIXOisz8kBaoWhMlkviVIU2sd
-         fqviPYZioYlnSMqY4zBLtZtzGukuhuinmxWyF58Y3vS6TWhoiNcMK9z2zP9xq7qk04S2
-         q/gDaz1m4FV69B2fRHaPmnILvQXbxyAZDNUGPUiOcSYkzyahrXjm4mYPhxTZCe6//kec
-         DL3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679583342;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=E4M/ocI2aBcPn7dk5asZ9gOO9Pu/P0ulfvgoCMj9PfY=;
-        b=DKJmEGj/Hj2/u95cvLWA6pbm2ldM6bDtd0gn8Nczr5Se6CyGevMAr+vS/4AJuthhT6
-         cHFhWCODtTHmOwatuCulkLQu0xVHbemvEvX0rJ5tjyevoY5YosuxGFL0hk6JKO+Ip4gk
-         wmezAT1O7s96adTiokYbpkBfY/xVNMsbmgLpdQfjkoGcIvwG7dQUZcI1/wG5F37E8rWE
-         26Y9tlW4cxyqWQIFRQKDxI5IGvjXFPTTOYbXSZqVTR7Z0NBgvBxRz18trCEVXIS2hPVO
-         ZTBKvLw4/w46v6ZMRB3mXInvOAMPZQoKPC3OKQ7V6VRsWHpbe/vJXZ5t8I5/bJwxrwbE
-         s6jA==
-X-Gm-Message-State: AO0yUKVSpzF4Ed08yV6qv5WPj/laBGOITMmDTp0IohZnlBPvRSwOR20Y
-        NK02aQ6cTiv8iJsGgOt2FIG/WA==
-X-Google-Smtp-Source: AK7set8LJt6KIjfhsLiEainbvIdVwncLRYQNGucOcCMZbcxLr+nXfx0+M8cDo2o1/t33Ffuzwi3nsQ==
-X-Received: by 2002:a05:600c:21c7:b0:3ed:9ce3:4a39 with SMTP id x7-20020a05600c21c700b003ed9ce34a39mr2594952wmj.26.1679583341756;
-        Thu, 23 Mar 2023 07:55:41 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:e25a:65de:379a:3899? ([2a01:e0a:982:cbb0:e25a:65de:379a:3899])
-        by smtp.gmail.com with ESMTPSA id c26-20020a7bc01a000000b003ee44b2effasm2114297wmb.12.2023.03.23.07.55.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Mar 2023 07:55:41 -0700 (PDT)
-Message-ID: <058166cd-c5bd-7baf-6c1e-fa28f2a918b5@linaro.org>
-Date:   Thu, 23 Mar 2023 15:55:40 +0100
+        Thu, 23 Mar 2023 10:56:01 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 20D371EFE7;
+        Thu, 23 Mar 2023 07:55:55 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D87404B3;
+        Thu, 23 Mar 2023 07:56:38 -0700 (PDT)
+Received: from [10.57.53.151] (unknown [10.57.53.151])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B33B53F6C4;
+        Thu, 23 Mar 2023 07:55:51 -0700 (PDT)
+Message-ID: <ab840019-a44c-3d72-1dd5-5ef3071f139a@arm.com>
+Date:   Thu, 23 Mar 2023 14:55:50 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 1/2] phy: qcom-qmp-combo: fix v3 offsets table
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-References: <20230323144726.1614344-1-dmitry.baryshkov@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20230323144726.1614344-1-dmitry.baryshkov@linaro.org>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.0
+Subject: Re: [PATCH v3 06/11] coresight-tpdm: Add node to set dsb programming
+ mode
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+References: <1679551448-19160-1-git-send-email-quic_taozha@quicinc.com>
+ <1679551448-19160-7-git-send-email-quic_taozha@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1679551448-19160-7-git-send-email-quic_taozha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.3 required=5.0 tests=NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/03/2023 15:47, Dmitry Baryshkov wrote:
-> SM8350 and SM8450 use qmp_combo_offsets_v3 table, which doesn't have
-> PCS_USB offset. Add the usb3_pcs_usb entry to program correct registers
-> while setting up sm8350 and sm8450 USB+DP combo PHYs.
+On 23/03/2023 06:04, Tao Zhang wrote:
+> Add node to set and show programming mode for TPDM DSB subunit.
+> Once the DSB programming mode is set, it will be written to the
+> register DSB_CR. Bit[10:9] of the DSB_CR register is used to set
+> the DSB test mode.
 > 
-> Fixes: 05bd18348b88 ("phy: qcom-qmp-combo: Add config for SM6350")
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
 > ---
->   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 1 +
->   1 file changed, 1 insertion(+)
+>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 10 ++++
+>   drivers/hwtracing/coresight/coresight-tpdm.c       | 62 ++++++++++++++++++++++
+>   drivers/hwtracing/coresight/coresight-tpdm.h       | 13 +++++
+>   3 files changed, 85 insertions(+)
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index c1483e157af4..3b488d12c933 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -1396,6 +1396,7 @@ static const struct qmp_combo_offsets qmp_combo_offsets_v3 = {
->   	.usb3_serdes	= 0x1000,
->   	.usb3_pcs_misc	= 0x1a00,
->   	.usb3_pcs	= 0x1c00,
-> +	.usb3_pcs_usb	= 0x1f00,
->   	.dp_serdes	= 0x2000,
->   	.dp_txa		= 0x2200,
->   	.dp_txb		= 0x2600,
+> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> index 27ce681..f13e282 100644
+> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> @@ -35,3 +35,13 @@ Description:
+>   		Accepts only one of the 2 values -  0 or 1.
+>   		0 : Set the DSB trigger type to false
+>   		1 : Set the DSB trigger type to true
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_mode
+> +Date:		March 2023
+> +KernelVersion	6.3
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		(Write) Set the mode of DSB tpdm. Read the mode of DSB
+> +		tpdm.
+> +
+> +		Accepts the value needs to be greater than 0.
 
-Thanks for the fix, I totally missed the legacy bindings pcs_usb_offset.
+Please could you document the values ?
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index e28cf10..8cd822f 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -4,6 +4,7 @@
+>    */
+>   
+>   #include <linux/amba/bus.h>
+> +#include <linux/bitfield.h>
+>   #include <linux/bitmap.h>
+>   #include <linux/coresight.h>
+>   #include <linux/coresight-pmu.h>
+> @@ -51,6 +52,32 @@ static int tpdm_init_datasets(struct tpdm_drvdata *drvdata)
+>   	return 0;
+>   }
+>   
+> +static void set_dsb_cycacc_mode(struct tpdm_drvdata *drvdata, u32 *val)
+> +{
+> +	u32 mode;
+> +
+> +	mode = TPDM_DSB_MODE_CYCACC(drvdata->dsb->mode);
+> +	*val &= ~TPDM_DSB_TEST_MODE;
+> +	*val |= FIELD_PREP(TPDM_DSB_TEST_MODE, mode);
+> +}
+> +
+> +static void set_dsb_hpsel_mode(struct tpdm_drvdata *drvdata, u32 *val)
+> +{
+> +	u32 mode;
+> +
+> +	mode = TPDM_DSB_MODE_HPBYTESEL(drvdata->dsb->mode);
+> +	*val &= ~TPDM_DSB_HPSEL;
+> +	*val |= FIELD_PREP(TPDM_DSB_HPSEL, mode);
+> +}
+> +
+> +static void set_dsb_perf_mode(struct tpdm_drvdata *drvdata, u32 *val)
+> +{
+> +	if (drvdata->dsb->mode & TPDM_DSB_MODE_PERF)
+> +		*val |= TPDM_DSB_CR_MODE;
+> +	else
+> +		*val &= ~TPDM_DSB_CR_MODE;
+> +}
+> +
+>   static void set_trigger_type(struct tpdm_drvdata *drvdata, u32 *val)
+>   {
+>   	if (drvdata->dsb->trig_type)
+> @@ -72,6 +99,12 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
+>   	writel_relaxed(val, drvdata->base + TPDM_DSB_TIER);
+>   
+>   	val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
+> +	/* Set the cycle accurate mode */
+> +	set_dsb_cycacc_mode(drvdata, &val);
+> +	/* Set the byte lane for high-performance mode */
+> +	set_dsb_hpsel_mode(drvdata, &val);
+> +	/* Set the performance mode */
+> +	set_dsb_perf_mode(drvdata, &val);
+>   	/* Set trigger type */
+>   	set_trigger_type(drvdata, &val);
+>   	/* Set the enable bit of DSB control register to 1 */
+> @@ -250,6 +283,34 @@ static struct attribute_group tpdm_attr_grp = {
+>   	.attrs = tpdm_attrs,
+>   };
+>   
+> +static ssize_t dsb_mode_show(struct device *dev,
+> +				  struct device_attribute *attr,
+> +				  char *buf)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	return sysfs_emit(buf, "%lx\n",
+> +			 (unsigned long)drvdata->dsb->mode);
+> +}
+> +
+> +static ssize_t dsb_mode_store(struct device *dev,
+> +				   struct device_attribute *attr,
+> +				   const char *buf,
+> +				   size_t size)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	unsigned long val;
+> +
+> +	if ((kstrtoul(buf, 0, &val)) || val < 0)
+> +		return -EINVAL;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	drvdata->dsb->mode = val & TPDM_MODE_ALL;
+> +	spin_unlock(&drvdata->spinlock);
+> +	return size;
+> +}
+> +static DEVICE_ATTR_RW(dsb_mode);
+> +
+>   static ssize_t dsb_trig_type_show(struct device *dev,
+>   				     struct device_attribute *attr,
+>   				     char *buf)
+> @@ -321,6 +382,7 @@ static ssize_t dsb_trig_ts_store(struct device *dev,
+>   static DEVICE_ATTR_RW(dsb_trig_ts);
+>   
+>   static struct attribute *tpdm_dsb_attrs[] = {
+> +	&dev_attr_dsb_mode.attr,
+>   	&dev_attr_dsb_trig_ts.attr,
+>   	&dev_attr_dsb_trig_type.attr,
+>   	NULL,
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
+> index 68f33bd..8fee562 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
+> @@ -15,11 +15,22 @@
+>   
+>   /* Enable bit for DSB subunit */
+>   #define TPDM_DSB_CR_ENA		BIT(0)
+> +/* Enable bit for DSB subunit perfmance mode */
+> +#define TPDM_DSB_CR_MODE		BIT(1)
+>   /* Enable bit for DSB subunit trigger type */
+>   #define TPDM_DSB_CR_TRIG_TYPE		BIT(12)
+> +
+>   /* Enable bit for DSB subunit trigger timestamp */
+>   #define TPDM_DSB_TIER_XTRIG_TSENAB		BIT(1)
+>   
+> +/* DSB programming modes */
+> +#define TPDM_DSB_MODE_CYCACC(val)	(val & GENMASK(2, 0))
+
+What do the values for the CYCACC mode mean ?
+
+> +#define TPDM_DSB_MODE_PERF		BIT(3)
+> +#define TPDM_DSB_MODE_HPBYTESEL(val)	(val & GENMASK(8, 4))
+> +#define TPDM_MODE_ALL			(0xFFFFFFF)
+> +#define TPDM_DSB_TEST_MODE		GENMASK(11, 9)
+> +#define TPDM_DSB_HPSEL		GENMASK(6, 2)
+
+Again what do the values mean ? Even if the kernel doesn't use them
+it would be good to document it.
+
+Suzuki
+
+> +
+>   /* TPDM integration test registers */
+>   #define TPDM_ITATBCNTRL		(0xEF0)
+>   #define TPDM_ITCNTRL		(0xF00)
+> @@ -48,10 +59,12 @@
+>   
+>   /**
+>    * struct dsb_dataset - specifics associated to dsb dataset
+> + * @mode:             DSB programming mode
+>    * @trig_ts:          Enable/Disable trigger timestamp.
+>    * @trig_type:        Enable/Disable trigger type.
+>    */
+>   struct dsb_dataset {
+> +	u32				mode;
+>   	bool			trig_ts;
+>   	bool			trig_type;
+>   };
+
