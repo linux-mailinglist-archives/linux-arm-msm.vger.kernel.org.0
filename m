@@ -2,104 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93B336C72BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 23:09:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A34A6C7324
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Mar 2023 23:34:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230040AbjCWWJC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 18:09:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58670 "EHLO
+        id S231135AbjCWWeC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 18:34:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbjCWWJA (ORCPT
+        with ESMTP id S229586AbjCWWeA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 18:09:00 -0400
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 215EA12041
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 15:08:59 -0700 (PDT)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-53d277c1834so419732837b3.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 15:08:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1679609337;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ApAT3jYclJ6tuM4Ar5bjYfOiqAXLl2HW8ed0MpHOtvE=;
-        b=m+DwhZDVXHVwX1qyHNU6dFSrO+1jD/zZCGm2dvuoW5IfwY9tr6P8LFAPbJ6Rxyt3Ok
-         TMeMcfOV49NreKzQuP+//Bx0exsKnTczPf5DFinUDHfqyuLt57npsZT/GYgdtNGyqVSz
-         t1ZQ7QUftT1/vUwsrJcIQ+zb7c/GXOwRAyfXQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679609337;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ApAT3jYclJ6tuM4Ar5bjYfOiqAXLl2HW8ed0MpHOtvE=;
-        b=VzHLknarFwgrJ1KjugTtLPW+iCeH5OeaWj3/iDcv0eN3jcVRS7Zf2Zb9Y5Fx5kkwQf
-         MAju20YdF1mZcv8XG0Ucg696f+ryyQ7k2qVmaVcr3bsLsyWQTNDmTCq21KVN/sQ7+gwD
-         qMhozWzKssk6ZmCkZoPlFUHnBJguvqpaOPYNiRs5t+LPu09+6lHwy9c3MMfLQO/88dRi
-         eAC5QkdH8PptEir30NZq8rC7NmQ9OdO5MWkTK8kxTsIcvZ1HokgwRcx69f31mnjc0+gX
-         31CfKlGpqCLhVUVm8czfqK3N8nMaSboTZCoEnGXXMbkrm1tuwCk//mt18WW6SiIYzAnF
-         O/Ng==
-X-Gm-Message-State: AAQBX9eZc+0RW8J47XVZowQ6RwdSpgBEHDFwm02YowJzui7qnDWRCz18
-        cA5+AYjlEWO/PFfBn/OLUt+3eCJLaBsuVX348lM=
-X-Google-Smtp-Source: AKy350ayUY+GDtBHTUgTVx4FXDE3XtR0NDmXJ4uaQ3qRMMBJZDb/NSN8CsmrR+ILhp0Ldk6CepyT7A==
-X-Received: by 2002:a81:6dd7:0:b0:545:6368:45d4 with SMTP id i206-20020a816dd7000000b00545636845d4mr256697ywc.0.1679609337127;
-        Thu, 23 Mar 2023 15:08:57 -0700 (PDT)
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com. [209.85.128.175])
-        by smtp.gmail.com with ESMTPSA id m1-20020a81ae01000000b00545a08184b2sm70160ywh.66.2023.03.23.15.08.56
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Mar 2023 15:08:56 -0700 (PDT)
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-5456249756bso256277b3.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 15:08:56 -0700 (PDT)
-X-Received: by 2002:a81:b387:0:b0:545:5f92:f7ee with SMTP id
- r129-20020a81b387000000b005455f92f7eemr53774ywh.2.1679609335803; Thu, 23 Mar
- 2023 15:08:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <CGME20230323220529eucas1p12e5e1bbe2a31fe775cd9e6244f9282ce@eucas1p1.samsung.com>
- <20230323220518.3247530-1-m.szyprowski@samsung.com>
-In-Reply-To: <20230323220518.3247530-1-m.szyprowski@samsung.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 23 Mar 2023 15:08:44 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WfREMuL6Z-aseAWPKXqpkutPofrWGy4ySH-WgbTHC-fg@mail.gmail.com>
-Message-ID: <CAD=FV=WfREMuL6Z-aseAWPKXqpkutPofrWGy4ySH-WgbTHC-fg@mail.gmail.com>
-Subject: Re: [PATCH] regulator: qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Thu, 23 Mar 2023 18:34:00 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D0226594;
+        Thu, 23 Mar 2023 15:33:58 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32NM93cO001022;
+        Thu, 23 Mar 2023 22:33:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=Iknq7DbmCPa6NBoymiUBH+ykN+AAfltzX0txCoit3Hs=;
+ b=R44Kt7Her+aC5tByGhPDZAHE17tYb+7o0ZepTTVVgS+VXFmFl5r+rloqKq+KPXMij38e
+ 1xsrhxjhjeLlJ//GHLJMsZjlIJFvFNVXKGmKbI9X0vc0nzcqBc6vEa2xFPJFVYeCzFad
+ qD1Zki6Z5BffdC127VF365Y2WRYZeADYoVxC/qLTGFJ3xQEyjyRebabUc65dLEYqfMeY
+ AzObSH0Md21TolzR7vdB8VTn7aMDjwN46TRm1loM5KOOQkrw+sSeOlCzPqXC8kvEYkAa
+ /veCPm+tT0NWU/kjbljy4RIzIR0YipNURuzHgpa/qoIDC++fWxFcUNu7/nft9IlCRCFo bg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pgxrur3a0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 23 Mar 2023 22:33:49 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32NMXm0I005301
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 23 Mar 2023 22:33:48 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Thu, 23 Mar 2023 15:33:48 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Xuewen Yan <xuewen.yan@unisoc.com>
+CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: [PATCH] cpufreq: qcom-cpufreq-hw: Revert adding cpufreq qos
+Date:   Thu, 23 Mar 2023 15:33:43 -0700
+Message-ID: <20230323223343.587210-1-quic_bjorande@quicinc.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: vy4OtcRPJPGg9At0hUZb5oJirT1hd6f3
+X-Proofpoint-GUID: vy4OtcRPJPGg9At0hUZb5oJirT1hd6f3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-23_13,2023-03-23_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
+ clxscore=1011 impostorscore=0 phishscore=0 adultscore=0 bulkscore=0
+ mlxlogscore=999 suspectscore=0 lowpriorityscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303230162
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+The OSM/EPSS hardware controls the frequency of each CPU cluster based
+on requests from the OS and various throttling events in the system.
+While throttling is in effect the related dcvs interrupt will be kept
+high. The purpose of the code handling this interrupt is to
+continuously report the thermal pressure based on the throttled
+frequency.
 
-On Thu, Mar 23, 2023 at 3:05=E2=80=AFPM Marek Szyprowski
-<m.szyprowski@samsung.com> wrote:
->
-> Restore synchronous probing for 'qcom,pm8150-rpmh-regulators' because
-> otherwise the UFSHC device is not properly initialized on QRB5165-RB5
-> board.
->
-> Fixes: ed6962cc3e05 ("regulator: Set PROBE_PREFER_ASYNCHRONOUS for driver=
-s between 4.14 and 4.19")
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
->  drivers/regulator/qcom-rpmh-regulator.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+The reasoning for adding QoS control to this mechanism is not entirely
+clear, but the introduction of commit 'c4c0efb06f17 ("cpufreq:
+qcom-cpufreq-hw: Add cpufreq qos for LMh")' causes the
+scaling_max_frequncy to be set to the throttled frequency. On the next
+iteration of polling, the throttled frequency is above or equal to the
+newly requested frequency, so the polling is stopped.
 
-I don't object to this patch landing temporarily, but can you provide
-any more details, please? On Qualcomm Chromebooks I'm not seeing any
-issues with RPMH regulators probing asynchronously, so I can only
-assume that there's a bug in the UFSHC driver that's being tickled.
+With cpufreq limiting the max frequency, the hardware no longer report a
+throttling state and no further updates to thermal pressure or qos
+state are made.
 
--Doug
+The result of this is that scaling_max_frequency can only go down, and
+the system becomes slower and slower every time a thermal throttling
+event is reported by the hardware.
+
+Even if the logic could be improved, there is no reason for software to
+limit the max freqency in response to the hardware limiting the max
+frequency. At best software will follow the reported hardware state, but
+typically it will cause slower backoff of the throttling.
+
+This reverts commit c4c0efb06f17fa4a37ad99e7752b18a5405c76dc.
+
+Fixes: c4c0efb06f17 ("cpufreq: qcom-cpufreq-hw: Add cpufreq qos for LMh")
+Cc: stable@vger.kernel.org
+Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+ drivers/cpufreq/qcom-cpufreq-hw.c | 14 --------------
+ 1 file changed, 14 deletions(-)
+
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 575a4461c25a..1503d315fa7e 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -14,7 +14,6 @@
+ #include <linux/of_address.h>
+ #include <linux/of_platform.h>
+ #include <linux/pm_opp.h>
+-#include <linux/pm_qos.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
+ #include <linux/units.h>
+@@ -60,8 +59,6 @@ struct qcom_cpufreq_data {
+ 	struct clk_hw cpu_clk;
+ 
+ 	bool per_core_dcvs;
+-
+-	struct freq_qos_request throttle_freq_req;
+ };
+ 
+ static struct {
+@@ -351,8 +348,6 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+ 
+ 	throttled_freq = freq_hz / HZ_PER_KHZ;
+ 
+-	freq_qos_update_request(&data->throttle_freq_req, throttled_freq);
+-
+ 	/* Update thermal pressure (the boost frequencies are accepted) */
+ 	arch_update_thermal_pressure(policy->related_cpus, throttled_freq);
+ 
+@@ -445,14 +440,6 @@ static int qcom_cpufreq_hw_lmh_init(struct cpufreq_policy *policy, int index)
+ 	if (data->throttle_irq < 0)
+ 		return data->throttle_irq;
+ 
+-	ret = freq_qos_add_request(&policy->constraints,
+-				   &data->throttle_freq_req, FREQ_QOS_MAX,
+-				   FREQ_QOS_MAX_DEFAULT_VALUE);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "Failed to add freq constraint (%d)\n", ret);
+-		return ret;
+-	}
+-
+ 	data->cancel_throttle = false;
+ 	data->policy = policy;
+ 
+@@ -519,7 +506,6 @@ static void qcom_cpufreq_hw_lmh_exit(struct qcom_cpufreq_data *data)
+ 	if (data->throttle_irq <= 0)
+ 		return;
+ 
+-	freq_qos_remove_request(&data->throttle_freq_req);
+ 	free_irq(data->throttle_irq, data);
+ }
+ 
+-- 
+2.25.1
+
