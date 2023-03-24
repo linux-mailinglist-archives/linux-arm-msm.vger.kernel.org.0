@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DD476C7598
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 03:25:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D88DE6C759C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 03:25:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230416AbjCXCZZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 22:25:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34232 "EHLO
+        id S229508AbjCXCZ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 22:25:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbjCXCZX (ORCPT
+        with ESMTP id S231364AbjCXCZY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 22:25:23 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73777298CB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 19:25:22 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id z42so286820ljq.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 19:25:22 -0700 (PDT)
+        Thu, 23 Mar 2023 22:25:24 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738182A15A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 19:25:23 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id h25so402404lfv.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 19:25:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679624721;
+        d=linaro.org; s=google; t=1679624722;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MYtDfQWx10YO17Wnn1ggV4D8R2RJGN5uqiLMueHHXec=;
-        b=J3Jl4mSgedwERrEmVpNgYAV9VCsALiC6fMl5WYv0iM5EtKafuS8ukW0r03qXWEjZig
-         RYJZr7rUceQUVQeB9OZBeijOQp04E2EANXcKTSLvxYSLZ6l2kZiBDWKmJGVGGB0zkFHh
-         4jO30CncCfuHNeganl96XbBmwmEE1qWpZAjNFadBJcMRdtDaegXxXr32fEH6d+Dto1LT
-         fa3f2wCnF0YXgpBmUURZHweca6pgFD5PAGT1ZuKtMgvQZV28d8Vjhvmhky65wSaFRafw
-         ymZCvIzWzzvwtzvUi0mjx6SpvPNULNt+g7rpkdRxaDnBn0hKvtDlNSMSmX/dBm1l2V9F
-         EQHQ==
+        bh=F0UkUAHHV030Q9Rz5orwTaamTqXyQfCNaYwLyt8g6O0=;
+        b=XZtUhT+1Gn0aizoU8zZboFIJEZlCnFI6oqdMqyq5snl8wzRszLk7hlUZWHM8UNXSbU
+         YSWkR8V7pMSJSbR5s05QpoO338+nEgHNNHScwWbKHs0lCkJWY4fHW5MyUninGg/9HEPL
+         iLPXZgiNfw75664DhB/JzSd6cmEwrSxVyqLIC+8oNQbHiBSvmt/mC+ednuUugjCpC1T+
+         YF33EnILx+P3ToP7HUQc2gFYMaMT0cDlhkPzjyx+Ex3Aw8vnwxNBEVaoY7M4WyA78mKP
+         cUCFIPDsGAjqxWNCP4l+Sn4IbThUTcZGxtQL5yjl6aMRYQ9B2D6pjeGhiMd/ZCfPY6Pz
+         hS4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679624721;
+        d=1e100.net; s=20210112; t=1679624722;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MYtDfQWx10YO17Wnn1ggV4D8R2RJGN5uqiLMueHHXec=;
-        b=Z4UihiqBvpz3+NZUq+GKk52LyTuNu4o4YauhvDUmiR/SjNt7FOlyl/MQUm7ayeAJGv
-         aytPIosBp9NFGoZoqk04fSwC6+jI6aPYQrJYUuBIdqCqfsBl4aqGZ3z1WhKlm8NJMafF
-         h2r2ib49oykLPq5TNOwgZdJpT2irHsKA5vhhOHxqDbpu8f260KpCTL8Rufk2T0Q5Qjjq
-         OqXLfYiCQobVIxLByrfvouqBMdc7yRirQ8GBGUyJk9eN69A7l1R6r8b/30Eb1sqdaYBH
-         W+WZnKEi2Vn4rstVd7TyVoGFfyf1ErjW+55vE2duK1OeyktAUVCzr35XAs0sZK3ZL71/
-         azog==
-X-Gm-Message-State: AAQBX9fn75PwCQloTjm2m9jh2gHUbLm4VLx0TMxbFLimYd2iAuDH7mBR
-        nplm/rIMMOK7/QIWi0gDGsklyg==
-X-Google-Smtp-Source: AKy350YdJ6dqlQlucGROPOEgXCKIMWwxg+ZMKqJ/8GKjjS9wXtybKPSwYHMqWAzeQ3peGMRYROdXnw==
-X-Received: by 2002:a2e:b0c8:0:b0:298:8782:e5f with SMTP id g8-20020a2eb0c8000000b0029887820e5fmr289817ljl.43.1679624720837;
-        Thu, 23 Mar 2023 19:25:20 -0700 (PDT)
+        bh=F0UkUAHHV030Q9Rz5orwTaamTqXyQfCNaYwLyt8g6O0=;
+        b=l0Qn7IbZQvyTblyxHTuyca7UR7wfHk5yRfIk9p7TL/1XHyaCyjD/19ifi+R8Xr6l68
+         72xynmHEcdZfhLfv5MR1FGsnTE13Kvnhn7VwzLKLgD+7pFyybh2DKGghPlZqxs0ckdbu
+         4bUIuyY9qs+irYwdVamjbUmOCZtzL/VHiYNK8szo0uKnyT56gqGuRu1MHJ5yVI0xURXI
+         1gJG85p5gAUgKKFGKCZKeU0BB2W+Y6aczs+IWzNDrsxhM3joigSAUizVWoFIhk4b7CMe
+         fKw+CmG+TAu30ypX7ebo6UhvcjKGJP0T2d4pEAXvXR9eQoNjg2LdznUsFHaVs5TSr7dc
+         xBNw==
+X-Gm-Message-State: AAQBX9c8vz2CzRo7Iv8lHGBSHjInUNJQANmvnlKWMcG0PMngrsVj84Z/
+        MfafoeQOlIaJWLHrNvNYzfyu6g==
+X-Google-Smtp-Source: AKy350YDs2q5/qG0/+u/R2zfmdyySqEjCGoK0ZJpvsepQRQ5Tkbvho6Wz38FmgqMtpvwEa/pNFBRdw==
+X-Received: by 2002:ac2:4884:0:b0:4ea:e628:356f with SMTP id x4-20020ac24884000000b004eae628356fmr178985lfc.48.1679624721820;
+        Thu, 23 Mar 2023 19:25:21 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id x4-20020a19f604000000b004db3aa3c542sm3162628lfe.47.2023.03.23.19.25.19
+        by smtp.gmail.com with ESMTPSA id x4-20020a19f604000000b004db3aa3c542sm3162628lfe.47.2023.03.23.19.25.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Mar 2023 19:25:20 -0700 (PDT)
+        Thu, 23 Mar 2023 19:25:21 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 05/41] phy: qcom-qmp-usb: make QPHY_PCS_MISC_CLAMP_ENABLE access conditional
-Date:   Fri, 24 Mar 2023 05:24:38 +0300
-Message-Id: <20230324022514.1800382-6-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 06/41] phy: qcom-qmp: move PCS MISC V4 registers to separate header
+Date:   Fri, 24 Mar 2023 05:24:39 +0300
+Message-Id: <20230324022514.1800382-7-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20230324022514.1800382-1-dmitry.baryshkov@linaro.org>
 References: <20230324022514.1800382-1-dmitry.baryshkov@linaro.org>
@@ -75,84 +75,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The register QPHY_V[34]_PCS_MISC_CLAMP_ENABLE is present only on some
-SoC families. Other platforms (qcm2290) can have PCS_MISC region, but do
-not have this register. Add it to the register layout table and check
-that it is defined before toggling CLAMP settings.
+Move PCS MISC V4 registers to the separate header.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v4.h | 17 +++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c         |  1 +
+ drivers/phy/qualcomm/phy-qcom-qmp.h             |  8 --------
+ 3 files changed, 18 insertions(+), 8 deletions(-)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v4.h
 
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v4.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v4.h
+new file mode 100644
+index 000000000000..e256a089f228
+--- /dev/null
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v4.h
+@@ -0,0 +1,17 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2017, The Linux Foundation. All rights reserved.
++ */
++
++#ifndef QCOM_PHY_QMP_PCS_MISC_V4_H_
++#define QCOM_PHY_QMP_PCS_MISC_V4_H_
++
++/* Only for QMP V4 PHY - PCS_MISC registers */
++#define QPHY_V4_PCS_MISC_TYPEC_CTRL			0x00
++#define QPHY_V4_PCS_MISC_TYPEC_PWRDN_CTRL		0x04
++#define QPHY_V4_PCS_MISC_PCS_MISC_CONFIG1		0x08
++#define QPHY_V4_PCS_MISC_CLAMP_ENABLE			0x0c
++#define QPHY_V4_PCS_MISC_TYPEC_STATUS			0x10
++#define QPHY_V4_PCS_MISC_PLACEHOLDER_STATUS		0x14
++
++#endif
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index a49711c5a63d..269350687259 100644
+index 269350687259..8a1dd5d80145 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -95,6 +95,7 @@ enum qphy_reg_layout {
- 	QPHY_PCS_AUTONOMOUS_MODE_CTRL,
- 	QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR,
- 	QPHY_PCS_POWER_DOWN_CONTROL,
-+	QPHY_PCS_MISC_CLAMP_ENABLE,
- 	/* Keep last to ensure regs_layout arrays are properly initialized */
- 	QPHY_LAYOUT_SIZE
- };
-@@ -115,6 +116,16 @@ static const unsigned int qmp_v3_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V3_PCS_AUTONOMOUS_MODE_CTRL,
- 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V3_PCS_LFPS_RXTERM_IRQ_CLEAR,
- 	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V3_PCS_POWER_DOWN_CONTROL,
-+	[QPHY_PCS_MISC_CLAMP_ENABLE]	= QPHY_V3_PCS_MISC_CLAMP_ENABLE,
-+};
-+
-+static const unsigned int qmp_v3_usb3phy_regs_layout_qcm2290[QPHY_LAYOUT_SIZE] = {
-+	[QPHY_SW_RESET]			= QPHY_V3_PCS_SW_RESET,
-+	[QPHY_START_CTRL]		= QPHY_V3_PCS_START_CONTROL,
-+	[QPHY_PCS_STATUS]		= QPHY_V3_PCS_PCS_STATUS,
-+	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V3_PCS_AUTONOMOUS_MODE_CTRL,
-+	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V3_PCS_LFPS_RXTERM_IRQ_CLEAR,
-+	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V3_PCS_POWER_DOWN_CONTROL,
- };
+@@ -22,6 +22,7 @@
  
- static const unsigned int qmp_v4_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
-@@ -126,6 +137,7 @@ static const unsigned int qmp_v4_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	/* In PCS_USB */
- 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V4_PCS_USB3_AUTONOMOUS_MODE_CTRL,
- 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V4_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
-+	[QPHY_PCS_MISC_CLAMP_ENABLE]	= QPHY_V4_PCS_MISC_CLAMP_ENABLE,
- };
+ #include "phy-qcom-qmp.h"
+ #include "phy-qcom-qmp-pcs-misc-v3.h"
++#include "phy-qcom-qmp-pcs-misc-v4.h"
+ #include "phy-qcom-qmp-pcs-usb-v4.h"
+ #include "phy-qcom-qmp-pcs-usb-v5.h"
  
- static const unsigned int qmp_v5_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
-@@ -1936,7 +1948,7 @@ static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
- 	.num_resets		= ARRAY_SIZE(qcm2290_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
--	.regs			= qmp_v3_usb3phy_regs_layout,
-+	.regs			= qmp_v3_usb3phy_regs_layout_qcm2290,
- };
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
+index 7ee4b0e07d11..1581d9b3d25c 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.h
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
+@@ -126,14 +126,6 @@
+ #define QSERDES_V4_DP_PHY_AUX_INTERRUPT_STATUS		0x0d8
+ #define QSERDES_V4_DP_PHY_STATUS			0x0dc
  
- static void qmp_usb_configure_lane(void __iomem *base,
-@@ -2198,8 +2210,8 @@ static void qmp_usb_enable_autonomous_mode(struct qmp_usb *qmp)
- 	qphy_setbits(pcs_usb, cfg->regs[QPHY_PCS_AUTONOMOUS_MODE_CTRL], intr_mask);
- 
- 	/* Enable i/o clamp_n for autonomous mode */
--	if (pcs_misc)
--		qphy_clrbits(pcs_misc, QPHY_V3_PCS_MISC_CLAMP_ENABLE, CLAMP_EN);
-+	if (pcs_misc && cfg->regs[QPHY_PCS_MISC_CLAMP_ENABLE])
-+		qphy_clrbits(pcs_misc, cfg->regs[QPHY_PCS_MISC_CLAMP_ENABLE], CLAMP_EN);
- }
- 
- static void qmp_usb_disable_autonomous_mode(struct qmp_usb *qmp)
-@@ -2209,8 +2221,8 @@ static void qmp_usb_disable_autonomous_mode(struct qmp_usb *qmp)
- 	void __iomem *pcs_misc = qmp->pcs_misc;
- 
- 	/* Disable i/o clamp_n on resume for normal mode */
--	if (pcs_misc)
--		qphy_setbits(pcs_misc, QPHY_V3_PCS_MISC_CLAMP_ENABLE, CLAMP_EN);
-+	if (pcs_misc && cfg->regs[QPHY_PCS_MISC_CLAMP_ENABLE])
-+		qphy_setbits(pcs_misc, cfg->regs[QPHY_PCS_MISC_CLAMP_ENABLE], CLAMP_EN);
- 
- 	qphy_clrbits(pcs_usb, cfg->regs[QPHY_PCS_AUTONOMOUS_MODE_CTRL],
- 		     ARCVR_DTCT_EN | ARCVR_DTCT_EVENT_SEL | ALFPS_DTCT_EN);
+-/* Only for QMP V4 PHY - PCS_MISC registers */
+-#define QPHY_V4_PCS_MISC_TYPEC_CTRL			0x00
+-#define QPHY_V4_PCS_MISC_TYPEC_PWRDN_CTRL		0x04
+-#define QPHY_V4_PCS_MISC_PCS_MISC_CONFIG1		0x08
+-#define QPHY_V4_PCS_MISC_CLAMP_ENABLE			0x0c
+-#define QPHY_V4_PCS_MISC_TYPEC_STATUS			0x10
+-#define QPHY_V4_PCS_MISC_PLACEHOLDER_STATUS		0x14
+-
+ /* Only for QMP V6 PHY - DP PHY registers */
+ #define QSERDES_V6_DP_PHY_AUX_INTERRUPT_STATUS		0x0e0
+ #define QSERDES_V6_DP_PHY_STATUS			0x0e4
 -- 
 2.30.2
 
