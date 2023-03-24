@@ -2,41 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B35C36C7845
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 07:52:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8101E6C7884
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 08:12:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229921AbjCXGwy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 02:52:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39690 "EHLO
+        id S231168AbjCXHMf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 03:12:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230372AbjCXGwx (ORCPT
+        with ESMTP id S230329AbjCXHMe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 02:52:53 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA76124C80;
-        Thu, 23 Mar 2023 23:52:52 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 753F9B822AD;
-        Fri, 24 Mar 2023 06:52:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CBDC433EF;
-        Fri, 24 Mar 2023 06:52:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679640770;
-        bh=eAgzktUw36k84XyIpPeAFS22zFe2LwUnrI5YTkK3tLk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Uy30E47500cQwy4yveoh3p8sqXsEoe+5WtY81PxbQuING23HmwERsmB7HB8++fsRL
-         6tf9dyoa+9lOSJDTyt8wAonTHUJ0J2SrrJaC/GykO8O2X81R5HlxhLGQiOswPNt15v
-         LBKYrhQ/4EyL5pWH9aYSkZf0utMxXoAMTpLO+bozn4KB0AlAclLd69fkP65H8p14bB
-         dQ4qZmtsnGVZ6bOEqV+QlcvaokRXCD0k2xn1sCYyZj8BvIQfmiZGbrrSS4IhJH2lFf
-         AeuQ51n2upKFnkTasj7teSd/zFmIgybVLp+nXod5NVPr4G+lsLl+ScgH1UzpcAA9Nh
-         FeR0MtGg+uDTg==
-Date:   Thu, 23 Mar 2023 23:52:47 -0700
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
+        Fri, 24 Mar 2023 03:12:34 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74E0B25E01
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 00:12:31 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id ek18so4135646edb.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 00:12:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679641950;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GHYARhcu7fqeGh+Mo9qe8pAsnwrLQZJjJYTNVl5/co0=;
+        b=eQ/gIFjOOzT1h/PfMelahxCE+q5DGqaPZzYpkuWS8Ix50crh+8pLukozCcpxvnN1lN
+         Rdwy0u6DYTq0gHaf+n5q65JduEvxaCK/TZzYMp6uI7n6DD8N3Kw1i9bT9de6O9LNSK4U
+         JhxUYb6OL65cMdC2sMceG64Tz43ZBnCKhKjahnwMpGp0xrPFIyl1+Kb65j20+ja1tu79
+         PW/oSDbUmfpV+A8hH2x/MQWi22+4MviE4dpyMLpayOys3ctYUtv5Y/SPO8lH4Q+8O3aQ
+         ZxZrG2MAX6NnYhQcP98DRhzBSMXt+Zzxm7h7rDx1LzZPkwBAOTFCwqoVddQyJovSS0Df
+         M8pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679641950;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GHYARhcu7fqeGh+Mo9qe8pAsnwrLQZJjJYTNVl5/co0=;
+        b=39RbTmtxWG4rCHNr3DdYRUM1nvSwqgo/DyMmzdGeBo2ZG50RTmG3wQz+X7kSEd0qdq
+         UAFobUjI9vqLvnx/ORRx7Mik1ZFvWyE23eWXxvZe74NbaxeNyDa++ZkXTECDiaVnyEzh
+         QyfsR6XVhBlaPYUkX/n66z+sMBcO7aXbOU/Xb4b3Fb+PydwtKlCcILolJV4lNX8kpJmR
+         rnmOpji7GsaiO4QYipZv8tELxd3b399RWA7j9/o4v78NVCYSVbaVpZpBrazGXZZkUhVV
+         Cu5HdGCRARJjQty2OXYIiq4WsixKD9z3uXez48aq7HonXV+fo7l+AxBSRVlbpkKgzAvV
+         byPw==
+X-Gm-Message-State: AAQBX9dUXdpYS5/EUjb3IHZtlzsWxVM9wE3MekctD45EUCn0pAH2I7wh
+        RmJkXO8g1/ZBSgzu2fmzzsgdSA==
+X-Google-Smtp-Source: AKy350ZgsGG14ir1cibTF8MCHhqvpjZXYXE75aJ1CLRl2+x6YiTaEEn8kXqhVNjwE/4L8/Vzwx87Yg==
+X-Received: by 2002:a17:906:54cc:b0:932:c315:b0d with SMTP id c12-20020a17090654cc00b00932c3150b0dmr1642754ejp.34.1679641949969;
+        Fri, 24 Mar 2023 00:12:29 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:ce50:243f:54cc:5373? ([2a02:810d:15c0:828:ce50:243f:54cc:5373])
+        by smtp.gmail.com with ESMTPSA id kb1-20020a1709070f8100b00933c4a25735sm7128368ejc.100.2023.03.24.00.12.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Mar 2023 00:12:29 -0700 (PDT)
+Message-ID: <3356ecee-4e6c-8707-c26e-73329b4f4728@linaro.org>
+Date:   Fri, 24 Mar 2023 08:12:28 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 4/8] arm64: dts: qcom: sm8450: remove invalid properties
+ in cluster-sleep nodes
+Content-Language: en-US
+To:     neil.armstrong@linaro.org, Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
@@ -50,69 +72,51 @@ Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Manivannan Sadhasivam <mani@kernel.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
         Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Bart Van Assche <bvanassche@acm.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-scsi@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: sm8450: remove invalid reg-names
- from ufs node
-Message-ID: <20230324065247.GA9598@sol.localdomain>
+        linux-scsi@vger.kernel.org
 References: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-0-3ead1e418fe4@linaro.org>
- <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-7-3ead1e418fe4@linaro.org>
- <9614782e-0d78-e8f2-a438-452cfa86f80b@linaro.org>
- <316d7d7d-b370-36e1-648a-400447d2dd47@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <316d7d7d-b370-36e1-648a-400447d2dd47@linaro.org>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+ <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-4-3ead1e418fe4@linaro.org>
+ <0bcad5cc-112f-386c-b70e-146530ac4898@linaro.org>
+ <215efc34-68bf-53d7-2191-a5132c3d2198@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <215efc34-68bf-53d7-2191-a5132c3d2198@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Neil,
-
-On Thu, Mar 23, 2023 at 02:10:44PM +0100, Neil Armstrong wrote:
-> Hi,
+On 23/03/2023 14:14, Neil Armstrong wrote:
+> On 23/03/2023 11:51, Krzysztof Kozlowski wrote:
+>> On 23/03/2023 11:25, Neil Armstrong wrote:
+>>> Fixes the following DT bindings check error:
+>>> domain-idle-states: cluster-sleep-0: 'idle-state-name', 'local-timer-stop' do not match any of the regexes:
+>>> 'pinctrl-[0-9]+'
+>>> domain-idle-states: cluster-sleep-1: 'idle-state-name', 'local-timer-stop' do not match any of the regexes:
+>>> 'pinctrl-[0-9]+'
+>>
+>> I don't get from the commit msg why these properties are not correct
+>> here. The idle states allow them, so maybe something is missing in the
+>> binding? At least commit msg should explain this.
 > 
-> On 23/03/2023 11:49, Krzysztof Kozlowski wrote:
-> > On 23/03/2023 11:25, Neil Armstrong wrote:
-> > > Fixes the following DT bindings check error:
-> > > ufshc@1d84000: Unevaluated properties are not allowed ('reg-names' was unexpected)
-> > > 
-> > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/sm8450.dtsi | 1 -
-> > >   1 file changed, 1 deletion(-)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > > index ef9bae2e6acc..8ecc48c7c5ef 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > > @@ -3996,7 +3996,6 @@ ufs_mem_hc: ufshc@1d84000 {
-> > >   				     "jedec,ufs-2.0";
-> > >   			reg = <0 0x01d84000 0 0x3000>,
-> > >   			      <0 0x01d88000 0 0x8000>;
-> > > -			reg-names = "std", "ice";
-> > 
-> > This is also part of:
-> > https://lore.kernel.org/linux-arm-msm/20230308155838.1094920-8-abel.vesa@linaro.org/#Z31arch:arm64:boot:dts:qcom:sm8450.dtsi
-> > but I actually wonder whether you just missed some binding patch?
-> 
-> I'm aware of Abel's RFC patchset to support shared ICE, but this is a cleanup of the current DT,
-> and the current bindings schema doesn't document reg-names.
-> 
+> The domain-idle-states bindings doesn't document those 2 properties, so perhaps it's missing ?
 
-The ufs-qcom driver accesses the "ice" registers by name, so the reg-names can't
-be removed from the device tree.  A few months ago there was a patch to fix the
-device tree schema for qcom,ufs to include the reg-names.  It looks like that
-patch got missed, though:
-https://lore.kernel.org/r/20221209-dt-binding-ufs-v2-2-dc7a04699579@fairphone.com
+Ah, you are right. These were copied from CPU idle states, so here they
+do not make sense.
 
-- Eric
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
