@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D6236C87CC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 22:55:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 037D16C87CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 22:55:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232281AbjCXVz5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S232069AbjCXVz5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 24 Mar 2023 17:55:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44804 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232120AbjCXVz4 (ORCPT
+        with ESMTP id S232259AbjCXVz4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 24 Mar 2023 17:55:56 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FB0E1E5F2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 14:55:54 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id bi9so3927187lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 14:55:54 -0700 (PDT)
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B0661E5F8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 14:55:55 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id q16so3936523lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 14:55:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679694953;
+        d=linaro.org; s=google; t=1679694954;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8+k49y8vkq2xcxY7Yu0qyM15XqLOBvZj7lJd33kjylE=;
-        b=DIt7fgQP9aIBziEje2pbhgkfgk+aBVXzDXA54iSuwKnziMqKHlLbk7+cwnVALohxPm
-         t9xyHDZp0/haQxE2s2aqwH9+HGDDGovGf3XyTCuXVo960mVUziEf7IlEjDuIAOEm5uWI
-         3wdiSB2euhDQA2BUwgtyGKe8fdtaegos/9FkxnzdBhp5blQf7Z/UnHXvGQexmrahDU00
-         eeaWiXyQsOjRqK0jann4maWbCKWuJkZyczQ1CwrYf9XaB+8LJXMpB6elq5TlOtGI543w
-         A6BbAkant+xs/1ZR8lvIEUpqNv6188R5bBS8xnKNvlXtOLUw7UCykaa/YssPfFgpCeG/
-         PqyQ==
+        bh=FARMu4hTbAZ9FVWyt2VvGjg3+YTS6nEVdT70kTxCBBY=;
+        b=j1rCB7sd9xlrWyGKJ5yBj5WzHjKCMGNR03LwVKaDXlmSnOFgj0K1VqrsLL3uleMoQT
+         jVguSfepplxrsFZl84t7cgdAvHahlNuljAghy/SXCukOZs8Dfi3EUUlDyqAmBikeuGN1
+         50tZjv2k9lFY2pQ+nI3Ua6bEnXkRWCrx+BACB4dvZexx16M7yEqzE5JzBSMKigAXyN09
+         uFImt7DuvN4DU4KIAlHmAkSqG0WOcRfE0X4eWnqj4GmTx3Tt7dweTJEFBZemZnY0rxLp
+         joZbFTto+T5QdYTEZAgdteVOYYLpEhVN2vGxRh2pI1Gq4P02QWypXwe3U4uxxDhczEAO
+         yCEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679694953;
+        d=1e100.net; s=20210112; t=1679694954;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8+k49y8vkq2xcxY7Yu0qyM15XqLOBvZj7lJd33kjylE=;
-        b=ks9NWScdghvpvtxCFsaanRGReY1nHl+9w62Lp4RPZBJQJ5uGdQkL8CbtexLBDGDRwF
-         CHeO7OLzDg8itSG0w7ZVKg6/bNUKH6pVbcfp8q7d861QzjOjAVlV7eVP7ayMeKg80D+T
-         lxCbnT9qHIhCEuFqgDXpu16Joi/3vqfNAFpcghKObzcz3z6LuLfhi6/xfQYdg2qq1R/e
-         SxMCLdX7qdTdIyJuwVbRCzRgMMO4I+DUYfyFMoL/nAnmfhEMeSDfW7gQ0+LG8CV75EwI
-         8WoMd4wbBVKX038B3UAoYrgb6MjxwrnGlZ/9G1nRBSabsOf9A7cuqAZGYALShSa0CVzF
-         NQ2Q==
-X-Gm-Message-State: AAQBX9fx8IP4sH8hkgWu1aqNQCxn4yrVOIVVb2AXRwLntPvGiBev416k
-        R65elvyO9FPO4NeXFC9WEnanug==
-X-Google-Smtp-Source: AKy350ZoIo3YqS+8G0Ry9LXRU5W/KUssG5ok8McFASmNcoJp0io8xqb2FfzJRidHCE6aXp5pi9ssJQ==
-X-Received: by 2002:ac2:54a1:0:b0:4e0:dfd0:fa9 with SMTP id w1-20020ac254a1000000b004e0dfd00fa9mr1052700lfk.56.1679694952854;
-        Fri, 24 Mar 2023 14:55:52 -0700 (PDT)
+        bh=FARMu4hTbAZ9FVWyt2VvGjg3+YTS6nEVdT70kTxCBBY=;
+        b=Bxw4Ln5xPgV/e2yvtyp0ENDlbmaLhgAwvDmwt++Z1Vz3/u20L8j5V4mdX35Xg8ZlWY
+         BZYaQo9l8fQCLaRVCHYnF2T1BzBez6WISSUS648exTaUskxMphBPIhANmdJ21kSAvrCc
+         NHaoFSJwewRzQDIWptgGKnMeqbfs2588VbAECIaRG5J8inWggts236w8vpNLPiM+soYs
+         cgUL7tFczx0EvQs2ME7zHwA8YTT0cH1/xAekvAxzUgbVEnoAxCDiVo/JRvQs0Oaj60hB
+         uhdo4eQaBNftjO7IcjiawuPlSo28x6eLkbxc5mv0qTUjjOhN1PzmqKOlFbk+Rrncl5cO
+         B2yg==
+X-Gm-Message-State: AAQBX9cEwQ1VjzPyW2cPwHuVV5Nus0hJwYaEuwtnfcidpSqo1PAW8813
+        lzyjUoYWyXvgvZGIFNEcEPtCjA==
+X-Google-Smtp-Source: AKy350YT1TNh3gPW5jYoT+pPUTwmaF6XH+l2//gXleKa3GSaUrV3EGTtXA8hJAUIhX4iTFi1F8c2rw==
+X-Received: by 2002:a19:750a:0:b0:4b4:e4a1:2fc6 with SMTP id y10-20020a19750a000000b004b4e4a12fc6mr1325104lfe.68.1679694953835;
+        Fri, 24 Mar 2023 14:55:53 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id y1-20020a197501000000b004dcf20843efsm3488285lfe.239.2023.03.24.14.55.51
+        by smtp.gmail.com with ESMTPSA id y1-20020a197501000000b004dcf20843efsm3488285lfe.239.2023.03.24.14.55.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Mar 2023 14:55:51 -0700 (PDT)
+        Fri, 24 Mar 2023 14:55:53 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         Johan Hovold <johan+linaro@kernel.org>,
         devicetree@vger.kernel.org
-Subject: [PATCH 1/5] dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy: add sm8150 USB+DP PHY
-Date:   Sat, 25 Mar 2023 00:55:46 +0300
-Message-Id: <20230324215550.1966809-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 2/5] phy: qcom-qmp-combo: add support for the USB+DP PHY on SM8150 platform
+Date:   Sat, 25 Mar 2023 00:55:47 +0300
+Message-Id: <20230324215550.1966809-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20230324215550.1966809-1-dmitry.baryshkov@linaro.org>
 References: <20230324215550.1966809-1-dmitry.baryshkov@linaro.org>
@@ -78,34 +78,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add bindings for sm8150 USB+DP PHY. These bindings follow the older
-style as this is a quick conversion to simplify further driver cleanup.
+SM8150 and SC8180X are close relatives. Reuse sc8180x data to support
+USB+DP combo PHY on SM8150 platform.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml    | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
-index 0ef2c9b9d466..a2ddf718ba76 100644
---- a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
-@@ -24,6 +24,7 @@ properties:
-           - qcom,sc7180-qmp-usb3-dp-phy
-           - qcom,sc8180x-qmp-usb3-dp-phy
-           - qcom,sdm845-qmp-usb3-dp-phy
-+          - qcom,sm8150-qmp-usb3-dp-phy
-           - qcom,sm8250-qmp-usb3-dp-phy
-       - items:
-           - enum:
-@@ -192,6 +193,7 @@ allOf:
-         compatible:
-           enum:
-             - qcom,sc8180x-qmp-usb3-dp-phy
-+            - qcom,sm8150-qmp-usb3-dp-phy
-     then:
-       properties:
-         clocks:
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 6850e04c329b..58e1f50c0660 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -3460,6 +3460,10 @@ static const struct of_device_id qmp_combo_of_match_table[] = {
+ 		.compatible = "qcom,sm6350-qmp-usb3-dp-phy",
+ 		.data = &sm6350_usb3dpphy_cfg,
+ 	},
++	{
++		.compatible = "qcom,sm8150-qmp-usb3-dp-phy",
++		.data = &sc8180x_usb3dpphy_cfg,
++	},
+ 	{
+ 		.compatible = "qcom,sm8250-qmp-usb3-dp-phy",
+ 		.data = &sm8250_usb3dpphy_cfg,
 -- 
 2.30.2
 
