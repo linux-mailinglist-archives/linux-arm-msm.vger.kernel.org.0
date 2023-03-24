@@ -2,132 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A96576C8707
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 21:47:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F2F066C8747
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 22:07:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232082AbjCXUra (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 16:47:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43238 "EHLO
+        id S232022AbjCXVH3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 17:07:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230015AbjCXUr3 (ORCPT
+        with ESMTP id S230382AbjCXVHV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 16:47:29 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E97E1136C7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 13:47:27 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id cn12so12654934edb.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 13:47:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679690846;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gvJuFk30qXvHsXmKvq2WXms+VNACf251BO2nmorEuAE=;
-        b=TPOAgzMTYkViLIjcHeqRkpM16OmWLnnbSWgzEmaWJhwgv6eN1kJDftmvs1qIr3Lpic
-         ypGfjEotaFTMZpJBjFijOTrxiGbMN2vhUX+dyTqFbm9U1NI7mTwp+TM2X5IMrdIYObb1
-         QCB0JNg9jdvMvi2jimAXGw/rrnK/mikPXCPcvazVy+qiYekvbuqavaUQ/HBEhUDPcfeE
-         7U0QDgpID8b7+iN+jfwEGzyC+OIPybCaixweKOBhBIL+6sbMSCDxbkuom5nH3Z/kZUh+
-         1us+I2Is9gmKVZRbqsGTsU7zIVTW+rzj5UdwTPuf4VFL+OpMXhvvqEwbP2xCCabM8XtZ
-         sAyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679690846;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gvJuFk30qXvHsXmKvq2WXms+VNACf251BO2nmorEuAE=;
-        b=Js4PO6zDdZyfqPT/U0YoGp8vVs4c1Cxvb3uaQy268v/MiHcq3BLFML3w6Q66KWM4bv
-         gD+ViHZVj8/gK4bt6o2UlH4Uzk7CX+23p3B6EoRaNoWyYh0TION4XmzApTDDgTpIkLMV
-         MLQOzEkZRDFQ/DrSVFflPDBTCbO4POSpJ5/2hCiD55hAvarmqhlNJhcpQd4Yn0m+ICs/
-         k0Q9LvaPNUf9EAltpSUQXzWj9vu6t0e+mtoRFlS6knducxizEfre8+KDheyO6/LVFCo/
-         fq7e6/tcPOuCR+jIkmoPxtXA9Va8uVEXDqZhLA+j77F4lAUwLDzzSP7dJzw9vB/8wCJD
-         NujQ==
-X-Gm-Message-State: AAQBX9f7Po8gC5CdWeLqgLepH3WZwWU5h4c7UTt832lYVMFv+cL5A9ps
-        xnKa092/4VPyUkK3r9G4/LwZFg==
-X-Google-Smtp-Source: AKy350YwCpEJ2Rxx3nxkTYvfEOr50qMbvXpKHh3yxBpw2u57GGoC30mDM0iDbjcLJi0wu6059ATpFA==
-X-Received: by 2002:a17:906:b049:b0:937:9a24:370b with SMTP id bj9-20020a170906b04900b009379a24370bmr4185300ejb.67.1679690846477;
-        Fri, 24 Mar 2023 13:47:26 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:3027:fb0b:ae08:588? ([2a02:810d:15c0:828:3027:fb0b:ae08:588])
-        by smtp.gmail.com with ESMTPSA id v15-20020a170906858f00b0093229e527cdsm10307455ejx.42.2023.03.24.13.47.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Mar 2023 13:47:26 -0700 (PDT)
-Message-ID: <8c88fe1b-cb91-22e3-6fcd-c2fdf2202cc0@linaro.org>
-Date:   Fri, 24 Mar 2023 21:47:24 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm8450: remove invalid
- properties in cluster-sleep nodes
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Fri, 24 Mar 2023 17:07:21 -0400
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BFD2166E7;
+        Fri, 24 Mar 2023 14:07:21 -0700 (PDT)
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32OL4NCM006418;
+        Fri, 24 Mar 2023 21:07:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2022-7-12;
+ bh=sMrWGF4iDvga1gtu6cL78e0EHnW0GNkp2SZd9j0LaBs=;
+ b=g1ZztP07jh3xUNoImnCeix3zgWt8GsKG4pQJkGUQpwf3JPvqhKN/LYFfNkDPMts+dH6P
+ YAhXs9uPYAtfsn3OgSmPdQpQkR3Jnm5ewCm2xs0xZxlB9XyOGu4S7fjmB6SFraIiGrmi
+ 94NuYni5B80XhAVI3jCfzre1D20ZhnbUuN0P6gtO38cuYh9bk1NI9TixJ3BHAimzL5AG
+ CT2bcMrrz8CWdMxPUpv1eIurcIhPE7+bUr0hFn6LAVolIORbPWYDcHWNMG1SI9LvK8pZ
+ 9Usn/NtHX50meZEBQZQUTJRAfGoQXHqTnZV0vxI1McwkDH9Konnk/NZpd4TVbNwspZq6 cA== 
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+        by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3phkey806u-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 24 Mar 2023 21:07:08 +0000
+Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+        by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.5/8.17.1.5) with ESMTP id 32OK211W027702;
+        Fri, 24 Mar 2023 21:07:08 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3pgxk4se43-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 24 Mar 2023 21:07:08 +0000
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 32OL76f8017159;
+        Fri, 24 Mar 2023 21:07:07 GMT
+Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
+        by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id 3pgxk4se2p-4;
+        Fri, 24 Mar 2023 21:07:07 +0000
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+To:     Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v2-0-0ca1bea1a843@linaro.org>
- <20230323-topic-sm8450-upstream-dt-bindings-fixes-v2-2-0ca1bea1a843@linaro.org>
- <20230324174518.2arvdglqqixmxqcp@ripper>
- <fdd51d3d-a1fd-c3a9-c578-59a11c5213de@linaro.org>
- <20230324195713.5blwpv7xjijlrtt5@ripper>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230324195713.5blwpv7xjijlrtt5@ripper>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-scsi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>
+Subject: Re: [PATCH 1/3] ufs: qcom: add __maybe_unused to OF ID table
+Date:   Fri, 24 Mar 2023 17:06:55 -0400
+Message-Id: <167969123974.59527.7651458809202499839.b4-ty@oracle.com>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230310214435.275127-1-krzysztof.kozlowski@linaro.org>
+References: <20230310214435.275127-1-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-24_11,2023-03-24_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 suspectscore=0
+ malwarescore=0 spamscore=0 mlxlogscore=968 adultscore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303240160
+X-Proofpoint-GUID: o6Q1LuRX7_Loq37EO1y-dSGVQxwj9H6R
+X-Proofpoint-ORIG-GUID: o6Q1LuRX7_Loq37EO1y-dSGVQxwj9H6R
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/03/2023 20:57, Bjorn Andersson wrote:
-> On Fri, Mar 24, 2023 at 08:27:12PM +0100, Krzysztof Kozlowski wrote:
->> On 24/03/2023 18:45, Bjorn Andersson wrote:
->>> On Fri, Mar 24, 2023 at 10:28:47AM +0100, Neil Armstrong wrote:
->>>> Fixes the following DT bindings check error:
->>>
->>> Is that because idle-state-name and local-timer-stop should not be
->>> defined for domain-idle-states or are you just clearing out the
->>> dtbs_check warning?
->>>
->>> According to cpu-capacity.txt local-timer-stop seems to have been a
->>> property relevant for clusters in the past, was this a mistake in the
->>> binding or did something change when this was moved to
->>> domain-idle-states?
->>
->> I cannot find anything about local-timer-stop in cpu-capacity.txt. Where
->> do you see it?
->>
+On Fri, 10 Mar 2023 22:44:33 +0100, Krzysztof Kozlowski wrote:
+
+> The driver can be built on ACPI and its .of_match_table uses
+> of_match_ptr(), thus annotate the actual table as maybe unused.
 > 
-> Ohh, you're right it's only mentioned in the example.
 > 
-> But idle-states.yaml documents the property for both cpus and clusters,
-> and it's used throughout the examples.
->
-> Our cluster states are defined in domanin-idle-states instead of
-> idle-state, does this imply that the flag is no longer applicable
-> per cluster in this mode of operation?
 
-As you noticed their meaning is interleaving. For example on SC7280 we
-use arm,idle-state for cluster. But other Qualcomm platforms rather
-define clusters as domain-idle-states and in that case, nothing parses
-tgat flag. The flag is only for cpuidle dt_idle_states. For
-power-domains it was always ignored.
+Applied to 6.4/scsi-queue, thanks!
 
-Funny fact - both cpu/cluster idle-states and power-domain-idle-states
-will end up eventually in cpuidle-psci.c...
+[1/3] ufs: qcom: add __maybe_unused to OF ID table
+      https://git.kernel.org/mkp/scsi/c/dd3f53301181
+[2/3] ufs: exynos: drop of_match_ptr for ID table
+      https://git.kernel.org/mkp/scsi/c/cd6a6893ac05
+[3/3] ufs: hisi: drop of_match_ptr for ID table
+      https://git.kernel.org/mkp/scsi/c/d43250ed0fec
 
-Best regards,
-Krzysztof
-
+-- 
+Martin K. Petersen	Oracle Linux Engineering
