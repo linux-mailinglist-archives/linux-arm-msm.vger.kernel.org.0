@@ -2,130 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 677CC6C78AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 08:17:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4293E6C78B3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 08:21:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231483AbjCXHRr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 03:17:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38638 "EHLO
+        id S229508AbjCXHVG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 03:21:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231304AbjCXHRo (ORCPT
+        with ESMTP id S229484AbjCXHVF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 03:17:44 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C467110248
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 00:17:41 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id i5so4386151eda.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 00:17:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679642260;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aXAkVT7qE3o2b6C1GZG01G7UNo5SeuZbrIlsD61ojCg=;
-        b=WZLVM+Pvfjz9X30E2t8w3NE+GPwpnZcHc3b860wehev3NfRVUhKjczo7KpM/+Nv+aB
-         Qe1ZdEuzfcoHXfljY1J+hOFllH3jsHTI/eX4O1i7tJKofF7J2WVA1TZh19r/Ry9PG6Sb
-         sbiVK/XhecqUzwxRoadxoayaqwPEYt14l16rlKvhaBJ8ji8dcnZNd1hihPs5V4m9xDhb
-         M9W5K/VvULUiC10++uH5t7hoEs6yfpyT6VKFJtkKVhQ163arDQAS+DkHysj8pn65CJao
-         nAZKAE9Q6SZFYJ5Z7YGdl4rPE641i8GdCuQhQTg9q0SUI2mOlUviYms3O5SBepQwqlQX
-         Vmvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679642260;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aXAkVT7qE3o2b6C1GZG01G7UNo5SeuZbrIlsD61ojCg=;
-        b=jfSZ2oDz8UfOoWn/hssHt5DjpkKov7mxgUuaC6qUkQ44XrJxDj4Zovi9vqwKki3RS5
-         VPSrkySJovdw3mBz5S7t6vW2MaPtE+RTFtDv25nMm0BgmB8EI7JKh8ZPuCccYzjAV4AS
-         D6kBY3ximkKWPgQ6zl4CxE13H7VlrJYxc5478Ut6S6I9rsrABsRYnCjmtrRTCQ8Ps8bA
-         UUoIiWKXKUPcFGhcJyGbHqEZb6WA0sNxLZNEKPYVK3vhpGVlXkON4jdwDAc3pJPYtQV6
-         /4Nmkcx4PFVUUC198/UE36wfmPCHQZOogHUvnJbM5/JCV9lqkL8kPfae3Y8WrOLfVwwK
-         m2Tg==
-X-Gm-Message-State: AAQBX9cKdGc+TmOQB823NdtqepJ6n3aJISR0PZfVv907Nfop78vJPHAi
-        ACq6IhjmdZ0tpp+Vm4hY8qj26w==
-X-Google-Smtp-Source: AKy350Z0IEgUlLyGvvrQ30h1GQdZUzu5+nU1YNH91UDza4dmttvtndN3IIVzkTqrz4PLJOMOJ62uwg==
-X-Received: by 2002:a17:906:b74f:b0:92d:591f:6586 with SMTP id fx15-20020a170906b74f00b0092d591f6586mr1897064ejb.34.1679642260303;
-        Fri, 24 Mar 2023 00:17:40 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:ce50:243f:54cc:5373? ([2a02:810d:15c0:828:ce50:243f:54cc:5373])
-        by smtp.gmail.com with ESMTPSA id 24-20020a508758000000b004fb419921e2sm10316150edv.57.2023.03.24.00.17.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Mar 2023 00:17:39 -0700 (PDT)
-Message-ID: <306b02e8-72bf-3eb7-f4cc-3cc5c598993b@linaro.org>
-Date:   Fri, 24 Mar 2023 08:17:38 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 6/8] arm64: dts: qcom: sm8450: remove invalid npl clock in
- vamacro node
-Content-Language: en-US
-To:     neil.armstrong@linaro.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Fri, 24 Mar 2023 03:21:05 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDFFFC0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 00:21:04 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 64E93B822F4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 07:21:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E913CC433D2;
+        Fri, 24 Mar 2023 07:21:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679642462;
+        bh=JAalBEdru/ocLqf8SWOl9qHluKU5LUoUETNuxkFPQDc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BjHU7E7vNpWu9OIW643SEAoLpc4S+gtiozoxRhUmtf5LEBYKm0THPSXoVPZYWlOAx
+         zFwQ+tkv+iRMshZ0y9QCuGzyfNypInNWP4K6GFl56Yv/nm0KcO6wcVwcEXlVCGkrtu
+         Uq8da/s4Z7uRkXjA9/RY+F1h4Qf++rxAoeKjOpIyXY8j9Iairs8fuLVt2MvJDWXdyy
+         bpTLW0Ti2Zvoa7cTRlQ5g1nzhGLPY2MET5BixDz6+alsWpVHB3GuhcRoEuQYUPuUG9
+         LjDAHfqHeSFbNAdahy037WzOM8mfKtKqAkKr7k6/OGWvsKsLJgBLAf/PDIvxoeZS1S
+         Jtq3KPA4h/SOQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pfbjR-0002zx-15; Fri, 24 Mar 2023 08:21:01 +0100
+Date:   Fri, 24 Mar 2023 08:21:01 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-scsi@vger.kernel.org
-References: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-0-3ead1e418fe4@linaro.org>
- <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-6-3ead1e418fe4@linaro.org>
- <35e3aa8b-ccff-25fa-42da-d8934ef366c6@linaro.org>
- <006bf3bf-ab9a-4a08-3ba5-fa23ff4ea05a@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <006bf3bf-ab9a-4a08-3ba5-fa23ff4ea05a@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH 1/2] phy: qcom-qmp-pcie: drop sdm845_qhp_pcie_rx_tbl
+Message-ID: <ZB1PXVam/9TlLgqu@hovoldconsulting.com>
+References: <20230324001752.1768505-1-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230324001752.1768505-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/03/2023 14:13, Neil Armstrong wrote:
-> On 23/03/2023 11:47, Krzysztof Kozlowski wrote:
->> On 23/03/2023 11:25, Neil Armstrong wrote:
->>> Fixes the following DT bindings check error:
->>> codec@33f0000: clocks: [[137, 57, 1], [137, 102, 1], [137, 103, 1], [137, 70, 1]] is too long
->>> codec@33f0000: clock-names: 'oneOf' conditional failed, one must be fixed:
->>> 	        ['mclk', 'macro', 'dcodec', 'npl'] is too long
->>>
->>> The implementation was checked and this npl clock isn't used for the VA macro.
->>>
->>
->> This does not look correct. DTS looks good, you miss some patches in
->> your tree.
+On Fri, Mar 24, 2023 at 03:17:51AM +0300, Dmitry Baryshkov wrote:
+> The SDM845 QHP PHY doesn't have designated RX region. Corresponding RX
+> table is empty, so we can drop it completely.
 > 
-> I'm based on today's linux-next, 
+> Fixes: 94a407cc17a4 ("phy: qcom-qmp: create copies of QMP PHY driver")
 
-Which is unfortunately not enough. Several things were
-fixed/added/changed and are pending. I brought the topic of pending
-branch few times on IRC for that reason.
+This is not really a bug (and this is just a cleanup) so you can drop
+the fixes tag (which looks incorrect anyway).
 
-> while the other lpass macros uses the npl clock,
-> the lpass vamacro bindings doesn't document the npl clock.
-> 
-> And I found no fixes whatsover to add the npl clock to bindings.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Really? lore finds it easily:
-
-https://lore.kernel.org/all/20221118071849.25506-2-srinivas.kandagatla@linaro.org/
-
-
-Best regards,
-Krzysztof
-
+Johan
