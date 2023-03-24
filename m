@@ -2,432 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D80F6C7F70
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 15:02:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 25F776C7F91
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 15:12:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232156AbjCXOCU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 10:02:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54322 "EHLO
+        id S231603AbjCXOMy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 10:12:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231639AbjCXOB6 (ORCPT
+        with ESMTP id S232063AbjCXOMx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 10:01:58 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1A741C33D;
-        Fri, 24 Mar 2023 07:00:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1679666459; x=1711202459;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=UNIswqp/hiRdz1IdtfO1ox7oQ8yEEaV8sg9ndV70Or4=;
-  b=kv0Co58tP20drFofHduT0jEpUmxJn2nKhzzXObOpP5KffEiCop4NpU11
-   1p8QeGbhx0Lm6XSJvHrZwRfdig7yHHlFQMqdQTU8Dw/d9VsOUdwAQfxoy
-   20cfHNwZjvZSSxB4T9Mv+3zdiKv8bIY/I3xhYXikcRYPRIgy5egnKpJbj
-   Alp+wxngJa0sozjCFK6VS7jBq0XdjEqJoHfLDOVya/t1biGHHOlY1S64N
-   nHWZCD9zfRL5+V5RVTKZf8kCikRV/YwHp0kiRxNJkHPFla0wr/44bzBCE
-   bFRSFZb5mvDeUl8Ht4ThFjP3Q31bIF+b9T8L1lNWQqDeQvmwrYFtZID7V
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10659"; a="338501881"
-X-IronPort-AV: E=Sophos;i="5.98,288,1673942400"; 
-   d="scan'208";a="338501881"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Mar 2023 07:00:44 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10659"; a="826271802"
-X-IronPort-AV: E=Sophos;i="5.98,288,1673942400"; 
-   d="scan'208";a="826271802"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmsmga001.fm.intel.com with SMTP; 24 Mar 2023 07:00:39 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Fri, 24 Mar 2023 16:00:38 +0200
-Date:   Fri, 24 Mar 2023 16:00:38 +0200
-From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     linux@roeck-us.net, gregkh@linuxfoundation.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        wcheng@codeaurora.org, caleb.connolly@linaro.org,
-        konrad.dybcio@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
-        robertom@qti.qualcomm.com
-Subject: Re: [PATCH v4 12/18] usb: typec: qcom: Add Qualcomm PMIC TCPM support
-Message-ID: <ZB2tBkUY85yhzm67@kuha.fi.intel.com>
-References: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
- <20230318121828.739424-13-bryan.odonoghue@linaro.org>
+        Fri, 24 Mar 2023 10:12:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B22391B56D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 07:12:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1679667125;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=7x5FMYKL/oVJz3tQGcZN2b2gCBkkTlGcuo/IBwXiCnI=;
+        b=MuFpyd8EnJGfijTFkvgxU/40MtU34YmSWeVcu6H9SRn9cZyHhYarJphnPnnKdLKBKcP4I7
+        L1oTChwfhJnTYTooHd6P89VbFQbDkb2vFDSr9SoGbiXQdYzvmiS64Mi/MOdeGRji9z4fkp
+        ge87A59qrczWKWLn033KcCfPdLDpATM=
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-306-7WA211GdPjqSBmgh4uap1Q-1; Fri, 24 Mar 2023 10:12:04 -0400
+X-MC-Unique: 7WA211GdPjqSBmgh4uap1Q-1
+Received: by mail-yb1-f199.google.com with SMTP id g187-20020a2520c4000000b00b74680a7904so1875819ybg.15
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 07:12:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679667123;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7x5FMYKL/oVJz3tQGcZN2b2gCBkkTlGcuo/IBwXiCnI=;
+        b=GxLtgwQztSeGsIfNfdrNva96gjKQFPd0L57xYqYmVBrMiQUa1hZOxzSIo35MeHOy1I
+         5GWWIEYtHGnVxzgircLYMWj5TsD2uNXujvEFP6EeQeRmVD+wFWSISyLvTsy5Uel/KpdT
+         5455AWQKDEFC+KdHEpHkKOLH+TNyk590a3buog7UVC4R4PgBkX3x4clTzTOWYxBsFydD
+         D2OvWlzzZREekhpOtKS6xmbvVlLQ7nkDTr8MP/xZ5SW06SYTrBY3S3rO+Bzqr+6lJefT
+         64PIYb20y2smkbaPIGWQyJwdCq6oCBneu/uC9oUGrTdPfDMCgpf2v0rtHkOGpJ4x6cbj
+         uCHA==
+X-Gm-Message-State: AAQBX9f/dD0LE+PufPFB40Dmkha3c8nknI+iQeKIV6UYdOOmqeQf7JoS
+        /zN1FwwJzRhrC7vKqj64eUVpNGtQ7d+VabbmE+ZT3bJCl02UI9jln5b7Qr71E1Xylgo3LfCyp6+
+        ZQz90vgsD/350PIzYky+VjSqDig==
+X-Received: by 2002:a0d:fd07:0:b0:545:91ae:f5a0 with SMTP id n7-20020a0dfd07000000b0054591aef5a0mr2126569ywf.51.1679667122937;
+        Fri, 24 Mar 2023 07:12:02 -0700 (PDT)
+X-Google-Smtp-Source: AKy350ZFISBweozfrJLRN2PDUoOSUv4156/1ipJP+0MX48z7EDbluxllafDZdgbK5QXw4zG3brhe3w==
+X-Received: by 2002:a0d:fd07:0:b0:545:91ae:f5a0 with SMTP id n7-20020a0dfd07000000b0054591aef5a0mr2126537ywf.51.1679667122553;
+        Fri, 24 Mar 2023 07:12:02 -0700 (PDT)
+Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
+        by smtp.gmail.com with ESMTPSA id a67-20020a811a46000000b00545a0818482sm421695ywa.18.2023.03.24.07.12.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Mar 2023 07:12:02 -0700 (PDT)
+Date:   Fri, 24 Mar 2023 09:12:00 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] regulator: qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS
+Message-ID: <20230324141200.he2rpj4x6tdtre27@halaney-x13s>
+References: <CGME20230323220529eucas1p12e5e1bbe2a31fe775cd9e6244f9282ce@eucas1p1.samsung.com>
+ <20230323220518.3247530-1-m.szyprowski@samsung.com>
+ <CAD=FV=WfREMuL6Z-aseAWPKXqpkutPofrWGy4ySH-WgbTHC-fg@mail.gmail.com>
+ <a45c4b18-0fbe-1e75-9b47-6c26217c97e3@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230318121828.739424-13-bryan.odonoghue@linaro.org>
-X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a45c4b18-0fbe-1e75-9b47-6c26217c97e3@samsung.com>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bryan,
-
-On Sat, Mar 18, 2023 at 12:18:22PM +0000, Bryan O'Donoghue wrote:
-> This commit adds a QCOM PMIC TCPM driver with an initial pm8150b
-> block.
+On Fri, Mar 24, 2023 at 12:18:53PM +0100, Marek Szyprowski wrote:
+> Hi,
 > 
-> qcom_pmic_virt_tcpm.c : Responsible for registering with TCPM and
->                         arbitrates access to the Type-C and PDPHY hardware
->                         blocks in one place.
->                         This driver presents a virtual device to the Linux
->                         TCPM layer.
+> On 23.03.2023 23:08, Doug Anderson wrote:
+> > On Thu, Mar 23, 2023 at 3:05 PM Marek Szyprowski
+> > <m.szyprowski@samsung.com> wrote:
+> >> Restore synchronous probing for 'qcom,pm8150-rpmh-regulators' because
+> >> otherwise the UFSHC device is not properly initialized on QRB5165-RB5
+> >> board.
+> >>
+> >> Fixes: ed6962cc3e05 ("regulator: Set PROBE_PREFER_ASYNCHRONOUS for drivers between 4.14 and 4.19")
+> >> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> >> ---
+> >>   drivers/regulator/qcom-rpmh-regulator.c | 2 +-
+> >>   1 file changed, 1 insertion(+), 1 deletion(-)
+> > I don't object to this patch landing temporarily, but can you provide
+> > any more details, please? On Qualcomm Chromebooks I'm not seeing any
+> > issues with RPMH regulators probing asynchronously, so I can only
+> > assume that there's a bug in the UFSHC driver that's being tickled.
 > 
-> qcom_pmic_pdphy.c: Rsponsible for interfacing with the PDPHY hardware and
->                    processing power-delivery related calls from TCPM.
->                    This hardware binding can be extended to facilitate
->                    similar hardware in different PMICs.
+> You are right. I've analyzed this case further and it turned out that it 
+> was my fault. In short - 'rootwait' kernel cmdline parameter was missing 
+> and root was specified as '/dev/sda7'.
 > 
-> qcom_pmic_typec.c: Responsible for notifying and processing Type-C
->                    related calls from TCPM.
->                    This hardware binding can be extended to facilitate
->                    similar hardware in different PMICs.
+> UFSHC driver properly retried probing after it cannot get its 
+> regulators, but it happened at the same time when kernel tried to mount 
+> rootfs. I was confused that this is really a regulator issue, because 
+> the mentioned /dev/sda* devices were properly reported as available in 
+> the system in the root mounting failure message, but adding the 
+> 'rootwait' cmdline parameter fixed this problem. It would be safe to 
+> revert this change. I'm really sorry for the false report and the noise.
+> 
 
-I'm sorry I never asked this before, but is that virtual device really
-necessary? Couldn't you just merge that qcom_omic_virt_tcpm.c into
-qcom_pmic_typec.c?
+It looks like this got applied, but reading your above message makes it
+seem like this patch is not necessary. Did I understand that correctly?
 
-<snip>
+If so we should see if Mark can drop / revert it?
 
-> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_virt_tcpm.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_virt_tcpm.c
-> new file mode 100644
-> index 0000000000000..91544b4b59439
-> --- /dev/null
-> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_virt_tcpm.c
-> @@ -0,0 +1,326 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2023, Linaro Ltd. All rights reserved.
-> + */
-> +
-> +#include <linux/err.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/kernel.h>
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/of_graph.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regulator/consumer.h>
-> +#include <linux/slab.h>
-> +#include <linux/usb/role.h>
-> +#include <linux/usb/tcpm.h>
-> +#include <linux/usb/typec_mux.h>
-> +#include "qcom_pmic_pdphy.h"
-> +#include "qcom_pmic_typec.h"
-> +
-> +struct pmic_virt_tcpm {
-> +	struct device		*dev;
-> +	struct pmic_typec	*pmic_typec;
-> +	struct pmic_pdphy	*pmic_pdphy;
-> +	struct tcpm_port	*tcpm_port;
-> +	struct tcpc_dev		tcpc;
-> +	bool			vbus_enabled;
-> +	struct mutex		lock;		/* VBUS state serialization */
-> +};
-> +
-> +#define tcpc_to_tcpm(_tcpc_) container_of(_tcpc_, struct pmic_virt_tcpm, tcpc)
-> +
-> +static int qcom_pmic_virt_tcpm_get_vbus(struct tcpc_dev *tcpc)
-> +{
-> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
-> +	int ret;
-> +
-> +	mutex_lock(&tcpm->lock);
-> +	ret = tcpm->vbus_enabled || qcom_pmic_typec_get_vbus(tcpm->pmic_typec);
-> +	mutex_unlock(&tcpm->lock);
-> +
-> +	return ret;
-> +}
-> +
-> +static int qcom_pmic_virt_tcpm_set_vbus(struct tcpc_dev *tcpc, bool on,
-> +					bool sink)
-> +{
-> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
-> +	int ret = 0;
-> +
-> +	mutex_lock(&tcpm->lock);
-> +	if (tcpm->vbus_enabled == on)
-> +		goto done;
-> +
-> +	ret = qcom_pmic_typec_set_vbus(tcpm->pmic_typec, on);
-> +	if (ret)
-> +		goto done;
-> +
-> +	tcpm->vbus_enabled = on;
-> +	tcpm_vbus_change(tcpm->tcpm_port);
-> +
-> +done:
-> +	dev_dbg(tcpm->dev, "set_vbus set: %d result %d\n", on, ret);
-> +	mutex_unlock(&tcpm->lock);
-> +
-> +	return ret;
-> +}
-> +
-> +static int qcom_pmic_virt_tcpm_set_vconn(struct tcpc_dev *tcpc, bool on)
-> +{
-> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
-> +
-> +	return qcom_pmic_typec_set_vconn(tcpm->pmic_typec, on);
-> +}
-> +
-> +static int qcom_pmic_virt_tcpm_get_cc(struct tcpc_dev *tcpc,
-> +				      enum typec_cc_status *cc1,
-> +				      enum typec_cc_status *cc2)
-> +{
-> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
-> +
-> +	return qcom_pmic_typec_get_cc(tcpm->pmic_typec, cc1, cc2);
-> +}
-> +
-> +static int qcom_pmic_virt_tcpm_set_cc(struct tcpc_dev *tcpc,
-> +				      enum typec_cc_status cc)
-> +{
-> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
-> +
-> +	return qcom_pmic_typec_set_cc(tcpm->pmic_typec, cc);
-> +}
-> +
-> +static int qcom_pmic_virt_tcpm_set_polarity(struct tcpc_dev *tcpc,
-> +					    enum typec_cc_polarity pol)
-> +{
-> +	/* Polarity is set separately by phy-qcom-qmp.c */
-> +	return 0;
-> +}
-> +
-> +static int qcom_pmic_virt_tcpm_start_toggling(struct tcpc_dev *tcpc,
-> +					      enum typec_port_type port_type,
-> +					      enum typec_cc_status cc)
-> +{
-> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
-> +
-> +	return qcom_pmic_typec_start_toggling(tcpm->pmic_typec, port_type, cc);
-> +}
-> +
-> +static int qcom_pmic_virt_tcpm_set_roles(struct tcpc_dev *tcpc, bool attached,
-> +					 enum typec_role power_role,
-> +					 enum typec_data_role data_role)
-> +{
-> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
-> +
-> +	return qcom_pmic_pdphy_set_roles(tcpm->pmic_pdphy, data_role,
-> +					 power_role);
-> +}
-> +
-> +static int qcom_pmic_virt_tcpm_set_pd_rx(struct tcpc_dev *tcpc, bool on)
-> +{
-> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
-> +
-> +	return qcom_pmic_pdphy_set_pd_rx(tcpm->pmic_pdphy, on);
-> +}
-> +
-> +static int qcom_pmic_virt_tcpm_pd_transmit(struct tcpc_dev *tcpc,
-> +					   enum tcpm_transmit_type type,
-> +					   const struct pd_message *msg,
-> +					   unsigned int negotiated_rev)
-> +{
-> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
-> +
-> +	return qcom_pmic_pdphy_pd_transmit(tcpm->pmic_pdphy, type, msg,
-> +					   negotiated_rev);
-> +}
+Thanks,
+Andrew
 
-So this driver is clearly the aggregate, and the typec device and the
-pdphy device are the components. Have you considered the component
-framework (drivers/base/component.c)?
-
-I think you could use it to simplify these drivers a bit. You probable
-would not need to expose all those functions in each driver separately
-like you do now, and the above functions you would not need at all.
-Instead you could just share (in this case) instance of your struct
-pmic_virt_tcpm with the components when they are bind and just expect
-them to fill the tcpm callbacks that they are responsible of.
-
-You also would not need to rely on things like probe deferring,
-because when the aggregate is bind you are guaranteed that all the
-components in it are ready. There are probable some other benefits in
-it as well.
-
-This is not a must, but I think worth taking a look.
-
-> +static struct platform_device
-> +*qcom_pmic_virt_tcpm_get_pdev(struct device *dev, const char *property_name)
-> +{
-> +	struct device_node *np;
-> +	struct platform_device *pdev;
-> +	const __be32 *prop;
-> +
-> +	prop = of_get_property(dev->of_node, property_name, NULL);
-> +	if (!prop) {
-> +		dev_err(dev, "required '%s' property missing\n", property_name);
-> +		return ERR_PTR(-EINVAL);
-> +	}
-> +
-> +	np = of_find_node_by_phandle(be32_to_cpup(prop));
-> +	if (!np) {
-> +		dev_err(dev, "could not find '%s' node\n", property_name);
-> +		return ERR_PTR(-ENODEV);
-> +	}
-> +
-> +	pdev = of_find_device_by_node(np);
-> +	of_node_put(np);
-> +
-> +	if (pdev)
-> +		return pdev;
-> +
-> +	return ERR_PTR(-ENODEV);
-> +}
-> +
-> +static int qcom_pmic_virt_tcpm_init(struct tcpc_dev *tcpc)
-> +{
-> +	return 0;
-> +}
-> +
-> +static int qcom_pmic_virt_tcpm_probe(struct platform_device *pdev)
-> +{
-> +	struct pmic_virt_tcpm *tcpm;
-> +	struct device *dev = &pdev->dev;
-> +	struct platform_device *typec_pdev;
-> +	struct platform_device *pdphy_pdev;
-> +	int ret;
-> +
-> +	tcpm = devm_kzalloc(dev, sizeof(*tcpm), GFP_KERNEL);
-> +	if (!tcpm)
-> +		return -ENOMEM;
-> +
-> +	tcpm->dev = dev;
-> +	tcpm->tcpc.init = qcom_pmic_virt_tcpm_init;
-> +	tcpm->tcpc.get_vbus = qcom_pmic_virt_tcpm_get_vbus;
-> +	tcpm->tcpc.set_vbus = qcom_pmic_virt_tcpm_set_vbus;
-> +	tcpm->tcpc.set_cc = qcom_pmic_virt_tcpm_set_cc;
-> +	tcpm->tcpc.get_cc = qcom_pmic_virt_tcpm_get_cc;
-> +	tcpm->tcpc.set_polarity = qcom_pmic_virt_tcpm_set_polarity;
-> +	tcpm->tcpc.set_vconn = qcom_pmic_virt_tcpm_set_vconn;
-> +	tcpm->tcpc.start_toggling = qcom_pmic_virt_tcpm_start_toggling;
-> +	tcpm->tcpc.set_pd_rx = qcom_pmic_virt_tcpm_set_pd_rx;
-> +	tcpm->tcpc.set_roles = qcom_pmic_virt_tcpm_set_roles;
-> +	tcpm->tcpc.pd_transmit = qcom_pmic_virt_tcpm_pd_transmit;
-> +
-> +	mutex_init(&tcpm->lock);
-> +	platform_set_drvdata(pdev, tcpm);
-> +
-> +	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-> +	if (ret) {
-> +		dev_err(dev, "Populating child devices fail\n");
-> +		return ret;
-> +	};
-> +
-> +	typec_pdev = qcom_pmic_virt_tcpm_get_pdev(dev, "qcom,pmic-typec");
-> +	if (IS_ERR(typec_pdev)) {
-> +		dev_err(dev, "Error linking typec endpoint\n");
-> +		return PTR_ERR(typec_pdev);
-> +	}
-> +
-> +	tcpm->pmic_typec = platform_get_drvdata(typec_pdev);
-> +	if (!tcpm->pmic_typec) {
-> +		ret = -EPROBE_DEFER;
-> +		goto put_typec_pdev;
-> +	}
-> +
-> +	pdphy_pdev = qcom_pmic_virt_tcpm_get_pdev(dev, "qcom,pmic-pdphy");
-> +	if (IS_ERR(pdphy_pdev)) {
-> +		dev_err(dev, "Error linking pdphy endpoint\n");
-> +		ret = PTR_ERR(pdphy_pdev);
-> +		goto put_typec_pdev;
-> +	}
-> +
-> +	tcpm->pmic_pdphy = platform_get_drvdata(pdphy_pdev);
-> +	if (!tcpm->pmic_pdphy) {
-> +		ret = -EPROBE_DEFER;
-> +		goto put_pdphy_dev;
-> +	}
-> +
-> +	tcpm->tcpc.fwnode = device_get_named_child_node(tcpm->dev, "connector");
-> +	if (IS_ERR(tcpm->tcpc.fwnode))
-> +		return PTR_ERR(tcpm->tcpc.fwnode);
-> +
-> +	tcpm->tcpm_port = tcpm_register_port(tcpm->dev, &tcpm->tcpc);
-> +	if (IS_ERR(tcpm->tcpm_port)) {
-> +		ret = PTR_ERR(tcpm->tcpm_port);
-> +		goto fwnode_remove;
-> +	}
-> +
-> +	ret = qcom_pmic_pdphy_init(tcpm->pmic_pdphy, tcpm->tcpm_port);
-> +	if (ret)
-> +		goto fwnode_remove;
-> +
-> +	ret = qcom_pmic_typec_init(tcpm->pmic_typec, tcpm->tcpm_port);
-> +	if (ret)
-> +		goto fwnode_remove;
-> +
-> +	return 0;
-> +
-> +fwnode_remove:
-> +	fwnode_remove_software_node(tcpm->tcpc.fwnode);
-> +
-> +put_pdphy_dev:
-> +	put_device(&pdphy_pdev->dev);
-> +
-> +put_typec_pdev:
-> +	put_device(&typec_pdev->dev);
-> +
-> +	return ret;
-> +}
-> +
-> +static int qcom_pmic_virt_tcpm_remove(struct platform_device *pdev)
-> +{
-> +	struct pmic_virt_tcpm *tcpm = platform_get_drvdata(pdev);
-> +
-> +	tcpm_unregister_port(tcpm->tcpm_port);
-> +	fwnode_remove_software_node(tcpm->tcpc.fwnode);
-> +	qcom_pmic_pdphy_put(tcpm->pmic_pdphy);
-> +	qcom_pmic_typec_put(tcpm->pmic_typec);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id qcom_pmic_virt_tcpm_table[] = {
-> +	{ .compatible = "qcom,pmic-virt-tcpm" },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(of, qcom_pmic_virt_tcpm_table);
-> +
-> +static struct platform_driver qcom_pmic_virt_tcpm_platform_driver = {
-> +	.driver = {
-> +		.name = "qcom,pmic-tcpm",
-> +		.of_match_table = qcom_pmic_virt_tcpm_table,
-> +	},
-> +	.probe = qcom_pmic_virt_tcpm_probe,
-> +	.remove = qcom_pmic_virt_tcpm_remove,
-> +};
-> +
-> +static int __init qcom_pmic_virt_tcpm_module_init(void)
-> +{
-> +	int ret;
-> +
-> +	ret = platform_driver_register(&qcom_pmic_typec_platform_driver);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = platform_driver_register(&qcom_pmic_pdphy_platform_driver);
-> +	if (ret)
-> +		goto unregister_typec;
-> +
-> +	ret = platform_driver_register(&qcom_pmic_virt_tcpm_platform_driver);
-> +	if (ret)
-> +		goto unregister_pdphy;
-> +
-> +	return 0;
-
-Why not just register each driver in their own init function?
-
-thanks,
-
--- 
-heikki
