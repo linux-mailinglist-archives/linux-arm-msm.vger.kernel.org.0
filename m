@@ -2,49 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB6906C84FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 19:31:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3270E6C850C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 19:31:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230360AbjCXSb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 14:31:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44366 "EHLO
+        id S231508AbjCXSbd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 14:31:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230015AbjCXSb2 (ORCPT
+        with ESMTP id S231444AbjCXSbc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 14:31:28 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31FE07DB2;
-        Fri, 24 Mar 2023 11:31:28 -0700 (PDT)
+        Fri, 24 Mar 2023 14:31:32 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F86716AE5;
+        Fri, 24 Mar 2023 11:31:31 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CA2AD62C3A;
+        by ams.source.kernel.org (Postfix) with ESMTPS id D1DEDB82565;
+        Fri, 24 Mar 2023 18:31:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD02C433A7;
         Fri, 24 Mar 2023 18:31:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE88C433A4;
-        Fri, 24 Mar 2023 18:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679682687;
-        bh=Ic1B6wQV50JDPwY+CApZcmUliG9wEFrvB2GpvMvl5ms=;
+        s=k20201202; t=1679682688;
+        bh=EyfY0rlchlhdbsx6lA17xyjUo29eM3oqgBh+IZ8tAk8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=mYbopYt1qLkhjKlzqjqRakmsJfzu/fSRbHhQ2x0nfcQ794Vu+nxR7wk+Wb/FuiHtB
-         OU1z1eLWKWtzrgF8VDcqSZ3yZmcmF93omiemGLwM1Th+nW/Yso23m2xOEjf/Y/LH/D
-         YmD8GTkHITAHDBMzl7bJDaCaZU6K+XNRBuREviOHcOvCctj+uEtDN8DQEZ3mLmx2aC
-         EOhZiBS2nXlSiRls61c0X32hBha4yE9Fa8Dm53lvPqC1i77VN4SNdKcgBAIZR0ZqeA
-         BYLXjJn0c6SQIPcp67BBlAYOONVAeRzeEGH80sDX6mi3CQ1TwsFByM6y9J8eusxkFN
-         2UXsR2so7siWA==
+        b=HyNQ3xpqWyFxqVmTf/X/1Q/x9pbfYQs36lb0l2P4yIqamq5FeV3aUI02SKz+cmZcE
+         fsdu8Cs2XEqDzMM9otoTQqpbGlUr6cNRHoLkMNTLHORkROY51/53c3hbAxyi/lMPWm
+         E/6TRP3ONxbBX3aYWMSOKLc6NIbGnxwDe5HrIEcKJP3F+XKWqXd+iVmxbjbnXhE2xF
+         T8vWKUSidnjcCKkrSVYvIIHIen5XB4mBz8zPu6CaFCBa/aUGs4Tdwpx9p8WZ7e6lXs
+         7ih0Lj/Yjp4DFG4b6QO8n5H2sjSpx2MwwMGdHJGhd3AwXet88kDp6tb4N/dR0XxZih
+         HD1f8GqiCL2tg==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
+To:     Kalle Valo <kvalo@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>
 Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ath11k@lists.infradead.org, Steev Klimaszewski <steev@kali.org>,
+        "David S. Miller" <davem@davemloft.net>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        netdev@vger.kernel.org, Eric Dumazet <edumazet@google.com>,
         devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-x13s: enable alternate touchpad
-Date:   Fri, 24 Mar 2023 11:34:27 -0700
-Message-Id: <167968287204.2233401.15960719073719503318.b4-ty@kernel.org>
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        linux-wireless@vger.kernel.org, Andy Gross <agross@kernel.org>
+Subject: Re: (subset) [PATCH v2 0/2] arm64: dts: qcom: sc8280xp-x13s: add wifi calibration variant
+Date:   Fri, 24 Mar 2023 11:34:28 -0700
+Message-Id: <167968287203.2233401.18027204097957860016.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230324094744.20448-1-johan+linaro@kernel.org>
-References: <20230324094744.20448-1-johan+linaro@kernel.org>
+In-Reply-To: <20230321094011.9759-1-johan+linaro@kernel.org>
+References: <20230321094011.9759-1-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -57,21 +63,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 24 Mar 2023 10:47:44 +0100, Johan Hovold wrote:
-> Enable both touchpad nodes in the devictree and let the HID driver
-> determine which one is actually populated (by attempting to read from
-> each i2c address).
+On Tue, 21 Mar 2023 10:40:09 +0100, Johan Hovold wrote:
+> This series adds the missing calibration variant devicetree property
+> which is needed to load the (just released) calibration data and use the
+> ath11k wifi on the Lenovo Thinkpad X13s.
 > 
-> Ideally this would not be needed and the boot firmware should instead
-> enable only the node for the populated touchpad, but this is unlikely to
-> ever be realised for the X13s.
+> Kalle, can you take the binding through your tree and then Bjorn can
+> take the devicetree update through the qcom tree?
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sc8280xp-x13s: enable alternate touchpad
-      commit: 4367d763698c5c7c2c0e540f0508e48b337c7d8a
+[2/2] arm64: dts: qcom: sc8280xp-x13s: add wifi calibration variant
+      commit: 2702f54f400ad3979632cdb76553772414f4c5e3
 
 Best regards,
 -- 
