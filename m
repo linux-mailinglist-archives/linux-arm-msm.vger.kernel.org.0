@@ -2,384 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A43346C7C7B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 11:26:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AC856C7CB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 11:35:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230350AbjCXK05 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 06:26:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42298 "EHLO
+        id S231531AbjCXKfH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 06:35:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230023AbjCXK04 (ORCPT
+        with ESMTP id S229734AbjCXKfG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 06:26:56 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAA0F20544
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 03:26:54 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id kq3so1375161plb.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 03:26:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679653614;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=TGBD8FEWEKxDa7aK1T0RCNQbdYp8oLYvFK8eEV3W7LA=;
-        b=UcT+NAof1Ccxa4ZtsdQ9EdvfdNzrIb2CmNbdEj+HOHaXg8m0iOjKEQgt9HNvXkV4rz
-         9lADCh2MMBVM87PG1MIieBf5CvmjUj3opMQiE4nqyoPzyItjzcBRUD2kd8gcy3RTPNBl
-         5V5RlUWRcWD1GVta2TTHnUlbbQE0+Ae0ZDW1bM/pH2T57BCw/vdwLtmGHSZ6FAdo1XtM
-         RFddG11GaqtIg7czUclZoJRxo3ndTle0Uu2ho/hLcjpX2iYKYwYEXxD3+Y4sU9ZWUSoF
-         r2ORZEviNd0dCGIrIwNSZXBZQuhyuk9b8Ut/rkoT5ySOzTf5e4XGe/B5NwsvytAJWcX8
-         I1ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679653614;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TGBD8FEWEKxDa7aK1T0RCNQbdYp8oLYvFK8eEV3W7LA=;
-        b=3TQV2OYWODKAkQVvSI/OZwEKPH9Kxu0CZcUOlm8Lj5Z4u5l8xOSya7sXjc1E3bTy6t
-         nPQBjnyNMgCRJ6FDbaBYiCSdC4vjY5cqTY9DkV+Ys4JJ68cSA9yP/75TA82pbk2QbdA7
-         I1PSeIaxINI5a6o5TDGHir1iAfPa88ifnqQKrIAR5QC9/VZ+2yeAKQopY9h96hJEYiA8
-         mACUTafbEsO0543kmxD1SGpgPU6wB2mIXehruByhoDypV5xK61E92Aq0OzhG0WkRvaqX
-         aAVPpRMFh3CaFrm1F/hZCjTIvt/UkDE0DREYwvTrt2QCLw/hMJdfs3o6SPyfPvwbvSjO
-         e9vg==
-X-Gm-Message-State: AO0yUKU1xz/Bq7RRQ0ye+pVNm3pkpRJXej3RxCs4S/17e8m6gr1LostX
-        e+iFVFIM7XPTf6fVAm17FnAZtjJlF9jjGt6Rww==
-X-Google-Smtp-Source: AK7set+n1gDTS/JZRzJwz0CgXfIV651PxtqHRmlNkqFCwcibcQZN1jAs/cXNK5xrcHF+n2ZWE9+WPw==
-X-Received: by 2002:a05:6a20:b70f:b0:da:318a:981f with SMTP id fg15-20020a056a20b70f00b000da318a981fmr2473057pzb.42.1679653614258;
-        Fri, 24 Mar 2023 03:26:54 -0700 (PDT)
-Received: from thinkpad ([117.217.184.219])
-        by smtp.gmail.com with ESMTPSA id a7-20020a62bd07000000b006222a261188sm13553144pff.62.2023.03.24.03.26.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Mar 2023 03:26:53 -0700 (PDT)
-Date:   Fri, 24 Mar 2023 15:56:45 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+        Fri, 24 Mar 2023 06:35:06 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 070941AD;
+        Fri, 24 Mar 2023 03:35:05 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6F65662A3B;
+        Fri, 24 Mar 2023 10:35:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE62C433EF;
+        Fri, 24 Mar 2023 10:35:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679654104;
+        bh=R6AHyT4VK2SKRPK37TZm5Le0My/nLlBY56tfIt3oIOk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=AJGC8Co2ydH4rBXjExx9YBlfv/6aHZkSAYRHO2fpNwCVLOgP0g+AFhRjqA758ZkWR
+         4v8O7PLforWQY74UG/OoCwFB7aIUQdsQiUDrGFU3vNT7HXjsKt4YeB4O5abesu0K77
+         MWcFM+yZbh4+DJOiA8eiSM8obkk6QeU3S6Wi7kdl+NauLJfExdSwRLwHKLL40h6aGs
+         DHAtm5k1HF9/25m8lYJSs8Y7LeX4EEOwvQMDwCohrPHfULTtzPvDuTarrPCTubgdfv
+         qdvRiHkOfEmglGm9MWP/r1FjTGkHKLQPrSfHrkkxpsGvyWzF7VRut/Tyfdvy0k24Wa
+         Xq/yIdVFs+QlA==
+Date:   Fri, 24 Mar 2023 16:04:52 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
 To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     ogabbay@kernel.org, airlied@gmail.com, daniel@ffwll.ch,
-        jacek.lawrynowicz@linux.intel.com,
-        stanislaw.gruszka@linux.intel.com, dafna@fastmail.com,
-        dri-devel@lists.freedesktop.org, quic_pkanojiy@quicinc.com,
-        quic_carlv@quicinc.com, quic_ajitpals@quicinc.com,
-        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 3/8] accel/qaic: Add MHI controller
-Message-ID: <20230324102645.GB4259@thinkpad>
-References: <1679325074-5494-1-git-send-email-quic_jhugo@quicinc.com>
- <1679325074-5494-4-git-send-email-quic_jhugo@quicinc.com>
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: host: Range check CHDBOFF and ERDBOFF
+Message-ID: <20230324103452.GC4259@thinkpad>
+References: <1679066059-8399-1-git-send-email-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1679325074-5494-4-git-send-email-quic_jhugo@quicinc.com>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <1679066059-8399-1-git-send-email-quic_jhugo@quicinc.com>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 20, 2023 at 09:11:09AM -0600, Jeffrey Hugo wrote:
-> An AIC100 device contains a MHI interface with a number of different
-> channels for controlling different aspects of the device. The MHI
-> controller works with the MHI bus to enable and drive that interface.
+On Fri, Mar 17, 2023 at 09:14:19AM -0600, Jeffrey Hugo wrote:
+> If the value read from the CHDBOFF and ERDBOFF registers is outside the
+> range of the MHI register space then an invalid address might be computed
+> which later causes a kernel panic.  Range check the read value to prevent
+> a crash due to bad data from the device.
 > 
-> AIC100 uses the BHI protocol in PBL to load SBL. The MHI controller
-> expects the SBL to be located at /lib/firmware/qcom/aic100/sbl.bin and
-> expects the MHI bus to manage the process of loading and sending SBL to
-> the device.
-> 
+> Fixes: 6cd330ae76ff ("bus: mhi: core: Add support for ringing channel/event ring doorbells")
+
+Please CC stable list.
+
 > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
 > Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-> Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
 > ---
->  drivers/accel/qaic/mhi_controller.c | 563 ++++++++++++++++++++++++++++++++++++
->  drivers/accel/qaic/mhi_controller.h |  16 +
->  2 files changed, 579 insertions(+)
->  create mode 100644 drivers/accel/qaic/mhi_controller.c
->  create mode 100644 drivers/accel/qaic/mhi_controller.h
+>  drivers/bus/mhi/host/init.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 > 
-> diff --git a/drivers/accel/qaic/mhi_controller.c b/drivers/accel/qaic/mhi_controller.c
-> new file mode 100644
-> index 0000000..777dfbe
-> --- /dev/null
-> +++ b/drivers/accel/qaic/mhi_controller.c
-> @@ -0,0 +1,563 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +
-> +/* Copyright (c) 2019-2021, The Linux Foundation. All rights reserved. */
-> +/* Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved. */
-> +
-> +#include <linux/delay.h>
-> +#include <linux/err.h>
-> +#include <linux/memblock.h>
-> +#include <linux/mhi.h>
-> +#include <linux/moduleparam.h>
-> +#include <linux/pci.h>
-> +#include <linux/sizes.h>
-> +
-> +#include "mhi_controller.h"
-> +#include "qaic.h"
-> +
-> +#define MAX_RESET_TIME_SEC 25
-> +
-> +static unsigned int mhi_timeout_ms = 2000; /* 2 sec default */
-> +module_param(mhi_timeout_ms, uint, 0600);
-> +MODULE_PARM_DESC(mhi_timeout_ms, "MHI controller timeout value");
-> +
-> +static struct mhi_channel_config aic100_channels[] = {
-> +	{
-> +		.name = "QAIC_LOOPBACK",
+> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> index 3d779ee..ae8ebcfb 100644
+> --- a/drivers/bus/mhi/host/init.c
+> +++ b/drivers/bus/mhi/host/init.c
+> @@ -516,6 +516,12 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
+>  		return -EIO;
+>  	}
+>  
+> +	if (val >= mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB)) {
+> +		dev_err(dev, "CHDB offset: 0x%x is out of range: 0x%zx\n",
+> +			val, mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB));
+> +		return -EINVAL;
 
-Why do you need QAIC_ prefix for channel names?
-
-> +		.num = 0,
-> +		.num_elements = 32,
-> +		.local_elements = 0,
-> +		.event_ring = 0,
-> +		.dir = DMA_TO_DEVICE,
-> +		.ee_mask = MHI_CH_EE_AMSS,
-> +		.pollcfg = 0,
-> +		.doorbell = MHI_DB_BRST_DISABLE,
-> +		.lpm_notify = false,
-> +		.offload_channel = false,
-> +		.doorbell_mode_switch = false,
-> +		.auto_queue = false,
-> +		.wake_capable = false,
-> +	},
-
-[...]
-
-> +static struct mhi_event_config aic100_events[] = {
-> +	{
-> +		.num_elements = 32,
-> +		.irq_moderation_ms = 0,
-> +		.irq = 0,
-> +		.channel = U32_MAX,
-> +		.priority = 1,
-> +		.mode = MHI_DB_BRST_DISABLE,
-> +		.data_type = MHI_ER_CTRL,
-> +		.hardware_event = false,
-> +		.client_managed = false,
-> +		.offload_channel = false,
-> +	},
-> +};
-> +
-
-It'd be nice to use macros for defining the channels and events as done in the
-pci_generic driver.
-
-> +static struct mhi_controller_config aic100_config = {
-> +	.max_channels = 128,
-> +	.timeout_ms = 0, /* controlled by mhi_timeout */
-> +	.buf_len = 0,
-> +	.num_channels = ARRAY_SIZE(aic100_channels),
-> +	.ch_cfg = aic100_channels,
-> +	.num_events = ARRAY_SIZE(aic100_events),
-> +	.event_cfg = aic100_events,
-> +	.use_bounce_buf = false,
-> +	.m2_no_db = false,
-> +};
-> +
-> +static int mhi_read_reg(struct mhi_controller *mhi_cntl, void __iomem *addr, u32 *out)
-> +{
-> +	u32 tmp = readl_relaxed(addr);
-> +
-> +	if (tmp == U32_MAX)
-> +		return -EIO;
-> +
-> +	*out = tmp;
-> +
-> +	return 0;
-> +}
-> +
-> +static void mhi_write_reg(struct mhi_controller *mhi_cntl, void __iomem *addr, u32 val)
-> +{
-> +	writel_relaxed(val, addr);
-> +}
-> +
-> +static int mhi_runtime_get(struct mhi_controller *mhi_cntl)
-> +{
-> +	return 0;
-> +}
-> +
-> +static void mhi_runtime_put(struct mhi_controller *mhi_cntl)
-> +{
-> +}
-> +
-> +static void mhi_status_cb(struct mhi_controller *mhi_cntl, enum mhi_callback reason)
-> +{
-> +	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(mhi_cntl->cntrl_dev));
-> +
-> +	/* this event occurs in atomic context */
-> +	if (reason == MHI_CB_FATAL_ERROR)
-> +		pci_err(qdev->pdev, "Fatal error received from device. Attempting to recover\n");
-
-Why no dev_err()?
-
-> +	/* this event occurs in non-atomic context */
-> +	if (reason == MHI_CB_SYS_ERROR)
-> +		qaic_dev_reset_clean_local_state(qdev, true);
-> +}
-> +
-> +static int mhi_reset_and_async_power_up(struct mhi_controller *mhi_cntl)
-> +{
-> +	char time_sec = 1;
-
-u8?
-
-> +	int current_ee;
-> +	int ret;
-> +
-> +	/* Reset the device to bring the device in PBL EE */
-> +	mhi_soc_reset(mhi_cntl);
-> +
-> +	/*
-> +	 * Keep checking the execution environment(EE) after every 1 second
-> +	 * interval.
-> +	 */
-> +	do {
-> +		msleep(1000);
-> +		current_ee = mhi_get_exec_env(mhi_cntl);
-> +	} while (current_ee != MHI_EE_PBL && time_sec++ <= MAX_RESET_TIME_SEC);
-> +
-> +	/* If the device is in PBL EE retry power up */
-> +	if (current_ee == MHI_EE_PBL)
-> +		ret = mhi_async_power_up(mhi_cntl);
-> +	else
-> +		ret = -EIO;
-> +
-> +	return ret;
-> +}
-> +
-> +struct mhi_controller *qaic_mhi_register_controller(struct pci_dev *pci_dev, void __iomem *mhi_bar,
-> +						    int mhi_irq)
-> +{
-> +	struct mhi_controller *mhi_cntl;
-
-Cosmetic change: We use "mhi_cntrl" in other controller drivers. So it is
-better to follow the same pattern here also.
-
-> +	int ret;
-> +
-> +	mhi_cntl = devm_kzalloc(&pci_dev->dev, sizeof(*mhi_cntl), GFP_KERNEL);
-> +	if (!mhi_cntl)
-> +		return ERR_PTR(-ENOMEM);
-> +
-> +	mhi_cntl->cntrl_dev = &pci_dev->dev;
-> +
-> +	/*
-> +	 * Covers the entire possible physical ram region. Remote side is
-> +	 * going to calculate a size of this range, so subtract 1 to prevent
-> +	 * rollover.
-> +	 */
-> +	mhi_cntl->iova_start = 0;
-> +	mhi_cntl->iova_stop = PHYS_ADDR_MAX - 1;
-> +	mhi_cntl->status_cb = mhi_status_cb;
-> +	mhi_cntl->runtime_get = mhi_runtime_get;
-> +	mhi_cntl->runtime_put = mhi_runtime_put;
-> +	mhi_cntl->read_reg = mhi_read_reg;
-> +	mhi_cntl->write_reg = mhi_write_reg;
-> +	mhi_cntl->regs = mhi_bar;
-> +	mhi_cntl->reg_len = SZ_4K;
-
-Is this size fixed for all AIC100 revisions? I think you should get this value
-from pci_resource_len() to avoid issues later.
+Isn't -ERANGE a better errno here and also in other places of the driver?
 
 Thanks,
 Mani
 
-> +	mhi_cntl->nr_irqs = 1;
-> +	mhi_cntl->irq = devm_kmalloc(&pci_dev->dev, sizeof(*mhi_cntl->irq), GFP_KERNEL);
-> +
-> +	if (!mhi_cntl->irq)
-> +		return ERR_PTR(-ENOMEM);
-> +
-> +	mhi_cntl->irq[0] = mhi_irq;
-> +	mhi_cntl->fw_image = "qcom/aic100/sbl.bin";
-> +
-> +	/* use latest configured timeout */
-> +	aic100_config.timeout_ms = mhi_timeout_ms;
-> +	ret = mhi_register_controller(mhi_cntl, &aic100_config);
-> +	if (ret) {
-> +		pci_err(pci_dev, "mhi_register_controller failed %d\n", ret);
-> +		return ERR_PTR(ret);
 > +	}
 > +
-> +	ret = mhi_prepare_for_power_up(mhi_cntl);
-> +	if (ret) {
-> +		pci_err(pci_dev, "mhi_prepare_for_power_up failed %d\n", ret);
-> +		goto prepare_power_up_fail;
+>  	/* Setup wake db */
+>  	mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
+>  	mhi_cntrl->wake_set = false;
+> @@ -532,6 +538,12 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
+>  		return -EIO;
+>  	}
+>  
+> +	if (val >= mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings)) {
+> +		dev_err(dev, "ERDB offset: 0x%x is out of range: 0x%zx\n",
+> +			val, mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings));
+> +		return -EINVAL;
 > +	}
 > +
-> +	ret = mhi_async_power_up(mhi_cntl);
-> +	/*
-> +	 * If EIO is returned it is possible that device is in SBL EE, which is
-> +	 * undesired. SOC reset the device and try to power up again.
-> +	 */
-> +	if (ret == -EIO && MHI_EE_SBL == mhi_get_exec_env(mhi_cntl)) {
-> +		pci_err(pci_dev, "Found device in SBL at MHI init. Attempting a reset.\n");
-> +		ret = mhi_reset_and_async_power_up(mhi_cntl);
-> +	}
-> +
-> +	if (ret) {
-> +		pci_err(pci_dev, "mhi_async_power_up failed %d\n", ret);
-> +		goto power_up_fail;
-> +	}
-> +
-> +	return mhi_cntl;
-> +
-> +power_up_fail:
-> +	mhi_unprepare_after_power_down(mhi_cntl);
-> +prepare_power_up_fail:
-> +	mhi_unregister_controller(mhi_cntl);
-> +	return ERR_PTR(ret);
-> +}
-> +
-> +void qaic_mhi_free_controller(struct mhi_controller *mhi_cntl, bool link_up)
-> +{
-> +	mhi_power_down(mhi_cntl, link_up);
-> +	mhi_unprepare_after_power_down(mhi_cntl);
-> +	mhi_unregister_controller(mhi_cntl);
-> +}
-> +
-> +void qaic_mhi_start_reset(struct mhi_controller *mhi_cntl)
-> +{
-> +	mhi_power_down(mhi_cntl, true);
-> +}
-> +
-> +void qaic_mhi_reset_done(struct mhi_controller *mhi_cntl)
-> +{
-> +	struct pci_dev *pci_dev = container_of(mhi_cntl->cntrl_dev, struct pci_dev, dev);
-> +	int ret;
-> +
-> +	ret = mhi_async_power_up(mhi_cntl);
-> +	if (ret)
-> +		pci_err(pci_dev, "mhi_async_power_up failed after reset %d\n", ret);
-> +}
-> diff --git a/drivers/accel/qaic/mhi_controller.h b/drivers/accel/qaic/mhi_controller.h
-> new file mode 100644
-> index 0000000..c105e93
-> --- /dev/null
-> +++ b/drivers/accel/qaic/mhi_controller.h
-> @@ -0,0 +1,16 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only
-> + *
-> + * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef MHICONTROLLERQAIC_H_
-> +#define MHICONTROLLERQAIC_H_
-> +
-> +struct mhi_controller *qaic_mhi_register_controller(struct pci_dev *pci_dev, void __iomem *mhi_bar,
-> +						    int mhi_irq);
-> +void qaic_mhi_free_controller(struct mhi_controller *mhi_cntl, bool link_up);
-> +void qaic_mhi_start_reset(struct mhi_controller *mhi_cntl);
-> +void qaic_mhi_reset_done(struct mhi_controller *mhi_cntl);
-> +
-> +#endif /* MHICONTROLLERQAIC_H_ */
+>  	/* Setup event db address for each ev_ring */
+>  	mhi_event = mhi_cntrl->mhi_event;
+>  	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, val += 8, mhi_event++) {
 > -- 
 > 2.7.4
+> 
 > 
 
 -- 
