@@ -2,179 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94FB86C853B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 19:37:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30D0D6C8555
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 19:48:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229689AbjCXShM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 14:37:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57010 "EHLO
+        id S229917AbjCXSsY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 14:48:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230190AbjCXShL (ORCPT
+        with ESMTP id S229729AbjCXSsW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 14:37:11 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 256E712B;
-        Fri, 24 Mar 2023 11:37:10 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A5A1762C3A;
-        Fri, 24 Mar 2023 18:37:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20BAC433EF;
-        Fri, 24 Mar 2023 18:37:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679683029;
-        bh=qATMgxUc7/Cj2AjJ1pQbCXfHyJibt2CWK82bpsYLbc4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lKwKT2jvATosVkXDCUEzPEw02cvUIrtlKc+rNC8B3kZGwALTtjAqCdTI4Q5GpoGGN
-         9Y7si8l171gHXPBR5mBw2WvcJD36A4J0gLyjokARGzgfQhq6b0ae4WG9HmptivDfRZ
-         sPVSIKdZgIiskRlKC/AGFhkuBOtqobk2hRvrIggEtIVQVcHBKlOpb1uVAX6mWbz1eK
-         Y+bJm45ekeVWYX46WrgRSy6HqWenyWfcRsAAiQ9ATFhph3aaM5DJtnezcP+g2kGTPR
-         lnTV9mxkv383cFwpwcmSVU6qbn9yFxUE22v4eHWyHOp3ISB5zDTYdtiX1wEbHWfU51
-         TG9KVF5SI638w==
-Date:   Fri, 24 Mar 2023 18:37:00 +0000
-From:   Will Deacon <will@kernel.org>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v11 12/26] gunyah: vm_mgr: Add/remove user memory regions
-Message-ID: <20230324183659.GB28266@willie-the-truck>
-References: <20230304010632.2127470-1-quic_eberman@quicinc.com>
- <20230304010632.2127470-13-quic_eberman@quicinc.com>
+        Fri, 24 Mar 2023 14:48:22 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE8A626B6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 11:48:21 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32OAtBrm026240;
+        Fri, 24 Mar 2023 18:48:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=z4HwbR1jttxjFB8Rt7hZvOwHBFqZrpbH2eATJiXVVT4=;
+ b=NaAvbsb/r37UEY4QweUa7jPFMUvxvOPZcf3G+54ZK47slCPa9L9gyglGTGR08XuAN5Dc
+ vxn/qe0jaJVBA4cxpL8XUNUaGiE5Lv5/DWyZq2cae2CTvSPhAzMQdL1+9eLFt9Y+xUQd
+ h6LdOlMvsl4WEa04Trsv8Fvl+9bxQvmqS+F7+YVXVlgAV3S7WZmy7b50xgXzeZl9fHsO
+ 2d+L3l9f2pdMD09tPGuCXcu2HTxhe25KoViM94JFxNCkeI4wHj1KshN2eVjyzFgMYVpp
+ csmmGi0280jxWVu2F8Bri6srSsPB0GrwvFzExbGZe7OoGuz7UAhR0mFUcR+LpCu/2utM cQ== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pgxr1auwd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Mar 2023 18:48:06 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32OIm6oi029515
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Mar 2023 18:48:06 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 24 Mar
+ 2023 11:48:05 -0700
+Message-ID: <22a1632a-e622-6b47-92ca-737a1d0de4a3@quicinc.com>
+Date:   Fri, 24 Mar 2023 11:47:37 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230304010632.2127470-13-quic_eberman@quicinc.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2] drm/msm/dpu: Add support for AR30 format
+To:     Leonard Lausen <leonard@lausen.nl>, <robdclark@gmail.com>,
+        <quic_abhinavk@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>
+References: <6f33219dc848ccd7122bce6933338033aa18c33c@lausen.nl>
+Content-Language: en-US
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <6f33219dc848ccd7122bce6933338033aa18c33c@lausen.nl>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: G6wxnR-01gt2wz-6-3GYSmbZe3W04EQp
+X-Proofpoint-ORIG-GUID: G6wxnR-01gt2wz-6-3GYSmbZe3W04EQp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-24_11,2023-03-24_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1011
+ adultscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 mlxscore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2303240147
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 03, 2023 at 05:06:18PM -0800, Elliot Berman wrote:
-> When launching a virtual machine, Gunyah userspace allocates memory for
-> the guest and informs Gunyah about these memory regions through
-> SET_USER_MEMORY_REGION ioctl.
+
+
+On 3/20/2023 7:58 PM, Leonard Lausen wrote:
+> Commit da7716a249b699978fb5 ("drm/msm/dpu: Add support for XR30 format") enabled
+> support for the 10-bit XR30 color format but missed enabling support for the
+> corresponding per-pixel alpha-blending AR30 color format.
 > 
-> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> Declaring only XR30 but not AR30 color format support can trigger bugs in
+> userspace. KDE KWin compositor versions prior to 5.27.3 for example prefer
+> 10-bit color formats, rendering a 1cm^2 black box around the cursor due to
+> missing per-pixel alpha-blending.
+> 
+> Signed-off-by: Leonard Lausen <leonard@lausen.nl>
+
+Hi Leonard,
+
+Was able to validate the changes on SC7180 with null_platform_test and 
+modetest.
+
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Tested-by: Jessica Zhang <quic_jesszhan@quicinc.com> # Trogdor (sc7180)
+
+Thanks,
+
+Jessica Zhang
+
 > ---
->  drivers/virt/gunyah/Makefile    |   2 +-
->  drivers/virt/gunyah/vm_mgr.c    |  44 ++++++
->  drivers/virt/gunyah/vm_mgr.h    |  25 ++++
->  drivers/virt/gunyah/vm_mgr_mm.c | 229 ++++++++++++++++++++++++++++++++
->  include/uapi/linux/gunyah.h     |  29 ++++
->  5 files changed, 328 insertions(+), 1 deletion(-)
->  create mode 100644 drivers/virt/gunyah/vm_mgr_mm.c
-
-[...]
-
-> +int gh_vm_mem_alloc(struct gh_vm *ghvm, struct gh_userspace_memory_region *region)
-> +{
-> +	struct gh_vm_mem *mapping, *tmp_mapping;
-> +	struct gh_rm_mem_entry *mem_entries;
-> +	phys_addr_t curr_page, prev_page;
-> +	struct gh_rm_mem_parcel *parcel;
-> +	int i, j, pinned, ret = 0;
-> +	size_t entry_size;
-> +	u16 vmid;
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c    | 11 +++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  2 ++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      |  1 +
+>   3 files changed, 14 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+> index d95540309d4d..2b1ef186b909 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+> @@ -536,6 +536,16 @@ static const struct dpu_format dpu_format_map_ubwc[] = {
+>                  true, 4, DPU_FORMAT_FLAG_DX | DPU_FORMAT_FLAG_COMPRESSED,
+>                  DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
+>   
+> +       /* XRGB2101010 and ARGB2101010 purposely have the same color
+> +        * ordering.  The hardware only supports ARGB2101010 UBWC
+> +        * natively.
+> +        */
+> +       INTERLEAVED_RGB_FMT_TILED(ARGB2101010,
+> +               COLOR_8BIT, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
+> +               C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
+> +               true, 4, DPU_FORMAT_FLAG_DX | DPU_FORMAT_FLAG_COMPRESSED,
+> +               DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
 > +
-> +	if (!region->memory_size || !PAGE_ALIGNED(region->memory_size) ||
-> +		!PAGE_ALIGNED(region->userspace_addr) || !PAGE_ALIGNED(region->guest_phys_addr))
-> +		return -EINVAL;
-> +
-> +	if (region->guest_phys_addr + region->memory_size < region->guest_phys_addr)
-> +		return -EOVERFLOW;
-> +
-> +	ret = mutex_lock_interruptible(&ghvm->mm_lock);
-> +	if (ret)
-> +		return ret;
-> +
-> +	mapping = __gh_vm_mem_find_by_label(ghvm, region->label);
-> +	if (mapping) {
-> +		mutex_unlock(&ghvm->mm_lock);
-> +		return -EEXIST;
-> +	}
-> +
-> +	mapping = kzalloc(sizeof(*mapping), GFP_KERNEL);
-> +	if (!mapping) {
-> +		mutex_unlock(&ghvm->mm_lock);
-> +		return -ENOMEM;
-> +	}
-> +
-> +	mapping->parcel.label = region->label;
-> +	mapping->guest_phys_addr = region->guest_phys_addr;
-> +	mapping->npages = region->memory_size >> PAGE_SHIFT;
-> +	parcel = &mapping->parcel;
-> +	parcel->mem_handle = GH_MEM_HANDLE_INVAL; /* to be filled later by mem_share/mem_lend */
-> +	parcel->mem_type = GH_RM_MEM_TYPE_NORMAL;
-> +
-> +	/* Check for overlap */
-> +	list_for_each_entry(tmp_mapping, &ghvm->memory_mappings, list) {
-> +		if (!((mapping->guest_phys_addr + (mapping->npages << PAGE_SHIFT) <=
-> +			tmp_mapping->guest_phys_addr) ||
-> +			(mapping->guest_phys_addr >=
-> +			tmp_mapping->guest_phys_addr + (tmp_mapping->npages << PAGE_SHIFT)))) {
-> +			ret = -EEXIST;
-> +			goto free_mapping;
-> +		}
-> +	}
-> +
-> +	list_add(&mapping->list, &ghvm->memory_mappings);
-> +
-> +	mapping->pages = kcalloc(mapping->npages, sizeof(*mapping->pages), GFP_KERNEL);
-> +	if (!mapping->pages) {
-> +		ret = -ENOMEM;
-> +		mapping->npages = 0; /* update npages for reclaim */
-> +		goto reclaim;
-> +	}
-> +
-> +	pinned = pin_user_pages_fast(region->userspace_addr, mapping->npages,
-> +					FOLL_WRITE | FOLL_LONGTERM, mapping->pages);
-> +	if (pinned < 0) {
-> +		ret = pinned;
-> +		mapping->npages = 0; /* update npages for reclaim */
-> +		goto reclaim;
-> +	} else if (pinned != mapping->npages) {
-> +		ret = -EFAULT;
-> +		mapping->npages = pinned; /* update npages for reclaim */
-> +		goto reclaim;
-> +	}
-
-I think Fuad mentioned this on an older version of these patches, but it
-looks like you're failing to account for the pinned memory here which is
-a security issue depending on who is able to issue the ioctl() calling
-into here.
-
-Specifically, I'm thinking that your kXalloc() calls should be using
-GFP_KERNEL_ACCOUNT in this function and also that you should be calling
-account_locked_vm() for the pages being pinned.
-
-Finally, what happens if userspace passes in a file mapping?
-
-Will
+>          PSEUDO_YUV_FMT_TILED(NV12,
+>                  0, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
+>                  C1_B_Cb, C2_R_Cr,
+> @@ -591,6 +601,7 @@ static int _dpu_format_get_media_color_ubwc(const struct dpu_format *fmt)
+>                  {DRM_FORMAT_XBGR8888, COLOR_FMT_RGBA8888_UBWC},
+>                  {DRM_FORMAT_XRGB8888, COLOR_FMT_RGBA8888_UBWC},
+>                  {DRM_FORMAT_ABGR2101010, COLOR_FMT_RGBA1010102_UBWC},
+> +               {DRM_FORMAT_ARGB2101010, COLOR_FMT_RGBA1010102_UBWC},
+>                  {DRM_FORMAT_XRGB2101010, COLOR_FMT_RGBA1010102_UBWC},
+>                  {DRM_FORMAT_XBGR2101010, COLOR_FMT_RGBA1010102_UBWC},
+>                  {DRM_FORMAT_BGR565, COLOR_FMT_RGB565_UBWC},
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index e8a217d242ca..6ae9c5358c5c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -157,6 +157,7 @@ static const uint32_t plane_formats[] = {
+>          DRM_FORMAT_RGBX8888,
+>          DRM_FORMAT_BGRX8888,
+>          DRM_FORMAT_XBGR8888,
+> +       DRM_FORMAT_ARGB2101010,
+>          DRM_FORMAT_XRGB2101010,
+>          DRM_FORMAT_RGB888,
+>          DRM_FORMAT_BGR888,
+> @@ -186,6 +187,7 @@ static const uint32_t plane_formats_yuv[] = {
+>          DRM_FORMAT_RGBA8888,
+>          DRM_FORMAT_BGRX8888,
+>          DRM_FORMAT_BGRA8888,
+> +       DRM_FORMAT_ARGB2101010,
+>          DRM_FORMAT_XRGB2101010,
+>          DRM_FORMAT_XRGB8888,
+>          DRM_FORMAT_XBGR8888,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index bfd5be89e8b8..0ed6a1a114c7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -69,6 +69,7 @@ static const uint32_t qcom_compressed_supported_formats[] = {
+>          DRM_FORMAT_ARGB8888,
+>          DRM_FORMAT_XBGR8888,
+>          DRM_FORMAT_XRGB8888,
+> +       DRM_FORMAT_ARGB2101010,
+>          DRM_FORMAT_XRGB2101010,
+>          DRM_FORMAT_BGR565,
+>   
+> -- 
+> 2.30.2
