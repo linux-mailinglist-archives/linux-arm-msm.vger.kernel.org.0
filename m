@@ -2,114 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2C2A6C7D18
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 12:19:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B0E226C7D6D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 12:45:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230426AbjCXLTA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 07:19:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39174 "EHLO
+        id S231693AbjCXLpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 07:45:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbjCXLS7 (ORCPT
+        with ESMTP id S231433AbjCXLpQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 07:18:59 -0400
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA62825972
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 04:18:57 -0700 (PDT)
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20230324111854euoutp01c5a3a6a864c34cf133fc0d1a08b52247~PVua0Yi6r2230022300euoutp01S
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 11:18:54 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20230324111854euoutp01c5a3a6a864c34cf133fc0d1a08b52247~PVua0Yi6r2230022300euoutp01S
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1679656734;
-        bh=fNr79FcUIdEJXNTKSFnA+H8WqK2qrVCro41MQYpsIHc=;
-        h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-        b=XI3JOlf47xEBoR1b0C37EycV7Fhvih1Kgg1BnNpo7KZ5e2b0AEEFl4bvc3asRbakU
-         u4dqelEq4DsblUulBXb5JP7aenf9ad0AkP6oPlMsZmVb2XljOe/w2U5T7+t3SO7lx4
-         pPpbKd/FGYPqPWdN1TAxvio/ytyGsvOeqUEtBVQM=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20230324111854eucas1p1bf2a7b4e397f3d5d12c1e8cc77edfa19~PVuaibR3R2674426744eucas1p15;
-        Fri, 24 Mar 2023 11:18:54 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 8C.95.09503.E178D146; Fri, 24
-        Mar 2023 11:18:54 +0000 (GMT)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20230324111854eucas1p24d7aeab36c50b87728a084bb1cb38ccf~PVuaOQdzX1674616746eucas1p20;
-        Fri, 24 Mar 2023 11:18:54 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20230324111854eusmtrp185264a64d1dc6fd44693739f7391a4f4~PVuaNsl4a2493224932eusmtrp1D;
-        Fri, 24 Mar 2023 11:18:54 +0000 (GMT)
-X-AuditID: cbfec7f2-e8fff7000000251f-b0-641d871e1aff
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 60.E4.08862.E178D146; Fri, 24
-        Mar 2023 11:18:54 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20230324111853eusmtip23c3d66c16de476ae33a2021e8959fe92~PVuZtVXYA0333103331eusmtip2g;
-        Fri, 24 Mar 2023 11:18:53 +0000 (GMT)
-Message-ID: <a45c4b18-0fbe-1e75-9b47-6c26217c97e3@samsung.com>
-Date:   Fri, 24 Mar 2023 12:18:53 +0100
+        Fri, 24 Mar 2023 07:45:16 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 142561F4A2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 04:45:16 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id b18so1782204ybp.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 04:45:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679658315;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=q8La0xLWr6gLifT69tT50MzQgCi7mxaTvUmaB3nLYfU=;
+        b=gg/+RIP5i9bEJIO5JfQQ0JWBTcP5RSxSH0aRa24dz0vsLvJSS7HQUSTcKU73n/IwWG
+         W03jArsRTdAgv8O/TafI+jMoVkIl2PEc0LIqW0tUBW/Yo+tCVTi50WdA1RqZcVucrzeD
+         vK+/hhNfB6gKlyblScmO3Kd+P5v66dyy1nlOmpY9Z9A43oi5H5eMvNWUcD52j8hkLZVV
+         elRn1rYPAH7Z0zncI4C+pQcTVwbBsZ1Cekdp0/sw7K01yf6uSwaSClU98sr3mGoG1f69
+         liCA/c13zLXG3P+UlFsCwBixp/T1AYgxWYGb354ldbCzBa5AF/jCdLGVtQQgV1XdlU1x
+         O3cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679658315;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=q8La0xLWr6gLifT69tT50MzQgCi7mxaTvUmaB3nLYfU=;
+        b=Oc0GHjqZgOEMvLHc1ft4dYRH3E0mR+eaflcREjaXB9k+z7nfqcqk6aPvMtK6H9nUSA
+         EBV06Mw/zl30PJo0hQGyX8PXwOVVZh9mKJ4YFYnGPKusW0s+XDcc1xXMp+La7D0sNtSP
+         RxyOo3t0z6eoMIcqS9P6z48AgcEsb3VytpgXAHisQiKiIf3FWKXYaGv5unyUrFqpI1oP
+         jd/i2LqbLDQA64ekiU3MwINBs+As8265DmbA/MYJSGlCn6ZS/CM0Vj+H/EYyt6U7wEaZ
+         kdAhUvXDRVCukXlIDforKFJOXCSqAlJBuKIclmRdhg6lP7eX5pUy/lKU8pub2xJYZpiA
+         JSow==
+X-Gm-Message-State: AAQBX9c8HvCr6pb9/C6WoSSBfgwcTJi5k7xuDJmM94tj4EXbfj/IFYDB
+        7G1LgOSoYv8uAU9VXGwgt4xIQiyeL0zTQQqqo/pTiw==
+X-Google-Smtp-Source: AKy350bnVsaKrHF+n3nfjfnGoH5sED0NRDkUMhCvoXdMDk6x/u1CuTavuk6oYVDQvR/CijiLs/zox8VArwd9N5T5Dgs=
+X-Received: by 2002:a05:6902:102b:b0:b46:4a5e:3651 with SMTP id
+ x11-20020a056902102b00b00b464a5e3651mr1114081ybt.9.1679658314955; Fri, 24 Mar
+ 2023 04:45:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0)
-        Gecko/20100101 Thunderbird/102.9.0
-Subject: Re: [PATCH] regulator: qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS
-Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
+References: <20230324022514.1800382-1-dmitry.baryshkov@linaro.org>
+ <20230324022514.1800382-2-dmitry.baryshkov@linaro.org> <083a8dc6-71d0-bcf5-664a-66c4c729399e@kernel.org>
+In-Reply-To: <083a8dc6-71d0-bcf5-664a-66c4c729399e@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 24 Mar 2023 13:45:03 +0200
+Message-ID: <CAA8EJpq2AoR+MePE2CQQShq=KO3NO+Jd0gVhhDUYq1NfV67yvA@mail.gmail.com>
+Subject: Re: [PATCH 01/41] dt-bindings: phy: migrate QMP USB PHY bindings to qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+To:     Krzysztof Kozlowski <krzk@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <CAD=FV=WfREMuL6Z-aseAWPKXqpkutPofrWGy4ySH-WgbTHC-fg@mail.gmail.com>
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA01SfUyMcRzf756n555uzp6uuK8kdoYOd+Qlh7SM2bExTdrE4uaeQq/uOhHW
-        I1tdJyNNcklMimxFeFLydqYXvZ+Ic3ltSnO4zlppSnePl/77fD+f7+f3+X6/+5GY6JKbN7k7
-        LpHWxKliJIQAZ2sGW2S+6VPU85vYaYrmj0O4gtUHKk6/7yIUTUWPCIU+uwJX9LfreYqsB018
-        xbOqc0Qwqcxj2nBlpbGTrywvySCU1hfVhNJR7rvRLVwQqKZjdu+jNfOCdgh25aen4Qnvxu0/
-        nvmBzyBWYEDuJFCLgB1gcAMSkCLqCoLvNbWYUxBRPxB092/nBAcCg4N1++sYNlUgTihGkGE1
-        Y1xhR9Cf2sFzdgmpILjRcw85MU7NgKYTpRjHe0D92S7ciSdQasjKve7q96TWgP1JpwtjlBgs
-        XQUu7EVJ4RPz2RWAUb8QXO2zuB4iKH8w2AyEE7tTITBou8rnzFPh6O08lwGoLhJyrX2Im3s1
-        FJjbCA57Qm/tLT6HfaAhOxPnDOkILgy95XHFSQRMt+WPezlYm3+OusnRCCmUVc3j6JVwzFzH
-        c9JAjYeXNg9uiPFwij2DcbQQ9GkirnsmGGtL/8U+ajVjJ5HEOOYuxjH7G8esY/yfewHhJUhM
-        67SxUbTWP45OkmtVsVpdXJR8Z3xsORr9Rw3DtX13UH6vXW5CPBKZEJCYxEv4NXSKWiRUqw4k
-        05r47RpdDK01ockkLhEL56yo3ymiolSJdDRNJ9CavyqPdPdmeHhKje5xsTqYzHA0Mq/lJVsS
-        AkL9Oh60Na5KvX+80uJ/+fu0SN3G9pWLZSN6vwUpW2VPj6zKMYD07iRHcvb6a9ds9SZZxTPx
-        wrKGwjypdHoA/9iGx50dVQMf0sIOTwzcPJde1xMt37ut7GbWnqdUWuOh8OhYQmZl17WoI2Zd
-        rC6NZp57D4UUzHG8ke+1nS+OKGyPoBffCWhWxU8Hli4MrsPCklK+JIws1Wlm3JDlWzBxNT8o
-        x1YSHJbc4WFnbprXZqon1hf6DX0uss/y+ea+JndJlrI94vrWA17g6JaOhG8SS+paQ05FkikF
-        OZXJvgc7e/L6Ex8uaxOHvvIqHYh8J8G1u1T+szGNVvUbZgG8S7YDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrGIsWRmVeSWpSXmKPExsVy+t/xe7py7bIpBhPXsVuce/ybxWJbh43F
-        1IdP2CzOLjvIZtExeTuLxbcrHUwWE/efZbe4vGsOmwOHx+yGiyweO2fdZffYtKqTzePOtT1s
-        Hp83yQWwRunZFOWXlqQqZOQXl9gqRRtaGOkZWlroGZlY6hkam8daGZkq6dvZpKTmZJalFunb
-        JehlzG1vYyl4wFPR2/OIvYFxG1cXIyeHhICJxL9D2xm7GLk4hASWMkr0vPjNCpGQkTg5rQHK
-        Fpb4c62LDaLoPaPEn5WrwBK8AnYSG1/sZQSxWQRUJc72r2OGiAtKnJz5hAXEFhVIkZi49DIb
-        iC0s4Cbx8ehdJhCbWUBc4taT+WC2iICmxLOGl8wgC5gF/jJK3P79lxVi2y1GiRPTILaxCRhK
-        dL3tApvEKRAo8fPtSnaISWYSXVu7GCFseYnmrbOZJzAKzUJyyCwkC2chaZmFpGUBI8sqRpHU
-        0uLc9NxiQ73ixNzi0rx0veT83E2MwAjcduzn5h2M81591DvEyMTBeIhRgoNZSYT3XYhsihBv
-        SmJlVWpRfnxRaU5q8SFGU2BoTGSWEk3OB6aAvJJ4QzMDU0MTM0sDU0szYyVxXs+CjkQhgfTE
-        ktTs1NSC1CKYPiYOTqkGJqfT6mHZa959aeSxN1g8ndHIaMIH/pOb2+9bu137ZLrAvq3DPGrl
-        mvTsSdOc/M8s39l8wFTtbt5T1g6LW2ZPTl6J3KL+2e2EV8WX3J6m26sb2Bxf9+59+C50Vv/X
-        b4bRv4oVTy2q6GbYf/ZnnUr8x6K/2p9nvQ/eXftrTXXm+jUbllQ6qMvVtoRvmq+2oMm3oK32
-        wqWStimMpT/OP/oovHzVvwcPvT2WL/odELMtdHmM7cmSXT4XDpwQqz13ZVu2yOQHEq8nPPgS
-        +/EHL2NOcMz2jyx+p+IXXQhwzit2mlF8ILllhccxhorDTc02PvefLA/9FnNi1YJ1IduY9k79
-        /tz3B//ODVKfkr9dfsZt3DpHiaU4I9FQi7moOBEAYJMLJkkDAAA=
-X-CMS-MailID: 20230324111854eucas1p24d7aeab36c50b87728a084bb1cb38ccf
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20230323220529eucas1p12e5e1bbe2a31fe775cd9e6244f9282ce
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20230323220529eucas1p12e5e1bbe2a31fe775cd9e6244f9282ce
-References: <CGME20230323220529eucas1p12e5e1bbe2a31fe775cd9e6244f9282ce@eucas1p1.samsung.com>
-        <20230323220518.3247530-1-m.szyprowski@samsung.com>
-        <CAD=FV=WfREMuL6Z-aseAWPKXqpkutPofrWGy4ySH-WgbTHC-fg@mail.gmail.com>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -117,39 +72,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, 24 Mar 2023 at 11:43, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>
+> On 24/03/2023 03:24, Dmitry Baryshkov wrote:
+> > Migrate legacy bindings (described in qcom,msm8996-qmp-usb3-phy.yaml)
+> > to qcom,sc8280xp-qmp-usb3-uni-phy.yaml. This removes a need to declare
+> > the child PHY node or split resource regions.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  .../phy/qcom,msm8996-qmp-usb3-phy.yaml        | 394 ------------------
+> >  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   | 236 ++++++++++-
+> >  2 files changed, 226 insertions(+), 404 deletions(-)
+> >  delete mode 100644 Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+> >
+>
+> Please use scripts/get_maintainers.pl to get a list of necessary people
+> and lists to CC.  It might happen, that command when run on an older
+> kernel, gives you outdated entries.  Therefore please be sure you base
+> your patches on recent Linux kernel.
+>
+> Since you skipped DT list, there will be no tests run, thus this is
+> unfortunately a NAK.
 
-On 23.03.2023 23:08, Doug Anderson wrote:
-> On Thu, Mar 23, 2023 at 3:05 PM Marek Szyprowski
-> <m.szyprowski@samsung.com> wrote:
->> Restore synchronous probing for 'qcom,pm8150-rpmh-regulators' because
->> otherwise the UFSHC device is not properly initialized on QRB5165-RB5
->> board.
->>
->> Fixes: ed6962cc3e05 ("regulator: Set PROBE_PREFER_ASYNCHRONOUS for drivers between 4.14 and 4.19")
->> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
->> ---
->>   drivers/regulator/qcom-rpmh-regulator.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
-> I don't object to this patch landing temporarily, but can you provide
-> any more details, please? On Qualcomm Chromebooks I'm not seeing any
-> issues with RPMH regulators probing asynchronously, so I can only
-> assume that there's a bug in the UFSHC driver that's being tickled.
+Yeah, I should enforce a ban on me sending patches after midnight.
 
-You are right. I've analyzed this case further and it turned out that it 
-was my fault. In short - 'rootwait' kernel cmdline parameter was missing 
-and root was specified as '/dev/sda7'.
 
-UFSHC driver properly retried probing after it cannot get its 
-regulators, but it happened at the same time when kernel tried to mount 
-rootfs. I was confused that this is really a regulator issue, because 
-the mentioned /dev/sda* devices were properly reported as available in 
-the system in the root mounting failure message, but adding the 
-'rootwait' cmdline parameter fixed this problem. It would be safe to 
-revert this change. I'm really sorry for the false report and the noise.
-
-Best regards
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
-
+With best wishes
+Dmitry
