@@ -2,102 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0E226C7D6D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 12:45:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2667F6C7DB8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 13:08:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231693AbjCXLpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 07:45:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51960 "EHLO
+        id S231418AbjCXMIt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 08:08:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231433AbjCXLpQ (ORCPT
+        with ESMTP id S229551AbjCXMIs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 07:45:16 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 142561F4A2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 04:45:16 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id b18so1782204ybp.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 04:45:16 -0700 (PDT)
+        Fri, 24 Mar 2023 08:08:48 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBD25EB4D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 05:08:46 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id g17so1962593lfv.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 05:08:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679658315;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=q8La0xLWr6gLifT69tT50MzQgCi7mxaTvUmaB3nLYfU=;
-        b=gg/+RIP5i9bEJIO5JfQQ0JWBTcP5RSxSH0aRa24dz0vsLvJSS7HQUSTcKU73n/IwWG
-         W03jArsRTdAgv8O/TafI+jMoVkIl2PEc0LIqW0tUBW/Yo+tCVTi50WdA1RqZcVucrzeD
-         vK+/hhNfB6gKlyblScmO3Kd+P5v66dyy1nlOmpY9Z9A43oi5H5eMvNWUcD52j8hkLZVV
-         elRn1rYPAH7Z0zncI4C+pQcTVwbBsZ1Cekdp0/sw7K01yf6uSwaSClU98sr3mGoG1f69
-         liCA/c13zLXG3P+UlFsCwBixp/T1AYgxWYGb354ldbCzBa5AF/jCdLGVtQQgV1XdlU1x
-         O3cg==
+        d=linaro.org; s=google; t=1679659725; x=1682251725;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FKWvw7b+JAS44FVyD0FLI3tZGRETXw2/xRa06dfHw0k=;
+        b=afr9y2A1iS13xzsG4ZbEpuOwpHzB94ZjEYQ8femJ88V1SChdcim0pr/d5rq1pZ0ENH
+         9NMtrGFFOPc5Hby8mA7uqg9Hwq1c0LoHr5h9OlTI/y6TWpCAfYRKLuYzRgo/ZldDhEhP
+         K4/CgRvzYaY0dtiGaiBC0qD5kLhzYigv7P53TQ8NNJ29f6HSfrHpTdADqPCXVBqpDW9c
+         Z4vw8hoaoVDz9Y1/gUfxR6t0qH+d1mMKaB9UtZC3K4tE9Ll8ni1C1dbVV8MJlHkb7w2j
+         UmGHqjdywccrNSa0vAQhwzeqXDQP8ic7E5S6/4eHmLbe03/pPu3mm0uYV1hiJIWzY0Ks
+         ECsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679658315;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=q8La0xLWr6gLifT69tT50MzQgCi7mxaTvUmaB3nLYfU=;
-        b=Oc0GHjqZgOEMvLHc1ft4dYRH3E0mR+eaflcREjaXB9k+z7nfqcqk6aPvMtK6H9nUSA
-         EBV06Mw/zl30PJo0hQGyX8PXwOVVZh9mKJ4YFYnGPKusW0s+XDcc1xXMp+La7D0sNtSP
-         RxyOo3t0z6eoMIcqS9P6z48AgcEsb3VytpgXAHisQiKiIf3FWKXYaGv5unyUrFqpI1oP
-         jd/i2LqbLDQA64ekiU3MwINBs+As8265DmbA/MYJSGlCn6ZS/CM0Vj+H/EYyt6U7wEaZ
-         kdAhUvXDRVCukXlIDforKFJOXCSqAlJBuKIclmRdhg6lP7eX5pUy/lKU8pub2xJYZpiA
-         JSow==
-X-Gm-Message-State: AAQBX9c8HvCr6pb9/C6WoSSBfgwcTJi5k7xuDJmM94tj4EXbfj/IFYDB
-        7G1LgOSoYv8uAU9VXGwgt4xIQiyeL0zTQQqqo/pTiw==
-X-Google-Smtp-Source: AKy350bnVsaKrHF+n3nfjfnGoH5sED0NRDkUMhCvoXdMDk6x/u1CuTavuk6oYVDQvR/CijiLs/zox8VArwd9N5T5Dgs=
-X-Received: by 2002:a05:6902:102b:b0:b46:4a5e:3651 with SMTP id
- x11-20020a056902102b00b00b464a5e3651mr1114081ybt.9.1679658314955; Fri, 24 Mar
- 2023 04:45:14 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1679659725; x=1682251725;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FKWvw7b+JAS44FVyD0FLI3tZGRETXw2/xRa06dfHw0k=;
+        b=lMQNtOk3mGLR9HY91TQ3rjLD9K+x1br5VQ5700iGvU6/noutLR3XiXqAPm920nC6mf
+         tZPJ9ZemuI/pprfHXhOB20x6rYuKot83Owj5qWPBN9XpypVs3exD5WPc27/VIWR0FOVj
+         t5uBslUvCYAnJIJim3tpIgGx60WxnSrThldh3uKC7WTL0OFRPrYoePg9Oo8fqN/vnMFZ
+         Ls5D6jE9Y9oWizoRcg3W90NRYn2+yHD4Uki91en4u0iRbna6w5+HFr+Cxj1o00btZfiP
+         tmu8nhPnI9HVWVZlGBQvZhgQgsE2c23OwO3F2z+RkRM9ZiaWCFQT6GGQLAmdTHlocuRv
+         8B9Q==
+X-Gm-Message-State: AAQBX9dQYpzrBSO0KVbGWHvUnAUYwdOmvtaxQOYmZULZy4DVnESyTwzt
+        NhcP2e7oF/CqgFx1gyPAmkQQ1Q==
+X-Google-Smtp-Source: AKy350a+AxVBqGyixTZ2LohqdfaVCcjTRMp0giVBa0/MZtDLKCnA5uRBslMBZXkINHhhFKF4sl/OMg==
+X-Received: by 2002:ac2:52b9:0:b0:4d2:c70a:fdfa with SMTP id r25-20020ac252b9000000b004d2c70afdfamr538404lfm.4.1679659725083;
+        Fri, 24 Mar 2023 05:08:45 -0700 (PDT)
+Received: from [192.168.1.102] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id h8-20020a197008000000b004dc6070e121sm3329137lfc.83.2023.03.24.05.08.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Mar 2023 05:08:44 -0700 (PDT)
+Message-ID: <7b26e32d-6f3e-4e1f-33a7-0a994ae8526d@linaro.org>
+Date:   Fri, 24 Mar 2023 14:08:35 +0200
 MIME-Version: 1.0
-References: <20230324022514.1800382-1-dmitry.baryshkov@linaro.org>
- <20230324022514.1800382-2-dmitry.baryshkov@linaro.org> <083a8dc6-71d0-bcf5-664a-66c4c729399e@kernel.org>
-In-Reply-To: <083a8dc6-71d0-bcf5-664a-66c4c729399e@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 24 Mar 2023 13:45:03 +0200
-Message-ID: <CAA8EJpq2AoR+MePE2CQQShq=KO3NO+Jd0gVhhDUYq1NfV67yvA@mail.gmail.com>
-Subject: Re: [PATCH 01/41] dt-bindings: phy: migrate QMP USB PHY bindings to qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.0.2
+Subject: Re: [PATCH 1/2] dt-bindings: dma: Add support for SM6115 and QCS2290
+ SoCs
+Content-Language: en-US
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        andersson@kernel.org, bhupesh.linux@gmail.com, vkoul@kernel.org,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org
+References: <20230320071211.3005769-1-bhupesh.sharma@linaro.org>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20230320071211.3005769-1-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 24 Mar 2023 at 11:43, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> On 24/03/2023 03:24, Dmitry Baryshkov wrote:
-> > Migrate legacy bindings (described in qcom,msm8996-qmp-usb3-phy.yaml)
-> > to qcom,sc8280xp-qmp-usb3-uni-phy.yaml. This removes a need to declare
-> > the child PHY node or split resource regions.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  .../phy/qcom,msm8996-qmp-usb3-phy.yaml        | 394 ------------------
-> >  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   | 236 ++++++++++-
-> >  2 files changed, 226 insertions(+), 404 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> >
->
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC.  It might happen, that command when run on an older
-> kernel, gives you outdated entries.  Therefore please be sure you base
-> your patches on recent Linux kernel.
->
-> Since you skipped DT list, there will be no tests run, thus this is
-> unfortunately a NAK.
+Hi Bhupesh,
 
-Yeah, I should enforce a ban on me sending patches after midnight.
+On 3/20/23 09:12, Bhupesh Sharma wrote:
+> Add new compatible for BAM DMA engine version v1.7.4 which is
+> found on Qualcomm SM6115 and QCS2290 SoCs.
+> 
+> While at it, also update qcom,bam-dma bindings to add comments
+> which describe the BAM DMA versions used in SM8150 and SM8250 SoCs.
+> This provides an easy reference for identifying the actual BAM DMA
+> version available on Qualcomm SoCs.
+> 
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>   Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> index f1ddcf672261..4c8536df98fe 100644
+> --- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> +++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> @@ -20,8 +20,10 @@ properties:
+>         - qcom,bam-v1.3.0
+>           # MSM8974, APQ8074 and APQ8084
+>         - qcom,bam-v1.4.0
+> -        # MSM8916 and SDM845
+> +        # MSM8916, SDM845, SM8150 and SM8250
+>         - qcom,bam-v1.7.0
+> +        # SM6115 and QRB2290
+> +      - qcom,bam-v1.7.4
+>   
+>     clocks:
+>       maxItems: 1
 
+apparently it's a good time to implement a switch in compatible values
+similar to the one done for QCE:
 
--- 
-With best wishes
-Dmitry
+https://lore.kernel.org/linux-arm-msm/20230222172240.3235972-6-vladimir.zapolskiy@linaro.org/
+
+If this is done in the nearest time, then new platfrom QCE changes
+can be seamlessly added after the next merge window, also the change
+in the compatible values model shall resolve multiple technical
+concerns including the one above about 1/1 change in the series.
+
+--
+Best wishes,
+Vladimir
