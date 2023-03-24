@@ -2,171 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 479236C7AF7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 10:16:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 698EE6C7B4E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 10:28:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230117AbjCXJQT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 05:16:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43478 "EHLO
+        id S231919AbjCXJ2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 05:28:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229753AbjCXJQS (ORCPT
+        with ESMTP id S231263AbjCXJ2x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 05:16:18 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EFDE1F4B9;
-        Fri, 24 Mar 2023 02:16:17 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32O8de39016699;
-        Fri, 24 Mar 2023 09:16:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=lUbjeb5tzd264tpcIsMS8Q0ujsT7b9ac9BoeEHI1JuA=;
- b=EoW+aFK1gCDWzFmC2S0eKFzhbjyUO6Xv2hMM63OmE0b8CJgDps5r+QndrSSaI7Y4Fi4/
- WFoYx5w0IyIYbQ4AxL2dHMS1SCjdqu/H3fbEGSyYEmSzaE5WFUKxePg8KkuAWcBxSpSk
- TFTY51/9rIQM1let6zQ+AY7CUuiDikohrhwJ8LNCaTTMWyjP097tbAmyDdv5TxaUWPR0
- eXnjl5vsp5Uarfmrv7kryLtQUzBZcJBwnqbu5afpo/eNHZ/jxM9M/roWJg9DKh6Zsx91
- lnyRfVW5v0N6yBv3qJvl6CrXzLxMRqoYfgNOTkc1kWiRPH5IP2IrQU3CkKbv7/dTj1eH JA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pgy609bf5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 24 Mar 2023 09:16:02 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32O9G16j003993
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 24 Mar 2023 09:16:01 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 24 Mar
- 2023 02:15:56 -0700
-Message-ID: <fb5d55ba-8f7b-292e-e676-9423c36f4085@quicinc.com>
-Date:   Fri, 24 Mar 2023 17:15:54 +0800
+        Fri, 24 Mar 2023 05:28:53 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B72530F3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 02:28:51 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id d17so1038865wrb.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 02:28:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679650129;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pe6xkVW/LwNnSr0qXJhAQ9MlrUZGEMQPRfSGh9j4qrQ=;
+        b=pvrGPWA/YRlHFpq2pgubC7K7Wz159BTtXW1nold76ETFYVsNHJq0KLt5ho23Rm/GbZ
+         wrrBJxjgefV1wsa/1CJF2LzZaArGvqprKvWpKyXwfXfvDCFhe0HlGEZo40acZ9gl6hg4
+         G74NJw7afWFPy8ousSRa3Xd5zuFBLoReJAeoeTw4FgjJjdctgOuple7iNXAA4TaPE9Je
+         iK3TETjd+nQYCERBu0cpgGnNeACZDefAmT1f/OAU3kVd/78bYxGgenOUzfw29OMRUUny
+         lZuiXc3wvlFmZ2y0IID7YttoMweJGjk5ciNzlweou5tiEIQE+0GyhA2yhgHiotySnSUh
+         YD6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679650129;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pe6xkVW/LwNnSr0qXJhAQ9MlrUZGEMQPRfSGh9j4qrQ=;
+        b=xV6EVUCTYaTpbRbHd3CwnifzwYtFQNjHhe8ub4l/BV5j6Tottj1PCmks7+QAHLlNjV
+         hp74jmMjahjTgE2bLZxaG2ZG5VXfUgo/zR0+fzWFOo/0OCQw/j6WOMEwzSKh/2c3esWo
+         50WmaA1dhi/Q6OaqnWzIQWXL660NKX6OYK4Icj48O/eBp6qG90627Z9LTn5Y9kA9gVqd
+         NviWbMX0x1i0O0C0B3YWN5yt0bgFrjKHkWF5AIV7M5rbxOvGs2FHuso1Jim4UhRay1M1
+         T9SjoUYGH5ARzSfIOthOAXCKC6TVrQqhORehNPFjBuZXUHJKIeiCnSKmBWTRPeOwDnim
+         p0+w==
+X-Gm-Message-State: AAQBX9fpGALEQ3xoJuNPdH7As1dj8mLjF5M0w/SedymyCBPd32Y1CyVO
+        EykPa/WtuGUzAHPit0g4EPJdqA==
+X-Google-Smtp-Source: AKy350ZPhLrsgllqoWa7OK8+vEdPLlF/AzIB3IxOzcqgJtDgt1Cf0B3PK9hkTPs7esoGyotLah7zjA==
+X-Received: by 2002:adf:df83:0:b0:2ca:175b:d850 with SMTP id z3-20020adfdf83000000b002ca175bd850mr1655308wrl.11.1679650129542;
+        Fri, 24 Mar 2023 02:28:49 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id v14-20020adfe28e000000b002c5a790e959sm18029980wri.19.2023.03.24.02.28.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Mar 2023 02:28:49 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v2 0/4] arm64: qcom: sm8450: bindings check cleanup
+Date:   Fri, 24 Mar 2023 10:28:45 +0100
+Message-Id: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v2-0-0ca1bea1a843@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v3 01/11] dt-bindings: arm: Add support for DSB element
- size
-Content-Language: en-US
-From:   Tao Zhang <quic_taozha@quicinc.com>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAE1tHWQC/5WOSw6CQBBEr0JmbZv5oBJX3sOwGKCBTmCGdA9EQ
+ 7i7ozdw+V4qVbUrQSYUdS92xbiRUAwZ7KlQ7ejDgEBdZmW1ddpZByku1ILMVXnRsC6SGP0MXYK
+ GQkdhEOjphQKVuTp9sxbRGZXbGi8IDfvQjrkvrNOU5cL4S2fzrDOPJCny+/dmM1/7//BmQIND3
+ xksTdVj+ZgoeI7nyIOqj+P4APDdCe70AAAA
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-References: <1679551448-19160-1-git-send-email-quic_taozha@quicinc.com>
- <1679551448-19160-2-git-send-email-quic_taozha@quicinc.com>
- <e6ad7301-09ea-93e0-929e-86e0eb0a02e7@arm.com>
- <d4c133c1-38c7-93e3-deaf-b55161057409@quicinc.com>
-In-Reply-To: <d4c133c1-38c7-93e3-deaf-b55161057409@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Orai57WJvA2e38pUIZNBoUPJTmjdRpMH
-X-Proofpoint-GUID: Orai57WJvA2e38pUIZNBoUPJTmjdRpMH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-24_04,2023-03-23_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 impostorscore=0
- mlxlogscore=999 clxscore=1011 lowpriorityscore=0 bulkscore=0 mlxscore=0
- phishscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2303200000 definitions=main-2303240077
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.1
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Suzuki,
+A few fixes to pass the DT bindings check successfully
+for sm8450 qrd & hdk DTs.
 
-在 3/24/2023 4:25 PM, Tao Zhang 写道:
-> Hi Suzuki,
->
-> 在 3/23/2023 7:18 PM, Suzuki K Poulose 写道:
->> On 23/03/2023 06:03, Tao Zhang wrote:
->>> Add property "qcom,dsb-elem-size" to support DSB(Discrete Single
->>> Bit) element for TPDM. The associated aggregator will read this
->>> size before it is enabled. DSB element size currently only
->>> supports 32-bit and 64-bit.
->>>
->>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>> ---
->>>   .../devicetree/bindings/arm/qcom,coresight-tpdm.yaml | 11 +++++++++++
->>>   1 file changed, 11 insertions(+)
->>>
->>> diff --git 
->>> a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml 
->>> b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
->>> index 5c08342..d9b6b613 100644
->>> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
->>> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
->>> @@ -44,6 +44,15 @@ properties:
->>>       minItems: 1
->>>       maxItems: 2
->>
->>
->>>   +  qcom,dsb-element-size:
->>> +    description:
->>> +      Specifies the DSB(Discrete Single Bit) element size supported by
->>> +      the monitor. The associated aggregator will read this size 
->>> before it
->>> +      is enabled. DSB element size currently only supports 32-bit 
->>> and 64-bit.
->>> +    $ref: /schemas/types.yaml#/definitions/uint32
->>> +    minimum: 32
->>> +    maximum: 64
->>
->> Shouldn't this be something like oneOf ? It is not a range, but one of
->> those two specific values ?
->
-> Yes, "qcom,dsb-element-size" should be an optional option required in 
-> TPDM
->
-> devicetree. Other properties like "qcom,cmb-element-size", 
-> "qcom,tc-element-size"
->
-> and etc. will be added in a later patch series.
->
-> I will update this doc according to your advice in the next version of 
-> the patch.
->
-> Tao
->
-Correct my misunderstanding in the mail above.
+The following are still needed to pass all the checks:
+- https://lore.kernel.org/r/20230308082424.140224-3-manivannan.sadhasivam@linaro.org
+- https://lore.kernel.org/r/20230130-topic-sm8450-upstream-pmic-glink-v5-5-552f3b721f9e@linaro.org
+- https://lore.kernel.org/all/20230308075648.134119-1-manivannan.sadhasivam@linaro.org/
+- https://lore.kernel.org/r/20230306112129.3687744-1-dmitry.baryshkov@linaro.org
+- https://lore.kernel.org/all/20221209-dt-binding-ufs-v3-0-499dff23a03c@fairphone.com/
+- https://lore.kernel.org/all/20221118071849.25506-2-srinivas.kandagatla@linaro.org/
 
-You are right, DSB element size should be 32-bit or 64-bit. I will 
-update this in the next
+A tree with the applied & rebased patches is available at:
+- https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm8450/upstream/dt-bindings-fixes
 
-patch series.
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- updated patches dependency to pass tests
+- fixes dt-bindings examples
+- added review tag
+- dropped already sent patches (2,6,7)
+- Link to v1: https://lore.kernel.org/r/20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-0-3ead1e418fe4@linaro.org
 
+---
+Neil Armstrong (4):
+      dt-bindings: display: msm: sm8450-mdss: Fix DSI compatible
+      arm64: dts: qcom: sm8450: remove invalid properties in cluster-sleep nodes
+      arm64: dts: qcom: sm8450: remove invalid power-domain-names in pcie nodes
+      arm64: dts: qcom: sm8450: fix pcie1 gpios properties name
 
-Tao
+ .../devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml      |  6 +++---
+ arch/arm64/boot/dts/qcom/sm8450.dtsi                           | 10 ++--------
+ 2 files changed, 5 insertions(+), 11 deletions(-)
+---
+base-commit: 207ecce2dffa48a738c1c4d17f889d25b7629655
+change-id: 20230323-topic-sm8450-upstream-dt-bindings-fixes-81630722ee31
 
->>
->> Suzuki
->>
->>
-> _______________________________________________
-> CoreSight mailing list -- coresight@lists.linaro.org
-> To unsubscribe send an email to coresight-leave@lists.linaro.org
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
