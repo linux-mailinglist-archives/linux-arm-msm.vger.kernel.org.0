@@ -2,147 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B1F66C76C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 06:01:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A26296C77BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 07:16:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229997AbjCXFBR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 01:01:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44452 "EHLO
+        id S231499AbjCXGQw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 02:16:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbjCXFBQ (ORCPT
+        with ESMTP id S231308AbjCXGQu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 01:01:16 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BB7322790;
-        Thu, 23 Mar 2023 22:01:15 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id ek18so3287197edb.6;
-        Thu, 23 Mar 2023 22:01:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679634074;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qjRWCU/VLQErX2z0uvL/aL2jDlqWYNpnjGy6qbEOGGE=;
-        b=AV4afuHsts3hAqNjn+9LdAhIgZ+Zdmq1EJCCmlG/TdZACcSB8wehdUwVsHhv/Dopjp
-         RTph8NS7MUsrtZ+Ev++hdhIOfeWehOCfOIUWSVtYW+uK0vaIPqUYPxuffx6LMoIXSNOz
-         5SaDg2awjB3Bdo2P0vjaJHPPrMIRZIaUZnRD1Vfpb69yaq96zT/2rXIpk2EvucvO+aNV
-         HBT40USzBCx+QgLCahLeo9aFpJ+igenZMfPloCpeBZK3bUsAfR+2LFmLSJ/EuHxaBLDk
-         bGbsEr6dFrTrDeMWRxE69GUfgXTX4AJXn6YIuA7BWne11xTaWAPULAXH/wzrufLxu+i0
-         dxgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679634074;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qjRWCU/VLQErX2z0uvL/aL2jDlqWYNpnjGy6qbEOGGE=;
-        b=0nsRnMePvc7bP9DrlNeIoiJIiQMPFXJzUxAvMZ3/ZyqIy9BOPY3As5lQW3gUuDkqpL
-         6LrF97UTlrQ4mHKPbcLURA3xsgg8XPb5Il+TxLl4qakPKfn0om7G3bd83C5lz0R06GM8
-         988daSRnkSQEoisYTlghYWvHNB9jBev4N77JkrmrnqqqEfNMDwnkTxQW1FS17UAJmqG4
-         C4b2yAjaPsjx5o9Eeu6o0XK/NPO7mtUMx0l9mmCYSO5FWv35YDjG/QNMQvO7mJ2MRAch
-         SEKCkiw9utTPLLtDUA9RRXpmcRXI8x5mThud/1MQG5aXD8MQpFrxSK+YyIYcl+WTb1eo
-         HFag==
-X-Gm-Message-State: AAQBX9dbHDv+gkOnmYtedonxEc/hz/i58asQ/BwlMERhCwsnLW2l0UNl
-        t5OdQUiUcNDPSdtxM2DCk4tMfHFy0mwIIw==
-X-Google-Smtp-Source: AKy350Z6AhniQxuCsI+BdYd/geEC5/fUia7TructKG3W3ffPTO5hgdA9jsSFB3KZs+E/YxUvVP/DzA==
-X-Received: by 2002:a05:6402:1503:b0:4fd:2b0e:ce87 with SMTP id f3-20020a056402150300b004fd2b0ece87mr1438213edw.24.1679634073874;
-        Thu, 23 Mar 2023 22:01:13 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id c24-20020a50d658000000b00501d5432f2fsm5249889edj.60.2023.03.23.22.01.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Mar 2023 22:01:13 -0700 (PDT)
-Date:   Fri, 24 Mar 2023 08:01:09 +0300
-From:   Dan Carpenter <error27@gmail.com>
-To:     oe-kbuild@lists.linux.dev,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
-        ming.qian@nxp.com, shijie.qin@nxp.com, eagle.zhou@nxp.com,
-        bin.liu@mediatek.com, matthias.bgg@gmail.com,
-        angelogioacchino.delregno@collabora.com, tiffany.lin@mediatek.com,
-        andrew-ct.chen@mediatek.com, yunfei.dong@mediatek.com,
-        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
-        daniel.almeida@collabora.com, hverkuil-cisco@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, jernel@kernel.org
-Cc:     lkp@intel.com, oe-kbuild-all@lists.linux.dev,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, kernel@collabora.com
-Subject: Re: [PATCH v2 2/8] media: videobuf2: Make bufs array dynamic
- allocated
-Message-ID: <4e2cb832-de83-4ba6-bd8a-119a19038cfe@kili.mountain>
+        Fri, 24 Mar 2023 02:16:50 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35DA528D32;
+        Thu, 23 Mar 2023 23:16:47 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32O4JN1f005878;
+        Fri, 24 Mar 2023 06:16:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=binmqssIOH8RRHmzcq2GvEcacH7/g6cim/PVJXyXtqE=;
+ b=ev5V4zVctWJ/2G7y8t9UE+7YX+lSsLirMZDIgtZrtC6mMTFQZZp8aM2SrX+PC+xPDTma
+ kCMrjw8htXQcMZ8pR70PT3uPoXzlxoUbeBqQ3KVSB4S9LyArZoRD+Myf3YcLfFXmJ2Kn
+ Ml/7Rs15VWzQwvPHB80k0O1qie2uXBBlmoIKouysK+ish8B6YsBrwzM0NUg5449T0G86
+ MAvF5VAfmCsDNGhG3qbdkfr6ZRTaARK4uQ6OIGpv3oEnzYaVr/PU7vGRCQPyYg2O9fsQ
+ dZ3YR9tbrBsW9zVRF2XWjnxKAUNGlbuYvoRFj/JbitCc4z2wyf+N0zN3IIoiVGH7PSWi mA== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pgyee8uk0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Mar 2023 06:16:29 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32O6GShd023727
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Mar 2023 06:16:28 GMT
+Received: from hazha-gv.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Thu, 23 Mar 2023 23:16:22 -0700
+From:   Hao Zhang <quic_hazha@quicinc.com>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Jonathan Corbet <corbet@lwn.net>
+CC:     Hao Zhang <quic_hazha@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-doc@vger.kernel.org>
+Subject: [PATCH v2 0/3] Add support to configure Coresight Dummy subunit
+Date:   Fri, 24 Mar 2023 14:16:05 +0800
+Message-ID: <20230324061608.33609-1-quic_hazha@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230321102855.346732-3-benjamin.gaignard@collabora.com>
-X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Lta3x1h8TvZ0PQVBKPAZ1Lr7xe20DlQn
+X-Proofpoint-ORIG-GUID: Lta3x1h8TvZ0PQVBKPAZ1Lr7xe20DlQn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-24_02,2023-03-23_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1015 mlxlogscore=999
+ malwarescore=0 phishscore=0 priorityscore=1501 mlxscore=0 bulkscore=0
+ impostorscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2303200000 definitions=main-2303240049
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Benjamin,
+Introduction of Coresight Dummy subunit
+The Coresight Dummy subunit is for Coresight Dummy component, there are some
+specific Coresight devices that HLOS don't have permission to access. Such as
+some TPDMs, they would be configured in NON-HLOS side, but it's necessary to
+build Coresight path for it to debug. So there need driver to register dummy
+devices as Coresight devices.
 
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Commit link:
+https://git.codelinaro.org/clo/linux-kernel/coresight/-/tree/coresight-dummy-v2
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Benjamin-Gaignard/media-videobuf2-Access-vb2_queue-bufs-array-through-helper-functions/20230321-183154
-base:   git://linuxtv.org/media_tree.git master
-patch link:    https://lore.kernel.org/r/20230321102855.346732-3-benjamin.gaignard%40collabora.com
-patch subject: [PATCH v2 2/8] media: videobuf2: Make bufs array dynamic allocated
-config: arm64-randconfig-m041-20230319 (https://download.01.org/0day-ci/archive/20230324/202303240148.lKRnUqW9-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 12.1.0
+Changes in V2:
+1. Declare dummy_init and dummy_exit as static to fix missing-prototypes
+warnings. -- kernel test robot <lkp@intel.com>
+2. Fix the errors of coresight-dummy yaml file. -- Rob Herring <robh@kernel.org>
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Reported-by: Dan Carpenter <error27@gmail.com>
-| Link: https://lore.kernel.org/r/202303240148.lKRnUqW9-lkp@intel.com/
+Hao Zhang (3):
+  Coresight: Add coresight dummy driver
+  dt-bindings: arm: Add Coresight Dummy Trace YAML schema
+  Documentation: trace: Add documentation for Coresight Dummy Trace
 
-smatch warnings:
-include/media/videobuf2-core.h:1272 vb2_queue_add_buffer() warn: sleeping in atomic context
-drivers/media/common/videobuf2/videobuf2-core.c:2456 vb2_core_queue_init() warn: Please consider using kcalloc instead of kmalloc_array
-
-vim +1272 include/media/videobuf2-core.h
-
-625d46c1c1fe8e Benjamin Gaignard 2023-03-21  1263  static inline bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb)
-625d46c1c1fe8e Benjamin Gaignard 2023-03-21  1264  {
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1265  	bool ret = false;
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1266  
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1267  	spin_lock(&q->bufs_lock);
-                                                        ^^^^^^^^^^^^^^^^^^^^^^^
-Holding a spin lock.
-
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1268  
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1269  	if (vb->index >= q->max_num_bufs) {
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1270  		struct vb2_buffer **tmp;
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1271  
-487d3f14d12ecf Benjamin Gaignard 2023-03-21 @1272  		tmp = krealloc_array(q->bufs, q->max_num_bufs * 2, sizeof(*q->bufs), GFP_KERNEL);
-                                                                                                                                     ^^^^^^^^^^
-Sleeping allocation.  GFP_ATOMIC?  Or is there a way to move the
-allocation outside the lock?
-
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1273  		if (!tmp)
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1274  			goto realloc_failed;
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1275  
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1276  		q->max_num_bufs *= 2;
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1277  		q->bufs = tmp;
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1278  	}
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1279  
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1280  	if (vb->index < q->max_num_bufs) {
-625d46c1c1fe8e Benjamin Gaignard 2023-03-21  1281  		q->bufs[vb->index] = vb;
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1282  		ret = true;
-625d46c1c1fe8e Benjamin Gaignard 2023-03-21  1283  	}
-625d46c1c1fe8e Benjamin Gaignard 2023-03-21  1284  
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1285  realloc_failed:
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1286  	spin_unlock(&q->bufs_lock);
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1287  
-487d3f14d12ecf Benjamin Gaignard 2023-03-21  1288  	return ret;
-625d46c1c1fe8e Benjamin Gaignard 2023-03-21  1289  }
+ .../bindings/arm/qcom,coresight-dummy.yaml    | 118 ++++++++++++
+ .../trace/coresight/coresight-dummy.rst       |  58 ++++++
+ drivers/hwtracing/coresight/Kconfig           |  11 ++
+ drivers/hwtracing/coresight/Makefile          |   1 +
+ drivers/hwtracing/coresight/coresight-dummy.c | 176 ++++++++++++++++++
+ 5 files changed, 364 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
+ create mode 100644 Documentation/trace/coresight/coresight-dummy.rst
+ create mode 100644 drivers/hwtracing/coresight/coresight-dummy.c
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+2.17.1
 
