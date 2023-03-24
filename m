@@ -2,89 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 53E756C7A5F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 09:54:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF1656C7A7F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 09:57:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231880AbjCXIyL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 04:54:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52588 "EHLO
+        id S231956AbjCXI5M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 04:57:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231869AbjCXIyL (ORCPT
+        with ESMTP id S231940AbjCXI45 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 04:54:11 -0400
+        Fri, 24 Mar 2023 04:56:57 -0400
 Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B7CB1A950
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 01:54:09 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id eg48so4853247edb.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 01:54:09 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94C492821D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 01:56:26 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id t10so4894471edd.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 01:56:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679648048;
+        d=linaro.org; s=google; t=1679648177;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NNXplUZWv2uC8xy5gETPaTQRPgOmXhcKawD8mHOM96I=;
-        b=zVU3hHmlipliPeWoyg87GxPpsFN+Mrhj4VARlvwjnLsFt4Zs8wxkKAbMYSn93nEEIF
-         EwVEUE6IsLr9grcxDb9bKAhKmHpontmLvymc8LtKF/pn3dzhJL9MPKtH0LkwhsTLMgZj
-         WEv+L870Jxy6CfL0zuXA1uwDH32kJW9WD0CsEEUTNnWZQbxSvz8J1WYEv2Y9ormPuFhG
-         J1C7ffB0TKAYW4Stq+awGhXz5T2MGs9OobLrOvNqvRoFyTiaZlglULT4xZuhTkgWhiHY
-         LNNR5lGagd8ipojcW76vcOVDLMgPtP1d6vEyN36DYJqn7xSxwT9VTkvFQsCu938HSELk
-         p27g==
+        bh=Um8TbgrwhTbkEwzBW9OgNTPHsSW0JHe7bi80kPf/8AM=;
+        b=tv9rIy9Uxu3qQtgXFh+rGg9UcyLX/MSBomBeUuea9AyNItUKVcnbXFLlYIaTPV0LDB
+         CQQugLqK7FP4jB7h+4rmxx5LAtCnyIpxToRHnyTKgJOrQW4OUHW9a4q5nQ2JdfnTYBJb
+         EsLCIF1w/ZBjnQD3Du69SsSYV2vCMp9LIUEiy2nHce7dBotl/YoYpxCrbQEp7fMwi4mO
+         cjS9PD/yx1wDYidaGNYm0jfQHbOQ224kh+Pdm08SgNvQEeXq/yIQndaa9wJ8wvmLshGf
+         TSYFnFj5kEUJUR55YMQ84OTOhr5K8XYpjB0mNaoGBOpcdsM/yXBnTxzDlByaF7Ju1pAS
+         Oeew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679648048;
+        d=1e100.net; s=20210112; t=1679648177;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NNXplUZWv2uC8xy5gETPaTQRPgOmXhcKawD8mHOM96I=;
-        b=iutwz9PtzvTjhYKKr9pyL7a1qvqbCl+ATU5iaJIcLyStbUwQfOoEcpJ+PDGNHOjkmw
-         NMfPh4FSCqygypD3gOlVh2X/Y9xsOPEOKXJoeeyXMsLn0Duzg62qlfVOlp6mr3WUei9Y
-         Bz3plCawWB/zZZ6/3VslvobB7B4URCjfKNXcA+pOjDLgf8z+PC2qvlCQl02bGQicQkKT
-         Sjo5t7msWSpWYPHIqrnpKSbvWbC7koasK7OfFC2MVbM3kJgJ/25Xz5yT7N3YackYTvzN
-         X+sVtjXG8df0CHeDi0Xa0QvJN65KvjZvUEv+NafPQBKJdjJ1Zp1boKup77WdFmQLtxG0
-         yT0Q==
-X-Gm-Message-State: AAQBX9eIkIPfm6Tc3Z6/xPJCJYU0sc4DwNFa8nbC+YTyy6UeR147nxEB
-        d9u4M1ARFauxlrOmylvPVhgCww==
-X-Google-Smtp-Source: AKy350bZgiKkDUCbgQQLT9YEaIuSJGm/ZBIWZUHLUO47cm+GH5NzLc1eDt5Y0018/bTU/tsOB+qUYg==
-X-Received: by 2002:a17:907:9d1a:b0:8a5:8620:575 with SMTP id kt26-20020a1709079d1a00b008a586200575mr2039609ejc.3.1679648047919;
-        Fri, 24 Mar 2023 01:54:07 -0700 (PDT)
+        bh=Um8TbgrwhTbkEwzBW9OgNTPHsSW0JHe7bi80kPf/8AM=;
+        b=LbGwkYesDjGGLuOLe4XlWxT6XcYERLaHWP69SnPM24sZyAI/tZNzQ0Juk1yMBH3lR5
+         wEFEuCjoCP6v6zOv8npafvvvYovEqk1layToNO0HvXmnf97eEVmdSQLU4iA/lU4GgoPF
+         jM3yD1cNW9aWNduo2WsWiMsaI8hm7UKYIFkWN++D7SfdnBbu1hNDfziscpQKfyLvoSrJ
+         IswH2fw/4U2jwU7VE/N9z5/geFfig/W1ukzwjKEdTclRIMz9aAUQe30qbYItl+tr3vXS
+         Gsfrdxb/4r2RDhfcK2hNo3K6pvn2ga3Y6zkyhb+2C3jeyxsCXve+3AVaIiGGGiD3N/vw
+         6T7w==
+X-Gm-Message-State: AAQBX9d+mzoFy9GnnZuAp9E1UcQrnAkxQywPl1Y2Q9h88KowW1Z6xT9U
+        hsVAl47DpOO5+VUNZN5S+bAHHA==
+X-Google-Smtp-Source: AKy350Z722g5hPv9Mo9UlX7Q2mEg4+ITEw0ynPSM2C2jUm30y/pXKOFomdKzmH7x/14WP6tJRKidxg==
+X-Received: by 2002:a17:906:3607:b0:92d:44ca:1137 with SMTP id q7-20020a170906360700b0092d44ca1137mr2162491ejb.43.1679648176715;
+        Fri, 24 Mar 2023 01:56:16 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:ce50:243f:54cc:5373? ([2a02:810d:15c0:828:ce50:243f:54cc:5373])
-        by smtp.gmail.com with ESMTPSA id h13-20020a170906110d00b009333aa81446sm8232726eja.115.2023.03.24.01.54.06
+        by smtp.gmail.com with ESMTPSA id wy8-20020a170906fe0800b0093e261cc8bcsm612167ejb.58.2023.03.24.01.56.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Mar 2023 01:54:07 -0700 (PDT)
-Message-ID: <66be41fe-0a90-506d-132c-5b87cb1c9e4e@linaro.org>
-Date:   Fri, 24 Mar 2023 09:54:06 +0100
+        Fri, 24 Mar 2023 01:56:16 -0700 (PDT)
+Message-ID: <58316fc3-1ee1-b530-e783-ccd8225e07d6@linaro.org>
+Date:   Fri, 24 Mar 2023 09:56:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [net-next PATCH v5 12/15] arm: qcom: dt: Drop unevaluated
- properties in switch nodes for rb3011
+Subject: Re: [PATCH V1 3/4] soc: qcom: boot_stat: Add Driver Support for Boot
+ Stats
 Content-Language: en-US
-To:     Christian Marangi <ansuelsmth@gmail.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
         Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org
-Cc:     Jonathan McDowell <noodles@earth.li>
-References: <20230319191814.22067-1-ansuelsmth@gmail.com>
- <20230319191814.22067-13-ansuelsmth@gmail.com>
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <cover.1679403696.git.quic_schowdhu@quicinc.com>
+ <3f385562845ae26d519940ca8098fde89282991b.1679403696.git.quic_schowdhu@quicinc.com>
+ <611ea918-64a6-f306-b5ec-db55e41abda2@linaro.org>
+ <321005fc-1bfd-c04d-b2b5-d85d213ac00a@quicinc.com>
+ <7b939818-993a-e849-e7e0-ae9ea74ea52b@linaro.org>
+ <5c4df95e-fb44-e873-7ecc-dec381a42aff@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230319191814.22067-13-ansuelsmth@gmail.com>
+In-Reply-To: <5c4df95e-fb44-e873-7ecc-dec381a42aff@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -97,20 +88,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/03/2023 20:18, Christian Marangi wrote:
-> IPQ8064 MikroTik RB3011UiAS-RM DT have currently unevaluted properties
-> in the 2 switch nodes. The bindings #address-cells and #size-cells are
-> redundant and cause warning for 'Unevaluated properties are not
-> allowed'.
+On 23/03/2023 14:45, Souradeep Chowdhury wrote:
 > 
-> Drop these bindings to mute these warning as they should not be there
-> from the start.
+> 
+> On 3/22/2023 8:23 PM, Krzysztof Kozlowski wrote:
+>> On 22/03/2023 14:54, Souradeep Chowdhury wrote:
+>>>
+>>>
+>>> On 3/21/2023 11:07 PM, Krzysztof Kozlowski wrote:
+>>>> On 21/03/2023 14:51, Souradeep Chowdhury wrote:
+>>>>> All of Qualcomm's proprietary Android boot-loaders capture boot time
+>>>>> stats, like the time when the bootloader started execution and at what
+>>>>> point the bootloader handed over control to the kernel etc. in the IMEM
+>>>>> region. This information is captured in a specific format by this driver
+>>>>> by mapping a structure to the IMEM memory region and then accessing the
+>>>>> members of the structure to print the information. This information is
+>>>>> useful in verifying if the existing boot KPIs have regre
+>>>>
+>>>>
+>>>>> +/**
+>>>>> + *  struct boot_stats - timestamp information related to boot stats
+>>>>> + *  @bootloader_start:	Time for the starting point of the abl bootloader
+>>>>> + *  @bootloader_end:	Time when the kernel starts loading from abl bootloader
+>>>>> + */
+>>>>> +struct boot_stats {
+>>>>> +	u32 bootloader_start;
+>>>>> +	u32 bootloader_end;
+>>>>> +} __packed;
+>>>>> +
+>>>>> +static struct boot_stats __iomem *boot_stats;
+>>>>> +static void __iomem *mpm_counter_base;
+>>>>> +static u32 mpm_counter_freq;
+>>>>
+>>>> No file-scope variables. Does not scale, not easy for review and
+>>>> maintenance. Avoid such code.
+>>>
+>>> Ack
+>>>>
+>>>>> +
+>>>>> +static int mpm_parse_dt(void)
+>>>>> +{
+>>>>> +	struct device_node *np_imem, *np_mpm2;
+>>>>> +
+>>>>> +	np_imem = of_find_compatible_node(NULL, NULL,
+>>>>> +					  "qcom,imem-boot_stats");
+>>>>> +	if (!np_imem) {
+>>>>> +		pr_err("can't find qcom,imem node\n");
+>>>>
+>>>> So you are printing errors everywhere, on every soc and with compile
+>>>> test on every platform there is in the world... sorry, it does not work
+>>>> like that.
+>>>
+>>> Ack
+>>>>
+>>>>> +		return -ENODEV;
+>>>>> +	}
+>>>>> +	boot_stats = of_iomap(np_imem, 0);
+>>>>> +	if (!boot_stats) {
+>>>>> +		pr_err("boot_stats: Can't map imem\n");
+>>>>> +		goto err1;
+>>>>> +	}
+>>>>
+>>>>
+>>>>> +
+>>>>> +static void __exit boot_stats_exit(void)
+>>>>> +{
+>>>>> +}
+>>>>> +module_exit(boot_stats_exit)
+>>>>
+>>>>
+>>>> I don't think this is some special code which deserves init calls. Make
+>>>> it module_platform_driver().
+>>>
+>>> Since this just reads some values from the Imem region and prints it to
+>>> the user and doesn't have a specific device associated with it, a
+>>
+>> Which is not really an argument for such antipattern, but okay...
+>>
+>>> generic module code is written for it and not a module_platform_driver().
+>>
+>> ... so how do you handle deferred probe?
+> 
+> This has no dependency on other resources except that it parses some 
+> information from DT nodes, so deferred probe handling is not needed
+> in this case.
 
-Use subject prefixes matching the subsystem (which you can get for
-example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-your patch is touching).
-
-ARM: dts: qcom: ipq8064-rb3011:
+Yes, I know, but if we would ever add it how this driver can handle it?
+This is antipattern.
 
 Best regards,
 Krzysztof
