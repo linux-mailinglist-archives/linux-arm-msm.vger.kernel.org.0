@@ -2,51 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03FB86C7FCC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 15:23:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E00046C7FF1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 15:34:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231725AbjCXOXL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 10:23:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34438 "EHLO
+        id S230192AbjCXOeR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 10:34:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230131AbjCXOXK (ORCPT
+        with ESMTP id S229551AbjCXOeQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 10:23:10 -0400
+        Fri, 24 Mar 2023 10:34:16 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFD10227BB;
-        Fri, 24 Mar 2023 07:23:08 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0654B10EB;
+        Fri, 24 Mar 2023 07:34:16 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6563662AD2;
-        Fri, 24 Mar 2023 14:23:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C8EC433D2;
-        Fri, 24 Mar 2023 14:23:05 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9EA5862B31;
+        Fri, 24 Mar 2023 14:34:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED42C433A4;
+        Fri, 24 Mar 2023 14:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679667787;
-        bh=ByUS8ixdKw9ZOUXU671IFgLj5lR9S0HYOJEGGrPdIBk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=s9Zv+2ZlLctru7hz2kVhdsiAvX+YYpdRGP5PLecwt17Z2m9yR/0WPRMrgXInzH7Dl
-         rujAt6ladQADe+s5rrzxZb3DktzXItf/vN955TBu14onwZsxHig1SXb9GExUilKMvl
-         HlWJ2SDi4ByhXCHIeCConJjino6Zk8GzctIAF+c71HN8oGb93qoRJzInD8FJxKqWMF
-         W/OLOtumeU+vPbVuyCadxySEURGItTF6C/gHXRjQtL/QxXLZisg2sOy9Q6BctnuU8f
-         iwP8RONf2yR535vViKnoYt/NaAB5CwoVP5MPvNlAzYNx8VAKzU2+b8QZPuGLelw9Ta
-         UoeTD9lE8KxpQ==
-Date:   Fri, 24 Mar 2023 19:52:55 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: host: Range check CHDBOFF and ERDBOFF
-Message-ID: <20230324142255.GD4259@thinkpad>
-References: <1679066059-8399-1-git-send-email-quic_jhugo@quicinc.com>
- <20230324103452.GC4259@thinkpad>
- <11ea2552-27e1-3665-869c-4594de1782a5@quicinc.com>
+        s=k20201202; t=1679668455;
+        bh=ozq+vH75mAjNkKi3jfaobvjryF3L2Ni1S1Tn6tmagvQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ZnhWOCjRHBVl6jMFyTdz2uJBPpSM2kij2cHeCYfnvMal7mOe3nevgli12nKSVyo1+
+         rZlC/eiRp+q6eYz1wuvLbURRo4cOa1ihg2sXmqlhxeiwE/5uyDJZb5KiFkbR81W5wr
+         Mihu8blBLIIPZzPzXG+mtcNvBqAxymxPA4pqExAf5yA8RL9wTslmj93FUvsxYqap4Q
+         U4sDe3114VPd8xkzxxSl3wiRrlADe7/VvdzGpRwnCFQhUCrAMQiONqvicHZNOAzuqU
+         qvkUUlLWORUAOjqfuxV3S76W62ttb0Hz0+kSU2MB9UaOHxxmARqzQALHu2NEdEOapF
+         9LgGCEDTVE4Ew==
+Received: by mail-pl1-f173.google.com with SMTP id ix20so1978358plb.3;
+        Fri, 24 Mar 2023 07:34:15 -0700 (PDT)
+X-Gm-Message-State: AAQBX9fyxFGJ2Q7V/4XTxyFgsG+S3SoSPtgcDKoRmveKbIlYoNbAyKn/
+        oGawmAEbx0daUxX9Zpt4COpTTvA0lLKbTPlqTQ==
+X-Google-Smtp-Source: AKy350Y57cQ3/TzcctMtJeBkZVGy3RaGVnEiqyzqBxcgVPo3gFc72P+HHXJ3tIgI+qnw4mjDX3xPaiNQsV4yB10ee/Y=
+X-Received: by 2002:a81:b149:0:b0:543:9065:b225 with SMTP id
+ p70-20020a81b149000000b005439065b225mr1122523ywh.5.1679668433642; Fri, 24 Mar
+ 2023 07:33:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <11ea2552-27e1-3665-869c-4594de1782a5@quicinc.com>
+References: <20230317233623.3968172-1-robh@kernel.org> <CACRpkdYq4jE7Qn1w8iPeGz7vxj_CeZ+H48B0TVYmeF4Tt=kHgA@mail.gmail.com>
+In-Reply-To: <CACRpkdYq4jE7Qn1w8iPeGz7vxj_CeZ+H48B0TVYmeF4Tt=kHgA@mail.gmail.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Fri, 24 Mar 2023 09:33:42 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqL+nF_WwZ-EDpUSD2yrxPLZWxaeb=WpTtPnnbpgcXT7qA@mail.gmail.com>
+Message-ID: <CAL_JsqL+nF_WwZ-EDpUSD2yrxPLZWxaeb=WpTtPnnbpgcXT7qA@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: pinctrl: Drop unneeded quotes
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Joel Stanley <joel@jms.id.au>,
+        Damien Le Moal <damien.lemoal@wdc.com>,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Sean Wang <sean.wang@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Jianlong Huang <jianlong.huang@starfivetech.com>,
+        Dvorkin Dmitry <dvorkin@tibbo.com>,
+        Wells Lu <wellslutw@gmail.com>,
+        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+        Michal Simek <michal.simek@xilinx.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-actions@lists.infradead.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-sunxi@lists.linux.dev, asahi@lists.linux.dev,
+        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+        linux-riscv@lists.infradead.org, patches@opensource.cirrus.com,
+        alsa-devel@alsa-project.org, linux-mediatek@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
@@ -56,85 +113,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 24, 2023 at 07:50:01AM -0600, Jeffrey Hugo wrote:
-> On 3/24/2023 4:34 AM, Manivannan Sadhasivam wrote:
-> > On Fri, Mar 17, 2023 at 09:14:19AM -0600, Jeffrey Hugo wrote:
-> > > If the value read from the CHDBOFF and ERDBOFF registers is outside the
-> > > range of the MHI register space then an invalid address might be computed
-> > > which later causes a kernel panic.  Range check the read value to prevent
-> > > a crash due to bad data from the device.
-> > > 
-> > > Fixes: 6cd330ae76ff ("bus: mhi: core: Add support for ringing channel/event ring doorbells")
-> > 
-> > Please CC stable list.
-> 
-> The stable folks have been automatically picking up everything with a fixes
-> tag for years.  CCing the stable list does not seem to do anything unless
-> the patch needs specific backporting adjustments.
-> 
-> Do you still want an explicit CC?
-> 
+On Thu, Mar 23, 2023 at 3:40=E2=80=AFAM Linus Walleij <linus.walleij@linaro=
+.org> wrote:
+>
+> On Sat, Mar 18, 2023 at 12:36=E2=80=AFAM Rob Herring <robh@kernel.org> wr=
+ote:
+>
+> > Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+> > checking for this can be enabled in yamllint.
+> >
+> > Signed-off-by: Rob Herring <robh@kernel.org>
+>
+> Should I queue this patch by the way, or do you need it to go into some
+> DT-related tree?
 
-That was the impression I had but Greg wanted us to explicitly CC stable list
-and add a hint about how deep the patch needs to be applied.
+Stands on its own. You can take it.
 
-> > 
-> > > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> > > Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-> > > ---
-> > >   drivers/bus/mhi/host/init.c | 12 ++++++++++++
-> > >   1 file changed, 12 insertions(+)
-> > > 
-> > > diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> > > index 3d779ee..ae8ebcfb 100644
-> > > --- a/drivers/bus/mhi/host/init.c
-> > > +++ b/drivers/bus/mhi/host/init.c
-> > > @@ -516,6 +516,12 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
-> > >   		return -EIO;
-> > >   	}
-> > > +	if (val >= mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB)) {
-> > > +		dev_err(dev, "CHDB offset: 0x%x is out of range: 0x%zx\n",
-> > > +			val, mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB));
-> > > +		return -EINVAL;
-> > 
-> > Isn't -ERANGE a better errno here and also in other places of the driver?
-> 
-> I suppose that could work.  This was modeled after the existing BHI (eg
-> BHIOFF) range checks.  You want those updated in the same change or a
-> separate one?
-> 
-
-That can go into a separate change.
-
-Thanks,
-Mani
-
-> > Thanks,
-> > Mani
-> > 
-> > > +	}
-> > > +
-> > >   	/* Setup wake db */
-> > >   	mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
-> > >   	mhi_cntrl->wake_set = false;
-> > > @@ -532,6 +538,12 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
-> > >   		return -EIO;
-> > >   	}
-> > > +	if (val >= mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings)) {
-> > > +		dev_err(dev, "ERDB offset: 0x%x is out of range: 0x%zx\n",
-> > > +			val, mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings));
-> > > +		return -EINVAL;
-> > > +	}
-> > > +
-> > >   	/* Setup event db address for each ev_ring */
-> > >   	mhi_event = mhi_cntrl->mhi_event;
-> > >   	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, val += 8, mhi_event++) {
-> > > -- 
-> > > 2.7.4
-> > > 
-> > > 
-> > 
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Rob
