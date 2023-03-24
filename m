@@ -2,75 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30D0D6C8555
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 19:48:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 655346C85A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 20:13:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229917AbjCXSsY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 14:48:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37066 "EHLO
+        id S231571AbjCXTNX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 15:13:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229729AbjCXSsW (ORCPT
+        with ESMTP id S231569AbjCXTNW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 14:48:22 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE8A626B6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 11:48:21 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32OAtBrm026240;
-        Fri, 24 Mar 2023 18:48:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=z4HwbR1jttxjFB8Rt7hZvOwHBFqZrpbH2eATJiXVVT4=;
- b=NaAvbsb/r37UEY4QweUa7jPFMUvxvOPZcf3G+54ZK47slCPa9L9gyglGTGR08XuAN5Dc
- vxn/qe0jaJVBA4cxpL8XUNUaGiE5Lv5/DWyZq2cae2CTvSPhAzMQdL1+9eLFt9Y+xUQd
- h6LdOlMvsl4WEa04Trsv8Fvl+9bxQvmqS+F7+YVXVlgAV3S7WZmy7b50xgXzeZl9fHsO
- 2d+L3l9f2pdMD09tPGuCXcu2HTxhe25KoViM94JFxNCkeI4wHj1KshN2eVjyzFgMYVpp
- csmmGi0280jxWVu2F8Bri6srSsPB0GrwvFzExbGZe7OoGuz7UAhR0mFUcR+LpCu/2utM cQ== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pgxr1auwd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 24 Mar 2023 18:48:06 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32OIm6oi029515
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 24 Mar 2023 18:48:06 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 24 Mar
- 2023 11:48:05 -0700
-Message-ID: <22a1632a-e622-6b47-92ca-737a1d0de4a3@quicinc.com>
-Date:   Fri, 24 Mar 2023 11:47:37 -0700
+        Fri, 24 Mar 2023 15:13:22 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DAC51CBE9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 12:13:21 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id m2so2815455wrh.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 12:13:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679685200;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wDkUXRm6ebBc/QHvz8cNntbon0PvzQ0AKnhQ2g7v5QA=;
+        b=rooZAbRs2MFRJmiyw+SXReNh5WT1x8mEzMt14Bke64nSL7GDOGC+bbvjDW7K5GiVCT
+         S7solNiEwVIk509smEZzokLht2sB6pDN614z/HcVs7KTMahyKyKpI2Nj2+sK5t2+WthW
+         Tzdd7p0p/fAFEsBJDnIuLGXFq+yRxxsIs2Rp7NbfKKL02wQHoE9ZJbMGoBm/jFB6Jdq9
+         peNmE8zjqXILzRM9XObFaNbDh0SStjpKqIbNHhBg08pbvu8/+A6+8fWPvsJ3UT9V6CuY
+         ERMSZXGDohg7QP192lyoGs9mwA70895/dvF04FCA28cOz3gpz5szx7c2E0bdMCtKDd/n
+         FhzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679685200;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wDkUXRm6ebBc/QHvz8cNntbon0PvzQ0AKnhQ2g7v5QA=;
+        b=CtlF2g+Xz80FPsQNf98qroimD8vSTKSu27umQR51qrJq37bbCPAocJtPYJWmcTuT2h
+         0Lc94IZpnvbP27XFQeStasQ2TUJxvdz3jAZZMQq5aDZKRzkhYbioj4q1loN/U8AtMTHq
+         WdYhYHuTOZnZ3DWwvzg9wO+3I5q2lIKA2JtkLV1j2YNQCTU3868UtKgbaMe4t/wGEqKd
+         hDjfoS1ZtrbdU9EaYxgJKmqJC+nuc0P06y6/nkEiQ5z/af2zFlJKfhMO60J2Q4L/2PvM
+         AQYDDg8YLQNLw83Yc3DohpTOE4DEp/hHgWIwQ9yt14jl8rH7pXW51Z/0PgNWvnZIh/vv
+         JInQ==
+X-Gm-Message-State: AAQBX9cn1jB44VgYuflplSgVuYsN0cnr4npP37EZ87LSpLEE7wWKuqLZ
+        OJaPvZwZDPVGlBBvMVyy21upeQ==
+X-Google-Smtp-Source: AKy350YHCF5U9GYrRAZFMNkr/n6h0lYGicNAZN7Hv0BODu2wqpIsKo8emK19gJHVRUVjHbfF+4Lv9w==
+X-Received: by 2002:a5d:538a:0:b0:2cf:f454:95d2 with SMTP id d10-20020a5d538a000000b002cff45495d2mr2808206wrv.12.1679685200010;
+        Fri, 24 Mar 2023 12:13:20 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:537:dd40:8b9b:575d? ([2a01:e0a:982:cbb0:537:dd40:8b9b:575d])
+        by smtp.gmail.com with ESMTPSA id w2-20020a5d6802000000b002cfe687fc7asm18883280wru.67.2023.03.24.12.13.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Mar 2023 12:13:19 -0700 (PDT)
+Message-ID: <fb2d333e-c459-f394-a299-533083b83596@linaro.org>
+Date:   Fri, 24 Mar 2023 20:13:18 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2] drm/msm/dpu: Add support for AR30 format
-To:     Leonard Lausen <leonard@lausen.nl>, <robdclark@gmail.com>,
-        <quic_abhinavk@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>
-References: <6f33219dc848ccd7122bce6933338033aa18c33c@lausen.nl>
-Content-Language: en-US
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <6f33219dc848ccd7122bce6933338033aa18c33c@lausen.nl>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: G6wxnR-01gt2wz-6-3GYSmbZe3W04EQp
-X-Proofpoint-ORIG-GUID: G6wxnR-01gt2wz-6-3GYSmbZe3W04EQp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-24_11,2023-03-24_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1011
- adultscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 mlxscore=0
- priorityscore=1501 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2303240147
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.7.2
+Subject: Re: [PATCH] drm/panel-edp: Add B133UAN01.0 edp panel entry
+Content-Language: en-GB
+To:     Doug Anderson <dianders@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20230324165909.131831-1-vkoul@kernel.org>
+ <CAD=FV=UJepzmKczemVGB8NacjyvLDqXiRoc81s1tJ=u5+HAeqg@mail.gmail.com>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+In-Reply-To: <CAD=FV=UJepzmKczemVGB8NacjyvLDqXiRoc81s1tJ=u5+HAeqg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,98 +84,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 3/20/2023 7:58 PM, Leonard Lausen wrote:
-> Commit da7716a249b699978fb5 ("drm/msm/dpu: Add support for XR30 format") enabled
-> support for the 10-bit XR30 color format but missed enabling support for the
-> corresponding per-pixel alpha-blending AR30 color format.
+Le 24/03/2023 à 18:04, Doug Anderson a écrit :
+> Hi,
 > 
-> Declaring only XR30 but not AR30 color format support can trigger bugs in
-> userspace. KDE KWin compositor versions prior to 5.27.3 for example prefer
-> 10-bit color formats, rendering a 1cm^2 black box around the cursor due to
-> missing per-pixel alpha-blending.
+> On Fri, Mar 24, 2023 at 9:59 AM Vinod Koul <vkoul@kernel.org> wrote:
+>>
+>> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>
+>> This panel is found in Lenovo Flex 5G laptop, so add the entry for it
+>>
+>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+>> ---
+>>   drivers/gpu/drm/panel/panel-edp.c | 1 +
+>>   1 file changed, 1 insertion(+)
 > 
-> Signed-off-by: Leonard Lausen <leonard@lausen.nl>
-
-Hi Leonard,
-
-Was able to validate the changes on SC7180 with null_platform_test and 
-modetest.
-
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Tested-by: Jessica Zhang <quic_jesszhan@quicinc.com> # Trogdor (sc7180)
-
-Thanks,
-
-Jessica Zhang
-
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c    | 11 +++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  2 ++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      |  1 +
->   3 files changed, 14 insertions(+)
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> index d95540309d4d..2b1ef186b909 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> @@ -536,6 +536,16 @@ static const struct dpu_format dpu_format_map_ubwc[] = {
->                  true, 4, DPU_FORMAT_FLAG_DX | DPU_FORMAT_FLAG_COMPRESSED,
->                  DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
->   
-> +       /* XRGB2101010 and ARGB2101010 purposely have the same color
-> +        * ordering.  The hardware only supports ARGB2101010 UBWC
-> +        * natively.
-> +        */
-> +       INTERLEAVED_RGB_FMT_TILED(ARGB2101010,
-> +               COLOR_8BIT, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
-> +               C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
-> +               true, 4, DPU_FORMAT_FLAG_DX | DPU_FORMAT_FLAG_COMPRESSED,
-> +               DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
-> +
->          PSEUDO_YUV_FMT_TILED(NV12,
->                  0, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
->                  C1_B_Cb, C2_R_Cr,
-> @@ -591,6 +601,7 @@ static int _dpu_format_get_media_color_ubwc(const struct dpu_format *fmt)
->                  {DRM_FORMAT_XBGR8888, COLOR_FMT_RGBA8888_UBWC},
->                  {DRM_FORMAT_XRGB8888, COLOR_FMT_RGBA8888_UBWC},
->                  {DRM_FORMAT_ABGR2101010, COLOR_FMT_RGBA1010102_UBWC},
-> +               {DRM_FORMAT_ARGB2101010, COLOR_FMT_RGBA1010102_UBWC},
->                  {DRM_FORMAT_XRGB2101010, COLOR_FMT_RGBA1010102_UBWC},
->                  {DRM_FORMAT_XBGR2101010, COLOR_FMT_RGBA1010102_UBWC},
->                  {DRM_FORMAT_BGR565, COLOR_FMT_RGB565_UBWC},
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index e8a217d242ca..6ae9c5358c5c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -157,6 +157,7 @@ static const uint32_t plane_formats[] = {
->          DRM_FORMAT_RGBX8888,
->          DRM_FORMAT_BGRX8888,
->          DRM_FORMAT_XBGR8888,
-> +       DRM_FORMAT_ARGB2101010,
->          DRM_FORMAT_XRGB2101010,
->          DRM_FORMAT_RGB888,
->          DRM_FORMAT_BGR888,
-> @@ -186,6 +187,7 @@ static const uint32_t plane_formats_yuv[] = {
->          DRM_FORMAT_RGBA8888,
->          DRM_FORMAT_BGRX8888,
->          DRM_FORMAT_BGRA8888,
-> +       DRM_FORMAT_ARGB2101010,
->          DRM_FORMAT_XRGB2101010,
->          DRM_FORMAT_XRGB8888,
->          DRM_FORMAT_XBGR8888,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index bfd5be89e8b8..0ed6a1a114c7 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -69,6 +69,7 @@ static const uint32_t qcom_compressed_supported_formats[] = {
->          DRM_FORMAT_ARGB8888,
->          DRM_FORMAT_XBGR8888,
->          DRM_FORMAT_XRGB8888,
-> +       DRM_FORMAT_ARGB2101010,
->          DRM_FORMAT_XRGB2101010,
->          DRM_FORMAT_BGR565,
->   
-> -- 
-> 2.30.2
+> ...assuming nothing distracts me, I'll plan to land this Monday to
+> drm-misc-next.
+
+If you get distracted, I'll apply it!
+
+Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
