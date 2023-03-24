@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 433BB6C7597
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 03:25:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 392EB6C759A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 03:25:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231346AbjCXCZW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Mar 2023 22:25:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34164 "EHLO
+        id S229752AbjCXCZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Mar 2023 22:25:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231183AbjCXCZV (ORCPT
+        with ESMTP id S231183AbjCXCZX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 22:25:21 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 491EA298CB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 19:25:20 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id g18so319862ljl.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 19:25:20 -0700 (PDT)
+        Thu, 23 Mar 2023 22:25:23 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B7A715546
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 19:25:21 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id x17so407810lfu.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 19:25:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679624718;
+        d=linaro.org; s=google; t=1679624719;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NNt6ft1wzRqXtQ9jcJ7PGssXiiP/3hyO2OYGzTQ8aIA=;
-        b=SedRQIKzbfHBINZrT8WimOHNpId/JFJP8dPfWwiKKCRV4Cah9CawNZlzoZhNqtrWOi
-         1lcNKlgMoi9prrC/nF6LTDpbZuNln2kKQNmtopM8Pbbk8OpCt0lcT53QyE8jXsuj2hbh
-         CJl/zOwasVfjUdPW9tUw1kxeeLrZsric6c5nkQBZGbCKZD3iv1fV2icWsEwSxAd5WD7v
-         LzM8SkGjktURBX+BmoYgZoxBzAE5mepkDbz58oCPKmSt7GrdussyAVLaXhBNBo7qKvgc
-         3+l/EKobzNjL1OqrnObMW/ylJV8pi0Ss91eDssn80Z+tIOrVUfRZlZz3DXXjmzNTEV1v
-         S5Qw==
+        bh=o2BpvXr+Z6dMw3AhPZYnNDNcoFi1zoA+Pe7N2yi0S64=;
+        b=qM1LjGGwjTbA66bcLnkZjhNwvI7fnKuRod72WKpO/SYKqy18/h6a5Bx853rfl98oLf
+         yvJMTPtwRT+J2zSG98gTUjO7Q+k8glnR/a3rSOx6SQZ4+USReWuItZH3J9t3xzNqZSpQ
+         1dcvtk1RK5DRPSzJnoaadhxpc0JyXwFE6Ig7IzczDNb4vDN5zVWcoFrVInM9CaZlAA0B
+         o0zY3H6Np+TgfzXfbFA16+NwDuR8HBuH1FfAbf0b7+O/0cU6wz+xgSu+EDFB3mRDVWvT
+         v/L/tkOTygfupGksb7qhzugHkmRN5IM+2PIYQjKT++NZ05hr0of3lf92oJUUuXEdLpzh
+         9qJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679624718;
+        d=1e100.net; s=20210112; t=1679624719;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NNt6ft1wzRqXtQ9jcJ7PGssXiiP/3hyO2OYGzTQ8aIA=;
-        b=HXG34j5dVgFiJQPLjkgu2ayNvQajhg7dj2vxX9/2f7BaJygZfeUHCK3B2guhWhOkMF
-         W2rBVyQi7LJqwzC41esMGDlrsbAlunXRJIboYiUQ+dL0JKLoINBsNEzzaer/PRoY3hit
-         wC02a7S+mWxXiMP0nWr6ZeimuQ9h9LFF11ap40yk5Hmve9JinlmDnHf6umnSQugdMXAW
-         2BrzLJeTzwJ+vGgkcfAFekjuWAhBaaU13128V6YWvMQAmnKd2PvphojhcNlO7GJbi6m4
-         NuPViat2bVSFPV3frbcieFJi8FmPCwSqJ0j4g9xiupSrphd6b0RAg4AqGkSw84iNfkpy
-         MZAQ==
-X-Gm-Message-State: AAQBX9epxp/WaF3V9cLyh5bOGs+EBat8wkWybrZbTD7UFcr18c9+9FA5
-        ibK9emmDM/3EXrX3zMY8b+pG0w==
-X-Google-Smtp-Source: AKy350a3IqAZHRXQJaODm7M8bzVwPhmLi1+cz/J88ETh/wgO7a8w/yFPvL0WRVWXnc968G35HCyQEA==
-X-Received: by 2002:a2e:9cd2:0:b0:29d:76c9:9803 with SMTP id g18-20020a2e9cd2000000b0029d76c99803mr345082ljj.37.1679624718513;
-        Thu, 23 Mar 2023 19:25:18 -0700 (PDT)
+        bh=o2BpvXr+Z6dMw3AhPZYnNDNcoFi1zoA+Pe7N2yi0S64=;
+        b=YSLpaM7Mi9NrQ9w64ujItTmGlFYFwy8udhtEdHut6szaIsgZ8pT+JBZB4bSMI5RLml
+         2kGNEglSfF//oqhhsX6fTmWJnjT2Gh/k1k9fuWnG5BZf4QbRowd/NE/f1myzUjD8x7LM
+         FF6QpEDb34xE7x95dMYAZhYas16x/fdvBHuWGyG8cmU3a91hmPRNQXSco/nn7+4djJfI
+         XlFEQAZFexvQ6jpHy8WOfeei3TPkTuNcl5R5m6OloQgb0Z+4pIM53mgRR5hteueY9V5T
+         IryjybHtNWLTa3IknJr8UbPi4eJ5mp62sMfjCealo4bTAmin2MDnsPVAk5yFUKOEy+xX
+         VTJg==
+X-Gm-Message-State: AAQBX9cP3VTWEhu3pNUfSAI7SjP2W7QSwY8omL3dek9QIk9QVbNfMEnl
+        atDFOKjF/Ajk7y71U9CuHX7teQ==
+X-Google-Smtp-Source: AKy350agS+cgFnxbfgdzsxFJcask5ehsRBlh1AYdwJNsudY5Pd7Qn6EVMYaaH7Bz3pW8qSA7VNgvkA==
+X-Received: by 2002:ac2:5291:0:b0:4dd:a212:e3ca with SMTP id q17-20020ac25291000000b004dda212e3camr204343lfm.11.1679624719627;
+        Thu, 23 Mar 2023 19:25:19 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id x4-20020a19f604000000b004db3aa3c542sm3162628lfe.47.2023.03.23.19.25.17
+        by smtp.gmail.com with ESMTPSA id x4-20020a19f604000000b004db3aa3c542sm3162628lfe.47.2023.03.23.19.25.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 23 Mar 2023 19:25:18 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 03/41] dt-bindings: phy: migrate QMP UFS PHY bindings to qcom,sc8280xp-qmp-ufs-phy.yaml
-Date:   Fri, 24 Mar 2023 05:24:36 +0300
-Message-Id: <20230324022514.1800382-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 04/41] dt-bindings: phy: migrate QMP PCIe PHY bindings to qcom,sc8280xp-qmp-pcie-phy.yaml
+Date:   Fri, 24 Mar 2023 05:24:37 +0300
+Message-Id: <20230324022514.1800382-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20230324022514.1800382-1-dmitry.baryshkov@linaro.org>
 References: <20230324022514.1800382-1-dmitry.baryshkov@linaro.org>
@@ -75,30 +75,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Migrate legacy bindings (described in qcom,msm8996-qmp-ufs-phy.yaml)
-to qcom,sc8280xp-qmp-ufs-phy.yaml. This removes a need to declare
+Migrate legacy bindings (described in qcom,ipq8074-qmp-pcie-phy.yaml)
+to qcom,sc8280xp-qmp-pcie-phy.yaml. This removes a need to declare
 the child PHY node or split resource regions.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../phy/qcom,msm8996-qmp-ufs-phy.yaml         | 244 ------------------
- .../phy/qcom,sc8280xp-qmp-ufs-phy.yaml        |  94 ++++++-
- 2 files changed, 89 insertions(+), 249 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-ufs-phy.yaml
+ .../phy/qcom,ipq8074-qmp-pcie-phy.yaml        | 299 ------------------
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       | 213 +++++++++++--
+ 2 files changed, 187 insertions(+), 325 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-ufs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-ufs-phy.yaml
+diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml
 deleted file mode 100644
-index 80a5348dbfde..000000000000
---- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-ufs-phy.yaml
+index 62045dcfb20c..000000000000
+--- a/Documentation/devicetree/bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml
 +++ /dev/null
-@@ -1,244 +0,0 @@
+@@ -1,299 +0,0 @@
 -# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
 -%YAML 1.2
 ----
--$id: http://devicetree.org/schemas/phy/qcom,msm8996-qmp-ufs-phy.yaml#
+-$id: http://devicetree.org/schemas/phy/qcom,ipq8074-qmp-pcie-phy.yaml#
 -$schema: http://devicetree.org/meta-schemas/core.yaml#
 -
--title: Qualcomm QMP PHY controller (UFS, MSM8996)
+-title: Qualcomm QMP PHY controller (PCIe, IPQ8074)
 -
 -maintainers:
 -  - Vinod Koul <vkoul@kernel.org>
@@ -108,21 +108,24 @@ index 80a5348dbfde..000000000000
 -  controllers on Qualcomm chipsets, such as, PCIe, UFS, and USB.
 -
 -  Note that these bindings are for SoCs up to SC8180X. For newer SoCs, see
--  qcom,sc8280xp-qmp-ufs-phy.yaml.
+-  qcom,sc8280xp-qmp-pcie-phy.yaml.
 -
 -properties:
 -  compatible:
 -    enum:
--      - qcom,msm8996-qmp-ufs-phy
--      - qcom,msm8998-qmp-ufs-phy
--      - qcom,sc8180x-qmp-ufs-phy
--      - qcom,sdm845-qmp-ufs-phy
--      - qcom,sm6115-qmp-ufs-phy
--      - qcom,sm6350-qmp-ufs-phy
--      - qcom,sm8150-qmp-ufs-phy
--      - qcom,sm8250-qmp-ufs-phy
--      - qcom,sm8350-qmp-ufs-phy
--      - qcom,sm8450-qmp-ufs-phy
+-      - qcom,ipq6018-qmp-pcie-phy
+-      - qcom,ipq8074-qmp-gen3-pcie-phy
+-      - qcom,ipq8074-qmp-pcie-phy
+-      - qcom,msm8998-qmp-pcie-phy
+-      - qcom,sc8180x-qmp-pcie-phy
+-      - qcom,sdm845-qhp-pcie-phy
+-      - qcom,sdm845-qmp-pcie-phy
+-      - qcom,sdx55-qmp-pcie-phy
+-      - qcom,sm8250-qmp-gen3x1-pcie-phy
+-      - qcom,sm8250-qmp-gen3x2-pcie-phy
+-      - qcom,sm8250-qmp-modem-pcie-phy
+-      - qcom,sm8450-qmp-gen3x1-pcie-phy
+-      - qcom,sm8450-qmp-gen4x2-pcie-phy
 -
 -  reg:
 -    items:
@@ -137,22 +140,20 @@ index 80a5348dbfde..000000000000
 -  ranges: true
 -
 -  clocks:
--    minItems: 1
--    maxItems: 3
+-    minItems: 2
+-    maxItems: 4
 -
 -  clock-names:
--    minItems: 1
--    maxItems: 3
--
--  power-domains:
--    maxItems: 1
+-    minItems: 2
+-    maxItems: 4
 -
 -  resets:
--    maxItems: 1
+-    minItems: 1
+-    maxItems: 2
 -
 -  reset-names:
--    items:
--      - const: ufsphy
+-    minItems: 1
+-    maxItems: 2
 -
 -  vdda-phy-supply: true
 -
@@ -169,14 +170,29 @@ index 80a5348dbfde..000000000000
 -        minItems: 3
 -        maxItems: 6
 -
+-      clocks:
+-        items:
+-          - description: PIPE clock
+-
+-      clock-names:
+-        deprecated: true
+-        items:
+-          - const: pipe0
+-
 -      "#clock-cells":
--        const: 1
+-        const: 0
+-
+-      clock-output-names:
+-        maxItems: 1
 -
 -      "#phy-cells":
 -        const: 0
 -
 -    required:
 -      - reg
+-      - clocks
+-      - "#clock-cells"
+-      - clock-output-names
 -      - "#phy-cells"
 -
 -    additionalProperties: false
@@ -191,8 +207,6 @@ index 80a5348dbfde..000000000000
 -  - clock-names
 -  - resets
 -  - reset-names
--  - vdda-phy-supply
--  - vdda-pll-supply
 -
 -additionalProperties: false
 -
@@ -202,64 +216,90 @@ index 80a5348dbfde..000000000000
 -        compatible:
 -          contains:
 -            enum:
--              - qcom,msm8996-qmp-ufs-phy
--    then:
--      properties:
--        clocks:
--          maxItems: 1
--        clock-names:
--          items:
--            - const: ref
--
--  - if:
--      properties:
--        compatible:
--          contains:
--            enum:
--              - qcom,msm8998-qmp-ufs-phy
--              - qcom,sc8180x-qmp-ufs-phy
--              - qcom,sdm845-qmp-ufs-phy
--              - qcom,sm6115-qmp-ufs-phy
--              - qcom,sm6350-qmp-ufs-phy
--              - qcom,sm8150-qmp-ufs-phy
--              - qcom,sm8250-qmp-ufs-phy
--    then:
--      properties:
--        clocks:
--          maxItems: 2
--        clock-names:
--          items:
--            - const: ref
--            - const: ref_aux
--
--  - if:
--      properties:
--        compatible:
--          contains:
--            enum:
--              - qcom,sm8450-qmp-ufs-phy
+-              - qcom,msm8998-qmp-pcie-phy
 -    then:
 -      properties:
 -        clocks:
 -          maxItems: 3
 -        clock-names:
 -          items:
+-            - const: aux
+-            - const: cfg_ahb
 -            - const: ref
--            - const: ref_aux
--            - const: qref
+-        resets:
+-          maxItems: 2
+-        reset-names:
+-          items:
+-            - const: phy
+-            - const: common
+-      required:
+-        - vdda-phy-supply
+-        - vdda-pll-supply
 -
 -  - if:
 -      properties:
 -        compatible:
 -          contains:
 -            enum:
--              - qcom,msm8998-qmp-ufs-phy
--              - qcom,sdm845-qmp-ufs-phy
--              - qcom,sm6350-qmp-ufs-phy
--              - qcom,sm8150-qmp-ufs-phy
--              - qcom,sm8250-qmp-ufs-phy
--              - qcom,sm8350-qmp-ufs-phy
--              - qcom,sm8450-qmp-ufs-phy
+-              - qcom,ipq6018-qmp-pcie-phy
+-              - qcom,ipq8074-qmp-gen3-pcie-phy
+-              - qcom,ipq8074-qmp-pcie-phy
+-    then:
+-      properties:
+-        clocks:
+-          maxItems: 2
+-        clock-names:
+-          items:
+-            - const: aux
+-            - const: cfg_ahb
+-        resets:
+-          maxItems: 2
+-        reset-names:
+-          items:
+-            - const: phy
+-            - const: common
+-
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,sc8180x-qmp-pcie-phy
+-              - qcom,sdm845-qhp-pcie-phy
+-              - qcom,sdm845-qmp-pcie-phy
+-              - qcom,sdx55-qmp-pcie-phy
+-              - qcom,sm8250-qmp-gen3x1-pcie-phy
+-              - qcom,sm8250-qmp-gen3x2-pcie-phy
+-              - qcom,sm8250-qmp-modem-pcie-phy
+-              - qcom,sm8450-qmp-gen3x1-pcie-phy
+-              - qcom,sm8450-qmp-gen4x2-pcie-phy
+-    then:
+-      properties:
+-        clocks:
+-          maxItems: 4
+-        clock-names:
+-          items:
+-            - const: aux
+-            - const: cfg_ahb
+-            - const: ref
+-            - const: refgen
+-        resets:
+-          maxItems: 1
+-        reset-names:
+-          items:
+-            - const: phy
+-      required:
+-        - vdda-phy-supply
+-        - vdda-pll-supply
+-
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,sm8250-qmp-gen3x2-pcie-phy
+-              - qcom,sm8250-qmp-modem-pcie-phy
+-              - qcom,sm8450-qmp-gen4x2-pcie-phy
 -    then:
 -      patternProperties:
 -        "^phy@[0-9a-f]+$":
@@ -271,13 +311,18 @@ index 80a5348dbfde..000000000000
 -                - description: PCS
 -                - description: TX lane 2
 -                - description: RX lane 2
+-                - description: PCS_MISC
 -
 -  - if:
 -      properties:
 -        compatible:
 -          contains:
 -            enum:
--              - qcom,sc8180x-qmp-ufs-phy
+-              - qcom,sc8180x-qmp-pcie-phy
+-              - qcom,sdm845-qmp-pcie-phy
+-              - qcom,sdx55-qmp-pcie-phy
+-              - qcom,sm8250-qmp-gen3x1-pcie-phy
+-              - qcom,sm8450-qmp-gen3x1-pcie-phy
 -    then:
 -      patternProperties:
 -        "^phy@[0-9a-f]+$":
@@ -294,8 +339,10 @@ index 80a5348dbfde..000000000000
 -        compatible:
 -          contains:
 -            enum:
--              - qcom,msm8996-qmp-ufs-phy
--              - qcom,sm6115-qmp-ufs-phy
+-              - qcom,ipq6018-qmp-pcie-phy
+-              - qcom,ipq8074-qmp-pcie-phy
+-              - qcom,msm8998-qmp-pcie-phy
+-              - qcom,sdm845-qhp-pcie-phy
 -    then:
 -      patternProperties:
 -        "^phy@[0-9a-f]+$":
@@ -309,174 +356,327 @@ index 80a5348dbfde..000000000000
 -examples:
 -  - |
 -    #include <dt-bindings/clock/qcom,gcc-sm8250.h>
--    #include <dt-bindings/clock/qcom,rpmh.h>
--
--    phy-wrapper@1d87000 {
--        compatible = "qcom,sm8250-qmp-ufs-phy";
--        reg = <0x01d87000 0x1c0>;
+-    phy-wrapper@1c0e000 {
+-        compatible = "qcom,sm8250-qmp-gen3x2-pcie-phy";
+-        reg = <0x01c0e000 0x1c0>;
 -        #address-cells = <1>;
 -        #size-cells = <1>;
--        ranges = <0x0 0x01d87000 0x1000>;
+-        ranges = <0x0 0x01c0e000 0x1000>;
 -
--        clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
--        clock-names = "ref", "ref_aux";
+-        clocks = <&gcc GCC_PCIE_PHY_AUX_CLK>,
+-                 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
+-                 <&gcc GCC_PCIE_WIGIG_CLKREF_EN>,
+-                 <&gcc GCC_PCIE1_PHY_REFGEN_CLK>;
+-        clock-names = "aux", "cfg_ahb", "ref", "refgen";
 -
--        resets = <&ufs_mem_hc 0>;
--        reset-names = "ufsphy";
+-        resets = <&gcc GCC_PCIE_1_PHY_BCR>;
+-        reset-names = "phy";
 -
--        vdda-phy-supply = <&vreg_l6b>;
--        vdda-pll-supply = <&vreg_l3b>;
+-        vdda-phy-supply = <&vreg_l10c_0p88>;
+-        vdda-pll-supply = <&vreg_l6b_1p2>;
 -
--        phy@400 {
--            reg = <0x400 0x108>,
--                  <0x600 0x1e0>,
--                  <0xc00 0x1dc>,
--                  <0x800 0x108>,
--                  <0xa00 0x1e0>;
+-        phy@200 {
+-            reg = <0x200 0x170>,
+-                  <0x400 0x200>,
+-                  <0xa00 0x1f0>,
+-                  <0x600 0x170>,
+-                  <0x800 0x200>,
+-                  <0xe00 0xf4>;
+-
+-            clocks = <&gcc GCC_PCIE_1_PIPE_CLK>;
+-
+-            #clock-cells = <0>;
+-            clock-output-names = "pcie_1_pipe_clk";
+-
 -            #phy-cells = <0>;
 -        };
 -    };
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-index 64ed331880f6..1718c68ef2cf 100644
---- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-@@ -16,20 +16,30 @@ description:
+diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+index ef49efbd0a20..328588448c6b 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+@@ -16,10 +16,23 @@ description:
  properties:
    compatible:
      enum:
-+      - qcom,msm8996-qmp-ufs-phy
-+      - qcom,msm8998-qmp-ufs-phy
-+      - qcom,sc8180x-qmp-ufs-phy
-       - qcom,sc8280xp-qmp-ufs-phy
-+      - qcom,sdm845-qmp-ufs-phy
-+      - qcom,sm6115-qmp-ufs-phy
-       - qcom,sm6125-qmp-ufs-phy
-+      - qcom,sm6350-qmp-ufs-phy
-+      - qcom,sm8150-qmp-ufs-phy
-+      - qcom,sm8250-qmp-ufs-phy
-+      - qcom,sm8350-qmp-ufs-phy
-+      - qcom,sm8450-qmp-ufs-phy
-       - qcom,sm8550-qmp-ufs-phy
++      - qcom,ipq6018-qmp-pcie-phy
++      - qcom,ipq8074-qmp-gen3-pcie-phy
++      - qcom,ipq8074-qmp-pcie-phy
++      - qcom,msm8998-qmp-pcie-phy
++      - qcom,sc8180x-qmp-pcie-phy
+       - qcom,sc8280xp-qmp-gen3x1-pcie-phy
+       - qcom,sc8280xp-qmp-gen3x2-pcie-phy
+       - qcom,sc8280xp-qmp-gen3x4-pcie-phy
++      - qcom,sdm845-qhp-pcie-phy
++      - qcom,sdm845-qmp-pcie-phy
++      - qcom,sdx55-qmp-pcie-phy
++      - qcom,sm8250-qmp-gen3x1-pcie-phy
++      - qcom,sm8250-qmp-gen3x2-pcie-phy
++      - qcom,sm8250-qmp-modem-pcie-phy
+       - qcom,sm8350-qmp-gen3x1-pcie-phy
++      - qcom,sm8450-qmp-gen3x1-pcie-phy
++      - qcom,sm8450-qmp-gen4x2-pcie-phy
+       - qcom,sm8550-qmp-gen3x2-pcie-phy
+       - qcom,sm8550-qmp-gen4x2-pcie-phy
  
-   reg:
-     maxItems: 1
+@@ -28,18 +41,12 @@ properties:
+     maxItems: 2
  
    clocks:
--    maxItems: 2
-+    minItems: 1
-+    maxItems: 3
+-    minItems: 5
++    minItems: 3
+     maxItems: 6
  
    clock-names:
+-    minItems: 5
 -    items:
+-      - const: aux
+-      - const: cfg_ahb
 -      - const: ref
--      - const: ref_aux
-+    minItems: 1
-+    maxItems: 3
+-      - const: rchng
+-      - const: pipe
+-      - const: pipediv2
++    minItems: 3
++    maxItems: 6
  
    power-domains:
      maxItems: 1
-@@ -45,6 +55,8 @@ properties:
+@@ -50,9 +57,7 @@ properties:
  
-   vdda-pll-supply: true
+   reset-names:
+     minItems: 1
+-    items:
+-      - const: phy
+-      - const: phy_nocsr
++    maxItems: 2
  
-+  vddp-ref-clk-supply: true
-+
-   "#clock-cells":
-     const: 1
+   vdda-phy-supply: true
  
-@@ -56,13 +68,67 @@ required:
+@@ -83,11 +88,8 @@ required:
    - reg
    - clocks
    - clock-names
 -  - power-domains
    - resets
    - reset-names
-   - vdda-phy-supply
-   - vdda-pll-supply
+-  - vdda-phy-supply
+-  - vdda-pll-supply
+   - "#clock-cells"
+   - clock-output-names
    - "#phy-cells"
- 
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,msm8996-qmp-ufs-phy
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 1
-+        clock-names:
+@@ -119,21 +121,116 @@ allOf:
+         compatible:
+           contains:
+             enum:
+-              - qcom,sm8350-qmp-gen3x1-pcie-phy
+-              - qcom,sm8550-qmp-gen3x2-pcie-phy
+-              - qcom,sm8550-qmp-gen4x2-pcie-phy
++              - qcom,msm8998-qmp-pcie-phy
+     then:
+       properties:
+         clocks:
+-          maxItems: 5
++          maxItems: 4
+         clock-names:
 +          items:
++            - const: aux
++            - const: cfg_ahb
 +            - const: ref
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,msm8998-qmp-ufs-phy
-+              - qcom,sc8180x-qmp-ufs-phy
-+              - qcom,sc8280xp-qmp-ufs-phy
-+              - qcom,sdm845-qmp-ufs-phy
-+              - qcom,sm6115-qmp-ufs-phy
-+              - qcom,sm6125-qmp-ufs-phy
-+              - qcom,sm6350-qmp-ufs-phy
-+              - qcom,sm8150-qmp-ufs-phy
-+              - qcom,sm8250-qmp-ufs-phy
-+              - qcom,sm8550-qmp-ufs-phy
-+    then:
-+      properties:
-+        clocks:
++            - const: pipe
++        resets:
 +          maxItems: 2
-+        clock-names:
++        reset-names:
 +          items:
-+            - const: ref
-+            - const: ref_aux
++            - const: phy
++            - const: common
++      required:
++        - vdda-phy-supply
++        - vdda-pll-supply
 +
 +  - if:
 +      properties:
 +        compatible:
 +          contains:
 +            enum:
-+              - qcom,sm8450-qmp-ufs-phy
++              - qcom,ipq6018-qmp-pcie-phy
++              - qcom,ipq8074-qmp-gen3-pcie-phy
++              - qcom,ipq8074-qmp-pcie-phy
 +    then:
 +      properties:
 +        clocks:
 +          maxItems: 3
 +        clock-names:
 +          items:
-+            - const: ref
-+            - const: ref_aux
-+            - const: qref
++            - const: aux
++            - const: cfg_ahb
++            - const: pipe
++        resets:
++          maxItems: 2
++        reset-names:
++          items:
++            - const: phy
++            - const: common
 +
- additionalProperties: false
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sc8180x-qmp-pcie-phy
++              - qcom,sdm845-qhp-pcie-phy
++              - qcom,sdm845-qmp-pcie-phy
++              - qcom,sdx55-qmp-pcie-phy
++              - qcom,sm8250-qmp-gen3x1-pcie-phy
++              - qcom,sm8250-qmp-gen3x2-pcie-phy
++              - qcom,sm8250-qmp-modem-pcie-phy
++              - qcom,sm8450-qmp-gen3x1-pcie-phy
++              - qcom,sm8450-qmp-gen4x2-pcie-phy
++    then:
++      properties:
++        clocks:
+           maxItems: 5
+-    else:
++        clock-names:
++          items:
++            - const: aux
++            - const: cfg_ahb
++            - const: ref
++            - const: refgen
++            - const: pipe
++        resets:
++          maxItems: 1
++        reset-names:
++          items:
++            - const: phy
++      required:
++        - vdda-phy-supply
++        - vdda-pll-supply
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sm8350-qmp-gen3x1-pcie-phy
++              - qcom,sm8550-qmp-gen3x2-pcie-phy
++        resets:
++          minItems: 1
++        reset-names:
++          items:
++            - const: phy
++    then:
+       properties:
+         clocks:
+-          minItems: 6
++          maxItems: 5
+         clock-names:
+-          minItems: 6
++          items:
++            - const: aux
++            - const: cfg_ahb
++            - const: ref
++            - const: rchng
++            - const: pipe
++        resets:
++          maxItems: 1
++        reset-names:
++          items:
++            - const: phy
++      required:
++        - vdda-phy-supply
++        - vdda-pll-supply
+ 
+   - if:
+       properties:
+@@ -143,16 +240,53 @@ allOf:
+               - qcom,sm8550-qmp-gen4x2-pcie-phy
+     then:
+       properties:
++        clocks:
++          maxItems: 5
++        clock-names:
++          items:
++            - const: aux
++            - const: cfg_ahb
++            - const: ref
++            - const: rchng
++            - const: pipe
+         resets:
+           minItems: 2
+         reset-names:
+-          minItems: 2
+-    else:
++          items:
++            - const: phy
++            - const: phy_nocsr
++      required:
++        - vdda-phy-supply
++        - vdda-pll-supply
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sc8280xp-qmp-gen3x1-pcie-phy
++              - qcom,sc8280xp-qmp-gen3x2-pcie-phy
++              - qcom,sc8280xp-qmp-gen3x4-pcie-phy
++    then:
+       properties:
++        clocks:
++          minItems: 6
++        clock-names:
++          items:
++            - const: aux
++            - const: cfg_ahb
++            - const: ref
++            - const: rchng
++            - const: pipe
++            - const: pipediv2
+         resets:
+-          maxItems: 1
++          minItems: 1
+         reset-names:
+-          maxItems: 1
++          items:
++            - const: phy
++      required:
++        - vdda-phy-supply
++        - vdda-pll-supply
  
  examples:
-@@ -84,5 +150,23 @@ examples:
-         vdda-phy-supply = <&vreg_l6b>;
-         vdda-pll-supply = <&vreg_l3b>;
+   - |
+@@ -213,3 +347,30 @@ examples:
  
+       #phy-cells = <0>;
+     };
++  - |
++    #define GCC_PCIE1_PHY_REFGEN_CLK   47
++    #define GCC_PCIE_PHY_AUX_CLK       71
++    #define GCC_PCIE_WIGIG_CLKREF_EN   74
++
++    phy@1c0e000 {
++        compatible = "qcom,sm8250-qmp-gen3x2-pcie-phy";
++        reg = <0x01c0e000 0x1c0>;
++
++        clocks = <&gcc GCC_PCIE_PHY_AUX_CLK>,
++                 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
++                 <&gcc GCC_PCIE_WIGIG_CLKREF_EN>,
++                 <&gcc GCC_PCIE1_PHY_REFGEN_CLK>,
++                 <&gcc GCC_PCIE_1_PIPE_CLK>;
++        clock-names = "aux", "cfg_ahb", "ref", "refgen", "pipe";
++
++        resets = <&gcc GCC_PCIE_1_PHY_BCR>;
++        reset-names = "phy";
++
++        vdda-phy-supply = <&vreg_l10c_0p88>;
++        vdda-pll-supply = <&vreg_l6b_1p2>;
++
++        #clock-cells = <0>;
++        clock-output-names = "pcie_1_pipe_clk";
++
 +        #phy-cells = <0>;
 +    };
-+  - |
-+    #include <dt-bindings/clock/qcom,rpmh.h>
-+
-+    phy@1d87000 {
-+        compatible = "qcom,sm8250-qmp-ufs-phy";
-+        reg = <0x01d87000 0x1c0>;
-+
-+        clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
-+        clock-names = "ref", "ref_aux";
-+
-+        resets = <&ufs_mem_hc 0>;
-+        reset-names = "ufsphy";
-+
-+        vdda-phy-supply = <&vreg_l6b>;
-+        vdda-pll-supply = <&vreg_l3b>;
-+
-         #phy-cells = <0>;
-     };
 -- 
 2.30.2
 
