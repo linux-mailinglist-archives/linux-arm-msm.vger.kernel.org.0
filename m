@@ -2,102 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB21B6C85F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 20:27:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF7406C866B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 20:56:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231817AbjCXT1c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 15:27:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50926 "EHLO
+        id S231974AbjCXT4v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 15:56:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231797AbjCXT1a (ORCPT
+        with ESMTP id S232008AbjCXT4i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 15:27:30 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B9D41DBB2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 12:27:27 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id m2so2843948wrh.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 12:27:27 -0700 (PDT)
+        Fri, 24 Mar 2023 15:56:38 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8029220D3D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 12:56:27 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-544f7c176easo52367297b3.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 12:56:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1679686046;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=chromium.org; s=google; t=1679687787;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A76mQMLCXjYaVOvcsZRi/XfbCpgyGK8ELYNqRDF4dnY=;
-        b=BGlDYDhoCSHvCE30sxCZJ330CsatpMec4rqSDHE1b4iNuDgzdZP3RcITGzQLdhSQE1
-         0N3Yz4BMfkOggoOZZEfuE48SBNrNXGe5M58Yo36TE3i0jUzVIoBUrgNYgI0hYrQog6Yc
-         0ccSEqEMB5Z2pmlPWflgH7nYkrYlTvygQ/xE0=
+        bh=lJ8XMXUhDPNrl814nUboxXrW9LkyTici68uktBtSFp8=;
+        b=P2zFpErnEFQsp7uPKvsd3TV5DcP5rEYW4cUIR/DZg2F7Bjo6Fuo7TB81xa4HUve9mN
+         f83wkGhGCLXt8pH/1NA9mpjGLxNwwWWLuHuVctnuEOdYIwAA+YedxbsIijurA1cI4QmS
+         6AA07fYrVRdkiyJ5UKRqq7ba8hcI44Krtm/Ys=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679686046;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1679687787;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=A76mQMLCXjYaVOvcsZRi/XfbCpgyGK8ELYNqRDF4dnY=;
-        b=dyBzvby+Pn6eJyVdfwAXwv/+0nWviGmTNeuYLjNXa3uAv+RUzwTuDu7xObZZHnmnST
-         zOZI3iZFjwETlPioz2mqBPR3RJ63mRkbKpRyFRGZcSswEGey8qB8dYBuwZJtR2u3tvaw
-         wPkkMcvlZp2m/IfdmPZcM+AsRcfT/Q4X7JiCevIqRUwW+F6iipR8uboPGr1UwzgrQfQW
-         ehzRU11scybkql7LnfYGfuBQsgkDS4d0yA/FFqbk6VIA1/tbxCs8g+9UEkG74wlE99ir
-         YlvL+3Qa6FYIyw1qyDb6Cir8HiYxcPPa4zG22X4RcH/PiqmYjpXLXF0s198XOoXildrI
-         dP4A==
-X-Gm-Message-State: AAQBX9dEwL+XGK1cWXlRUaLC2LwzAUUsvCsu51M43527dq7MWVLT3DpW
-        +jK8PBagTkyOLH7e6R/I3KfF2ohSJu/9SIk4ATLmcA==
-X-Google-Smtp-Source: AKy350aA0OrVbBXXikGt1TrNwIXDxKvzGrW8p1JqkcKi/TrZpSty/ja8lUFG73jSGVmL/obLAm6bK/QBzKB/s35FXu4=
-X-Received: by 2002:adf:f8cf:0:b0:2d3:3db2:bbae with SMTP id
- f15-20020adff8cf000000b002d33db2bbaemr804498wrq.5.1679686046094; Fri, 24 Mar
- 2023 12:27:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230118193015.911074-1-markyacoub@google.com>
- <20230118193015.911074-7-markyacoub@google.com> <MWHPR11MB1741FB33E933A3285B7DC88DE3BA9@MWHPR11MB1741.namprd11.prod.outlook.com>
- <MWHPR11MB1741D833E10227E8BA1CEE03E3879@MWHPR11MB1741.namprd11.prod.outlook.com>
-In-Reply-To: <MWHPR11MB1741D833E10227E8BA1CEE03E3879@MWHPR11MB1741.namprd11.prod.outlook.com>
+        bh=lJ8XMXUhDPNrl814nUboxXrW9LkyTici68uktBtSFp8=;
+        b=AUAB4+XAqExXMfNhna7Gc+YM1GAk6tnkj3/kGjiCOTGwdC+P1XjpMDiwmY8md1/8EX
+         GmtXJNFtEEGtzLwTTOR352jrgsP7eF+Q9BOgTbmAk4GeJ6vyhjvskINsyHca61eyzECp
+         TKfBYDxQICHV19eE7/xjKd79BqqrbqX+Nd/oce2srrYJ+HtvJzzoWcrljwL3f2RgtCPD
+         Qn/ne1nQopIkZ9EBNO3fF50P+7pW9W5sgalya+DqD4/8IDWvZ6g1qlB+I94ynQTpV4+B
+         rDkrANnVnTtnieGVUw9XjDZ4wvaMIyrgerID0gIf3KevlfjoRclYZP4pW4S1Xi4BjUtg
+         Ydmw==
+X-Gm-Message-State: AAQBX9eJCMGfp0s1f6twQuyTC+LUmuhL70JBVJ2MIp9d2RiWZOEVMCpE
+        81sZuaM7+uNdFW3jh4wMVP/UxQ==
+X-Google-Smtp-Source: AKy350btG7JZAXhOS+MiHIcxvyNWthfjiPWQRq04uR4hey+5zvIW3E5kjhsx4yNIl9eMj7A92K+cIQ==
+X-Received: by 2002:a0d:e80d:0:b0:541:a219:2b61 with SMTP id r13-20020a0de80d000000b00541a2192b61mr3298134ywe.35.1679687787185;
+        Fri, 24 Mar 2023 12:56:27 -0700 (PDT)
+Received: from localhost ([2620:0:1035:15:5509:ec45:2b32:b39f])
+        by smtp.gmail.com with UTF8SMTPSA id o19-20020a81ef13000000b00545a0818500sm579522ywm.144.2023.03.24.12.56.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Mar 2023 12:56:26 -0700 (PDT)
 From:   Mark Yacoub <markyacoub@chromium.org>
-Date:   Fri, 24 Mar 2023 15:27:15 -0400
-Message-ID: <CAJUqKUqhHmvD0K7OzrFKPeBBxprXgLVw1-L-vpNAAS7u4CxNoA@mail.gmail.com>
-Subject: Re: [PATCH v6 06/10] drm/i915/hdcp: Retain hdcp_capable return codes
-To:     "Kandpal, Suraj" <suraj.kandpal@intel.com>
-Cc:     "quic_khsieh@quicinc.com" <quic_khsieh@quicinc.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
-        "quic_sbillaka@quicinc.com" <quic_sbillaka@quicinc.com>,
-        "konrad.dybcio@somainline.org" <konrad.dybcio@somainline.org>,
-        "Souza, Jose" <jose.souza@intel.com>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "krzysztof.kozlowski+dt@linaro.org" 
-        <krzysztof.kozlowski+dt@linaro.org>,
-        "hbh25y@gmail.com" <hbh25y@gmail.com>,
-        "Vasut, Marek" <marex@denx.de>,
-        "Dixit, Ashutosh" <ashutosh.dixit@intel.com>,
-        "sean@poorly.run" <sean@poorly.run>,
-        "abhinavk@codeaurora.org" <abhinavk@codeaurora.org>,
-        "javierm@redhat.com" <javierm@redhat.com>,
-        "Murthy, Arun R" <arun.r.murthy@intel.com>,
-        "Lisovskiy, Stanislav" <stanislav.lisovskiy@intel.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "quic_jesszhan@quicinc.com" <quic_jesszhan@quicinc.com>,
-        "Nautiyal, Ankit K" <ankit.k.nautiyal@intel.com>,
-        "Nikula, Jani" <jani.nikula@intel.com>,
-        "De Marchi, Lucas" <lucas.demarchi@intel.com>,
-        "quic_abhinavk@quicinc.com" <quic_abhinavk@quicinc.com>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "christophe.jaillet@wanadoo.fr" <christophe.jaillet@wanadoo.fr>,
-        "maxime@cerno.tech" <maxime@cerno.tech>,
-        "Vivi, Rodrigo" <rodrigo.vivi@intel.com>,
-        "johan+linaro@kernel.org" <johan+linaro@kernel.org>,
-        "tvrtko.ursulin@linux.intel.com" <tvrtko.ursulin@linux.intel.com>,
-        "andersson@kernel.org" <andersson@kernel.org>,
-        "dianders@chromium.org" <dianders@chromium.org>,
-        "Sharma, Swati2" <swati2.sharma@intel.com>,
-        "Navare, Manasi D" <manasi.d.navare@intel.com>,
-        "tzimmermann@suse.de" <tzimmermann@suse.de>,
-        "Modem, Bhanuprakash" <bhanuprakash.modem@intel.com>,
-        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
-        "seanpaul@chromium.org" <seanpaul@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Google-Original-From: Mark Yacoub <markyacoub@google.com>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     seanpaul@chromium.org, suraj.kandpal@intel.com,
+        dianders@chromium.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        Rob Herring <robh@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Mark Yacoub <markyacoub@chromium.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v7 08/10] dt-bindings: msm/dp: Add bindings for HDCP registers
+Date:   Fri, 24 Mar 2023 15:55:52 -0400
+Message-Id: <20230324195555.3921170-9-markyacoub@google.com>
+X-Mailer: git-send-email 2.40.0.348.gf938b09366-goog
+In-Reply-To: <20230324195555.3921170-1-markyacoub@google.com>
+References: <20230324195555.3921170-1-markyacoub@google.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -108,314 +83,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 23, 2023 at 3:18=E2=80=AFAM Kandpal, Suraj <suraj.kandpal@intel=
-.com> wrote:
->
->
->
-> > -----Original Message-----
-> > From: Kandpal, Suraj
-> > Sent: Friday, March 10, 2023 1:55 PM
-> > To: Mark Yacoub <markyacoub@chromium.org>; quic_khsieh@quicinc.com;
-> > linux-arm-msm@vger.kernel.org; dri-devel@lists.freedesktop.org;
-> > freedreno@lists.freedesktop.org; devicetree@vger.kernel.org; linux-
-> > kernel@vger.kernel.org; intel-gfx@lists.freedesktop.org
-> > Cc: quic_sbillaka@quicinc.com; konrad.dybcio@somainline.org; Souza, Jos=
-e
-> > <jose.souza@intel.com>; bjorn.andersson@linaro.org;
-> > krzysztof.kozlowski+dt@linaro.org; hbh25y@gmail.com; Vasut, Marek
-> > <marex@denx.de>; Dixit, Ashutosh <ashutosh.dixit@intel.com>;
-> > sean@poorly.run; abhinavk@codeaurora.org; javierm@redhat.com; Murthy,
-> > Arun R <arun.r.murthy@intel.com>; Lisovskiy, Stanislav
-> > <Stanislav.Lisovskiy@intel.com>; agross@kernel.org;
-> > quic_jesszhan@quicinc.com; Nautiyal, Ankit K <ankit.k.nautiyal@intel.co=
-m>;
-> > Nikula, Jani <jani.nikula@intel.com>; De Marchi, Lucas
-> > <lucas.demarchi@intel.com>; quic_abhinavk@quicinc.com;
-> > swboyd@chromium.org; robh+dt@kernel.org;
-> > christophe.jaillet@wanadoo.fr; maxime@cerno.tech; Vivi, Rodrigo
-> > <rodrigo.vivi@intel.com>; johan+linaro@kernel.org;
-> > tvrtko.ursulin@linux.intel.com; andersson@kernel.org;
-> > dianders@chromium.org; Sharma, Swati2 <swati2.sharma@intel.com>;
-> > Navare, Manasi D <manasi.d.navare@intel.com>; tzimmermann@suse.de;
-> > Modem, Bhanuprakash <Bhanuprakash.Modem@intel.com>;
-> > dmitry.baryshkov@linaro.org; seanpaul@chromium.org
-> > Subject: RE: [PATCH v6 06/10] drm/i915/hdcp: Retain hdcp_capable return
-> > codes
-> >
-> > > Subject: [PATCH v6 06/10] drm/i915/hdcp: Retain hdcp_capable return
-> > > codes
-> > >
-> > > From: Sean Paul <seanpaul@chromium.org>
-> > >
-> > > The shim functions return error codes, but they are discarded in
-> > > intel_hdcp.c. This patch plumbs the return codes through so they are
-> > > properly handled.
-> > >
-> > > Acked-by: Jani Nikula <jani.nikula@intel.com>
-> > > Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-> > > Signed-off-by: Sean Paul <seanpaul@chromium.org>
-> > > Signed-off-by: Mark Yacoub <markyacoub@chromium.org>
-> > > Link:
-> > > https://patchwork.freedesktop.org/patch/msgid/20210913175747.47456-7-
-> > > sean@poorly.run #v1
-> > > Link:
-> > > https://patchwork.freedesktop.org/patch/msgid/20210915203834.1439-7-
-> > > sean@poorly.run #v2
-> > > Link:
-> > > https://patchwork.freedesktop.org/patch/msgid/20211001151145.55916-7-
-> > > sean@poorly.run #v3
-> > > Link:
-> > >
-> > https://patchwork.freedesktop.org/patch/msgid/20211105030434.2828845-
-> > > 7-sean@poorly.run #v4
-> > > Link:
-> > >
-> > https://patchwork.freedesktop.org/patch/msgid/20220411204741.1074308-
-> > > 7-sean@poorly.run #v5
-> > >
-> > > Changes in v2:
-> > > -None
-> > > Changes in v3:
-> > > -None
-> > > Changes in v4:
-> > > -None
-> > > Changes in v5:
-> > > -None
-> > > Changes in v6:
-> > > -Rebased
-> > >
-> > > ---
-> > >  .../drm/i915/display/intel_display_debugfs.c  |  9 +++-
-> > >  drivers/gpu/drm/i915/display/intel_hdcp.c     | 51 ++++++++++-------=
---
-> > >  drivers/gpu/drm/i915/display/intel_hdcp.h     |  4 +-
-> > >  3 files changed, 37 insertions(+), 27 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/i915/display/intel_display_debugfs.c
-> > > b/drivers/gpu/drm/i915/display/intel_display_debugfs.c
-> > > index 7c7253a2541c..13a4153bb76e 100644
-> > > --- a/drivers/gpu/drm/i915/display/intel_display_debugfs.c
-> > > +++ b/drivers/gpu/drm/i915/display/intel_display_debugfs.c
-> > > @@ -492,6 +492,7 @@ static void intel_panel_info(struct seq_file *m,
-> > > static void intel_hdcp_info(struct seq_file *m,
-> > >                         struct intel_connector *intel_connector)  {
-> > > +   int ret;
-> > >     bool hdcp_cap, hdcp2_cap;
-> > >
-> > >     if (!intel_connector->hdcp.shim) {
-> > > @@ -499,8 +500,12 @@ static void intel_hdcp_info(struct seq_file *m,
-> > >             goto out;
-> > >     }
-> > >
-> > > -   hdcp_cap =3D intel_hdcp_capable(intel_connector);
-> > > -   hdcp2_cap =3D intel_hdcp2_capable(intel_connector);
-> > > +   ret =3D intel_hdcp_capable(intel_connector, &hdcp_cap);
-> > > +   if (ret)
-> > > +           hdcp_cap =3D false;
-> > > +   ret =3D intel_hdcp2_capable(intel_connector, &hdcp2_cap);
-> > > +   if (ret)
-> > > +           hdcp2_cap =3D false;
-> > >
-> >
-> > This does not seem to be adding value here as this error which you refe=
-rred
-> > to as being ignored is used both in case of hdmi and dp is being to det=
-ermine
-> > if hdcp_cap or hdcp2 cap is true or false which you basically reiterate=
- here too
-> > check the intel_dp_hdcp2_capable and intel_hdmi_hdcp2_capable .
-> > this change in itself can be removed.
-> >
-> > Regards,
-> > Suraj Kandpal
-> >
-Hey Suraj, what we're trying to do here is to have a distinction
-between 2 things:
-1. were we able to check of the capability or not. like did the
-connection work well
-2. if the check went well, what capability were were able to read
-We may or may not need both info. But since we moved to common DRM, it
-might be best keep the distinction and each driver can handle it as it
-sees fit.
-> > >     if (hdcp_cap)
-> > >             seq_puts(m, "HDCP1.4 ");
-> > > diff --git a/drivers/gpu/drm/i915/display/intel_hdcp.c
-> > > b/drivers/gpu/drm/i915/display/intel_hdcp.c
-> > > index 0a20bc41be55..61a862ae1f28 100644
-> > > --- a/drivers/gpu/drm/i915/display/intel_hdcp.c
-> > > +++ b/drivers/gpu/drm/i915/display/intel_hdcp.c
-> > > @@ -177,50 +177,49 @@ int intel_hdcp_read_valid_bksv(struct
-> > > intel_digital_port *dig_port,  }
-> > >
-> > >  /* Is HDCP1.4 capable on Platform and Sink */ -bool
-> > > intel_hdcp_capable(struct intel_connector *connector)
-> > > +int intel_hdcp_capable(struct intel_connector *connector, bool
-> > > +*capable)
-> > >  {
-> > >     struct intel_digital_port *dig_port =3D
-> > > intel_attached_dig_port(connector);
-> > >     const struct intel_hdcp_shim *shim =3D connector->hdcp.shim;
-> > > -   bool capable =3D false;
-> > >     u8 bksv[5];
-> > >
-> > > +   *capable =3D false;
-> > > +
-> > >     if (!shim)
-> > > -           return capable;
-> > > +           return 0;
-> > >
-> > > -   if (shim->hdcp_capable) {
-> > > -           shim->hdcp_capable(dig_port, &capable);
-> > > -   } else {
-> > > -           if (!intel_hdcp_read_valid_bksv(dig_port, shim, bksv))
-> > > -                   capable =3D true;
-> > > -   }
-> > > +   if (shim->hdcp_capable)
-> > > +           return shim->hdcp_capable(dig_port, capable);
-> > > +
-> > > +   if (!intel_hdcp_read_valid_bksv(dig_port, shim, bksv))
-> > > +           *capable =3D true;
-> > >
-> > > -   return capable;
-> > > +   return 0;
-> > >  }
-> > >
-> > >  /* Is HDCP2.2 capable on Platform and Sink */ -bool
-> > > intel_hdcp2_capable(struct intel_connector *connector)
-> > > +int intel_hdcp2_capable(struct intel_connector *connector, bool
-> > > +*capable)
-> > >  {
-> > >     struct intel_digital_port *dig_port =3D
-> > > intel_attached_dig_port(connector);
-> > >     struct drm_i915_private *dev_priv =3D to_i915(connector->base.dev=
-);
-> > >     struct intel_hdcp *hdcp =3D &connector->hdcp;
-> > > -   bool capable =3D false;
-> > > +
-> > > +   *capable =3D false;
-> > >
-> > >     /* I915 support for HDCP2.2 */
-> > >     if (!hdcp->hdcp2_supported)
-> > > -           return false;
-> > > +           return 0;
-> > >
-> > >     /* MEI interface is solid */
-> > >     mutex_lock(&dev_priv->display.hdcp.comp_mutex);
-> > >     if (!dev_priv->display.hdcp.comp_added ||  !dev_priv-
-> > > >display.hdcp.master) {
-> > >             mutex_unlock(&dev_priv->display.hdcp.comp_mutex);
-> > > -           return false;
-> > > +           return 0;
-> > >     }
-> > >     mutex_unlock(&dev_priv->display.hdcp.comp_mutex);
-> > >
-> > >     /* Sink's capability for HDCP2.2 */
-> > > -   hdcp->shim->hdcp_2_2_capable(dig_port, &capable);
-> > > -
-> > > -   return capable;
-> > > +   return hdcp->shim->hdcp_2_2_capable(dig_port, capable);
-> > >  }
-> > >
-> > >  static bool intel_hdcp_in_use(struct drm_i915_private *dev_priv, @@ =
--
-> > > 2355,6 +2354,7 @@ int intel_hdcp_enable(struct intel_connector
-> > > *connector,
-> > >     struct intel_digital_port *dig_port =3D
-> > > intel_attached_dig_port(connector);
-> > >     struct intel_hdcp *hdcp =3D &connector->hdcp;
-> > >     unsigned long check_link_interval =3D
-> > DRM_HDCP_CHECK_PERIOD_MS;
-> > > +   bool capable;
-> > >     int ret =3D -EINVAL;
-> > >
-> > >     if (!hdcp->shim)
-> > > @@ -2373,21 +2373,27 @@ int intel_hdcp_enable(struct intel_connector
-> > > *connector,
-> > >      * Considering that HDCP2.2 is more secure than HDCP1.4, If the
-> > > setup
-> > >      * is capable of HDCP2.2, it is preferred to use HDCP2.2.
-> > >      */
-> > > -   if (intel_hdcp2_capable(connector)) {
-> > > +   ret =3D intel_hdcp2_capable(connector, &capable);
-> > > +   if (capable) {
-> > >             ret =3D _intel_hdcp2_enable(connector);
-> > > -           if (!ret)
-> > > +           if (!ret) {
-> > >                     check_link_interval =3D
-> > > DRM_HDCP2_CHECK_PERIOD_MS;
-> > > +                   goto out;
-> > > +           }
->
-> HI,
-> Just noticed another changed here if any error is returned with intel_hdc=
-2_capable
-> You directly jump to out which will stop us from enabling hdcp 1.4 we sho=
-uld check
-> for hdcp 1.4 capability even if hdcp 2.2 capability is returned with an e=
-rror one other
-> reason I don't think the handling of error codes are adding value here.
->
-> Regards,
-> Suraj Kandpal
-Hey Suraj - the goto happens if we know that the device is hdcp2
-capable. If it's capable, we do enable it. If we have no error
-returned, that's when we skip hdcp1.4
-otherwise, if it's not capable, or the enable returned with an error
-code, we don't goto out but move on to try on hdcp 1.4
-Thanks!
-> > >     }
-> > >
-> > >     /*
-> > >      * When HDCP2.2 fails and Content Type is not Type1, HDCP1.4 will
-> > >      * be attempted.
-> > >      */
-> > > -   if (ret && intel_hdcp_capable(connector) &&
-> > > -       hdcp->content_type !=3D DRM_MODE_HDCP_CONTENT_TYPE1) {
-> > > +   ret =3D intel_hdcp_capable(connector, &capable);
-> > > +   if (ret)
-> > > +           goto out;
-> > > +
-> > > +   if (capable && hdcp->content_type !=3D
-> > > DRM_MODE_HDCP_CONTENT_TYPE1)
-> > >             ret =3D _intel_hdcp_enable(connector);
-> > > -   }
-> > >
-> > > +out:
-> > >     if (!ret) {
-> > >             schedule_delayed_work(&hdcp->check_work,
-> > > check_link_interval);
-> > >             intel_hdcp_update_value(connector,
-> > > @@ -2395,7 +2401,6 @@ int intel_hdcp_enable(struct intel_connector
-> > > *connector,
-> > >                                     true);
-> > >     }
-> > >
-> > > -out:
-> > >     mutex_unlock(&dig_port->hdcp_mutex);
-> > >     mutex_unlock(&hdcp->mutex);
-> > >     return ret;
-> > > diff --git a/drivers/gpu/drm/i915/display/intel_hdcp.h
-> > > b/drivers/gpu/drm/i915/display/intel_hdcp.h
-> > > index 7c5fd84a7b65..f06f6e5a2b1a 100644
-> > > --- a/drivers/gpu/drm/i915/display/intel_hdcp.h
-> > > +++ b/drivers/gpu/drm/i915/display/intel_hdcp.h
-> > > @@ -33,8 +33,8 @@ void intel_hdcp_update_pipe(struct
-> > > intel_atomic_state *state,
-> > >                         const struct intel_crtc_state *crtc_state,
-> > >                         const struct drm_connector_state *conn_state)=
-;
-> > bool
-> > > is_hdcp_supported(struct drm_i915_private *dev_priv, enum port port);
-> > > -bool intel_hdcp_capable(struct intel_connector *connector); -bool
-> > > intel_hdcp2_capable(struct intel_connector *connector);
-> > > +int intel_hdcp_capable(struct intel_connector *connector, bool
-> > > +*capable); int intel_hdcp2_capable(struct intel_connector *connector=
-,
-> > > +bool *capable);
-> > >  void intel_hdcp_component_init(struct drm_i915_private *dev_priv);
-> > > void intel_hdcp_component_fini(struct drm_i915_private *dev_priv);
-> > > void intel_hdcp_cleanup(struct intel_connector *connector);
-> > > --
-> > > 2.39.0.246.g2a6d74b583-goog
->
+From: Sean Paul <seanpaul@chromium.org>
+
+Add the bindings for the MSM DisplayPort HDCP registers
+which are required to write the HDCP key into the display controller as
+well as the registers to enable HDCP authentication/key
+exchange/encryption.
+
+Cc: Rob Herring <robh@kernel.org>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+Signed-off-by: Mark Yacoub <markyacoub@chromium.org>
+
+---
+Changes in v2:
+-Drop register range names (Stephen)
+-Fix yaml errors (Rob)
+Changes in v3:
+-Add new compatible string for dp-hdcp
+-Add descriptions to reg
+-Add minItems/maxItems to reg
+-Make reg depend on the new hdcp compatible string
+Changes in v4:
+-Rebase on Bjorn's multi-dp patchset
+Changes in v4.5:
+-Remove maxItems from reg (Rob)
+-Remove leading zeros in example (Rob)
+Changes in v5:
+-None
+Changes in v6:
+-Rebased: modify minItems instead of adding it as new line.
+Changes in v7:
+-Revert the change to minItems
+-Added the maxItems to Reg
+
+ .../devicetree/bindings/display/msm/dp-controller.yaml     | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+index 774ccb5184b88..c47ade3a4ae17 100644
+--- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+@@ -31,6 +31,8 @@ properties:
+       - description: link register block
+       - description: p0 register block
+       - description: p1 register block
++      - description: (Optional) Registers for HDCP device key injection
++      - description: (Optional) Registers for HDCP TrustZone interaction
+ 
+   interrupts:
+     maxItems: 1
+@@ -158,6 +160,7 @@ allOf:
+         aux-bus: false
+         reg:
+           minItems: 5
++          maxItems: 7
+       required:
+         - "#sound-dai-cells"
+ 
+@@ -175,7 +178,9 @@ examples:
+               <0xae90200 0x200>,
+               <0xae90400 0xc00>,
+               <0xae91000 0x400>,
+-              <0xae91400 0x400>;
++              <0xae91400 0x400>,
++              <0xaed1000 0x174>,
++              <0xaee1000 0x2c>;
+         interrupt-parent = <&mdss>;
+         interrupts = <12>;
+         clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+-- 
+2.40.0.348.gf938b09366-goog
+
