@@ -2,106 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96D726C8130
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 16:28:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B50646C814D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 16:35:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231580AbjCXP2k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 11:28:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57962 "EHLO
+        id S231839AbjCXPfS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 11:35:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229540AbjCXP2j (ORCPT
+        with ESMTP id S232520AbjCXPe6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 11:28:39 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14C071DB8E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 08:28:35 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id m2so2213476wrh.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 08:28:35 -0700 (PDT)
+        Fri, 24 Mar 2023 11:34:58 -0400
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95A821EBC6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 08:34:52 -0700 (PDT)
+Received: by mail-qt1-x835.google.com with SMTP id bz27so1816622qtb.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 08:34:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679671713;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=z5srmsqlcg8umGs3LaBjmV1e0O8IUDxrHiOdqEkIUYo=;
-        b=nMIleCic/HqZvdIypobaa4t1WzWsIZbJLdfTm3ah+ecMDjnVLrBn7Q8cjjN2fS7bJO
-         ciYaGkVKQmE0BWacHDM0FoCGCjPUxoLahumNWgIA4marRdfNfykDTsma+m/3pmUBe2YC
-         RCBEziGrtnyrBbFSl/e6ZTrKS7MuJpLcWUvbS7q4HG+T8tjWljktWAj1PSKbvZm8f403
-         G1Xdal3l2fAkA48WHQxG9JFHW5xgk6EjnvKcRFHL9VrnvoYpG2Ut93xrbKN9kecf8jL3
-         7mmg8cT1J67uKWLj3niaZNrkYonLVewzhAnJzHg4koA5ivLk0dXXby+6DiMRi2TbGw4q
-         cYPg==
+        d=ndufresne-ca.20210112.gappssmtp.com; s=20210112; t=1679672091;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=7FyBbkUlSzWUDUg7FSl6pltsSXVFIHYA7e4KXdYYzK0=;
+        b=MeRC33lk6v1nX1CaLMpuOD7McLymhdBaxID6EIllMJ/odTnOgZ3Ls7Ufy+LF90tZc3
+         Rukbh2vhZd09yzD7IbWoKlFToE7vKOFmwn1MlDeyeK2QwZRl3EaVkSQlWGqiEQlqMsp7
+         +9v2PHmuFRGG9NieLrA0J6+yO3Y+KmaQ1RDeU1+L6KYByp+SPGdB4x5pwH1MnsWM0ylM
+         u8RqbExRZdZwI4k+Yxkf1E1Ncu/Jj4EjQsyS+95WiNCaJHSGdxvcEnqY5rb+M9AJs79D
+         Hq3hRsBDyx/SQLzfVXCtTwZyf2mN6bBbx9A8WJIWFxsqFrARC4TK+bTN+cXf/4XHlGwY
+         bS8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679671713;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z5srmsqlcg8umGs3LaBjmV1e0O8IUDxrHiOdqEkIUYo=;
-        b=WfSNOKB7M/dg8SvF9Bj20xK67wpdEI93AKVEA76b9Z6l8rBFRBUTYMzWKMa1SL6XdO
-         2owqKtR93hSuN6btkP/ryHSP7I9wQtPgGbPYOP79pTQUrk6G7HNdDQxLvABGnn6t9Wbe
-         e1sDqSQS1OPDS8lPRT153qPiJ1SacNnMKfOmKh3pIk/i2VHDi5XuHOSFtDOU01Wkx6a1
-         h2xEYNEcm0c1iNcqBwtqd0BCN9SMPaSLv955j+eowY+LLpsuiC2wpkeIQFCbWGqLxVrf
-         5sfHPvV+4FBNIi7r6J419ka3OYFHoethXbrlH6tO+L2/tu/Sh9/iU4z1SzFuxjWDAvNp
-         eHbw==
-X-Gm-Message-State: AAQBX9d6F11uidfy9I+ZGScXfsTfTHJUbrGJHBld1vC+/KPqlS7mwdef
-        gPMFtcXb/6ZE9kXyvd6yt31ZNA==
-X-Google-Smtp-Source: AKy350byfti3VnOwNReDw3ErCqUryyx858RfEMp/sZR16Or3efO3Wii8+6MRE3pOPQQQHgfRJz8aXQ==
-X-Received: by 2002:adf:f6c9:0:b0:2c7:161e:702f with SMTP id y9-20020adff6c9000000b002c7161e702fmr2637724wrp.47.1679671713572;
-        Fri, 24 Mar 2023 08:28:33 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id f24-20020a7bc8d8000000b003eb596cbc54sm5263343wml.0.2023.03.24.08.28.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Mar 2023 08:28:33 -0700 (PDT)
-Message-ID: <9c541f81-8501-a142-1df8-6e71509c0d88@linaro.org>
-Date:   Fri, 24 Mar 2023 15:28:32 +0000
+        d=1e100.net; s=20210112; t=1679672091;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7FyBbkUlSzWUDUg7FSl6pltsSXVFIHYA7e4KXdYYzK0=;
+        b=lnr3UAJ9H1uugaeWJR8dGazDNCVYDeB1kKvu8oHElUDRG2Ls6B0UyHa8wnTiR/LqOT
+         UVLXvwgakOiqfvLR+hjsV6ItuwXL/ju0ozz4igihmEFq33m6BLeT3wIMKyb4PPvbZd+C
+         vagXDCwrs3ZgkKbw1/Jjr71rzwd5Cqa+xZEqM/7HzxL8cNLuS2PT7e23L4EKs91hko86
+         UWBGMtP2CUjGhwBIcFEXfP8SByQ9ZO/9XWQ4DATmY9EPIcmO8xKL9A2ljer+lxKzih2d
+         BtW4VRcxaWWq02Ul3Zq/d+oo9c3mFEuLS9uLqHUp7u0VKJi5SWUOCDooukOMdtwVO3vV
+         yz4g==
+X-Gm-Message-State: AO0yUKUE6OMw+SFNm8jyACO3jj9XghrBlBqwRa2K53AB3UVIdDIvF0+H
+        r25D/42eLv7DX+8G7iw4O8mpIg==
+X-Google-Smtp-Source: AK7set/k7jemVRQn2HhZJ/81On3zU02ry4zvQi9KTc7/Sa7tSuj5SNuZNPCX6T0rkNYDxGsmo9XXJQ==
+X-Received: by 2002:ac8:5f0b:0:b0:3e1:c341:f618 with SMTP id x11-20020ac85f0b000000b003e1c341f618mr5351655qta.65.1679672091486;
+        Fri, 24 Mar 2023 08:34:51 -0700 (PDT)
+Received: from nicolas-tpx395.localdomain (192-222-136-102.qc.cable.ebox.net. [192.222.136.102])
+        by smtp.gmail.com with ESMTPSA id h26-20020ac846da000000b003bfb5fd72a7sm12745420qto.86.2023.03.24.08.34.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Mar 2023 08:34:51 -0700 (PDT)
+Message-ID: <6f2979d33526e5ccdc32cf096415d8309fc91d3d.camel@ndufresne.ca>
+Subject: Re: [RFC 2/4] media: videobuf2: Replace bufs array by a list
+From:   Nicolas Dufresne <nicolas@ndufresne.ca>
+To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc:     David Laight <David.Laight@ACULAB.COM>,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        "tfiga@chromium.org" <tfiga@chromium.org>,
+        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
+        "mchehab@kernel.org" <mchehab@kernel.org>,
+        "ming.qian@nxp.com" <ming.qian@nxp.com>,
+        "shijie.qin@nxp.com" <shijie.qin@nxp.com>,
+        "eagle.zhou@nxp.com" <eagle.zhou@nxp.com>,
+        "bin.liu@mediatek.com" <bin.liu@mediatek.com>,
+        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+        "angelogioacchino.delregno@collabora.com" 
+        <angelogioacchino.delregno@collabora.com>,
+        "tiffany.lin@mediatek.com" <tiffany.lin@mediatek.com>,
+        "andrew-ct.chen@mediatek.com" <andrew-ct.chen@mediatek.com>,
+        "yunfei.dong@mediatek.com" <yunfei.dong@mediatek.com>,
+        "stanimir.k.varbanov@gmail.com" <stanimir.k.varbanov@gmail.com>,
+        "quic_vgarodia@quicinc.com" <quic_vgarodia@quicinc.com>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "andersson@kernel.org" <andersson@kernel.org>,
+        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
+        "ezequiel@vanguardiasur.com.ar" <ezequiel@vanguardiasur.com.ar>,
+        "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
+        "daniel.almeida@collabora.com" <daniel.almeida@collabora.com>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-mediatek@lists.infradead.org" 
+        <linux-mediatek@lists.infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-rockchip@lists.infradead.org" 
+        <linux-rockchip@lists.infradead.org>,
+        "kernel@collabora.com" <kernel@collabora.com>
+Date:   Fri, 24 Mar 2023 11:34:48 -0400
+In-Reply-To: <68ba7b3f-57f5-3969-5036-2c8d08273548@xs4all.nl>
+References: <20230313135916.862852-1-benjamin.gaignard@collabora.com>
+         <20230313135916.862852-3-benjamin.gaignard@collabora.com>
+         <20230313181155.GC22646@pendragon.ideasonboard.com>
+         <86df05244d974416903e919d387a0a0b@AcuMS.aculab.com>
+         <e704b505-86d8-c6f2-8546-adccdab72622@xs4all.nl>
+         <dc04d48e34ed40e58f43badd001a81d0@AcuMS.aculab.com>
+         <cbf34cf1-e065-8136-8344-89ca1864f637@xs4all.nl>
+         <20230319233358.GD20234@pendragon.ideasonboard.com>
+         <f085aa9225c573df906bdc7ff032a8fd591b18b3.camel@ndufresne.ca>
+         <20230322150153.GO20234@pendragon.ideasonboard.com>
+         <2d6480e36ce061a63440d1e11d52b02e57ba746d.camel@ndufresne.ca>
+         <68ba7b3f-57f5-3969-5036-2c8d08273548@xs4all.nl>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4 (3.46.4-1.fc37) 
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v4 00/18] Add Qualcomm PMIC TPCM support
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>, linux@roeck-us.net,
-        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     wcheng@codeaurora.org, caleb.connolly@linaro.org,
-        konrad.dybcio@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
-        robertom@qti.qualcomm.com, lujianhua000@gmail.com
-References: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
- <CREPJP5KTX2D.VCM8IIZIP1ZT@otso>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <CREPJP5KTX2D.VCM8IIZIP1ZT@otso>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/03/2023 15:10, Luca Weiss wrote:
-> When plugging in the device with TCPM on into my PC (peripheral mode)
-> then the USB device registers and unregisters every couple of seconds,
-> never stays stable on. No messages in dmesg when this happens. This only
-> happens with the USB-C plug in one direction, in the other it
-> works reliable.
+Le vendredi 24 mars 2023 =C3=A0 16:18 +0100, Hans Verkuil a =C3=A9crit=C2=
+=A0:
+> On 24/03/2023 16:14, Nicolas Dufresne wrote:
+> > Le mercredi 22 mars 2023 =C3=A0 17:01 +0200, Laurent Pinchart a =C3=A9c=
+rit=C2=A0:
+> > > On Wed, Mar 22, 2023 at 10:50:52AM -0400, Nicolas Dufresne wrote:
+> > > > Hi Laurent,
+> > > >=20
+> > > > Le lundi 20 mars 2023 =C3=A0 01:33 +0200, Laurent Pinchart a =C3=A9=
+crit=C2=A0:
+> > > > > > The typical usage is that applications allocate N buffers with =
+the
+> > > > > > VIDIOC_REQBUFS ioctl, and in most cases that's all they use.
+> > > > >=20
+> > > > > Note that once we get DELETE_BUF (or DELETE_BUFS) support I'd lik=
+e to
+> > > > > encourage applications to use the new API, and deprecate REQBUFS
+> > > > > (dropping it isn't on my radar, as it would take forever before n=
+o
+> > > > > userspace uses it anymore).
+> > > >=20
+> > > > I was wondering if you can extend on this. I'm worried the count se=
+mantic might
+> > > > prevent emulating it over create_bufs() ops, but if that works, did=
+ you meant to
+> > > > emulate it so driver no longer have to implement reqbufs() if they =
+have
+> > > > create_bufs() ?
+> > >=20
+> > > For drivers it should be fairly simply, as the reqbufs and create_buf=
+s
+> > > ioctl handlers should just point to the corresponding videobuf2 helpe=
+rs.
+> > >=20
+> > > What I meant is that I'd like to encourage userspace to use the
+> > > VIDIOC_CREATE_BUFS ioctl instead of VIDIOC_REQBUFS.
+> > >=20
+> >=20
+> > I'm not sure what rationale I can give implementer to "encourage" them =
+to use a
+> > more complex API that needs to copy over the FMT (which has just been s=
+et),
+> > specially in the initial pre-allocation case. For most, CREATE_BUFS aft=
+er SMT
+> > will look like a very redundant and counter intuitive thing. Maybe you =
+have a
+> > more optimistic view on the matter ? Or you have a better idea how we c=
+ould give
+> > a meaning to having a fmt there on the initial case where the allocatio=
+n matches
+> > the queue FMT ?
+>=20
+> I wouldn't mind if we can make a much nicer CREATE_BUFS variant with just=
+ the
+> size instead of a format. That was in hindsight a really bad idea, terrib=
+le
+> over-engineering.
 
-Sounds like we need to do some SoC specific debug on orientation 
-switching in the PHY.
+Note that all DRM allocators also includes width/height and some format rel=
+ated
+info (or the full info). This is because the driver deals with the alignmen=
+t
+requirements. In some use cases (I have inter frame dynamic control in mind
+here) the fmt could be a mean to feedback the alignment (like bytesperline)=
+ back
+to the application where the stream is no longer homogeneous on the FMT.
 
-I wonder how many lanes dp_opts->lanes says for your part ?
+That being said, If we move toward a size base allocator API, we could also=
+ just
+point back to an existing HEAP (or export an new heap if none are valid). A=
+nd
+define the sizeimage(s) is now that information you need from the FMT to
+allocate anything + which heap needs to be used for the current setup.
 
-Also potentially not having "orientation-switch" in &usb_1_qmpphy{} but, 
-I think we discussed that before.
+Nicolas
 
-So either
+>=20
+> Regards,
+>=20
+> 	Hans
 
-- PHY orientation turn-around isn't working or
-- DTS orientation-switch isn't happening
-
-for you
-
----
-bod
