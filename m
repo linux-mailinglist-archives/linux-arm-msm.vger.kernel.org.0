@@ -2,58 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 863186C79D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 09:31:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C83096C7A05
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 09:41:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231273AbjCXIbs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 04:31:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50496 "EHLO
+        id S229734AbjCXIle (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 04:41:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230157AbjCXIbr (ORCPT
+        with ESMTP id S229908AbjCXIld (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 04:31:47 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29E5B1499C;
-        Fri, 24 Mar 2023 01:31:45 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id DD52DB822DC;
-        Fri, 24 Mar 2023 08:31:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069FAC433D2;
-        Fri, 24 Mar 2023 08:31:36 +0000 (UTC)
-Message-ID: <b0018f7b-0556-0ac1-d2fa-89787a27fba1@xs4all.nl>
-Date:   Fri, 24 Mar 2023 09:31:35 +0100
+        Fri, 24 Mar 2023 04:41:33 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78DE52597B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 01:41:31 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id i5so5077405eda.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 01:41:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679647290;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qKxYNXZ9eHTtJMVzM82IFy1ZfYeyHo24UX4/jj8J0vg=;
+        b=kk5HtABnn5CNziEd/v+xSZlemVkOLRPoG6I2hvVCXKOXwnkXJPXcUb0Ve7gBTCcfRJ
+         7xrAPksf0pAY1yRhsrtiq589Lf8myv2QtpFWIytfC8j1nmsQsCh9pT4f6PjVs1C547nx
+         GO/tL4XEzbeWHEj1NmtSTPEW13+croi5sgRokLh3/evQnhhD6KbqOH9mM9SJoKHymp0v
+         GhWh6CKtzqT/tQjLDQerKcrznVZzvwQR9XtJPL6H/FyK6GwMKt8imm5MCrrRSZehTwK+
+         MSi/hsYRjiBULZhNJ8rm52md2WJawZPgfEQAG89XJIYRITGj2sGDTbau/tkAwE5Uddj1
+         DFUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679647290;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qKxYNXZ9eHTtJMVzM82IFy1ZfYeyHo24UX4/jj8J0vg=;
+        b=xikS4ERa+S9TvmVzfvCFWcEI94yahj3qIJkCQWIXoI6ImJzpD00HY15Dv7dmcifENq
+         n+HGjj9dp51Iu04JyVKszWOxmJnuvBMYE32OdupbbHObpoQ8qfIr6fLD0CCQa4Nahu6U
+         HRM93J7PjEKwbu0+TvdquBfi5t9ta7RPbarHn9epd/I6FcPTTFvfOP0PbyEUYJkplBqr
+         ioV+3g0YjPWYTfYZ97y4pVEsENPsdIlKykHMXPL4Gx758l4LyvpZzgQDg7SRI9UlnSjZ
+         C3l1VLXc5s57rXLAhAJVeF5Vc0dDX20mOTOIBQGz1jHM/tsdcIsnNay8CUEEKrVbABH9
+         M8ng==
+X-Gm-Message-State: AAQBX9dZo7dSnCN6jyfMrq9+/+MgpPvfZleIs0lZOKDxz9SbJ0yIu80e
+        tKKjZtMjc0HTgq0xcc/gOttjAg==
+X-Google-Smtp-Source: AKy350ai1hGJUdWv5AuStbzO8s918lkqS+DUjEbLx6cM/VEYzEvuynYhgcBLqUsfPvWFwGGEarki4Q==
+X-Received: by 2002:a17:907:3fa3:b0:93d:425a:b935 with SMTP id hr35-20020a1709073fa300b0093d425ab935mr2493419ejc.25.1679647289984;
+        Fri, 24 Mar 2023 01:41:29 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:ce50:243f:54cc:5373])
+        by smtp.gmail.com with ESMTPSA id o12-20020a170906358c00b0093b6d1db84asm3552002ejb.120.2023.03.24.01.41.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Mar 2023 01:41:29 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] dt-bindings: pinctrl: qcom,sm8550-lpass-lpi: allow input-enabled and bias-bus-hold
+Date:   Fri, 24 Mar 2023 09:41:27 +0100
+Message-Id: <20230324084127.29362-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 2/8] media: videobuf2: Make bufs array dynamic
- allocated
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        Dan Carpenter <error27@gmail.com>, oe-kbuild@lists.linux.dev,
-        tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
-        ming.qian@nxp.com, shijie.qin@nxp.com, eagle.zhou@nxp.com,
-        bin.liu@mediatek.com, matthias.bgg@gmail.com,
-        angelogioacchino.delregno@collabora.com, tiffany.lin@mediatek.com,
-        andrew-ct.chen@mediatek.com, yunfei.dong@mediatek.com,
-        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
-        daniel.almeida@collabora.com, laurent.pinchart@ideasonboard.com
-Cc:     lkp@intel.com, oe-kbuild-all@lists.linux.dev,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, kernel@collabora.com
-References: <4e2cb832-de83-4ba6-bd8a-119a19038cfe@kili.mountain>
- <a88b93cc-a81f-6186-09fc-02223867e677@collabora.com>
-Content-Language: en-US
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <a88b93cc-a81f-6186-09fc-02223867e677@collabora.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,81 +75,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/03/2023 09:11, Benjamin Gaignard wrote:
-> 
-> Le 24/03/2023 à 06:01, Dan Carpenter a écrit :
->> Hi Benjamin,
->>
->> https://git-scm.com/docs/git-format-patch#_base_tree_information]
->>
->> url:    https://github.com/intel-lab-lkp/linux/commits/Benjamin-Gaignard/media-videobuf2-Access-vb2_queue-bufs-array-through-helper-functions/20230321-183154
->> base:   git://linuxtv.org/media_tree.git master
->> patch link:    https://lore.kernel.org/r/20230321102855.346732-3-benjamin.gaignard%40collabora.com
->> patch subject: [PATCH v2 2/8] media: videobuf2: Make bufs array dynamic allocated
->> config: arm64-randconfig-m041-20230319 (https://download.01.org/0day-ci/archive/20230324/202303240148.lKRnUqW9-lkp@intel.com/config)
->> compiler: aarch64-linux-gcc (GCC) 12.1.0
->>
->> If you fix the issue, kindly add following tag where applicable
->> | Reported-by: kernel test robot <lkp@intel.com>
->> | Reported-by: Dan Carpenter <error27@gmail.com>
->> | Link: https://lore.kernel.org/r/202303240148.lKRnUqW9-lkp@intel.com/
->>
->> smatch warnings:
->> include/media/videobuf2-core.h:1272 vb2_queue_add_buffer() warn: sleeping in atomic context
->> drivers/media/common/videobuf2/videobuf2-core.c:2456 vb2_core_queue_init() warn: Please consider using kcalloc instead of kmalloc_array
->>
->> vim +1272 include/media/videobuf2-core.h
->>
->> 625d46c1c1fe8e Benjamin Gaignard 2023-03-21  1263  static inline bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb)
->> 625d46c1c1fe8e Benjamin Gaignard 2023-03-21  1264  {
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1265      bool ret = false;
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1266
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1267      spin_lock(&q->bufs_lock);
->>                                                          ^^^^^^^^^^^^^^^^^^^^^^^
->> Holding a spin lock.
->>
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1268
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1269      if (vb->index >= q->max_num_bufs) {
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1270          struct vb2_buffer **tmp;
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1271
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21 @1272          tmp = krealloc_array(q->bufs, q->max_num_bufs * 2, sizeof(*q->bufs), GFP_KERNEL);
->>                                                                                                                                       ^^^^^^^^^^
->> Sleeping allocation.  GFP_ATOMIC?  Or is there a way to move the
->> allocation outside the lock?
-> 
-> I will add GFP_ATOMIC flag in next version.
+Add missing common pin configuration properties: input-enabled and
+bias-bus-hold.
 
-No need. Instead, don't use realloc here, just allocate a new array, copy over all
-the data from the old, and then switch q->bufs with the spinlock held. Then you
-can free the old one.
+Fixes: 268e97ccc311 ("dt-bindings: pinctrl: qcom,sm8550-lpass-lpi-pinctrl: add SM8550 LPASS")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-It's only when you update q->bufs that you need the lock.
+---
 
-Regards,
+Linus, please take it directly.
+---
+ .../bindings/pinctrl/qcom,sm8550-lpass-lpi-pinctrl.yaml         | 2 ++
+ 1 file changed, 2 insertions(+)
 
-	Hans
-
-> 
-> Thanks for your help,
-> Benjamin
-> 
->>
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1273          if (!tmp)
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1274              goto realloc_failed;
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1275
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1276          q->max_num_bufs *= 2;
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1277          q->bufs = tmp;
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1278      }
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1279
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1280      if (vb->index < q->max_num_bufs) {
->> 625d46c1c1fe8e Benjamin Gaignard 2023-03-21  1281          q->bufs[vb->index] = vb;
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1282          ret = true;
->> 625d46c1c1fe8e Benjamin Gaignard 2023-03-21  1283      }
->> 625d46c1c1fe8e Benjamin Gaignard 2023-03-21  1284
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1285  realloc_failed:
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1286      spin_unlock(&q->bufs_lock);
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1287
->> 487d3f14d12ecf Benjamin Gaignard 2023-03-21  1288      return ret;
->> 625d46c1c1fe8e Benjamin Gaignard 2023-03-21  1289  }
->>
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8550-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8550-lpass-lpi-pinctrl.yaml
+index 691bf60abb8c..ef9743246849 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,sm8550-lpass-lpi-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8550-lpass-lpi-pinctrl.yaml
+@@ -96,9 +96,11 @@ $defs:
+           2: Lower Slew rate (slower edges)
+           3: Reserved (No adjustments)
+ 
++      bias-bus-hold: true
+       bias-pull-down: true
+       bias-pull-up: true
+       bias-disable: true
++      input-enable: true
+       output-high: true
+       output-low: true
+ 
+-- 
+2.34.1
 
