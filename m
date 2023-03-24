@@ -2,106 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 698DB6C8211
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 17:03:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC03B6C822D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 17:13:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231667AbjCXQDU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 12:03:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60400 "EHLO
+        id S229579AbjCXQNY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 12:13:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbjCXQDT (ORCPT
+        with ESMTP id S229441AbjCXQNX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 12:03:19 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C10B46AF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 09:03:18 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id r29so2306925wra.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 09:03:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679673796;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JejaCk6CyWSfdiQWhxpThu9OY9rNIrf2KzDX35z5Uyc=;
-        b=CnpTk8DJ0VZi6Qona+U0/XQDLXLLxcDigVDczGvL4PJf7hV1VMJoVaBs+wEdJLLWbv
-         rdS+AbWELW/LnNtzxHpq7PVSAU1YGmdGkkK3CvT+WdZ4xHmvGa8i7HWKGTAnMiS04uxO
-         kZb06EhuXvvKWDQeOFM2jrfdhA7IIWJmzyE4xhy21X3KklzgKxDbI9faeGyKfHWniXyd
-         oUAAlwZtFuQvDZV2WjHhkNFm28QfJLJlT4HmB7CEJGBcz1oEzUF6f/gcthitguW5NF+3
-         ZkviJKqi3YfsGCcwff3RoLKpYJneojzLxE7YfJCwmvK7nRThDl8NIWNvNR+fD33fPSuY
-         msmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679673796;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JejaCk6CyWSfdiQWhxpThu9OY9rNIrf2KzDX35z5Uyc=;
-        b=cniFDaQnVgYz8R6OH47WMQLj8hsyiX4qEDEOI40iRwDi11Vh2+wgjP2ODThQdk7zlh
-         1bkIXZR+w1EM7FGyWcIUTxFyVjDf5MKJZ6VXkIq18tiGtDQuAdUPYaywliadWBnm+s4u
-         uQERJoO+kubIS3Qo9wvlfF+wAn+62G++KXTPMKpjMTiP7+t/x1JL+PW+VkLV4ZyJb/Os
-         FPJ0Yd31LQqufh4VlAtIv6qI1qGdXF6aNjZ15oqRXItrBlKhm7NFBFrDAQL/4Hr9GVtt
-         ZoWDLPvfrUWN4ujDdBSH9UUD//f/sBR6lRKuPiuCIGp4+UJLORVz+wLd53Q7KAslx3gl
-         DLSg==
-X-Gm-Message-State: AAQBX9c+J/v+P3A/Ip5KV+cQY09RVYq3TdbAOn4+QvlUs6+tQ6wWSLlq
-        gmHa/jvhnQAHKY6LzaxMMnN3FQ==
-X-Google-Smtp-Source: AKy350YKmDxrUkZCYDWW3/RcuEzrMmBDH1zTRoX2kHjwHiAHKi9ulZM5d4yb8N1LUp7EwADLpgbt2w==
-X-Received: by 2002:adf:dbc5:0:b0:2d7:998c:5ad9 with SMTP id e5-20020adfdbc5000000b002d7998c5ad9mr2530229wrj.8.1679673796641;
-        Fri, 24 Mar 2023 09:03:16 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id m9-20020adffa09000000b002c70d97af78sm18781475wrr.85.2023.03.24.09.03.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Mar 2023 09:03:16 -0700 (PDT)
-Message-ID: <51c38884-fbbf-ae5e-781d-e32605f7ef5b@linaro.org>
-Date:   Fri, 24 Mar 2023 16:03:15 +0000
+        Fri, 24 Mar 2023 12:13:23 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D4F565BA;
+        Fri, 24 Mar 2023 09:13:21 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32OFsSFf020593;
+        Fri, 24 Mar 2023 16:13:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=Dak5fQL83ddtMorWQzb+nyjRnP7QPKmm1aK9TibiOds=;
+ b=B79NgJrmP6IchXQB3CSVuhlltoGY8v1G6pcTXyyxat5LILL9lw0cXq3sReTwsOkzCnqL
+ BdgN82qZSciUyeoly/Sbp9/GFQg7ok5LBsscZcX7/xX3lwhgqa8i6DRpYKVeXy5pVX7k
+ xde+AkdltuotkHw4epq2Q73hnyGgg4xTs+rElRyhYw+FgK5cboA3BxPjRnI7brNnURbF
+ 3lcJQl4xpkpoT9SThcVj28gBiQ+zOGOAd0p8q1XeP1A7iGu4xDm1aAHEplpelcm0d8W8
+ WeO8gnuyW9f2beZmt5fu7sFQvTkMnvDRm/JbjDAPBGzysOrhF+M3iq6nNSNhUn5o613H SA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3phev481wb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Mar 2023 16:13:17 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32OGDGVl031843
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Mar 2023 16:13:16 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Fri, 24 Mar 2023 09:13:16 -0700
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     <mani@kernel.org>
+CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>, <stable@vger.kernel.org>
+Subject: [PATCH v2] bus: mhi: host: Range check CHDBOFF and ERDBOFF
+Date:   Fri, 24 Mar 2023 10:13:04 -0600
+Message-ID: <1679674384-27209-1-git-send-email-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v4 12/18] usb: typec: qcom: Add Qualcomm PMIC TCPM support
-Content-Language: en-US
-To:     Jianhua Lu <lujianhua000@gmail.com>
-Cc:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
-        gregkh@linuxfoundation.org, andersson@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, wcheng@codeaurora.org,
-        caleb.connolly@linaro.org, konrad.dybcio@linaro.org,
-        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
-References: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
- <20230318121828.739424-13-bryan.odonoghue@linaro.org>
- <ZBxkB04KqY8WbeA1@Gentoo> <89bca327-a860-672c-b4ae-766698d38639@linaro.org>
- <ZBzyK0ILtUDr986r@Gentoo> <37d14447-0f10-be88-9cd9-8ebd30f1d006@linaro.org>
- <ZBz5OvauxQ2PWcHu@Gentoo> <40503ba8-7a38-0d1d-1d59-82101a0ce92e@linaro.org>
- <ZB14jJNUhHGBl7Az@Gentoo> <6bd08120-115e-5429-63da-32f8df52bc7f@linaro.org>
- <ZB29J/7LI4PREmn6@Gentoo>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <ZB29J/7LI4PREmn6@Gentoo>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ZjDPMGJx0U0YDY6wT8kJ7ZeYuhhFlbs3
+X-Proofpoint-GUID: ZjDPMGJx0U0YDY6wT8kJ7ZeYuhhFlbs3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-24_10,2023-03-24_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
+ phishscore=0 priorityscore=1501 mlxlogscore=999 bulkscore=0
+ impostorscore=0 lowpriorityscore=0 mlxscore=0 adultscore=0 spamscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303240128
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/03/2023 15:09, Jianhua Lu wrote:
-> I get schematics of same vendor's similar device, it shows usb vbus is
-> connected to charger pump. It can be the main reason that can't detect vbus, but
-> I don't know why type-c can work normally.
+If the value read from the CHDBOFF and ERDBOFF registers is outside the
+range of the MHI register space then an invalid address might be computed
+which later causes a kernel panic.  Range check the read value to prevent
+a crash due to bad data from the device.
 
-oki doki that all makes sense - the "charger pump" is supplying vbus 
-most likely - you can confirm or invalidate this theory by connecting a 
-1.0/2.0 device to your external hub - making sure it is unpowered.
-
-vbus *should* flow through the Type-C port into your external hub and 
-into the 1.0/2.0 device, irrespective of vcon
-
-Either way that's a 2x input on the VSafe5 - I'll downgrade this to a 
-dev_warn() or perhaps even a dev_dbg()
-
-thx
-
+Fixes: 6cd330ae76ff ("bus: mhi: core: Add support for ringing channel/event ring doorbells")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 ---
-bod
+
+v2:
+-CC stable
+-Use ERANGE for the error code
+
+ drivers/bus/mhi/host/init.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+index 3d779ee..b46a082 100644
+--- a/drivers/bus/mhi/host/init.c
++++ b/drivers/bus/mhi/host/init.c
+@@ -516,6 +516,12 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
+ 		return -EIO;
+ 	}
+ 
++	if (val >= mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB)) {
++		dev_err(dev, "CHDB offset: 0x%x is out of range: 0x%zx\n",
++			val, mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB));
++		return -ERANGE;
++	}
++
+ 	/* Setup wake db */
+ 	mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
+ 	mhi_cntrl->wake_set = false;
+@@ -532,6 +538,12 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
+ 		return -EIO;
+ 	}
+ 
++	if (val >= mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings)) {
++		dev_err(dev, "ERDB offset: 0x%x is out of range: 0x%zx\n",
++			val, mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings));
++		return -ERANGE;
++	}
++
+ 	/* Setup event db address for each ev_ring */
+ 	mhi_event = mhi_cntrl->mhi_event;
+ 	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, val += 8, mhi_event++) {
+-- 
+2.7.4
+
