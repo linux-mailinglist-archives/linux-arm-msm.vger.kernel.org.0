@@ -2,192 +2,432 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AD2A6C7F23
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 14:52:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D80F6C7F70
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 15:02:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229729AbjCXNwG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 09:52:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44824 "EHLO
+        id S232156AbjCXOCU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 10:02:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229600AbjCXNwF (ORCPT
+        with ESMTP id S231639AbjCXOB6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 09:52:05 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 052131ACD0;
-        Fri, 24 Mar 2023 06:52:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8D1A362AEA;
-        Fri, 24 Mar 2023 13:52:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6672C433EF;
-        Fri, 24 Mar 2023 13:52:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679665923;
-        bh=VFWAIb8kkILCZjlK61SwCOvFMSQhSfMr3UVPM0P/zus=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SXopr78XpZY1/cIa89tHN8Gw5yH20HpN0aGPkqKIPiD5moPjVY7lsN+q6BQMSKv3p
-         f8leXa+g9xPRdFusTlbRkvwcpWw/l5SO59+Irknegn5INhKKP9cHpbfrZgVomd0lp5
-         EuAIGxPDoIjTGC1iZkqgxL7XJwpHbtiJeqIMDuxVenqMjVCYWMm3inZ+7t4LHHki26
-         c8JhMhXxXeoLxq4VuHThegvMz4ZhQkRmKAusm6TeUThGpO1ARrsjnad5zKQ5pYcKUv
-         ty5+R6fd1wtKGF9kiU861dN59wUDWRUrlSxuP6pRCtXAlhE+C6eN6fnyGfiYYDlr9S
-         iFQsZr8SIpq5w==
-Date:   Fri, 24 Mar 2023 06:55:12 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-gpio@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 08/14] pinctrl: qcom: Support OUTPUT_ENABLE; deprecate
- INPUT_ENABLE
-Message-ID: <20230324135512.afplb6cbugwr63ej@ripper>
-References: <20230323173019.3706069-1-dianders@chromium.org>
- <20230323102605.8.Id740ae6a993f9313b58add6b10f6a92795d510d4@changeid>
+        Fri, 24 Mar 2023 10:01:58 -0400
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1A741C33D;
+        Fri, 24 Mar 2023 07:00:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1679666459; x=1711202459;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=UNIswqp/hiRdz1IdtfO1ox7oQ8yEEaV8sg9ndV70Or4=;
+  b=kv0Co58tP20drFofHduT0jEpUmxJn2nKhzzXObOpP5KffEiCop4NpU11
+   1p8QeGbhx0Lm6XSJvHrZwRfdig7yHHlFQMqdQTU8Dw/d9VsOUdwAQfxoy
+   20cfHNwZjvZSSxB4T9Mv+3zdiKv8bIY/I3xhYXikcRYPRIgy5egnKpJbj
+   Alp+wxngJa0sozjCFK6VS7jBq0XdjEqJoHfLDOVya/t1biGHHOlY1S64N
+   nHWZCD9zfRL5+V5RVTKZf8kCikRV/YwHp0kiRxNJkHPFla0wr/44bzBCE
+   bFRSFZb5mvDeUl8Ht4ThFjP3Q31bIF+b9T8L1lNWQqDeQvmwrYFtZID7V
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10659"; a="338501881"
+X-IronPort-AV: E=Sophos;i="5.98,288,1673942400"; 
+   d="scan'208";a="338501881"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Mar 2023 07:00:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10659"; a="826271802"
+X-IronPort-AV: E=Sophos;i="5.98,288,1673942400"; 
+   d="scan'208";a="826271802"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmsmga001.fm.intel.com with SMTP; 24 Mar 2023 07:00:39 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Fri, 24 Mar 2023 16:00:38 +0200
+Date:   Fri, 24 Mar 2023 16:00:38 +0200
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     linux@roeck-us.net, gregkh@linuxfoundation.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        wcheng@codeaurora.org, caleb.connolly@linaro.org,
+        konrad.dybcio@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
+        robertom@qti.qualcomm.com
+Subject: Re: [PATCH v4 12/18] usb: typec: qcom: Add Qualcomm PMIC TCPM support
+Message-ID: <ZB2tBkUY85yhzm67@kuha.fi.intel.com>
+References: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
+ <20230318121828.739424-13-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230323102605.8.Id740ae6a993f9313b58add6b10f6a92795d510d4@changeid>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <20230318121828.739424-13-bryan.odonoghue@linaro.org>
+X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 23, 2023 at 10:30:12AM -0700, Douglas Anderson wrote:
-> The Qualcomm pinctrl driver has been violating the documented meaning
-> of PIN_CONFIG_INPUT_ENABLE. That documentation says:
-> 
->   Note that this does not affect the pin's ability to drive output.
-> 
-> ...yet the Qualcomm driver's sole action when asked to "enable input"
-> on a pin is to disable its output.
-> 
+Hi Bryan,
 
-Seemed like a good idea at the time...
+On Sat, Mar 18, 2023 at 12:18:22PM +0000, Bryan O'Donoghue wrote:
+> This commit adds a QCOM PMIC TCPM driver with an initial pm8150b
+> block.
+> 
+> qcom_pmic_virt_tcpm.c : Responsible for registering with TCPM and
+>                         arbitrates access to the Type-C and PDPHY hardware
+>                         blocks in one place.
+>                         This driver presents a virtual device to the Linux
+>                         TCPM layer.
+> 
+> qcom_pmic_pdphy.c: Rsponsible for interfacing with the PDPHY hardware and
+>                    processing power-delivery related calls from TCPM.
+>                    This hardware binding can be extended to facilitate
+>                    similar hardware in different PMICs.
+> 
+> qcom_pmic_typec.c: Responsible for notifying and processing Type-C
+>                    related calls from TCPM.
+>                    This hardware binding can be extended to facilitate
+>                    similar hardware in different PMICs.
 
-> The Qualcomm driver's implementation stems from the fact that
-> "output-disable" is a "new" property from 2017. It was introduced in
-> commit 425562429d4f ("pinctrl: generic: Add output-enable
-> property"). The "input-enable" handling in Qualcomm drivers is from
-> 2015 introduced in commit 407f5e392f9c ("pinctrl: qcom: handle
-> input-enable pinconf property").
-> 
-> Let's change the Qualcomm driver to move us in the right direction. As
-> part of this:
-> 1. We'll now support PIN_CONFIG_OUTPUT_ENABLE
-> 2. We'll still support using PIN_CONFIG_INPUT_ENABLE to disable a
->    pin's output (in violation of the docs) with a big comment in the
->    code. This is needed because old device trees have "input-enable"
->    in them and, in some cases, people might need the old
->    behavior. While we could programmatically change all old device
->    trees, it doesn't really hurt to keep supporting the old behavior
->    and we're _supposed_ to try to be compatible with old device trees
->    anyway.
-> 
-> It can also be noted that the PIN_CONFIG_INPUT_ENABLE handling code
-> seems to have purposefully ignored its argument. That means that old
-> boards that had _either_ "input-disable" or "input-enable" in them
-> would have had the effect of disabling a pin's output. While we could
-> change this behavior, since we're only leaving the
-> PIN_CONFIG_INPUT_ENABLE there for backward compatibility we might as
-> well be fully backward compatible.
-> 
+I'm sorry I never asked this before, but is that virtual device really
+necessary? Couldn't you just merge that qcom_omic_virt_tcpm.c into
+qcom_pmic_typec.c?
 
-It made total sense to to spell input-disable as output-{high,low} back
-then, but we're wiser now. Thanks for fixing it.
+<snip>
 
-> NOTE: despite the fact that we'll still support
-> PIN_CONFIG_INPUT_ENABLE for _setting_ config, we take it away from
-> msm_config_group_get(). This appears to be only used for populating
-> debugfs and fixing debugfs to "output enabled" where relevant instead
-> of "input enabled" makes more sense and has more truthiness.
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_virt_tcpm.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_virt_tcpm.c
+> new file mode 100644
+> index 0000000000000..91544b4b59439
+> --- /dev/null
+> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_virt_tcpm.c
+> @@ -0,0 +1,326 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2023, Linaro Ltd. All rights reserved.
+> + */
+> +
+> +#include <linux/err.h>
+> +#include <linux/interrupt.h>
+> +#include <linux/kernel.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/of_graph.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/regulator/consumer.h>
+> +#include <linux/slab.h>
+> +#include <linux/usb/role.h>
+> +#include <linux/usb/tcpm.h>
+> +#include <linux/usb/typec_mux.h>
+> +#include "qcom_pmic_pdphy.h"
+> +#include "qcom_pmic_typec.h"
+> +
+> +struct pmic_virt_tcpm {
+> +	struct device		*dev;
+> +	struct pmic_typec	*pmic_typec;
+> +	struct pmic_pdphy	*pmic_pdphy;
+> +	struct tcpm_port	*tcpm_port;
+> +	struct tcpc_dev		tcpc;
+> +	bool			vbus_enabled;
+> +	struct mutex		lock;		/* VBUS state serialization */
+> +};
+> +
+> +#define tcpc_to_tcpm(_tcpc_) container_of(_tcpc_, struct pmic_virt_tcpm, tcpc)
+> +
+> +static int qcom_pmic_virt_tcpm_get_vbus(struct tcpc_dev *tcpc)
+> +{
+> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
+> +	int ret;
+> +
+> +	mutex_lock(&tcpm->lock);
+> +	ret = tcpm->vbus_enabled || qcom_pmic_typec_get_vbus(tcpm->pmic_typec);
+> +	mutex_unlock(&tcpm->lock);
+> +
+> +	return ret;
+> +}
+> +
+> +static int qcom_pmic_virt_tcpm_set_vbus(struct tcpc_dev *tcpc, bool on,
+> +					bool sink)
+> +{
+> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
+> +	int ret = 0;
+> +
+> +	mutex_lock(&tcpm->lock);
+> +	if (tcpm->vbus_enabled == on)
+> +		goto done;
+> +
+> +	ret = qcom_pmic_typec_set_vbus(tcpm->pmic_typec, on);
+> +	if (ret)
+> +		goto done;
+> +
+> +	tcpm->vbus_enabled = on;
+> +	tcpm_vbus_change(tcpm->tcpm_port);
+> +
+> +done:
+> +	dev_dbg(tcpm->dev, "set_vbus set: %d result %d\n", on, ret);
+> +	mutex_unlock(&tcpm->lock);
+> +
+> +	return ret;
+> +}
+> +
+> +static int qcom_pmic_virt_tcpm_set_vconn(struct tcpc_dev *tcpc, bool on)
+> +{
+> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
+> +
+> +	return qcom_pmic_typec_set_vconn(tcpm->pmic_typec, on);
+> +}
+> +
+> +static int qcom_pmic_virt_tcpm_get_cc(struct tcpc_dev *tcpc,
+> +				      enum typec_cc_status *cc1,
+> +				      enum typec_cc_status *cc2)
+> +{
+> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
+> +
+> +	return qcom_pmic_typec_get_cc(tcpm->pmic_typec, cc1, cc2);
+> +}
+> +
+> +static int qcom_pmic_virt_tcpm_set_cc(struct tcpc_dev *tcpc,
+> +				      enum typec_cc_status cc)
+> +{
+> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
+> +
+> +	return qcom_pmic_typec_set_cc(tcpm->pmic_typec, cc);
+> +}
+> +
+> +static int qcom_pmic_virt_tcpm_set_polarity(struct tcpc_dev *tcpc,
+> +					    enum typec_cc_polarity pol)
+> +{
+> +	/* Polarity is set separately by phy-qcom-qmp.c */
+> +	return 0;
+> +}
+> +
+> +static int qcom_pmic_virt_tcpm_start_toggling(struct tcpc_dev *tcpc,
+> +					      enum typec_port_type port_type,
+> +					      enum typec_cc_status cc)
+> +{
+> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
+> +
+> +	return qcom_pmic_typec_start_toggling(tcpm->pmic_typec, port_type, cc);
+> +}
+> +
+> +static int qcom_pmic_virt_tcpm_set_roles(struct tcpc_dev *tcpc, bool attached,
+> +					 enum typec_role power_role,
+> +					 enum typec_data_role data_role)
+> +{
+> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
+> +
+> +	return qcom_pmic_pdphy_set_roles(tcpm->pmic_pdphy, data_role,
+> +					 power_role);
+> +}
+> +
+> +static int qcom_pmic_virt_tcpm_set_pd_rx(struct tcpc_dev *tcpc, bool on)
+> +{
+> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
+> +
+> +	return qcom_pmic_pdphy_set_pd_rx(tcpm->pmic_pdphy, on);
+> +}
+> +
+> +static int qcom_pmic_virt_tcpm_pd_transmit(struct tcpc_dev *tcpc,
+> +					   enum tcpm_transmit_type type,
+> +					   const struct pd_message *msg,
+> +					   unsigned int negotiated_rev)
+> +{
+> +	struct pmic_virt_tcpm *tcpm = tcpc_to_tcpm(tcpc);
+> +
+> +	return qcom_pmic_pdphy_pd_transmit(tcpm->pmic_pdphy, type, msg,
+> +					   negotiated_rev);
+> +}
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+So this driver is clearly the aggregate, and the typec device and the
+pdphy device are the components. Have you considered the component
+framework (drivers/base/component.c)?
 
-Regards,
-Bjorn
+I think you could use it to simplify these drivers a bit. You probable
+would not need to expose all those functions in each driver separately
+like you do now, and the above functions you would not need at all.
+Instead you could just share (in this case) instance of your struct
+pmic_virt_tcpm with the components when they are bind and just expect
+them to fill the tcpm callbacks that they are responsible of.
 
-> ---
-> 
->  drivers/pinctrl/qcom/pinctrl-msm.c | 36 +++++++++++++++++++++++++-----
->  1 file changed, 31 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> index daeb79a9a602..4515f375c5e8 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -323,6 +323,7 @@ static int msm_config_reg(struct msm_pinctrl *pctrl,
->  		break;
->  	case PIN_CONFIG_OUTPUT:
->  	case PIN_CONFIG_INPUT_ENABLE:
-> +	case PIN_CONFIG_OUTPUT_ENABLE:
->  		*bit = g->oe_bit;
->  		*mask = 1;
->  		break;
-> @@ -414,11 +415,9 @@ static int msm_config_group_get(struct pinctrl_dev *pctldev,
->  		val = msm_readl_io(pctrl, g);
->  		arg = !!(val & BIT(g->in_bit));
->  		break;
-> -	case PIN_CONFIG_INPUT_ENABLE:
-> -		/* Pin is output */
-> -		if (arg)
-> +	case PIN_CONFIG_OUTPUT_ENABLE:
-> +		if (!arg)
->  			return -EINVAL;
-> -		arg = 1;
->  		break;
->  	default:
->  		return -ENOTSUPP;
-> @@ -502,9 +501,36 @@ static int msm_config_group_set(struct pinctrl_dev *pctldev,
->  			arg = 1;
->  			break;
->  		case PIN_CONFIG_INPUT_ENABLE:
-> -			/* disable output */
-> +			/*
-> +			 * According to pinctrl documentation this should
-> +			 * actually be a no-op.
-> +			 *
-> +			 * The docs are explicit that "this does not affect
-> +			 * the pin's ability to drive output" but what we do
-> +			 * here is to modify the output enable bit. Thus, to
-> +			 * follow the docs we should remove that.
-> +			 *
-> +			 * The docs say that we should enable any relevant
-> +			 * input buffer, but TLMM there is no input buffer that
-> +			 * can be enabled/disabled. It's always on.
-> +			 *
-> +			 * The points above, explain why this _should_ be a
-> +			 * no-op. However, for historical reasons and to
-> +			 * support old device trees, we'll violate the docs
-> +			 * still affect the output.
-> +			 *
-> +			 * It should further be noted that this old historical
-> +			 * behavior actually overrides arg to 0. That means
-> +			 * that "input-enable" and "input-disable" in a device
-> +			 * tree would _both_ disable the output. We'll
-> +			 * continue to preserve this behavior as well since
-> +			 * we have no other use for this attribute.
-> +			 */
->  			arg = 0;
->  			break;
-> +		case PIN_CONFIG_OUTPUT_ENABLE:
-> +			arg = !!arg;
-> +			break;
->  		default:
->  			dev_err(pctrl->dev, "Unsupported config parameter: %x\n",
->  				param);
-> -- 
-> 2.40.0.348.gf938b09366-goog
-> 
+You also would not need to rely on things like probe deferring,
+because when the aggregate is bind you are guaranteed that all the
+components in it are ready. There are probable some other benefits in
+it as well.
+
+This is not a must, but I think worth taking a look.
+
+> +static struct platform_device
+> +*qcom_pmic_virt_tcpm_get_pdev(struct device *dev, const char *property_name)
+> +{
+> +	struct device_node *np;
+> +	struct platform_device *pdev;
+> +	const __be32 *prop;
+> +
+> +	prop = of_get_property(dev->of_node, property_name, NULL);
+> +	if (!prop) {
+> +		dev_err(dev, "required '%s' property missing\n", property_name);
+> +		return ERR_PTR(-EINVAL);
+> +	}
+> +
+> +	np = of_find_node_by_phandle(be32_to_cpup(prop));
+> +	if (!np) {
+> +		dev_err(dev, "could not find '%s' node\n", property_name);
+> +		return ERR_PTR(-ENODEV);
+> +	}
+> +
+> +	pdev = of_find_device_by_node(np);
+> +	of_node_put(np);
+> +
+> +	if (pdev)
+> +		return pdev;
+> +
+> +	return ERR_PTR(-ENODEV);
+> +}
+> +
+> +static int qcom_pmic_virt_tcpm_init(struct tcpc_dev *tcpc)
+> +{
+> +	return 0;
+> +}
+> +
+> +static int qcom_pmic_virt_tcpm_probe(struct platform_device *pdev)
+> +{
+> +	struct pmic_virt_tcpm *tcpm;
+> +	struct device *dev = &pdev->dev;
+> +	struct platform_device *typec_pdev;
+> +	struct platform_device *pdphy_pdev;
+> +	int ret;
+> +
+> +	tcpm = devm_kzalloc(dev, sizeof(*tcpm), GFP_KERNEL);
+> +	if (!tcpm)
+> +		return -ENOMEM;
+> +
+> +	tcpm->dev = dev;
+> +	tcpm->tcpc.init = qcom_pmic_virt_tcpm_init;
+> +	tcpm->tcpc.get_vbus = qcom_pmic_virt_tcpm_get_vbus;
+> +	tcpm->tcpc.set_vbus = qcom_pmic_virt_tcpm_set_vbus;
+> +	tcpm->tcpc.set_cc = qcom_pmic_virt_tcpm_set_cc;
+> +	tcpm->tcpc.get_cc = qcom_pmic_virt_tcpm_get_cc;
+> +	tcpm->tcpc.set_polarity = qcom_pmic_virt_tcpm_set_polarity;
+> +	tcpm->tcpc.set_vconn = qcom_pmic_virt_tcpm_set_vconn;
+> +	tcpm->tcpc.start_toggling = qcom_pmic_virt_tcpm_start_toggling;
+> +	tcpm->tcpc.set_pd_rx = qcom_pmic_virt_tcpm_set_pd_rx;
+> +	tcpm->tcpc.set_roles = qcom_pmic_virt_tcpm_set_roles;
+> +	tcpm->tcpc.pd_transmit = qcom_pmic_virt_tcpm_pd_transmit;
+> +
+> +	mutex_init(&tcpm->lock);
+> +	platform_set_drvdata(pdev, tcpm);
+> +
+> +	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
+> +	if (ret) {
+> +		dev_err(dev, "Populating child devices fail\n");
+> +		return ret;
+> +	};
+> +
+> +	typec_pdev = qcom_pmic_virt_tcpm_get_pdev(dev, "qcom,pmic-typec");
+> +	if (IS_ERR(typec_pdev)) {
+> +		dev_err(dev, "Error linking typec endpoint\n");
+> +		return PTR_ERR(typec_pdev);
+> +	}
+> +
+> +	tcpm->pmic_typec = platform_get_drvdata(typec_pdev);
+> +	if (!tcpm->pmic_typec) {
+> +		ret = -EPROBE_DEFER;
+> +		goto put_typec_pdev;
+> +	}
+> +
+> +	pdphy_pdev = qcom_pmic_virt_tcpm_get_pdev(dev, "qcom,pmic-pdphy");
+> +	if (IS_ERR(pdphy_pdev)) {
+> +		dev_err(dev, "Error linking pdphy endpoint\n");
+> +		ret = PTR_ERR(pdphy_pdev);
+> +		goto put_typec_pdev;
+> +	}
+> +
+> +	tcpm->pmic_pdphy = platform_get_drvdata(pdphy_pdev);
+> +	if (!tcpm->pmic_pdphy) {
+> +		ret = -EPROBE_DEFER;
+> +		goto put_pdphy_dev;
+> +	}
+> +
+> +	tcpm->tcpc.fwnode = device_get_named_child_node(tcpm->dev, "connector");
+> +	if (IS_ERR(tcpm->tcpc.fwnode))
+> +		return PTR_ERR(tcpm->tcpc.fwnode);
+> +
+> +	tcpm->tcpm_port = tcpm_register_port(tcpm->dev, &tcpm->tcpc);
+> +	if (IS_ERR(tcpm->tcpm_port)) {
+> +		ret = PTR_ERR(tcpm->tcpm_port);
+> +		goto fwnode_remove;
+> +	}
+> +
+> +	ret = qcom_pmic_pdphy_init(tcpm->pmic_pdphy, tcpm->tcpm_port);
+> +	if (ret)
+> +		goto fwnode_remove;
+> +
+> +	ret = qcom_pmic_typec_init(tcpm->pmic_typec, tcpm->tcpm_port);
+> +	if (ret)
+> +		goto fwnode_remove;
+> +
+> +	return 0;
+> +
+> +fwnode_remove:
+> +	fwnode_remove_software_node(tcpm->tcpc.fwnode);
+> +
+> +put_pdphy_dev:
+> +	put_device(&pdphy_pdev->dev);
+> +
+> +put_typec_pdev:
+> +	put_device(&typec_pdev->dev);
+> +
+> +	return ret;
+> +}
+> +
+> +static int qcom_pmic_virt_tcpm_remove(struct platform_device *pdev)
+> +{
+> +	struct pmic_virt_tcpm *tcpm = platform_get_drvdata(pdev);
+> +
+> +	tcpm_unregister_port(tcpm->tcpm_port);
+> +	fwnode_remove_software_node(tcpm->tcpc.fwnode);
+> +	qcom_pmic_pdphy_put(tcpm->pmic_pdphy);
+> +	qcom_pmic_typec_put(tcpm->pmic_typec);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id qcom_pmic_virt_tcpm_table[] = {
+> +	{ .compatible = "qcom,pmic-virt-tcpm" },
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, qcom_pmic_virt_tcpm_table);
+> +
+> +static struct platform_driver qcom_pmic_virt_tcpm_platform_driver = {
+> +	.driver = {
+> +		.name = "qcom,pmic-tcpm",
+> +		.of_match_table = qcom_pmic_virt_tcpm_table,
+> +	},
+> +	.probe = qcom_pmic_virt_tcpm_probe,
+> +	.remove = qcom_pmic_virt_tcpm_remove,
+> +};
+> +
+> +static int __init qcom_pmic_virt_tcpm_module_init(void)
+> +{
+> +	int ret;
+> +
+> +	ret = platform_driver_register(&qcom_pmic_typec_platform_driver);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = platform_driver_register(&qcom_pmic_pdphy_platform_driver);
+> +	if (ret)
+> +		goto unregister_typec;
+> +
+> +	ret = platform_driver_register(&qcom_pmic_virt_tcpm_platform_driver);
+> +	if (ret)
+> +		goto unregister_pdphy;
+> +
+> +	return 0;
+
+Why not just register each driver in their own init function?
+
+thanks,
+
+-- 
+heikki
