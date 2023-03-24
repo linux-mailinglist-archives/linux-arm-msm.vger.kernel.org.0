@@ -2,72 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BD9F6C790A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 08:38:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6D756C791C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 08:41:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231818AbjCXHil (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 03:38:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40526 "EHLO
+        id S231805AbjCXHln (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 03:41:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231773AbjCXHid (ORCPT
+        with ESMTP id S231311AbjCXHlj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 03:38:33 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1427646B6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 00:38:22 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id h8so4315689ede.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 00:38:22 -0700 (PDT)
+        Fri, 24 Mar 2023 03:41:39 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B74EA20A05
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 00:41:35 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id ek18so4375639edb.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 00:41:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679643500;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WZMi7sLdrM3/+emhhwm7I6CBclwb/X39tQ363y4/lo4=;
-        b=gvnoPVBeZOw7DEqPIZWPn+jVjwnuhu9c/4a9j4OsWMJktoqJhXfVE0Q91UlER8vlPp
-         bCVlX5inqzm+dWl33+CaeRkQt7iU7Kj4KVl3iaZVJsXTJ7Rq0LIAy5lxVAo6mkPxXxQd
-         A5TePjzwtILzPvlRPkxjdxee5r7Q9vrGjhby5hT41c39kztOlGq8dJWDhmZi0kCXgjMp
-         GA+1Awi5AEcrLk8Mx13bDQHmEouubi6tZjrIGHoS4lXJfxMPcWM7JgFUCj1vk4BMpYue
-         JnewLsA89XiHNMu/HDTW75hf9L2JyiVb5cDefsgD/KomLzfsoYEA77uOqLZwiTFc2V4V
-         OPkQ==
+        d=fairphone.com; s=fair; t=1679643694;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=X/XWx7YkBxGnboDoZgQ7k0nvdNbLK5mLNGMl2mAQck8=;
+        b=y8zuVgRuzHzC24+lgI2LUBOgkWYy3kb7SGkW+YrO4cBzYgZZcpDwDM+s4XIh5PbkGC
+         UFR+WYPQXxtOmIjjsQdikK2Q1c3n0Zh2q5c2LzvELoe0lKl0g+SIhcdSs0GLtgUT6b7M
+         vaebepD5WuWjd/kpStDB13QO9WVcXUjUTz2PyhDLjdyTt3Bz5HSvJHrW/kFetYgFbGtr
+         7WtyzQ+1UOwDlU72oZey1Obkk+4I+ZnbPjMLe0zxWnv58irb/eaj4hulf5roo08bxm+6
+         JV0YB9tPSP4Gpoan5jENIw40KuFAKrQRTB9xQgY0k2O6zAqhxzGPVJxRBGeafn/iFebG
+         QzLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679643500;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WZMi7sLdrM3/+emhhwm7I6CBclwb/X39tQ363y4/lo4=;
-        b=mINwTja81m3vkOV2Ax0kppWAMdgpb60DT/zOqDfCdCFPvqp+AI3Q0jQTcH8AXg6buv
-         LdMzl2ekXQaAufMC7SrPtd2BUH8m5Tcesa6GgFIRwEBvYima26zjPjES+1jCMZZ7Wg0+
-         LB1ThY4SYIkaUjFnKA8l3H7bISsethrqm94R1T5yXkYJvveMmdXEYddS9ydgfmn42EtK
-         YH4sTqVbUMWedijJ/vZ4lDBLsCvNoa7TQrG4vqkDA7I2q3nIVOO63l+YbEwW5pbe/Pit
-         h02chDgrmQz+qAJv2yutAqPQCJroGXXI5kfBUzJWwBPLT7VUx1BRdgWcWouP2ZuBe/op
-         yfxQ==
-X-Gm-Message-State: AAQBX9eGw8903ySIbGeD74q+rt767Ih+A22Y9f8D2jO6DfBkKQLNDlXP
-        DnywjAQKxd4RGsnrmTulOtfdU20aMeKZxmEhc8M=
-X-Google-Smtp-Source: AKy350bbRZyHEiuhazOXLX+kXjCrxVkzcm90HtTPEZQ4KX0VDn4TlNMk5TzJuO3ijn+jCQujDcuLoA==
-X-Received: by 2002:a17:906:a3ca:b0:926:e917:133c with SMTP id ca10-20020a170906a3ca00b00926e917133cmr1682953ejb.47.1679643500582;
-        Fri, 24 Mar 2023 00:38:20 -0700 (PDT)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:ce50:243f:54cc:5373])
-        by smtp.gmail.com with ESMTPSA id rh26-20020a17090720fa00b00930ba362216sm9970429ejb.176.2023.03.24.00.38.19
+        d=1e100.net; s=20210112; t=1679643694;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=X/XWx7YkBxGnboDoZgQ7k0nvdNbLK5mLNGMl2mAQck8=;
+        b=fQXx4P/x5ZlgvRGnwKakBJ0ikAz11dkegM+DbzIz8qAaD+j9AkLF4MhdLIc9Bsf9E7
+         GyCfEY2Y3s6Fm3wpLmPZ3NVpamFImeDovH2mECqtrjcUyvQA8xVoVLfSqQ/bfscS+DuS
+         K0+XhUqcapQnq1rAI3NTyzNpC5Snva8+ERgIQjDr/WUjDtVPRfVMtfZrZuvnf8V3w8xW
+         mCER6Cac7HwL9hTjXnVc6R6j85eTyVhbExfEmO7JXHwlXXwTBbxzmQfvscPmR1GGD+s1
+         YYGaX5TtnAOf3PB6Soko4uL9o3OC/MiK6P3LL8UqWUG/2P46zxZq7d3MH/Buf2qGmfW2
+         YTXQ==
+X-Gm-Message-State: AAQBX9dfAPPABPi+3JV0tOAvWFf28z9VxKJPJ/eJmTWQdhkNYtG0ish3
+        KmADb5Yjz/tXZo+GbmzFwOspvA==
+X-Google-Smtp-Source: AKy350Zow5T6QA/twFWOhVbkw0YON81CH4a5u2mrMAh8v5pAtniRwZgs0rK8eL9aW9GFlHa6vcrG2Q==
+X-Received: by 2002:aa7:c397:0:b0:4fe:e851:af4a with SMTP id k23-20020aa7c397000000b004fee851af4amr1753723edq.39.1679643694211;
+        Fri, 24 Mar 2023 00:41:34 -0700 (PDT)
+Received: from [192.168.0.29] (84-115-214-73.cable.dynamic.surfer.at. [84.115.214.73])
+        by smtp.gmail.com with ESMTPSA id d23-20020a50f697000000b004fd2a7aa1ecsm10271227edn.32.2023.03.24.00.41.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Mar 2023 00:38:20 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Fri, 24 Mar 2023 00:41:33 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v3 0/3] Fix some issues in QCOM UFS bindings
+Date:   Fri, 24 Mar 2023 08:41:27 +0100
+Message-Id: <20221209-dt-binding-ufs-v3-0-499dff23a03c@fairphone.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACdUHWQC/33NTQrCMBAF4KuUrB1Jx7YxrryHuEjz0wRqIkkbk
+ NK7O7gUdDXzBt43Gys2B1vYpdlYtjWUkCKF06Fh2qs4WQiGMkOO2CKXYBYYQzQhTrC6AmiEGzo
+ hhXPIqDSqYmHMKmpPtbjOMx19KEvKr8+T2tK4/fRqCxzOpufouG1puToV8tOnaI86PdiduIr/C
+ STCaKF4N0jZC/lN7Pv+BteJehP4AAAA
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6/6] arm64: dts: qcom: sc8280xp: drop incorrect domain idle states properties
-Date:   Fri, 24 Mar 2023 08:38:13 +0100
-Message-Id: <20230324073813.22158-6-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230324073813.22158-1-krzysztof.kozlowski@linaro.org>
-References: <20230324073813.22158-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Iskren Chernev <me@iskren.info>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Iskren Chernev <me@iskren.info>
+X-Mailer: b4 0.12.1
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -77,29 +87,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Domain idle states do not use 'idle-state-name':
-
-  sc8280xp-crd.dtb: domain-idle-states: cluster-sleep-0: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
-
-Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/all/20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-4-3ead1e418fe4@linaro.org/
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+Changes in v3:
+- Drop applied patch
+- Pick up sm6115 patch from v5 https://lore.kernel.org/all/20221030094258.486428-2-iskren.chernev@gmail.com/
+- Rebase on linux-next
+- Link to v2: https://lore.kernel.org/r/20221209-dt-binding-ufs-v2-0-dc7a04699579@fairphone.com
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 1a3d15e6d381..4adfff7583be 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -268,7 +268,6 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
- 		domain-idle-states {
- 			CLUSTER_SLEEP_0: cluster-sleep-0 {
- 				compatible = "domain-idle-state";
--				idle-state-name = "cluster-power-collapse";
- 				arm,psci-suspend-param = <0x4100c344>;
- 				entry-latency-us = <3263>;
- 				exit-latency-us = <6562>;
+Changes in v2:
+- Add new patch adding reg-names to sm6115 & rebase series on top of sm6115
+  addition
+- Fix binding example after sm8450 move, split this patch from original patch
+  since it became too big
+- Move reg-names definition to top-level
+- Link to v1: https://lore.kernel.org/r/20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com
+
+---
+Iskren Chernev (1):
+      dt-bindings: ufs: qcom: Add sm6115 binding
+
+Luca Weiss (2):
+      dt-bindings: ufs: qcom: Add reg-names property for ICE
+      dt-bindings: ufs: qcom: Fix sm8450 bindings
+
+ .../devicetree/bindings/ufs/qcom,ufs.yaml          | 61 ++++++++++++++++++++--
+ 1 file changed, 56 insertions(+), 5 deletions(-)
+---
+base-commit: e5dbf24e8b9e6aa0a185d86ce46a7a9c79ebb40f
+change-id: 20221209-dt-binding-ufs-2d7f64797ff2
+
+Best regards,
 -- 
-2.34.1
+Luca Weiss <luca.weiss@fairphone.com>
 
