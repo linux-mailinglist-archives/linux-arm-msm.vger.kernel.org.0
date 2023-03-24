@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 182EE6C75A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 03:25:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A8186C759E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 03:25:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231183AbjCXCZa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231488AbjCXCZa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 23 Mar 2023 22:25:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34460 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231442AbjCXCZ2 (ORCPT
+        with ESMTP id S230132AbjCXCZ3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Mar 2023 22:25:28 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 238162B2B4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 19:25:26 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id i13so392124lfe.9
+        Thu, 23 Mar 2023 22:25:29 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31EA9212BF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 19:25:27 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id bi9so376593lfb.12
         for <linux-arm-msm@vger.kernel.org>; Thu, 23 Mar 2023 19:25:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679624724;
+        d=linaro.org; s=google; t=1679624725;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LlHRxValegSqnSMBft+K8PLCC3g7dnAwqGZEFqtWtJA=;
-        b=C5QNN7IX6yRB+D/EJdba2WTRgAFiBQQoPRWwyi2sGUPv5a8pYiJ6FUUdzgGvwsdz/4
-         a4zq8/AyuVvk0AMtiyLxfD/LuFDLVYAs5K9KKH7rLcMjQ32kM6ht5jEwlcK2YY/QpbJG
-         3Cvg8cyEy8Hofjc2xl/Tl3nUZckvOhRnRlxCgR6nfceD1n7DwYOZrGxXVGL6i4Pb7AFs
-         dK8syEi4fnv8SmKXC+woAWvAeJY9P38U7CxwyzwYz+qDrlRxosQyn/5S0zgvLmnSzkop
-         qvp8EAbgyZmz0/h4KHk/BTxRHs3yP2S34T571PQwwRTzMs0GmMPxsx+1Y68wOYo/jUyo
-         r8Lw==
+        bh=3Ex2SxWiKHsLi5JuC7h4BWwHvOKFOw+6Zk3M1yOf5+0=;
+        b=WRdUTJh6nIZZnWmcVmOK1B5tZB3K/g3487ARz72AStEAvRKG3HE5nKf83Uur55FkLR
+         Kama/UwbHoCi3/SC7Kkcg+BEXiVQt3y23+WZsEKnHT3vad47waYWiTIJdyb2HzWhyMZt
+         ONKmPBzRM88ebD8tn66b/Hf+8885Y/UQev+Ec6dNSsircHzGv1kWOaMR7sx2xbLX4uAK
+         nLyUroBYdpmqfIMMCCaX218Zs6bcTx7zxr/sd93504VO68UdTtOOKsz5khjVvQ8SDDHy
+         4AGHX9yas7Mpw4GR/gRaMF0i66We1V9OE8pT2LaDRzIQUr+Q7kvgr5BWGAh7RaZNLB8W
+         Yo4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679624724;
+        d=1e100.net; s=20210112; t=1679624725;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LlHRxValegSqnSMBft+K8PLCC3g7dnAwqGZEFqtWtJA=;
-        b=csFhMrCO+AO0ma8jHWQhYw4H5JEjbC55kKGYeIxumyMHVYwKaO0YqGxzsOvFhfgDxo
-         fOqPS56x2PT8FCbgoB1JdBCwcsxWcg/34oYgfiLDODQcTz5v0vlzGj7dO0SAEGvEWe1z
-         4axt7TqYgK6CdfwU7JiqpYL05+FNTcYPaAUtiY7msicFtthpHB31bTX1tOjMQTseVfjE
-         XULTnmnhBCaI4GenLUfcvxdYfdAjF0tg6e52q+vz8rzFkzQLZcq6R3QrteBvfsz9yBxY
-         ylmii/+PfcfEYWOXr09LIHnJICf9F6NX0PEuaq5YKQ9j06TNXv1B8ZDdf9xQ6FgQIuTn
-         HWdA==
-X-Gm-Message-State: AAQBX9eO6ddGieWm8UlfBAMNmN+Wc15Xnb83ud81lt1dW4DdHIkK66FB
-        dDpi+UJUFnIscpLURTS8D1+xpQ==
-X-Google-Smtp-Source: AKy350b+ewgIkjp2ZVOKPIhcKN/92Bkarm+0H3NMHqExND0WIG6crQy4ZmCESBC76L85gkw39p3SPQ==
-X-Received: by 2002:a05:6512:143:b0:4e9:9f10:b31d with SMTP id m3-20020a056512014300b004e99f10b31dmr269509lfo.2.1679624724462;
-        Thu, 23 Mar 2023 19:25:24 -0700 (PDT)
+        bh=3Ex2SxWiKHsLi5JuC7h4BWwHvOKFOw+6Zk3M1yOf5+0=;
+        b=pKwhvuv4hCTKMB8zNowdoIRLHS5OtC9EYZcnkgEN+W+v0Vimg3XwrwRlnpDlj6Nz6A
+         1BPiO7PIsYZoktwb+9fQE/lH4RMEK/VFmQWKnBVMadFRmwRGZGp7/+WlcsHTH31Lw7Cg
+         RW1086IgJADnB9OICZrR8ipLO3t3TFzHCM7HloDJWj9dsi1x0zWi5NKFjzfs5n//3+mv
+         lfFB4tbPi8eCG3vLfzq537vor4TH0lUFyUZEODOzB3+aH4fAR2CS9ceL/3iMcxg23qaA
+         hSX7eClgSfzwJxRALLyCUcNv082aKhORwrdbqycGwpVXrIiWDASbyiU5VmnBqU67vq7y
+         7XEA==
+X-Gm-Message-State: AAQBX9dhrtcMhsc71kjhO1c0vkjzzGfVsw9u5tKxRSZ3cvgfxPk6QAhZ
+        WRob36/56Uj8gAKaKfcWBb5Ilg==
+X-Google-Smtp-Source: AKy350YK6K1kc0bOCgHGJlc4xpmxkOJAj8pSUqLxxdnuM6nrgiE7nQhqCjY7GUa5eGpgfIL/+VBuCA==
+X-Received: by 2002:a05:6512:905:b0:4ea:fa78:3661 with SMTP id e5-20020a056512090500b004eafa783661mr228099lft.31.1679624725430;
+        Thu, 23 Mar 2023 19:25:25 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id x4-20020a19f604000000b004db3aa3c542sm3162628lfe.47.2023.03.23.19.25.23
+        by smtp.gmail.com with ESMTPSA id x4-20020a19f604000000b004db3aa3c542sm3162628lfe.47.2023.03.23.19.25.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Mar 2023 19:25:23 -0700 (PDT)
+        Thu, 23 Mar 2023 19:25:24 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 09/41] phy: qcom-qmp-pcie: populate offsets configuration
-Date:   Fri, 24 Mar 2023 05:24:42 +0300
-Message-Id: <20230324022514.1800382-10-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 10/41] arm64: dts: qcom: ipq6018: switch USB QMP PHY to new style of bindings
+Date:   Fri, 24 Mar 2023 05:24:43 +0300
+Message-Id: <20230324022514.1800382-11-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20230324022514.1800382-1-dmitry.baryshkov@linaro.org>
 References: <20230324022514.1800382-1-dmitry.baryshkov@linaro.org>
@@ -75,200 +75,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Populate offsets configuration for the rest of UFS PHYs to make it
-possible to switch them to the new (single-node) bindings style.
+Change the USB QMP PHY to use newer style of QMP PHY bindings (single
+resource region, no per-PHY subnodes).
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 84 ++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi | 31 +++++++++++----------------
+ 1 file changed, 12 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index c95bf7ec2abe..ac60da8e0b88 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1939,6 +1939,56 @@ static const char * const sdm845_pciephy_reset_l[] = {
- 	"phy",
- };
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+index 9ff4e9d45065..ff540bfcc062 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+@@ -220,31 +220,24 @@ qusb_phy_1: qusb@59000 {
  
-+static const struct qmp_pcie_offsets qmp_pcie_offsets_qhp = {
-+	.serdes		= 0,
-+	.pcs		= 0x1800,
-+	.tx		= 0x0800,
-+	/* no .rx for QHP */
-+};
-+
-+static const struct qmp_pcie_offsets qmp_pcie_offsets_v2 = {
-+	.serdes		= 0,
-+	.pcs		= 0x0800,
-+	.tx		= 0x0200,
-+	.rx		= 0x0400,
-+};
-+
-+static const struct qmp_pcie_offsets qmp_pcie_offsets_v3 = {
-+	.serdes		= 0,
-+	.pcs		= 0x0800,
-+	.pcs_misc	= 0x0600,
-+	.tx		= 0x0200,
-+	.rx		= 0x0400,
-+};
-+
-+static const struct qmp_pcie_offsets qmp_pcie_offsets_v4x1 = {
-+	.serdes		= 0,
-+	.pcs		= 0x0800,
-+	.pcs_misc	= 0x0c00,
-+	.tx		= 0x0200,
-+	.rx		= 0x0400,
-+};
-+
-+static const struct qmp_pcie_offsets qmp_pcie_offsets_v4x2 = {
-+	.serdes		= 0,
-+	.pcs		= 0x0a00,
-+	.pcs_misc	= 0x0e00,
-+	.tx		= 0x0200,
-+	.rx		= 0x0400,
-+	.tx2		= 0x0600,
-+	.rx2		= 0x0800,
-+};
-+
-+static const struct qmp_pcie_offsets qmp_pcie_offsets_v4_20 = {
-+	.serdes		= 0x1000,
-+	.pcs		= 0x1200,
-+	.pcs_misc	= 0x1600,
-+	.tx		= 0x0000,
-+	.rx		= 0x0200,
-+	.tx2		= 0x0800,
-+	.rx2		= 0x0a00,
-+};
-+
- static const struct qmp_pcie_offsets qmp_pcie_offsets_v5 = {
- 	.serdes		= 0,
- 	.pcs		= 0x0200,
-@@ -1949,6 +1999,16 @@ static const struct qmp_pcie_offsets qmp_pcie_offsets_v5 = {
- 	.rx2		= 0x1800,
- };
+ 		ssphy_0: ssphy@78000 {
+ 			compatible = "qcom,ipq6018-qmp-usb3-phy";
+-			reg = <0x0 0x00078000 0x0 0x1c4>;
+-			#address-cells = <2>;
+-			#size-cells = <2>;
+-			ranges;
++			reg = <0x0 0x00078000 0x0 0x1000>;
  
-+static const struct qmp_pcie_offsets qmp_pcie_offsets_v5_20 = {
-+	.serdes		= 0x1000,
-+	.pcs		= 0x1200,
-+	.pcs_misc	= 0x1400,
-+	.tx		= 0x0000,
-+	.rx		= 0x0200,
-+	.tx2		= 0x0800,
-+	.rx2		= 0x0a00,
-+};
-+
- static const struct qmp_pcie_offsets qmp_pcie_offsets_v6_20 = {
- 	.serdes		= 0x1000,
- 	.pcs		= 0x1200,
-@@ -1963,6 +2023,8 @@ static const struct qmp_pcie_offsets qmp_pcie_offsets_v6_20 = {
- static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
- 	.lanes			= 1,
+ 			clocks = <&gcc GCC_USB0_AUX_CLK>,
+-				 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>, <&xo>;
+-			clock-names = "aux", "cfg_ahb", "ref";
++				 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
++				 <&xo>,
++				 <&gcc GCC_USB0_PIPE_CLK>;
++			clock-names = "aux",
++				      "cfg_ahb",
++				      "ref",
++				      "pipe";
++			clock-output-names = "gcc_usb0_pipe_clk_src";
++			#clock-cells = <0>;
++			#phy-cells = <0>;
  
-+	.offsets		= &qmp_pcie_offsets_v2,
-+
- 	.tbls = {
- 		.serdes		= ipq8074_pcie_serdes_tbl,
- 		.serdes_num	= ARRAY_SIZE(ipq8074_pcie_serdes_tbl),
-@@ -1988,6 +2050,8 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
- static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
- 	.lanes			= 1,
+ 			resets = <&gcc GCC_USB0_PHY_BCR>,
+ 				 <&gcc GCC_USB3PHY_0_PHY_BCR>;
+ 			reset-names = "phy","common";
+ 			status = "disabled";
+-
+-			usb0_ssphy: phy@78200 {
+-				reg = <0x0 0x00078200 0x0 0x130>, /* Tx */
+-				      <0x0 0x00078400 0x0 0x200>, /* Rx */
+-				      <0x0 0x00078800 0x0 0x1f8>, /* PCS */
+-				      <0x0 0x00078600 0x0 0x044>; /* PCS misc */
+-				#phy-cells = <0>;
+-				#clock-cells = <0>;
+-				clocks = <&gcc GCC_USB0_PIPE_CLK>;
+-				clock-names = "pipe0";
+-				clock-output-names = "gcc_usb0_pipe_clk_src";
+-			};
+ 		};
  
-+	.offsets		= &qmp_pcie_offsets_v4x1,
-+
- 	.tbls = {
- 		.serdes		= ipq8074_pcie_gen3_serdes_tbl,
- 		.serdes_num	= ARRAY_SIZE(ipq8074_pcie_gen3_serdes_tbl),
-@@ -2017,6 +2081,8 @@ static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
- static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
- 	.lanes			= 1,
- 
-+	.offsets		= &qmp_pcie_offsets_v4x1,
-+
- 	.tbls = {
- 		.serdes		= ipq6018_pcie_serdes_tbl,
- 		.serdes_num	= ARRAY_SIZE(ipq6018_pcie_serdes_tbl),
-@@ -2044,6 +2110,8 @@ static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
- static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
- 	.lanes			= 1,
- 
-+	.offsets		= &qmp_pcie_offsets_v3,
-+
- 	.tbls = {
- 		.serdes		= sdm845_qmp_pcie_serdes_tbl,
- 		.serdes_num	= ARRAY_SIZE(sdm845_qmp_pcie_serdes_tbl),
-@@ -2071,6 +2139,8 @@ static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
- static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
- 	.lanes			= 1,
- 
-+	.offsets		= &qmp_pcie_offsets_qhp,
-+
- 	.tbls = {
- 		.serdes		= sdm845_qhp_pcie_serdes_tbl,
- 		.serdes_num	= ARRAY_SIZE(sdm845_qhp_pcie_serdes_tbl),
-@@ -2094,6 +2164,8 @@ static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
- static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
- 	.lanes			= 1,
- 
-+	.offsets		= &qmp_pcie_offsets_v4x1,
-+
- 	.tbls = {
- 		.serdes		= sm8250_qmp_pcie_serdes_tbl,
- 		.serdes_num	= ARRAY_SIZE(sm8250_qmp_pcie_serdes_tbl),
-@@ -2131,6 +2203,8 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
- static const struct qmp_phy_cfg sm8250_qmp_gen3x2_pciephy_cfg = {
- 	.lanes			= 2,
- 
-+	.offsets		= &qmp_pcie_offsets_v4x2,
-+
- 	.tbls = {
- 		.serdes		= sm8250_qmp_pcie_serdes_tbl,
- 		.serdes_num	= ARRAY_SIZE(sm8250_qmp_pcie_serdes_tbl),
-@@ -2168,6 +2242,8 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x2_pciephy_cfg = {
- static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
- 	.lanes			= 1,
- 
-+	.offsets		= &qmp_pcie_offsets_v3,
-+
- 	.tbls = {
- 		.serdes		= msm8998_pcie_serdes_tbl,
- 		.serdes_num	= ARRAY_SIZE(msm8998_pcie_serdes_tbl),
-@@ -2195,6 +2271,8 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
- static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
- 	.lanes			= 2,
- 
-+	.offsets		= &qmp_pcie_offsets_v4x2,
-+
- 	.tbls = {
- 		.serdes		= sc8180x_qmp_pcie_serdes_tbl,
- 		.serdes_num	= ARRAY_SIZE(sc8180x_qmp_pcie_serdes_tbl),
-@@ -2330,6 +2408,8 @@ static const struct qmp_phy_cfg sc8280xp_qmp_gen3x4_pciephy_cfg = {
- static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
- 	.lanes			= 2,
- 
-+	.offsets		= &qmp_pcie_offsets_v4_20,
-+
- 	.tbls = {
- 		.serdes		= sdx55_qmp_pcie_serdes_tbl,
- 		.serdes_num	= ARRAY_SIZE(sdx55_qmp_pcie_serdes_tbl),
-@@ -2446,6 +2526,8 @@ static const struct qmp_phy_cfg sm8350_qmp_gen3x2_pciephy_cfg = {
- static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
- 	.lanes			= 1,
- 
-+	.offsets		= &qmp_pcie_offsets_v5,
-+
- 	.tbls = {
- 		.serdes		= sm8450_qmp_gen3_pcie_serdes_tbl,
- 		.serdes_num	= ARRAY_SIZE(sm8450_qmp_gen3_pcie_serdes_tbl),
-@@ -2481,6 +2563,8 @@ static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
- static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
- 	.lanes			= 2,
- 
-+	.offsets		= &qmp_pcie_offsets_v5_20,
-+
- 	.tbls = {
- 		.serdes		= sm8450_qmp_gen4x2_pcie_serdes_tbl,
- 		.serdes_num	= ARRAY_SIZE(sm8450_qmp_gen4x2_pcie_serdes_tbl),
+ 		qusb_phy_0: qusb@79000 {
+@@ -553,7 +546,7 @@ dwc_0: usb@8a00000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0x0 0x08a00000 0x0 0xcd00>;
+ 				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
+-				phys = <&qusb_phy_0>, <&usb0_ssphy>;
++				phys = <&qusb_phy_0>, <&ssphy_0>;
+ 				phy-names = "usb2-phy", "usb3-phy";
+ 				clocks = <&xo>;
+ 				clock-names = "ref";
 -- 
 2.30.2
 
