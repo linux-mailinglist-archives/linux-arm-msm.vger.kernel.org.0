@@ -2,73 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A38B06C869F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 21:16:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C5CC6C86B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 21:21:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231840AbjCXUQ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 16:16:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55438 "EHLO
+        id S231196AbjCXUVl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 16:21:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231822AbjCXUQy (ORCPT
+        with ESMTP id S229551AbjCXUVk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 16:16:54 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA6FA1E1CA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 13:16:51 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id bl9so1244586iob.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 13:16:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679689011;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4COcfpw9WG6m5GbVy1D4YLQiwmZKsGAwS1sbqXD1qEo=;
-        b=gUrv+A8U/4sHWHCX7QHYNx/fX6Y4gsuwXZ5oXPeAWwsY1HA2CfpdU5AnXJETkmR/4R
-         3sfKdnnyOcAiIavfTmHQXuiAyix7IbrrEuDIiX4hGaKzNz/RXBI24ji4Bih+s07l5eDP
-         tHa0gd52lkQ0jB8ZwG7ZjG2H3p7mfFJIsGPtcpHAv9Q5YaalM4uGwcv+WF9H2vj44Jfg
-         Xfzp8z2Nefov+AMBEn5YbqAWsr7b6K7BY3extnNVfm5dnzgPdGMU2PfMIT31utLF7zUE
-         a/NEfk78BhSBZGn4YmuVUfqH19hgq5F+eRI3j1qJAmfojfZK8RLBBjoAJeGdw0u59sro
-         3Azw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679689011;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4COcfpw9WG6m5GbVy1D4YLQiwmZKsGAwS1sbqXD1qEo=;
-        b=ZQ4xlpYTbF0n/WzBZa7dZK6hdbqe81Tx9fonKeLkXDPI8iB3HZIPhMUWoCaTzskfZ/
-         JOtotkQfPuEga6Ogx3+o86CqRCp4OsGUNtH+FcjhfdIQiWUaNX59No+YrYpUaPCtcBqC
-         F6JpnRKLTiGl217JUvJJEq0n021fGTMurDc2Ji0BQhHXJ9x575ynuW+yUdXMl8VoXDrh
-         /mrqJlRfVwSmKCY+h4ZK4IkP7c+35iu0jZ8mv/2u6a/6aEaCn8k9aRBRUpDgIODiZL2P
-         ApSbbiPXgSzv0bRgF1EymU0msQMXRdcPgqDVm5BvDPgZ1pPEXiCWea90JSMS1DuHbKsL
-         7htg==
-X-Gm-Message-State: AO0yUKVC1OnBEy+pIj9X7Kloxj5W6Pv1b4nRs0RVTinmnEJp32iZm1wz
-        ayhUs7I/SMRAOQxfBCFEIjmqTQ==
-X-Google-Smtp-Source: AK7set9LgaonR2SHhPcYWqJ5oyOKzict9DML0voVT7n4d0wQ8jpBszqkPscR+e4e9vUkV68emkKufw==
-X-Received: by 2002:a6b:6f12:0:b0:758:4909:fbd6 with SMTP id k18-20020a6b6f12000000b007584909fbd6mr3154666ioc.12.1679689010900;
-        Fri, 24 Mar 2023 13:16:50 -0700 (PDT)
-Received: from localhost.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id q12-20020a05663810cc00b003e8a17d7b1fsm7173445jad.27.2023.03.24.13.16.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Mar 2023 13:16:42 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org
-Cc:     quic_rohiagar@quicinc.com, caleb.connolly@linaro.org,
-        mka@chromium.org, evgreen@chromium.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] ARM: dts: qcom-sdx65: move status properties to end of nodes
-Date:   Fri, 24 Mar 2023 15:15:28 -0500
-Message-Id: <20230324201528.2540564-3-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230324201528.2540564-1-elder@linaro.org>
-References: <20230324201528.2540564-1-elder@linaro.org>
+        Fri, 24 Mar 2023 16:21:40 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E91E1A94D;
+        Fri, 24 Mar 2023 13:21:39 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (213-243-189-158.bb.dnainternet.fi [213.243.189.158])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id B21B2A58;
+        Fri, 24 Mar 2023 21:21:35 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1679689295;
+        bh=k082uSrt6jNQq0wYKw9dlktMyGfVT1a6X+VmeRopIhQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=KjQE14OQG/1rdUOuBbJvohFSBegnyZS9jPYY5Lhj5m5xjVQ1OJPx/QPJJxHmEGiXk
+         oxQ6r8iqbugo67bppEFw0YuiMMMT9fwCwGbS8mMgppoOdT1QGXkMOAVYQ8ww48etkK
+         37OWSXgkj0n17Xxk29IxOG2ZMCYZdkbUbUbV7Czo=
+Date:   Fri, 24 Mar 2023 22:21:42 +0200
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Nicolas Dufresne <nicolas@ndufresne.ca>
+Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        David Laight <David.Laight@ACULAB.COM>,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        "tfiga@chromium.org" <tfiga@chromium.org>,
+        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
+        "mchehab@kernel.org" <mchehab@kernel.org>,
+        "ming.qian@nxp.com" <ming.qian@nxp.com>,
+        "shijie.qin@nxp.com" <shijie.qin@nxp.com>,
+        "eagle.zhou@nxp.com" <eagle.zhou@nxp.com>,
+        "bin.liu@mediatek.com" <bin.liu@mediatek.com>,
+        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+        "angelogioacchino.delregno@collabora.com" 
+        <angelogioacchino.delregno@collabora.com>,
+        "tiffany.lin@mediatek.com" <tiffany.lin@mediatek.com>,
+        "andrew-ct.chen@mediatek.com" <andrew-ct.chen@mediatek.com>,
+        "yunfei.dong@mediatek.com" <yunfei.dong@mediatek.com>,
+        "stanimir.k.varbanov@gmail.com" <stanimir.k.varbanov@gmail.com>,
+        "quic_vgarodia@quicinc.com" <quic_vgarodia@quicinc.com>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "andersson@kernel.org" <andersson@kernel.org>,
+        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
+        "ezequiel@vanguardiasur.com.ar" <ezequiel@vanguardiasur.com.ar>,
+        "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
+        "daniel.almeida@collabora.com" <daniel.almeida@collabora.com>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-mediatek@lists.infradead.org" 
+        <linux-mediatek@lists.infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-rockchip@lists.infradead.org" 
+        <linux-rockchip@lists.infradead.org>,
+        "kernel@collabora.com" <kernel@collabora.com>
+Subject: Re: [RFC 2/4] media: videobuf2: Replace bufs array by a list
+Message-ID: <20230324202142.GB23868@pendragon.ideasonboard.com>
+References: <86df05244d974416903e919d387a0a0b@AcuMS.aculab.com>
+ <e704b505-86d8-c6f2-8546-adccdab72622@xs4all.nl>
+ <dc04d48e34ed40e58f43badd001a81d0@AcuMS.aculab.com>
+ <cbf34cf1-e065-8136-8344-89ca1864f637@xs4all.nl>
+ <20230319233358.GD20234@pendragon.ideasonboard.com>
+ <f085aa9225c573df906bdc7ff032a8fd591b18b3.camel@ndufresne.ca>
+ <20230322150153.GO20234@pendragon.ideasonboard.com>
+ <2d6480e36ce061a63440d1e11d52b02e57ba746d.camel@ndufresne.ca>
+ <68ba7b3f-57f5-3969-5036-2c8d08273548@xs4all.nl>
+ <6f2979d33526e5ccdc32cf096415d8309fc91d3d.camel@ndufresne.ca>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <6f2979d33526e5ccdc32cf096415d8309fc91d3d.camel@ndufresne.ca>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,96 +88,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move a few device tree "status" properties so that they are the last
-specified property, in "qcom-sdx65-mtp.dts" and "qcom-sdx65.dtsi".
-Note that properties must always be specified before sub-nodes.
+On Fri, Mar 24, 2023 at 11:34:48AM -0400, Nicolas Dufresne wrote:
+> Le vendredi 24 mars 2023 à 16:18 +0100, Hans Verkuil a écrit :
+> > On 24/03/2023 16:14, Nicolas Dufresne wrote:
+> > > Le mercredi 22 mars 2023 à 17:01 +0200, Laurent Pinchart a écrit :
+> > > > On Wed, Mar 22, 2023 at 10:50:52AM -0400, Nicolas Dufresne wrote:
+> > > > > Le lundi 20 mars 2023 à 01:33 +0200, Laurent Pinchart a écrit :
+> > > > > > > The typical usage is that applications allocate N buffers with the
+> > > > > > > VIDIOC_REQBUFS ioctl, and in most cases that's all they use.
+> > > > > > 
+> > > > > > Note that once we get DELETE_BUF (or DELETE_BUFS) support I'd like to
+> > > > > > encourage applications to use the new API, and deprecate REQBUFS
+> > > > > > (dropping it isn't on my radar, as it would take forever before no
+> > > > > > userspace uses it anymore).
+> > > > > 
+> > > > > I was wondering if you can extend on this. I'm worried the count semantic might
+> > > > > prevent emulating it over create_bufs() ops, but if that works, did you meant to
+> > > > > emulate it so driver no longer have to implement reqbufs() if they have
+> > > > > create_bufs() ?
+> > > > 
+> > > > For drivers it should be fairly simply, as the reqbufs and create_bufs
+> > > > ioctl handlers should just point to the corresponding videobuf2 helpers.
+> > > > 
+> > > > What I meant is that I'd like to encourage userspace to use the
+> > > > VIDIOC_CREATE_BUFS ioctl instead of VIDIOC_REQBUFS.
+> > > > 
+> > > 
+> > > I'm not sure what rationale I can give implementer to "encourage" them to use a
+> > > more complex API that needs to copy over the FMT (which has just been set),
+> > > specially in the initial pre-allocation case. For most, CREATE_BUFS after SMT
+> > > will look like a very redundant and counter intuitive thing. Maybe you have a
+> > > more optimistic view on the matter ? Or you have a better idea how we could give
+> > > a meaning to having a fmt there on the initial case where the allocation matches
+> > > the queue FMT ?
+> > 
+> > I wouldn't mind if we can make a much nicer CREATE_BUFS variant with just the
+> > size instead of a format. That was in hindsight a really bad idea, terrible
+> > over-engineering.
+> 
+> Note that all DRM allocators also includes width/height and some format related
+> info (or the full info). This is because the driver deals with the alignment
+> requirements. In some use cases (I have inter frame dynamic control in mind
+> here) the fmt could be a mean to feedback the alignment (like bytesperline) back
+> to the application where the stream is no longer homogeneous on the FMT.
+> 
+> That being said, If we move toward a size base allocator API, we could also just
+> point back to an existing HEAP (or export an new heap if none are valid). And
+> define the sizeimage(s) is now that information you need from the FMT to
+> allocate anything + which heap needs to be used for the current setup.
 
-Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- arch/arm/boot/dts/qcom-sdx65-mtp.dts | 6 +++---
- arch/arm/boot/dts/qcom-sdx65.dtsi    | 8 +++++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+If we could move away from allocating buffers within V4L2 to only
+importing buffers allocated through the DMA heaps API, I'd be very
+happy. That won't be simple though. Maybe a good candidate for
+discussions during the media summit in Prague this year ?
 
-diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-index 72e25de0db5fc..57bc3b03d3aac 100644
---- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-+++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-@@ -270,8 +270,8 @@ nand@0 {
- };
- 
- &remoteproc_mpss {
--	status = "okay";
- 	memory-region = <&mpss_adsp_mem>;
-+	status = "okay";
- };
- 
- &usb {
-@@ -283,14 +283,14 @@ &usb_dwc3 {
- };
- 
- &usb_hsphy {
--	status = "okay";
- 	vdda-pll-supply = <&vreg_l4b_0p88>;
- 	vdda33-supply = <&vreg_l10b_3p08>;
- 	vdda18-supply = <&vreg_l5b_1p8>;
-+	status = "okay";
- };
- 
- &usb_qmpphy {
--	status = "okay";
- 	vdda-phy-supply = <&vreg_l4b_0p88>;
- 	vdda-pll-supply = <&vreg_l1b_1p2>;
-+	status = "okay";
- };
-diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
-index 360d6dc144811..a7adf28a395a8 100644
---- a/arch/arm/boot/dts/qcom-sdx65.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
-@@ -224,16 +224,15 @@ usb_hsphy: phy@ff4000 {
- 				     "qcom,usb-snps-hs-7nm-phy";
- 			reg = <0xff4000 0x120>;
- 			#phy-cells = <0>;
--			status = "disabled";
- 			clocks = <&rpmhcc RPMH_CXO_CLK>;
- 			clock-names = "ref";
- 			resets = <&gcc GCC_QUSB2PHY_BCR>;
-+			status = "disabled";
- 		};
- 
- 		usb_qmpphy: phy@ff6000 {
- 			compatible = "qcom,sdx65-qmp-usb3-uni-phy";
- 			reg = <0x00ff6000 0x1c8>;
--			status = "disabled";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			ranges;
-@@ -247,6 +246,8 @@ usb_qmpphy: phy@ff6000 {
- 				 <&gcc GCC_USB3_PHY_BCR>;
- 			reset-names = "phy", "common";
- 
-+			status = "disabled";
-+
- 			usb_ssphy: phy@ff6200 {
- 				reg = <0x00ff6e00 0x160>,
- 				      <0x00ff7000 0x1ec>,
-@@ -393,7 +394,6 @@ mem_noc: interconnect@9680000 {
- 		usb: usb@a6f8800 {
- 			compatible = "qcom,sdx65-dwc3", "qcom,dwc3";
- 			reg = <0x0a6f8800 0x400>;
--			status = "disabled";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			ranges;
-@@ -423,6 +423,8 @@ usb: usb@a6f8800 {
- 
- 			resets = <&gcc GCC_USB30_BCR>;
- 
-+			status = "disabled";
-+
- 			usb_dwc3: usb@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x0a600000 0xcd00>;
 -- 
-2.34.1
+Regards,
 
+Laurent Pinchart
