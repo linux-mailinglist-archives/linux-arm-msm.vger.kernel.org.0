@@ -2,69 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 317A26C7DEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 13:19:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB25F6C7E62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 14:02:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230196AbjCXMTo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 08:19:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41380 "EHLO
+        id S231796AbjCXNCy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 09:02:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231839AbjCXMTm (ORCPT
+        with ESMTP id S231477AbjCXNCx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 08:19:42 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8590EC7B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 05:19:23 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id n125so1868362ybg.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Mar 2023 05:19:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679660362;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8TOoc2P/covbfEozOoPRNxWEkdDXKymUtV6P3HpaZvk=;
-        b=ht+mL8EDec/L3PgDQ5WMUMfMXgKm8odJ+OzDgyfYiOoXEy8XBPiVTnSp+WVCW4X2Ap
-         35K6HOOdLs59nnKMwYLejnHGaNwrS+n8JbEU5EotRm/XQvonvv9OwR4Akq//IHeIiM6B
-         4kavnz0ThZwp5B30FYt58rsUJ+dYFCCS4vN3YtBPebFVGhsVWHqjASsw4Sin8a3PVe0k
-         z9QFwbmF2bBDzVUzqg7loSIwNC6jycplQlQTswwTmpPtZV7HJq0iinV1PYIl1VMXiXsZ
-         3f426k7bYjpsBrAN/JfPmTD7t0l72usDeAHCc/m4yVVYh1uwg3uf/3reMPqKyH0xiBoU
-         XpRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679660362;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8TOoc2P/covbfEozOoPRNxWEkdDXKymUtV6P3HpaZvk=;
-        b=1bmTVGNebKM4DlBkvYHiHb+z7Leuy75J5ZYRDWe+i+bdoXvNg8LmrOWBt/q6hHIhse
-         rmgCy0MkqlxDGxaAAKWnalaNx++X+qNck0BVLLYxAW/o0Ks/AeXk1TD/vDY92SDqkltc
-         qGHCujhIUPuFs/j3/BFeX3xA6yLkiCcL7AKQDEOqzYtIX8ataN8NIt83NxWexykCbGDk
-         I5YLAqNqm9hGR1jNa4H9JyrNokiLpXwjZxR4t8ZQnADhzH4hz621n0YgjcrYW2/JplFK
-         JBVZxBUH7Drtlyx5rT8s/38oQjB6ZBKCVKVfAQLfnq1fV8JEQUc/Onvlt17IZpu5MhCX
-         Y8Lg==
-X-Gm-Message-State: AAQBX9eAh5W1651b9l3N4EsnKIKXBOGfg+T7gPvgoK0tZTx0NWpXrHAv
-        /kLcD2+Tog/wbiYpOzzeKVjHgyjhiPU8QUZEFniDxQ==
-X-Google-Smtp-Source: AKy350bGXLauoWAYWG/zSrBryz9Djw/9sFVdv4WxZI3ju9VN2EJ4JlLNZj1dNeRAti5yNPn+RQ/ueE++oNMsNk7PyT8=
-X-Received: by 2002:a05:6902:102b:b0:b46:4a5e:3651 with SMTP id
- x11-20020a056902102b00b00b464a5e3651mr1171972ybt.9.1679660362119; Fri, 24 Mar
- 2023 05:19:22 -0700 (PDT)
+        Fri, 24 Mar 2023 09:02:53 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E450C20563;
+        Fri, 24 Mar 2023 06:02:46 -0700 (PDT)
+Received: from [192.168.2.179] (109-252-120-116.nat.spd-mgts.ru [109.252.120.116])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: dmitry.osipenko)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 8A0A16602E0E;
+        Fri, 24 Mar 2023 13:02:42 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1679662964;
+        bh=kpqXq6UeGgXsVu6TLQM8ko29kV7748olljvXmD9n2oU=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=fJhdF/6EuVwtZqtUK9BHmxcGAPcgYm67pizoTOiLS9liSDI+PCTMcPyPeBk8giObt
+         6N51SXsvFnXt++WjdZLVZiBKxkCrEf3urnxFeWOwQaHqT1pxqh9M8a1IxjtCcKhU3d
+         k7MFMRzZ8bzXLYC9jwq5TkCmdptLjCRdWSe/uQlUXSFwpLLJ+5u+GpP+UO16L2DpnU
+         dUl+S4RWnEFc5tSuWFJT1WKLt5N+xstLYPLcN+K3CMNL8f7DKjRxEAEXTsDnaS7aYL
+         Vr7Tog2S9Zg7P9ovovoOE1lojrwScdl3WKEZhgPXKrTnRJeD1wG6PV7NEvTvYlcqBm
+         r1IDDo9CdQSqw==
+Message-ID: <5a16edd7-3e68-1f94-0ff1-24668fc43501@collabora.com>
+Date:   Fri, 24 Mar 2023 16:02:39 +0300
 MIME-Version: 1.0
-References: <20230324001752.1768505-1-dmitry.baryshkov@linaro.org>
- <20230324001752.1768505-2-dmitry.baryshkov@linaro.org> <ZB1P7h0FdT66k/LG@hovoldconsulting.com>
-In-Reply-To: <ZB1P7h0FdT66k/LG@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 24 Mar 2023 14:19:10 +0200
-Message-ID: <CAA8EJprw0kPZtbO22-TcMYy+cqyUZCbJdMvUoiXWbcWDPCe0Aw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] phy: qcom-qmp-pcie: sc8180x PCIe PHY has 2 lanes
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 2/8] media: videobuf2: Make bufs array dynamic
+ allocated
+Content-Language: en-US
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
+        ming.qian@nxp.com, shijie.qin@nxp.com, eagle.zhou@nxp.com,
+        bin.liu@mediatek.com, matthias.bgg@gmail.com,
+        angelogioacchino.delregno@collabora.com, tiffany.lin@mediatek.com,
+        andrew-ct.chen@mediatek.com, yunfei.dong@mediatek.com,
+        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
+        daniel.almeida@collabora.com, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, jernel@kernel.org
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, kernel@collabora.com
+References: <20230321102855.346732-1-benjamin.gaignard@collabora.com>
+ <20230321102855.346732-3-benjamin.gaignard@collabora.com>
+From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <20230321102855.346732-3-benjamin.gaignard@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,47 +70,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 24 Mar 2023 at 09:23, Johan Hovold <johan@kernel.org> wrote:
->
-> On Fri, Mar 24, 2023 at 03:17:52AM +0300, Dmitry Baryshkov wrote:
-> > All PCIe PHYs on sc8180x platform have 2 lanes, so change the number of
-> > lanes to 2.
-> >
-> > Fixes: 94a407cc17a4 ("phy: qcom-qmp: create copies of QMP PHY driver")
->
-> This is not the right fixes tag either. This should have been
->
-> Fixes: f839f14e24f2 ("phy: qcom-qmp: Add sc8180x PCIe support")
->
-> Should this also be backported (i.e. should you add a stable tag)?
+On 3/21/23 13:28, Benjamin Gaignard wrote:
+> +	q->bufs = kmalloc_array(q->max_num_bufs, sizeof(*q->bufs), GFP_KERNEL | __GFP_ZERO);
+> +	if (!q->bufs)
+> +		return -ENOMEM;
+> +
 
-Maybe, but it's not that important. We don't have corresponding DT
-bits, so it seems not that urgent.
-
->
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> > index d580f3d3e221..c95bf7ec2abe 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> > @@ -2193,7 +2193,7 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
-> >  };
-> >
-> >  static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
-> > -     .lanes                  = 1,
-> > +     .lanes                  = 2,
-> >
-> >       .tbls = {
-> >               .serdes         = sc8180x_qmp_pcie_serdes_tbl,
->
-> Johan
-
-
+Use kcalloc()
 
 -- 
-With best wishes
+Best regards,
 Dmitry
+
