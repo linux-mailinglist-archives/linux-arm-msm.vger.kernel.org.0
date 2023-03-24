@@ -2,173 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB2AE6C77C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 07:17:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B35C36C7845
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 07:52:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231699AbjCXGR3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 02:17:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46710 "EHLO
+        id S229921AbjCXGwy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 02:52:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229817AbjCXGRX (ORCPT
+        with ESMTP id S230372AbjCXGwx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 02:17:23 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49D6028E76;
-        Thu, 23 Mar 2023 23:17:15 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32O5FbJ2030390;
-        Fri, 24 Mar 2023 06:16:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=XNhxMsKw6ZAe+EYt13fPXlDqqycgBNXXfO0jTrz0x0w=;
- b=LymwUMow5Jwgr4HR/5eHH+OVNwHFWYtxutNjh4/KbsM4Ny7gVjeScmWgEO57LS47Ec7w
- 5YApU1Y/pfNfXkB6xuPKu+qwmXQ1rpJHLMbSZiouiuLibsP0RlONIu389m+fVQC8fi44
- 2mkzSDMLs6X6om6+iMDSgRQl3qdH8f/Rl5rcO6GhCUgQdhinvRFFke/ls1m5SVtxCKQL
- t2Cbph8CoPiCySPCrklnOOIgbGb0Pc67HZ1XA89UhXW6TRjlZ3SqypwA5M78P5aDhHd3
- 40gCCKHSj8ExWuGFmmn2rvLs8QspOa4KzjJsHqoK/PHMpRAMYZLI+++zj6Gg1+rQ296/ ig== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pgydugvyf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 24 Mar 2023 06:16:50 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32O6Gn6B005035
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 24 Mar 2023 06:16:49 GMT
-Received: from hazha-gv.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Thu, 23 Mar 2023 23:16:43 -0700
-From:   Hao Zhang <quic_hazha@quicinc.com>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+        Fri, 24 Mar 2023 02:52:53 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA76124C80;
+        Thu, 23 Mar 2023 23:52:52 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 753F9B822AD;
+        Fri, 24 Mar 2023 06:52:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CBDC433EF;
+        Fri, 24 Mar 2023 06:52:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679640770;
+        bh=eAgzktUw36k84XyIpPeAFS22zFe2LwUnrI5YTkK3tLk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Uy30E47500cQwy4yveoh3p8sqXsEoe+5WtY81PxbQuING23HmwERsmB7HB8++fsRL
+         6tf9dyoa+9lOSJDTyt8wAonTHUJ0J2SrrJaC/GykO8O2X81R5HlxhLGQiOswPNt15v
+         LBKYrhQ/4EyL5pWH9aYSkZf0utMxXoAMTpLO+bozn4KB0AlAclLd69fkP65H8p14bB
+         dQ4qZmtsnGVZ6bOEqV+QlcvaokRXCD0k2xn1sCYyZj8BvIQfmiZGbrrSS4IhJH2lFf
+         AeuQ51n2upKFnkTasj7teSd/zFmIgybVLp+nXod5NVPr4G+lsLl+ScgH1UzpcAA9Nh
+         FeR0MtGg+uDTg==
+Date:   Thu, 23 Mar 2023 23:52:47 -0700
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Jonathan Corbet <corbet@lwn.net>
-CC:     Hao Zhang <quic_hazha@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-doc@vger.kernel.org>
-Subject: [PATCH v2 3/3] Documentation: trace: Add documentation for Coresight Dummy Trace
-Date:   Fri, 24 Mar 2023 14:16:08 +0800
-Message-ID: <20230324061608.33609-4-quic_hazha@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230324061608.33609-1-quic_hazha@quicinc.com>
-References: <20230324061608.33609-1-quic_hazha@quicinc.com>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lee Jones <lee@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-scsi@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+Subject: Re: [PATCH 7/8] arm64: dts: qcom: sm8450: remove invalid reg-names
+ from ufs node
+Message-ID: <20230324065247.GA9598@sol.localdomain>
+References: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-0-3ead1e418fe4@linaro.org>
+ <20230323-topic-sm8450-upstream-dt-bindings-fixes-v1-7-3ead1e418fe4@linaro.org>
+ <9614782e-0d78-e8f2-a438-452cfa86f80b@linaro.org>
+ <316d7d7d-b370-36e1-648a-400447d2dd47@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: LNGL-8bt0fqzFf7EHFVs3GItCkxhHfeV
-X-Proofpoint-GUID: LNGL-8bt0fqzFf7EHFVs3GItCkxhHfeV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-24_02,2023-03-23_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- adultscore=0 mlxscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 spamscore=0 malwarescore=0
- mlxlogscore=999 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2303200000 definitions=main-2303240049
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <316d7d7d-b370-36e1-648a-400447d2dd47@linaro.org>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add documentation for Coresight Dummy Trace under trace/coresight.
+Hi Neil,
 
-Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
----
- .../trace/coresight/coresight-dummy.rst       | 58 +++++++++++++++++++
- 1 file changed, 58 insertions(+)
- create mode 100644 Documentation/trace/coresight/coresight-dummy.rst
+On Thu, Mar 23, 2023 at 02:10:44PM +0100, Neil Armstrong wrote:
+> Hi,
+> 
+> On 23/03/2023 11:49, Krzysztof Kozlowski wrote:
+> > On 23/03/2023 11:25, Neil Armstrong wrote:
+> > > Fixes the following DT bindings check error:
+> > > ufshc@1d84000: Unevaluated properties are not allowed ('reg-names' was unexpected)
+> > > 
+> > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > > ---
+> > >   arch/arm64/boot/dts/qcom/sm8450.dtsi | 1 -
+> > >   1 file changed, 1 deletion(-)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> > > index ef9bae2e6acc..8ecc48c7c5ef 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> > > @@ -3996,7 +3996,6 @@ ufs_mem_hc: ufshc@1d84000 {
+> > >   				     "jedec,ufs-2.0";
+> > >   			reg = <0 0x01d84000 0 0x3000>,
+> > >   			      <0 0x01d88000 0 0x8000>;
+> > > -			reg-names = "std", "ice";
+> > 
+> > This is also part of:
+> > https://lore.kernel.org/linux-arm-msm/20230308155838.1094920-8-abel.vesa@linaro.org/#Z31arch:arm64:boot:dts:qcom:sm8450.dtsi
+> > but I actually wonder whether you just missed some binding patch?
+> 
+> I'm aware of Abel's RFC patchset to support shared ICE, but this is a cleanup of the current DT,
+> and the current bindings schema doesn't document reg-names.
+> 
 
-diff --git a/Documentation/trace/coresight/coresight-dummy.rst b/Documentation/trace/coresight/coresight-dummy.rst
-new file mode 100644
-index 000000000000..819cabab8623
---- /dev/null
-+++ b/Documentation/trace/coresight/coresight-dummy.rst
-@@ -0,0 +1,58 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+=============================
-+Coresight Dummy Trace Module
-+=============================
-+
-+    :Author:   Hao Zhang <quic_hazha@quicinc.com>
-+    :Date:     March 2023
-+
-+Introduction
-+---------------------------
-+
-+Coresight Dummy Trace Module is for the specific devices that HLOS don't
-+have permission to access or configure. Such as Coresight sink EUD, some
-+TPDMs etc. So there need driver to register dummy devices as Coresight
-+devices. Provide Coresight API for dummy device operations, such as
-+enabling and disabling dummy devices. Build the Coresight path for dummy
-+sink or dummy source for debugging.
-+
-+Sysfs files and directories
-+---------------------------
-+
-+Root: ``/sys/bus/coresight/devices/dummy<N>``
-+
-+----
-+
-+:File:            ``enable_source`` (RW)
-+:Notes:
-+    - > 0 : enable the datasets of dummy source.
-+
-+    - = 0 : disable the datasets of dummy source.
-+
-+:Syntax:
-+    ``echo 1 > enable_source``
-+
-+----
-+
-+:File:            ``enable_sink`` (RW)
-+:Notes:
-+    - > 0 : enable the datasets of dummy sink.
-+
-+    - = 0 : disable the datasets of dummy sink.
-+
-+:Syntax:
-+    ``echo 1 > enable_sink``
-+
-+----
-+
-+Config details
-+---------------------------
-+
-+There are two types of nodes, dummy sink and dummy source. The nodes
-+should be observed at the coresight path
-+"/sys/bus/coresight/devices".
-+e.g.
-+/sys/bus/coresight/devices # ls -l | grep dummy
-+dummy0 -> ../../../devices/platform/soc@0/soc@0:dummy_source/dummy0
-+dummy1 -> ../../../devices/platform/soc@0/soc@0:dummy_sink/dummy1
--- 
-2.17.1
+The ufs-qcom driver accesses the "ice" registers by name, so the reg-names can't
+be removed from the device tree.  A few months ago there was a patch to fix the
+device tree schema for qcom,ufs to include the reg-names.  It looks like that
+patch got missed, though:
+https://lore.kernel.org/r/20221209-dt-binding-ufs-v2-2-dc7a04699579@fairphone.com
 
+- Eric
