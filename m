@@ -2,164 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 864FB6C7C2B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 11:04:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C4B416C7C5A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Mar 2023 11:17:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230382AbjCXKEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Mar 2023 06:04:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59810 "EHLO
+        id S229830AbjCXKQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Mar 2023 06:16:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231254AbjCXKEX (ORCPT
+        with ESMTP id S231678AbjCXKQ4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Mar 2023 06:04:23 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8BF11A4BF;
-        Fri, 24 Mar 2023 03:04:22 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8DDCDB82357;
-        Fri, 24 Mar 2023 10:04:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73DCEC433D2;
-        Fri, 24 Mar 2023 10:04:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679652260;
-        bh=8+n/g8D7fA39riz19Ut1Cr74s9l1rB4rM9KIMmbszOQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cJuAyXXkH9p46rBWBlX4YTit8Ot5+QQH4LlLtMVOsjdpjRUnWTDc+EFM9xJL1OhKe
-         FkJe+v48Vr9XCKvaMg6YoUXF/3dwgQXkzH3Ff7JCEur9AI+fG/acjEXEpkwE5QW939
-         8vR/Ezsbq2/nGAD2ttYxhpgp4T3cxaDe+uAigtlhJ2EMNdRmI2Dz1Ayzt+cGDP2T0c
-         QSc4oYp4aO9OnMMKPnRR8jyTNQjTQeLUt5fhA8KyZUOP1SF1aMzvdCXQc3eEgRmuX8
-         JfZL4keo0VvY02LHg36MUqA8x4qy7PNcloF0vBHVkrvZ0qv9DqJ8q16HpAmGvR5L+p
-         W/M8uO6d2BQ8g==
-Date:   Fri, 24 Mar 2023 15:34:07 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH] cpufreq: qcom-cpufreq-hw: fix double IO unmap and
- resource release on exit
-Message-ID: <20230324100407.GA4259@thinkpad>
-References: <20230323174026.950622-1-krzysztof.kozlowski@linaro.org>
+        Fri, 24 Mar 2023 06:16:56 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A35D6136CA;
+        Fri, 24 Mar 2023 03:16:53 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id w4so1373571plg.9;
+        Fri, 24 Mar 2023 03:16:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679653013;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cziNVzlXnH/lQ5/2+kk4lE5zj/E0WdazVGv7S5DQupA=;
+        b=gTEL50fHUNYCxyR9k0EUrOvJ2iQIIrNX9VfBcWP3z4ptBVNbW5Nd9A86DS0Vb3dttt
+         ewdQvub3VD1E6ncz+SHjbR/s8R2qUsjLwNgvNmn1JtngdW9XXXIcUCHoQ9CGBw+AtS+H
+         fM1rnPkKB5dEDEDJcvMgLtcJ/nQFTFMlFYO8OF0XHR9eC8/P2IA+mVTEGjFctetHVuzt
+         S9zn9acZDNxucgjfKSXkDLYH+kESmUQ02extsU+kzVfd+0Cf7Yggrrf9kLVKbyLN7YTE
+         LgkVsPPXXkpk2qgQ/LSqEvyEHg7U0q6G+AC330vFT6fLD37s58lT5v69Qt7Tja6Y2FET
+         wb5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679653013;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cziNVzlXnH/lQ5/2+kk4lE5zj/E0WdazVGv7S5DQupA=;
+        b=2hY1S0X9Ui3Ds9OzxQ6E4HzAdb74xJU5Hr7zNpwyN2AIO2zMbAkv4tkUvvnzq60MpU
+         Mk+XluudfxBclCvn62vn10P7IdbIePv0whm0BqlO7wIM9xnrpjHpzPrADRNhVu1dTICc
+         YebMBvsSwUZRv5ihRK1jdzuzC+JDZjTwXYsn76Fh7cVPSwnv6f/wc1yGKPRS+QnRwb/Y
+         YZh2kGWvySSyv7ED1hPyIq1kVhzV/ia68hb+vCvRekikiSbAVhnKa7g2Qgj2FaJ5HKZv
+         GrI+uvdwFh2471f3PKNan+0N80cDhoFmig59SSNbzBWRoA75fOp2+Gw+Y3RVwGMQW7VC
+         DC/Q==
+X-Gm-Message-State: AO0yUKWLbO0nQGBg4plM8uMJplHC7hvi3/gb2WHATVHMWp2fnTaQEZng
+        qpbcve8bDsdQS3Qaxu17ENbhIgfEq8d+Ww==
+X-Google-Smtp-Source: AK7set9lTERL34FBRNIipit8w0qwmE6L0+mhtwG5LjWIAuHRB7gMRSprRagWnvLHUtpKuQUYtMLfrg==
+X-Received: by 2002:a05:6a20:8ee2:b0:d7:47e8:59bd with SMTP id m34-20020a056a208ee200b000d747e859bdmr2012753pzk.60.1679653013059;
+        Fri, 24 Mar 2023 03:16:53 -0700 (PDT)
+Received: from Gentoo (n220246252084.netvigator.com. [220.246.252.84])
+        by smtp.gmail.com with ESMTPSA id d2-20020a639742000000b00502e7115cbdsm10413239pgo.51.2023.03.24.03.16.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Mar 2023 03:16:52 -0700 (PDT)
+Date:   Fri, 24 Mar 2023 18:16:44 +0800
+From:   Jianhua Lu <lujianhua000@gmail.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
+        gregkh@linuxfoundation.org, andersson@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, wcheng@codeaurora.org,
+        caleb.connolly@linaro.org, konrad.dybcio@linaro.org,
+        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
+Subject: Re: [PATCH v4 12/18] usb: typec: qcom: Add Qualcomm PMIC TCPM support
+Message-ID: <ZB14jJNUhHGBl7Az@Gentoo>
+References: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
+ <20230318121828.739424-13-bryan.odonoghue@linaro.org>
+ <ZBxkB04KqY8WbeA1@Gentoo>
+ <89bca327-a860-672c-b4ae-766698d38639@linaro.org>
+ <ZBzyK0ILtUDr986r@Gentoo>
+ <37d14447-0f10-be88-9cd9-8ebd30f1d006@linaro.org>
+ <ZBz5OvauxQ2PWcHu@Gentoo>
+ <40503ba8-7a38-0d1d-1d59-82101a0ce92e@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230323174026.950622-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <40503ba8-7a38-0d1d-1d59-82101a0ce92e@linaro.org>
+X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 23, 2023 at 06:40:26PM +0100, Krzysztof Kozlowski wrote:
-> Commit 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data
-> during probe") moved getting memory resource and iomap from
-> qcom_cpufreq_hw_cpu_init() to the probe function, however it left
-> untouched cleanup in qcom_cpufreq_hw_cpu_exit().
+On Fri, Mar 24, 2023 at 02:37:15AM +0000, Bryan O'Donoghue wrote:
+> On 24/03/2023 01:13, Jianhua Lu wrote:
+> >> Can you show the printout of *(pmic_typec->base + TYPEC_SM_STATUS_REG) ?
 > 
-> During device unbind this will lead to doule release of resource and
-> double iounmap(), first by qcom_cpufreq_hw_cpu_exit() and second via
-> managed resources:
+> [   17.108819] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: 
+> qcom_pmic_typec_port_set_vbus misc 0x000000cb
 > 
->   resource: Trying to free nonexistent resource <0x0000000018593000-0x0000000018593fff>
->   Trying to vunmap() nonexistent vm area (0000000088a7d4dc)
->   ...
->   vunmap (mm/vmalloc.c:2771 (discriminator 1))
->   iounmap (mm/ioremap.c:60)
->   devm_ioremap_release (lib/devres.c:19)
->   devres_release_all (drivers/base/devres.c:506 drivers/base/devres.c:535)
->   device_unbind_cleanup (drivers/base/dd.c:523)
->   device_release_driver_internal (drivers/base/dd.c:1248 drivers/base/dd.c:1263)
->   device_driver_detach (drivers/base/dd.c:1300)
->   unbind_store (drivers/base/bus.c:243)
->   drv_attr_store (drivers/base/bus.c:127)
->   sysfs_kf_write (fs/sysfs/file.c:137)
->   kernfs_fop_write_iter (fs/kernfs/file.c:334)
->   vfs_write (include/linux/fs.h:1851 fs/read_write.c:491 fs/read_write.c:584)
->   ksys_write (fs/read_write.c:637)
->   __arm64_sys_write (fs/read_write.c:646)
->   invoke_syscall (arch/arm64/include/asm/current.h:19 arch/arm64/kernel/syscall.c:57)
->   el0_svc_common.constprop.0 (arch/arm64/include/asm/daifflags.h:28 arch/arm64/kernel/syscall.c:150)
->   do_el0_svc (arch/arm64/kernel/syscall.c:194)
->   el0_svc (arch/arm64/include/asm/daifflags.h:28 arch/arm64/kernel/entry-common.c:133 arch/arm64/kernel/entry-common.c:142 arch/arm64/kernel/entry-common.c:638)
->   el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:656)
->   el0t_64_sync (arch/arm64/kernel/entry.S:591)
+> [   17.118659] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: 
+> qcom_pmic_typec_port_set_vbus sm_status 0x000000b9
 > 
-> Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
-> Cc: <stable@vger.kernel.org>
-> Cc: Manivannan Sadhasivam <mani@kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> SM_STAT == 0xb9 => 10111001
+When I connect my device to a usb hub with external power supply, it show
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+[ 1495.622026] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: 
+get_cc: misc 0x000000c9 cc1 0x00000002 Rd cc2 0x00000000 Open attached 1 cc=cc2
+[ 1495.622383] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: 
+get_cc: misc 0x000000c9 cc1 0x00000002 Rd cc2 0x00000000 Open attached 1 cc=cc2
+[ 1495.824637] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: 
+qcom_pmic_typec_set_vbus sm_stat output 0x000000b9
+[ 1495.824667] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: 
+qcom_pmic_typec_set_vbus misc 0x000000c9
+[ 1495.824685] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: 
+qcom_pmic_typec_set_vbus sm_status 0x000000b9
+[ 1495.824739] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: 
+set_cc: currsrc=1 Rp-1.5-180uA mode EN_SRC_ONLY debounce 1 attached 1 cc=cc2
+[ 1495.829001] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: Debounce cc complete
 
-Thanks,
-Mani
-
+I think my device's pm8150b is connected to charger pump but this charger
+driver hasn't been implement, so can't detect pm8150b_vbus.
+> 
+> In other words, my hardware gives a clear indication of the appropriate 
+> transition.
+> 
+> Would appreciate if you could apply the above "patch"
+> 
+> That said I _am_ included to believe you and to do something about it, I 
+> will downgrade to a warning instead of returning on error in failure to 
+> transition to VSafeVX
+Your patch is correct. Making it warning let other devices' type-c work normally.
+I agree with your idea.
+> 
+> Yeah though I'd appreciate seeing the output of the above patch to see 
+> if there's something we are missing.
+> 
+> Thanks for your review/time/input
+> 
 > ---
->  drivers/cpufreq/qcom-cpufreq-hw.c | 11 ++---------
->  1 file changed, 2 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> index 2f581d2d617d..b2d2907200a9 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> @@ -43,7 +43,6 @@ struct qcom_cpufreq_soc_data {
->  
->  struct qcom_cpufreq_data {
->  	void __iomem *base;
-> -	struct resource *res;
->  
->  	/*
->  	 * Mutex to synchronize between de-init sequence and re-starting LMh
-> @@ -590,16 +589,12 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
->  {
->  	struct device *cpu_dev = get_cpu_device(policy->cpu);
->  	struct qcom_cpufreq_data *data = policy->driver_data;
-> -	struct resource *res = data->res;
-> -	void __iomem *base = data->base;
->  
->  	dev_pm_opp_remove_all_dynamic(cpu_dev);
->  	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
->  	qcom_cpufreq_hw_lmh_exit(data);
->  	kfree(policy->freq_table);
->  	kfree(data);
-> -	iounmap(base);
-> -	release_mem_region(res->start, resource_size(res));
->  
->  	return 0;
->  }
-> @@ -718,17 +713,15 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
->  	for (i = 0; i < num_domains; i++) {
->  		struct qcom_cpufreq_data *data = &qcom_cpufreq.data[i];
->  		struct clk_init_data clk_init = {};
-> -		struct resource *res;
->  		void __iomem *base;
->  
-> -		base = devm_platform_get_and_ioremap_resource(pdev, i, &res);
-> +		base = devm_platform_ioremap_resource(pdev, i);
->  		if (IS_ERR(base)) {
-> -			dev_err(dev, "Failed to map resource %pR\n", res);
-> +			dev_err(dev, "Failed to map resource index %d\n", i);
->  			return PTR_ERR(base);
->  		}
->  
->  		data->base = base;
-> -		data->res = res;
->  
->  		/* Register CPU clock for each frequency domain */
->  		clk_init.name = kasprintf(GFP_KERNEL, "qcom_cpufreq%d", i);
-> -- 
-> 2.34.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+> bod
