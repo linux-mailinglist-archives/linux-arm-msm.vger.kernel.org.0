@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 166286C8E39
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Mar 2023 13:34:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 738F96C8E41
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Mar 2023 13:36:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230043AbjCYMes (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Mar 2023 08:34:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37758 "EHLO
+        id S231667AbjCYMgz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Mar 2023 08:36:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229724AbjCYMer (ORCPT
+        with ESMTP id S229588AbjCYMgy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Mar 2023 08:34:47 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEB4711E8E
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Mar 2023 05:34:44 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id z42so4292340ljq.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Mar 2023 05:34:44 -0700 (PDT)
+        Sat, 25 Mar 2023 08:36:54 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB2CE1206C
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Mar 2023 05:36:48 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id h25so5534593lfv.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Mar 2023 05:36:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679747683;
+        d=linaro.org; s=google; t=1679747807;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ReaitnulF0uvcbnJN/ZIznGLjoRUBo7klDqiFoHvWtw=;
-        b=ubS4XGL1CgHe0VLKLDvPwBoYczk7HRZk3AIOCTJX/oivKyZpNsNceToAhyXySJ5slO
-         RqsM09fpvlZjNaVr3CTLONpd437wfvRSSeAu3aqT0LC3GtELwL5eaQPTlDoRU0GtUQbI
-         Pk3KMPR5yqQ6Y7kJeJUxZL7E3/MVZXGBfrK3xBWCPd5nvM4ymS7TySne6heF/+UMkOIk
-         P1cfhBOH94lgqEkSQL1DDxSRCs3y0xJXZ+D4Nba0hen58RWxQ8p//k9ZX5FRHys3To87
-         uc1B6S+uDRIZp5zlqjbyxMjwlwyMtvdJPdJ9GHJ/hfe8wdmxIoMWzQDUYuI9VVTmxyHb
-         fYyg==
+        bh=wy4d61Q0Hsu6MeQ4VqMI6uU0acyT/NBFlJjng5PRhcA=;
+        b=AmOng/Z7bfIV4y3J8uDc4+GmHUggbIAYbYkL9e9/pud4mity0v0quHx2V2MCIxP3Q+
+         v3/cwN1/m7NdSB0k/RmImyzxpQmqbHa1llD/reJEfBAXbP1YCywkJ9rOpZy7lKAF5n2K
+         nxaTGcbYeXdyzauE/Si5ir+L0g468Hz7wNjJGhTos1n/t/w2gJDt97X/7IMFzWpUY83c
+         AZNLCztdA+PDFrFK1/GeN8hxKSdReLTAqrFgdGoIjodlu+ffD/dKnD/578FLFTQbkp4v
+         0wjR+vuVPtTYEUXySq2arNgZvWfaRGO/RM1ehiTNX+LOf2Vy9T9nLSzxBxSaiNz+8LJ/
+         FYvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679747683;
+        d=1e100.net; s=20210112; t=1679747807;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ReaitnulF0uvcbnJN/ZIznGLjoRUBo7klDqiFoHvWtw=;
-        b=vyG6BJjHw/r3vIDPuDUoiz9NmlPOwMGj62ByghSIKP5Y3pzjVQSkZj725JUf5PN8+u
-         fhIziVk8Nj3P/n4TWyUz8ngJkzGNdh4YpqtrGrLhJuTcmesOvZvyXPYLaW4aiVE5zwG5
-         8EHZyyBGtA5OQGKtsIpTnGlyUtLqkqXsxPh1s5OW6KkGIsoJuTu9e/FryuCl7xFbvcSk
-         KcV3afp0XS8a1mlzFPn2cRsjyq0z0luqXdSwkuDK2hSvLPHDYwnMfgJxF/Agu2yudwZF
-         sj1UufQgEP0nuNu0HpvWqNagNv1yCMoLrJ0KB1YKCiaZ21rk1dGrgIVce1Smf69Q6k1X
-         yakQ==
-X-Gm-Message-State: AAQBX9cvxMxfslFFxe95WRg/+QQwts8WX6sANdjPkGMduaBNrln69gE2
-        qf61AVHGOKkfwvtmgbXYVnDr5A==
-X-Google-Smtp-Source: AKy350Y2mOiNMM9C484HSrd97DejL81sxYasaUolSYbAc2sxrau5iM7eUMwOfPCtIdyxD5GnFzf/GQ==
-X-Received: by 2002:a2e:9001:0:b0:29f:6fd7:697c with SMTP id h1-20020a2e9001000000b0029f6fd7697cmr1731628ljg.28.1679747682973;
-        Sat, 25 Mar 2023 05:34:42 -0700 (PDT)
+        bh=wy4d61Q0Hsu6MeQ4VqMI6uU0acyT/NBFlJjng5PRhcA=;
+        b=EM6E1D2PIfBYD48xgVlaqw3SVEJBRcHAhIOq3xFtjBzm13ZvbbNi+L8lFTd5KWkOsw
+         8PM7waXcjJVyv3qHck5E0hcksUIWn40BcHSx75t9+wv52MUn011ES0z042Rj9Ic9KnNF
+         v9zxjhFMzjHeG2Vy3H27ywpSdceZcVoJVk+QL2pRkMwQCN2dYyQ2Vpo0luiac/kpAe+O
+         c9Qt2ZtA1H3+PJaJildDppcdvADZTi/qxT6CbiyMHTItWQLiPGarn5lCNKLGvXg4PIfY
+         Q0kJ7eiHOoabZd9jPR2GfjISQplzFQf6Cetp2Wevt78Ve4GCGjNWDRViCalTfIhL0M3T
+         DARg==
+X-Gm-Message-State: AAQBX9dh10i3prkGsLUeaA9B5ZIPisKM3wB9h7GkGQOi+m32oaGoILyl
+        dmK/JOdcwDCiiccpRjlFePdiTQ==
+X-Google-Smtp-Source: AKy350aceE9ftA30lFJ6bJfvEmdDq4Y5MbaiAqlSCHR+z8Q9+IdqQqYkBGfSPigGkQ5amAvuEuHOlA==
+X-Received: by 2002:ac2:54a1:0:b0:4e0:dfd0:fa9 with SMTP id w1-20020ac254a1000000b004e0dfd00fa9mr1499237lfk.56.1679747806949;
+        Sat, 25 Mar 2023 05:36:46 -0700 (PDT)
 Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id u3-20020a2e9f03000000b002a2b9d9429esm856638ljk.117.2023.03.25.05.34.41
+        by smtp.gmail.com with ESMTPSA id w16-20020a05651203d000b004e843d6244csm3806022lfp.99.2023.03.25.05.36.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Mar 2023 05:34:42 -0700 (PDT)
-Message-ID: <bfc64e55-3c06-e36b-70cc-33a0303681be@linaro.org>
-Date:   Sat, 25 Mar 2023 13:34:41 +0100
+        Sat, 25 Mar 2023 05:36:46 -0700 (PDT)
+Message-ID: <967154b6-97a7-0c43-52cc-746274694c18@linaro.org>
+Date:   Sat, 25 Mar 2023 13:36:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v2 10/12] arm64: dts: qcom: Introduce the SC8180x platform
+Subject: Re: [PATCH v2 11/12] arm64: dts: qcom: sc8180x: Introduce Primus
 Content-Language: en-US
 To:     Vinod Koul <vkoul@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>
@@ -65,9 +65,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230325122444.249507-1-vkoul@kernel.org>
- <20230325122444.249507-11-vkoul@kernel.org>
+ <20230325122444.249507-12-vkoul@kernel.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230325122444.249507-11-vkoul@kernel.org>
+In-Reply-To: <20230325122444.249507-12-vkoul@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -85,704 +85,1082 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 25.03.2023 13:24, Vinod Koul wrote:
 > From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Introduce a base dtsi for the Qualcomm SC8180x platform, with CPUs,
-> global clock controller, SMMU, rpmh clocks, rpmh power-domains, CPUfreq,
-> QUP blocks, UFS, USB, ADSP, CDSP and MPSS and WiFi.
+> Introduce support for the SC8180X reference device, aka Primus, with
+> debug UART, regulators, UFS and USB support.
 > 
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc8180x.dtsi | 3950 +++++++++++++++++++++++++
->  1 file changed, 3950 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc8180x.dtsi
+Please introduce PMICs in a separate commit. On top of that,
+the previous patch (in a very slim and basic version) should
+have been combined with (a very slim and basic version) this
+patch so that we don't introduce code that never compiles.
+
+And the patches are missing your (as the sender) S-o-bs.
+
+Please run them through dtbs_check and checkpatch.pl --strict,
+I think it should have pointed some of that out.
+
+Konrad
+>  arch/arm64/boot/dts/qcom/Makefile           |   1 +
+>  arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi | 326 +++++++++
+>  arch/arm64/boot/dts/qcom/sc8180x-primus.dts | 706 ++++++++++++++++++++
+>  3 files changed, 1033 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc8180x-primus.dts
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 31aa54f0428c..fdce44a7a902 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -141,6 +141,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-zombie-nvme-lte.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd-r3.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc8180x-primus.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc8280xp-crd.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc8280xp-lenovo-thinkpad-x13s.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sda660-inforce-ifc6560.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
 > new file mode 100644
-> index 000000000000..4d4ee6bc91e5
+> index 000000000000..49c146b6f37f
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-> @@ -0,0 +1,3950 @@
+> +++ b/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
+> @@ -0,0 +1,326 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2021-2022, Linaro Limited
+> + */
+> +
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/interrupt-controller/irq.h>
+> +#include <dt-bindings/spmi/spmi.h>
+> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
+> +
+> +/ {
+> +	thermal-zones {
+> +		pmc8180-thermal {
+> +			polling-delay-passive = <100>;
+> +			polling-delay = <0>;
+> +
+> +			thermal-sensors = <&pmc8180_temp>;
+> +
+> +			trips {
+> +				trip0 {
+> +					temperature = <95000>;
+> +					hysteresis = <0>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip1 {
+> +					temperature = <115000>;
+> +					hysteresis = <0>;
+> +					type = "hot";
+> +				};
+> +
+> +				trip2 {
+> +					temperature = <145000>;
+> +					hysteresis = <0>;
+> +					type = "critical";
+> +				};
+> +			};
+> +		};
+> +
+> +		pmc8180c-thermal {
+> +			polling-delay-passive = <100>;
+> +			polling-delay = <0>;
+> +
+> +			thermal-sensors = <&pmc8180c_temp>;
+> +
+> +			trips {
+> +				trip0 {
+> +					temperature = <95000>;
+> +					hysteresis = <0>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip1 {
+> +					temperature = <115000>;
+> +					hysteresis = <0>;
+> +					type = "hot";
+> +				};
+> +
+> +				trip2 {
+> +					temperature = <145000>;
+> +					hysteresis = <0>;
+> +					type = "critical";
+> +				};
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&spmi_bus {
+> +	pmc8180_0: pmic@0 {
+> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
+> +		reg = <0x0 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pon: power-on@800 {
+> +			compatible = "qcom,pm8916-pon";
+> +			reg = <0x0800>;
+> +			pwrkey {
+> +				compatible = "qcom,pm8941-pwrkey";
+> +				interrupts = <0x0 0x8 0x0 IRQ_TYPE_EDGE_BOTH>;
+> +				debounce = <15625>;
+> +				bias-pull-up;
+> +				linux,code = <KEY_POWER>;
+> +
+> +				status = "disabled";
+> +			};
+> +		};
+> +
+> +		pmc8180_temp: temp-alarm@2400 {
+> +			compatible = "qcom,spmi-temp-alarm";
+> +			reg = <0x2400>;
+> +			interrupts = <0x0 0x24 0x0 IRQ_TYPE_EDGE_BOTH>;
+> +			io-channels = <&pmc8180_adc ADC5_DIE_TEMP>;
+> +			io-channel-names = "thermal";
+> +			#thermal-sensor-cells = <0>;
+> +		};
+> +
+> +		pmc8180_adc: adc@3100 {
+> +			compatible = "qcom,spmi-adc5";
+> +			reg = <0x3100>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			#io-channel-cells = <1>;
+> +			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
+> +
+> +			ref-gnd@0 {
+> +				reg = <ADC5_REF_GND>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "ref_gnd";
+> +			};
+> +
+> +			vref-1p25@1 {
+> +				reg = <ADC5_1P25VREF>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "vref_1p25";
+> +			};
+> +
+> +			die-temp@6 {
+> +				reg = <ADC5_DIE_TEMP>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "die_temp";
+> +			};
+> +		};
+> +
+> +		pmc8180_adc_tm: adc-tm@3500 {
+> +			compatible = "qcom,spmi-adc-tm5";
+> +			reg = <0x3500>;
+> +			interrupts = <0x0 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
+> +			#thermal-sensor-cells = <1>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			status = "disabled";
+> +		};
+> +
+> +		rtc@6000 {
+> +			compatible = "qcom,pm8941-rtc";
+> +			reg = <0x6000>;
+> +			reg-names = "rtc", "alarm";
+> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
+> +		};
+> +
+> +		pmc8180_gpios: gpio@c000 {
+> +			compatible = "qcom,pmc8180-gpio";
+> +			reg = <0xc000>;
+> +			gpio-controller;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +
+> +	pmic@1 {
+> +		compatible = "qcom,pmc8180", "qcom,spmi-pmic";
+> +		reg = <0x1 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +	};
+> +
+> +	pmic@2 {
+> +		compatible = "qcom,smb2351", "qcom,spmi-pmic";
+> +		reg = <0x2 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		adc@3100 {
+> +			compatible = "qcom,spmi-adc-rev2";
+> +			reg = <0x3100>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			#io-channel-cells = <1>;
+> +			interrupts = <0x2 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
+> +
+> +			ref-gnd@0 {
+> +				reg = <ADC5_REF_GND>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "ref_gnd";
+> +			};
+> +
+> +			vref-1p25@1 {
+> +				reg = <ADC5_1P25VREF>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "vref_1p25";
+> +			};
+> +
+> +			vcoin@85 {
+> +				reg = <0x85>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "vcoin2";
+> +			};
+> +		};
+> +	};
+> +
+> +	pmic@6 {
+> +		compatible = "qcom,pm8150c", "qcom,spmi-pmic";
+> +		reg = <0x6 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +	};
+> +
+> +	pmic@8 {
+> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
+> +		reg = <0x8 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +	};
+> +
+> +	pmic@a {
+> +		compatible = "qcom,smb2351", "qcom,spmi-pmic";
+> +		reg = <0xa SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		adc@3100 {
+> +			compatible = "qcom,spmi-adc-rev2";
+> +			reg = <0x3100>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			#io-channel-cells = <1>;
+> +			interrupts = <0xa 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
+> +
+> +			ref-gnd@0 {
+> +				reg = <ADC5_REF_GND>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "ref_gnd";
+> +			};
+> +
+> +			vref-1p25@1 {
+> +				reg = <ADC5_1P25VREF>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "vref_1p25";
+> +			};
+> +
+> +			vcoin@85 {
+> +				reg = <0x85>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "vcoin";
+> +			};
+> +		};
+> +	};
+> +
+> +	pmic@4 {
+> +		compatible = "qcom,pm8150c", "qcom,spmi-pmic";
+> +		reg = <0x4 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		power-on@800 {
+> +			compatible = "qcom,pm8916-pon";
+> +			reg = <0x0800>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+> +		pmc8180c_temp: temp-alarm@2400 {
+> +			compatible = "qcom,spmi-temp-alarm";
+> +			reg = <0x2400>;
+> +			interrupts = <0x4 0x24 0x0 IRQ_TYPE_EDGE_BOTH>;
+> +			io-channels = <&pmc8180c_adc ADC5_DIE_TEMP>;
+> +			io-channel-names = "thermal";
+> +			#thermal-sensor-cells = <0>;
+> +		};
+> +
+> +		pmc8180c_adc: adc@3100 {
+> +			compatible = "qcom,spmi-adc5";
+> +			reg = <0x3100>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			#io-channel-cells = <1>;
+> +			interrupts = <0x4 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
+> +
+> +			ref-gnd@0 {
+> +				reg = <ADC5_REF_GND>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "ref_gnd";
+> +			};
+> +
+> +			vref-1p25@1 {
+> +				reg = <ADC5_1P25VREF>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "vref_1p25";
+> +			};
+> +
+> +			die-temp@6 {
+> +				reg = <ADC5_DIE_TEMP>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "die_temp";
+> +			};
+> +		};
+> +
+> +		pmc8180c_adc_tm: adc-tm@3500 {
+> +			compatible = "qcom,spmi-adc-tm5";
+> +			reg = <0x3500>;
+> +			interrupts = <0x4 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
+> +			#thermal-sensor-cells = <1>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			status = "disabled";
+> +		};
+> +
+> +		pmc8180c_gpios: gpio@c000 {
+> +			compatible = "qcom,pmc8180c-gpio";
+> +			reg = <0xc000>;
+> +			gpio-controller;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +
+> +	pmic@5 {
+> +		compatible = "qcom,pmc8180c", "qcom,spmi-pmic";
+> +		reg = <0x5 SPMI_USID>;
+> +
+> +		pmc8180c_lpg: lpg {
+> +			compatible = "qcom,pmc8180c-lpg";
+> +
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			#pwm-cells = <2>;
+> +
+> +			status = "disabled";
+> +		};
+> +	};
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+> new file mode 100644
+> index 000000000000..9f365fccae78
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+> @@ -0,0 +1,706 @@
 > +// SPDX-License-Identifier: BSD-3-Clause
 > +/*
 > + * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
 > + * Copyright (c) 2020-2023, Linaro Limited
 > + */
 > +
-> +#include <dt-bindings/clock/qcom,dispcc-sm8250.h>
-> +#include <dt-bindings/clock/qcom,gcc-sc8180x.h>
-> +#include <dt-bindings/clock/qcom,gpucc-sm8150.h>
-> +#include <dt-bindings/clock/qcom,rpmh.h>
-> +#include <dt-bindings/interconnect/qcom,osm-l3.h>
-> +#include <dt-bindings/interconnect/qcom,sc8180x.h>
-> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/power/qcom-rpmpd.h>
-> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +#include <dt-bindings/thermal/thermal.h>
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/input/gpio-keys.h>
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include "sc8180x.dtsi"
+> +#include "sc8180x-pmics.dtsi"
 > +
 > +/ {
-> +	interrupt-parent = <&intc>;
+> +	model = "Qualcomm SC8180x Primus";
+> +	compatible = "qcom,sc8180x-primus", "qcom,sc8180x";
 > +
-> +	#address-cells = <2>;
-> +	#size-cells = <2>;
+> +	aliases {
+> +		serial0 = &uart12;
+> +		serial1 = &uart13;
+> +	};
 > +
-> +	clocks {
-> +		xo_board_clk: xo-board {
-> +			compatible = "fixed-clock";
-> +			#clock-cells = <0>;
-> +			clock-frequency = <38400000>;
+> +	backlight: backlight {
+> +		compatible = "pwm-backlight";
+> +		pwms = <&pmc8180c_lpg 4 1000000>;
+> +		enable-gpios = <&pmc8180c_gpios 8 GPIO_ACTIVE_HIGH>;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&bl_pwm_default>;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&hall_int_active_state>;
+> +
+> +		lid-switch {
+> +			gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>;
+> +			linux,input-type = <EV_SW>;
+> +			linux,code = <SW_LID>;
+> +			wakeup-source;
+> +			wakeup-event-action = <EV_ACT_DEASSERTED>;
 > +		};
-> +
-> +		sleep_clk: sleep-clk {
-> +			compatible = "fixed-clock";
-> +			#clock-cells = <0>;
-> +			clock-frequency = <32764>;
-> +			clock-output-names = "sleep_clk";
-> +		};
 > +	};
 > +
-> +	cpus {
-> +		#address-cells = <2>;
-> +		#size-cells = <0>;
-> +
-> +		CPU0: cpu@0 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo485";
-> +			reg = <0x0 0x0>;
-Please add clocks = <&cpufreq_hw n>;
- 
-> +			enable-method = "psci";
-> +			capacity-dmips-mhz = <602>;
-> +			next-level-cache = <&L2_0>;
-> +			qcom,freq-domain = <&cpufreq_hw 0>;
-> +			operating-points-v2 = <&cpu0_opp_table>;
-> +			interconnects = <&gem_noc MASTER_AMPSS_M0 3 &mc_virt SLAVE_EBI_CH0 3>,
-> +					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
-> +			power-domains = <&CPU_PD0>;
-> +			power-domain-names = "psci";
-> +			#cooling-cells = <2>;
-Add a newline before subnodes, please.
-
-> +			L2_0: l2-cache {
-> +				compatible = "cache";
-> +				next-level-cache = <&L3_0>;
-> +				L3_0: l3-cache {
-> +				      compatible = "cache";
-> +				};
-> +			};
-> +		};
-> +
-[...]
-
-> +
-> +	cpu0_opp_table: opp-table-cpu0 {
-> +		compatible = "operating-points-v2";
-> +		opp-shared;
-> +
-> +		opp-300000000 {
-> +			opp-hz = /bits/ 64 <300000000>;
-> +			opp-peak-kBps = <800000 9600000>;
-Maybe adding bwmon from the get-go would be better than statically
-scaling DDR freq?
-
-[...]
-
-> +	camnoc_virt: interconnect-0{
-Missing space before {
-> +		compatible = "qcom,sc8180x-camnoc-virt";
-> +		#interconnect-cells = <2>;
-> +		qcom,bcm-voters = <&apps_bcm_voter>;
-> +	};
-> +
-> +	mc_virt: interconnect-mc-virt {
-Please be consistent with your naming.
-
-> +		compatible = "qcom,sc8180x-mc-virt";
-> +		#interconnect-cells = <2>;
-> +		qcom,bcm-voters = <&apps_bcm_voter>;
-> +	};
-> +
-> +	qup_virt: interconnect-qup-virt {
-> +		compatible = "qcom,sc8180x-qup-virt";
-> +		#interconnect-cells = <2>;
-> +		qcom,bcm-voters = <&apps_bcm_voter>;
-> +	};
-> +
-[...]
-
 > +	reserved-memory {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
+> +		rmtfs_mem: rmtfs-region@85500000 {
+> +			compatible = "qcom,rmtfs-mem";
+> +			reg = <0x0 0x85500000 0x0 0x200000>;
+> +			no-map;
 > +
-> +		hyp_mem: hyp-region@85700000 {
-the -region seems a bit unnecessary in all of these nodes
-
-> +			reg = <0x0 0x85700000 0x0 0x600000>;
+> +			qcom,client-id = <1>;
+> +			qcom,vmid = <15>;
+> +		};
+> +
+> +		wlan_mem: wlan-region@8bc00000 {
+> +			reg = <0x0 0x8bc00000 0x0 0x180000>;
 > +			no-map;
 > +		};
 > +
-[...]
-
-> +
-> +	soc: soc@0 {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges = <0 0 0 0 0x10 0>;
-> +		dma-ranges = <0 0 0 0 0x10 0>;
-> +		compatible = "simple-bus";
-compat
-addr-cells
-size-cella
-ranges
-dma-ranges
-
-please
-
-> +
-> +		gcc: clock-controller@100000 {
-> +			compatible = "qcom,gcc-sc8180x";
-> +			reg = <0x0 0x00100000 0x0 0x1f0000>;
-> +			#clock-cells = <1>;
-> +			#reset-cells = <1>;
-> +			#power-domain-cells = <1>;
-> +			clock-names = "bi_tcxo",
-> +				      "bi_tcxo_ao",
-> +				      "sleep_clk";
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK_A>,
-> +				 <&sleep_clk>;
-property before property-names
-
-
+> +		adsp_mem: adsp-region@96e00000 {
+> +			reg = <0x0 0x96e00000 0x0 0x1c00000>;
+> +			no-map;
 > +		};
 > +
-> +		qupv3_id_0: geniqup@8c0000 {
-> +			compatible = "qcom,geni-se-qup";
-> +			reg = <0 0x008c0000 0 0x6000>;
-> +			clock-names = "m-ahb", "s-ahb";
-> +			clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
-> +				 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +			iommus = <&apps_smmu 0x4c3 0>;
-> +			status = "disabled";
-> +
-> +			i2c0: i2c@880000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00880000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
-property before property-names
-
-Please split QUPs into a separate patch, this one is way
-too big.
-
-[...]
-
-> +		config_noc: interconnect@1500000 {
-Interconnect could also realistically go to a separate patch.
-
-> +			compatible = "qcom,sc8180x-config-noc";
-> +			reg = <0 0x01500000 0 0x7400>;
-> +			#interconnect-cells = <2>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		mpss_mem: mpss-region@8d800000 {
+> +			reg = <0x0 0x8d800000 0x0 0x9600000>;
+> +			no-map;
 > +		};
 > +
-> +		system_noc: interconnect@1620000 {
-> +			compatible = "qcom,sc8180x-system-noc";
-> +			reg = <0 0x01620000 0 0x19400>;
-> +			#interconnect-cells = <2>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		gpu_mem: gpu-region@98a00000 {
+> +			reg = <0x0 0x98a00000 0x0 0x2000>;
+> +			no-map;
 > +		};
 > +
-> +		aggre1_noc: interconnect@16e0000 {
-> +			compatible = "qcom,sc8180x-aggre1-noc";
-> +			reg = <0 0x016e0000 0 0xd080>;
-> +			#interconnect-cells = <2>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		reserved-region@9a500000 {
+> +			reg = <0x0 0x9a500000 0x0 0x600000>;
+> +			no-map;
+> +		};
+> +	};
+> +
+> +	vreg_nvme_0p9: nvme-0p9-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vreg_nvme_0p9";
+> +
+> +		regulator-min-microvolt = <900000>;
+> +		regulator-max-microvolt = <900000>;
+> +
+> +		regulator-always-on;
+> +	};
+> +
+> +	vreg_nvme_3p3: nvme-3p3-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vreg_nvme_3p3";
+> +
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&pmc8180c_gpios 11 0>;
+> +		enable-active-high;
+> +
+> +		regulator-always-on;
+> +	};
+> +
+> +	vdd_kb_tp_3v3: vdd-kb-tp-3v3-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vdd_kb_tp_3v3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&tlmm 4 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		regulator-always-on;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&kb_tp_3v3_en_active_state>;
+> +	};
+> +
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-min-microvolt = <3700000>;
+> +		regulator-max-microvolt = <3700000>;
+> +	};
+> +
+> +	vreg_s4a_1p8: pm8150-s4 {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vreg_s4a_1p8";
+> +
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +
+> +		vin-supply = <&vph_pwr>;
+> +	};
+> +};
+> +
+> +&apps_rsc {
+> +	pmc8180-a-rpmh-regulators {
+> +		compatible = "qcom,pmc8180-rpmh-regulators";
+> +		qcom,pmic-id = "a";
+> +
+> +		vdd-s5-supply = <&vph_pwr>;
+> +		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p0>;
+> +
+> +		vreg_s5a_2p0: smps5 {
+> +			regulator-min-microvolt = <2040000>;
+> +			regulator-max-microvolt = <2100000>;
 > +		};
 > +
-> +		aggre2_noc: interconnect@1700000 {
-> +			compatible = "qcom,sc8180x-aggre2-noc";
-> +			reg = <0 0x01700000 0 0x20000>;
-> +			#interconnect-cells = <2>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		vreg_l7a_1p8: ldo7 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-> +		compute_noc: interconnect@1720000 {
-> +			compatible = "qcom,sc8180x-compute-noc";
-> +			reg = <0 0x01720000 0 0x7000>;
-> +			#interconnect-cells = <2>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		vreg_l9a_1p3: ldo9 {
+> +			regulator-min-microvolt = <1296000>;
+> +			regulator-max-microvolt = <1304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-> +		mmss_noc: interconnect@1740000 {
-> +			compatible = "qcom,sc8180x-mmss-noc";
-> +			reg = <0 0x01740000 0 0x1c100>;
-> +			#interconnect-cells = <2>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		vreg_l12a_1p8: ldo12 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	pmc8180c-rpmh-regulators {
+> +		compatible = "qcom,pmc8180c-rpmh-regulators";
+> +		qcom,pmic-id = "c";
+> +
+> +		vdd-s6-supply = <&vph_pwr>;
+> +		vdd-s8-supply = <&vph_pwr>;
+> +		vdd-l2-l3-supply = <&vreg_s6c_1p35>;
+> +		vdd-bob-supply = <&vph_pwr>;
+> +
+> +		vreg_s6c_1p35: smps6 {
+> +			regulator-min-microvolt = <1350000>;
+> +			regulator-max-microvolt = <1372000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-[...]
-
-> +		pcie0: pci@1c00000 {
-And PCIe
-
-> +			compatible = "qcom,pcie-sc8180x";
-> +			reg = <0 0x01c00000 0 0x3000>,
-> +			      <0 0x60000000 0 0xf1d>,
-> +			      <0 0x60000f20 0 0xa8>,
-> +			      <0 0x60001000 0 0x1000>,
-> +			      <0 0x60100000 0 0x100000>;
-> +			reg-names = "parf", "dbi", "elbi", "atu", "config";
-One per line, please
-
-
-[...]
-
-> +
-> +		ufs_mem_hc: ufshc@1d84000 {
-> +			compatible = "qcom,sc8180x-ufshc", "qcom,ufshc",
-> +				     "jedec,ufs-2.0";
-> +			reg = <0 0x01d84000 0 0x2500>;
-> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
-> +			phys = <&ufs_mem_phy_lanes>;
-> +			phy-names = "ufsphy";
-> +			lanes-per-direction = <2>;
-> +			#reset-cells = <1>;
-> +			resets = <&gcc GCC_UFS_PHY_BCR>;
-> +			reset-names = "rst";
-> +
-> +			iommus = <&apps_smmu 0x300 0>;
-> +
-> +			clock-names =
-No need for this weird newline split.
-
-Also, property before property-names.
-
-[...]
-
-
-> +
-> +		gpu: gpu@2c00000 {
-GPUSS and MDSS related nodes should also go to their separate,
-respective patches.
-
-[...]
-> +
-> +		remoteproc_mpss: remoteproc@4080000 {
-And remote procs as well
-
-> +			compatible = "qcom,sc8180x-mpss-pas";
-> +			reg = <0x0 0x04080000 0x0 0x4040>;
-> +
-[...]
-
-> +	thermal-zones {
-And thermal-zones as well.
-
-
-I'll go more in-depth after you split it up, this is pretty hard
-to review as-is.
-
-Konrad
-> +		cpu0-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens0 1>;
-> +
-> +			trips {
-> +				cpu-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
+> +		vreg_s8c_1p8: smps8 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-always-on;
 > +		};
 > +
-> +		cpu1-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens0 2>;
-> +
-> +			trips {
-> +				cpu-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
+> +		vreg_l3c_1p2: ldo3 {
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-> +		cpu2-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens0 3>;
-> +
-> +			trips {
-> +				cpu-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
+> +		vreg_l4c_3p3: ldo4 {
+> +			regulator-min-microvolt = <3008000>;
+> +			regulator-max-microvolt = <3008000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-> +		cpu3-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens0 4>;
-> +
-> +			trips {
-> +				cpu-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
+> +		vreg_l10c_3p3: ldo10 {
+> +			regulator-min-microvolt = <3000000>;
+> +			regulator-max-microvolt = <3312000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-> +		cpu4-top-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens0 7>;
-> +
-> +			trips {
-> +				cpu-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
+> +		vreg_l11c_3p3: ldo11 {
+> +			regulator-min-microvolt = <3296000>;
+> +			regulator-max-microvolt = <3304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-> +		cpu5-top-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
+> +		vreg_bob: bob {
+> +			regulator-min-microvolt = <3296000>;
+> +			regulator-max-microvolt = <3350000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
 > +
-> +			thermal-sensors = <&tsens0 8>;
+> +	pmc8180-e-rpmh-regulators {
+> +		compatible = "qcom,pmc8180-rpmh-regulators";
+> +		qcom,pmic-id = "e";
 > +
-> +			trips {
-> +				cpu-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
+> +		vdd-s4-supply = <&vph_pwr>;
+> +		vdd-s5-supply = <&vph_pwr>;
+> +		vdd-l2-l10-supply = <&vreg_bob>;
+> +		vdd-l3-l4-l5-l18-supply = <&vreg_s4e_0p98>;
+> +		vdd-l7-l12-l14-l15-supply = <&vreg_s5e_2p05>;
+> +		vdd-l13-l16-l17-supply = <&vreg_bob>;
+> +
+> +		vreg_s4e_0p98: smps4 {
+> +			regulator-min-microvolt = <992000>;
+> +			regulator-max-microvolt = <992000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-> +		cpu6-top-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens0 9>;
-> +
-> +			trips {
-> +				cpu-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
+> +		vreg_s5e_2p05: smps5 {
+> +			regulator-min-microvolt = <2040000>;
+> +			regulator-max-microvolt = <2040000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-> +		cpu7-top-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens0 10>;
-> +
-> +			trips {
-> +				cpu-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
+> +		vreg_l1e_0p75: ldo1 {
+> +			regulator-min-microvolt = <752000>;
+> +			regulator-max-microvolt = <752000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-> +		cpu4-bottom-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens0 11>;
-> +
-> +			trips {
-> +				cpu-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
+> +		vreg_l5e_0p88: ldo5 {
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <880000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-> +		cpu5-bottom-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens0 12>;
-> +
-> +			trips {
-> +				cpu-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
+> +		vreg_l7e_1p8: ldo7 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-> +		cpu6-bottom-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens0 13>;
-> +
-> +			trips {
-> +				cpu-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
+> +		vreg_l10e_2p9: ldo10 {
+> +			regulator-min-microvolt = <2904000>;
+> +			regulator-max-microvolt = <2904000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-> +		cpu7-bottom-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens0 14>;
-> +
-> +			trips {
-> +				cpu-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
+> +		vreg_l12e: ldo12 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
-> +		aoss0-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens0 0>;
-> +
-> +			trips {
-> +				trip-point0 {
-> +					temperature = <90000>;
-> +					hysteresis = <2000>;
-> +					type = "hot";
-> +				};
-> +			};
+> +		vreg_l16e_3p0: ldo16 {
+> +			regulator-min-microvolt = <3072000>;
+> +			regulator-max-microvolt = <3072000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
+> +	};
+> +};
 > +
-> +		cluster0-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
+> +&dispcc {
+> +	status = "okay";
+> +};
 > +
-> +			thermal-sensors = <&tsens0 5>;
+> +&gpu {
+> +	status = "okay";
 > +
-> +			trips {
-> +				cluster-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <2000>;
-> +					type = "critical";
-> +				};
-> +			};
-> +		};
+> +	zap-shader {
+> +		memory-region = <&gpu_mem>;
+> +		firmware-name = "qcom/sc8180x/qcdxkmsuc8180.mbn";
+> +	};
+> +};
 > +
-> +		cluster1-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
+> +&i2c1 {
+> +	clock-frequency = <100000>;
 > +
-> +			thermal-sensors = <&tsens0 6>;
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&ts_i2c_active_state>;
 > +
-> +			trips {
-> +				cluster-crit {
-> +					temperature = <110000>;
-> +					hysteresis = <2000>;
-> +					type = "critical";
-> +				};
-> +			};
-> +		};
+> +	status = "okay";
 > +
-> +		gpu-thermal-top {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
+> +	touchscreen@10 {
+> +		compatible = "hid-over-i2c";
+> +		reg = <0x10>;
+> +		hid-descr-addr = <0x1>;
 > +
-> +			thermal-sensors = <&tsens0 15>;
+> +		vdd-supply = <&vreg_l4c_3p3>;
+> +		vddl-supply = <&vreg_l12e>;
 > +
-> +			trips {
-> +				trip-point0 {
-> +					temperature = <90000>;
-> +					hysteresis = <2000>;
-> +					type = "hot";
-> +				};
-> +			};
-> +		};
+> +		post-power-on-delay-ms = <20>;
 > +
-> +		aoss1-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
+> +		interrupts-extended = <&tlmm 122 IRQ_TYPE_LEVEL_LOW>;
 > +
-> +			thermal-sensors = <&tsens1 0>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&ts_active_state>;
+> +	};
+> +};
 > +
-> +			trips {
-> +				trip-point0 {
-> +					temperature = <90000>;
-> +					hysteresis = <2000>;
-> +					type = "hot";
-> +				};
-> +			};
-> +		};
+> +&i2c7 {
+> +	clock-frequency = <100000>;
 > +
-> +		wlan-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&aux_i2c_active_state>;
 > +
-> +			thermal-sensors = <&tsens1 1>;
+> +	status = "okay";
 > +
-> +			trips {
-> +				trip-point0 {
-> +					temperature = <90000>;
-> +					hysteresis = <2000>;
-> +					type = "hot";
-> +				};
-> +			};
-> +		};
+> +	touchpad@15 {
+> +		compatible = "hid-over-i2c";
+> +		reg = <0x15>;
+> +		hid-descr-addr = <0x1>;
 > +
-> +		video-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
+> +		interrupts-extended = <&tlmm 24 IRQ_TYPE_LEVEL_LOW>;
 > +
-> +			thermal-sensors = <&tsens1 2>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&tp_int_active_state>;
 > +
-> +			trips {
-> +				trip-point0 {
-> +					temperature = <90000>;
-> +					hysteresis = <2000>;
-> +					type = "hot";
-> +				};
-> +			};
-> +		};
+> +		vdd-supply = <&vdd_kb_tp_3v3>;
+> +	};
 > +
-> +		mem-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
+> +	keyboard@3a {
+> +		compatible = "hid-over-i2c";
+> +		reg = <0x3a>;
+> +		hid-descr-addr = <0x1>;
+> +		interrupts-extended = <&tlmm 37 IRQ_TYPE_LEVEL_LOW>;
 > +
-> +			thermal-sensors = <&tsens1 3>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&kb_int_active_state>;
 > +
-> +			trips {
-> +				trip-point0 {
-> +					temperature = <90000>;
-> +					hysteresis = <2000>;
-> +					type = "hot";
-> +				};
-> +			};
-> +		};
+> +		vdd-supply = <&vdd_kb_tp_3v3>;
+> +	};
+> +};
 > +
-> +		q6-hvx-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
+> +&mdss {
+> +	status = "okay";
+> +};
 > +
-> +			thermal-sensors = <&tsens1 4>;
+> +&mdss_edp {
+> +	data-lanes = <0 1 2 3>;
 > +
-> +			trips {
-> +				trip-point0 {
-> +					temperature = <90000>;
-> +					hysteresis = <2000>;
-> +					type = "hot";
-> +				};
-> +			};
-> +		};
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&edp_hpd_active>;
 > +
-> +		camera-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
+> +	status = "okay";
 > +
-> +			thermal-sensors = <&tsens1 5>;
+> +	aux-bus {
+> +		panel {
+> +			compatible = "edp-panel";
 > +
-> +			trips {
-> +				trip-point0 {
-> +					temperature = <90000>;
-> +					hysteresis = <2000>;
-> +					type = "hot";
-> +				};
-> +			};
-> +		};
+> +			backlight = <&backlight>;
 > +
-> +		compute-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens1 6>;
-> +
-> +			trips {
-> +				trip-point0 {
-> +					temperature = <90000>;
-> +					hysteresis = <2000>;
-> +					type = "hot";
-> +				};
-> +			};
-> +		};
-> +
-> +		mdm-dsp-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens1 7>;
-> +
-> +			trips {
-> +				trip-point0 {
-> +					temperature = <90000>;
-> +					hysteresis = <2000>;
-> +					type = "hot";
-> +				};
-> +			};
-> +		};
-> +
-> +		npu-thermal {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens1 8>;
-> +
-> +			trips {
-> +				trip-point0 {
-> +					temperature = <90000>;
-> +					hysteresis = <2000>;
-> +					type = "hot";
-> +				};
-> +			};
-> +		};
-> +
-> +		gpu-thermal-bottom {
-> +			polling-delay-passive = <250>;
-> +			polling-delay = <1000>;
-> +
-> +			thermal-sensors = <&tsens1 11>;
-> +
-> +			trips {
-> +				trip-point0 {
-> +					temperature = <90000>;
-> +					hysteresis = <2000>;
-> +					type = "hot";
+> +			ports {
+> +				port {
+> +					auo_b133han05_in: endpoint {
+> +						remote-endpoint = <&mdss_edp_out>;
+> +					};
 > +				};
 > +			};
 > +		};
 > +	};
 > +
-> +	timer {
-> +		compatible = "arm,armv8-timer";
-> +		interrupts = <GIC_PPI 1 IRQ_TYPE_LEVEL_LOW>,
-> +			     <GIC_PPI 2 IRQ_TYPE_LEVEL_LOW>,
-> +			     <GIC_PPI 3 IRQ_TYPE_LEVEL_LOW>,
-> +			     <GIC_PPI 0 IRQ_TYPE_LEVEL_LOW>;
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss_edp_out: endpoint {
+> +				remote-endpoint = <&auo_b133han05_in>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&pcie1 {
+> +	perst-gpio = <&tlmm 175 GPIO_ACTIVE_LOW>;
+> +	wake-gpio = <&tlmm 177 GPIO_ACTIVE_HIGH>;
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pcie2_default_state>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie1_phy {
+> +	vdda-phy-supply = <&vreg_l5e_0p88>;
+> +	vdda-pll-supply = <&vreg_l3c_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pmc8180c_lpg {
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_id_0 {
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_id_1 {
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_id_2 {
+> +	status = "okay";
+> +};
+> +
+> +&remoteproc_adsp {
+> +	memory-region = <&adsp_mem>;
+> +	firmware-name = "qcom/sc8180x/qcadsp8180.mbn";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&remoteproc_mpss {
+> +	memory-region = <&mpss_mem>;
+> +	firmware-name = "qcom/sc8180x/qcmpss8180.mbn";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&uart12 {
+> +	compatible = "qcom,geni-debug-uart";
+> +	status = "okay";
+> +};
+> +
+> +&uart13 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&uart13_state>;
+> +
+> +	status = "okay";
+> +
+> +	bluetooth {
+> +		compatible = "qcom,wcn3998-bt";
+> +
+> +		vddio-supply = <&vreg_s4a_1p8>;
+> +		vddxo-supply = <&vreg_l7a_1p8>;
+> +		vddrf-supply = <&vreg_l9a_1p3>;
+> +		vddch0-supply = <&vreg_l11c_3p3>;
+> +		max-speed = <3200000>;
+> +	};
+> +};
+> +
+> +&ufs_mem_hc {
+> +	reset-gpios = <&tlmm 190 GPIO_ACTIVE_LOW>;
+> +
+> +	vcc-supply = <&vreg_l10e_2p9>;
+> +	vcc-max-microamp = <155000>;
+> +
+> +	vccq2-supply = <&vreg_l7e_1p8>;
+> +	vccq2-max-microamp = <425000>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&ufs_mem_phy {
+> +	vdda-phy-supply = <&vreg_l5e_0p88>;
+> +	vdda-pll-supply = <&vreg_l3c_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_prim_hsphy {
+> +	vdda-pll-supply = <&vreg_l5e_0p88>;
+> +	vdda18-supply = <&vreg_l12a_1p8>;
+> +	vdda33-supply = <&vreg_l16e_3p0>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_prim_qmpphy {
+> +	vdda-phy-supply = <&vreg_l3c_1p2>;
+> +	vdda-pll-supply = <&vreg_l5e_0p88>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_prim {
+> +	status = "okay";
+> +};
+> +
+> +&usb_prim_dwc3 {
+> +	dr_mode = "host";
+> +};
+> +
+> +&usb_sec_hsphy {
+> +	vdda-pll-supply = <&vreg_l5e_0p88>;
+> +	vdda18-supply = <&vreg_l12a_1p8>;
+> +	vdda33-supply = <&vreg_l16e_3p0>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_sec_qmpphy {
+> +	vdda-phy-supply = <&vreg_l3c_1p2>;
+> +	vdda-pll-supply = <&vreg_l5e_0p88>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_sec {
+> +	status = "okay";
+> +};
+> +
+> +&usb_sec_dwc3 {
+> +	dr_mode = "host";
+> +};
+> +
+> +&wifi {
+> +	memory-region = <&wlan_mem>;
+> +
+> +	vdd-0.8-cx-mx-supply = <&vreg_l1e_0p75>;
+> +	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
+> +	vdd-1.3-rfa-supply = <&vreg_l9a_1p3>;
+> +	vdd-3.3-ch0-supply = <&vreg_l11c_3p3>;
+> +	vdd-3.3-ch1-supply = <&vreg_l10c_3p3>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&xo_board_clk {
+> +	clock-frequency = <38400000>;
+> +};
+> +
+> +/* PINCTRL */
+> +
+> +&pmc8180c_gpios {
+> +	bl_pwm_default: bl-pwm-default-state {
+> +		en-pins {
+> +			pins = "gpio8";
+> +			function = "normal";
+> +		};
+> +
+> +		pwm-pins {
+> +			pins = "gpio10";
+> +			function = "func1";
+> +		};
+> +	};
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <0 4>, <47 4>, <126 4>;
+> +
+> +	aux_i2c_active_state: aux-i2c-active-state {
+> +		pins = "gpio98", "gpio99";
+> +		function = "qup7";
+> +
+> +		bias-disable;
+> +		drive-strength = <16>;
+> +	};
+> +
+> +	edp_hpd_active: epd-hpd-active-state {
+> +		pins = "gpio10";
+> +		function = "edp_hot";
+> +	};
+> +
+> +	hall_int_active_state: hall-int-active-state {
+> +		pins = "gpio121";
+> +		function = "gpio";
+> +
+> +		input-enable;
+> +		bias-disable;
+> +	};
+> +
+> +	kb_int_active_state: kb-int-active-state {
+> +		int-n-pins {
+> +			pins = "gpio37";
+> +			function = "gpio";
+> +
+> +			bias-pull-up;
+> +			intput-enable;
+> +		};
+> +
+> +		kp-disable-pins {
+> +			pins = "gpio135";
+> +			function = "gpio";
+> +
+> +			output-high;
+> +		};
+> +	};
+> +
+> +	kb_tp_3v3_en_active_state: kb-tp-3v3-en-active-state {
+> +		pins = "gpio4";
+> +		functino = "gpio";
+> +
+> +		bias-disable;
+> +	};
+> +
+> +	pcie2_default_state: pcie2-default-state {
+> +		clkreq-pins {
+> +			pins = "gpio176";
+> +			function = "pci_e2";
+> +			bias-pull-up;
+> +		};
+> +
+> +		reset-n-pins {
+> +			pins = "gpio175";
+> +			function = "gpio";
+> +
+> +			drive-strength = <2>;
+> +			output-low;
+> +			bias-pull-down;
+> +		};
+> +
+> +		wake-n-pins {
+> +			pins = "gpio177";
+> +			function = "gpio";
+> +
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+> +	tp_int_active_state: tp-int-active-state {
+> +		tp-int-pins {
+> +			pins = "gpio24";
+> +			function = "gpio";
+> +
+> +			bias-disable;
+> +			input-enable;
+> +		};
+> +
+> +		tp-close-n-pins {
+> +			pins = "gpio116";
+> +			function = "gpio";
+> +
+> +			bias-disable;
+> +			input-enable;
+> +		};
+> +	};
+> +
+> +	ts_active_state: ts-active-state {
+> +		int-n-pins {
+> +			pins = "gpio122";
+> +			function = "gpio";
+> +
+> +			input-enable;
+> +			bias-disable;
+> +		};
+> +
+> +		reset-n-pins {
+> +			pins = "gpio54";
+> +			function = "gpio";
+> +
+> +			output-high;
+> +		};
+> +	};
+> +
+> +	ts_i2c_active_state: ts-i2c-active-state {
+> +		pins = "gpio114", "gpio115";
+> +		function = "qup1";
+> +
+> +		/* External pull up */
+> +		bias-disable;
+> +		drive-strength = <2>;
+> +	};
+> +
+> +	uart13_state: uart13-state {
+> +		cts-pins {
+> +			pins = "gpio43";
+> +			function = "qup13";
+> +			bias-pull-down;
+> +		};
+> +
+> +		rts-tx-pins {
+> +			pins = "gpio44", "gpio45";
+> +			function = "qup13";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +
+> +		rx-pins {
+> +			pins = "gpio46";
+> +			function = "qup13";
+> +			bias-pull-up;
+> +		};
 > +	};
 > +};
