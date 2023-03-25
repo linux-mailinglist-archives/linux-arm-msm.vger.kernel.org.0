@@ -2,142 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA0966C8D52
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Mar 2023 12:14:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10E886C8D65
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Mar 2023 12:20:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230118AbjCYLOh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Mar 2023 07:14:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37372 "EHLO
+        id S229600AbjCYLUF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Mar 2023 07:20:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229600AbjCYLOg (ORCPT
+        with ESMTP id S231614AbjCYLUE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Mar 2023 07:14:36 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32D0312B;
-        Sat, 25 Mar 2023 04:14:35 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A723460C16;
-        Sat, 25 Mar 2023 11:14:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D381AC433D2;
-        Sat, 25 Mar 2023 11:14:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679742874;
-        bh=vPjezWUwf5PkMN9wm8Ys2Nw7IFlubfUlanfXia2+AKk=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=hOVJN20zZGNaC5gtZaF5zXWOe5s0ZEa+93VnPRZ8nPm5FtkEs12OK+5lq+RZ6H5u/
-         CnJd4vsOQv92v48gf94zxv6RRvrfHzU9UAj9ioqhpxTb9frHY4E9fzyxgaT7j87Jij
-         sz0lh0PklsfJPEFWatsO0QeS+/VwboUKjm55yMMg4vMckmpF6ad2EPYCL0RC27AJ1L
-         BpfhgN/Fvb8QjGav4GsOghTodugVhPYkvEePGzIgzih8r6oj4zw/DA7wRaM/V0Qu67
-         W1CTMTuQ6x3EW7GKhsEZQXHicsY0gBTG05UenE8H60yEwSRJM1hMhV/AmKUzNWmgQg
-         Ql38nrBkz7NgQ==
-Message-ID: <98fcbdd4-77b3-5b17-7102-c590f1a5a63e@kernel.org>
-Date:   Sat, 25 Mar 2023 12:14:27 +0100
+        Sat, 25 Mar 2023 07:20:04 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D65E195
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Mar 2023 04:20:01 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id t17-20020a05600c451100b003edc906aeeaso3570891wmo.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Mar 2023 04:20:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679743200;
+        h=content-transfer-encoding:to:subject:message-id:date:from:sender
+         :reply-to:mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=FZRXrrCyhC/asJwSLOsOxy0dUDn7uJ0nZ8VEzBDUmgw=;
+        b=RvqlL4vXdmLZ3+GPCy8kCL42diInnqg9AUUQP6do0nrsiCPWaPmT0fMChz++P5h4cN
+         IINxvVj+mJcJdhAyRvExqfoEyaiozCKDjVHywj28w2lnCO3OYJ3WJ9/DbEuX4f7RgdMM
+         OZzckvtOpzyDgeErFfEgGeXqCBPiLVkckWugNsuxwnZyuZWkejiZ/cijSymExLqiBo/4
+         NxLJOiqBQ6LEOOpIqo80ugAyiDoqJqgqlHsYLsv2jn1njWdc8/f7m2a9rfdiZpLE6aQa
+         0TpMYMz0ajt1ulzLCxb0CsXjRZZh8k1hLSdFEYbSiTC4+wrorzMMV8AugBxHGiL4Hxll
+         R2eQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679743200;
+        h=content-transfer-encoding:to:subject:message-id:date:from:sender
+         :reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FZRXrrCyhC/asJwSLOsOxy0dUDn7uJ0nZ8VEzBDUmgw=;
+        b=rofklIhgrnbBZi8aK4LvjPpQAaLbks3QprptGpO+2GfxvdyCTk4Wa2EvfSpbxULagl
+         5dCeh8tolL+stcOpWe2B0HU3snxKV2v4rg+Vhwr8SrkcHB9k1XhVnpYFM78HEIaNeE6d
+         AYg7Iw6nnYxDeClcJ8xkHA7yQZ6RhTeckvi7TDQH3GpeRK63F2Xe6u8DEGEU0lj0rWb+
+         HLCvnfSClA+DDHB0gPxA6zdDFGjtIfB32YWQKTPDhyuyEkq7XmZt4KciTixEFQhC6CIj
+         54vVufhwGwexrkemWogx3h82/k7cVtMR07/zL9ch14KpsYBCGisrHl9ih5+HScmcG0Ax
+         yMQA==
+X-Gm-Message-State: AO0yUKWCu/r4TsF+iRlPNsi1JQV65oD3ZRAQz8je8TIcLgRrezY7hm7v
+        XnfD/h53qxCNS90TRn58WtIV1ABYeSYy3v1dCVc=
+X-Google-Smtp-Source: AK7set8eWZRwYp+qmYJp8B02G2WuY74f3KR4uf3Of/INTmx5nhiWsfQjD+bD28PcSpUvCkvSp8WFEJRaqEoU4PH8QEg=
+X-Received: by 2002:a7b:ca4a:0:b0:3ed:c669:8a15 with SMTP id
+ m10-20020a7bca4a000000b003edc6698a15mr1392897wml.1.1679743200148; Sat, 25 Mar
+ 2023 04:20:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 1/2] ARM: dts: qcom: sdx65: add IPA information
-Content-Language: en-US
-To:     Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
-        agross@kernel.org, konrad.dybcio@linaro.org
-Cc:     quic_rohiagar@quicinc.com, caleb.connolly@linaro.org,
-        mka@chromium.org, evgreen@chromium.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230324201528.2540564-1-elder@linaro.org>
- <20230324201528.2540564-2-elder@linaro.org>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <20230324201528.2540564-2-elder@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Reply-To: mkwesogo@gmail.com
+Sender: simtondji@gmail.com
+Received: by 2002:a5d:4a4c:0:b0:2d8:6f46:a535 with HTTP; Sat, 25 Mar 2023
+ 04:19:59 -0700 (PDT)
+From:   "Mr. Muskwe Sanogo" <sanogokwe@gmail.com>
+Date:   Sat, 25 Mar 2023 11:19:59 +0000
+X-Google-Sender-Auth: ycbpY1NZYejUWu4cIxovoRDxGao
+Message-ID: <CAGg0eJxqqdi-mBH8JMwpVMLX9ErzkZF6LCCM-=CH3nm2n4va5g@mail.gmail.com>
+Subject: Greetings and articulate salutations.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=6.5 required=5.0 tests=ADVANCE_FEE_5_NEW,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        LOTTO_DEPT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_HK_NAME_FM_MR_MRS,UNDISC_FREEM,UNDISC_MONEY autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:333 listed in]
+        [list.dnswl.org]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [simtondji[at]gmail.com]
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
+        *  2.9 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+        *  0.0 LOTTO_DEPT Claims Department
+        *  0.8 ADVANCE_FEE_5_NEW Appears to be advance fee fraud (Nigerian
+        *      419)
+        *  2.0 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/03/2023 21:15, Alex Elder wrote:
-> Add IPA-related nodes and definitions to "sdx65.dtsi".  The SMP2P
-> nodes (ipa_smp2p_out and ipa_smp2p_in) are already present.
-> 
-> Enable IPA in "sdx65-mtp.dts"; this GSI firmware is loaded by Trust
-> Zone on this platform.
-> 
-> Tested-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> Signed-off-by: Alex Elder <elder@linaro.org>
-> ---
->  arch/arm/boot/dts/qcom-sdx65-mtp.dts |  5 ++++
->  arch/arm/boot/dts/qcom-sdx65.dtsi    | 38 ++++++++++++++++++++++++++++
->  2 files changed, 43 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-> index ed98c83c141fc..72e25de0db5fc 100644
-> --- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-> +++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-> @@ -245,6 +245,11 @@ &blsp1_uart3 {
->  	status = "okay";
->  };
->  
-> +&ipa {
-> +	qcom,gsi-loader = "skip";
-> +	status = "okay";
-> +};
-> +
->  &qpic_bam {
->  	status = "okay";
->  };
-> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
-> index 192f9f94bc8b4..360d6dc144811 100644
-> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
-> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
-> @@ -11,6 +11,7 @@
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +#include <dt-bindings/interconnect/qcom,sdx65.h>
->  
->  / {
->  	#address-cells = <1>;
-> @@ -299,6 +300,43 @@ tcsr_mutex: hwlock@1f40000 {
->  			#hwlock-cells = <1>;
->  		};
->  
-> +		ipa: ipa@3e04000 {
-> +			compatible = "qcom,sdx65-ipa";
-> +
-> +			iommus = <&apps_smmu 0x5e0 0x0>,
-> +				 <&apps_smmu 0x5e2 0x0>;
-> +			reg = <0x3f40000 0x10000>,
-> +			      <0x3f50000 0x5000>,
-> +			      <0x3e04000 0xfc000>;
-> +			reg-names = "ipa-reg",
-> +				    "ipa-shared",
-> +				    "gsi";
-> +
-> +			interrupts-extended = <&intc GIC_SPI 241 IRQ_TYPE_EDGE_RISING>,
-> +					      <&intc GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-> +					      <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
-> +			interrupt-names = "ipa",
-> +					   "gsi",
-> +					   "ipa-clock-query",
-> +					   "ipa-setup-ready";
+I bestow upon you a serendipitous and euphoric afternoon, With due
+respect to your personality and much sincerity of this purpose, I make
+this contact with you believing that you can be of great assistance to
+me. I'm Mr. Muskwe Sanogo,  I'm the Chairman of FOREIGN PAYMENTS
+CONTRACT AWARD COMMITTEE and also I currently hold the post of
+Internal Audit Manager of our bank, Please see this as a confidential
+message and do not reveal it to another person because it=E2=80=99s a top
+secret.
 
-These look misaligned.
+It may surprise you to receive this letter from me, since there has
+been no previous correspondence between us.  I will also like to make
+it clear here that l know that the internet has been grossly abused by
+criminal minded people making it difficult for people with genuine
+intention to correspond and exchange views without skepticism.
 
-With above:
+We are imposition to reclaim and inherit the sum of US $(28,850,000
+Million ) without any trouble, from a dormant account which remains
+unclaimed since 10 years the owner died. This is a U.S Dollars account
+and the beneficiary died without trace of his family to claim the
+fund.
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Upon my personal audit investigation into the details of the account,
+I find out that the deceased is a foreigner, which makes it possible
+for you as a foreigner no matter your country to lay claim on the
+balance as the Foreign Business Partner or Extended Relative to the
+deceased, provided you are not from here.
+
+Your integrity and trustworthiness will make us succeed without any
+risk. Please if you think that the amount is too much to be
+transferred into your account, you have the right to ask our bank to
+transfer the fund into your account bit by bit after approval or you
+double the account. Once this fund is transferred into your account,
+we will share the fund accordingly. 45%, for you, 45%, for me, 5%, had
+been mapped out for the expense made in this transaction, 5% as a free
+will donation to charity and motherless babies homes in both our
+countries as sign of breakthrough and more blessings.
 
 
-Best regards,
-Krzysztof
+If you are interested to help without disappointment or breach of
+trust, reply me, so that I will guide you on the proper banking
+guidelines to follow for the claim. After the transfer, I will fly to
+your country for sharing of funds according to our agreement.
 
+Assurance: Note that this transaction will never in any way harm or
+foiled your good post or reputation in your country, because
+everything will follow legal process.
+
+I am looking forward to hear from you soonest.
+Yours faithfully,
+Mr. Muskwe Sanogo
