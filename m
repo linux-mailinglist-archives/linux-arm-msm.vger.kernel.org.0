@@ -2,146 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10E886C8D65
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Mar 2023 12:20:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E9566C8D6F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Mar 2023 12:29:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229600AbjCYLUF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Mar 2023 07:20:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42296 "EHLO
+        id S231886AbjCYL3P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Mar 2023 07:29:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231614AbjCYLUE (ORCPT
+        with ESMTP id S231821AbjCYL3O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Mar 2023 07:20:04 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D65E195
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Mar 2023 04:20:01 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id t17-20020a05600c451100b003edc906aeeaso3570891wmo.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Mar 2023 04:20:01 -0700 (PDT)
+        Sat, 25 Mar 2023 07:29:14 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 751B912CE0;
+        Sat, 25 Mar 2023 04:29:02 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id q16so5379195lfe.10;
+        Sat, 25 Mar 2023 04:29:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679743200;
-        h=content-transfer-encoding:to:subject:message-id:date:from:sender
-         :reply-to:mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=FZRXrrCyhC/asJwSLOsOxy0dUDn7uJ0nZ8VEzBDUmgw=;
-        b=RvqlL4vXdmLZ3+GPCy8kCL42diInnqg9AUUQP6do0nrsiCPWaPmT0fMChz++P5h4cN
-         IINxvVj+mJcJdhAyRvExqfoEyaiozCKDjVHywj28w2lnCO3OYJ3WJ9/DbEuX4f7RgdMM
-         OZzckvtOpzyDgeErFfEgGeXqCBPiLVkckWugNsuxwnZyuZWkejiZ/cijSymExLqiBo/4
-         NxLJOiqBQ6LEOOpIqo80ugAyiDoqJqgqlHsYLsv2jn1njWdc8/f7m2a9rfdiZpLE6aQa
-         0TpMYMz0ajt1ulzLCxb0CsXjRZZh8k1hLSdFEYbSiTC4+wrorzMMV8AugBxHGiL4Hxll
-         R2eQ==
+        d=gmail.com; s=20210112; t=1679743741;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ht+M9qAwDcGzy0Oi5GFIk5LGEqROnuLchd2TnwqxBxs=;
+        b=AM9xNCWXg1wmyrB1RoOB6p5kioHSwyTQw41FQf2b49pvAmiOqiiEN+IZtMhlrbuHiL
+         Jl7UlaTt9aL0iHYgM8NrHQXG9Va2qBpgaKAuwPf2EI50mXZQnZGQeSFwCCV4NGpxpm2N
+         s3jEMv4c0qDbjGrGYSBXpaKKQXnxhWIHE4WKxX/IQogWF8FnKwye9+7gWI96vBB5bAfS
+         KmtdnA1JuDwYvuL/TBRZlOXjrcJ9Xj7SrpVo+RhJE8FRU40OSptdUqc5+SkFpUMZYKyz
+         3XRvzH3SEzaurmbf1ddM8DWHrcqfr830JB1j57U9lxrLeg4TNCbuSUdyugCmpjzeKDa9
+         VqBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679743200;
-        h=content-transfer-encoding:to:subject:message-id:date:from:sender
-         :reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FZRXrrCyhC/asJwSLOsOxy0dUDn7uJ0nZ8VEzBDUmgw=;
-        b=rofklIhgrnbBZi8aK4LvjPpQAaLbks3QprptGpO+2GfxvdyCTk4Wa2EvfSpbxULagl
-         5dCeh8tolL+stcOpWe2B0HU3snxKV2v4rg+Vhwr8SrkcHB9k1XhVnpYFM78HEIaNeE6d
-         AYg7Iw6nnYxDeClcJ8xkHA7yQZ6RhTeckvi7TDQH3GpeRK63F2Xe6u8DEGEU0lj0rWb+
-         HLCvnfSClA+DDHB0gPxA6zdDFGjtIfB32YWQKTPDhyuyEkq7XmZt4KciTixEFQhC6CIj
-         54vVufhwGwexrkemWogx3h82/k7cVtMR07/zL9ch14KpsYBCGisrHl9ih5+HScmcG0Ax
-         yMQA==
-X-Gm-Message-State: AO0yUKWCu/r4TsF+iRlPNsi1JQV65oD3ZRAQz8je8TIcLgRrezY7hm7v
-        XnfD/h53qxCNS90TRn58WtIV1ABYeSYy3v1dCVc=
-X-Google-Smtp-Source: AK7set8eWZRwYp+qmYJp8B02G2WuY74f3KR4uf3Of/INTmx5nhiWsfQjD+bD28PcSpUvCkvSp8WFEJRaqEoU4PH8QEg=
-X-Received: by 2002:a7b:ca4a:0:b0:3ed:c669:8a15 with SMTP id
- m10-20020a7bca4a000000b003edc6698a15mr1392897wml.1.1679743200148; Sat, 25 Mar
- 2023 04:20:00 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1679743741;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ht+M9qAwDcGzy0Oi5GFIk5LGEqROnuLchd2TnwqxBxs=;
+        b=yTzrc8on/kYKywpkK2TFnYBjbuizBVxctBGzBj9zYKB5UFJfQSSKH41iwELxoDSWqu
+         zFPbFikr8YHJg6fnkvYzFaAGU0zE+PXQpPphMVMIUXRUk3dzXljIx2a4GtcK5Pr8B9Rs
+         FcTeYnJ9gWK56vPr3/aCvpA3HacSeGq5nHwxZKHRP+nsqjnlb8XTNsPrz2poZbZ4T6mU
+         AyHWsWuhVmh88FlR1iX+GDTkPpR0QvE6lZBZ19X3OltzTB8F8cVP7O1FOPtvzjJB53t5
+         c6IAA7btwb0UjjV3huAXgv5IQxfPe1rUgXBSaWu/Yx9KjeSJ6NjHqd4gClqELAjx3Jwv
+         dsBg==
+X-Gm-Message-State: AAQBX9eo+NMRPhPm+nNVczQivWixZc2o5HKeVT6SUt/lNLb3IudxIKO8
+        nQjyYqT3QkFn4qiLca2jqydDuUMCTcZ9Zg==
+X-Google-Smtp-Source: AKy350bejnySz6miPOH2OcjbHvHUExS1lkKqmmyuni0RJWWNhjWKW4qG7kFT3KIWm5uKzIt8zpKALg==
+X-Received: by 2002:ac2:5989:0:b0:4dd:a053:3baf with SMTP id w9-20020ac25989000000b004dda0533bafmr1727986lfn.35.1679743740443;
+        Sat, 25 Mar 2023 04:29:00 -0700 (PDT)
+Received: from localhost.localdomain (cdb25.neoplus.adsl.tpnet.pl. [83.30.151.25])
+        by smtp.gmail.com with ESMTPSA id m30-20020ac24ade000000b004eaf55936eesm1502510lfp.233.2023.03.25.04.28.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 25 Mar 2023 04:29:00 -0700 (PDT)
+From:   Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/4] arm64: dts: msm8953: Replace xo_board with rpmcc sourced xo
+Date:   Sat, 25 Mar 2023 12:28:49 +0100
+Message-Id: <20230325112852.18841-1-a39.skl@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Reply-To: mkwesogo@gmail.com
-Sender: simtondji@gmail.com
-Received: by 2002:a5d:4a4c:0:b0:2d8:6f46:a535 with HTTP; Sat, 25 Mar 2023
- 04:19:59 -0700 (PDT)
-From:   "Mr. Muskwe Sanogo" <sanogokwe@gmail.com>
-Date:   Sat, 25 Mar 2023 11:19:59 +0000
-X-Google-Sender-Auth: ycbpY1NZYejUWu4cIxovoRDxGao
-Message-ID: <CAGg0eJxqqdi-mBH8JMwpVMLX9ErzkZF6LCCM-=CH3nm2n4va5g@mail.gmail.com>
-Subject: Greetings and articulate salutations.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: Yes, score=6.5 required=5.0 tests=ADVANCE_FEE_5_NEW,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        LOTTO_DEPT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_HK_NAME_FM_MR_MRS,UNDISC_FREEM,UNDISC_MONEY autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2a00:1450:4864:20:0:0:0:333 listed in]
-        [list.dnswl.org]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [simtondji[at]gmail.com]
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
-        *  2.9 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-        *  0.0 LOTTO_DEPT Claims Department
-        *  0.8 ADVANCE_FEE_5_NEW Appears to be advance fee fraud (Nigerian
-        *      419)
-        *  2.0 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: ******
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I bestow upon you a serendipitous and euphoric afternoon, With due
-respect to your personality and much sincerity of this purpose, I make
-this contact with you believing that you can be of great assistance to
-me. I'm Mr. Muskwe Sanogo,  I'm the Chairman of FOREIGN PAYMENTS
-CONTRACT AWARD COMMITTEE and also I currently hold the post of
-Internal Audit Manager of our bank, Please see this as a confidential
-message and do not reveal it to another person because it=E2=80=99s a top
-secret.
+Assign RPM_SMD_XO_CLK_SRC from rpmcc in place
+of fixed-clock where possible.
 
-It may surprise you to receive this letter from me, since there has
-been no previous correspondence between us.  I will also like to make
-it clear here that l know that the internet has been grossly abused by
-criminal minded people making it difficult for people with genuine
-intention to correspond and exchange views without skepticism.
+Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/msm8953.dtsi | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-We are imposition to reclaim and inherit the sum of US $(28,850,000
-Million ) without any trouble, from a dormant account which remains
-unclaimed since 10 years the owner died. This is a U.S Dollars account
-and the beneficiary died without trace of his family to claim the
-fund.
+diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+index da00c2f04cda..438a70eb6152 100644
+--- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+@@ -2,6 +2,7 @@
+ /* Copyright (c) 2022, The Linux Foundation. All rights reserved. */
+ 
+ #include <dt-bindings/clock/qcom,gcc-msm8953.h>
++#include <dt-bindings/clock/qcom,rpmcc.h>
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
+@@ -637,7 +638,7 @@ gcc: clock-controller@1800000 {
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+ 			#power-domain-cells = <1>;
+-			clocks = <&xo_board>,
++			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+ 				 <&sleep_clk>,
+ 				 <0>,
+ 				 <0>,
+@@ -801,7 +802,7 @@ dsi0_phy: phy@1a94400 {
+ 				#clock-cells = <1>;
+ 				#phy-cells = <0>;
+ 
+-				clocks = <&gcc GCC_MDSS_AHB_CLK>, <&xo_board>;
++				clocks = <&gcc GCC_MDSS_AHB_CLK>, <&rpmcc RPM_SMD_XO_CLK_SRC>;
+ 				clock-names = "iface", "ref";
+ 
+ 				status = "disabled";
+@@ -868,7 +869,7 @@ dsi1_phy: phy@1a96400 {
+ 				#clock-cells = <1>;
+ 				#phy-cells = <0>;
+ 
+-				clocks = <&gcc GCC_MDSS_AHB_CLK>, <&xo_board>;
++				clocks = <&gcc GCC_MDSS_AHB_CLK>, <&rpmcc RPM_SMD_XO_CLK_SRC>;
+ 				clock-names = "iface", "ref";
+ 
+ 				status = "disabled";
+@@ -992,7 +993,7 @@ sdhc_1: mmc@7824900 {
+ 
+ 			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
+ 				 <&gcc GCC_SDCC1_APPS_CLK>,
+-				 <&xo_board>;
++				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+ 			clock-names = "iface", "core", "xo";
+ 
+ 			power-domains = <&rpmpd MSM8953_VDDCX>;
+@@ -1052,7 +1053,7 @@ sdhc_2: mmc@7864900 {
+ 
+ 			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
+ 				 <&gcc GCC_SDCC2_APPS_CLK>,
+-				 <&xo_board>;
++				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+ 			clock-names = "iface", "core", "xo";
+ 
+ 			power-domains = <&rpmpd MSM8953_VDDCX>;
+-- 
+2.25.1
 
-Upon my personal audit investigation into the details of the account,
-I find out that the deceased is a foreigner, which makes it possible
-for you as a foreigner no matter your country to lay claim on the
-balance as the Foreign Business Partner or Extended Relative to the
-deceased, provided you are not from here.
-
-Your integrity and trustworthiness will make us succeed without any
-risk. Please if you think that the amount is too much to be
-transferred into your account, you have the right to ask our bank to
-transfer the fund into your account bit by bit after approval or you
-double the account. Once this fund is transferred into your account,
-we will share the fund accordingly. 45%, for you, 45%, for me, 5%, had
-been mapped out for the expense made in this transaction, 5% as a free
-will donation to charity and motherless babies homes in both our
-countries as sign of breakthrough and more blessings.
-
-
-If you are interested to help without disappointment or breach of
-trust, reply me, so that I will guide you on the proper banking
-guidelines to follow for the claim. After the transfer, I will fly to
-your country for sharing of funds according to our agreement.
-
-Assurance: Note that this transaction will never in any way harm or
-foiled your good post or reputation in your country, because
-everything will follow legal process.
-
-I am looking forward to hear from you soonest.
-Yours faithfully,
-Mr. Muskwe Sanogo
