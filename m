@@ -2,114 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9ADF6C8F61
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Mar 2023 17:17:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F3166C8F8B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Mar 2023 17:52:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231248AbjCYQRM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Mar 2023 12:17:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37420 "EHLO
+        id S231308AbjCYQwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Mar 2023 12:52:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229600AbjCYQRM (ORCPT
+        with ESMTP id S230118AbjCYQw3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Mar 2023 12:17:12 -0400
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BDF74C01;
-        Sat, 25 Mar 2023 09:17:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1679761031; x=1711297031;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Vrcn0rGVgrXIQf6tSvf4FE1wbGH838j2OtTvkbDyXDw=;
-  b=NRZ1i7NCCvQF5HJfvkUWLcqYMkEyL96Dl3LrcPbeNA/DwguAx/Canfxa
-   1Yi/aggSNNQVVUwdgVrt4C0OkQhv4lmYwP9FVufpBUrz9YHqZRlQpLySD
-   6pqS2kp1YR8azNFhMP6g37jUfwQ/bfnTcq0wCfSoZUQIL3O09C4Nxs6E3
-   0robPUd/xcZ6uLkl7OtnFXMcuNcvkaxfkuMF0voXlessMTi+nU/LBZP5O
-   8EbrdyzUyJdzZoBdRLdHp9FIEiQHIXClwlGiKvQrsYwVrIpMvqq+ihdNW
-   7oU7Pka2A+8kgJhb+w3QfoZkTF7gFRIYeGUFvmNt0VpJmer2Kr+vdUYNs
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10660"; a="404914160"
-X-IronPort-AV: E=Sophos;i="5.98,290,1673942400"; 
-   d="scan'208";a="404914160"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2023 09:17:10 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10660"; a="685520387"
-X-IronPort-AV: E=Sophos;i="5.98,290,1673942400"; 
-   d="scan'208";a="685520387"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by fmsmga007.fm.intel.com with ESMTP; 25 Mar 2023 09:17:07 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pg6Zn-000GNO-0v;
-        Sat, 25 Mar 2023 16:17:07 +0000
-Date:   Sun, 26 Mar 2023 00:16:28 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Dylan Van Assche <me@dylanvanassche.be>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     oe-kbuild-all@lists.linux.dev,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Dylan Van Assche <me@dylanvanassche.be>
-Subject: Re: [PATCH 2/4] dts: arm64: qcom: sdm845: add SLPI FastRPC support
-Message-ID: <202303260005.DW8hkIxU-lkp@intel.com>
-References: <20230325135114.21688-3-me@dylanvanassche.be>
+        Sat, 25 Mar 2023 12:52:29 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AA9F7287
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Mar 2023 09:52:28 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id e15-20020a17090ac20f00b0023d1b009f52so7831196pjt.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Mar 2023 09:52:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679763148;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eO2MudwSzM7w2aBKoq+3lTQiN9qd5TRShVeIYuReNyw=;
+        b=iQix4vg9UCkITzy7QW+CiY9KBjUno8pGXvfX3Sx/pmuEW9VSJTXA4XHgfxuJDkvkjZ
+         J9387k3spmWwAcZVbBU6QdT+dG3g/ot4Yy6ZnWwT3s0ndUsx2rB4XLxqN6zX3fh+62X7
+         BzaI0SCMjhYdw+bf8HqMAYOto9oKkoekFXSKtQiRRmV9apO/gzGo1vdMiGKEMr/3bVeQ
+         bEvz6K05j7D8+k6tiFJVNIdt0r9c27cUCrhMt3hlCc0PEtz4WoI8bKcn9TlcvU367uB4
+         G/OrnyIUmXtuEnG2koemrqmOt0NXGOdoBBSJhnNCoXziDEQQlP7CGFxVoYBEHxqcqD6a
+         fOzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679763148;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eO2MudwSzM7w2aBKoq+3lTQiN9qd5TRShVeIYuReNyw=;
+        b=zVLUxdT1ZmFbVp8y6OkbMLkUAgmMa0lVns31BKoTyoP2i42/waRo0ly1yDSrnP82nh
+         KcqWDmDPDkaACchcuP900q7J79Sc1mI8SR3PSZIG6PNAXbgBqBpM0I21Rcr7GXJrbeSV
+         zD18CyMkM6BUt5Tfk0zimmC+E31fFE9SbWoVlAjDpvbbrmUF453S799vd/5/c9KJ+tQi
+         Yqb86+eSYVyBlRs28kww8uYESjvcq+0kpk+XL3tNsiwStgY/9FP2jVlHIBPcjVmklrcZ
+         1QtwlwwbjOUoJodeKKE7QkkdiXuOJasYcTxKDV07El/fI5ALcILWKhoAK/8ASSkw/ldh
+         InBw==
+X-Gm-Message-State: AAQBX9e3gevL3OgNqkVm6GSEgXE+xD8nhNK50TrsLLKZC59fRxpJsekG
+        L32161K5pEQ7h8oAzKnYtGmB
+X-Google-Smtp-Source: AKy350bsd+xiNmrmOMPpqAJcJJZT0iPvndikcX9YpRtxA+bDBgrkMvmsffN3wjEfM/YxaHbXYhWHiw==
+X-Received: by 2002:a17:903:2311:b0:1a1:b656:2149 with SMTP id d17-20020a170903231100b001a1b6562149mr7515724plh.50.1679763147684;
+        Sat, 25 Mar 2023 09:52:27 -0700 (PDT)
+Received: from localhost.localdomain ([117.217.184.99])
+        by smtp.gmail.com with ESMTPSA id p5-20020a1709026b8500b001a1aeb3a7a9sm14889787plk.137.2023.03.25.09.52.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 25 Mar 2023 09:52:27 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     andersson@kernel.org, Thinh.Nguyen@synopsys.com,
+        gregkh@linuxfoundation.org, mathias.nyman@intel.com
+Cc:     konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/5] usb: dwc3: qcom: Allow runtime PM
+Date:   Sat, 25 Mar 2023 22:22:12 +0530
+Message-Id: <20230325165217.31069-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230325135114.21688-3-me@dylanvanassche.be>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dylan,
+Hi,
 
-Thank you for the patch! Yet something to improve:
+This series allows the dwc3-qcom driver to do runtime PM itself without
+userspace intervention. Still, userspace is required to enable runtime PM
+for dwc3 glue and xhci drivers as we cannot enable runtime PM for them.
+But this series avoids one more additional step.
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v6.3-rc3 next-20230324]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+While enabling runtime PM, I noticed that the xhci driver suspends before
+catching the xhci interrupts during resume. This ended up deferring the
+device enumeration for some time. So I included a patch adding autosuspend
+delay of 200ms to the xhci driver. With this delay, usb enumeration happens
+properly.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dylan-Van-Assche/dts-arm64-qcom-sdm845-add-SLPI-remoteproc/20230325-215354
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20230325135114.21688-3-me%40dylanvanassche.be
-patch subject: [PATCH 2/4] dts: arm64: qcom: sdm845: add SLPI FastRPC support
-config: arm64-defconfig (https://download.01.org/0day-ci/archive/20230326/202303260005.DW8hkIxU-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/df03f51210d03566bf0d35a56633d55e3c57b5ad
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Dylan-Van-Assche/dts-arm64-qcom-sdm845-add-SLPI-remoteproc/20230325-215354
-        git checkout df03f51210d03566bf0d35a56633d55e3c57b5ad
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm64 olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
+This series has been tested on SC8280XP-CRD and RB5 devices.
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303260005.DW8hkIxU-lkp@intel.com/
+Thanks,
+Mani
 
-All errors (new ones prefixed by >>):
+Manivannan Sadhasivam (5):
+  arm64: dts: qcom: sc8280xp: Add missing dwc3 quirks
+  xhci: host: Use 200ms autosuspend delay for runtime suspend
+  usb: dwc3: qcom: Fix null ptr access during runtime_suspend()
+  usb: dwc3: qcom: Clear pending interrupt before enabling wake
+    interrupt
+  usb: dwc3: qcom: Allow runtime PM
 
->> Error: arch/arm64/boot/dts/qcom/sdm845.dtsi:3360.4-5 syntax error
-   FATAL ERROR: Unable to parse input tree
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 14 ++++++++++++++
+ drivers/usb/dwc3/dwc3-qcom.c           | 13 +++++++++----
+ drivers/usb/host/xhci-plat.c           |  2 ++
+ 3 files changed, 25 insertions(+), 4 deletions(-)
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+2.25.1
+
