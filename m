@@ -2,180 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D05F6C8DE4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Mar 2023 13:12:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B7BAC6C8DFB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Mar 2023 13:25:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231921AbjCYMMo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Mar 2023 08:12:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40348 "EHLO
+        id S230336AbjCYMY7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Mar 2023 08:24:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231740AbjCYMMn (ORCPT
+        with ESMTP id S230192AbjCYMY7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Mar 2023 08:12:43 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C7EA14226
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Mar 2023 05:12:39 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id q14so4269538ljm.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Mar 2023 05:12:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679746358;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KOKj8v+JeWrMhJcyWb6hLuGQlmRfk5jovd4JgoLoghk=;
-        b=xnFpoHV+sryGfPdc6MZcPJzVMgscfCdoloDUpJKGACZmjzACWiBY/YeetCYrHJoDqr
-         CQOgHrIkg7Dk6njY/PsAZ4qkxxAAWUZT5aSaZ92T2CfQ+NzG8q1SQVVPnIhq8N7uiHo/
-         DirAk4lMSMnUYWCK6ZZ4PLNFBZCq1rZs5nXAAi2laA/Xrxf5XH8sEX9PpB3UQLYQ+jjx
-         QH0HUMm1xCZwReVX9ICgjC0hQwQrNl/ZFOR5Vndo7DVIkei2xMDcelo2vyNKZNKWW6XJ
-         WKSzs3DsviIREqTCGl2ietgk/oQD/cKur0ZWTebVxTCKM6Bby2YjhxhJ9Pzt8ycyGYBm
-         ol0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679746358;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KOKj8v+JeWrMhJcyWb6hLuGQlmRfk5jovd4JgoLoghk=;
-        b=YIi1B7k+48jMU7u4Z5vmTtrpq9XlTRwsi237/CfWMUFd0/kVsZexIqCaZ7hZE/XtA1
-         31kB/TOTNalzIYytobRxhgzNKerEnJ7S5y50KSeAUpV3bgl8Je1RAj/DBHrXUQAosqAV
-         YLmGhqXTi9hUq8ZuwvL5aZAFAaHN+FiOmpFHDr+n1xoKHvY0u8w+bfAI7i6Cg0Q7bI2Y
-         0dDdfpYpp8+NYwvUDxKYCmeNWlZBS2JO5YgtGnykjvsfVQeNxydEBf1v3hxeAhfF5ejH
-         kjs0c11xDDApRjmAAFwSbXIyiC7C9VMOdUDHpYZChIwxuQkvs2eqDTM8vyo3S5bq843Z
-         aXeA==
-X-Gm-Message-State: AAQBX9eK63niFS7mJdWkeUYVZ4KKMPPlIGzzh4aEdlmg8ItZ1xIhjjiM
-        uitdQNdulfFy2HuSwOA8dVvoKQ==
-X-Google-Smtp-Source: AKy350YJOtcGJnKqfsNpN8iVYHLZ9AlcyJIO1TgrZiWY+EQcdbbQGOW+NvSYskIOIHmQ2qK0/ScIrQ==
-X-Received: by 2002:a2e:9997:0:b0:299:ac58:1c4 with SMTP id w23-20020a2e9997000000b00299ac5801c4mr1862550lji.1.1679746357933;
-        Sat, 25 Mar 2023 05:12:37 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id j3-20020a19f503000000b004d6ebbad989sm3802380lfb.1.2023.03.25.05.12.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Mar 2023 05:12:37 -0700 (PDT)
-Message-ID: <e90454f3-78d4-ba78-6f60-248b550a9fa3@linaro.org>
-Date:   Sat, 25 Mar 2023 13:12:36 +0100
+        Sat, 25 Mar 2023 08:24:59 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5656AC2;
+        Sat, 25 Mar 2023 05:24:58 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DC6AA60C48;
+        Sat, 25 Mar 2023 12:24:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334BAC433D2;
+        Sat, 25 Mar 2023 12:24:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679747097;
+        bh=1dklbVwFwR0zhMisSmK0/9gJpIfc7bnmRJm4tVTpEP4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=kq+hukc6ikZx9SJzvxhdssupIjoLs/fpTfE4xWR1GCUAQf+ej4+CZPJ6As1nBx/Np
+         LnTe6uwtqRqgrBX8wcFx7iA8t9RlLfsrIhHjEF5zws5SH1BNQEw5/apXO7k4iKqEPN
+         Uy7pV/q9o/Dh1UqRs27VBKuLeF+QbeTJYbTLOInceRv5Os9TizexZ9yXkIxh/nxT68
+         rKRgc/2/r6fPkD5tZD46tl9Fnb/ND04aN/xOju7u135zEC1uc4Nn4GKbm+20O4KZKj
+         8x3BBE8d1WSRsffNs0PUWyactCPqtrXyQxPNcfK3Mi5YCLhNVrOxR7Sfku/eXrUcvl
+         Io5wExRlyhzbw==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Mark Brown <broonie@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        linux-pci@vger.kernel.org,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-phy@lists.infradead.org,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-scsi@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>
+Subject: [PATCH v2 00/12] Introduce the SC8180x devices
+Date:   Sat, 25 Mar 2023 17:54:32 +0530
+Message-Id: <20230325122444.249507-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 2/2] ARM: dts: qcom-sdx65: move status properties to end
- of nodes
-Content-Language: en-US
-To:     Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     quic_rohiagar@quicinc.com, caleb.connolly@linaro.org,
-        mka@chromium.org, evgreen@chromium.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230324201528.2540564-1-elder@linaro.org>
- <20230324201528.2540564-3-elder@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230324201528.2540564-3-elder@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This introduces Qualcomm SC8180x SoC which features in Lenovo Flex 5G
+laptop. This also adds support for Primus platform as well as Lenovo Flex 5G
+laptop.
 
+I would be great if submaintainers can ack the binding patch so that
+everything can go thru qcom tree
 
-On 24.03.2023 21:15, Alex Elder wrote:
-> Move a few device tree "status" properties so that they are the last
-> specified property, in "qcom-sdx65-mtp.dts" and "qcom-sdx65.dtsi".
-> Note that properties must always be specified before sub-nodes.
-> 
-> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Alex Elder <elder@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Changes in v2:
+ - Fix the ufs pcie and phy bindings
+ - Lots of error fixes for dtbs_check
+ - Add few more missing compatiables
 
-Konrad
->  arch/arm/boot/dts/qcom-sdx65-mtp.dts | 6 +++---
->  arch/arm/boot/dts/qcom-sdx65.dtsi    | 8 +++++---
->  2 files changed, 8 insertions(+), 6 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-> index 72e25de0db5fc..57bc3b03d3aac 100644
-> --- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-> +++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-> @@ -270,8 +270,8 @@ nand@0 {
->  };
->  
->  &remoteproc_mpss {
-> -	status = "okay";
->  	memory-region = <&mpss_adsp_mem>;
-> +	status = "okay";
->  };
->  
->  &usb {
-> @@ -283,14 +283,14 @@ &usb_dwc3 {
->  };
->  
->  &usb_hsphy {
-> -	status = "okay";
->  	vdda-pll-supply = <&vreg_l4b_0p88>;
->  	vdda33-supply = <&vreg_l10b_3p08>;
->  	vdda18-supply = <&vreg_l5b_1p8>;
-> +	status = "okay";
->  };
->  
->  &usb_qmpphy {
-> -	status = "okay";
->  	vdda-phy-supply = <&vreg_l4b_0p88>;
->  	vdda-pll-supply = <&vreg_l1b_1p2>;
-> +	status = "okay";
->  };
-> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
-> index 360d6dc144811..a7adf28a395a8 100644
-> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
-> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
-> @@ -224,16 +224,15 @@ usb_hsphy: phy@ff4000 {
->  				     "qcom,usb-snps-hs-7nm-phy";
->  			reg = <0xff4000 0x120>;
->  			#phy-cells = <0>;
-> -			status = "disabled";
->  			clocks = <&rpmhcc RPMH_CXO_CLK>;
->  			clock-names = "ref";
->  			resets = <&gcc GCC_QUSB2PHY_BCR>;
-> +			status = "disabled";
->  		};
->  
->  		usb_qmpphy: phy@ff6000 {
->  			compatible = "qcom,sdx65-qmp-usb3-uni-phy";
->  			reg = <0x00ff6000 0x1c8>;
-> -			status = "disabled";
->  			#address-cells = <1>;
->  			#size-cells = <1>;
->  			ranges;
-> @@ -247,6 +246,8 @@ usb_qmpphy: phy@ff6000 {
->  				 <&gcc GCC_USB3_PHY_BCR>;
->  			reset-names = "phy", "common";
->  
-> +			status = "disabled";
-> +
->  			usb_ssphy: phy@ff6200 {
->  				reg = <0x00ff6e00 0x160>,
->  				      <0x00ff7000 0x1ec>,
-> @@ -393,7 +394,6 @@ mem_noc: interconnect@9680000 {
->  		usb: usb@a6f8800 {
->  			compatible = "qcom,sdx65-dwc3", "qcom,dwc3";
->  			reg = <0x0a6f8800 0x400>;
-> -			status = "disabled";
->  			#address-cells = <1>;
->  			#size-cells = <1>;
->  			ranges;
-> @@ -423,6 +423,8 @@ usb: usb@a6f8800 {
->  
->  			resets = <&gcc GCC_USB30_BCR>;
->  
-> +			status = "disabled";
-> +
->  			usb_dwc3: usb@a600000 {
->  				compatible = "snps,dwc3";
->  				reg = <0x0a600000 0xcd00>;
+Bjorn Andersson (3):
+  arm64: dts: qcom: Introduce the SC8180x platform
+  arm64: dts: qcom: sc8180x: Introduce Primus
+  arm64: dts: qcom: sc8180x: Introduce Lenovo Flex 5G
+
+Vinod Koul (9):
+  dt-bindings: firmware: document Qualcomm SC8180X SCM
+  dt-bindings: PCI: qcom: Document sc8180x properties
+  dt-bindings: phy: qcom,qmp-pcie: fix the sc8180x regs
+  dt-bindings: usb: qcom,dwc3: Add SC8180x binding
+  dt-bindings: interconnect: split SC8180x to own schema
+  scsi: ufs: dt-bindings: Add SC8180x binding
+  dt-bindings: phy: qcom,qmp-ufs: fix the sc8180x regs
+  regulator: dt-bindings: qcom,rpmh: Add compatible for PMC8180
+  dt-bindings: qcom,pdc: Add SC8180x compatible
+
+ .../bindings/firmware/qcom,scm.yaml           |    1 +
+ .../bindings/interconnect/qcom,rpmh.yaml      |   11 -
+ .../interconnect/qcom,sc8180x-rpmh.yaml       |   76 +
+ .../interrupt-controller/qcom,pdc.yaml        |    1 +
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |   49 +-
+ .../phy/qcom,ipq8074-qmp-pcie-phy.yaml        |    2 +-
+ .../phy/qcom,msm8996-qmp-ufs-phy.yaml         |   18 +-
+ .../regulator/qcom,rpmh-regulator.yaml        |    4 +
+ .../devicetree/bindings/ufs/qcom,ufs.yaml     |    2 +
+ .../devicetree/bindings/usb/qcom,dwc3.yaml    |    2 +
+ arch/arm64/boot/dts/qcom/Makefile             |    2 +
+ .../boot/dts/qcom/sc8180x-lenovo-flex-5g.dts  |  590 +++
+ arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi   |  326 ++
+ arch/arm64/boot/dts/qcom/sc8180x-primus.dts   |  706 +++
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi         | 3950 +++++++++++++++++
+ 15 files changed, 5709 insertions(+), 31 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sc8180x-rpmh.yaml
+ create mode 100644 arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc8180x.dtsi
+
+-- 
+2.39.2
+
