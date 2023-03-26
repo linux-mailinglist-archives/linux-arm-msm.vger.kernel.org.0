@@ -2,68 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A2706C96F4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Mar 2023 18:52:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B781F6C985A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 00:01:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232093AbjCZQwc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Mar 2023 12:52:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40132 "EHLO
+        id S229596AbjCZWBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Mar 2023 18:01:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229621AbjCZQwb (ORCPT
+        with ESMTP id S229471AbjCZWBN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Mar 2023 12:52:31 -0400
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4256F4EEF
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Mar 2023 09:52:30 -0700 (PDT)
-Received: by mail-io1-xd2a.google.com with SMTP id d14so2896511ion.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Mar 2023 09:52:30 -0700 (PDT)
+        Sun, 26 Mar 2023 18:01:13 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5568B59F9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Mar 2023 15:01:12 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id p203so8187690ybb.13
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Mar 2023 15:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679849548;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uZDpfx3urFpkn6ahCSfHgrhA7mhIEUMUgAQsnqLHf8E=;
-        b=lw02E4M5hD/bCTsw9aoEmp9o5Go8WICBB/nja5f64DrIyDY6COPKylxnqlVBtpfdyv
-         GWv5TcbfKlbtBJ+sfHmTSiLAUCwSjT3IZ4gqsSTUwupt8zpbAKCRjRKbx5EDmtHx9Jg7
-         wZQeuVT7Y8KrQsCY4h8XRNw9l/iNZSG1avD3eld/z7UqgI3lHJx1EwL95+lC7vdqxed9
-         h3cH/8oyD191x2pTz/cgAism5FJUp+2gFb3N2ECBaOXcIqggZjF+I96gjnrReKF8tDe+
-         juVli4JRKwUMK6stG0/4Hgfw8oPz0jI3NlEB55ZijzDxTp2ToJEgyy+4tsofGkZ86Zgx
-         6rVQ==
+        d=linaro.org; s=google; t=1679868071;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=nW5Zc8I9D3NwW9JUY8UwDM40P3d6d2p4PO1EwU3IDaI=;
+        b=lttfX1kJ6ZctCFBJbQWMDHXaxHbnu4g/vIZsHhvCzMCsHG8wsta1JHfgSA8+nTGo9i
+         GTjVry/Ilt1WouW13iOy1ER+vxb6jQmGK6Re+SfNiJswO5v80Ltj+934ZOu22GNA4Dky
+         SlSN6yLPHTxe/Vt0qV2hB7UWrIBWTgs2KtXyUPR2T8KPK7FMoIfazqBl/GZGxLme3i6X
+         1ld59Ac0M/+x47RyMuMXz19MssYL1s8Dd0wu381+1B2AF6CF3R63lZpUpz/UPGrFi9SO
+         Nmy8KbH4p8InCxAtR1RSvwKaEA76UEURU43lmjRRwPfKtsFmgtE+Uo0bUf8qcPMUlPar
+         wzLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679849548;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20210112; t=1679868071;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uZDpfx3urFpkn6ahCSfHgrhA7mhIEUMUgAQsnqLHf8E=;
-        b=r2Xo7qglEpPBTTkjoeANh/ijb9Rs5hnI4HXl5KWIDpMgEY3qP+AIMRxiTuFtbwX09v
-         u0w0sctT8lhfJuRFEQr5WqBXp8vwEAdHe4hDwthvB/pjjkRWRojdq40NreRGmotXUI6Y
-         qFOcmRZ0q34uXdOnLnUoYWVhDDgjPUOEUXbQ1AQMd4fnVlFl1+ZcVEtM5hOT5quQiEs4
-         W1GZRmAjgxUl7OdRubmObOAC8jb7SCMcxSPGZttrTb3HK7iPZx5EdUTQjuJL0devjJLa
-         Q6gTNfE1FhfrQ4Qjuo0H4VN0Y5Xgfq22H2q9fSvmWeXo77Fm8f8E/xi0jVANrwpsxBvM
-         b6Qw==
-X-Gm-Message-State: AO0yUKXesm44OCzkE+PIQnivLOtKs+XGUBHBYLLLxTsYS7kB3pQ9NH64
-        ZM805gil2l4t0GNZKM8WEg95rA==
-X-Google-Smtp-Source: AK7set99/fu0tVXo6FiX13qhaEmHEvLC3MCJvfjzz3kDAiKDyyxTs7GgLGQPJFXfM9JXlMm2u5od7w==
-X-Received: by 2002:a6b:f707:0:b0:74c:7db1:47cf with SMTP id k7-20020a6bf707000000b0074c7db147cfmr6914684iog.14.1679849548663;
-        Sun, 26 Mar 2023 09:52:28 -0700 (PDT)
-Received: from localhost.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id s10-20020a6bdc0a000000b0074e7960e70dsm3675834ioc.51.2023.03.26.09.52.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Mar 2023 09:52:27 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     quic_bjorande@quicinc.com, caleb.connolly@linaro.org,
-        mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net] net: ipa: compute DMA pool size properly
-Date:   Sun, 26 Mar 2023 11:52:23 -0500
-Message-Id: <20230326165223.2707557-1-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        bh=nW5Zc8I9D3NwW9JUY8UwDM40P3d6d2p4PO1EwU3IDaI=;
+        b=KjuGC3R+bLtE88zSKhcLE+70uY/dvE9oyIjMebYIf1G+Wr2Fvhvjy6sCEAEgk6Qc4t
+         /G5vfAOUP/OMvcWCvERape5AS1mY7aE9gWs0xjoceaWziYhIhMgALBo5q0+NI5Iy6O73
+         MUIyA83IdijO6OrTJLAZV335U/nm5i15qYxWhZklm7NFS9DQJ6M665Z5QUg5IErj4Ihw
+         hIonNripgzEHznKbLFttYY5Ym9BYWzf189tIsVMUYtTUzV3IaO6ADY5JyZskdNrsQ0cS
+         CUsEuTha+4lEzPCdv91EB38j2GGwpcy9P/FX6NlWldltN/50oYKWX4u9Y6nkIsPJQkAR
+         ZXlA==
+X-Gm-Message-State: AAQBX9em1Fy/E9YXUlOKHfKZLoBEuRYYsTQy4zNKM2sVhIo5s471rcMV
+        7l5YNlUtBTBi3css/hEWgXWxD/xDH8M+9A/gOQZ67g==
+X-Google-Smtp-Source: AKy350YT/xl8gofmmkVhwL2aCMeTVFx6UYQ8WocHxT1/FSBcMYEXjfM1wbj2q4875vnX5Bile5Tlmms3fT3yVFoFri8=
+X-Received: by 2002:a25:234c:0:b0:b35:91cc:9e29 with SMTP id
+ j73-20020a25234c000000b00b3591cc9e29mr6997010ybj.5.1679868071581; Sun, 26 Mar
+ 2023 15:01:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230326163813.535762-1-robdclark@gmail.com>
+In-Reply-To: <20230326163813.535762-1-robdclark@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 27 Mar 2023 01:01:00 +0300
+Message-ID: <CAA8EJpp2vhiq5WWaU=shG-tqDjt3pzw-NGTZbMMkx2cyp+ETCg@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Rename drm_msm_gem_submit_reloc::or in C++ code
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org,
+        Danylo Piliaiev <dpiliaiev@igalia.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -73,45 +72,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In gsi_trans_pool_init_dma(), the total size of a pool of memory
-used for DMA transactions is calculated.  However the calculation is
-done incorrectly.
+On Sun, 26 Mar 2023 at 19:38, Rob Clark <robdclark@gmail.com> wrote:
+>
+> From: Danylo Piliaiev <dpiliaiev@igalia.com>
+>
+> Clashes with C++ `or` keyword
+>
+> Signed-off-by: Danylo Piliaiev <dpiliaiev@igalia.com>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 
-For 4KB pages, this total size is currently always more than one
-page, and as a result, the calculation produces a positive (though
-incorrect) total size.  The code still works in this case; we just
-end up with fewer DMA pool entries than we intended.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Bjorn Andersson tested booting a kernel with 16KB pages, and hit a
-null pointer derereference in sg_alloc_append_table_from_pages(),
-descending from gsi_trans_pool_init_dma().  The cause of this was
-that a 16KB total size was going to be allocated, and with 16KB
-pages the order of that allocation is 0.  The total_size calculation
-yielded 0, which eventually led to the crash.
 
-Correcting the total_size calculation fixes the problem.
-
-Reported-by: <quic_bjorande@quicinc.com>
-Tested-by: <quic_bjorande@quicinc.com>
-Fixes: 9dd441e4ed57 ("soc: qcom: ipa: GSI transactions")
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/gsi_trans.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
-index 0f52c068c46d6..ee6fb00b71eb6 100644
---- a/drivers/net/ipa/gsi_trans.c
-+++ b/drivers/net/ipa/gsi_trans.c
-@@ -156,7 +156,7 @@ int gsi_trans_pool_init_dma(struct device *dev, struct gsi_trans_pool *pool,
- 	 * gsi_trans_pool_exit_dma() can assume the total allocated
- 	 * size is exactly (count * size).
- 	 */
--	total_size = get_order(total_size) << PAGE_SHIFT;
-+	total_size = PAGE_SIZE << get_order(total_size);
- 
- 	virt = dma_alloc_coherent(dev, total_size, &addr, GFP_KERNEL);
- 	if (!virt)
 -- 
-2.34.1
-
+With best wishes
+Dmitry
