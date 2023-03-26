@@ -2,101 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4660D6C967A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Mar 2023 17:58:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B80566C9680
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Mar 2023 18:01:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232591AbjCZP6d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Mar 2023 11:58:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53324 "EHLO
+        id S232287AbjCZQBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Mar 2023 12:01:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232585AbjCZP6L (ORCPT
+        with ESMTP id S232314AbjCZQBm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Mar 2023 11:58:11 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CF0144A2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Mar 2023 08:58:07 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id y4so26308829edo.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Mar 2023 08:58:07 -0700 (PDT)
+        Sun, 26 Mar 2023 12:01:42 -0400
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C7E41FD6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Mar 2023 09:01:40 -0700 (PDT)
+Received: by mail-il1-x136.google.com with SMTP id r4so3440280ilt.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Mar 2023 09:01:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679846286;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5oFwo4L+TIJv2R5IVOvnMPXoseaXu9lKbQdTJK30VDs=;
-        b=jf++4HlYZO0T+jKocmegItNVCEHGSyEdWBgRM+aQIvt/YbIKVGP49hEFuyGyFDhbVy
-         8rjQts3n3J0O3J9njxsc/TM3VaikkggUo/HpBTRzaM06Y1p2pMPK3v0QV5jt1ZAxDJrM
-         vQonzUmxa2jaoXYBY2Qhq1v3kYJPzXrNgbGBmlpZDLM/XbfvoG9w0QbpJ2DmShUw3iNP
-         3O13JaKQL4GJf8o+0c47e2y2TIOgjtj6DLr7Od9KsOrqlTg+7hGi9XMP1RLBI0Dx3dtR
-         aqTII4x9+MWallE0lI9D9dFMPqtw9aCI9R9yuKXqC8fvV7d7f0/uOk5CdlegaNKWmb2A
-         La3g==
+        d=ieee.org; s=google; t=1679846500;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QBPQLVtRTjnAB/29HPxS5lW1N6PezRYFN9fRXipj1zY=;
+        b=IGiB34vS5/NFCzkvrmmpWV1FXCX+vcbSUvukf//Yrmo/w3xr/brxT0aFRfmBytJu2z
+         kWIn6H8dJC70+I4IScmGl/qhoLj/fBTIqQ/JmSeQc8s4/s9qg8UkMfxyCB+Do8LVoiVw
+         8xoWLQBGWJIFWiHpnh6FqD07ADlAwtc94RQzI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679846286;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5oFwo4L+TIJv2R5IVOvnMPXoseaXu9lKbQdTJK30VDs=;
-        b=v1TFqk16qNxRRq5g7JWp6RSaaNpqS2ecUkR1ppJXfnz8rmB6yxadi4SpjWCJl2qQc5
-         4L+mySNnKqKmRVwXjagKNKcLSBm44nX9n3urfVv2bYp9i8yYGvHOEYS9OaJaxrBABStA
-         QhVPsdJ8t/DERicAmJJorMUOfs7sVb/PJ1xYzMdWuHevOOEF2/Y97GDNTm/ZP+kNiukS
-         c2nx7167UoGs0P6yPztCyq3fOcigovpqhdSNPti70OamtmrQH6e8GKsoFFN7/Yae53FG
-         BVEJXLZHI8iXptPqJlRXQ6zWMLzbB1VTNvQl8LEuemD3tsWjp3p2/9aKW+QSNxzK8xpt
-         Zufg==
-X-Gm-Message-State: AAQBX9dEgMwP1vDGkGs23mtYjjeevJYHxr4htjMkxgPyk516GsZ3/RoF
-        ZrMD+Hf+vf3gieQgW9DSrKRL3w==
-X-Google-Smtp-Source: AKy350Zcv96asGrO6i96CRg2Dngd9B7NvuEmsHZJRcgIBGA2lZt5CCVxqcfpja+L/n6mykzni0E8ag==
-X-Received: by 2002:a05:6402:204c:b0:500:2cc6:36da with SMTP id bc12-20020a056402204c00b005002cc636damr9570372edb.19.1679846286694;
-        Sun, 26 Mar 2023 08:58:06 -0700 (PDT)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:eca3:3b8f:823b:2669])
-        by smtp.gmail.com with ESMTPSA id q3-20020a50cc83000000b004fc86fcc4b3sm13705502edi.80.2023.03.26.08.58.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Mar 2023 08:58:06 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 11/11] arm64: dts: qcom: sdm845-xiaomi-beryllium: correct compatible
-Date:   Sun, 26 Mar 2023 17:57:53 +0200
-Message-Id: <20230326155753.92007-11-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230326155753.92007-1-krzysztof.kozlowski@linaro.org>
-References: <20230326155753.92007-1-krzysztof.kozlowski@linaro.org>
+        d=1e100.net; s=20210112; t=1679846500;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QBPQLVtRTjnAB/29HPxS5lW1N6PezRYFN9fRXipj1zY=;
+        b=x24h+hWeXQAOdLjZtgUfAp+mW4VqHAD5UR6QHpxIn0a/FhH4hbzHzvt997SCC+bgVG
+         WXIvPNHorDyD5Bc+4FI3OgDwgHvrRrm+ncAafcb7QY7DKuVzWxICRbROMIH/QTZc29un
+         0bJPVVk9RyMlFaAf2941iEeH3RLYk4ajZfyYFsTiA/ejDPULJwTqMoL8Mgeo05vM1nKR
+         8pviFfQzQY+SvWgxhq7iGlaZ4hOOzx66j3S6FGI+beqDBep3fAXHhmGLiXMTpBVz01fS
+         13FaT1OZMdhPFJssEHvSHq8w0wslo3QYEjSdfXY0gwQ0AsC4CSIbrvviJnNSitRcU0Ep
+         xA5w==
+X-Gm-Message-State: AAQBX9fADo2nHEau+FXfb9WBIMFUkkb88MVoTNT6WCR6wq6Qv5tdcoXD
+        +IaYjf6QqxmkMUIQ5gvMUGwkXw==
+X-Google-Smtp-Source: AKy350aLi64HPF8IBNKNRoN2sbu8nNmpTqSJGlkD+X2Ash8ZjrX46m9n39Dwzfnepb6tUXXwstAZtA==
+X-Received: by 2002:a92:c107:0:b0:323:338:cc3c with SMTP id p7-20020a92c107000000b003230338cc3cmr7123936ile.6.1679846499674;
+        Sun, 26 Mar 2023 09:01:39 -0700 (PDT)
+Received: from [10.211.55.3] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id b19-20020a92a053000000b00325db2dcb9dsm1976157ilm.4.2023.03.26.09.01.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 26 Mar 2023 09:01:39 -0700 (PDT)
+Message-ID: <82797190-5a83-53d5-47cd-0c62b3f7c6d8@ieee.org>
+Date:   Sun, 26 Mar 2023 11:01:37 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 1/2] ARM: dts: qcom: sdx65: add IPA information
+To:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
+        agross@kernel.org, konrad.dybcio@linaro.org
+Cc:     quic_rohiagar@quicinc.com, caleb.connolly@linaro.org,
+        mka@chromium.org, evgreen@chromium.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230324201528.2540564-1-elder@linaro.org>
+ <20230324201528.2540564-2-elder@linaro.org>
+ <98fcbdd4-77b3-5b17-7102-c590f1a5a63e@kernel.org>
+Content-Language: en-US
+From:   Alex Elder <elder@ieee.org>
+In-Reply-To: <98fcbdd4-77b3-5b17-7102-c590f1a5a63e@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Tianma FHD panel is supposed to be used with fallback compatible:
+On 3/25/23 6:14 AM, Krzysztof Kozlowski wrote:
+> On 24/03/2023 21:15, Alex Elder wrote:
+>> Add IPA-related nodes and definitions to "sdx65.dtsi".  The SMP2P
+>> nodes (ipa_smp2p_out and ipa_smp2p_in) are already present.
+>>
+>> Enable IPA in "sdx65-mtp.dts"; this GSI firmware is loaded by Trust
+>> Zone on this platform.
+>>
+>> Tested-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>> Signed-off-by: Alex Elder <elder@linaro.org>
+>> ---
+>>   arch/arm/boot/dts/qcom-sdx65-mtp.dts |  5 ++++
+>>   arch/arm/boot/dts/qcom-sdx65.dtsi    | 38 ++++++++++++++++++++++++++++
+>>   2 files changed, 43 insertions(+)
+>>
+>> diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
+>> index ed98c83c141fc..72e25de0db5fc 100644
+>> --- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
+>> +++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
+>> @@ -245,6 +245,11 @@ &blsp1_uart3 {
+>>   	status = "okay";
+>>   };
+>>   
+>> +&ipa {
+>> +	qcom,gsi-loader = "skip";
+>> +	status = "okay";
+>> +};
+>> +
+>>   &qpic_bam {
+>>   	status = "okay";
+>>   };
+>> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
+>> index 192f9f94bc8b4..360d6dc144811 100644
+>> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
+>> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
+>> @@ -11,6 +11,7 @@
+>>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>   #include <dt-bindings/power/qcom-rpmpd.h>
+>>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>> +#include <dt-bindings/interconnect/qcom,sdx65.h>
+>>   
+>>   / {
+>>   	#address-cells = <1>;
+>> @@ -299,6 +300,43 @@ tcsr_mutex: hwlock@1f40000 {
+>>   			#hwlock-cells = <1>;
+>>   		};
+>>   
+>> +		ipa: ipa@3e04000 {
+>> +			compatible = "qcom,sdx65-ipa";
+>> +
+>> +			iommus = <&apps_smmu 0x5e0 0x0>,
+>> +				 <&apps_smmu 0x5e2 0x0>;
+>> +			reg = <0x3f40000 0x10000>,
+>> +			      <0x3f50000 0x5000>,
+>> +			      <0x3e04000 0xfc000>;
+>> +			reg-names = "ipa-reg",
+>> +				    "ipa-shared",
+>> +				    "gsi";
+>> +
+>> +			interrupts-extended = <&intc GIC_SPI 241 IRQ_TYPE_EDGE_RISING>,
+>> +					      <&intc GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>,
+>> +					      <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+>> +					      <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
+>> +			interrupt-names = "ipa",
+>> +					   "gsi",
+>> +					   "ipa-clock-query",
+>> +					   "ipa-setup-ready";
+> 
+> These look misaligned.
 
-  sdm845-xiaomi-beryllium-tianma.dtb: panel@0: compatible: ['tianma,fhd-video'] is too short
+I believe this is the alignment convention used by all IPA nodes
+in DTS files.  It's possible I'm not seeing something you are,
+but...  what alignment should be used?  And if I change this,
+should I change all others?
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
-index 8e176111e599..e9427851ebaa 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
-@@ -10,6 +10,6 @@ / {
- };
- 
- &display_panel {
--	compatible = "tianma,fhd-video";
-+	compatible = "tianma,fhd-video", "novatek,nt36672a";
- 	status = "okay";
- };
--- 
-2.34.1
+					-Alex
+
+> 
+> With above:
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
 
