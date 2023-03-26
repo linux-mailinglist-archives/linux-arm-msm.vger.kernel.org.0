@@ -2,112 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 39BBF6C9543
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Mar 2023 16:32:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 763E06C965B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Mar 2023 17:58:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232502AbjCZOcz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Mar 2023 10:32:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60998 "EHLO
+        id S232087AbjCZP6A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Mar 2023 11:58:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232377AbjCZOcx (ORCPT
+        with ESMTP id S231671AbjCZP57 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Mar 2023 10:32:53 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C9966A69
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Mar 2023 07:32:51 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pgRQF-0008Ds-2t; Sun, 26 Mar 2023 16:32:39 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pgRQC-006rcG-I2; Sun, 26 Mar 2023 16:32:36 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pgRQB-0088Wk-F3; Sun, 26 Mar 2023 16:32:35 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+        Sun, 26 Mar 2023 11:57:59 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A0310E6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Mar 2023 08:57:58 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id ew6so26166996edb.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Mar 2023 08:57:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679846277;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KOxLTVXPQ9AYAdZCVOpfJ7Gu9nxcuITjuyN2ENbFdg4=;
+        b=dd3Naus/cgwBsgZSchftaaKmtdYsQ1MIkfiaEn8yGSEivQm9QI43Ux4OFC77hr0GMu
+         jgepSBQypsl3fDfdGO1TDmuJCtov+h8vHmWj395yjWJ+fYm/tGJAp5WTaJQGWyLE0epU
+         ZN4rG/Um+t7LFFVFgOMNozGy/JrjKaYYvWqFFwnjCTob7zcSOIKEJoi9ROXlg7U1J1vS
+         ALhywtjUiBm/m0CRJ+gEb7Ma3He2UseS7FDAjiea47ral4Q3RC2C37rtTvNURz9A0VBw
+         JjyEmUhvF1m9MJUoPOGd0t7+Hwhwqsv4POX3Wpk8wE3QCTAPsNlJLBtnU2ob8U7HB4bG
+         l5aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679846277;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KOxLTVXPQ9AYAdZCVOpfJ7Gu9nxcuITjuyN2ENbFdg4=;
+        b=2hxUmwBRI/tugXm9r0kUIa8G3aebRffpOxMBiRV+yVmfpbsvDgLmTcuhAvOMKc3+Vf
+         j2JLPAxTIw0sN/XdDZCmvb6XxnWCFL+M23+abDB+Q8aiJWFL7m44QkCrM4xTypC9KHRU
+         2ohH5N/QxmH1BaQLNcV5avwjw5qcqgK9dAXph88cpncboI5ohAcNq8t5z2z0XSzhRuX1
+         uzzr5K4uBtgtFxl/C5ktihkug8G0cSbKfOtosOw/MMGkk4wQj15HUtJAdqR9V/yGNHon
+         eA5WrsWwtnh3GXt09UBb5qOV+NEE6YYADszQrUVUiWOMgKoG4dRuyzyDb/pn5peRdtZM
+         nWJA==
+X-Gm-Message-State: AAQBX9cwkOurYfTz0LuEWpckkzx6bTAFilF2AACWHxBOeOiXrmO2QRem
+        Sx+RMKvTpiQ4ImzO6bR5pdfZQw==
+X-Google-Smtp-Source: AKy350anxCVwbZC5BtR+tV+luXTT5V1kQbKSVhcr9NA857OvJbrgxTJcETyXkyEHeJRHgsYDHWIjyw==
+X-Received: by 2002:a05:6402:1641:b0:4fb:953d:c3d0 with SMTP id s1-20020a056402164100b004fb953dc3d0mr8891541edx.20.1679846276905;
+        Sun, 26 Mar 2023 08:57:56 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:eca3:3b8f:823b:2669])
+        by smtp.gmail.com with ESMTPSA id q3-20020a50cc83000000b004fc86fcc4b3sm13705502edi.80.2023.03.26.08.57.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Mar 2023 08:57:56 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        kernel@pengutronix.de
-Subject: [PATCH 046/117] media: venc: Convert to platform remove callback returning void
-Date:   Sun, 26 Mar 2023 16:31:13 +0200
-Message-Id: <20230326143224.572654-49-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230326143224.572654-1-u.kleine-koenig@pengutronix.de>
-References: <20230326143224.572654-1-u.kleine-koenig@pengutronix.de>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 01/11] arm64: dts: qcom: sdm845-cheza: use just "port" in Innolux panel
+Date:   Sun, 26 Mar 2023 17:57:43 +0200
+Message-Id: <20230326155753.92007-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1804; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=hwSaE/8xK5uDZSiLTTtZlCVtdlhltZuM7HPsqGQ9Uf4=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkIFa+uxorUIQpjqZN3S9rqhNDmr3xDFDC5H+f4 J9shvHrsPWJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZCBWvgAKCRCPgPtYfRL+ Tn+yCACq2oQqKASPlvz22ANabMKMAXSr7B65CS1U9LTwKXjTBq79XIZEXvC8VR4Djdon1bBVxax 4WCWGLplC9aLPujPNVeqMa1UdqBbmbNUzL9DzbmQE43Ij0SiFFlc5YH2ZnSH6QXyUFWfQlnvH7Z oQeUbi4r4MppzYy2XOjcpsHVIT9u3hgFQqAnzjpyWmR/pluqblYPu8DUw2yCpSFiasn5WWg310K i7R0naRJwQ6+n6Dtk39ah1nmc9NDyjrI75RskO9MQoy7aRPkSSYlxP/BSRFf+gsfG7j/VCBtGu8 9KN3yQscinsL3cAXqYeFk7MX2puW2VpCE7wg+kya1yP36dHP
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+The panel bindings expect to have only one port, thus they do not allow
+to use "ports" node:
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+  sdm845-cheza-r2.dtb: panel: 'ports' does not match any of the regexes: 'pinctrl-[0-9]+'
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/media/platform/qcom/venus/venc.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index cdb12546c4fa..6d61614656a5 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -1492,7 +1492,7 @@ static int venc_probe(struct platform_device *pdev)
- 	return ret;
- }
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+index f2b48241d15c..59ad6a8403d2 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+@@ -135,11 +135,9 @@ panel: panel {
+ 		backlight = <&backlight>;
+ 		no-hpd;
  
--static int venc_remove(struct platform_device *pdev)
-+static void venc_remove(struct platform_device *pdev)
- {
- 	struct venus_core *core = dev_get_drvdata(pdev->dev.parent);
- 
-@@ -1501,8 +1501,6 @@ static int venc_remove(struct platform_device *pdev)
- 
- 	if (core->pm_ops->venc_put)
- 		core->pm_ops->venc_put(core->dev_enc);
--
--	return 0;
- }
- 
- static __maybe_unused int venc_runtime_suspend(struct device *dev)
-@@ -1543,7 +1541,7 @@ MODULE_DEVICE_TABLE(of, venc_dt_match);
- 
- static struct platform_driver qcom_venus_enc_driver = {
- 	.probe = venc_probe,
--	.remove = venc_remove,
-+	.remove_new = venc_remove,
- 	.driver = {
- 		.name = "qcom-venus-encoder",
- 		.of_match_table = venc_dt_match,
+-		ports {
+-			panel_in: port {
+-				panel_in_edp: endpoint {
+-					remote-endpoint = <&sn65dsi86_out>;
+-				};
++		panel_in: port {
++			panel_in_edp: endpoint {
++				remote-endpoint = <&sn65dsi86_out>;
+ 			};
+ 		};
+ 	};
 -- 
-2.39.2
+2.34.1
 
