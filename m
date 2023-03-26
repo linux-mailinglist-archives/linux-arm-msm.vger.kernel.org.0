@@ -2,83 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0F836C922C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Mar 2023 05:01:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0B226C932B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Mar 2023 10:52:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230309AbjCZDBN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Mar 2023 23:01:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54346 "EHLO
+        id S231873AbjCZIwT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Mar 2023 04:52:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbjCZDBL (ORCPT
+        with ESMTP id S231845AbjCZIwS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Mar 2023 23:01:11 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08AE99EC1;
-        Sat, 25 Mar 2023 20:01:10 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 877E460C82;
-        Sun, 26 Mar 2023 03:01:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFFCC433D2;
-        Sun, 26 Mar 2023 03:01:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679799669;
-        bh=nSfw0kjiNzoXi4EGYiHl5//xYiTQCf4jcCZo+tOchPQ=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=CTOAWR6AKhsODcwWfR45G7vVJ2GURz4rwjbRqJMeAcnr8efNLhLoL4lgz58RWF/p0
-         MvWuQnyPVc427U66gWMLsmDzA504GMeNu8YrOE7b0oNL+/ng7MLzY43YrM4t42SxXG
-         2kxkAbTg/+D8VXtXL6/8f5HcQoa3ZtSZc3MC3WyLY2xk+NxGROrMpZ0R/cOFiVvEUe
-         pdX8KEf2CjKBbS8QiLQKf8zrzTVV7D4I97IjEHJQloXBKZ3gck3djuLgeZ3neJ9wNk
-         Mznqti0A8ei2ROflfZoXtJpNjMnbg2npANAaQtGf86MjkiwYmp82XTZX7OE4nd8sux
-         dQdI+Dan8AEdQ==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: (subset) [PATCH 1/5] arm64: dts: qcom: msm8916-thwc-ufi001c: add function to pin config
-Date:   Sat, 25 Mar 2023 20:04:17 -0700
-Message-Id: <167979983769.3004671.15307182890891287980.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230324202244.744271-1-krzysztof.kozlowski@linaro.org>
-References: <20230324202244.744271-1-krzysztof.kozlowski@linaro.org>
+        Sun, 26 Mar 2023 04:52:18 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6E187EFF
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Mar 2023 01:52:16 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id i5so24346030eda.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Mar 2023 01:52:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679820735;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p1G5XuG2O44rhuRS+cdtjXkMOG1YaLkvmFPo9d6ePeQ=;
+        b=kt9fmK2m0EiBdcWA/bhdn34lSYAf9VIEFlhYgE1guZ9rrBz7zO8tOE0YsSuDxaXLsd
+         AystX85dhnq9pPaS7QQuGJMwhiuROindN2L2dpc4nO42bq5kRAxoxRDK/3N0i+vG4tm1
+         zbrr4ToalhuObWk3ViDoIXBekoMpMcXhohlEStpxktqu9111oPyW3tv7ASk2ZUZz0M1j
+         TeHqYdi2W7gCNoa6xMu6oxFYzVgv2yU2xY0Di7UT3SLKdYq8+MTnqZe0524j/vJN/PSJ
+         GL3Av5csVCx8cCCK40uWMI5k002k6P4y+ZQb0sM4CHKWKghWwW+jIG7dVpwrV5ELIv/0
+         k+pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679820735;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p1G5XuG2O44rhuRS+cdtjXkMOG1YaLkvmFPo9d6ePeQ=;
+        b=RRzZoJ7Fti6knKGH1ZaEpMSVUaFmQhu5iDlTZ74kAmSz7uplnKfIeyaYNtK6HQDw10
+         S6kcJmT//9YCgygT8iyb/7B9Loy0U9savZ7X3zad1MuGgshFiuZAqX6QN1u2RNIcw1qY
+         mNdrAK2MiNv+DHQHAb/K4RYt/8emEyPzAmffUH9Pv2El9wGWvS/TB2m040V/GIUWrp8N
+         WGXs4H4alx2oCugB0jUkYn6yJqEp09e/S68sd6Q2PCzLKzjAe5iNhJCYBOfpY2diMwIe
+         I01LjjIuYTWGPuLD27CAmU0b/vyCftJXDVq9gQLtqZue1+8QnU3jbNzKgMoDiXPaPfuo
+         X4Cw==
+X-Gm-Message-State: AAQBX9fNpJfoW+HfBpEYPkCQw/WSYNP2Ro1+xx6P4tbm1sC1lAoDKTBB
+        xzkMuSo18DaDnSURFnesBsMsTA==
+X-Google-Smtp-Source: AKy350a4Hf2pni90dnhLjgH1jLAjpW5maFCPJFgbsuds0EDN8CGprK37+v/57FDrATumfl8wg8VLiw==
+X-Received: by 2002:a05:6402:1390:b0:502:2382:5c24 with SMTP id b16-20020a056402139000b0050223825c24mr7067869edv.39.1679820735349;
+        Sun, 26 Mar 2023 01:52:15 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:6cac:926d:a4f2:aa09? ([2a02:810d:15c0:828:6cac:926d:a4f2:aa09])
+        by smtp.gmail.com with ESMTPSA id z17-20020a5096d1000000b004aee4e2a56esm13223831eda.0.2023.03.26.01.52.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 26 Mar 2023 01:52:14 -0700 (PDT)
+Message-ID: <d827dafb-5b97-7ba3-542c-e3f60d4fb468@linaro.org>
+Date:   Sun, 26 Mar 2023 10:51:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 0/2] Qualcomm SDM845 SLPI DSP driver support
+To:     Dylan Van Assche <me@dylanvanassche.be>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230325132117.19733-1-me@dylanvanassche.be>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230325132117.19733-1-me@dylanvanassche.be>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 24 Mar 2023 21:22:40 +0100, Krzysztof Kozlowski wrote:
-> Bindings require pin configuration nodes to have the function, even if
-> it is GPIO:
+On 25/03/2023 14:21, Dylan Van Assche wrote:
+> The Qualcomm SDM845 SoC has a separate SLPI (Sensor Low Power Island)
+> DSP for sensors connected to the SoC which is responsible for exposing
+> sensors to userspace, power saving, and other features. 
+> While sensors are connected to GPIOs of the SoC, they cannot be used
+> because the hypervisor blocks direct access to the sensors, thus the 
+> DSP must be used to access any sensor on this SoC. The SLPI DSP uses a
+> GLink edge (dsps) to communicate with the host and has a FastRPC interface
+> to load files from the host filesystem such as sensor configuration files.
+> The FastRPC interface does not use regular FastRPC Compute Banks
+> but instead uses an allocated CMA region through which communication happens.
 > 
->   msm8916-thwc-ufi001c.dtb: pinctrl@1000000: sim-ctrl-default-state: 'oneOf' conditional failed, one must be fixed:
->     'esim-sel-pins', 'sim-en-pins', 'sim-sel-pins' do not match any of the regexes: 'pinctrl-[0-9]+'
+> This set of patches adds support to drivers for the SLPI DSP:
+> 1. Configure the permissions of assigned DSP memory through the hypervisor.
+> 2. Allocate a remote heap when the FastRPC session ID is 0 instead of using 
+> a Compute Bank directly.
+> 3. Add the SLPI remoteproc resource to the q6v5_pas driver to enable support
+> for it in the driver.
+> over QRTR.
 > 
-> 
-> [...]
+> DTS changes to enable the SLPI DSP in the SDM845 DTS and hardware
+> e.g. Oneplus 6 and SHIFTPHONES SHIFT6mq will be send once the driver changes
+> are applied.
 
-Applied, thanks!
-
-[2/5] arm64: dts: qcom: apq8096-db820c: drop simple-bus from clocks
-      commit: 704e26678c8d50d8988e30a47edddbb361e9e973
-[3/5] arm64: dts: qcom: msm8994-msft-lumia: drop simple-bus from clocks
-      commit: 5574a5022df4cf67fdcf8c94bfbafb2cc296beee
-[4/5] arm64: dts: qcom: msm8996-xiaomi: drop simple-bus from clocks
-      commit: 338958e30c6897b7978019b5ea3fa1897cd511ba
-[5/5] arm64: dts: qcom: sdm630: move DSI opp-table into DSI node
-      commit: a2e5260d07555834d14431399cefdd3220b917d6
+No, as we explained on IRC, we expect DTS to be sent the same time.
 
 Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Krzysztof
+
