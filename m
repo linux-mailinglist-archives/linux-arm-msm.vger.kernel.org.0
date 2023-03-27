@@ -2,166 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB82F6CA7F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 16:42:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1C846CA7FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 16:44:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232762AbjC0OmH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 10:42:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43002 "EHLO
+        id S232208AbjC0OoX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 10:44:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232636AbjC0OmF (ORCPT
+        with ESMTP id S230287AbjC0OoW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 10:42:05 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE79CA1;
-        Mon, 27 Mar 2023 07:42:04 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32RAHAT2020927;
-        Mon, 27 Mar 2023 14:42:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=ivyVZR7ouQVyFI8OG9hI0akCWrLjSGGOqUuj+y5oqjY=;
- b=OwFRaxiDv75ylbiFN9bDDjelWINLSZdb3/fOCVyqvurmd6RyF4iHhPoVjVsVYN+tnkSV
- yeUa9P1GS0ImzqIfRkWWj5EJo5wBsj10hiKlMXjK868CNgpuGDeS+McMV/3QvuAhQj+O
- OERytUqyhBjgSBxv8dc2fjaHf/X4sT4HcqnOLqcZRGMxmKssOoelPrizCDYbiXqZ364B
- cvfOHEcHg8+rktpQOc15Ss/t+cwCYy6Kkl0NUOMRbrSBg2LY5S8dYk4uJu3H+5BoEv2e
- UVWb3Vcs0uRiq/fUxumtZkIb7EbY5oflQhUWdxaJje0qWkjbjXEfeU+dGpdpoVNzW4aX LA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3phsqqmnhv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 27 Mar 2023 14:42:01 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32REg0D1016900
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 27 Mar 2023 14:42:00 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Mon, 27 Mar 2023 07:41:59 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Chris Lew <quic_clew@quicinc.com>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH 2/2] rpmsg: glink: Consolidate TX_DATA and TX_DATA_CONT
-Date:   Mon, 27 Mar 2023 07:41:53 -0700
-Message-ID: <20230327144153.3133425-3-quic_bjorande@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230327144153.3133425-1-quic_bjorande@quicinc.com>
-References: <20230327144153.3133425-1-quic_bjorande@quicinc.com>
+        Mon, 27 Mar 2023 10:44:22 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C152B30DA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 07:44:20 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id t10so37104705edd.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 07:44:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679928259;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bcJ5LgW5ER1wwy6sFz6CbRHRnCtmdb/eU7GUYh8dJzM=;
+        b=SMZBCI18dJcH5FkMFF/JEYx5uPb0wcks3YbmaiaE/ROusQSn14F2yKDbWwfvscCw7/
+         uGMwLlPn5pMUUSl6SxvxrytszAMHihPPBHMJi4j17JMLXpzB9jaIFm3+4FnCEoW8SD46
+         xg5Hsrt9kpR8yjbsuDwx9TgRaEEp5Kzd7/EcbK+q+VxVXVbwMiapmIqKTPHheZkjUekA
+         VN7t9VtiTCBmoVpJ1TWeWK/t4bz9bV96sn5wvQGEzmkoBMbtH3d/dkBUMFOFUx8kVVuO
+         hvflyd8eEBO07Eox/3ldUiLnaiNfTzs5fxZVZFQ4rXDjnBEElYD/Jv/jbrGvs8b9Hvv0
+         7S9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679928259;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bcJ5LgW5ER1wwy6sFz6CbRHRnCtmdb/eU7GUYh8dJzM=;
+        b=MFQVc0k2jom0chvp5UGXGXJBq6GpaB7hxNEuNDgYXEWwR0iDpZ3i4lF5GXR0Z+eDBE
+         dFoIC51nz4C+MU7a/i27ykWH3liRzC3NBCUrQ2jv+IsWMEDHu+QNYMMV4AtW0AA6Zm5N
+         Y25ZPbBhgYGpFpj05amV8qk//KlwZCaZC8wvAHMC9frH+Zm89WSwnDI1JObVCCtsnS+F
+         Lv2w0RU02Ud5SqiuO6vPSMKd7c4yfvSeVOtI5uYpPEA0t85vBnrx9jJ1NeL8MzuJk1Bx
+         Pb0AlNOi8qR29Pv/ncyLaZ+4mPJe+ciSIofOVnc1YhVsZ/Yu6YGkTFOWtrMeW+qWSfO5
+         jCFg==
+X-Gm-Message-State: AO0yUKUSz7lj48kbvpLulq6+vyBAkFWyMtOUyJQvH2FLyQytV5WqjFpV
+        zJCpfJxCOmcgSEqrEg2CF4KxUA==
+X-Google-Smtp-Source: AK7set+1ksES0ZIaPZjVsuA2WTUy9q1CM0Ewm895xcCulrtSusV/Tks9feJ8wt5cD8cXAM2gepOpiQ==
+X-Received: by 2002:a17:906:ddb:b0:925:6bcb:4796 with SMTP id p27-20020a1709060ddb00b009256bcb4796mr18618407eji.38.1679928259316;
+        Mon, 27 Mar 2023 07:44:19 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:581e:789c:7616:5ee? ([2a02:810d:15c0:828:581e:789c:7616:5ee])
+        by smtp.gmail.com with ESMTPSA id 11-20020a170906300b00b0093137b1f23fsm14111235ejz.37.2023.03.27.07.44.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Mar 2023 07:44:18 -0700 (PDT)
+Message-ID: <ba3da82d-999b-b040-5230-36e60293e0fd@linaro.org>
+Date:   Mon, 27 Mar 2023 16:44:17 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rbb0htesICTgjRuC6CVEWGyKTHhMS7Rt
-X-Proofpoint-ORIG-GUID: rbb0htesICTgjRuC6CVEWGyKTHhMS7Rt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-24_11,2023-03-27_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- mlxlogscore=999 bulkscore=0 adultscore=0 clxscore=1015 mlxscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303270116
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v4 2/7] dt-bindings: mmc: sdhci-msm: Add ICE phandle
+Content-Language: en-US
+To:     Abel Vesa <abel.vesa@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Biggers <ebiggers@kernel.org>
+Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+References: <20230327134734.3256974-1-abel.vesa@linaro.org>
+ <20230327134734.3256974-3-abel.vesa@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230327134734.3256974-3-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rather than duplicating most of the code for constructing the initial
-TX_DATA and subsequent TX_DATA_CONT packets, roll them into a single
-loop.
+On 27/03/2023 15:47, Abel Vesa wrote:
+> Starting with SM8550, the ICE will have its own devicetree node
+> so add the qcom,ice property to reference it.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
- drivers/rpmsg/qcom_glink_native.c | 46 +++++++++----------------------
- 1 file changed, 13 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 62634d020d13..082cf7f4888e 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1309,7 +1309,7 @@ static int __qcom_glink_send(struct glink_channel *channel,
- 	int ret;
- 	unsigned long flags;
- 	int chunk_size = len;
--	int left_size = 0;
-+	size_t offset = 0;
- 
- 	if (!glink->intentless) {
- 		while (!intent) {
-@@ -1343,49 +1343,29 @@ static int __qcom_glink_send(struct glink_channel *channel,
- 		iid = intent->id;
- 	}
- 
--	if (wait && chunk_size > SZ_8K) {
--		chunk_size = SZ_8K;
--		left_size = len - chunk_size;
--	}
--	req.msg.cmd = cpu_to_le16(GLINK_CMD_TX_DATA);
--	req.msg.param1 = cpu_to_le16(channel->lcid);
--	req.msg.param2 = cpu_to_le32(iid);
--	req.chunk_size = cpu_to_le32(chunk_size);
--	req.left_size = cpu_to_le32(left_size);
--
--	ret = qcom_glink_tx(glink, &req, sizeof(req), data, chunk_size, wait);
--
--	/* Mark intent available if we failed */
--	if (ret) {
--		if (intent)
--			intent->in_use = false;
--		return ret;
--	}
--
--	while (left_size > 0) {
--		data = (void *)((char *)data + chunk_size);
--		chunk_size = left_size;
--		if (chunk_size > SZ_8K)
-+	while (offset < len) {
-+		chunk_size = len - offset;
-+		if (chunk_size > SZ_8K && (wait || offset > 0))
- 			chunk_size = SZ_8K;
--		left_size -= chunk_size;
- 
--		req.msg.cmd = cpu_to_le16(GLINK_CMD_TX_DATA_CONT);
-+		req.msg.cmd = cpu_to_le16(offset == 0 ? GLINK_CMD_TX_DATA : GLINK_CMD_TX_DATA_CONT);
- 		req.msg.param1 = cpu_to_le16(channel->lcid);
- 		req.msg.param2 = cpu_to_le32(iid);
- 		req.chunk_size = cpu_to_le32(chunk_size);
--		req.left_size = cpu_to_le32(left_size);
-+		req.left_size = cpu_to_le32(len - offset - chunk_size);
- 
--		ret = qcom_glink_tx(glink, &req, sizeof(req), data,
--				    chunk_size, wait);
--
--		/* Mark intent available if we failed */
-+		ret = qcom_glink_tx(glink, &req, sizeof(req), data + offset, chunk_size, wait);
- 		if (ret) {
-+			/* Mark intent available if we failed */
- 			if (intent)
- 				intent->in_use = false;
--			break;
-+			return ret;
- 		}
-+
-+		offset += chunk_size;
- 	}
--	return ret;
-+
-+	return 0;
- }
- 
- static int qcom_glink_send(struct rpmsg_endpoint *ept, void *data, int len)
--- 
-2.25.1
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
 
