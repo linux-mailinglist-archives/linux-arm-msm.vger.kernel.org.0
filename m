@@ -2,216 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7623E6CB050
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 23:03:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF8036CB078
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 23:16:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231958AbjC0VD0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 17:03:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54080 "EHLO
+        id S231266AbjC0VQl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 17:16:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231977AbjC0VDZ (ORCPT
+        with ESMTP id S229935AbjC0VQk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 17:03:25 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14B96271C;
-        Mon, 27 Mar 2023 14:03:07 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id cf7so12485360ybb.5;
-        Mon, 27 Mar 2023 14:03:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679950986;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WSzUASJDqmk05kc24FOpZeQYr3X2iF7C+bvKtga/9zY=;
-        b=DuVyGK5jAPiKnMlo3gU6hpcJlp8HDMLAP1nJQQjmnCqbJFOW1gNNxBNc0OLl/GN71Q
-         evi/fD/5bdtx/GSM/0P1o0pMiEfjk85bs8fcCmsOeM6fbxCkKCQysa6Uy1HX8sejUyoN
-         so/PsIzzOIOTQOr+mJ+SglXLD40pJ3h5Qy4ms/eZnuorA8hHlTeTl0g+69ujzt0BgpX+
-         7vXFCuoXpj/MCa1Qh1KZSvW1XLrEy7ujo82qdjfirrpSZGlV6TEmLbseGogGAeW4atYK
-         7qIFAP7tkD8m76YoVEobhtU5PDbTNRHiwiCRCxvXTNyNtbzBOtEDq10vj5bIIU2L6Pjo
-         1ecQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679950986;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WSzUASJDqmk05kc24FOpZeQYr3X2iF7C+bvKtga/9zY=;
-        b=h7RlxtIQCrRDtwtbAr8UyxvLE78LUNva1YU4KOKfTFjywFyp2hOu0V82ZOZBQ9VvHI
-         0M6mTAsyKtE7BmkY6wpxfpkO/Curl7ykpPzYTFj7Itqs0mvqgsaZ9Q3/wcJvVUWVuiPm
-         7ddCef+vz7XfszeTzzg6TpLTr+KKx1sKwvXrLzesBRhha+RXMizp2hULm/MMhUmTgoZP
-         BZE0TXRNqGgIWHfGaWFbRe80p/TyHLCyFQb12jdQWsSOZo0pvMVyT/Ng100d/pGWGWEu
-         X6bdR42EqxWfOY2tRgJb3O4iiQNMBSKMVyLv/G3nvElj2SLCj+YCn0xXoZYk+iBahtPC
-         cKJA==
-X-Gm-Message-State: AAQBX9esc/JCMfmZI9TZK7w5N1Lba9MKCCyObgXu3Atd1y56EADN0iEo
-        BL23F1+/SFYo/lG9PfVaqPc=
-X-Google-Smtp-Source: AKy350b6hIWzNa11aqhiXM04lQXVpTScEhhafaJJz9+qWPhPN8ftANifZPQ7/9ZhMvQBPXP3vzOTRA==
-X-Received: by 2002:a25:24a:0:b0:b48:e4e:eddd with SMTP id 71-20020a25024a000000b00b480e4eedddmr13151269ybc.25.1679950986253;
-        Mon, 27 Mar 2023 14:03:06 -0700 (PDT)
-Received: from localhost ([2607:fea8:529d:4d00::9f37])
-        by smtp.gmail.com with ESMTPSA id p8-20020a254208000000b00b7767ca7476sm2511400yba.19.2023.03.27.14.03.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Mar 2023 14:03:05 -0700 (PDT)
-From:   Richard Acayan <mailingradian@gmail.com>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v2 2/2] misc: fastrpc: reject new invocations during device removal
-Date:   Mon, 27 Mar 2023 17:02:18 -0400
-Message-Id: <20230327210217.60948-3-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230327210217.60948-1-mailingradian@gmail.com>
-References: <20230327210217.60948-1-mailingradian@gmail.com>
+        Mon, 27 Mar 2023 17:16:40 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 668BD1707;
+        Mon, 27 Mar 2023 14:16:39 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32RLGKch015997;
+        Mon, 27 Mar 2023 21:16:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=8lYqf1wwT4U4CScuSUdJtIieuPVZBNV4dkYQrO8RUEo=;
+ b=ECXwiz/O3lBr/Y2Y31F2wTs857wa0cANJqjaJHmcGin24w9q0GfaE+GwOChTSAxAq4mn
+ tUjYzD60giPiwEbKtzPuxG4qd4yMdpP/9mgRl2smSLtD+mYQkiV8FDCCQh3Oz7XdM2oP
+ T+bHeS+W9/e6jwlZv0tN2qdeMZLoIJ5bK3CVXegm6INdDak44ENNVjMaWF2TF8/hRtP3
+ wNYcTUkuLhtsE1bzNPxY8SlHfkkSFXhOc0nGQ5dzR14KsXyw1eHGYkCqLncgSAeseDjb
+ 4TpLDWC3q2t+MRd0lTuvtOUAscknr2Bm8Ehy1poIdo2pobGQBiQaziYm77c9l3UogIVS 8A== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pkby494ev-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 27 Mar 2023 21:16:30 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32RLGT2f025880
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 27 Mar 2023 21:16:29 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Mon, 27 Mar 2023 14:16:28 -0700
+Date:   Mon, 27 Mar 2023 14:16:27 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Alex Elder <elder@linaro.org>
+CC:     <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <caleb.connolly@linaro.org>,
+        <mka@chromium.org>, <evgreen@chromium.org>, <andersson@kernel.org>,
+        <quic_cpratapa@quicinc.com>, <quic_avuyyuru@quicinc.com>,
+        <quic_jponduru@quicinc.com>, <quic_subashab@quicinc.com>,
+        <elder@kernel.org>, <netdev@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH net] net: ipa: compute DMA pool size properly
+Message-ID: <20230327211627.GA3248042@hu-bjorande-lv.qualcomm.com>
+References: <20230326165223.2707557-1-elder@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230326165223.2707557-1-elder@linaro.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: _GmPASFlWHEOA8kH8S3SbEfFlCH0un73
+X-Proofpoint-GUID: _GmPASFlWHEOA8kH8S3SbEfFlCH0un73
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-24_11,2023-03-27_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ lowpriorityscore=0 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
+ impostorscore=0 phishscore=0 mlxlogscore=999 mlxscore=0 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303270173
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The channel's rpmsg object allows new invocations to be made. After old
-invocations are already interrupted, the driver shouldn't try to invoke
-anymore. Invalidating the rpmsg at the end of the driver removal
-function makes it easy to cause a race condition in userspace. Even
-closing a file descriptor before the driver finishes its cleanup can
-cause an invocation via fastrpc_release_current_dsp_process() and
-subsequent timeout.
+On Sun, Mar 26, 2023 at 11:52:23AM -0500, Alex Elder wrote:
+> In gsi_trans_pool_init_dma(), the total size of a pool of memory
+> used for DMA transactions is calculated.  However the calculation is
+> done incorrectly.
+> 
+> For 4KB pages, this total size is currently always more than one
+> page, and as a result, the calculation produces a positive (though
+> incorrect) total size.  The code still works in this case; we just
+> end up with fewer DMA pool entries than we intended.
+> 
+> Bjorn Andersson tested booting a kernel with 16KB pages, and hit a
+> null pointer derereference in sg_alloc_append_table_from_pages(),
+> descending from gsi_trans_pool_init_dma().  The cause of this was
+> that a 16KB total size was going to be allocated, and with 16KB
+> pages the order of that allocation is 0.  The total_size calculation
+> yielded 0, which eventually led to the crash.
+> 
+> Correcting the total_size calculation fixes the problem.
+> 
+> Reported-by: <quic_bjorande@quicinc.com>
+> Tested-by: <quic_bjorande@quicinc.com>
 
-Invalidate the channel before the invocations are interrupted to make
-sure that no invocations can be created to hang after the device closes.
+It would be nice to add "Bjorn Andersson" to these two.
 
-Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
----
-Demonstration of the bug as performed on a Google Pixel 3a with
-devicetree patches:
+Regards,
+Bjorn
 
-	#include <fcntl.h>
-	#include <misc/fastrpc.h>
-	#include <stdint.h>
-	#include <stdio.h>
-	#include <string.h>
-	#include <sys/ioctl.h>
-	#include <unistd.h>
-
-	static int remotectl_open(int fd,
-				  const char *name,
-				  uint32_t *handle)
-	{
-		struct fastrpc_invoke invoke;
-		struct fastrpc_invoke_args args[4];
-		struct {
-			uint32_t namelen;
-			uint32_t errlen;
-		} in;
-		struct {
-			uint32_t handle;
-			uint32_t err;
-		} out;
-		char errstr[256];
-		int ret;
-
-		// Remoteproc expects to receive a null terminator
-		in.namelen = strlen(name) + 1;
-		in.errlen = 256;
-
-		args[0].ptr = (__u64) &in;
-		args[0].length = sizeof(in);
-		args[0].fd = -1;
-
-		args[1].ptr = (__u64) name;
-		args[1].length = in.namelen;
-		args[1].fd = -1;
-
-		args[2].ptr = (__u64) &out;
-		args[2].length = sizeof(out);
-		args[2].fd = -1;
-
-		args[3].ptr = (__u64) errstr;
-		args[3].length = 256;
-		args[3].fd = -1;
-
-		invoke.handle = 0;
-		invoke.sc = 0x00020200;
-		invoke.args = (__u64) args;
-
-		ret = ioctl(fd, FASTRPC_IOCTL_INVOKE, (__u64) &invoke);
-
-		if (!ret)
-			*handle = out.handle;
-
-		return ret;
-	}
-
-	int main()
-	{
-		struct fastrpc_init_create_static create;
-		uint32_t handle;
-		int fd, ret;
-
-		fd = open("/dev/fastrpc-adsp", O_RDWR);
-		if (fd == -1) {
-			perror("Could not open /dev/fastrpc-adsp");
-			return 1;
-		}
-
-		ret = ioctl(fd, FASTRPC_IOCTL_INIT_ATTACH_SNS, NULL);
-		if (ret) {
-			perror("Could not attach to sensorspd");
-			goto close_dev;
-		}
-
-		/*
-		 * Under normal circumstances, the remote processor
-		 * would request a file from a different client, and
-		 * quickly find out that there is no such file. When
-		 * this other client is not running, this procedure call
-		 * conveniently waits for the ADSP to crash.
-		 */
-		ret = remotectl_open(fd, "a", &handle);
-		if (ret == -1)
-			perror("Could not open CHRE interface");
-
-	close_dev:
-		// This takes 10 seconds
-		printf("Closing file descriptor\n");
-		close(fd);
-		printf("Closed file descriptor\n");
-
-		return 0;
-	}
----
- drivers/misc/fastrpc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 20c035af373a..f4116ce7805a 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -2351,7 +2351,9 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
- 	struct fastrpc_user *user;
- 	unsigned long flags;
- 
-+	/* No invocations past this point */
- 	spin_lock_irqsave(&cctx->lock, flags);
-+	cctx->rpdev = NULL;
- 	list_for_each_entry(user, &cctx->users, user)
- 		fastrpc_notify_users(user);
- 	spin_unlock_irqrestore(&cctx->lock, flags);
-@@ -2370,7 +2372,6 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
- 
- 	of_platform_depopulate(&rpdev->dev);
- 
--	cctx->rpdev = NULL;
- 	fastrpc_channel_ctx_put(cctx);
- }
- 
--- 
-2.40.0
-
+> Fixes: 9dd441e4ed57 ("soc: qcom: ipa: GSI transactions")
+> Signed-off-by: Alex Elder <elder@linaro.org>
+> ---
+>  drivers/net/ipa/gsi_trans.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
+> index 0f52c068c46d6..ee6fb00b71eb6 100644
+> --- a/drivers/net/ipa/gsi_trans.c
+> +++ b/drivers/net/ipa/gsi_trans.c
+> @@ -156,7 +156,7 @@ int gsi_trans_pool_init_dma(struct device *dev, struct gsi_trans_pool *pool,
+>  	 * gsi_trans_pool_exit_dma() can assume the total allocated
+>  	 * size is exactly (count * size).
+>  	 */
+> -	total_size = get_order(total_size) << PAGE_SHIFT;
+> +	total_size = PAGE_SIZE << get_order(total_size);
+>  
+>  	virt = dma_alloc_coherent(dev, total_size, &addr, GFP_KERNEL);
+>  	if (!virt)
+> -- 
+> 2.34.1
+> 
