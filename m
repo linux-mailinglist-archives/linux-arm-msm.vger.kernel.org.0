@@ -2,163 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A43A86CA1C5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 12:54:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 379DC6CA2AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 13:44:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231787AbjC0KyX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 06:54:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37312 "EHLO
+        id S232476AbjC0LoD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 07:44:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230020AbjC0KyW (ORCPT
+        with ESMTP id S231921AbjC0LoC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 06:54:22 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A28EFE;
-        Mon, 27 Mar 2023 03:54:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 13DA7B80DA9;
-        Mon, 27 Mar 2023 10:54:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD1AC433EF;
-        Mon, 27 Mar 2023 10:54:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679914458;
-        bh=3m5S2P0Y01xv0mVXDkCZEoWn9ZtG8G6QGBhdIL/kX/g=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=g0qAhMBt7IVpjUMYgi2bPELCKNFe6lTVo6Tu0djOmqrs5Gb8lc9d45RdcQPrW+d3I
-         mcOwVZBm0DqeQ9BzA08EsW0WqX8+rL4keYE02uS1CxbI+tSexLy/x8RGEG3Y/dAUfV
-         PLv4XFvBywCazj2bDR3Qthy25CsZ3RTE0yTFZpUs80dh1mzNnK54vEhMByGsGxEUDX
-         kgOctzXvb5bEs6yOk7geAJY3qbYBoXaIKIw3PpxWjaUwSk9iQV2z4qI+VlW40lw019
-         8d0+Iri1oImxcx2rLfBOSiZj7nFHCoy4TgZQ6v86kr6h2gRrZV2qCAXg3tc8vVWKNT
-         rM3Cx+sXisqvw==
-Date:   Mon, 27 Mar 2023 16:24:03 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        lee@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, lpieralisi@kernel.org,
-        kw@linux.com, bhelgaas@google.com,
-        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pci@vger.kernel.org
-Subject: Re: [PATCH v4 3/5] ARM: dts: qcom: sdx65: Add support for PCIe EP
-Message-ID: <20230327105403.GF16424@thinkpad>
-References: <1679036039-27157-1-git-send-email-quic_rohiagar@quicinc.com>
- <1679036039-27157-4-git-send-email-quic_rohiagar@quicinc.com>
+        Mon, 27 Mar 2023 07:44:02 -0400
+X-Greylist: delayed 1111 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 27 Mar 2023 04:44:00 PDT
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D20CA2698
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 04:44:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha256; b=YG00kI5R7ljzmjLZhxIbq1sI32aj8EKJ0r+P1J4vQE4QDP4FPQdrF/sQz4ZeYQbt3LiTpmzBA7S5GduF5D1S//XP34o/Z85Eti2faEK66lSPhAcNoRluunTOHT7INFrdb9pFgAdXtdBQuN7PfyFR0gf/Kd3oYKDCk+KIMYqajf+EpItGNaJgIZuGTU7qFaH3atekTnt5EpHBYIU8cx/V2BNB/QXRkgrSgBWDLeI2v7Rs0m4ZZIydl9UmqD/Oobqdh3gSFLNjlVGUYeE5lPZTx0BzM4ANmJnj2CMh18S7ZCSr4pF+cez7wioQazyY/V9XKOeUg2xesmWEeTr4QvfvFg==; s=purelymail1; d=iskren.info; v=1; bh=q1q6QlROVAEEz2iajcRh0+Y4NPypwdDdDX9tz1qlxrQ=; h=Received:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=BHREr0xixlDoBzbB0XwPbYSLJSqj31FKvWCCSa32GrMZrtrvSZHOxPR7XItW5NJZ7d1v/Y3Pp30hyoAkN5sVbTA+0r3v6i7Z/f13ueS1P3Gy0NMCTqu99A0DN/+T8gDLFA9sD0n5FtohTfKn59kocYftIgaUb86W2Rc4XYs4ulwPmiDFHdvsVW8kMOr1mPW/nr3W2uaYZcUZui9deIt+tIjPGXyYu6KV70veRvHeoNnCAUQUyBW4W2AXd5sCCcUpy9qwaxToEQw0HRTzr8AEo5esfXA9uenCJYSnIVWtmhHVmYmH9Xm1+FVkM9H339osDAzoeAwYPtmto8qPLT17fg==; s=purelymail1; d=purelymail.com; v=1; bh=q1q6QlROVAEEz2iajcRh0+Y4NPypwdDdDX9tz1qlxrQ=; h=Feedback-ID:Received:Subject:To:From;
+Feedback-ID: 10275:2339:null:purelymail
+X-Pm-Original-To: linux-arm-msm@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1765702763;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Mon, 27 Mar 2023 11:24:40 +0000 (UTC)
+Message-ID: <edfa2aac-b341-f827-5e7d-88248fa22309@iskren.info>
+Date:   Mon, 27 Mar 2023 14:24:35 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1679036039-27157-4-git-send-email-quic_rohiagar@quicinc.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3 0/3] Fix some issues in QCOM UFS bindings
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+References: <20221209-dt-binding-ufs-v3-0-499dff23a03c@fairphone.com>
+Content-Language: en-US
+From:   Iskren Chernev <me@iskren.info>
+In-Reply-To: <20221209-dt-binding-ufs-v3-0-499dff23a03c@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 17, 2023 at 12:23:57PM +0530, Rohit Agarwal wrote:
-> Add support for PCIe Endpoint controller on the
-> Qualcomm SDX65 platform.
-> 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+On 3/24/23 09:41, Luca Weiss wrote:
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Iskren Chernev <me@iskren.info>
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
+(for the series)
 
 > ---
->  arch/arm/boot/dts/qcom-sdx65.dtsi | 56 +++++++++++++++++++++++++++++++++++++++
->  1 file changed, 56 insertions(+)
+> Changes in v3:
+> - Drop applied patch
+> - Pick up sm6115 patch from v5 https://lore.kernel.org/all/20221030094258.486428-2-iskren.chernev@gmail.com/
+> - Rebase on linux-next
+> - Link to v2: https://lore.kernel.org/r/20221209-dt-binding-ufs-v2-0-dc7a04699579@fairphone.com
 > 
-> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
-> index 084daf8..a7d8ad9 100644
-> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
-> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
-> @@ -11,6 +11,7 @@
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +#include <dt-bindings/gpio/gpio.h>
->  
->  / {
->  	#address-cells = <1>;
-> @@ -293,6 +294,56 @@
->  			status = "disabled";
->  		};
->  
-> +		pcie_ep: pcie-ep@1c00000 {
-> +			compatible = "qcom,sdx65-pcie-ep", "qcom,sdx55-pcie-ep";
-> +			reg = <0x01c00000 0x3000>,
-> +			      <0x40000000 0xf1d>,
-> +			      <0x40000f20 0xa8>,
-> +			      <0x40001000 0x1000>,
-> +			      <0x40200000 0x100000>,
-> +			      <0x01c03000 0x3000>;
-> +			reg-names = "parf",
-> +				    "dbi",
-> +				    "elbi",
-> +				    "atu",
-> +				    "addr_space",
-> +				    "mmio";
-> +
-> +			qcom,perst-regs = <&tcsr 0xb258 0xb270>;
-> +
-> +			clocks = <&gcc GCC_PCIE_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_SLV_Q2A_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_SLEEP_CLK>,
-> +				 <&gcc GCC_PCIE_0_CLKREF_EN>;
-> +			clock-names = "aux",
-> +				      "cfg",
-> +				      "bus_master",
-> +				      "bus_slave",
-> +				      "slave_q2a",
-> +				      "sleep",
-> +				      "ref";
-> +
-> +			interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "global", "doorbell";
-> +
-> +			resets = <&gcc GCC_PCIE_BCR>;
-> +			reset-names = "core";
-> +
-> +			power-domains = <&gcc PCIE_GDSC>;
-> +
-> +			phys = <&pcie_phy>;
-> +			phy-names = "pcie-phy";
-> +
-> +			max-link-speed = <3>;
-> +			num-lanes = <2>;
-> +
-> +			status = "disabled";
-> +		};
-> +
->  		pcie_phy: phy@1c06000 {
->  			compatible = "qcom,sdx65-qmp-gen4x2-pcie-phy";
->  			reg = <0x01c06000 0x2000>;
-> @@ -330,6 +381,11 @@
->  			#hwlock-cells = <1>;
->  		};
->  
-> +		tcsr: syscon@1fcb000 {
-> +			compatible = "qcom,sdx65-tcsr", "syscon";
-> +			reg = <0x01fc0000 0x1000>;
-> +		};
-> +
->  		remoteproc_mpss: remoteproc@4080000 {
->  			compatible = "qcom,sdx55-mpss-pas";
->  			reg = <0x04080000 0x4040>;
-> -- 
-> 2.7.4
+> Changes in v2:
+> - Add new patch adding reg-names to sm6115 & rebase series on top of sm6115
+>   addition
+> - Fix binding example after sm8450 move, split this patch from original patch
+>   since it became too big
+> - Move reg-names definition to top-level
+> - Link to v1: https://lore.kernel.org/r/20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com
 > 
-
--- 
-மணிவண்ணன் சதாசிவம்
+> ---
+> Iskren Chernev (1):
+>       dt-bindings: ufs: qcom: Add sm6115 binding
+> 
+> Luca Weiss (2):
+>       dt-bindings: ufs: qcom: Add reg-names property for ICE
+>       dt-bindings: ufs: qcom: Fix sm8450 bindings
+> 
+>  .../devicetree/bindings/ufs/qcom,ufs.yaml          | 61 ++++++++++++++++++++--
+>  1 file changed, 56 insertions(+), 5 deletions(-)
+> ---
+> base-commit: e5dbf24e8b9e6aa0a185d86ce46a7a9c79ebb40f
+> change-id: 20221209-dt-binding-ufs-2d7f64797ff2
+> 
+> Best regards,
