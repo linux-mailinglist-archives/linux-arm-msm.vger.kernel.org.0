@@ -2,76 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F07FB6C9ED1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 11:04:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F8E76C9EF1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 11:07:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233079AbjC0JEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 05:04:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42012 "EHLO
+        id S232486AbjC0JHo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 05:07:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232594AbjC0JDb (ORCPT
+        with ESMTP id S233304AbjC0JHI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 05:03:31 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E8264201
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 02:01:38 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id h25so10371060lfv.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 02:01:38 -0700 (PDT)
+        Mon, 27 Mar 2023 05:07:08 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5DA54EFD;
+        Mon, 27 Mar 2023 02:06:33 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id l7so7048117pjg.5;
+        Mon, 27 Mar 2023 02:06:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679907697;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2ZF8lnTdgBo76J61R0eU74GHsCNaFYFA/VikNNvRUeY=;
-        b=kcheOvDYJ2HR8hXD96KUoD/iP+Qa6Fg8vuUImjl2l5D40VcSqI7YHjJ7CCKGk82PLX
-         kRpYtpzgpkPT2wOMj7pUT8SRG59I8bsU/zT5rhHlfI3fUNN9S//kPV6VjSM+DtPhEGB4
-         3BgxnvVO0+Pqdj3RyKeizj3VIQs74HDJRNN4qTiRQRv8dYYn4QYXNvEKe2qekRQ0DySE
-         H9fLFb2cL+ukXrl4LYM6Pou5EPYEdPkO3SKdQfFKeDMQpN/Sj5Pd3U7qbyW5hPCAWYWE
-         P/F/hhfD3Tz0T12SleC9CW6//ofl/HOsrWS2qfPZb+JTcX0I53cKhrz8UMtiOhxUq8LL
-         sKrQ==
+        d=gmail.com; s=20210112; t=1679907993;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=O8fUt4pO+XHuFO5xT5Dt4jN0bSb0IjaRl69C7+BMdDg=;
+        b=LcgNg+6NtV1SL1HZQ41SfLf4+zxLtfV9YXrxPK7vJ5t3NhP4X/JdG0vszd1eEYhVEi
+         Lx0vA1NU1gcwAQ8PRLarirt1b17dx3ulnzdHVH3i9FyW/z845IxGIo4PEVkQAxINU0kz
+         O2BbcKQHUzwTxWoIs4Nl9/n8vmpmDFssbVjkJtANNenJpDzQQM3coQDZhgRLEqCACobQ
+         NA26ZrjjI4CcToPS5twfuS0xEWwLRWevqsCZH/kaaBMSyPDAgQYA+YrSDAEcICpyyYH/
+         KiS0tgcgHQbHeXuzAIOXjLgCE46vLsxSFJunPzgAq2e+Lc8OPBQ5cmJX9U/Y8FcU9ki2
+         CzVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679907697;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2ZF8lnTdgBo76J61R0eU74GHsCNaFYFA/VikNNvRUeY=;
-        b=DCZL8p7pNvQpxYU12Q+v4u0h5FJUG76CjoETBNTeY9TpsPhO8EaylRXxjGmPyXECyx
-         2uVNaKn0hZB0vDCeI/c3gdMk1znXZobXhrUhNH7B4a5xEO1vORy/ejvIV+pS52H8Jug3
-         3RNubz8+llNTgmYllirGksXAVFXz6decwuM9wtxSPYuo2pxTeFoos0Rq0xPwcZsb9De5
-         mkGYCXLTLKeA7RcPg601wY0OMPnmIR6cCd0YqREWz3fa7gF4dNOAQndp+ZIh8ojoueII
-         nCLyzfr+UfeSNoE6Zg35tXFe+T84mLkoFAHU0Y42sbWEbV2u3TNl/TUSG6KZ8zZQ7UuO
-         flug==
-X-Gm-Message-State: AAQBX9fxM6AMlLacDHGC+pqWmwCGmlh60owk3vYHLuzsOkfmJPMzmsUS
-        Bx81I2pOydFspYSFCw3CRYQYIw==
-X-Google-Smtp-Source: AKy350ZTclvQkj8ph6vELe+Md+QnJjIPl1t0NzSuNYltD7cNUWB4kNAbBhoPsYJsNDCYhZ1FEjA8YQ==
-X-Received: by 2002:ac2:5ec6:0:b0:4eb:20e:6aec with SMTP id d6-20020ac25ec6000000b004eb020e6aecmr3096588lfq.40.1679907696899;
-        Mon, 27 Mar 2023 02:01:36 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id j12-20020a19f50c000000b004b40c1f1c70sm4594985lfb.212.2023.03.27.02.01.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 02:01:36 -0700 (PDT)
-Message-ID: <cc7392c1-0ea1-29b3-fab6-19c843413724@linaro.org>
-Date:   Mon, 27 Mar 2023 11:01:35 +0200
+        d=1e100.net; s=20210112; t=1679907993;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=O8fUt4pO+XHuFO5xT5Dt4jN0bSb0IjaRl69C7+BMdDg=;
+        b=1UyTcrX+UqTns8O0csW/dsL36bsNxwbNH430svLFoKY69i807b8w6lSynSlIUFTiN+
+         3I84cX9b6b6y5fMWLAZtzxCgJ0QDVj13p7tp8f0v+8+X2tc6t8FZlnlO4dvJlj9gNnVG
+         Dl4Wu3ErUyhVLSkdWByxy8Yjd1ZbkAXa1YgeHafARJvRSTPaa3MUSaqnnMZ6cAeFF+0n
+         o9vLY1f1KNHXdJeyHJqntpi42bqoJhyfEEKPYVyMfsoTX0y5AC9Qbek2KcWJqm5jCq3G
+         tySBy/3fj/XP9BmzUs7ytdDL+2k0EvN7QAHEq6nfxijdMsWZpBFKXyM6hzwIttkWmOP4
+         jdyQ==
+X-Gm-Message-State: AAQBX9dEAFC8U4fD6vR3M4AXh56/vCNMNtydlwxHSaIC3Jj/rCdVq67f
+        klY3vMyFRFDpK6Ic2QOETP0=
+X-Google-Smtp-Source: AKy350akZsC9DAW9cAZ9dO/WH1qyoqAa+nZML0KGvlXEjleks2KmWYsZflCCbNjDE2Oyna1h5ZRy6w==
+X-Received: by 2002:a17:903:28c8:b0:1a2:19c1:a974 with SMTP id kv8-20020a17090328c800b001a219c1a974mr8678082plb.68.1679907993332;
+        Mon, 27 Mar 2023 02:06:33 -0700 (PDT)
+Received: from debian.me (subs02-180-214-232-16.three.co.id. [180.214.232.16])
+        by smtp.gmail.com with ESMTPSA id l18-20020a170902d35200b0019468fe44d3sm18629240plk.25.2023.03.27.02.06.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Mar 2023 02:06:32 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+        id 6B322106758; Mon, 27 Mar 2023 16:06:29 +0700 (WIB)
+Date:   Mon, 27 Mar 2023 16:06:28 +0700
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     Hao Zhang <quic_hazha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Jonathan Corbet <corbet@lwn.net>
+Cc:     Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-doc@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] Documentation: trace: Add documentation for
+ Coresight Dummy Trace
+Message-ID: <ZCFclDU2JZLzbVX/@debian.me>
+References: <20230324061608.33609-1-quic_hazha@quicinc.com>
+ <20230324061608.33609-4-quic_hazha@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 0/5] usb: dwc3: qcom: Allow runtime PM
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        andersson@kernel.org, Thinh.Nguyen@synopsys.com,
-        gregkh@linuxfoundation.org, mathias.nyman@intel.com
-Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230325165217.31069-1-manivannan.sadhasivam@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230325165217.31069-1-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Nhj3/4xBxIE5HRwH"
+Content-Disposition: inline
+In-Reply-To: <20230324061608.33609-4-quic_hazha@quicinc.com>
+X-Spam-Status: No, score=1.3 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -79,40 +100,76 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--Nhj3/4xBxIE5HRwH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 25.03.2023 17:52, Manivannan Sadhasivam wrote:
-> Hi,
-> 
-> This series allows the dwc3-qcom driver to do runtime PM itself without
-> userspace intervention. Still, userspace is required to enable runtime PM
-> for dwc3 glue and xhci drivers as we cannot enable runtime PM for them.
-> But this series avoids one more additional step.
-What sort of 'userspace intervention' are we talking about?
-echo mem > /sys/power/state?
+On Fri, Mar 24, 2023 at 02:16:08PM +0800, Hao Zhang wrote:
+> +Sysfs files and directories
+> +---------------------------
+> +
+> +Root: ``/sys/bus/coresight/devices/dummy<N>``
+> +
+> +----
+> +
+> +:File:            ``enable_source`` (RW)
+> +:Notes:
+> +    - > 0 : enable the datasets of dummy source.
+> +
+> +    - =3D 0 : disable the datasets of dummy source.
+> +
+> +:Syntax:
+> +    ``echo 1 > enable_source``
+> +
+> +----
+> +
+> +:File:            ``enable_sink`` (RW)
+> +:Notes:
+> +    - > 0 : enable the datasets of dummy sink.
+> +
+> +    - =3D 0 : disable the datasets of dummy sink.
+> +
+> +:Syntax:
+> +    ``echo 1 > enable_sink``
 
-Konrad
-> 
-> While enabling runtime PM, I noticed that the xhci driver suspends before
-> catching the xhci interrupts during resume. This ended up deferring the
-> device enumeration for some time. So I included a patch adding autosuspend
-> delay of 200ms to the xhci driver. With this delay, usb enumeration happens
-> properly.
-> 
-> This series has been tested on SC8280XP-CRD and RB5 devices.
-> 
-> Thanks,
-> Mani
-> 
-> Manivannan Sadhasivam (5):
->   arm64: dts: qcom: sc8280xp: Add missing dwc3 quirks
->   xhci: host: Use 200ms autosuspend delay for runtime suspend
->   usb: dwc3: qcom: Fix null ptr access during runtime_suspend()
->   usb: dwc3: qcom: Clear pending interrupt before enabling wake
->     interrupt
->   usb: dwc3: qcom: Allow runtime PM
-> 
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 14 ++++++++++++++
->  drivers/usb/dwc3/dwc3-qcom.c           | 13 +++++++++----
->  drivers/usb/host/xhci-plat.c           |  2 ++
->  3 files changed, 25 insertions(+), 4 deletions(-)
-> 
+Is enable_{source,sink} integer-valued or bit (0/1)? In other words, is
+it OK to `echo 2` to both sysfs files?
+
+> +
+> +----
+> +
+> +Config details
+> +---------------------------
+> +
+> +There are two types of nodes, dummy sink and dummy source. The nodes
+> +should be observed at the coresight path
+> +"/sys/bus/coresight/devices".
+
+For consistency, inline this sysfs also (thus
+``/sys/bus/coresight/devices``.
+
+> +e.g.
+e.g.:: (make the shell snippet below code block)
+> +/sys/bus/coresight/devices # ls -l | grep dummy
+IMO I prefer `PS1=3D\$` (that is, omit the directory). Alternatively,
+you can write `ls -l /sys/bus/coresight/devices | grep dummy` (specify
+the directory to `ls`).
+
+Thanks.
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--Nhj3/4xBxIE5HRwH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZCFcjwAKCRD2uYlJVVFO
+o1gMAP9hA3XoJ+1BWv3KOewMhgRMYIwCugU1u1SLb6+ulgXKKQD8DNcMJrpatOcs
+cyouf4vyhI6HmCRIK5V0aHosRUkHrQM=
+=Bs3E
+-----END PGP SIGNATURE-----
+
+--Nhj3/4xBxIE5HRwH--
