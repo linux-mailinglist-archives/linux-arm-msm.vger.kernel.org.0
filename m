@@ -2,136 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EB9A6C9E95
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 10:50:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 391386C9EA4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 10:54:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232134AbjC0Ium (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 04:50:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51682 "EHLO
+        id S232954AbjC0IyV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 04:54:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233019AbjC0IuH (ORCPT
+        with ESMTP id S232975AbjC0Ixu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 04:50:07 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4C0BAF33
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:46:12 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id br6so10278868lfb.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:46:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679906770;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3bblUISwUdvX28GVAQmZgddhk99r6Y32+A6iFqrvA9Q=;
-        b=U+2nxbg2awVjW8DK6WQY2+V6cIWknv0bO+NiHqbEheTiEFE2VMeSYymqq317GJe69/
-         XSwOv7LrXDxud9oapLO8yuTEQj7BVmGnBOfS5LRmLV9hxNBprje/+9Cm9ThgPajBEX6e
-         r5ymjh+wa5ggzmX0S9ha1sy1rdImLyPSGbbNZGdekA4YFkXo58rSzhtdUcj/Y6Kb4eRL
-         eL+ikJgu7vp/0F7mWRQpxhq1rBVoM2gftmO9LoXhDmWUx4rcdzlN5nirDeyGwcNzdADh
-         Dcy+Ddu2QmBUCc1Bccmj82u4cIahNX0ZINMFZO+u9mb099Xeuxbdpg24bcuC5AJJk79A
-         woCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679906770;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3bblUISwUdvX28GVAQmZgddhk99r6Y32+A6iFqrvA9Q=;
-        b=x1ata3p/5gkSB5ae7lQ51kVbvJb6eWRUxdceJR2NmwEHnDXejcHv0Wuu+NSHsC1/78
-         hbKkkUv73j6gh/XQDjvwvBFDbDlwo6S9FtTiIVAbItQhqDdoeDRxxsy7l76vn50OpO50
-         tNgVgfZGVSlk6cRHK7Fh57n2GGt9GwrUImFyVy01Ez2KBcQBOPgGgS3mgB03AWJT7hZZ
-         1W+rt0ts6hzdGcdV7Nv6LO6duUcMu7+oALIqDrhrtPhZNWisza6TU69TAzlyxs84uwOw
-         HFvdhl0BZrf9IiOclbb72XSODWVLlxMQSp0vMalx5UPTL2isqn33Vu1DmhmIUgoRUPTk
-         Sd1w==
-X-Gm-Message-State: AAQBX9cp4wnkd4xbm2EZ4ofB5Cnf954v/7J59Q94ADazo3Bd99kGrMTN
-        KkkC3BvxlWaA4ymtrwqFx5DeOA==
-X-Google-Smtp-Source: AKy350bIQMnul1Wn9w7L9g2s+pjWkdNnt9dnVvTfSXioHFe09J5toczUaODqHFcKw6Az9nHgKpzPtQ==
-X-Received: by 2002:ac2:494e:0:b0:4e7:4a3c:697 with SMTP id o14-20020ac2494e000000b004e74a3c0697mr2988056lfi.38.1679906770682;
-        Mon, 27 Mar 2023 01:46:10 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id f17-20020a056512093100b004db0d26adb4sm4548579lft.182.2023.03.27.01.46.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 01:46:10 -0700 (PDT)
-Message-ID: <1db4d7f2-c4b4-6ef7-3aab-96608e84064e@linaro.org>
-Date:   Mon, 27 Mar 2023 10:46:09 +0200
+        Mon, 27 Mar 2023 04:53:50 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 137848683;
+        Mon, 27 Mar 2023 01:49:16 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32R0BBsr019100;
+        Mon, 27 Mar 2023 08:49:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=hoSvzJOMWCvrDX95XzxhFDO4bi33I9EybMhwH2GNeJk=;
+ b=I4yCOx94B3RwPknIfsfRuHl6Sx9h6UdGkxdsiw74EU76mbi1efDwhGoo4pwue8A9X/qT
+ 5qautsxmLRPpM5tx8PYaf03uzwTtcQ1Fd9UlZo6aRjiwsKWakExe7skf2dfQLOdnyU5b
+ BvKCIB5LgskvYWXK5PQImjy7OJfVgsBZDbbAkCndyKx5yC1KWm26w6X8XAENnAdLOKGn
+ PBZIhQn3pWMpHcUXBjv9XShIlWdAp/XZmCixKgBfIVbkl9BDiVAy6uSgFjkV9+WEOD0u
+ VKClW5Nixa3bz5ej2cti6wqiMlE/pVRINQPhCNzwYv3vEfsRhZ2tmvIglDftPhpW7Kn1 zw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3phsrauvtr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 27 Mar 2023 08:49:12 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32R8mvJn030192
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 27 Mar 2023 08:48:57 GMT
+Received: from ekangupt-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Mon, 27 Mar 2023 01:48:53 -0700
+From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
+To:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
+CC:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
+        <linux-kernel@vger.kernel.org>, <bkumar@qti.qualcomm.com>,
+        <fastrpc.upstream@qti.qualcomm.com>, stable <stable@kernel.org>
+Subject: [PATCH v2] misc: fastrpc: Pass proper scm arguments for secure map request
+Date:   Mon, 27 Mar 2023 14:18:49 +0530
+Message-ID: <1679906929-25711-1-git-send-email-quic_ekangupt@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 046/117] media: venc: Convert to platform remove callback
- returning void
-Content-Language: en-US
-To:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        kernel@pengutronix.de
-References: <20230326143224.572654-1-u.kleine-koenig@pengutronix.de>
- <20230326143224.572654-49-u.kleine-koenig@pengutronix.de>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230326143224.572654-49-u.kleine-koenig@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: cG2DUzeN9Ipf1rgHEBxGZDOrTeKeCcCy
+X-Proofpoint-ORIG-GUID: cG2DUzeN9Ipf1rgHEBxGZDOrTeKeCcCy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-24_11,2023-03-24_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ malwarescore=0 priorityscore=1501 phishscore=0 suspectscore=0
+ lowpriorityscore=0 mlxscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303270072
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+If a map request is made with securemap attribute, the memory
+ownership needs to be reassigned to new VMID to allow access
+from protection domain. Currently only DSP VMID is passed to
+the reassign call which is incorrect as only a combination of
+HLOS and DSP VMID is allowed for memory ownership reassignment
+and passing only DSP VMID will cause assign call failure.
 
+Also pass proper restoring permissions to HLOS as the source
+permission will now carry both HLOS and DSP VMID permission.
 
-On 26.03.2023 16:31, Uwe Kleine-König wrote:
-> The .remove() callback for a platform driver returns an int which makes
-> many driver authors wrongly assume it's possible to do error handling by
-> returning an error code. However the value returned is (mostly) ignored
-> and this typically results in resource leaks. To improve here there is a
-> quest to make the remove callback return void. In the first step of this
-> quest all drivers are converted to .remove_new() which already returns
-> void.
-> 
-> Trivially convert this driver from always returning zero in the remove
-> callback to the void returning variant.
-> 
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Change is also made to get valid physical address from
+scatter/gather for this allocation request.
 
-Konrad
->  drivers/media/platform/qcom/venus/venc.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index cdb12546c4fa..6d61614656a5 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -1492,7 +1492,7 @@ static int venc_probe(struct platform_device *pdev)
->  	return ret;
->  }
->  
-> -static int venc_remove(struct platform_device *pdev)
-> +static void venc_remove(struct platform_device *pdev)
->  {
->  	struct venus_core *core = dev_get_drvdata(pdev->dev.parent);
->  
-> @@ -1501,8 +1501,6 @@ static int venc_remove(struct platform_device *pdev)
->  
->  	if (core->pm_ops->venc_put)
->  		core->pm_ops->venc_put(core->dev_enc);
-> -
-> -	return 0;
->  }
->  
->  static __maybe_unused int venc_runtime_suspend(struct device *dev)
-> @@ -1543,7 +1541,7 @@ MODULE_DEVICE_TABLE(of, venc_dt_match);
->  
->  static struct platform_driver qcom_venus_enc_driver = {
->  	.probe = venc_probe,
-> -	.remove = venc_remove,
-> +	.remove_new = venc_remove,
->  	.driver = {
->  		.name = "qcom-venus-encoder",
->  		.of_match_table = venc_dt_match,
+Fixes: e90d91190619 ("misc: fastrpc: Add support to secure memory map")
+Cc: stable <stable@kernel.org>
+Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+---
+Changes in v2:
+ - Use u64 to represent bitmap instead of architecture-dependent
+   "unsigned int"
+
+ drivers/misc/fastrpc.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index a701132..998eb7c 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -316,12 +316,14 @@ static void fastrpc_free_map(struct kref *ref)
+ 	if (map->table) {
+ 		if (map->attr & FASTRPC_ATTR_SECUREMAP) {
+ 			struct qcom_scm_vmperm perm;
++			int vmid = map->fl->cctx->vmperms[0].vmid;
++			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS) | BIT(vmid);
+ 			int err = 0;
+ 
+ 			perm.vmid = QCOM_SCM_VMID_HLOS;
+ 			perm.perm = QCOM_SCM_PERM_RWX;
+ 			err = qcom_scm_assign_mem(map->phys, map->size,
+-				&map->fl->cctx->perms, &perm, 1);
++				&src_perms, &perm, 1);
+ 			if (err) {
+ 				dev_err(map->fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
+ 						map->phys, map->size, err);
+@@ -787,8 +789,12 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
+ 		goto map_err;
+ 	}
+ 
+-	map->phys = sg_dma_address(map->table->sgl);
+-	map->phys += ((u64)fl->sctx->sid << 32);
++	if (attr & FASTRPC_ATTR_SECUREMAP) {
++		map->phys = sg_phys(map->table->sgl);
++	} else {
++		map->phys = sg_dma_address(map->table->sgl);
++		map->phys += ((u64)fl->sctx->sid << 32);
++	}
+ 	map->size = len;
+ 	map->va = sg_virt(map->table->sgl);
+ 	map->len = len;
+@@ -798,9 +804,15 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
+ 		 * If subsystem VMIDs are defined in DTSI, then do
+ 		 * hyp_assign from HLOS to those VM(s)
+ 		 */
++		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
++		struct qcom_scm_vmperm dst_perms[2] = {0};
++
++		dst_perms[0].vmid = QCOM_SCM_VMID_HLOS;
++		dst_perms[0].perm = QCOM_SCM_PERM_RW;
++		dst_perms[1].vmid = fl->cctx->vmperms[0].vmid;
++		dst_perms[1].perm = QCOM_SCM_PERM_RWX;
+ 		map->attr = attr;
+-		err = qcom_scm_assign_mem(map->phys, (u64)map->size, &fl->cctx->perms,
+-				fl->cctx->vmperms, fl->cctx->vmcount);
++		err = qcom_scm_assign_mem(map->phys, (u64)map->size, &src_perms, dst_perms, 2);
+ 		if (err) {
+ 			dev_err(sess->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
+ 					map->phys, map->size, err);
+-- 
+2.7.4
+
