@@ -2,67 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C8356CAB3E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 19:01:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D96826CAB42
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 19:02:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232689AbjC0RBu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 13:01:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51852 "EHLO
+        id S232667AbjC0RCA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 13:02:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232602AbjC0RBk (ORCPT
+        with ESMTP id S232685AbjC0RBt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 13:01:40 -0400
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 298B13C31;
-        Mon, 27 Mar 2023 10:01:36 -0700 (PDT)
-Received: by mail-oi1-f175.google.com with SMTP id r14so1183789oiw.12;
-        Mon, 27 Mar 2023 10:01:36 -0700 (PDT)
+        Mon, 27 Mar 2023 13:01:49 -0400
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 294FD40F3;
+        Mon, 27 Mar 2023 10:01:44 -0700 (PDT)
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-17aeb49429eso9961881fac.6;
+        Mon, 27 Mar 2023 10:01:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679936495;
+        d=1e100.net; s=20210112; t=1679936503;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=A1cer0myC+DWXq6An3rnd+VU8s9Hlurez1Dtqg1RAXY=;
-        b=ROpqpACInh74Ci1JpVcsye1pNNkh2QC+5vt5MySEHLTB65qEc0+9VAo1Hdmp92yWRP
-         YqCoeKNy5+xl+WWB/sgoqeMvEsaSVJXPS8NFw61uk75VCWpdMk+czKjPbMGw5AmVtRAe
-         QRuG30rc/GoZKrawXgMn363rhx+86VoOaCmy7OdSIlTYLWKhSMo/z48a34Fre5g0iYlC
-         t4aIZVvRaJWjS/rYeBrs5mdQ3/BasskUEMzIZcSDsHKxE/oZopljBn8OPAnR0O93Y0i1
-         dwB0VJjt0qkO5sIQsbq3M5QOOXJ5GmcbbVEmCQQr1bIZFRHqOhWNfR6WVBbPJQFiIu+I
-         Xfgw==
-X-Gm-Message-State: AO0yUKXx0guzd08hsBFqKI01Vln+EpBMhLFVEYDcmUWXe5LMQAgVB2h8
-        A+qRuofsUUWJ1P92KYTGAg==
-X-Google-Smtp-Source: AK7set9SgajdaFm03+ruzVbdS8nr9AGDu1wFpBNE1MkKTQ3SXd6u3tEkVayylaoJu/IVuphkeImN8w==
-X-Received: by 2002:aca:2217:0:b0:387:6a3b:5a86 with SMTP id b23-20020aca2217000000b003876a3b5a86mr5256962oic.28.1679936493734;
-        Mon, 27 Mar 2023 10:01:33 -0700 (PDT)
+        bh=vsiiS+cg9ETxQ7qmK+ws7pFEXw6XBClGT7/dY2V6YIU=;
+        b=bVZm5l7aTZvKBMXP9G98Z3wDRRJjdqKdDAITZtlzKVyXme4PC4Z4iKHDwJGpTrhByT
+         Xw/a3QUVakPT2UWf6lNGUXU3MlmMrf55AalH7XVcwObbVEAbbqGmaFLQSvoj8tYUd/2Q
+         7pTY6VERpZjqnH9oXbWHqibymarGVOfEaXIRflSZpKsJFjbFp9KxTNFVf9bkkomwSadM
+         ozE2/B/7WePreXRrva0FqWdK2y4g350rRyPPe7BoC+373uJ1giO6+fuVuFHSSlIRDD/y
+         QxT21rVYQLbT6LP8FS7xx2hozzI5CIcRFGw8lcy9KMyAzPM2X0LDm4eT+o+ziparSgjx
+         LkIw==
+X-Gm-Message-State: AAQBX9f3K1wQoTVpeX86/ix/PolQPHmot+CZDYNZXE6Yjl0GT+1VkVyo
+        KttlMa8S4qddb6Sz9L4sgg==
+X-Google-Smtp-Source: AKy350Y8FlKQ/y1NaNuo1nCVn3oPUauVYD2sc8z7OjA3kA1wH7XZPPgYFn9GWGfUSER2YH3YSr7JQg==
+X-Received: by 2002:a05:6870:9711:b0:177:b6ce:1e76 with SMTP id n17-20020a056870971100b00177b6ce1e76mr8661847oaq.55.1679936503338;
+        Mon, 27 Mar 2023 10:01:43 -0700 (PDT)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id n67-20020acabd46000000b0038919e6eb5esm1610639oif.3.2023.03.27.10.01.32
+        by smtp.gmail.com with ESMTPSA id zq35-20020a0568718ea300b0017f647294f5sm503569oab.16.2023.03.27.10.01.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Mar 2023 10:01:33 -0700 (PDT)
-Received: (nullmailer pid 4104036 invoked by uid 1000);
-        Mon, 27 Mar 2023 17:01:32 -0000
+        Mon, 27 Mar 2023 10:01:42 -0700 (PDT)
+Received: (nullmailer pid 4104460 invoked by uid 1000);
+        Mon, 27 Mar 2023 17:01:41 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-hardening@vger.kernel.org
-Subject: [PATCH] dt-bindings: reserved-memory: Drop unneeded quotes
-Date:   Mon, 27 Mar 2023 12:01:22 -0500
-Message-Id: <20230327170122.4103518-1-robh@kernel.org>
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Hammer Hsieh <hammerh0314@gmail.com>
+Cc:     linux-serial@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] dt-bindings: serial: Drop unneeded quotes
+Date:   Mon, 27 Mar 2023 12:01:36 -0500
+Message-Id: <20230327170137.4104272-1-robh@kernel.org>
 X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.8 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+X-Spam-Status: No, score=0.7 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
         FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -74,141 +79,184 @@ checking for this can be enabled in yamllint.
 
 Signed-off-by: Rob Herring <robh@kernel.org>
 ---
- .../bindings/reserved-memory/google,open-dice.yaml          | 2 +-
- .../bindings/reserved-memory/nvidia,tegra210-emc-table.yaml | 2 +-
- .../devicetree/bindings/reserved-memory/phram.yaml          | 4 ++--
- .../devicetree/bindings/reserved-memory/qcom,cmd-db.yaml    | 6 +++---
- .../devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml | 6 +++---
- .../devicetree/bindings/reserved-memory/ramoops.yaml        | 6 +++---
- .../bindings/reserved-memory/shared-dma-pool.yaml           | 2 +-
- 7 files changed, 14 insertions(+), 14 deletions(-)
+ .../devicetree/bindings/serial/amlogic,meson-uart.yaml        | 4 ++--
+ .../devicetree/bindings/serial/qcom,serial-geni-qcom.yaml     | 4 ++--
+ Documentation/devicetree/bindings/serial/renesas,em-uart.yaml | 4 ++--
+ Documentation/devicetree/bindings/serial/renesas,hscif.yaml   | 4 ++--
+ Documentation/devicetree/bindings/serial/renesas,sci.yaml     | 4 ++--
+ Documentation/devicetree/bindings/serial/renesas,scif.yaml    | 4 ++--
+ Documentation/devicetree/bindings/serial/renesas,scifa.yaml   | 4 ++--
+ Documentation/devicetree/bindings/serial/renesas,scifb.yaml   | 4 ++--
+ Documentation/devicetree/bindings/serial/serial.yaml          | 4 ++--
+ Documentation/devicetree/bindings/serial/sprd-uart.yaml       | 4 ++--
+ .../devicetree/bindings/serial/sunplus,sp7021-uart.yaml       | 4 ++--
+ 11 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/reserved-memory/google,open-dice.yaml b/Documentation/devicetree/bindings/reserved-memory/google,open-dice.yaml
-index a924fcfca085..c591ec37d7e8 100644
---- a/Documentation/devicetree/bindings/reserved-memory/google,open-dice.yaml
-+++ b/Documentation/devicetree/bindings/reserved-memory/google,open-dice.yaml
-@@ -16,7 +16,7 @@ maintainers:
-   - David Brazdil <dbrazdil@google.com>
+diff --git a/Documentation/devicetree/bindings/serial/amlogic,meson-uart.yaml b/Documentation/devicetree/bindings/serial/amlogic,meson-uart.yaml
+index 3cbdde85ed71..ad13df48a590 100644
+--- a/Documentation/devicetree/bindings/serial/amlogic,meson-uart.yaml
++++ b/Documentation/devicetree/bindings/serial/amlogic,meson-uart.yaml
+@@ -2,8 +2,8 @@
+ # Copyright 2019 BayLibre, SAS
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/serial/amlogic,meson-uart.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/serial/amlogic,meson-uart.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
  
- allOf:
--  - $ref: "reserved-memory.yaml"
-+  - $ref: reserved-memory.yaml
+ title: Amlogic Meson SoC UART Serial Interface
  
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/reserved-memory/nvidia,tegra210-emc-table.yaml b/Documentation/devicetree/bindings/reserved-memory/nvidia,tegra210-emc-table.yaml
-index b1b0421a4255..e2ace3df942a 100644
---- a/Documentation/devicetree/bindings/reserved-memory/nvidia,tegra210-emc-table.yaml
-+++ b/Documentation/devicetree/bindings/reserved-memory/nvidia,tegra210-emc-table.yaml
-@@ -14,7 +14,7 @@ description: On Tegra210, firmware passes a binary representation of the
-   EMC frequency table via a reserved memory region.
- 
- allOf:
--  - $ref: "reserved-memory.yaml"
-+  - $ref: reserved-memory.yaml
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/reserved-memory/phram.yaml b/Documentation/devicetree/bindings/reserved-memory/phram.yaml
-index 6c4db28015f1..65c7cacf9be4 100644
---- a/Documentation/devicetree/bindings/reserved-memory/phram.yaml
-+++ b/Documentation/devicetree/bindings/reserved-memory/phram.yaml
-@@ -17,8 +17,8 @@ maintainers:
-   - Vincent Whitchurch <vincent.whitchurch@axis.com>
- 
- allOf:
--  - $ref: "reserved-memory.yaml"
--  - $ref: "/schemas/mtd/mtd.yaml"
-+  - $ref: reserved-memory.yaml
-+  - $ref: /schemas/mtd/mtd.yaml
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.yaml b/Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.yaml
-index df1b5e0ed3f4..610f8ef37e8d 100644
---- a/Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.yaml
-+++ b/Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.yaml
+diff --git a/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml b/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
+index 05a6999808d1..dd33794b3534 100644
+--- a/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
++++ b/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
 @@ -1,8 +1,8 @@
  # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
  %YAML 1.2
  ---
--$id: "http://devicetree.org/schemas/reserved-memory/qcom,cmd-db.yaml#"
+-$id: "http://devicetree.org/schemas/serial/qcom,serial-geni-qcom.yaml#"
 -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+$id: http://devicetree.org/schemas/reserved-memory/qcom,cmd-db.yaml#
++$id: http://devicetree.org/schemas/serial/qcom,serial-geni-qcom.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
  
- title: Qualcomm Command DB
+ title: Qualcomm Geni based QUP UART interface
  
-@@ -20,7 +20,7 @@ maintainers:
-   - Bjorn Andersson <bjorn.andersson@linaro.org>
- 
- allOf:
--  - $ref: "reserved-memory.yaml"
-+  - $ref: reserved-memory.yaml
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
-index 08eb10c25821..bab982f00485 100644
---- a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
-+++ b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
+diff --git a/Documentation/devicetree/bindings/serial/renesas,em-uart.yaml b/Documentation/devicetree/bindings/serial/renesas,em-uart.yaml
+index 12d0fa34f9f9..3fc2601f1338 100644
+--- a/Documentation/devicetree/bindings/serial/renesas,em-uart.yaml
++++ b/Documentation/devicetree/bindings/serial/renesas,em-uart.yaml
 @@ -1,8 +1,8 @@
  # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
  %YAML 1.2
  ---
--$id: "http://devicetree.org/schemas/reserved-memory/qcom,rmtfs-mem.yaml#"
+-$id: "http://devicetree.org/schemas/serial/renesas,em-uart.yaml#"
 -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+$id: http://devicetree.org/schemas/reserved-memory/qcom,rmtfs-mem.yaml#
++$id: http://devicetree.org/schemas/serial/renesas,em-uart.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
  
- title: Qualcomm Remote File System Memory
+ title: Renesas EMMA Mobile UART Interface
  
-@@ -15,7 +15,7 @@ maintainers:
-   - Bjorn Andersson <bjorn.andersson@linaro.org>
- 
- allOf:
--  - $ref: "reserved-memory.yaml"
-+  - $ref: reserved-memory.yaml
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/reserved-memory/ramoops.yaml b/Documentation/devicetree/bindings/reserved-memory/ramoops.yaml
-index 0391871cf44d..45cc39ecc9f8 100644
---- a/Documentation/devicetree/bindings/reserved-memory/ramoops.yaml
-+++ b/Documentation/devicetree/bindings/reserved-memory/ramoops.yaml
+diff --git a/Documentation/devicetree/bindings/serial/renesas,hscif.yaml b/Documentation/devicetree/bindings/serial/renesas,hscif.yaml
+index afedb6edfc34..1c7f1276aed6 100644
+--- a/Documentation/devicetree/bindings/serial/renesas,hscif.yaml
++++ b/Documentation/devicetree/bindings/serial/renesas,hscif.yaml
 @@ -1,8 +1,8 @@
- # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
  %YAML 1.2
  ---
--$id: "http://devicetree.org/schemas/reserved-memory/ramoops.yaml#"
+-$id: "http://devicetree.org/schemas/serial/renesas,hscif.yaml#"
 -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+$id: http://devicetree.org/schemas/reserved-memory/ramoops.yaml#
++$id: http://devicetree.org/schemas/serial/renesas,hscif.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
  
- title: Ramoops oops/panic logger
+ title: Renesas High Speed Serial Communication Interface with FIFO (HSCIF)
  
-@@ -27,7 +27,7 @@ maintainers:
-   - Kees Cook <keescook@chromium.org>
+diff --git a/Documentation/devicetree/bindings/serial/renesas,sci.yaml b/Documentation/devicetree/bindings/serial/renesas,sci.yaml
+index dc445b327e0b..9f7305200c47 100644
+--- a/Documentation/devicetree/bindings/serial/renesas,sci.yaml
++++ b/Documentation/devicetree/bindings/serial/renesas,sci.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/serial/renesas,sci.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/serial/renesas,sci.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
  
- allOf:
--  - $ref: "reserved-memory.yaml"
-+  - $ref: reserved-memory.yaml
+ title: Renesas Serial Communication Interface
  
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/reserved-memory/shared-dma-pool.yaml b/Documentation/devicetree/bindings/reserved-memory/shared-dma-pool.yaml
-index 47696073b665..457de0920cd1 100644
---- a/Documentation/devicetree/bindings/reserved-memory/shared-dma-pool.yaml
-+++ b/Documentation/devicetree/bindings/reserved-memory/shared-dma-pool.yaml
-@@ -10,7 +10,7 @@ maintainers:
-   - devicetree-spec@vger.kernel.org
+diff --git a/Documentation/devicetree/bindings/serial/renesas,scif.yaml b/Documentation/devicetree/bindings/serial/renesas,scif.yaml
+index 1989bd67d04e..f26bea2d7398 100644
+--- a/Documentation/devicetree/bindings/serial/renesas,scif.yaml
++++ b/Documentation/devicetree/bindings/serial/renesas,scif.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/serial/renesas,scif.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/serial/renesas,scif.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
  
- allOf:
--  - $ref: "reserved-memory.yaml"
-+  - $ref: reserved-memory.yaml
+ title: Renesas Serial Communication Interface with FIFO (SCIF)
  
- properties:
-   compatible:
+diff --git a/Documentation/devicetree/bindings/serial/renesas,scifa.yaml b/Documentation/devicetree/bindings/serial/renesas,scifa.yaml
+index 4c3b5e7270da..499507678cdf 100644
+--- a/Documentation/devicetree/bindings/serial/renesas,scifa.yaml
++++ b/Documentation/devicetree/bindings/serial/renesas,scifa.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/serial/renesas,scifa.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/serial/renesas,scifa.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Renesas Serial Communications Interface with FIFO A (SCIFA)
+ 
+diff --git a/Documentation/devicetree/bindings/serial/renesas,scifb.yaml b/Documentation/devicetree/bindings/serial/renesas,scifb.yaml
+index 2f7cbbb48960..810d8a991fdd 100644
+--- a/Documentation/devicetree/bindings/serial/renesas,scifb.yaml
++++ b/Documentation/devicetree/bindings/serial/renesas,scifb.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/serial/renesas,scifb.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/serial/renesas,scifb.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Renesas Serial Communications Interface with FIFO B (SCIFB)
+ 
+diff --git a/Documentation/devicetree/bindings/serial/serial.yaml b/Documentation/devicetree/bindings/serial/serial.yaml
+index c9231e501f1f..ea277560a596 100644
+--- a/Documentation/devicetree/bindings/serial/serial.yaml
++++ b/Documentation/devicetree/bindings/serial/serial.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/serial/serial.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/serial/serial.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Serial Interface Generic
+ 
+diff --git a/Documentation/devicetree/bindings/serial/sprd-uart.yaml b/Documentation/devicetree/bindings/serial/sprd-uart.yaml
+index da0e2745b5fc..28ff77aa86c8 100644
+--- a/Documentation/devicetree/bindings/serial/sprd-uart.yaml
++++ b/Documentation/devicetree/bindings/serial/sprd-uart.yaml
+@@ -2,8 +2,8 @@
+ # Copyright 2019 Unisoc Inc.
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/serial/sprd-uart.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/serial/sprd-uart.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Spreadtrum serial UART
+ 
+diff --git a/Documentation/devicetree/bindings/serial/sunplus,sp7021-uart.yaml b/Documentation/devicetree/bindings/serial/sunplus,sp7021-uart.yaml
+index ea1e637661c7..7d0a4bcb88e9 100644
+--- a/Documentation/devicetree/bindings/serial/sunplus,sp7021-uart.yaml
++++ b/Documentation/devicetree/bindings/serial/sunplus,sp7021-uart.yaml
+@@ -2,8 +2,8 @@
+ # Copyright (C) Sunplus Co., Ltd. 2021
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/serial/sunplus,sp7021-uart.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/serial/sunplus,sp7021-uart.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Sunplus SoC SP7021 UART Controller
+ 
 -- 
 2.39.2
 
