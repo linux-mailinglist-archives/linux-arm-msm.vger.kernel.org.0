@@ -2,138 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 785FD6CA72E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 16:13:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24C756CA6D0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 16:10:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233041AbjC0ONd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 10:13:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46586 "EHLO
+        id S230468AbjC0OKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 10:10:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232866AbjC0OMo (ORCPT
+        with ESMTP id S229852AbjC0OKA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 10:12:44 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 725CE658D;
-        Mon, 27 Mar 2023 07:11:29 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id i9so8959448wrp.3;
-        Mon, 27 Mar 2023 07:11:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679926285;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oy4rJp/0zV8uQx96aqdFOna+cm21IPd+B8/oErRDE1c=;
-        b=N1+9G3TumKrPZKtDgnUYD6HDreYZGrsnCsG3x6VR1o6zsdlKygYn5Z2B/6MK7uSEib
-         /66G9qTuGKBx/QqmSMP7T42XAs/7GFQk8nHeM2yzmROF/lCWibWpheeY7B2GIYdPhN1b
-         9GOlfffc+AZNhfrEsFIJ3yAaWe0xtdGPgJ7Kl/Hxs1k3JTD2gzvl09ggMzmHbEwGGjX0
-         5zZz5BzkFOFGFyvfTTjuPhvEr8tGjp/IpmshsxkTYQ/MxRyhYQnC07KfzFJlhNkTtrfr
-         U+DjoUUgEiUUffoufrfwBWTA2WZQ8MQAdVmgCLlpPjCWptllhVOFI+HVVbkY+10eJdED
-         7MAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679926285;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oy4rJp/0zV8uQx96aqdFOna+cm21IPd+B8/oErRDE1c=;
-        b=FMq992CpDPrMpcuoNU7v2pHnJ5WKkCjoRtruPc5m3muB4eg9xCAjexKkTsEroi+5hA
-         durhU+5iBGOl/FoytHyGN6pLTqSDuY/4oc/vvpXD/yiORs9XLlExHXAFxEoVc8L4An/G
-         +i61vETMfq9ZVUVG0vFD5rqTdjroN+gwJx2tmmH6zzDJZsXG0In7PZQKEk1cOmWrcK1u
-         lqFFSjWFvUcKg/TBdi4lENPhFWZwAD+ogrU07Prv5zqlTQ+F/eC3wTnfl+jpwj86RfOh
-         jr5rHMMI5fZZqc+W/WHSHoTm/Vq876gIIEmaHN3OH7NB8RINqn+WicFilTAO6HzRXXZ2
-         dlKg==
-X-Gm-Message-State: AAQBX9cRRe04NsHN3WvViu0vNRBelz/muQ6LV/Mpp7RhuKm7OiKkH2KZ
-        qdll3xKrzazm0df3Kq7B0nA=
-X-Google-Smtp-Source: AKy350bY2vBFHRJIpmB9jjsdfXbR2+U5xce8+gKxuwZJYB+85/mF1ngen08oj5b5T/J/Vu/xGqkEyw==
-X-Received: by 2002:adf:e5d1:0:b0:2ce:a7f5:ff10 with SMTP id a17-20020adfe5d1000000b002cea7f5ff10mr8517757wrn.57.1679926285261;
-        Mon, 27 Mar 2023 07:11:25 -0700 (PDT)
-Received: from localhost.localdomain (93-34-89-197.ip49.fastwebnet.it. [93.34.89.197])
-        by smtp.googlemail.com with ESMTPSA id p17-20020adfcc91000000b002c71dd1109fsm25307591wrj.47.2023.03.27.07.11.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Mar 2023 07:11:24 -0700 (PDT)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
+        Mon, 27 Mar 2023 10:10:00 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9487BD3;
+        Mon, 27 Mar 2023 07:09:58 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 59A90B80BEC;
+        Mon, 27 Mar 2023 14:09:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE99C433EF;
+        Mon, 27 Mar 2023 14:09:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679926196;
+        bh=qhleqvSXG55LxvL+uEa9mQ1uZqawiIM0nEiCIToDFzE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=gyz3rDhZiVPqbbQYupLmUGWcI1BIvh3RYJcqWZuuFKl3ygJh3GXR3R1M9hWXUv9qY
+         rdl/JEvArv34V2ryq0xWC7VFi2Z3tvIwOrl6AErokW4MQfmapOtZ3hQ6AM+GvSZx0z
+         G/PEzJtXUyXAZJa8Fblso8ugrxIukM4NSndWNi7gCmlzGLqTnz3BUppmnsu5GvbMvJ
+         WGA6Re0e5drIsKBQnbX5Ve737LcMqu3SjUOakQ9F402KcbNBT5mTXTPk49dBbziPOJ
+         wuqFaaOUl+6yvAjkgskdkzv/Q8MhoD1XQ5NXjOpio67D6supKhRshqwW9nMMBUEtlg
+         EjtXMFKw+HRjQ==
+Date:   Mon, 27 Mar 2023 07:12:59 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        John Crispin <john@phrozen.org>, linux-leds@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [net-next PATCH v6 16/16] arm: mvebu: dt: Add PHY LED support for 370-rd WAN port
-Date:   Mon, 27 Mar 2023 16:10:31 +0200
-Message-Id: <20230327141031.11904-17-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230327141031.11904-1-ansuelsmth@gmail.com>
-References: <20230327141031.11904-1-ansuelsmth@gmail.com>
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        linux-pci@vger.kernel.org,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-phy@lists.infradead.org,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-scsi@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>
+Subject: Re: [PATCH v2 00/12] Introduce the SC8180x devices
+Message-ID: <20230327141259.bjdtyvhilxuxts62@ripper>
+References: <20230325122444.249507-1-vkoul@kernel.org>
+ <6f6be544-48da-0c22-ea54-e07e35131ec9@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6f6be544-48da-0c22-ea54-e07e35131ec9@linaro.org>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Andrew Lunn <andrew@lunn.ch>
+On Mon, Mar 27, 2023 at 09:46:31AM +0200, Krzysztof Kozlowski wrote:
+> On 25/03/2023 13:24, Vinod Koul wrote:
+> > This introduces Qualcomm SC8180x SoC which features in Lenovo Flex 5G
+> > laptop. This also adds support for Primus platform as well as Lenovo Flex 5G
+> > laptop.
+> > 
+> > I would be great if submaintainers can ack the binding patch so that
+> > everything can go thru qcom tree
+> 
+> I think Bjorn recently was rejecting taking bindings patches, so what
+> changed?
+> 
 
-The WAN port of the 370-RD has a Marvell PHY, with one LED on
-the front panel. List this LED in the device tree.
+Nothing changed. In the interest of reducing the risk for merge
+conflicts I still think it's best if bindings goes via respective
+maintainer trees; so patch 1 is for me...
 
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- arch/arm/boot/dts/armada-370-rd.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/arch/arm/boot/dts/armada-370-rd.dts b/arch/arm/boot/dts/armada-370-rd.dts
-index be005c9f42ef..15b36aa34ef4 100644
---- a/arch/arm/boot/dts/armada-370-rd.dts
-+++ b/arch/arm/boot/dts/armada-370-rd.dts
-@@ -20,6 +20,7 @@
- /dts-v1/;
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/interrupt-controller/irq.h>
-+#include <dt-bindings/leds/common.h>
- #include <dt-bindings/gpio/gpio.h>
- #include "armada-370.dtsi"
- 
-@@ -135,6 +136,19 @@ &mdio {
- 	pinctrl-names = "default";
- 	phy0: ethernet-phy@0 {
- 		reg = <0>;
-+		leds {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			led@0 {
-+				reg = <0>;
-+				label = "WAN";
-+				color = <LED_COLOR_ID_WHITE>;
-+				function = LED_FUNCTION_LAN;
-+				function-enumerator = <1>;
-+				linux,default-trigger = "netdev";
-+			};
-+		};
- 	};
- 
- 	switch: switch@10 {
--- 
-2.39.2
-
+Regards,
+Bjorn
