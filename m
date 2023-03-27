@@ -2,104 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F2176CA114
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 12:20:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EDC06CA120
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 12:21:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233118AbjC0KUK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 06:20:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51764 "EHLO
+        id S233571AbjC0KVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 06:21:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232983AbjC0KUI (ORCPT
+        with ESMTP id S233577AbjC0KVG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 06:20:08 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1A6540E0;
-        Mon, 27 Mar 2023 03:20:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9CD37B81058;
-        Mon, 27 Mar 2023 10:20:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04071C433D2;
-        Mon, 27 Mar 2023 10:20:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679912405;
-        bh=xOkv83dpb4qhFn4mZHxypeMOPMtKkrIkKCWh451KMTQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=AcXbauTPw+0VyaNcBBIMwTjPQPdMHPCUnzEYVlvaTYJZBzqSTUQWBlih703SyxA6t
-         ZE98somqk8SFdVpm98yPLs6lEPBpgOD/LkcgcNte6J49aB0A62FlC2nQoVwST9mASJ
-         He0gsfys17zmfcM+1QPTDWasMtJfQrIJU4oGbt+HvIv5ZmUpnSH7v0Bmzt24rEnBXU
-         mMX0wcpES8Cf22TX6MxXxzWZ4WMXGJ3w63J+4n4BeIJqvq6gDIGQbZXN6tbheQo8WV
-         b4aQm3I478xul05JKrgvf0413u9Iq4NHurSGiqIvUnD+7mfEnsxb2PVn8upvkZkiwU
-         z2DSs6QFUKAjw==
-Date:   Mon, 27 Mar 2023 15:49:52 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
+        Mon, 27 Mar 2023 06:21:06 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A58AF30F9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:21:05 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id c9so270624lfb.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:21:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679912464;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0/I9lr+ZkR5aRqUVRn/W21Ba0KeGxJDDvRUqsC5WDzc=;
+        b=CVfaUAsDyhDdbif7Op1Sp/RHwzq3DKCet8dKRah5HkgGvKF+qQ8UuZX2nV20/pTcMq
+         1SRyo7xBv5zE7YwNWdCMWfVIcD3kkrnTy+IhKkIDqzWMpF2LRlvK/+hZp8V1jKZvIyTX
+         njbqYnX+WJEL86VUurSRZPiYDzWjgXBbIJkJK60qSjcxsgev+3z+FvGnN/5YNCwAMoSK
+         TxZtaVScbU76jxG4Frrm3xrS2+ucHnJ44CmjZrRyT283bU2iaR2Im6GO1F39sc8ifKq/
+         ShpxYdS+S2C6/JGhAyPU9v8n+AGiuvrbBqPOX4BAfLDVPNU7uhkdXUvUhqM8f7VzdLf8
+         Fw3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679912464;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0/I9lr+ZkR5aRqUVRn/W21Ba0KeGxJDDvRUqsC5WDzc=;
+        b=pX4tnYBEScqVOe+GnM0NZtvXEDXsFDuwm3W+SBEvjAZ36KalTgHMMHUJ+mr1Wu3N0T
+         vzdQMGG68XW/kcVm4vpNxDI2LhY0Fg6DFlYHSFsPOX2TxAMuVoBrgqpARgxHUF8269hy
+         lRby8Wu2DcZldS7xZECju1PzxLF0M1FLBEJ8gWKavINIjZ7z3DT0nohPJW1umHNMOH8W
+         9UmX8m+oeyubhxesX0SjTiO6MITwO+zCwRJ6hWPHNOalYCDrDWUtEDd8CZME5VYnMi94
+         33pltETHa1IUEbEHGe6GhTP/JiELz1qbKydU22xyERkZbA8jPNW0hU3fIWGHzQTfFVR3
+         6vQw==
+X-Gm-Message-State: AAQBX9f4MB5FjEfpnEnsGThR1RimMygOcd+jv5jvI4ePV86mgqVJtE8n
+        KoJmmWj8OUWlDdalucu1LCguSw==
+X-Google-Smtp-Source: AKy350ZJ13M3V3+WgCqYi06dvK1hBJwmoJhMCuhIlmN019P0n2HARMAuSsuo6vqW5Xll6WjR0cTAPg==
+X-Received: by 2002:a19:ae16:0:b0:4ea:e5b9:23b7 with SMTP id f22-20020a19ae16000000b004eae5b923b7mr3373326lfc.2.1679912463985;
+        Mon, 27 Mar 2023 03:21:03 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id y26-20020ac255ba000000b004e9b307d2c8sm3706005lfg.238.2023.03.27.03.21.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Mar 2023 03:21:03 -0700 (PDT)
+Message-ID: <f8c7b56d-0952-2d3e-95b8-c7d229e88bf9@linaro.org>
+Date:   Mon, 27 Mar 2023 13:21:03 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 05/11] arm64: dts: qcom: sc7180-trogdor-quackingstick: use
+ just "port" in panel
+Content-Language: en-GB
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 06/12] scsi: ufs: dt-bindings: Add SC8180x binding
-Message-ID: <20230327101952.GB16424@thinkpad>
-References: <20230325122444.249507-1-vkoul@kernel.org>
- <20230325122444.249507-7-vkoul@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230325122444.249507-7-vkoul@kernel.org>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20230326155753.92007-1-krzysztof.kozlowski@linaro.org>
+ <20230326155753.92007-5-krzysztof.kozlowski@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230326155753.92007-5-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Mar 25, 2023 at 05:54:38PM +0530, Vinod Koul wrote:
-> Document the UFS HC for SC8180x SoC
+On 26/03/2023 18:57, Krzysztof Kozlowski wrote:
+> The panel bindings expect to have only one port, thus they do not allow
+> to use "ports" node:
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-
-Thanks,
-Mani
-
+>    sc7180-trogdor-quackingstick-r0.dtb: panel@0: 'ports' does not match any of the regexes: 'pinctrl-[0-9]+'
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index c5a06c048389..a3db34f35f4f 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -26,6 +26,7 @@ properties:
->            - qcom,msm8994-ufshc
->            - qcom,msm8996-ufshc
->            - qcom,msm8998-ufshc
-> +          - qcom,sc8180x-ufshc
->            - qcom,sc8280xp-ufshc
->            - qcom,sdm845-ufshc
->            - qcom,sm6350-ufshc
-> @@ -105,6 +106,7 @@ allOf:
->            contains:
->              enum:
->                - qcom,msm8998-ufshc
-> +              - qcom,sc8280x-ufshc
->                - qcom,sc8280xp-ufshc
->                - qcom,sm8250-ufshc
->                - qcom,sm8350-ufshc
-> -- 
-> 2.39.2
-> 
+>   .../boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi   | 11 +++--------
+>   1 file changed, 3 insertions(+), 8 deletions(-)
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
+
