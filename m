@@ -2,166 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E19046CAAF1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 18:48:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03EC76CAB37
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 19:01:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230229AbjC0Qsy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 12:48:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35072 "EHLO
+        id S232385AbjC0RBZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 13:01:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229804AbjC0Qsx (ORCPT
+        with ESMTP id S230386AbjC0RBZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 12:48:53 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 632602718;
-        Mon, 27 Mar 2023 09:48:52 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 14D97B817B0;
-        Mon, 27 Mar 2023 16:48:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFDDC433D2;
-        Mon, 27 Mar 2023 16:48:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679935729;
-        bh=RBHLpix/Xszw9JJ0ucrZ1EJILEOxun33InjcawwuCE4=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=NFJzwgrr4eBE9U877Qj9iwNQVN3CSva0WlZVYlhzk5QTBEQ/JnlaUJ/zdEf3Agylr
-         4KonOj+BjRk5SMrCm99RotKuLIVL2L1fx+9iUJeJUsGIUPMt/b0qu25qmrWGUbpWW1
-         wQEKbOStS83AG+Wr94+TSX1Yz6rymnDklS2dgI0v4lceabnviiN2kLFHdCvz1WmWaL
-         ZIqTDy/B2D+Lj6CY4QatRjxsZrp0R6O0mkEOzqRcXR4rXSIL87uEmynQ6sapMekxCz
-         o2aS4pZTTqCfLCrkdoCHaVLP0wtqTJmUeie3CX9FuSQxNxrIzz96ZT54Y+A3up5vcA
-         pxuWLFB7wOTEw==
-Message-ID: <0af15083921c5d3c89392209654f0c9b.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230327132718.573-3-quic_devipriy@quicinc.com>
-References: <20230327132718.573-1-quic_devipriy@quicinc.com> <20230327132718.573-3-quic_devipriy@quicinc.com>
-Subject: Re: [PATCH V10 2/4] clk: qcom: Add Global Clock Controller driver for IPQ9574
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, arnd@arndb.de, broonie@kernel.org,
-        catalin.marinas@arm.com, devicetree@vger.kernel.org,
-        dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, linus.walleij@linaro.org,
+        Mon, 27 Mar 2023 13:01:25 -0400
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3920B3AAF;
+        Mon, 27 Mar 2023 10:01:23 -0700 (PDT)
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-17997ccf711so9992624fac.0;
+        Mon, 27 Mar 2023 10:01:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679936483;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OiTyBpredZ9G3c2Qr8ZySRrki6vsviNzT8Ei0s2GCWs=;
+        b=6BnonuSyjPfvZ11KY7VuC6aeWGzsvx1+4tI6gWlpc9bR3d8qYRVEBeWddl0UkPR9pT
+         FhcxnhMC99O46aG/whuJwrT+978MVftTrEii/dFfGp8U3GHxSkCUYtUfZUjEtSecOCUj
+         eN0QV2UycdAO72/OsDjA/skRQYdvRub0XBotI69R4WhGTwmHrpsSCTpI+dgxy/x6nANI
+         2h98yHDRx5ZP2SG5amgmxOyADAc8RhGhCs6BWK3JrXfo9LjnR1hXHNJ9NubZ1XXtaS24
+         9TAY86jvy2D2cxfiOXEzj1CMEdhrQXQWASIxNw0X58W90OqApJlrZwQA3R7pOajGsj5f
+         O0MA==
+X-Gm-Message-State: AO0yUKWbNn1R32nrbcdi4AKzxTizThZryeBsRdolD4zf1R7i7Gq85WHP
+        XP9lVMENjDiTcP8MruVyMw==
+X-Google-Smtp-Source: AKy350apFLu0p89aoZfe3hbeUVq/LGMiZBqIYewYKZlim7HEkNZnKA09d3D1uR6qEYhHiwbYrEbXIQ==
+X-Received: by 2002:a05:6870:c5a5:b0:17a:d08c:c8a8 with SMTP id ba37-20020a056870c5a500b0017ad08cc8a8mr7880979oab.44.1679936482131;
+        Mon, 27 Mar 2023 10:01:22 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id b1-20020a4a98c1000000b00524f47b4682sm11527277ooj.10.2023.03.27.10.01.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Mar 2023 10:01:21 -0700 (PDT)
+Received: (nullmailer pid 4103173 invoked by uid 1000);
+        Mon, 27 Mar 2023 17:01:20 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>
+Cc:     linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        marcel.ziswiler@toradex.com, mturquette@baylibre.com,
-        nfraprado@collabora.com, p.zabel@pengutronix.de,
-        robh+dt@kernel.org, shawnguo@kernel.org, will@kernel.org
-Date:   Mon, 27 Mar 2023 09:48:47 -0700
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com
+Subject: [PATCH] dt-bindings: remoteproc: Drop unneeded quotes
+Date:   Mon, 27 Mar 2023 12:01:13 -0500
+Message-Id: <20230327170114.4102315-1-robh@kernel.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.7 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Devi Priya (2023-03-27 06:27:16)
-> diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq957=
-4.c
-> new file mode 100644
-> index 000000000000..b2a2d618a5ec
-> --- /dev/null
-> +++ b/drivers/clk/qcom/gcc-ipq9574.c
-> @@ -0,0 +1,4248 @@
-> +// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +/*
-> + * Copyright (c) 2023 The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <linux/kernel.h>
-> +#include <linux/err.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_device.h>
+Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+checking for this can be enabled in yamllint.
 
-What is this include for?
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+ .../remoteproc/amlogic,meson-mx-ao-arc.yaml        |  4 ++--
+ .../bindings/remoteproc/fsl,imx-rproc.yaml         |  4 ++--
+ .../bindings/remoteproc/ingenic,vpu.yaml           |  4 ++--
+ .../bindings/remoteproc/qcom,glink-edge.yaml       |  2 +-
+ .../bindings/remoteproc/qcom,smd-edge.yaml         |  2 +-
+ .../bindings/remoteproc/renesas,rcar-rproc.yaml    |  4 ++--
+ .../bindings/remoteproc/st,stm32-rproc.yaml        | 14 +++++++-------
+ 7 files changed, 17 insertions(+), 17 deletions(-)
 
-> +#include <linux/regmap.h>
+diff --git a/Documentation/devicetree/bindings/remoteproc/amlogic,meson-mx-ao-arc.yaml b/Documentation/devicetree/bindings/remoteproc/amlogic,meson-mx-ao-arc.yaml
+index 11cb42a3fdd1..3100cb870170 100644
+--- a/Documentation/devicetree/bindings/remoteproc/amlogic,meson-mx-ao-arc.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/amlogic,meson-mx-ao-arc.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/remoteproc/amlogic,meson-mx-ao-arc.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/remoteproc/amlogic,meson-mx-ao-arc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Amlogic Meson AO ARC Remote Processor
+ 
+diff --git a/Documentation/devicetree/bindings/remoteproc/fsl,imx-rproc.yaml b/Documentation/devicetree/bindings/remoteproc/fsl,imx-rproc.yaml
+index ae2eab4452dd..0c3910f152d1 100644
+--- a/Documentation/devicetree/bindings/remoteproc/fsl,imx-rproc.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/fsl,imx-rproc.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/remoteproc/fsl,imx-rproc.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/remoteproc/fsl,imx-rproc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: NXP i.MX Co-Processor
+ 
+diff --git a/Documentation/devicetree/bindings/remoteproc/ingenic,vpu.yaml b/Documentation/devicetree/bindings/remoteproc/ingenic,vpu.yaml
+index 85b1e43cab08..8b55dbd909b0 100644
+--- a/Documentation/devicetree/bindings/remoteproc/ingenic,vpu.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/ingenic,vpu.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/remoteproc/ingenic,vpu.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/remoteproc/ingenic,vpu.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Ingenic Video Processing Unit
+ 
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
+index 15e6851e1ff8..7b43ad3daa56 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
+@@ -15,7 +15,7 @@ description:
+ 
+ properties:
+   $nodename:
+-    const: "glink-edge"
++    const: glink-edge
+ 
+   apr:
+     $ref: /schemas/soc/qcom/qcom,apr.yaml#
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
+index 7ec8a6b6682c..02c85b420c1a 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
+@@ -21,7 +21,7 @@ description:
+ 
+ properties:
+   $nodename:
+-    const: "smd-edge"
++    const: smd-edge
+ 
+   apr:
+     $ref: /schemas/soc/qcom/qcom,apr.yaml#
+diff --git a/Documentation/devicetree/bindings/remoteproc/renesas,rcar-rproc.yaml b/Documentation/devicetree/bindings/remoteproc/renesas,rcar-rproc.yaml
+index 7e0275d31a3c..4bea679a0f61 100644
+--- a/Documentation/devicetree/bindings/remoteproc/renesas,rcar-rproc.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/renesas,rcar-rproc.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/remoteproc/renesas,rcar-rproc.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/remoteproc/renesas,rcar-rproc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Renesas R-Car remote processor controller
+ 
+diff --git a/Documentation/devicetree/bindings/remoteproc/st,stm32-rproc.yaml b/Documentation/devicetree/bindings/remoteproc/st,stm32-rproc.yaml
+index 66b1e3efdaa3..37c0d7b4ceef 100644
+--- a/Documentation/devicetree/bindings/remoteproc/st,stm32-rproc.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/st,stm32-rproc.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/remoteproc/st,stm32-rproc.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/remoteproc/st,stm32-rproc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: STMicroelectronics STM32 remote processor controller
+ 
+@@ -29,7 +29,7 @@ properties:
+ 
+   st,syscfg-holdboot:
+     description: remote processor reset hold boot
+-    $ref: "/schemas/types.yaml#/definitions/phandle-array"
++    $ref: /schemas/types.yaml#/definitions/phandle-array
+     items:
+       - items:
+           - description: Phandle of syscon block
+@@ -39,7 +39,7 @@ properties:
+   st,syscfg-tz:
+     description:
+       Reference to the system configuration which holds the RCC trust zone mode
+-    $ref: "/schemas/types.yaml#/definitions/phandle-array"
++    $ref: /schemas/types.yaml#/definitions/phandle-array
+     items:
+       - items:
+           - description: Phandle of syscon block
+@@ -95,7 +95,7 @@ properties:
+       (see ../reserved-memory/reserved-memory.txt)
+ 
+   st,syscfg-pdds:
+-    $ref: "/schemas/types.yaml#/definitions/phandle-array"
++    $ref: /schemas/types.yaml#/definitions/phandle-array
+     description: |
+       Reference to the system configuration which holds the remote
+     items:
+@@ -105,7 +105,7 @@ properties:
+           - description: The field mask of the PDDS selection
+ 
+   st,syscfg-m4-state:
+-    $ref: "/schemas/types.yaml#/definitions/phandle-array"
++    $ref: /schemas/types.yaml#/definitions/phandle-array
+     description: |
+       Reference to the tamp register which exposes the Cortex-M4 state.
+     items:
+@@ -115,7 +115,7 @@ properties:
+           - description: The field mask of the Cortex-M4 state
+ 
+   st,syscfg-rsc-tbl:
+-    $ref: "/schemas/types.yaml#/definitions/phandle-array"
++    $ref: /schemas/types.yaml#/definitions/phandle-array
+     description: |
+       Reference to the tamp register which references the Cortex-M4
+       resource table address.
+-- 
+2.39.2
 
-Need to include clk-provider.h
-
-> +
-> +#include <linux/reset-controller.h>
-
-Put a newline here.
-
-> +#include <dt-bindings/clock/qcom,ipq9574-gcc.h>
-> +#include <dt-bindings/reset/qcom,ipq9574-gcc.h>
-> +
-> +#include "clk-rcg.h"
-> +#include "clk-branch.h"
-> +#include "clk-alpha-pll.h"
-> +#include "clk-regmap-divider.h"
-> +#include "clk-regmap-mux.h"
-> +#include "clk-regmap-phy-mux.h"
-> +#include "reset.h"
-> +
-> +/* Need to match the order of clocks in DT binding */
-> +enum {
-> +       DT_XO,
-> +       DT_SLEEP_CLK,
-> +       DT_BIAS_PLL_UBI_NC_CLK,
-> +       DT_PCIE30_PHY0_PIPE_CLK,
-> +       DT_PCIE30_PHY1_PIPE_CLK,
-> +       DT_PCIE30_PHY2_PIPE_CLK,
-> +       DT_PCIE30_PHY3_PIPE_CLK,
-> +       DT_USB3PHY_0_CC_PIPE_CLK,
-> +};
-> +
-> +enum {
-> +       P_XO,
-> +       P_PCIE30_PHY0_PIPE,
-> +       P_PCIE30_PHY1_PIPE,
-> +       P_PCIE30_PHY2_PIPE,
-> +       P_PCIE30_PHY3_PIPE,
-> +       P_USB3PHY_0_PIPE,
-> +       P_GPLL0,
-> +       P_GPLL0_DIV2,
-> +       P_GPLL0_OUT_AUX,
-> +       P_GPLL2,
-> +       P_GPLL4,
-> +       P_PI_SLEEP,
-> +       P_BIAS_PLL_UBI_NC_CLK,
-> +};
-> +
-> +static const struct parent_map gcc_xo_map[] =3D {
-> +       { P_XO, 0 },
-> +};
-> +
-> +static const struct clk_parent_data gcc_xo_data[] =3D {
-> +       { .index =3D DT_XO },
-> +};
-> +
-> +static const struct clk_parent_data gcc_sleep_clk_data[] =3D {
-> +       { .index =3D DT_SLEEP_CLK },
-> +};
-> +
-> +static struct clk_alpha_pll gpll0_main =3D {
-> +       .offset =3D 0x20000,
-> +       .regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
-> +       .clkr =3D {
-> +               .enable_reg =3D 0x0b000,
-> +               .enable_mask =3D BIT(0),
-> +               .hw.init =3D &(struct clk_init_data) {
-
-All these clk_init_data structs should be const.
-
-> +                       .name =3D "gpll0_main",
-> +                       .parent_data =3D gcc_xo_data,
-> +                       .num_parents =3D ARRAY_SIZE(gcc_xo_data),
-> +                       .ops =3D &clk_alpha_pll_ops,
-> +               },
-> +       },
-> +};
