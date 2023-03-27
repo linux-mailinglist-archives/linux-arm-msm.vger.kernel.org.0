@@ -2,76 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 061D26C9EAF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 10:56:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7C876C9EC3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 11:00:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233518AbjC0I4D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 04:56:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58372 "EHLO
+        id S233139AbjC0JAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 05:00:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233019AbjC0Izc (ORCPT
+        with ESMTP id S231740AbjC0I7f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 04:55:32 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CEE81715
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:51:42 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id br6so10299570lfb.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:51:42 -0700 (PDT)
+        Mon, 27 Mar 2023 04:59:35 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A41E35FD3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:57:45 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id h25so10356606lfv.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:57:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679907100;
+        d=linaro.org; s=google; t=1679907464;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=O2+kRCNVOr2pBFfgdf+JplZo6qHGQlkF340GrkRwD8U=;
-        b=qU7jolIbbSl5zD2tA8YK/ZxLY8rDToXZQ/ycWR5SP3WAnXtSHbuN/RVkwohZXclLu2
-         /WCkMb4UHx8aTV29QRpBcpapGzzdFva81aErnk5Vp+bHjM+q4wObkrOxnZS7jNJ34umY
-         GRPv0wr8sv3fH3KChaOsdndWdVSzn2/1CJLipV+rd6y/WrkNsQZTYiCqemyx0WL3716p
-         Meleyv58Xv7bYQMccrIdNHxefc/t0HEluQcgyazXHFli9JoLU+YsoMtfojTkWayPcRWX
-         DEISpVzkfzThO+WDy9+XRPCIlSjYezeTjjEV+e/vKBgQmLUVpv/ehO+c6Hq+IEfVwOlW
-         p62A==
+        bh=qO70piV6L5co88Z+RIZ+x/s1SHwenabxlhCDD1NSUPA=;
+        b=E83RXsk7l6zQ0U5TKuJdTMB6PM7vC3IgyA9euiyfZNFi1FPMEWvptlGoDBZBZLYAp0
+         H+Qt/w7lvY8u9jpU15Aedh2F9OG4MiqW6UdQecxZNZkGTBLe5nirWcZE6furimBnIWlL
+         0XUFrkcx7baqB8BKCZgt7F2WXwbsn0duPHdqSiDXqyRICaD5r11H3DyDeH1RpPRk1VSX
+         RyAxQBVkg91sIHWik56QBip0sI/lm7yMV0UYKjbfxCSPpT4P4AJMJgeqIsJDZ237/ojf
+         7Lm+/SdP+QWO81Gozcbj5pBZhvnVmOxP2lOYcKvWKqvB03IMEQIsSvP9sGD/UH8IUZmx
+         41QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679907100;
+        d=1e100.net; s=20210112; t=1679907464;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O2+kRCNVOr2pBFfgdf+JplZo6qHGQlkF340GrkRwD8U=;
-        b=2ttV+B2DOkZbV8WZoXuP6A74hJVUBWwf5JWYaFvdw+LumptwvZ/wv6KQdLQ+4wrcAq
-         RyNJcq6JnEWRELL1K5m4XeieeqOj/FA404kU3NHAEMI+MihZgHW/RLTNoLzbpqAZzO/P
-         IAxYJ3C/yrzVIw35ena3GH5IgCphJTqp77qAtwbGa2SlEhq2+FXwuOHahqBxZE25hf5d
-         a8/6U0DuQ3rX0Zh1V/SGKF4pEzKjVFc9fZADDUINBQxhmdMwsdI6yiEza0HUNJvx8lE0
-         Sv9Jt2mzwWvwRqHg8/2el6GW4NJsiKM8a/MnKUdtN+WylzBkwsjn2eigNRNQ8hW8LbW+
-         5b6g==
-X-Gm-Message-State: AAQBX9eCUE1N9rkK478wdW9BJGGelxdote3zIisznQdfHkcqd898RvtD
-        PiG0Gm4pNvDRldyorsqO6xiF1OGmHlyfjaVCxek=
-X-Google-Smtp-Source: AKy350bFRvV8uD+FvgcuLNXlZq2os4xpuXLlzBvvYRq/oAQPOwFEwwRffDZ0bMYEGWGMOj2ISw+rPw==
-X-Received: by 2002:ac2:5607:0:b0:4c0:91d0:e7ab with SMTP id v7-20020ac25607000000b004c091d0e7abmr2573477lfd.28.1679907100312;
-        Mon, 27 Mar 2023 01:51:40 -0700 (PDT)
+        bh=qO70piV6L5co88Z+RIZ+x/s1SHwenabxlhCDD1NSUPA=;
+        b=CLPOeFrXszZ4ddxIYR/x+iutVYbVAGuHWbLZmSg4PwirEHVyca7R1G3wYy8b1FzWa7
+         G5Zf3JCaHoyvFZBuRnnnxE6kACq+gPP3O+ibMrBqw6O0EQsE4WVAcQeYv2cs+lR3i4hd
+         JGVLsI5TRarTTKkSe67zxLWKRmpR70jvkqLgOsv8DFZODg29F02VF4g6Y72ysV7oGCO3
+         joi1X9tESvKG7EVTBw85je7xJlceIZeujoHTBttdQqz9QBKq1TjK2ZgbjO6zz7uowWRm
+         /MqMD5ZYcRIthghQuZQ8NsYyDe7KHwdhGYqwtxGN21uLuS8LdJSiatmsf6YgAWUr9d1o
+         kjlg==
+X-Gm-Message-State: AAQBX9edEkIM/osmdoA7LJOBaBH9ifYTVk4+9gm3UC0PXIN+LvIRRqdk
+        47yuUBr8SrNYylxyASWy3X76wQ==
+X-Google-Smtp-Source: AKy350bq7PWQ0j+JQ0lJzGuzoliax57NGExzC4FLMTzh59uAlRnHrFWt+qseT5HE34jJbSBYcBnkIA==
+X-Received: by 2002:a05:6512:25b:b0:4e9:7d60:7108 with SMTP id b27-20020a056512025b00b004e97d607108mr2871056lfo.53.1679907463889;
+        Mon, 27 Mar 2023 01:57:43 -0700 (PDT)
 Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id c18-20020ac25312000000b004eaec70c68esm2731000lfh.294.2023.03.27.01.51.39
+        by smtp.gmail.com with ESMTPSA id y1-20020a2eb001000000b002986854f27dsm4536171ljk.23.2023.03.27.01.57.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 01:51:39 -0700 (PDT)
-Message-ID: <84bcb9a7-40f7-b692-0f06-4075b27b5b7e@linaro.org>
-Date:   Mon, 27 Mar 2023 10:51:38 +0200
+        Mon, 27 Mar 2023 01:57:43 -0700 (PDT)
+Message-ID: <d9cd11e1-1d71-e54f-5d3a-f3de54d71f01@linaro.org>
+Date:   Mon, 27 Mar 2023 10:57:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v2 12/12] arm64: dts: qcom: sc8180x: Introduce Lenovo Flex
- 5G
+Subject: Re: [PATCH 1/2] ARM: dts: qcom: sdx65: add IPA information
 Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230325122444.249507-1-vkoul@kernel.org>
- <20230325122444.249507-13-vkoul@kernel.org>
- <cf4feba0-de96-9e81-592b-e4b7520340a6@linaro.org> <ZCEs57ttv67KfOua@matsya>
+To:     Alex Elder <elder@ieee.org>, Krzysztof Kozlowski <krzk@kernel.org>,
+        Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     quic_rohiagar@quicinc.com, caleb.connolly@linaro.org,
+        mka@chromium.org, evgreen@chromium.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230324201528.2540564-1-elder@linaro.org>
+ <20230324201528.2540564-2-elder@linaro.org>
+ <98fcbdd4-77b3-5b17-7102-c590f1a5a63e@kernel.org>
+ <f600869e-0fd8-ca19-1baf-d23f7a9103d6@linaro.org>
+ <5f825218-c583-7ccd-6845-684a4b166abe@ieee.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZCEs57ttv67KfOua@matsya>
+In-Reply-To: <5f825218-c583-7ccd-6845-684a4b166abe@ieee.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -84,388 +88,119 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 27.03.2023 07:43, Vinod Koul wrote:
-> On 25-03-23, 13:40, Konrad Dybcio wrote:
+On 26.03.2023 18:04, Alex Elder wrote:
+> On 3/25/23 7:12 AM, Konrad Dybcio wrote:
 >>
 >>
->> On 25.03.2023 13:24, Vinod Koul wrote:
->>> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> On 25.03.2023 12:14, Krzysztof Kozlowski wrote:
+>>> On 24/03/2023 21:15, Alex Elder wrote:
+>>>> Add IPA-related nodes and definitions to "sdx65.dtsi".  The SMP2P
+>>>> nodes (ipa_smp2p_out and ipa_smp2p_in) are already present.
+>>>>
+>>>> Enable IPA in "sdx65-mtp.dts"; this GSI firmware is loaded by Trust
+>>>> Zone on this platform.
+>>>>
+>>>> Tested-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>>>> Signed-off-by: Alex Elder <elder@linaro.org>
+>>>> ---
+>>>>   arch/arm/boot/dts/qcom-sdx65-mtp.dts |  5 ++++
+>>>>   arch/arm/boot/dts/qcom-sdx65.dtsi    | 38 ++++++++++++++++++++++++++++
+>>>>   2 files changed, 43 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
+>>>> index ed98c83c141fc..72e25de0db5fc 100644
+>>>> --- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
+>>>> +++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
+>>>> @@ -245,6 +245,11 @@ &blsp1_uart3 {
+>>>>       status = "okay";
+>>>>   };
+>>>>   +&ipa {
+>>>> +    qcom,gsi-loader = "skip";
+>>>> +    status = "okay";
+>>>> +};
+>>>> +
+>>>>   &qpic_bam {
+>>>>       status = "okay";
+>>>>   };
+>>>> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
+>>>> index 192f9f94bc8b4..360d6dc144811 100644
+>>>> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
+>>>> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
+>>>> @@ -11,6 +11,7 @@
+>>>>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>>>   #include <dt-bindings/power/qcom-rpmpd.h>
+>>>>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>>>> +#include <dt-bindings/interconnect/qcom,sdx65.h>
+>>>>     / {
+>>>>       #address-cells = <1>;
+>>>> @@ -299,6 +300,43 @@ tcsr_mutex: hwlock@1f40000 {
+>>>>               #hwlock-cells = <1>;
+>>>>           };
+>>>>   +        ipa: ipa@3e04000 {
+>>>> +            compatible = "qcom,sdx65-ipa";
+>>>> +
+>>>> +            iommus = <&apps_smmu 0x5e0 0x0>,
+>>>> +                 <&apps_smmu 0x5e2 0x0>;
+>>>> +            reg = <0x3f40000 0x10000>,
+>>>> +                  <0x3f50000 0x5000>,
+>>>> +                  <0x3e04000 0xfc000>;
+>>>> +            reg-names = "ipa-reg",
+>>>> +                    "ipa-shared",
+>>>> +                    "gsi";
+>>>> +
+>>>> +            interrupts-extended = <&intc GIC_SPI 241 IRQ_TYPE_EDGE_RISING>,
+>>>> +                          <&intc GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>,
+>>>> +                          <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+>>>> +                          <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
+>>>> +            interrupt-names = "ipa",
+>>>> +                       "gsi",
+>>>> +                       "ipa-clock-query",
+>>>> +                       "ipa-setup-ready";
 >>>
->>> Introduce support for the Lenovo Flex 5G laptop, built on the Qualcomm
->>> SC8180X platform. Supported peripherals includes keyboard, touchpad,
->>> UFS storage, external USB and WiFi.
+>>> These look misaligned.
 >>>
->>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->>> Signed-off-by: Vinod Koul <vkoul@kernel.org>
->>> ---
->>>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->>>  .../boot/dts/qcom/sc8180x-lenovo-flex-5g.dts  | 590 ++++++++++++++++++
->>>  2 files changed, 591 insertions(+)
->>>  create mode 100644 arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
+>>> With above:
 >>>
->>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->>> index fdce44a7a902..f096561f711e 100644
->>> --- a/arch/arm64/boot/dts/qcom/Makefile
->>> +++ b/arch/arm64/boot/dts/qcom/Makefile
->>> @@ -141,6 +141,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-zombie-nvme-lte.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd-r3.dtb
->>> +dtb-$(CONFIG_ARCH_QCOM)	+= sc8180x-lenovo-flex-5g.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= sc8180x-primus.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= sc8280xp-crd.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= sc8280xp-lenovo-thinkpad-x13s.dtb
->>> diff --git a/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
->>> new file mode 100644
->>> index 000000000000..76dad608fb85
->>> --- /dev/null
->>> +++ b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
->>> @@ -0,0 +1,590 @@
->>> +// SPDX-License-Identifier: BSD-3-Clause
->>> +/*
->>> + * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
->>> + * Copyright (c) 2020-2023, Linaro Limited
->>> + */
->>> +
->>> +/dts-v1/;
->>> +
->>> +#include <dt-bindings/gpio/gpio.h>
->>> +#include <dt-bindings/input/gpio-keys.h>
->>> +#include <dt-bindings/input/input.h>
->>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->>> +#include "sc8180x.dtsi"
->>> +#include "sc8180x-pmics.dtsi"
->>> +
->>> +/ {
->>> +	model = "Lenovo Flex 5G";
->>> +	compatible = "lenovo,flex-5g", "qcom,sc8180x";
->>> +
->>> +	aliases {
->>> +		serial0 = &uart13;
->>> +	};
->>> +
->>> +	backlight: backlight {
->>> +		compatible = "pwm-backlight";
->>> +		pwms = <&pmc8180c_lpg 4 1000000>;
->>> +		enable-gpios = <&pmc8180c_gpios 8 GPIO_ACTIVE_HIGH>;
->>> +
->>> +		pinctrl-names = "default";
->>> +		pinctrl-0 = <&bl_pwm_default>;
->>> +	};
->>> +
->>> +	chosen {
->>> +	};
->> Unused, remove.
+>>> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+>> With this and moving iommus below interconnect:
 > 
-> ok
-> 
->>
->>> +
->>> +	gpio-keys {
->>> +		compatible = "gpio-keys";
->>> +
->>> +		pinctrl-names = "default";
->>> +		pinctrl-0 = <&hall_int_active_state>;
->> property
->> property-names
-> 
-> ack here and everwhere else
-> 
->>
->>> +
->>> +		lid {
->>> +			gpios = <&tlmm 121 GPIO_ACTIVE_LOW>;
->>> +			linux,input-type = <EV_SW>;
->>> +			linux,code = <SW_LID>;
->>> +			wakeup-source;
->>> +			wakeup-event-action = <EV_ACT_DEASSERTED>;
->>> +		};
->>> +	};
->>> +
->>> +	reserved-memory {
->>> +		rmtfs_mem: rmtfs-region@85500000 {
->>> +			compatible = "qcom,rmtfs-mem";
->>> +			reg = <0x0 0x85500000 0x0 0x200000>;
->> You're using 0 and 0x0 in a mixed fashion. Please stick with one,
->> preferably 0x0 everywhere.
-> 
-> yep
-> 
->>
->>> +			no-map;
->>> +
->>> +			qcom,client-id = <1>;
->>> +			qcom,vmid = <15>;
->>> +		};
->>> +
->> [...]
->>
->>> +
->>> +&dispcc {
->>> +	status = "okay";
->> Any reason for disabling dispcc by default?
-> 
-> I think that is a good question. I would prefer disabling and enabling
-> in places it is required, we might have a headless system or a dev board
-> where we dont have display..?
-It's a double-edged sword: on one side we could disable clocks that were
-mistakenly enabled, but on the other hand we do keep some some clocks
-always-on within that driver..
+> Is there guidance somewhere that states what order should be
+> used for these properties?
+This is a very slippery topic, but..
 
-Perhaps leave it on by default and shut it off per-board if need be.
+ Why should iommus be below
+> interconnects?
+..everybody agrees iommus shouldn't between compatible and
+reg (these two go first hand-in-hand) and most of our DTs
+have it somewhere low, often below interconnect.
+
+In a perfect world we'd have a computer taking care of this
+but for now it remains an open question.
 
 > 
->>
->>> +};
->>> +
->>> +&gpu {
->>> +	status = "okay";
->>> +
->>> +	zap-shader {
->>> +		memory-region = <&gpu_mem>;
->>> +		firmware-name = "qcom/sc8180x/qcdxkmsuc8180.mbn";
->>> +	};
->>> +};
->>> +
->>> +&i2c1 {
->>> +	clock-frequency = <100000>;
->>> +
->>> +	pinctrl-names = "default";
->>> +	pinctrl-0 = <&i2c1_active>, <&i2c1_hid_active>;
->> property
->> property-names
->>
->>> +
->>> +	status = "okay";
->>> +
->>> +	hid@10 {
->>> +		compatible = "hid-over-i2c";
->>> +		reg = <0x10>;
->>> +		hid-descr-addr = <0x1>;
->>> +
->>> +		interrupts-extended = <&tlmm 122 IRQ_TYPE_LEVEL_LOW>;
->>> +	};
->>> +};
->>> +
->>> +&i2c7 {
->>> +	clock-frequency = <100000>;
->>> +
->>> +	pinctrl-names = "default";
->>> +	pinctrl-0 = <&i2c7_active>, <&i2c7_hid_active>;
->>> +
->>> +	status = "okay";
->>> +
->>> +	hid@5 {
->>> +		compatible = "hid-over-i2c";
->>> +		reg = <0x5>;
->>> +		hid-descr-addr = <0x20>;
->>> +
->>> +		interrupts-extended = <&tlmm 37 IRQ_TYPE_LEVEL_LOW>;
->>> +	};
->>> +
->>> +	hid@2c {
->>> +		compatible = "hid-over-i2c";
->>> +		reg = <0x2c>;
->>> +		hid-descr-addr = <0x20>;
->>> +
->>> +		interrupts-extended = <&tlmm 24 IRQ_TYPE_LEVEL_LOW>;
->>> +	};
->>> +};
->>> +
->>> +&mdss {
->>> +	status = "okay";
->>> +};
->>> +
->>> +&mdss_edp {
->>> +	data-lanes = <0 1 2 3>;
->>> +
->>> +	pinctrl-names = "default";
->>> +	pinctrl-0 = <&edp_hpd_active>;
->>> +
->>> +	status = "okay";
->>> +
->>> +	aux-bus {
->>> +		panel {
->>> +			compatible = "edp-panel";
->>> +			no-hpd;
->>> +
->>> +			backlight = <&backlight>;
->>> +
->>> +			ports {
->>> +				port {
->>> +					auo_b140han06_in: endpoint {
->>> +						remote-endpoint = <&mdss_edp_out>;
->>> +					};
->>> +				};
->>> +			};
->>> +		};
->>> +	};
->>> +
->>> +	ports {
->>> +		port@1 {
->>> +			reg = <1>;
->>> +			mdss_edp_out: endpoint {
->>> +				remote-endpoint = <&auo_b140han06_in>;
->>> +			};
->>> +		};
->>> +	};
->>> +};
->>> +
->>> +&pcie3 {
->>> +	perst-gpio = <&tlmm 178 GPIO_ACTIVE_LOW>;
->>> +	wake-gpio = <&tlmm 180 GPIO_ACTIVE_HIGH>;
->>> +	pinctrl-names = "default";
->>> +	pinctrl-0 = <&pcie3_default_state>;
->>> +
->>> +	status = "okay";
->>> +};
->>> +
->>> +&pcie3_phy {
->>> +	vdda-phy-supply = <&vreg_l5e_0p88>;
->>> +	vdda-pll-supply = <&vreg_l3c_1p2>;
->>> +
->>> +	status = "okay";
->>> +};
->>> +
->>> +&pmc8180c_lpg {
->>> +	status = "okay";
->>> +};
->>> +
->>> +&qupv3_id_0 {
->>> +	status = "okay";
->>> +};
->>> +
->>> +&qupv3_id_1 {
->>> +	status = "okay";
->>> +};
->>> +
->>> +&qupv3_id_2 {
->>> +	status = "okay";
->>> +};
->>> +
->>> +&remoteproc_adsp {
->>> +	memory-region = <&adsp_mem>;
->>> +	firmware-name = "qcom/sc8180x/LENOVO/82AK/qcadsp8180.mbn";
->>> +
->>> +	status = "okay";
->>> +};
->>> +
->>> +&remoteproc_cdsp {
->>> +	memory-region = <&cdsp_mem>;
->>> +	firmware-name = "qcom/sc8180x/LENOVO/82AK/qccdsp8180.mbn";
->>> +
->>> +	status = "okay";
->>> +};
->>> +
->>> +&remoteproc_mpss {
->>> +	memory-region = <&mpss_mem>;
->>> +	firmware-name = "qcom/sc8180x/LENOVO/82AK/qcmpss8180_nm.mbn";
->>> +
->>> +	status = "okay";
->>> +};
->>> +
->>> +&uart13 {
->>> +	pinctrl-names = "default";
->>> +	pinctrl-0 = <&uart13_state>;
->>> +
->>> +	status = "okay";
->>> +
->>> +	bluetooth {
->>> +		compatible = "qcom,wcn3998-bt";
->>> +
->>> +		vddio-supply = <&vreg_s4a_1p8>;
->>> +		vddxo-supply = <&vreg_l7a_1p8>;
->>> +		vddrf-supply = <&vreg_l9a_1p3>;
->>> +		vddch0-supply = <&vreg_l11c_3p3>;
->>> +		max-speed = <3200000>;
->>> +	};
->>> +};
->>> +
->>> +&ufs_mem_hc {
->>> +	reset-gpios = <&tlmm 190 GPIO_ACTIVE_LOW>;
->>> +
->>> +	vcc-supply = <&vreg_l10e_2p9>;
->>> +	vcc-max-microamp = <155000>;
->>> +
->>> +	vccq2-supply = <&vreg_l7e_1p8>;
->>> +	vccq2-max-microamp = <425000>;
->> Missing regulator-allow-set-load for regulators that have current
->> ops assigned to them.
->>
->>> +
->>> +	status = "okay";
->>> +};
->>> +
->>> +&ufs_mem_phy {
->>> +	vdda-phy-supply = <&vreg_l5e_0p88>;
->>> +	vdda-pll-supply = <&vreg_l3c_1p2>;
->>> +
->>> +	status = "okay";
->>> +};
->>> +
->>> +&usb_prim_hsphy {
->>> +	vdda-pll-supply = <&vreg_l5e_0p88>;
->>> +	vdda18-supply = <&vreg_l12a_1p8>;
->>> +	vdda33-supply = <&vreg_l16e_3p0>;
->>> +
->>> +	status = "okay";
->>> +};
->>> +
->>> +&usb_prim_qmpphy {
->>> +	vdda-phy-supply = <&vreg_l3c_1p2>;
->>> +	vdda-pll-supply = <&vreg_l5e_0p88>;
->>> +
->>> +	status = "okay";
->>> +};
->>> +
->>> +&usb_prim {
->> We mostly use usb_1 / usb_2 for this
-> 
-> Isnt this better from readablity pov? esp since this is board dts
-Generally both sound pretty reasonable but I'm just saying that
-all other trees name this differently..
+> As I said to Krzysztof, I *think* all of the IPA nodes look
+> like this; should all of them be updated to follow whatever
+> the preferred convention is?
+This is the ugly part of this, we don't have a solid,
+widely-agreed-upon scheme of ordering properties other than
+some loose guidelines (e.g. compatible, reg, ...,  status),
+so I think it's not worth making extra noise in existing files
+until figure it out.
 
 Konrad
 > 
->>
->>> +	status = "okay";
->>> +};
->>> +
->>> +&usb_prim_dwc3 {
->>> +	dr_mode = "host";
->>> +};
->>> +
->>> +&usb_sec_hsphy {
->>> +	vdda-pll-supply = <&vreg_l5e_0p88>;
->>> +	vdda18-supply = <&vreg_l12a_1p8>;
->>> +	vdda33-supply = <&vreg_l16e_3p0>;
->>> +
->>> +	status = "okay";
->>> +};
->>> +
->>> +&usb_sec_qmpphy {
->>> +	vdda-phy-supply = <&vreg_l3c_1p2>;
->>> +	vdda-pll-supply = <&vreg_l5e_0p88>;
->>> +
->>> +	status = "okay";
->>> +};
->>> +
->>> +&usb_sec {
->>> +	status = "okay";
->>> +};
->>> +
->>> +&usb_sec_dwc3 {
->>> +	dr_mode = "host";
->> No roleswitching?
+> Thanks.
 > 
-> Laptop :-) Always in host mode
+>                     -Alex
+> 
 > 
 >>
->>> +};
->>> +
->>> +&wifi {
->>> +	memory-region = <&wlan_mem>;
->> It comes from the common dt file, so this may as well stay there.
-> 
-> I can do that
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>
+>> Konrad
+>>>
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
 > 
