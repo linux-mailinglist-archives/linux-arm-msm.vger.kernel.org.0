@@ -2,85 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AAA226CA66C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 15:48:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C50626CA685
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 15:54:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232829AbjC0NsZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 09:48:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39524 "EHLO
+        id S231787AbjC0Nyd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 09:54:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232708AbjC0NsD (ORCPT
+        with ESMTP id S230107AbjC0Nyb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 09:48:03 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9CBE40DC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 06:47:57 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id r11so36491893edd.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 06:47:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679924876;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lTn5F189KIeSyouIqB7oUGZ+SeBBT4oUoo83nt/2Gcg=;
-        b=oxhUElUHmPdIZTLZrDwdo1G7diHSpjN4uhtVEx/rynJrJvnifbjEJyBaFRw6dJN1XG
-         1sAsirN3LenRaebtJdzlJ2p/hJATZV0uIK9Cf3syLngE9i4R00qgs4w9hRn/pfWEDmHB
-         1yCdfZmXv2MAR5eZdj4OsYjpj2MJ6wVT61CFxGkrO6sapaQ5yEdxNmNnT5WJXg/OHNNH
-         GxCvenTPn9+xWbvYzsRG/P/z2PT8el57LZXdUL7y9sd2itqlUELVt8RnJFkg0HQDXaIF
-         25/IPOTWt4+PT+4XDzNK1IYITRDfn8+K0kALNcCvOeum3vK0gNjPkfSmMpnkPADFujwh
-         2Ldg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679924876;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lTn5F189KIeSyouIqB7oUGZ+SeBBT4oUoo83nt/2Gcg=;
-        b=BKnCkf1NfB/DPldiCwc4p9WGSJt3fklpMVBXkZiUuqqSOxuzdQnD3GSSfXGSIuobq9
-         XI4/pWRLp6llxN2IYXuzV3BhbxKhg82lDTtHd8dWXhC3QCyXHUDyPpLAq8/hC86XvQP2
-         eBYbHjy+mqSoos0daELo2a5ETO9YjOxkQYJPyFnrb3uaovRuAz3EBigSbeo4LwPOdawz
-         HwFs6IiV/MLm3kBZEC572jCmvqR++L4QMHeMX+Ik0t4xV0Onms490JL3RkREBKo0WxPO
-         7zR8J1fWHfTQ5kuX5+07X0jvfdSRRvqIs2Um6N8oxQHSiv4S4ubbreyYXvTMiWTgaM2z
-         lrHg==
-X-Gm-Message-State: AAQBX9dCgsK+46GnYiZZ4S+jyLByVoI/25POMEtF3hrfoqpl22/yXlOg
-        /s8yaelVoZwG+2hbfM4xF07CJQ==
-X-Google-Smtp-Source: AKy350ZibMohoGFEowWAQx58zdQHFHlGZBRmO/0/lGjWGv5kIFkFtZCQNW3hEXg9RNgGC0ba29s01g==
-X-Received: by 2002:a17:906:6dd7:b0:931:c99c:480 with SMTP id j23-20020a1709066dd700b00931c99c0480mr12763873ejt.69.1679924876049;
-        Mon, 27 Mar 2023 06:47:56 -0700 (PDT)
-Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id n7-20020a509347000000b005023ddb37eesm2394303eda.8.2023.03.27.06.47.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Mar 2023 06:47:55 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Biggers <ebiggers@kernel.org>
-Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-Subject: [PATCH v4 7/7] arm64: dts: qcom: sm8550: Add the Inline Crypto Engine node
-Date:   Mon, 27 Mar 2023 16:47:34 +0300
-Message-Id: <20230327134734.3256974-8-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230327134734.3256974-1-abel.vesa@linaro.org>
-References: <20230327134734.3256974-1-abel.vesa@linaro.org>
+        Mon, 27 Mar 2023 09:54:31 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F5673C25;
+        Mon, 27 Mar 2023 06:54:30 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32RDLVad013620;
+        Mon, 27 Mar 2023 13:54:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=vErAbA+67np0DJjRjpGBn7ZfxgBTtrb9gzfiMtW068A=;
+ b=DKm8ufx20TaXw7+W3AalnHf91O4nx8BmfaHWtVzmhb1WUKYMADTpVrs9LQhKwTTa+IMy
+ fqtW6eX61ThmBtcjlFwIP++hMed6pelgNK/10y2C2ms+Md2xDY2qDutX2OaQ5zYRQXXk
+ W5qW9YVlyGpuSr+cALC3/KRYOOeF60Uv3+y1xLKyxMj2FsOaCK/qEsEMJOuFNKnFXR6w
+ 70zbCbC4At/BFyYIGC7wbBfj+Mn0B7cadfP/KkhfYkZaLg4FMtG+dNFAwK/xDtb7feNx
+ 9/ytZsAcx8JwjJbjMC8S0bpC3Nt/ylOtWYAAof3D06SG0Ii9f01Hh8Cs3PmSJ+od/ZCC ng== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pkby4825k-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 27 Mar 2023 13:54:10 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32RDs9p2004370
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 27 Mar 2023 13:54:09 GMT
+Received: from [10.201.3.104] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 27 Mar
+ 2023 06:54:05 -0700
+Message-ID: <745e6bd6-96a5-ceab-1f0c-31440d34e4c8@quicinc.com>
+Date:   Mon, 27 Mar 2023 19:24:02 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 2/5] mtd: rawnand: qcom: Add initial support for qspi nand
+Content-Language: en-US
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+CC:     Boris Brezillon <boris.brezillon@collabora.com>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <robh+dt@kernel.org>, <vigneshr@ti.com>, <richard@nod.at>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <quic_srichara@quicinc.com>, <qpic_varada@quicinc.com>,
+        <quic_sjaganat@quicinc.com>
+References: <1602307902-16761-1-git-send-email-mdalam@codeaurora.org>
+ <1602307902-16761-3-git-send-email-mdalam@codeaurora.org>
+ <20201029100751.713e27df@collabora.com>
+ <b70ddb40-a1f1-f967-6b7b-057a39b0bcc2@quicinc.com>
+ <20230306153851.0dcdda27@xps-13>
+From:   Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <20230306153851.0dcdda27@xps-13>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BeaiQvF3fssM7SoEvGEbcFicwmdk2VcU
+X-Proofpoint-GUID: BeaiQvF3fssM7SoEvGEbcFicwmdk2VcU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-24_11,2023-03-27_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ lowpriorityscore=0 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
+ impostorscore=0 phishscore=0 mlxlogscore=999 mlxscore=0 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303270109
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,53 +87,91 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for UFS ICE by adding the qcom,ice property and the
-ICE dedicated devicetree node. While at it, add the reg-name property
-to the UFS HC node to be in line with older platforms.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
 
-The v3 (RFC) is here:
-https://lore.kernel.org/all/20230313115202.3960700-8-abel.vesa@linaro.org/
+On 3/6/2023 8:08 PM, Miquel Raynal wrote:
+> Hello,
+> 
+> quic_mdalam@quicinc.com wrote on Mon, 6 Mar 2023 19:45:58 +0530:
+> 
+>> On 10/29/2020 2:37 PM, Boris Brezillon wrote:
+>>> Hello,
+>>>
+>>> On Sat, 10 Oct 2020 11:01:39 +0530
+>>> Md Sadre Alam <mdalam@codeaurora.org> wrote:
+>>>   
+>>>> This change will add initial support for qspi (serial nand).
+>>>>
+>>>> QPIC Version v.2.0 onwards supports serial nand as well so this
+>>>> change will initialize all required register to enable qspi (serial
+>>>> nand).
+>>>>
+>>>> This change is supporting very basic functionality of qspi nand flash.
+>>>>
+>>>> 1. Reset device (Reset QSPI NAND device).
+>>>>
+>>>> 2. Device detection (Read id QSPI NAND device).
+>>> Unfortunately, that's not going to work in the long term. You're
+>>> basically hacking the raw NAND framework to make SPI NANDs fit. I do
+>>> understand the rationale behind this decision (re-using the code for
+>>> ECC and probably other things), but that's not going to work. So I'd
+>>> recommend doing the following instead:
+>>>
+>>> 1/ implement a SPI-mem controller driver
+>>> 2/ implement an ECC engine driver so the ECC logic can be shared
+>>>      between the SPI controller and raw NAND controller drivers
+>>> 3/ convert the raw NAND driver to the exec_op() interface (none of
+>>>      this hack would have been possible if the driver was using the new
+>>>      API)
+>>>
+>>> Regards,
+>>>
+>>> Boris
+>>>   
+>>      Sorry for late reply, again started working on this feature support.  The QPIC v2 on wards there is serial nand support got added , its not a standard SPI controller
+>>
+>>      its QPIC controller having support for serial nand. All SPI related configuration done by QPIC hardware and its not exposed as SPI bus to the external world. Only based on
+>>
+>>      QPIC_SPI_CFG = 1, serial functionality will get selected. So that no need to implement as SPI-mem controller driver, since its not a SPI controller.
+>>
+>>     Please check the below diagram for top view of QPIC controller.
+> 
+> One of the hard things in the Linux kernel is to make devices fit
+> frameworks. This feature does not fit the raw NAND framework. It does
+> not follow any of the conventions taken there. It is not gonna be
+> accepted there. You need to expose spi-mem functionalities, even if the
+> spi-proper features are not available. I believe your situation still
+> fits the spi-mem abstraction.
+> 
+> Thanks,
+> Miquèl
 
-Changes since v3:
- * none
 
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+I have started writing the driver code for SPI NAND. Please check the below design,
+is this fine as per Boris suggestion.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index c6613654942a..dcfbbf33663a 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1889,6 +1889,7 @@ ufs_mem_hc: ufs@1d84000 {
- 			compatible = "qcom,sm8550-ufshc", "qcom,ufshc",
- 				     "jedec,ufs-2.0";
- 			reg = <0x0 0x01d84000 0x0 0x3000>;
-+			reg-names = "std";
- 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
- 			phys = <&ufs_mem_phy>;
- 			phy-names = "ufsphy";
-@@ -1932,9 +1933,18 @@ ufs_mem_hc: ufs@1d84000 {
- 				<0 0>,
- 				<0 0>,
- 				<0 0>;
-+			qcom,ice = <&ice>;
-+
- 			status = "disabled";
- 		};
- 
-+		ice: crypto@1d88000 {
-+			compatible = "qcom,sm8550-inline-crypto-engine",
-+				     "qcom,inline-crypto-engine";
-+			reg = <0 0x01d88000 0 0x8000>;
-+			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+		};
-+
- 		tcsr_mutex: hwlock@1f40000 {
- 			compatible = "qcom,tcsr-mutex";
- 			reg = <0 0x01f40000 0 0x20000>;
--- 
-2.34.1
 
+           |------------------------|                      |------------------------------|                        |---------------------------------|
+           |qcom spi nand driver    |--------------------->|common ECC engine driver      |<-----------------------|qcom raw nand driver             |
+           |                        |                      |                              |                        |                                 |
+           |                        |                      |drivers/mtd/nand/ecc-qcom.c   |                        |drivers/mtd/nand/raw/qcom_nand.c |
+           |                        |                      |                              |                        |                                 |
+           |drivers/spi/spi-qpic.c  |                      |------------------------------|                        |                                 |
+           |                        |                      |common API file:              |                        |                                 |
+           |                        |                      |common API: reset, read id,   |                        |                                 |
+           |                        |--------------------->|erase, read page, write page, |<-----------------------|                                 |
+           |------------------------|                      |bad block check etc.          |                        |                                 |
+                                                           |                              |                        |---------------------------------|
+                                                           |drivers/mtd/nand/raw/qpic_comm|
+                                                           |    on.c                      |
+                                                           |------------------------------|
+
+
+Here ECC engine driver as separate file under (drivers/mtd/nand/ecc-qcom.c) and all
+common APIs like reset, read id, erase, write page, read page, check block bad etc.
+as separate file under drivers/mtd/nand/raw/qpic_common.c.APIs under ECC engine drivers
+and qpic_common.c will be exported and used by spi-qpic.c driver (Serial NAND) and qcom_nand.c
+(raw nand driver).
+
+Thanks,
+Alam.
