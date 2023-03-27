@@ -2,171 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0FE66CAE5F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 21:15:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A34696CAE7C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 21:24:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232633AbjC0TPv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 15:15:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40480 "EHLO
+        id S230187AbjC0TYC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 15:24:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232646AbjC0TPu (ORCPT
+        with ESMTP id S229505AbjC0TYB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 15:15:50 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B9AB1984
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 12:15:48 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id f14so4341528iow.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 12:15:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679944548;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0NEkIpk/LEoId79ZUOQ1s4XlmlbZJpAqRfun/DpMKuI=;
-        b=wnD4iHyEBTEx+ITbYa4t6wRAmgVItiIuX2miqj7yFZK+adKyzw52bAfWA3HizObG3K
-         19sMWLOr/FFGaveF3BwS0+GVkDLrtmAEZpoLh2hPvPOvtFO1q+QC619HKKxl3Qg/8xeM
-         9CTl+a3PNxycVmy2IRKHmX0+0wezKlnDMQUBl3PiO6sLs1qUvIo/K/rToMvJHHxKM2mM
-         fN4KmDVKdx3W/btwfRWttJ2WmiRFiJB8haPuXiIvSI4M7XGUMyhYJNANeUd2F6cIqEOM
-         ztLhUPP1JC77T1o0Ek/KyG30m20ZYnqj7lFRFZ0NvgHSHISSo/XpN1g9mELlg1Kt4fYU
-         lSEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679944548;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0NEkIpk/LEoId79ZUOQ1s4XlmlbZJpAqRfun/DpMKuI=;
-        b=WrAw4jbFXI4B9HuD97HzKRJkVf464+XmQvcmN3eiajrhRg02x1qO65C+Vm+f3SiA3K
-         euSP96ZMvsJ/iFNIphtA87Y4BQdGZSF305MklZJoEhFTe0LmqE6E97qY5TaIXVxbHAOY
-         a1AE4jNtlAYJvGqhmGFBx38nZCnBUhRLN2NIaov8cCrXP9QweAxi08IQxJ2w5waHkRl4
-         ad/l+EtsFnOMS/BPZsQkDMNAD2Ffm7GxUmZnX46OC2ekDqvsOhzpIJnH4uuJ09MA7/vP
-         adqCQatrKlXedookdDRptkr95Yd1pGJRjGGveDSUK3eMx55c0yuXl3lQyM99KsaCuZGA
-         FxeA==
-X-Gm-Message-State: AO0yUKXTYVuYVN+LhReLS8Tpfgk//26zyizJzcWp1No31X3VG282UI0u
-        Tss5l4XJyXWbTpTki2Ya5c9dCg==
-X-Google-Smtp-Source: AK7set9I4/ljS7nflIGziy/qyeSQONWljoFEB1oR7T0y4jrHLZl1M64MmqqoSF9kyk04xgMLuNVgbg==
-X-Received: by 2002:a6b:a1a:0:b0:759:1e9e:6daa with SMTP id z26-20020a6b0a1a000000b007591e9e6daamr10235039ioi.10.1679944547876;
-        Mon, 27 Mar 2023 12:15:47 -0700 (PDT)
-Received: from localhost.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id n13-20020a5e8c0d000000b0074555814e73sm3460548ioj.32.2023.03.27.12.15.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Mar 2023 12:15:47 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org
-Cc:     quic_rohiagar@quicinc.com, caleb.connolly@linaro.org,
-        mka@chromium.org, evgreen@chromium.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] ARM: dts: qcom-sdx65: move status properties to end of nodes
-Date:   Mon, 27 Mar 2023 14:15:42 -0500
-Message-Id: <20230327191542.2765834-3-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230327191542.2765834-1-elder@linaro.org>
-References: <20230327191542.2765834-1-elder@linaro.org>
+        Mon, 27 Mar 2023 15:24:01 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E9F9CD;
+        Mon, 27 Mar 2023 12:24:01 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AE46C6147A;
+        Mon, 27 Mar 2023 19:24:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94616C433EF;
+        Mon, 27 Mar 2023 19:23:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679945040;
+        bh=iujBnATPdseZ2OyDbUQdNGaFQkW0LiQ28bu7WznPQQc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=S8HupFN2ydPYE0W7hyZpOHT9iHChgB2KA0DLs1Glti21Pfff1QyFCgp1gmaCAFRcr
+         CkByPMdUjBGkOVyXDxkaa77lWPhlt0U5jfdinFnOCCpV2ikccWqU+5ELj/SsGNE1IM
+         c7KF3o8yZUsB9BxgLBJV1qtq0/boxa0b9PMBEtPQl9YtZmIiJPsSoSySTgmw6WeRh4
+         amys3xKJVaCnEYA2qZ0D0vLKNyfvcKceog76ZPjfHFyiU0I9bT5EJ9HrxffrCejRxw
+         ad/g6bBKOKzTO6tmUClJkzBrz64F6epSP28/NtmeUhP6fwp6Aa21LfCN1jff55xQfA
+         yElep5IED3pOg==
+Date:   Mon, 27 Mar 2023 12:27:04 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Eric Biggers <ebiggers@kernel.org>
+Cc:     Abel Vesa <abel.vesa@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v4 4/7] soc: qcom: Make the Qualcomm UFS/SDCC ICE a
+ dedicated driver
+Message-ID: <20230327192704.ywczpr2otbwxnsh5@ripper>
+References: <20230327134734.3256974-1-abel.vesa@linaro.org>
+ <20230327134734.3256974-5-abel.vesa@linaro.org>
+ <20230327185358.c4emwquhouq42itf@ripper>
+ <20230327190954.GE73752@sol.localdomain>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230327190954.GE73752@sol.localdomain>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move a few device tree "status" properties so that they are the last
-specified property, in "qcom-sdx65-mtp.dts" and "qcom-sdx65.dtsi".
-Note that properties must always be specified before sub-nodes.
+On Mon, Mar 27, 2023 at 12:09:54PM -0700, Eric Biggers wrote:
+> On Mon, Mar 27, 2023 at 11:53:58AM -0700, Bjorn Andersson wrote:
+> > > +int qcom_ice_program_key(struct qcom_ice *ice,
+> > > +			 u8 algorithm_id, u8 key_size,
+> > > +			 const u8 crypto_key[], u8 data_unit_size,
+> > > +			 int slot)
+> > > +{
+> > > +	struct device *dev = ice->dev;
+> > > +	union {
+> > > +		u8 bytes[AES_256_XTS_KEY_SIZE];
+> > > +		u32 words[AES_256_XTS_KEY_SIZE / sizeof(u32)];
+> > > +	} key;
+> > > +	int i;
+> > > +	int err;
+> > > +
+> > > +	/* Only AES-256-XTS has been tested so far. */
+> > > +	if (algorithm_id != QCOM_ICE_CRYPTO_ALG_AES_XTS ||
+> > > +	    key_size != QCOM_ICE_CRYPTO_KEY_SIZE_256) {
+> > > +		dev_err_ratelimited(dev,
+> > > +				    "Unhandled crypto capability; algorithm_id=%d, key_size=%d\n",
+> > > +				    algorithm_id, key_size);
+> > > +		return -EINVAL;
+> > > +	}
+> > > +
+> > > +	memcpy(key.bytes, crypto_key, AES_256_XTS_KEY_SIZE);
+> > > +
+> > > +	/*
+> > > +	 * The SCM call byte-swaps the 32-bit words of the key.
+> > > +	 * So we have to do the same, in order for the final key be correct.
+> > 
+> > Does it actually byte swap the words, or is the API just specified to
+> > take the words in big endian format?
+> 
+> [Note, this is existing code I wrote that Abel is just moving to a new file.]
+> 
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- arch/arm/boot/dts/qcom-sdx65-mtp.dts | 6 +++---
- arch/arm/boot/dts/qcom-sdx65.dtsi    | 8 +++++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+Ah right, then I'm inclined to keep it untouched.
 
-diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-index 72e25de0db5fc..57bc3b03d3aac 100644
---- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-+++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-@@ -270,8 +270,8 @@ nand@0 {
- };
- 
- &remoteproc_mpss {
--	status = "okay";
- 	memory-region = <&mpss_adsp_mem>;
-+	status = "okay";
- };
- 
- &usb {
-@@ -283,14 +283,14 @@ &usb_dwc3 {
- };
- 
- &usb_hsphy {
--	status = "okay";
- 	vdda-pll-supply = <&vreg_l4b_0p88>;
- 	vdda33-supply = <&vreg_l10b_3p08>;
- 	vdda18-supply = <&vreg_l5b_1p8>;
-+	status = "okay";
- };
- 
- &usb_qmpphy {
--	status = "okay";
- 	vdda-phy-supply = <&vreg_l4b_0p88>;
- 	vdda-pll-supply = <&vreg_l1b_1p2>;
-+	status = "okay";
- };
-diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
-index f35061e5b7fb8..2e1d008bccfd8 100644
---- a/arch/arm/boot/dts/qcom-sdx65.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
-@@ -224,16 +224,15 @@ usb_hsphy: phy@ff4000 {
- 				     "qcom,usb-snps-hs-7nm-phy";
- 			reg = <0xff4000 0x120>;
- 			#phy-cells = <0>;
--			status = "disabled";
- 			clocks = <&rpmhcc RPMH_CXO_CLK>;
- 			clock-names = "ref";
- 			resets = <&gcc GCC_QUSB2PHY_BCR>;
-+			status = "disabled";
- 		};
- 
- 		usb_qmpphy: phy@ff6000 {
- 			compatible = "qcom,sdx65-qmp-usb3-uni-phy";
- 			reg = <0x00ff6000 0x1c8>;
--			status = "disabled";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			ranges;
-@@ -247,6 +246,8 @@ usb_qmpphy: phy@ff6000 {
- 				 <&gcc GCC_USB3_PHY_BCR>;
- 			reset-names = "phy", "common";
- 
-+			status = "disabled";
-+
- 			usb_ssphy: phy@ff6200 {
- 				reg = <0x00ff6e00 0x160>,
- 				      <0x00ff7000 0x1ec>,
-@@ -394,7 +395,6 @@ mem_noc: interconnect@9680000 {
- 		usb: usb@a6f8800 {
- 			compatible = "qcom,sdx65-dwc3", "qcom,dwc3";
- 			reg = <0x0a6f8800 0x400>;
--			status = "disabled";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			ranges;
-@@ -424,6 +424,8 @@ usb: usb@a6f8800 {
- 
- 			resets = <&gcc GCC_USB30_BCR>;
- 
-+			status = "disabled";
-+
- 			usb_dwc3: usb@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x0a600000 0xcd00>;
--- 
-2.34.1
+> It doesn't write to the input array, if that is what you are asking.  I was
+> thinking of this as one byte swap cancelling out another.  But sure, the comment
+> could be simplified to something like the following:
+> 
+> 	/* The SCM call requires that the key words be byte-swapped. */
+> 
 
+Last time I looked at a crypto driver, it was full of "switch the
+endian" operations, back and forth. So my request here was simply to
+make it clear which endian is actually expected.
+So I'm guessing the appropriate comment is:
+
+	/* The SCM call requires that the key words are encoded in big endian */
+
+> > How come you memcpy + swap in place, instead of loop over the words and
+> > cpu_to_be32() them into a __be words[] array?
+> > 
+> > > +	 */
+> > > +	for (i = 0; i < ARRAY_SIZE(key.words); i++)
+> > > +		__cpu_to_be32s(&key.words[i]);
+> 
+> With this approach there is no need to worry about unaligned memory accesses.
+
+That's a valid reason that I was looking for. Wouldn't this be a common
+problem, something other parts of the stack would like to avoid?
+Or it's just a byte array until we get here?
+
+> It could be done with unaligned memory accesses, though, if you prefer that:
+> 
+
+No need to jump through the hoops, but a comment would have saved
+(robbed?) me from wondering.
+
+Regards,
+Bjorn
+
+> 	union {
+> 		[...]
+> 		__be32 words[...];
+> 	} key;
+> 
+> 	[...]
+> 		key.words[i] = cpu_to_be32(get_unaligned((__u32 *)crypto_key + i));
+> 
+> - Eric
