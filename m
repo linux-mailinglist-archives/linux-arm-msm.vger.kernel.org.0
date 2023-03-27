@@ -2,89 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E2A56CADDA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 20:49:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A18F86CADE0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 20:49:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232591AbjC0StB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 14:49:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38740 "EHLO
+        id S232524AbjC0St5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 14:49:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232011AbjC0Ssz (ORCPT
+        with ESMTP id S232676AbjC0Stv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 14:48:55 -0400
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 442EC40FB;
-        Mon, 27 Mar 2023 11:48:40 -0700 (PDT)
-Received: from smtp102.mailbox.org (unknown [10.196.197.102])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        Mon, 27 Mar 2023 14:49:51 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 388DC3AA2;
+        Mon, 27 Mar 2023 11:49:37 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4PlhfX4JT4z9sRj;
-        Mon, 27 Mar 2023 20:48:36 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
-        s=MBO0001; t=1679942916;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=dKSbFG5DGVwvXJCZEdfm9iFVOlxnj2KKA0SRmRRz/mM=;
-        b=aO/Lr5tBOJwYoHrMyampkhZ4Lve/fM0VVGo+BBfu1EYY5+DdZCGbdj6lq8QR2c05RtEYwG
-        T2zdEiVNn9oXJS8M4n5iU5MzWlIZ3hHUrD8HW6gUuL7idIeXNjYW7jyoJ6kTrodBtKMnxt
-        Oo4GdrSiPOCx9+zVbWwmtZArcI1cNhOeM7OZvUldR+V288sEOdLezCtd7DrLZOEkEN4gQH
-        rzcR7P7wYP0npDdkZxSZd0jtDtyU7YOIRceUjtwOl04Kt+Mxti8Zg3N+GDO7pjR7zrxgQf
-        YNWV9unVCiSZJgiV3AeBnSwtuVuyxSZrHblgM/XqnByawGYYcIsu3jhtf0cS6Q==
-From:   Dylan Van Assche <me@dylanvanassche.be>
-To:     Andy Gross <agross@kernel.org>,
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C79DA61474;
+        Mon, 27 Mar 2023 18:49:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D9DC433EF;
+        Mon, 27 Mar 2023 18:49:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679942976;
+        bh=jLpV4aLEaWhnj2ZeSXlyZ4XrVCotJyZACRst+Ac2PsY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Rd5hRxyfDJ/6AksAtofExgq4NRAeL1yIwf+eXcgpeStZ0wYSYQNeSv6Lz1SdNx04f
+         71t7VD8RAxgbPs6ATLN4wAQWolJcZ2UwWc2RNt2OnX2NdB8BCD/YZyhzKyetRwFL9I
+         2vN/eCphpT1Nx2q956+8o/nZkpu8cVO12JuIjRd9is4Rpg33jrmTn4xo4qJTvqDNRA
+         eaXBmZJdkWyVXTSun5xEyvRFPNVa9d4pTe0lOoj12RlY/3OblQV0rsWke7kiqb+Z3S
+         negqyzWgL9hlvX7CR8QJhcDX9IHk3F+KUtpVsPmm00OmRq75PxAjBKPCSuE+TbGCQv
+         ACN2NpvYai5kQ==
+Date:   Mon, 27 Mar 2023 11:49:33 -0700
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Iskren Chernev <me@iskren.info>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Dylan Van Assche <me@dylanvanassche.be>
-Subject: [PATCH v2 5/5] dts: arm64: qcom: sdm845-shift-axolotl: enable SLPI
-Date:   Mon, 27 Mar 2023 20:48:11 +0200
-Message-Id: <20230327184811.499553-6-me@dylanvanassche.be>
-In-Reply-To: <20230327184811.499553-1-me@dylanvanassche.be>
-References: <20230327184811.499553-1-me@dylanvanassche.be>
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Subject: Re: [PATCH v3 1/3] dt-bindings: ufs: qcom: Add sm6115 binding
+Message-ID: <20230327184933.GD73752@sol.localdomain>
+References: <20221209-dt-binding-ufs-v3-0-499dff23a03c@fairphone.com>
+ <20221209-dt-binding-ufs-v3-1-499dff23a03c@fairphone.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221209-dt-binding-ufs-v3-1-499dff23a03c@fairphone.com>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the SLPI DSP on the SHIFTPHONES SHIFT6mq phone with a
-Qualcomm SDM845 SoC.
+On Fri, Mar 24, 2023 at 08:41:28AM +0100, Luca Weiss wrote:
+> From: Iskren Chernev <me@iskren.info>
+> 
+> Add SM6115 UFS to DT schema.
+> 
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 
-Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
----
- arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+Reviewed-by: Eric Biggers <ebiggers@google.com>
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-index b54e304abf71..bd9571a258cf 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-@@ -572,6 +572,11 @@ &qupv3_id_1 {
- 	status = "okay";
- };
- 
-+&slpi_pas {
-+	firmware-name = "qcom/sdm845/axolotl/slpi.mbn";
-+	status = "okay";
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <0 4>, <81 4>;
- 
--- 
-2.39.2
-
+- Eric
