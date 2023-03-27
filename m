@@ -2,91 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45CD96CA761
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 16:20:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 356C96CA78E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 16:27:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232439AbjC0OUH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 10:20:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57076 "EHLO
+        id S233116AbjC0O14 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 10:27:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230287AbjC0OT2 (ORCPT
+        with ESMTP id S233117AbjC0O1l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 10:19:28 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47F442722;
-        Mon, 27 Mar 2023 07:17:41 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 27 Mar 2023 10:27:41 -0400
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5727955A3;
+        Mon, 27 Mar 2023 07:26:50 -0700 (PDT)
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id E2CC7B815F3;
-        Mon, 27 Mar 2023 14:17:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5456C433EF;
-        Mon, 27 Mar 2023 14:17:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679926658;
-        bh=ST6/Tf0Hd9KxwNCo9HY/s+ET1/l38vy0oeHUythJylI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KQ6IaZFvjr7xiN1RVix4oLQO7K1Vr9gUYuIiuoHmzBFbay7taWsNJO0Um/mXYW3hg
-         rGCWQ6lc36khTW7dQo6RSK/O2ePhFgGcV4K/KpYunPcbEJdU5foBGsH1XmMXILjCE0
-         gi16UwCMXipAXicUYe+/9sCMihX6ap+lEXbzfeVKwa+YT0d9hH8UodmRrz+F903aJK
-         ghXhtorKg3HmFFtdG50t2LMYfm/BMJrD0qHk/2+UUxZBgKbxNw077/TPVIkZSbhqfi
-         XnOAKnT5/QCHwRK0HQa9MKnqt7q3GhGs2Um4VsQroi15ueLqhlBKGhdcvcMK5yeCym
-         b1jLBac/PGuuA==
-Date:   Mon, 27 Mar 2023 07:20:43 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4PlZr51Rwfz9t6d;
+        Mon, 27 Mar 2023 16:26:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
+        s=MBO0001; t=1679927189;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=9rOAJ6mYjJCPRKt+lu0rKWy0FC1qYxXDWw3444VdaWE=;
+        b=y8eULv06lBVmn/GXaB7wAZ9IFTinKqgYb15FTQZccKVKcLhDkG6AxkYJaLPLCjYLDlACKv
+        UCbohsS1oFS0e9/OdkC9owIEycxFqJeP2DV6ZunxEyZTlDL+bPb87smd+qWTeCm+6e1gps
+        R/lio4sh1rcYq8OTC82qVq5//wc7qNTu5yr/m5qhSxhESrNl0MIDHAWL6c/7WiuX8D3x2J
+        yNdRK0b/ABEnblPJfFtZybpEutoYT3Hn0jhNuvNrAySvn9SBgEzjq87FNzPCwR8Ye4z1vc
+        e10P+LN6LFcYsW4RyPlB3q/CXpzCamf4z0Oh4SkFcBwDNUrlYLhjFH6XAxyHRQ==
+Message-ID: <1f3fb4bd5387c8d69a6eb068fb773b9273081c13.camel@dylanvanassche.be>
+Subject: Re: [PATCH 1/2] dt-bindings: misc: qcom,fastrpc: add
+ qcom,assign-all-memory property
+From:   Dylan Van Assche <me@dylanvanassche.be>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 12/12] arm64: dts: qcom: sc8180x: Introduce Lenovo
- Flex 5G
-Message-ID: <20230327142043.4q62vfcd2557caen@ripper>
-References: <20230325122444.249507-1-vkoul@kernel.org>
- <20230325122444.249507-13-vkoul@kernel.org>
- <cf4feba0-de96-9e81-592b-e4b7520340a6@linaro.org>
- <ZCEs57ttv67KfOua@matsya>
- <84bcb9a7-40f7-b692-0f06-4075b27b5b7e@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Date:   Mon, 27 Mar 2023 16:26:25 +0200
+In-Reply-To: <44904ffc-83d4-1137-3479-737a81b31d16@linaro.org>
+References: <20230325134410.21092-1-me@dylanvanassche.be>
+         <20230325134410.21092-2-me@dylanvanassche.be>
+         <883c3c48-c6e5-556d-431f-e92592b9106a@linaro.org>
+         <b75b92bf64b55ba0ace0fbff65955c838a294dec.camel@dylanvanassche.be>
+         <44904ffc-83d4-1137-3479-737a81b31d16@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <84bcb9a7-40f7-b692-0f06-4075b27b5b7e@linaro.org>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 27, 2023 at 10:51:38AM +0200, Konrad Dybcio wrote:
-> On 27.03.2023 07:43, Vinod Koul wrote:
-> > On 25-03-23, 13:40, Konrad Dybcio wrote:
-> >> On 25.03.2023 13:24, Vinod Koul wrote:
-> >>> From: Bjorn Andersson <bjorn.andersson@linaro.org>
-[..]
-> >>> +&dispcc {
-> >>> +	status = "okay";
-> >> Any reason for disabling dispcc by default?
-> > 
-> > I think that is a good question. I would prefer disabling and enabling
-> > in places it is required, we might have a headless system or a dev board
-> > where we dont have display..?
-> It's a double-edged sword: on one side we could disable clocks that were
-> mistakenly enabled, but on the other hand we do keep some some clocks
-> always-on within that driver..
-> 
-> Perhaps leave it on by default and shut it off per-board if need be.
-> 
+Hi Krzysztof,
 
-There is a little bit of overhead in keeping the clock controllers
-enabled at all times, but I expect it to benefit us in that it would
-ensure that any clocks that the bootloader might have left on will be
-disabled.
+On Mon, 2023-03-27 at 14:22 +0200, Krzysztof Kozlowski wrote:
+> On 27/03/2023 13:37, Dylan Van Assche wrote:
+> > Hi Krzysztof,
+> >=20
+> > On Sun, 2023-03-26 at 10:55 +0200, Krzysztof Kozlowski wrote:
+> > > On 25/03/2023 14:44, Dylan Van Assche wrote:
+> > > > Document the added qcom,assign-all-memory in devicetree
+> > > > bindings.
+> > > >=20
+> > > > Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
+> > > > ---
+> > > > =C2=A0Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml | 6
+> > > > ++++++
+> > > > =C2=A01 file changed, 6 insertions(+)
+> > > >=20
+> > > > diff --git
+> > > > a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > > > b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > > > index 1ab9588cdd89..fa5b00534b30 100644
+> > > > --- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > > > +++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > > > @@ -57,6 +57,12 @@ properties:
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Virtual machine IDs for remote=
+ processor.
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0 $ref: "/schemas/types.yaml#/definitions/ui=
+nt32-array"
+> > > > =C2=A0
+> > > > +=C2=A0 qcom,assign-all-mem:
+> > > > +=C2=A0=C2=A0=C2=A0 description:
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Assign memory to all Virtual machin=
+es defined by
+> > > > qcom,vmids.
+> > >=20
+> > > This (neither commit msg) does not explain why this is needed and
+> > > actually does not sound like hardware-related property.
+> >=20
+> > This is made a separate property to toggle different behavior in
+> > the
+> > driver if it is needed for some FastRPC nodes.=20
+>=20
+> Bindings are not for driver behavior.
+>=20
+> > Downstream does guard
+> > this with a property 'restrict-access' as well, see [1] for a
+> > random
+> > SDM845 downstream kernel. On SDM845, this property is not present,
+> > thus
+> > the IF block runs. On SDM670, this property is present, then the IF
+> > block is skipped. That's why I opt for this property to have this
+> > behaviour conditionally. I'm not sure how to explain it better
+> > though.
+>=20
+> Still you described driver... Please come with something more
+> hardware
+> related.
 
-So, I think we should go with enable by default and leave enabled.
+So just updating the description is enough then?
 
-Regards,
-Bjorn
+As this is all reverse engineered, I have no access to the
+documentation of FastRPC, so best effort:
+
+"""
+Mark allocated memory region accessible to remote processor.
+This memory region is used by remote processor to communicate
+when no dedicated Fastrpc context bank hardware is available=C2=A0
+for remote processor.
+"""
+
+Is this the description that is 'more hardware related'?
+
+Kind regards,
+Dylan Van Assche
+
+>=20
+> Best regards,
+> Krzysztof
+>=20
+
