@@ -2,59 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF98B6CB0E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 23:45:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87A336CB101
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 23:51:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231990AbjC0Vp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 17:45:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57632 "EHLO
+        id S230105AbjC0Vvi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 17:51:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231359AbjC0VpJ (ORCPT
+        with ESMTP id S229827AbjC0VvZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 17:45:09 -0400
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6FD0271C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 14:45:04 -0700 (PDT)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-545ce8e77fcso118766237b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 14:45:04 -0700 (PDT)
+        Mon, 27 Mar 2023 17:51:25 -0400
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 519662D60
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 14:51:22 -0700 (PDT)
+Received: by mail-vs1-xe2f.google.com with SMTP id df34so8772128vsb.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 14:51:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679953504;
+        d=chromium.org; s=google; t=1679953880;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8Od1yrRw9W0dDs3CqT7zBZ9uROZ36udzvsBtgFGjS0E=;
-        b=nJJC9+Vtewsjq4C44MAfep9cBROtkUlVfjhIvW8jPihW1JxYSYxcgz8nuv+wRlNyfO
-         VBQOCmg5nV9AXlBXv59COMt77+n+f1i/KRcQfmyDNRpLAtbAX1dhMEWktZXkB22ng3et
-         6gG1BHtIGQ0JQ51n3bqiged3a7tH9vYNd43mcjTIrTIKJYR4hi7SJqcg71X0tzNO597I
-         yS0qAbe0tDH1cuRCSFYgRv+9eZR5iiNmRp6wBFlx5uG1mx7x9jDuyKVEF/b9fupU6Eef
-         A9s1l4g9GgJPAXfYWgNXAjcH0bNHsclAtf0w4i+HZzwdeUVeoklVqx5dhZJzp3D0Z5vY
-         y2OA==
+        bh=O9qH6rlTsm7Q+HG/U3Vbn83vlXYTPD/5LPZnsPMmWW8=;
+        b=n/59ViaC874pcaFm8uemtXHXe6fQ9xP0qOZ1w6uoEBaluASOaSpzYoEXQweJVr8m6g
+         rZjg1cjfNKpdfE2n36ctdK8ud3LfY8lT8frIDFC6GiSh9+F3+5YkjrB5r2nWW9PKoQtA
+         LPTL9pFo0f6G/P8wUKYwwWm+e9cmiZK4rWTSo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679953504;
+        d=1e100.net; s=20210112; t=1679953880;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8Od1yrRw9W0dDs3CqT7zBZ9uROZ36udzvsBtgFGjS0E=;
-        b=msgqEia3QXnORj4PA/QvCYHXERSn/Yx30GboypPDtq6fSRaY3a6vE+ssSFbbDqhk4V
-         wBXgXm4Kd9ei+nGq2n25EC4mRZGvwM9YR8GIJNEB+VFgvzjIJ9BK59xQfsSIG3okHiz4
-         Aqo5FNfliWMHEZoPJskYoafQo8acCwaBgRLptxBClNoLqsPvSrL/1Cg8Z5idVla6thAP
-         4zzEtL+K2357gAJpllryW9R+IElFAtCi1sp6y2PKPHWzLev9rXP95Llr2BqkFZOC2Zlu
-         /V2UyivmsgzEJlcCIBtML2bj39Yk7SQMALr5VjYPZ3ZeS8dETqInSOYgztBDj+J8Qdx3
-         FzNA==
-X-Gm-Message-State: AAQBX9dgaxoknINHv/fCH6QxSclBAXnqs9q8soK0NJWgN1VnQ0LT2mo0
-        vLI4IeZy15HVcCg1hqJTAFXHccdULUwNSv/Fih3kDA==
-X-Google-Smtp-Source: AKy350ZiZF5MjjPsOVfoZJqYbz6+9AyDpWJmzjBpGI3FukJ1AYFDm8mdtZ8HxExb9n4AJbaKdmnLzxtqtcjOdjCI/G0=
-X-Received: by 2002:a81:4426:0:b0:53d:2772:65d with SMTP id
- r38-20020a814426000000b0053d2772065dmr6146370ywa.9.1679953503833; Mon, 27 Mar
- 2023 14:45:03 -0700 (PDT)
+        bh=O9qH6rlTsm7Q+HG/U3Vbn83vlXYTPD/5LPZnsPMmWW8=;
+        b=ppMQRP5bWaoCZUpIaP1W9dILT1rUkU5wYkl1ATWzV/LkIkoPPyny0hf5pgH9zMkzf1
+         kAbQwia+PUtnwLDRcfafxZZ0QbGXQq7bjIqNgV6N8LCIOQPq+EWkaAQfn/AcSJBIRtfF
+         2S5r0+icRG26AB/AXZcsW2bE7atKdnJf+EYuKtudxwNhIhyd4hfWVWZqi4fyO9ehFTqS
+         pKjBN2XvHnzKejfiBc4bvM/nzgKVdF9c5Xam6oBa+l3Q4ga77k88hMg0Km66IeyF0iqg
+         BNc2lbRvI451eJGFCyhCfgpXq+Dqbl9hWGCCYI+M1Wollk//xo0zuBJGhJPPD5CyUJ8y
+         +6tQ==
+X-Gm-Message-State: AAQBX9eKM/jY6s4LN8KFCOVTWiK+dighiE4ryVcELufpJ7p0+Afno96p
+        wQBTUuCP1cd/OckOyY0xO3qIjMv203eMW/jPH/o=
+X-Google-Smtp-Source: AKy350aJ2B05w+k7m9RN2oHPeEMY98lOCwrkBBiM60vzqelurnB9kTHkLfIY7TWux+74KpWyuHSH/g==
+X-Received: by 2002:a67:f88c:0:b0:423:e462:ec2 with SMTP id h12-20020a67f88c000000b00423e4620ec2mr4506180vso.27.1679953879945;
+        Mon, 27 Mar 2023 14:51:19 -0700 (PDT)
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com. [209.85.217.47])
+        by smtp.gmail.com with ESMTPSA id i12-20020ab00d8c000000b007643f1ac0b7sm1934124uak.3.2023.03.27.14.51.16
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Mar 2023 14:51:17 -0700 (PDT)
+Received: by mail-vs1-f47.google.com with SMTP id d2so8770504vso.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 14:51:16 -0700 (PDT)
+X-Received: by 2002:a05:6102:4711:b0:425:f1e7:fecf with SMTP id
+ ei17-20020a056102471100b00425f1e7fecfmr6513084vsb.7.1679953876235; Mon, 27
+ Mar 2023 14:51:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230323173019.3706069-1-dianders@chromium.org>
-In-Reply-To: <20230323173019.3706069-1-dianders@chromium.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 27 Mar 2023 23:44:52 +0200
-Message-ID: <CACRpkdaGpaiOVjEN6Ftq5=-yuAyD0xb7OcvtEsoqbTzias-xxw@mail.gmail.com>
+References: <20230323173019.3706069-1-dianders@chromium.org> <CACRpkdaGpaiOVjEN6Ftq5=-yuAyD0xb7OcvtEsoqbTzias-xxw@mail.gmail.com>
+In-Reply-To: <CACRpkdaGpaiOVjEN6Ftq5=-yuAyD0xb7OcvtEsoqbTzias-xxw@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 27 Mar 2023 14:51:04 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=W6QKfQxGcSrQdgp4VHYxfk7aYZOkYx4ve7QSpoZ-LM=A@mail.gmail.com>
+Message-ID: <CAD=FV=W6QKfQxGcSrQdgp4VHYxfk7aYZOkYx4ve7QSpoZ-LM=A@mail.gmail.com>
 Subject: Re: [PATCH 00/14] Control Quad SPI pinctrl better on Qualcomm Chromebooks
-To:     Douglas Anderson <dianders@chromium.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
 Cc:     Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -70,57 +77,91 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 23, 2023 at 6:31=E2=80=AFPM Douglas Anderson <dianders@chromium=
+Hi,
+
+On Mon, Mar 27, 2023 at 2:45=E2=80=AFPM Linus Walleij <linus.walleij@linaro=
 .org> wrote:
-
-> The main goal of this series is to do a better job of cI can apply ontrol=
-ing the
-> pins related to the "Quad SPI" IP block on Qualcomm Chromebooks. This
-> is essentially 'v2' of my previous attempt in the patch ("arm64: dts:
-> qcom: sc7180: Fix trogdor qspi pull direction") [1] but since it's
-> spiraled out a bit and there are no patches that are exactly the same
-> I've reset to v1.
 >
-> The early patches in this series are just no-op cleanup patches that
-> can be applied. They're not terribly critical but since they are
-> "Fixes" I've listed them first.
+> On Thu, Mar 23, 2023 at 6:31=E2=80=AFPM Douglas Anderson <dianders@chromi=
+um.org> wrote:
 >
-> The next patch in the series is a very simple and (hopefully)
-> non-controversial SPI patch. It can be applied independently if
-> anything else.
+> > The main goal of this series is to do a better job of cI can apply ontr=
+oling the
+> > pins related to the "Quad SPI" IP block on Qualcomm Chromebooks. This
+> > is essentially 'v2' of my previous attempt in the patch ("arm64: dts:
+> > qcom: sc7180: Fix trogdor qspi pull direction") [1] but since it's
+> > spiraled out a bit and there are no patches that are exactly the same
+> > I've reset to v1.
+> >
+> > The early patches in this series are just no-op cleanup patches that
+> > can be applied. They're not terribly critical but since they are
+> > "Fixes" I've listed them first.
+> >
+> > The next patch in the series is a very simple and (hopefully)
+> > non-controversial SPI patch. It can be applied independently if
+> > anything else.
+> >
+> > Next, we have a bunch of pinctrl patches (including the device tree
+> > bindings related to them). I dunno what folks are going to think about
+> > these. If everyone hates them, we can drop them and just change the
+> > later patches in the series to use "input-enable" instead of
+> > "output-disable". It feels ugly to me, but it maybe less upheval.
+> >
+> > Next I removed the now-deprecated "input-enable" property from all
+> > Chromebooks. None of them were necessary.
+> >
+> > Finally, I did what I really wanted to do in the first place: attempt
+> > to cleanup the pinctrl states of the Quad SPI. These patches have a
+> > hard requirement on the pinctrl change.
 >
-> Next, we have a bunch of pinctrl patches (including the device tree
-> bindings related to them). I dunno what folks are going to think about
-> these. If everyone hates them, we can drop them and just change the
-> later patches in the series to use "input-enable" instead of
-> "output-disable". It feels ugly to me, but it maybe less upheval.
+> This looks good to me (TM)
 >
-> Next I removed the now-deprecated "input-enable" property from all
-> Chromebooks. None of them were necessary.
+> Do you have a merge plan?
+> I can queue the pinctrl patch into the pinctrl tree, and
+> the pinctrl binding patches.
 >
-> Finally, I did what I really wanted to do in the first place: attempt
-> to cleanup the pinctrl states of the Quad SPI. These patches have a
-> hard requirement on the pinctrl change.
+> Will you take the rest to the SPI and SoC tree?
+>
+> Acked-by: Linus Walleij <linus.walleij@linaro.org>
 
-This looks good to me (TM)
+My thoughts:
 
-Do you have a merge plan?
-I can queue the pinctrl patch into the pinctrl tree, and
-the pinctrl binding patches.
+1. Mark could land the SPI patch at any time, assuming he's OK with
+it. It can land totally independently.
 
-Will you take the rest to the SPI and SoC tree?
+2. First 7 dts patches could land in the Qualcomm tree. There are no
+dependencies on these ones other than the commit message of some of
+the later dts patches talking about the pinctrl patches.
 
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-FWIW
+...then...
 
-Yours,
-Linus Walleij
+
+Option A:
+
+3. You land the pinctrl and binding patches in an immutable branch and
+merge into pinctrl.
+
+4. Bjorn merges the immutable branch into the Qulacomm tree and places
+the last 3 dts patches atop.
+
+
+Option B:
+
+3. You Ack the pinctrl patches and Bjorn lands them all, plus the last
+3 dts patches.
+
+
+Option C:
+
+3. You land the pinctrl patches, then we want a few months and land
+the last 3 dts patches.
