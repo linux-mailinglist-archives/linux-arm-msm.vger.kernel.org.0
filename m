@@ -2,78 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 497266CAAB6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 18:34:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68DE76CAAD0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 18:41:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232618AbjC0QeJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 12:34:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48326 "EHLO
+        id S229934AbjC0Qlo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 12:41:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232521AbjC0QeA (ORCPT
+        with ESMTP id S230288AbjC0Qln (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 12:34:00 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2993126AC;
-        Mon, 27 Mar 2023 09:33:46 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32REefc8015630;
-        Mon, 27 Mar 2023 16:33:39 GMT
+        Mon, 27 Mar 2023 12:41:43 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AF7B2698;
+        Mon, 27 Mar 2023 09:41:40 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32RAJPq6017673;
+        Mon, 27 Mar 2023 16:41:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=7S1232h/XwYZf89QBN7zUWlxPDxwqmmgYZt9Ya4kwYg=;
- b=WMeG9rKh8yB8fvQCHAySGFeI5ueEcRKPgWfw8mk7QAAVIaFf6RSUFElu4puxWtfcL9n9
- Pn21sl+5wAeDq3v4NbgcTBmUQlR3N2mKCfQQLMSaNTRaQLHAvjYEyQAOykuOAojcIWCL
- PTz8VhRehpj7r5sUhGnnGg2qbU8ZtPInu03xQTzWZXKvRrlNHwyT6JHvDY9+ciy6WxK/
- E7ZbePeH3V8n1tCklMDdFUZe1+cflUxHaksIr/i23ci7+01+HmSTh+m1GAxRF1edpevZ
- oYKgIq4/4eM0ZYnPSwB+5DoxIzMXlHdj5RYgUclvn8cY2BZHVli6bL64WUEBIJOhXHYC Gg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3phsqqn2cf-1
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=v/KL0iSUouRlg6RgT5Qvg2Zi5Xz08E6+7OtUkJxKRHs=;
+ b=YbtVmWZUx8R3LbZejel+pw8KJspWkU6FVTM+AVsk9P2HcVPB7V62KsEQMbNJzNjr6FpL
+ iYIb1Z5HMoKLYy45jR7+52tJn5LyHRK1UAEt8+9MxUUWvPDjg/6DhQJLf3nSHK/GVmrq
+ 1PGuUQzeJH1QiFir2eon51o0ZD5xrFYRnteCzXP6dVyLRKksp1aZLFKfkl7yz5Pe26Q1
+ 6eksSDLxu/49oEGf2ZyO+0OhpgIh+SPNcp0G0vW0sIUmBIFuTURjoyLI1lg37x/tAL0Y
+ gnzX52jbMMxESzPs+yI4UMUCkFPp/U/S5PqUDlQHSshZANd3mnhV0YHVfTJz3XDJW0Hf MA== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pht50w0jn-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 27 Mar 2023 16:33:39 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32RGXcUP024417
+        Mon, 27 Mar 2023 16:41:37 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32RGfaMe014561
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 27 Mar 2023 16:33:38 GMT
-Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+        Mon, 27 Mar 2023 16:41:36 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Mon, 27 Mar 2023 09:33:33 -0700
-From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-To:     <swboyd@chromium.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <broonie@kernel.org>, <quic_plai@quicinc.com>,
-        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>, <quic_visr@quicinc.com>
-CC:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Subject: [PATCH v1 4/4] clk: qcom: lpasscc-sc7280: Remove qdsp6ss clock registration
-Date:   Mon, 27 Mar 2023 22:02:49 +0530
-Message-ID: <20230327163249.1081824-5-quic_mohs@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230327163249.1081824-1-quic_mohs@quicinc.com>
-References: <20230327163249.1081824-1-quic_mohs@quicinc.com>
+ 15.2.986.41; Mon, 27 Mar 2023 09:41:34 -0700
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linus.walleij@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: [PATCH v4 0/5] Refactor to support multiple download mode
+Date:   Mon, 27 Mar 2023 22:11:16 +0530
+Message-ID: <1679935281-18445-1-git-send-email-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ONDpdOYg3H39CXoKa8g2vF3aYFYqxufd
-X-Proofpoint-ORIG-GUID: ONDpdOYg3H39CXoKa8g2vF3aYFYqxufd
+X-Proofpoint-GUID: D0E0CndYBxcDNuNPFYJW038u7tWRBghv
+X-Proofpoint-ORIG-GUID: D0E0CndYBxcDNuNPFYJW038u7tWRBghv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-03-24_11,2023-03-27_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- mlxlogscore=999 bulkscore=0 adultscore=0 clxscore=1015 mlxscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303270133
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
+ lowpriorityscore=0 suspectscore=0 priorityscore=1501 spamscore=0
+ malwarescore=0 impostorscore=0 adultscore=0 phishscore=0 clxscore=1015
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303270134
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,108 +73,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The qdsp6ss memory region is being shared by ADSP remoteproc device and
-lpasscc clock device, hence causing memory conflict.
-As the qdsp6ss clocks are being enabled in remoteproc driver, remove the
-qdsp6ss clock registration.
+Intention of this series to support multiple download mode and
+only modify the required bits during setting tcsr register.
 
-Fixes: 4ab43d171181 ("clk: qcom: Add lpass clock controller driver for SC7280")
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
----
- drivers/clk/qcom/lpasscc-sc7280.c | 63 +------------------------------
- 1 file changed, 1 insertion(+), 62 deletions(-)
+Other download modes are minidump, bothdump (full dump + minidump).
 
-diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
-index 48432010ce24..4719e3fa8b05 100644
---- a/drivers/clk/qcom/lpasscc-sc7280.c
-+++ b/drivers/clk/qcom/lpasscc-sc7280.c
-@@ -30,48 +30,6 @@ static struct clk_branch lpass_top_cc_lpi_q6_axim_hs_clk = {
- 	},
- };
- 
--static struct clk_branch lpass_qdsp6ss_core_clk = {
--	.halt_reg = 0x20,
--	/* CLK_OFF would not toggle until LPASS is out of reset */
--	.halt_check = BRANCH_HALT_SKIP,
--	.clkr = {
--		.enable_reg = 0x20,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "lpass_qdsp6ss_core_clk",
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch lpass_qdsp6ss_xo_clk = {
--	.halt_reg = 0x38,
--	/* CLK_OFF would not toggle until LPASS is out of reset */
--	.halt_check = BRANCH_HALT_SKIP,
--	.clkr = {
--		.enable_reg = 0x38,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "lpass_qdsp6ss_xo_clk",
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch lpass_qdsp6ss_sleep_clk = {
--	.halt_reg = 0x3c,
--	/* CLK_OFF would not toggle until LPASS is out of reset */
--	.halt_check = BRANCH_HALT_SKIP,
--	.clkr = {
--		.enable_reg = 0x3c,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "lpass_qdsp6ss_sleep_clk",
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
- static struct regmap_config lpass_regmap_config = {
- 	.reg_bits	= 32,
- 	.reg_stride	= 4,
-@@ -90,18 +48,6 @@ static const struct qcom_cc_desc lpass_cc_top_sc7280_desc = {
- 	.num_clks = ARRAY_SIZE(lpass_cc_top_sc7280_clocks),
- };
- 
--static struct clk_regmap *lpass_qdsp6ss_sc7280_clocks[] = {
--	[LPASS_QDSP6SS_XO_CLK] = &lpass_qdsp6ss_xo_clk.clkr,
--	[LPASS_QDSP6SS_SLEEP_CLK] = &lpass_qdsp6ss_sleep_clk.clkr,
--	[LPASS_QDSP6SS_CORE_CLK] = &lpass_qdsp6ss_core_clk.clkr,
--};
--
--static const struct qcom_cc_desc lpass_qdsp6ss_sc7280_desc = {
--	.config = &lpass_regmap_config,
--	.clks = lpass_qdsp6ss_sc7280_clocks,
--	.num_clks = ARRAY_SIZE(lpass_qdsp6ss_sc7280_clocks),
--};
--
- static int lpass_cc_sc7280_probe(struct platform_device *pdev)
- {
- 	const struct qcom_cc_desc *desc;
-@@ -121,17 +67,10 @@ static int lpass_cc_sc7280_probe(struct platform_device *pdev)
- 		goto destroy_pm_clk;
- 	}
- 
--	lpass_regmap_config.name = "qdsp6ss";
--	desc = &lpass_qdsp6ss_sc7280_desc;
--
--	ret = qcom_cc_probe_by_index(pdev, 0, desc);
--	if (ret)
--		goto destroy_pm_clk;
--
- 	lpass_regmap_config.name = "top_cc";
- 	desc = &lpass_cc_top_sc7280_desc;
- 
--	ret = qcom_cc_probe_by_index(pdev, 1, desc);
-+	ret = qcom_cc_probe_by_index(pdev, 0, desc);
- 	if (ret)
- 		goto destroy_pm_clk;
- 
+Latest minidump kernel driver patches has been sent here
+https://lore.kernel.org/lkml/1679491817-2498-1-git-send-email-quic_mojha@quicinc.com/
+
+Also, this series should be applied on
+https://lore.kernel.org/lkml/1678979666-551-1-git-send-email-quic_mojha@quicinc.com/
+
+Changes in v4:
+  - val should be shifted within the function [srinivas.kandagatla]
+    i.e new = (old & ~mask) | (val << ffs(mask) - 1);
+  - Added Acked-by [linus.walleij] on pinctrl change.
+
+Changes in v3 : https://lore.kernel.org/lkml/1679070482-8391-1-git-send-email-quic_mojha@quicinc.com/
+ - Removed [1] from the series and sent as a separate patch[2], although this series
+   should be applied on top [2].
+  [1] https://lore.kernel.org/lkml/1677664555-30191-2-git-send-email-quic_mojha@quicinc.com/
+  [2] https://lore.kernel.org/lkml/1678979666-551-1-git-send-email-quic_mojha@quicinc.com/
+ - Introduce new exported symbol on suggestion from [srinivas.kandagatla]
+ - Use the symbol from drivers/pinctrl/qcom/pinctrl-msm.c.
+ - Addressed comment given by [dmitry.baryshkov]
+ - Converted non-standard Originally-by to Signed-off-by.
+
+Changes in v2: https://lore.kernel.org/lkml/1677664555-30191-1-git-send-email-quic_mojha@quicinc.com/
+ - Addressed comment made by [bjorn]
+ - Added download mask.
+ - Passed download mode as parameter
+ - Accept human accepatable download mode string.
+ - enable = !!dload_mode
+ - Shifted module param callback to somewhere down in
+   the file so that it no longer need to know the
+   prototype of qcom_scm_set_download_mode()
+ - updated commit text.
+
+
+Mukesh Ojha (5):
+  firmware: qcom_scm: provide a read-modify-write function
+  pinctrl: qcom: Use qcom_scm_io_update_field()
+  firmware: scm: Modify only the download bits in TCSR register
+  firmware: qcom_scm: Refactor code to support multiple download mode
+  firmware: qcom_scm: Add multiple download mode support
+
+ drivers/firmware/Kconfig               | 11 -----
+ drivers/firmware/qcom_scm.c            | 89 +++++++++++++++++++++++++++++++---
+ drivers/pinctrl/qcom/pinctrl-msm.c     | 11 ++---
+ include/linux/firmware/qcom/qcom_scm.h |  2 +
+ 4 files changed, 87 insertions(+), 26 deletions(-)
+
 -- 
-2.25.1
+2.7.4
 
