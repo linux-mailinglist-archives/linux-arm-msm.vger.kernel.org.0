@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A12B6C9E8A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 10:50:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62AF46C9E8E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 10:50:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232847AbjC0IuB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 04:50:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50234 "EHLO
+        id S232875AbjC0IuI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 04:50:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233228AbjC0Ita (ORCPT
+        with ESMTP id S233438AbjC0Iti (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 04:49:30 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18FDBA27D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:45:52 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id k37so10368040lfv.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:45:52 -0700 (PDT)
+        Mon, 27 Mar 2023 04:49:38 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBB3EAF04
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:45:57 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id k37so10369077lfv.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:45:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679906738;
+        d=linaro.org; s=google; t=1679906754;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1vKxZD4uY+8xzaJ91LfecL8ep0yvr9IuwHztb6HOThc=;
-        b=oJUWlmf5aBjtk58Izrpr0xINr6zH3yqRdhf/SRw+DbnaHIoqvZoglEIuEdjvUYSlgK
-         yj5aMFd+z/Bgfn6EnEUKZDDSHuho5yXrATVKIAv3aFwq46x5hgGQlm0VFl9xa+kuW/H+
-         K1d67eTkXv9pb01tA4D15WgLqK7NefRcPODLU0qEmFFm7cVY7lVXBAmAOLf9sz4xI+Bi
-         Ohez4C6wCR0zuddRzBZ9HsTj2NE56eCBGFV0FVSbOYhHTUp2sgSBIGxKyMaWRTLIArZQ
-         6Bujy5kl3EPR2I3HEkwMpqGFO3UHclGhF0Phba0402d4xaCdY3I6IPAbtZiQEZA+CDAv
-         vWBA==
+        bh=dPZSCKp7vZLTxkuBtskdPHC0sKrR3He7Fthw/GA/hf8=;
+        b=gC51z7Id08kqVskdO8iOYZakg/SGw4Dd3ORv1rawdNA6Ge/0faeEGhkTUZnebXYkFL
+         aLiyEsdZvVVCM/gBwDCbLif5VwtUljJCtEGFOr+V51uqcQKPnxhLYRgOtsazrFZBURSj
+         tnU2gM0c+XXYzt3CoBrajnh3Bznai22zz+CajkEtweBxMmymkT3XfEoMIiZyJ5s8M66J
+         ZKJwCF3G1KRs7MvYBuOW41eMHTpz4h8WISSp4xAdd64WHG4OYKPNSc1dfVXTv/zDxRbT
+         alvXh1sV+brwU/YlEeR3RpPAMeIgUt+h1Wcf8o8u5qzGfs3trKkOKSj12wcM48m2Vy3I
+         surA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679906738;
+        d=1e100.net; s=20210112; t=1679906754;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1vKxZD4uY+8xzaJ91LfecL8ep0yvr9IuwHztb6HOThc=;
-        b=pkBbHN6Sn8GoA3TUSH5jYqlfkQniCiGnz5ZBjG1qWMGtoGWuN78MhVgCPy3e3wSEP1
-         T3eseH9RqhJvzba//NwkmKvqsiaxmxxzcZqyjeHqiMpL42HzACjputwT1UlY54FheMse
-         Yc9XLkCfulyh/S41cq+g+Aadx4DN9arVnELYa+Rn5AtUr0qs7fu81rNfuWYLaLygGlIs
-         g9lRfd1SXNzj637Bg9ZgwS+IJWV5NPSF0s++J8SVADurFp560PrZzmyQsDwTu2gPJUq1
-         nQYhFUmS9KQ1V/1W1VtYJ1Y2nj5WipRns4n3BtqYCbGKt4EjwaJd4nLGrIRQmQDH0Wtd
-         iWig==
-X-Gm-Message-State: AAQBX9evICSlZxtBEXO10HBVjxVk2st7juNjxhg51vDy54dEbmbbhpRf
-        aaJK1nrKNGfrHEU936lxLl/S0A==
-X-Google-Smtp-Source: AKy350Z8aL1WJvTtsYWkT17l2/W33C47pumO65qP68QCcUcqLXSR1EhQ42yLQXCt7LxrXqnX8rSQEg==
-X-Received: by 2002:a05:6512:25b:b0:4e9:7d60:7108 with SMTP id b27-20020a056512025b00b004e97d607108mr2862883lfo.53.1679906738711;
-        Mon, 27 Mar 2023 01:45:38 -0700 (PDT)
+        bh=dPZSCKp7vZLTxkuBtskdPHC0sKrR3He7Fthw/GA/hf8=;
+        b=j9C9g+I3WsUbKdjL0dZn93LAn+9T8cYqfiIckoGcYj3lyiA3TVMBevlPUBrzGK2Yfr
+         QL/S0ppd+NLlSqC6r2vsflevd+S//gFsDT/h9c6Dl+oqtngdyZE6soA75IJ/axQcx3Q3
+         33RBQP7hJMEZ/EY0/baFKWe0NamUbA7UGQeDX1qucKvgRtvFYUANd/sIikT2lSzqpDqm
+         uqg0cj2XWsSU1XlO/bfqw6AI8odchXjsagNUsJCZvwyuS3/+4Ec7jqLd3LaMQZxgJZQP
+         5nJPKaYOKO8BdfCXyGayAQMa1rekmbAcCziiDlVoHNAxKlQ9RBtf0+e0KLSIuq6qIPRU
+         ViWQ==
+X-Gm-Message-State: AAQBX9eWu6BDgRxSzbGDHtpWSOLYitYlL2DU1fPgYvRE/vrpYZLrVif9
+        Ku04JQdeQCfXS6uiwqOnYw9meA==
+X-Google-Smtp-Source: AKy350abro+CyXrXFwvQMPrWGIlZWOFbGiOOa9PUJXfnJBBEUoJGdtutYjlxM9idI9iFRD7tYzzRNA==
+X-Received: by 2002:ac2:5505:0:b0:4b5:9e70:ca6e with SMTP id j5-20020ac25505000000b004b59e70ca6emr3153693lfk.17.1679906754189;
+        Mon, 27 Mar 2023 01:45:54 -0700 (PDT)
 Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id l14-20020a05651c10ce00b002a11280db83sm2066214ljn.96.2023.03.27.01.45.37
+        by smtp.gmail.com with ESMTPSA id u15-20020ac243cf000000b004eaf2291dcdsm2559738lfl.102.2023.03.27.01.45.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 01:45:38 -0700 (PDT)
-Message-ID: <e1d70b0a-42da-bcf4-7d1c-d6bbc86b5b53@linaro.org>
-Date:   Mon, 27 Mar 2023 10:45:37 +0200
+        Mon, 27 Mar 2023 01:45:53 -0700 (PDT)
+Message-ID: <a1f79852-e555-0794-c534-57da7f1ab543@linaro.org>
+Date:   Mon, 27 Mar 2023 10:45:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 043/117] media: venus: Warn only once about problems in
- .remove()
+Subject: Re: [PATCH 044/117] media: venus: Convert to platform remove callback
+ returning void
 Content-Language: en-US
 To:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
         Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
@@ -67,9 +67,9 @@ To:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         kernel@pengutronix.de
 References: <20230326143224.572654-1-u.kleine-koenig@pengutronix.de>
- <20230326143224.572654-46-u.kleine-koenig@pengutronix.de>
+ <20230326143224.572654-47-u.kleine-koenig@pengutronix.de>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230326143224.572654-46-u.kleine-koenig@pengutronix.de>
+In-Reply-To: <20230326143224.572654-47-u.kleine-koenig@pengutronix.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -85,30 +85,53 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 26.03.2023 16:31, Uwe Kleine-König wrote:
-> The only effect of returning an error code in a remove callback is that
-> the driver core emits a warning. The device is unbound anyhow.
+> The .remove() callback for a platform driver returns an int which makes
+> many driver authors wrongly assume it's possible to do error handling by
+> returning an error code. However the value returned is (mostly) ignored
+> and this typically results in resource leaks. To improve here there is a
+> quest to make the remove callback return void. In the first step of this
+> quest all drivers are converted to .remove_new() which already returns
+> void.
 > 
-> As the remove callback already emits a (quite verbose) warning when ret
-> is non-zero, return zero to suppress the additional warning.
+> Trivially convert this driver from always returning zero in the remove
+> callback to the void returning variant.
 > 
 > Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/media/platform/qcom/venus/core.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/media/platform/qcom/venus/core.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
 > 
 > diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> index 990a1519f968..403ffb92af60 100644
+> index 403ffb92af60..2ae867cb4c48 100644
 > --- a/drivers/media/platform/qcom/venus/core.c
 > +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -448,7 +448,7 @@ static int venus_remove(struct platform_device *pdev)
+> @@ -416,7 +416,7 @@ static int venus_probe(struct platform_device *pdev)
+>  	return ret;
+>  }
+>  
+> -static int venus_remove(struct platform_device *pdev)
+> +static void venus_remove(struct platform_device *pdev)
+>  {
+>  	struct venus_core *core = platform_get_drvdata(pdev);
+>  	const struct venus_pm_ops *pm_ops = core->pm_ops;
+> @@ -447,8 +447,6 @@ static int venus_remove(struct platform_device *pdev)
+>  	mutex_destroy(&core->pm_lock);
 >  	mutex_destroy(&core->lock);
 >  	venus_dbgfs_deinit(core);
->  
-> -	return ret;
-> +	return 0;
+> -
+> -	return 0;
 >  }
 >  
 >  static void venus_core_shutdown(struct platform_device *pdev)
+> @@ -891,7 +889,7 @@ MODULE_DEVICE_TABLE(of, venus_dt_match);
+>  
+>  static struct platform_driver qcom_venus_driver = {
+>  	.probe = venus_probe,
+> -	.remove = venus_remove,
+> +	.remove_new = venus_remove,
+>  	.driver = {
+>  		.name = "qcom-venus",
+>  		.of_match_table = venus_dt_match,
