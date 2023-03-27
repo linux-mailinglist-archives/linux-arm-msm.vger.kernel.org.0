@@ -2,171 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 565176CAF3C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 21:56:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 584B46CAF7C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 22:13:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232631AbjC0T4P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 15:56:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50966 "EHLO
+        id S229970AbjC0UNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 16:13:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232493AbjC0T4O (ORCPT
+        with ESMTP id S229940AbjC0UNA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 15:56:14 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72FA430E5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 12:56:12 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id q6so4414938iot.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 12:56:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679946972;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lH7WjDhRatoLIWeRekjA6Q2wRRz8ocWvRkg9eIDfK6c=;
-        b=vJYbbHJrFCK00Ie+LZfdSJ9WynZk14oWpMucOHxrU6bOD8IT7ntctL/Q0eogZX5VaZ
-         O9SWnHs9G5+ndrbv52VRN/ucw0o6tF05CJEpaH0KP8I9ofAwGet8Q63cfjuSaF/WTkb+
-         jlFBhJV2QcM3p64P5NDe2s0ou5Iiv7UA27PbbcssQQ08d8FZqifn+Eu7WDhGTyglTLVf
-         H1Lv12kUH2WMNtRShYzovz1EPso5uo7yH9J+/v6uIblj4c4qnwJqxJiBduahVQq4DbZ1
-         XoAGx7+bRPc907ryBDLzPtRXhzikGVQiBmz6kmeKYXBnM90gZsyQHdqKyujb7K71oJ8a
-         FQuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679946972;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lH7WjDhRatoLIWeRekjA6Q2wRRz8ocWvRkg9eIDfK6c=;
-        b=v8NPxFn7N5nfukF44vLz2/3IGq4/gxAoG7fkln8ghGcoKMrxOXRJXCZNoKy0TZA/Hs
-         Rw+5Qj0pDKK4HvNhSrhHbY+6v/E0q1fs9rUiuZv44vvp0ytHkHrugrr6zyRrqsyfHe+J
-         3H70vQV3MA66/CEWUrlIMYDlZq1c1kKa6Vp0JhqoUI7d7KSR3QwuWdlYNDcV4haejSiL
-         SoAh+4uw53FM6jzhwVeyAczoyRn+V1jtfQm0TpNrfmszqtXZ3ZSir7WsIgHBj9qDlclr
-         J5QFDWbpJxc1qrNnRSx6GnbXSawdim/9qGmxunIHZrLLHjFNx59j6IbBNWuFEmZQczY4
-         wLgQ==
-X-Gm-Message-State: AO0yUKWZUTZgbPAJ25dkMLKpicodjdGoyqiYHr5Uvc0EF0I9o++u1Uqx
-        xQbiTc9vmNagb7BlcccHyGcjmA==
-X-Google-Smtp-Source: AK7set9ogJLbgaIMGt7IdzPrW7LogdjWngrwM/15exNOolmnt0rboCdUPeqnHhkLOaXuZzBp51CH/g==
-X-Received: by 2002:a5e:d601:0:b0:74c:a578:e3a0 with SMTP id w1-20020a5ed601000000b0074ca578e3a0mr8975492iom.5.1679946971841;
-        Mon, 27 Mar 2023 12:56:11 -0700 (PDT)
-Received: from localhost.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id a18-20020a027a12000000b003e69be53404sm9011984jac.150.2023.03.27.12.56.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Mar 2023 12:56:11 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org
-Cc:     quic_rohiagar@quicinc.com, caleb.connolly@linaro.org,
-        mka@chromium.org, evgreen@chromium.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v3 2/2] ARM: dts: qcom-sdx65: move status properties to end of nodes
-Date:   Mon, 27 Mar 2023 14:56:05 -0500
-Message-Id: <20230327195605.2854123-3-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230327195605.2854123-1-elder@linaro.org>
-References: <20230327195605.2854123-1-elder@linaro.org>
+        Mon, 27 Mar 2023 16:13:00 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B79B1BDF;
+        Mon, 27 Mar 2023 13:12:59 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0F6C6614E2;
+        Mon, 27 Mar 2023 20:12:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EF9C433EF;
+        Mon, 27 Mar 2023 20:12:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679947978;
+        bh=ztuneWnacYJNX61OcSRLH6dtkEQaVL91CZmSDSc+HvA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BGKc7m3TJ1K2Ad+LniE+5DTg+auW75CPse6loLp5HVcL/vZvqbDF9t19XyobR6gzU
+         qE8zqtxoQgi8BOnBQOIYzGcrBan8AgDwAY1AGcKU6dAzqu+Bg99o5POZl8tv0yAJgu
+         G2uzAInEbtj7GrgHfQpKpRWEAV19EvxCo7lt0es5RKzByzgJ7/pkdAAxOqn+sLzqOa
+         dG20RD9sOICkaRFYrBWzyz63wDiXXdcv9ELvhHVpWi+lOJ4rPzAo7nwhSK323biZMb
+         gzjV4Yn13exs+q6DU+ir1A6ToP2zFU6cHj8v5MbWwMF46mS4Fbx3WBsR6hNO7anLBX
+         pAcJw7Ano5gEA==
+Date:   Mon, 27 Mar 2023 20:12:56 +0000
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Abel Vesa <abel.vesa@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v4 4/7] soc: qcom: Make the Qualcomm UFS/SDCC ICE a
+ dedicated driver
+Message-ID: <ZCH4yE9nmj/3e1Vx@gmail.com>
+References: <20230327134734.3256974-1-abel.vesa@linaro.org>
+ <20230327134734.3256974-5-abel.vesa@linaro.org>
+ <20230327185358.c4emwquhouq42itf@ripper>
+ <20230327190954.GE73752@sol.localdomain>
+ <20230327192704.ywczpr2otbwxnsh5@ripper>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230327192704.ywczpr2otbwxnsh5@ripper>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move a few device tree "status" properties so that they are the last
-specified property, in "qcom-sdx65-mtp.dts" and "qcom-sdx65.dtsi".
-Note that properties must always be specified before sub-nodes.
+On Mon, Mar 27, 2023 at 12:27:04PM -0700, Bjorn Andersson wrote:
+> 
+> That's a valid reason that I was looking for. Wouldn't this be a common
+> problem, something other parts of the stack would like to avoid?
+> Or it's just a byte array until we get here?
+> 
+> > It could be done with unaligned memory accesses, though, if you prefer that:
+> > 
+> 
+> No need to jump through the hoops, but a comment would have saved
+> (robbed?) me from wondering.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- arch/arm/boot/dts/qcom-sdx65-mtp.dts | 6 +++---
- arch/arm/boot/dts/qcom-sdx65.dtsi    | 8 +++++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+The parameter to qcom_ice_program_key() is 'const u8 crypto_key[]', which has no
+inherent alignment in the type.  It might be that the callers currently only
+pass 4-byte aligned buffers, but I don't think that should be relied on here.
 
-diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-index 72e25de0db5fc..57bc3b03d3aac 100644
---- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-+++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-@@ -270,8 +270,8 @@ nand@0 {
- };
- 
- &remoteproc_mpss {
--	status = "okay";
- 	memory-region = <&mpss_adsp_mem>;
-+	status = "okay";
- };
- 
- &usb {
-@@ -283,14 +283,14 @@ &usb_dwc3 {
- };
- 
- &usb_hsphy {
--	status = "okay";
- 	vdda-pll-supply = <&vreg_l4b_0p88>;
- 	vdda33-supply = <&vreg_l10b_3p08>;
- 	vdda18-supply = <&vreg_l5b_1p8>;
-+	status = "okay";
- };
- 
- &usb_qmpphy {
--	status = "okay";
- 	vdda-phy-supply = <&vreg_l4b_0p88>;
- 	vdda-pll-supply = <&vreg_l1b_1p2>;
-+	status = "okay";
- };
-diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
-index 74671cc12c884..525dd8a1f6649 100644
---- a/arch/arm/boot/dts/qcom-sdx65.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
-@@ -224,16 +224,15 @@ usb_hsphy: phy@ff4000 {
- 				     "qcom,usb-snps-hs-7nm-phy";
- 			reg = <0xff4000 0x120>;
- 			#phy-cells = <0>;
--			status = "disabled";
- 			clocks = <&rpmhcc RPMH_CXO_CLK>;
- 			clock-names = "ref";
- 			resets = <&gcc GCC_QUSB2PHY_BCR>;
-+			status = "disabled";
- 		};
- 
- 		usb_qmpphy: phy@ff6000 {
- 			compatible = "qcom,sdx65-qmp-usb3-uni-phy";
- 			reg = <0x00ff6000 0x1c8>;
--			status = "disabled";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			ranges;
-@@ -247,6 +246,8 @@ usb_qmpphy: phy@ff6000 {
- 				 <&gcc GCC_USB3_PHY_BCR>;
- 			reset-names = "phy", "common";
- 
-+			status = "disabled";
-+
- 			usb_ssphy: phy@ff6200 {
- 				reg = <0x00ff6e00 0x160>,
- 				      <0x00ff7000 0x1ec>,
-@@ -394,7 +395,6 @@ mem_noc: interconnect@9680000 {
- 		usb: usb@a6f8800 {
- 			compatible = "qcom,sdx65-dwc3", "qcom,dwc3";
- 			reg = <0x0a6f8800 0x400>;
--			status = "disabled";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			ranges;
-@@ -424,6 +424,8 @@ usb: usb@a6f8800 {
- 
- 			resets = <&gcc GCC_USB30_BCR>;
- 
-+			status = "disabled";
-+
- 			usb_dwc3: usb@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x0a600000 0xcd00>;
--- 
-2.34.1
-
+- Eric
