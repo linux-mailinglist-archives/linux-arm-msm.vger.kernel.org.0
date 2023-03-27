@@ -2,111 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91B616C9CA6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 09:47:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 831BC6C9CBC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 09:50:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231979AbjC0HrR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 03:47:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34968 "EHLO
+        id S232545AbjC0Ht7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 03:49:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230309AbjC0HrP (ORCPT
+        with ESMTP id S232799AbjC0Htz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 03:47:15 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6443B1FCB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 00:46:35 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id t10so31909243edd.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 00:46:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679903193;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Bb4tmemzNzPfIOjPtgMNPF0CGomNiXxN8XvI9oRSmNI=;
-        b=VOfYyK9i6gZs8IWKGfI37YsIXxvoNnvPus05sLgBEuQYEVjULkcjsjyFNivEOsYqvf
-         FDYabVFqnS1vndkA7pAb61k2xYxFdDu2+xLecPJuE2FIXTU4bndsTakmFPrJAkt0E44c
-         NTJldoufbchjv82hpKqsFaXg5TmLrDoPsY/STlri88zmsTVABenlQmfHInDPDblJE1Ks
-         xgB/szC11Y2g8HBr0Fn1Q9A1/UHPMZI1v78/6S02XjYf9kgLd/WKyJFWmZ0XIbBI9FgR
-         bOsJzirVpDJMdkimwZM8u7Q7Bs4mmxcerQ3hC0PcKvea6cICA28v4JaWajIg7BsoYqNm
-         brMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679903193;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Bb4tmemzNzPfIOjPtgMNPF0CGomNiXxN8XvI9oRSmNI=;
-        b=yCNSoyIK6fncWfvOHT01HlT4ATQ9wDLbzSywSEWrvWC8RX0eaSLBT2u26RX5IXHMzG
-         CoSAUEgtx9lgOrn5DBu8P1HIU5UO/BxV9jDIwRQWH5Uvo2g4Ch1DjeR3NQxB/GPbEbM7
-         LGP+BNd6Xa6y2na3txCPmqSC7KeIWTCBFchJcspurDwkLjYGHJEIP10+VYLtfsGpCBk7
-         lKXjlfvReX+PbBb0l7e9U2plCQJBDR12zLJdgXNFug4xcrO/QHl0lXq5rsA2q6O5nZt3
-         yn2i8daGMf5oEdQCmKwjPXDBM5wFMYG+jKshSiL1Gv/ysd/xyVvRbX/177FkVaUAXpG+
-         XqUw==
-X-Gm-Message-State: AAQBX9c2ClCsa3yaa/YHIj8N3A0MO/tGGCjQcilcicATsD2LYJql/D3H
-        XTVjjwuZJbkWeJBDj04WmOPWQw==
-X-Google-Smtp-Source: AKy350ZNWA0feM++fE9Wdn2rh/TytZ36eDYbHVPI+fh8qG3pqwsASZFFXhljXwAi23S7uHcsc2ijNA==
-X-Received: by 2002:aa7:c646:0:b0:4a0:e305:a0de with SMTP id z6-20020aa7c646000000b004a0e305a0demr11834978edr.19.1679903193519;
-        Mon, 27 Mar 2023 00:46:33 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:198e:c1a5:309b:d678? ([2a02:810d:15c0:828:198e:c1a5:309b:d678])
-        by smtp.gmail.com with ESMTPSA id v6-20020a50d086000000b004fb00831851sm14246435edd.66.2023.03.27.00.46.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 00:46:33 -0700 (PDT)
-Message-ID: <6f6be544-48da-0c22-ea54-e07e35131ec9@linaro.org>
-Date:   Mon, 27 Mar 2023 09:46:31 +0200
+        Mon, 27 Mar 2023 03:49:55 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9172DE1;
+        Mon, 27 Mar 2023 00:49:54 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32R7T4h4032155;
+        Mon, 27 Mar 2023 07:49:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=/c2reEat/wJZOjBAjPDX8NUM19PVHExcK5yTwg99PXI=;
+ b=WYTv/YKevq6N4+dqRYnCMsXPQ8MABYhKCueHT3au3fKPW6aOe14odYq41jywrNdt1RZy
+ wgpWeKthupIaJLSrztPM2HvaiNlIMf0KYy4hERDwF8PBbaMX71c57FiH/syuL8E9C+V9
+ GXbD6Y5RLf2jVhn1u7s8kuuaGZ2EUl2hcqUAGOjtSLAekgwr3y+nVZujuc/dVrzrIWly
+ HiPoONO81fjJq9jh//kaPwwIJOF4W+zR6xFeeGXWGMaboBMfxokd4Th12TnkVBsdiA8n
+ kq0pd2ePTexjeKO1s2GQt5po4k0g63tM/ixi3x80Zb3d9ZZ04jvjAp7eDDUmOTXca5lr bA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3phsqqkr8j-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 27 Mar 2023 07:49:42 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32R7nfNc028602
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 27 Mar 2023 07:49:41 GMT
+Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 27 Mar
+ 2023 00:49:36 -0700
+Message-ID: <b04c49b1-3eb2-e4f8-63f4-6613bf9225af@quicinc.com>
+Date:   Mon, 27 Mar 2023 15:49:34 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v2 00/12] Introduce the SC8180x devices
+Subject: Re: [PATCH v3 08/11] coresight-tpdm: Add nodes to configure pattern
+ match output
 Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        linux-pci@vger.kernel.org,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-phy@lists.infradead.org,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-usb@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-scsi@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>
-References: <20230325122444.249507-1-vkoul@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230325122444.249507-1-vkoul@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+References: <1679551448-19160-1-git-send-email-quic_taozha@quicinc.com>
+ <1679551448-19160-9-git-send-email-quic_taozha@quicinc.com>
+ <b3bb6dc1-ceeb-0116-055b-25a27da8ab38@arm.com>
+From:   Tao Zhang <quic_taozha@quicinc.com>
+In-Reply-To: <b3bb6dc1-ceeb-0116-055b-25a27da8ab38@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9L_uUI6PGy6PSwz476lM4wuQsGV0sFeS
+X-Proofpoint-ORIG-GUID: 9L_uUI6PGy6PSwz476lM4wuQsGV0sFeS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-24_11,2023-03-24_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ mlxlogscore=999 bulkscore=0 adultscore=0 clxscore=1015 mlxscore=0
+ spamscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303270062
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/03/2023 13:24, Vinod Koul wrote:
-> This introduces Qualcomm SC8180x SoC which features in Lenovo Flex 5G
-> laptop. This also adds support for Primus platform as well as Lenovo Flex 5G
-> laptop.
-> 
-> I would be great if submaintainers can ack the binding patch so that
-> everything can go thru qcom tree
+Hi Suzuki,
 
-I think Bjorn recently was rejecting taking bindings patches, so what
-changed?
+On 3/24/2023 1:27 AM, Suzuki K Poulose wrote:
+> On 23/03/2023 06:04, Tao Zhang wrote:
+>> Add nodes to configure trigger pattern and trigger pattern mask.
+>> Each DSB subunit TPDM has maximum of n(n<7) XPR registers to
+>> configure trigger pattern match output. Eight 32 bit registers
+>> providing DSB interface trigger output pattern match comparison.
+>> And each DSB subunit TPDM has maximum of m(m<7) XPMR registers to
+>> configure trigger pattern mask match output. Eight 32 bit
+>> registers providing DSB interface trigger output pattern match
+>> mask.
+>>
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>> ---
+>>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 24 +++++++
+>>   drivers/hwtracing/coresight/coresight-tpdm.c       | 84 
+>> ++++++++++++++++++++++
+>>   drivers/hwtracing/coresight/coresight-tpdm.h       |  8 +++
+>>   3 files changed, 116 insertions(+)
+>>
+>> diff --git 
+>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
+>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> index 094d624..c06374f 100644
+>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> @@ -71,3 +71,27 @@ Description:
+>>           value 1: Start EDCMR register number
+>>           value 2: End EDCMR register number
+>>           value 3: The value need to be written
+>> +
+>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_trig_patt_val
+>> +Date:        March 2023
+>> +KernelVersion    6.3
+>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
+>> (QUIC) <quic_taozha@quicinc.com>
+>> +Description:
+>> +        (Write) Set the trigger pattern value of DSB tpdm.
+>> +        Read the trigger pattern value of DSB tpdm.
+>> +
+>> +        Accepts the following two values.
+>> +        value 1: Index number of XPR register
+>> +        value 2: The value need to be written
+>
+> minor nit: What values are acceptable ? Otherwise looks fine.
 
-Best regards,
-Krzysztof
+I will update this in the next patch series.
 
+
+Tao
+
+>
+> Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+>
