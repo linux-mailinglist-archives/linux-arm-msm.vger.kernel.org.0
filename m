@@ -2,77 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C21E06C9CFF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 09:59:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E75C6C9D06
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 09:59:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232923AbjC0H7K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 03:59:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55052 "EHLO
+        id S232403AbjC0H7q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 03:59:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232917AbjC0H7G (ORCPT
+        with ESMTP id S232647AbjC0H7m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 03:59:06 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9944346A6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 00:59:04 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id r11so32164636edd.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 00:59:04 -0700 (PDT)
+        Mon, 27 Mar 2023 03:59:42 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52D1F55B1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 00:59:37 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id i9so7677929wrp.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 00:59:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679903943;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YQKQzGOMARwoG57LLxeRnpM5fxI1Xzye0MM/44WhAFs=;
-        b=H9T+KHI5mScbjXZM39U4rvF4EZJwf2VlsFbYg9jFeDzvxCrfXaWnuREo0bRRpCT5Pr
-         Vi3lynoo+ImNMm3DtJL0sEYEN7NIenQ7HR/Xq/9RHy2xsA/AOgCa8Pd19GkXZM8jcaK6
-         FTa2blSR5rLJkL61N4WPWAghb2b4bUqkxMG960dCC3dapL2AXrgzPktGXs/BvIELvIQz
-         5h76LyQb+qmpcxJyyhXXNJ8chrHZ1+vpkb/L4R0fpnleHUGfSnHGXDnmb/CcWUL1ur9W
-         rqi3XZ3uxTNe6GSLcVD125ahJ34Qk5o0BWPDHz/+kXgIhyN6O2QmW5JY5hoVkPAYxDia
-         AMRA==
+        d=linaro.org; s=google; t=1679903975;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=nGK8p1zYpMEnDgAhAQhaaKqDmAb8VBKLy3WtqQM93QI=;
+        b=K4Dhxzad6cJEa4k9l8Ntcz7WHBDlu/BCSBeV+WgkEt4H6c35TJkqm6imBHpHkXy/bi
+         4ehLcDjpluan61Souxuyc5H1oPPla9qZhYIp3hhFTQ1Bs/ZiGk8J6l/iHaKnaBUr6k6B
+         gkk91eqfPWYu7yiADeZvsYaBWkuPUBjk8cfroGSnxJyZETcdhqFEMISYTNdz9f0tIggF
+         WGTX9A3Z57UTa2jo+87I17rSnFLtvg75QpQYxpRXej+itQBiB2xdXHap/kAOPf4bsz/x
+         TMfr9sDUmx364OrYUImhpYJH5Vu40gX5fgZCqhOEkvtvuXraNR3vGhbof55HLIysdKCh
+         3M7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679903943;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YQKQzGOMARwoG57LLxeRnpM5fxI1Xzye0MM/44WhAFs=;
-        b=hSJqxeZ92IuLQvoPl8ksX8yFBhYFRbtLLtk92LewSE8M/RVI58o5i9cVhGg2duK2sR
-         Vyhn1GJKd2hNZK5jMBG5ADx5hhaXOxYBfOVIonuXuX+jdxTmgHtgx7XhkK6tQc2GejgH
-         UuS4AK/KhvDQuy0AIXUvtf37cWLCoiX9WQt17HjmsJinK7o2eEHsfCw31YY6aYb43ohA
-         yp7TUFBB0k3IQQpU8RcZlbY7g6AO/RSQ1pHtUbhWIjM1xP5JGIuDOerust1JhUl90+cf
-         kgpM05y2gFMhb1ADO4vSXuRfh3bBbSiKjSzvWkXFaOB24QZJw0svdfjZsZzuYklVQuvG
-         Waaw==
-X-Gm-Message-State: AAQBX9ejSb+1r8kPBSZoj2btywQmSgDOCOPXkp++l6b9By7gWZa3xhS0
-        9YEYKem28Lhne/G9l9egjmNCvg==
-X-Google-Smtp-Source: AKy350YO1pg1SW4DGaty/B43Uir5N+0/YScvp+JK1pk8Mp6Js5yKlyJ9IMJb9KGnKGG3fEXiLEjFRg==
-X-Received: by 2002:a17:906:bcec:b0:926:8992:4310 with SMTP id op12-20020a170906bcec00b0092689924310mr11870849ejb.38.1679903943007;
-        Mon, 27 Mar 2023 00:59:03 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:198e:c1a5:309b:d678? ([2a02:810d:15c0:828:198e:c1a5:309b:d678])
-        by smtp.gmail.com with ESMTPSA id xo20-20020a170907bb9400b0093f0fbebfc2sm3296956ejc.144.2023.03.27.00.59.02
+        d=1e100.net; s=20210112; t=1679903975;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nGK8p1zYpMEnDgAhAQhaaKqDmAb8VBKLy3WtqQM93QI=;
+        b=VHG6UIF0dyFV4tbpY8vtM1aR8YqWyAK2DW4ny8a9M4XVeYNkwepX7keEsucDWegqIP
+         CY7rrgdOzJbMieMFueKi+rG7f/ih40j/xjWbSn8UwoJDg7aw22jbC3+cBoNwOtWxiFCX
+         kprQGcdeOTP0/3lfjpsKWjPnJKOCN95+T2WphLRmDzCc02SxmqAFsSOKJx6kwJM5msM1
+         yHBvmAC5GoIhIJHnqzByhvtrfZGnZSxDkp+mqGBC4fROpWES3c2N3887w37CuqPBluSZ
+         8IfmZpES8SDWJWGLOJyc7cluFCy7Owk76BlywPsiHH7cWfNJzsgUVEtKXZ6Qj2jT3NU3
+         sCdQ==
+X-Gm-Message-State: AAQBX9dp1HkqsmlOYBQ6tIBh4c90mYHyf0pVDtToosQkuw0y8h1Caa4d
+        IsR9M2e/0ZgUXy0J2Mk1gsyWYA==
+X-Google-Smtp-Source: AKy350areUaUsdNsORmSK5Jsp4OH20hA1FlvzL7Gep+VNpA/gtMevWqZ81Cc9bDfFebQNIDUk450bA==
+X-Received: by 2002:adf:df0d:0:b0:2cf:ef5d:4ee7 with SMTP id y13-20020adfdf0d000000b002cfef5d4ee7mr7907145wrl.69.1679903975579;
+        Mon, 27 Mar 2023 00:59:35 -0700 (PDT)
+Received: from [192.168.7.111] (679773502.box.freepro.com. [212.114.21.58])
+        by smtp.gmail.com with ESMTPSA id m6-20020a056000008600b002cde25fba30sm24477285wrx.1.2023.03.27.00.59.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 00:59:02 -0700 (PDT)
-Message-ID: <6162759b-a9ab-5ce3-e216-8213501ab174@linaro.org>
-Date:   Mon, 27 Mar 2023 09:59:01 +0200
+        Mon, 27 Mar 2023 00:59:35 -0700 (PDT)
+Message-ID: <70957e67-e570-3800-e679-d7c291295999@linaro.org>
+Date:   Mon, 27 Mar 2023 09:59:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v2 06/12] scsi: ufs: dt-bindings: Add SC8180x binding
+ Thunderbird/102.8.0
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 3/5] arm64: dts: qcom: sm8150: turn first USB PHY into
+ USB+DP PHY
 Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230325122444.249507-1-vkoul@kernel.org>
- <20230325122444.249507-7-vkoul@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230325122444.249507-7-vkoul@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        devicetree@vger.kernel.org
+References: <20230324215550.1966809-1-dmitry.baryshkov@linaro.org>
+ <20230324215550.1966809-4-dmitry.baryshkov@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230324215550.1966809-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -84,24 +88,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/03/2023 13:24, Vinod Koul wrote:
-
-Subject: drop second/last, redundant "binding". The "dt-bindings" prefix
-is already stating that these are bindings.
-
-Same in all other patches.
-
-> Document the UFS HC for SC8180x SoC
-
-Finish sentences with full stop. Same in all other patches.
-
+On 24/03/2023 22:55, Dmitry Baryshkov wrote:
+> The first USB PHY on the sm8150 platform is really the USB+DP combo
+> PHY. Add the DP part of the PHY.
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
+>   arch/arm64/boot/dts/qcom/sm8150.dtsi | 17 +++++++++++++----
+>   1 file changed, 13 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index 9491be4a6bf0..a618218f7b68 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -3392,20 +3392,19 @@ usb_2_hsphy: phy@88e3000 {
+>   		};
+>   
+>   		usb_1_qmpphy: phy@88e9000 {
+> -			compatible = "qcom,sm8150-qmp-usb3-phy";
+> +			compatible = "qcom,sm8150-qmp-usb3-dp-phy";
+>   			reg = <0 0x088e9000 0 0x18c>,
+> -			      <0 0x088e8000 0 0x10>;
+> +			      <0 0x088e8000 0 0x38>,
+> +			      <0 0x088ea000 0 0x40>;
+>   			status = "disabled";
+>   			#address-cells = <2>;
+>   			#size-cells = <2>;
+>   			ranges;
+> -
+>   			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
+>   				 <&rpmhcc RPMH_CXO_CLK>,
+>   				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
+>   				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
+>   			clock-names = "aux", "ref_clk_src", "ref", "com_aux";
+> -
+>   			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
+>   				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
+>   			reset-names = "phy", "common";
+> @@ -3423,6 +3422,16 @@ usb_1_ssphy: phy@88e9200 {
+>   				clock-names = "pipe0";
+>   				clock-output-names = "usb3_phy_pipe_clk_src";
+>   			};
+> +
+> +			usb_1_dpphy: phy@88ea200 {
+> +				reg = <0 0x088ea200 0 0x200>,
+> +				      <0 0x088ea400 0 0x200>,
+> +				      <0 0x088eaa00 0 0x200>,
+> +				      <0 0x088ea600 0 0x200>,
+> +				      <0 0x088ea800 0 0x200>;
+> +				#clock-cells = <1>;
+> +				#phy-cells = <0>;
+> +			};
 
+Is there a reason why the new flat bindings from qcom,sc8280xp-qmp-usb43dp-phy.yaml are not used instead ?
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Neil
 
-Best regards,
-Krzysztof
+>   		};
+>   
+>   		usb_2_qmpphy: phy@88eb000 {
 
