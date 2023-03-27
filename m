@@ -2,73 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEE176CAEB2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 21:32:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D4A66CAEB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 21:35:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232400AbjC0Tco (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 15:32:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55170 "EHLO
+        id S232254AbjC0TfM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 15:35:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231833AbjC0Tcm (ORCPT
+        with ESMTP id S231841AbjC0TfJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 15:32:42 -0400
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 972FE3C20
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 12:32:38 -0700 (PDT)
-Received: by mail-il1-x12a.google.com with SMTP id j6so5184668ilr.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 12:32:38 -0700 (PDT)
+        Mon, 27 Mar 2023 15:35:09 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B973B1BCF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 12:35:07 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id w9so40747597edc.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 12:35:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679945558;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        d=linaro.org; s=google; t=1679945706;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=aUpj/H7BkNuUkIGOFcYHAsDAOJ/fBIWLI9WpunppJHQ=;
-        b=V1ozkARYxrB61HHUBZUMLIO9Rah39OCNgEMabehkhHaWX2HyRHyoOjL2DDCHaJayr4
-         RYL5JAJcgmQ8GVXFLYx83LlNQVCBjaHmt+/54871tFhPPDP0xRjFKcDJbVZXpeIdkNO0
-         5BscX/UA/e+q7IpIc1lu4IC9JGvG4YvhszAFdq1j95XL8oRDNh1Cdr/6/ZINQmyElM0/
-         0Y8jH9R7qEZAz9Dc3zdV6qtb9lsDZyTKmw/W+u3pAwa5zl+pjtnGgIlot82UYfSlaW+H
-         EMamoxukuvlcvt7ZWEEWhem4p9TsUUZe7f7CiNwPlA8tfStTOZyZ/BDwYe5OuGlycjVU
-         qYmA==
+        bh=CipNcg6XGhT+x225ozA3jqRgRsy3IVzOurOagbBJ054=;
+        b=IeTokkfm6UWkOYDDbUa5a8dEtSK25HIxP3MKONEl8LYvz7+y2mO31PP6B7MD2M+80P
+         8eA9viEpDVpyZaONFCKJ3VYa4LfYhMTGVn4FPKls46k0RDMS6LRFE5CIVO+33+SXAT1r
+         dB0xjiPUwKXHTz3EEpThy6HPIcIWOFckY0F7wDIa2xg2pJvLKc3UFKN/R6WN7YbkpI1F
+         HYg18/4cHbLLEnRI+GesvpGlQsPhUAnCMgcQl7HXCbQ6UGffvQbkyGfl/4BEzK6SmwPL
+         12TtBD/LhsTFH5y88WWNlJjn3v085uU3fXQ7obGEj4vrwth+e9aOayJbNzzZ+iP6hBB/
+         zJWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679945558;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        d=1e100.net; s=20210112; t=1679945706;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aUpj/H7BkNuUkIGOFcYHAsDAOJ/fBIWLI9WpunppJHQ=;
-        b=MXKeS7Q4RYJtg3pLDYjhhl9GubLbbMSfBDx8KipPVWMLF4YRmxt5aFSoR2dvHRX06D
-         I7WSvPHunz2BR0bfd8Yo3kq7NQUjgAoLIYlnNIw8m1WnYGawIdAS+HK8Pe84dJkNxucF
-         CQJIf1jy0g5X853xlXiFbWVFgUiysnZ3eHs/3gOEhz/+KFKOpkk6kk3oeSlBytaHOnNl
-         as629VIKFEKwizphJMlwE0AONmFpX2IJKnEZMQA4FdcsjfomMJKCVI1kQn6gvO012P+g
-         skXAPe0TsB7hcbSE9BtA9ccTx+Q8sk5yJohx/1rH9W16eHVow/lDJx4JPqvuEfDQGWpM
-         BCMQ==
-X-Gm-Message-State: AAQBX9ewCqbyPw2ArGCpHMU111j0XHiKEkLHZvYF7mhLOchtZ0ciPe3x
-        WhVetDCQMNOazPEBUq/AlH/HTA==
-X-Google-Smtp-Source: AKy350Zv+PcQW4lgvwD6aEwR+cxdAXWBw6dtwrFHEouo+w2Uefvyxv2g1u6yTFXxyCigF3j+R65hFA==
-X-Received: by 2002:a92:908:0:b0:315:9749:7a0e with SMTP id y8-20020a920908000000b0031597497a0emr10802213ilg.23.1679945557870;
-        Mon, 27 Mar 2023 12:32:37 -0700 (PDT)
-Received: from [172.22.22.4] ([98.61.227.136])
-        by smtp.googlemail.com with ESMTPSA id n18-20020a922612000000b00316dc3afe57sm7956100ile.86.2023.03.27.12.32.36
+        bh=CipNcg6XGhT+x225ozA3jqRgRsy3IVzOurOagbBJ054=;
+        b=plLKZ/Pda2aQajMX3p2rxz88ykJdGygmaWKMqEXu00sVk+bgWNfoB1Ci43aK9uDF47
+         sBJcmsRp7cXfARJwZBy+rBTU9pwy8pKxgqF1OAiL962nxzd88WT2IK8ErfrfJXGG2Mvv
+         aapJ7I5ZRdcm/oxiil4h1ctj9E0Rl4aprAqsKerWDB5zhLiRSGa2CIfJatm/14ASWXRW
+         zIqIuDB/ByEbaqz5feB6nAshjQ5RwOKd7GOgHZPnaPY8OLCYk5hpe2dJIqU6wCNIf4eM
+         Z2PbrmH0qQcS7LNbo1eJ06D1qLDjjMdKHE7aGXcUVURRTWlzdV/9uf6fMMiyF+Mur196
+         AJYw==
+X-Gm-Message-State: AAQBX9fL6ETCDJgjboAuKTsFIbX/O4svtQx7B1DkOsgfJKK69lZHjfiu
+        vbSgnWFglKLfyJfXbvM6O4UHTQ==
+X-Google-Smtp-Source: AKy350YtrtGg8yqJ/C9YGnzqneUXRLN2+3R7BFncNFhFLbFR1CFy/RSVxt7xVrbMhYi973wLuPSvjg==
+X-Received: by 2002:a17:906:3607:b0:92d:44ca:1137 with SMTP id q7-20020a170906360700b0092d44ca1137mr13605161ejb.43.1679945706240;
+        Mon, 27 Mar 2023 12:35:06 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:9314:a4b3:ce49:2c6b? ([2a02:810d:15c0:828:9314:a4b3:ce49:2c6b])
+        by smtp.gmail.com with ESMTPSA id q2-20020a1709066b0200b0092be0d267besm14577954ejr.142.2023.03.27.12.35.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 12:32:37 -0700 (PDT)
-Message-ID: <601c9862-6261-3cf1-b7ec-31a75e1fe9b4@linaro.org>
-Date:   Mon, 27 Mar 2023 14:32:36 -0500
+        Mon, 27 Mar 2023 12:35:05 -0700 (PDT)
+Message-ID: <8050df0c-753b-1733-962f-b4065500a090@linaro.org>
+Date:   Mon, 27 Mar 2023 21:35:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 0/2] ARM: dts: qcom: sdx65: support IPA
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v2 2/5] dt-bindings: misc: qcom,fastrpc: allow FastRPC
+ node without reg entry
 Content-Language: en-US
-From:   Alex Elder <elder@linaro.org>
-To:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org
-Cc:     quic_rohiagar@quicinc.com, caleb.connolly@linaro.org,
-        mka@chromium.org, evgreen@chromium.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230327191542.2765834-1-elder@linaro.org>
-In-Reply-To: <20230327191542.2765834-1-elder@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Dylan Van Assche <me@dylanvanassche.be>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230327184811.499553-1-me@dylanvanassche.be>
+ <20230327184811.499553-3-me@dylanvanassche.be>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230327184811.499553-3-me@dylanvanassche.be>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -80,33 +85,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/27/23 2:15 PM, Alex Elder wrote:
-> The upstream IPA driver now supports IPA v5.0 for SDX65.  Add
-> IPA-related nodes and definitions to "sdx65.dtsi", and enable IPA
-> in "sdx65-mtp.dts".
-> 
-> Having touched these files, Konrad advised I should update them to
-> move the "status" property to the end of nodes where it is used.
-> 
-> Version 2 of this series addresses comments made by Krzysztof and
-> Konrad, and adds their reviewed-by tags.
+On 27/03/2023 20:48, Dylan Van Assche wrote:
+> FastRPC nodes may exist without a registry property and actual
 
-I'm sorry but building "dtbs" with this change adds a warning
-I had not noticed before.
-   simple-bus unit address format error
+Why would they exist without unit address?
 
-I'll be sending v3 shortly.  Sorry for the noise.
+> Compute Banks  in some cases such as the SLPI on the Qualcomm SDM845 SoC.
 
-					-Alex
+I do not see there anything disallowing unit address yet...
 
-> 					-Alex
-> 
-> Alex Elder (2):
->    ARM: dts: qcom: sdx65: add IPA information
->    ARM: dts: qcom-sdx65: move status properties to end of nodes
-> 
->   arch/arm/boot/dts/qcom-sdx65-mtp.dts | 11 +++++--
->   arch/arm/boot/dts/qcom-sdx65.dtsi    | 47 ++++++++++++++++++++++++++--
->   2 files changed, 52 insertions(+), 6 deletions(-)
-> 
+
+> Relax the regex to allow such FastRPC nodes and remove 'reg' as a
+> required property.
+
+No, at least not without proper explanation why unit address is not
+allowed for these.
+
+
+Best regards,
+Krzysztof
 
