@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37A7C6CAEEB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 21:38:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2373F6CAEF2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 21:38:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232554AbjC0Tio (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 15:38:44 -0400
+        id S232645AbjC0Tiv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 15:38:51 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231913AbjC0Tin (ORCPT
+        with ESMTP id S232449AbjC0Tio (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 15:38:43 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 935E02718
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 12:38:41 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id cn12so40766582edb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 12:38:41 -0700 (PDT)
+        Mon, 27 Mar 2023 15:38:44 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 463F32718
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 12:38:43 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id b20so40812348edd.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 12:38:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679945920;
+        d=linaro.org; s=google; t=1679945921;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CP7vUwcUfZjT92t57J6/2HFlOi0R4gSQ4bD3Gdxv8EQ=;
-        b=gVYf6k+Q1Hw3tfFAQM3dthxP++izXDBmMYvfyZeGOhZSqGbDx1qu/5ZyiKE43VQTue
-         zPvOP1mwvIB2CxKB/6cmoAngCvHRw0datYLj4+RN5RSnBsXiWmxUbX+b59jUb4MrOMmn
-         ZkDGOUk6rXjH2t0VDphftu05shEtZhH861kbAuDkwdyRyMN7S+8RlaKMtuAz0aacMqFO
-         1tG3Z8mpmrSpAIUeB7NTlPNGuT4vz7PkgMTro3piu8wao26SgAZtlDfqZgjBh7obA3uw
-         CzfiU5guucKSMFYrOAtcjobT1UqiSj3XJ7rnObW8O8Y8Ri5L0ya/cDWZk7t5VVaUzEoS
-         k1lQ==
+        bh=VsEPgMY5BFjwdL0oALK9gMsrag92KFHyzI19rln1PIE=;
+        b=OyLa/9dGtp66ezkTixrZsqvmqd5gqTBnNDqdv73CyVFo8D4VcoVzTZbABOcXWtHl+e
+         OZkxQEn/l7GGqXQ2OuwEOhxhhhHpVTT+VRragVayCD+FzaUwhB9SOX1HDP3SM8tanc1Q
+         2eBuOlJgjKRAuZIGIDS2/XVY/2YuXfBf9UP6Tv1wrblkNMsDC8SrJjO39/AHv3UDjQEq
+         4lXOEcE5NfWgXhpW1rFxLXv0bDQjjKi0Gks5y94sP6UukKf2pFCQfR2wNG+nxnOu+iId
+         FCwp1tCh8lni/MYxM0esvUWWi2fT3+sDloxAV5P+CFSCLW3oWOXfKtxdQRV4xLg7MvrD
+         boWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679945920;
+        d=1e100.net; s=20210112; t=1679945921;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CP7vUwcUfZjT92t57J6/2HFlOi0R4gSQ4bD3Gdxv8EQ=;
-        b=jluE0oVFSzZTkko6E0v1/VXEe31meYz8AE50HE9QOmW8+uvTeBVtdpZDI1uQF9XDEF
-         lOaxWANHzQE5PwDOSdvSgds0uUgu+Ago9kvL4asfD0MuQhBbJiAaf4BGKiLuqsIEVUsF
-         qt24fXK7XiIciujBdi4rnhLFCftxnIsR277jFDOpSP7pAX+2Xp+ycyF/jJLzYbgJcNAR
-         nL47jp9nqrorio5Ywp5Qp0RZMCqJFJoX4c5Gzt+zHiWJ52URmKteurQaAoqgDmRU35k3
-         0mGtNL23CFoSQqrkoAYHVlfaPINmg/U3HOjaQmseN4/BQSEwzg3cp8eM42Lwx+4+0IMB
-         jkZw==
-X-Gm-Message-State: AAQBX9cLPHjpehSjC7OntmBwq7z6E4E02DdahBiXw9YFNyPeA5sJWhMS
-        2MJO8pGFj/uz7K7jwxmkU9Wx2g==
-X-Google-Smtp-Source: AKy350adEKdeCdVUqGPyeEv9UeZI/9p7Qn5YWZRwAV/xpSyX1GViLO2pAcu7/Eh5auRkifBQ1iRvHQ==
-X-Received: by 2002:a17:907:76f9:b0:930:fe49:5383 with SMTP id kg25-20020a17090776f900b00930fe495383mr13477287ejc.76.1679945920207;
-        Mon, 27 Mar 2023 12:38:40 -0700 (PDT)
+        bh=VsEPgMY5BFjwdL0oALK9gMsrag92KFHyzI19rln1PIE=;
+        b=ZNdMx3o84SRHccuZYDCJRm1rDM+r7x6U/jmcggP+B0mxagcG87YNXUgZfjtLjpVWqC
+         CtaVD1HhfY2PBVj4ko+Iqzw1BLX83uK0pAWjkFc4eTzG+Qi6nHl0zwhuEDZLVndvpdRG
+         S8wzgtz5SbCaekH8s97N4Lu671fo9f5jsvPAS/lFSHDDGzwLxFNPqxK8a/wnrTAZFuwc
+         /aVsXr72BMT8kJs9GDOdWgBg2nBDPLJZcmsEQEXXB8MiKPXD08Nqb22mpqm6KsBztC7M
+         stXi79eoaHojc3TGQEsA+d1bJufuK0dx3PelJqqNfU1Rk0NOef28Bkl6VtkBv3pXRJ3F
+         9hYg==
+X-Gm-Message-State: AAQBX9fsb9DHaFXB+0J2452QkDnGpGbQ0DuayxTRqVapLTmN/PeIYTEC
+        5U7+sqeZ7wxYChrIUsPOKjjrUQ==
+X-Google-Smtp-Source: AKy350ZwNF8Xu5+4eGdhXdHDrA1hqhB2p4RHUk+qIBtKBTqrNiayByfa35LNiX6/ZISwTisJWl5iGg==
+X-Received: by 2002:a17:906:8398:b0:900:a150:cea3 with SMTP id p24-20020a170906839800b00900a150cea3mr13197868ejx.9.1679945921642;
+        Mon, 27 Mar 2023 12:38:41 -0700 (PDT)
 Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id kb1-20020a1709070f8100b00933c4a25735sm11701254ejc.100.2023.03.27.12.38.38
+        by smtp.gmail.com with ESMTPSA id kb1-20020a1709070f8100b00933c4a25735sm11701254ejc.100.2023.03.27.12.38.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Mar 2023 12:38:39 -0700 (PDT)
+        Mon, 27 Mar 2023 12:38:41 -0700 (PDT)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     "Rafael J. Wysocki" <rafael@kernel.org>,
         Kevin Hilman <khilman@kernel.org>,
@@ -67,9 +67,9 @@ Cc:     linux-pm@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         Doug Anderson <dianders@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH v3 2/4] soc: qcom: rpmhpd: Do proper power off when state synced
-Date:   Mon, 27 Mar 2023 22:38:27 +0300
-Message-Id: <20230327193829.3756640-3-abel.vesa@linaro.org>
+Subject: [PATCH v3 3/4] clk: qcom: gdsc: Avoid actual power off until sync state
+Date:   Mon, 27 Mar 2023 22:38:28 +0300
+Message-Id: <20230327193829.3756640-4-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230327193829.3756640-1-abel.vesa@linaro.org>
 References: <20230327193829.3756640-1-abel.vesa@linaro.org>
@@ -84,65 +84,206 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Instead of aggregating different corner values on sync state callback,
-call the genpd API for queuing up the power off. This will also mark the
-domain as powered off in the debugfs genpd summary. Also, until sync
-state has been reached, return busy on power off request, in order to
-allow genpd core to know that the actual domain hasn't been powered of
-from the "disable unused" late initcall.
+In case there is a sync state callback registered for a provider,
+do not actually power off any gdsc for that provider until sync state
+has been reached and return busy instead. Since the qcom_cc is
+private, add a helper that returns the gdsc_desc based on the device of
+the provider. Finally, add the generic gdsc sync state callback to be
+used by the platform specific providers.
 
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 ---
- drivers/soc/qcom/rpmhpd.c | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ drivers/clk/qcom/common.c | 19 +++++++++++++++++++
+ drivers/clk/qcom/common.h |  2 ++
+ drivers/clk/qcom/gdsc.c   | 26 ++++++++++++++++++++++++++
+ drivers/clk/qcom/gdsc.h   |  6 ++++++
+ 4 files changed, 53 insertions(+)
 
-diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-index f20e2a49a669..ec7926820772 100644
---- a/drivers/soc/qcom/rpmhpd.c
-+++ b/drivers/soc/qcom/rpmhpd.c
-@@ -649,8 +649,12 @@ static int rpmhpd_power_off(struct generic_pm_domain *domain)
- 	mutex_lock(&rpmhpd_lock);
+diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+index 75f09e6e057e..d7fd1b170c1c 100644
+--- a/drivers/clk/qcom/common.c
++++ b/drivers/clk/qcom/common.c
+@@ -20,6 +20,7 @@
+ struct qcom_cc {
+ 	struct qcom_reset_controller reset;
+ 	struct clk_regmap **rclks;
++	struct gdsc_desc *scd;
+ 	size_t num_rclks;
+ };
  
- 	ret = rpmhpd_aggregate_corner(pd, 0);
--	if (!ret)
--		pd->enabled = false;
-+	if (!ret) {
-+		if (!pd->state_synced)
-+			ret = -EBUSY;
-+		else
-+			pd->enabled = false;
-+	}
- 
- 	mutex_unlock(&rpmhpd_lock);
- 
-@@ -810,10 +814,8 @@ static void rpmhpd_sync_state(struct device *dev)
- {
- 	const struct rpmhpd_desc *desc = of_device_get_match_data(dev);
- 	struct rpmhpd **rpmhpds = desc->rpmhpds;
--	unsigned int corner;
- 	struct rpmhpd *pd;
- 	unsigned int i;
--	int ret;
- 
- 	mutex_lock(&rpmhpd_lock);
- 	for (i = 0; i < desc->num_pds; i++) {
-@@ -822,14 +824,7 @@ static void rpmhpd_sync_state(struct device *dev)
- 			continue;
- 
- 		pd->state_synced = true;
--		if (pd->enabled)
--			corner = max(pd->corner, pd->enable_corner);
--		else
--			corner = 0;
--
--		ret = rpmhpd_aggregate_corner(pd, corner);
--		if (ret)
--			dev_err(dev, "failed to sync %s\n", pd->res_name);
-+		pm_genpd_queue_power_off(&pd->pd);
- 	}
- 	mutex_unlock(&rpmhpd_lock);
+@@ -234,6 +235,13 @@ static struct clk_hw *qcom_cc_clk_hw_get(struct of_phandle_args *clkspec,
+ 	return cc->rclks[idx] ? &cc->rclks[idx]->hw : NULL;
  }
+ 
++struct gdsc_desc *qcom_cc_get_gdsc_desc(struct device *dev)
++{
++	struct qcom_cc *cc = dev_get_drvdata(dev);
++
++	return cc->scd;
++}
++
+ int qcom_cc_really_probe(struct platform_device *pdev,
+ 			 const struct qcom_cc_desc *desc, struct regmap *regmap)
+ {
+@@ -251,6 +259,8 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+ 	if (!cc)
+ 		return -ENOMEM;
+ 
++	dev_set_drvdata(dev, cc);
++
+ 	reset = &cc->reset;
+ 	reset->rcdev.of_node = dev->of_node;
+ 	reset->rcdev.ops = &qcom_reset_ops;
+@@ -267,6 +277,9 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+ 		scd = devm_kzalloc(dev, sizeof(*scd), GFP_KERNEL);
+ 		if (!scd)
+ 			return -ENOMEM;
++
++		cc->scd = scd;
++
+ 		scd->dev = dev;
+ 		scd->scs = desc->gdscs;
+ 		scd->num = desc->num_gdscs;
+@@ -319,6 +332,12 @@ int qcom_cc_probe(struct platform_device *pdev, const struct qcom_cc_desc *desc)
+ }
+ EXPORT_SYMBOL_GPL(qcom_cc_probe);
+ 
++void qcom_cc_sync_state(struct device *dev)
++{
++	gdsc_sync_state(dev);
++}
++EXPORT_SYMBOL_GPL(qcom_cc_sync_state);
++
+ int qcom_cc_probe_by_index(struct platform_device *pdev, int index,
+ 			   const struct qcom_cc_desc *desc)
+ {
+diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
+index 9c8f7b798d9f..1bea04da0a00 100644
+--- a/drivers/clk/qcom/common.h
++++ b/drivers/clk/qcom/common.h
+@@ -61,9 +61,11 @@ extern struct regmap *qcom_cc_map(struct platform_device *pdev,
+ extern int qcom_cc_really_probe(struct platform_device *pdev,
+ 				const struct qcom_cc_desc *desc,
+ 				struct regmap *regmap);
++extern struct gdsc_desc *qcom_cc_get_gdsc_desc(struct device *dev);
+ extern int qcom_cc_probe(struct platform_device *pdev,
+ 			 const struct qcom_cc_desc *desc);
+ extern int qcom_cc_probe_by_index(struct platform_device *pdev, int index,
+ 				  const struct qcom_cc_desc *desc);
++extern void qcom_cc_sync_state(struct device *dev);
+ 
+ #endif
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index 5358e28122ab..ea7d753a38ef 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -15,6 +15,8 @@
+ #include <linux/regulator/consumer.h>
+ #include <linux/reset-controller.h>
+ #include <linux/slab.h>
++
++#include "common.h"
+ #include "gdsc.h"
+ 
+ #define PWR_ON_MASK		BIT(31)
+@@ -319,6 +321,9 @@ static int gdsc_disable(struct generic_pm_domain *domain)
+ 	struct gdsc *sc = domain_to_gdsc(domain);
+ 	int ret;
+ 
++	if (!sc->state_synced)
++		return -EBUSY;
++
+ 	if (sc->pwrsts == PWRSTS_ON)
+ 		return gdsc_assert_reset(sc);
+ 
+@@ -365,6 +370,7 @@ static int gdsc_disable(struct generic_pm_domain *domain)
+ 
+ static int gdsc_init(struct gdsc *sc)
+ {
++	struct device *dev = sc->dev;
+ 	u32 mask, val;
+ 	int on, ret;
+ 
+@@ -452,6 +458,9 @@ static int gdsc_init(struct gdsc *sc)
+ 	if (!sc->pd.power_on)
+ 		sc->pd.power_on = gdsc_enable;
+ 
++	if (!dev_has_sync_state(dev))
++		sc->state_synced = true;
++
+ 	ret = pm_genpd_init(&sc->pd, NULL, !on);
+ 	if (ret)
+ 		goto err_disable_supply;
+@@ -496,6 +505,7 @@ int gdsc_register(struct gdsc_desc *desc,
+ 	for (i = 0; i < num; i++) {
+ 		if (!scs[i])
+ 			continue;
++		scs[i]->dev = dev;
+ 		scs[i]->regmap = regmap;
+ 		scs[i]->rcdev = rcdev;
+ 		ret = gdsc_init(scs[i]);
+@@ -536,6 +546,22 @@ void gdsc_unregister(struct gdsc_desc *desc)
+ 	of_genpd_del_provider(dev->of_node);
+ }
+ 
++void gdsc_sync_state(struct device *dev)
++{
++	struct gdsc_desc *scd = qcom_cc_get_gdsc_desc(dev);
++	struct gdsc **scs = scd->scs;
++	size_t num = scd->num;
++	int i;
++
++	for (i = 0; i < num; i++) {
++		if (!scs[i])
++			continue;
++
++		scs[i]->state_synced = true;
++		pm_genpd_queue_power_off(&scs[i]->pd);
++	}
++}
++
+ /*
+  * On SDM845+ the GPU GX domain is *almost* entirely controlled by the GMU
+  * running in the CX domain so the CPU doesn't need to know anything about the
+diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+index 803512688336..e1c902caecde 100644
+--- a/drivers/clk/qcom/gdsc.h
++++ b/drivers/clk/qcom/gdsc.h
+@@ -35,6 +35,7 @@ struct gdsc {
+ 	struct generic_pm_domain	pd;
+ 	struct generic_pm_domain	*parent;
+ 	struct regmap			*regmap;
++	struct device			*dev;
+ 	unsigned int			gdscr;
+ 	unsigned int			collapse_ctrl;
+ 	unsigned int			collapse_mask;
+@@ -73,6 +74,8 @@ struct gdsc {
+ 
+ 	const char 			*supply;
+ 	struct regulator		*rsupply;
++
++	bool				state_synced;
+ };
+ 
+ struct gdsc_desc {
+@@ -86,6 +89,7 @@ int gdsc_register(struct gdsc_desc *desc, struct reset_controller_dev *,
+ 		  struct regmap *);
+ void gdsc_unregister(struct gdsc_desc *desc);
+ int gdsc_gx_do_nothing_enable(struct generic_pm_domain *domain);
++void gdsc_sync_state(struct device *dev);
+ #else
+ static inline int gdsc_register(struct gdsc_desc *desc,
+ 				struct reset_controller_dev *rcdev,
+@@ -94,6 +98,8 @@ static inline int gdsc_register(struct gdsc_desc *desc,
+ 	return -ENOSYS;
+ }
+ 
++static inline void gdsc_sync_state(struct device *dev) { }
++
+ static inline void gdsc_unregister(struct gdsc_desc *desc) {};
+ #endif /* CONFIG_QCOM_GDSC */
+ #endif /* __QCOM_GDSC_H__ */
 -- 
 2.34.1
 
