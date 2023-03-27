@@ -2,207 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E60776CA834
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 16:50:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A6116CA856
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 16:57:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232644AbjC0Ot7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 10:49:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56540 "EHLO
+        id S233016AbjC0O5c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 10:57:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232548AbjC0Ot6 (ORCPT
+        with ESMTP id S229783AbjC0O5b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 10:49:58 -0400
-Received: from relay10.mail.gandi.net (relay10.mail.gandi.net [IPv6:2001:4b98:dc4:8::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06E9D107;
-        Mon, 27 Mar 2023 07:49:55 -0700 (PDT)
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id 27BF624000D;
-        Mon, 27 Mar 2023 14:49:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1679928594;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=YN5cJMJG4IXHnQqhhSstOio0T65vBkkJvcu1CZWpss4=;
-        b=ln2omZ5aBM/K8Ucq/aNBLNRbN/LoC0+oJ9gZ+rPTmilgwrLgvCXvUBXXgw2jcTFqcjcbhd
-        qEtG3OxnJJnUGkMLYI6Zjy/OaXZ3x60xVx/pz40Cc2nw7mmPU0TJDmWEKF0DQkmyl3CeGw
-        rYy4cPWr58gd4jy8QufL5m4v2OYJJUE4SCmtVU90FeDwMSv/FdsS2ZVFTnGo4DI/kYPfCu
-        VA+AOc6WOp2dLR55JMBu3m53y19bCL8nlTG3nIzJDG2weenQMkTX6CPK3ieeHKyRTIaejy
-        MwRbinfwTGlFaroeZQZu8zhqKIybqNjZCYcVMEG9B/LBIG5m+fYhnoihi8aR7Q==
-Date:   Mon, 27 Mar 2023 16:49:49 +0200
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc:     Boris Brezillon <boris.brezillon@collabora.com>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
-        <robh+dt@kernel.org>, <vigneshr@ti.com>, <richard@nod.at>,
-        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <quic_srichara@quicinc.com>, <qpic_varada@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, Mark Brown <broonie@kernel.org>
-Subject: Re: [PATCH 2/5] mtd: rawnand: qcom: Add initial support for qspi
- nand
-Message-ID: <20230327164949.465750a0@xps-13>
-In-Reply-To: <745e6bd6-96a5-ceab-1f0c-31440d34e4c8@quicinc.com>
-References: <1602307902-16761-1-git-send-email-mdalam@codeaurora.org>
-        <1602307902-16761-3-git-send-email-mdalam@codeaurora.org>
-        <20201029100751.713e27df@collabora.com>
-        <b70ddb40-a1f1-f967-6b7b-057a39b0bcc2@quicinc.com>
-        <20230306153851.0dcdda27@xps-13>
-        <745e6bd6-96a5-ceab-1f0c-31440d34e4c8@quicinc.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+        Mon, 27 Mar 2023 10:57:31 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 425271718;
+        Mon, 27 Mar 2023 07:57:30 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 247F2C14;
+        Mon, 27 Mar 2023 07:58:14 -0700 (PDT)
+Received: from [10.57.54.246] (unknown [10.57.54.246])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 006013F6C4;
+        Mon, 27 Mar 2023 07:57:26 -0700 (PDT)
+Message-ID: <8a2dc999-2bed-0f32-4210-bc3d8f223581@arm.com>
+Date:   Mon, 27 Mar 2023 15:57:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.0
+Subject: Re: [PATCH] coresight: cti: Check if the CPU activated for the CPU
+ CTI
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1679910560-23469-1-git-send-email-quic_taozha@quicinc.com>
+ <9c7f6414-ac5c-bee2-7068-04a7ee7d94f9@arm.com>
+ <81a39cd8-745d-334d-840d-66aed47c3470@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <81a39cd8-745d-334d-840d-66aed47c3470@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.3 required=5.0 tests=NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+On 27/03/2023 15:28, Tao Zhang wrote:
+> Hi Suzuki,
+> 
+> On 3/27/2023 5:52 PM, Suzuki K Poulose wrote:
+>> On 27/03/2023 10:49, Tao Zhang wrote:
+>>> Check whether the CPU corresponding to the CPU CTI is activated.
+>>> If it is not activated, the CPU CTI node should not exist, and
+>>> an error will be returned in the initialization function.
+>>>
+>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>>> ---
+>>>   drivers/hwtracing/coresight/coresight-cti-core.c | 6 ++++--
+>>>   1 file changed, 4 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/drivers/hwtracing/coresight/coresight-cti-core.c 
+>>> b/drivers/hwtracing/coresight/coresight-cti-core.c
+>>> index 277c890..aaa83ae 100644
+>>> --- a/drivers/hwtracing/coresight/coresight-cti-core.c
+>>> +++ b/drivers/hwtracing/coresight/coresight-cti-core.c
+>>> @@ -899,10 +899,12 @@ static int cti_probe(struct amba_device *adev, 
+>>> const struct amba_id *id)
+>>>       drvdata->config.hw_powered = true;
+>>>         /* set up device name - will depend if cpu bound or otherwise */
+>>> -    if (drvdata->ctidev.cpu >= 0)
+>>> +    if (drvdata->ctidev.cpu >= 0) {
+>>> +        if (!cpu_active(drvdata->ctidev.cpu))
+>>> +            return -ENXIO;
+>>>           cti_desc.name = devm_kasprintf(dev, GFP_KERNEL, "cti_cpu%d",
+>>>                              drvdata->ctidev.cpu);
+>>
+>> But why ? As long as we do not enable or touch any CPU specific bits 
+>> in the probe, why do we need to fail this ? What are you trying to fix ?
+>>
+>> Please could you share the log if you are hitting something ? This looks
+>> like masking a problem.
+>>
+>> Suzuki
+> 
+> We found that when the CPU core is disabled, for example, CPU3 is 
+> disabled, but
+> 
+> CPU3 CTI node corresponding to CPU3 still exists. In fact, in this case, 
+> CPU3 CTI
+> 
+> has been unable to trigger CPU3 properly since CPU3 is in an inactive 
+> state. This change
+> 
+> is to avoid configuring the CPU CTI of the CPU that has been disabled in 
+> this case.
 
-+ Mark
+Who is configuring the trigger ? Shouldn't we skip "enabling" the CTI
+when the associated CPU is inactive instead ? Disabling the probe with
+an error doesn't solve the problem. What if the CPU becomes active later 
+? What makes sure that the CTI is probed then ?
 
-quic_mdalam@quicinc.com wrote on Mon, 27 Mar 2023 19:24:02 +0530:
-
-> On 3/6/2023 8:08 PM, Miquel Raynal wrote:
-> > Hello,
-> >=20
-> > quic_mdalam@quicinc.com wrote on Mon, 6 Mar 2023 19:45:58 +0530:
-> >  =20
-> >> On 10/29/2020 2:37 PM, Boris Brezillon wrote: =20
-> >>> Hello,
-> >>>
-> >>> On Sat, 10 Oct 2020 11:01:39 +0530
-> >>> Md Sadre Alam <mdalam@codeaurora.org> wrote: =20
-> >>>   >>>> This change will add initial support for qspi (serial nand). =
-=20
-> >>>>
-> >>>> QPIC Version v.2.0 onwards supports serial nand as well so this
-> >>>> change will initialize all required register to enable qspi (serial
-> >>>> nand).
-> >>>>
-> >>>> This change is supporting very basic functionality of qspi nand flas=
-h.
-> >>>>
-> >>>> 1. Reset device (Reset QSPI NAND device).
-> >>>>
-> >>>> 2. Device detection (Read id QSPI NAND device). =20
-> >>> Unfortunately, that's not going to work in the long term. You're
-> >>> basically hacking the raw NAND framework to make SPI NANDs fit. I do
-> >>> understand the rationale behind this decision (re-using the code for
-> >>> ECC and probably other things), but that's not going to work. So I'd
-> >>> recommend doing the following instead:
-> >>>
-> >>> 1/ implement a SPI-mem controller driver
-> >>> 2/ implement an ECC engine driver so the ECC logic can be shared
-> >>>      between the SPI controller and raw NAND controller drivers
-> >>> 3/ convert the raw NAND driver to the exec_op() interface (none of
-> >>>      this hack would have been possible if the driver was using the n=
-ew
-> >>>      API)
-> >>>
-> >>> Regards,
-> >>>
-> >>> Boris =20
-> >>>   >>   =C2=A0=C2=A0 Sorry for late reply, again started working on th=
-is feature support.=C2=A0 The QPIC v2 on wards there is serial nand support=
- got added , its not a standard SPI controller =20
-> >>
-> >>   =C2=A0=C2=A0 its QPIC controller having support for serial nand. All=
- SPI related configuration done by QPIC hardware and its not exposed as SPI=
- bus to the external world. Only based on
-> >>
-> >>   =C2=A0=C2=A0 QPIC_SPI_CFG =3D 1, serial functionality will get selec=
-ted. So that no need to implement as SPI-mem controller driver, since its n=
-ot a SPI controller.
-> >>
-> >>   =C2=A0 Please check the below diagram for top view of QPIC controlle=
-r. =20
-> >=20
-> > One of the hard things in the Linux kernel is to make devices fit
-> > frameworks. This feature does not fit the raw NAND framework. It does
-> > not follow any of the conventions taken there. It is not gonna be
-> > accepted there. You need to expose spi-mem functionalities, even if the
-> > spi-proper features are not available. I believe your situation still
-> > fits the spi-mem abstraction.
-> >=20
-> > Thanks,
-> > Miqu=C3=A8l =20
->=20
->=20
-> I have started writing the driver code for SPI NAND. Please check the bel=
-ow design,
-> is this fine as per Boris suggestion.
-
-Thanks.
+Suzuki
 
 
->            |------------------------|                      |-------------=
------------------|                        |--------------------------------=
--|
->            |qcom spi nand driver    |--------------------->|common ECC en=
-gine driver      |<-----------------------|qcom raw nand driver            =
- |
->            |                        |                      |             =
-                 |                        |                                =
- |
->            |                        |                      |drivers/mtd/n=
-and/ecc-qcom.c   |                        |drivers/mtd/nand/raw/qcom_nand.c=
- |
->            |                        |                      |             =
-                 |                        |                                =
- |
->            |drivers/spi/spi-qpic.c  |                      |-------------=
------------------|                        |                                =
- |
->            |                        |                      |common API fi=
-le:              |                        |                                =
- |
->            |                        |                      |common API: r=
-eset, read id,   |                        |                                =
- |
->            |                        |--------------------->|erase, read p=
-age, write page, |<-----------------------|                                =
- |
->            |------------------------|                      |bad block che=
-ck etc.          |                        |                                =
- |
->                                                            |             =
-                 |                        |--------------------------------=
--|
->                                                            |drivers/mtd/n=
-and/raw/qpic_comm|
->                                                            |    on.c     =
-                 |
->                                                            |-------------=
------------------|
->=20
->=20
-> Here ECC engine driver as separate file under (drivers/mtd/nand/ecc-qcom.=
-c) and all
-> common APIs like reset, read id, erase, write page, read page, check bloc=
-k bad etc.
+> 
+> Tao
+> 
+>>
+>>
+>>> -    else
+>>> +    } else
+>>>           cti_desc.name = coresight_alloc_device_name(&cti_sys_devs, 
+>>> dev);
+>>>       if (!cti_desc.name)
+>>>           return -ENOMEM;
+>>
 
-I'm not sure how generic these APIs are, please try to not put anything
-raw NAND or SPI-NAND specific in the common file. I don't want to see
-"if (raw)" or "if (spi)" conditions there.
-
-> as separate file under drivers/mtd/nand/raw/qpic_common.c.APIs under ECC =
-engine drivers
-> and qpic_common.c will be exported and used by spi-qpic.c driver (Serial =
-NAND) and qcom_nand.c
-> (raw nand driver).
-
-On my side, I don't have a strong opinion yet but it looks good to me.
-
-Can you confirm you are considering switching to the ->exec_op() API in
-the raw NAND driver?
-
-Thanks,
-Miqu=C3=A8l
