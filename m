@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4BE96CA12B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 12:21:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCE866CA12E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 12:22:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233591AbjC0KV4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 06:21:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54612 "EHLO
+        id S233602AbjC0KWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 06:22:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233594AbjC0KVx (ORCPT
+        with ESMTP id S233600AbjC0KWK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 06:21:53 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C55664EF2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:21:47 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id c29so10718001lfv.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:21:47 -0700 (PDT)
+        Mon, 27 Mar 2023 06:22:10 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7657D5FEE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:22:08 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id bi9so10672332lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:22:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679912506;
+        d=linaro.org; s=google; t=1679912526;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8cCLL0Ku81Lj0tFub0aTRUmlGj/bY9UaPx7F8ErIg3Q=;
-        b=mPmvINEvZ8SbKpM3PZ4sWPSxTCEliy3mOHU2bLIjFSiXylMYG98J7MD0W09mp1oXvl
-         oHMpXzVTxn8H1uTLJvLdxOf/UsaJTEITQhzh79MFEh+xXDDgsWP9A0Jn3Jm3OVkcIaeU
-         pEWmee9OhV1BCNzlUiNv1pvL98WLZKQvUALEJd5GgWmRBeY1HnKHXag+LVwr21TGdAJF
-         TSIDwYIczZMwltgJu/PPPUe88nqGfVxYhNSzY92Dtc6+Zn7jVDaW0zis58MM4YPvIh5P
-         6oz9VHJWRhaEaLbmdNZW2oPBgAN1pboKntVhUyA32A6FpuTaBIPe9PHoxKHG1vi4v2sq
-         Pegw==
+        bh=xJlIsfoTYjsZ6GqEn0YXkCelW0/G1Ux6mbNEFEOUwXQ=;
+        b=W9H4AzXgPK1GXam44qBCWJnDLzwiWFbKLQV+HEAdgmkgmkgTsOokQKUoOev1DAn4aM
+         ohqy1ufIr4O25ITK+4KjaXSB/mKpUXVoqOr6QVHcefj/Lt6EPk/QADOVVkeQ0ttOOfCJ
+         te6VQx693yAxbp0dJ5xkiaXEdvnMydXv1I98cjvJxrA/RqAaV4lhHfN5x7zsQhk++rtw
+         YVVsX/uwwjmpYvxhl3EHO6a6YersmRncJ6kHsZsvg22+eKQ0fAJLPjqP2bNidSUc3Y/l
+         OZAXy2+2IM6Cnz53HXewePIuEY6UABDJQWXtPA1V0wWnKa2eBNKQRR2Z/EmNP0aSe8iN
+         rf0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679912506;
+        d=1e100.net; s=20210112; t=1679912526;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8cCLL0Ku81Lj0tFub0aTRUmlGj/bY9UaPx7F8ErIg3Q=;
-        b=p4xBUiUstMs3p2IRLRfvAI/j0wsgTQgt0ixXP3J+LBLOCzV3D2SU1ahGc1VgE8XFDf
-         vtRAoseqnGREYk1cmL5N+ARAQdOWqR0PnEwaHpd6NMjPS+Exb4tIcBEYD20lbdB1UYwJ
-         1qfISk2/hJiVakWQ9E2aUfDLImDoqaWNh04JHkMGvqBeZVvqMMw0QsjJvcovmdAsyRy3
-         9LzXakOQmfXNLOeI2+q/H1uDHWps8YdQvc4Wsxk7TEnejpHPT5dmBTP8NmyBxE8BglLW
-         bRqBXHvRaoRhXU6xO0Yz1NELucoxy8Ls1upfsQHBu4HckU99Gxq5hQ9uqirH5X8h4cby
-         F+nQ==
-X-Gm-Message-State: AAQBX9edHcfP6MlhooS24FFqNrJtxg93h9aXJk7zbU6rI1l+egCMghlj
-        +Ls/DBYXEI3mHr6/my9wnbdFwg==
-X-Google-Smtp-Source: AKy350YsZl1lLndPLtgmqhQKTd2yzdEZ4UifTW61GDodPhv8n+hCqkK2VFpC4LzgDFm0NZPE8I1BVA==
-X-Received: by 2002:ac2:54a1:0:b0:4e0:dfd0:fa9 with SMTP id w1-20020ac254a1000000b004e0dfd00fa9mr2806692lfk.56.1679912506089;
-        Mon, 27 Mar 2023 03:21:46 -0700 (PDT)
+        bh=xJlIsfoTYjsZ6GqEn0YXkCelW0/G1Ux6mbNEFEOUwXQ=;
+        b=fOEQK4m3URiK0uO3AbGHlV7ITF30Um5BsX/EsLtZUfOnUTddMVLU8UYe6fZ00yVLTd
+         eAT4fHT/rjKxsKRioIraRKcwmew2GmJfbSW1xIan6HQbuEQCtltpONpIGEC825HOUOo/
+         1c08BduiYAt0Ry59BBNnCdpB+TJbnSQGi8DGHbc9IhGCKmCXutwJI0b4SMF7XR6DHzq5
+         MXXcYgHdjZvSgY50k6d/o4KMxA3CLaSM4PKH6htgWmYzD8kHEFKud3ZL1uKursflJZKx
+         eF1DIvLaBz0bXAhZM9BGkAenGzw800CGDsijven6TMZrMqW4byCsKZqTJffGzURAI+uR
+         yUag==
+X-Gm-Message-State: AAQBX9fUB7ImQjFL7ShLDyGUk288iPcIvXbXy+yeqEhHSc9JSG+LxtJt
+        RqYIjDzD34C6CvnYB3Amc3ffIg==
+X-Google-Smtp-Source: AKy350Z0Jupm5iA4/JrEES0lolDFIVw5iJo2iljcqwNzZKMsNa1r/CwSrn8GiQyWJoMsAYMXooWM4Q==
+X-Received: by 2002:a19:7404:0:b0:4e8:3fc7:9483 with SMTP id v4-20020a197404000000b004e83fc79483mr3419046lfe.23.1679912526443;
+        Mon, 27 Mar 2023 03:22:06 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id y11-20020ac2420b000000b004dded2d1965sm4606933lfh.267.2023.03.27.03.21.45
+        by smtp.gmail.com with ESMTPSA id w3-20020ac24423000000b004e977970721sm4378102lfl.219.2023.03.27.03.22.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 03:21:45 -0700 (PDT)
-Message-ID: <bf0dba24-cd67-4286-6284-d8b2ae0a181f@linaro.org>
-Date:   Mon, 27 Mar 2023 13:21:45 +0300
+        Mon, 27 Mar 2023 03:22:06 -0700 (PDT)
+Message-ID: <5cf3568e-e378-cf38-6350-21e787866cee@linaro.org>
+Date:   Mon, 27 Mar 2023 13:22:05 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 07/11] arm64: dts: qcom: sc7180-qcard: use just "port" in
- panel
+Subject: Re: [PATCH 08/11] arm64: dts: qcom: sc7180-trogdor-lazor: correct
+ panel compatible
 Content-Language: en-GB
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -67,9 +67,9 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230326155753.92007-1-krzysztof.kozlowski@linaro.org>
- <20230326155753.92007-7-krzysztof.kozlowski@linaro.org>
+ <20230326155753.92007-8-krzysztof.kozlowski@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230326155753.92007-7-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230326155753.92007-8-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -83,15 +83,15 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 26/03/2023 18:57, Krzysztof Kozlowski wrote:
-> The panel bindings expect to have only one port, thus they do not allow
-> to use "ports" node:
+> innolux,n116bca-ea1 is not exactly compatible witg innolux,n116bge, as
+> they have their own driver data.  Bindings do not allow fallback:
 > 
->    sc7280-herobrine-zombie-nvme-lte.dtb: panel: 'ports' does not match any of the regexes: 'pinctrl-[0-9]+'
+>    sc7180-trogdor-lazor-limozeen-nots-r4.dtb: panel: compatible: ['innolux,n116bca-ea1', 'innolux,n116bge'] is too long
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->   arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi | 11 +++--------
->   1 file changed, 3 insertions(+), 8 deletions(-)
+>   .../boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts     | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
