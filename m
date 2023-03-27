@@ -2,54 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90EFF6CA866
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 17:01:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DA656CA871
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 17:01:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231787AbjC0PBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 11:01:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40640 "EHLO
+        id S233190AbjC0PBt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 11:01:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232782AbjC0PBi (ORCPT
+        with ESMTP id S233010AbjC0PBq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 11:01:38 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E84D4483;
-        Mon, 27 Mar 2023 08:01:37 -0700 (PDT)
+        Mon, 27 Mar 2023 11:01:46 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CA4B4EFB;
+        Mon, 27 Mar 2023 08:01:45 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CAE6061303;
-        Mon, 27 Mar 2023 15:01:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FC4C4339E;
-        Mon, 27 Mar 2023 15:01:32 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id A717BB8160C;
+        Mon, 27 Mar 2023 15:01:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67041C4339C;
+        Mon, 27 Mar 2023 15:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679929296;
-        bh=dsoVd3bOkZ1/OXyt+ZP8t5ze5tdgtMoUGRvUuV6EukM=;
+        s=k20201202; t=1679929302;
+        bh=52DnpiK5+wbZheULc1ZM0vQEiyBCXv7N98OEzPalzlk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=SHPAMbr7ynIEkq5oNWhug9hIbn4LJ0wlRJ6JgemhXBguNbBUPRRDeUdVcqazMWkWC
-         dk9d8QHtU103JjtWCjNwzZLwSakTbYVoyyZMPznbW2kNkDFCK+lV/7pj97e//rbFdB
-         KAcjBslm3nZ5BD8UOtzQgE313X4qN68GC8CjlYGQyBtCbPdHgVt918IpKotLwM74ca
-         Zn52WHW55dJ8f6+KX/RVedxJw0EkqlPTOL1x9rcwK7iDgIZU3Ce79U8tYgcWxannLX
-         MEStSzPPRTj0snsGEx0UFdc0kYSX/e0hXkgCvgkTLp0pcdTYZYHGlYYERA/m/ZwxGN
-         9en6lprtJ6hkQ==
+        b=rNZwgN/CvBsPyJU/yTtE31oZpvbJOgR6hTQ4oUfRiIgkegXDhIUNn3Om0S6zdm9zk
+         IQTM3HdyF9UWqxwJFbbZhRp1E/moCesnopdXWBi6ahYtV68fc68gzfNXxg6O6s0AG0
+         BmUVwmAQ0aCf/p5aN+WuchtNwH7oJ8Eyjl7KKXq2RjJ+pjUHksV4B1CpYiNTvxzhiJ
+         jJwLBl443WeyXOQP5EjhknhnUNdi2zy1zL7+QpiwOZUrTlGsV9pTuw4xtTWyiVcsBi
+         bvnyXWQRVYDZXfhiTuZbRnhj9vnZh2sMlGAoZrMwPN0RqfEnPEaQNC2tNMLsjm8Pkx
+         5+ZFBZENPAzYw==
 From:   Will Deacon <will@kernel.org>
-To:     mcgrof@kernel.org, Nick Alcock <nick.alcock@oracle.com>
+To:     Yang Li <yang.lee@linux.alibaba.com>
 Cc:     catalin.marinas@arm.com, kernel-team@android.com,
-        Will Deacon <will@kernel.org>, linux-gpio@vger.kernel.org,
-        linux-edac@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-acpi@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-modules@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-serial@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, asahi@lists.linux.dev,
-        linux-pci@vger.kernel.org
-Subject: Re: [PATCH 00/24] MODULE_LICENSE removals, second tranche
-Date:   Mon, 27 Mar 2023 16:01:15 +0100
-Message-Id: <167992609868.3834946.4831319626649638477.b4-ty@kernel.org>
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        mark.rutland@arm.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH -next] perf: qcom: Use devm_platform_get_and_ioremap_resource()
+Date:   Mon, 27 Mar 2023 16:01:18 +0100
+Message-Id: <167992578245.3834259.11608007943578363119.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20230217141059.392471-1-nick.alcock@oracle.com>
-References: <20230217141059.392471-1-nick.alcock@oracle.com>
+In-Reply-To: <20230315023108.36953-1-yang.lee@linux.alibaba.com>
+References: <20230315023108.36953-1-yang.lee@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -62,22 +57,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 17 Feb 2023 14:10:35 +0000, Nick Alcock wrote:
-> This series, based on current modules-next, is part of a treewide cleanup
-> suggested by Luis Chamberlain, to remove the LICENSE_MODULE usage from
-> files/objects that are not tristate.  Due to recent changes to kbuild, these
-> uses are now problematic.  See the commit logs for more details.
+On Wed, 15 Mar 2023 10:31:08 +0800, Yang Li wrote:
+> According to commit 890cc39a8799 ("drivers: provide
+> devm_platform_get_and_ioremap_resource()"), convert
+> platform_get_resource(), devm_ioremap_resource() to a single
+> call to devm_platform_get_and_ioremap_resource(), as this is exactly
+> what this function does.
 > 
-> (The commit log prefixes and Cc lists are automatically determined using
-> the script mentioned below.  I've eyeballed them, and they seem reasonable:
-> my apologies if they are not.)
 > 
 > [...]
 
-Applied drivers/perf patch to will (for-next/perf), thanks!
+Applied to will (for-next/perf), thanks!
 
-[08/24] kbuild, drivers/perf: remove MODULE_LICENSE in non-modules
-        https://git.kernel.org/will/c/a64021d3726a
+[1/1] perf: qcom: Use devm_platform_get_and_ioremap_resource()
+      https://git.kernel.org/will/c/8540504c5136
 
 Cheers,
 -- 
