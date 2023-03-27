@@ -2,56 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DE096CAD27
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 20:38:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AB4A6CAD5D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 20:43:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232323AbjC0SiJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 14:38:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46306 "EHLO
+        id S232548AbjC0SnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 14:43:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232400AbjC0SiF (ORCPT
+        with ESMTP id S232631AbjC0SnM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 14:38:05 -0400
-Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [IPv6:2001:67c:2050:0:465::202])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6473B7;
-        Mon, 27 Mar 2023 11:37:59 -0700 (PDT)
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
+        Mon, 27 Mar 2023 14:43:12 -0400
+Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36F363C31;
+        Mon, 27 Mar 2023 11:42:38 -0700 (PDT)
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4PlhQD1WVrz9sc1;
-        Mon, 27 Mar 2023 20:37:56 +0200 (CEST)
+        by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4PlhWF1Wnfz9sZg;
+        Mon, 27 Mar 2023 20:42:17 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
-        s=MBO0001; t=1679942276;
+        s=MBO0001; t=1679942537;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=OpnY5Bll0e5uxT0SinClsl4A2EVcTJcY0t1lar/iMyU=;
-        b=vXkPWp3D4jR8eSe2YoJquvRM/caraZwDhConHqvV7+z26+YIet9wjbUdnXJ80c+BNtpB8x
-        QJSB3rWesiXNc/Qs9LKYO4gad8Te6cikFJLH/922jYZKNdsig0gfwkyU7s6ZcqnBEKAHMn
-        udquq0Y4XY6dMhM2EJ/wEcuMxj19hTkEwAZenJMv6yPDC6I2blpnRVcx1v8HHNQfe26GL0
-        pdl4wE+77YJPMsTrkXDKCJqT+n5vaYLQzzXpOAXP6eR+0oLmvPfIyyZFUEHfPWUXBTd/gC
-        QKfhygZ21oEgpz0eTYZyjHS4pItKvGk/o1sl5ED3Q9wXocJe15GVb8oS0FYGfg==
+         content-transfer-encoding:content-transfer-encoding;
+        bh=UPeTkvVxhkyl7K0E/zp4aqMcr8drNcpWwqSgEpn+bfk=;
+        b=iSoRZEYqu+i9PpKIV/3nTTBHt/NNwPyAyaqBulyRkAa9Bw2pBuvlm+mDUIgjEdIjWeQ/Jn
+        1ChAFTC5HZIY6Ti5RU93CYxlQ2DaFnyfbhGl8bG+TeFsXpMZrrjAxxvqCBALdIWE0UZjFb
+        x8bqMEzjrsOLxaZCcFu/wmn9LeIauknnI6wvg8bI1TXxg94pz3vt9NfCIZzNSYmHCCPkjK
+        CxqtQeFTy4Bdz2hZukGca8h03bbEio4Eqkh/6uzqeiwzQDRZkDCuzBrY/HVzQZlc2iMgx4
+        ubY++yMjQ4T+cvMuSlWIx1Z1i1B/YOo61EG68TQaTf13YeNNDIoH04QR6fDuwg==
 From:   Dylan Van Assche <me@dylanvanassche.be>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Dylan Van Assche <me@dylanvanassche.be>
-Subject: [PATCH v2 3/3] remoteproc: qcom: pas: refactor SLPI remoteproc init
-Date:   Mon, 27 Mar 2023 20:37:36 +0200
-Message-Id: <20230327183736.496170-4-me@dylanvanassche.be>
-In-Reply-To: <20230327183736.496170-1-me@dylanvanassche.be>
-References: <20230327183736.496170-1-me@dylanvanassche.be>
+Subject: [PATCH v2 0/2] misc: fastrpc: FastRPC reserved memory assignment for SDM845 SLPI
+Date:   Mon, 27 Mar 2023 20:42:02 +0200
+Message-Id: <20230327184204.498032-1-me@dylanvanassche.be>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 4PlhQD1WVrz9sc1
 X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -61,135 +54,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SLPI remoteproc initialization is the same for SDM845, SM8150, SM8250,
-SM8350 but is duplicated for each compatible. Refactor initialization
-structs for these 4 compatibles as a single struct.
+* About *
 
-Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
----
- drivers/remoteproc/qcom_q6v5_pas.c | 66 ++++--------------------------
- 1 file changed, 9 insertions(+), 57 deletions(-)
+The Qualcomm SDM845 SoC has a separate SLPI (Sensor Low Power Island)
+DSP for sensors connected to the SoC which is responsible for exposing
+sensors to userspace, power saving, and other features. 
+While sensors are connected to GPIOs of the SoC, they cannot be used
+because the hypervisor blocks direct access to the sensors, thus the 
+DSP must be used to access any sensor on this SoC. The SLPI DSP uses a
+GLink edge (dsps) to communicate with the host and has a FastRPC interface
+to load files from the host filesystem such as sensor configuration files.
+The FastRPC interface does not use regular FastRPC Compute Banks
+but instead uses an allocated CMA region through which communication happens.
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index d82b6f4bced4..d1c7baec4aca 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -1014,7 +1014,7 @@ static const struct adsp_data sc8180x_mpss_resource = {
- 	.ssctl_id = 0x12,
- };
- 
--static const struct adsp_data slpi_resource_init = {
-+static const struct adsp_data msm_slpi_resource_init = {
- 		.crash_reason_smem = 424,
- 		.firmware_name = "slpi.mdt",
- 		.pas_id = 12,
-@@ -1028,7 +1028,7 @@ static const struct adsp_data slpi_resource_init = {
- 		.ssctl_id = 0x16,
- };
- 
--static const struct adsp_data sdm845_slpi_resource = {
-+static const struct adsp_data sm_slpi_resource_init = {
- 		.crash_reason_smem = 424,
- 		.firmware_name = "slpi.mdt",
- 		.pas_id = 12,
-@@ -1044,54 +1044,6 @@ static const struct adsp_data sdm845_slpi_resource = {
- 		.ssctl_id = 0x16,
- };
- 
--static const struct adsp_data sm8150_slpi_resource = {
--		.crash_reason_smem = 424,
--		.firmware_name = "slpi.mdt",
--		.pas_id = 12,
--		.auto_boot = true,
--		.proxy_pd_names = (char*[]){
--			"lcx",
--			"lmx",
--			NULL
--		},
--		.load_state = "slpi",
--		.ssr_name = "dsps",
--		.sysmon_name = "slpi",
--		.ssctl_id = 0x16,
--};
--
--static const struct adsp_data sm8250_slpi_resource = {
--	.crash_reason_smem = 424,
--	.firmware_name = "slpi.mdt",
--	.pas_id = 12,
--	.auto_boot = true,
--	.proxy_pd_names = (char*[]){
--		"lcx",
--		"lmx",
--		NULL
--	},
--	.load_state = "slpi",
--	.ssr_name = "dsps",
--	.sysmon_name = "slpi",
--	.ssctl_id = 0x16,
--};
--
--static const struct adsp_data sm8350_slpi_resource = {
--	.crash_reason_smem = 424,
--	.firmware_name = "slpi.mdt",
--	.pas_id = 12,
--	.auto_boot = true,
--	.proxy_pd_names = (char*[]){
--		"lcx",
--		"lmx",
--		NULL
--	},
--	.load_state = "slpi",
--	.ssr_name = "dsps",
--	.sysmon_name = "slpi",
--	.ssctl_id = 0x16,
--};
--
- static const struct adsp_data wcss_resource_init = {
- 	.crash_reason_smem = 421,
- 	.firmware_name = "wcnss.mdt",
-@@ -1200,9 +1152,9 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,msm8953-adsp-pil", .data = &msm8996_adsp_resource},
- 	{ .compatible = "qcom,msm8974-adsp-pil", .data = &adsp_resource_init},
- 	{ .compatible = "qcom,msm8996-adsp-pil", .data = &msm8996_adsp_resource},
--	{ .compatible = "qcom,msm8996-slpi-pil", .data = &slpi_resource_init},
-+	{ .compatible = "qcom,msm8996-slpi-pil", .data = &msm_slpi_resource_init},
- 	{ .compatible = "qcom,msm8998-adsp-pas", .data = &msm8996_adsp_resource},
--	{ .compatible = "qcom,msm8998-slpi-pas", .data = &slpi_resource_init},
-+	{ .compatible = "qcom,msm8998-slpi-pas", .data = &msm_slpi_resource_init},
- 	{ .compatible = "qcom,qcs404-adsp-pas", .data = &adsp_resource_init },
- 	{ .compatible = "qcom,qcs404-cdsp-pas", .data = &cdsp_resource_init },
- 	{ .compatible = "qcom,qcs404-wcss-pas", .data = &wcss_resource_init },
-@@ -1217,7 +1169,7 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,sdm660-adsp-pas", .data = &adsp_resource_init},
- 	{ .compatible = "qcom,sdm845-adsp-pas", .data = &sdm845_adsp_resource_init},
- 	{ .compatible = "qcom,sdm845-cdsp-pas", .data = &sdm845_cdsp_resource_init},
--	{ .compatible = "qcom,sdm845-slpi-pas", .data = &sdm845_slpi_resource},
-+	{ .compatible = "qcom,sdm845-slpi-pas", .data = &sm_slpi_resource_init},
- 	{ .compatible = "qcom,sdx55-mpss-pas", .data = &sdx55_mpss_resource},
- 	{ .compatible = "qcom,sm6115-adsp-pas", .data = &adsp_resource_init},
- 	{ .compatible = "qcom,sm6115-cdsp-pas", .data = &cdsp_resource_init},
-@@ -1228,17 +1180,17 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,sm8150-adsp-pas", .data = &sm8150_adsp_resource},
- 	{ .compatible = "qcom,sm8150-cdsp-pas", .data = &sm8150_cdsp_resource},
- 	{ .compatible = "qcom,sm8150-mpss-pas", .data = &mpss_resource_init},
--	{ .compatible = "qcom,sm8150-slpi-pas", .data = &sm8150_slpi_resource},
-+	{ .compatible = "qcom,sm8150-slpi-pas", .data = &sm_slpi_resource_init},
- 	{ .compatible = "qcom,sm8250-adsp-pas", .data = &sm8250_adsp_resource},
- 	{ .compatible = "qcom,sm8250-cdsp-pas", .data = &sm8250_cdsp_resource},
--	{ .compatible = "qcom,sm8250-slpi-pas", .data = &sm8250_slpi_resource},
-+	{ .compatible = "qcom,sm8250-slpi-pas", .data = &sm_slpi_resource_init},
- 	{ .compatible = "qcom,sm8350-adsp-pas", .data = &sm8350_adsp_resource},
- 	{ .compatible = "qcom,sm8350-cdsp-pas", .data = &sm8350_cdsp_resource},
--	{ .compatible = "qcom,sm8350-slpi-pas", .data = &sm8350_slpi_resource},
-+	{ .compatible = "qcom,sm8350-slpi-pas", .data = &sm_slpi_resource_init},
- 	{ .compatible = "qcom,sm8350-mpss-pas", .data = &mpss_resource_init},
- 	{ .compatible = "qcom,sm8450-adsp-pas", .data = &sm8350_adsp_resource},
- 	{ .compatible = "qcom,sm8450-cdsp-pas", .data = &sm8350_cdsp_resource},
--	{ .compatible = "qcom,sm8450-slpi-pas", .data = &sm8350_slpi_resource},
-+	{ .compatible = "qcom,sm8450-slpi-pas", .data = &sm_slpi_resource_init},
- 	{ .compatible = "qcom,sm8450-mpss-pas", .data = &sm8450_mpss_resource},
- 	{ .compatible = "qcom,sm8550-adsp-pas", .data = &sm8550_adsp_resource},
- 	{ .compatible = "qcom,sm8550-cdsp-pas", .data = &sm8550_cdsp_resource},
+* Changes *
+
+This patchseries add support to the FastRPC for assigning a coherent memory
+region to a DSP via the hypervisor with the correct permissions.
+This is necessary to support the SLPI found in the Qualcomm SDM845 SoC which
+does not have dedicated FastRPC Compute Banks, in contrast to newer SoCs,
+but uses a memory region instead when allocating buffers.
+
+* Related patches *
+
+1. Remoteproc changes to support the SLPI DSP in SDM845:
+https://lore.kernel.org/linux-remoteproc/20230325132117.19733-1-me@dylanvanassche.be/
+2. DTS changes (v1):
+https://lore.kernel.org/linux-devicetree/20230325135114.21688-1-me@dylanvanassche.be/
+
+This serie does not depend on any serie, but all of them are necessary
+to enable the feature in the end.
+
+* Changelog *
+
+Changes in v2:
+
+- Removed double blank lines
+- Dropped dt-bindings property as it is not needed for driver behavior
+- Add additional patch to allocate buffers via CMA memory for DSPs
+  without dedicated FastRPC Compute Banks.
+
+Kind regards,
+Dylan Van Assche
+
+Dylan Van Assche (2):
+  misc: fastrpc: support complete DMA pool access to the DSP
+  misc: fastrpc: use coherent pool for untranslated Compute Banks
+
+ drivers/misc/fastrpc.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
+
 -- 
 2.39.2
 
