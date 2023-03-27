@@ -2,85 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D37A6CA42A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 14:33:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D194D6CA496
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 14:52:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229619AbjC0MdD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 08:33:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60970 "EHLO
+        id S229653AbjC0MwP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 08:52:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232043AbjC0MdC (ORCPT
+        with ESMTP id S229452AbjC0MwO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 08:33:02 -0400
+        Mon, 27 Mar 2023 08:52:14 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 102993C04;
-        Mon, 27 Mar 2023 05:33:01 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D72251707;
+        Mon, 27 Mar 2023 05:52:13 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 525C1B80DA6;
-        Mon, 27 Mar 2023 12:33:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A9EC433D2;
-        Mon, 27 Mar 2023 12:32:58 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9C3CDB81219;
+        Mon, 27 Mar 2023 12:52:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7408FC433D2;
+        Mon, 27 Mar 2023 12:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679920378;
-        bh=ZNwBA2NAAA+1rgyfUbyfokfIEOLrB3/fDda0MLnXviw=;
-        h=From:To:Cc:Subject:Date:From;
-        b=lIu503uWNSm8wf3zxwSQ9IH9xcffa90LwGPDnjf7I6JcZ/aWSh64cVCiUjaM7zeU+
-         Pw97SdfmQCMqmhLqz87M7JiD2uCUyfR/a9lyyT7w6qcibV0LQWoT1Qh4rCK3Thziha
-         5VHHQrU22vDQAngOG9WOFDXRL8QpoeqaDEigvU2Re71fp0oYEE2VUcPfqpKU9DiBtq
-         ln8wFqQ74aXbSifka2Daq1wD7smuS3bhHO33ttifoABgN7uWdv8vqstTF/aGD/lbOy
-         B56YvFVplApO7SExZo8FasYbt8+sZbS5rkPGyTByZ1B0Mjog4H5GM4hjOstI83fQkM
-         5CeunoSaGfCuA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1pgm28-0001BF-4a; Mon, 27 Mar 2023 14:33:08 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        s=k20201202; t=1679921531;
+        bh=E9MTle2DExPoRvRu4kx7q+nspG7X7Jy/oLcqbqz9/kg=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=RbwzttHUJSCxLwFkz0diR3YsEPAF5NLC6x5O57TYVcMNbJ2bNrL91Hu8IQkY1yBpy
+         aEExXPiY/AsTw2u2WXmBPhxlIr7WIiEvlTy0xC72XHO/eMgXe5RkCd+ovFpqrmbnbM
+         bf+EYfdsao8tdglX2DbnFAv5K/5klM6xJHKcaaB+tI7BM9+dv7CsTiJhX17p5NrMnY
+         wG6D54R0FRm76hIDJjNVMgmL2t4cbYGv6z2Ffug53BddqksPvn+dOSit/mCRf2uVKo
+         qbt6FPaXsPQr4vf2ixjuR289LsJTvOrVNqklak+DdLTtFZsuOWHEiQe51iCAsvb8rb
+         fWS8pYdHfHrUw==
+From:   Will Deacon <will@kernel.org>
+To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] arm64: dts: qcom: sc8280xp-x13s: drop bogus 'input-enable'
-Date:   Mon, 27 Mar 2023 14:32:43 +0200
-Message-Id: <20230327123243.4527-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.39.2
+        Robin Murphy <robin.murphy@arm.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     catalin.marinas@arm.com, kernel-team@android.com,
+        Will Deacon <will@kernel.org>, devicetree@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev
+Subject: Re: [PATCH 0/2] SM6115 GPU SMMU
+Date:   Mon, 27 Mar 2023 13:51:59 +0100
+Message-Id: <167991702239.1302151.4477761847847607127.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20230315-topic-kamorta_adrsmmu-v1-0-d1c0dea90bd9@linaro.org>
+References: <20230315-topic-kamorta_adrsmmu-v1-0-d1c0dea90bd9@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.0 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        SPF_PASS,SUBJ_ALL_CAPS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The sc8280xp pin controller does not have a way to enable or disable the
-input buffer so drop the unnecessary 'input-enable' property which is
-about to be deprecated.
+On Wed, 15 Mar 2023 11:52:07 +0100, Konrad Dybcio wrote:
+> Bring in bindings and the dt part for SM6115 GPU SMMU
+> 
+> Depends on:
+> https://lore.kernel.org/linux-arm-msm/20230313-topic-gpu_smmu_bindings-v3-0-66ab655fbfd5@linaro.org/
+> 
+> [2/2] only addresses 6115, 6125 will be sent separately after some dt cleanups there
+> 
+> [...]
 
-Link: https://lore.kernel.org/lkml/20230323102605.6.I291ce0ba2c6ea80b341659c4f75a567a76dd7ca6@changeid
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 1 -
- 1 file changed, 1 deletion(-)
+Applied bindings change to will (for-joerg/arm-smmu/bindings), thanks!
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index d827005f1375..2591b492d5d8 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -1274,7 +1274,6 @@ edp_reg_en: edp-reg-en-state {
- 	hall_int_n_default: hall-int-n-state {
- 		pins = "gpio107";
- 		function = "gpio";
--		input-enable;
- 		bias-disable;
- 	};
- 
+[1/2] dt-bindings: arm-smmu: Document SM61[12]5 GPU SMMU
+      https://git.kernel.org/will/c/3ad6585509dc
+
+Cheers,
 -- 
-2.39.2
+Will
 
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
