@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCE866CA12E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 12:22:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2169F6CA130
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 12:22:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233602AbjC0KWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 06:22:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55054 "EHLO
+        id S233595AbjC0KW3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 06:22:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233600AbjC0KWK (ORCPT
+        with ESMTP id S233567AbjC0KW1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 06:22:10 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7657D5FEE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:22:08 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id bi9so10672332lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:22:08 -0700 (PDT)
+        Mon, 27 Mar 2023 06:22:27 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 129C6524A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:22:22 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 20so8425892lju.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:22:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679912526;
+        d=linaro.org; s=google; t=1679912541;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xJlIsfoTYjsZ6GqEn0YXkCelW0/G1Ux6mbNEFEOUwXQ=;
-        b=W9H4AzXgPK1GXam44qBCWJnDLzwiWFbKLQV+HEAdgmkgmkgTsOokQKUoOev1DAn4aM
-         ohqy1ufIr4O25ITK+4KjaXSB/mKpUXVoqOr6QVHcefj/Lt6EPk/QADOVVkeQ0ttOOfCJ
-         te6VQx693yAxbp0dJ5xkiaXEdvnMydXv1I98cjvJxrA/RqAaV4lhHfN5x7zsQhk++rtw
-         YVVsX/uwwjmpYvxhl3EHO6a6YersmRncJ6kHsZsvg22+eKQ0fAJLPjqP2bNidSUc3Y/l
-         OZAXy2+2IM6Cnz53HXewePIuEY6UABDJQWXtPA1V0wWnKa2eBNKQRR2Z/EmNP0aSe8iN
-         rf0A==
+        bh=oR46Zi0I7Lypt/q9oljjXXwkox+XBwZiyhnyKzMDFHo=;
+        b=kC4EVVGcxJLmZroGM3ZWQKwuVEmbLbdRYITkjUDd7ZTw7Pb0DBLD9SKKnHxeUG71fE
+         4W1x4loB0JX8nv6jzOOYVz6tEZXKdyvZ27WI2F/XAR/lXicgxptku3xpw/yTY+w5swtI
+         1ZNpyM+3GegQY8ACt82jrXnGIQVIlnKHOW1s4DCe1j/07dwXX8AJAuiiyd8bW7talPDx
+         usOePNBe38/PCC7soqS+yEaqhpqPBQmjcu2B4FhivpZxsxr59d6Hqegdl+PB+9x4Ks0w
+         Geu3Vu/AFsglU6hf23MY67zkBibQz0jc99Qn8+doOzamWmcyZ5gAYWISCBkiUS6Pt+LD
+         HeLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679912526;
+        d=1e100.net; s=20210112; t=1679912541;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xJlIsfoTYjsZ6GqEn0YXkCelW0/G1Ux6mbNEFEOUwXQ=;
-        b=fOEQK4m3URiK0uO3AbGHlV7ITF30Um5BsX/EsLtZUfOnUTddMVLU8UYe6fZ00yVLTd
-         eAT4fHT/rjKxsKRioIraRKcwmew2GmJfbSW1xIan6HQbuEQCtltpONpIGEC825HOUOo/
-         1c08BduiYAt0Ry59BBNnCdpB+TJbnSQGi8DGHbc9IhGCKmCXutwJI0b4SMF7XR6DHzq5
-         MXXcYgHdjZvSgY50k6d/o4KMxA3CLaSM4PKH6htgWmYzD8kHEFKud3ZL1uKursflJZKx
-         eF1DIvLaBz0bXAhZM9BGkAenGzw800CGDsijven6TMZrMqW4byCsKZqTJffGzURAI+uR
-         yUag==
-X-Gm-Message-State: AAQBX9fUB7ImQjFL7ShLDyGUk288iPcIvXbXy+yeqEhHSc9JSG+LxtJt
-        RqYIjDzD34C6CvnYB3Amc3ffIg==
-X-Google-Smtp-Source: AKy350Z0Jupm5iA4/JrEES0lolDFIVw5iJo2iljcqwNzZKMsNa1r/CwSrn8GiQyWJoMsAYMXooWM4Q==
-X-Received: by 2002:a19:7404:0:b0:4e8:3fc7:9483 with SMTP id v4-20020a197404000000b004e83fc79483mr3419046lfe.23.1679912526443;
-        Mon, 27 Mar 2023 03:22:06 -0700 (PDT)
+        bh=oR46Zi0I7Lypt/q9oljjXXwkox+XBwZiyhnyKzMDFHo=;
+        b=mQZTXk1d2lQJdOLo44Ge8rMFyTC2NTWNJCc6qiAv7R8Xp3R0KQ/0nfZDEYYbGD2uBg
+         d1qGtaNDfhlriX55ojd8NPs1PfgnY1wC4k2TBfVQXRZ2ff1BCIzV4laTTi3jCdi/INY0
+         yd1yCiqUyiGo0kJyx1HGRyZzZUpsdSS6xaEH/Ts5YM8/u0XRhlK6oriNDViLF8ijzLHH
+         lPICpRYo7zH5OzsESabuuaNpISvzBgfrh6EWtkAoEL8u4ZlfvfcMFYAtVLykCZAH3wxq
+         yf+wLD71os09eWsU4BOdA+0gk5LAgDzQ36KpWpe+biJcZGnzj1hhkrTPrP3RHRKBBEWn
+         ughw==
+X-Gm-Message-State: AAQBX9cTcPOPgg4H2OD7cFSPTlZO4C74sChMqtHpAkaIhDkBIvcTmLIH
+        A4Bl718Nb2nWIG5yZNLM2NUarQ==
+X-Google-Smtp-Source: AKy350blePytZMYW9wxha/NfmuXTTY3El1Mj6rPlob57Z2i7jFwTw+yPHp/YztpVi97Es8aokbK+Mg==
+X-Received: by 2002:a2e:9f0a:0:b0:29a:3a61:bbd4 with SMTP id u10-20020a2e9f0a000000b0029a3a61bbd4mr3390567ljk.48.1679912541323;
+        Mon, 27 Mar 2023 03:22:21 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id w3-20020ac24423000000b004e977970721sm4378102lfl.219.2023.03.27.03.22.05
+        by smtp.gmail.com with ESMTPSA id f20-20020a2e6a14000000b002a12f54df41sm2066948ljc.38.2023.03.27.03.22.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 03:22:06 -0700 (PDT)
-Message-ID: <5cf3568e-e378-cf38-6350-21e787866cee@linaro.org>
-Date:   Mon, 27 Mar 2023 13:22:05 +0300
+        Mon, 27 Mar 2023 03:22:21 -0700 (PDT)
+Message-ID: <ff903f95-7425-b3ad-b22f-802b00c4c9aa@linaro.org>
+Date:   Mon, 27 Mar 2023 13:22:20 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 08/11] arm64: dts: qcom: sc7180-trogdor-lazor: correct
- panel compatible
+Subject: Re: [PATCH 09/11] arm64: dts: qcom: sdm845-oneplus: drop invalid
+ panel properties
 Content-Language: en-GB
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -67,9 +67,9 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230326155753.92007-1-krzysztof.kozlowski@linaro.org>
- <20230326155753.92007-8-krzysztof.kozlowski@linaro.org>
+ <20230326155753.92007-9-krzysztof.kozlowski@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230326155753.92007-8-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230326155753.92007-9-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -83,15 +83,15 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 26/03/2023 18:57, Krzysztof Kozlowski wrote:
-> innolux,n116bca-ea1 is not exactly compatible witg innolux,n116bge, as
-> they have their own driver data.  Bindings do not allow fallback:
+> Panel does not have children with unit-addresses thus address/size-cells
+> are not valid:
 > 
->    sc7180-trogdor-lazor-limozeen-nots-r4.dtb: panel: compatible: ['innolux,n116bca-ea1', 'innolux,n116bge'] is too long
+>    panel@0: '#address-cells', '#size-cells' do not match any of the regexes: 'pinctrl-[0-9]+'
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->   .../boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts     | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 2 --
+>   1 file changed, 2 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
