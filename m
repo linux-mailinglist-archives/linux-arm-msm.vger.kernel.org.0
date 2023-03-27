@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF06E6CA126
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 12:21:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4BE96CA12B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 12:21:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233469AbjC0KVk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 06:21:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54198 "EHLO
+        id S233591AbjC0KV4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 06:21:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232645AbjC0KVj (ORCPT
+        with ESMTP id S233594AbjC0KVx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 06:21:39 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F309640E0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:21:37 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id a11so8388302lji.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:21:37 -0700 (PDT)
+        Mon, 27 Mar 2023 06:21:53 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C55664EF2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:21:47 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id c29so10718001lfv.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 03:21:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679912496;
+        d=linaro.org; s=google; t=1679912506;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=oBjAZjhZt2Kos0OPc0NoSOuwiBwcjf9HHxEXr2cpC34=;
-        b=PI18rf8DX54UhgFlSCEZDY+Wb+eAVTd6NqI3RtZT+xa9FF48FM6NBSRZrY0HGJhXkq
-         mKbGSiaHqnEOK1+GAstUytm5wwIBrov15+I3FlE0TLg7Mcb2I/fOYgeqvaluL1Mtgh/O
-         Z06k3KmHsJagpVM0naEkwyPb0aY3rQ6WSArbshKzRoLCjve97B93+XAPtQNpoPxWhbKI
-         JlgP6d+ZsSyKcoq3Ob11LC4H+xtMQHmNqFSoGCJrrMXH2DalgxanYvrgUYB7AoKbBpTv
-         oxfELqoiTCw8MnDOCPuWUxEX5Ec6E2mOjL/Xns0kSxMUGc27aNPsnJPJYyQBzPS9vVlC
-         6Dyw==
+        bh=8cCLL0Ku81Lj0tFub0aTRUmlGj/bY9UaPx7F8ErIg3Q=;
+        b=mPmvINEvZ8SbKpM3PZ4sWPSxTCEliy3mOHU2bLIjFSiXylMYG98J7MD0W09mp1oXvl
+         oHMpXzVTxn8H1uTLJvLdxOf/UsaJTEITQhzh79MFEh+xXDDgsWP9A0Jn3Jm3OVkcIaeU
+         pEWmee9OhV1BCNzlUiNv1pvL98WLZKQvUALEJd5GgWmRBeY1HnKHXag+LVwr21TGdAJF
+         TSIDwYIczZMwltgJu/PPPUe88nqGfVxYhNSzY92Dtc6+Zn7jVDaW0zis58MM4YPvIh5P
+         6oz9VHJWRhaEaLbmdNZW2oPBgAN1pboKntVhUyA32A6FpuTaBIPe9PHoxKHG1vi4v2sq
+         Pegw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679912496;
+        d=1e100.net; s=20210112; t=1679912506;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oBjAZjhZt2Kos0OPc0NoSOuwiBwcjf9HHxEXr2cpC34=;
-        b=EqrCCcv7lkCEXCyikjxKnYAIdPvd6P/7/jT1k6w0lEaZdS8cVtK/qOZqpE1d5JqqKV
-         AKEPDGIUE+16FubZP3PkS2cwT3zLmPNG3d0y5bkAY/4lnTeRyJrEkRWxvs6IgKFFMnIX
-         saD5z642uW196wC1Q5apXd1RLtjRff06DmHjV+TXjOgZPUkyzYkLwiFSwKQoxCVspIDq
-         TGA6kMeG4ISFg7fl7ooZk9tkN+Ddz1eiXsj4JHBTQBNZOSqLCXg0bON2GfjpyBJDHkui
-         U+iLqox/KRAaOX9rizVi4cCkvdyNVzTzf5qrMq92SRCr2GqVfLrwoKONZrWGRMeBZ6nd
-         Dajg==
-X-Gm-Message-State: AAQBX9cYSV5KVGBZta9sQdiKLuGCfNABACnzCE3/31yeJj5P6YSLaDrA
-        nnBF7mVJEmBdN8fvwpgtYBwQTw==
-X-Google-Smtp-Source: AKy350ai6cINLU+vH1OqohOljZduIP0o4msJq72d2C3h4OUe/B0nWK/MDypGJCEHV1JGz9GlJaahyg==
-X-Received: by 2002:a2e:6e03:0:b0:298:aad1:153e with SMTP id j3-20020a2e6e03000000b00298aad1153emr3618616ljc.11.1679912496274;
-        Mon, 27 Mar 2023 03:21:36 -0700 (PDT)
+        bh=8cCLL0Ku81Lj0tFub0aTRUmlGj/bY9UaPx7F8ErIg3Q=;
+        b=p4xBUiUstMs3p2IRLRfvAI/j0wsgTQgt0ixXP3J+LBLOCzV3D2SU1ahGc1VgE8XFDf
+         vtRAoseqnGREYk1cmL5N+ARAQdOWqR0PnEwaHpd6NMjPS+Exb4tIcBEYD20lbdB1UYwJ
+         1qfISk2/hJiVakWQ9E2aUfDLImDoqaWNh04JHkMGvqBeZVvqMMw0QsjJvcovmdAsyRy3
+         9LzXakOQmfXNLOeI2+q/H1uDHWps8YdQvc4Wsxk7TEnejpHPT5dmBTP8NmyBxE8BglLW
+         bRqBXHvRaoRhXU6xO0Yz1NELucoxy8Ls1upfsQHBu4HckU99Gxq5hQ9uqirH5X8h4cby
+         F+nQ==
+X-Gm-Message-State: AAQBX9edHcfP6MlhooS24FFqNrJtxg93h9aXJk7zbU6rI1l+egCMghlj
+        +Ls/DBYXEI3mHr6/my9wnbdFwg==
+X-Google-Smtp-Source: AKy350YsZl1lLndPLtgmqhQKTd2yzdEZ4UifTW61GDodPhv8n+hCqkK2VFpC4LzgDFm0NZPE8I1BVA==
+X-Received: by 2002:ac2:54a1:0:b0:4e0:dfd0:fa9 with SMTP id w1-20020ac254a1000000b004e0dfd00fa9mr2806692lfk.56.1679912506089;
+        Mon, 27 Mar 2023 03:21:46 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id k14-20020a2e92ce000000b002a5f97eaef0sm184755ljh.126.2023.03.27.03.21.35
+        by smtp.gmail.com with ESMTPSA id y11-20020ac2420b000000b004dded2d1965sm4606933lfh.267.2023.03.27.03.21.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 03:21:35 -0700 (PDT)
-Message-ID: <3381e839-b8a6-ce55-7f1d-fc047e572eeb@linaro.org>
-Date:   Mon, 27 Mar 2023 13:21:35 +0300
+        Mon, 27 Mar 2023 03:21:45 -0700 (PDT)
+Message-ID: <bf0dba24-cd67-4286-6284-d8b2ae0a181f@linaro.org>
+Date:   Mon, 27 Mar 2023 13:21:45 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 06/11] arm64: dts: qcom: sc7180-trogdor-wormdingler: use
- just "port" in panel
+Subject: Re: [PATCH 07/11] arm64: dts: qcom: sc7180-qcard: use just "port" in
+ panel
 Content-Language: en-GB
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -67,9 +67,9 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230326155753.92007-1-krzysztof.kozlowski@linaro.org>
- <20230326155753.92007-6-krzysztof.kozlowski@linaro.org>
+ <20230326155753.92007-7-krzysztof.kozlowski@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230326155753.92007-6-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230326155753.92007-7-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -86,11 +86,11 @@ On 26/03/2023 18:57, Krzysztof Kozlowski wrote:
 > The panel bindings expect to have only one port, thus they do not allow
 > to use "ports" node:
 > 
->    sc7180-trogdor-wormdingler-rev1-boe.dtb: panel@0: 'ports' does not match any of the regexes: 'pinctrl-[0-9]+'
+>    sc7280-herobrine-zombie-nvme-lte.dtb: panel: 'ports' does not match any of the regexes: 'pinctrl-[0-9]+'
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->   .../boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi     | 11 +++--------
+>   arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi | 11 +++--------
 >   1 file changed, 3 insertions(+), 8 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
