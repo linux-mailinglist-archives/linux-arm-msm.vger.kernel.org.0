@@ -2,66 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A18FA6CB0AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 23:27:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF98B6CB0E3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 23:45:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232256AbjC0V1l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 17:27:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44070 "EHLO
+        id S231990AbjC0Vp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 17:45:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231978AbjC0V1k (ORCPT
+        with ESMTP id S231359AbjC0VpJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 17:27:40 -0400
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25FE0173E;
-        Mon, 27 Mar 2023 14:27:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1679952459; x=1711488459;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=oY4+vDAxY0246pEy4b081gmn25gIUk5XxHRtZZZXKmo=;
-  b=eWcsHfqNyr3bLC4hC5A5r/QvMxVjuWKa/aYC6yPByURrBaRIdiePYa6v
-   7QZHL2NxgJAIOIydxuFyd6m1O1Ln/u2KqmK9vXjBciIUuVKWYXhAyrXxz
-   AxYp/049jrP/W8LUBd4ZTJDFNbyIBcleViHefoukbPaC5phQiOutE963u
-   DCy4okxMDboR158SjW0yREWaLBEltV7KnhJbI4ymPgkBANVy4WjbTvVKB
-   DFtSZp+MRYr9EAPLG2/ssZk8IAn9iAwbr3bVOYm77RBBGbWRELex15DSD
-   v/riTZo2DqGoFi06fqBqfTQmrRMG7h2IsKLb8vX5OPV8wpgkEiXAt/CTX
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10662"; a="368148896"
-X-IronPort-AV: E=Sophos;i="5.98,295,1673942400"; 
-   d="scan'208";a="368148896"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2023 14:27:38 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10662"; a="1013280464"
-X-IronPort-AV: E=Sophos;i="5.98,295,1673942400"; 
-   d="scan'208";a="1013280464"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by fmsmga005.fm.intel.com with ESMTP; 27 Mar 2023 14:27:35 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pguNK-000I1v-2P;
-        Mon, 27 Mar 2023 21:27:34 +0000
-Date:   Tue, 28 Mar 2023 05:27:24 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linus.walleij@linaro.org
-Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        Mukesh Ojha <quic_mojha@quicinc.com>
-Subject: Re: [PATCH v4 1/5] firmware: qcom_scm: provide a read-modify-write
- function
-Message-ID: <202303280535.acb66sQT-lkp@intel.com>
-References: <1679935281-18445-2-git-send-email-quic_mojha@quicinc.com>
+        Mon, 27 Mar 2023 17:45:09 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6FD0271C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 14:45:04 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-545ce8e77fcso118766237b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 14:45:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679953504;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8Od1yrRw9W0dDs3CqT7zBZ9uROZ36udzvsBtgFGjS0E=;
+        b=nJJC9+Vtewsjq4C44MAfep9cBROtkUlVfjhIvW8jPihW1JxYSYxcgz8nuv+wRlNyfO
+         VBQOCmg5nV9AXlBXv59COMt77+n+f1i/KRcQfmyDNRpLAtbAX1dhMEWktZXkB22ng3et
+         6gG1BHtIGQ0JQ51n3bqiged3a7tH9vYNd43mcjTIrTIKJYR4hi7SJqcg71X0tzNO597I
+         yS0qAbe0tDH1cuRCSFYgRv+9eZR5iiNmRp6wBFlx5uG1mx7x9jDuyKVEF/b9fupU6Eef
+         A9s1l4g9GgJPAXfYWgNXAjcH0bNHsclAtf0w4i+HZzwdeUVeoklVqx5dhZJzp3D0Z5vY
+         y2OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679953504;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8Od1yrRw9W0dDs3CqT7zBZ9uROZ36udzvsBtgFGjS0E=;
+        b=msgqEia3QXnORj4PA/QvCYHXERSn/Yx30GboypPDtq6fSRaY3a6vE+ssSFbbDqhk4V
+         wBXgXm4Kd9ei+nGq2n25EC4mRZGvwM9YR8GIJNEB+VFgvzjIJ9BK59xQfsSIG3okHiz4
+         Aqo5FNfliWMHEZoPJskYoafQo8acCwaBgRLptxBClNoLqsPvSrL/1Cg8Z5idVla6thAP
+         4zzEtL+K2357gAJpllryW9R+IElFAtCi1sp6y2PKPHWzLev9rXP95Llr2BqkFZOC2Zlu
+         /V2UyivmsgzEJlcCIBtML2bj39Yk7SQMALr5VjYPZ3ZeS8dETqInSOYgztBDj+J8Qdx3
+         FzNA==
+X-Gm-Message-State: AAQBX9dgaxoknINHv/fCH6QxSclBAXnqs9q8soK0NJWgN1VnQ0LT2mo0
+        vLI4IeZy15HVcCg1hqJTAFXHccdULUwNSv/Fih3kDA==
+X-Google-Smtp-Source: AKy350ZiZF5MjjPsOVfoZJqYbz6+9AyDpWJmzjBpGI3FukJ1AYFDm8mdtZ8HxExb9n4AJbaKdmnLzxtqtcjOdjCI/G0=
+X-Received: by 2002:a81:4426:0:b0:53d:2772:65d with SMTP id
+ r38-20020a814426000000b0053d2772065dmr6146370ywa.9.1679953503833; Mon, 27 Mar
+ 2023 14:45:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1679935281-18445-2-git-send-email-quic_mojha@quicinc.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+References: <20230323173019.3706069-1-dianders@chromium.org>
+In-Reply-To: <20230323173019.3706069-1-dianders@chromium.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 27 Mar 2023 23:44:52 +0200
+Message-ID: <CACRpkdaGpaiOVjEN6Ftq5=-yuAyD0xb7OcvtEsoqbTzias-xxw@mail.gmail.com>
+Subject: Re: [PATCH 00/14] Control Quad SPI pinctrl better on Qualcomm Chromebooks
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-gpio@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rajesh Patil <rajpat@codeaurora.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,65 +79,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mukesh,
+On Thu, Mar 23, 2023 at 6:31=E2=80=AFPM Douglas Anderson <dianders@chromium=
+.org> wrote:
 
-Thank you for the patch! Perhaps something to improve:
+> The main goal of this series is to do a better job of cI can apply ontrol=
+ing the
+> pins related to the "Quad SPI" IP block on Qualcomm Chromebooks. This
+> is essentially 'v2' of my previous attempt in the patch ("arm64: dts:
+> qcom: sc7180: Fix trogdor qspi pull direction") [1] but since it's
+> spiraled out a bit and there are no patches that are exactly the same
+> I've reset to v1.
+>
+> The early patches in this series are just no-op cleanup patches that
+> can be applied. They're not terribly critical but since they are
+> "Fixes" I've listed them first.
+>
+> The next patch in the series is a very simple and (hopefully)
+> non-controversial SPI patch. It can be applied independently if
+> anything else.
+>
+> Next, we have a bunch of pinctrl patches (including the device tree
+> bindings related to them). I dunno what folks are going to think about
+> these. If everyone hates them, we can drop them and just change the
+> later patches in the series to use "input-enable" instead of
+> "output-disable". It feels ugly to me, but it maybe less upheval.
+>
+> Next I removed the now-deprecated "input-enable" property from all
+> Chromebooks. None of them were necessary.
+>
+> Finally, I did what I really wanted to do in the first place: attempt
+> to cleanup the pinctrl states of the Quad SPI. These patches have a
+> hard requirement on the pinctrl change.
 
-[auto build test WARNING on next-20230327]
-[also build test WARNING on v6.3-rc4]
-[cannot apply to linusw-pinctrl/devel linusw-pinctrl/for-next linus/master v6.3-rc4 v6.3-rc3 v6.3-rc2]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+This looks good to me (TM)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Mukesh-Ojha/firmware-qcom_scm-provide-a-read-modify-write-function/20230328-004405
-patch link:    https://lore.kernel.org/r/1679935281-18445-2-git-send-email-quic_mojha%40quicinc.com
-patch subject: [PATCH v4 1/5] firmware: qcom_scm: provide a read-modify-write function
-config: s390-allyesconfig (https://download.01.org/0day-ci/archive/20230328/202303280535.acb66sQT-lkp@intel.com/config)
-compiler: s390-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/47c3bb52fbb758e2238a7ab29c00e3188afe9754
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Mukesh-Ojha/firmware-qcom_scm-provide-a-read-modify-write-function/20230328-004405
-        git checkout 47c3bb52fbb758e2238a7ab29c00e3188afe9754
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=s390 olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=s390 SHELL=/bin/bash drivers/firmware/
+Do you have a merge plan?
+I can queue the pinctrl patch into the pinctrl tree, and
+the pinctrl binding patches.
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303280535.acb66sQT-lkp@intel.com/
+Will you take the rest to the SPI and SoC tree?
 
-All warnings (new ones prefixed by >>):
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+FWIW
 
-   drivers/firmware/qcom_scm.c: In function 'qcom_scm_io_update_field':
->> drivers/firmware/qcom_scm.c:419:49: warning: suggest parentheses around '-' inside '<<' [-Wparentheses]
-     419 |         new = (old & ~mask) | (val << ffs(mask) - 1);
-         |                                       ~~~~~~~~~~^~~
-
-
-vim +419 drivers/firmware/qcom_scm.c
-
-   409	
-   410	int qcom_scm_io_update_field(phys_addr_t addr, unsigned int mask, unsigned int val)
-   411	{
-   412		unsigned int old, new;
-   413		int ret;
-   414	
-   415		ret = qcom_scm_io_readl(addr, &old);
-   416		if (ret)
-   417			return ret;
-   418	
- > 419		new = (old & ~mask) | (val << ffs(mask) - 1);
-   420	
-   421		return qcom_scm_io_writel(addr, new);
-   422	}
-   423	EXPORT_SYMBOL(qcom_scm_io_update_field);
-   424	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+Yours,
+Linus Walleij
