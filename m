@@ -2,118 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E01296CB1D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 00:32:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32D016CB295
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 01:41:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbjC0WcD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 18:32:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37162 "EHLO
+        id S229610AbjC0XlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 19:41:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231432AbjC0WcC (ORCPT
+        with ESMTP id S229677AbjC0XlE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 18:32:02 -0400
-Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 873ED26A9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 15:31:57 -0700 (PDT)
-Received: by mail-vs1-xe2e.google.com with SMTP id h27so8876438vsa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 15:31:57 -0700 (PDT)
+        Mon, 27 Mar 2023 19:41:04 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F9C9BF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 16:41:02 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id o12so4647954iow.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 16:41:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1679956314;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c9Wt+WsnnVD5DSCi0zCQh6BBH6TNLjKpNQABAtkF2NM=;
-        b=TJJnlhbbvX8CYLVVoocAVzW32w5wyAy0w60WP17fBop9zORjJqlfutrdzs/xPjGob3
-         uEulrtjagGT+SgE63CFj5egKzLS3IbJHrXB6yTWm1tmCzSoarY0t5YK0cyBT/kqQnlq8
-         eRBkjUz66+OCudU1Z0B0MRnmlsKdT+AOpyZPk=
+        d=linaro.org; s=google; t=1679960461;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JoaFrK1DNRcSQ1ImrxF44n1yrzlCAr4sckNkLw8fzgI=;
+        b=ynLrYPNn6MrJNCQybk3kIizkcAFvpdHlUVrlKkTSEFf6vsFf0NdNb+GzmdccfMMi+v
+         p/5kub3wqmBElnCB9zoFf+tyhpFJxH8e3odsVyR7ElHioJdCKTwnELseuFLpqNZ1GXst
+         RfQwqM7KRmF6SJLzKxuUt2U71O2SiEPJgAcMKPo2s2vCSmvLcuNyseaV5JUdddVN5Wxl
+         yKqoc2ZLtUQ+jTyZuvgmGSnOm2lZlNi3EFvV4hu+erMjPY0ZBgc/+oxrOiq65jq9A4nF
+         ywPBjX1FsxgQaWaz+1NdPITcer+pRX4EGMdVBlH/jqi7CIcbFTegj1TfoWlkhHc98ZI/
+         F1GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679956314;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1679960461;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=c9Wt+WsnnVD5DSCi0zCQh6BBH6TNLjKpNQABAtkF2NM=;
-        b=NWET4h7KyxADPEp329FnII3P+hMLlLgss1+BYqNTNYT6cEGcSHIS/8K4n85RuBtbjy
-         z7VeNzBc7vy6HTWiL1ufxg04GTDb3xciqTZ326k2/gd21gpDnuYLEoETBb2OaRUPny6t
-         vkDdYS5IY60UUmsFmskZ64Izt4eHzr9hmjhSc+6UxR618zqfwqH32OyWHyT+JfLHrr+T
-         JKdspP+4uJYG3c4B53mn10BmDlZ7RA/C91lSPxj3qHhmLI5k+ExhTNNHzW9ODGlleyW9
-         cKspfyVGoypSmtf8CR3EmaeIz5XyWY9yGRmkosikcwVOULXjpm8xMsKVrRuw7nRWMdPm
-         sgZA==
-X-Gm-Message-State: AAQBX9fuu3f0eTcXXj6NTFWF0YKuHEqUprT9aJHse39QJYCsyk/8OPHT
-        NrHjoonZt07T6uKBIrIFhfNMn18sm5Swr8OHlJc=
-X-Google-Smtp-Source: AKy350Y7PTxlIRsg0M58GzAw0nsSqXR7SOk1KPwhu5VNxF932ocSy85c5adD40VaIMvjNV1H42G/iQ==
-X-Received: by 2002:a67:edd2:0:b0:426:84d2:5ecc with SMTP id e18-20020a67edd2000000b0042684d25eccmr3998735vsp.33.1679956314732;
-        Mon, 27 Mar 2023 15:31:54 -0700 (PDT)
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com. [209.85.222.51])
-        by smtp.gmail.com with ESMTPSA id a3-20020ab00c03000000b00747dd9831dfsm3533726uak.28.2023.03.27.15.31.53
-        for <linux-arm-msm@vger.kernel.org>
+        bh=JoaFrK1DNRcSQ1ImrxF44n1yrzlCAr4sckNkLw8fzgI=;
+        b=K4V7tDyP3LOYC6jUtUYhZNdFbDz65gtPome/TUnC8gHMvf9W7lNnto1w6VwqEfJh3d
+         FuTry6sW+layc8nDEznYhdvijbuVjK2e8g8gwfrvMkpBE0cDwsZ1jLfJI13Sxe6dZzus
+         7eJ2HUZGEocsvUWumbb+ktt4eb9ihNc+mayuPx3ektMdfj+HkJmg76XA3kmFXXRBpOGf
+         JoPhR0HBEsitUvD/m+tHFHtE/vUGqqVxRjABNIByR9KNstwN1TGo3KJNa979L1EZMafG
+         h0yHkDhFOPf0l0TC+9u14ehV3nsKpVAWz6fKZU/UyS0Cgmg0dBx1jPg2ofGJIICNYIEK
+         /d4A==
+X-Gm-Message-State: AO0yUKXVmQd0MY6aWr2zxF5k0DGm+YY4qEQoIHIXgRj/sWXwFuRutb+H
+        snmCR/y1hH7IdEUPWz2bSpDWZg==
+X-Google-Smtp-Source: AK7set+bRCdcdl3Ae9vYyBV57C+4JF+6Noaiw/aikNo5KecpU4wjfRCVr2njCldm4zVFNaxS7XZmZQ==
+X-Received: by 2002:a6b:720b:0:b0:74c:bc14:46a1 with SMTP id n11-20020a6b720b000000b0074cbc1446a1mr10993237ioc.4.1679960461433;
+        Mon, 27 Mar 2023 16:41:01 -0700 (PDT)
+Received: from smtpclient.apple ([152.179.59.114])
+        by smtp.gmail.com with ESMTPSA id g8-20020a6b7608000000b0074c7db1470dsm8107156iom.20.2023.03.27.16.41.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 15:31:53 -0700 (PDT)
-Received: by mail-ua1-f51.google.com with SMTP id v48so7532755uad.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 15:31:53 -0700 (PDT)
-X-Received: by 2002:ab0:6082:0:b0:765:8f29:d679 with SMTP id
- i2-20020ab06082000000b007658f29d679mr329648ual.1.1679956313217; Mon, 27 Mar
- 2023 15:31:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230324165909.131831-1-vkoul@kernel.org> <CAD=FV=UJepzmKczemVGB8NacjyvLDqXiRoc81s1tJ=u5+HAeqg@mail.gmail.com>
- <fb2d333e-c459-f394-a299-533083b83596@linaro.org>
-In-Reply-To: <fb2d333e-c459-f394-a299-533083b83596@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 27 Mar 2023 15:31:41 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WTz=FVPP+pB8VMA8qWtD9hH00yBhFvs5rkfynranyr4w@mail.gmail.com>
-Message-ID: <CAD=FV=WTz=FVPP+pB8VMA8qWtD9hH00yBhFvs5rkfynranyr4w@mail.gmail.com>
-Subject: Re: [PATCH] drm/panel-edp: Add B133UAN01.0 edp panel entry
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Mon, 27 Mar 2023 16:41:00 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+From:   Alex Elder <alex.elder@linaro.org>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH net] net: ipa: compute DMA pool size properly
+Date:   Mon, 27 Mar 2023 18:40:49 -0500
+Message-Id: <2E9EE299-E500-429E-9D19-CA8A55326100@linaro.org>
+References: <20230327211627.GA3248042@hu-bjorande-lv.qualcomm.com>
+Cc:     Alex Elder <elder@linaro.org>, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+        caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
+        andersson@kernel.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+In-Reply-To: <20230327211627.GA3248042@hu-bjorande-lv.qualcomm.com>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+X-Mailer: iPhone Mail (20D67)
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Fri, Mar 24, 2023 at 12:13=E2=80=AFPM Neil Armstrong
-<neil.armstrong@linaro.org> wrote:
->
-> Le 24/03/2023 =C3=A0 18:04, Doug Anderson a =C3=A9crit :
-> > Hi,
-> >
-> > On Fri, Mar 24, 2023 at 9:59=E2=80=AFAM Vinod Koul <vkoul@kernel.org> w=
+
+> On Mar 27, 2023, at 4:16 PM, Bjorn Andersson <quic_bjorande@quicinc.com> w=
 rote:
-> >>
-> >> From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> >>
-> >> This panel is found in Lenovo Flex 5G laptop, so add the entry for it
-> >>
-> >> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> >> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> >> ---
-> >>   drivers/gpu/drm/panel/panel-edp.c | 1 +
-> >>   1 file changed, 1 insertion(+)
-> >
-> > Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> >
-> > ...assuming nothing distracts me, I'll plan to land this Monday to
-> > drm-misc-next.
->
-> If you get distracted, I'll apply it!
->
-> Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+>=20
+> =EF=BB=BFOn Sun, Mar 26, 2023 at 11:52:23AM -0500, Alex Elder wrote:
+>> In gsi_trans_pool_init_dma(), the total size of a pool of memory
+>> used for DMA transactions is calculated.  However the calculation is
+>> done incorrectly.
+>>=20
+>> For 4KB pages, this total size is currently always more than one
+>> page, and as a result, the calculation produces a positive (though
+>> incorrect) total size.  The code still works in this case; we just
+>> end up with fewer DMA pool entries than we intended.
+>>=20
+>> Bjorn Andersson tested booting a kernel with 16KB pages, and hit a
+>> null pointer derereference in sg_alloc_append_table_from_pages(),
+>> descending from gsi_trans_pool_init_dma().  The cause of this was
+>> that a 16KB total size was going to be allocated, and with 16KB
+>> pages the order of that allocation is 0.  The total_size calculation
+>> yielded 0, which eventually led to the crash.
+>>=20
+>> Correcting the total_size calculation fixes the problem.
+>>=20
+>> Reported-by: <quic_bjorande@quicinc.com>
+>> Tested-by: <quic_bjorande@quicinc.com>
+>=20
+> It would be nice to add "Bjorn Andersson" to these two.
+>=20
 
-Pushed to drm-misc-next:
+Oh yeah sorry about that. I=E2=80=99ll add it.   -Alex
 
-981f8866754d drm/panel-edp: Add B133UAN01.0 edp panel entry
+> Regards,
+> Bjorn
+>=20
+>> Fixes: 9dd441e4ed57 ("soc: qcom: ipa: GSI transactions")
+>> Signed-off-by: Alex Elder <elder@linaro.org>
+>> ---
+>> drivers/net/ipa/gsi_trans.c | 2 +-
+>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>=20
+>> diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
+>> index 0f52c068c46d6..ee6fb00b71eb6 100644
+>> --- a/drivers/net/ipa/gsi_trans.c
+>> +++ b/drivers/net/ipa/gsi_trans.c
+>> @@ -156,7 +156,7 @@ int gsi_trans_pool_init_dma(struct device *dev, struc=
+t gsi_trans_pool *pool,
+>>     * gsi_trans_pool_exit_dma() can assume the total allocated
+>>     * size is exactly (count * size).
+>>     */
+>> -    total_size =3D get_order(total_size) << PAGE_SHIFT;
+>> +    total_size =3D PAGE_SIZE << get_order(total_size);
+>>=20
+>>    virt =3D dma_alloc_coherent(dev, total_size, &addr, GFP_KERNEL);
+>>    if (!virt)
+>> --=20
+>> 2.34.1
+>>=20
