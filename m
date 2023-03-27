@@ -2,153 +2,209 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 831BC6C9CBC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 09:50:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3CBD6C9CD1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 09:52:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232545AbjC0Ht7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 03:49:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40570 "EHLO
+        id S232685AbjC0Hwq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 03:52:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232799AbjC0Htz (ORCPT
+        with ESMTP id S232550AbjC0Hwo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 03:49:55 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9172DE1;
-        Mon, 27 Mar 2023 00:49:54 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32R7T4h4032155;
-        Mon, 27 Mar 2023 07:49:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=/c2reEat/wJZOjBAjPDX8NUM19PVHExcK5yTwg99PXI=;
- b=WYTv/YKevq6N4+dqRYnCMsXPQ8MABYhKCueHT3au3fKPW6aOe14odYq41jywrNdt1RZy
- wgpWeKthupIaJLSrztPM2HvaiNlIMf0KYy4hERDwF8PBbaMX71c57FiH/syuL8E9C+V9
- GXbD6Y5RLf2jVhn1u7s8kuuaGZ2EUl2hcqUAGOjtSLAekgwr3y+nVZujuc/dVrzrIWly
- HiPoONO81fjJq9jh//kaPwwIJOF4W+zR6xFeeGXWGMaboBMfxokd4Th12TnkVBsdiA8n
- kq0pd2ePTexjeKO1s2GQt5po4k0g63tM/ixi3x80Zb3d9ZZ04jvjAp7eDDUmOTXca5lr bA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3phsqqkr8j-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 27 Mar 2023 07:49:42 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32R7nfNc028602
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 27 Mar 2023 07:49:41 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 27 Mar
- 2023 00:49:36 -0700
-Message-ID: <b04c49b1-3eb2-e4f8-63f4-6613bf9225af@quicinc.com>
-Date:   Mon, 27 Mar 2023 15:49:34 +0800
+        Mon, 27 Mar 2023 03:52:44 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D105110
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 00:52:43 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id t10so31973169edd.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 00:52:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679903562;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=S1nsUKjzCSRJ3QxewfOzpoaDxvCQL60FhzqskMDTvRY=;
+        b=mW6Kkklp5WlQxHi+FwA6xvgBZDesfxzza7v/KKjXwrrHY9YdKhXB/l3F9czTiiEz2r
+         NTfqu6AdyMuGrKKrs8fkHgXdgOt/VwqGzi5BX+f7CujntDaEgS108SFEGai4VFMJLuNX
+         6BZDKIdmOxQsmkyQi2jgY5ZRiLpKeMScj4HoGs2Zbg9thSzGXbPx0szDQ+fzhrODrT42
+         Kw2/CiVwx62vbhNbw5LHy3AHMWtGF5PuvjCwK+lq+CaDUb227Pp2XCZIda+E6CmsCu7D
+         fb66VS2k9/7Hri9KWG1SsAgRpWV1mJ0Ljtux/VYee5xZQtCGwxk3R9k0KGJgflvyZnfh
+         janQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679903562;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=S1nsUKjzCSRJ3QxewfOzpoaDxvCQL60FhzqskMDTvRY=;
+        b=1POZC1ROOhAuox7KYS4dirYdOLuvSbkHNJnUoxodMYKZgGenEwADKu0NIkukXDCCYr
+         1UdUa+ZvW8kqLidDiZV4+OqXfdTYYre9QlSOhHuBTPYmnVjqS/1Vyj90oXEBg/gqvX2l
+         cFkyxDJgn3+jiMkYjHFNoMiw5OqNC1zl56Cfk9fD3xsyIAMRSKJFuj5kC3g/8LV71Ksf
+         lPjef6xBm/s87CHPuZkk4wzmj4vOXXSRHBqVaSk4j0sxn7Bg6c5N+YAGJiE8drFvw2Om
+         SeNDfIQracRzLaHavIF2z+uLQhzF0CVGsw22wUBQrlJPXmd5Mkmomm4yfvoIPTIG2QTc
+         Sprg==
+X-Gm-Message-State: AAQBX9dgBNDALNBTmM6CXYO1/p2FgveXH/jqprud/46GXoSIboTAGfn8
+        3LNbnMIAOYwFDxwvbKkyXLJKlA==
+X-Google-Smtp-Source: AKy350bG/xOcJXznhNrcbxb2R9hKOzmD00U7Kklxl1F6u5myMQ0+i27iI8rX0Oq2x156EA5Ivve36w==
+X-Received: by 2002:a17:906:948d:b0:8b1:264d:6187 with SMTP id t13-20020a170906948d00b008b1264d6187mr10204061ejx.46.1679903561704;
+        Mon, 27 Mar 2023 00:52:41 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:198e:c1a5:309b:d678? ([2a02:810d:15c0:828:198e:c1a5:309b:d678])
+        by smtp.gmail.com with ESMTPSA id o7-20020a1709062e8700b00933356c681esm12231674eji.150.2023.03.27.00.52.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Mar 2023 00:52:41 -0700 (PDT)
+Message-ID: <c03075fa-14d4-513e-3ff0-940452697765@linaro.org>
+Date:   Mon, 27 Mar 2023 09:52:40 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v3 08/11] coresight-tpdm: Add nodes to configure pattern
- match output
+Subject: Re: [PATCH v2 02/12] dt-bindings: PCI: qcom: Document sc8180x
+ properties
 Content-Language: en-US
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
+To:     Vinod Koul <vkoul@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Bjorn Andersson <andersson@kernel.org>
-References: <1679551448-19160-1-git-send-email-quic_taozha@quicinc.com>
- <1679551448-19160-9-git-send-email-quic_taozha@quicinc.com>
- <b3bb6dc1-ceeb-0116-055b-25a27da8ab38@arm.com>
-From:   Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <b3bb6dc1-ceeb-0116-055b-25a27da8ab38@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9L_uUI6PGy6PSwz476lM4wuQsGV0sFeS
-X-Proofpoint-ORIG-GUID: 9L_uUI6PGy6PSwz476lM4wuQsGV0sFeS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-24_11,2023-03-24_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- mlxlogscore=999 bulkscore=0 adultscore=0 clxscore=1015 mlxscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303270062
+Cc:     linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230325122444.249507-1-vkoul@kernel.org>
+ <20230325122444.249507-3-vkoul@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230325122444.249507-3-vkoul@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Suzuki,
+On 25/03/2023 13:24, Vinod Koul wrote:
+> sc8180x PCIe clocks and resets are different from the common pcie
 
-On 3/24/2023 1:27 AM, Suzuki K Poulose wrote:
-> On 23/03/2023 06:04, Tao Zhang wrote:
->> Add nodes to configure trigger pattern and trigger pattern mask.
->> Each DSB subunit TPDM has maximum of n(n<7) XPR registers to
->> configure trigger pattern match output. Eight 32 bit registers
->> providing DSB interface trigger output pattern match comparison.
->> And each DSB subunit TPDM has maximum of m(m<7) XPMR registers to
->> configure trigger pattern mask match output. Eight 32 bit
->> registers providing DSB interface trigger output pattern match
->> mask.
->>
->> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->> ---
->>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 24 +++++++
->>   drivers/hwtracing/coresight/coresight-tpdm.c       | 84 
->> ++++++++++++++++++++++
->>   drivers/hwtracing/coresight/coresight-tpdm.h       |  8 +++
->>   3 files changed, 116 insertions(+)
->>
->> diff --git 
->> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
->> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> index 094d624..c06374f 100644
->> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> @@ -71,3 +71,27 @@ Description:
->>           value 1: Start EDCMR register number
->>           value 2: End EDCMR register number
->>           value 3: The value need to be written
->> +
->> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_trig_patt_val
->> +Date:        March 2023
->> +KernelVersion    6.3
->> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
->> (QUIC) <quic_taozha@quicinc.com>
->> +Description:
->> +        (Write) Set the trigger pattern value of DSB tpdm.
->> +        Read the trigger pattern value of DSB tpdm.
->> +
->> +        Accepts the following two values.
->> +        value 1: Index number of XPR register
->> +        value 2: The value need to be written
->
-> minor nit: What values are acceptable ? Otherwise looks fine.
+There is no "common" part for sc8180x in this binding. sc8180x is
+customized.
 
-I will update this in the next patch series.
+> binding, this warrants the oneOf clause for the clocks and resets
 
+Your subject and commit suggests you are now adding new customization
+for SC8180x, but it is already there! Clocks, interrupts, regs etc.
+Therefore the commit msg does not fit the contents of the patch. Instead
+say that you fix something or change, because of foo and bar.
 
-Tao
+Otherwise it looks like some old patch rebased onto new kernel so it
+does not match at all.
 
->
-> Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
->
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    | 49 ++++++++++++++++++-
+>  1 file changed, 47 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index fb32c43dd12d..d4f837924e7c 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -459,6 +459,33 @@ allOf:
+>            items:
+>              - const: pci # PCIe core reset
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,pcie-sc8180x
+> +    then:
+> +      properties:
+> +        clocks:
+> +          minItems: 8
+> +          maxItems: 8
+> +        clock-names:
+> +          items:
+> +            - const: pipe # PIPE clock
+> +            - const: aux # Auxiliary clock
+> +            - const: cfg # Configuration clock
+> +            - const: bus_master # Master AXI clock
+> +            - const: bus_slave # Slave AXI clock
+> +            - const: slave_q2a # Slave Q2A clock
+> +            - const: ref # REFERENCE clock
+> +            - const: tbu # PCIe TBU clock
+> +        resets:
+> +          maxItems: 1
+> +        reset-names:
+> +          items:
+> +            - const: pci # PCIe core reset
+> +
+>    - if:
+>        properties:
+>          compatible:
+> @@ -507,7 +534,6 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> -              - qcom,pcie-sc8180x
+>                - qcom,pcie-sm8150
+>                - qcom,pcie-sm8250
+>      then:
+> @@ -675,6 +701,7 @@ allOf:
+>            contains:
+>              enum:
+>                - qcom,pcie-sa8540p
+> +              - qcom,pcie-sc8180x
+>                - qcom,pcie-sc8280xp
+>      then:
+>        required:
+> @@ -717,7 +744,6 @@ allOf:
+>              enum:
+>                - qcom,pcie-msm8996
+>                - qcom,pcie-sc7280
+> -              - qcom,pcie-sc8180x
+>                - qcom,pcie-sdm845
+>                - qcom,pcie-sm8150
+>                - qcom,pcie-sm8250
+> @@ -746,6 +772,25 @@ allOf:
+>                  - const: msi6
+>                  - const: msi7
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,pcie-sc8180x
+> +    then:
+> +      oneOf:
+
+It's not oneOf.
+> +        - properties:
+> +            interrupts:
+> +              maxItems: 1
+> +            interrupt-names:
+> +              items:
+> +                - const: msi
+
+Why do you even need this here? It's already there.
+
+> +            iommus:
+> +              maxItems: 1
+> +            iommu-map:
+> +              maxItems: 2
+
+And this looks wrong. Drop.
+https://lore.kernel.org/all/20230308082424.140224-3-manivannan.sadhasivam@linaro.org/
+
+> +
+>    - if:
+>        properties:
+>          compatible:
+
+Best regards,
+Krzysztof
+
