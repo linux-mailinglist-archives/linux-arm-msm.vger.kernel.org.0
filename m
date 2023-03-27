@@ -2,134 +2,807 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5B406C9A89
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 06:31:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 302F46C9AE6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 07:38:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232019AbjC0EbM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 00:31:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36706 "EHLO
+        id S229475AbjC0Fi4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 01:38:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230180AbjC0EbL (ORCPT
+        with ESMTP id S230309AbjC0Fiz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 00:31:11 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE66A4C1F;
-        Sun, 26 Mar 2023 21:31:08 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32R0Z4MD025881;
-        Mon, 27 Mar 2023 04:30:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=TUUCFDqI+u7nB65jzjQQat0ajxrTfcl0QyWyzZcDN3o=;
- b=LVr7WPod8TAvmoSrI0PhM/IRU1zJjixMEYe5FsLWrE6z/n0q/ba1pSt8FTHDE0FxNLl9
- uEsg6u7pOBac+lK0RV0zwLde3TpFRQqoTyAixq52qqEWKGOh0TUXfxsCeuHTXiDdT3LF
- xzgu4s8y5tcSqHEEGGJjDX9hL7Vv+B7m5wlHNvm9xUzAmWHKWyAsZlugGlW6hW4XBkvj
- J/jgzjAPb/UxOyeK36C0M3aMhtboPwZLZJjGs1LFghe30XSFlpRupMMRwlydmuWkuPUA
- gNJH4rhjukfGwtMWbwaVHwK3+5+7ZbffWClNmOuHVwp4/tqwvkOi7spz73Xt8lM0cEKi iw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3phte8b7ya-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 27 Mar 2023 04:30:54 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32R4Ur4G001295
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 27 Mar 2023 04:30:53 GMT
-Received: from [10.239.154.73] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Sun, 26 Mar
- 2023 21:30:51 -0700
-Message-ID: <cb5d7483-9b6f-51c7-a2b1-9ff83c6e7c8a@quicinc.com>
-Date:   Mon, 27 Mar 2023 12:30:09 +0800
+        Mon, 27 Mar 2023 01:38:55 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 826184C01;
+        Sun, 26 Mar 2023 22:38:53 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0EFC1B80DAC;
+        Mon, 27 Mar 2023 05:38:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4655C433D2;
+        Mon, 27 Mar 2023 05:38:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679895530;
+        bh=Yhb2RGYjg/g3c0wqYGwzgujjwyviDdmR0hflJF8Bga0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=dMphlRGkOjzy2goSoW7ymBZEjRZ9qSvWG/AtZOyRTElak+e5fDVowtpqT1UU2BrbH
+         tGx8H4u1tlmeGexvd9QvaD8N7Ji8DfyuvfETvQ1CpcjPnNEBcdYME0P5vJbkGN9A+c
+         f0mhFxiFaw+KVjzYcv7ZOL1juwleZnFfDz/rfoHLFgJZj6Yy6eFK57lMNe/ibz3PoG
+         iTILb2Gftve7LOUj7kG7M8OJwlL7RN7ZVodWp3MgeuK+Mlf0CKCOc3bX/9KUozKuk7
+         bbsFC8+k5W/fMZ6/pETxEosuREL4Q6Kwp7oK8/lqbUnGnXhx4aPn8uGucPag8/Qu72
+         an22BHIWfb34Q==
+Date:   Mon, 27 Mar 2023 11:08:45 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 10/12] arm64: dts: qcom: Introduce the SC8180x platform
+Message-ID: <ZCEr5WnbvA2jkHLn@matsya>
+References: <20230325122444.249507-1-vkoul@kernel.org>
+ <20230325122444.249507-11-vkoul@kernel.org>
+ <bfc64e55-3c06-e36b-70cc-33a0303681be@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v8 1/2] leds: flash: add driver to support flash LED
- module in QCOM PMICs
-To:     Pavel Machek <pavel@ucw.cz>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <lee@kernel.org>, <krzysztof.kozlowski@linaro.org>,
-        <linux-leds@vger.kernel.org>, <quic_collinsd@quicinc.com>,
-        <quic_subbaram@quicinc.com>, Luca Weiss <luca.weiss@fairphone.com>
-References: <20230303095023.538917-1-quic_fenglinw@quicinc.com>
- <20230303095023.538917-2-quic_fenglinw@quicinc.com>
- <20230325170957.GA2904@bug>
-Content-Language: en-US
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <20230325170957.GA2904@bug>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8U2rnc8fuNPNC5_QL7VMlfS2V-7F_Vaj
-X-Proofpoint-ORIG-GUID: 8U2rnc8fuNPNC5_QL7VMlfS2V-7F_Vaj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-24_11,2023-03-24_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- suspectscore=0 priorityscore=1501 malwarescore=0 clxscore=1011 mlxscore=0
- bulkscore=0 spamscore=0 phishscore=0 mlxlogscore=995 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2303270036
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bfc64e55-3c06-e36b-70cc-33a0303681be@linaro.org>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 3/26/2023 1:09 AM, Pavel Machek wrote:
-> Hi!
->> @@ -61,6 +61,21 @@ config LEDS_MT6360
->>   	  Independent current sources supply for each flash LED support torch
->>   	  and strobe mode.
->>   
->> +config LEDS_QCOM_FLASH
->> +	tristate "LED support for flash module inside Qualcomm Technologies, Inc. PMIC"
->> +	depends on MFD_SPMI_PMIC || COMPILE_TEST
->> +	depends on LEDS_CLASS && OF
->> +	depends on V4L2_FLASH_LED_CLASS || !V4L2_FLASH_LED_CLASS
->> +	select REGMAP
->> +	help
->> +	  This option enables support for the flash module found in Qualcomm
->> +	  Technologies, Inc. PMICs. The flash module can have 3 or 4 flash LED
->> +	  channels and each channel is programmable to support up to 1.5 A full
->> +	  scale current. It also supports connecting two channels' output together
->> +	  to supply one LED component to achieve current up to 2 A. In such case,
->> +	  the total LED current will be split symmetrically on each channel and
->> +	  they will be enabled/disabled at the same time.
+On 25-03-23, 13:34, Konrad Dybcio wrote:
 > 
-> "This can be built as a module, module will be called..."
+> 
+> On 25.03.2023 13:24, Vinod Koul wrote:
+> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > 
+> > Introduce a base dtsi for the Qualcomm SC8180x platform, with CPUs,
+> > global clock controller, SMMU, rpmh clocks, rpmh power-domains, CPUfreq,
+> > QUP blocks, UFS, USB, ADSP, CDSP and MPSS and WiFi.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc8180x.dtsi | 3950 +++++++++++++++++++++++++
+> >  1 file changed, 3950 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sc8180x.dtsi
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+> > new file mode 100644
+> > index 000000000000..4d4ee6bc91e5
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+> > @@ -0,0 +1,3950 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
+> > + * Copyright (c) 2020-2023, Linaro Limited
+> > + */
+> > +
+> > +#include <dt-bindings/clock/qcom,dispcc-sm8250.h>
+> > +#include <dt-bindings/clock/qcom,gcc-sc8180x.h>
+> > +#include <dt-bindings/clock/qcom,gpucc-sm8150.h>
+> > +#include <dt-bindings/clock/qcom,rpmh.h>
+> > +#include <dt-bindings/interconnect/qcom,osm-l3.h>
+> > +#include <dt-bindings/interconnect/qcom,sc8180x.h>
+> > +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> > +#include <dt-bindings/power/qcom-rpmpd.h>
+> > +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> > +#include <dt-bindings/thermal/thermal.h>
+> > +
+> > +/ {
+> > +	interrupt-parent = <&intc>;
+> > +
+> > +	#address-cells = <2>;
+> > +	#size-cells = <2>;
+> > +
+> > +	clocks {
+> > +		xo_board_clk: xo-board {
+> > +			compatible = "fixed-clock";
+> > +			#clock-cells = <0>;
+> > +			clock-frequency = <38400000>;
+> > +		};
+> > +
+> > +		sleep_clk: sleep-clk {
+> > +			compatible = "fixed-clock";
+> > +			#clock-cells = <0>;
+> > +			clock-frequency = <32764>;
+> > +			clock-output-names = "sleep_clk";
+> > +		};
+> > +	};
+> > +
+> > +	cpus {
+> > +		#address-cells = <2>;
+> > +		#size-cells = <0>;
+> > +
+> > +		CPU0: cpu@0 {
+> > +			device_type = "cpu";
+> > +			compatible = "qcom,kryo485";
+> > +			reg = <0x0 0x0>;
+> Please add clocks = <&cpufreq_hw n>;
+>  
+> > +			enable-method = "psci";
+> > +			capacity-dmips-mhz = <602>;
+> > +			next-level-cache = <&L2_0>;
+> > +			qcom,freq-domain = <&cpufreq_hw 0>;
 
-I can update it in a new change considering the initial change has been 
-applied.
+You mean this or something else?
+
+> > +			operating-points-v2 = <&cpu0_opp_table>;
+> > +			interconnects = <&gem_noc MASTER_AMPSS_M0 3 &mc_virt SLAVE_EBI_CH0 3>,
+> > +					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+> > +			power-domains = <&CPU_PD0>;
+> > +			power-domain-names = "psci";
+> > +			#cooling-cells = <2>;
+> Add a newline before subnodes, please.
+
+Sure
 
 > 
->> +static int qcom_flash_led_brightness_set(struct led_classdev *led_cdev,
->> +					enum led_brightness brightness)
->> +{
->> +	struct led_classdev_flash *fled_cdev = lcdev_to_flcdev(led_cdev);
->> +	struct qcom_flash_led *led = flcdev_to_qcom_fled(fled_cdev);
->> +	u32 current_ma = brightness * led->max_torch_current_ma / LED_FULL;
->> +	bool enable = !!brightness;
->> +	int rc;
->> +
->> +	rc = set_flash_current(led, current_ma, TORCH_MODE);
->> +	if (rc)
->> +		return rc;
+> > +			L2_0: l2-cache {
+> > +				compatible = "cache";
+> > +				next-level-cache = <&L3_0>;
+> > +				L3_0: l3-cache {
+> > +				      compatible = "cache";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> [...]
 > 
-> I'd not mind supporting more than one brightness level -- AFAICT hw can do that.
+> > +
+> > +	cpu0_opp_table: opp-table-cpu0 {
+> > +		compatible = "operating-points-v2";
+> > +		opp-shared;
+> > +
+> > +		opp-300000000 {
+> > +			opp-hz = /bits/ 64 <300000000>;
+> > +			opp-peak-kBps = <800000 9600000>;
+> Maybe adding bwmon from the get-go would be better than statically
+> scaling DDR freq?
 
-It does support multiple levels and the 'current_ma' is calculated based 
-on different brightness level.
+Maybe :-) but we would like to land the dts now rather than wait more :)
 
 > 
-> BR,
-> 									Pavel
+> [...]
+> 
+> > +	camnoc_virt: interconnect-0{
+> Missing space before {
+
+Will fix
+
+> > +		compatible = "qcom,sc8180x-camnoc-virt";
+> > +		#interconnect-cells = <2>;
+> > +		qcom,bcm-voters = <&apps_bcm_voter>;
+> > +	};
+> > +
+> > +	mc_virt: interconnect-mc-virt {
+> Please be consistent with your naming.
+
+Are you referring to adding -0 for this?
+
+> 
+> > +		compatible = "qcom,sc8180x-mc-virt";
+> > +		#interconnect-cells = <2>;
+> > +		qcom,bcm-voters = <&apps_bcm_voter>;
+> > +	};
+> > +
+> > +	qup_virt: interconnect-qup-virt {
+> > +		compatible = "qcom,sc8180x-qup-virt";
+> > +		#interconnect-cells = <2>;
+> > +		qcom,bcm-voters = <&apps_bcm_voter>;
+> > +	};
+> > +
+> [...]
+> 
+> > +	reserved-memory {
+> > +		#address-cells = <2>;
+> > +		#size-cells = <2>;
+> > +		ranges;
+> > +
+> > +		hyp_mem: hyp-region@85700000 {
+> the -region seems a bit unnecessary in all of these nodes
+
+This is reserved for hyp, I think we should add it here so that we dont
+touch this piece..?
+
+> 
+> > +			reg = <0x0 0x85700000 0x0 0x600000>;
+> > +			no-map;
+> > +		};
+> > +
+> [...]
+> 
+> > +
+> > +	soc: soc@0 {
+> > +		#address-cells = <2>;
+> > +		#size-cells = <2>;
+> > +		ranges = <0 0 0 0 0x10 0>;
+> > +		dma-ranges = <0 0 0 0 0x10 0>;
+> > +		compatible = "simple-bus";
+> compat
+> addr-cells
+> size-cella
+> ranges
+> dma-ranges
+> 
+> please
+
+Sure
+
+> 
+> > +
+> > +		gcc: clock-controller@100000 {
+> > +			compatible = "qcom,gcc-sc8180x";
+> > +			reg = <0x0 0x00100000 0x0 0x1f0000>;
+> > +			#clock-cells = <1>;
+> > +			#reset-cells = <1>;
+> > +			#power-domain-cells = <1>;
+> > +			clock-names = "bi_tcxo",
+> > +				      "bi_tcxo_ao",
+> > +				      "sleep_clk";
+> > +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> > +				 <&rpmhcc RPMH_CXO_CLK_A>,
+> > +				 <&sleep_clk>;
+> property before property-names
+
+ok
+
+> 
+> 
+> > +		};
+> > +
+> > +		qupv3_id_0: geniqup@8c0000 {
+> > +			compatible = "qcom,geni-se-qup";
+> > +			reg = <0 0x008c0000 0 0x6000>;
+> > +			clock-names = "m-ahb", "s-ahb";
+> > +			clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
+> > +				 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
+> > +			#address-cells = <2>;
+> > +			#size-cells = <2>;
+> > +			ranges;
+> > +			iommus = <&apps_smmu 0x4c3 0>;
+> > +			status = "disabled";
+> > +
+> > +			i2c0: i2c@880000 {
+> > +				compatible = "qcom,geni-i2c";
+> > +				reg = <0 0x00880000 0 0x4000>;
+> > +				clock-names = "se";
+> > +				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
+> property before property-names
+> 
+> Please split QUPs into a separate patch, this one is way
+> too big.
+
+Will do
+
+> 
+> [...]
+> 
+> > +		config_noc: interconnect@1500000 {
+> Interconnect could also realistically go to a separate patch.
+
+Yeah already list is complaining, let me see how to split it up...
+
+> 
+> > +			compatible = "qcom,sc8180x-config-noc";
+> > +			reg = <0 0x01500000 0 0x7400>;
+> > +			#interconnect-cells = <2>;
+> > +			qcom,bcm-voters = <&apps_bcm_voter>;
+> > +		};
+> > +
+> > +		system_noc: interconnect@1620000 {
+> > +			compatible = "qcom,sc8180x-system-noc";
+> > +			reg = <0 0x01620000 0 0x19400>;
+> > +			#interconnect-cells = <2>;
+> > +			qcom,bcm-voters = <&apps_bcm_voter>;
+> > +		};
+> > +
+> > +		aggre1_noc: interconnect@16e0000 {
+> > +			compatible = "qcom,sc8180x-aggre1-noc";
+> > +			reg = <0 0x016e0000 0 0xd080>;
+> > +			#interconnect-cells = <2>;
+> > +			qcom,bcm-voters = <&apps_bcm_voter>;
+> > +		};
+> > +
+> > +		aggre2_noc: interconnect@1700000 {
+> > +			compatible = "qcom,sc8180x-aggre2-noc";
+> > +			reg = <0 0x01700000 0 0x20000>;
+> > +			#interconnect-cells = <2>;
+> > +			qcom,bcm-voters = <&apps_bcm_voter>;
+> > +		};
+> > +
+> > +		compute_noc: interconnect@1720000 {
+> > +			compatible = "qcom,sc8180x-compute-noc";
+> > +			reg = <0 0x01720000 0 0x7000>;
+> > +			#interconnect-cells = <2>;
+> > +			qcom,bcm-voters = <&apps_bcm_voter>;
+> > +		};
+> > +
+> > +		mmss_noc: interconnect@1740000 {
+> > +			compatible = "qcom,sc8180x-mmss-noc";
+> > +			reg = <0 0x01740000 0 0x1c100>;
+> > +			#interconnect-cells = <2>;
+> > +			qcom,bcm-voters = <&apps_bcm_voter>;
+> > +		};
+> > +
+> [...]
+> 
+> > +		pcie0: pci@1c00000 {
+> And PCIe
+> 
+> > +			compatible = "qcom,pcie-sc8180x";
+> > +			reg = <0 0x01c00000 0 0x3000>,
+> > +			      <0 0x60000000 0 0xf1d>,
+> > +			      <0 0x60000f20 0 0xa8>,
+> > +			      <0 0x60001000 0 0x1000>,
+> > +			      <0 0x60100000 0 0x100000>;
+> > +			reg-names = "parf", "dbi", "elbi", "atu", "config";
+> One per line, please
+
+ok
+
+> 
+> 
+> [...]
+> 
+> > +
+> > +		ufs_mem_hc: ufshc@1d84000 {
+> > +			compatible = "qcom,sc8180x-ufshc", "qcom,ufshc",
+> > +				     "jedec,ufs-2.0";
+> > +			reg = <0 0x01d84000 0 0x2500>;
+> > +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> > +			phys = <&ufs_mem_phy_lanes>;
+> > +			phy-names = "ufsphy";
+> > +			lanes-per-direction = <2>;
+> > +			#reset-cells = <1>;
+> > +			resets = <&gcc GCC_UFS_PHY_BCR>;
+> > +			reset-names = "rst";
+> > +
+> > +			iommus = <&apps_smmu 0x300 0>;
+> > +
+> > +			clock-names =
+> No need for this weird newline split.
+> 
+> Also, property before property-names.
+> 
+> [...]
+> 
+> 
+> > +
+> > +		gpu: gpu@2c00000 {
+> GPUSS and MDSS related nodes should also go to their separate,
+> respective patches.
+
+ok
+
+> 
+> [...]
+> > +
+> > +		remoteproc_mpss: remoteproc@4080000 {
+> And remote procs as well
+> 
+> > +			compatible = "qcom,sc8180x-mpss-pas";
+> > +			reg = <0x0 0x04080000 0x0 0x4040>;
+> > +
+> [...]
+> 
+> > +	thermal-zones {
+> And thermal-zones as well.
+> 
+> 
+> I'll go more in-depth after you split it up, this is pretty hard
+> to review as-is.
+> 
+> Konrad
+> > +		cpu0-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 1>;
+> > +
+> > +			trips {
+> > +				cpu-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <1000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		cpu1-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 2>;
+> > +
+> > +			trips {
+> > +				cpu-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <1000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		cpu2-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 3>;
+> > +
+> > +			trips {
+> > +				cpu-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <1000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		cpu3-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 4>;
+> > +
+> > +			trips {
+> > +				cpu-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <1000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		cpu4-top-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 7>;
+> > +
+> > +			trips {
+> > +				cpu-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <1000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		cpu5-top-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 8>;
+> > +
+> > +			trips {
+> > +				cpu-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <1000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		cpu6-top-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 9>;
+> > +
+> > +			trips {
+> > +				cpu-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <1000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		cpu7-top-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 10>;
+> > +
+> > +			trips {
+> > +				cpu-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <1000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		cpu4-bottom-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 11>;
+> > +
+> > +			trips {
+> > +				cpu-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <1000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		cpu5-bottom-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 12>;
+> > +
+> > +			trips {
+> > +				cpu-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <1000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		cpu6-bottom-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 13>;
+> > +
+> > +			trips {
+> > +				cpu-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <1000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		cpu7-bottom-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 14>;
+> > +
+> > +			trips {
+> > +				cpu-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <1000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		aoss0-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 0>;
+> > +
+> > +			trips {
+> > +				trip-point0 {
+> > +					temperature = <90000>;
+> > +					hysteresis = <2000>;
+> > +					type = "hot";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		cluster0-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 5>;
+> > +
+> > +			trips {
+> > +				cluster-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <2000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		cluster1-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 6>;
+> > +
+> > +			trips {
+> > +				cluster-crit {
+> > +					temperature = <110000>;
+> > +					hysteresis = <2000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		gpu-thermal-top {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens0 15>;
+> > +
+> > +			trips {
+> > +				trip-point0 {
+> > +					temperature = <90000>;
+> > +					hysteresis = <2000>;
+> > +					type = "hot";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		aoss1-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens1 0>;
+> > +
+> > +			trips {
+> > +				trip-point0 {
+> > +					temperature = <90000>;
+> > +					hysteresis = <2000>;
+> > +					type = "hot";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		wlan-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens1 1>;
+> > +
+> > +			trips {
+> > +				trip-point0 {
+> > +					temperature = <90000>;
+> > +					hysteresis = <2000>;
+> > +					type = "hot";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		video-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens1 2>;
+> > +
+> > +			trips {
+> > +				trip-point0 {
+> > +					temperature = <90000>;
+> > +					hysteresis = <2000>;
+> > +					type = "hot";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		mem-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens1 3>;
+> > +
+> > +			trips {
+> > +				trip-point0 {
+> > +					temperature = <90000>;
+> > +					hysteresis = <2000>;
+> > +					type = "hot";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		q6-hvx-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens1 4>;
+> > +
+> > +			trips {
+> > +				trip-point0 {
+> > +					temperature = <90000>;
+> > +					hysteresis = <2000>;
+> > +					type = "hot";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		camera-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens1 5>;
+> > +
+> > +			trips {
+> > +				trip-point0 {
+> > +					temperature = <90000>;
+> > +					hysteresis = <2000>;
+> > +					type = "hot";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		compute-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens1 6>;
+> > +
+> > +			trips {
+> > +				trip-point0 {
+> > +					temperature = <90000>;
+> > +					hysteresis = <2000>;
+> > +					type = "hot";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		mdm-dsp-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens1 7>;
+> > +
+> > +			trips {
+> > +				trip-point0 {
+> > +					temperature = <90000>;
+> > +					hysteresis = <2000>;
+> > +					type = "hot";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		npu-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens1 8>;
+> > +
+> > +			trips {
+> > +				trip-point0 {
+> > +					temperature = <90000>;
+> > +					hysteresis = <2000>;
+> > +					type = "hot";
+> > +				};
+> > +			};
+> > +		};
+> > +
+> > +		gpu-thermal-bottom {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <1000>;
+> > +
+> > +			thermal-sensors = <&tsens1 11>;
+> > +
+> > +			trips {
+> > +				trip-point0 {
+> > +					temperature = <90000>;
+> > +					hysteresis = <2000>;
+> > +					type = "hot";
+> > +				};
+> > +			};
+> > +		};
+> > +	};
+> > +
+> > +	timer {
+> > +		compatible = "arm,armv8-timer";
+> > +		interrupts = <GIC_PPI 1 IRQ_TYPE_LEVEL_LOW>,
+> > +			     <GIC_PPI 2 IRQ_TYPE_LEVEL_LOW>,
+> > +			     <GIC_PPI 3 IRQ_TYPE_LEVEL_LOW>,
+> > +			     <GIC_PPI 0 IRQ_TYPE_LEVEL_LOW>;
+> > +	};
+> > +};
+
+-- 
+~Vinod
