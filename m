@@ -2,80 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9C786CA5AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 15:24:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 160286CA5D7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 15:28:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232642AbjC0NY1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 09:24:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35146 "EHLO
+        id S232777AbjC0N2s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 09:28:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232582AbjC0NXs (ORCPT
+        with ESMTP id S232384AbjC0N21 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 09:23:48 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4DA23AAB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 06:23:23 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id t10so36046641edd.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 06:23:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679923401;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FjQpUfEO0NsE7N3bLT5uR7/QoLqyWyEQKa6IuwI/2/Q=;
-        b=f/5TMMjIfCgndJMlaJ4r71lbXVsNskze6ZnT/CIHAv6BxV9SLh4v8fyC88l8kU85U2
-         rBuuo9mpNQroSu66yJ+POn8fD3VptqUzEncPkYpeIuk1IEmjjHw+0o1Hh1D3DxAnNoon
-         M4CO6AT+7YDrU0CwU7qbo5QXem3KQ035DCr2lS5QQIZM7RSeD7VwuN2fPgKaD1i84dVz
-         fMug82jTJauGI7kjWHYTHY2qRwDTWT4eE+CwoHSdufk68x530YMC2eAH6+ALuKLziA1Z
-         Na8OVqga5M6b10mcS3g9uttyq31xzK+aaoniJII5oRksHGW3biJbt8MLE19umzxrlDz5
-         Y1sQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679923401;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FjQpUfEO0NsE7N3bLT5uR7/QoLqyWyEQKa6IuwI/2/Q=;
-        b=r27VDCf+9q3EXgYE+8SUKjGVDvIShXP1Ljn4caG5W/+W1g/Xdm+MGRI5lR8PclYGD5
-         BrGoQ0BsX9RayXWh1A8CucGtwEZynwcuWRsVbyDnqiCWlK9uWp+OdtSMTXkbL6079dVB
-         7a9+hML4UEQS+72IVg72+41tgewQ0ZAaAkagBmVe2ttXK+hdGroYLoFeoayOTGKoYPSL
-         wWIctTq/onFuWJx1U7gYt7CrdjS1B4X+hADsYV44mjpc9k95S8wDWryK7m2qSZB1rsW1
-         7IcJV+5cOaAChRfgJbkmqoj5Z/qCsJGx/+tp0fz4YL8JBek1MJF0xcx//NVIJs6rikAq
-         8rgA==
-X-Gm-Message-State: AAQBX9erDWfhFQ8Netemzcyic5nnnykxlhdTxdgmE7wVO/T70x0ev3VW
-        LhydKciteiGVZOgZJVqdA2RHRA==
-X-Google-Smtp-Source: AKy350ZUl+vUbD/HZJiigKbFVDkPZWimDS0mWigAI07cv5eEwg9rsxZejhZUO4wjuY3K/PLlHqV1aw==
-X-Received: by 2002:a17:907:d402:b0:930:ca4d:f2bf with SMTP id vi2-20020a170907d40200b00930ca4df2bfmr14281716ejc.54.1679923400927;
-        Mon, 27 Mar 2023 06:23:20 -0700 (PDT)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:581e:789c:7616:5ee])
-        by smtp.gmail.com with ESMTPSA id gy24-20020a170906f25800b00930445428acsm14286814ejb.14.2023.03.27.06.23.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Mar 2023 06:23:20 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Patrick Lai <quic_plai@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 10/10] ASoC: codecs: lpass-wsa-macro: add support for SM8550
-Date:   Mon, 27 Mar 2023 15:22:54 +0200
-Message-Id: <20230327132254.147975-11-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230327132254.147975-1-krzysztof.kozlowski@linaro.org>
-References: <20230327132254.147975-1-krzysztof.kozlowski@linaro.org>
+        Mon, 27 Mar 2023 09:28:27 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBD8230E6;
+        Mon, 27 Mar 2023 06:28:13 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32RAJEKM024674;
+        Mon, 27 Mar 2023 13:27:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=zMOf3H9MfVXtmHyapLAstKy2EJvf6Cj5ivPih/SsaXs=;
+ b=gax7jARbCBBwphuGRVnMJ8GF5/B8na5koVbWVqAAwyrK22jvwkGUiPVNPNOIB6EXaysc
+ NYUs4ZWoymEMiY16odP4VpWUxgZ7xqk+R2dmGInnEFS+kL9ZuZM8Wwzr8Cao4/YHqJbs
+ N1zukM4kZpM3X27fOEc/tViG/oCh2dr+xzmE1qRntrs7i5VwFuRTPqySGE9QTuLFttpN
+ JnVsh2w8iFoscqkVYvRqSVE//s9baJkEdiZg9YBBPrVbNh0Cgn55AxRk0AcOiya0xAvX
+ gd+sxcFeAZ0osMNIdfdFvsQyGeJzRfpSqOooFkN1B9TsieiqzTURW3sr1zH7t2IT5wFi kQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pk57710ya-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 27 Mar 2023 13:27:47 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32RDRkF8007327
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 27 Mar 2023 13:27:46 GMT
+Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Mon, 27 Mar 2023 06:27:37 -0700
+From:   Devi Priya <quic_devipriy@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>
+Subject: [PATCH V10 0/4] Add minimal boot support for IPQ9574
+Date:   Mon, 27 Mar 2023 18:57:14 +0530
+Message-ID: <20230327132718.573-1-quic_devipriy@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xHFHnZvr9Ephwk9BLeNOdrekIa5U3aey
+X-Proofpoint-ORIG-GUID: xHFHnZvr9Ephwk9BLeNOdrekIa5U3aey
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-24_11,2023-03-27_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 adultscore=0
+ mlxlogscore=488 phishscore=0 malwarescore=0 spamscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2303270105
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,99 +85,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the WSA macro codec on Qualcomm SM8550.  SM8550 does not
-use NPL clock, thus add flags allowing to skip it.
+The IPQ9574 is Qualcomm's 802.11ax SoC for Routers,
+Gateways and Access Points
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+This series adds minimal board boot support for ipq9574-rdp433 variant
 
----
+V9 can be found at:
+https://lore.kernel.org/linux-arm-kernel/20230316072940.29137-1-quic_devipriy@quicinc.com/
 
-Changes since v1:
-1. Move the flag define to common header
----
- sound/soc/codecs/lpass-wsa-macro.c | 37 +++++++++++++++++++++++-------
- 1 file changed, 29 insertions(+), 8 deletions(-)
+Changes in V10:
+	- Dropped the pinctrl driver and its binding as it is
+	  already part of the linux-next/master
+	- Detailed change log is present in the respective patches
 
-diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
-index 6484c335bd5d..8ba7dc89daaa 100644
---- a/sound/soc/codecs/lpass-wsa-macro.c
-+++ b/sound/soc/codecs/lpass-wsa-macro.c
-@@ -14,6 +14,8 @@
- #include <linux/pm_runtime.h>
- #include <linux/of_platform.h>
- #include <sound/tlv.h>
-+
-+#include "lpass-macro-common.h"
- #include "lpass-wsa-macro.h"
- 
- #define CDC_WSA_CLK_RST_CTRL_MCLK_CONTROL	(0x0000)
-@@ -2346,7 +2348,10 @@ static int wsa_macro_register_mclk_output(struct wsa_macro *wsa)
- 	struct clk_init_data init;
- 	int ret;
- 
--	parent_clk_name = __clk_get_name(wsa->npl);
-+	if (wsa->npl)
-+		parent_clk_name = __clk_get_name(wsa->npl);
-+	else
-+		parent_clk_name = __clk_get_name(wsa->mclk);
- 
- 	init.name = "mclk";
- 	of_property_read_string(dev_of_node(dev), "clock-output-names",
-@@ -2379,9 +2384,12 @@ static int wsa_macro_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct wsa_macro *wsa;
-+	kernel_ulong_t flags;
- 	void __iomem *base;
- 	int ret;
- 
-+	flags = (kernel_ulong_t)device_get_match_data(dev);
-+
- 	wsa = devm_kzalloc(dev, sizeof(*wsa), GFP_KERNEL);
- 	if (!wsa)
- 		return -ENOMEM;
-@@ -2398,9 +2406,11 @@ static int wsa_macro_probe(struct platform_device *pdev)
- 	if (IS_ERR(wsa->mclk))
- 		return PTR_ERR(wsa->mclk);
- 
--	wsa->npl = devm_clk_get(dev, "npl");
--	if (IS_ERR(wsa->npl))
--		return PTR_ERR(wsa->npl);
-+	if (flags & LPASS_MACRO_FLAG_HAS_NPL_CLOCK) {
-+		wsa->npl = devm_clk_get(dev, "npl");
-+		if (IS_ERR(wsa->npl))
-+			return PTR_ERR(wsa->npl);
-+	}
- 
- 	wsa->fsgen = devm_clk_get(dev, "fsgen");
- 	if (IS_ERR(wsa->fsgen))
-@@ -2551,10 +2561,21 @@ static const struct dev_pm_ops wsa_macro_pm_ops = {
- };
- 
- static const struct of_device_id wsa_macro_dt_match[] = {
--	{.compatible = "qcom,sc7280-lpass-wsa-macro"},
--	{.compatible = "qcom,sm8250-lpass-wsa-macro"},
--	{.compatible = "qcom,sm8450-lpass-wsa-macro"},
--	{.compatible = "qcom,sc8280xp-lpass-wsa-macro" },
-+	{
-+		.compatible = "qcom,sc7280-lpass-wsa-macro",
-+		.data = (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK,
-+	}, {
-+		.compatible = "qcom,sm8250-lpass-wsa-macro",
-+		.data = (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK,
-+	}, {
-+		.compatible = "qcom,sm8450-lpass-wsa-macro",
-+		.data = (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK,
-+	}, {
-+		.compatible = "qcom,sm8550-lpass-wsa-macro",
-+	}, {
-+		.compatible = "qcom,sc8280xp-lpass-wsa-macro",
-+		.data = (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK,
-+	},
- 	{}
- };
- MODULE_DEVICE_TABLE(of, wsa_macro_dt_match);
+Devi Priya (4):
+  dt-bindings: clock: Add ipq9574 clock and reset definitions
+  clk: qcom: Add Global Clock Controller driver for IPQ9574
+  arm64: dts: qcom: Add support for ipq9574 SoC and RDP433 variant
+  arm64: defconfig: Enable IPQ9574 SoC base configs
+
+ .../bindings/clock/qcom,ipq9574-gcc.yaml      |   62 +
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts   |   84 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  270 ++
+ arch/arm64/configs/defconfig                  |    2 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/gcc-ipq9574.c                | 4248 +++++++++++++++++
+ include/dt-bindings/clock/qcom,ipq9574-gcc.h  |  213 +
+ include/dt-bindings/reset/qcom,ipq9574-gcc.h  |  164 +
+ 10 files changed, 5053 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574.dtsi
+ create mode 100644 drivers/clk/qcom/gcc-ipq9574.c
+ create mode 100644 include/dt-bindings/clock/qcom,ipq9574-gcc.h
+ create mode 100644 include/dt-bindings/reset/qcom,ipq9574-gcc.h
+
+
+base-commit: 011eb7443621f49ca1e8cdf9c74c215f25019118
 -- 
-2.34.1
+2.17.1
 
