@@ -2,56 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 379DC6CA2AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 13:44:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 052A06CA295
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 13:37:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232476AbjC0LoD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 07:44:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60910 "EHLO
+        id S232191AbjC0LhQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 07:37:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231921AbjC0LoC (ORCPT
+        with ESMTP id S231671AbjC0LhP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 07:44:02 -0400
-X-Greylist: delayed 1111 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 27 Mar 2023 04:44:00 PDT
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D20CA2698
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 04:44:00 -0700 (PDT)
-DKIM-Signature: a=rsa-sha256; b=YG00kI5R7ljzmjLZhxIbq1sI32aj8EKJ0r+P1J4vQE4QDP4FPQdrF/sQz4ZeYQbt3LiTpmzBA7S5GduF5D1S//XP34o/Z85Eti2faEK66lSPhAcNoRluunTOHT7INFrdb9pFgAdXtdBQuN7PfyFR0gf/Kd3oYKDCk+KIMYqajf+EpItGNaJgIZuGTU7qFaH3atekTnt5EpHBYIU8cx/V2BNB/QXRkgrSgBWDLeI2v7Rs0m4ZZIydl9UmqD/Oobqdh3gSFLNjlVGUYeE5lPZTx0BzM4ANmJnj2CMh18S7ZCSr4pF+cez7wioQazyY/V9XKOeUg2xesmWEeTr4QvfvFg==; s=purelymail1; d=iskren.info; v=1; bh=q1q6QlROVAEEz2iajcRh0+Y4NPypwdDdDX9tz1qlxrQ=; h=Received:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=BHREr0xixlDoBzbB0XwPbYSLJSqj31FKvWCCSa32GrMZrtrvSZHOxPR7XItW5NJZ7d1v/Y3Pp30hyoAkN5sVbTA+0r3v6i7Z/f13ueS1P3Gy0NMCTqu99A0DN/+T8gDLFA9sD0n5FtohTfKn59kocYftIgaUb86W2Rc4XYs4ulwPmiDFHdvsVW8kMOr1mPW/nr3W2uaYZcUZui9deIt+tIjPGXyYu6KV70veRvHeoNnCAUQUyBW4W2AXd5sCCcUpy9qwaxToEQw0HRTzr8AEo5esfXA9uenCJYSnIVWtmhHVmYmH9Xm1+FVkM9H339osDAzoeAwYPtmto8qPLT17fg==; s=purelymail1; d=purelymail.com; v=1; bh=q1q6QlROVAEEz2iajcRh0+Y4NPypwdDdDX9tz1qlxrQ=; h=Feedback-ID:Received:Subject:To:From;
-Feedback-ID: 10275:2339:null:purelymail
-X-Pm-Original-To: linux-arm-msm@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1765702763;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Mon, 27 Mar 2023 11:24:40 +0000 (UTC)
-Message-ID: <edfa2aac-b341-f827-5e7d-88248fa22309@iskren.info>
-Date:   Mon, 27 Mar 2023 14:24:35 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 0/3] Fix some issues in QCOM UFS bindings
-To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Mon, 27 Mar 2023 07:37:15 -0400
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [IPv6:2001:67c:2050:0:465::201])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE3744487;
+        Mon, 27 Mar 2023 04:37:12 -0700 (PDT)
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4PlW4f3Kz8z9sWL;
+        Mon, 27 Mar 2023 13:37:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
+        s=MBO0001; t=1679917026;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=sZriSGIooLktT9ELrcWQe/LSK859gMi66zy5pb+cbcQ=;
+        b=KmjME9p2gnITYFFFtVviHLZ6DcG6LE9+yCHJNmMCaaRW9pLiRvyLAIuTJC3duxDNURXTdl
+        8RBVHHs2Q/ObTYcYtjoUOs4SyaPX6PGk4P/9j3XCXPVRnOjyIRfud6l8neSLDapKXSRptq
+        JGUVi3b/B1kyTpy5Y1WhyhkRzTZ+pQEa2DDlPlkawVUs71fa76EJq+u/KcviC2icG+AJng
+        ShU3dlMruLlpmqtc9xac+Y6mRvZT3bWFnH3bvE2uxgvHvr5Y/WF8GBrO669ynEtqhxCcxf
+        5hF3NzuREb+EPV6jwN5QuBa14tVc1PzGEAVjCJsy52T9sVHbKCJa9KwyhjeW/g==
+Message-ID: <b75b92bf64b55ba0ace0fbff65955c838a294dec.camel@dylanvanassche.be>
+Subject: Re: [PATCH 1/2] dt-bindings: misc: qcom,fastrpc: add
+ qcom,assign-all-memory property
+From:   Dylan Van Assche <me@dylanvanassche.be>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-References: <20221209-dt-binding-ufs-v3-0-499dff23a03c@fairphone.com>
-Content-Language: en-US
-From:   Iskren Chernev <me@iskren.info>
-In-Reply-To: <20221209-dt-binding-ufs-v3-0-499dff23a03c@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,SPF_PASS
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Date:   Mon, 27 Mar 2023 13:37:03 +0200
+In-Reply-To: <883c3c48-c6e5-556d-431f-e92592b9106a@linaro.org>
+References: <20230325134410.21092-1-me@dylanvanassche.be>
+         <20230325134410.21092-2-me@dylanvanassche.be>
+         <883c3c48-c6e5-556d-431f-e92592b9106a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Rspamd-Queue-Id: 4PlW4f3Kz8z9sWL
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,39 +68,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/24/23 09:41, Luca Weiss wrote:
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Iskren Chernev <me@iskren.info>
+Hi Krzysztof,
 
-(for the series)
+On Sun, 2023-03-26 at 10:55 +0200, Krzysztof Kozlowski wrote:
+> On 25/03/2023 14:44, Dylan Van Assche wrote:
+> > Document the added qcom,assign-all-memory in devicetree bindings.
+> >=20
+> > Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
+> > ---
+> > =C2=A0Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml | 6
+> > ++++++
+> > =C2=A01 file changed, 6 insertions(+)
+> >=20
+> > diff --git
+> > a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > index 1ab9588cdd89..fa5b00534b30 100644
+> > --- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > +++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > @@ -57,6 +57,12 @@ properties:
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Virtual machine IDs for remote pro=
+cessor.
+> > =C2=A0=C2=A0=C2=A0=C2=A0 $ref: "/schemas/types.yaml#/definitions/uint32=
+-array"
+> > =C2=A0
+> > +=C2=A0 qcom,assign-all-mem:
+> > +=C2=A0=C2=A0=C2=A0 description:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Assign memory to all Virtual machines d=
+efined by qcom,vmids.
+>=20
+> This (neither commit msg) does not explain why this is needed and
+> actually does not sound like hardware-related property.
 
-> ---
-> Changes in v3:
-> - Drop applied patch
-> - Pick up sm6115 patch from v5 https://lore.kernel.org/all/20221030094258.486428-2-iskren.chernev@gmail.com/
-> - Rebase on linux-next
-> - Link to v2: https://lore.kernel.org/r/20221209-dt-binding-ufs-v2-0-dc7a04699579@fairphone.com
-> 
-> Changes in v2:
-> - Add new patch adding reg-names to sm6115 & rebase series on top of sm6115
->   addition
-> - Fix binding example after sm8450 move, split this patch from original patch
->   since it became too big
-> - Move reg-names definition to top-level
-> - Link to v1: https://lore.kernel.org/r/20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com
-> 
-> ---
-> Iskren Chernev (1):
->       dt-bindings: ufs: qcom: Add sm6115 binding
-> 
-> Luca Weiss (2):
->       dt-bindings: ufs: qcom: Add reg-names property for ICE
->       dt-bindings: ufs: qcom: Fix sm8450 bindings
-> 
->  .../devicetree/bindings/ufs/qcom,ufs.yaml          | 61 ++++++++++++++++++++--
->  1 file changed, 56 insertions(+), 5 deletions(-)
-> ---
-> base-commit: e5dbf24e8b9e6aa0a185d86ce46a7a9c79ebb40f
-> change-id: 20221209-dt-binding-ufs-2d7f64797ff2
-> 
+This is made a separate property to toggle different behavior in the
+driver if it is needed for some FastRPC nodes. Downstream does guard
+this with a property 'restrict-access' as well, see [1] for a random
+SDM845 downstream kernel. On SDM845, this property is not present, thus
+the IF block runs. On SDM670, this property is present, then the IF
+block is skipped. That's why I opt for this property to have this
+behaviour conditionally. I'm not sure how to explain it better though.
+
+Any feedback is appreciated, thanks!
+
+Kind regards,
+Dylan Van Assche
+
+[1]
+https://github.com/SHIFTPHONES/android_kernel_shift_sdm845/blob/sos-3.x/dri=
+vers/char/adsprpc.c#L4615-L4631
+
+>=20
+> > +=C2=A0=C2=A0=C2=A0 type: boolean
+> > +
+> > +
+>=20
+> Do not add double blank lines.
+>=20
+> > =C2=A0=C2=A0 "#address-cells":
+> > =C2=A0=C2=A0=C2=A0=C2=A0 const: 1
+> > =C2=A0
+>=20
 > Best regards,
+> Krzysztof
+>=20
+
