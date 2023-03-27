@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DACC6CAC8F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 20:02:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4761A6CACE0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 20:19:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229967AbjC0SCE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 14:02:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40572 "EHLO
+        id S229862AbjC0STj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 14:19:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbjC0SCD (ORCPT
+        with ESMTP id S229550AbjC0STj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 14:02:03 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 404CDEC;
-        Mon, 27 Mar 2023 11:02:02 -0700 (PDT)
+        Mon, 27 Mar 2023 14:19:39 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 495AF1BF1;
+        Mon, 27 Mar 2023 11:19:38 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id E8547B818A4;
-        Mon, 27 Mar 2023 18:02:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79A1C4339B;
-        Mon, 27 Mar 2023 18:01:58 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E57AF613CA;
+        Mon, 27 Mar 2023 18:19:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A254C433D2;
+        Mon, 27 Mar 2023 18:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679940119;
-        bh=r3W3CExS6s0aynR90LW9av86zilz2l5bpPiQq8qSgxE=;
+        s=k20201202; t=1679941177;
+        bh=jxWcGcpioNQejKk8I7hJg+OhLTSHRqbJl49uuhHYivo=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=e5eKH37trpX6huVMm+kEvfWLbcU5tdQTr1r2ve39BDvGGqv/TSsQSO/2MEhhQqIL5
-         hudw/0svA//Q0jC0gCjlzEOaq9YWJOu9Tka09ExBUq7XZ/TatcLyACvJnOGYXkN6AK
-         LOL5uLSGXEV9OZ5EnAoCWJNiAK71AGI/TNSaDTCPB0dOgHYxIamMjE0+t6Re4WjWZ0
-         1ZrByloe1o0sg0mT6tZDdbw+tH8tg8xXcabHmnRJgmBi4QEBy80jl3Rv2rZ+5J9Sbd
-         anijbDoznXNlGRQMpfxYja5jghHDNhB0hgs+khe/fPuMZYJXkMGyU53pf4nfAUuTYR
-         /sC19gQf19C/A==
-Date:   Mon, 27 Mar 2023 11:01:57 -0700
+        b=Zc8sMCdKqOks3JUZN+McYVEWMcU8JNsdhkPNeC1XxCSKRjOLWQ4BkZgrK37KeNxsG
+         R3fcqJvW+ikEcFOM+WimhkTemMG3zc4nLBuHPfsEchkgMCfgcJjjJCVb/rX/HziQ1x
+         WY+4rzGx/Ba5PCPfLEtYG6/PfhOA0WBF9ucxR+s1hDcmtCIBGKmmDiP6SL7G2Fdy/4
+         bE0L2kW3TR3mn0y5S7Vh3htid6fEXPRNCo7DXgkACBclfQmNYg/9DZbrB6fajjP6zA
+         W1Cct7By/QiKd8W2XTgRPHaRRKZqZbcYmr6XiDV+yLn17LK+UmWhbSiEdBRcfL1hVJ
+         4Wp5Du2EAMRjg==
+Date:   Mon, 27 Mar 2023 11:19:34 -0700
 From:   Eric Biggers <ebiggers@kernel.org>
 To:     Abel Vesa <abel.vesa@linaro.org>
 Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
@@ -54,17 +54,16 @@ Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
         linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v4 4/7] soc: qcom: Make the Qualcomm UFS/SDCC ICE a
- dedicated driver
-Message-ID: <20230327180157.GC1882@sol.localdomain>
+Subject: Re: [PATCH v4 5/7] scsi: ufs: ufs-qcom: Switch to the new ICE API
+Message-ID: <20230327181934.GD1882@sol.localdomain>
 References: <20230327134734.3256974-1-abel.vesa@linaro.org>
- <20230327134734.3256974-5-abel.vesa@linaro.org>
+ <20230327134734.3256974-6-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230327134734.3256974-5-abel.vesa@linaro.org>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+In-Reply-To: <20230327134734.3256974-6-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,72 +71,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 27, 2023 at 04:47:31PM +0300, Abel Vesa wrote:
-> +	/* For now this driver only supports ICE version 3 and 4. */
-> +	if (major != 3 && major != 4) {
-> +		dev_warn(dev, "Unsupported ICE version: v%d.%d.%d\n",
-> +			 major, minor, step);
-> +		return false;
-> +	}
+Hi Abel,
 
-Version 4 support was not in the original.  This ought to be mentioned in the
-commit message.
+On Mon, Mar 27, 2023 at 04:47:32PM +0300, Abel Vesa wrote:
+> Now that there is a new dedicated ICE driver, drop the ufs-qcom-ice and
+> use the new ICE api provided by the Qualcomm soc driver ice. The platforms
+> that already have ICE support will use the API as library since there will
+> not be a devicetree node, but instead they have reg range. In this case,
+> the of_qcom_ice_get will return an ICE instance created for the consumer's
+> device. But if there are platforms that do not have ice reg in the
+> consumer devicetree node and instead provide a dedicated ICE devicetree
+> node, the of_qcom_ice_get will look up the device based on qcom,ice
+> property and will get the ICE instance registered by the probe function
+> of the ice driver.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 
-> +struct qcom_ice *of_qcom_ice_get(struct device *dev)
+I am still worried about the ICE clock.  Are you sure it is being managed
+correctly?  With your patch, the ICE clock gets enabled in ufs_qcom_ice_resume
+and disabled in ufs_qcom_ice_suspend, which hopefully pair up.  But it also gets
+enabled in ufs_qcom_ice_enable which isn't paired with anything.  Also, this all
+happens at a different time from the existing UFS clocks being enabled/disabled.
+
+I wonder if the ICE clock should be enabled/disabled in ufs_qcom_setup_clocks()
+instead of what you are doing currently?
+
+> +static int ufs_qcom_ice_init(struct ufs_qcom_host *host)
 > +{
-> +	struct platform_device *pdev = to_platform_device(dev);
-> +	struct qcom_ice *ice = ERR_PTR(-EPROBE_DEFER);
-> +	struct device_node *node;
-> +	struct resource *res;
-> +	void __iomem *base;
+> +	struct ufs_hba *hba = host->hba;
+> +	struct device *dev = hba->dev;
 > +
-> +	if (!dev || !dev->of_node)
-> +		return ERR_PTR(-ENODEV);
-> +
-> +	/* legacy has ice reg range in the consumer DT node */
-> +	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "ice");
-> +	if (res) {
-> +		base = devm_ioremap_resource(&pdev->dev, res);
-> +		if (IS_ERR(base))
-> +			return base;
-> +
-> +		/* create ICE instance using consumer dev */
-> +		return qcom_ice_create(pdev, base);
+> +	host->ice = of_qcom_ice_get(dev);
+> +	if (host->ice == ERR_PTR(-EOPNOTSUPP)) {
+> +		dev_warn(dev, "Disabling inline encryption support\n");
+> +		hba->caps &= ~UFSHCD_CAP_CRYPTO;
+> +		host->ice = NULL;
 > +	}
 > +
-> +	node = of_parse_phandle(dev->of_node, "qcom,ice", 0);
-> +	if (!node) {
-> +		ice = NULL;
-> +		goto out;
-> +	}
-
-I think a longer comment in this code explaining the legacy implementation vs.
-the new implementation would be helpful.
-
-> +	pdev = of_find_device_by_node(node);
-> +	if (!pdev) {
-> +		dev_err(dev, "Cannot find device node %s\n", node->name);
-> +		goto out;
-> +	}
-
-It is hard to understand the return value in this case, since
-'ice = ERR_PTR(-EPROBE_DEFER)' happens way above.  Maybe do:
-
-	if (!pdev) {
-		dev_err(dev, "Cannot find device node %s\n", node->name);
-		ice = ERR_PTR(-EPROBE_DEFER);
-		goto out;
-	}
+> +	if (IS_ERR(host->ice))
+> +		return PTR_ERR(host->ice);
 > +
-> +	ice = platform_get_drvdata(pdev);
-> +	if (!ice) {
-> +		dev_err(dev, "Cannot get ice\n");
-> +		put_device(&pdev->dev);
-> +		return ERR_PTR(-ENODEV);
-> +	}
+> +	return 0;
+> +}
 
-Can this error message be more descriptive?
+This is still sometimes leaving UFSHCD_CAP_CRYPTO set in cases where ICE is
+unsupported.
 
-Otherwise this patch is looking good, thanks!
+Moving the *setting* of UFSHCD_CAP_CRYPTO into here would fix that.
+
+It is also hard to understand how the -EOPNOTSUPP case differs from the NULL
+case.  Can you add a comment?  Or just consider keeping the original behavior,
+which did not distinguish between these cases (as long as MASK_CRYPTO_SUPPORT
+was set in REG_CONTROLLER_CAPABILITIES, which was checked first).
 
 - Eric
