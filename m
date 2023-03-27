@@ -2,133 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A6116CA856
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 16:57:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90EFF6CA866
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 17:01:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233016AbjC0O5c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 10:57:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36626 "EHLO
+        id S231787AbjC0PBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 11:01:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229783AbjC0O5b (ORCPT
+        with ESMTP id S232782AbjC0PBi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 10:57:31 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 425271718;
-        Mon, 27 Mar 2023 07:57:30 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 247F2C14;
-        Mon, 27 Mar 2023 07:58:14 -0700 (PDT)
-Received: from [10.57.54.246] (unknown [10.57.54.246])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 006013F6C4;
-        Mon, 27 Mar 2023 07:57:26 -0700 (PDT)
-Message-ID: <8a2dc999-2bed-0f32-4210-bc3d8f223581@arm.com>
-Date:   Mon, 27 Mar 2023 15:57:25 +0100
+        Mon, 27 Mar 2023 11:01:38 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E84D4483;
+        Mon, 27 Mar 2023 08:01:37 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CAE6061303;
+        Mon, 27 Mar 2023 15:01:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FC4C4339E;
+        Mon, 27 Mar 2023 15:01:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679929296;
+        bh=dsoVd3bOkZ1/OXyt+ZP8t5ze5tdgtMoUGRvUuV6EukM=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=SHPAMbr7ynIEkq5oNWhug9hIbn4LJ0wlRJ6JgemhXBguNbBUPRRDeUdVcqazMWkWC
+         dk9d8QHtU103JjtWCjNwzZLwSakTbYVoyyZMPznbW2kNkDFCK+lV/7pj97e//rbFdB
+         KAcjBslm3nZ5BD8UOtzQgE313X4qN68GC8CjlYGQyBtCbPdHgVt918IpKotLwM74ca
+         Zn52WHW55dJ8f6+KX/RVedxJw0EkqlPTOL1x9rcwK7iDgIZU3Ce79U8tYgcWxannLX
+         MEStSzPPRTj0snsGEx0UFdc0kYSX/e0hXkgCvgkTLp0pcdTYZYHGlYYERA/m/ZwxGN
+         9en6lprtJ6hkQ==
+From:   Will Deacon <will@kernel.org>
+To:     mcgrof@kernel.org, Nick Alcock <nick.alcock@oracle.com>
+Cc:     catalin.marinas@arm.com, kernel-team@android.com,
+        Will Deacon <will@kernel.org>, linux-gpio@vger.kernel.org,
+        linux-edac@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-acpi@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-modules@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-serial@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-sunxi@lists.linux.dev, asahi@lists.linux.dev,
+        linux-pci@vger.kernel.org
+Subject: Re: [PATCH 00/24] MODULE_LICENSE removals, second tranche
+Date:   Mon, 27 Mar 2023 16:01:15 +0100
+Message-Id: <167992609868.3834946.4831319626649638477.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20230217141059.392471-1-nick.alcock@oracle.com>
+References: <20230217141059.392471-1-nick.alcock@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.9.0
-Subject: Re: [PATCH] coresight: cti: Check if the CPU activated for the CPU
- CTI
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1679910560-23469-1-git-send-email-quic_taozha@quicinc.com>
- <9c7f6414-ac5c-bee2-7068-04a7ee7d94f9@arm.com>
- <81a39cd8-745d-334d-840d-66aed47c3470@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <81a39cd8-745d-334d-840d-66aed47c3470@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.3 required=5.0 tests=NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/03/2023 15:28, Tao Zhang wrote:
-> Hi Suzuki,
+On Fri, 17 Feb 2023 14:10:35 +0000, Nick Alcock wrote:
+> This series, based on current modules-next, is part of a treewide cleanup
+> suggested by Luis Chamberlain, to remove the LICENSE_MODULE usage from
+> files/objects that are not tristate.  Due to recent changes to kbuild, these
+> uses are now problematic.  See the commit logs for more details.
 > 
-> On 3/27/2023 5:52 PM, Suzuki K Poulose wrote:
->> On 27/03/2023 10:49, Tao Zhang wrote:
->>> Check whether the CPU corresponding to the CPU CTI is activated.
->>> If it is not activated, the CPU CTI node should not exist, and
->>> an error will be returned in the initialization function.
->>>
->>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>> ---
->>>   drivers/hwtracing/coresight/coresight-cti-core.c | 6 ++++--
->>>   1 file changed, 4 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/hwtracing/coresight/coresight-cti-core.c 
->>> b/drivers/hwtracing/coresight/coresight-cti-core.c
->>> index 277c890..aaa83ae 100644
->>> --- a/drivers/hwtracing/coresight/coresight-cti-core.c
->>> +++ b/drivers/hwtracing/coresight/coresight-cti-core.c
->>> @@ -899,10 +899,12 @@ static int cti_probe(struct amba_device *adev, 
->>> const struct amba_id *id)
->>>       drvdata->config.hw_powered = true;
->>>         /* set up device name - will depend if cpu bound or otherwise */
->>> -    if (drvdata->ctidev.cpu >= 0)
->>> +    if (drvdata->ctidev.cpu >= 0) {
->>> +        if (!cpu_active(drvdata->ctidev.cpu))
->>> +            return -ENXIO;
->>>           cti_desc.name = devm_kasprintf(dev, GFP_KERNEL, "cti_cpu%d",
->>>                              drvdata->ctidev.cpu);
->>
->> But why ? As long as we do not enable or touch any CPU specific bits 
->> in the probe, why do we need to fail this ? What are you trying to fix ?
->>
->> Please could you share the log if you are hitting something ? This looks
->> like masking a problem.
->>
->> Suzuki
+> (The commit log prefixes and Cc lists are automatically determined using
+> the script mentioned below.  I've eyeballed them, and they seem reasonable:
+> my apologies if they are not.)
 > 
-> We found that when the CPU core is disabled, for example, CPU3 is 
-> disabled, but
-> 
-> CPU3 CTI node corresponding to CPU3 still exists. In fact, in this case, 
-> CPU3 CTI
-> 
-> has been unable to trigger CPU3 properly since CPU3 is in an inactive 
-> state. This change
-> 
-> is to avoid configuring the CPU CTI of the CPU that has been disabled in 
-> this case.
+> [...]
 
-Who is configuring the trigger ? Shouldn't we skip "enabling" the CTI
-when the associated CPU is inactive instead ? Disabling the probe with
-an error doesn't solve the problem. What if the CPU becomes active later 
-? What makes sure that the CTI is probed then ?
+Applied drivers/perf patch to will (for-next/perf), thanks!
 
-Suzuki
+[08/24] kbuild, drivers/perf: remove MODULE_LICENSE in non-modules
+        https://git.kernel.org/will/c/a64021d3726a
 
+Cheers,
+-- 
+Will
 
-> 
-> Tao
-> 
->>
->>
->>> -    else
->>> +    } else
->>>           cti_desc.name = coresight_alloc_device_name(&cti_sys_devs, 
->>> dev);
->>>       if (!cti_desc.name)
->>>           return -ENOMEM;
->>
-
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
