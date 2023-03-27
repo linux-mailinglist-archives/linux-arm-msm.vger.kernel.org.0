@@ -2,74 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 584B86C9D48
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 10:12:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB7906C9D4C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 10:12:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232990AbjC0IMT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 04:12:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40584 "EHLO
+        id S233017AbjC0IMc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 04:12:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232975AbjC0IMO (ORCPT
+        with ESMTP id S232982AbjC0IMW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 04:12:14 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71E2E4C1F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:12:12 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id h8so32278756ede.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:12:12 -0700 (PDT)
+        Mon, 27 Mar 2023 04:12:22 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AB0149DD
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:12:20 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id l27so7720013wrb.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 01:12:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679904731;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uKVPxylgDdk8ljRlRVdTtw/YVrsqqNKRHKlcHhyqZvE=;
-        b=li8IAkj1BKtKAnsGi0N/xtLXRhL1+BlEChpY8SSC35wffw+Jyp36/tKtq21oClm8hb
-         XhIGm42hJ/CwhHA8Dy9jwoJbi9qzRwRPc1Jyn5tAYpgdFEbJw+7rJToienlk3Yd2U6PG
-         Y8j87llqi7a8MiWlBEMm5uFgiaI+cqVXpxKaYIhgReJcs5Ui8lBewKLUofodybjLo4JG
-         SK67gulRaXqPdthBO84sFQtJsUymsLt1xFagVb4+UzjtgmNcflLQEFnSfiI3DFIEqHFv
-         JW9lJU0i256Afm8L7AvWxGXALmKUdi0sc6eW72UKVjG1QuJGw6pDWlpP4Q++M2PX6p4/
-         hJeQ==
+        d=linaro.org; s=google; t=1679904739;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=KBfO/oFMbTKt7WQEfeOuO2ERZ7+hWklfjpQd73i51jE=;
+        b=xInh/mRq9zL3iWJW/LVrlrdt7sKz1u9ejAVy3pSlpHX1W/4/2fFJUfZXF0sFyr9pDU
+         mV7sJXGXx5LeMvo1J4T42eweggdNm83y0iyOae/8nU5NSYeA27/AM8VlFfUzGqFEFnZL
+         xe4MpU6nSyogwVFnObfKVk9IceTa3guueWNNdZ6MBmencI9lONOw05rjW/lYKX9HO2YP
+         PQ5iGHqZMYDZHxCmNFqA5oASrRwlQDCXA/r9ntU3R72uBh35cOI6L7i6mYDI+tnIJT3l
+         dRNGeNGr6Qgp6i9ZtE0MyTufX8+ZnH7LwRJXRBCvRa8KvWvln+VOkqJed09gXd+aH4T5
+         3hXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679904731;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uKVPxylgDdk8ljRlRVdTtw/YVrsqqNKRHKlcHhyqZvE=;
-        b=P46s3FvZJ53EXrmhgksCKfQ6CPeu3Z8HbC+giFEKCd6VtYx5SNYXWZ58dB1C+XlTs1
-         ui3+BiQpXChKB+XZ0xMPPodER1ctTOtuP+BFQremf9FQgGcbbnjZJdwUPR6/plX4d0RX
-         3LYcW8bnw/XAEw2AWV57l3MuGWQ0dtevR1EJEJnNfqucM6rV3E46qB5bRE7wrt96fAHX
-         pD9bROH8XrP+ItF75j9uqgfkznsqrVVS8S3tgJF55QxaIwLpwhjhMhspxHeFovQemxCu
-         rRKNwKyUEaGXUwoFWVYquyeZl1MU36guMxNWyhdq8TKd/RLRRbMPaeimEsVOUhU58AIv
-         4cBw==
-X-Gm-Message-State: AAQBX9f4pcf8xYrlpQisn+DADbTIg/Ke9OeS1J9XdrYY5tNSOB4yoKrz
-        8t3EqMT71r1tvICp0gKzpns0chvDCcZhD/Tq46c=
-X-Google-Smtp-Source: AKy350bFT8pXlDIPefmc1dqhpwT3CBvf0ARJ/vs9kdQxBRBMl6tXUqw2b809ibGI6LWxvuxyZHf5WQ==
-X-Received: by 2002:a17:907:7246:b0:944:43e:7983 with SMTP id ds6-20020a170907724600b00944043e7983mr5057217ejc.67.1679904730933;
-        Mon, 27 Mar 2023 01:12:10 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:198e:c1a5:309b:d678? ([2a02:810d:15c0:828:198e:c1a5:309b:d678])
-        by smtp.gmail.com with ESMTPSA id r16-20020a170906549000b009334d87d106sm11770270ejo.147.2023.03.27.01.12.10
+        d=1e100.net; s=20210112; t=1679904739;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KBfO/oFMbTKt7WQEfeOuO2ERZ7+hWklfjpQd73i51jE=;
+        b=qVI1NQTQMz+jOnW1kO5s6sjJqJ0g9LGslcZ+PdGq4lptJI85Vc0gfxg3sBmhhaCf50
+         EZTXC0t5J9C2Pj4c4bV1YEhJmRsD9CXQBGumjrR6Us5KJXUafFCgqDtXVYV9hB/Jhk0N
+         Wk0BPgZ55eG97EbNc49lZYi7kwQKRaVsIF0ZnB1m7cv8cx9pNXiyukBlD6Ym9aw/oTVp
+         VCB10WQ97iQfPdkamyJU+JHUl6qvu10PjuH3T5E2jYjsNM/CPC3NersMUcN9LqrnHCnP
+         YRo6oftbnRHU+WdV29nqrcC+7XEqG8Nk6Cs+5cC7EBgP1nssQTMsZs/SxGeasLcKjjBk
+         8mFg==
+X-Gm-Message-State: AAQBX9eTixXabU0SCwDYijytQgLvaRCd1VBv7p7cQM0xZmbH4kTegTd7
+        fNggjhG8ng4uMZ0xb74ZlzYDgw==
+X-Google-Smtp-Source: AKy350auFzMlC4w9kxnIeWd9u8zmLg6N8VYeAGBRNLrH6OS+QBEgMkTj/PNX2qyN7EUxaSyT9O8rpw==
+X-Received: by 2002:a5d:66ca:0:b0:2d3:bde8:9ff with SMTP id k10-20020a5d66ca000000b002d3bde809ffmr9388618wrw.34.1679904739019;
+        Mon, 27 Mar 2023 01:12:19 -0700 (PDT)
+Received: from [192.168.7.111] (679773502.box.freepro.com. [212.114.21.58])
+        by smtp.gmail.com with ESMTPSA id a8-20020a056000100800b002d8566128e5sm15971130wrx.25.2023.03.27.01.12.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Mar 2023 01:12:10 -0700 (PDT)
-Message-ID: <f4fd089e-5ad4-dc35-abb5-dc3053702311@linaro.org>
-Date:   Mon, 27 Mar 2023 10:12:09 +0200
+        Mon, 27 Mar 2023 01:12:18 -0700 (PDT)
+Message-ID: <be4af5a9-6c82-138d-28dc-73b485fa1a00@linaro.org>
+Date:   Mon, 27 Mar 2023 10:12:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v2 11/12] arm64: dts: qcom: sc8180x: Introduce Primus
+ Thunderbird/102.8.0
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 6/9] arm64: dts: qcom: sc7280: switch USB+DP QMP PHY to
+ new style of bindings
 Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230325122444.249507-1-vkoul@kernel.org>
- <20230325122444.249507-12-vkoul@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230325122444.249507-12-vkoul@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        devicetree@vger.kernel.org
+References: <20230326005733.2166354-1-dmitry.baryshkov@linaro.org>
+ <20230326005733.2166354-7-dmitry.baryshkov@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230326005733.2166354-7-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -81,430 +88,123 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/03/2023 13:24, Vinod Koul wrote:
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+On 26/03/2023 01:57, Dmitry Baryshkov wrote:
+> Change the USB QMP PHY to use newer style of QMP PHY bindings (single
+> resource region, no per-PHY subnodes).
 > 
-> Introduce support for the SC8180X reference device, aka Primus, with
-> debug UART, regulators, UFS and USB support.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile           |   1 +
->  arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi | 326 +++++++++
->  arch/arm64/boot/dts/qcom/sc8180x-primus.dts | 706 ++++++++++++++++++++
->  3 files changed, 1033 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 57 +++++++++-------------------
+>   1 file changed, 18 insertions(+), 39 deletions(-)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 5e6f9f441f1a..887c490bdd14 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -18,6 +18,7 @@
+>   #include <dt-bindings/interconnect/qcom,sc7280.h>
+>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>   #include <dt-bindings/mailbox/qcom-ipcc.h>
+> +#include <dt-bindings/phy/phy-qcom-qmp.h>
+>   #include <dt-bindings/power/qcom-rpmpd.h>
+>   #include <dt-bindings/reset/qcom,sdm845-aoss.h>
+>   #include <dt-bindings/reset/qcom,sdm845-pdc.h>
+> @@ -3327,49 +3328,26 @@ usb_2_hsphy: phy@88e4000 {
+>   			resets = <&gcc GCC_QUSB2PHY_SEC_BCR>;
+>   		};
+>   
+> -		usb_1_qmpphy: phy-wrapper@88e9000 {
+> -			compatible = "qcom,sc7280-qmp-usb3-dp-phy",
+> -				     "qcom,sm8250-qmp-usb3-dp-phy";
+> -			reg = <0 0x088e9000 0 0x200>,
+> -			      <0 0x088e8000 0 0x40>,
+> -			      <0 0x088ea000 0 0x200>;
+> +		usb_1_qmpphy: phy@88e8000 {
+> +			compatible = "qcom,sc7280-qmp-usb3-dp-phy";
+> +			reg = <0 0x088e8000 0 0x3000>;
+>   			status = "disabled";
+> -			#address-cells = <2>;
+> -			#size-cells = <2>;
+> -			ranges;
+>   
+>   			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
+>   				 <&rpmhcc RPMH_CXO_CLK>,
+> -				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
+> -			clock-names = "aux", "ref_clk_src", "com_aux";
+> +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
+> +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> +			clock-names = "aux",
+> +				      "ref",
+> +				      "com_aux",
+> +				      "usb3_pipe";
+>   
+>   			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
+>   				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
+>   			reset-names = "phy", "common";
+>   
+> -			usb_1_ssphy: usb3-phy@88e9200 {
+> -				reg = <0 0x088e9200 0 0x200>,
+> -				      <0 0x088e9400 0 0x200>,
+> -				      <0 0x088e9c00 0 0x400>,
+> -				      <0 0x088e9600 0 0x200>,
+> -				      <0 0x088e9800 0 0x200>,
+> -				      <0 0x088e9a00 0 0x100>;
+> -				#clock-cells = <0>;
+> -				#phy-cells = <0>;
+> -				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> -				clock-names = "pipe0";
+> -				clock-output-names = "usb3_phy_pipe_clk_src";
+> -			};
+> -
+> -			dp_phy: dp-phy@88ea200 {
+> -				reg = <0 0x088ea200 0 0x200>,
+> -				      <0 0x088ea400 0 0x200>,
+> -				      <0 0x088eaa00 0 0x200>,
+> -				      <0 0x088ea600 0 0x200>,
+> -				      <0 0x088ea800 0 0x200>;
+> -				#phy-cells = <0>;
+> -				#clock-cells = <1>;
+> -			};
+> +			#clock-cells = <1>;
+> +			#phy-cells = <1>;
+>   		};
+>   
+>   		usb_2: usb@8cf8800 {
+> @@ -3694,7 +3672,7 @@ usb_1_dwc3: usb@a600000 {
+>   				iommus = <&apps_smmu 0xe0 0x0>;
+>   				snps,dis_u2_susphy_quirk;
+>   				snps,dis_enblslpm_quirk;
+> -				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
+> +				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
+>   				phy-names = "usb2-phy", "usb3-phy";
+>   				maximum-speed = "super-speed";
+>   			};
+> @@ -3799,8 +3777,8 @@ dispcc: clock-controller@af00000 {
+>   				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
+>   				 <&mdss_dsi_phy 0>,
+>   				 <&mdss_dsi_phy 1>,
+> -				 <&dp_phy 0>,
+> -				 <&dp_phy 1>,
+> +				 <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
+> +				 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
+>   				 <&mdss_edp_phy 0>,
+>   				 <&mdss_edp_phy 1>;
 
-(...)
+The gcc usb3_phy_wrapper_gcc_usb30_pipe_clk entry is missing, it was already missing with legacy bindings.
 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
-> new file mode 100644
-> index 000000000000..9f365fccae78
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
-> @@ -0,0 +1,706 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2020-2023, Linaro Limited
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/gpio-keys.h>
-> +#include <dt-bindings/input/input.h>
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include "sc8180x.dtsi"
-> +#include "sc8180x-pmics.dtsi"
-> +
-> +/ {
-> +	model = "Qualcomm SC8180x Primus";
-> +	compatible = "qcom,sc8180x-primus", "qcom,sc8180x";
+Neil
 
-Please run scripts/checkpatch.pl and fix reported warnings.
-
-> +
-> +	aliases {
-> +		serial0 = &uart12;
-> +		serial1 = &uart13;
-> +	};
-> +
-> +	backlight: backlight {
-> +		compatible = "pwm-backlight";
-> +		pwms = <&pmc8180c_lpg 4 1000000>;
-> +		enable-gpios = <&pmc8180c_gpios 8 GPIO_ACTIVE_HIGH>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&bl_pwm_default>;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&hall_int_active_state>;
-> +
-> +		lid-switch {
-> +			gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>;
-> +			linux,input-type = <EV_SW>;
-> +			linux,code = <SW_LID>;
-> +			wakeup-source;
-> +			wakeup-event-action = <EV_ACT_DEASSERTED>;
-> +		};
-> +	};
-> +
-> +	reserved-memory {
-> +		rmtfs_mem: rmtfs-region@85500000 {
-> +			compatible = "qcom,rmtfs-mem";
-> +			reg = <0x0 0x85500000 0x0 0x200000>;
-> +			no-map;
-> +
-> +			qcom,client-id = <1>;
-> +			qcom,vmid = <15>;
-> +		};
-> +
-> +		wlan_mem: wlan-region@8bc00000 {
-> +			reg = <0x0 0x8bc00000 0x0 0x180000>;
-> +			no-map;
-> +		};
-> +
-> +		adsp_mem: adsp-region@96e00000 {
-> +			reg = <0x0 0x96e00000 0x0 0x1c00000>;
-> +			no-map;
-> +		};
-> +
-> +		mpss_mem: mpss-region@8d800000 {
-> +			reg = <0x0 0x8d800000 0x0 0x9600000>;
-> +			no-map;
-> +		};
-> +
-> +		gpu_mem: gpu-region@98a00000 {
-> +			reg = <0x0 0x98a00000 0x0 0x2000>;
-> +			no-map;
-> +		};
-> +
-> +		reserved-region@9a500000 {
-> +			reg = <0x0 0x9a500000 0x0 0x600000>;
-> +			no-map;
-> +		};
-> +	};
-> +
-> +	vreg_nvme_0p9: nvme-0p9-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg_nvme_0p9";
-> +
-> +		regulator-min-microvolt = <900000>;
-> +		regulator-max-microvolt = <900000>;
-> +
-> +		regulator-always-on;
-> +	};
-> +
-> +	vreg_nvme_3p3: nvme-3p3-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg_nvme_3p3";
-> +
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +
-> +		gpio = <&pmc8180c_gpios 11 0>;
-> +		enable-active-high;
-> +
-> +		regulator-always-on;
-> +	};
-> +
-> +	vdd_kb_tp_3v3: vdd-kb-tp-3v3-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vdd_kb_tp_3v3";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +
-> +		gpio = <&tlmm 4 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		regulator-always-on;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&kb_tp_3v3_en_active_state>;
-> +	};
-> +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3700000>;
-> +		regulator-max-microvolt = <3700000>;
-> +	};
-> +
-> +	vreg_s4a_1p8: pm8150-s4 {
-
--regulator suffix
-
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg_s4a_1p8";
-> +
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +
-> +		vin-supply = <&vph_pwr>;
-> +	};
-> +};
-> +
-> +&apps_rsc {
-> +	pmc8180-a-rpmh-regulators {
-
-Does not look like you tested the DTS against bindings. Please run `make
-dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-for instructions).
-
-> +		compatible = "qcom,pmc8180-rpmh-regulators";
-> +		qcom,pmic-id = "a";
-> +
-> +		vdd-s5-supply = <&vph_pwr>;
-> +		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p0>;
-> +
-> +		vreg_s5a_2p0: smps5 {
-> +			regulator-min-microvolt = <2040000>;
-> +			regulator-max-microvolt = <2100000>;
-> +		};
-> +
-> +		vreg_l7a_1p8: ldo7 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l9a_1p3: ldo9 {
-> +			regulator-min-microvolt = <1296000>;
-> +			regulator-max-microvolt = <1304000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l12a_1p8: ldo12 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +
-> +	pmc8180c-rpmh-regulators {
-> +		compatible = "qcom,pmc8180c-rpmh-regulators";
-> +		qcom,pmic-id = "c";
-> +
-> +		vdd-s6-supply = <&vph_pwr>;
-> +		vdd-s8-supply = <&vph_pwr>;
-> +		vdd-l2-l3-supply = <&vreg_s6c_1p35>;
-> +		vdd-bob-supply = <&vph_pwr>;
-> +
-> +		vreg_s6c_1p35: smps6 {
-> +			regulator-min-microvolt = <1350000>;
-> +			regulator-max-microvolt = <1372000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s8c_1p8: smps8 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-always-on;
-> +		};
-> +
-> +		vreg_l3c_1p2: ldo3 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l4c_3p3: ldo4 {
-> +			regulator-min-microvolt = <3008000>;
-> +			regulator-max-microvolt = <3008000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l10c_3p3: ldo10 {
-> +			regulator-min-microvolt = <3000000>;
-> +			regulator-max-microvolt = <3312000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l11c_3p3: ldo11 {
-> +			regulator-min-microvolt = <3296000>;
-> +			regulator-max-microvolt = <3304000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_bob: bob {
-> +			regulator-min-microvolt = <3296000>;
-> +			regulator-max-microvolt = <3350000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +
-> +	pmc8180-e-rpmh-regulators {
-> +		compatible = "qcom,pmc8180-rpmh-regulators";
-> +		qcom,pmic-id = "e";
-> +
-> +		vdd-s4-supply = <&vph_pwr>;
-> +		vdd-s5-supply = <&vph_pwr>;
-> +		vdd-l2-l10-supply = <&vreg_bob>;
-> +		vdd-l3-l4-l5-l18-supply = <&vreg_s4e_0p98>;
-> +		vdd-l7-l12-l14-l15-supply = <&vreg_s5e_2p05>;
-> +		vdd-l13-l16-l17-supply = <&vreg_bob>;
-> +
-> +		vreg_s4e_0p98: smps4 {
-> +			regulator-min-microvolt = <992000>;
-> +			regulator-max-microvolt = <992000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s5e_2p05: smps5 {
-> +			regulator-min-microvolt = <2040000>;
-> +			regulator-max-microvolt = <2040000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l1e_0p75: ldo1 {
-> +			regulator-min-microvolt = <752000>;
-> +			regulator-max-microvolt = <752000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l5e_0p88: ldo5 {
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <880000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l7e_1p8: ldo7 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l10e_2p9: ldo10 {
-> +			regulator-min-microvolt = <2904000>;
-> +			regulator-max-microvolt = <2904000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l12e: ldo12 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l16e_3p0: ldo16 {
-> +			regulator-min-microvolt = <3072000>;
-> +			regulator-max-microvolt = <3072000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +};
-> +
-> +&dispcc {
-> +	status = "okay";
-> +};
-> +
-> +&gpu {
-> +	status = "okay";
-> +
-> +	zap-shader {
-> +		memory-region = <&gpu_mem>;
-> +		firmware-name = "qcom/sc8180x/qcdxkmsuc8180.mbn";
-> +	};
-> +};
-> +
-> +&i2c1 {
-> +	clock-frequency = <100000>;
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&ts_i2c_active_state>;
-> +
-> +	status = "okay";
-> +
-> +	touchscreen@10 {
-> +		compatible = "hid-over-i2c";
-> +		reg = <0x10>;
-> +		hid-descr-addr = <0x1>;
-> +
-> +		vdd-supply = <&vreg_l4c_3p3>;
-> +		vddl-supply = <&vreg_l12e>;
-> +
-> +		post-power-on-delay-ms = <20>;
-> +
-> +		interrupts-extended = <&tlmm 122 IRQ_TYPE_LEVEL_LOW>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&ts_active_state>;
-> +	};
-> +};
-> +
-> +&i2c7 {
-> +	clock-frequency = <100000>;
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&aux_i2c_active_state>;
-> +
-> +	status = "okay";
-> +
-> +	touchpad@15 {
-> +		compatible = "hid-over-i2c";
-> +		reg = <0x15>;
-> +		hid-descr-addr = <0x1>;
-> +
-> +		interrupts-extended = <&tlmm 24 IRQ_TYPE_LEVEL_LOW>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&tp_int_active_state>;
-> +
-> +		vdd-supply = <&vdd_kb_tp_3v3>;
-> +	};
-> +
-> +	keyboard@3a {
-> +		compatible = "hid-over-i2c";
-> +		reg = <0x3a>;
-> +		hid-descr-addr = <0x1>;
-> +		interrupts-extended = <&tlmm 37 IRQ_TYPE_LEVEL_LOW>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&kb_int_active_state>;
-> +
-> +		vdd-supply = <&vdd_kb_tp_3v3>;
-> +	};
-> +};
-> +
-> +&mdss {
-> +	status = "okay";
-> +};
-> +
-> +&mdss_edp {
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&edp_hpd_active>;
-> +
-> +	status = "okay";
-> +
-> +	aux-bus {
-> +		panel {
-> +			compatible = "edp-panel";
-> +
-> +			backlight = <&backlight>;
-> +
-> +			ports {
-
-Are you sure this passes dtbs checks?
-
-
-
-Best regards,
-Krzysztof
+>   			clock-names = "bi_tcxo",
+> @@ -4138,8 +4116,9 @@ mdss_dp: displayport-controller@ae90000 {
+>   						"stream_pixel";
+>   				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
+>   						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
+> -				assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
+> -				phys = <&dp_phy>;
+> +				assigned-clock-parents = <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
+> +							 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
+> +				phys = <&usb_1_qmpphy QMP_USB43DP_DP_PHY>;
+>   				phy-names = "dp";
+>   
+>   				operating-points-v2 = <&dp_opp_table>;
 
