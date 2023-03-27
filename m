@@ -2,140 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D1F16CADBD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 20:46:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C585D6CADCA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 20:48:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229804AbjC0SqU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 14:46:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35502 "EHLO
+        id S229650AbjC0Ss3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 14:48:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbjC0SqS (ORCPT
+        with ESMTP id S229452AbjC0Ss2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 14:46:18 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69826A3;
-        Mon, 27 Mar 2023 11:46:17 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 27 Mar 2023 14:48:28 -0400
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [IPv6:2001:67c:2050:0:465::102])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40F3BA3;
+        Mon, 27 Mar 2023 11:48:27 -0700 (PDT)
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 13CBFB818C4;
-        Mon, 27 Mar 2023 18:46:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220E8C4339E;
-        Mon, 27 Mar 2023 18:46:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679942774;
-        bh=HVJfi5yiPTIaQ0FtKRuQnH39lcrjzNl/Toz+HEZVZgc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=d3Kajehyk9S3gttgCUy/JC4ssjpKVjwn215RqP6GeGk6Yhbhx10F4MVZYC6F3O2j3
-         vDp1lOZ2YlADjI8LlfS9vkvS6AEJW0JoasH1skwo34yJ1Zqqv0phxfjztHl/5dWX0R
-         aZKf2M8dCjPOSqQULv7fAZrZC/NmAv2Rn0mkTpCIJQ6UZM5ZdHQeok/aI6m7zh353x
-         RgaHHpOzqhf8JOVFaGE3bd92OsLgonG7H21lG/sOAsEgZEeUxTsGqtX8nHqeEfvJ4W
-         mNMjXuZ/A/tggWPU2hC3HPJLTYUsD7U8ieEhh3+7v6WMIPceIQZJsFgAk3Q7Gi7W8M
-         91+6hE96r8gNg==
-Date:   Mon, 27 Mar 2023 11:46:12 -0700
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4PlhfH2qykz9sTW;
+        Mon, 27 Mar 2023 20:48:23 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
+        s=MBO0001; t=1679942903;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=dhL+LGkrki0muDqB8H1PWedY5IW9NDpXQ10RZ+jS+8A=;
+        b=U4i6PKhzr4RvzH9iWGMl6PPd7WLKRwAUoklD+dV+8+/89X5vDp0dTOAiKOLgaj8zji6hLo
+        6dYqHe4CIBN8ckpzpuUGy9FbW++xyHrZuSoaoUSBOFDPiDdv3LhZ2WIMkmteHxWFQyCQub
+        Jv9d3mW9cWrVtCyzYHBWFHWOzKNDUr8ltrR557/xZkoYn1wmj7wSHtFzEJiAI9waLIl8Ps
+        LDJaK77jRrT4IgJkswQsLtP2u9/VzDgtyJ945HWWVy/S+dtiylsro3+UtVLJueV0ZHByUE
+        TSjObyXFmAJSsph1FfH4KdGR/YinmPl5KmoZHO4JyOeAio2CAFLpU+m5e0O3yQ==
+From:   Dylan Van Assche <me@dylanvanassche.be>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Iskren Chernev <me@iskren.info>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v3 3/3] dt-bindings: ufs: qcom: Fix sm8450 bindings
-Message-ID: <20230327184612.GC73752@sol.localdomain>
-References: <20221209-dt-binding-ufs-v3-0-499dff23a03c@fairphone.com>
- <20221209-dt-binding-ufs-v3-3-499dff23a03c@fairphone.com>
+        Dylan Van Assche <me@dylanvanassche.be>
+Subject: [PATCH v2 0/5] dts: qcom: arm64: sdm845: SLPI DSP enablement
+Date:   Mon, 27 Mar 2023 20:48:06 +0200
+Message-Id: <20230327184811.499553-1-me@dylanvanassche.be>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221209-dt-binding-ufs-v3-3-499dff23a03c@fairphone.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 24, 2023 at 08:41:30AM +0100, Luca Weiss wrote:
-> SM8450 actually supports ICE (Inline Crypto Engine) so adjust the
-> bindings and the example to match.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index ebc8e1adbc6f..3af786120fa5 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -113,7 +113,6 @@ allOf:
->                - qcom,sc8280xp-ufshc
->                - qcom,sm8250-ufshc
->                - qcom,sm8350-ufshc
-> -              - qcom,sm8450-ufshc
->                - qcom,sm8550-ufshc
->      then:
->        properties:
-> @@ -144,6 +143,7 @@ allOf:
->                - qcom,sdm845-ufshc
->                - qcom,sm6350-ufshc
->                - qcom,sm8150-ufshc
-> +              - qcom,sm8450-ufshc
->      then:
->        properties:
->          clocks:
-> @@ -250,7 +250,9 @@ examples:
->          ufs@1d84000 {
->              compatible = "qcom,sm8450-ufshc", "qcom,ufshc",
->                           "jedec,ufs-2.0";
-> -            reg = <0 0x01d84000 0 0x3000>;
-> +            reg = <0 0x01d84000 0 0x3000>,
-> +                  <0 0x01d88000 0 0x8000>;
-> +            reg-names = "std", "ice";
->              interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
->              phys = <&ufs_mem_phy_lanes>;
->              phy-names = "ufsphy";
-> @@ -278,7 +280,8 @@ examples:
->                            "ref_clk",
->                            "tx_lane0_sync_clk",
->                            "rx_lane0_sync_clk",
-> -                          "rx_lane1_sync_clk";
-> +                          "rx_lane1_sync_clk",
-> +                          "ice_core_clk";
->              clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
->                       <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
->                       <&gcc GCC_UFS_PHY_AHB_CLK>,
-> @@ -286,7 +289,8 @@ examples:
->                       <&rpmhcc RPMH_CXO_CLK>,
->                       <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->                       <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
-> -                     <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
-> +                     <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>,
-> +                     <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
->              freq-table-hz = <75000000 300000000>,
->                              <0 0>,
->                              <0 0>,
-> @@ -294,6 +298,7 @@ examples:
->                              <75000000 300000000>,
->                              <0 0>,
->                              <0 0>,
-> -                            <0 0>;
-> +                            <0 0>,
-> +                            <75000000 300000000>;
->          };
+* About *
 
-Reviewed-by: Eric Biggers <ebiggers@google.com>
+The Qualcomm SDM845 SoC has a separate SLPI (Sensor Low Power Island)
+DSP for sensors connected to the SoC which is responsible for exposing
+sensors to userspace, power saving, and other features. 
+While sensors are connected to GPIOs of the SoC, they cannot be used
+because the hypervisor blocks direct access to the sensors, thus the 
+DSP must be used to access any sensor on this SoC. The SLPI DSP uses a
+GLink edge (dsps) to communicate with the host and has a FastRPC interface
+to load files from the host filesystem such as sensor configuration files.
+The FastRPC interface does not use regular FastRPC Compute Banks
+but instead uses an allocated CMA region through which communication happens.
 
-- Eric
+* Changes *
+
+This patchseries completes support for the SLPI in the Qualcomm SDM845 SoC
+by adding the SLPI to the SDM845 DTS and enable it for 2 hardware devices:
+- Oneplus 6
+- SHIFTPHONES SHIFT6mq
+
+* Related patches *
+
+1. Remoteproc changes to support the SLPI DSP in SDM845 (v2):
+https://lore.kernel.org/linux-remoteproc/20230327183736.496170-1-me@dylanvanassche.be/
+2. FastRPC changes to support the SLPI DSP in SDM845 (v2):
+https://lore.kernel.org/linux-arm-msm/20230327184204.498032-1-me@dylanvanassche.be/
+
+This serie does not depend on any serie, but all of them are necessary
+to enable the feature in the end.
+
+* Changelog *
+
+Changes in v2:
+
+- Removed double blank lines
+- Enforce alphabetically order for 'slpi_pas'
+- Reordered 'slpi_pas' properties
+- Fixed FastRPC syntax
+- Dropped qcom,assign-all-mem property as this is not necessary anymore
+
+Kind regards,
+Dylan Van Assche
+
+Dylan Van Assche (5):
+  dts: arm64: qcom: sdm845: add SLPI remoteproc
+  dt-bindings: misc: qcom,fastrpc: allow FastRPC node without reg entry
+  dts: arm64: qcom: sdm845: add SLPI FastRPC support
+  dts: arm64: qcom: sdm845-oneplus: enable SLPI
+  dts: arm64: qcom: sdm845-shift-axolotl: enable SLPI
+
+ .../bindings/misc/qcom,fastrpc.yaml           |  3 +-
+ .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |  5 ++
+ .../boot/dts/qcom/sdm845-shift-axolotl.dts    |  5 ++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 59 +++++++++++++++++++
+ 4 files changed, 70 insertions(+), 2 deletions(-)
+
+-- 
+2.39.2
+
