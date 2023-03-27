@@ -2,66 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1267F6CA7A9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 16:29:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9386B6CA7C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Mar 2023 16:32:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232911AbjC0O3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 10:29:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49658 "EHLO
+        id S232856AbjC0Oct (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 10:32:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232965AbjC0O24 (ORCPT
+        with ESMTP id S232635AbjC0Ocs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 10:28:56 -0400
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AD80729B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 07:28:09 -0700 (PDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-5419d4c340aso173336337b3.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 07:28:09 -0700 (PDT)
+        Mon, 27 Mar 2023 10:32:48 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC1C4198A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 07:32:41 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-54606036bb3so8277727b3.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 07:32:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679927288;
+        d=linaro.org; s=google; t=1679927561;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=X7oETiAbAfzUJ7HzqmqjYrIufs3V2fiHoFSbt1UIh4s=;
-        b=LMhiL9Jf9E+cVjvFhCUgHOKVr4umgl4MyEOkMWil6ek4otCgMmULsS+j1Ql3oN98O5
-         AO3FLsIzrbR/7IA4I+xL4Rz+E4mdnwh/I92ecqoRgIHTViTLeHsYsSyMrSsxGAur1S3G
-         Jl5b+WfdFUSRM0I3ViEjgRlKG7XjVx6HHaOUcPWm70NHx6dkJ8gfnoEuxenyK9LP2oik
-         6e7mIXw0+u+UAbb6Bc0RWKsVGBVdu7ZIqdIgMbfPmZN1+Vij0nuN7EhFG4+hkc5CJoJ1
-         xx/ctIiu+Tcl70Sw8l5VJZPNbsbphL9ON/VJuaEAMm5x6BJp7kEb3cGTA0ziRifu/FgX
-         Q0sw==
+        bh=oZWYt2A1/xegsDaR9fdcxpuR4sCQsiDX1CHwh3kGLtI=;
+        b=aFlzEpm3jS5c8Qt8xlwCGn9pcvUmoRnZQXEwcDzfRk2NX/Ad+4ieeQgIf+Ly12IAJV
+         gW3CfuVrLZXDlf3+lzbkpm0IW+sqoIcR/I9vNWRsL4ZCNQLNc3QP4OwqF7ixJNo2+1HM
+         ncRWqrVZpHahKE+KObjsVch8rSd0ya95mMao8jpoInJFlOz1UKbNDv8XqapeVq/jvCft
+         ZDt23UJUjworIWWsJ76H+FdLBRUDrPfarccUMRBH/Q/EjUAFJMG/i+Yqq0XcTrPRs3rV
+         Iyc4HgsncEKgKoS734APuWVIL69jCnwqHNMp6NPYVR+VdFM/Sc1W+OkqsUYSGqSVKDu/
+         Nzdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679927288;
+        d=1e100.net; s=20210112; t=1679927561;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=X7oETiAbAfzUJ7HzqmqjYrIufs3V2fiHoFSbt1UIh4s=;
-        b=vQVQJbabnoiErfcHr44DNBzl02FxWo/VVHqqvpKVj6wk5jkr4sY7vJKFXgcTcxKkWu
-         3+UJEhoGMtgI15a5ERUNCNibvDIDRJcFx+lzRMQnF9ST+I32z71U3BfuDsn3f+nwEg8q
-         c19s099VxkweXRLSCCtp75dQiTkif7WWJ+CTIAPTjkNfvctVEzOAtWFdTrBStENnBknB
-         OQhiT8osit/SzCKsumoLrSPzM6wSDhxWBHgS10wUqJQfR8EHuqYQUthgdcsci0ppUgc1
-         QZ6wfBAAZ+V/pYpaf8dRFu5ajOOK74IIDX3C39xhN5eaIcCiAxsOqUo5sZIGKjw3wNal
-         ktoQ==
-X-Gm-Message-State: AAQBX9drmyJFDhnPDwU7Rtyjss5+1rMM+mfEgbPa6S9lmxEHmS/GGyLY
-        q2IQgiQMe3VqAonfHBzYJFJ/5zLkts1JGT8R1TNltV/tbkGEOPgAGWI6xPlr
-X-Google-Smtp-Source: AKy350ZKD/fgBcAqFDqiMdxfNo8Nyf0RE9CUuUo/C58z5D16bKlfHDfNsdW0R00eimXjynMkd8Keq9JqY8R8ZFQfgRc=
-X-Received: by 2002:a81:b50f:0:b0:544:b8d8:339e with SMTP id
- t15-20020a81b50f000000b00544b8d8339emr5534658ywh.5.1679927288387; Mon, 27 Mar
- 2023 07:28:08 -0700 (PDT)
+        bh=oZWYt2A1/xegsDaR9fdcxpuR4sCQsiDX1CHwh3kGLtI=;
+        b=YLdl3Zhh0xD1FWADbEzOyPp1AvlNU7J+WvR7irwQFF4BKYg3m8TqH5V2JWg8WUUomX
+         Yunz1H59kBUXISEuF5ZpgxweCkwvkI5upS+Ler3HIiP4787PzVpaw0E+nT0So6k77f35
+         4ALJm+rsgys+Te2p1VEyjApMXwKCNaTPCT1W8qEGOFJM6StdSPHdyz51Zi/KYBPyZhcq
+         oO130qBvYCAdn6bej4s+IzntdHOJ/kM2VE3D1etGbLpp5NAQlGWlcPJqHV9kzZs4bqZJ
+         DU8h+8g713ULuxOJZLutuebyB/ltsvVvXzMXJmPhoo26zKnfNgOaYty/pQkqmAiuLRxx
+         vibQ==
+X-Gm-Message-State: AAQBX9cgTCUC3mfQ2eHRudxL40yX7pJLpm841/S9mytU0IxWmna7RMPs
+        vmInHiAtIKmR0PPeEc+KV+P1eAgBm03MFBgddDEpKw==
+X-Google-Smtp-Source: AKy350YGL//ko0YOoMJn0yEBqBZM1OBbm7i8Gh3XLiKPeHWOd4Tug/7//ICczuY6fpZH922jDtuTVP3l2J/SHPOrcPc=
+X-Received: by 2002:a05:690c:3:b0:541:698b:7bdb with SMTP id
+ bc3-20020a05690c000300b00541698b7bdbmr4131051ywb.2.1679927560837; Mon, 27 Mar
+ 2023 07:32:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230327140752.163009-1-krzysztof.kozlowski@linaro.org> <20230327140752.163009-3-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230327140752.163009-3-krzysztof.kozlowski@linaro.org>
+References: <20230325134410.21092-1-me@dylanvanassche.be> <20230325134410.21092-2-me@dylanvanassche.be>
+ <883c3c48-c6e5-556d-431f-e92592b9106a@linaro.org> <b75b92bf64b55ba0ace0fbff65955c838a294dec.camel@dylanvanassche.be>
+ <44904ffc-83d4-1137-3479-737a81b31d16@linaro.org> <1f3fb4bd5387c8d69a6eb068fb773b9273081c13.camel@dylanvanassche.be>
+In-Reply-To: <1f3fb4bd5387c8d69a6eb068fb773b9273081c13.camel@dylanvanassche.be>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 27 Mar 2023 17:27:57 +0300
-Message-ID: <CAA8EJpoOjHpwwamdxBg+nf_Xf3m2q8vt9keM1atd821_iC6V3g@mail.gmail.com>
-Subject: Re: [PATCH v4 2/5] mailbox: qcom-apcs-ipc: do not grow the of_device_id
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Date:   Mon, 27 Mar 2023 17:32:30 +0300
+Message-ID: <CAA8EJprxn6LSDu3NV8r0pFr1pc+zRydoyOdJ2y6VRN3zZ8a52g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: misc: qcom,fastrpc: add
+ qcom,assign-all-memory property
+To:     Dylan Van Assche <me@dylanvanassche.be>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
@@ -72,22 +80,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 27 Mar 2023 at 17:17, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On Mon, 27 Mar 2023 at 17:27, Dylan Van Assche <me@dylanvanassche.be> wrote:
 >
-> Re-organize the compatible devices and add a comment to avoid unneeded
-> of_device_id growth with every new SoC.  These devices have quite a lot
-> of similarities and they can use only one compatible fallback for driver
-> binding.
+> Hi Krzysztof,
 >
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
+> On Mon, 2023-03-27 at 14:22 +0200, Krzysztof Kozlowski wrote:
+> > On 27/03/2023 13:37, Dylan Van Assche wrote:
+> > > Hi Krzysztof,
+> > >
+> > > On Sun, 2023-03-26 at 10:55 +0200, Krzysztof Kozlowski wrote:
+> > > > On 25/03/2023 14:44, Dylan Van Assche wrote:
+> > > > > Document the added qcom,assign-all-memory in devicetree
+> > > > > bindings.
+> > > > >
+> > > > > Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
+> > > > > ---
+> > > > >  Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml | 6
+> > > > > ++++++
+> > > > >  1 file changed, 6 insertions(+)
+> > > > >
+> > > > > diff --git
+> > > > > a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > > > > b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > > > > index 1ab9588cdd89..fa5b00534b30 100644
+> > > > > --- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > > > > +++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > > > > @@ -57,6 +57,12 @@ properties:
+> > > > >        Virtual machine IDs for remote processor.
+> > > > >      $ref: "/schemas/types.yaml#/definitions/uint32-array"
+> > > > >
+> > > > > +  qcom,assign-all-mem:
+> > > > > +    description:
+> > > > > +      Assign memory to all Virtual machines defined by
+> > > > > qcom,vmids.
+> > > >
+> > > > This (neither commit msg) does not explain why this is needed and
+> > > > actually does not sound like hardware-related property.
+> > >
+> > > This is made a separate property to toggle different behavior in
+> > > the
+> > > driver if it is needed for some FastRPC nodes.
+> >
+> > Bindings are not for driver behavior.
+> >
+> > > Downstream does guard
+> > > this with a property 'restrict-access' as well, see [1] for a
+> > > random
+> > > SDM845 downstream kernel. On SDM845, this property is not present,
+> > > thus
+> > > the IF block runs. On SDM670, this property is present, then the IF
+> > > block is skipped. That's why I opt for this property to have this
+> > > behaviour conditionally. I'm not sure how to explain it better
+> > > though.
+> >
+> > Still you described driver... Please come with something more
+> > hardware
+> > related.
+>
+> So just updating the description is enough then?
+>
+> As this is all reverse engineered, I have no access to the
+> documentation of FastRPC, so best effort:
 
+Vendor kernels put a lot of controls into DT, despite some of these
+controls being related to software or being a platform constant.
+Upstream tends to push some of the constraints into the driver data,
+leaving only variadic parts in DT.
+Could you please check if the property you are proposing is constant
+among the devices on a platform or not. If it is a platform
+peculiarity, a usual way is to add it to driver data rather than the
+DT.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+>
+> """
+> Mark allocated memory region accessible to remote processor.
+> This memory region is used by remote processor to communicate
+> when no dedicated Fastrpc context bank hardware is available
+> for remote processor.
+> """
+>
+> Is this the description that is 'more hardware related'?
 
 -- 
 With best wishes
