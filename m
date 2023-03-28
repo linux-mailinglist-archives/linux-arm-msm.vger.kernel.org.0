@@ -2,90 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EC266CC3CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 16:57:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 025B66CC652
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 17:30:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233610AbjC1O5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 10:57:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33396 "EHLO
+        id S230407AbjC1PaH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 11:30:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233603AbjC1O5q (ORCPT
+        with ESMTP id S233071AbjC1P3e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 10:57:46 -0400
-Received: from mail-40136.proton.ch (mail-40136.proton.ch [185.70.40.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D406E061;
-        Tue, 28 Mar 2023 07:57:45 -0700 (PDT)
-Date:   Tue, 28 Mar 2023 14:57:38 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1680015463; x=1680274663;
-        bh=8VYClvItDD5z4B2IZDetMy87zHl4JJwRVsi0b1MCWg4=;
-        h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=eao+F0VqQ4+vZO+XM0/+cXlZmkIj2LPG3t23KlyemYnb00QIv6Ixpn+AC1vguHrr+
-         fs99bpLxcTdGLY8vqMtT5zkbVcXcj4XkP/rwUFqpBtCnoMYWU/C/Bo9fh3dgpzTsOz
-         Q9KP+qA+dR2W2hbjdnb+L0FVK+Wt7nJP+JN2F3J8=
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-From:   Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH 09/11] arm64: dts: qcom: sdm845-oneplus: drop invalid panel properties
-Message-ID: <f5521c4c-01d7-7783-bdfd-dadf88396fd6@connolly.tech>
-In-Reply-To: <20230326155753.92007-9-krzysztof.kozlowski@linaro.org>
-References: <20230326155753.92007-1-krzysztof.kozlowski@linaro.org> <20230326155753.92007-9-krzysztof.kozlowski@linaro.org>
-Feedback-ID: 10753939:user:proton
+        Tue, 28 Mar 2023 11:29:34 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE66C10403
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 08:28:24 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id c29so16340938lfv.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 08:28:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680017303;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xbYSQAdfBoY9srBzQ23DbeM27K11V67ptwoHKDjgyAc=;
+        b=pM8We1qxb75pUNu0dH9pz/vq0cEy69uWGhSkBJE0Dx6a2F2YE5+1BDyJkNiFO3qbwx
+         z6y5abDpn3yLZuCHldzouxKfzDhEBgkUy2jwO0qIlZdxjNfFlzh1he5HX+zKTciexrR7
+         5kKYugQaN7u6aydiiwf7OVMmiCeIO/LrCCcshW4a4nE28X+WfUQUVti4ZbimDMPi3fcK
+         oGyQJtVGzinps6YPx5Ugy2wF/3f8JsPXrU7nSRPy4eDnXnF/d2VB2jHf2BEpch+OyC8e
+         oHIQiF+l/2En+jsD1qEMVE6lzPvSXJ3nuuZN3mBPo1iEjdyAcj8ST8OPDxGizbdb5aHq
+         xKfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680017303;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xbYSQAdfBoY9srBzQ23DbeM27K11V67ptwoHKDjgyAc=;
+        b=6aiYjnRS5lOTK8UR3PoPYuUmdxUo/vmbqAlzgeFSxeOuk/ErV50MHn0fM85vAWhmT2
+         y/DRfkbCIzPmZQjujE0KKheCfW0oEFlAGpy38hvwv3f5vk1hmzf/lZJTXjNj2Yq4cSP2
+         3/urSgkCkEOTG6SlINxsYwgPLXGuPo/etwjJCb9tcvR5B0wBGxOXRSrQjlreSkaA1Hgp
+         86EAUT3sLPunZhqyZ6Y55xgpSuiFHyWXlfCIAOiGuf3gAboa9Wcy5IrnYo9DrXxpHGda
+         x2F1kI4/Ba8bN0eOgEGvrEoIKOdV0Xz0JCh6R3q9H0ZGpS3aVwjY+ghBW1xDGBp6QU2a
+         eJDQ==
+X-Gm-Message-State: AAQBX9dISv0p7bAUgluTTumMS5fW2Tev4D105VF83IOK0dysWJXs+ykX
+        QBLy/D09QK9SyZ3ODyOSGwkgCg==
+X-Google-Smtp-Source: AKy350Z28cG2TgRFvAR8TDgA1LLOhqMkUBnSkIbNOBlA1oA7/iIwsV3nfpf0NfNrSfb8T4j+ZDNzKg==
+X-Received: by 2002:ac2:4145:0:b0:4dd:ce0b:7692 with SMTP id c5-20020ac24145000000b004ddce0b7692mr4407966lfi.46.1680017302863;
+        Tue, 28 Mar 2023 08:28:22 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id h1-20020ac250c1000000b004e83f386878sm5083801lfm.153.2023.03.28.08.28.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Mar 2023 08:28:22 -0700 (PDT)
+Message-ID: <af31e11c-6c70-a358-1198-3cddc3ee2f89@linaro.org>
+Date:   Tue, 28 Mar 2023 18:28:21 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH] drm/msm: Avoid rounding down to zero jiffies
+Content-Language: en-GB
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20230324220013.191795-1-robdclark@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230324220013.191795-1-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 25/03/2023 00:00, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> If userspace asked for a timeout greater than zero, but less than a
+> jiffy, they clearly weren't planning on spinning.  So it is better
+> to round up to one.
+> 
+> This fixes an issue with supertuxkart that was (for some reason)
+> spinning on a gl sync with 1ms timeout.  CPU time for a demo lap
+> drops from:
+> 
+>    15.83user 20.98system 0:47.46elapsed 77%CPU
+> 
+> to:
+> 
+>    8.84user 2.30system 0:46.67elapsed 23%CPU
 
+Interesting. We potentially increased the timeout, but the overall 
+(elapsed) time has decreased. Nevertheless:
 
-On 26/03/2023 16:57, Krzysztof Kozlowski wrote:
-> Panel does not have children with unit-addresses thus address/size-cells
-> are not valid:
->
->   panel@0: '#address-cells', '#size-cells' do not match any of the regexe=
-s: 'pinctrl-[0-9]+'
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Reviewed-by: Caleb Connolly <caleb@connolly.tech>
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
->  arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 2 --
->  1 file changed, 2 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/a=
-rm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> index b01542d79ae2..0c268c560d37 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> @@ -347,8 +347,6 @@ &dsi0 {
->  =09display_panel: panel@0 {
->  =09=09status =3D "disabled";
->
-> -=09=09#address-cells =3D <1>;
-> -=09=09#size-cells =3D <0>;
->  =09=09reg =3D <0>;
->
->  =09=09vddio-supply =3D <&vreg_l14a_1p88>;
-> --
-> 2.34.1
->
+>   drivers/gpu/drm/msm/msm_drv.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 9f0c184b02a0..7936aa6cad03 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -548,7 +548,7 @@ static inline unsigned long timeout_to_jiffies(const ktime_t *timeout)
+>   		remaining_jiffies = ktime_divns(rem, NSEC_PER_SEC / HZ);
+>   	}
+>   
+> -	return clamp(remaining_jiffies, 0LL, (s64)INT_MAX);
+> +	return clamp(remaining_jiffies, 1LL, (s64)INT_MAX);
+>   }
+>   
+>   /* Driver helpers */
 
---
-Kind Regards,
-Caleb
+-- 
+With best wishes
+Dmitry
 
