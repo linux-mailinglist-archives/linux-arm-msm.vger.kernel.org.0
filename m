@@ -2,128 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 18FBC6CB665
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 07:54:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1368E6CB67C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 08:03:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232132AbjC1Fxw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 01:53:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41556 "EHLO
+        id S230142AbjC1GDK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 02:03:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229527AbjC1Fxv (ORCPT
+        with ESMTP id S230468AbjC1GDJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 01:53:51 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 218EF2D61
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 22:53:49 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id y14so10894702wrq.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 22:53:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679982827;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=JS0pA7dTK//9+UyGYDDGbrV1+24ixtl3SbvVnf67nhQ=;
-        b=jEHWPzTrGpEMleU840krXgzFguip/yZPH9Ln2iBEqaPZ7vZO+qgv/CLesHnXxxEWma
-         LkOuwUS7mTA9PITANbgFDSXet7YS4gMaWPolVZ+2q71XM5VI+JoZClJYoxTwyu4ZR27j
-         E74PpOrF9u7+3b+gvOLv6bRJhK1KMSvy5XNRXsJaZIK/mnapUZZeXvPKEJ6EanhyHRo7
-         uzl6VjO6r4N5AQoWPRKLYp8MvtTsK1GLtamRdmqZlcjBMcu9jEqixSPk+js96kWlMvIH
-         OW0pINmtLrAKEE5OyUiJSOdYfKY2TEHxNtbRWcPRN9GwLeIm1bHE8XoIAJlMFZI3N41t
-         40fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679982827;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JS0pA7dTK//9+UyGYDDGbrV1+24ixtl3SbvVnf67nhQ=;
-        b=aDn7ndjCF4AFBmWAmF+l6DOEVgddiL6oha+RTvU35OK+XJSPjPj3V3pOe/PMeijRVX
-         74AjQly+QysVnUDVDTmNNAXSI6enr0ujdIHZRZZuvibHk1UF0iOOcMFaqCq9TJzID57J
-         uQMH0R1U1pQK1GKmsUeBV46rvqvooYNH9BEzp6wBETT55FZZGwuEnVQTXWyR6j92uc08
-         OwohSiAPxGm6N2DZzp9jSgArhIKnvG4g37BuVWSzTHdTVOR9cRM0KC9BvFCGBOtcRKmy
-         6zIMnzfcQ467SpEyGDFYDCroBG0vSNo8IjqIwTPkKnQ9WT2sAUCUH/CERObzmJw6275U
-         YdpQ==
-X-Gm-Message-State: AAQBX9cvb8VrUqZLZ13wAtUFfu5/SaT2kKmEQoXfXyU7tnEI4njiSFxB
-        Esn6m1XahI7W+fLHOzMIL7lfHlfmChV7etANd1rz5A==
-X-Google-Smtp-Source: AKy350Y4+xkcnQAc1ICGZNMlkAi2Rc1gi2m98kbPnFAUFZoojSgwj6O24a5KHuE+6ii35Y/77jlNsth4h3MjHe2bU+E=
-X-Received: by 2002:a5d:648c:0:b0:2d7:9771:fc4b with SMTP id
- o12-20020a5d648c000000b002d79771fc4bmr6317194wri.5.1679982827489; Mon, 27 Mar
- 2023 22:53:47 -0700 (PDT)
+        Tue, 28 Mar 2023 02:03:09 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D93821BF9;
+        Mon, 27 Mar 2023 23:02:58 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32S3kP4H027584;
+        Tue, 28 Mar 2023 06:02:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=tiXyRIJPK6Rsvlv8Hvs8pKKjdhdnF707hGQ8B7kyECA=;
+ b=cv1WsJOT3+/i8V09AAyFX7cmrz/2kFmazIG3RzRWzq0tIOBWZ160hQngJS+OnY5CSFSC
+ zn+TltEIB0YRZnX3b3XBlAp6lk92IM6qYeELogqYNgNp6HiCTkiSQofmbw9EX8icZWJd
+ g28MIv/SSM1EkmcdWEw3/jr+JozzbJ+JPtN0qxcxfHYJKt9Nf7lrMDoRKctorKHDNiCA
+ 5ObG60Nv0s7ojliYvDcZ7OE976x2m4xHKmoK+CxCZTqsJAx0epZRGc6/H9VkgKU4BRcR
+ lMvcRAsQRK/GBQIUM/bqW+/9WIXvSJtahZQVdurPh+57vvl0oIHX7aOporp1U2WbJI0I vA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pk5773512-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 28 Mar 2023 06:02:47 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32S62k3e019484
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 28 Mar 2023 06:02:46 GMT
+Received: from [10.216.36.96] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 27 Mar
+ 2023 23:02:41 -0700
+Message-ID: <fb9712fc-d103-769c-2ed7-51a08bbe76b2@quicinc.com>
+Date:   Tue, 28 Mar 2023 11:32:38 +0530
 MIME-Version: 1.0
-References: <20230320071211.3005769-1-bhupesh.sharma@linaro.org> <7b26e32d-6f3e-4e1f-33a7-0a994ae8526d@linaro.org>
-In-Reply-To: <7b26e32d-6f3e-4e1f-33a7-0a994ae8526d@linaro.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Tue, 28 Mar 2023 11:23:36 +0530
-Message-ID: <CAH=2NtzGbmeWUusC_vuE5EOR8AWVKEskmuBzQxSu_vCRKuh54A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: dma: Add support for SM6115 and QCS2290 SoCs
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, vkoul@kernel.org,
-        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
-        konrad.dybcio@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v1 0/4] Remove the qdsp6ss register from lpasscc
+Content-Language: en-US
+To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <broonie@kernel.org>,
+        <konrad.dybcio@somainline.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <mturquette@baylibre.com>,
+        <quic_plai@quicinc.com>, <quic_rohkumar@quicinc.com>,
+        <quic_visr@quicinc.com>, <robh+dt@kernel.org>,
+        <swboyd@chromium.org>
+References: <20230327163249.1081824-1-quic_mohs@quicinc.com>
+ <b347395dd736194ae9392f2f6ea450b0.sboyd@kernel.org>
+From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+In-Reply-To: <b347395dd736194ae9392f2f6ea450b0.sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: fj3ZzXUIWJ0lnJLW_nJtJNSq9jfRGId5
+X-Proofpoint-ORIG-GUID: fj3ZzXUIWJ0lnJLW_nJtJNSq9jfRGId5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-24_11,2023-03-27_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 adultscore=0
+ mlxlogscore=645 phishscore=0 malwarescore=0 spamscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2303280049
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vladimir,
 
-On Fri, 24 Mar 2023 at 17:38, Vladimir Zapolskiy
-<vladimir.zapolskiy@linaro.org> wrote:
->
-> Hi Bhupesh,
->
-> On 3/20/23 09:12, Bhupesh Sharma wrote:
-> > Add new compatible for BAM DMA engine version v1.7.4 which is
-> > found on Qualcomm SM6115 and QCS2290 SoCs.
-> >
-> > While at it, also update qcom,bam-dma bindings to add comments
-> > which describe the BAM DMA versions used in SM8150 and SM8250 SoCs.
-> > This provides an easy reference for identifying the actual BAM DMA
-> > version available on Qualcomm SoCs.
-> >
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >   Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 4 +++-
-> >   1 file changed, 3 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-> > index f1ddcf672261..4c8536df98fe 100644
-> > --- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-> > +++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-> > @@ -20,8 +20,10 @@ properties:
-> >         - qcom,bam-v1.3.0
-> >           # MSM8974, APQ8074 and APQ8084
-> >         - qcom,bam-v1.4.0
-> > -        # MSM8916 and SDM845
-> > +        # MSM8916, SDM845, SM8150 and SM8250
-> >         - qcom,bam-v1.7.0
-> > +        # SM6115 and QRB2290
-> > +      - qcom,bam-v1.7.4
-> >
-> >     clocks:
-> >       maxItems: 1
->
-> apparently it's a good time to implement a switch in compatible values
-> similar to the one done for QCE:
->
-> https://lore.kernel.org/linux-arm-msm/20230222172240.3235972-6-vladimir.zapolskiy@linaro.org/
->
-> If this is done in the nearest time, then new platfrom QCE changes
-> can be seamlessly added after the next merge window, also the change
-> in the compatible values model shall resolve multiple technical
-> concerns including the one above about 1/1 change in the series.
+On 3/27/2023 11:11 PM, Stephen Boyd wrote:
+> Quoting Mohammad Rafi Shaik (2023-03-27 09:32:45)
+>> This patch set is to remove the qdsp6ss register from lpasscc to
+>> resolve memory conflict's between lpascc and ADSP remoteproc driver.
+> Is this related to the other patch series[1] ("[PATCH v9 0/4] Add resets
+> for ADSP based audio clock controller driver")? Does it supersede those?
+Thanks for comment,
 
-That is on my to-do list, but it's not of urgent priority as of now,
-as fortunately the BAM DMA versions 1.7.0 and 1.7.4 are very similar
-(at least in terms of how the linux driver uses them), so when we have
-future use-cases that exploit the differences between the two versions
-(or newer versions introduced in SoCs in the meanwhile) in the DMA
-driver we can move to the soc-specific compatibles.
+yes, its superseded form patch series[1] ("[PATCH v9 0/4] Add resets
+for ADSP based audio clock controller driver") which is required many
+changes.
 
-Thanks,
-Bhupesh
+As the qdsp6ss clocks are being enabled in remoteproc driver,
+the qdsp6ss not required in lpasscc node.
+
+For audioreach solution required to create the remoteproc_adsp
+device tree node with base address 0x3000000 for remoteproc driver,
+as already this address being used in lpasscc node it's causing memory
+conflict.
+>> Mohammad Rafi Shaik (4):
+>>    arm64: dts: qcom: sc7280: Modify lpasscc node name
+>>    dt-bindings: clock: qcom,sc7280-lpasscc: Remove qdsp6ss register
+>>      region
+>>    arm64: dts: qcom: sc7280: Remove qdsp6ss regmap region
+>>    clk: qcom: lpasscc-sc7280: Remove qdsp6ss clock registration
+> [1] https://lore.kernel.org/all/20230317141622.1926573-1-quic_mohs@quicinc.com/
