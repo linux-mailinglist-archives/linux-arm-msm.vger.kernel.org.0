@@ -2,203 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CB986CB6BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 08:16:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7171E6CB74F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 08:40:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232374AbjC1GQN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 02:16:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60964 "EHLO
+        id S232256AbjC1GkK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 02:40:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232345AbjC1GQM (ORCPT
+        with ESMTP id S229664AbjC1GkJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 02:16:12 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AC4230FC;
-        Mon, 27 Mar 2023 23:16:10 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32S6C7jK010531;
-        Tue, 28 Mar 2023 06:15:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=iRrp4ZVtHf6+VfJjNdWEkd8OHn2fcSeeKtKC2EYmZqI=;
- b=oDJO0GnxXGX/pXQnqDScTGS7qLfCVyxGW5Ggatsn9zRS/JRaBGNtMxl5TIdv1Hx3ls04
- gwxSJD5rYPKwPXqibHUvYl2koRaOKuzqFtYQq8rkLeDFp3j0F9jKAerg7COsUp8kS+Ro
- uf6/ezOiBQbhb11pFSpIhwU3RC9OxuKwUAVSzE3xZrnoZdf+ak2Q8X7RucRW1w9TMIix
- 1VNPUfEECqRkXRjEwMkEOETpp1tEVhQ+ZSAf8XGT/5WOSpitHonK14vbPmocLXJ9cy7x
- xjXcxV1qOm8hSC4Xs33OYdVqkDojLYCA7G0lZrqOQB65L2WC9b4BVXPTn/y2cU9x0FaZ ug== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pk7h8tu7p-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 28 Mar 2023 06:15:49 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32S6Fl1R002528
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 28 Mar 2023 06:15:47 GMT
-Received: from [10.216.32.150] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 27 Mar
- 2023 23:15:38 -0700
-Message-ID: <2484518b-bcf6-7fb1-6bfb-b96b3682397b@quicinc.com>
-Date:   Tue, 28 Mar 2023 11:45:35 +0530
+        Tue, 28 Mar 2023 02:40:09 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED41219AA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 23:40:06 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id ek18so45339767edb.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 23:40:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679985605;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KS01sPEbTq+ygcPzS1GxIzVdABG8Hy8NYqv6mG/Q61E=;
+        b=Y1eKKHjCjGGKosnQoBeNxL1IOgLvcdlzRP7nxJFwVS1HRD83UmzD1USFQJW7LcXYOR
+         2iANqDsd5//kEqVAQTis7pvycAxh+Q83CC9i0zYera6cqbIsnNc86HKQ6j2qdYfg+jw/
+         UOksy3cN9eubli/mkqeuzSNqwjSb4GIisKdoQjq/i9I+qGC6tnunQ6f8/LTWO2J9wbEk
+         KaSa8W13tvxHCvIZHhS5Uh/8q3nGwfzmjvhPQ0FlH8BGBRIAK5cHUE7sUsThIVJG5PDp
+         2uQamEHpRO/9/bmlkb38ybAgg2x/SwVckDWIM49XDezQthXULEZWlnngXp2Lgw/9PTBL
+         J92g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679985605;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KS01sPEbTq+ygcPzS1GxIzVdABG8Hy8NYqv6mG/Q61E=;
+        b=3pr9mLwZ1qBlLedRUrduLfHEjMVjc3B5SWWydmMgHrZ5nSmyL21/ku7p3gtvNyGGHo
+         CIJhgzWQ4BL0UO6uXDeguZ9D3pGVKEpHi0IQ7b6v3IXPSqzafl/UzoLp4DQUVhHLi9za
+         7+lul8bGZENSq1wWf8xR64JzSQnIhzLIVFmY/eHJ0iIcYkvGICylbV0BhcbANP1xROs7
+         fgXCV9p7l4Leb/R+su1qQFzb/161Jdj59vnqZ4yhz/sZxSazH5k242ghF+MNOIqeTbYX
+         C2ZRdJOw4sHs0/5L0ii4fGVdxTZyLPoOilCXSW1LPn7uB+oK2wJI1klzOKmd8bITylzv
+         30tg==
+X-Gm-Message-State: AAQBX9d+AAY15UiA+JcbBmT9n8uOTwXVcBfpR6BUIN/u2xpywC+19s1F
+        +dQV9Wg2y8qCRqD5DRqUtLsztQ==
+X-Google-Smtp-Source: AKy350ag5jc21SpgvGjtcfe5iqQzGFQTsZBfMCKtrlipgo56KJ4JXFi5xmsf1BmySij7IfyHpCsfbQ==
+X-Received: by 2002:a17:906:81d5:b0:93d:ae74:fa9e with SMTP id e21-20020a17090681d500b0093dae74fa9emr14858648ejx.7.1679985605412;
+        Mon, 27 Mar 2023 23:40:05 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:9e92:dca6:241d:71b6? ([2a02:810d:15c0:828:9e92:dca6:241d:71b6])
+        by smtp.gmail.com with ESMTPSA id v25-20020a17090606d900b008e22978b98bsm14934354ejb.61.2023.03.27.23.40.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Mar 2023 23:40:05 -0700 (PDT)
+Message-ID: <abff6c64-86d7-5ab5-e046-31e293eb9b9a@linaro.org>
+Date:   Tue, 28 Mar 2023 08:40:03 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH V10 2/4] clk: qcom: Add Global Clock Controller driver for
- IPQ9574
+Subject: Re: [PATCH v2 1/3] dt-bindings: remoteproc: qcom: adsp: add
+ qcom,sdm845-slpi-pas compatible
 Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <arnd@arndb.de>, <broonie@kernel.org>,
-        <catalin.marinas@arm.com>, <devicetree@vger.kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <konrad.dybcio@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <linus.walleij@linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <marcel.ziswiler@toradex.com>, <mturquette@baylibre.com>,
-        <nfraprado@collabora.com>, <p.zabel@pengutronix.de>,
-        <robh+dt@kernel.org>, <shawnguo@kernel.org>, <will@kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_poovendh@quicinc.com>
-References: <20230327132718.573-1-quic_devipriy@quicinc.com>
- <20230327132718.573-3-quic_devipriy@quicinc.com>
- <0af15083921c5d3c89392209654f0c9b.sboyd@kernel.org>
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <0af15083921c5d3c89392209654f0c9b.sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Dylan Van Assche <me@dylanvanassche.be>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230327183736.496170-1-me@dylanvanassche.be>
+ <20230327183736.496170-2-me@dylanvanassche.be>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230327183736.496170-2-me@dylanvanassche.be>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NKZ7h8yzMq3DFkKuh5KMdGewxq-VMlB_
-X-Proofpoint-ORIG-GUID: NKZ7h8yzMq3DFkKuh5KMdGewxq-VMlB_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-24_11,2023-03-27_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- bulkscore=0 impostorscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
- clxscore=1015 mlxlogscore=999 phishscore=0 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303280050
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 27/03/2023 20:37, Dylan Van Assche wrote:
+> SLPI DSP remoteproc on DSP is defined by the 'qcom,sdm845-slpi-pas'
+> compatible in the qcom_q6v5_pas driver. Add this compatible to the
+> devicetree bindings.
+> 
+> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
+> ---
+>  .../bindings/remoteproc/qcom,adsp.yaml        | 19 +++++++++++++++++++
 
 
-On 3/27/2023 10:18 PM, Stephen Boyd wrote:
-> Quoting Devi Priya (2023-03-27 06:27:16)
->> diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq9574.c
->> new file mode 100644
->> index 000000000000..b2a2d618a5ec
->> --- /dev/null
->> +++ b/drivers/clk/qcom/gcc-ipq9574.c
->> @@ -0,0 +1,4248 @@
->> +// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +/*
->> + * Copyright (c) 2023 The Linux Foundation. All rights reserved.
->> + */
->> +
->> +#include <linux/kernel.h>
->> +#include <linux/err.h>
->> +#include <linux/platform_device.h>
->> +#include <linux/module.h>
->> +#include <linux/of.h>
->> +#include <linux/of_device.h>
-> 
-> What is this include for?
-This include actually don't seem necessary. But, I see that of.h & 
-platform_device.h are being included via of_device.h
-Would you suggest to drop of_device.h or the other two
-headers instead?
-> 
->> +#include <linux/regmap.h>
-> 
-> Need to include clk-provider.h
-> 
->> +
->> +#include <linux/reset-controller.h>
-> 
-> Put a newline here.
-Okay
-> 
->> +#include <dt-bindings/clock/qcom,ipq9574-gcc.h>
->> +#include <dt-bindings/reset/qcom,ipq9574-gcc.h>
->> +
->> +#include "clk-rcg.h"
->> +#include "clk-branch.h"
->> +#include "clk-alpha-pll.h"
->> +#include "clk-regmap-divider.h"
->> +#include "clk-regmap-mux.h"
->> +#include "clk-regmap-phy-mux.h"
->> +#include "reset.h"
->> +
->> +/* Need to match the order of clocks in DT binding */
->> +enum {
->> +       DT_XO,
->> +       DT_SLEEP_CLK,
->> +       DT_BIAS_PLL_UBI_NC_CLK,
->> +       DT_PCIE30_PHY0_PIPE_CLK,
->> +       DT_PCIE30_PHY1_PIPE_CLK,
->> +       DT_PCIE30_PHY2_PIPE_CLK,
->> +       DT_PCIE30_PHY3_PIPE_CLK,
->> +       DT_USB3PHY_0_CC_PIPE_CLK,
->> +};
->> +
->> +enum {
->> +       P_XO,
->> +       P_PCIE30_PHY0_PIPE,
->> +       P_PCIE30_PHY1_PIPE,
->> +       P_PCIE30_PHY2_PIPE,
->> +       P_PCIE30_PHY3_PIPE,
->> +       P_USB3PHY_0_PIPE,
->> +       P_GPLL0,
->> +       P_GPLL0_DIV2,
->> +       P_GPLL0_OUT_AUX,
->> +       P_GPLL2,
->> +       P_GPLL4,
->> +       P_PI_SLEEP,
->> +       P_BIAS_PLL_UBI_NC_CLK,
->> +};
->> +
->> +static const struct parent_map gcc_xo_map[] = {
->> +       { P_XO, 0 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_xo_data[] = {
->> +       { .index = DT_XO },
->> +};
->> +
->> +static const struct clk_parent_data gcc_sleep_clk_data[] = {
->> +       { .index = DT_SLEEP_CLK },
->> +};
->> +
->> +static struct clk_alpha_pll gpll0_main = {
->> +       .offset = 0x20000,
->> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
->> +       .clkr = {
->> +               .enable_reg = 0x0b000,
->> +               .enable_mask = BIT(0),
->> +               .hw.init = &(struct clk_init_data) {
-> 
-> All these clk_init_data structs should be const.
-Okay
-> 
->> +                       .name = "gpll0_main",
->> +                       .parent_data = gcc_xo_data,
->> +                       .num_parents = ARRAY_SIZE(gcc_xo_data),
->> +                       .ops = &clk_alpha_pll_ops,
->> +               },
->> +       },
->> +};
-Thanks,
-Devi Priya
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
