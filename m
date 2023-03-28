@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71D656CC0CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 15:29:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00C606CC0E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 15:30:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232644AbjC1N3x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 09:29:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50106 "EHLO
+        id S233098AbjC1Nas (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 09:30:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233084AbjC1N3p (ORCPT
+        with ESMTP id S233110AbjC1Nad (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 09:29:45 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C72ABDF6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 06:29:41 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id y15so15828320lfa.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 06:29:41 -0700 (PDT)
+        Tue, 28 Mar 2023 09:30:33 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A00C166
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 06:30:03 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id br6so15798027lfb.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 06:30:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680010180;
+        d=linaro.org; s=google; t=1680010202;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1WbYAhbTJCq9CpwMXXHWoOEY+JTfgn6zXdroTgNd+uI=;
-        b=rxZ50zI1MCv1NKtbEahVMhd0XbsX7dlagZ+uAEWEHzhfu6KTkIlpyBw+oYsznzMtdo
-         piS+8kgBJnPAcgvgbHnl73jhjdP+wCXaz3D2TvWVMZTVPxdJs/nCGocivGm1iPhx8C/4
-         8LcIaQ73RD1Ifrdn54ryeojlfsJtHmDFZGEnHbsyiAQRzexpemOheO2FkIdT7nRI6sHv
-         8tx82exQW1kp4S/FDS4hrAPlUV2l1zNydeaFm+d8BP68PLtCFWFWNpcGtBb3TO8sKwVk
-         0PI6KGYpe6+RJDQocuLb2GDATCC/SdmGAjuO9fbjeiTDThwr7GUWbdGkRRZ/QQWlV8Mp
-         jn0Q==
+        bh=XKTtxXBQXNdB3mDvc7ywZLQeEEIHxxzdUGBM34gb4BA=;
+        b=I8xms0l0rNHplSHi9RGLTwbge69HPDturDYNFRl1tfLXCHpa4y2XoX38Ka1qyUMkaN
+         cv25wbwMfJl0YsVfSM03v0dD6iUxuK/4A/g+14/BZxf/Gdo5n0RF7yrGRkh8ZZGGJfUH
+         BpEcmPTZ/ap7X+dADikfLPXa3GMl3fBI86ZeXlf5tClGBx5msFW/Vyq83tkAhoMgSnlX
+         tdYXJDVfe3DV1wpnbfCepRRSBo2jupakArQOwSIRt4RTYICNhYbgfDshBloUqNHcyd5G
+         DDK83XrJ3p+X51CwwIPB6V6etzQFw0o6FBN/suhAqEw+fNBNX2olqYFPHH7WtMvwH4sE
+         hvKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680010180;
+        d=1e100.net; s=20210112; t=1680010202;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1WbYAhbTJCq9CpwMXXHWoOEY+JTfgn6zXdroTgNd+uI=;
-        b=r1Fs+DdJCy6pKNghgFa2TbyEWe2uYs/HZEAHHqpgyowyKTKhszCftefWSrSwjCM8oU
-         EBi+rkNs4cR3IJVNxQfv3+Fv4/XThec0vRZ2mOCdSLR42AQZ+lkKto+uXmV3ErXlabL6
-         8d5xdKplay3jby2uDs6onHb7GmVEFLpJs1lblNGs2juMr5SmksI2Cm2DGH4K7pK1KKrn
-         BLK+5Za+2e6CytkMb1f8KTuaKpCG5fRBSntPbtXR8ZWbgqd96afVaLtFEoU+s1jbijw0
-         B50WdYPOzttPlZ7E6a/FtxKngRqFToMn0An3UB/VZh62NcON+Dr7J46m2BS5isswcNYa
-         6qnA==
-X-Gm-Message-State: AAQBX9dj9m0kNs9M/YvU4TYip2a6II6MzA//1OqMFsMnxzVa4YFgMzo7
-        RWxfMvSpsL1olFlGyIl9sckGAw==
-X-Google-Smtp-Source: AKy350aI9Nosdzm7Da1+tRI3ckrPMOkF/SZUZmTk6ZU0G1m/sSinzGQCdwI8yBEQKu2hL/2VJBY2lQ==
-X-Received: by 2002:ac2:549a:0:b0:4de:ca63:b2d9 with SMTP id t26-20020ac2549a000000b004deca63b2d9mr4125954lfk.49.1680010179704;
-        Tue, 28 Mar 2023 06:29:39 -0700 (PDT)
+        bh=XKTtxXBQXNdB3mDvc7ywZLQeEEIHxxzdUGBM34gb4BA=;
+        b=sTzAEjOJL8fCmD+kHQm95RWnaCtsDRZGonelbPsw/RvlOH7hgx+djdUBSSJ38s5p84
+         3zaNlovQJRer93rtQ6ZiipwRd6dDzCFyeARPMDks4f82TNPtdnOW7yKH1QbRrvjdX6vN
+         TNNjG2VAuQrsI157H8AiG7DAJyQFQUpjYTXNjcLUwAosX6bgY1Z6VdS+2BsQRxePWQML
+         JU7DgaYoIc+NTkiAJib5vCVXfSMGO4mNtQxTyoeuC4tz67OY8PJCg+Y94OJyxrGFX+Zg
+         saf2XEt9oxYKsUa6lWqaKQMXtfJr2s7w0MujX/15fdUKQibXT6TwvLgwIaoTr0vURU+L
+         Vwhg==
+X-Gm-Message-State: AAQBX9eV4rTxxzbTWGm2hX4xVfXBDe50V4ibvvVOl/5ygZAMW6Wx1/NB
+        qVpwNnkzi3fWaMmEETbjw7hriw==
+X-Google-Smtp-Source: AKy350aQBV4ZvZHbN/PDT47IBCkZUFzZ1c/0U0S8aAiHh6D2eyakbST1XrzpZ1XrLEJ90DUuXhbH3A==
+X-Received: by 2002:a05:6512:3c2:b0:4dd:98c6:ee2 with SMTP id w2-20020a05651203c200b004dd98c60ee2mr4295986lfp.15.1680010201754;
+        Tue, 28 Mar 2023 06:30:01 -0700 (PDT)
 Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id f24-20020ac25338000000b004e8448de1c0sm5116024lfh.10.2023.03.28.06.29.38
+        by smtp.gmail.com with ESMTPSA id b26-20020a056512025a00b0048a9e899693sm5080765lfo.16.2023.03.28.06.30.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Mar 2023 06:29:39 -0700 (PDT)
-Message-ID: <5beab308-a114-745b-fa28-84ca0495f539@linaro.org>
-Date:   Tue, 28 Mar 2023 15:29:38 +0200
+        Tue, 28 Mar 2023 06:30:01 -0700 (PDT)
+Message-ID: <b1eb5e35-87a5-fd8f-da35-f2303fa29ade@linaro.org>
+Date:   Tue, 28 Mar 2023 15:30:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v4 3/5] ARM: dts: qcom: sdx65: Add support for PCIe EP
+Subject: Re: [PATCH v4 4/5] ARM: dts: qcom: sdx65-mtp: Enable PCIe PHY
 Content-Language: en-US
 To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, lee@kernel.org, robh+dt@kernel.org,
@@ -65,9 +65,9 @@ To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
 References: <1679036039-27157-1-git-send-email-quic_rohiagar@quicinc.com>
- <1679036039-27157-4-git-send-email-quic_rohiagar@quicinc.com>
+ <1679036039-27157-5-git-send-email-quic_rohiagar@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <1679036039-27157-4-git-send-email-quic_rohiagar@quicinc.com>
+In-Reply-To: <1679036039-27157-5-git-send-email-quic_rohiagar@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -83,99 +83,62 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 17.03.2023 07:53, Rohit Agarwal wrote:
-> Add support for PCIe Endpoint controller on the
-> Qualcomm SDX65 platform.
+> Enable PCIe PHY on SDX65 MTP for PCIe EP. While at it,
+> updating status as last property for each node.
 > 
 > Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
 > ---
->  arch/arm/boot/dts/qcom-sdx65.dtsi | 56 +++++++++++++++++++++++++++++++++++++++
->  1 file changed, 56 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
-> index 084daf8..a7d8ad9 100644
-> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
-> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
-> @@ -11,6 +11,7 @@
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +#include <dt-bindings/gpio/gpio.h>
-This should be sorted alphabetically
-
-Other than that:
-
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
+>  arch/arm/boot/dts/qcom-sdx65-mtp.dts | 16 +++++++++++++---
+>  1 file changed, 13 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
+> index ed98c83..70720e6 100644
+> --- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
+> +++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
+> @@ -245,6 +245,13 @@
+>  	status = "okay";
+>  };
 >  
->  / {
->  	#address-cells = <1>;
-> @@ -293,6 +294,56 @@
->  			status = "disabled";
->  		};
+> +&pcie_phy {
+> +	vdda-phy-supply = <&vreg_l1b_1p2>;
+> +	vdda-pll-supply = <&vreg_l4b_0p88>;
+> +
+> +	status = "okay";
+> +};
+> +
+>  &qpic_bam {
+>  	status = "okay";
+>  };
+> @@ -265,8 +272,9 @@
+>  };
 >  
-> +		pcie_ep: pcie-ep@1c00000 {
-> +			compatible = "qcom,sdx65-pcie-ep", "qcom,sdx55-pcie-ep";
-> +			reg = <0x01c00000 0x3000>,
-> +			      <0x40000000 0xf1d>,
-> +			      <0x40000f20 0xa8>,
-> +			      <0x40001000 0x1000>,
-> +			      <0x40200000 0x100000>,
-> +			      <0x01c03000 0x3000>;
-> +			reg-names = "parf",
-> +				    "dbi",
-> +				    "elbi",
-> +				    "atu",
-> +				    "addr_space",
-> +				    "mmio";
+>  &remoteproc_mpss {
+> -	status = "okay";
+>  	memory-region = <&mpss_adsp_mem>;
 > +
-> +			qcom,perst-regs = <&tcsr 0xb258 0xb270>;
-> +
-> +			clocks = <&gcc GCC_PCIE_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_SLV_Q2A_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_SLEEP_CLK>,
-> +				 <&gcc GCC_PCIE_0_CLKREF_EN>;
-> +			clock-names = "aux",
-> +				      "cfg",
-> +				      "bus_master",
-> +				      "bus_slave",
-> +				      "slave_q2a",
-> +				      "sleep",
-> +				      "ref";
-> +
-> +			interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "global", "doorbell";
-> +
-> +			resets = <&gcc GCC_PCIE_BCR>;
-> +			reset-names = "core";
-> +
-> +			power-domains = <&gcc PCIE_GDSC>;
-> +
-> +			phys = <&pcie_phy>;
-> +			phy-names = "pcie-phy";
-> +
-> +			max-link-speed = <3>;
-> +			num-lanes = <2>;
-> +
-> +			status = "disabled";
-> +		};
-> +
->  		pcie_phy: phy@1c06000 {
->  			compatible = "qcom,sdx65-qmp-gen4x2-pcie-phy";
->  			reg = <0x01c06000 0x2000>;
-> @@ -330,6 +381,11 @@
->  			#hwlock-cells = <1>;
->  		};
+> +	status = "okay";
+>  };
 >  
-> +		tcsr: syscon@1fcb000 {
-> +			compatible = "qcom,sdx65-tcsr", "syscon";
-> +			reg = <0x01fc0000 0x1000>;
-> +		};
+>  &usb {
+> @@ -278,14 +286,16 @@
+>  };
+>  
+>  &usb_hsphy {
+> -	status = "okay";
+>  	vdda-pll-supply = <&vreg_l4b_0p88>;
+>  	vdda33-supply = <&vreg_l10b_3p08>;
+>  	vdda18-supply = <&vreg_l5b_1p8>;
 > +
->  		remoteproc_mpss: remoteproc@4080000 {
->  			compatible = "qcom,sdx55-mpss-pas";
->  			reg = <0x04080000 0x4040>;
+> +	status = "okay";
+>  };
+>  
+>  &usb_qmpphy {
+> -	status = "okay";
+>  	vdda-phy-supply = <&vreg_l4b_0p88>;
+>  	vdda-pll-supply = <&vreg_l1b_1p2>;
+> +
+> +	status = "okay";
+>  };
