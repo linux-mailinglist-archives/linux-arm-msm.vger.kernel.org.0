@@ -2,86 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CAFC6CBC2E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 12:13:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 144526CBC6D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 12:20:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231929AbjC1KNS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 06:13:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45308 "EHLO
+        id S230400AbjC1KUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 06:20:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229728AbjC1KNP (ORCPT
+        with ESMTP id S230054AbjC1KUr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 06:13:15 -0400
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB16261A9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 03:12:54 -0700 (PDT)
-Received: by mail-pg1-x52a.google.com with SMTP id bn14so6848755pgb.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 03:12:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679998374;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ur6uKN85TYQWLvCxVJ2c6x3zzJWUhaZqRctpfFiWUIw=;
-        b=jMVlny30ljZY/tcBflSVwe7xsuCk1ZeRa8ALY7gPYkfVb1fk3X/qS20c7qeNCwedo8
-         9fiMHOM1EmovhkAcm1B90c9lq3ijj7SE+2HntzSi8o7fNqelTbWHeSaKXhx8a3SbC23L
-         B3nr5bKH0OlufphI3VzSGZqK/YQJuw504YuT0K4IneZbcXkUocTqRJciPmfe8ARDEzTR
-         8j2aN8JQNZd3qBNZlpSfeJeD3j+hgUIhSUk1UDjMHEyCLLCT64sYQZn2QzOayHSQfzYi
-         vgzAQifxhoSr5QRskxbasBfNmluk69H7SVvuPqVVfDysWz66UMivERFjTNbT2pGqBSTg
-         dqLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679998374;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ur6uKN85TYQWLvCxVJ2c6x3zzJWUhaZqRctpfFiWUIw=;
-        b=1BOnyAjGOFiMpdohB3FxyOhcc5de6/MHihzqkTX4an/lVl7sHuZaoD440m9Kvq2/nm
-         8FlfjH5Ki4tVuWYdDdr98ye1pmiwbztSIK0UICBebFWFIKo/TUeRfLdOBrVBFovzeLtj
-         R/Wvq573jJ+g9SzhluFEm/Tyd8YRqL3QW4zxWtUFeeRs7DTZvPnO1olGRy8WT4VSrWzK
-         fPDNPMxOBT0UkCnZa4L3DzmjjSYwHVPLwO5hTRGUKhyUWf6SUgaA1udXt2NBxNL5nojV
-         K2E3TxcypvOtrjQ8Lsuffl3DqBt3/9iFiG84AjuyL1ExqkBfxvX0oIQTI0OWmM0HilZJ
-         vkdg==
-X-Gm-Message-State: AAQBX9fXS/Wk8MXR83smllNn4IFYkfQNQdPIPF5Xlr9NC40nmx68hyvC
-        3zCbc96RgBVFM2peMMpjHg/sqZt4l7WITQlMJemf6Q==
-X-Google-Smtp-Source: AKy350bA0E0pgZejxVtJ222F9kw3bBsx4EpT493ao0TPM6h4l4h3va196sNgYjfU3tFvV53zdC5WKFAvD4wLwA7gH9k=
-X-Received: by 2002:a05:6a00:1827:b0:622:c6ad:b373 with SMTP id
- y39-20020a056a00182700b00622c6adb373mr8123366pfa.3.1679998373864; Tue, 28 Mar
- 2023 03:12:53 -0700 (PDT)
+        Tue, 28 Mar 2023 06:20:47 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D4734EE8;
+        Tue, 28 Mar 2023 03:20:45 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32SA39Rf021238;
+        Tue, 28 Mar 2023 10:20:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=WI7hat+HkOS+r0DWL2leZsJFqenf6gVLJkg4WXWjSh0=;
+ b=mw8TbpBpJgonbm/BMFTAZ0Ng/XFSjZl57xix7tBcu0tAHqEaQmsIorqIBg6p0mhAeqzC
+ jix/L6SJE5NZTHHpm/o0fDqBJZ9FAI4YjjznG0s4W7JFJ5xNrbX968VuB3cAiOVJEwou
+ 27snQ4jSRx10mY3ePsM5fcDTxOinVGwW6bfc/btKocW3LjFojCl6rmP5KcKiMsavbiEN
+ UoZPTWuzFbzUB8S86UyKX7s2MX/Q/94N999lTa6ifz0w+sGjobBLXPDCltSfDc9n6kBa
+ qpnf9PIssyRdcrtSGaqe2dW75/tasEXmqXXOhjkGJ3/c1/wk1DDOQgpYGUOpdWmFYtA5 Dg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pkx4t8157-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 28 Mar 2023 10:20:39 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32SAKbY6005002
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 28 Mar 2023 10:20:37 GMT
+Received: from poovendh-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Tue, 28 Mar 2023 03:20:31 -0700
+From:   Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_devipriy@quicinc.com>
+Subject: [PATCH V6 0/2] Enable crashdump collection support for IPQ9574
+Date:   Tue, 28 Mar 2023 15:50:11 +0530
+Message-ID: <20230328102013.21361-1-quic_poovendh@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-References: <20230324061608.33609-1-quic_hazha@quicinc.com>
- <20230324061608.33609-3-quic_hazha@quicinc.com> <e51c200e-6de0-d516-3f32-28367b2f5a95@linaro.org>
- <e6b0a542-17d9-290e-7c84-8356a38d6802@quicinc.com>
-In-Reply-To: <e6b0a542-17d9-290e-7c84-8356a38d6802@quicinc.com>
-From:   Mike Leach <mike.leach@linaro.org>
-Date:   Tue, 28 Mar 2023 11:12:42 +0100
-Message-ID: <CAJ9a7VjC+1m8odyotBoG3EPAL=Cn90fCCY1xPGFyg8uKEar7nQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] dt-bindings: arm: Add Coresight Dummy Trace YAML schema
-To:     Hao Zhang <quic_hazha@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Jonathan Corbet <corbet@lwn.net>, Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-doc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: WjELJyxGZMFaeLPJlZwGeyde4OKkiGgd
+X-Proofpoint-ORIG-GUID: WjELJyxGZMFaeLPJlZwGeyde4OKkiGgd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-24_11,2023-03-27_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 malwarescore=0
+ spamscore=0 bulkscore=0 phishscore=0 suspectscore=0 impostorscore=0
+ mlxlogscore=832 lowpriorityscore=0 priorityscore=1501 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303280086
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,234 +79,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Crashdump collection is enabled based on the DLOAD bit in the TCSR register.
+This bit is set during bootup and clearing during shutdown. During crash,
+dload bit is not cleared, due to which uboot starts crashdump collection.
 
-As per my comments in the previous patch in this set....
+Enable the support for download mode to collect the crashdumps if
+system crashes, to debug crashes extensively.
 
-On Mon, 27 Mar 2023 at 08:38, Hao Zhang <quic_hazha@quicinc.com> wrote:
->
-> Hi Krzysztof,
->
-> On 3/25/2023 7:49 PM, Krzysztof Kozlowski wrote:
-> > On 24/03/2023 07:16, Hao Zhang wrote:
-> >> Add new coresight-dummy.yaml file describing the bindings required
-> >> to define coresight dummy trace in the device trees.
-> >>
-> >
-> > Subject: drop second/last, redundant "YAML schema". The "dt-bindings"
-> > prefix is already stating that these are bindings and all new must be DT
-> > schema. You cannot add anything else, so this is redundant.
-> >
-> I will take your advice to drop redundant part of title in the next
-> version of patch.
-> >
-> >> Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
-> >> ---
-> >>   .../bindings/arm/qcom,coresight-dummy.yaml    | 118 ++++++++++++++++++
-> >>   1 file changed, 118 insertions(+)
-> >>   create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
-> >> new file mode 100644
-> >> index 000000000000..7b719b084d72
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
-> >> @@ -0,0 +1,118 @@
-> >> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> >> +# Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> >> +%YAML 1.2
-> >> +---
-> >> +$id: http://devicetree.org/schemas/arm/qcom,coresight-dummy.yaml#
-> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> +
-> >> +title: QCOM Coresight Dummy component
-> >> +
-> >> +description: |
-> >> +  The Coresight Dummy component is for the specific devices that HLOS don't have
-> >> +  permission to access or configure. Such as Coresight sink EUD, some TPDMs etc.
-> >> +  So there need driver to register dummy devices as Coresight devices. Provide
-> >> +  Coresight API for dummy device operations, such as enabling and disabling
-> >> +  dummy devices. Build the Coresight path for dummy sink or dummy source for
-> >> +  debugging.
-> >> +
-> >> +  The primary use case of the coresight dummy is to build path for dummy sink or
-> >> +  dummy source.
-> >> +
-> >> +maintainers:
-> >> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
-> >> +  - Tao Zhang <quic_taozha@quicinc.com>
-> >> +  - Hao Zhang <quic_hazha@quicinc.com>
-> >> +
-> >> +select:
-> >> +  properties:
-> >> +    compatible:
-> >> +      contains:
-> >> +        enum:
-> >> +          - qcom,coresight-dummy
+During the bootup, bootloaders initialize the SMEM. However the bootup
+after crash, SMEM will not be initialized again. If the memory for the
+SMEM is not reserved, linux consumes that region, which leads to the
+loss of SMEM data. So, during the next bootup after crash, bootloaders
+will hang due to invalid data present in the SMEM region. Due to this,
+added the SMEM support along with crashdump collection series.
 
-Can we have coresight-dummy-source and coresight-dummy-sink?
+This patch series adds the support for crashdump collection.
 
-> >> +  required:
-> >> +    - compatible
-> >
-> > Why do you need the select?
-> >
-> This is a mistake, will remove it in the next version of patch.
-> >> +
-> >> +properties:
-> >> +  $nodename:
-> >> +    pattern: "^dummy_.*(sink|source)_[0-9]+.*$"
-> >
-> > We do not enforce node names in individual bindings. Why do you need it?
-> > Plus underscore is not even proper character...
-> >
-> I will remove this node.
->
-> >> +  compatible:
-> >> +    items:
-> >
-> > Drop items. You have only one item, so no need for list.
->
-> I will take your advice and update it in the next version of patch.
->
-> >> +      - const: qcom,coresight-dummy
-> >> +
-> >> +  qcom,dummy-sink:
-> >> +    type: boolean
-> >> +    description:
-> >> +      Indicates that the type of this coresight node is dummy sink.
-> >
-> > You just duplicated property name. Write something useful.
-> >
-> >> +
-> >> +  qcom,dummy-source:
-> >> +    type: boolean
-> >> +    description:
-> >> +      Indicates that the type of this coresight node is dummy source.
-> >
-> > You just duplicated property name. Write something useful.
-> >
->
+DTS patch depends on the IPQ9574 baseport series
+	https://lore.kernel.org/linux-arm-kernel/20230327132718.573-1-quic_devipriy@quicinc.com/
 
-These properties not required if the compatible name is more specific
+V6:
+	- Dropped the below patches as it is already part of linux-next/master
+          [1/5] dt-bindings: scm: Add compatible for IPQ9574
+	  [2/5] dt-bindings: mfd: Add the tcsr compatible for IPQ9574
+	- Dropping patch [5/5] firmware: scm: Modify only the DLOAD bit in TCSR
+	  register for download mode as it is posted part of below series
+	  https://lore.kernel.org/lkml/1676990381-18184-1-git-send-email-quic_mojha@quicinc.com/#r
 
-> Sure, I will add more details for it.
->
-> >> +
-> >> +  out-ports:
-> >> +    description: |
-> >
-> > No need for |
-> >
-> >> +      Output connections from the dummy source to Coresight Trace bus.
-> >> +    $ref: /schemas/graph.yaml#/properties/ports
-> >> +
-> >> +    properties:
-> >> +      port:
-> >> +        description: Output connection from the dummy source to Coresight
-> >> +            Trace bus.
-> >> +        $ref: /schemas/graph.yaml#/properties/port
-> >> +
-> >> +  in-ports:
-> >> +    description: |
-> >
-> > Ditto
-> >
-> I will remove it in the next version of patch.
->
-> >> +      Input connections from the CoreSight Trace bus to dummy sink.
-> >> +    $ref: /schemas/graph.yaml#/properties/ports
-> >> +
-> >> +    properties:
-> >> +      port:
-> >> +        description: Input connection from the Coresight Trace bus to
-> >> +            dummy sink.
-> >> +        $ref: /schemas/graph.yaml#/properties/port
-> >> +
-> >> +required:
-> >> +  - compatible
-> >> +
+V5 can be found at
+	https://lore.kernel.org/linux-arm-kernel/20230216120012.28357-1-quic_poovendh@quicinc.com/
 
-The binding should constrain out ports to dummy-source only, and in
-ports to dummy sink only.
+V4 can be found at
+	https://lore.kernel.org/linux-arm-kernel/20230214051414.10740-1-quic_poovendh@quicinc.com/
 
-Regards
+V3 can be found at
+	https://lore.kernel.org/linux-arm-msm/20230208053332.16537-1-quic_poovendh@quicinc.com/
 
-Mike
+Changes in V2:
+	- rebased on linux-next/master
+	- dropped co-developed by tag wherever applicable
+	- V1 can be found at
+	  https://lore.kernel.org/linux-arm-kernel/20230113160012.14893-1-quic_poovendh@quicinc.com/
 
-> >> +additionalProperties: false
-> >> +
-> >> +oneOf:
-> >> +  - required:
-> >> +      - qcom,dummy-sink
-> >> +  - required:
-> >> +      - qcom,dummy-source
-> >> +
-> >> +examples:
-> >> +  # minimum dummy sink definition. dummy sink connect to coresight replicator.
-> >> +  - |
-> >> +    dummy_sink_1 {
-> >
-> > Node names should be generic, so "sink"
-> > https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-> >
-> >> +      compatible = "qcom,coresight-dummy";
-> >> +      qcom,dummy-sink;
-> >> +
-> >> +      in-ports {
-> >> +        port {
-> >> +          eud_in_replicator_swao: endpoint {
-> >> +            remote-endpoint =
-> >> +              <&replicator_swao_out_eud>;
-> >
-> > Why line break after =?
-> >
->
-> >> +          };
-> >> +        };
-> >> +      };
-> >> +    };
-> >> +
-> >> +  # minimum dummy source definition. dummy source connect to coresight funnel.
-> >
-> > If you use sentences, then start with capital letter.
-> >
->
-> I will update it according to your advice in the next version of patch.
->
-> >> +  - |
-> >> +    dummy_source_1 {
-> >> +      compatible = "qcom,coresight-dummy";
-> >> +      qcom,dummy-source;
-> >> +
-> >> +      out-ports {
-> >> +        port {
-> >> +          dummy_riscv_out_funnel_swao: endpoint {
-> >> +            remote-endpoint =
-> >> +              <&funnel_swao_in_dummy_riscv>;
-> >
-> > Why line break?
->
-> I copy it from device tree and keep the original format, will correct
-> the format in the next version of patch.
->
-> Thanks,
-> Hao
->
-> >> +          };
-> >> +        };
-> >> +      };
-> >> +    };
-> >> +
-> >> +...
-> >
-> > Best regards,
-> > Krzysztof
-> >
+Poovendhan Selvaraj (2):
+  arm64: dts: qcom: ipq9574: Enable the download mode support
+  arm64: dts: qcom: ipq9574: Add SMEM support
+
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
 
-
+base-commit: a6faf7ea9fcb7267d06116d4188947f26e00e57e
 -- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+2.17.1
+
