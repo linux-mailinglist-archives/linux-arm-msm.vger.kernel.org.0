@@ -2,137 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F7E16CC735
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 17:56:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 939CD6CC785
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 18:08:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232221AbjC1P4R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 11:56:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53064 "EHLO
+        id S232883AbjC1QIt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 12:08:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232400AbjC1P4P (ORCPT
+        with ESMTP id S232877AbjC1QIm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 11:56:15 -0400
-Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DED44B6;
-        Tue, 28 Mar 2023 08:56:13 -0700 (PDT)
-Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-17ab3a48158so13198140fac.1;
-        Tue, 28 Mar 2023 08:56:13 -0700 (PDT)
+        Tue, 28 Mar 2023 12:08:42 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40454DBE2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 09:08:39 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id q6so5580996iot.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 09:08:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680018971;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zLQmwWJisvp20MnJ4qDI8yRnwjPlaeebVHetENzuzzU=;
-        b=OMbM7O9EwBPWWFjEMJ+FlcmYiUgbLAfQbAtSTuyxoESDSgQ8hxghe6qUyRx/vWMcwh
-         aHVOiBp14eBMTCpWI7EXffI2UDinCk6c7HEi5vnnMdOt0RWbeGRltPE7QsecSf6UZvCy
-         m/dzpD6UfN14mpt/DqrhS//y9OxBhElytj2WCu1DJ5badiC7j7HoZfUgvU669VHBXz3N
-         UzYknZTA9gE7NJ0H/WeB9SV6uKDRhvEHjv5o2wMVCnVVIh+eKF+8tCUOzzC7LjAztv/T
-         v47jIBW3dO77hkBHYiaxICiyfMo4YGu/+7ZHQcLuQUMzxJDp4W3IVeKVsm+FbzfXUSp3
-         fyKg==
+        d=linaro.org; s=google; t=1680019718;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZeYDQrGbPRqt70DYrQNatAGDz+G9B8QI11p/DnsQkr0=;
+        b=AM3iLxks4PZF2oOZ8SG+noafJkJHYtZKMOP8cbso20aH5Hax3P8HbwYP32gWXHyB0x
+         MTGDNV5lpCFBdrFoEof7cxqC9WytuGTQUvKsAvpYqoTsPaTdE3oWpIMjp/5EZRdPFiU1
+         WZXBN1F8F71BwnI8FGXxra8ArbQPXdG9lLOEFAYJBaG+TKgDp+oMdtnaUEjbTbfKrj1J
+         s4c94fjGXcNYyhwFpWgcGEraIcgiL+SsxDZSLTTlfLu/GAgfLTYxtStl7ZKJsAqLLIsi
+         kmTwX3UYgGJVPrkEiz8f1i+MxGlgEsq1QronfYqtlESJQ4wX1f2dO8lYpvrQdjcZ1dXJ
+         7EmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680018971;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zLQmwWJisvp20MnJ4qDI8yRnwjPlaeebVHetENzuzzU=;
-        b=eSFt3fhxwSl2ZGqh8ZDH//fnVK1hkyaU5gKa4gKf9dd9vwht7huHUzMAtP6ihmzNEr
-         H5aciabOKAML7h7z3+S5XtbbG61tnXJETsugfdbFBIODUFOD82Lrp3SZUJZl+Udv7zLK
-         4Lrg8JJ/TDnkzKmZUBZlIbrsuuSZ94e4RqWa6G+VeFojUdugv/dj0jURjvuQwr01AmH9
-         I5NH01fswoP0TTQWvsMVpO4oriUBeAprSNL8fUvSywv52kPOlvR2n1Nr8/J+pPWWHSOD
-         6C+Z1vWfOmqk26XofxYHb52zmsxH1ZLnzje0kaKCoe3+tiofyHkn/jiwPGOKeor9SQYZ
-         pEyA==
-X-Gm-Message-State: AO0yUKWQfP3gdHgkzXb9EVwb+1wq/kEPvrzVU5RaMw0tiWboPP+Ptnm+
-        3TURxseA8dumaZK8GY5qEpNPoGPul3KtuCk4BHs=
-X-Google-Smtp-Source: AK7set9Dbu34N1vzrjqQsCVc28MeYvZObEv0k5MjUDJn0LlSibv+c/2Gjo7q6ZirexlX1fKiTuUOUJWWFpxN4YAPvJI=
-X-Received: by 2002:a05:6871:4796:b0:17a:df9b:6b1b with SMTP id
- qa22-20020a056871479600b0017adf9b6b1bmr5890211oab.5.1680018971653; Tue, 28
- Mar 2023 08:56:11 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680019718;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZeYDQrGbPRqt70DYrQNatAGDz+G9B8QI11p/DnsQkr0=;
+        b=EQ5O08BNWQA5ItRjfNK1Y+9rNSkaDB1Gs3KfnKs2cwxPCO2x2ITE0M5mMPrPY8DLwa
+         kEILZ950rn1RUuYeGnYU5sPsowFVJcwVyDLWSGNEB+O098gKwYAVb8FmjCA3Qi/V8HGK
+         YLrCU037RjFuzaO6FSIsEM+KGLS3rhh1XWWYL/OXQ6dqPzU65F08QFqfDQnagQLPDfL/
+         DmnrMjrb/Q4K5cen5TX6ltpD3TknlUPMbz+FjfrYHG4ifQpuCRElSecrP6q7Ngn/KZYC
+         crkgaPAYUYoYuHGybBfhpM1QgZDsA7uO32r9qU457Bd8QqOwavGOgm6WRHvqDsD6oqcp
+         CRvA==
+X-Gm-Message-State: AO0yUKXfCfLaYUpchQoaOByd/DK5HDWwvfEZosMK+3JiBSWqtKSgmaKt
+        /tCgzw7sexkAtsUMk8cKajHViQ==
+X-Google-Smtp-Source: AK7set9NnweZPwKGZ6Qvn3oSo/IYtPZC5W8x3ZJAzYNTMogy6llDtemEQaN3sv8W4f+JSdL/5cHAog==
+X-Received: by 2002:a5e:9901:0:b0:752:6338:3d8 with SMTP id t1-20020a5e9901000000b00752633803d8mr12636325ioj.6.1680019718488;
+        Tue, 28 Mar 2023 09:08:38 -0700 (PDT)
+Received: from localhost.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id g8-20020a5edf48000000b00758917bc309sm4956724ioq.31.2023.03.28.09.08.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Mar 2023 09:08:37 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     quic_bjorande@quicinc.com, caleb.connolly@linaro.org,
+        mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH net v2] net: ipa: compute DMA pool size properly
+Date:   Tue, 28 Mar 2023 11:08:33 -0500
+Message-Id: <20230328160833.2861095-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20230324220013.191795-1-robdclark@gmail.com> <af31e11c-6c70-a358-1198-3cddc3ee2f89@linaro.org>
-In-Reply-To: <af31e11c-6c70-a358-1198-3cddc3ee2f89@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 28 Mar 2023 08:56:00 -0700
-Message-ID: <CAF6AEGs8yH4SHvjDHKkHT3c4UNc35m3tFGiPBcHA3oATZQiKVA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Avoid rounding down to zero jiffies
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 28, 2023 at 8:28=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 25/03/2023 00:00, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > If userspace asked for a timeout greater than zero, but less than a
-> > jiffy, they clearly weren't planning on spinning.  So it is better
-> > to round up to one.
-> >
-> > This fixes an issue with supertuxkart that was (for some reason)
-> > spinning on a gl sync with 1ms timeout.  CPU time for a demo lap
-> > drops from:
-> >
-> >    15.83user 20.98system 0:47.46elapsed 77%CPU
-> >
-> > to:
-> >
-> >    8.84user 2.30system 0:46.67elapsed 23%CPU
->
-> Interesting. We potentially increased the timeout, but the overall
-> (elapsed) time has decreased. Nevertheless:
+In gsi_trans_pool_init_dma(), the total size of a pool of memory
+used for DMA transactions is calculated.  However the calculation is
+done incorrectly.
 
-There is some randomness from run to run so small variations in total
---profile-laps=3DN time are normal.  So I wouldn't read too much into
-that, compared to %CPU.  This shouldn't really change how long it
-takes for the fence to signal, as much as just prevent the CPU from
-busy looping until the fence does signal ;-)
+For 4KB pages, this total size is currently always more than one
+page, and as a result, the calculation produces a positive (though
+incorrect) total size.  The code still works in this case; we just
+end up with fewer DMA pool entries than we intended.
 
-(In theory the CPU busy looping could cause GPU thermal throttling,
-but I don't think that was happening in this case.)
+Bjorn Andersson tested booting a kernel with 16KB pages, and hit a
+null pointer derereference in sg_alloc_append_table_from_pages(),
+descending from gsi_trans_pool_init_dma().  The cause of this was
+that a 16KB total size was going to be allocated, and with 16KB
+pages the order of that allocation is 0.  The total_size calculation
+yielded 0, which eventually led to the crash.
 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Correcting the total_size calculation fixes the problem.
 
-thx
+Reported-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Tested-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Fixes: 9dd441e4ed57 ("soc: qcom: ipa: GSI transactions")
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+Note: This was reported via private communication.
+v2: - Added Bjorn's actual name to tags.  
 
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >   drivers/gpu/drm/msm/msm_drv.h | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_dr=
-v.h
-> > index 9f0c184b02a0..7936aa6cad03 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.h
-> > +++ b/drivers/gpu/drm/msm/msm_drv.h
-> > @@ -548,7 +548,7 @@ static inline unsigned long timeout_to_jiffies(cons=
-t ktime_t *timeout)
-> >               remaining_jiffies =3D ktime_divns(rem, NSEC_PER_SEC / HZ)=
-;
-> >       }
-> >
-> > -     return clamp(remaining_jiffies, 0LL, (s64)INT_MAX);
-> > +     return clamp(remaining_jiffies, 1LL, (s64)INT_MAX);
-> >   }
-> >
-> >   /* Driver helpers */
->
-> --
-> With best wishes
-> Dmitry
->
+ drivers/net/ipa/gsi_trans.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
+index 0f52c068c46d6..ee6fb00b71eb6 100644
+--- a/drivers/net/ipa/gsi_trans.c
++++ b/drivers/net/ipa/gsi_trans.c
+@@ -156,7 +156,7 @@ int gsi_trans_pool_init_dma(struct device *dev, struct gsi_trans_pool *pool,
+ 	 * gsi_trans_pool_exit_dma() can assume the total allocated
+ 	 * size is exactly (count * size).
+ 	 */
+-	total_size = get_order(total_size) << PAGE_SHIFT;
++	total_size = PAGE_SIZE << get_order(total_size);
+ 
+ 	virt = dma_alloc_coherent(dev, total_size, &addr, GFP_KERNEL);
+ 	if (!virt)
+-- 
+2.34.1
+
