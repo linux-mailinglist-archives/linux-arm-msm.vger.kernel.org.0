@@ -2,256 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8CB46CBF6D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 14:42:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 949E16CBFBD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 14:50:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232322AbjC1Mm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 08:42:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57216 "EHLO
+        id S230301AbjC1Mu0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 08:50:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230339AbjC1MmZ (ORCPT
+        with ESMTP id S233060AbjC1MuL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 08:42:25 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E2C0BA5C1;
-        Tue, 28 Mar 2023 05:41:58 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 45B75C14;
-        Tue, 28 Mar 2023 05:34:09 -0700 (PDT)
-Received: from [10.57.54.240] (unknown [10.57.54.240])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 986B73F6C4;
-        Tue, 28 Mar 2023 05:33:21 -0700 (PDT)
-Message-ID: <c3f5af31-b6ef-dc45-25f0-4e52d93fcaa7@arm.com>
-Date:   Tue, 28 Mar 2023 13:33:20 +0100
+        Tue, 28 Mar 2023 08:50:11 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F431B442
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 05:49:38 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id c29so15687927lfv.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 05:49:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680007774;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1VidQzNASsjux63fhI4uuQ2DTo+OMQ7IeAyjim1gV9U=;
+        b=Yfxn63WyrzAfO1tKDAfFXoAxKnk6BCSIbXkw8TEZ3p7jxTrOECdb5AHNR+w+7SYsnw
+         xBKd+uFhn7qCc/r3TcsIsaVF975bOzOrmJSx2HRjK7xPOZiCypLmgOgkREtZNZSYRg1Z
+         6osNuvxfJkMdo+4Xyf/UwTfYKoaTSMeszkoI+Rc/ut1buFEspBG3mV9hBRisJj6MwHmM
+         0V+RUhtMX3UEoXJM6VNjsDuN7NHFgZlEKIiOkH4z9r/Ier2+HTS1ec3MnOCxf587tl/S
+         VHbaO+a/QOoEUrt8rN6OYAC0qno3U3ULfO01L4+18XOKp38dkyQxXqxbC6JO/HP3DXLP
+         JpAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680007774;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1VidQzNASsjux63fhI4uuQ2DTo+OMQ7IeAyjim1gV9U=;
+        b=OWbi8pQ9jTXZzwJkngoKT/BC+Zw6N3rawPGpD5fETYVckn9cN6bjRcMKni1lkk5c90
+         7wi0yEDjvuStMVUGV804TFpnL07P0QyFNTTbsPKareB0XzPIFPdpKAIyq2rYv9qJl/2m
+         gK7p/UQ3/othAkcEK1xfzmVLOgnY9StM6oI4owOVc86UeiWIDApizncAQwAwFHvVj/b4
+         SKLjuKndS+5b+qRcBBnanALrOlcDY4xZjX4zSpF8z5gRF/4YMhy3UPX2ULFSgq6moSyp
+         PMEaM8wpR8Bc7P7peZwD0m+H4btu6vlg83qvWwjKPiKgYTzKjHNVmtV0Y3zvYARLa0Na
+         jXSw==
+X-Gm-Message-State: AAQBX9e2JtOHy8c20Wzx0f2BqqiKyk/3OoKAh1CzTdkVN46fhQ8zhGTu
+        YQJhYDk3ShzKCU0Jpm1JVcyw6Q==
+X-Google-Smtp-Source: AKy350b+rejnzP2zxrXGmRaUOdHxM2i1U5qKBX8wGs8qd7uzaDxdvUIU3FUVEmqrn6C7LJ1eUJGuvA==
+X-Received: by 2002:ac2:5598:0:b0:4ac:b7bf:697a with SMTP id v24-20020ac25598000000b004acb7bf697amr4967288lfg.4.1680007773949;
+        Tue, 28 Mar 2023 05:49:33 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id t6-20020a19ad06000000b004a2c447598fsm5028496lfc.159.2023.03.28.05.49.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Mar 2023 05:49:33 -0700 (PDT)
+Message-ID: <74e44866-1de6-e74c-7d06-7189fe328aa5@linaro.org>
+Date:   Tue, 28 Mar 2023 15:49:32 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.9.0
-Subject: Re: [PATCH v3 02/11] coresight-tpda: Add DSB dataset support
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        James Clark <james.clark@arm.com>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>
-References: <1679551448-19160-1-git-send-email-quic_taozha@quicinc.com>
- <1679551448-19160-3-git-send-email-quic_taozha@quicinc.com>
- <e578790c-4794-5609-16e8-15d63082760e@arm.com>
- <51ad3cb3-bd83-51c9-52bc-f700cd17103c@quicinc.com>
- <48f31b84-573f-fe1d-bcd7-e55ec7f47831@arm.com>
- <595568c3-d2bc-e37e-83b3-2adfd3fa4193@quicinc.com>
- <6f8b087d-77a7-512e-6504-e4841447eda9@arm.com>
- <edbd1f10-70e5-1fd4-44de-da59b387e9dd@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <edbd1f10-70e5-1fd4-44de-da59b387e9dd@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 02/10] Revert "drm/msm: Fix failure paths in
+ msm_drm_init()"
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>
+References: <20230306100722.28485-1-johan+linaro@kernel.org>
+ <20230306100722.28485-3-johan+linaro@kernel.org>
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230306100722.28485-3-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.3 required=5.0 tests=NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/03/2023 12:31, Tao Zhang wrote:
-> Hi Suzuki,
+On 06/03/2023 12:07, Johan Hovold wrote:
+> This reverts commit 8636500300a01740d92b345c680b036b94555b1b.
 > 
-> On 3/27/2023 5:43 PM, Suzuki K Poulose wrote:
->> On 27/03/2023 04:31, Tao Zhang wrote:
->>>
->>> On 3/26/2023 3:31 AM, Suzuki K Poulose wrote:
->>>> On 24/03/2023 14:58, Tao Zhang wrote:
->>>>> Hi Suzuki,
->>>>>
->>>>> 在 3/23/2023 7:51 PM, Suzuki K Poulose 写道:
->>>>>> On 23/03/2023 06:03, Tao Zhang wrote:
->>>>>>> Read the DSB element size from the device tree. Set the register
->>>>>>> bit that controls the DSB element size of the corresponding port.
->>>>>>>
->>>>>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>>>>>> ---
->>>>>>>   drivers/hwtracing/coresight/coresight-tpda.c | 58 
->>>>>>> ++++++++++++++++++++++++++++
->>>>>>>   drivers/hwtracing/coresight/coresight-tpda.h |  4 ++
->>>>>>>   2 files changed, 62 insertions(+)
->>>>>>>
->>>>>>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c 
->>>>>>> b/drivers/hwtracing/coresight/coresight-tpda.c
->>>>>>> index f712e11..8dcfc4a 100644
->>>>>>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
->>>>>>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
->>>>>>> @@ -21,6 +21,47 @@
->>>>>>>     DEFINE_CORESIGHT_DEVLIST(tpda_devs, "tpda");
->>>>>>>   +/* Search and read element data size from the TPDM node in
->>>>>>> + * the devicetree. Each input port of TPDA is connected to
->>>>>>> + * a TPDM. Different TPDM supports different types of dataset,
->>>>>>> + * and some may support more than one type of dataset.
->>>>>>> + * Parameter "inport" is used to pass in the input port number
->>>>>>> + * of TPDA, and it is set to 0 in the recursize call.
->>>>>>> + * Parameter "parent" is used to pass in the original call.
->>>>>>> + */
->>>>>>
->>>>>> I am still not clear why we need to do this recursively ?
->>>>>
->>>>> Some TPDMs are not directly output connected to the TPDAs. So here I
->>>>>
->>>>> use a recursive method to check from the TPDA input port until I find
->>>>>
->>>>> the connected TPDM.
->>>>>
->>>>> Do you have a better suggestion besides a recursive method?
->>>>>
->>>>>>
->>>>>>> +static int tpda_set_element_size(struct tpda_drvdata *drvdata,
->>>>>>> +               struct coresight_device *csdev, int inport, bool 
->>>>>>> parent)
->>>>>>
->>>>>> Please could we renamse csdev => tpda_dev
->>>>>
->>>>> Since this is a recursively called function, this Coresight device 
->>>>> is not
->>>>>
->>>>> necessarily TPDA, it can be other Coresight device.
->>>>>
->>>>>>
->>>>>>> +{
->>>>>>> +    static int nr_inport;
->>>>>>> +    int i;
->>>>>>> +    struct coresight_device *in_csdev;
->>>>>>
->>>>>> similarly tpdm_dev ?
->>>>> Same as above, this variable may not necessarily be a TPDM.
->>>>>>
->>>>>> Could we not add a check here to see if the dsb_esize[inport] is 
->>>>>> already
->>>>>> set and then bail out, reading this over and over ?
->>>>>>
->>>>> I will update this in the next patch series.
->>>>>>> +
->>>>>>> +    if (inport > (TPDA_MAX_INPORTS - 1))
->>>>>>> +        return -EINVAL;
->>>>>>> +
->>>>>>> +    if (parent)
->>>>>>> +        nr_inport = inport;
->>>>>>> +
->>>>>>> +    for (i = 0; i < csdev->pdata->nr_inconns; i++) {
->>>>>>> +        in_csdev = csdev->pdata->in_conns[i].remote_dev;
->>>>>>
->>>>>> Please note, the names of the structure field might change in the
->>>>>> next version of James' series
->>>>> Got it. I will keep an eye out for the James' patch series.
->>>>>>
->>>>>>> +        if (!in_csdev)
->>>>>>> +            break;
->>>>>>> +
->>>>>>> +        if (parent)
->>>>>>> +            if (csdev->pdata->in_conns[i].port != inport)
->>>>>>> +                continue;
->>>>>>> +
->>>>>>> +        if (in_csdev && strstr(dev_name(&in_csdev->dev), "tpdm")) {
->>>>>>
->>>>>> Isn't there a better way to distinguish a device to be TPDM ? May 
->>>>>> be we
->>>>>> could even add a source_sub_type - SOURCE_TPDM instead of using
->>>>>> SOURCE_OTHERS ? Do you expect other sources to be connected to TPDA?
->>>>>> e.g., STMs ?
->>>>>
->>>>> I can add "SOURCE_TPDM" as a source_sub_type, but SOURCE_OTHERS needs
->>>>>
->>>>> to be kept since the other Coresight component we will upstream 
->>>>> later may
->>>>>
->>>>> need it.
->>>>>
->>>>>>
->>>>>>> + of_property_read_u32(in_csdev->dev.parent->of_node,
->>>>>>> +                    "qcom,dsb-element-size", 
->>>>>>> &drvdata->dsb_esize[nr_inport]);
->>>>>>> +            break;
->>>>>>> +        }
->>>>>>> +        tpda_set_element_size(drvdata, in_csdev, 0, false);
->>>>>>
->>>>>> What is the point of this ? Is this for covering the a TPDA 
->>>>>> connected to
->>>>>> another TPDA ?
->>>>>>
->>>>>> e.g., { TPDM0, TPDM1 } -> TPDA0 -> TPDA1 ?
->>>>>
->>>>> A TPDM may not connect to the TPDA directly, for example,
->>>>>
->>>>> TPDM0 ->FUNNEL0->FUNNEL1->TPDA0
->>>>>
->>>>> And many TPDMs can connect to one TPDA, one input port on TPDA only 
->>>>> has
->>>>>
->>>>> one TPDM connected. Therefore, we use a recursive method to find 
->>>>> the TPDM
->>>>>
->>>>> corresponding to the input port of TPDA.
->>>>
->>>> How do you find out decide what to choose, if there are multiple TPDMs
->>>> connected to FUNNEL0 or even FUNNEL1 ?
->>>>
->>>> e.g
->>>>
->>>> TPDM0->FUNNEL0->FUNNEL1->TPDA0
->>>>                 /
->>>>           TPDM1
->>>
->>> We can find out the corresponding TPDM by the input port number of TPDA.
->>>
->>> Each input port is connected to a TPDM. So we have an input port 
->>> number in
->>>
->>> the input parameter of the recursive lookup function 
->>> "tpda_set_element_size".
->>
->> I don't understand, how you would figure out, in the above situation.
->> i.e., FUNNEL1 is connected to TPDA0, but there are two TPDMs that could
->> be pumping the trace. They both arrive via FUNNEL1. So, how does that
->> solve your problem ?
+> A recent commit tried to address a drm device leak in the early
+> msm_drm_uninit() error paths but ended up making things worse.
 > 
-> In our HW design, the input ports of TPDA and TPDM are one-one-one 
-> corresponding.  Only one
+> Specifically, it moved the drm device reference put in msm_drm_uninit()
+> to msm_drm_init() which means that the drm would now be leaked on normal
+> unbind.
 > 
-> TPDM can be found connected from one TPDA's input port. The path to a 
-> TPDA input port doesn't
+> For reasons that were never spelled out, it also added kms NULL pointer
+> checks to a couple of helper functions that had nothing to do with the
+> paths modified by the patch.
 > 
-> connect more than one TPDM. It's by HW design.
+> Instead of trying to salvage this incrementally, let's revert the bad
+> commit so that clean and backportable fixes can be added in its place.
+> 
+> Fixes: 8636500300a0 ("drm/msm: Fix failure paths in msm_drm_init()")
+> Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Your current designs may be like that. But as far as the driver is
-concerned, I would like to add in extra measures to ensure that it
-encounters a variation from the above on a future platform. So, please
-could you add a check to detect this case and add a WARNING ?
+Ok, let's do it this way
 
-Suzuki
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+> ---
+>   drivers/gpu/drm/msm/disp/msm_disp_snapshot.c |  3 ---
+>   drivers/gpu/drm/msm/msm_drv.c                | 11 ++++-------
+>   2 files changed, 4 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+> index b73031cd48e4..e75b97127c0d 100644
+> --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+> +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+> @@ -129,9 +129,6 @@ void msm_disp_snapshot_destroy(struct drm_device *drm_dev)
+>   	}
+>   
+>   	priv = drm_dev->dev_private;
+> -	if (!priv->kms)
+> -		return;
+> -
+>   	kms = priv->kms;
+>   
+>   	if (kms->dump_worker)
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index b7f5a78eadd4..9ded384acba4 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -150,9 +150,6 @@ static void msm_irq_uninstall(struct drm_device *dev)
+>   	struct msm_drm_private *priv = dev->dev_private;
+>   	struct msm_kms *kms = priv->kms;
+>   
+> -	if (!priv->kms)
+> -		return;
+> -
+>   	kms->funcs->irq_uninstall(kms);
+>   	if (kms->irq_requested)
+>   		free_irq(kms->irq, dev);
+> @@ -270,6 +267,8 @@ static int msm_drm_uninit(struct device *dev)
+>   	component_unbind_all(dev, ddev);
+>   
+>   	ddev->dev_private = NULL;
+> +	drm_dev_put(ddev);
+> +
+>   	destroy_workqueue(priv->wq);
+>   
+>   	return 0;
+> @@ -442,12 +441,12 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+>   
+>   	ret = msm_init_vram(ddev);
+>   	if (ret)
+> -		goto err_drm_dev_put;
+> +		return ret;
+>   
+>   	/* Bind all our sub-components: */
+>   	ret = component_bind_all(dev, ddev);
+>   	if (ret)
+> -		goto err_drm_dev_put;
+> +		return ret;
+>   
+>   	dma_set_max_seg_size(dev, UINT_MAX);
+>   
+> @@ -542,8 +541,6 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+>   
+>   err_msm_uninit:
+>   	msm_drm_uninit(dev);
+> -err_drm_dev_put:
+> -	drm_dev_put(ddev);
+>   	return ret;
+>   }
+>   
 
-> 
-> 
-> Tao
-> 
->>
->> Suzuki
->>
->>
->>>
->>>> Suzuki
->>>>
->>>>
->>
+-- 
+With best wishes
+Dmitry
 
