@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6109E6CC843
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 18:41:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E54026CC8AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 19:00:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232801AbjC1QlU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 12:41:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52460 "EHLO
+        id S229985AbjC1Q76 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 12:59:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229806AbjC1QlT (ORCPT
+        with ESMTP id S229632AbjC1Q75 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 12:41:19 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1A0A3C1D;
-        Tue, 28 Mar 2023 09:41:17 -0700 (PDT)
+        Tue, 28 Mar 2023 12:59:57 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22DCC9ECF;
+        Tue, 28 Mar 2023 09:59:57 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 80651B81DBB;
-        Tue, 28 Mar 2023 16:41:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9D2C4339B;
-        Tue, 28 Mar 2023 16:41:12 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A129D618C7;
+        Tue, 28 Mar 2023 16:59:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE429C433EF;
+        Tue, 28 Mar 2023 16:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680021675;
-        bh=puCNRpwmEqJetbrROPl1Vggv5627DYtpnEIhZnhgltU=;
-        h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=f8g1IPFus2nyhjwbRIIMFTOz+6qNnpSGGL2tYJOnKy8VQn9vCMe27AlwPqZPVRs+v
-         tJk0Xn1UVFqiiMlNDq24yvVFfeKa9CJL4p8aXWehSRCyWGAc/2Hpjt2b8JqDQXWH0Q
-         kv2BE1KIbe1Ay7Sepna3QVj20bwfoAP0bwMayGREvVzE0lUs9gi1KMsdbHbiHNED9X
-         xu43/VinAzcXE+y1/xclLIKQGI2DouaM2FiMeHP/wj8fxjx4eAWhiAL0yBNVx9wOt4
-         EIXyIG0g8OjglQDrOeIRlrYWoH53ZYmuNJNhTA7sxNkCYq734gonl4xma03uKIrjgu
-         dDhJ3kxW1p44A==
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230313075551.17290-1-krzysztof.kozlowski@linaro.org>
-References: <20230313075445.17160-1-krzysztof.kozlowski@linaro.org>
- <20230313075551.17290-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2 0/9] ASoC: add audio digital codecs for Qualcomm
- SM8550
-Message-Id: <168002167217.51443.3734911880079647013.b4-ty@kernel.org>
-Date:   Tue, 28 Mar 2023 17:41:12 +0100
-MIME-Version: 1.0
+        s=k20201202; t=1680022796;
+        bh=5JSnUi0WPwXlNlLr2PLygtWZxa1SAMU3aE2taoy2XJ8=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=pG0CxzYc2iEAdKBPDBguoug0WhMNqYnXGWZ0vBpoy+o6qPYkfq/te1U0HzBubmaQY
+         Qc8D+RBVRs1+W1SNXJeXhNKBBI9XldesJIStEjChrgsxA4gbMXGDDthNbKmnJm75t/
+         rbiuw9xpcFMA4l9jMzA9x3O4cQgTvHfYJBzKd5tHBS2YxTcl56WOqzpvinvMcLQ6QR
+         ZZZNr2QWvUVX9A5g2OoAj4eUUfQqtuziuEXpF+e38ZnF2Wj0hWFv1NPx+LQ0f+d+u7
+         6i1mCDUrzUQp9f8kbWzJZ1qdkaw6r3WKLHPJQlx2L24KbYY/2fUPQel4IbrAAIC++G
+         gXkxDvMHR41aw==
+Message-ID: <1cfd584a48e1bb453596948a0187ecf1.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-bd1bf
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <2484518b-bcf6-7fb1-6bfb-b96b3682397b@quicinc.com>
+References: <20230327132718.573-1-quic_devipriy@quicinc.com> <20230327132718.573-3-quic_devipriy@quicinc.com> <0af15083921c5d3c89392209654f0c9b.sboyd@kernel.org> <2484518b-bcf6-7fb1-6bfb-b96b3682397b@quicinc.com>
+Subject: Re: [PATCH V10 2/4] clk: qcom: Add Global Clock Controller driver for IPQ9574
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, arnd@arndb.de, broonie@kernel.org,
+        catalin.marinas@arm.com, devicetree@vger.kernel.org,
+        dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, linus.walleij@linaro.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marcel.ziswiler@toradex.com, mturquette@baylibre.com,
+        nfraprado@collabora.com, p.zabel@pengutronix.de,
+        robh+dt@kernel.org, shawnguo@kernel.org, will@kernel.org
+Date:   Tue, 28 Mar 2023 09:59:53 -0700
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,60 +66,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 13 Mar 2023 08:55:51 +0100, Krzysztof Kozlowski wrote:
-> Dependencies
-> ============
-> For va-macro bindings:
-> https://lore.kernel.org/r/20221118071849.25506-2-srinivas.kandagatla@linaro.org
-> 
-> NOT a dependency
-> ================
-> The patchset can be applied independently of my previous fix:
-> https://lore.kernel.org/linux-arm-msm/20230310100937.32485-1-krzysztof.kozlowski@linaro.org/T/#u
-> 
-> [...]
+Quoting Devi Priya (2023-03-27 23:15:35)
+>=20
+>=20
+> On 3/27/2023 10:18 PM, Stephen Boyd wrote:
+> > Quoting Devi Priya (2023-03-27 06:27:16)
+> >> diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq=
+9574.c
+> >> new file mode 100644
+> >> index 000000000000..b2a2d618a5ec
+> >> --- /dev/null
+> >> +++ b/drivers/clk/qcom/gcc-ipq9574.c
+> >> @@ -0,0 +1,4248 @@
+> >> +// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> >> +/*
+> >> + * Copyright (c) 2023 The Linux Foundation. All rights reserved.
+> >> + */
+> >> +
+> >> +#include <linux/kernel.h>
+> >> +#include <linux/err.h>
+> >> +#include <linux/platform_device.h>
+> >> +#include <linux/module.h>
+> >> +#include <linux/of.h>
+> >> +#include <linux/of_device.h>
+> >=20
+> > What is this include for?
+> This include actually don't seem necessary. But, I see that of.h &=20
+> platform_device.h are being included via of_device.h
+> Would you suggest to drop of_device.h or the other two
+> headers instead?
 
-Applied to
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-
-Thanks!
-
-[1/9] ASoC: dt-bindings: qcom,lpass-rx-macro: narrow clocks per variants
-      commit: e4cf7805f084772cccf2094b634a16bccf2f444f
-[2/9] ASoC: dt-bindings: qcom,lpass-rx-macro: Add SM8550 RX macro
-      commit: 0fc109f875721f9cef29bb68095f50d67343b4b7
-[3/9] ASoC: codecs: lpass-rx-macro: add support for SM8550
-      commit: 492fe974fed0754f7076580e069e1e182e7b3603
-[4/9] ASoC: dt-bindings: qcom,lpass-tx-macro: narrow clocks per variants
-      commit: bf4afbf950938d42cf0df1ecd915affeb26f4d76
-[5/9] ASoC: dt-bindings: qcom,lpass-tx-macro: Add SM8550 TX macro
-      commit: 050578c6f18c28e95f9659493a52a67b68b4b667
-[6/9] ASoC: codecs: lpass-tx-macro: add support for SM8550
-      commit: 5faf6a1c5256559af98c998b7416e4db8fb09b75
-[7/9] ASoC: dt-bindings: qcom,lpass-va-macro: Add SM8550 VA macro
-      (no commit info)
-[8/9] ASoC: dt-bindings: qcom,lpass-wsa-macro: Add SM8550 WSA macro
-      commit: c1bda22bd2f382f9c3b27fb7a899f8804d92f897
-[9/9] ASoC: codecs: lpass-wsa-macro: add support for SM8550
-      commit: 6b004b836ced4d9ce655b5f1c810833c1a880369
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Include headers for things you use. Don't try to omit includes if you
+see that a header includes other headers that you're using.
