@@ -2,79 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7F2C6CBC70
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 12:21:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1390C6CBC7D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 12:27:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232458AbjC1KVC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 06:21:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56332 "EHLO
+        id S230014AbjC1K1Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 06:27:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231359AbjC1KU5 (ORCPT
+        with ESMTP id S229620AbjC1K1P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 06:20:57 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C95E16EBF;
-        Tue, 28 Mar 2023 03:20:53 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32S6dYV0028826;
-        Tue, 28 Mar 2023 10:20:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=dunxGkyVWnRgXa2caWreYb69qL3j/qi7JGyEYcOBAUY=;
- b=ah5M7t5gxxyJ9YnZRDMEzL4sSpiSS+0yQjqg6jvdjc6Q7Tk4sRA2MTjquiAUN6eq6fDF
- n8+EUn3fCjkJhA6Dg6ksETbyHce/tCbAyA6NDnZ3bR8f3g7rH2+voZ2uXuLvxNvBa8En
- a3VVMBkkSWx4NpUtoIBuzp05fNgGr0lsKU1VmMlOl1+nc+PU2TThmZMLGujKYm+Dc5Nu
- mv/hsTIXwhFndg7XaJo1/+rRk5iKxIFVB0K8ai7XDfDBW+oXE5XOw2n1wx4jJhBscAvp
- K5ZIpM70bOnDksdwqVdcQC6/DJWQBZAJvAOPkxKTD6dvYwRFdujaNyHSxt8NFunYyyI5 wA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pkk7b9djb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 28 Mar 2023 10:20:49 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32SAKnFr029009
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 28 Mar 2023 10:20:49 GMT
-Received: from poovendh-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Tue, 28 Mar 2023 03:20:43 -0700
-From:   Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_devipriy@quicinc.com>
-Subject: [PATCH V6 2/2] arm64: dts: qcom: ipq9574: Add SMEM support
-Date:   Tue, 28 Mar 2023 15:50:13 +0530
-Message-ID: <20230328102013.21361-3-quic_poovendh@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230328102013.21361-1-quic_poovendh@quicinc.com>
-References: <20230328102013.21361-1-quic_poovendh@quicinc.com>
+        Tue, 28 Mar 2023 06:27:15 -0400
+Received: from mail.marcansoft.com (marcansoft.com [212.63.210.85])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC767618B;
+        Tue, 28 Mar 2023 03:27:13 -0700 (PDT)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        (Authenticated sender: marcan@marcan.st)
+        by mail.marcansoft.com (Postfix) with ESMTPSA id B85844248B;
+        Tue, 28 Mar 2023 10:27:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=marcan.st; s=default;
+        t=1679999231; bh=zT2koom/7W4xUS4Q4Sf76XmaDUMDIN5TnyETV511rOM=;
+        h=Date:Subject:To:Cc:From;
+        b=fDoF7aexA/9AcvnCA66GAgO+W9WNbjW5AWw4xVFwRwX9SZRxm/JPZSkZkNOrLK+c+
+         egHT+pqKAUs0KaLPXW5Tz7oQiNFzxR3gg2KH3rHVq4GJqPIgJ4e2QZcP9v+xl3PYlf
+         Ba09NK6CXwdD0KmVF3zHVZQlCdPYimKf327UbEI5io6hyajxtf/PxTwOk9+0hvnOuj
+         jhudG2tMYp6U/rOZ9iOh2gonmOvIx+5FS6rHEjvAXr4RlOKxQrx8S9uxtxQBithol3
+         l9ursIrP/XS41teW5MAscmRFYEUAeVJ7fiIeAiQ8q+Bpuu+wWcIZvaed1JbJ2CUk2k
+         ZhobpJ87npbHQ==
+Message-ID: <871beead-1cc8-bb94-7c15-0173dfb11e71@marcan.st>
+Date:   Tue, 28 Mar 2023 19:27:02 +0900
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: hLulyRWqvM-xxccQQjIlhhPJDr6F0umQ
-X-Proofpoint-GUID: hLulyRWqvM-xxccQQjIlhhPJDr6F0umQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-24_11,2023-03-28_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 suspectscore=0 phishscore=0 bulkscore=0 mlxscore=0
- lowpriorityscore=0 mlxlogscore=732 clxscore=1015 malwarescore=0
- spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303280086
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH] dt-bindings: i2c: Drop unneeded quotes
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Peter Rosin <peda@axentia.se>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>
+Cc:     linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
+        asahi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com
+From:   Hector Martin <marcan@marcan.st>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,53 +72,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the required nodes to support SMEM
+On 23/03/2023 02.35, Rob Herring wrote:
+> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+> checking for this can be enabled in yamllint.
+> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/i2c/amlogic,meson6-i2c.yaml | 4 ++--
+>  Documentation/devicetree/bindings/i2c/apple,i2c.yaml          | 4 ++--
+>  Documentation/devicetree/bindings/i2c/atmel,at91sam-i2c.yaml  | 2 +-
+>  Documentation/devicetree/bindings/i2c/cdns,i2c-r1p10.yaml     | 4 ++--
+>  Documentation/devicetree/bindings/i2c/i2c-mux-gpio.yaml       | 4 ++--
+>  Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml | 4 ++--
+>  Documentation/devicetree/bindings/i2c/st,stm32-i2c.yaml       | 2 +-
+>  .../devicetree/bindings/i2c/xlnx,xps-iic-2.00.a.yaml          | 4 ++--
+>  8 files changed, 14 insertions(+), 14 deletions(-)
 
-Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
----
- Changes in V6:
-	- No changes
+For apple:
 
- Changes in V5:
-	- Dropped unrelated changes
+Reviewed-by: Hector Martin <marcan@marcan.st>
 
- Changes in V4:
-	- Added required nodes for smem support
-
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index 099948f36efc..14a3396b0381 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -107,6 +107,13 @@
- 			reg = <0x0 0x4a600000 0x0 0x400000>;
- 			no-map;
- 		};
-+
-+		smem@4aa00000 {
-+			compatible = "qcom,smem";
-+			reg = <0x0 0x4aa00000 0x0 0x00100000>;
-+			hwlocks = <&tcsr_mutex 0>;
-+			no-map;
-+		};
- 	};
- 
- 	soc: soc@0 {
-@@ -149,6 +156,12 @@
- 			#power-domain-cells = <1>;
- 		};
- 
-+		tcsr_mutex: hwlock@1905000 {
-+			compatible = "qcom,tcsr-mutex";
-+			reg = <0x01905000 0x20000>;
-+			#hwlock-cells = <1>;
-+		};
-+
- 		tcsr: syscon@1937000 {
- 			compatible = "qcom,tcsr-ipq9574", "syscon";
- 			reg = <0x01937000 0x21000>;
--- 
-2.17.1
+- Hector
 
