@@ -2,258 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9E6C6CB2C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 02:18:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF8BF6CB351
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 03:46:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231279AbjC1ASJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Mar 2023 20:18:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36112 "EHLO
+        id S232289AbjC1BqA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Mar 2023 21:46:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229606AbjC1ASH (ORCPT
+        with ESMTP id S230156AbjC1Bp7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Mar 2023 20:18:07 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9EC91BDD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 17:18:05 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id y2so6845649pfw.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 17:18:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1679962685;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NAT8YKWoRzsnW/D83k7oze0TqtTySta11nv0MrTObWM=;
-        b=XPBm+9xksh5PxzAYsl8E2AlRmfp5jgrv9AuRc2x4dXApa3Kq+h8rESDLxoOEVNhg/+
-         0PxFMH1ADI4OynnF8Aw62CSuC90wI/rUFShKEp06NyDRwuADSb5kzJF5IIZdhG9T85RU
-         QzbJ/0i2LlYQCweBp+wP2uyZCby0ZsyuMziV2RaNGMx4ECDk8VgWJTI33ShhLu4BQ1wP
-         bIpE6lcCispSViefdnCH3Xd50Z6G0SUG+EQPFu56pvsGLLfh/KrCsJL1b2VfzFlFSE5y
-         5phRhyXvIJI4KIczbMnXtDsfKPoiGJpqPG0eKt4JdhNpmVtoeE1b/MYSxZP4AX+xRcMQ
-         sxAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679962685;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NAT8YKWoRzsnW/D83k7oze0TqtTySta11nv0MrTObWM=;
-        b=HUfPggyayTXsa6CLqBTxK2IVHvzcWiwmywcB8dSEIGW7W3ZnwPLtYnHf9mVB1LNsF0
-         ygt6n3N34QtBPguk4AIB9t+FRRroskHjCqBgCNvuYWi1P5xnVYPvQK8utJRc2IwG4S5d
-         6QA/QmF5BTUIW+GglfB9WZReIXnlvPOc4UnENAsQz4uGQLZ1giTHl8dXQu5gXQzP2fYr
-         /MnP/xUGERqkaYNBZsUaRK0wZHkYC4sxgenVzeMQtqbfDsJfJKyDMW+a7FqfRzMldiAF
-         wDZ/AC2408ssJHAANeGOZESSjtoQ6+hXVGZTfIjZuQFIL5fvP1kHkbgz4MqAn2f5pYXc
-         I1vw==
-X-Gm-Message-State: AAQBX9fKrP5ZKWE0N/m8r2yiwDYpfe2fzB2CMgCTNWHxnHbP5t+oEgub
-        nZ2qxcmHjmdlp3VpQVz7fYKF55qjGJdYxIq86J+TCw==
-X-Google-Smtp-Source: AKy350ZfVurdmDvbshJjR8lJnRWOqXeP2QfY8WKwM1OLga/HLMcolMzF6jCx6t5oZGgAAV3jHCML2DnLXVBFIwbDpRk=
-X-Received: by 2002:a63:d157:0:b0:50c:2b1:7a8f with SMTP id
- c23-20020a63d157000000b0050c02b17a8fmr3720403pgj.6.1679962685061; Mon, 27 Mar
- 2023 17:18:05 -0700 (PDT)
+        Mon, 27 Mar 2023 21:45:59 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 801271BCD;
+        Mon, 27 Mar 2023 18:45:57 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32RNMXeU030957;
+        Tue, 28 Mar 2023 01:45:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=NVqOR9PCgqZAIwWDr1ktOZBwWzDpzUHb7zx6m33Yw64=;
+ b=GQ5XHLxSje7Lk6mPzUZXjl3yB1USrYBQC7XDhBUiZ7Za5okLKv1iKXWAxY0BngQMWbyU
+ 25zongN3NNhe8Jt16J4XzPXzpv9daJ9VTTTuuoMK6EmdBjUGpviBuLUPW/ACf2iLmXwi
+ IpKnaD1hRedSSuepWbEzYZbz5Z6lIwK06pSWmBq7NjWXO/p2cKXCj/LaXbSTxheNnLlQ
+ KXHx4CvzaKyB1Trmn+Il+YvTMcAGHmpxz+JM+BPEo9OASpXAERofSaj14X2mdkc87Zr2
+ 8WjRrW6DhQqCY8pD7UsimseFUhQ1bYIL6ZqAPiRX0wTBWikRHdidyCsjiwK08ivypIYe lQ== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pkby49j4p-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 28 Mar 2023 01:45:39 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32S1jcN7029325
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 28 Mar 2023 01:45:38 GMT
+Received: from [10.233.17.245] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 27 Mar
+ 2023 18:45:30 -0700
+Message-ID: <4abcf829-5265-d8ed-05a4-e3259068ad51@quicinc.com>
+Date:   Tue, 28 Mar 2023 09:45:28 +0800
 MIME-Version: 1.0
-References: <20230327193829.3756640-1-abel.vesa@linaro.org>
-In-Reply-To: <20230327193829.3756640-1-abel.vesa@linaro.org>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Mon, 27 Mar 2023 17:17:28 -0700
-Message-ID: <CAGETcx9f1p2esfyzyfU04EAB1FXh=d9-U81DaGyZNjL_Vti3oQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] Allow genpd providers to power off domains on sync state
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v2 3/3] Documentation: trace: Add documentation for
+ Coresight Dummy Trace
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Android Kernel Team <kernel-team@android.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-15.7 required=5.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,ENV_AND_HDR_SPF_MATCH,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL,
-        USER_IN_DEF_SPF_WL autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Jonathan Corbet <corbet@lwn.net>, Leo Yan <leo.yan@linaro.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-doc@vger.kernel.org>
+References: <20230324061608.33609-1-quic_hazha@quicinc.com>
+ <20230324061608.33609-4-quic_hazha@quicinc.com> <ZCFeJkkpIor5P28r@kroah.com>
+Content-Language: en-US
+From:   Hao Zhang <quic_hazha@quicinc.com>
+In-Reply-To: <ZCFeJkkpIor5P28r@kroah.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: DZya5-LtyXjXxFnWoKDxk3ifvAVdMTO9
+X-Proofpoint-GUID: DZya5-LtyXjXxFnWoKDxk3ifvAVdMTO9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-24_11,2023-03-27_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
+ impostorscore=0 phishscore=0 mlxlogscore=991 mlxscore=0 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303280011
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 27, 2023 at 12:38=E2=80=AFPM Abel Vesa <abel.vesa@linaro.org> w=
-rote:
->
-> There have been already a couple of tries to make the genpd "disable
-> unused" late initcall skip the powering off of domains that might be
-> needed until later on (i.e. until some consumer probes). The conclusion
-> was that the provider could return -EBUSY from the power_off callback
-> until the provider's sync state has been reached. This patch series tries
-> to provide a proof-of-concept that is working on Qualcomm platforms.
+Hi Greg,
 
-I'm giving my thoughts in the cover letter instead of spreading it
-around all the patches so that there's context between the comments.
+On 3/27/2023 5:13 PM, Greg Kroah-Hartman wrote:
+> On Fri, Mar 24, 2023 at 02:16:08PM +0800, Hao Zhang wrote:
+>> Add documentation for Coresight Dummy Trace under trace/coresight.
+>>
+>> Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
+>> ---
+>>   .../trace/coresight/coresight-dummy.rst       | 58 +++++++++++++++++++
+>>   1 file changed, 58 insertions(+)
+>>   create mode 100644 Documentation/trace/coresight/coresight-dummy.rst
+>>
+>> diff --git a/Documentation/trace/coresight/coresight-dummy.rst b/Documentation/trace/coresight/coresight-dummy.rst
+>> new file mode 100644
+>> index 000000000000..819cabab8623
+>> --- /dev/null
+>> +++ b/Documentation/trace/coresight/coresight-dummy.rst
+>> @@ -0,0 +1,58 @@
+>> +.. SPDX-License-Identifier: GPL-2.0
+>> +
+>> +=============================
+>> +Coresight Dummy Trace Module
+>> +=============================
+>> +
+>> +    :Author:   Hao Zhang <quic_hazha@quicinc.com>
+>> +    :Date:     March 2023
+>> +
+>> +Introduction
+>> +---------------------------
+>> +
+>> +Coresight Dummy Trace Module is for the specific devices that HLOS don't
+>> +have permission to access or configure. Such as Coresight sink EUD, some
+>> +TPDMs etc. So there need driver to register dummy devices as Coresight
+>> +devices. Provide Coresight API for dummy device operations, such as
+>> +enabling and disabling dummy devices. Build the Coresight path for dummy
+>> +sink or dummy source for debugging.
+>> +
+>> +Sysfs files and directories
+>> +---------------------------
+>> +
+>> +Root: ``/sys/bus/coresight/devices/dummy<N>``
+> 
+> sysfs files are documented in Documentation/ABI/ not in random .rst
+> files, sorry.  Please use the correct format described there, not a
+> random one like this :)
+> 
+> thanks,
+> 
+> greg k-h
 
-1) Why can't all the logic in this patch series be implemented at the
-framework level? And then allow the drivers to opt into this behavior
-by setting the sync_state() callback.
+Thanks for your review, I will correct the format in the next version of 
+patch.
 
-That way, you can land it only for QC drivers by setting up
-sync_state() callback only for QC drivers, but actually have the same
-code function correctly for non-QC drivers too. And then once we have
-this functionality working properly for QC drivers for one kernel
-version (or two), we'll just have the framework set the device's
-driver's sync_state() if it doesn't have one already.
-
-2) sync_state() is not just about power on/off. It's also about the
-power domain level. Can you handle that too please?
-
-3) In your GDSC drivers, it's not clear to me if you are preventing
-power off until sync_state() only for GDSCs that were already on at
-boot. So if an off-at-boot GDSC gets turned on, and then you attempt
-to turn it off before all its consumers have probed, it'll fail to
-power it off even though that wasn't necessary?
-
-4) The returning -EBUSY when a power off is attempted seems to be
-quite wasteful. The framework will go through the whole sequence of
-trying to power down, send the notifications and then fail and then
-send the undo notifications. Combined with point (2) I think this can
-be handled better at the aggregation level in the framework to avoid
-even going that far into the power off sequence.
-
--Saravana
-
->
-> I've been doing extensive testing on SM8450, but I've also spinned this
-> on my X13s (SC8280XP). Both patches that add the sync state callback to
-> the SC8280XP and SM8450 are here to provide context. Once we agree on
-> the form, I intend to add the sync state callback to all gdsc providers.
->
-> Currently, some of the gdsc providers might not reach sync state due to
-> list of consumers not probing yet (or at all). The sync state can be
-> enforced by writing 1 to the state_synced sysfs attribute of the
-> provider, thanks to Saravana's commit [1] which has been already merged.
->
-> [1] https://lore.kernel.org/r/20230304005355.746421-3-saravanak@google.co=
-m
->
-> V2 (RFC) of this patchset was here:
-> https://lore.kernel.org/all/20230320134217.1685781-1-abel.vesa@linaro.org=
-/
->
-> Changes since v2:
->  * renamed genpd_queue_power_off_work to pm_genpd_queue_power_off and add=
-ed
->    comment about its purpose w.r.t. it being exported.
->  * added the qcom_cc generic sync state callback to all providers that
->    register GDSCs, instead of SM8450 and SC8280XP
->
-> Changes since v1:
->  * Added the qcom_cc sync state callback which calls in turn the gdsc one
->  * dropped extra semicolon from pm_domain.h
->
-> Abel Vesa (4):
->   PM: domains: Allow power off queuing from providers
->   soc: qcom: rpmhpd: Do proper power off when state synced
->   clk: qcom: gdsc: Avoid actual power off until sync state
->   clk: qcom: Add sync state callback to all providers
->
->  drivers/base/power/domain.c            | 18 ++++++++++--------
->  drivers/clk/qcom/apss-ipq6018.c        |  1 +
->  drivers/clk/qcom/camcc-sc7180.c        |  1 +
->  drivers/clk/qcom/camcc-sc7280.c        |  1 +
->  drivers/clk/qcom/camcc-sdm845.c        |  1 +
->  drivers/clk/qcom/camcc-sm6350.c        |  1 +
->  drivers/clk/qcom/camcc-sm8250.c        |  1 +
->  drivers/clk/qcom/camcc-sm8450.c        |  1 +
->  drivers/clk/qcom/common.c              | 19 +++++++++++++++++++
->  drivers/clk/qcom/common.h              |  2 ++
->  drivers/clk/qcom/dispcc-qcm2290.c      |  1 +
->  drivers/clk/qcom/dispcc-sc7180.c       |  1 +
->  drivers/clk/qcom/dispcc-sc7280.c       |  1 +
->  drivers/clk/qcom/dispcc-sc8280xp.c     |  1 +
->  drivers/clk/qcom/dispcc-sdm845.c       |  1 +
->  drivers/clk/qcom/dispcc-sm6115.c       |  1 +
->  drivers/clk/qcom/dispcc-sm6125.c       |  1 +
->  drivers/clk/qcom/dispcc-sm6350.c       |  1 +
->  drivers/clk/qcom/dispcc-sm6375.c       |  1 +
->  drivers/clk/qcom/dispcc-sm8250.c       |  1 +
->  drivers/clk/qcom/dispcc-sm8450.c       |  1 +
->  drivers/clk/qcom/dispcc-sm8550.c       |  1 +
->  drivers/clk/qcom/gcc-apq8084.c         |  1 +
->  drivers/clk/qcom/gcc-ipq806x.c         |  1 +
->  drivers/clk/qcom/gcc-ipq8074.c         |  1 +
->  drivers/clk/qcom/gcc-mdm9615.c         |  1 +
->  drivers/clk/qcom/gcc-msm8660.c         |  1 +
->  drivers/clk/qcom/gcc-msm8909.c         |  1 +
->  drivers/clk/qcom/gcc-msm8916.c         |  1 +
->  drivers/clk/qcom/gcc-msm8939.c         |  1 +
->  drivers/clk/qcom/gcc-msm8953.c         |  1 +
->  drivers/clk/qcom/gcc-msm8960.c         |  1 +
->  drivers/clk/qcom/gcc-msm8974.c         |  1 +
->  drivers/clk/qcom/gcc-msm8976.c         |  1 +
->  drivers/clk/qcom/gcc-msm8994.c         |  1 +
->  drivers/clk/qcom/gcc-msm8996.c         |  1 +
->  drivers/clk/qcom/gcc-msm8998.c         |  1 +
->  drivers/clk/qcom/gcc-qcm2290.c         |  1 +
->  drivers/clk/qcom/gcc-qcs404.c          |  1 +
->  drivers/clk/qcom/gcc-qdu1000.c         |  1 +
->  drivers/clk/qcom/gcc-sa8775p.c         |  1 +
->  drivers/clk/qcom/gcc-sc7180.c          |  1 +
->  drivers/clk/qcom/gcc-sc7280.c          |  1 +
->  drivers/clk/qcom/gcc-sc8180x.c         |  1 +
->  drivers/clk/qcom/gcc-sc8280xp.c        |  1 +
->  drivers/clk/qcom/gcc-sdm660.c          |  1 +
->  drivers/clk/qcom/gcc-sdm845.c          |  1 +
->  drivers/clk/qcom/gcc-sdx55.c           |  1 +
->  drivers/clk/qcom/gcc-sdx65.c           |  1 +
->  drivers/clk/qcom/gcc-sm6115.c          |  1 +
->  drivers/clk/qcom/gcc-sm6125.c          |  1 +
->  drivers/clk/qcom/gcc-sm6350.c          |  1 +
->  drivers/clk/qcom/gcc-sm6375.c          |  1 +
->  drivers/clk/qcom/gcc-sm7150.c          |  1 +
->  drivers/clk/qcom/gcc-sm8150.c          |  1 +
->  drivers/clk/qcom/gcc-sm8250.c          |  1 +
->  drivers/clk/qcom/gcc-sm8350.c          |  1 +
->  drivers/clk/qcom/gcc-sm8450.c          |  1 +
->  drivers/clk/qcom/gcc-sm8550.c          |  1 +
->  drivers/clk/qcom/gdsc.c                | 26 ++++++++++++++++++++++++++
->  drivers/clk/qcom/gdsc.h                |  6 ++++++
->  drivers/clk/qcom/gpucc-msm8998.c       |  1 +
->  drivers/clk/qcom/gpucc-sc7180.c        |  1 +
->  drivers/clk/qcom/gpucc-sc7280.c        |  1 +
->  drivers/clk/qcom/gpucc-sc8280xp.c      |  1 +
->  drivers/clk/qcom/gpucc-sdm660.c        |  1 +
->  drivers/clk/qcom/gpucc-sdm845.c        |  1 +
->  drivers/clk/qcom/gpucc-sm6115.c        |  1 +
->  drivers/clk/qcom/gpucc-sm6125.c        |  1 +
->  drivers/clk/qcom/gpucc-sm6350.c        |  1 +
->  drivers/clk/qcom/gpucc-sm6375.c        |  1 +
->  drivers/clk/qcom/gpucc-sm8150.c        |  1 +
->  drivers/clk/qcom/gpucc-sm8250.c        |  1 +
->  drivers/clk/qcom/gpucc-sm8350.c        |  1 +
->  drivers/clk/qcom/lcc-ipq806x.c         |  1 +
->  drivers/clk/qcom/lpassaudiocc-sc7280.c |  1 +
->  drivers/clk/qcom/lpasscc-sc7280.c      |  1 +
->  drivers/clk/qcom/lpasscorecc-sc7180.c  |  2 ++
->  drivers/clk/qcom/lpasscorecc-sc7280.c  |  2 ++
->  drivers/clk/qcom/mmcc-apq8084.c        |  1 +
->  drivers/clk/qcom/mmcc-msm8974.c        |  1 +
->  drivers/clk/qcom/mmcc-msm8994.c        |  1 +
->  drivers/clk/qcom/mmcc-msm8996.c        |  1 +
->  drivers/clk/qcom/mmcc-msm8998.c        |  1 +
->  drivers/clk/qcom/mmcc-sdm660.c         |  1 +
->  drivers/clk/qcom/videocc-sc7180.c      |  1 +
->  drivers/clk/qcom/videocc-sc7280.c      |  1 +
->  drivers/clk/qcom/videocc-sdm845.c      |  1 +
->  drivers/clk/qcom/videocc-sm8150.c      |  1 +
->  drivers/clk/qcom/videocc-sm8250.c      |  1 +
->  drivers/soc/qcom/rpmhpd.c              | 19 +++++++------------
->  include/linux/pm_domain.h              |  4 ++++
->  92 files changed, 161 insertions(+), 20 deletions(-)
->
-> --
-> 2.34.1
->
+Thanks,
+Hao
