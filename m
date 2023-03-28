@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 31ADE6CB79F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 09:07:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D9566CB7AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 09:09:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229784AbjC1HHN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 03:07:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48610 "EHLO
+        id S229670AbjC1HJQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 03:09:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjC1HHM (ORCPT
+        with ESMTP id S229718AbjC1HJP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 03:07:12 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F7A12727
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 00:07:11 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id w9so45611372edc.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 00:07:10 -0700 (PDT)
+        Tue, 28 Mar 2023 03:09:15 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF2BE2D48
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 00:09:12 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id eg48so45459792edb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 00:09:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679987229;
+        d=linaro.org; s=google; t=1679987351;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=w4ch23DrQsWHOR9SnPpFPwEYN9EwYbqlOi9orjMDJe4=;
-        b=Tny7Ck2ytQInZa88ltoENG417Ja1fscKtnD1GDs58pdSZJ/IVSj8/UsWVhNeSneUz/
-         8YvgGJJ3lFeVdUuBAzBRD2Xfp17sBlzFfs8EAVLZTNvHohM3QBxlEeE6Xn/v+yU3cko1
-         iqcF4ptefuOZmgRjRQRRo2iXBt3qxSgpGvfV99avSulHtgtTRLJkPR0I0F55i3u2MQeu
-         ycRfn9Am0945hrqeNyx7mzanityt6clb2X+F2BG9N9Ru1iIdebD6F/Ofsl8ADVqpA+9/
-         uoSABKgpQ8mEl+OkxRZ278vABaKXzskqEJtx3QxNF4U623FECciajm6w9Ey8wNStjRg6
-         KyyA==
+        bh=SOVU8RBe7aR7D4CaCDozBWMIHjex6O25PxAUFtGHR20=;
+        b=JzHU38sHO7In6qpvbTJgTbAqk1fVTJ2CQ0Wd9Ls7ggx9Em/S5v+64RwlQECakrVpcH
+         zeJydAMiV53vnjPyJV1k73sd2vuMCJ3wXKTvNR8h7UNmQatNDCVwEGX6Up7Y9tDIjCJp
+         UivJP29SM8DYeQ8B57yX+9xDbcFaTI8YVL92a7BIb3f5/0Ax/wcrosiNNiFXbpQxxHtu
+         n5lNtMFWWdgpr+kwgqqNFyLc5ZMTuLPw2tOtTvQG8cLc+bC7yGIAn/T7/SI8l0MZrgym
+         /pNmt13+4uWtqwlnqayT+YQ0cnPqrJy4cGayO9ZM3477EFTdjPjCuzp4vxdY276sf3DF
+         21YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679987229;
+        d=1e100.net; s=20210112; t=1679987351;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w4ch23DrQsWHOR9SnPpFPwEYN9EwYbqlOi9orjMDJe4=;
-        b=4sReA6RfP2ScNsVkxjmYXzQHkUb3zWAl7+MhTkqzg1RcjF85qMAVljMZ5xeSg1MlM8
-         KnS7IoFjQp4MhBp9GjPJgZTWC9/KUF2xvXOPUlsVQxlVJOrpEme79Ybwl7wU8hvrMUa/
-         ocaOWuF4IkXK/gYMM8iwdjX0YPbuD7qExFabCIxsSb5VhMKoCAsRSv4qt5aZVmgCtcZU
-         GbctGLI37CYl3jMvr90MUFhuZuT+kCK7oGa6vU797pYjxHMIpkSu8x0YMM4KR5MKkdYq
-         yaH66Hyw0fCzxENp6Trwpkc39u82az4tJRCFAUk0+Hhj7YkHNGfu7+ss3JT9Y42rELPr
-         iQnw==
-X-Gm-Message-State: AAQBX9fbPU5LzklM2Gtius8VqlNwm4WZl4QjJBoJ1AhcU+EgcvBQzzGv
-        z2MyPqV63wrVPjhqotdU2FHiQA==
-X-Google-Smtp-Source: AKy350bKhgmasZr9CpVxheey/53sUglV0Ce7vW/cC0O8O0yoA3cHNgz9FAmIy78efquiDIKZIIzJng==
-X-Received: by 2002:a17:906:448e:b0:933:3cd8:a16f with SMTP id y14-20020a170906448e00b009333cd8a16fmr16877907ejo.75.1679987229556;
-        Tue, 28 Mar 2023 00:07:09 -0700 (PDT)
+        bh=SOVU8RBe7aR7D4CaCDozBWMIHjex6O25PxAUFtGHR20=;
+        b=ME6dcYa8jwYco7ixPWTFgXNoVLeWXuqdRs1qwg7BBEcjk4812MYJJm+2HSeuZc5jde
+         n0V933Vnu+jv8vRACco9YnA+pkobGg0qLNRPG1WRidw8oQSZYxB78rRPh5VHiMkI7vXL
+         Fw9dE8X8ko9xQcjTReKTTspSyNqEH0vdSUsCRzlPMVIskDkSeHEkcLU0m1MegLqTZp7h
+         RM7lsKyLiWtJCebBHMMHpJ9BdbL8Cjulm1y7dnYD6LqLTK7DOdlTyILM1dPngPRUlQLv
+         8l7SnWCfODMJ5ZS+vGbq8+kEBwh3dv3X0RTLSkGbD1DV6Svkr3jTjSa39GNGj9kAIIhc
+         iUEw==
+X-Gm-Message-State: AO0yUKWwal16Xw41PaC+4ldz/8FCNfFq95egMa0nBlCxacuKyKX699YG
+        EDrK24NW/tarDSSFL9v7tumejg==
+X-Google-Smtp-Source: AK7set++FIrmezxGT+XslLTQjEdJlsT5IB14A1jKFakYYMeGeD3Uyo1qplKKlDhDanwJTz/sSprUyw==
+X-Received: by 2002:a05:6402:1c95:b0:4af:7bdc:188e with SMTP id cy21-20020a0564021c9500b004af7bdc188emr22837333edb.16.1679987351279;
+        Tue, 28 Mar 2023 00:09:11 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:9e92:dca6:241d:71b6? ([2a02:810d:15c0:828:9e92:dca6:241d:71b6])
-        by smtp.gmail.com with ESMTPSA id q7-20020a170906b28700b00931c887372dsm14794198ejz.107.2023.03.28.00.07.08
+        by smtp.gmail.com with ESMTPSA id j30-20020a508a9e000000b004af5968cb3bsm15378561edj.17.2023.03.28.00.09.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Mar 2023 00:07:09 -0700 (PDT)
-Message-ID: <39356c59-7723-40df-08ba-cd563a7e066c@linaro.org>
-Date:   Tue, 28 Mar 2023 09:07:08 +0200
+        Tue, 28 Mar 2023 00:09:10 -0700 (PDT)
+Message-ID: <e5d4663f-c816-4789-a63c-5d6ce4744692@linaro.org>
+Date:   Tue, 28 Mar 2023 09:09:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v4 2/8] dt-bindings: phy: qcom,qmp-usb: Add IPQ9574 USB3
- PHY
+Subject: Re: [PATCH v4 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
 Content-Language: en-US
 To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
@@ -67,9 +66,9 @@ To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
 References: <cover.1679909245.git.quic_varada@quicinc.com>
- <4a21defe3320eb11d0e43bc7f02b3168ecefd458.1679909245.git.quic_varada@quicinc.com>
+ <f3c42c0e2e2fb309dc0d248e0e1b921c6b8c11f9.1679909245.git.quic_varada@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <4a21defe3320eb11d0e43bc7f02b3168ecefd458.1679909245.git.quic_varada@quicinc.com>
+In-Reply-To: <f3c42c0e2e2fb309dc0d248e0e1b921c6b8c11f9.1679909245.git.quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -83,57 +82,138 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 27/03/2023 11:30, Varadarajan Narayanan wrote:
-> Add dt-bindings for USB3 PHY found on Qualcomm IPQ9574
+> Add USB phy and controller related nodes
 > 
 > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
 >  Changes in v4:
-> 	- Remove constraints not applicable to IPQ9574
->  Changes in v3:
-> 	- Update other mandatory fields to accomodate IPQ9574
->  Changes in v2:
-> 	- Updated sections missed in previous patch
-> ---
->  .../bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml    | 25 ++++++++++++++++++++--
->  1 file changed, 23 insertions(+), 2 deletions(-)
+> 	- Use newer bindings without subnodes
+> 	- Fix coding style issues
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> index e81a382..aa5b58c 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> @@ -21,6 +21,7 @@ properties:
->      enum:
->        - qcom,ipq6018-qmp-usb3-phy
->        - qcom,ipq8074-qmp-usb3-phy
-> +      - qcom,ipq9574-qmp-usb3-phy
->        - qcom,msm8996-qmp-usb3-phy
->        - qcom,msm8998-qmp-usb3-phy
->        - qcom,qcm2290-qmp-usb3-phy
-> @@ -122,8 +123,6 @@ required:
->    - clock-names
->    - resets
->    - reset-names
-> -  - vdda-phy-supply
-> -  - vdda-pll-supply
+>  Changes in v3:
+> 	- Insert the nodes at proper location
+> 
+>  Changes in v2:
+> 	- Fixed issues flagged by Krzysztof
+> 	- Fix issues reported by make dtbs_check
+> 	- Remove NOC related clocks (to be added with proper
+> 	  interconnect support)
+> ---
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 83 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 83 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> index 2bb4053..5379c25 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> @@ -215,6 +215,45 @@
+>  		#size-cells = <1>;
+>  		ranges = <0 0 0 0xffffffff>;
 >  
->  additionalProperties: false
->  
-> @@ -204,6 +203,28 @@ allOf:
->          compatible:
->            contains:
->              enum:
-> +              - qcom,ipq9574-qmp-usb3-phy
-> +    then:
-> +      properties:
-> +        clocks:
-> +          maxItems: 3
-> +        clock-names:
-> +          items:
-> +            - const: aux
-> +            - const: cfg_ahb
-> +            - const: pipe
+> +		qusb_phy_0: phy@7b000 {
+> +			compatible = "qcom,ipq9574-qusb2-phy";
+> +			reg = <0x0007b000 0x180>;
+> +			#phy-cells = <0>;
+> +
+> +			clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
+> +				 <&xo_board_clk>;
+> +			clock-names = "cfg_ahb",
+> +				      "ref";
+> +
+> +			resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
+> +			status = "disabled";
+> +		};
+> +
+> +		ssphy_0: phy@7d000 {
+> +			compatible = "qcom,ipq9574-qmp-usb3-phy";
+> +			reg = <0x0007d000 0xa00>;
+> +			#clock-cells = <1>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
 
-Isn't pipe the clock for child node?
+Why do you need these three?
+
+> +
+> +			clocks = <&gcc GCC_USB0_AUX_CLK>,
+> +				 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
+> +				 <&gcc GCC_USB0_PIPE_CLK>;
+> +			clock-names = "aux",
+> +				      "cfg_ahb",
+> +				      "pipe";
+> +
+> +			resets = <&gcc GCC_USB0_PHY_BCR>,
+> +				 <&gcc GCC_USB3PHY_0_PHY_BCR>;
+> +			reset-names = "phy",
+> +				      "common";
+> +			status = "disabled";
+> +
+> +			#phy-cells = <0>;
+> +			clock-output-names = "usb0_pipe_clk";
+
+Does not look like you tested the DTS against bindings. Please run `make
+dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
+for instructions).
+
+> +		};
+> +
+>  		pcie0_phy: phy@84000 {
+>  			compatible = "qcom,ipq9574-qmp-gen3x1-pcie-phy";
+>  			reg = <0x00084000 0x1bc>; /* Serdes PLL */
+> @@ -436,6 +475,50 @@
+>  			status = "disabled";
+>  		};
+>  
+> +		usb3: usb3@8a00000 {
+
+usb@
+
+> +			compatible = "qcom,ipq9574-dwc3", "qcom,dwc3";
+> +			reg = <0x08af8800 0x400>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
+
+
+
+> +
+> +			clocks = <&gcc GCC_SNOC_USB_CLK>,
+> +				 <&gcc GCC_ANOC_USB_AXI_CLK>,
+> +				 <&gcc GCC_USB0_MASTER_CLK>,
+> +				 <&gcc GCC_USB0_SLEEP_CLK>,
+> +				 <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+> +
+> +			clock-names = "sys_noc_axi",
+> +				      "anoc_axi",
+> +				      "master",
+> +				      "sleep",
+> +				      "mock_utmi";
+> +
+> +			assigned-clocks = <&gcc GCC_USB0_MASTER_CLK>,
+> +					  <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+> +			assigned-clock-rates = <200000000>,
+> +					       <24000000>;
+> +
+> +			resets = <&gcc GCC_USB_BCR>;
+> +			status = "disabled";
+> +
+> +			dwc_0: usb@8a00000 {
+> +				compatible = "snps,dwc3";
+> +				reg = <0x8a00000 0xcd00>;
+> +				clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+> +				clock-names = "ref";
+> +				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
+> +				phys = <&qusb_phy_0>, <&ssphy_0>;
+> +				phy-names = "usb2-phy", "usb3-phy";
+> +				tx-fifo-resize;
+> +				snps,is-utmi-l1-suspend;
+> +				snps,hird-threshold = /bits/ 8 <0x0>;
+> +				snps,dis_u2_susphy_quirk;
+> +				snps,dis_u3_susphy_quirk;
+> +				dr_mode = "host";
+
+Are you saying that peripheral mode cannot work on this USB controller?
+Never?
 
 Best regards,
 Krzysztof
