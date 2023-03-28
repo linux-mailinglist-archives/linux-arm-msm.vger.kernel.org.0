@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 936066CBA13
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 11:06:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DB9D6CBA4C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 11:17:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232679AbjC1JG2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 05:06:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58890 "EHLO
+        id S230520AbjC1JQz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 05:16:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230263AbjC1JGU (ORCPT
+        with ESMTP id S230505AbjC1JQx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 05:06:20 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 215515FDD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 02:06:08 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id j11so14829394lfg.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 02:06:08 -0700 (PDT)
+        Tue, 28 Mar 2023 05:16:53 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA4775B9F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 02:16:27 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id q16so14880052lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 02:16:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679994366;
+        d=linaro.org; s=google; t=1679994985;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ogVdg59OvtEGhTTAtCeTATzo7VTOuITJJjSGfK73PZE=;
-        b=dAjWmLzjsnSJ8Zcysv9m6l46+Iqp6eV1esydN03bb/xRSs0HpowY3EyZdoPc4ZA2fk
-         uTjCye7LO+vS8JrAczzEGXl3u4PngMayUMyVVCtRZ3HuOGVAZbyyfUwbOQTTyMieMJ01
-         qHe3EgCQgCL/R7MeC5NYr8VUHs6HTyiFWAxMLztr5VG1bU5U4pf58sy1DmAv4N5868Nx
-         /hTyuBECzYqGriUJIMzel9o6YuxoUxKJhX4jouatLEbtlYHCUthT5VsSIrgyRths6GP8
-         eOlIxGOwUzRMbwvkjzFuhiw7E72U5acuZR98l3JaYNfJVT+Z3O0GDHvZ3p8xppsuqrP/
-         ivCA==
+        bh=XVwy6Dnb1d+DxS2wedB653Zz7EIqv+1P84qFWsC+sSs=;
+        b=mDauaQS3w38Xc7B6Ss93Tz3UOLHXtwf60Xxh4cr4AR/0m7KoARwRsl9vVw2BbEBBtI
+         p/fcDiIYyu7tbm+HKw4o6uSBNFrbxXVBm/sVe1KUsLgxeRRY957NSFNwrpo8lom4eqX7
+         c1QQTNiiinOXq5VxUgKrKIs1x+oeMDH/Ny7oQUsH5JLykbp4zxn/DLJVq34qHa2yLyQu
+         z16AeKmTs5SsMfYV+G0fvPqKUafXA5pKCpcyht78pBZbSFIHCEV/OE+lo3xxgJFMxJiw
+         r3Pw3s+BpyV6pj41CwcSur2GC7u98gCr5UfPz/uqsyNCHH9x/vv/WG1sPw8rTGNSfqNy
+         EtRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679994366;
+        d=1e100.net; s=20210112; t=1679994985;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ogVdg59OvtEGhTTAtCeTATzo7VTOuITJJjSGfK73PZE=;
-        b=5bi6pDWLvnUK7pwSziXK4y7q2x346Lq7a/zegEjfmClDbUHS2RVsOgT1t2W0H7Zxfs
-         7XdZPDHTRNw5vY7nGgrXNqsR6F8RpjuJDJrVZN0rikw6QBLS9WLWGzO09dQ+okGBobYh
-         eg+eJc0JD5iFM1vx7os+vhXzpm5WVf6p9uepzoKoVbMaJU3aXRsJLds+WfuA7MWxVruG
-         vgF3ULOXHd1TeYh6kSNKbZSdHjrTa4YInNNN3tq+LZnCsSbXgWAUgnk16CQV7XJq5uFs
-         7a7lguhqPd3Q2vh0f1Q+kSBpjBYk+Mkcm3RgrvH19V9G3bbv8JZtnVrEC5DD3OHOPld6
-         D42w==
-X-Gm-Message-State: AAQBX9dAnXSZPcP1u8dRWtH9mcRU7e3TRiVQPKF+rvMctHcqWFBusvBL
-        F2jMs+Vi9aB2TjdlZM5OzHpLwg==
-X-Google-Smtp-Source: AKy350aLWBsBDlf4pkqsGQd4V0rQEatYU3yJjtu5Pp8yX7hyd+wvFIIFc9mM7PQ6h+3SfqTq42S0wA==
-X-Received: by 2002:ac2:596b:0:b0:4d5:d0f9:e57 with SMTP id h11-20020ac2596b000000b004d5d0f90e57mr4249037lfp.21.1679994366456;
-        Tue, 28 Mar 2023 02:06:06 -0700 (PDT)
+        bh=XVwy6Dnb1d+DxS2wedB653Zz7EIqv+1P84qFWsC+sSs=;
+        b=WJBX9r+tDDW0b8mCM26ewBi2vLRR/K9qvqywglFwl+PsqxwTi155lQJPGaAi81RE6r
+         EbHZGY+lKlzw1ZDOJ85jj2jD2wP4T2d3GicJm+JjwbXdrkYK4RhfcrHrWQ1GNet/SFcF
+         pFsYr8E/DT9/VMeaIW/ja1p3jbUnU7VqwabUqC+6NxZf3PR3Hu3BtquLVbQ0sxnNCGvu
+         D+NQqU+0CbluB25BYmFAegLzFqoA9+fmB6gk0pZanMXdvPc/uGSiEjN2foydDVpnDC12
+         60sy0jVrSA2pc+tF/nsK9AB9jx9xB7y9n4KQbVGIaCfdLgFzpgEnrnD8s4wfPCU3vEby
+         /Rog==
+X-Gm-Message-State: AAQBX9e0JDeyJz9u8LX2sY7hdYBFHfvAZSp+YpRACGStlr2AxhszKV+B
+        P2Gyp4xKxzbtGkv0GqsjXWIp0g==
+X-Google-Smtp-Source: AKy350bdf1KNzCyrReTbNqKzhAVBsSk6fMUzecRQMv7NRU6ovRmnLiWyq4XiEyJNsSJUC2nFSeuvnw==
+X-Received: by 2002:ac2:5551:0:b0:4dd:cef0:c27c with SMTP id l17-20020ac25551000000b004ddcef0c27cmr3951959lfk.33.1679994985154;
+        Tue, 28 Mar 2023 02:16:25 -0700 (PDT)
 Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id y11-20020a2e9d4b000000b00295a5aa9d05sm4929716ljj.120.2023.03.28.02.06.05
+        by smtp.gmail.com with ESMTPSA id h8-20020a05651211c800b004db0a7ce483sm4973167lfr.162.2023.03.28.02.16.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Mar 2023 02:06:06 -0700 (PDT)
-Message-ID: <75243bf3-180d-ded3-22e6-018eb347a54d@linaro.org>
-Date:   Tue, 28 Mar 2023 11:06:05 +0200
+        Tue, 28 Mar 2023 02:16:24 -0700 (PDT)
+Message-ID: <b3630bb5-a2a9-6f38-c70a-eb4b8ea1630d@linaro.org>
+Date:   Tue, 28 Mar 2023 11:16:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v3 14/18] arm64: dts: qcom: sa8775p: add PMIC GPIO
- controller nodes
+Subject: Re: [PATCH v3 15/18] arm64: dts: qcom: sa8775p-ride: set
+ gpio-line-names for PMIC GPIOs
 Content-Language: en-US
 To:     Bartosz Golaszewski <brgl@bgdev.pl>,
         Andy Gross <agross@kernel.org>,
@@ -67,9 +67,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 References: <20230327125316.210812-1-brgl@bgdev.pl>
- <20230327125316.210812-15-brgl@bgdev.pl>
+ <20230327125316.210812-16-brgl@bgdev.pl>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230327125316.210812-15-brgl@bgdev.pl>
+In-Reply-To: <20230327125316.210812-16-brgl@bgdev.pl>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -87,85 +87,75 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 27.03.2023 14:53, Bartosz Golaszewski wrote:
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Add GPIO controller nodes to PMICs that have the GPIO hooked up on
-> sa8775p-ride.
+> Set line names for GPIO lines exposed by PMICs on sa8775p-ride.
 > 
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 40 +++++++++++++++++++++
->  1 file changed, 40 insertions(+)
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 51 +++++++++++++++++++++++
+>  1 file changed, 51 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> index be12997a080c..7602cca47bae 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> @@ -125,6 +125,16 @@ pmm8654au_0_pon_resin: resin {
->  				status = "disabled";
->  			};
->  		};
-> +
-> +		pmm8654au_0_gpios: gpio@8800 {
-> +			compatible = "qcom,pmm8654au-gpio", "qcom,spmi-gpio";
-> +			reg = <0x8800>;
-> +			gpio-controller;
-> +			gpio-ranges = <&pmm8654au_0_gpios 0 0 12>;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
->  	};
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> index b7ee4cc676b5..a0d2024a69df 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> @@ -32,6 +32,57 @@ &i2c18 {
+>  	status = "okay";
+>  };
 >  
->  	pmm8654au_1: pmic@2 {
-> @@ -139,6 +149,16 @@ pmm8654au_1_temp_alarm: temp-alarm@a00 {
->  			interrupts-extended = <&spmi_bus 0x2 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
->  			#thermal-sensor-cells = <0>;
->  		};
+> +&pmm8654au_0_gpios {
+> +	gpio-line-names = "DS_EN",
+> +			  "POFF_COMPLETE",
+> +			  "UFS0_VER_ID",
+> +			  "FAST_POFF",
+> +			  "DBU1_PON_DONE",
+> +			  "AOSS_SLEEP",
+> +			  "CAM_DES0_EN",
+> +			  "CAM_DES1_EN",
+> +			  "CAM_DES2_EN",
+> +			  "CAM_DES3_EN",
+> +			  "UEFI",
+> +			  "ANALOG_PON_OPT";
+> +};
 > +
-> +		pmm8654au_1_gpios: gpio@8800 {
-> +			compatible = "qcom,pmm8654au-gpio", "qcom,spmi-gpio";
-> +			reg = <0x8800>;
-> +			gpio-controller;
-> +			gpio-ranges = <&pmm8654au_2_gpios 0 0 12>;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
->  	};
->  
->  	pmm8654au_2: pmic@4 {
-> @@ -153,6 +173,16 @@ pmm8654au_2_temp_alarm: temp-alarm@a00 {
->  			interrupts-extended = <&spmi_bus 0x4 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
->  			#thermal-sensor-cells = <0>;
->  		};
+> +&pmm8654au_1_gpios {
+> +	gpio-line-names = "PMIC_C_ID0",
+> +			  "PMIC_C_ID1",
+> +			  "UFS1_VER_ID",
+> +			  "IPA_PWR",
+> +			  "",
+> +			  "WLAN_DBU4_EN",
+> +			  "WLAN_EN",
+> +			  "BT_EN",
+> +			  "USB2_PWR_EN",
+> +			  "USB2_FAULT";
+> +};
 > +
-> +		pmm8654au_2_gpios: gpio@8800 {
-> +			compatible = "qcom,pmm8654au-gpio", "qcom,spmi-gpio";
-> +			reg = <0x8800>;
-> +			gpio-controller;
-> +			gpio-ranges = <&pmm8654au_2_gpios 0 0 12>;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
->  	};
->  
->  	pmm8654au_3: pmic@6 {
-> @@ -167,5 +197,15 @@ pmm8654au_3_temp_alarm: temp-alarm@a00 {
->  			interrupts-extended = <&spmi_bus 0x6 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
->  			#thermal-sensor-cells = <0>;
->  		};
+> +&pmm8654au_2_gpios {
+> +	gpio-line-names = "PMIC_E_ID0",
+> +			  "PMIC_E_ID1",
+> +			  "USB0_PWR_EN",
+> +			  "USB0_FAULT",
+> +			  "SENSOR_IRQ_1",
+> +			  "SENSOR_IRQ_2",
+> +			  "SENSOR_RST",
+> +			  "SGMIIO0_RST",
+> +			  "SGMIIO1_RST",
+> +			  "USB1_PWR_ENABLE",
+> +			  "USB1_FAULT",
+> +			  "VMON_SPX8";
+> +};
 > +
-> +		pmm8654au_3_gpios: gpio@8800 {
-> +			compatible = "qcom,pmm8654au-gpio", "qcom,spmi-gpio";
-> +			reg = <0x8800>;
-> +			gpio-controller;
-> +			gpio-ranges = <&pmm8654au_3_gpios 0 0 12>;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
->  	};
+> +&pmm8654au_3_gpios {
+> +	gpio-line-names = "PMIC_G_ID0",
+> +			  "PMIC_G_ID1",
+> +			  "GNSS_RST",
+> +			  "GNSS_EN",
+> +			  "GNSS_BOOT_MODE";
+> +};
+> +
+>  &qupv3_id_1 {
+>  	status = "okay";
 >  };
