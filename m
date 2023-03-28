@@ -2,83 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 522286CBBC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 12:03:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E1E26CBBD3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 12:06:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231493AbjC1KDK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 06:03:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53600 "EHLO
+        id S232725AbjC1KFU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 06:05:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232832AbjC1KDG (ORCPT
+        with ESMTP id S232922AbjC1KFL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 06:03:06 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E41EC618B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 03:03:04 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id c9so4627592lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 03:03:04 -0700 (PDT)
+        Tue, 28 Mar 2023 06:05:11 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1395765B6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 03:05:09 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id fy10-20020a17090b020a00b0023b4bcf0727so11981274pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 03:05:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679997783;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Sl9kxXSw+Tz25eb85qCM7uxtmc76BHK03FRsB6nWKSE=;
-        b=xqSEU/kqI0Diy4z4+MqEBldFOfHYnHjrn/VIcy+3OrcOcxOGBciCx4ARC7cjTGQupw
-         hCWssqow5Tqz4t+ZlqXr1WHFFsx42NQoLKeOSwFlffd4Y9zrGCa4lYIWGuf68UZu61/c
-         UgwEz0OZUDmXLkzceyoEi15VfMQCMsnihjZStKFER+zz3H6vGYYSPX0EFXCrVFmoEBpH
-         YV75NCnqFqv5T+Dc54OkEgfToptxK9OB8Ea0r8JsGhDQkA/ztZmWY99+MQo1uPbwgB7p
-         zqLcJnzzcxhN03+TSNChqJQSvw2PA4SWJiwEwLST55kJZj+bXdEvyQyzNrWr7KsQFDPC
-         HUXA==
+        d=linaro.org; s=google; t=1679997908;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=vbAeF/q4puGBHB30GEkNPpQcAvRu+9MbMvkqaMKXnBY=;
+        b=N/hUGfZoczN3Pg/z8HKjl9dm38fgrahylvaMAeBz4U+0FI7thq5T4HCsq8QxobKFYn
+         WJXd3tLrwx7JaNUoIIv47Gf3OvtwE8GNHOkvz5MskH3HggP2CI+Zyyp75aQ10exvAG7P
+         CjUHSRhO6ImpgWTd1PzPx1QMA9Ae0eY8nklOMKPkNvyEqfQe81pWkMT1RsPvHf/W7GNa
+         rWDGTt+maAzqstMTcDH4tmRu3PsYJx1er4/moiH72T0UMxjbLXj5mpKpCMVws1fx/Dep
+         E5wiKaJWOd5rTpQx93vgZZGw7IV2odNGO/M1QmKBW4kldKuE+A3IkXTFs+O3v5fx6rQg
+         eyOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679997783;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Sl9kxXSw+Tz25eb85qCM7uxtmc76BHK03FRsB6nWKSE=;
-        b=5DGVAB+E5zbctsoJiar0OHRWDnsh7D4nyxmW5pfnFT+uyWqgaSVAOY+ZcHqBR2WPVX
-         jVUvmzvAj+Esn13rhwZQSKqTVeMdPjJYNAsx7d7IAUGOGfy/vHrHL/V3JdEfA5SSQw7G
-         wxINjhWvB5QWxdXfcqBAZ0Q5aDJCZ0BPFbmqZBvP90c3gQg9UKV4WYsX/++/a5hErFxe
-         s6b9PIX4nmr4xqjSH7dr64FuF8o9DntDlS7SbzxU32BmpMkKj6RlUNvtfMlAsIY5n2no
-         X8IVKeZf2TakQTCINjza4K2KZiEuaFBw/V/UoRDd6Ke3MWRayMhGmAN8UqzFgWs8UyhO
-         9iYQ==
-X-Gm-Message-State: AAQBX9eYHF55bfPBRbos2V6xY7SHyK7sbFGqo88BsZvH3tu6l8iM4hwY
-        lhnEP/5MQHham7zjIerSTxq+9A==
-X-Google-Smtp-Source: AKy350YMwE0ddyX51M/0yjHpBUptGp7dETGcgGbw3f2Xvu7upg2kzTEHZQUXY87LiX8lgJx8wcJJHQ==
-X-Received: by 2002:ac2:4f8d:0:b0:4e0:979d:56e8 with SMTP id z13-20020ac24f8d000000b004e0979d56e8mr4712169lfs.22.1679997783162;
-        Tue, 28 Mar 2023 03:03:03 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id f10-20020ac24e4a000000b004db3e330dcesm5008471lfr.178.2023.03.28.03.03.02
+        d=1e100.net; s=20210112; t=1679997908;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vbAeF/q4puGBHB30GEkNPpQcAvRu+9MbMvkqaMKXnBY=;
+        b=HGdQShpeW9Jwrr0C43Av+s970BiRQWKVzc4ZVDQ6Hx5RaWO9USeMb30qB86B4GbwC4
+         nNWJdokU3zvn2Q/hCIpFHYiGnLXjX1PzIV02EJrIzrSQ5CHKpJy5D4EFQaq6N/t32my4
+         NZShlBl2VC4B8BG9Nx2NAgRR+49OWk7dzTrSqL1A0dH3SjiFkfR6S3cfcCRX/AgP3bY/
+         f6ZtZfk8weqy3uFTbKFEZNw2NxvcAyhJ1Pzb/XE4jD/iCwWedoathTtt9/6RvPRJIley
+         mzy0EEeIIX7YYKCe4FyYbpm03PHao4QMHM1nlLnQ9+nz8o7eesaOahZI7yPF858da4PA
+         xZYg==
+X-Gm-Message-State: AO0yUKUhRFlMUE5c8OJJrh9I7wb8IgqtY2IzMTn8tOL5px53l8wQEdhr
+        kFq5V+msAHj4puhg/rF3GdJm
+X-Google-Smtp-Source: AK7set+lwReY2NPXkOJR+EBgtum4SrJ6381r8NXBBjrHBxs47d/fAM2boVcLG/RDewj8Pp6fVpXhtw==
+X-Received: by 2002:a05:6a20:1326:b0:cd:91bc:a9af with SMTP id g38-20020a056a20132600b000cd91bca9afmr10898154pzh.58.1679997908438;
+        Tue, 28 Mar 2023 03:05:08 -0700 (PDT)
+Received: from thinkpad ([117.202.191.80])
+        by smtp.gmail.com with ESMTPSA id g12-20020a170902c38c00b001990028c0c9sm20809821plg.68.2023.03.28.03.05.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Mar 2023 03:03:02 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 28 Mar 2023 12:02:53 +0200
-Subject: [PATCH 2/2] irqchip: irq-qcom-mpm: Support passing a slice of SRAM
- as reg space
+        Tue, 28 Mar 2023 03:05:08 -0700 (PDT)
+Date:   Tue, 28 Mar 2023 15:35:01 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     andersson@kernel.org, Thinh.Nguyen@synopsys.com,
+        gregkh@linuxfoundation.org, mathias.nyman@intel.com,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 5/5] usb: dwc3: qcom: Allow runtime PM
+Message-ID: <20230328100501.GD5695@thinkpad>
+References: <20230325165217.31069-1-manivannan.sadhasivam@linaro.org>
+ <20230325165217.31069-6-manivannan.sadhasivam@linaro.org>
+ <ZCK3fGkgowvAd6Dw@hovoldconsulting.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230328-topic-msgram_mpm-v1-2-1b788a5f5a33@linaro.org>
-References: <20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org>
-In-Reply-To: <20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1679997779; l=3266;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=j53C+GXyNrDcAD6z2W1lAVzYENLhZdbwFZ4vxEDuGZ0=;
- b=7kBk95MhrZI4VdrM3PLJSqOqrg5k4VerCssvwUKsN3a3wwSN2HQpGfazNjS67qCZqX6v05Gnbbt5
- 0oAHWK3MBdG7T7VAurc9V+VPfvEqc7s/93tfWzENjWAcIpfw9SWj
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZCK3fGkgowvAd6Dw@hovoldconsulting.com>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -88,97 +78,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The MPM hardware is accessible to us from the ARM CPUs through a shared
-memory region (RPM MSG RAM) that's also concurrently accessed by other
-kinds of cores on the system (like modem, ADSP etc.). Modeling this
-relation in a (somewhat) sane manner in the device tree basically
-requires us to either present the MPM as a child of said memory region
-(which makes little sense, as a mapped memory carveout is not a bus),
-define nodes which bleed their register spaces into one another, or
-passing their slice of the MSG RAM through some kind of a property.
+On Tue, Mar 28, 2023 at 11:46:36AM +0200, Johan Hovold wrote:
+> On Sat, Mar 25, 2023 at 10:22:17PM +0530, Manivannan Sadhasivam wrote:
+> > dwc3-qcom driver is capable of doing runtime PM on its own, but currently
+> > it requires userspace intervention to enable it. But there is no harm in
+> > letting the driver to enable runtime PM on its own. So let's get rid of the
+> > "pm_runtime_forbid()" and make sure that the dependency is maintained with
+> > child devices using "pm_suspend_ignore_children(dev, false)".
+> 
+> Well, the potential harm is that these paths have hardly been tested so
+> enabling it by default is a risk (e.g. as you noticed when trying to
+> enable this by default). And especially if we don't address the layering
+> violations first.
+> 
 
-Go with the third option and add a way to map a region passed through
-the "qcom,rpm-msg-ram" property as our register space.
+I certainly tested this on a couple of boards with host and gadget mode and
+noticed no issue (except one issue noticed by Steev on a docking station with
+display but that should be related to orientation switch).
 
-The current way of using 'reg' is preserved for ABI reasons.
+Even if we allow runtime PM on this driver, still userspace needs to enable it
+for dwc3 and xhci drivers. So this essentially reduces one step in that process
+if someone tries to enable runtime PM for usb intentionally. So I don't forsee a
+potential harm here.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/irqchip/irq-qcom-mpm.c | 30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+> > Also during remove(), the device needs to be waken up first if it was
+> > runtime suspended. Finally, pm_runtime_allow() can be removed.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/usb/dwc3/dwc3-qcom.c | 5 +++--
+> >  1 file changed, 3 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> > index f1059dfcb0e8..5f26bb66274f 100644
+> > --- a/drivers/usb/dwc3/dwc3-qcom.c
+> > +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> > @@ -920,7 +920,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+> >  	qcom->is_suspended = false;
+> >  	pm_runtime_set_active(dev);
+> >  	pm_runtime_enable(dev);
+> > -	pm_runtime_forbid(dev);
+> > +	pm_suspend_ignore_children(dev, false);
+> 
+> There's no need to explicitly disable ignore-children as that is the
+> default.
+> 
 
-diff --git a/drivers/irqchip/irq-qcom-mpm.c b/drivers/irqchip/irq-qcom-mpm.c
-index d30614661eea..6fe59f4deef4 100644
---- a/drivers/irqchip/irq-qcom-mpm.c
-+++ b/drivers/irqchip/irq-qcom-mpm.c
-@@ -14,6 +14,7 @@
- #include <linux/mailbox_client.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/of_address.h>
- #include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/pm_domain.h>
-@@ -322,8 +323,10 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
- 	struct device *dev = &pdev->dev;
- 	struct irq_domain *parent_domain;
- 	struct generic_pm_domain *genpd;
-+	struct device_node *msgram_np;
- 	struct qcom_mpm_priv *priv;
- 	unsigned int pin_cnt;
-+	struct resource res;
- 	int i, irq;
- 	int ret;
- 
-@@ -374,9 +377,21 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
- 
- 	raw_spin_lock_init(&priv->lock);
- 
--	priv->base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(priv->base))
--		return PTR_ERR(priv->base);
-+	/* If we have a handle to an RPM message ram partition, use it. */
-+	msgram_np = of_parse_phandle(np, "qcom,rpm-msg-ram", 0);
-+	if (msgram_np) {
-+		ret = of_address_to_resource(msgram_np, 0, &res);
-+		/* Don't use devm_ioremap_resource, as we're accessing a shared region. */
-+		priv->base = ioremap(res.start, resource_size(&res));
-+		of_node_put(msgram_np);
-+		if (IS_ERR(priv->base))
-+			return PTR_ERR(priv->base);
-+	} else {
-+		/* Otherwise, fall back to simple MMIO. */
-+		priv->base = devm_platform_ioremap_resource(pdev, 0);
-+		if (IS_ERR(priv->base))
-+			return PTR_ERR(priv->base);
-+	}
- 
- 	for (i = 0; i < priv->reg_stride; i++) {
- 		qcom_mpm_write(priv, MPM_REG_ENABLE, i, 0);
-@@ -387,8 +402,10 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
- 	}
- 
- 	irq = platform_get_irq(pdev, 0);
--	if (irq < 0)
--		return irq;
-+	if (irq < 0) {
-+		ret = irq;
-+		goto unmap_base;
-+	}
- 
- 	genpd = &priv->genpd;
- 	genpd->flags = GENPD_FLAG_IRQ_SAFE;
-@@ -451,6 +468,9 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
- 	mbox_free_channel(priv->mbox_chan);
- remove_genpd:
- 	pm_genpd_remove(genpd);
-+unmap_base:
-+	if (res.start)
-+		iounmap(priv->base);
- 	return ret;
- }
- 
+Other dwc drivers were doing it, so I thought someone (maintainer) wanted to
+explicitly disable ignore_children. But if that's not the case, I can remove it.
+
+> >  	return 0;
+> >  
+> > @@ -948,6 +948,8 @@ static int dwc3_qcom_remove(struct platform_device *pdev)
+> >  	struct device *dev = &pdev->dev;
+> >  	int i;
+> >  
+> > +	pm_runtime_get_sync(dev);
+> 
+> This call needs to be balanced. But this is a fix for a bug in the
+> current implementation that should go in a separate patch.
+> 
+
+Ok. For balancing I could add pm_runtime_put_noidle() before pm_runtime_disable.
+
+- Mani
+
+> > +
+> >  	device_remove_software_node(&qcom->dwc3->dev);
+> >  	of_platform_depopulate(dev);
+> >  
+> > @@ -960,7 +962,6 @@ static int dwc3_qcom_remove(struct platform_device *pdev)
+> >  	dwc3_qcom_interconnect_exit(qcom);
+> >  	reset_control_assert(qcom->resets);
+> >  
+> > -	pm_runtime_allow(dev);
+> >  	pm_runtime_disable(dev);
+> >  
+> >  	return 0;
+> 
+> Johan
 
 -- 
-2.40.0
-
+மணிவண்ணன் சதாசிவம்
