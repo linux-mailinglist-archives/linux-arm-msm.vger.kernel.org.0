@@ -2,97 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5790D6CBB89
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 11:53:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDD4E6CBBCC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 12:03:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232394AbjC1JxD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 05:53:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40558 "EHLO
+        id S232701AbjC1KDM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 06:03:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232656AbjC1Jwe (ORCPT
+        with ESMTP id S232725AbjC1KDE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 05:52:34 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E25D472AB;
-        Tue, 28 Mar 2023 02:51:42 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 57BA261630;
-        Tue, 28 Mar 2023 09:51:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B250BC433EF;
-        Tue, 28 Mar 2023 09:51:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679997101;
-        bh=IeUoFJsAwrYDiV9XdFo6igFhnSlqKPAMMJqeh4qtdc4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=p2cTDIPDDT+JT8iVO9/oDNpMHwO3quM7caq//p3/vN+Noit24Eb5L+Po1Yrp2kGt+
-         CquPJOSo38v1miL/GhoQUJa0AMz6Ab0KMqiW4nlf/zsO9+HJcJpqkT7djb7T+Ly53Y
-         UtKaANYFP3bsks3tYGN3JtZE/DAeaHn+vUMMPkCFzRIvwFRQHJfWiO2C7o1Pqqsi+6
-         +/3134tB122RUrUMAYpIuZU0BU2Vj2/UjJ5yCyI6ljiCtqhzWusMWW0UlGB8s7EH0A
-         Z2zfLMq42PvmtjGcX61xOOngKb+1hmtPjotDVUmNYqQnL6XXLF44eKA+bNIOEMkZwD
-         /f7MwuMvMWNbQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ph5zd-0004dS-3v; Tue, 28 Mar 2023 11:51:53 +0200
-Date:   Tue, 28 Mar 2023 11:51:53 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, Thinh.Nguyen@synopsys.com,
-        gregkh@linuxfoundation.org, mathias.nyman@intel.com,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 3/5] usb: dwc3: qcom: Fix null ptr access during
- runtime_suspend()
-Message-ID: <ZCK4uZCrbVZ/HfRq@hovoldconsulting.com>
-References: <20230325165217.31069-1-manivannan.sadhasivam@linaro.org>
- <20230325165217.31069-4-manivannan.sadhasivam@linaro.org>
- <ZCKyFEc087xoypdo@hovoldconsulting.com>
- <20230328094718.GB5695@thinkpad>
+        Tue, 28 Mar 2023 06:03:04 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8E0F5FCB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 03:03:02 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id y15so15047127lfa.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 03:03:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679997781;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LyqTQFK+uVxsQYwyzlRv5E2d4XzzuOepwBhUJm638mk=;
+        b=PAcNESty8n7ZDp/KEZo9JNWQa6AN4XTktJyIb1sZ/X4ENi7kKl3q7x+l/74NA5lm+t
+         keIv6Tu6cu4i9sh9bS7QAeLG7xv4mWlpIGadaQe4lMeh4hPhpMeOQVl7c4O7Wpozd+BJ
+         sRMCiTdlHUNksMFbc5kKk7axX9fEoOMl+HDYnVv0teDq1acidnFK7GH/IzD9xkaFRbSi
+         pxKZYsbZN7sKHRyHTqQg+EhVF8AVrKoRGsaovmlPXIi6N4ixUqh+45OnD8oG+BFZzmuj
+         hVZKouzjEvDsBxzB6rA9XRz4+Gaj13neYe0lOlwV8/sZOSgcpEyOQuRxZY2ENzD3EXCR
+         jIgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679997781;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LyqTQFK+uVxsQYwyzlRv5E2d4XzzuOepwBhUJm638mk=;
+        b=GPPMDaie6IoR6XPzopFTqXtza8oaij0znf/qRs68TWdJfnx3m0Lnd7Wx2URXUU4PNU
+         CnH1LkoKPA7t0SbubwL3EGDGKJPzLsKNyCXa4zDCgQEuE2r1PvTITEafwHw86EEusMmg
+         hhhXGfJ+Q0AeH1UB4dkDQ8oTpNnDF6gX1kOR0z+nuo/OB8fxDGUUALyFji3xMKqDyniY
+         3fZpGN1sPfIck6lYlf5QvPtTDtzt7EVeZ5gTTB/xrPYc39NYTE8YB4643f4Rz4972hyT
+         1OqBiQv/qWEuZ4DkRcxJdriGqLKEjCqz2lNdHQxCWZUGCpI5A1f88Sazn3/oMHJNkIae
+         UtNg==
+X-Gm-Message-State: AAQBX9dZ/w3LsWFAI9z6S0B/aVKnWCsXMdz46oZVUbFHaAhQ4rBFDzCI
+        MknDsLZrLduwOh+924v59ElB2A==
+X-Google-Smtp-Source: AKy350YGbDiP4mhI2oNX77LkOc1pOGIfCa8AEk/jlSS+DxHtn2jn82eGU9gBAH+BT52Bo/Vvx30jcw==
+X-Received: by 2002:ac2:44b4:0:b0:4eb:c85:bdc2 with SMTP id c20-20020ac244b4000000b004eb0c85bdc2mr3113821lfm.2.1679997780947;
+        Tue, 28 Mar 2023 03:03:00 -0700 (PDT)
+Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
+        by smtp.gmail.com with ESMTPSA id f10-20020ac24e4a000000b004db3e330dcesm5008471lfr.178.2023.03.28.03.02.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Mar 2023 03:03:00 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/2] Resolve MPM register space situation
+Date:   Tue, 28 Mar 2023 12:02:51 +0200
+Message-Id: <20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230328094718.GB5695@thinkpad>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEu7ImQC/x2N0QrCMAwAf2Xk2cBsh1R/RUTaGLfA2pVmijD27
+ ws+3sFxGyg3YYVbt0Hjr6gsxeB86oCmWEZGeRmD653vvQu4LlUIs44t5meuGekSQmKfyF0HsCx
+ FZUwtFposLJ95Nlkbv+X3/9wf+34ARPLR+3cAAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1679997779; l=1895;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=lF/bvkNJ7NLlgQqY7yN7AeVawfTeX3/WEciMsVGTE3U=;
+ b=fcbsdJo5+WcFlPqfdWkwDg2oF4yvKNoIHpAZnGXRnPm4LbzWTwVvxhKLcC5BFQOdRQ45U5uZjkeJ
+ hcTDCb0iAdJYaWg+95rEY7hXkXk3FcpPviMvbKzTRNnaZrbl17JO
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 28, 2023 at 03:17:18PM +0530, Manivannan Sadhasivam wrote:
-> On Tue, Mar 28, 2023 at 11:23:32AM +0200, Johan Hovold wrote:
-> > On Sat, Mar 25, 2023 at 10:22:15PM +0530, Manivannan Sadhasivam wrote:
+The MPM (and some other things, irrelevant to this patchset) resides
+(as far as the ARM cores are concerned, anyway) in a MMIO-mapped region
+that's a portion of the RPM (low-power management core)'s RAM, known
+as the RPM Message RAM. Representing this relation in the Device Tree
+creates some challenges, as one would either have to treat a memory
+region as a bus, map nodes in a way such that their reg-s would be
+overlapping, or supply the nodes with a slice of that region.
 
-> > >  static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
-> > >  {
-> > > +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> > >  	u32 val;
-> > >  	int i, ret;
-> > >  
-> > > -	if (qcom->is_suspended)
-> > > +	if (qcom->is_suspended || !dwc)
-> > >  		return 0;
-> > 
-> > I think we should try to keep the layering violations confined to the
-> > helper functions. So how about amending dwc3_qcom_is_host() and check
-> > for NULL before dereferencing the xhci pointer?
-> > 
-> > If the dwc3 driver hasn't probed yet, we're clearly not in host mode
-> > either...
-> 
-> Well, that's what I initially did but then I reverted to this approach as
-> returning true/false from dwc3_qcom_is_host() based on the pointer availability
-> doesn't sound right.
-> 
-> For example, if we return true then it implies that the driver is in host mode
-> which is logically wrong (before dwc3 probe) even though there is no impact.
+This series implements the third option, by adding a qcom,rpm-msg-ram
+property, which has been used for some drivers poking into this region
+before. Bindings ABI compatibility is preserved through keeping the
+"normal" (a.k.a read the reg property and map that region) way of
+passing the register space.
 
-No, you should return false of course as we are *not* in host mode as I
-mentioned above.
+Example representation with this patchset:
 
-Johan
+/ {
+	[...]
+
+	mpm: interrupt-controller {
+		compatible = "qcom,mpm";
+		qcom,rpm-msg-ram = <&apss_mpm>;
+		[...]
+	};
+
+	[...]
+
+	soc: soc@0 {
+		[...]
+
+		rpm_msg_ram: sram@45f0000 {
+			compatible = "qcom,rpm-msg-ram", "mmio-sram";
+			reg = <0 0x045f0000 0 0x7000>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0 0x0 0x045f0000 0x7000>;
+
+			apss_mpm: sram@1b8 {
+				reg = <0x1b8 0x48>;
+			};
+		};
+	};
+};
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      dt-bindings: interrupt-controller: mpm: Allow passing reg through phandle
+      irqchip: irq-qcom-mpm: Support passing a slice of SRAM as reg space
+
+ .../bindings/interrupt-controller/qcom,mpm.yaml    |  6 ++++-
+ drivers/irqchip/irq-qcom-mpm.c                     | 30 ++++++++++++++++++----
+ 2 files changed, 30 insertions(+), 6 deletions(-)
+---
+base-commit: a6faf7ea9fcb7267d06116d4188947f26e00e57e
+change-id: 20230328-topic-msgram_mpm-c688be3bc294
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
