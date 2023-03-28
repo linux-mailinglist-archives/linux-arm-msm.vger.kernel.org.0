@@ -2,80 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C66096CCDBA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 00:55:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1C886CCDE4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 01:09:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229793AbjC1WzY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 18:55:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51314 "EHLO
+        id S229804AbjC1XJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 19:09:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229708AbjC1WzX (ORCPT
+        with ESMTP id S229775AbjC1XJc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 18:55:23 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B1452100;
-        Tue, 28 Mar 2023 15:55:22 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32SMf6hZ028467;
-        Tue, 28 Mar 2023 22:55:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=zD6tIgThhRSFsnYd5P+4y30mqU1VvCsggBrYEeNNsMQ=;
- b=MSmpX/FmMcqVVOcOIfZm2dQ5LX42PM8NAAG8Vyad1NXrKFvANiEaKplJ2jJShi93e0BA
- GAHr8QFeQo35zsUyTdHpr6AyecChFaG8LlKtnH0U5odfBS4jzG1iI0bh7d5ZDZpMOOa8
- hChUMXGlFq+Zpk5V+4E2AJfE4zMrsGyXdkqC+nHyD+jZzvG+k8hCoeOzgoLGsvfkAKF/
- AHszaIR2qMURp/15f9PvTaJWsWGh5bJB+GMtVFl2biSz7Z12ia/IlzNmCrJMF1pMs2kA
- jFvvAW8kBb/tqQj18TU56rN87yvycPLyGHYQFm866mpAL0sFedtY0I9R1phL0CeepPpY wQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pkbmyvg5f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 28 Mar 2023 22:55:19 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32SMtIkF020043
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 28 Mar 2023 22:55:18 GMT
-Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 28 Mar
- 2023 15:55:18 -0700
-Subject: Re: [PATCH 1/2] rpmsg: glink: Propagate TX failures in intentless
- mode as well
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230327144153.3133425-1-quic_bjorande@quicinc.com>
- <20230327144153.3133425-2-quic_bjorande@quicinc.com>
-From:   Chris Lew <quic_clew@quicinc.com>
-Message-ID: <026912e3-4479-415e-96db-abbb2f533599@quicinc.com>
-Date:   Tue, 28 Mar 2023 15:55:17 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Tue, 28 Mar 2023 19:09:32 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA7B02109;
+        Tue, 28 Mar 2023 16:09:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+        Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+        Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+        bh=TtAWW+rcRDNEtRaY+5PARKcs7L5jYJy9Gvn5idod+V8=; b=T6qhdSfj75BjrmtNtqPQemMtTQ
+        6UA+i8rTanrpWdnc/mgCBuuhh7AwBmjkiGbms4BD9FOndFiKjb6kA5WgXVXSgkpKwB2+sShQt/kb1
+        XTRd7QAODPJSm656Vxq5sS1YT8vkGmqQ+sQB80d8+KKwLy7Hzee6ULrbQw7ggnyRnjvLPJXlXH4RW
+        xcaosmceEBhUVbuYQQAO5urm238UFDRppDvfp2GJcnUBRTNDjWiFwjPTqSphvfRL57un/8zbOJKpc
+        J4TriE2hqlL8eDhplEcKNh3khT12GSBI4NlmbSDLWMfCwdy3+iqBvLEGnYyRNFQlNnzTVC5x2woNL
+        c4Fbj3+A==;
+Received: from [2601:1c2:980:9ec0::2764]
+        by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
+        id 1phIRP-00G5fs-2c;
+        Tue, 28 Mar 2023 23:09:23 +0000
+Message-ID: <988d7f44-4c4a-982a-90a9-86fc10f2fc15@infradead.org>
+Date:   Tue, 28 Mar 2023 16:09:22 -0700
 MIME-Version: 1.0
-In-Reply-To: <20230327144153.3133425-2-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH] drm/msm/a6xx: add CONFIG_PM dependency
+To:     Arnd Bergmann <arnd@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230324095502.3289094-1-arnd@kernel.org>
 Content-Language: en-US
+From:   Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <20230324095502.3289094-1-arnd@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: l6vWVoHXxDvFoxA5DIhySnmzoKxsZ2QQ
-X-Proofpoint-GUID: l6vWVoHXxDvFoxA5DIhySnmzoKxsZ2QQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-24_11,2023-03-28_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
- lowpriorityscore=0 impostorscore=0 spamscore=0 adultscore=0 bulkscore=0
- mlxlogscore=999 mlxscore=0 suspectscore=0 phishscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303280178
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,55 +63,49 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 3/27/2023 7:41 AM, Bjorn Andersson wrote:
-> As support for splitting transmision over several messages using
-> TX_DATA_CONT was introduced it does not immediately return the return
-> value of qcom_glink_tx().
+On 3/24/23 02:54, Arnd Bergmann wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
 > 
-> The result is that in the intentless case (i.e. intent == NULL), the
-> code will continue to send all additional chunks. This is wasteful, and
-> it's possible that the send operation could incorrectly indicate
-> success, if the last chunk fits in the TX fifo.
+> Selecting CONFIG_PM_GENERIC_DOMAINS causes a build failure when CONFIG_PM
+> is not enabled:
 > 
-> Fix the condition.
+> WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS
+>   Depends on [n]: PM [=n]
+>   Selected by [m]:
+>   - DRM_MSM [=m] && HAS_IOMEM [=y] && DRM [=m] && (ARCH_QCOM [=y] || SOC_IMX5 || COMPILE_TEST [=y]) && COMMON_CLK [=y] && IOMMU_SUPPORT [=y] && (QCOM_OCMEM [=y] || QCOM_OCMEM [=y]=n) && (QCOM_LLCC [=n] || QCOM_LLCC [=n]=n) && (QCOM_COMMAND_DB [=y] || QCOM_COMMAND_DB [=y]=n) && DEVFREQ_GOV_SIMPLE_ONDEMAND [=y]
 > 
-> Fixes: 8956927faed3 ("rpmsg: glink: Add TX_DATA_CONT command while sending")
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> drivers/base/power/domain.c:654:13: error: use of undeclared identifier 'pm_wq'
+>         queue_work(pm_wq, &genpd->power_off_work);
+>                    ^
+> drivers/base/power/domain.c:853:26: error: no member named 'ignore_children' in 'struct dev_pm_info'
+>                 if (!dev || dev->power.ignore_children)
+>                             ~~~~~~~~~~ ^
+> 
+> Fixes: c11fa1204fe9 ("drm/msm/a6xx: Use genpd notifier to ensure cx-gdsc collapse")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+
+
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+
+Thanks.
+
 > ---
-
-s/transmision/transmission
-
-Reviewed-by: Chris Lew <quic_clew@quicinc.com>
-
->   drivers/rpmsg/qcom_glink_native.c | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
+>  drivers/gpu/drm/msm/Kconfig | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-> index 01d2805fe30f..62634d020d13 100644
-> --- a/drivers/rpmsg/qcom_glink_native.c
-> +++ b/drivers/rpmsg/qcom_glink_native.c
-> @@ -1356,8 +1356,9 @@ static int __qcom_glink_send(struct glink_channel *channel,
->   	ret = qcom_glink_tx(glink, &req, sizeof(req), data, chunk_size, wait);
->   
->   	/* Mark intent available if we failed */
-> -	if (ret && intent) {
-> -		intent->in_use = false;
-> +	if (ret) {
-> +		if (intent)
-> +			intent->in_use = false;
->   		return ret;
->   	}
->   
-> @@ -1378,8 +1379,9 @@ static int __qcom_glink_send(struct glink_channel *channel,
->   				    chunk_size, wait);
->   
->   		/* Mark intent available if we failed */
-> -		if (ret && intent) {
-> -			intent->in_use = false;
-> +		if (ret) {
-> +			if (intent)
-> +				intent->in_use = false;
->   			break;
->   		}
->   	}
-> 
+> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+> index 1c417ba53b5b..85f5ab1d552c 100644
+> --- a/drivers/gpu/drm/msm/Kconfig
+> +++ b/drivers/gpu/drm/msm/Kconfig
+> @@ -9,6 +9,7 @@ config DRM_MSM
+>  	depends on QCOM_OCMEM || QCOM_OCMEM=n
+>  	depends on QCOM_LLCC || QCOM_LLCC=n
+>  	depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=n
+> +	depends on PM
+>  	select IOMMU_IO_PGTABLE
+>  	select QCOM_MDT_LOADER if ARCH_QCOM
+>  	select REGULATOR
+
+-- 
+~Randy
