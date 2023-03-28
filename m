@@ -2,63 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E54026CC8AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 19:00:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 932306CC977
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 19:42:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229985AbjC1Q76 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 12:59:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45930 "EHLO
+        id S229589AbjC1RmE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 13:42:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbjC1Q75 (ORCPT
+        with ESMTP id S229604AbjC1RmD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 12:59:57 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22DCC9ECF;
-        Tue, 28 Mar 2023 09:59:57 -0700 (PDT)
+        Tue, 28 Mar 2023 13:42:03 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D67F4E06B;
+        Tue, 28 Mar 2023 10:42:02 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A129D618C7;
-        Tue, 28 Mar 2023 16:59:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE429C433EF;
-        Tue, 28 Mar 2023 16:59:55 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6C0776181B;
+        Tue, 28 Mar 2023 17:42:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BFDC433EF;
+        Tue, 28 Mar 2023 17:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680022796;
-        bh=5JSnUi0WPwXlNlLr2PLygtWZxa1SAMU3aE2taoy2XJ8=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=pG0CxzYc2iEAdKBPDBguoug0WhMNqYnXGWZ0vBpoy+o6qPYkfq/te1U0HzBubmaQY
-         Qc8D+RBVRs1+W1SNXJeXhNKBBI9XldesJIStEjChrgsxA4gbMXGDDthNbKmnJm75t/
-         rbiuw9xpcFMA4l9jMzA9x3O4cQgTvHfYJBzKd5tHBS2YxTcl56WOqzpvinvMcLQ6QR
-         ZZZNr2QWvUVX9A5g2OoAj4eUUfQqtuziuEXpF+e38ZnF2Wj0hWFv1NPx+LQ0f+d+u7
-         6i1mCDUrzUQp9f8kbWzJZ1qdkaw6r3WKLHPJQlx2L24KbYY/2fUPQel4IbrAAIC++G
-         gXkxDvMHR41aw==
-Message-ID: <1cfd584a48e1bb453596948a0187ecf1.sboyd@kernel.org>
+        s=k20201202; t=1680025321;
+        bh=2SMsf25Os8n/Nh4s1s1UZQy+WrqVW8lL7AF37NLGxhE=;
+        h=In-Reply-To:References:Subject:From:To:Date:From;
+        b=cZIk5LMM/eQRh5i9MUcZzAdXLzyqXmMMnSXdA1QzSryyEEhco5byULYBGCPq7h+c6
+         9Wh2FIUizPRVV9RfkIs6YelU4xYJlYjQSqyOKIVKxE15K6pakoOh8msL5zVC0zQImk
+         sGBi4GXpIcK7zkmG3ZwZ1+xCN4m4PURdChHj1AbOnKh1hJ1iuKk6c0z0fJ16p2jy09
+         ImHzGJ1tjz2RpJYb8LYLDr3USGDTgEswDxXbDoENWzS74n4RzfWGJt96QeSHNlEVfa
+         nSfUYlp/4oc9htfgTAdKO/+ZzmflTnsZYVcIKVuCIqnK4e6Kn0BYm04HuyGkPHwogJ
+         mBGHNemAn0ErA==
+Message-ID: <5c89937f7b208e872af58636933194a0.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <2484518b-bcf6-7fb1-6bfb-b96b3682397b@quicinc.com>
-References: <20230327132718.573-1-quic_devipriy@quicinc.com> <20230327132718.573-3-quic_devipriy@quicinc.com> <0af15083921c5d3c89392209654f0c9b.sboyd@kernel.org> <2484518b-bcf6-7fb1-6bfb-b96b3682397b@quicinc.com>
-Subject: Re: [PATCH V10 2/4] clk: qcom: Add Global Clock Controller driver for IPQ9574
+In-Reply-To: <fb9712fc-d103-769c-2ed7-51a08bbe76b2@quicinc.com>
+References: <20230327163249.1081824-1-quic_mohs@quicinc.com> <b347395dd736194ae9392f2f6ea450b0.sboyd@kernel.org> <fb9712fc-d103-769c-2ed7-51a08bbe76b2@quicinc.com>
+Subject: Re: [PATCH v1 0/4] Remove the qdsp6ss register from lpasscc
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, arnd@arndb.de, broonie@kernel.org,
-        catalin.marinas@arm.com, devicetree@vger.kernel.org,
-        dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, linus.walleij@linaro.org,
-        linux-arm-kernel@lists.infradead.org,
+To:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, broonie@kernel.org,
+        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        marcel.ziswiler@toradex.com, mturquette@baylibre.com,
-        nfraprado@collabora.com, p.zabel@pengutronix.de,
-        robh+dt@kernel.org, shawnguo@kernel.org, will@kernel.org
-Date:   Tue, 28 Mar 2023 09:59:53 -0700
+        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
+        quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
+        quic_visr@quicinc.com, robh+dt@kernel.org, swboyd@chromium.org
+Date:   Tue, 28 Mar 2023 10:41:59 -0700
 User-Agent: alot/0.10
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,35 +58,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Devi Priya (2023-03-27 23:15:35)
+Quoting Mohammad Rafi Shaik (2023-03-27 23:02:38)
 >=20
+> On 3/27/2023 11:11 PM, Stephen Boyd wrote:
+> > Quoting Mohammad Rafi Shaik (2023-03-27 09:32:45)
+> >> This patch set is to remove the qdsp6ss register from lpasscc to
+> >> resolve memory conflict's between lpascc and ADSP remoteproc driver.
+> > Is this related to the other patch series[1] ("[PATCH v9 0/4] Add resets
+> > for ADSP based audio clock controller driver")? Does it supersede those?
+> Thanks for comment,
 >=20
-> On 3/27/2023 10:18 PM, Stephen Boyd wrote:
-> > Quoting Devi Priya (2023-03-27 06:27:16)
-> >> diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq=
-9574.c
-> >> new file mode 100644
-> >> index 000000000000..b2a2d618a5ec
-> >> --- /dev/null
-> >> +++ b/drivers/clk/qcom/gcc-ipq9574.c
-> >> @@ -0,0 +1,4248 @@
-> >> +// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> >> +/*
-> >> + * Copyright (c) 2023 The Linux Foundation. All rights reserved.
-> >> + */
-> >> +
-> >> +#include <linux/kernel.h>
-> >> +#include <linux/err.h>
-> >> +#include <linux/platform_device.h>
-> >> +#include <linux/module.h>
-> >> +#include <linux/of.h>
-> >> +#include <linux/of_device.h>
-> >=20
-> > What is this include for?
-> This include actually don't seem necessary. But, I see that of.h &=20
-> platform_device.h are being included via of_device.h
-> Would you suggest to drop of_device.h or the other two
-> headers instead?
+> yes, its superseded form patch series[1] ("[PATCH v9 0/4] Add resets
+> for ADSP based audio clock controller driver") which is required many
+> changes.
+>=20
+> As the qdsp6ss clocks are being enabled in remoteproc driver,
+> the qdsp6ss not required in lpasscc node.
+>=20
+> For audioreach solution required to create the remoteproc_adsp
+> device tree node with base address 0x3000000 for remoteproc driver,
+> as already this address being used in lpasscc node it's causing memory
+> conflict.
 
-Include headers for things you use. Don't try to omit includes if you
-see that a header includes other headers that you're using.
+Ok. Please add the details of superseded patch series to the cover
+letter. It helps us understand what to do with the other patches on the
+list.
