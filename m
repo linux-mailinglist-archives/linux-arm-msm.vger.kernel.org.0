@@ -2,73 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 935BB6CCD59
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 00:38:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 193DB6CCD5E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 00:38:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229695AbjC1WiM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 18:38:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35414 "EHLO
+        id S229719AbjC1WiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 18:38:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbjC1WiL (ORCPT
+        with ESMTP id S229720AbjC1WiM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 18:38:11 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 958BC2D48
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 15:38:05 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id by8so14148723ljb.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 15:38:05 -0700 (PDT)
+        Tue, 28 Mar 2023 18:38:12 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CBB52D52
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 15:38:06 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id y15so17771171lfa.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 15:38:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1680043084;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WtFbj44YPSQR/4fSgUx5IndQxVE/oG1HTaVeharokM4=;
-        b=D0zPtyHkNeoJ9RqKP32Oa+YqC5WmMueAOAc4YAhJOMoxzbWyFjeNQmAlnlTMNYOaM+
-         QWmtYwYrj6NIkNHIQT0FojJo7bjonvqDOYUujM+67t9y0QwXhsWISlY3BVLiXgTBzvUC
-         v9G4fqliEJurzIFqkQJLmN8jA03v5QvW8+Y7CjOUWFZ7weQPTlWpYRoShXQ42r/q2mNq
-         InLjLLAvUs36JR/CKbwLSL4vPp+R0TJVKTtuvcWYOcHGBk1EO8YlG6gAZIwlyLVJhs3k
-         rMlBy4Wj8Tv8cOuGiWgZLl+6HLtn7zOREh6JV2a6Mu38+ELZsSnGiGK81mNxOlK6DW8C
-         D/Pw==
+        bh=5zCOYrUpTdIxhDlpcMXELt7+2xWD7OjZuaR8tKINgR8=;
+        b=RDhFHGCslj8gOoK8MCER9prpFCD3ZQSxZMp/oLUIQplkptA4f19xKGXghbYQ68Zl3a
+         bHhlualsHGYJdf55TbPE6JaNVB6iDsPSh7U8DCLhHOs0j9IyauaEA3NaUR0V+M+73U7+
+         IrE4wYH3yY/g+vfwfBVZ8eadGVOGMo6h04st5+lbHnoZTfj5gBfr9uB1XJ7/CJ3RKc93
+         8s1c+Y07FpPYVAwnGsTgEhYQVnGjyV5EGYUeQS809RW5MEoFxRP3foYoaIPycLDOY4TX
+         4Vy7omzd9LLDHLRquFa7dgbMiqmLoKS/t9BX3yLzG85sO6x83IupFRwfahwE8qhdX5sy
+         +5pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112; t=1680043084;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WtFbj44YPSQR/4fSgUx5IndQxVE/oG1HTaVeharokM4=;
-        b=IDeMeflIKpiUCOC6tJP86TuO4QNjiKGMztI+dahBAIcKCV7n0gO5/793Bx3O20qyHv
-         nDIzvSs2L8ZuUWKQ6VXtb2/RzjMmrTACJz8J7opSRjGpARyPH0bCjl+e1Q7TFzKYIc89
-         RICXLWVeEGXhprzQCbTWV1OWutodO53sW7glya1CHnDw3H3Xp8WypoC8m1ingjmDQ9CO
-         mrFV60bxUL/T6vS0ZyVKX91KIa0aGRCtm852drEDtkv9Fc37g3V02mQCl16Hc4q9sEeU
-         vzmdWHmUxygPIZpvXXIDqw7xgRf7Ai1DTxaT778b6MGPx4/KTUFGa8wlF1sN4CWTJQhx
-         pe5Q==
-X-Gm-Message-State: AAQBX9fc3kR3S3I2FfICRLWx+Am4FzvL+AzOeBnWhASFR8udfxqux1DU
-        ztJonOZvagjUBFw0sseO20FSMA==
-X-Google-Smtp-Source: AKy350ZR+mT4CfQ2Ri1gunD53Flr5HdyR228sB0xZCr0s2ILhY5VdzrYf4HYOKAfKXHACX/9j1SYRg==
-X-Received: by 2002:a2e:82d7:0:b0:298:9e64:c916 with SMTP id n23-20020a2e82d7000000b002989e64c916mr4837634ljh.17.1680043083914;
-        Tue, 28 Mar 2023 15:38:03 -0700 (PDT)
+        bh=5zCOYrUpTdIxhDlpcMXELt7+2xWD7OjZuaR8tKINgR8=;
+        b=pAVSRCJy9zbU/f6Jxa1e+37yGm+q2tm5LPcyp1SHKSslI1u2OEB3eRI1K2pbPf8geN
+         uXK4znOeNpQ34PIYu2BmzeHvAhxDPT00b8XdcDTvguFTmOrfdXGnDjXBUMnXvB7kD4Yt
+         57+Xgq+RT5BHlphvIwuOA6BMpArDfAbeRImEnelysGDxuEq6cAcdVGqTBKja0itACZyI
+         p2KmZnfO7Q0O8nnDcdFFY/xfizdi9JL7ygWjF0caUsrfDfsm+23uU1z0vD8RLkO1Wh+O
+         8dpgcygQsNKNlTt9kxIq78b3cxMaxXZ2cBpmR7duS2gR04xClIR7jN+CD2uD5kL4zHHi
+         Z7gA==
+X-Gm-Message-State: AAQBX9foRtJsLuLld9W0qKSrYIcL64ZaH3AMNk6X1xfpxUlmYeGW6gsz
+        AawLM37QkpW/wy43uGBGw0YoDw==
+X-Google-Smtp-Source: AKy350Yni7yE8EMNjcQgNBhUoFPCJ9CFPDV7t7eP3GuMk/5HRg8DbkzB8vdZFxmKhLP1H7PbaxGlNw==
+X-Received: by 2002:a05:6512:950:b0:4db:28ce:e600 with SMTP id u16-20020a056512095000b004db28cee600mr3829031lft.1.1680043084695;
+        Tue, 28 Mar 2023 15:38:04 -0700 (PDT)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id t22-20020a2e9d16000000b002934d555783sm5199522lji.6.2023.03.28.15.38.03
+        by smtp.gmail.com with ESMTPSA id t22-20020a2e9d16000000b002934d555783sm5199522lji.6.2023.03.28.15.38.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Mar 2023 15:38:03 -0700 (PDT)
+        Tue, 28 Mar 2023 15:38:04 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@gmail.com>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] drm/msm/dp: Clean up handling of DP AUX interrupts
-Date:   Wed, 29 Mar 2023 01:37:47 +0300
-Message-Id: <168004255468.1060915.8365675966800695901.b4-ty@linaro.org>
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 0/3] drm/msm/mdss: rework UBWC setup
+Date:   Wed, 29 Mar 2023 01:37:48 +0300
+Message-Id: <168004305307.1061932.15557156588157558501.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230126170745.v2.1.I90ffed3ddd21e818ae534f820cb4d6d8638859ab@changeid>
-References: <20230126170745.v2.1.I90ffed3ddd21e818ae534f820cb4d6d8638859ab@changeid>
+In-Reply-To: <20230118010428.1671443-1-dmitry.baryshkov@linaro.org>
+References: <20230118010428.1671443-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -82,28 +79,25 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Thu, 26 Jan 2023 17:09:12 -0800, Douglas Anderson wrote:
-> The DP AUX interrupt handling was a bit of a mess.
-> * There were two functions (one for "native" transfers and one for
->   "i2c" transfers) that were quite similar. It was hard to say how
->   many of the differences between the two functions were on purpose
->   and how many of them were just an accident of how they were coded.
-> * Each function sometimes used "else if" to test for error bits and
->   sometimes didn't and again it was hard to say if this was on purpose
->   or just an accident.
-> * The two functions wouldn't notice whether "unknown" bits were
->   set. For instance, there seems to be a bit "DP_INTR_PLL_UNLOCKED"
->   and if it was set there would be no indication.
-> * The two functions wouldn't notice if more than one error was set.
+On Wed, 18 Jan 2023 03:04:25 +0200, Dmitry Baryshkov wrote:
+> The commit 92bab9142456 ("drm/msm: less magic numbers in
+> msm_mdss_enable") reworked the static UBWC setup to replace magic
+> numbers with calulating written values from the SoC/device parameters.
+> This simplified adding new platforms.
+> However I did not estimate that the values would still be cryptic and
+> would be C&P-sted instead of being determined from the vendor DT. Some
+> of the platform (sc8180x) completely missed this setup step.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] drm/msm/dp: Clean up handling of DP AUX interrupts
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/9dd5895a5687
-[2/2] drm/msm/dp: Return IRQ_NONE for unhandled interrupts
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/f185c87fa119
+[1/3] drm/msm/mdss: convert UBWC setup to use match data
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/f4abcfab7667
+[2/3] drm/msm/mdss: add data for sc8180xp
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/2c3415835aaf
+[3/3] drm/msm/mdss: add the sdm845 data for completeness
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/4b411abf95f9
 
 Best regards,
 -- 
