@@ -2,104 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AEE016CBFC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 14:52:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 654C66CBFF6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 14:57:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232921AbjC1Mv7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 08:51:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41980 "EHLO
+        id S232523AbjC1M5b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 08:57:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232476AbjC1Mvg (ORCPT
+        with ESMTP id S232654AbjC1M50 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 08:51:36 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D7C3AF34
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 05:51:00 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id o20so9505144ljp.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 05:51:00 -0700 (PDT)
+        Tue, 28 Mar 2023 08:57:26 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95387A5D0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 05:57:16 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id p3-20020a17090a74c300b0023f69bc7a68so12375448pjl.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 05:57:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680007858;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oPp+3nUFhZ+YccWkOIH56CCwebX/zcxyGIO1u7xt7XA=;
-        b=UMUoBtzi8Lljz2Sgb34U5+xP6Cu5rQuIeiaCyv2PE0Qy2pb0JDEUpuRrub0zyOxEpG
-         Cz6ta8fT083O124Iuv8hNxLEjJEaTEwySKZRBOCj4XCsSnnCQsJJd1SbR1KDebBCx/UD
-         W8Ju0NAR93gKRNTOFefaA1HYM9rkGhZPYuap7A75MkKBehF60/Cc+O93aT6FvX6pfPzb
-         3i76DO71uzn07NOuoPLptIeTq79g+lpO7aYaikD/lxpuEbfGnlTogT3qhMT1dSSlSfbO
-         4HAwb96diIMyQTLi/KEOP+kT7Khau+oMMDYhtMZgdTEZAduqhqmlh81XdhL6BnLxG/9b
-         7Fmw==
+        d=linaro.org; s=google; t=1680008236;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Cnqt2KDpfFtGxo7NM9abnZ0QYf18epNb8nX+e0XiQcs=;
+        b=G3k1IxoPlSK6oA51ZOfIJU5whId5sRD0rPOtk8SaMishf5NxCLleEHV5Hi3w+FMrOP
+         OyCCydwF88MI9MSy4mCtjL99rJO1exsIVRW4ZP/gTW9GgjS84o21+/dOG16RM7XlfuY1
+         wgfLmAVZ3yR0nxsjnISSfX1jp97tggj5+U5ZFST7391fYTDuR0PaWjRux/lKM8qnT26i
+         SICXDWLO4m+dcjhTbSKPrEmqIhEyAnOLrs6Qy91vjghlC/iWA7lb7QP9nm0LXzRHhciE
+         laIYrtm7lp98M8qJMY/74DhXA/GKlz1oMsf+NBXv9WedFzikQmkpaYuYty0fED5LGrGP
+         gQHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680007858;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1680008236;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oPp+3nUFhZ+YccWkOIH56CCwebX/zcxyGIO1u7xt7XA=;
-        b=Rio3qGXYa5Mf49dDxJiP4Wm3m3Z3D2Wo6ImFayNSm6ofk+JXTRshMLuccdUXKTDC9o
-         qozuNrvUJExf0q+B8KyFUsWeUKj1lJcbfZUOmYLDDcxAYCCBVpyBYpdSTSs5PpULjEO7
-         U2iMmH3w87zdQ3ASyePXCAr3ZveMPzOiz/gtEfJDQtn7vZ3SkQ9//TkUH1Wke3wrcOv/
-         In6r9uq0Yt+AP54G8J2t3FcrclRkTEPZR7mEgEfQfzLquScjF8Od2B3TqyIt3T5OPBj/
-         imR+3HoVO6iqr/ZnS6Y5p5MkVdmmzCzaf0Hw1ipJ2DCZNxKD13se1GuYPbbZMsOZyKoJ
-         VX/w==
-X-Gm-Message-State: AAQBX9d7haYgHB8rRR2v33Nh9vwDb3JSvJTmUhm59ilzOuNnUIU++jNE
-        2NBUDCynrVj1TRlRn8rQGBElJg==
-X-Google-Smtp-Source: AKy350Yfu+WCDB8OJ9f2IMPSw0LR1xCUAsN/WKbV1RchlDNRGKaVMzSWeu/KVaJJcuMAw7GWBZ8XcQ==
-X-Received: by 2002:a2e:9d0c:0:b0:29e:4fa5:1708 with SMTP id t12-20020a2e9d0c000000b0029e4fa51708mr4844998lji.3.1680007858273;
-        Tue, 28 Mar 2023 05:50:58 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id y2-20020a2eb002000000b0029b32a40934sm4666781ljk.113.2023.03.28.05.50.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Mar 2023 05:50:57 -0700 (PDT)
-Message-ID: <40178a1b-4a97-8f18-74ca-ccb1fc7403d4@linaro.org>
-Date:   Tue, 28 Mar 2023 15:50:57 +0300
+        bh=Cnqt2KDpfFtGxo7NM9abnZ0QYf18epNb8nX+e0XiQcs=;
+        b=Yraw3EeiMkIAKFbCpOep3VJdlsC1O7tfsSxvp/DDv6XuBZJjGCF8ZB1dg5vkdxWYPd
+         u8y8f6Ife9tZKzYqXh3e6z5G42K4e0EFFPViVTW+72Dez4MANTL4Ic4JCR2cBjeoEmvX
+         aHk4SkHioSaOtkN3UzQtadBo6sZMwXf/pb0lpk9IA+Djb2pxCSV0Er2fQc/GJMTcUJ+U
+         ukh8hMya8igF7xVqhBFlyhIMTIMNzgx0J2QXcLa+x6oIKQphkeNE8bI2nPJhrOJaJ/QM
+         7f7Y5uCQRWo3YetQAJUt/sPqonYmB/m9Kmtx89lYgl9oo+OuUo6aj8G40LfZrUkCg0vb
+         u7gA==
+X-Gm-Message-State: AAQBX9dIFL7q+RfjjenqvyubO1hpOxj663sXgGSodRdAGNcQZqluSJ78
+        fiQxVLt0JdSZLVvObUkJFjbt
+X-Google-Smtp-Source: AKy350aBYPPthGJS7n5GXGjAxdKZ0jVz1I0ANqkUPZ4irdmozlvd1uosOJ+ub/RO5g/YvZvQLzAx1w==
+X-Received: by 2002:a17:902:e882:b0:1a1:f413:70b1 with SMTP id w2-20020a170902e88200b001a1f41370b1mr19091817plg.18.1680008235878;
+        Tue, 28 Mar 2023 05:57:15 -0700 (PDT)
+Received: from thinkpad ([117.202.191.80])
+        by smtp.gmail.com with ESMTPSA id u4-20020a170902b28400b001a06b33923bsm21111938plr.164.2023.03.28.05.57.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Mar 2023 05:57:15 -0700 (PDT)
+Date:   Tue, 28 Mar 2023 18:27:05 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     andersson@kernel.org, Thinh.Nguyen@synopsys.com,
+        gregkh@linuxfoundation.org, mathias.nyman@intel.com,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 5/5] usb: dwc3: qcom: Allow runtime PM
+Message-ID: <20230328125705.GG5695@thinkpad>
+References: <20230325165217.31069-1-manivannan.sadhasivam@linaro.org>
+ <20230325165217.31069-6-manivannan.sadhasivam@linaro.org>
+ <ZCK3fGkgowvAd6Dw@hovoldconsulting.com>
+ <20230328100501.GD5695@thinkpad>
+ <ZCLbCJi80AKyVgnq@hovoldconsulting.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 08/10] drm/msm: fix workqueue leak on bind errors
-Content-Language: en-GB
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20230306100722.28485-1-johan+linaro@kernel.org>
- <20230306100722.28485-9-johan+linaro@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230306100722.28485-9-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZCLbCJi80AKyVgnq@hovoldconsulting.com>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/03/2023 12:07, Johan Hovold wrote:
-> Make sure to destroy the workqueue also in case of early errors during
-> bind (e.g. a subcomponent failing to bind).
+On Tue, Mar 28, 2023 at 02:18:16PM +0200, Johan Hovold wrote:
+> On Tue, Mar 28, 2023 at 03:35:01PM +0530, Manivannan Sadhasivam wrote:
+> > On Tue, Mar 28, 2023 at 11:46:36AM +0200, Johan Hovold wrote:
+> > > On Sat, Mar 25, 2023 at 10:22:17PM +0530, Manivannan Sadhasivam wrote:
+> > > > dwc3-qcom driver is capable of doing runtime PM on its own, but currently
+> > > > it requires userspace intervention to enable it. But there is no harm in
+> > > > letting the driver to enable runtime PM on its own. So let's get rid of the
+> > > > "pm_runtime_forbid()" and make sure that the dependency is maintained with
+> > > > child devices using "pm_suspend_ignore_children(dev, false)".
+> > > 
+> > > Well, the potential harm is that these paths have hardly been tested so
+> > > enabling it by default is a risk (e.g. as you noticed when trying to
+> > > enable this by default). And especially if we don't address the layering
+> > > violations first.
+> > > 
+> > 
+> > I certainly tested this on a couple of boards with host and gadget mode and
+> > noticed no issue (except one issue noticed by Steev on a docking station with
+> > display but that should be related to orientation switch).
+> > 
+> > Even if we allow runtime PM on this driver, still userspace needs to enable it
+> > for dwc3 and xhci drivers. So this essentially reduces one step in that process
+> > if someone tries to enable runtime PM for usb intentionally. So I don't forsee a
+> > potential harm here.
 > 
-> Since commit c3b790ea07a1 ("drm: Manage drm_mode_config_init with
-> drmm_") the mode config will be freed when the drm device is released
-> also when using the legacy interface, but add an explicit cleanup for
-> consistency and to facilitate backporting.
+> Well this whole driver is a mess so I don't have any problem imagining
+> ways in which things can break. ;)
 > 
-> Fixes: 060530f1ea67 ("drm/msm: use componentised device support")
-> Cc: stable@vger.kernel.org      # 3.15
-> Cc: Rob Clark <robdclark@gmail.com>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->   drivers/gpu/drm/msm/msm_drv.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+> > > > Also during remove(), the device needs to be waken up first if it was
+> > > > runtime suspended. Finally, pm_runtime_allow() can be removed.
+> > > > 
+> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > ---
+> > > >  drivers/usb/dwc3/dwc3-qcom.c | 5 +++--
+> > > >  1 file changed, 3 insertions(+), 2 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> > > > index f1059dfcb0e8..5f26bb66274f 100644
+> > > > --- a/drivers/usb/dwc3/dwc3-qcom.c
+> > > > +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> > > > @@ -920,7 +920,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+> > > >  	qcom->is_suspended = false;
+> > > >  	pm_runtime_set_active(dev);
+> > > >  	pm_runtime_enable(dev);
+> > > > -	pm_runtime_forbid(dev);
+> > > > +	pm_suspend_ignore_children(dev, false);
+> > > 
+> > > There's no need to explicitly disable ignore-children as that is the
+> > > default.
+> > > 
+> > 
+> > Other dwc drivers were doing it, so I thought someone (maintainer) wanted to
+> > explicitly disable ignore_children. But if that's not the case, I can remove it.
+> 
+> Yeah, please remove it. I doubt these runtime pm implementations have
+> gotten much review.
+> 
+> Note how several dwc3 glue drivers just do an unconditional get in
+> probe(), which means that these paths are probably never exercised at
+> all and effectively amounts to that pm_runtime_forbid() you are removing
+> here.
+> 
+> Probably there to tick off "runtime pm" on some internal project
+> manager's list of "features".
+> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Agree.
+
+> > > >  	return 0;
+> > > >  
+> > > > @@ -948,6 +948,8 @@ static int dwc3_qcom_remove(struct platform_device *pdev)
+> > > >  	struct device *dev = &pdev->dev;
+> > > >  	int i;
+> > > >  
+> > > > +	pm_runtime_get_sync(dev);
+> > > 
+> > > This call needs to be balanced. But this is a fix for a bug in the
+> > > current implementation that should go in a separate patch.
+> > > 
+> > 
+> > Ok. For balancing I could add pm_runtime_put_noidle() before pm_runtime_disable.
+> 
+> You should do it after disabling runtime pm.
+> 
+
+May I know why?
+
+Thanks,
+Mani
+
+> > > > +
+> > > >  	device_remove_software_node(&qcom->dwc3->dev);
+> > > >  	of_platform_depopulate(dev);
+> > > >  
+> > > > @@ -960,7 +962,6 @@ static int dwc3_qcom_remove(struct platform_device *pdev)
+> > > >  	dwc3_qcom_interconnect_exit(qcom);
+> > > >  	reset_control_assert(qcom->resets);
+> > > >  
+> > > > -	pm_runtime_allow(dev);
+> > > >  	pm_runtime_disable(dev);
+> > > >  
+> > > >  	return 0;
+> 
+> Johan
 
 -- 
-With best wishes
-Dmitry
-
+மணிவண்ணன் சதாசிவம்
