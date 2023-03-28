@@ -2,122 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A7B36CC7E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 18:28:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6109E6CC843
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 18:41:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231244AbjC1Q17 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 12:27:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37344 "EHLO
+        id S232801AbjC1QlU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 12:41:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230510AbjC1Q16 (ORCPT
+        with ESMTP id S229806AbjC1QlT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 12:27:58 -0400
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE32C2114
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 09:27:55 -0700 (PDT)
-Received: by mail-il1-x129.google.com with SMTP id x6so6624640ile.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 09:27:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680020875;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HZlLwQPOb8jKLc2eNXMwjH3kvxbHnpPjAYHKfKgd7uA=;
-        b=Qtxy9wPVh5rqdceW19ctke0VfOWZMgcfxj6GjZesd+Pd9vieH4JM1u8sejWiGo2BxB
-         WT2qiUUZE5kv7/kYXwFQwDi4BKmVmod9Z9YoY39MubGBP8Q5PYUKTsm3hNjqW2YUXGYA
-         duSYZBfxSHuODhD80wW3+aRpuL4SPAxpIS14OOgD8i2lX/3R1dLLTMF4Ogyt/Zlo5WUw
-         5uLA613pQMPoqacuHvClHq8/2Wfmz+k+S/S5W1kNSQ1YwiRA5jb73pXIRyhITApxjZtv
-         jn40+ffjxJd3ZTS9WJ14eeJ9czJLt47Ks33FNntjUbmfUTxzMUYnFV+QJ5qQk+Sfw4XY
-         vJFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680020875;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HZlLwQPOb8jKLc2eNXMwjH3kvxbHnpPjAYHKfKgd7uA=;
-        b=xktw8jNsNR6xmniG/cL0FhJdkYeqb0QFtHUXrCyY91PfsPSPPMObqy8RU6uFcAImte
-         tH4S0sDbv9jjQNcrDhpDszWpnFBMusHP4X7wVDeXJSdxfWbiHGqLyd/5A9xcqANgpE6J
-         4WZELwG/Lc3gEyGYF6Pf9gSGkTK6+NWpABvitlq7P1bifSVCmNeMcRwIpk5Mbazn2x1H
-         9YunOh/cYmZc7eic7yM/+9Tvo48exyNwhd1A1AKdfmimGLyp1w5E8YK1rMX0m9MgdJeO
-         +/iXBO4i0D46uFzvobxEUStcUQ+q3fqB4I6aSYC2U1V/VlDN8Fc1rIgHEXP9J0K1ae/W
-         Ak+A==
-X-Gm-Message-State: AAQBX9fI5dPECeKzNzjjxQT9jH6YiLpk2mhinYXG7m/oUUFlJDUau/Ka
-        SIQnpG2t0yV0Nx4jOcXwnib6PA==
-X-Google-Smtp-Source: AKy350auGPR2rXe6tX4isI+DRP4rAbQtTgO5YEMWMmej3TcLoAd9VmkXAB1ub8WFQZAjitvbzGN9hw==
-X-Received: by 2002:a92:c8c6:0:b0:315:8bc0:1d85 with SMTP id c6-20020a92c8c6000000b003158bc01d85mr12800420ilq.11.1680020874908;
-        Tue, 28 Mar 2023 09:27:54 -0700 (PDT)
-Received: from localhost.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id g2-20020a92c7c2000000b003159b6d97d6sm8642814ilk.52.2023.03.28.09.27.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Mar 2023 09:27:54 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     quic_bjorande@quicinc.com, mbloch@nvidia.com,
-        caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
-        andersson@kernel.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH net v3] net: ipa: compute DMA pool size properly
-Date:   Tue, 28 Mar 2023 11:27:51 -0500
-Message-Id: <20230328162751.2861791-1-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Tue, 28 Mar 2023 12:41:19 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1A0A3C1D;
+        Tue, 28 Mar 2023 09:41:17 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 80651B81DBB;
+        Tue, 28 Mar 2023 16:41:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9D2C4339B;
+        Tue, 28 Mar 2023 16:41:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680021675;
+        bh=puCNRpwmEqJetbrROPl1Vggv5627DYtpnEIhZnhgltU=;
+        h=From:To:In-Reply-To:References:Subject:Date:From;
+        b=f8g1IPFus2nyhjwbRIIMFTOz+6qNnpSGGL2tYJOnKy8VQn9vCMe27AlwPqZPVRs+v
+         tJk0Xn1UVFqiiMlNDq24yvVFfeKa9CJL4p8aXWehSRCyWGAc/2Hpjt2b8JqDQXWH0Q
+         kv2BE1KIbe1Ay7Sepna3QVj20bwfoAP0bwMayGREvVzE0lUs9gi1KMsdbHbiHNED9X
+         xu43/VinAzcXE+y1/xclLIKQGI2DouaM2FiMeHP/wj8fxjx4eAWhiAL0yBNVx9wOt4
+         EIXyIG0g8OjglQDrOeIRlrYWoH53ZYmuNJNhTA7sxNkCYq734gonl4xma03uKIrjgu
+         dDhJ3kxW1p44A==
+From:   Mark Brown <broonie@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230313075551.17290-1-krzysztof.kozlowski@linaro.org>
+References: <20230313075445.17160-1-krzysztof.kozlowski@linaro.org>
+ <20230313075551.17290-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 0/9] ASoC: add audio digital codecs for Qualcomm
+ SM8550
+Message-Id: <168002167217.51443.3734911880079647013.b4-ty@kernel.org>
+Date:   Tue, 28 Mar 2023 17:41:12 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-bd1bf
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In gsi_trans_pool_init_dma(), the total size of a pool of memory
-used for DMA transactions is calculated.  However the calculation is
-done incorrectly.
+On Mon, 13 Mar 2023 08:55:51 +0100, Krzysztof Kozlowski wrote:
+> Dependencies
+> ============
+> For va-macro bindings:
+> https://lore.kernel.org/r/20221118071849.25506-2-srinivas.kandagatla@linaro.org
+> 
+> NOT a dependency
+> ================
+> The patchset can be applied independently of my previous fix:
+> https://lore.kernel.org/linux-arm-msm/20230310100937.32485-1-krzysztof.kozlowski@linaro.org/T/#u
+> 
+> [...]
 
-For 4KB pages, this total size is currently always more than one
-page, and as a result, the calculation produces a positive (though
-incorrect) total size.  The code still works in this case; we just
-end up with fewer DMA pool entries than we intended.
+Applied to
 
-Bjorn Andersson tested booting a kernel with 16KB pages, and hit a
-null pointer derereference in sg_alloc_append_table_from_pages(),
-descending from gsi_trans_pool_init_dma().  The cause of this was
-that a 16KB total size was going to be allocated, and with 16KB
-pages the order of that allocation is 0.  The total_size calculation
-yielded 0, which eventually led to the crash.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-Correcting the total_size calculation fixes the problem.
+Thanks!
 
-Reported-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Tested-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Fixes: 9dd441e4ed57 ("soc: qcom: ipa: GSI transactions")
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Alex Elder <elder@linaro.org>
----
-Note: This was reported via private communication.
-v3: - Added Mark Bloch's reviewed-by tag.
-v2: - Added Bjorn's actual name to tags.  
+[1/9] ASoC: dt-bindings: qcom,lpass-rx-macro: narrow clocks per variants
+      commit: e4cf7805f084772cccf2094b634a16bccf2f444f
+[2/9] ASoC: dt-bindings: qcom,lpass-rx-macro: Add SM8550 RX macro
+      commit: 0fc109f875721f9cef29bb68095f50d67343b4b7
+[3/9] ASoC: codecs: lpass-rx-macro: add support for SM8550
+      commit: 492fe974fed0754f7076580e069e1e182e7b3603
+[4/9] ASoC: dt-bindings: qcom,lpass-tx-macro: narrow clocks per variants
+      commit: bf4afbf950938d42cf0df1ecd915affeb26f4d76
+[5/9] ASoC: dt-bindings: qcom,lpass-tx-macro: Add SM8550 TX macro
+      commit: 050578c6f18c28e95f9659493a52a67b68b4b667
+[6/9] ASoC: codecs: lpass-tx-macro: add support for SM8550
+      commit: 5faf6a1c5256559af98c998b7416e4db8fb09b75
+[7/9] ASoC: dt-bindings: qcom,lpass-va-macro: Add SM8550 VA macro
+      (no commit info)
+[8/9] ASoC: dt-bindings: qcom,lpass-wsa-macro: Add SM8550 WSA macro
+      commit: c1bda22bd2f382f9c3b27fb7a899f8804d92f897
+[9/9] ASoC: codecs: lpass-wsa-macro: add support for SM8550
+      commit: 6b004b836ced4d9ce655b5f1c810833c1a880369
 
- drivers/net/ipa/gsi_trans.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
-index 0f52c068c46d6..ee6fb00b71eb6 100644
---- a/drivers/net/ipa/gsi_trans.c
-+++ b/drivers/net/ipa/gsi_trans.c
-@@ -156,7 +156,7 @@ int gsi_trans_pool_init_dma(struct device *dev, struct gsi_trans_pool *pool,
- 	 * gsi_trans_pool_exit_dma() can assume the total allocated
- 	 * size is exactly (count * size).
- 	 */
--	total_size = get_order(total_size) << PAGE_SHIFT;
-+	total_size = PAGE_SIZE << get_order(total_size);
- 
- 	virt = dma_alloc_coherent(dev, total_size, &addr, GFP_KERNEL);
- 	if (!virt)
--- 
-2.34.1
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
