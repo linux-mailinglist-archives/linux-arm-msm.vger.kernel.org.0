@@ -2,74 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8F826CBCAA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 12:40:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5625C6CBCAE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 12:41:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230507AbjC1KjV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 06:39:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43920 "EHLO
+        id S229436AbjC1KlY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 06:41:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230378AbjC1KjT (ORCPT
+        with ESMTP id S231833AbjC1KlT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 06:39:19 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1368A619F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 03:39:17 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-536af432ee5so222127537b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 03:39:17 -0700 (PDT)
+        Tue, 28 Mar 2023 06:41:19 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 249D16184
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 03:41:18 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id cf7so14407360ybb.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 03:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679999956;
+        d=linaro.org; s=google; t=1680000077;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=WeJvOmb4UiZDVdrpjbdoZEi88r2fueDviw4j3TobD+s=;
-        b=in30x2eTX3jMdB5lq1/bDRTxEHiNx9CtvD7goZQ6srXY+8gNricGHD/FTz0kAZsX9h
-         ry0Ldo03nV1VdMZBxhOiz0iMe1BRmASe+mD65YEruCVXoY0kbUsM/FgZLzv4q1n6Ll0z
-         GVUioTnM9Eejmtvl5rRwz/3cwRjYeG2w5D9ULfltX9JSeLE9ixzw9M/O45MFf6240+qe
-         d2lTNggLA6nKiLPBrpxqqlEqBXcbUQFTRY3MQ3HPDrzVtvSk+C3SvbaQrtA3Wek29dHU
-         VcwRILvcyIQWn84anR+3PRXriNK7zyc07nGzltmgzqqyHmk3BywN1lNyUfLfgtFs836/
-         lVkg==
+        bh=ScncozdRfE1mQa4+nAK0Jtn2/gS2SKLxxgCN6MI5Phg=;
+        b=H8oqCcILOHHKdyyXrpcOAQHKtYJ2R0EHXcQyxGEJjfqnmd65oxyqvV/KLS0RWopNJX
+         Bk7WhfFL4NLKT25hUFYeNxGmxs41HJy7haUypio2700XOEz3BVSLnDHurA2FmhON4kKN
+         yQcC59eumRN+Lf1cbDncVhl8Vmlj5FFy02C3vc2LhT426HTg/j5PDdIj1wT3U9gJNOVo
+         SX0PNrdLVKrOWxwye4Njt6BQKEuF2bgwYb/dSXnYUxJMwubfctDv4kVrnsR4UJzXn8hV
+         d82478pWw5hE2oGzI98Q0G5Muogq/5IAcrrFPZV0nmWdqzBhYsYKK8FTPIF14zb3GUFo
+         0X2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679999956;
+        d=1e100.net; s=20210112; t=1680000077;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WeJvOmb4UiZDVdrpjbdoZEi88r2fueDviw4j3TobD+s=;
-        b=QQbQPqVCWxa/0trT4ojBnW7DJr7hXYjXUMeM0eHOnv5nq3DcqiaSXHNVfvyWUAqXkq
-         uHSSNHgj2cuqn2pXAJHJIe5PGgX4PhnfSWHSEWVN7F0uZVhCRPqjijmNTSzczZmI9gLv
-         mifmhO6vzQinTNxVaEokK5jod/bqzeSIIXZ75k2oQPWbUGqCyVK/Uzb26TwMlP5n7prW
-         bj5b/4k6ZLLFbpKPmfIlGRLbT48kFs/Xf1jwu7Qh9Ouy2QtrCC7rbJ3HKuw01Is2pa8K
-         fUtjP7DvbtzfRWepMu8lCfBO7W7RRcbmTFnPWIbocZ9uX6H4XwXHptDEuX7AhOaAiVue
-         aZ7g==
-X-Gm-Message-State: AAQBX9d/jg6qw2dRIx+0Zwqi/4bGfdgnRNiLjsOyS2yGtJN7t8AMlbOn
-        yH9leb5IOmKCKMkBGrBuEV1ZDJ6B05WY9zKGxUfPhQ==
-X-Google-Smtp-Source: AKy350brQY738lvkF7Rq2rzNE3EKxx6So7gaAZKzG1faUECV9zEl3gL5esGUxz85xxrR5C20f9Chy1kDFvI+CQ0wU18=
-X-Received: by 2002:a81:4410:0:b0:545:a7d8:f278 with SMTP id
- r16-20020a814410000000b00545a7d8f278mr6595880ywa.5.1679999956113; Tue, 28 Mar
- 2023 03:39:16 -0700 (PDT)
+        bh=ScncozdRfE1mQa4+nAK0Jtn2/gS2SKLxxgCN6MI5Phg=;
+        b=kr1tKPuyJzg8utmLd4Na+jb7mJbT2aM08i1xPMj8hqDi2+mri7m6HtWMYFlcgg83T8
+         UR1kvM6Mvpkc6kCeKnw9Z2yDbUNLJCTWbJ5dpn7ndFU0oRZg61uC/L0vRhADeojwkvQN
+         tYl37fsG53q6tL0Q40Dg3weFvYTz/v/NIVg4qh+ciB3LEuMvYgPf57nzJuAoYFxEXrza
+         SjXH4+lorXBH0aAQM5IhebrYAE31x0acBcqbn/q+wIsaOx5VsB2EP1yZ9+QmOqu/OQ3z
+         e/HB5KtN43Dm4kYyWE+Zliud3B3/zr2T7A2nF+zcnf5ZaFWLa9GspwnDokU5/BIWqcFX
+         1mYA==
+X-Gm-Message-State: AAQBX9cGFPZTxv72NeCnWYU6Pf22xsCCyC2SMzOxYoqZ4If/79mGqNqT
+        JrQnEJu7smfcNPUcjCMP6w7IuBXvhDRAx5nO+O4IPQ==
+X-Google-Smtp-Source: AKy350ZgEE/D6adiyj/0Gd6S8pM8rCmiMKgPbfnz/d61Gs6OOEUXmjzkmasYyqUwfhInm+ReDGrgAg0kgVptOTmf+cU=
+X-Received: by 2002:a05:6902:168d:b0:b6c:2d28:b3e7 with SMTP id
+ bx13-20020a056902168d00b00b6c2d28b3e7mr9261489ybb.9.1680000077344; Tue, 28
+ Mar 2023 03:41:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230327132718.573-1-quic_devipriy@quicinc.com>
- <20230327132718.573-4-quic_devipriy@quicinc.com> <CAA8EJprTm1sZ8fnfNee+NJTiaFq17QwWaEnSoJWVYs_GY65xFg@mail.gmail.com>
- <a6225636-7abb-3c5c-c78f-8d40c25167b9@quicinc.com>
-In-Reply-To: <a6225636-7abb-3c5c-c78f-8d40c25167b9@quicinc.com>
+References: <20230326005733.2166354-1-dmitry.baryshkov@linaro.org>
+ <20230326005733.2166354-2-dmitry.baryshkov@linaro.org> <72f744cc-21ea-0eab-2778-53ec0f3e4964@linaro.org>
+In-Reply-To: <72f744cc-21ea-0eab-2778-53ec0f3e4964@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 28 Mar 2023 13:39:05 +0300
-Message-ID: <CAA8EJprgcMOX-WRXP2i9k850La1A1UKaKuODd-fVi27nOxMbyA@mail.gmail.com>
-Subject: Re: [PATCH V10 3/4] arm64: dts: qcom: Add support for ipq9574 SoC and
- RDP433 variant
-To:     Devi Priya <quic_devipriy@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de, shawnguo@kernel.org, arnd@arndb.de,
-        marcel.ziswiler@toradex.com, nfraprado@collabora.com,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, quic_srichara@quicinc.com,
-        quic_gokulsri@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
-        quic_anusha@quicinc.com, quic_poovendh@quicinc.com
+Date:   Tue, 28 Mar 2023 13:41:06 +0300
+Message-ID: <CAA8EJpq7VRsrA9++kV1E1NZ2GzoLFC6o19YDCnw=0B4kePVCEA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/9] dt-bindings: phy: migrate combo QMP PHY bindings
+ to qcom,sc8280xp-qmp-usb43dp-phy.yaml
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
@@ -80,194 +76,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 28 Mar 2023 at 10:31, Devi Priya <quic_devipriy@quicinc.com> wrote:
-> On 3/27/2023 8:15 PM, Dmitry Baryshkov wrote:
-> > On Mon, 27 Mar 2023 at 16:28, Devi Priya <quic_devipriy@quicinc.com> wrote:
-> >>
-> >> Add initial device tree support for Qualcomm IPQ9574 SoC and
-> >> Reference Design Platform(RDP) 433 which is based on IPQ9574
-> >> family of SoCs
-> >>
-> >> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-> >> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> >> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-> >> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-> >> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> >> ---
-> >>   Changes in V10:
-> >>          - Renamed the Board Device Tree Source to use the RDP numbers
-> >>          - Updated the Makefile, subject and commit message accordingly
-> >>
-> >>   arch/arm64/boot/dts/qcom/Makefile           |   1 +
-> >>   arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts |  84 ++++++
-> >>   arch/arm64/boot/dts/qcom/ipq9574.dtsi       | 270 ++++++++++++++++++++
-> >>   3 files changed, 355 insertions(+)
-> >>   create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-> >>   create mode 100644 arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> >> index 1a29403400b7..52f1f92c5195 100644
-> >> --- a/arch/arm64/boot/dts/qcom/Makefile
-> >> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> >> @@ -8,6 +8,7 @@ dtb-$(CONFIG_ARCH_QCOM) += ipq6018-cp01-c1.dtb
-> >>   dtb-$(CONFIG_ARCH_QCOM)        += ipq8074-hk01.dtb
-> >>   dtb-$(CONFIG_ARCH_QCOM)        += ipq8074-hk10-c1.dtb
-> >>   dtb-$(CONFIG_ARCH_QCOM)        += ipq8074-hk10-c2.dtb
-> >> +dtb-$(CONFIG_ARCH_QCOM)        += ipq9574-rdp433.dtb
-> >>   dtb-$(CONFIG_ARCH_QCOM)        += msm8916-acer-a1-724.dtb
-> >>   dtb-$(CONFIG_ARCH_QCOM)        += msm8916-alcatel-idol347.dtb
-> >>   dtb-$(CONFIG_ARCH_QCOM)        += msm8916-asus-z00l.dtb
-> >> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-> >> new file mode 100644
-> >> index 000000000000..2ce8e09e7565
-> >> --- /dev/null
-> >> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-> >> @@ -0,0 +1,84 @@
-> >> +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
-> >> +/*
-> >> + * IPQ9574 RDP433 board device tree source
-> >> + *
-> >> + * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
-> >> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> >> + */
-> >> +
-> >> +/dts-v1/;
-> >> +
-> >> +#include "ipq9574.dtsi"
-> >> +
-> >> +/ {
-> >> +       model = "Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C7";
-> >> +       compatible = "qcom,ipq9574-ap-al02-c7", "qcom,ipq9574";
-> >> +
-> >> +       aliases {
-> >> +               serial0 = &blsp1_uart2;
-> >> +       };
-> >> +
-> >> +       chosen {
-> >> +               stdout-path = "serial0:115200n8";
-> >> +       };
-> >> +};
-> >> +
-> >> +&blsp1_uart2 {
-> >> +       pinctrl-0 = <&uart2_pins>;
-> >> +       pinctrl-names = "default";
-> >> +       status = "okay";
-> >> +};
-> >> +
-> >> +&sdhc_1 {
-> >> +       pinctrl-0 = <&sdc_default_state>;
-> >> +       pinctrl-names = "default";
-> >> +       mmc-ddr-1_8v;
-> >> +       mmc-hs200-1_8v;
-> >> +       mmc-hs400-1_8v;
-> >> +       mmc-hs400-enhanced-strobe;
-> >> +       max-frequency = <384000000>;
-> >> +       bus-width = <8>;
-> >> +       status = "okay";
-> >> +};
-> >> +
-> >> +&sleep_clk {
-> >> +       clock-frequency = <32000>;
-> >> +};
-> >> +
-> >> +&tlmm {
-> >> +       sdc_default_state: sdc-default-state {
-> >> +               clk-pins {
-> >> +                       pins = "gpio5";
-> >> +                       function = "sdc_clk";
-> >> +                       drive-strength = <8>;
-> >> +                       bias-disable;
-> >> +               };
-> >> +
-> >> +               cmd-pins {
-> >> +                       pins = "gpio4";
-> >> +                       function = "sdc_cmd";
-> >> +                       drive-strength = <8>;
-> >> +                       bias-pull-up;
-> >> +               };
-> >> +
-> >> +               data-pins {
-> >> +                       pins = "gpio0", "gpio1", "gpio2",
-> >> +                              "gpio3", "gpio6", "gpio7",
-> >> +                              "gpio8", "gpio9";
-> >> +                       function = "sdc_data";
-> >> +                       drive-strength = <8>;
-> >> +                       bias-pull-up;
-> >> +               };
-> >> +
-> >> +               rclk-pins {
-> >> +                       pins = "gpio10";
-> >> +                       function = "sdc_rclk";
-> >> +                       drive-strength = <8>;
-> >> +                       bias-pull-down;
-> >> +               };
-> >> +       };
-> >> +};
-> >> +
-> >> +&xo_board_clk {
-> >> +       clock-frequency = <24000000>;
-> >> +};
-> >> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> >> new file mode 100644
-> >> index 000000000000..3bb7435f5e7f
-> >> --- /dev/null
-> >> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> >> @@ -0,0 +1,270 @@
-> >> +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
-> >> +/*
-> >> + * IPQ9574 SoC device tree source
-> >> + *
-> >> + * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
-> >> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-> >> + */
-> >> +
-> >> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> >> +#include <dt-bindings/clock/qcom,ipq9574-gcc.h>
-> >> +#include <dt-bindings/reset/qcom,ipq9574-gcc.h>
-> >> +
-> >> +/ {
-> >> +       interrupt-parent = <&intc>;
-> >> +       #address-cells = <2>;
-> >> +       #size-cells = <2>;
-> >> +
-> >> +       clocks {
-> >> +               bias_pll_ubi_nc_clk: bias-pll-ubi-nc-clk {
-> >> +                       compatible = "fixed-clock";
-> >> +                       clock-frequency = <353000000>;
-> >> +                       #clock-cells = <0>;
-> >> +               };
-> >
-> > What is the source for this clock? With it clocking at 353 MHz, I
-> > doubt that it is an external clock.
-> bias_pll_ubi_nc_clk (353MHz)is a backup source
-> for Q6_AXIM2_CLK/PCIE2_AXIM_CLK/PCIE3_AXIM_CLK/SNOC-CLK
-> It is from the CMN_PLL, and is the same as that of PPE core clock.
-> Do you suggest to move its clock-frequency to Board DT similar to
-> xo/sleep clock?
+On Tue, 28 Mar 2023 at 10:02, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 26/03/2023 01:57, Dmitry Baryshkov wrote:
+> > Migrate legacy bindings (described in qcom,sc7180-qmp-usb3-dp-phy.yaml)
+> > to qcom,sc8280xp-qmp-usb43dp-phy.yaml. This removes a need to declare
+> > the child PHY node or split resource regions.
+>
+> Thank you for your patch. There is something to discuss/improve.
+>
+> > -  resets:
+> > -    items:
+> > -      - description: reset of phy block.
+> > -      - description: phy common block reset.
+> > -
+> > -  reset-names:
+> > -    items:
+> > -      - const: phy
+> > -      - const: common
+> > -
+> > -  vdda-phy-supply:
+> > -    description:
+> > -      Phandle to a regulator supply to PHY core block.
+> > -
+> > -  vdda-pll-supply:
+> > -    description:
+> > -      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> > -
+> > -  vddp-ref-clk-supply:
+> > -    description:
+> > -      Phandle to a regulator supply to any specific refclk pll block.
+>
+> What about this supply. It's missing in the new binding. Don't we need
+> it? Isn't it a real supply?
 
-No, I suggest moving it to the device where it originates. If it comes
-from GCC, it should be provided by the GCC, not by the top-level fixed
-clock.
-
-> >
-> >> +
-> >> +               sleep_clk: sleep-clk {
-> >> +                       compatible = "fixed-clock";
-> >> +                       #clock-cells = <0>;
-> >> +               };
-> >> +
-> >> +               xo_board_clk: xo-board-clk {
-> >> +                       compatible = "fixed-clock";
-> >> +                       #clock-cells = <0>;
-> >> +               };
-> >> +       };
-> >
-> > [skipped the rest]
-> >
-> Regards,
-> Devi Priya
-
-
+I think it is a leftover from the QMP split. This is a real supply,
+but it is used only by UFS PHYs. So, while we are clearing old
+bindings, let's drop this unused thing.
 
 -- 
 With best wishes
