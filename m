@@ -2,68 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 793E46CB5CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 07:13:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 405086CB640
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 07:47:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229985AbjC1FNC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 01:13:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46308 "EHLO
+        id S229580AbjC1Frs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 01:47:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229784AbjC1FNB (ORCPT
+        with ESMTP id S229497AbjC1Frr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 01:13:01 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2518C19C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 22:12:58 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id j18-20020a05600c1c1200b003ee5157346cso8584109wms.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 22:12:58 -0700 (PDT)
+        Tue, 28 Mar 2023 01:47:47 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D015A4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 22:47:46 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id e18so10870559wra.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Mar 2023 22:47:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679980376;
+        d=linaro.org; s=google; t=1679982465;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7NL5B2zEB3jTPHtWtDx1iz+SHXOLfKNEdYRThYQwGLc=;
-        b=zlnoQGiVIjJQBluz7v2YslRDbX63SbDbQkVOJkD/dKCrBo2xUDsMADewjEASdH0oTk
-         MT3kPwB22TWJZA0dWtYlg7kZ0x+102BmK2n40Dvk1lWEbInKiGKNLB8nL1EJ9PreJf4d
-         +IOuTuIsy0HD/Wg+rP3J56aUUchOwePBSkrtueL7/e7e7ATfA+mIApkDVsMndN/JkZPT
-         PrRQOWE9/8o8fPS7IpCV7aCBpNFwBKRaB2mq/Kbxp2sdXqSVWO8EQd4raCQGPgxV4mEC
-         cLyOPnMYmrFYyt8vKCo1vkW/bgA5MWrF2MTJWzyMMrTHphDU0FTSncc9pJpkEzrxwjsO
-         jYDw==
+        bh=6lh60Yr9juv2WyZOUdbsikkbVmvbDkOrRECq1Xjk8w0=;
+        b=hKb91XV0j+RJ4xQ36slziJZbbxrhakQalwhvXw/O1Drrwsl7YnUUc7o0vth3A8ITyk
+         d/OIgXcNEAfQqxyNySKuvhY3hO09+6CYQDdj42CQU0vUm7VXDlLREJAxRoOld+zbAmuG
+         nK/+iJIDUkDB8oJuMEx8w3QWm2o7iEA5yJ2evUg+C+V93rVvy45DaYrrfuR5r44MuF2A
+         vVrdRNcbBtEdlpcPXid7Re2+M2arNA8j1qJrKPu+O6BgjazpSadhfteRkDilxFRfTsn8
+         lB+d68NWoNVT9vuLmItboCwop42GIB3LzD2zlSeXfzath1pP1mqIadKfMPNsS5qotGhm
+         wEuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679980376;
+        d=1e100.net; s=20210112; t=1679982465;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7NL5B2zEB3jTPHtWtDx1iz+SHXOLfKNEdYRThYQwGLc=;
-        b=SrfGKVpkY7DLFBkAqqA0oh26d2+DcY6YMZ4qDyQf5K8jtdlAJtytguXWMk+0yIhaNA
-         jHvTURJrpWT+GEgfXYlU784bSxLvBATN74Mz0FTpkWP5lfkgNJp29p4p60H+tlnBR2SA
-         Kr4g/6zln9Ue3ff1aK0CRjK3btVvPX3Xz2ziMRAOrRelqF0gAbvsc+5n25tR+G6uvs3b
-         gyavcRxoptzUpwN7nqxHSbPF92eITuiLpFSEGJTYoO1N5DhdtiKnQAMUPkj7DfzbFPo5
-         IoQxYbzcT+xqDDZ3ZW7QWnPnVCcwlHUCq+bEGkLejxGiZtOJtjHuWlMep06CJ+qwVcbg
-         d/sA==
-X-Gm-Message-State: AO0yUKUl4zoDYZqwNunSQ3aW22RNzuQkABE/F0lX3AOTHlkRhTtH3rgY
-        P453jE3bxuH8MtkGLO2vRIbYfuVzZnM4QOvN6e8AWg==
-X-Google-Smtp-Source: AK7set9bejMNLadUHItCJEY+tvClPEZKRImqA5n8bQgifJgLS2Xs4Uk1TMn55w2Pog1JrL8aEtG93Bl3lse9l0tEV+0=
-X-Received: by 2002:a7b:cd17:0:b0:3ed:526c:25cb with SMTP id
- f23-20020a7bcd17000000b003ed526c25cbmr3217797wmj.8.1679980376495; Mon, 27 Mar
- 2023 22:12:56 -0700 (PDT)
+        bh=6lh60Yr9juv2WyZOUdbsikkbVmvbDkOrRECq1Xjk8w0=;
+        b=EbYqnbie+pHI5ZQBVxzxhoXLbmHeeNrPdOyajQc12KiMrya62P4tnLPaBTQ1vZAUY7
+         /TfRg1clxzQW9sOHbp4BjcsuuSjn+6cBLkZEsvYfDZlVE0mI7EpCE9P8rZGDdLATBR3U
+         2y5ntaJgTX2fOeuwRqyO0RWRNhYL6yorKMzNU6T8YAW9OfzgZjCRuCLOc0/qwO081KrG
+         h7VU4wsLnEScL0mIT1mt5/HGHeAU20ac6RUMknWjUjp5n6lQzDKkNxjDZdRofCigkX9u
+         gN+P2a2kCj8J3N13m0emA6P88HqsxxzNAeCob0l43Gv6qGsaVXdJZWa0Cf+nQseFGiXa
+         ih+A==
+X-Gm-Message-State: AAQBX9eXUiSztaX6MxHmdWNOqvJDwdNw+I9S4R8mkDluUp8bh4n4+z1P
+        lZb0/mLI6lUhjy9aMJPF3EKgH+wqevcjhqPPLC1SoA==
+X-Google-Smtp-Source: AKy350bY4T8hh+mpb40iWxB7Rw/cLU14ODPcs3MZGucuLndnUopjiDkmFHPtza0z2LvdN0b4qT1zE7f9jJlYW3hYhJk=
+X-Received: by 2002:adf:ec4e:0:b0:2ce:817b:846d with SMTP id
+ w14-20020adfec4e000000b002ce817b846dmr2908654wrn.4.1679982464773; Mon, 27 Mar
+ 2023 22:47:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230322114519.3412469-1-bhupesh.sharma@linaro.org>
- <20230322114519.3412469-4-bhupesh.sharma@linaro.org> <333081a2-6b31-3fca-1a95-4273b5a46fb7@linaro.org>
- <d5821429-032d-e1e6-3a4e-ca19eb4a60ed@linaro.org>
-In-Reply-To: <d5821429-032d-e1e6-3a4e-ca19eb4a60ed@linaro.org>
+References: <20230323233735.2131020-1-vladimir.zapolskiy@linaro.org> <20230323233735.2131020-6-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20230323233735.2131020-6-vladimir.zapolskiy@linaro.org>
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Tue, 28 Mar 2023 10:42:45 +0530
-Message-ID: <CAH=2NtypbmwuXgHTdCiaY6zRZEMrVvZipkoYRW=d_WmOMqE3Og@mail.gmail.com>
-Subject: Re: [PATCH v2 03/10] dt-bindings: qcom-qce: Fix compatibles
- combinations for SM8150 and IPQ4019 SoCs
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        linux-crypto@vger.kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, robh+dt@kernel.org,
-        konrad.dybcio@linaro.org, rfoss@kernel.org,
-        neil.armstrong@linaro.org
+Date:   Tue, 28 Mar 2023 11:17:33 +0530
+Message-ID: <CAH=2Ntz_boSOT2KKURt5eZK03urm8uJ_JVzOn5ZD_z_42Chaaw@mail.gmail.com>
+Subject: Re: [PATCH 5/5] arm64: dts: qcom: sm8450: add description of Qualcomm
+ Crypto Engine IP
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
@@ -74,70 +69,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 27 Mar 2023 at 17:49, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On Fri, 24 Mar 2023 at 05:07, Vladimir Zapolskiy
+<vladimir.zapolskiy@linaro.org> wrote:
 >
-> On 27/03/2023 13:49, Vladimir Zapolskiy wrote:
-> > Hi Bhupesh,
-> >
-> > On 3/22/23 13:45, Bhupesh Sharma wrote:
-> >> Currently the compatible list available in 'qce' dt-bindings does not
-> >> support SM8150 and IPQ4019 SoCs directly, leading to following
-> >> 'dtbs_check' error:
-> >>
-> >>   arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-griffin.dtb:
-> >>    crypto@1dfa000: compatible: 'oneOf' conditional failed, one must be fixed:
-> >>      ['qcom,sm8150-qce', 'qcom,qce'] is too long
-> >>      ['qcom,sm8150-qce', 'qcom,qce'] is too short
-> >>
-> >> Fix the same.
-> >>
-> >> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> >> ---
-> >>   Documentation/devicetree/bindings/crypto/qcom-qce.yaml | 6 ++++++
-> >>   1 file changed, 6 insertions(+)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-> >> index e375bd981300..90ddf98a6df9 100644
-> >> --- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-> >> +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-> >> @@ -24,6 +24,12 @@ properties:
-> >>           deprecated: true
-> >>           description: Kept only for ABI backward compatibility
-> >>
-> >> +      - items:
-> >> +          - enum:
-> >> +              - qcom,ipq4019-qce
-> >> +              - qcom,sm8150-qce
-> >> +          - const: qcom,qce
-> >> +
-> >
-> > thank you for the fix, the change is correct, please apply the tag:
-> >
-> > Fixes: 00f3bc2db351 ("dt-bindings: qcom-qce: Add new SoC compatible strings for Qualcomm QCE IP")
-> >
-> > But let me ask you to split the "items" into two:
-> >
-> >        - items:
-> >            - const: qcom,ipq4019-qce
-> >            - const: qcom,qce
-> >
-> >        - items:
-> >            - const: qcom,sm8150-qce
-> >            - const: qcom,qce
-> >
+> Add description of QCE and its corresponding BAM DMA IPs on SM8450 SoC.
 >
-> Why splitting these? The enum is the preferred way usually, so why here
-> do it differently?
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index ce4b7d0a09ab..228c26fb9003 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -4081,6 +4081,28 @@ ufs_mem_phy_lanes: phy@1d87400 {
+>                         };
+>                 };
+>
+> +               cryptobam: dma-controller@1dc4000 {
+> +                       compatible = "qcom,bam-v1.7.0";
+> +                       reg = <0x0 0x01dc4000 0x0 0x24000>;
+> +                       interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
+> +                       #dma-cells = <1>;
+> +                       qcom,ee = <0>;
+> +                       qcom,controlled-remotely;
+> +                       num-channels = <8>;
+> +                       qcom,num-ees = <2>;
+> +                       iommus = <&apps_smmu 0x584 0x11>;
+> +               };
+> +
+> +               crypto: crypto@1dfa000 {
+> +                       compatible = "qcom,sm8450-qce", "qcom,sm8150-qce", "qcom,qce";
+> +                       reg = <0x0 0x01dfa000 0x0 0x6000>;
+> +                       dmas = <&cryptobam 4>, <&cryptobam 5>;
+> +                       dma-names = "rx", "tx";
+> +                       interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
+> +                       interconnect-names = "memory";
+> +                       iommus = <&apps_smmu 0x584 0x11>;
+> +               };
+> +
+>                 sdhc_2: mmc@8804000 {
+>                         compatible = "qcom,sm8450-sdhci", "qcom,sdhci-msm-v5";
+>                         reg = <0 0x08804000 0 0x1000>;
+> --
+> 2.33.0
 
-Exactly, so our compatibles as per my patch can be :
-"qcom,ipq4019-qce", "qcom,qce" or "qcom,sm8150-qce", "qcom,qce" which
-is what we want to achieve as these are the base compatible versions
-for further socs, with compatible strings as:
+Already folded Neil's patch and sent via [1], which includes the
+correct BAM DMA compatible list as well.
 
-"qcom,<new-soc-with-crypto-same-as-ipq4019-qce", "qcom,ipq4019-qce",
-"qcom,qce" , or
-"qcom,<new-soc-with-crypto-same-as-sm8150-qce", "qcom,sm8150-qce", "qcom,qce"
+[1]. https://lore.kernel.org/linux-arm-msm/20230322114519.3412469-11-bhupesh.sharma@linaro.org/
 
-Thanks,
-Bhupesh
+Thanks.
