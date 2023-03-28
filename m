@@ -2,64 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34E5B6CCD6C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 00:38:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81E156CCD6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 00:38:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbjC1Wi0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 18:38:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35558 "EHLO
+        id S229841AbjC1Wi1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 18:38:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229753AbjC1WiP (ORCPT
+        with ESMTP id S229766AbjC1WiP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 28 Mar 2023 18:38:15 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 565C61BEF
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA5512726
         for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 15:38:10 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id a11so14173541lji.6
+Received: by mail-lj1-x231.google.com with SMTP id e21so14180542ljn.7
         for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 15:38:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680043088;
+        d=linaro.org; s=google; t=1680043090;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BOwWonrpE9Dkyy4Q/0LXCbY8zJnCltM/M3j75FmH7fw=;
-        b=a7ZnX691SuT2RJykm2XbV+BlyKWG02pym4XibfWplMvBb4nTSxzJIuD7kKwt8/oUbl
-         fZmxX4ILQZSUk5uJF7l9HM5XCyngGJJteZT2X6LOHFPjvMAvGLD5x4iiM0SHyPkpqNHU
-         B8HO+e701eSARlMTByXmWlnLf0w/rv1qgCgsA8GsKM4eTtt5EF10PIDC8il7kyE8H2aH
-         Rxo/W4EAKucYJ2FK4gH7kCD2BK0Ab/pAzIlkLNxlZypojJU1uNUTx9WkFXrVRKkMUfez
-         h84Nu3nyxsKq+nGhMISCZ6dABqNxiEdLOeOfw9ToBtOoG/cHKcXpLujtxg+5IHEA34cV
-         OsEQ==
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uuKyg736nkIuL3P7k6oLEYaG5s7VO0i2HZ07gXW95rw=;
+        b=Wys+GzszTQsg61rxXqP9WQabYCGt55+c1mTFBE27TmWqKn0/sWE+YT9gr1gCp/pHFc
+         AwPFaGLhnneLAVW2RiAKXOz3Ba6Mmc2JEUIy4jYipcy2oSnrFp24dGqCcw11LuvwpR1f
+         +D1U6F1P/sSepExR3RqeSWLCvEEcre8hUKzhLVw4QyNq8rPYuAapmG8Bqkj/xr7fxoHO
+         eY00cZgQgg0qZQ9EH56kfVgncq4Gxy2Xo+I9TujDKvwM/0R7TwReNAV92VtW+mskNxEx
+         3Y0PaDUbhwmXuJtfaio+GLIlBxUd9e5v12enqeKsxc1c03aYv7YBLL79/BupOvOGqh6t
+         bUHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680043088;
+        d=1e100.net; s=20210112; t=1680043090;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BOwWonrpE9Dkyy4Q/0LXCbY8zJnCltM/M3j75FmH7fw=;
-        b=Zb5lXa3ZojF4okVoAYfyJiIAJFD/Sgwp2t6RAv9USJoj+Oo5yooZx+iyJa5/eq2347
-         W+Z4v9n9k+DJrut0sECtlJRue6rP6+zJauNwrSuHpZ4LEk9ITf6zu9PwUnpNfYZR+p1i
-         CD4z8ii4S03rFb3v/PQdIS4JVzWTsBAlN5eYcUWk4glZZQWpHwCzPdLXTJERaFO4R96l
-         YtMK0PJejR3+avvoSwfOVIeyjXHK+6uYaImHTwvN6K23hzNNlDTwpR4iFBoQ8kZJnN22
-         Tbzzmm8IfY9KDrrGfYjckaUPahIRMwbdVPFxrynCXCSLMxT/lCimpEFLYSVatj6r/Pq9
-         JtJA==
-X-Gm-Message-State: AAQBX9f+5kpnyjpjEGy9fomcyf2F68F1mXzVPKWnP8xbDQ/uS4Hyu45V
-        s2pJmzgtMWh/OHtVBSAnDXQWVw==
-X-Google-Smtp-Source: AKy350YBE11m41SRDzdOvavHBzk6Aq12RlAFgkaKcKonlKYiYOP6aknoWHMxpgUB9rOLDfqF4VKkdw==
-X-Received: by 2002:a05:651c:153:b0:2a2:781d:2c5f with SMTP id c19-20020a05651c015300b002a2781d2c5fmr5335225ljd.39.1680043088731;
-        Tue, 28 Mar 2023 15:38:08 -0700 (PDT)
+        bh=uuKyg736nkIuL3P7k6oLEYaG5s7VO0i2HZ07gXW95rw=;
+        b=N5Ioi02xxgH8p4ZjPkDjJ2qQZ5uVEIJF3GXP0R9au+MXVjaHZXvC1ktMpvORh+ft4N
+         N58+aAEAb5jvmzLLEIE6xv1jxB8lNhTBNq4TTHijt3u7+kV1obt0CbmoAVBDe6BQcSLH
+         ESGNmmRhLX95aH7Hlu4GHQ9KsSXR1TZCaqUz3B3V4a9dPWImTGfLLxBl0ryNEG1IsHyq
+         /K/SiyAyTDgq1eIYkPobaAEWVmb/isl8MWoqnrst+CAPMwCor1Qh4709CyBVFvT/WC4e
+         mCIwM4nXbMDYz+I4KsWYQUpETxyxbQmWezznsT/kHnAzGPYd1e1IXuTovBaOe5mtcNUj
+         cd7g==
+X-Gm-Message-State: AAQBX9dEDWhUjzCmEz1oQEDYZc6gem50RBggUUp/HHgvnCEXCcdhmM2l
+        vBe+/QPGESuiYMaFgyz8778eCg==
+X-Google-Smtp-Source: AKy350aYL6MLzYQtAiiFbxjvBEiB50JA6kEZC7HJ6Sp61UFsLlnTl9MhWY7M2PFqqdybnm9mI6bhtQ==
+X-Received: by 2002:a2e:9d87:0:b0:28b:ad5b:578f with SMTP id c7-20020a2e9d87000000b0028bad5b578fmr5090533ljj.31.1680043090281;
+        Tue, 28 Mar 2023 15:38:10 -0700 (PDT)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id t22-20020a2e9d16000000b002934d555783sm5199522lji.6.2023.03.28.15.38.08
+        by smtp.gmail.com with ESMTPSA id t22-20020a2e9d16000000b002934d555783sm5199522lji.6.2023.03.28.15.38.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Mar 2023 15:38:08 -0700 (PDT)
+        Tue, 28 Mar 2023 15:38:09 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Leonard Lausen <leonard@lausen.nl>
-Subject: Re: [PATCH v2] drm/msm/dpu: Add support for AR30 format
-Date:   Wed, 29 Mar 2023 01:37:53 +0300
-Message-Id: <168004255465.1060915.4281864962908827878.b4-ty@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/4] arm64: qcom: sm8450: bindings check cleanup
+Date:   Wed, 29 Mar 2023 01:37:55 +0300
+Message-Id: <168004255461.1060915.996594905396334205.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <6f33219dc848ccd7122bce6933338033aa18c33c@lausen.nl>
-References: <6f33219dc848ccd7122bce6933338033aa18c33c@lausen.nl>
+In-Reply-To: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v2-0-0ca1bea1a843@linaro.org>
+References: <20230323-topic-sm8450-upstream-dt-bindings-fixes-v2-0-0ca1bea1a843@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -73,22 +84,24 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Tue, 21 Mar 2023 02:58:04 +0000, Leonard Lausen wrote:
-> Commit da7716a249b699978fb5 ("drm/msm/dpu: Add support for XR30 format") enabled
-> support for the 10-bit XR30 color format but missed enabling support for the
-> corresponding per-pixel alpha-blending AR30 color format.
+On Fri, 24 Mar 2023 10:28:45 +0100, Neil Armstrong wrote:
+> A few fixes to pass the DT bindings check successfully
+> for sm8450 qrd & hdk DTs.
 > 
-> Declaring only XR30 but not AR30 color format support can trigger bugs in
-> userspace. KDE KWin compositor versions prior to 5.27.3 for example prefer
-> 10-bit color formats, rendering a 1cm^2 black box around the cursor due to
-> missing per-pixel alpha-blending.
+> The following are still needed to pass all the checks:
+> - https://lore.kernel.org/r/20230308082424.140224-3-manivannan.sadhasivam@linaro.org
+> - https://lore.kernel.org/r/20230130-topic-sm8450-upstream-pmic-glink-v5-5-552f3b721f9e@linaro.org
+> - https://lore.kernel.org/all/20230308075648.134119-1-manivannan.sadhasivam@linaro.org/
+> - https://lore.kernel.org/r/20230306112129.3687744-1-dmitry.baryshkov@linaro.org
+> - https://lore.kernel.org/all/20221209-dt-binding-ufs-v3-0-499dff23a03c@fairphone.com/
+> - https://lore.kernel.org/all/20221118071849.25506-2-srinivas.kandagatla@linaro.org/
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] drm/msm/dpu: Add support for AR30 format
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/a8318110b987
+[1/4] dt-bindings: display: msm: sm8450-mdss: Fix DSI compatible
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/6ae1aa7703f8
 
 Best regards,
 -- 
