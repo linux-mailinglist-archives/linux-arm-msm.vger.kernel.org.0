@@ -2,118 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34B086CB9E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 10:55:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48BA56CBA0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 11:06:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232354AbjC1Iy6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 04:54:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48898 "EHLO
+        id S232484AbjC1JFS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 05:05:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232276AbjC1Iyq (ORCPT
+        with ESMTP id S229670AbjC1JFL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 04:54:46 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B253719A1;
-        Tue, 28 Mar 2023 01:54:45 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 6230DB81BBF;
-        Tue, 28 Mar 2023 08:54:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD22FC433EF;
-        Tue, 28 Mar 2023 08:54:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679993683;
-        bh=FlhEhP6prp2j0gTaGdnVSIx+i5NWL7KCri11ZYnsy3I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SJRGXCjhZkx/iOapcmyPGdXscZHKSIdLVHHLMURh1Rf6qwEnc3Xlad0Qvwr7KT+qF
-         1MENXlQqeB6wAxszDpo0TlZmxkBw9FBjElNI3lmZEwodbevs5J0gzufBZbX0mRJdhf
-         vC8+Ux1CbqncIrFCgHueOAiBJ+SC1rsOFyCvtvF8jIFY1Og2EUQ7iCdVEy7jrzzCGJ
-         YQsXyp4K2PTCsfootJyrObN8PSegqIaDFVCs650s/Kz/BEbhs4gmnYGP3HVngdZrES
-         FvDmZClERmEwCYz3P6muXFqsF2d3ARRaq5wJPoyotbW36VpAoQYf/hmQcGjpBck2D5
-         QfcbOfLgQZHBw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ph56U-0003mE-05; Tue, 28 Mar 2023 10:54:54 +0200
-Date:   Tue, 28 Mar 2023 10:54:53 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, Thinh.Nguyen@synopsys.com,
-        gregkh@linuxfoundation.org, mathias.nyman@intel.com,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 1/5] arm64: dts: qcom: sc8280xp: Add missing dwc3 quirks
-Message-ID: <ZCKrXZn7Eu/jvdpG@hovoldconsulting.com>
-References: <20230325165217.31069-1-manivannan.sadhasivam@linaro.org>
- <20230325165217.31069-2-manivannan.sadhasivam@linaro.org>
+        Tue, 28 Mar 2023 05:05:11 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FB1259D4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 02:05:08 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id k37so14915549lfv.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 02:05:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1679994306;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=C3GjN3p9ccpD2B5O58h3xZEaPlGMGrYBwTgOTQdFGIg=;
+        b=pSisNiBNNob3zSKZAxcqGeY2LLXQsg6LDJPfFT2VvZWc5mUnnfn7cYZsMPepVeptpS
+         uJ4Sf4UTMoyfkBBTfpzE74IQq1GW4OxR0fQoKm+fSDf/P9ucnmM+0p0rn+f+0h1RUnwj
+         8p5RvVy1HyWOCxgyq/FXTXn+qEBPIg9mPNN5BMaKPwqtTuUlbf1xqhVk9w4bgqOm8api
+         ZJ5ZGETklL7IrklsZ7fuSGVQDHSGzQce+byt1bvIX1EWW+HjEP9KsFyRlMCPyNz9B5Wg
+         iGO3AQ5sTc5NGgGj6MKcju9cKfO8oUdvBZTDc1Xp6tm1Sq5y0tGRKMxKsVGeEwVnDFVp
+         +yng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679994306;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=C3GjN3p9ccpD2B5O58h3xZEaPlGMGrYBwTgOTQdFGIg=;
+        b=7oKiQ/+uMs6aydnv4zqwHlwD/XKsO+6fWcBkjseWJRaFUjiY1z2eugZD5OEBvsPppQ
+         EqZqAZciTvrMzVaWnPTP+tlhF1mPp0EN2/zpSp0WTtd6BU/2874rSFTwsggpG7Yqg8m1
+         TnTI9XAc96jqcdfeOnp2NJC20+VRPZmXsVI3xhV30oIDObMcJ/SSuJ/eRCy9QjTyRn9U
+         5xAeYVbQaue0+viwAun6VUW641lxUP7wZqKR61/mdE+J7N6bcYvnLPNUwGcEkFqC/ODE
+         SdzCvpJYfSQ3GIUXY3AxrMl8kNf+utaJATJ+4IqFc/OS/Hsagy4/4X6aqu+JcE1tm9+6
+         docw==
+X-Gm-Message-State: AAQBX9eYI5o3sJXSsd3/khYgQrKbC5459m3NHHhYBQpKO6s8ZuOp2U7o
+        P3Op2Y5Z5sxiWe59IIy4G851gFsLm/gxIeBIjFk=
+X-Google-Smtp-Source: AKy350Y7a3jy3jCAnt0vZZbmeJGDqqUk0fRCUZ0iGtOe7GuMDvmLtoMOr3oE5zEXGthiLjnLftXJIA==
+X-Received: by 2002:ac2:5638:0:b0:4dd:fd4e:5a20 with SMTP id b24-20020ac25638000000b004ddfd4e5a20mr4607528lff.58.1679994306438;
+        Tue, 28 Mar 2023 02:05:06 -0700 (PDT)
+Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
+        by smtp.gmail.com with ESMTPSA id y26-20020ac255ba000000b004e9b307d2c8sm4088202lfg.238.2023.03.28.02.05.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Mar 2023 02:05:06 -0700 (PDT)
+Message-ID: <7522deaa-54be-d757-8a05-9d8195bf6ed9@linaro.org>
+Date:   Tue, 28 Mar 2023 11:05:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230325165217.31069-2-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3 04/18] arm64: dts: qcom: sa8775p: add the pdc node
+Content-Language: en-US
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230327125316.210812-1-brgl@bgdev.pl>
+ <20230327125316.210812-5-brgl@bgdev.pl>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230327125316.210812-5-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Mar 25, 2023 at 10:22:13PM +0530, Manivannan Sadhasivam wrote:
-> Add missing quirks for the USB DWC3 IP.
 
-This is not an acceptable commit message generally and certainly not for
-something that you have tagged for stable.
 
-At a minimum, you need to describe why these are needed and what the
-impact is.
-
-Also, why are you sending as part of a series purporting to enable
-runtime PM when it appears to be all about optimising specific gadget
-applications?
-
-Did you confirm that the below makes any sense or has this just been
-copied verbatim from the vendor devicetree (it looks like that)?
-
-The fact that almost none of the qcom SoCs sets these also indicates
-that something is not right here.
-
-> Cc: stable@vger.kernel.org # 5.20
-> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+On 27.03.2023 14:53, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 0d02599d8867..266a94c712aa 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -3040,6 +3040,13 @@ usb_0_dwc3: usb@a600000 {
->  				iommus = <&apps_smmu 0x820 0x0>;
->  				phys = <&usb_0_hsphy>, <&usb_0_qmpphy QMP_USB43DP_USB3_PHY>;
->  				phy-names = "usb2-phy", "usb3-phy";
-> +				snps,hird-threshold = /bits/ 8 <0x0>;
-> +				snps,usb2-gadget-lpm-disable;
+> Add the Power Domain Controller node for SA8775p.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Here you are disabling LPM for gadget mode, which makes most of the
-other properties entirely pointless.
-
-> +				snps,is-utmi-l1-suspend;
-> +				snps,dis-u1-entry-quirk;
-> +				snps,dis-u2-entry-quirk;
-
-These appear to be used to optimise certain gadget application and
-likely not something that should be set in a dtsi.
-
-> +				snps,has-lpm-erratum;
-> +				tx-fifo-resize;
-
-Same here.
-
->  				port {
->  					usb_0_role_switch: endpoint {
-
-Johan
+Konrad
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 47 +++++++++++++++++++++++++++
+>  1 file changed, 47 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 296ba69b81ab..6bb1db1839cc 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -591,6 +591,53 @@ tcsr_mutex: hwlock@1f40000 {
+>  			#hwlock-cells = <1>;
+>  		};
+>  
+> +		pdc: interrupt-controller@b220000 {
+> +			compatible = "qcom,sa8775p-pdc", "qcom,pdc";
+> +			reg = <0x0 0x0b220000 0x0 0x30000>,
+> +			      <0x0 0x17c000f0 0x0 0x64>;
+> +			qcom,pdc-ranges = <0 480 40>,
+> +					  <40 140 14>,
+> +					  <54 263 1>,
+> +					  <55 306 4>,
+> +					  <59 312 3>,
+> +					  <62 374 2>,
+> +					  <64 434 2>,
+> +					  <66 438 2>,
+> +					  <70 520 1>,
+> +					  <73 523 1>,
+> +					  <118 568 6>,
+> +					  <124 609 3>,
+> +					  <159 638 1>,
+> +					  <160 720 3>,
+> +					  <169 728 30>,
+> +					  <199 416 2>,
+> +					  <201 449 1>,
+> +					  <202 89 1>,
+> +					  <203 451 1>,
+> +					  <204 462 1>,
+> +					  <205 264 1>,
+> +					  <206 579 1>,
+> +					  <207 653 1>,
+> +					  <208 656 1>,
+> +					  <209 659 1>,
+> +					  <210 122 1>,
+> +					  <211 699 1>,
+> +					  <212 705 1>,
+> +					  <213 450 1>,
+> +					  <214 643 2>,
+> +					  <216 646 5>,
+> +					  <221 390 5>,
+> +					  <226 700 2>,
+> +					  <228 440 1>,
+> +					  <229 663 1>,
+> +					  <230 524 2>,
+> +					  <232 612 3>,
+> +					  <235 723 5>;
+> +			#interrupt-cells = <2>;
+> +			interrupt-parent = <&intc>;
+> +			interrupt-controller;
+> +		};
+> +
+>  		tlmm: pinctrl@f000000 {
+>  			compatible = "qcom,sa8775p-tlmm";
+>  			reg = <0x0 0x0f000000 0x0 0x1000000>;
