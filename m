@@ -2,87 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4B336CB961
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 10:29:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E54056CB96C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 10:31:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231934AbjC1I3v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 04:29:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48246 "EHLO
+        id S230424AbjC1IbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 04:31:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231820AbjC1I3v (ORCPT
+        with ESMTP id S230263AbjC1IbU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 04:29:51 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E1FD3C34;
-        Tue, 28 Mar 2023 01:29:50 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 03477B81BB2;
-        Tue, 28 Mar 2023 08:29:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8EECC433D2;
-        Tue, 28 Mar 2023 08:29:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679992187;
-        bh=SnwELIqmKALLVCVVt5MIOjBTgoc6BuHmgOZFpkq01s0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=iUJmXpnPtNUiLD/zaG/fChsA4WOoo7LQoP4clU9YqExjtf0qKBmwemJOZfjgvrJ/K
-         8U6HksBJ6DuRrDCaQnKIkVguK4WGX5PgAw4pYWDN58AadMK0pv8gt4hC+A5BbWyROa
-         UYHwgeRkzTTtuLOVbZzLZXdpxp0HOPKZOUAKlx881s0LRExx3wdXfHjHmAlziFTYip
-         aeXz/hnZZwNmvjMwGuGogNXpg29p5TETkktYUTNhd7FZTiGz9Og8MP7tWe+pfXvhJz
-         TNdw+yMwe3wyRn6IJr6vJ4kaxuvFZ1+kkjn8Z3+hOQWB49IbrDmam17Fr6lGDgSPH3
-         e9vUwJ/fyArCw==
-Date:   Tue, 28 Mar 2023 13:59:42 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>, linux-pm@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
+        Tue, 28 Mar 2023 04:31:20 -0400
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 082E0C7;
+        Tue, 28 Mar 2023 01:31:18 -0700 (PDT)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+        id 54CDF1C0ABB; Tue, 28 Mar 2023 10:31:17 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
+        t=1679992277;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=NZKxrePiLV6l9V0HmcTkJ0mbMEOMo46hydocfIMAsEM=;
+        b=TaQUejS3XvePiDrGtbQ3Wr4dI+7/5Ann4SxcWJnc33K3QFtaE90LrCi65fNBrL6leBXaFY
+        caltXj6eY/KUdYbTwcLVSYBx/D3/C+URYSLi2W8eFxu6Vapd7eDoRMlpuR0R7efR5KJ4YC
+        AqrjXY8FKBXLwFGBQLqDO6nrIiTOtJg=
+Date:   Tue, 28 Mar 2023 10:31:16 +0200
+From:   Pavel Machek <pavel@ucw.cz>
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 05/12] dt-bindings: interconnect: split SC8180x to own
- schema
-Message-ID: <ZCKldukoQxweujzn@matsya>
-References: <20230325122444.249507-1-vkoul@kernel.org>
- <20230325122444.249507-6-vkoul@kernel.org>
- <167983963951.350350.7524342280614332456.robh@kernel.org>
+        Andrew Lunn <andrew@lunn.ch>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        John Crispin <john@phrozen.org>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [net-next PATCH v6 16/16] arm: mvebu: dt: Add PHY LED support
+ for 370-rd WAN port
+Message-ID: <ZCKl1A9dZOIAdMY8@duo.ucw.cz>
+References: <20230327141031.11904-1-ansuelsmth@gmail.com>
+ <20230327141031.11904-17-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="M1XUwPa0tTn2VCRg"
 Content-Disposition: inline
-In-Reply-To: <167983963951.350350.7524342280614332456.robh@kernel.org>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <20230327141031.11904-17-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26-03-23, 09:10, Rob Herring wrote:
-> 
-> On Sat, 25 Mar 2023 17:54:37 +0530, Vinod Koul wrote:
-> > SC8180x comes with interconnects having and missing IO address space, and
-> > variable number of clocks, so split it from common file for easier
-> > maintenance and to fix warnings like:
-> > 
-> > sc8180x-lenovo-flex-5g.dtb: interconnect-0: 'reg' is a required property
-> > 
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >  .../bindings/interconnect/qcom,rpmh.yaml      | 11 ---
-> >  .../interconnect/qcom,sc8180x-rpmh.yaml       | 76 +++++++++++++++++++
-> >  2 files changed, 76 insertions(+), 11 deletions(-)
-> >  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sc8180x-rpmh.yaml
-> > 
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Thanks I have fixed this error, will post v3 soon
+--M1XUwPa0tTn2VCRg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-~Vinod
+On Mon 2023-03-27 16:10:31, Christian Marangi wrote:
+> From: Andrew Lunn <andrew@lunn.ch>
+>=20
+> The WAN port of the 370-RD has a Marvell PHY, with one LED on
+> the front panel. List this LED in the device tree.
+
+> @@ -135,6 +136,19 @@ &mdio {
+>  	pinctrl-names =3D "default";
+>  	phy0: ethernet-phy@0 {
+>  		reg =3D <0>;
+> +		leds {
+> +			#address-cells =3D <1>;
+> +			#size-cells =3D <0>;
+> +
+> +			led@0 {
+> +				reg =3D <0>;
+> +				label =3D "WAN";
+> +				color =3D <LED_COLOR_ID_WHITE>;
+> +				function =3D LED_FUNCTION_LAN;
+> +				function-enumerator =3D <1>;
+> +				linux,default-trigger =3D "netdev";
+> +			};
+
+/sys/class/leds/WAN is not acceptable.
+
+Best regards,
+							Pavel
+--=20
+People of Russia, stop Putin before his war on Ukraine escalates.
+
+--M1XUwPa0tTn2VCRg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZCKl1AAKCRAw5/Bqldv6
+8oOMAJ94SXgT/9W1NuDgolccPqIAuAiokgCgo5aEvcznB5Zg1V+9XSXaeddQA6M=
+=n8Nw
+-----END PGP SIGNATURE-----
+
+--M1XUwPa0tTn2VCRg--
